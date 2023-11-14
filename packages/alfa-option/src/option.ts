@@ -44,7 +44,7 @@ export interface Option<T>
   some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
   some(predicate: Predicate<T>): this is Some<T>;
   none<U extends T>(
-    refinement: Refinement<T, U>
+    refinement: Refinement<T, U>,
   ): this is Option<Exclude<T, U>>;
   none(predicate: Predicate<T>): boolean;
   every<U extends T>(refinement: Refinement<T, U>): this is Option<U>;

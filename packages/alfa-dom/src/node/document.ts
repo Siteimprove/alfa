@@ -11,9 +11,11 @@ import { Element } from "./element";
 export class Document extends Node<"document"> {
   public static of(
     children: Iterable<Node>,
-    style: Iterable<Sheet> = []
+    style: Iterable<Sheet> = [],
+    externalId?: string,
+    extraData?: any,
   ): Document {
-    return new Document(Array.from(children), style);
+    return new Document(Array.from(children), style, externalId, extraData);
   }
 
   public static empty(): Document {
@@ -23,8 +25,13 @@ export class Document extends Node<"document"> {
   private readonly _style: Array<Sheet>;
   private _frame: Option<Element> = None;
 
-  private constructor(children: Array<Node>, style: Iterable<Sheet>) {
-    super(children, "document");
+  private constructor(
+    children: Array<Node>,
+    style: Iterable<Sheet>,
+    externalId?: string,
+    extraData?: any,
+  ) {
+    super(children, "document", externalId, extraData);
 
     this._style = Array.from(style);
   }
@@ -47,7 +54,7 @@ export class Document extends Node<"document"> {
    * @internal
    **/
   protected _internalPath(
-    options: Node.Traversal = Node.Traversal.empty
+    options: Node.Traversal = Node.Traversal.empty,
   ): string {
     if (options.isSet(Node.Traversal.nested)) {
       return this._frame
@@ -112,10 +119,10 @@ export namespace Document {
    */
   export function fromDocument(
     json: JSON,
-    device?: Device
+    device?: Device,
   ): Trampoline<Document> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device)
+      Node.fromNode(child, device),
     ).map((children) => Document.of(children, json.style.map(Sheet.from)));
   }
 }

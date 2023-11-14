@@ -1,4 +1,4 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
@@ -21,6 +21,7 @@ import { referenceSameResource } from "../common/predicate";
 import { normalize } from "../common/normalize";
 
 import { Scope, Stability } from "../tags";
+import { WithAccessibleName } from "../common/diagnostic";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
@@ -44,8 +45,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               hasNamespace(Namespace.HTML, Namespace.SVG),
               hasRole(device, (role) => role.is("link")),
               isIncludedInTheAccessibilityTree(device),
-              hasNonEmptyAccessibleName(device)
-            )
+              hasNonEmptyAccessibleName(device),
+            ),
           )
           // Group by contexts (context => group)
           .groupBy((element) => linkContext(element, device))
@@ -53,14 +54,14 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
           .map((elements) =>
             elements.groupBy((element) =>
               Node.from(element, device).name.map((name) =>
-                normalize(name.value)
-              )
-            )
+                normalize(name.value),
+              ),
+            ),
           );
 
         // Drop the context and name keys
         const groups = Sequence.from(
-          Iterable.flatMap(map.values(), (map) => map.values())
+          Iterable.flatMap(map.values(), (map) => map.values()),
         );
 
         // Only keep the groups with more than one element
@@ -68,31 +69,36 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
       },
 
       expectations(target) {
+        const name = WithAccessibleName.getAccessibleName(
+          Iterable.first(target).getUnsafe(), // Existence of first element is guaranteed by applicability
+          device,
+        ).getUnsafe(); // Existence of accessible name is guaranteed by applicability
+
         const embedSameResource = [...target].every(
           (element, i, elements) =>
             // This is either the first element...
             i === 0 ||
             // ...or an element that embeds the same resource as the element
             // before it.
-            referenceSameResource(response.url)(element, elements[i - 1])
+            referenceSameResource(response.url)(element, elements[i - 1]),
         );
 
         return {
           1: expectation(
             embedSameResource,
-            () => Outcomes.ResolveSameResource,
+            () => Outcomes.ResolveSameResource(name),
             () =>
               Question.of(
                 "reference-equivalent-resources",
                 target,
-                `Do the links resolve to equivalent resources?`
+                `Do the links resolve to equivalent resources?`,
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
-                  () => Outcomes.ResolveEquivalentResource,
-                  () => Outcomes.ResolveDifferentResource
-                )
-              )
+                  () => Outcomes.ResolveEquivalentResource(name),
+                  () => Outcomes.ResolveDifferentResource(name),
+                ),
+              ),
           ),
         };
       },
@@ -104,19 +110,29 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
  * @public
  */
 export namespace Outcomes {
-  export const ResolveSameResource = Ok.of(
-    Diagnostic.of(`The links resolve to the same resource`)
-  );
+  export const ResolveSameResource = (accessibleName: string) =>
+    Ok.of(
+      WithAccessibleName.of(
+        `The links resolve to the same resource`,
+        accessibleName,
+      ),
+    );
 
-  export const ResolveEquivalentResource = Ok.of(
-    Diagnostic.of(`The links resolve to equivalent resources`)
-  );
+  export const ResolveEquivalentResource = (accessibleName: string) =>
+    Ok.of(
+      WithAccessibleName.of(
+        `The links resolve to equivalent resources`,
+        accessibleName,
+      ),
+    );
 
-  export const ResolveDifferentResource = Err.of(
-    Diagnostic.of(
-      `The links do not resolve to the same or equivalent resources`
-    )
-  );
+  export const ResolveDifferentResource = (accessibleName: string) =>
+    Err.of(
+      WithAccessibleName.of(
+        `The links do not resolve to the same or equivalent resources`,
+        accessibleName,
+      ),
+    );
 }
 
 /**

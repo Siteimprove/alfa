@@ -33,7 +33,7 @@ test(`evaluates() passes on link with a different background-image than text`, a
             "linear-gradient(to right, #046B99 50%, transparent 50%)",
         }),
       ]),
-    ]
+    ],
   );
   const style = Ok.of(
     noDistinguishingProperties
@@ -41,7 +41,7 @@ test(`evaluates() passes on link with a different background-image than text`, a
         "background",
         "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
       ])
-      .withDistinguishingProperties(["background"])
+      .withDistinguishingProperties(["background"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -49,7 +49,7 @@ test(`evaluates() passes on link with a different background-image than text`, a
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -68,13 +68,13 @@ test(`evaluate() passes an applicable <a> element that removes the default text
           background: "red",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
     noDistinguishingProperties
       .withStyle(["background", "rgb(100% 0% 0%)"])
-      .withDistinguishingProperties(["background"])
+      .withDistinguishingProperties(["background"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -82,7 +82,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -104,7 +104,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and is
           textDecoration: "none",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -112,7 +112,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and is
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [addCursor(noStyle)],
-        [addOutline(noStyle)]
+        [addOutline(noStyle)],
       ),
     }),
   ]);
@@ -135,7 +135,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and is
           textDecoration: "none",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -143,7 +143,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and is
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [addCursor(noStyle)],
-        [addOutline(noStyle)]
+        [addOutline(noStyle)],
       ),
     }),
   ]);
@@ -166,11 +166,11 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
           background: "red",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Err.of(
-    noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
+    noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -178,7 +178,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
       1: Outcomes.IsNotDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -204,13 +204,13 @@ test(`evaluate() passes an applicable <a> element that removes the default text
           "box-shadow": "10px 5px 5px red",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
     noDistinguishingProperties
       .withStyle(["box-shadow", "10px 5px 5px rgb(100% 0% 0%)"])
-      .withDistinguishingProperties(["box-shadow"])
+      .withDistinguishingProperties(["box-shadow"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -234,7 +234,7 @@ test(`evaluate() fails an applicable <a> element that removes the default text
           "box-shadow": "initial",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -242,7 +242,7 @@ test(`evaluate() fails an applicable <a> element that removes the default text
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [addCursor(noStyle)],
-        [noStyle]
+        [noStyle],
       ),
     }),
   ]);
@@ -267,7 +267,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
           borderBottom: "1px solid #000",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
@@ -276,9 +276,9 @@ test(`evaluate() passes an applicable <a> element that removes the default text
         ["border-width", "0px 0px 1px"],
         ["border-style", "none none solid"],
         ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
-        ["outline", "0px"]
+        ["outline", "0px"],
       )
-      .withDistinguishingProperties(["border"])
+      .withDistinguishingProperties(["border"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -286,7 +286,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -305,15 +305,15 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
           borderBottom: "1px solid transparent",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Err.of(
     noDistinguishingProperties.withStyle(
       ["border-width", "0px 0px 1px"],
       ["border-style", "none none solid"],
-      ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"]
-    )
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
+    ),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -321,7 +321,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
       1: Outcomes.IsNotDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -340,15 +340,15 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
           borderBottom: "0px solid #000",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Err.of(
     noDistinguishingProperties.withStyle(
       ["border-width", "0px"],
       ["border-style", "none none solid"],
-      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"]
-    )
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+    ),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -356,7 +356,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
       1: Outcomes.IsNotDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -383,13 +383,13 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
           fontWeight: "bold",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
     noDistinguishingProperties
       .withStyle(["font", "700 16px serif"])
-      .withDistinguishingProperties(["font"])
+      .withDistinguishingProperties(["font"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -397,7 +397,7 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -419,13 +419,13 @@ test(`evaluate() passes a link with different font-family than surrounding text`
           font: '16px "some-font", serif',
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
     noDistinguishingProperties
       .withStyle(["font", '16px "some-font", serif'])
-      .withDistinguishingProperties(["font"])
+      .withDistinguishingProperties(["font"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -433,7 +433,7 @@ test(`evaluate() passes a link with different font-family than surrounding text`
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -457,7 +457,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
           outline: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
@@ -469,8 +469,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
         ["color", "rgb(0% 0% 93.33333%)"],
         ["outline", "auto"],
       ],
-      defaultContrastPairings
-    )
+      defaultContrastPairings,
+    ),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -494,7 +494,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
           textDecoration: "none",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -519,7 +519,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
           cursor: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -550,13 +550,13 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
           textDecoration: "none",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
     noDistinguishingProperties
       .withStyle(["vertical-align", "super"])
-      .withDistinguishingProperties(["vertical-align"])
+      .withDistinguishingProperties(["vertical-align"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -564,7 +564,7 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
         [addCursor(style), addCursor(noStyle)],
-        [addOutline(noStyle), style]
+        [addOutline(noStyle), style],
       ),
     }),
   ]);
@@ -590,7 +590,7 @@ test(`evaluate() passes an <a> element with a <p> parent element when
           fontWeight: "bold",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
@@ -604,7 +604,7 @@ test(`evaluate() passes an <a> element with a <p> parent element when
         "font",
         "text-decoration",
         "box-shadow",
-      ])
+      ]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -612,7 +612,7 @@ test(`evaluate() passes an <a> element with a <p> parent element when
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);

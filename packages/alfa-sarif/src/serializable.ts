@@ -17,7 +17,7 @@ export interface Serializable<T extends SARIF = SARIF> {
  */
 export namespace Serializable {
   export function isSerializable<T extends SARIF>(
-    value: unknown
+    value: unknown,
   ): value is Serializable<T> {
     return isObject(value) && isFunction(value.toSARIF);
   }

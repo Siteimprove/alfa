@@ -45,11 +45,11 @@ export namespace Shape {
     Extent.Resolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Shape) => PartiallyResolved {
     return (value) =>
       Selective.of(value)
-        .if(Ellipse.isEllipse, Ellipse.partiallyResolve(resolver))
+        .if(Ellipse.isEllipse, (ellipse) => ellipse.partiallyResolve(resolver))
         .else((value) => value.resolve(resolver))
         .get();
   }
@@ -57,6 +57,6 @@ export namespace Shape {
   export const parse = either<Slice<Token>, Shape, string>(
     Ellipse.parse,
     Circle.parse,
-    Extent.parse
+    Extent.parse,
   );
 }

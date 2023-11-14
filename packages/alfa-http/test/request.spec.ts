@@ -10,6 +10,6 @@ test(".from() returns Err on invalid URL", (t) => {
       headers: [],
       method: "GET",
     }).isErr(),
-    true
+    true,
   );
 });

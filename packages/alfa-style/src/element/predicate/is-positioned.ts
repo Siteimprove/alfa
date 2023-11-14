@@ -16,6 +16,6 @@ export function isPositioned(
   return hasComputedStyle(
     "position",
     (position) => positions.some(equals(position.value)),
-    device
+    device,
   );
 }

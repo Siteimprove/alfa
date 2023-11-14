@@ -26,7 +26,7 @@ test(`evaluate() passes a video that is labelled as alternative for text`, async
         "has-audio": true,
         "text-alternative": Option.of(text),
         label: Option.of(label),
-      })
+      }),
     ),
     [
       passed(
@@ -36,9 +36,9 @@ test(`evaluate() passes a video that is labelled as alternative for text`, async
           1: Outcomes.HasPerceivableAlternative("<video>"),
           2: Outcomes.HasPerceivableLabel("<video>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -57,7 +57,7 @@ test(`evaluate() fails a video that is not alternative for text`, async (t) => {
         "has-audio": true,
         "text-alternative": None,
         label: Option.of(label),
-      })
+      }),
     ),
     [
       failed(
@@ -67,9 +67,9 @@ test(`evaluate() fails a video that is not alternative for text`, async (t) => {
           1: Outcomes.HasNoAlternative("<video>"),
           2: Outcomes.HasPerceivableLabel("<video>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -88,7 +88,7 @@ test(`evaluate() fails a video that is not labelled as alternative for text`, as
         "has-audio": true,
         "text-alternative": Option.of(text),
         label: None,
-      })
+      }),
     ),
     [
       failed(
@@ -98,9 +98,9 @@ test(`evaluate() fails a video that is not labelled as alternative for text`, as
           1: Outcomes.HasPerceivableAlternative("<video>"),
           2: Outcomes.HasNoLabel("<video>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -120,7 +120,7 @@ test(`evaluate() fails a video alternative for invisible text`, async (t) => {
         "has-audio": true,
         "text-alternative": Option.of(text),
         label: Option.of(label),
-      })
+      }),
     ),
     [
       failed(
@@ -130,9 +130,9 @@ test(`evaluate() fails a video alternative for invisible text`, async (t) => {
           1: Outcomes.HasNonPerceivableAlternative("<video>"),
           2: Outcomes.HasPerceivableLabel("<video>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -154,7 +154,7 @@ test(`evaluate() fails a video that is invisibly labelled as alternative for tex
         "has-audio": true,
         "text-alternative": Option.of(text),
         label: Option.of(label),
-      })
+      }),
     ),
     [
       failed(
@@ -164,9 +164,9 @@ test(`evaluate() fails a video that is invisibly labelled as alternative for tex
           1: Outcomes.HasPerceivableAlternative("<video>"),
           2: Outcomes.HasNonPerceivableLabel("<video>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -179,9 +179,9 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
     await evaluate(
       R31,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": true })
+      oracle({ "is-video-streaming": false, "has-audio": true }),
     ),
-    [cantTell(R31, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R31, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -202,8 +202,8 @@ test(`evaluate() is inapplicable to videos without audio`, async (t) => {
     await evaluate(
       R31,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": false })
+      oracle({ "is-video-streaming": false, "has-audio": false }),
     ),
-    [inapplicable(R31, Outcome.Mode.SemiAuto)]
+    [inapplicable(R31, Outcome.Mode.SemiAuto)],
   );
 });

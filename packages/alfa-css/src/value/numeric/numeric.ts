@@ -31,9 +31,13 @@ export namespace Numeric {
   /**
    * Numerics that are the result of a calculation.
    */
-  export abstract class Calculated<T extends Type = Type, R extends Type = T>
-    extends Value<T, true, R>
-    implements INumeric<T, true, R>
+  export abstract class Calculated<
+      T extends Type = Type,
+      R extends Type = T,
+      PR extends Type = R,
+    >
+    extends Value<T, true, R, PR>
+    implements Resolvable<Fixed<R>, never>
   {
     protected readonly _math: ToMath<T>;
 
@@ -46,7 +50,7 @@ export namespace Numeric {
       return this._math;
     }
 
-    public hasCalculation(): this is Calculated<T, R> {
+    public hasCalculation(): this is Calculated<T, R, PR> {
       return true;
     }
 
@@ -81,9 +85,13 @@ export namespace Numeric {
   /**
    * Numerics that are a fixed (not calculated) value.
    */
-  export abstract class Fixed<T extends Type = Type, R extends Type = T>
-    extends Value<T, false, R>
-    implements INumeric<T, false, R>, Comparable<Fixed>
+  export abstract class Fixed<
+      T extends Type = Type,
+      R extends Type = T,
+      PR extends Type = R,
+    >
+    extends Value<T, false, R, PR>
+    implements Resolvable<Fixed<R>, never>, Comparable<Fixed>
   {
     protected readonly _value: number;
 
@@ -142,16 +150,6 @@ export namespace Numeric {
   }
 
   export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
-
-  interface INumeric<
-    T extends Type = Type,
-    CALC extends boolean = boolean,
-    R extends Type = T
-  > extends Value<T, CALC, R>,
-      Resolvable<Fixed<R>, unknown> {
-    hasCalculation(): this is Calculated<T, R>;
-    resolve(resolver?: unknown): Fixed<R>;
-  }
 
   export function isCalculated(value: unknown): value is Calculated {
     return value instanceof Calculated;

@@ -5,6 +5,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Parser as CSSParser } from "../../../../syntax";
 
 import { LengthPercentage } from "../../../numeric";
+import { PartiallyResolvable, Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 const { map } = Parser;
@@ -12,10 +13,12 @@ const { map } = Parser;
 /**
  * {@link https://drafts.csswg.org/css-images/#color-transition-hint}
  */
-export class Hint<P extends LengthPercentage = LengthPercentage> extends Value<
-  "hint",
-  Value.HasCalculation<[P]>
-> {
+export class Hint<P extends LengthPercentage = LengthPercentage>
+  extends Value<"hint", Value.HasCalculation<[P]>>
+  implements
+    Resolvable<Hint.Canonical, Hint.Resolver>,
+    PartiallyResolvable<Hint.PartiallyResolved, Hint.PartialResolver>
+{
   public static of<P extends LengthPercentage>(position: P): Hint<P> {
     return new Hint(position);
   }
@@ -27,12 +30,21 @@ export class Hint<P extends LengthPercentage = LengthPercentage> extends Value<
     this._position = position;
   }
 
+  /** @public (knip) */
   public get position(): P {
     return this._position;
   }
 
   public resolve(resolver: Hint.Resolver): Hint.Canonical {
     return new Hint(LengthPercentage.resolve(resolver)(this._position));
+  }
+
+  public partiallyResolve(
+    resolver: Hint.PartialResolver,
+  ): Hint.PartiallyResolved {
+    return new Hint(
+      LengthPercentage.partiallyResolve(resolver)(this._position),
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -67,13 +79,6 @@ export namespace Hint {
   export type Resolver = LengthPercentage.Resolver;
 
   export type PartialResolver = LengthPercentage.PartialResolver;
-
-  export function partiallyResolve(
-    resolver: PartialResolver
-  ): (value: Hint) => PartiallyResolved {
-    return (value) =>
-      Hint.of(LengthPercentage.partiallyResolve(resolver)(value.position));
-  }
 
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-hint}

@@ -26,15 +26,6 @@ export namespace Item {
 
   export type PartialResolver = Hint.PartialResolver & Stop.PartialResolver;
 
-  export function partiallyResolve(
-    resolver: PartialResolver
-  ): (value: Item) => PartiallyResolved {
-    return (value) =>
-      Stop.isStop(value)
-        ? Stop.partiallyResolve(resolver)(value)
-        : Hint.partiallyResolve(resolver)(value);
-  }
-
   // <linear-color-hint>? , <linear-color-stop>
   const parse = pair(option(left(Hint.parse, Comma.parse)), Stop.parse);
 
@@ -51,6 +42,6 @@ export namespace Item {
       }
 
       return items;
-    }
+    },
   );
 }

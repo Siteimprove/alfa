@@ -45,7 +45,7 @@ test("#map() does not overflow for long sequences", (t) => {
 
   t.deepEqual(
     [...seq],
-    array(100000).map((n) => n + 1)
+    array(100000).map((n) => n + 1),
   );
 });
 
@@ -54,28 +54,28 @@ test("#map() does not force the tail of a sequence", (t) => {
     1,
     Lazy.of(() => {
       throw new Error("The tail was forced");
-    })
+    }),
   ).map((n) => n + 1);
 });
 
 test("#apply() applies a sequence of functions to each value of a sequence", (t) => {
   t.deepEqual(
     [...seq.apply(Sequence.from([(n) => n + 1, (n) => n * 2]))],
-    [2, 3, 4, 5, 2, 4, 6, 8]
+    [2, 3, 4, 5, 2, 4, 6, 8],
   );
 });
 
 test("#flatMap() applies a function to each value of a sequence and flattens the result", (t) => {
   t.deepEqual(
     [...seq.flatMap((n) => Sequence.from([n, n]))],
-    [1, 1, 2, 2, 3, 3, 4, 4]
+    [1, 1, 2, 2, 3, 3, 4, 4],
   );
 });
 
 test("#flatMap() behaves when the first value of a sequence maps to an empty sequence", (t) => {
   t.deepEqual(
     [...seq.flatMap((n) => Sequence.from(array(n)))],
-    [0, /**/ 0, 1, /**/ 0, 1, 2, /**/ 0, 1, 2, 3]
+    [0, /**/ 0, 1, /**/ 0, 1, 2, /**/ 0, 1, 2, 3],
   );
 });
 
@@ -94,7 +94,7 @@ test("#flatten() unwraps a nested sequence", (t) => {
 test("#reduce() reduces a sequence of values to a single value", (t) => {
   t.equal(
     seq.reduce((acc, n) => acc + n, 0),
-    10
+    10,
   );
 });
 
@@ -147,21 +147,21 @@ test("#find() returns none when no value of a sequence satisfies a predicate", (
 test("#collect() applies an option returning function to a sequence and discards all nones", (t) => {
   t.deepEqual(
     [...seq.collect((n) => (n % 2 === 0 ? Option.of(n.toString()) : None))],
-    ["2", "4"]
+    ["2", "4"],
   );
 });
 
 test("#count() counts the number of values of a sequence that satisfy a predicate", (t) => {
   t.equal(
     seq.count((n) => n % 2 === 0),
-    2
+    2,
   );
 });
 
 test("#distinct() removes duplicate values from a sequence", (t) => {
   t.deepEqual(
     [...Sequence.from([1, 1, 2, 3, 3, 3, 4, 4]).distinct()],
-    [1, 2, 3, 4]
+    [1, 2, 3, 4],
   );
 });
 
@@ -260,7 +260,7 @@ test("#sortWith() sorts a sequence according to a comparer", (t) => {
 
   t.deepEqual(
     [...seq.sortWith((a, b) => (a > b ? 1 : a < b ? -1 : 0))],
-    [1, 2, 3, 4, 5, 6, 7]
+    [1, 2, 3, 4, 5, 6, 7],
   );
 });
 

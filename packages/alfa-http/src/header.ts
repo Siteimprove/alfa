@@ -10,7 +10,8 @@ export class Header
   implements
     Equatable,
     json.Serializable<Header.JSON>,
-    earl.Serializable<Header.EARL> {
+    earl.Serializable<Header.EARL>
+{
   public static of(name: string, value: string): Header {
     return new Header(name, value);
   }

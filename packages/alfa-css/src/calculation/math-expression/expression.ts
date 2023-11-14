@@ -39,7 +39,7 @@ export abstract class Expression<T extends string = string>
    */
   public abstract reduce<
     L extends Unit.Length = "px",
-    P extends Numeric = Numeric
+    P extends Numeric = Numeric,
   >(resolver: Expression.Resolver<L, P>): Expression;
 
   public toAngle(): Result<Angle, string> {
@@ -97,6 +97,6 @@ export namespace Expression {
 
   export type Resolver<
     L extends Unit.Length = "px",
-    P extends Numeric = Numeric
+    P extends Numeric = Numeric,
   > = LengthResolver<L> & PercentageResolver<P>;
 }

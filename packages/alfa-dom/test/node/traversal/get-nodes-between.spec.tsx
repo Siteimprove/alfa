@@ -22,7 +22,7 @@ test("getNodesBetween() returns the nodes between two nodes", (t) => {
       includeFirst: true,
       includeSecond: true,
     }).toArray(),
-    [divHello, spanHello, hello, divEmpty, spanEmpty, divWorld]
+    [divHello, spanHello, hello, divEmpty, spanEmpty, divWorld],
   );
 
   t.deepEqual(
@@ -30,7 +30,7 @@ test("getNodesBetween() returns the nodes between two nodes", (t) => {
       includeFirst: true,
       includeSecond: false,
     }).toArray(),
-    [divHello, spanHello, hello, divEmpty, spanEmpty]
+    [divHello, spanHello, hello, divEmpty, spanEmpty],
   );
 
   t.deepEqual(
@@ -38,7 +38,7 @@ test("getNodesBetween() returns the nodes between two nodes", (t) => {
       includeFirst: false,
       includeSecond: true,
     }).toArray(),
-    [divEmpty, spanEmpty, divWorld]
+    [divEmpty, spanEmpty, divWorld],
   );
 
   t.deepEqual(
@@ -46,7 +46,7 @@ test("getNodesBetween() returns the nodes between two nodes", (t) => {
       includeFirst: false,
       includeSecond: false,
     }).toArray(),
-    [divEmpty, spanEmpty]
+    [divEmpty, spanEmpty],
   );
 });
 
@@ -57,7 +57,7 @@ test(`getNodesBetween() return a single node when both arguments are the same
       includeFirst: true,
       includeSecond: true,
     }).toArray(),
-    [divHello]
+    [divHello],
   );
 });
 
@@ -68,7 +68,7 @@ test(`getNodesBetween() return an empty sequence when both arguments are the
       includeFirst: true,
       includeSecond: false,
     }).toArray(),
-    []
+    [],
   );
 
   t.deepEqual(
@@ -76,7 +76,7 @@ test(`getNodesBetween() return an empty sequence when both arguments are the
       includeFirst: false,
       includeSecond: true,
     }).toArray(),
-    []
+    [],
   );
 
   t.deepEqual(
@@ -84,7 +84,7 @@ test(`getNodesBetween() return an empty sequence when both arguments are the
       includeFirst: false,
       includeSecond: false,
     }).toArray(),
-    []
+    [],
   );
 });
 
@@ -95,7 +95,7 @@ test(`getNodesBetween() return an empty sequence when node2 is a descendant of
       includeFirst: true,
       includeSecond: true,
     }).toArray(),
-    [divHello, spanHello, hello]
+    [divHello, spanHello, hello],
   );
 
   t.deepEqual(
@@ -103,7 +103,7 @@ test(`getNodesBetween() return an empty sequence when node2 is a descendant of
       includeFirst: false,
       includeSecond: true,
     }).toArray(),
-    []
+    [],
   );
 
   t.deepEqual(
@@ -111,7 +111,7 @@ test(`getNodesBetween() return an empty sequence when node2 is a descendant of
       includeFirst: true,
       includeSecond: false,
     }).toArray(),
-    [divHello, spanHello]
+    [divHello, spanHello],
   );
 
   t.deepEqual(
@@ -119,6 +119,6 @@ test(`getNodesBetween() return an empty sequence when node2 is a descendant of
       includeFirst: false,
       includeSecond: false,
     }).toArray(),
-    []
+    [],
   );
 });

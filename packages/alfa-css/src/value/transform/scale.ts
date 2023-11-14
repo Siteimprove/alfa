@@ -104,23 +104,23 @@ export namespace Scale {
   const parseScale = map(
     CSSFunction.parse(
       "scale",
-      map(List.parseCommaSeparated(Number.parse, 1, 2), (list) => list.values)
+      map(List.parseCommaSeparated(Number.parse, 1, 2), (list) => list.values),
     ),
-    ([_, [x, y]]) => Scale.of(x, y ?? x)
+    ([_, [x, y]]) => Scale.of(x, y ?? x),
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scalex}
    */
   const parseScaleX = map(CSSFunction.parse("scaleX", Number.parse), ([_, x]) =>
-    Scale.of(x, Number.of(1))
+    Scale.of(x, Number.of(1)),
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scaley}
    */
   const parseScaleY = map(CSSFunction.parse("scaleY", Number.parse), ([_, y]) =>
-    Scale.of(Number.of(1), y)
+    Scale.of(Number.of(1), y),
   );
 
   export const parse = either(parseScale, parseScaleX, parseScaleY);

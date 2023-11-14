@@ -3,6 +3,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Comma, Function, type Parser as CSSParser } from "../../../../syntax";
+import { PartiallyResolvable, Resolvable } from "../../../resolvable";
 
 import { Value } from "../../../value";
 
@@ -18,14 +19,16 @@ const { map, pair, option, left } = Parser;
  *
  * @public
  */
-export class Linear<
-  I extends Item = Item,
-  D extends Direction = Direction
-> extends Value<"gradient", Value.HasCalculation<[D, I]>> {
+export class Linear<I extends Item = Item, D extends Direction = Direction>
+  extends Value<"gradient", Value.HasCalculation<[D, I]>>
+  implements
+    Resolvable<Linear.Canonical, Linear.Resolver>,
+    PartiallyResolvable<Linear.PartiallyResolved, Linear.PartialResolver>
+{
   public static of<I extends Item, D extends Direction>(
     direction: D,
     items: Iterable<I>,
-    repeats: boolean
+    repeats: boolean,
   ): Linear<I, D> {
     return new Linear(direction, Array.from(items), repeats);
   }
@@ -61,7 +64,19 @@ export class Linear<
     return new Linear(
       this._direction.resolve(),
       this._items.map(Item.resolve(resolver)),
-      this._repeats
+      this._repeats,
+    );
+  }
+
+  public partiallyResolve(
+    resolver: Linear.PartialResolver,
+  ): Linear.PartiallyResolved {
+    return new Linear(
+      this._direction.resolve(),
+      Array.from(
+        Iterable.map(this._items, (item) => item.partiallyResolve(resolver)),
+      ),
+      this._repeats,
     );
   }
 
@@ -112,6 +127,11 @@ export class Linear<
 export namespace Linear {
   export type Canonical = Linear<Item.Canonical, Direction.Canonical>;
 
+  export type PartiallyResolved = Linear<
+    Item.PartiallyResolved,
+    Direction.Canonical
+  >;
+
   export interface JSON extends Value.JSON<"gradient"> {
     kind: "linear";
     direction: Direction.JSON;
@@ -121,24 +141,9 @@ export namespace Linear {
 
   export type Resolver = Item.Resolver & Direction.Resolver;
 
-  export type PartiallyResolved = Linear<
-    Item.PartiallyResolved,
-    Direction.Canonical
-  >;
-
   export type PartialResolver = Item.PartialResolver & Direction.Resolver;
 
-  export function partiallyResolve(
-    resolver: PartialResolver
-  ): (value: Linear) => PartiallyResolved {
-    return (value) =>
-      Linear.of(
-        value.direction.resolve(),
-        Iterable.map(value.items, Item.partiallyResolve(resolver)),
-        value.repeats
-      );
-  }
-
+  /** @public (knip) */
   export function isLinear(value: unknown): value is Linear {
     return value instanceof Linear;
   }
@@ -151,14 +156,14 @@ export namespace Linear {
       (fn) =>
         fn.value === "linear-gradient" ||
         fn.value === "repeating-linear-gradient",
-      pair(option(left(Direction.parse, Comma.parse)), Item.parseList)
+      pair(option(left(Direction.parse, Comma.parse)), Item.parseList),
     ),
     ([fn, [direction, items]]) => {
       return Linear.of(
         direction.getOrElse(() => Side.of("bottom")),
         items,
-        fn.name.startsWith("repeating")
+        fn.name.startsWith("repeating"),
       );
-    }
+    },
   );
 }

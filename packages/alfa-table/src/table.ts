@@ -31,12 +31,12 @@ export class Table implements Equatable, Serializable<Table.JSON> {
   public static of(
     element: Element,
     cells: Iterable<Cell>,
-    groups: Iterable<Group>
+    groups: Iterable<Group>,
   ): Table {
     return new Table(
       element,
       Array.sort(Array.copy(Array.from(cells))),
-      Array.sort(Array.copy(Array.from(groups)))
+      Array.sort(Array.copy(Array.from(groups))),
     );
   }
 
@@ -51,7 +51,7 @@ export class Table implements Equatable, Serializable<Table.JSON> {
   private constructor(
     element: Element,
     cells: Array<Cell>,
-    groups: Array<Group>
+    groups: Array<Group>,
   ) {
     this._element = element;
     this._cells = cells;
@@ -523,7 +523,7 @@ export namespace Table {
           current.get(),
           "colspan",
           1 /* lower */,
-          1000 /* upper */
+          1000 /* upper */,
         );
 
         // 9
@@ -532,7 +532,7 @@ export namespace Table {
           "rowspan",
           0 /* lower */,
           65534 /* upper */,
-          1 /* missing */
+          1 /* missing */,
         );
 
         // 10
@@ -563,14 +563,14 @@ export namespace Table {
             current.get(),
             Slot.of(xCurrent, yCurrent),
             colspan,
-            rowspan
+            rowspan,
           );
         } else {
           cell = Cell.data(
             current.get(),
             Slot.of(xCurrent, yCurrent),
             colspan,
-            rowspan
+            rowspan,
           );
         }
 
@@ -653,7 +653,7 @@ export namespace Table {
             current.get(),
             "span",
             1 /* lower */,
-            1000 /* upper */
+            1000 /* upper */,
           );
 
           // 4
@@ -675,7 +675,7 @@ export namespace Table {
           element,
           "span",
           1 /* lower */,
-          1000 /* upper */
+          1000 /* upper */,
         );
 
         // 2
@@ -742,7 +742,7 @@ export namespace Table {
         headers.push(
           ...ids
             .get()
-            .collect((id) => Option.from(index.get(id)).map((i) => cells[i]))
+            .collect((id) => Option.from(index.get(id)).map((i) => cells[i])),
         );
       } else {
         // 1
@@ -778,7 +778,7 @@ export namespace Table {
               headers.push(
                 ...get(x, y)
                   .map((i) => cells[i])
-                  .filter((cell) => cell.isHeader() && isRowGroupHeader(cell))
+                  .filter((cell) => cell.isHeader() && isRowGroupHeader(cell)),
               );
             }
           }
@@ -802,8 +802,8 @@ export namespace Table {
                 ...get(x, y)
                   .map((i) => cells[i])
                   .filter(
-                    (cell) => cell.isHeader() && isColumnGroupHeader(cell)
-                  )
+                    (cell) => cell.isHeader() && isColumnGroupHeader(cell),
+                  ),
               );
             }
           }
@@ -830,7 +830,7 @@ export namespace Table {
           cell.width,
           cell.height,
           anchors,
-          cell.scope
+          cell.scope,
         );
       } else {
         cells[i] = Cell.data(
@@ -838,7 +838,7 @@ export namespace Table {
           cell.anchor,
           cell.width,
           cell.height,
-          anchors
+          anchors,
         );
       }
     }
@@ -852,7 +852,7 @@ export namespace Table {
       initialX: number,
       initialY: number,
       deltaX: number,
-      deltaY: number
+      deltaY: number,
     ): void {
       // 1
       let x = initialX;
@@ -913,7 +913,7 @@ export namespace Table {
           if (deltaX === 0) {
             if (
               opaque.some(
-                (header) => header.x === cell.x && header.width === cell.width
+                (header) => header.x === cell.x && header.width === cell.width,
               ) ||
               !isColumHeader(cell)
             ) {
@@ -922,7 +922,8 @@ export namespace Table {
           } else {
             if (
               opaque.some(
-                (header) => header.y === cell.y && header.height === cell.height
+                (header) =>
+                  header.y === cell.y && header.height === cell.height,
               ) ||
               !isRowHeader(cell)
             ) {
@@ -973,7 +974,7 @@ export namespace Table {
         cell.width,
         cell.height,
         cell.headers,
-        scope
+        scope,
       );
     }
 
@@ -1052,7 +1053,7 @@ export namespace Table {
     attribute: string,
     lower: number,
     upper: number,
-    missing: number = lower
+    missing: number = lower,
   ): number {
     return clamp(
       element
@@ -1061,7 +1062,7 @@ export namespace Table {
         .reject(isNaN)
         .getOr(missing),
       lower,
-      upper
+      upper,
     );
   }
 }

@@ -45,12 +45,12 @@ export default Rule.Atomic.of<Page, Element>({
                 .get(node, () =>
                   node
                     .descendants(Node.fullTree)
-                    .filter(and(isText, isVisible(device)))
+                    .filter(and(isText, isVisible(device))),
                 )
-                .isEmpty()
+                .isEmpty(),
             ),
-            hasCascadedStyle(`font-size`, () => true, device)
-          )
+            hasCascadedStyle(`font-size`, () => true, device),
+          ),
         );
       },
 
@@ -73,21 +73,21 @@ export default Rule.Atomic.of<Page, Element>({
                   // identity (.equals) to differentiate, e.g., two
                   // "font-size: 100%" declarations
                   source !== declaration,
-                device
+                device,
               ),
               hasComputedStyle(
                 "font-size",
                 (fontSize, _) => fontSize.value >= 9,
-                device
-              )
-            )
+                device,
+              ),
+            ),
           );
 
         return {
           1: expectation(
             texts,
             () => Outcomes.IsSufficient(declaration),
-            () => Outcomes.IsInsufficient(declaration)
+            () => Outcomes.IsInsufficient(declaration),
           ),
         };
       },
@@ -101,12 +101,12 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const IsSufficient = (declaration: Option<Declaration>) =>
     Ok.of(
-      WithDeclaration.of(`The font size is greater than 9 pixels`, declaration)
+      WithDeclaration.of(`The font size is greater than 9 pixels`, declaration),
     );
 
   export const IsInsufficient = (declaration: Option<Declaration>) =>
     Err.of(
-      WithDeclaration.of(`The font size is smaller than 9 pixels`, declaration)
+      WithDeclaration.of(`The font size is smaller than 9 pixels`, declaration),
     );
 }
 
@@ -158,7 +158,7 @@ export namespace WithDeclaration {
   }
 
   export function isWithDeclaration(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is WithDeclaration;
 
   export function isWithDeclaration(value: unknown): value is WithDeclaration;

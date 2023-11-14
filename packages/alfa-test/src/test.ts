@@ -24,7 +24,7 @@ const defaultNotifier: Notifier = {
  */
 export async function test(
   name: string,
-  assertion: (assert: Assertions) => void | Promise<void>
+  assertion: (assert: Assertions) => void | Promise<void>,
 ): Promise<void>;
 
 /**
@@ -33,13 +33,13 @@ export async function test(
 export async function test(
   name: string,
   assertion: (assert: Assertions) => void | Promise<void>,
-  notifier: Notifier
+  notifier: Notifier,
 ): Promise<void>;
 
 export async function test(
   name: string,
   assertion: (assert: Assertions) => void | Promise<void>,
-  notifier = defaultNotifier
+  notifier = defaultNotifier,
 ): Promise<void> {
   try {
     await assertion("strict" in assert ? assert.strict : assert);

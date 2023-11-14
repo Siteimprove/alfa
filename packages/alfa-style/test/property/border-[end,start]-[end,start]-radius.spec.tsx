@@ -12,7 +12,7 @@ for (const vertical of ["end", "start"] as const) {
 
       h.document(
         [element],
-        [h.sheet([h.rule.style("div", [h.declaration(property, "10%")])])]
+        [h.sheet([h.rule.style("div", [h.declaration(property, "10%")])])],
       );
 
       t.deepEqual(cascaded(element, property), {
@@ -38,7 +38,7 @@ for (const vertical of ["end", "start"] as const) {
 
       h.document(
         [element],
-        [h.sheet([h.rule.style("div", [h.declaration(property, "10px 10%")])])]
+        [h.sheet([h.rule.style("div", [h.declaration(property, "10px 10%")])])],
       );
 
       t.deepEqual(cascaded(element, property), {

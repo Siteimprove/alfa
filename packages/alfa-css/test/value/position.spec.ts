@@ -1,21 +1,20 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Lexer, Math, Position } from "../../src";
+import { Length, Math, Position } from "../../src";
+import { parserUnsafe, serializer } from "../common/parse";
 
-function parse(input: string, legacySyntax: boolean = false) {
-  return Position.parse(legacySyntax)(Lexer.lex(input))
-    .map(([, position]) => position.toJSON())
-    .getUnsafe();
-}
+const parse = parserUnsafe(Position.parse());
+const serialize = serializer(Position.parse());
+const serializeLegacy = serializer(Position.parse(true));
 
 test(".parse() parses 1-token positions", (t) => {
-  t.deepEqual(parse("center"), {
+  t.deepEqual(serialize("center"), {
     type: "position",
     horizontal: { type: "keyword", value: "center" },
     vertical: { type: "keyword", value: "center" },
   });
 
-  t.deepEqual(parse("right"), {
+  t.deepEqual(serialize("right"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -25,7 +24,7 @@ test(".parse() parses 1-token positions", (t) => {
     vertical: { type: "keyword", value: "center" },
   });
 
-  t.deepEqual(parse("top"), {
+  t.deepEqual(serialize("top"), {
     type: "position",
     horizontal: { type: "keyword", value: "center" },
     vertical: {
@@ -35,7 +34,7 @@ test(".parse() parses 1-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("10px"), {
+  t.deepEqual(serialize("10px"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -46,7 +45,7 @@ test(".parse() parses 1-token positions", (t) => {
   });
 
   // "10px" is not consumed
-  t.deepEqual(parse("top 10px"), {
+  t.deepEqual(serialize("top 10px"), {
     type: "position",
     horizontal: { type: "keyword", value: "center" },
     vertical: {
@@ -57,7 +56,7 @@ test(".parse() parses 1-token positions", (t) => {
   });
 
   // "left" is not consumed
-  t.deepEqual(parse("10px left"), {
+  t.deepEqual(serialize("10px left"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -69,7 +68,7 @@ test(".parse() parses 1-token positions", (t) => {
 });
 
 test(".parse() parses 2-token positions", (t) => {
-  t.deepEqual(parse("left bottom"), {
+  t.deepEqual(serialize("left bottom"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -83,7 +82,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("bottom left"), {
+  t.deepEqual(serialize("bottom left"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -97,7 +96,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("left center"), {
+  t.deepEqual(serialize("left center"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -107,7 +106,7 @@ test(".parse() parses 2-token positions", (t) => {
     vertical: { type: "keyword", value: "center" },
   });
 
-  t.deepEqual(parse("center left"), {
+  t.deepEqual(serialize("center left"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -117,7 +116,7 @@ test(".parse() parses 2-token positions", (t) => {
     vertical: { type: "keyword", value: "center" },
   });
 
-  t.deepEqual(parse("left 10px"), {
+  t.deepEqual(serialize("left 10px"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -131,7 +130,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("10px top"), {
+  t.deepEqual(serialize("10px top"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -145,7 +144,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("10px 20%"), {
+  t.deepEqual(serialize("10px 20%"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -160,7 +159,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "20%" is not consumed
-  t.deepEqual(parse("10px top 20%", true), {
+  t.deepEqual(serializeLegacy("10px top 20%"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -175,7 +174,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "20%" is not consumed
-  t.deepEqual(parse("left 10px 20%", true), {
+  t.deepEqual(serializeLegacy("left 10px 20%"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -190,7 +189,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "10px" not consumed
-  t.deepEqual(parse("left top 10px"), {
+  t.deepEqual(serialize("left top 10px"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -205,7 +204,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "left" not consumed
-  t.deepEqual(parse("top 10px left"), {
+  t.deepEqual(serialize("top 10px left"), {
     type: "position",
     horizontal: { type: "keyword", value: "center" },
     vertical: {
@@ -216,7 +215,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "10px" not consumed
-  t.deepEqual(parse("top left 10px"), {
+  t.deepEqual(serialize("top left 10px"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -231,7 +230,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "right 10px" not consumed
-  t.deepEqual(parse("center 20% right 10px"), {
+  t.deepEqual(serialize("center 20% right 10px"), {
     type: "position",
     horizontal: { type: "keyword", value: "center" },
     vertical: {
@@ -243,7 +242,7 @@ test(".parse() parses 2-token positions", (t) => {
 });
 
 test(".parse() parses 3-token positions", (t) => {
-  t.deepEqual(parse("left 10px center", true), {
+  t.deepEqual(serializeLegacy("left 10px center"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -253,7 +252,7 @@ test(".parse() parses 3-token positions", (t) => {
     vertical: { type: "keyword", value: "center" },
   });
 
-  t.deepEqual(parse("left top 10px", true), {
+  t.deepEqual(serializeLegacy("left top 10px"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -267,7 +266,7 @@ test(".parse() parses 3-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("top 10px left", true), {
+  t.deepEqual(serializeLegacy("top 10px left"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -281,7 +280,7 @@ test(".parse() parses 3-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("top left 10px", true), {
+  t.deepEqual(serializeLegacy("top left 10px"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -297,7 +296,7 @@ test(".parse() parses 3-token positions", (t) => {
 });
 
 test(".parse() parses 4-token positions", (t) => {
-  t.deepEqual(parse("right 10px bottom 20%"), {
+  t.deepEqual(serialize("right 10px bottom 20%"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -311,7 +310,7 @@ test(".parse() parses 4-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("bottom 20% right 10px"), {
+  t.deepEqual(serialize("bottom 20% right 10px"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -343,7 +342,7 @@ test(".parse() accepts calculations", (t) => {
     },
   };
 
-  t.deepEqual(parse("calc(10px + 5%)"), {
+  t.deepEqual(serialize("calc(10px + 5%)"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -353,7 +352,7 @@ test(".parse() accepts calculations", (t) => {
     vertical: { type: "keyword", value: "center" },
   });
 
-  t.deepEqual(parse("left calc(10px + 5%)"), {
+  t.deepEqual(serialize("left calc(10px + 5%)"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -367,7 +366,7 @@ test(".parse() accepts calculations", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(10px + 5%) calc(10px + 5%)"), {
+  t.deepEqual(serialize("calc(10px + 5%) calc(10px + 5%)"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -381,7 +380,7 @@ test(".parse() accepts calculations", (t) => {
     },
   });
 
-  t.deepEqual(parse("top calc(10px + 5%) left", true), {
+  t.deepEqual(serializeLegacy("top calc(10px + 5%) left"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -395,7 +394,7 @@ test(".parse() accepts calculations", (t) => {
     },
   });
 
-  t.deepEqual(parse("right calc(10px + 5%) bottom calc(10px + 5%)"), {
+  t.deepEqual(serialize("right calc(10px + 5%) bottom calc(10px + 5%)"), {
     type: "position",
     horizontal: {
       type: "side",
@@ -411,9 +410,7 @@ test(".parse() accepts calculations", (t) => {
 });
 
 test(".resolve() fully resolves positions", (t) => {
-  const actual = Position.parse()(Lexer.lex("left calc(1em + 5%) top 20%"))
-    .map(([, position]) => position)
-    .getUnsafe();
+  const actual = parse("left calc(1em + 5%) top 20%");
 
   t.deepEqual(
     actual
@@ -422,7 +419,7 @@ test(".resolve() fully resolves positions", (t) => {
           Length.of(16, "px"),
           Length.of(0, "px"),
           Length.of(0, "px"),
-          Length.of(0, "px")
+          Length.of(0, "px"),
         ),
         percentageHBase: Length.of(10, "px"),
         percentageVBase: Length.of(20, "px"),
@@ -440,38 +437,35 @@ test(".resolve() fully resolves positions", (t) => {
         side: { type: "keyword", value: "top" },
         offset: { type: "length", unit: "px", value: 4 },
       },
-    }
+    },
   );
 });
 
 test(".partiallyResolve() partially resolves positions", (t) => {
-  const actual = Position.parse()(
-    Lexer.lex("left calc(1em + 1px) top calc(20% + 10%)")
+  const actual = parse(
+    "left calc(1em + 1px) top calc(20% + 10%)",
   )
-    .map(([, position]) => position)
-    .getUnsafe();
-
-  t.deepEqual(
-    Position.partiallyResolve({
+    .partiallyResolve({
       length: Length.resolver(
         Length.of(16, "px"),
         Length.of(0, "px"),
         Length.of(0, "px"),
-        Length.of(0, "px")
+        Length.of(0, "px"),
       ),
-    })(actual).toJSON(),
-    {
-      type: "position",
-      horizontal: {
-        type: "side",
-        side: { type: "keyword", value: "left" },
-        offset: { type: "length", unit: "px", value: 17 },
-      },
-      vertical: {
-        type: "side",
-        side: { type: "keyword", value: "top" },
-        offset: { type: "percentage", value: 0.3 },
-      },
-    }
+    });
+
+  t.deepEqual(actual.toJSON(), {
+    type: "position",
+    horizontal: {
+      type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 17 },
+    },
+    vertical: {
+      type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "percentage", value: 0.3 },
+    },
+  },
   );
 });

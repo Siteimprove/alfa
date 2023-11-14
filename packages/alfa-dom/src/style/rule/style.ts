@@ -11,7 +11,7 @@ export class StyleRule extends Rule {
   public static of(
     selector: string,
     declarations: Iterable<Declaration>,
-    hint = false
+    hint = false,
   ): StyleRule {
     return new StyleRule(selector, Array.from(declarations), hint);
   }
@@ -23,13 +23,13 @@ export class StyleRule extends Rule {
   private constructor(
     selector: string,
     declarations: Array<Declaration>,
-    hint: boolean
+    hint: boolean,
   ) {
     super();
 
     this._selector = selector;
     this._style = Block.of(
-      declarations.filter((declaration) => declaration._attachParent(this))
+      declarations.filter((declaration) => declaration._attachParent(this)),
     );
     this._hint = hint;
   }
@@ -80,7 +80,7 @@ export namespace StyleRule {
    */
   export function fromStyleRule(json: JSON): Trampoline<StyleRule> {
     return Trampoline.done(
-      StyleRule.of(json.selector, json.style.map(Declaration.from))
+      StyleRule.of(json.selector, json.style.map(Declaration.from)),
     );
   }
 }

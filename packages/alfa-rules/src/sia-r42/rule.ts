@@ -30,8 +30,8 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.HTML, Namespace.SVG),
             isIncludedInTheAccessibilityTree(device),
-            hasRole(device, (role) => role.hasRequiredParent())
-          )
+            hasRole(device, (role) => role.hasRequiredParent()),
+          ),
         );
       },
 
@@ -41,12 +41,12 @@ export default Rule.Atomic.of<Page, Element>({
             hasRequiredParent(device)(target),
             () =>
               Outcomes.IsOwnedByContextRole(
-                WithRole.getRoleName(target, device)
+                WithRole.getRoleName(target, device),
               ),
             () =>
               Outcomes.IsNotOwnedByContextRole(
-                WithRole.getRoleName(target, device)
-              )
+                WithRole.getRoleName(target, device),
+              ),
           ),
         };
       },
@@ -62,16 +62,16 @@ export namespace Outcomes {
     Ok.of(
       WithRole.of(
         `The element is owned by an element of its required context role`,
-        role
-      )
+        role,
+      ),
     );
 
   export const IsNotOwnedByContextRole = (role: Role.Name) =>
     Err.of(
       WithRole.of(
         `The element is not owned by an element of its required context role`,
-        role
-      )
+        role,
+      ),
     );
 }
 
@@ -82,19 +82,19 @@ function hasRequiredParent(device: Device): Predicate<Element> {
     return node.role
       .filter((role) => role.hasRequiredParent())
       .every((role) =>
-        node.parent().some(isRequiredParent(role.requiredParent))
+        node.parent().some(isRequiredParent(role.requiredParent)),
       );
   };
 }
 
 function isRequiredParent(
-  requiredParent: ReadonlyArray<ReadonlyArray<Role.Name>>
+  requiredParent: ReadonlyArray<ReadonlyArray<Role.Name>>,
 ): Predicate<aria.Node> {
   return (node) =>
     requiredParent.some((roles) => isRequiredParent(roles)(node));
 
   function isRequiredParent(
-    requiredParent: ReadonlyArray<Role.Name>
+    requiredParent: ReadonlyArray<Role.Name>,
   ): Predicate<aria.Node> {
     return (node) => {
       const [role, ...rest] = requiredParent;

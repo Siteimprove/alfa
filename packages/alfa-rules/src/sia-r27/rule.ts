@@ -31,7 +31,7 @@ export default Rule.Composite.of<Page, Element, Question.Metadata>({
           1: expectation(
             Trilean.some(outcomes, isPassed),
             () => Outcomes.HasTextAlternative,
-            () => Outcomes.HasNoTextAlternative
+            () => Outcomes.HasNoTextAlternative,
           ),
         };
       },
@@ -45,13 +45,13 @@ export default Rule.Composite.of<Page, Element, Question.Metadata>({
 export namespace Outcomes {
   export const HasTextAlternative = Ok.of(
     Diagnostic.of(
-      `The \`<video>\` element has a text alternative for its audio content`
-    )
+      `The \`<video>\` element has a text alternative for its audio content`,
+    ),
   );
 
   export const HasNoTextAlternative = Err.of(
     Diagnostic.of(
-      `The \`<video>\` element has no text alternative for its audio content`
-    )
+      `The \`<video>\` element has no text alternative for its audio content`,
+    ),
   );
 }

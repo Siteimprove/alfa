@@ -31,15 +31,15 @@ export default Rule.Atomic.of<Page, Attribute>({
           hasNamespace(Namespace.HTML),
           hasName("table"),
           isPerceivableForAll(device),
-          hasRole(device, (role) => role.is("table"))
-        )
+          hasRole(device, (role) => role.is("table")),
+        ),
       )
       .reduce((headers, table) => {
         const cells = cellsCache
           .get(table, () =>
             getElementDescendants(table).filter(
-              and(hasNamespace(Namespace.HTML), hasName("td", "th"))
-            )
+              and(hasNamespace(Namespace.HTML), hasName("td", "th")),
+            ),
           )
           .filter(hasAttribute("headers"));
         for (const cell of cells) {
@@ -64,8 +64,8 @@ export default Rule.Atomic.of<Page, Attribute>({
         const cells = cellsCache
           .get(table, () =>
             getElementDescendants(table).filter(
-              and(hasNamespace(Namespace.HTML), hasName("td", "th"))
-            )
+              and(hasNamespace(Namespace.HTML), hasName("td", "th")),
+            ),
           )
           .filter(hasId(equals(...ids)));
 
@@ -75,12 +75,12 @@ export default Rule.Atomic.of<Page, Attribute>({
             // number of identified cells is equal to the number of IDs.
             cells.size === ids.size,
             () => Outcomes.HeadersRefersToCellInTable,
-            () => Outcomes.HeadersDoesNotReferToCellsInTable
+            () => Outcomes.HeadersDoesNotReferToCellsInTable,
           ),
           2: expectation(
             cells.every((cell) => !target.owner.some(equals(cell))),
             () => Outcomes.HeadersDoesNotRefersToSelf,
-            () => Outcomes.HeadersRefersToSelf
+            () => Outcomes.HeadersRefersToSelf,
           ),
         };
       },
@@ -94,23 +94,23 @@ export default Rule.Atomic.of<Page, Attribute>({
 export namespace Outcomes {
   export const HeadersRefersToCellInTable = Ok.of(
     Diagnostic.of(
-      `The \`headers\` attribute refers to cells in the same \`<table>\``
-    )
+      `The \`headers\` attribute refers to cells in the same \`<table>\``,
+    ),
   );
 
   export const HeadersDoesNotReferToCellsInTable = Err.of(
     Diagnostic.of(
-      `The \`headers\` attribute refers to cells not present in the same \`<table>\``
-    )
+      `The \`headers\` attribute refers to cells not present in the same \`<table>\``,
+    ),
   );
 
   export const HeadersDoesNotRefersToSelf = Ok.of(
     Diagnostic.of(
-      `The \`headers\` attribute does not refer to the cell defining it`
-    )
+      `The \`headers\` attribute does not refer to the cell defining it`,
+    ),
   );
 
   export const HeadersRefersToSelf = Err.of(
-    Diagnostic.of(`The \`headers\` attribute refers to the cell defining it`)
+    Diagnostic.of(`The \`headers\` attribute refers to the cell defining it`),
   );
 }

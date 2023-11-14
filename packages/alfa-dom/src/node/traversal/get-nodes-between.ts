@@ -25,7 +25,7 @@ export function getNodesBetween(
   node1: Node,
   node2: Node,
   includeOptions: Options = { includeFirst: false, includeSecond: false },
-  treeOptions: Node.Traversal = Node.fullTree
+  treeOptions: Node.Traversal = Node.fullTree,
 ): Sequence<Node> {
   let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
 
@@ -67,7 +67,7 @@ export function getNodesBetween(
 function getNodesInclusivelyBetween(
   node1: Node,
   node2: Node,
-  treeOptions: Node.Traversal
+  treeOptions: Node.Traversal,
 ): Sequence<Node> {
   const isFrontier = or(equals(node1), equals(node2));
 
@@ -77,7 +77,7 @@ function getNodesInclusivelyBetween(
       context
         .inclusiveDescendants(treeOptions)
         .skipUntil(isFrontier)
-        .skipLastUntil(isFrontier)
+        .skipLastUntil(isFrontier),
     )
     .getOrElse(Sequence.empty);
 }

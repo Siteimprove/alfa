@@ -6,6 +6,7 @@ import { Parser as CSSParser, Token } from "../../../../syntax";
 
 import { Color } from "../../../color";
 import { LengthPercentage } from "../../../numeric";
+import { PartiallyResolvable, Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 const { either, pair, map, left, right } = Parser;
@@ -14,12 +15,17 @@ const { either, pair, map, left, right } = Parser;
  * {@link https://drafts.csswg.org/css-images/#color-stop}
  */
 export class Stop<
-  C extends Color = Color,
-  P extends LengthPercentage = LengthPercentage
-> extends Value<"stop", Value.HasCalculation<[C, P]>> {
+    C extends Color = Color,
+    P extends LengthPercentage = LengthPercentage,
+  >
+  extends Value<"stop", Value.HasCalculation<[C, P]>>
+  implements
+    Resolvable<Stop.Canonical, Stop.Resolver>,
+    PartiallyResolvable<Stop.PartiallyResolved, Stop.PartialResolver>
+{
   public static of<C extends Color, P extends LengthPercentage>(
     color: C,
-    position: Option<P> = None
+    position: Option<P> = None,
   ): Stop<C, P> {
     return new Stop(color, position);
   }
@@ -33,7 +39,7 @@ export class Stop<
       (Value.hasCalculation(color) ||
         position
           .map(Value.hasCalculation)
-          .getOr(false)) as Value.HasCalculation<[C, P]>
+          .getOr(false)) as Value.HasCalculation<[C, P]>,
     );
     this._color = color;
     this._position = position;
@@ -43,6 +49,7 @@ export class Stop<
     return this._color;
   }
 
+  /** @public (knip) */
   public get position(): Option<P> {
     return this._position;
   }
@@ -50,7 +57,16 @@ export class Stop<
   public resolve(resolver: Stop.Resolver): Stop.Canonical {
     return new Stop(
       this._color.resolve(),
-      this._position.map(LengthPercentage.resolve(resolver))
+      this._position.map(LengthPercentage.resolve(resolver)),
+    );
+  }
+
+  public partiallyResolve(
+    resolver: Stop.PartialResolver,
+  ): Stop.PartiallyResolved {
+    return new Stop(
+      this._color.resolve(),
+      this._position.map(LengthPercentage.partiallyResolve(resolver)),
     );
   }
 
@@ -98,16 +114,7 @@ export namespace Stop {
 
   export type PartialResolver = LengthPercentage.PartialResolver;
 
-  export function partiallyResolve(
-    resolver: PartialResolver
-  ): (value: Stop) => PartiallyResolved {
-    return (value) =>
-      Stop.of(
-        value.color.resolve(),
-        value.position.map(LengthPercentage.partiallyResolve(resolver))
-      );
-  }
-
+  /** @public (knip) */
   export function isStop(value: unknown): value is Stop {
     return value instanceof Stop;
   }
@@ -121,15 +128,15 @@ export namespace Stop {
       (result) => {
         const [color, position] = result;
         return Stop.of(color, Option.of(position));
-      }
+      },
     ),
     map(
       pair(LengthPercentage.parse, right(Token.parseWhitespace, Color.parse)),
       (result) => {
         const [position, color] = result;
         return Stop.of(color, Option.of(position));
-      }
+      },
     ),
-    map(Color.parse, (color) => Stop.of(color))
+    map(Color.parse, (color) => Stop.of(color)),
   );
 }

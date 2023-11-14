@@ -21,9 +21,11 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: N,
-    value: string
+    value: string,
+    externalId?: string,
+    extraData?: any,
   ): Attribute<N> {
-    return new Attribute(namespace, prefix, name, value);
+    return new Attribute(namespace, prefix, name, value, externalId, extraData);
   }
 
   private readonly _namespace: Option<Namespace>;
@@ -36,9 +38,11 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: N,
-    value: string
+    value: string,
+    externalId?: string,
+    extraData?: any,
   ) {
-    super([], "attribute");
+    super([], "attribute", externalId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -61,7 +65,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
   public get qualifiedName(): string {
     return this._prefix.reduce<string>(
       (name, prefix) => `${prefix}:${name}`,
-      this._name
+      this._name,
     );
   }
 
@@ -110,7 +114,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
    */
   public tokens(separator: string | RegExp = /\s+/): Sequence<string> {
     return Sequence.from(
-      this._value.trim().split(separator).filter(not(isEmpty))
+      this._value.trim().split(separator).filter(not(isEmpty)),
     );
   }
 
@@ -197,15 +201,15 @@ export namespace Attribute {
    * @internal
    */
   export function fromAttribute<N extends string = string>(
-    attribute: JSON<N>
+    attribute: JSON<N>,
   ): Trampoline<Attribute<N>> {
     return Trampoline.done(
       Attribute.of(
         Option.from(attribute.namespace as Namespace | null),
         Option.from(attribute.prefix),
         attribute.name,
-        attribute.value
-      )
+        attribute.value,
+      ),
     );
   }
 
@@ -217,7 +221,7 @@ export namespace Attribute {
    */
   export function foldCase<N extends string = string>(
     name: N,
-    owner: Option<Element>
+    owner: Option<Element>,
   ): N | Lowercase<N> {
     return owner.some((owner) => owner.namespace.some(equals(Namespace.HTML)))
       ? (name.toLowerCase() as Lowercase<N>)

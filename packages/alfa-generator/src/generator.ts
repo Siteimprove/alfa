@@ -20,7 +20,7 @@ export type Generator<T, R = void, N = undefined> = globalThis.Generator<
 export namespace Generator {
   export function* map<T, U, R, N>(
     generator: Generator<T, R, N>,
-    mapper: Mapper<T, U>
+    mapper: Mapper<T, U>,
   ): Generator<U, R, N> {
     let next = generator.next();
 
@@ -34,7 +34,7 @@ export namespace Generator {
 
   export function* flatMap<T, U, R, N>(
     generator: Generator<T, R, N>,
-    mapper: Mapper<T, Generator<U, R, N>>
+    mapper: Mapper<T, Generator<U, R, N>>,
   ): Generator<U, R, N> {
     let next = generator.next();
 
@@ -49,7 +49,7 @@ export namespace Generator {
   export function reduce<T, U, R, N>(
     generator: Generator<T, R, N>,
     reducer: Reducer<T, U>,
-    accumulator: U
+    accumulator: U,
   ): U {
     let next = generator.next();
 

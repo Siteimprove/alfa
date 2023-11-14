@@ -18,7 +18,7 @@ import { Sequence } from '@siteimprove/alfa-sequence';
 export abstract class Node<F extends Flags.allFlags, T extends string = string, S extends unknown = unknown> implements Iterable<Node<F>>, Equatable, Hashable, json.Serializable<Node.JSON<T>, S> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Node<F>>;
-    protected constructor(children: Array<Node<F>>, type: T);
+    protected constructor(children: Array<Node<F>>, type: T, externalId?: string, extraData?: any);
     // (undocumented)
     ancestors(options?: Flags<F>): Sequence<Node<F>>;
     // @internal (undocumented)
@@ -37,6 +37,10 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string, 
     equals(value: Node<F>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    // (undocumented)
+    get externalId(): string | undefined;
+    // (undocumented)
+    get extraData(): any;
     // (undocumented)
     first(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
@@ -105,6 +109,8 @@ export namespace Node {
         [key: string]: json.JSON | undefined;
         // (undocumented)
         children?: Array<JSON>;
+        // (undocumented)
+        externalId?: string;
         // (undocumented)
         type: T;
     }

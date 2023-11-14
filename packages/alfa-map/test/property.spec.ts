@@ -97,12 +97,12 @@ test(`#add and #delete behave when used in bulk`, (t) => {
     t.deepEqual(
       map.has(key),
       false,
-      `Pre-add map.has() fails with seed ${seed}`
+      `Pre-add map.has() fails with seed ${seed}`,
     );
     t.deepEqual(
       Iterable.includes(map.keys(), key),
       false,
-      `Pre-add includes fails with seed ${seed}`
+      `Pre-add includes fails with seed ${seed}`,
     );
 
     map = map.set(key, true);
@@ -112,12 +112,12 @@ test(`#add and #delete behave when used in bulk`, (t) => {
     t.deepEqual(
       map.has(key),
       true,
-      `Post-add map.has() fails with seed ${seed}`
+      `Post-add map.has() fails with seed ${seed}`,
     );
     t.deepEqual(
       Iterable.includes(map.keys(), key),
       true,
-      `Post-add includes fails with seed ${seed}`
+      `Post-add includes fails with seed ${seed}`,
     );
   }
 
@@ -131,12 +131,12 @@ test(`#add and #delete behave when used in bulk`, (t) => {
     t.deepEqual(
       map.has(key),
       true,
-      `Pre-delete map.has() fails with seed ${seed}`
+      `Pre-delete map.has() fails with seed ${seed}`,
     );
     t.deepEqual(
       Iterable.includes(map.keys(), key),
       true,
-      `Pre-delete includes fails with seed ${seed}`
+      `Pre-delete includes fails with seed ${seed}`,
     );
 
     map = map.delete(key);
@@ -144,17 +144,17 @@ test(`#add and #delete behave when used in bulk`, (t) => {
     t.deepEqual(
       map.size,
       i - 1,
-      `Post-delete map.size() fails with seed ${seed}`
+      `Post-delete map.size() fails with seed ${seed}`,
     );
     t.deepEqual(
       map.has(key),
       false,
-      `Post-delete map.has() fails with seed ${seed}`
+      `Post-delete map.has() fails with seed ${seed}`,
     );
     t.deepEqual(
       Iterable.includes(map.keys(), key),
       false,
-      `Post-delete includes fails with seed ${seed}`
+      `Post-delete includes fails with seed ${seed}`,
     );
   }
 });

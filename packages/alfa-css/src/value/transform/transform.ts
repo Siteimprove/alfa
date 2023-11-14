@@ -55,11 +55,11 @@ export namespace Transform {
   export type PartialResolver = Translate.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Transform) => PartiallyResolved {
     return (value) =>
       Translate.isTranslate(value)
-        ? Translate.partiallyResolve(resolver)(value)
+        ? value.partiallyResolve(resolver)
         : value.resolve(resolver);
   }
 
@@ -75,7 +75,7 @@ export namespace Transform {
     x: Number,
     y: Number,
     z: Number,
-    angle: Angle
+    angle: Angle,
   ): Rotate {
     return Rotate.of(x, y, z, angle);
   }
@@ -91,7 +91,7 @@ export namespace Transform {
   export function translate<
     X extends LengthPercentage,
     Y extends LengthPercentage,
-    Z extends Length
+    Z extends Length,
   >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
     return Translate.of(x, y, z);
   }
@@ -107,7 +107,7 @@ export namespace Transform {
     Rotate.parse,
     Scale.parse,
     Skew.parse,
-    Translate.parse
+    Translate.parse,
   );
 
   /**

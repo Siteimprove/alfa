@@ -13,11 +13,11 @@ const { and } = Refinement;
  */
 export const withDocumentElement = (
   document: Document,
-  predicate: Predicate<Element> = () => true
+  predicate: Predicate<Element> = () => true,
 ) =>
   fold(
     Node.hasChild(and(Element.isDocumentElement, predicate)),
     () => Option.of(document),
     () => None,
-    document
+    document,
   );

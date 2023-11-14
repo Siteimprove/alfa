@@ -12,7 +12,7 @@ for (const box of ["block", "inline"] as const) {
 
       h.document(
         [element],
-        [h.sheet([h.rule.style("div", [h.declaration(property, "dotted")])])]
+        [h.sheet([h.rule.style("div", [h.declaration(property, "dotted")])])],
       );
 
       t.deepEqual(cascaded(element, property), {

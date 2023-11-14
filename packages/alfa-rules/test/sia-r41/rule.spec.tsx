@@ -14,20 +14,30 @@ import { failed, inapplicable, passed } from "../common/outcome";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource`, async (t) => {
-  const target = [<a href="foo.html">Foo</a>, <a href="foo.html">Foo</a>];
+  const accessibleName = "Foo";
+
+  const target = [
+    <a href="foo.html">{accessibleName}</a>,
+    <a href="foo.html">{accessibleName}</a>,
+  ];
 
   const document = h.document(target);
 
   t.deepEqual(await evaluate(R41, { document }), [
     passed(R41, Group.of(target), {
-      1: Outcomes.ResolveSameResource,
+      1: Outcomes.ResolveSameResource(accessibleName),
     }),
   ]);
 });
 
 test(`evaluate() fails two links that have the same name, but reference
       different resources`, async (t) => {
-  const target = [<a href="foo.html">Foo</a>, <a href="bar.html">Foo</a>];
+  const accessibleName = "Foo";
+
+  const target = [
+    <a href="foo.html">{accessibleName}</a>,
+    <a href="bar.html">{accessibleName}</a>,
+  ];
 
   const document = h.document(target);
 
@@ -37,24 +47,29 @@ test(`evaluate() fails two links that have the same name, but reference
       { document },
       oracle({
         "reference-equivalent-resources": false,
-      })
+      }),
     ),
     [
       failed(
         R41,
         Group.of(target),
         {
-          1: Outcomes.ResolveDifferentResource,
+          1: Outcomes.ResolveDifferentResource(accessibleName),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
 test(`evaluate() passes two links that have the same name and reference
       equivalent resources`, async (t) => {
-  const target = [<a href="foo.html">Foo</a>, <a href="bar.html">Foo</a>];
+  const accessibleName = "Foo";
+
+  const target = [
+    <a href="foo.html">{accessibleName}</a>,
+    <a href="bar.html">{accessibleName}</a>,
+  ];
 
   const document = h.document(target);
 
@@ -64,18 +79,18 @@ test(`evaluate() passes two links that have the same name and reference
       { document },
       oracle({
         "reference-equivalent-resources": true,
-      })
+      }),
     ),
     [
       passed(
         R41,
         Group.of(target),
         {
-          1: Outcomes.ResolveEquivalentResource,
+          1: Outcomes.ResolveEquivalentResource(accessibleName),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -89,13 +104,15 @@ test(`evaluate() is inapplicable to two links that have different names`, async 
 });
 
 test("evaluate() correctly resolves relative URLs", async (t) => {
+  const accessibleName = "Foo";
+
   const target = [
-    <a href="https://somewhere.com/path/to/foo.html">Foo</a>,
-    <a href="foo.html">Foo</a>,
-    <a href="./foo.html">Foo</a>,
-    <a href="/path/to/foo.html">Foo</a>,
-    <a href="down/../foo.html">Foo</a>,
-    <a href="../to/foo.html">Foo</a>,
+    <a href="https://somewhere.com/path/to/foo.html">{accessibleName}</a>,
+    <a href="foo.html">{accessibleName}</a>,
+    <a href="./foo.html">{accessibleName}</a>,
+    <a href="/path/to/foo.html">{accessibleName}</a>,
+    <a href="down/../foo.html">{accessibleName}</a>,
+    <a href="../to/foo.html">{accessibleName}</a>,
   ];
 
   const document = h.document(target);
@@ -105,27 +122,28 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
       document,
       response: Response.of(
         URL.parse("https://somewhere.com/path/to/bar.html").getUnsafe(),
-        200
+        200,
       ),
     }),
     [
       passed(R41, Group.of(target), {
-        1: Outcomes.ResolveSameResource,
+        1: Outcomes.ResolveSameResource(accessibleName),
       }),
-    ]
+    ],
   );
 });
 
 test(`evaluate() gather links from the full page`, async (t) => {
-  const link1 = <a href="foo.html">Foo</a>;
-  const link2 = <a href="foo.html">Foo</a>;
+  const accessibleName = "Foo";
+  const link1 = <a href="foo.html">{accessibleName}</a>;
+  const link2 = <a href="foo.html">{accessibleName}</a>;
   const target = [link1, link2];
 
   const document = h.document([link1, <iframe>{h.document([link2])}</iframe>]);
 
   t.deepEqual(await evaluate(R41, { document }), [
     passed(R41, Group.of(target), {
-      1: Outcomes.ResolveSameResource,
+      1: Outcomes.ResolveSameResource(accessibleName),
     }),
   ]);
 });

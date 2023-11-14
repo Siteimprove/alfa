@@ -17,7 +17,7 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
  */
 export function isRendered(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Node> {
   return function isRendered(node): boolean {
     return cache

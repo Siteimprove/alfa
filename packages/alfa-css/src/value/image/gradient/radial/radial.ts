@@ -12,6 +12,7 @@ import {
 
 import { Keyword } from "../../../keyword";
 import { Position } from "../../../position";
+import { PartiallyResolvable, Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 import { Item } from "../item";
@@ -27,19 +28,24 @@ const { map, either, pair, option, left, right, delimited } = Parser;
  * @public
  */
 export class Radial<
-  I extends Item = Item,
-  S extends Shape = Shape,
-  P extends Position = Position
-> extends Value<"gradient", Value.HasCalculation<[I, S, P]>> {
+    I extends Item = Item,
+    S extends Shape = Shape,
+    P extends Position = Position,
+  >
+  extends Value<"gradient", Value.HasCalculation<[I, S, P]>>
+  implements
+    Resolvable<Radial.Canonical, Radial.Resolver>,
+    PartiallyResolvable<Radial.PartiallyResolved, Radial.PartialResolver>
+{
   public static of<
     I extends Item = Item,
     S extends Shape = Shape,
-    P extends Position = Position
+    P extends Position = Position,
   >(
     shape: S,
     position: P,
     items: Iterable<I>,
-    repeats: boolean
+    repeats: boolean,
   ): Radial<I, S, P> {
     return new Radial(shape, position, Array.from(items), repeats);
   }
@@ -52,20 +58,20 @@ export class Radial<
   private constructor(
     shape: S,
     position: P,
-    items: Iterable<I>,
-    repeats: boolean
+    items: Array<I>,
+    repeats: boolean,
   ) {
     super(
       "gradient",
       Value.hasCalculation(
         shape,
         position,
-        ...items
-      ) as unknown as Value.HasCalculation<[I, S, P]>
+        ...items,
+      ) as unknown as Value.HasCalculation<[I, S, P]>,
     );
     this._shape = shape;
     this._position = position;
-    this._items = [...items];
+    this._items = items;
     this._repeats = repeats;
   }
 
@@ -94,7 +100,20 @@ export class Radial<
       this._shape.resolve(resolver),
       this._position.resolve(resolver),
       this._items.map(Item.resolve(resolver)),
-      this._repeats
+      this._repeats,
+    );
+  }
+
+  public partiallyResolve(
+    resolver: Radial.PartialResolver,
+  ): Radial.PartiallyResolved {
+    return new Radial(
+      Shape.partiallyResolve(resolver)(this._shape),
+      this._position.partiallyResolve(resolver),
+      Array.from(
+        Iterable.map(this._items, (item) => item.partiallyResolve(resolver)),
+      ),
+      this._repeats,
     );
   }
 
@@ -136,7 +155,7 @@ export class Radial<
 
   public toString(): string {
     const args = [`${this._shape} at ${this._position}`, ...this._items].join(
-      ", "
+      ", ",
     );
 
     return `${this._repeats ? "repeating-" : ""}radial-gradient(${args})`;
@@ -153,6 +172,12 @@ export namespace Radial {
     Position.Canonical
   >;
 
+  export type PartiallyResolved = Radial<
+    Item.PartiallyResolved,
+    Shape.PartiallyResolved,
+    Position.PartiallyResolved
+  >;
+
   export interface JSON extends Value.JSON<"gradient"> {
     kind: "radial";
     shape: Shape.JSON;
@@ -163,36 +188,18 @@ export namespace Radial {
 
   export type Resolver = Item.Resolver & Shape.Resolver & Position.Resolver;
 
-  export type PartiallyResolved = Radial<
-    Item.PartiallyResolved,
-    Shape.PartiallyResolved,
-    Position.PartiallyResolved
-  >;
-
   export type PartialResolver = Item.PartialResolver &
     Shape.PartialResolver &
     Position.PartialResolver;
 
-  export function partiallyResolve(
-    resolver: PartialResolver
-  ): (value: Radial) => PartiallyResolved {
-    return (value) =>
-      Radial.of(
-        Shape.partiallyResolve(resolver)(value.shape),
-        Position.partiallyResolve(resolver)(value.position),
-        Iterable.map(value.items, Item.partiallyResolve(resolver)),
-        value.repeats
-      );
-  }
-
-  /** @public */
+  /** @public (knip) */
   export function isRadial(value: unknown): value is Radial {
     return value instanceof Radial;
   }
 
   const parsePosition = right(
     delimited(option(Token.parseWhitespace), Keyword.parse("at")),
-    Position.parse(false /* legacySyntax */)
+    Position.parse(false /* legacySyntax */),
   );
 
   /**
@@ -209,18 +216,18 @@ export namespace Radial {
             either(
               pair(
                 map(Shape.parse, (shape) => Option.of(shape)),
-                option(delimited(option(Token.parseWhitespace), parsePosition))
+                option(delimited(option(Token.parseWhitespace), parsePosition)),
               ),
               map(
                 parsePosition,
-                (position) => [None, Option.of(position)] as const
-              )
+                (position) => [None, Option.of(position)] as const,
+              ),
             ),
-            Comma.parse
-          )
+            Comma.parse,
+          ),
         ),
-        Item.parseList
-      )
+        Item.parseList,
+      ),
     ),
     (result) => {
       const [fn, [shapeAndPosition, items]] = result;
@@ -232,10 +239,10 @@ export namespace Radial {
       const position = shapeAndPosition
         .flatMap(([, position]) => position)
         .getOrElse(() =>
-          Position.of(Keyword.of("center"), Keyword.of("center"))
+          Position.of(Keyword.of("center"), Keyword.of("center")),
         );
 
       return Radial.of(shape, position, items, fn.name.startsWith("repeating"));
-    }
+    },
   );
 }

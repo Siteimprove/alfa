@@ -11,7 +11,7 @@ import { Style } from "../../style";
  */
 export function hasTextDecoration(
   device: Device,
-  context?: Context
+  context?: Context,
 ): Predicate<Element> {
   return (element) => {
     const style = Style.from(element, device, context);

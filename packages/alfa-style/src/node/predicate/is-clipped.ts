@@ -27,7 +27,7 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
  */
 export function isClipped(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Node> {
   return (node) =>
     cache
@@ -47,19 +47,19 @@ export function isClipped(
                   // Boxes are gathered on an empty context and can only be used
                   // with an empty context.
                   () => context === Context.empty(),
-                  isClippedByMovingAway(device)
+                  isClippedByMovingAway(device),
                 ),
                 // Or it is an element whose positioning parent is clipped
-                hasPositioningParent(device, isClipped(device, context))
-              )
+                hasPositioningParent(device, isClipped(device, context)),
+              ),
             ),
             // Or (it's not an element) and its parent is clipped
             and(not(isElement), (node: Node) =>
-              node.parent(Node.fullTree).some(isClipped(device, context))
-            )
+              node.parent(Node.fullTree).some(isClipped(device, context)),
+            ),
           ),
-          node
-        )
+          node,
+        ),
       );
 }
 
@@ -96,7 +96,7 @@ export function isClipped(
  */
 function isClippedBySize(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Element> {
   return function isClipped(element: Element): boolean {
     // Gathering the required style properties.
@@ -129,7 +129,11 @@ function isClippedBySize(
         return true;
       }
 
-      if (Numeric.isNumeric(dimension) && Numeric.isZero(dimension)) {
+      if (
+        Numeric.isNumeric(dimension) &&
+        !dimension.hasCalculation() &&
+        Numeric.isZero(dimension)
+      ) {
         // "dimension: 0%" or "dimension: 0px", nothing shows nor overflows
         return true;
       }
@@ -165,7 +169,7 @@ function isClippedBySize(
  */
 function isClippedByIndent(
   device: Device,
-  context: Context
+  context: Context,
 ): Predicate<Element> {
   return function isClipped(element: Element): boolean {
     const style = Style.from(element, device, context);
@@ -210,7 +214,7 @@ function isClippedByIndent(
  */
 function isClippedByMasking(
   device: Device,
-  context: Context
+  context: Context,
 ): Predicate<Element> {
   return function isClipped(element: Element): boolean {
     const style = Style.from(element, device, context);
@@ -246,7 +250,7 @@ function isClippedByMovingAway(device: Device): Predicate<Element> {
     return hasBox(
       (elementBox) =>
         hasPositioningParent(device, isClipping(elementBox, device))(element),
-      device
+      device,
     )(element);
   };
 }
@@ -276,26 +280,26 @@ function isClipping(elementBox: Rectangle, device: Device): Predicate<Element> {
         // The element is to the left, and clipped away.
         and(
           hasBox((ancestorBox) => elementBox.right < ancestorBox.left, device),
-          hasComputedStyle("overflow-x", isNotVisible, device)
+          hasComputedStyle("overflow-x", isNotVisible, device),
         ),
         // The element is to the right and cannot be scrolled to.
         and(
           hasBox((ancestorBox) => elementBox.left > ancestorBox.right, device),
-          hasComputedStyle("overflow-x", isNoScroll, device)
+          hasComputedStyle("overflow-x", isNoScroll, device),
         ),
         // The element is above, and clipped away.
         and(
           hasBox((ancestorBox) => elementBox.bottom < ancestorBox.top, device),
-          hasComputedStyle("overflow-y", isNotVisible, device)
+          hasComputedStyle("overflow-y", isNotVisible, device),
         ),
         // The element is below and cannot be scrolled to.
         and(
           hasBox((ancestorBox) => elementBox.top > ancestorBox.bottom, device),
-          hasComputedStyle("overflow-y", isNoScroll, device)
+          hasComputedStyle("overflow-y", isNoScroll, device),
         ),
         // The ancestor doesn't clip, let's search for the next one.
-        hasPositioningParent(device, isClipping)
-      )
+        hasPositioningParent(device, isClipping),
+      ),
     )(ancestor);
   };
 }

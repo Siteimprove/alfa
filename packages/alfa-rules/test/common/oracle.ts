@@ -11,10 +11,10 @@ function wrapper<
   CONTEXT,
   ANSWER,
   T,
-  URI extends keyof Question.Metadata
+  URI extends keyof Question.Metadata,
 >(
   question: act.Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>,
-  answer: ANSWER
+  answer: ANSWER,
 ): Future<Option<ANSWER>> {
   return Future.now(Option.of(answer));
 }
@@ -24,7 +24,7 @@ const dontKnow = Future.now(None);
 export function oracle<I, T extends Hashable, S>(
   answers: Partial<{
     [URI in keyof Question.Metadata]: Question.Metadata[URI][1];
-  }>
+  }>,
 ): act.Oracle<I, T, Question.Metadata, S> {
   return (rule, question) => {
     // Check if we do have an answer for this question.
@@ -53,9 +53,6 @@ export function oracle<I, T extends Hashable, S>(
         return wrapper(question, answers[question.uri]!);
 
       case "string":
-        return wrapper(question, answers[question.uri]!);
-
-      case "string[]":
         return wrapper(question, answers[question.uri]!);
     }
   };

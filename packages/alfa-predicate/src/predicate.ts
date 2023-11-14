@@ -33,7 +33,7 @@ export namespace Predicate {
   }
 
   export function not<T, A extends Array<unknown> = []>(
-    predicate: Predicate<T, A>
+    predicate: Predicate<T, A>,
   ): Predicate<T, A> {
     return (value, ...args) => !predicate(value, ...args);
   }
@@ -91,14 +91,14 @@ export namespace Predicate {
   export function property<
     T,
     K extends keyof T = keyof T,
-    A extends Array<unknown> = []
+    A extends Array<unknown> = [],
   >(property: K, predicate: Predicate<T[K], A>): Predicate<T, A> {
     return (value, ...args) => predicate(value[property], ...args);
   }
 
   export function tee<T, A extends Array<unknown> = []>(
     predicate: Predicate<T, A>,
-    callback: Callback<T, void, [result: boolean, ...args: A]>
+    callback: Callback<T, void, [result: boolean, ...args: A]>,
   ): Predicate<T, A> {
     return (value, ...args) => {
       const result = predicate(value, ...args);

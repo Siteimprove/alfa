@@ -27,9 +27,9 @@ export class Branched<T, B = never>
       List.of(
         Value.of(
           value,
-          branches.length === 0 ? None : Some.of(List.from(branches))
-        )
-      )
+          branches.length === 0 ? None : Some.of(List.from(branches)),
+        ),
+      ),
     );
   }
 
@@ -51,8 +51,8 @@ export class Branched<T, B = never>
     this._values.forEach(({ value, branches }) =>
       callback(
         value,
-        branches.getOrElse(() => List.empty())
-      )
+        branches.getOrElse(() => List.empty()),
+      ),
     );
   }
 
@@ -64,12 +64,12 @@ export class Branched<T, B = never>
             values,
             mapper(
               value,
-              branches.getOrElse(() => List.empty())
+              branches.getOrElse(() => List.empty()),
             ),
-            branches
+            branches,
           ),
-        List.empty()
-      )
+        List.empty(),
+      ),
     );
   }
 
@@ -78,14 +78,14 @@ export class Branched<T, B = never>
   }
 
   public flatMap<U>(
-    mapper: Mapper<T, Branched<U, B>, [Iterable<B>]>
+    mapper: Mapper<T, Branched<U, B>, [Iterable<B>]>,
   ): Branched<U, B> {
     return new Branched(
       this._values.reduce(
         (values, { value, branches: scope }) =>
           mapper(
             value,
-            scope.getOrElse(() => List.empty())
+            scope.getOrElse(() => List.empty()),
           )._values.reduce((values, { value, branches }) => {
             if (scope.isNone() && branches.isSome()) {
               branches = unused(branches, this._values);
@@ -95,8 +95,8 @@ export class Branched<T, B = never>
 
             return merge(values, value, branches);
           }, values),
-        List.empty()
-      )
+        List.empty(),
+      ),
     );
   }
 
@@ -110,14 +110,14 @@ export class Branched<T, B = never>
         reducer(
           accumulator,
           value.value,
-          value.branches.getOrElse(() => List.empty())
+          value.branches.getOrElse(() => List.empty()),
         ),
-      accumulator
+      accumulator,
     );
   }
 
   public filter<U extends T>(
-    refinement: Refinement<T, U, [Iterable<B>]>
+    refinement: Refinement<T, U, [Iterable<B>]>,
   ): Branched<U, B>;
 
   public filter(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
@@ -127,14 +127,14 @@ export class Branched<T, B = never>
       this._values.filter(({ value, branches }) =>
         predicate(
           value,
-          branches.getOrElse(() => List.empty())
-        )
-      )
+          branches.getOrElse(() => List.empty()),
+        ),
+      ),
     );
   }
 
   public reject<U extends T>(
-    refinement: Refinement<T, U, [Iterable<B>]>
+    refinement: Refinement<T, U, [Iterable<B>]>,
   ): Branched<Exclude<T, U>, B>;
 
   public reject(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
@@ -144,7 +144,7 @@ export class Branched<T, B = never>
   }
 
   public find<U extends T>(
-    refinement: Refinement<T, U, [Iterable<B>]>
+    refinement: Refinement<T, U, [Iterable<B>]>,
   ): Option<U>;
 
   public find(predicate: Predicate<T, [Iterable<B>]>): Option<T>;
@@ -154,43 +154,43 @@ export class Branched<T, B = never>
       .find(({ value, branches }) =>
         predicate(
           value,
-          branches.getOrElse(() => List.empty())
-        )
+          branches.getOrElse(() => List.empty()),
+        ),
       )
       .map(({ value }) => value);
   }
 
   public includes(value: T): boolean {
     return this._values.some(({ value: found }) =>
-      Equatable.equals(value, found)
+      Equatable.equals(value, found),
     );
   }
 
   public collect<U>(
-    mapper: Mapper<T, Option<U>, [Iterable<B>]>
+    mapper: Mapper<T, Option<U>, [Iterable<B>]>,
   ): Branched<U, B> {
     return new Branched(
       this._values.reduce(
         (values, { value, branches }) =>
           mapper(
             value,
-            branches.getOrElse(() => List.empty())
+            branches.getOrElse(() => List.empty()),
           )
             .map((value) => merge(values, value, branches))
             .getOr(values),
-        List.empty()
-      )
+        List.empty(),
+      ),
     );
   }
 
   public collectFirst<U>(
-    mapper: Mapper<T, Option<U>, [Iterable<B>]>
+    mapper: Mapper<T, Option<U>, [Iterable<B>]>,
   ): Option<U> {
     return this._values.collectFirst(({ value, branches }) =>
       mapper(
         value,
-        branches.getOrElse(() => List.empty())
-      )
+        branches.getOrElse(() => List.empty()),
+      ),
     );
   }
 
@@ -199,7 +199,7 @@ export class Branched<T, B = never>
       if (
         predicate(
           value.value,
-          value.branches.getOrElse(() => List.empty())
+          value.branches.getOrElse(() => List.empty()),
         )
       ) {
         return true;
@@ -218,7 +218,7 @@ export class Branched<T, B = never>
       if (
         !predicate(
           value.value,
-          value.branches.getOrElse(() => List.empty())
+          value.branches.getOrElse(() => List.empty()),
         )
       ) {
         return false;
@@ -232,7 +232,7 @@ export class Branched<T, B = never>
     return this.reduce(
       (count, value, branches) =>
         predicate(value, branches) ? count + 1 : count,
-      0
+      0,
     );
   }
 
@@ -258,8 +258,8 @@ export class Branched<T, B = never>
       merge(
         this._values,
         value,
-        branches.length === 0 ? None : Some.of(List.from(branches))
-      )
+        branches.length === 0 ? None : Some.of(List.from(branches)),
+      ),
     );
   }
 
@@ -309,13 +309,13 @@ export namespace Branched {
   >;
 
   export function isBranched<T, B = never>(
-    value: unknown
+    value: unknown,
   ): value is Branched<T, B> {
     return value instanceof Branched;
   }
 
   export function from<T, B = never>(
-    values: Iterable<readonly [T, Iterable<B>]>
+    values: Iterable<readonly [T, Iterable<B>]>,
   ): Branched<T, B> {
     if (isBranched<T, B>(values)) {
       return values;
@@ -325,26 +325,26 @@ export namespace Branched {
 
     return rest.reduce(
       (result, [value, branches]) => result.branch(value, ...branches),
-      Branched.of(value, ...branches)
+      Branched.of(value, ...branches),
     );
   }
 
   export function traverse<T, U, B>(
     values: Iterable<T>,
-    mapper: Mapper<T, Branched<U, B>, [index: number]>
+    mapper: Mapper<T, Branched<U, B>, [index: number]>,
   ): Branched<Iterable<U>, B> {
     return Iterable.reduce(
       values,
       (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value, i).map((value) => values.append(value))
+          mapper(value, i).map((value) => values.append(value)),
         ),
-      Branched.of(List.empty())
+      Branched.of(List.empty()),
     );
   }
 
   export function sequence<T, B>(
-    values: Iterable<Branched<T, B>>
+    values: Iterable<Branched<T, B>>,
   ): Branched<Iterable<T>, B> {
     return traverse(values, (value) => value);
   }
@@ -353,7 +353,7 @@ export namespace Branched {
 class Value<T, B> implements Equatable, Hashable {
   public static of<T, B>(
     value: T,
-    branches: Option<List<B>> = None
+    branches: Option<List<B>> = None,
   ): Value<T, B> {
     return new Value(value, branches);
   }
@@ -390,7 +390,7 @@ class Value<T, B> implements Equatable, Hashable {
 function merge<T, B>(
   values: List<Value<T, B>>,
   value: T,
-  branches: Option<List<B>>
+  branches: Option<List<B>>,
 ): List<Value<T, B>> {
   if (values.size === 0) {
     return List.of(Value.of(value, branches));
@@ -400,8 +400,8 @@ function merge<T, B>(
     .find((existing) => Equatable.equals(existing.value, value))
     .map((existing) =>
       existing.branches.flatMap((left) =>
-        branches.map((right) => left.concat(right))
-      )
+        branches.map((right) => left.concat(right)),
+      ),
     )
     .getOr(branches);
 
@@ -411,7 +411,7 @@ function merge<T, B>(
 function deduplicate<T, B>(
   values: List<Value<T, B>>,
   value: T,
-  branches: Option<List<B>>
+  branches: Option<List<B>>,
 ): List<Value<T, B>> {
   return values.reduce((values, existing) => {
     if (Equatable.equals(existing.value, value)) {
@@ -425,7 +425,7 @@ function deduplicate<T, B>(
     return existing.branches.reduce((values, existingBranches) => {
       const deduplicated = branches.reduce(
         (existing, branches) => existing.subtract(branches),
-        existingBranches
+        existingBranches,
       );
 
       if (deduplicated.size === 0) {
@@ -439,24 +439,24 @@ function deduplicate<T, B>(
 
 function narrow<T, B>(
   branches: Option<List<B>>,
-  scope: Option<List<B>>
+  scope: Option<List<B>>,
 ): Option<List<B>> {
   return scope.map((scope) =>
-    branches.reduce((scope, branches) => scope.intersect(branches), scope)
+    branches.reduce((scope, branches) => scope.intersect(branches), scope),
   );
 }
 
 function unused<T, B>(
   branches: Option<List<B>>,
-  values: List<Value<T, B>>
+  values: List<Value<T, B>>,
 ): Option<List<B>> {
   return values.reduce(
     (branches, value) =>
       value.branches
         .flatMap((existing) =>
-          branches.map((branches) => branches.subtract(existing))
+          branches.map((branches) => branches.subtract(existing)),
         )
         .or(branches),
-    branches
+    branches,
   );
 }

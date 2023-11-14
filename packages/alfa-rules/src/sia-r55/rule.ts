@@ -38,8 +38,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               and(
                 hasNamespace(equals(Namespace.HTML)),
                 isIncludedInTheAccessibilityTree(device),
-                hasRole(device, (role) => role.is("landmark"))
-              )
+                hasRole(device, (role) => role.is("landmark")),
+              ),
             )
             // circumventing https://github.com/Siteimprove/alfa/issues/298
             .reject(hasIncorrectRoleWithoutName(device))
@@ -47,8 +47,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             // names are less frequent than duplicated roles.
             .groupBy((landmark) =>
               Node.from(landmark, device).name.map((name) =>
-                normalize(name.value)
-              )
+                normalize(name.value),
+              ),
             )
             .filter((landmarks) => landmarks.size > 1)
             // Next, we group by role.
@@ -56,8 +56,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               sameName
                 // We have filtered by having a role, and can safely get it.
                 .groupBy((landmark) =>
-                  Node.from(landmark, device).role.getUnsafe()
-                )
+                  Node.from(landmark, device).role.getUnsafe(),
+                ),
             )
             .filter((elements) => elements.size > 1)
             .map(Group.of)
@@ -80,9 +80,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             diagnostic: WithRoleAndName.of(
               `Do these ${role} landmarks have the same or equivalent content?`,
               role,
-              name
+              name,
             ),
-          }
+          },
         );
 
         return {
@@ -90,8 +90,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             expectation(
               same,
               () => Outcomes.SameResource(role, name),
-              () => Outcomes.DifferentResources(role, name)
-            )
+              () => Outcomes.DifferentResources(role, name),
+            ),
           ),
         };
       },
@@ -108,8 +108,8 @@ export namespace Outcomes {
       WithRoleAndName.of(
         `No two \`${role}\` have the same name and different content.`,
         role,
-        name
-      )
+        name,
+      ),
     );
 
   export const DifferentResources = (role: Role.Name, name: string) =>
@@ -117,8 +117,8 @@ export namespace Outcomes {
       WithRoleAndName.of(
         `Some \`${role}\` have the same name and different content.`,
         role,
-        name
-      )
+        name,
+      ),
     );
 }
 
@@ -133,13 +133,13 @@ export class WithRoleAndName extends WithRole {
   public static of(
     message: string,
     role: Role.Name,
-    name: string
+    name: string,
   ): WithRoleAndName;
 
   public static of(
     message: string,
     role?: Role.Name,
-    name?: string
+    name?: string,
   ): Diagnostic {
     return role === undefined
       ? new Diagnostic(message)
@@ -189,7 +189,7 @@ export namespace WithRoleAndName {
   }
 
   export function isWithRoleAndName(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is WithRoleAndName;
 
   export function isWithRoleAndName(value: unknown): value is WithRoleAndName;

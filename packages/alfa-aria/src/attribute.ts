@@ -13,10 +13,11 @@ import { Roles } from "./role/data";
  * @public
  */
 export class Attribute<N extends Attribute.Name = Attribute.Name>
-  implements Equatable, Serializable {
+  implements Equatable, Serializable
+{
   public static of<N extends Attribute.Name>(
     name: N,
-    value: string
+    value: string,
   ): Attribute<N> {
     return new Attribute(name, value);
   }

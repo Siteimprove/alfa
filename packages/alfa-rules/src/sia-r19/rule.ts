@@ -37,9 +37,9 @@ export default Rule.Atomic.of<Page, Attribute>({
             Sequence.from(element.attributes).filter(
               and(
                 property("name", aria.Attribute.isName),
-                property("value", not(isEmpty))
-              )
-            )
+                property("value", not(isEmpty)),
+              ),
+            ),
           );
       },
 
@@ -57,7 +57,7 @@ export default Rule.Atomic.of<Page, Attribute>({
             isValid(attribute) &&
               isAttributeOptionalOrValid(attribute, owner, device),
             () => Outcomes.HasValidValue,
-            () => Outcomes.HasNoValidValue
+            () => Outcomes.HasNoValidValue,
           ),
         };
       },
@@ -70,11 +70,11 @@ export default Rule.Atomic.of<Page, Attribute>({
  */
 export namespace Outcomes {
   export const HasValidValue = Ok.of(
-    Diagnostic.of(`The attribute has a valid value`)
+    Diagnostic.of(`The attribute has a valid value`),
   );
 
   export const HasNoValidValue = Err.of(
-    Diagnostic.of(`The attribute does not have a valid value`)
+    Diagnostic.of(`The attribute does not have a valid value`),
   );
 }
 
@@ -129,7 +129,7 @@ function treeHasId(id: string, node: Node): boolean {
 function isAttributeOptionalOrValid(
   attribute: aria.Attribute,
   owner: Element,
-  device: Device
+  device: Device,
 ): boolean {
   const node = aria.Node.from(owner, device);
   for (const role of node.role) {

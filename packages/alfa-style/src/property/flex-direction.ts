@@ -9,5 +9,5 @@ export default Longhand.fromKeywords(
   "row",
   "row-reverse",
   "column",
-  "column-reverse"
+  "column-reverse",
 );

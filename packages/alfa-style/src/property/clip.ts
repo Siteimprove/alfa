@@ -24,8 +24,8 @@ type Computed = Specified;
 const parse = either(
   Keyword.parse("auto"),
   map(Rectangle.parse, (rectangle) =>
-    Shape.of(rectangle, Keyword.of("border-box"))
-  )
+    Shape.of(rectangle, Keyword.of("border-box")),
+  ),
 );
 
 /**
@@ -48,5 +48,5 @@ export default Longhand.of<Specified, Computed>(
       position.equals(Keyword.of("fixed"))
       ? value
       : Value.of(Keyword.of("auto"));
-  }
+  },
 );

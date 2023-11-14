@@ -15,7 +15,7 @@ const { map, either, pair, option, right } = Parser;
 export class Corner extends Value<"corner", false> {
   public static of(
     vertical: Position.Vertical,
-    horizontal: Position.Horizontal
+    horizontal: Position.Horizontal,
   ): Corner {
     return new Corner(vertical, horizontal);
   }
@@ -25,19 +25,19 @@ export class Corner extends Value<"corner", false> {
 
   private constructor(
     vertical: Position.Vertical,
-    horizontal: Position.Horizontal
+    horizontal: Position.Horizontal,
   ) {
     super("corner", false);
     this._vertical = vertical;
     this._horizontal = horizontal;
   }
 
-  /** @public */
+  /** @public (knip) */
   public get vertical(): Position.Vertical {
     return this._vertical;
   }
 
-  /** @public */
+  /** @public (knip) */
   public get horizontal(): Position.Horizontal {
     return this._horizontal;
   }
@@ -86,7 +86,7 @@ export namespace Corner {
 
   const parseCorner = <S1, S2>(
     side1: CSSParser<S1>,
-    side2: CSSParser<S2>
+    side2: CSSParser<S2>,
   ): CSSParser<[S1, S2]> =>
     pair(side1, right(option(Token.parseWhitespace), side2));
 
@@ -102,13 +102,13 @@ export namespace Corner {
       either(
         map(
           parseCorner(Position.parseVertical, Position.parseHorizontal),
-          ([vertical, horizontal]) => Corner.of(vertical, horizontal)
+          ([vertical, horizontal]) => Corner.of(vertical, horizontal),
         ),
         map(
           parseCorner(Position.parseHorizontal, Position.parseVertical),
-          ([horizontal, vertical]) => Corner.of(vertical, horizontal)
-        )
-      )
-    )
+          ([horizontal, vertical]) => Corner.of(vertical, horizontal),
+        ),
+      ),
+    ),
   );
 }

@@ -24,7 +24,7 @@ export class Side extends Value<"side", false> {
     this._side = side;
   }
 
-  /** @public */
+  /** @public (knip) */
   public get side(): Position.Vertical | Position.Horizontal {
     return this._side;
   }
@@ -70,8 +70,8 @@ export namespace Side {
   export const parse = map(
     right(
       Token.parseIdent("to"),
-      right(option(Token.parseWhitespace), Position.parse)
+      right(option(Token.parseWhitespace), Position.parse),
     ),
-    (side) => Side.of(side)
+    (side) => Side.of(side),
   );
 }

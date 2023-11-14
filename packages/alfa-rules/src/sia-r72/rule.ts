@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
-          and(hasRole(device, "paragraph"), isVisible(device))
+          and(hasRole(device, "paragraph"), isVisible(device)),
         );
       },
 
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(isNotUpperCased(device), target),
             () => Outcomes.IsNotUppercased,
-            () => Outcomes.IsUppercased
+            () => Outcomes.IsUppercased,
           ),
         };
       },
@@ -45,11 +45,11 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsNotUppercased = Ok.of(
-    Diagnostic.of(`The text of the paragraph is not uppercased`)
+    Diagnostic.of(`The text of the paragraph is not uppercased`),
   );
 
   export const IsUppercased = Err.of(
-    Diagnostic.of(`The text of the paragraph is uppercased`)
+    Diagnostic.of(`The text of the paragraph is uppercased`),
   );
 }
 
@@ -57,6 +57,6 @@ function isNotUpperCased(device: Device) {
   return hasComputedStyle(
     "text-transform",
     (transform) => transform.value !== "uppercase",
-    device
+    device,
   );
 }

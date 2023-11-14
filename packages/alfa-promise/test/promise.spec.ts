@@ -8,10 +8,10 @@ test(`.isPromise() tests if a value is a promise`, (t) => {
 });
 
 test(`.all() resolves with the values of all passed promises once resolved`, async (t) => {
-  t.deepEqual(await Promise.all(Promise.resolve(1), Promise.resolve(2)), [
-    1,
-    2,
-  ]);
+  t.deepEqual(
+    await Promise.all(Promise.resolve(1), Promise.resolve(2)),
+    [1, 2],
+  );
 });
 
 test(`.all() rejects as soon as a passed promise rejects`, async (t) => {
@@ -25,7 +25,7 @@ test(`.all() rejects as soon as a passed promise rejects`, async (t) => {
 test(`.any() resolves with the value the first promise that resolves`, async (t) => {
   t.deepEqual(
     await Promise.any<number>(Promise.resolve(1), Promise.reject("foo")),
-    1
+    1,
   );
 });
 

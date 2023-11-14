@@ -7,7 +7,6 @@ import { Number as BaseNumber } from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 
 import type { Resolvable } from "../resolvable";
-import { Value } from "../value";
 
 import { Numeric } from "./numeric";
 
@@ -33,7 +32,7 @@ export namespace Number {
    */
   export class Calculated
     extends Numeric.Calculated<"number">
-    implements INumber<true>
+    implements Resolvable<Canonical, never>
   {
     public static of(value: Math<"number">): Calculated {
       return new Calculated(value);
@@ -48,8 +47,12 @@ export namespace Number {
         this._math
           .resolve()
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not fully resolve ${this} as a number`)
+          .getUnsafe(`Could not fully resolve ${this} as a number`),
       );
+    }
+
+    public partiallyResolve(): Canonical {
+      return this.resolve();
     }
 
     public equals(value: unknown): value is this {
@@ -71,7 +74,10 @@ export namespace Number {
   /**
    * Numbers that are a fixed (not calculated) value.
    */
-  export class Fixed extends Numeric.Fixed<"number"> implements INumber<false> {
+  export class Fixed
+    extends Numeric.Fixed<"number">
+    implements Resolvable<Canonical, never>
+  {
     public static of(value: number | BaseNumber): Fixed {
       return new Fixed(BaseNumber.isNumber(value) ? value.value : value);
     }
@@ -81,6 +87,10 @@ export namespace Number {
     }
 
     public resolve(): this {
+      return this;
+    }
+
+    public partiallyResolve(): this {
       return this;
     }
 
@@ -102,13 +112,6 @@ export namespace Number {
    */
   export namespace Fixed {
     export interface JSON extends Numeric.Fixed.JSON<"number"> {}
-  }
-
-  interface INumber<CALC extends boolean = boolean>
-    extends Value<"number", CALC>,
-      Resolvable<Canonical, never> {
-    hasCalculation(): this is Calculated;
-    resolve(): Canonical;
   }
 
   export function isCalculated(value: unknown): value is Calculated {
@@ -141,7 +144,7 @@ export namespace Number {
    */
   export const parse: CSSParser<Number> = either(
     map<Slice<Token>, BaseNumber, Fixed, string>(BaseNumber.parse, of),
-    map(Math.parseNumber, of)
+    map(Math.parseNumber, of),
   );
 
   /**

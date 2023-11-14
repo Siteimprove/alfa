@@ -10,5 +10,5 @@ export default Longhand.fromKeywords(
   "relative",
   "absolute",
   "sticky",
-  "fixed"
+  "fixed",
 );

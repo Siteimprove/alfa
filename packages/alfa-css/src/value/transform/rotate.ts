@@ -22,7 +22,7 @@ export class Rotate
     x: Number,
     y: Number,
     z: Number,
-    angle: A
+    angle: A,
   ): Rotate {
     return new Rotate(x.resolve(), y.resolve(), z.resolve(), angle.resolve());
   }
@@ -36,7 +36,7 @@ export class Rotate
     x: Number.Canonical,
     y: Number.Canonical,
     z: Number.Canonical,
-    angle: Angle.Canonical
+    angle: Angle.Canonical,
   ) {
     super("rotate", false);
     this._x = x;
@@ -123,7 +123,7 @@ export namespace Rotate {
 
   const parseAngleOrZero = either(
     Angle.parse,
-    map(Number.parseZero, () => Angle.of(0, "deg"))
+    map(Number.parseZero, () => Angle.of(0, "deg")),
   );
 
   const parseAxis = (name: string) =>
@@ -133,28 +133,28 @@ export namespace Rotate {
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-rotate}
    */
   const parseRotate = map(parseAxis("rotate"), (angle) =>
-    Rotate.of(_0, _0, _1, angle)
+    Rotate.of(_0, _0, _1, angle),
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatex}
    */
   const parseRotateX = map(parseAxis("rotateX"), (angle) =>
-    Rotate.of(_1, _0, _0, angle)
+    Rotate.of(_1, _0, _0, angle),
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
   const parseRotateY = map(parseAxis("rotateY"), (angle) =>
-    Rotate.of(_0, _1, _0, angle)
+    Rotate.of(_0, _1, _0, angle),
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
   const parseRotateZ = map(parseAxis("rotateZ"), (angle) =>
-    Rotate.of(_0, _0, _1, angle)
+    Rotate.of(_0, _0, _1, angle),
   );
 
   /**
@@ -166,19 +166,19 @@ export namespace Rotate {
       pair(
         map(
           List.parseCommaSeparated(Number.parse, 3, 3),
-          (list) => list.values
+          (list) => list.values,
         ),
         right(
           delimited(option(Token.parseWhitespace), Token.parseComma),
-          parseAngleOrZero
-        )
-      )
+          parseAngleOrZero,
+        ),
+      ),
     ),
     (result) => {
       const [_, [[x, y, z], angle]] = result;
 
       return Rotate.of(x, y, z, angle);
-    }
+    },
   );
 
   export const parse = either(
@@ -186,6 +186,6 @@ export namespace Rotate {
     parseRotateX,
     parseRotateY,
     parseRotateZ,
-    parseRotate3d
+    parseRotate3d,
   );
 }

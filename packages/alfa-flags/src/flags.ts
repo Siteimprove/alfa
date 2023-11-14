@@ -44,7 +44,7 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    */
   public add(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
-      this._value | Flags._reduce(...flags)
+      this._value | Flags._reduce(...flags),
     ) as this;
   }
 
@@ -58,7 +58,7 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    */
   public remove(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
-      this._value & ~Flags._reduce(...flags)
+      this._value & ~Flags._reduce(...flags),
     ) as this;
   }
 

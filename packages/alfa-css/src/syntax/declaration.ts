@@ -23,7 +23,7 @@ export class Declaration implements Iterable<Token>, Equatable, Serializable {
   public static of(
     name: string,
     value: Iterable<Token>,
-    important = false
+    important = false,
   ): Declaration {
     return new Declaration(name, Array.from(value), important);
   }
@@ -108,11 +108,11 @@ export namespace Declaration {
     pair(
       left(
         Token.parseIdent(),
-        delimited(option(Token.parseWhitespace), Token.parseColon)
+        delimited(option(Token.parseWhitespace), Token.parseColon),
       ),
       map(zeroOrMore(Component.consume), (components) =>
-        components.flatMap((component) => [...component])
-      )
+        components.flatMap((component) => [...component]),
+      ),
     ),
     ([{ value: name }, value]) =>
       (input) => {
@@ -145,7 +145,7 @@ export namespace Declaration {
           input,
           Declaration.of(name, value, important),
         ]);
-      }
+      },
   );
 
   /**

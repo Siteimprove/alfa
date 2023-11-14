@@ -21,9 +21,8 @@ export class Shadow<
     B extends Length = Length,
     S extends Length = Length,
     C extends Color = Color,
-    CALC extends boolean = boolean
   >
-  extends Value<"shadow", CALC>
+  extends Value<"shadow", Value.HasCalculation<[H, V, B, S, C]>>
   implements Resolvable<Shadow.Canonical, Shadow.Resolver>
 {
   public static of<
@@ -31,24 +30,16 @@ export class Shadow<
     V extends Length = H,
     B extends Length = Length,
     S extends Length = Length,
-    C extends Color = Color
+    C extends Color = Color,
   >(
     horizontal: H,
     vertical: V,
     blur: B,
     spread: S,
     color: C,
-    isInset: boolean
-  ): Shadow<H, V, B, S, C, Value.HasCalculation<[H, V, B, S]>> {
-    return new Shadow(
-      horizontal,
-      vertical,
-      blur,
-      spread,
-      color,
-      isInset,
-      Value.hasCalculation(horizontal, vertical, blur, spread)
-    );
+    isInset: boolean,
+  ): Shadow<H, V, B, S, C> {
+    return new Shadow(horizontal, vertical, blur, spread, color, isInset);
   }
 
   private readonly _horizontal: H;
@@ -65,9 +56,11 @@ export class Shadow<
     spread: S,
     color: C,
     isInset: boolean,
-    hasCalculation: CALC
   ) {
-    super("shadow", hasCalculation);
+    super(
+      "shadow",
+      Value.hasCalculation(horizontal, vertical, blur, spread, color),
+    );
     this._horizontal = horizontal;
     this._vertical = vertical;
     this._blur = blur;
@@ -108,7 +101,6 @@ export class Shadow<
       this._spread.resolve(resolver),
       this._color.resolve(),
       this._isInset,
-      false
     );
   }
   public equals(value: unknown): value is this {
@@ -161,8 +153,7 @@ export namespace Shadow {
     Length.Canonical,
     Length.Canonical,
     Length.Canonical,
-    Color.Canonical,
-    false
+    Color.Canonical
   >;
   export interface JSON extends Value.JSON<"shadow"> {
     horizontal: Length.JSON;
@@ -188,7 +179,7 @@ export namespace Shadow {
     : [T, T, T, T];
 
   function checkLength<T, N extends 3 | 4>(
-    max: N
+    max: N,
   ): (array: Array<T>) => array is Sized<T, N> {
     return (array): array is Sized<T, N> =>
       array.length >= 2 && array.length <= max;
@@ -198,7 +189,7 @@ export namespace Shadow {
     return parseIf(
       checkLength<Length, N>(max),
       separatedList(Length.parse, Token.parseWhitespace),
-      () => `Shadows must have between 2 and ${max} lengths`
+      () => `Shadows must have between 2 and ${max} lengths`,
     );
   }
 
@@ -273,7 +264,7 @@ export namespace Shadow {
           blur ?? Length.of(0, "px"),
           spread ?? Length.of(0, "px"),
           color ?? Keyword.of("currentcolor"),
-          isInset ?? false
+          isInset ?? false,
         ),
       ]);
     };

@@ -1,26 +1,29 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import type { Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 /**
  * @public
  */
-export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
-  extends Value<"tuple", CALC>
-  implements Resolvable<Tuple<Tuple.Resolved<T>, false>, Tuple.Resolver<T>>
+export class Tuple<T extends Array<Value>>
+  extends Value<"tuple", Value.HasCalculation<T>>
+  implements
+    Resolvable<Tuple<Tuple.Resolved<T>>, Tuple.Resolver<T>>,
+    PartiallyResolvable<
+      Tuple<Tuple.PartiallyResolved<T>>,
+      Tuple.PartialResolver<T>
+    >
 {
-  public static of<T extends Array<Value>>(
-    ...values: Readonly<T>
-  ): Tuple<T, Value.HasCalculation<T>> {
-    return new Tuple(values, Value.hasCalculation(...values));
+  public static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T> {
+    return new Tuple(values);
   }
 
   private readonly _values: Readonly<T>;
 
-  private constructor(values: Readonly<T>, calculation: CALC) {
-    super("tuple", calculation);
+  private constructor(values: Readonly<T>) {
+    super("tuple", Value.hasCalculation(...values));
     this._values = values;
   }
 
@@ -28,12 +31,19 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
     return this._values;
   }
 
-  public resolve(
-    resolver?: Tuple.Resolver<T>
-  ): Tuple<Tuple.Resolved<T>, false> {
-    return new Tuple<Tuple.Resolved<T>, false>(
+  public resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>> {
+    return new Tuple<Tuple.Resolved<T>>(
       this._values.map((value) => value.resolve(resolver)) as Tuple.Resolved<T>,
-      false
+    );
+  }
+
+  public partiallyResolve(
+    resolver?: Tuple.PartialResolver<T>,
+  ): Tuple<Tuple.PartiallyResolved<T>> {
+    return new Tuple<Tuple.PartiallyResolved<T>>(
+      this._values.map((value) =>
+        value.resolve(resolver),
+      ) as Tuple.PartiallyResolved<T>,
     );
   }
 
@@ -61,7 +71,7 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
     return {
       ...super.toJSON(),
       values: this._values.map((value) =>
-        value.toJSON()
+        value.toJSON(),
       ) as Serializable.ToJSON<T>,
     };
   }
@@ -80,7 +90,7 @@ export namespace Tuple {
   }
 
   export function isTuple<T extends Array<Value>>(
-    value: unknown
+    value: unknown,
   ): value is Tuple<T> {
     return value instanceof Tuple;
   }
@@ -94,9 +104,16 @@ export namespace Tuple {
    */
   export type Resolved<T extends Array<Value>> = T extends [
     infer Head extends Value,
-    ...infer Tail extends Array<Value>
+    ...infer Tail extends Array<Value>,
   ]
     ? [Resolvable.Resolved<Head>, ...Resolved<Tail>]
+    : [];
+
+  export type PartiallyResolved<T extends Array<Value>> = T extends [
+    infer Head extends Value,
+    ...infer Tail extends Array<Value>,
+  ]
+    ? [Resolvable.PartiallyResolved<Head>, ...PartiallyResolved<Tail>]
     : [];
 
   /**
@@ -109,5 +126,11 @@ export namespace Tuple {
     infer V extends Value
   >
     ? Resolvable.Resolver<V>
+    : never;
+
+  export type PartialResolver<T extends Array<Value>> = T extends Array<
+    infer V extends Value
+  >
+    ? Resolvable.PartialResolver<V>
     : never;
 }

@@ -131,7 +131,7 @@ export function element(): Descriptors.Element {
  */
 export function sequence<D extends Descriptor>(
   descriptor: D,
-  options: { required?: boolean } = {}
+  options: { required?: boolean } = {},
 ): Descriptors.Sequence<D> {
   return {
     type: options.required === true ? "+" : "*",
@@ -145,7 +145,7 @@ export function sequence<D extends Descriptor>(
  * @internal
  */
 export function optional<D extends Descriptor>(
-  descriptor: D
+  descriptor: D,
 ): Descriptors.Optional<D> {
   return {
     type: "?",

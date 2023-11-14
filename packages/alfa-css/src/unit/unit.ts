@@ -47,7 +47,7 @@ export namespace Unit {
     }
 
     export function isViewportRelative(
-      unit: string
+      unit: string,
     ): unit is Relative.Viewport {
       switch (unit) {
         case "vw":

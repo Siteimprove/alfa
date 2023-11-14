@@ -9,7 +9,7 @@ export class MatchingClasses extends Diagnostic {
   public static of(
     message: string,
     matchingTargets: Map<string, number> = Map.empty(),
-    matchingNonTargets: Map<string, number> = Map.empty()
+    matchingNonTargets: Map<string, number> = Map.empty(),
   ): Diagnostic {
     return new MatchingClasses(message, matchingTargets, matchingNonTargets);
   }
@@ -20,7 +20,7 @@ export class MatchingClasses extends Diagnostic {
   private constructor(
     message: string,
     matchingTargets: Map<string, number>,
-    matchingNonTargets: Map<string, number>
+    matchingNonTargets: Map<string, number>,
   ) {
     super(message);
     this._matchingTargets = matchingTargets;
@@ -72,7 +72,7 @@ export namespace MatchingClasses {
   }
 
   export function isMatchingClasses(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is MatchingClasses;
 
   export function isMatchingClasses(value: unknown): value is MatchingClasses;

@@ -24,8 +24,8 @@ test("evaluate() cannot tell when same landmarks have same names", async (t) => 
       WithRoleAndName.of(
         `Do these complementary landmarks have the same or equivalent content?`,
         "complementary",
-        "More information"
-      )
+        "More information",
+      ),
     ),
   ]);
 });
@@ -41,7 +41,7 @@ test("evaluate() passes when same landmarks have same names and content", async 
     await evaluate(
       R55,
       { document },
-      oracle({ "is-content-equivalent": true })
+      oracle({ "is-content-equivalent": true }),
     ),
     [
       passed(
@@ -50,9 +50,9 @@ test("evaluate() passes when same landmarks have same names and content", async 
         {
           1: Outcomes.SameResource("complementary", "More information"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -67,7 +67,7 @@ test("evaluate() fails when same landmarks have same names but different content
     await evaluate(
       R55,
       { document },
-      oracle({ "is-content-equivalent": false })
+      oracle({ "is-content-equivalent": false }),
     ),
     [
       failed(
@@ -76,9 +76,9 @@ test("evaluate() fails when same landmarks have same names but different content
         {
           1: Outcomes.DifferentResources("complementary", "More information"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -93,7 +93,7 @@ test("evaluate() fails when same sections have same names", async (t) => {
     await evaluate(
       R55,
       { document },
-      oracle({ "is-content-equivalent": false })
+      oracle({ "is-content-equivalent": false }),
     ),
     [
       failed(
@@ -102,9 +102,9 @@ test("evaluate() fails when same sections have same names", async (t) => {
         {
           1: Outcomes.DifferentResources("region", "More information"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 

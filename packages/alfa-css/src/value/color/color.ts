@@ -36,12 +36,12 @@ export namespace Color {
 
   export function hsl<
     H extends Number.Canonical | Angle.Canonical,
-    A extends Number.Canonical | Percentage.Canonical
+    A extends Number.Canonical | Percentage.Canonical,
   >(
     hue: H,
-    saturation: Percentage,
-    lightness: Percentage,
-    alpha: A
+    saturation: Percentage<"percentage">,
+    lightness: Percentage<"percentage">,
+    alpha: A,
   ): HSL<H, A> {
     return HSL.of(hue, saturation, lightness, alpha);
   }
@@ -52,7 +52,7 @@ export namespace Color {
 
   export function rgb<
     C extends Number.Canonical | Percentage.Canonical,
-    A extends Number.Canonical | Percentage.Canonical
+    A extends Number.Canonical | Percentage.Canonical,
   >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
     return RGB.of(red, green, blue, alpha);
   }
@@ -70,7 +70,7 @@ export namespace Color {
     RGB.parse,
     HSL.parse,
     Current.parse,
-    System.parse
+    System.parse,
   );
 
   export function isTransparent(color: Color): boolean {

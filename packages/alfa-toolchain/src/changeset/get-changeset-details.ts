@@ -15,7 +15,7 @@ export namespace Changeset {
     "Removed",
     "Fixed",
   ] as const;
-  export type Kind = typeof kinds[number];
+  export type Kind = (typeof kinds)[number];
 
   function isKind(name: string): name is Kind {
     return kinds.some((kind) => kind === name);
@@ -49,12 +49,12 @@ export namespace Changeset {
        *   capture group <details> (all the rest, incl. newlines ('s' flag))
        * end of string
        */
-      /[*][*](?<kind>[a-zA-Z]*):[*][*] (?<title>[^\n]*)(?:\n\n(?<details>.*))?$/s
+      /[*][*](?<kind>[a-zA-Z]*):[*][*] (?<title>[^\n]*)(?:\n\n(?<details>.*))?$/s,
     );
 
     if (matches === null) {
       return Err.of(
-        `Changeset doesn't match the required format (${changeset.summary})`
+        `Changeset doesn't match the required format (${changeset.summary})`,
       );
     }
 

@@ -4,11 +4,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import * as Base from "../../calculation/numeric";
-import { Parser as CSSParser, Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
-import type { Resolvable } from "../resolvable";
-import { Value } from "../value";
+import type { PartiallyResolvable, Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
 import { Length } from "./length";
@@ -22,8 +21,8 @@ const { either, map } = Parser;
 export type LengthPercentage<U extends Unit.Length = Unit.Length> =
   | LengthPercentage.Calculated
   | Length.Calculated
-  | Percentage.Calculated<"length">
   | Length.Fixed<U>
+  | Percentage.Calculated<"length">
   | Percentage.Fixed<"length">;
 
 /**
@@ -37,7 +36,7 @@ export namespace LengthPercentage {
    */
   export type PartiallyResolved =
     | Canonical
-    | Percentage.Canonical
+    | Percentage.PartiallyResolved<"length">
     | LengthPercentage.Calculated;
 
   /**
@@ -45,7 +44,9 @@ export namespace LengthPercentage {
    */
   export class Calculated
     extends Dimension.Calculated<"length-percentage">
-    implements ILengthPercentage<true>
+    implements
+      Resolvable<Length.Canonical, Resolver>,
+      PartiallyResolvable<Calculated, PartialResolver>
   {
     public static of(value: Math<"length-percentage">): Calculated {
       return new Calculated(value);
@@ -82,6 +83,10 @@ export namespace LengthPercentage {
       );
     }
 
+    public partiallyResolve(resolver: PartialResolver): this {
+      return this;
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof Calculated && super.equals(value);
     }
@@ -99,21 +104,13 @@ export namespace LengthPercentage {
     | Percentage.Calculated.JSON
     | Percentage.Fixed.JSON;
 
-  interface ILengthPercentage<CALC extends boolean = boolean>
-    extends Value<"length-percentage", CALC, "length">,
-      Resolvable<Length.Canonical, Resolver> {
-    hasCalculation(): this is Calculated;
-    resolve(resolver: Resolver): Canonical;
-  }
-
   // In order to resolve a percentage, we need a base (=100%)
   // In order to resolve a length, we need to know how to resolve relative
   // lengths.
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Length.Resolver &
-    Percentage.Resolver<"length", Canonical>;
+  export type Resolver = Length.Resolver & Percentage.Resolver<"length">;
 
   export type PartialResolver = Length.Resolver;
 
@@ -149,7 +146,7 @@ export namespace LengthPercentage {
     return (value) =>
       Selective.of(value)
         .if(Length.isLength, (value) => value.resolve(resolver))
-        .if(Percentage.isPercentage, (value) => value.resolve())
+        .if(Percentage.isPercentage, (value) => value.partiallyResolve())
         .get();
   }
 
@@ -242,9 +239,13 @@ export namespace LengthPercentage {
   /**
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
-  export const parse = either<Slice<Token>, LengthPercentage, string>(
+  export const parse: CSSParser<LengthPercentage> = either<
+    Slice<Token>,
+    LengthPercentage,
+    string
+  >(
     Length.parse,
-    Percentage.parse,
+    Percentage.parse<"length">,
     map<Slice<Token>, Math<"length-percentage">, Calculated, string>(
       Math.parseLengthPercentage,
       of,

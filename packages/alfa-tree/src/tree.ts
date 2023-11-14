@@ -29,13 +29,14 @@ const { equals } = Refinement;
  * @public
  */
 export abstract class Node<
-  // The list of flags allowed to control tree traversal.
-  F extends Flags.allFlags,
-  // The type
-  T extends string = string,
-  // The options for serialization
-  S extends unknown = unknown
-> implements
+    // The list of flags allowed to control tree traversal.
+    F extends Flags.allFlags,
+    // The type
+    T extends string = string,
+    // The options for serialization
+    S extends unknown = unknown,
+  >
+  implements
     Iterable<Node<F>>,
     Equatable,
     Hashable,
@@ -44,6 +45,10 @@ export abstract class Node<
   protected readonly _children: Array<Node<F>>;
   protected _parent: Option<Node<F>> = None;
   protected readonly _type: T;
+
+  // Externally provided data.
+  private readonly _externalId: string | undefined;
+  private readonly _extraData: any;
 
   /**
    * Whether the node is frozen.
@@ -58,15 +63,29 @@ export abstract class Node<
    */
   protected _frozen: boolean = false;
 
-  protected constructor(children: Array<Node<F>>, type: T) {
+  protected constructor(
+    children: Array<Node<F>>,
+    type: T,
+    externalId?: string,
+    extraData?: any,
+  ) {
     this._children = (children as Array<Node<F>>).filter((child) =>
-      child._attachParent(this)
+      child._attachParent(this),
     ) as Array<Node<F>>;
     this._type = type;
+    this._externalId = externalId;
+    this._extraData = extraData;
   }
 
   public get type(): T {
     return this._type;
+  }
+
+  public get externalId(): string | undefined {
+    return this._externalId;
+  }
+  public get extraData(): any {
+    return this._extraData;
   }
 
   public get frozen(): boolean {
@@ -151,8 +170,8 @@ export abstract class Node<
       this._descendants[value] = this.children(options).flatMap((child) =>
         Sequence.of(
           child,
-          Lazy.of(() => child.descendants(options))
-        )
+          Lazy.of(() => child.descendants(options)),
+        ),
       );
     }
 
@@ -172,7 +191,7 @@ export abstract class Node<
   public inclusiveDescendants(options?: Flags<F>): Sequence<Node<F>> {
     return Sequence.of(
       this,
-      Lazy.of(() => this.descendants(options))
+      Lazy.of(() => this.descendants(options)),
     );
   }
 
@@ -190,7 +209,7 @@ export abstract class Node<
     for (const parent of this.parent(options)) {
       return Sequence.of(
         parent,
-        Lazy.of(() => parent.ancestors(options))
+        Lazy.of(() => parent.ancestors(options)),
       );
     }
 
@@ -210,7 +229,7 @@ export abstract class Node<
   public inclusiveAncestors(options?: Flags<F>): Sequence<Node<F>> {
     return Sequence.of(
       this,
-      Lazy.of(() => this.ancestors(options))
+      Lazy.of(() => this.ancestors(options)),
     );
   }
 
@@ -339,7 +358,7 @@ export abstract class Node<
    */
   public closest<T extends Node<F>>(
     refinement: Refinement<Node<F>, T>,
-    options?: Flags<F>
+    options?: Flags<F>,
   ): Option<T>;
 
   /**
@@ -347,7 +366,7 @@ export abstract class Node<
    */
   public closest(
     predicate: Predicate<Node<F>>,
-    options?: Flags<F>
+    options?: Flags<F>,
   ): Option<Node<F>>;
 
   /**
@@ -355,7 +374,7 @@ export abstract class Node<
    */
   public closest(
     predicate: Predicate<Node<F>>,
-    options?: Flags<F>
+    options?: Flags<F>,
   ): Option<Node<F>> {
     return this.inclusiveAncestors(options).find(predicate);
   }
@@ -380,6 +399,9 @@ export abstract class Node<
     return {
       type: this._type,
       children: this._children.map((child) => child.toJSON(options)),
+      ...(this._externalId === undefined
+        ? {}
+        : { externalId: this._externalId }),
     };
   }
 
@@ -406,5 +428,6 @@ export namespace Node {
     [key: string]: json.JSON | undefined;
     type: T;
     children?: Array<JSON>;
+    externalId?: string;
   }
 }

@@ -8,7 +8,7 @@ function parse(
   value: string,
   color: string,
   style?: "dotted", // the only one used in the tests :-/
-  width?: number
+  width?: number,
 ): void {
   const element = <div />;
   const declaration = h.declaration("border", value);

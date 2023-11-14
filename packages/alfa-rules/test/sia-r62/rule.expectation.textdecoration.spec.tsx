@@ -40,13 +40,13 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
         h.rule.style("a:focus", { outline: "none" }),
         h.rule.style("span", { fontWeight: "bold" }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
     noDistinguishingProperties
       .withStyle(["font", "700 16px serif"])
-      .withDistinguishingProperties(["font"])
+      .withDistinguishingProperties(["font"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -54,7 +54,7 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
         [style, noStyle],
-        [style, noStyle]
+        [style, noStyle],
       ),
     }),
   ]);
@@ -76,7 +76,7 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
         [hoverStyle, addCursor(noStyle)],
-        [focusStyle, noStyle]
+        [focusStyle, noStyle],
       ),
     }),
   ]);
@@ -102,13 +102,13 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
         }),
         h.rule.style("span", { fontWeight: "bold" }),
       ]),
-    ]
+    ],
   );
 
   const linkStyle = Ok.of(
     noDistinguishingProperties
       .withStyle(["font", "700 16px serif"])
-      .withDistinguishingProperties(["font"])
+      .withDistinguishingProperties(["font"]),
   );
 
   const spanStyle = Ok.of(
@@ -119,8 +119,8 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
         ["font", "700 16px serif"],
         ["outline", "0px"],
       ],
-      [makePairing(defaultTextColor, defaultTextColor, 1)]
-    )
+      [makePairing(defaultTextColor, defaultTextColor, 1)],
+    ),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -128,7 +128,7 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
       1: Outcomes.IsDistinguishable(
         [linkStyle, spanStyle],
         [linkStyle, spanStyle],
-        [linkStyle, spanStyle]
+        [linkStyle, spanStyle],
       ),
     }),
   ]);
@@ -148,7 +148,7 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
         [hoverStyle, addCursor(noStyle)],
-        [focusStyle, noStyle]
+        [focusStyle, noStyle],
       ),
     }),
   ]);
@@ -168,7 +168,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
           cursor: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -191,7 +191,7 @@ test(`evaluate() fails an <a> element that removes the default text decoration
           cursor: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -219,7 +219,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
           textDecoration: "underline",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -247,7 +247,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
           textDecoration: "underline",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -275,7 +275,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
           textDecoration: "underline",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -283,7 +283,7 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [defaultStyle],
-        [defaultStyle]
+        [defaultStyle],
       ),
     }),
   ]);

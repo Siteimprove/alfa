@@ -10,7 +10,10 @@ const { isFunction, isObject, isString, isNumber, isBoolean, isNull } =
 /**
  * @public
  */
-export interface Serializable<T extends JSON = JSON, OPTIONS extends unknown = unknown> {
+export interface Serializable<
+  T extends JSON = JSON,
+  OPTIONS extends unknown = unknown,
+> {
   toJSON(options?: OPTIONS): T;
 }
 
@@ -25,14 +28,20 @@ export namespace Serializable {
     : JSON;
 
   export function isSerializable<T extends JSON>(
-    value: unknown
+    value: unknown,
   ): value is Serializable<T> {
     return isObject(value) && isFunction(value.toJSON);
   }
 
-  export function toJSON<T extends JSON, OPTIONS extends unknown = unknown>(value: Serializable<T>, options?: OPTIONS): T;
+  export function toJSON<T extends JSON, OPTIONS extends unknown = unknown>(
+    value: Serializable<T>,
+    options?: OPTIONS,
+  ): T;
 
-  export function toJSON<T, OPTIONS extends unknown = unknown>(value: T, options?: OPTIONS): ToJSON<T>;
+  export function toJSON<T, OPTIONS extends unknown = unknown>(
+    value: T,
+    options?: OPTIONS,
+  ): ToJSON<T>;
 
   export function toJSON(value: unknown, options?: unknown): JSON {
     if (isSerializable(value)) {

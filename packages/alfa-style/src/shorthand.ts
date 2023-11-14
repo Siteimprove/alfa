@@ -16,14 +16,14 @@ type Name = Longhands.Name;
 export class Shorthand<N extends Name = never> {
   public static of<N extends Name>(
     properties: Array<N>,
-    parse: Shorthand.Parser<N>
+    parse: Shorthand.Parser<N>,
   ) {
     return new Shorthand(
       properties,
       left(
         either(Longhand.parseDefaults, parse),
-        end(() => "Expected end of input")
-      )
+        end(() => "Expected end of input"),
+      ),
     );
   }
 

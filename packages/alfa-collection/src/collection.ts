@@ -71,7 +71,7 @@ export namespace Collection {
     filter<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, U>;
     filter(predicate: Predicate<V, [key: K]>): Keyed<K, V>;
     reject<U extends V>(
-      refinement: Refinement<V, U, [key: K]>
+      refinement: Refinement<V, U, [key: K]>,
     ): Keyed<K, Exclude<V, U>>;
     reject(predicate: Predicate<V, [key: K]>): Keyed<K, V>;
     find<U extends V>(refinement: Refinement<V, U, [key: K]>): Option<U>;
@@ -160,19 +160,19 @@ export namespace Collection {
     reduceWhile<U>(
       predicate: Predicate<T, [index: number]>,
       reducer: Reducer<T, U, [index: number]>,
-      accumulator: U
+      accumulator: U,
     ): U;
     reduceUntil<U>(
       predicate: Predicate<T, [index: number]>,
       reducer: Reducer<T, U, [index: number]>,
-      accumulator: U
+      accumulator: U,
     ): U;
     filter<U extends T>(
-      refinement: Refinement<T, U, [index: number]>
+      refinement: Refinement<T, U, [index: number]>,
     ): Indexed<U>;
     filter(predicate: Predicate<T, [index: number]>): Indexed<T>;
     reject<U extends T>(
-      refinement: Refinement<T, U, [index: number]>
+      refinement: Refinement<T, U, [index: number]>,
     ): Indexed<Exclude<T, U>>;
     reject(predicate: Predicate<T, [index: number]>): Indexed<T>;
     find<U extends T>(refinement: Refinement<T, U, [index: number]>): Option<U>;
@@ -209,13 +209,13 @@ export namespace Collection {
     last(): Option<T>;
     take(count: number): Indexed<T>;
     takeWhile<U extends T>(
-      refinement: Refinement<T, U, [index: number]>
+      refinement: Refinement<T, U, [index: number]>,
     ): Indexed<U>;
     takeWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeLast(count: number): Indexed<T>;
     takeLastWhile<U extends T>(
-      refinement: Refinement<T, U, [index: number]>
+      refinement: Refinement<T, U, [index: number]>,
     ): Indexed<U>;
     takeLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
     takeLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
@@ -236,12 +236,12 @@ export namespace Collection {
     sortWith(comparer: Comparer<T>): Indexed<T>;
     sortWith<T, U extends T = T>(
       this: Indexed<U>,
-      comparer: Comparer<T>
+      comparer: Comparer<T>,
     ): Indexed<U>;
     compare<T>(this: Indexed<Comparable<T>>, iterable: Iterable<T>): Comparison;
     compareWith<U = T>(
       iterable: Iterable<U>,
-      comparer: Comparer<T, U, [index: number]>
+      comparer: Comparer<T, U, [index: number]>,
     ): Comparison;
   }
 

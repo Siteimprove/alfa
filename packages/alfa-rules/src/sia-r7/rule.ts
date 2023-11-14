@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         function* visit(
           node: Node,
-          lang: Option<Attribute>
+          lang: Option<Attribute>,
         ): Iterable<Attribute> {
           if (test(and(isElement, hasAttribute("lang", not(isEmpty))), node)) {
             lang = node.attribute("lang");
@@ -52,16 +52,16 @@ export default Rule.Atomic.of<Page, Attribute>({
               isText,
               and(
                 or(isVisible(device), isIncludedInTheAccessibilityTree(device)),
-                (text: Text) => !isWhitespace(text.data)
-              )
+                (text: Text) => !isWhitespace(text.data),
+              ),
             );
 
             const isElementWithAccessibleName = and(
               isElement,
               hasAccessibleName(
                 device,
-                (accessibleName) => !isWhitespace(accessibleName.value)
-              )
+                (accessibleName) => !isWhitespace(accessibleName.value),
+              ),
             );
 
             if (test(or(isVisibleText, isElementWithAccessibleName), node)) {
@@ -85,7 +85,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             Language.parse(target.value).isOk(),
             () => Outcomes.HasValidLanguage,
-            () => Outcomes.HasNoValidLanguage
+            () => Outcomes.HasNoValidLanguage,
           ),
         };
       },
@@ -98,12 +98,12 @@ export default Rule.Atomic.of<Page, Attribute>({
  */
 export namespace Outcomes {
   export const HasValidLanguage = Ok.of(
-    Diagnostic.of(`The \`lang\` attribute has a valid primary language subtag`)
+    Diagnostic.of(`The \`lang\` attribute has a valid primary language subtag`),
   );
 
   export const HasNoValidLanguage = Err.of(
     Diagnostic.of(
-      `The \`lang\` attribute does not have a valid primary language subtag`
-    )
+      `The \`lang\` attribute does not have a valid primary language subtag`,
+    ),
   );
 }

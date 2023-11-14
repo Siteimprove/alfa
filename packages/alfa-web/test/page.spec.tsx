@@ -19,7 +19,7 @@ test(".from() returns Err on invalid URL in request", (t) => {
       device: Device.standard().toJSON(),
       document: Document.empty().toJSON(),
     }).isErr(),
-    true
+    true,
   );
 });
 
@@ -37,7 +37,7 @@ test(".from() returns Err on invalid URL in response", (t) => {
       device: Device.standard().toJSON(),
       document: Document.empty().toJSON(),
     }).isErr(),
-    true
+    true,
   );
 });
 
@@ -63,6 +63,6 @@ test(".toJSON() serializes correct box", (t) => {
         x: 8,
         y: 8,
       },
-    ]
+    ],
   );
 });

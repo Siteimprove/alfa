@@ -19,7 +19,7 @@ test("h.document() constructs a document", (t) => {
     Document.of([
       Type.of("html"),
       Element.of(Option.of(Namespace.HTML), None, "html"),
-    ])
+    ]),
   );
 });
 
@@ -30,7 +30,7 @@ test("h() puts the first document child in a content document", (t) => {
   const iframe = h.element(
     "iframe",
     [],
-    [h.element("dummy"), document1, h.element("dummy"), document2]
+    [h.element("dummy"), document1, h.element("dummy"), document2],
   );
 
   t.deepEqual(iframe.content.getUnsafe(), document1);
@@ -43,7 +43,7 @@ test("h() puts the first shadow child in a shadow tree", (t) => {
   const iframe = h.element(
     "iframe",
     [],
-    [h.element("dummy"), shadow1, h.element("dummy"), shadow2]
+    [h.element("dummy"), shadow1, h.element("dummy"), shadow2],
   );
 
   t.deepEqual(iframe.shadow.getUnsafe(), shadow1);
@@ -52,11 +52,11 @@ test("h() puts the first shadow child in a shadow tree", (t) => {
 test("h() put elements in the correct namespace", (t) => {
   t.deepEqual(
     h("circle"),
-    Element.of(Option.of(Namespace.SVG), None, "circle")
+    Element.of(Option.of(Namespace.SVG), None, "circle"),
   );
 
   t.deepEqual(
     h("mfrac"),
-    Element.of(Option.of(Namespace.MathML), None, "mfrac")
+    Element.of(Option.of(Namespace.MathML), None, "mfrac"),
   );
 });

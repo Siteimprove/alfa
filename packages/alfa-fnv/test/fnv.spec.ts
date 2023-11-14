@@ -12,11 +12,11 @@ const fnv = (hasher: (hash: Hash) => Hash): number =>
 test(".write() writes string data", (t) => {
   t.equal(
     fnv((h) => h.writeString("hello world")),
-    0xd58b3fa7
+    0xd58b3fa7,
   );
 
   t.equal(
     fnv((h) => h.writeString("🦄🌈")),
-    0xaaf5fee7
+    0xaaf5fee7,
   );
 });

@@ -14,23 +14,18 @@ if (status !== 0) {
 system.exit(extract(flags.project));
 
 function extract(root = "packages") {
+  const exclude = ["packages", "scratches"];
   const projects = system
     .readDirectory(root, ["tsconfig.json"], ["node_modules"])
-    .map(path.dirname);
+    .map(path.dirname)
+    .filter((x) => !exclude.includes(x));
 
   let code = 0;
 
   for (const project of projects) {
-    let file;
-    try {
-      file = require.resolve(
-        path.resolve(project, "config", "api-extractor.json"),
-      );
-    } catch {
-      continue;
-    }
+    const filePath = path.resolve(project, "config", "api-extractor.json");
 
-    const config = ExtractorConfig.loadFileAndPrepare(file);
+    const config = ExtractorConfig.loadFileAndPrepare(filePath);
 
     try {
       const result = Extractor.invoke(config, {

@@ -1,27 +1,26 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Image, Lexer } from "../../../src";
+import { Image } from "../../../src";
+import { serializer } from "../../common/parse";
 
-function parse(input: string) {
-  return Image.parse(Lexer.lex(input)).getUnsafe()[1].toJSON();
-}
+const serialize = serializer(Image.parse);
 
 test("parse() parses an image with relative URL", (t) => {
-  t.deepEqual(parse("url('foo.jpg')"), {
+  t.deepEqual(serialize("url('foo.jpg')"), {
     type: "image",
     image: { type: "url", url: "foo.jpg" },
   });
 });
 
 test("parse() parses an image with absolute URL", (t) => {
-  t.deepEqual(parse("url('https://example.com/foo.jpg')"), {
+  t.deepEqual(serialize("url('https://example.com/foo.jpg')"), {
     type: "image",
     image: { type: "url", url: "https://example.com/foo.jpg" },
   });
 });
 
 test("parse() parses a linear gradient", (t) => {
-  t.deepEqual(parse("linear-gradient(red, blue)"), {
+  t.deepEqual(serialize("linear-gradient(red, blue)"), {
     type: "image",
     image: {
       type: "gradient",
@@ -45,7 +44,7 @@ test("parse() parses a linear gradient", (t) => {
 });
 
 test("parse() parses a radial gradient", (t) => {
-  t.deepEqual(parse("radial-gradient(red, blue)"), {
+  t.deepEqual(serialize("radial-gradient(red, blue)"), {
     type: "image",
     image: {
       type: "gradient",

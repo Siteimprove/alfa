@@ -39,9 +39,21 @@ export function h<N extends string = string>(
   children?: Array<Node | string>,
   style?: Array<Declaration> | Record<string, string>,
   box?: Rectangle,
-  device: Device = Device.standard()
+  device: Device = Device.standard(),
+  externalId?: string,
+  extraData?: any,
 ): Element<N> {
-  return h.element(name, attributes, children, style, undefined, box, device);
+  return h.element(
+    name,
+    attributes,
+    children,
+    style,
+    undefined,
+    box,
+    device,
+    externalId,
+    extraData,
+  );
 }
 
 /**
@@ -55,7 +67,9 @@ export namespace h {
     style: Array<Declaration> | Record<string, string> = [],
     namespace?: Namespace,
     box?: Rectangle,
-    device?: Device
+    device?: Device,
+    externalId?: string,
+    extraData?: any,
   ): Element<N> {
     attributes = Array.isArray(attributes)
       ? attributes
@@ -70,7 +84,7 @@ export namespace h {
               h.attribute(hyphenate(name), value === true ? "" : value),
             ];
           },
-          []
+          [],
         );
 
     const block = h.block(style);
@@ -99,7 +113,9 @@ export namespace h {
         .map((child) => (typeof child === "string" ? h.text(child) : child)),
       style.length === 0 ? None : Option.of(block),
       Option.from(box),
-      Option.from(device)
+      Option.from(device),
+      externalId,
+      extraData,
     );
 
     if (content !== undefined) {
@@ -115,65 +131,95 @@ export namespace h {
 
   export function attribute<N extends string = string>(
     name: N,
-    value: string
+    value: string,
+    externalId?: string,
+    extraData?: any,
   ): Attribute<N> {
-    return Attribute.of(None, None, name, value);
+    return Attribute.of(None, None, name, value, externalId, extraData);
   }
 
-  export function text(data: string): Text {
-    return Text.of(data);
+  export function text(
+    data: string,
+    externalId?: string,
+    extraData?: any,
+  ): Text {
+    return Text.of(data, externalId, extraData);
   }
 
   export function document(
     children: Array<Node | string>,
-    style?: Array<Sheet>
+    style?: Array<Sheet>,
+    externalId?: string,
+    extraData?: any,
   ): Document {
     return Document.of(
       children.map((child) =>
-        typeof child === "string" ? text(child) : child
+        typeof child === "string" ? text(child) : child,
       ),
-      style
+      style,
+      externalId,
+      extraData,
     );
   }
 
   export function shadow(
     children: Array<Node | string>,
     style?: Array<Sheet>,
-    mode?: Shadow.Mode
+    mode?: Shadow.Mode,
+    externalId?: string,
+    extraData?: any,
   ): Shadow {
     return Shadow.of(
       children!.map((child) =>
-        typeof child === "string" ? text(child) : child
+        typeof child === "string" ? text(child) : child,
       ),
       style,
-      mode
+      mode,
+      externalId,
+      extraData,
     );
   }
 
   export function type<N extends string = string>(
     name: N,
     publicId?: string,
-    systemId?: string
+    systemId?: string,
+    externalId?: string,
+    extraData?: any,
   ): Type<N> {
-    return Type.of(name, Option.from(publicId), Option.from(systemId));
+    return Type.of(
+      name,
+      Option.from(publicId),
+      Option.from(systemId),
+      externalId,
+      extraData,
+    );
   }
 
-  export function fragment(children: Array<Node | string>): Fragment {
+  export function fragment(
+    children: Array<Node | string>,
+    externalId?: string,
+    extraData?: any,
+  ): Fragment {
     return Fragment.of(
-      children.map((child) => (typeof child === "string" ? text(child) : child))
+      children.map((child) =>
+        typeof child === "string" ? text(child) : child,
+      ),
+      externalId,
+      extraData,
     );
   }
 
   export function sheet(
     rules: Array<Rule>,
     disabled?: boolean,
-    condition?: string
+    condition?: string,
   ): Sheet {
     return Sheet.of(rules, disabled, Option.from(condition));
   }
 
   export function block(
-    declarations: Array<Declaration> | Record<string, string>
+    declarations: Array<Declaration> | Record<string, string>,
   ): Block {
     return Block.of(
       Array.isArray(declarations)
@@ -190,28 +236,28 @@ export namespace h {
             }
 
             return Declaration.of(name, value, important);
-          })
+          }),
     );
   }
 
   export function declaration(
     name: string,
     value: string,
-    important?: boolean
+    important?: boolean,
   ): Declaration {
     return Declaration.of(name, value, important);
   }
 
   export namespace rule {
     export function fontFace(
-      declarations: Array<Declaration> | Record<string, string>
+      declarations: Array<Declaration> | Record<string, string>,
     ): FontFaceRule {
       return FontFaceRule.of(block(declarations));
     }
 
     export function keyframe(
       key: string,
-      declarations: Array<Declaration> | Record<string, string>
+      declarations: Array<Declaration> | Record<string, string>,
     ): KeyframeRule {
       return KeyframeRule.of(key, block(declarations));
     }
@@ -226,14 +272,14 @@ export namespace h {
 
     export function namespace(
       namespace: string,
-      prefix?: string
+      prefix?: string,
     ): NamespaceRule {
       return NamespaceRule.of(namespace, Option.from(prefix));
     }
 
     export function page(
       selector: string,
-      declarations: Array<Declaration> | Record<string, string>
+      declarations: Array<Declaration> | Record<string, string>,
     ): PageRule {
       return PageRule.of(selector, block(declarations));
     }
@@ -241,14 +287,14 @@ export namespace h {
     export function style(
       selector: string,
       declarations: Array<Declaration> | Record<string, string>,
-      hint?: boolean
+      hint?: boolean,
     ): StyleRule {
       return StyleRule.of(selector, block(declarations), hint);
     }
 
     export function supports(
       condition: string,
-      rules: Array<Rule>
+      rules: Array<Rule>,
     ): SupportsRule {
       return SupportsRule.of(condition, rules);
     }

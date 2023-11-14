@@ -37,20 +37,20 @@ export default Rule.Atomic.of<Page, Document>({
 
       expectations(target) {
         const title = getElementDescendants(target).find(
-          and(hasNamespace(Namespace.HTML), hasName("title"))
+          and(hasNamespace(Namespace.HTML), hasName("title")),
         );
 
         return {
           1: expectation(
             title.isSome(),
             () => Outcomes.HasTitle,
-            () => Outcomes.HasNoTitle
+            () => Outcomes.HasNoTitle,
           ),
 
           2: expectation(
             title.some(hasTextContent()),
             () => Outcomes.HasNonEmptyTitle,
-            () => Outcomes.HasEmptyTitle
+            () => Outcomes.HasEmptyTitle,
           ),
         };
       },
@@ -63,18 +63,18 @@ export default Rule.Atomic.of<Page, Document>({
  */
 export namespace Outcomes {
   export const HasTitle = Ok.of(
-    Diagnostic.of(`The document has at least one \`<title>\` element`)
+    Diagnostic.of(`The document has at least one \`<title>\` element`),
   );
 
   export const HasNoTitle = Err.of(
-    Diagnostic.of(`The document does not have a \`<title>\` element`)
+    Diagnostic.of(`The document does not have a \`<title>\` element`),
   );
 
   export const HasNonEmptyTitle = Ok.of(
-    Diagnostic.of(`The first \`<title>\` element has text content`)
+    Diagnostic.of(`The first \`<title>\` element has text content`),
   );
 
   export const HasEmptyTitle = Err.of(
-    Diagnostic.of(`The first \`<title>\` element has no text content`)
+    Diagnostic.of(`The first \`<title>\` element has no text content`),
   );
 }

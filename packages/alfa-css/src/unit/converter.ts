@@ -56,7 +56,7 @@ function rates<U extends string>(fn: () => Rates<U>): Rates<U> {
 export type Converter<U extends string> = (
   value: number,
   from: U,
-  to: U
+  to: U,
 ) => number;
 
 /**
@@ -96,7 +96,7 @@ export namespace Converter {
         pt,
         px,
       };
-    })
+    }),
   );
 
   /**

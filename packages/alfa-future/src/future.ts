@@ -128,26 +128,26 @@ export namespace Future {
 
   export function from<T>(promise: Promise<T> | Thunk<Promise<T>>): Future<T> {
     return Future.defer((callback) =>
-      (typeof promise === "function" ? promise() : promise).then(callback)
+      (typeof promise === "function" ? promise() : promise).then(callback),
     );
   }
 
   export function traverse<T, U>(
     values: Iterable<T>,
-    mapper: Mapper<T, Future<U>, [index: number]>
+    mapper: Mapper<T, Future<U>, [index: number]>,
   ): Future<Iterable<U>> {
     return Iterable.reduce(
       values,
       (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value, i).map((value) => Array.append(values, value))
+          mapper(value, i).map((value) => Array.append(values, value)),
         ),
-      now(Array.empty())
+      now(Array.empty()),
     );
   }
 
   export function sequence<T>(
-    futures: Iterable<Future<T>>
+    futures: Iterable<Future<T>>,
   ): Future<Iterable<T>> {
     return traverse(futures, (value) => value);
   }
@@ -243,7 +243,7 @@ namespace Defer {
   export class Bind<S, T> extends Future<T> {
     public static of<S, T>(
       continuation: Continuation<S>,
-      mapper: Mapper<S, Future<T>>
+      mapper: Mapper<S, Future<T>>,
     ): Bind<S, T> {
       return new Bind(continuation, mapper);
     }
@@ -253,7 +253,7 @@ namespace Defer {
 
     private constructor(
       continuation: Continuation<S>,
-      mapper: Mapper<S, Future<T>>
+      mapper: Mapper<S, Future<T>>,
     ) {
       super();
       this._continuation = continuation;
@@ -266,7 +266,7 @@ namespace Defer {
 
     public then(callback: Callback<T>): void {
       this._continuation((value) =>
-        defer(() => this._mapper(value).then(callback))
+        defer(() => this._mapper(value).then(callback)),
       );
     }
 
@@ -289,8 +289,8 @@ namespace Defer {
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
       return Suspend.of(() =>
         Bind.of(this._continuation, (value) =>
-          this._mapper(value).flatMap(mapper)
-        )
+          this._mapper(value).flatMap(mapper),
+        ),
       );
     }
   }
@@ -333,7 +333,7 @@ namespace Suspend {
   export class Bind<S, T> extends Future<T> {
     public static of<S, T>(
       thunk: Thunk<Future<S>>,
-      mapper: Mapper<S, Future<T>>
+      mapper: Mapper<S, Future<T>>,
     ): Bind<S, T> {
       return new Bind(thunk, mapper);
     }
@@ -365,7 +365,7 @@ namespace Suspend {
 
     public flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U> {
       return Suspend.of(() =>
-        Bind.of(this._thunk, (value) => this._mapper(value).flatMap(mapper))
+        Bind.of(this._thunk, (value) => this._mapper(value).flatMap(mapper)),
       );
     }
   }

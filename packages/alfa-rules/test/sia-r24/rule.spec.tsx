@@ -32,7 +32,7 @@ test(`evaluate() passes when non-streaming video elements have all audio and
         "is-video-streaming": false,
         "has-audio": true,
         transcript: Option.of(transcript),
-      })
+      }),
     ),
     [
       passed(
@@ -41,9 +41,9 @@ test(`evaluate() passes when non-streaming video elements have all audio and
         {
           1: Outcomes.HasPerceivableTranscript("<video>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -67,7 +67,7 @@ test(`evaluate() fails when non-streaming video elements have no audio and
         "has-audio": true,
         transcript: None,
         "transcript-link": None,
-      })
+      }),
     ),
     [
       failed(
@@ -76,9 +76,9 @@ test(`evaluate() fails when non-streaming video elements have no audio and
         {
           1: Outcomes.HasNoTranscriptLink("<video>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -100,9 +100,9 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
         "is-video-streaming": false,
         "has-audio": true,
         transcript: None,
-      })
+      }),
     ),
-    [cantTell(R24, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R24, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 

@@ -9,7 +9,6 @@ import { Integer as BaseInteger } from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 
 import type { Resolvable } from "../resolvable";
-import { Value } from "../value";
 
 import { Numeric } from "./numeric";
 
@@ -35,7 +34,7 @@ export namespace Integer {
    */
   export class Calculated
     extends Numeric.Calculated<"number">
-    implements IInteger<true>
+    implements Resolvable<Canonical, never>
   {
     public static of(value: Calculation<"number">): Calculated {
       return new Calculated(value);
@@ -56,8 +55,12 @@ export namespace Integer {
         this._math
           .resolve()
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not fully resolve ${this} as a number`).value
+          .getUnsafe(`Could not fully resolve ${this} as a number`).value,
       );
+    }
+
+    public partiallyResolve(): Canonical {
+      return this.resolve();
     }
 
     public equals(value: unknown): value is this {
@@ -81,7 +84,7 @@ export namespace Integer {
    */
   export class Fixed
     extends Numeric.Fixed<"number">
-    implements IInteger<false>
+    implements Resolvable<Canonical, never>
   {
     /**
      * {@link https://drafts.csswg.org/css-values/#css-round-to-the-nearest-integer}
@@ -92,7 +95,7 @@ export namespace Integer {
           ? value.value
           : // Math.round ensure the correct rounding.
             // The bitwise or ensure coercion to 32 bits integer
-            Math.round(value) | 0
+            Math.round(value) | 0,
       );
     }
 
@@ -101,6 +104,10 @@ export namespace Integer {
     }
 
     public resolve(): this {
+      return this;
+    }
+
+    public partiallyResolve(): this {
       return this;
     }
 
@@ -128,13 +135,6 @@ export namespace Integer {
     export interface JSON extends Numeric.Fixed.JSON<"number"> {}
   }
 
-  interface IInteger<CALC extends boolean = boolean>
-    extends Value<"number", CALC>,
-      Resolvable<Canonical, never> {
-    hasCalculation(): this is Calculated;
-    resolve(): Canonical;
-  }
-
   export function isCalculated(value: unknown): value is Calculated {
     return value instanceof Calculated;
   }
@@ -154,7 +154,7 @@ export namespace Integer {
   export function of(value: Calculation<"number">): Calculated;
 
   export function of(
-    value: number | BaseInteger | Calculation<"number">
+    value: number | BaseInteger | Calculation<"number">,
   ): Integer {
     return Selective.of(value)
       .if(Calculation.isNumber, Calculated.of)
@@ -167,6 +167,6 @@ export namespace Integer {
    */
   export const parse: CSSParser<Integer> = either(
     map<Slice<Token>, BaseInteger, Fixed, string>(BaseInteger.parse, of),
-    map(Calculation.parseNumber, of)
+    map(Calculation.parseNumber, of),
   );
 }

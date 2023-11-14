@@ -36,7 +36,7 @@ test("evaluate() passes when a form field has no error indicator", async (t) => 
       { document },
       oracle({
         "error-indicators": [],
-      })
+      }),
     ),
     [
       passed(
@@ -46,9 +46,9 @@ test("evaluate() passes when a form field has no error indicator", async (t) => 
           1: Outcomes.HasNoErrorIndicator,
           2: Outcomes.HasNoErrorIndicator,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -63,7 +63,7 @@ test(`evaluate() passes when a form field has an error indicator that identifies
         "error-indicators": [perceivableError],
         "error-indicator-identifying-form-field": Option.of(perceivableError),
         "error-indicator-describing-resolution": Option.of(perceivableError),
-      })
+      }),
     ),
     [
       passed(
@@ -73,9 +73,9 @@ test(`evaluate() passes when a form field has an error indicator that identifies
           1: Outcomes.ErrorIndicatorIdentifiesTarget,
           2: Outcomes.ErrorIndicatorDescribesResolution,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -90,7 +90,7 @@ test(`evaluate() fails when a form field has an error indicator that does not
         "error-indicators": [perceivableError],
         "error-indicator-identifying-form-field": None,
         "error-indicator-describing-resolution": None,
-      })
+      }),
     ),
     [
       failed(
@@ -100,9 +100,9 @@ test(`evaluate() fails when a form field has an error indicator that does not
           1: Outcomes.NoErrorIndicatorIdentifiesTarget,
           2: Outcomes.NoErrorIndicatorDescribesResolution,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -117,7 +117,7 @@ test(`evaluate() fails when a form field has an error indicator that identifies
         "error-indicators": [invisibleError],
         "error-indicator-identifying-form-field": Option.of(invisibleError),
         "error-indicator-describing-resolution": Option.of(invisibleError),
-      })
+      }),
     ),
     [
       failed(
@@ -127,9 +127,9 @@ test(`evaluate() fails when a form field has an error indicator that identifies
           1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
           2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -144,7 +144,7 @@ test(`evaluate() fails when a form field has an error indicator that identifies
         "error-indicators": [ignoredError],
         "error-indicator-identifying-form-field": Option.of(ignoredError),
         "error-indicator-describing-resolution": Option.of(ignoredError),
-      })
+      }),
     ),
     [
       failed(
@@ -154,8 +154,8 @@ test(`evaluate() fails when a form field has an error indicator that identifies
           1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
           2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });

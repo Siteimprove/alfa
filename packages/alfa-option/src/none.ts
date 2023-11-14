@@ -111,7 +111,7 @@ export const None: None = new (class None {
 
   public compare<T>(
     this: Option<Comparable<T>>,
-    option: Option<T>
+    option: Option<T>,
   ): Comparison {
     return this.compareWith(option, compareComparable);
   }

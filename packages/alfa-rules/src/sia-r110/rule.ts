@@ -30,10 +30,10 @@ export default Rule.Atomic.of<Page, Attribute>({
             target
               .tokens()
               .some(
-                (token) => Role.isName(token) && Role.of(token).isConcrete()
+                (token) => Role.isName(token) && Role.of(token).isConcrete(),
               ),
             () => Outcomes.HasValidRole,
-            () => Outcomes.HasNoValidRole
+            () => Outcomes.HasNoValidRole,
           ),
         };
       },
@@ -46,10 +46,10 @@ export default Rule.Atomic.of<Page, Attribute>({
  */
 export namespace Outcomes {
   export const HasValidRole = Ok.of(
-    Diagnostic.of(`The element has a at least one valid role`)
+    Diagnostic.of(`The element has a at least one valid role`),
   );
 
   export const HasNoValidRole = Err.of(
-    Diagnostic.of(`The element does not have a valid role`)
+    Diagnostic.of(`The element does not have a valid role`),
   );
 }

@@ -17,7 +17,7 @@ export const parse: Parser<
   [
     Color.Specified | Keyword<"initial">,
     Longhand.Parsed<typeof Style> | Keyword<"initial">,
-    Width.Specified | Keyword<"initial">
+    Width.Specified | Keyword<"initial">,
   ],
   string
 > = (input) => {
@@ -83,5 +83,5 @@ export default Shorthand.of(
     ["border-top-color", color],
     ["border-top-style", style],
     ["border-top-width", width],
-  ])
+  ]),
 );

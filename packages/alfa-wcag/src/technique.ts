@@ -6,7 +6,7 @@ import { Techniques } from "./technique/data";
  * @public
  */
 export class Technique<
-  N extends Technique.Name = Technique.Name
+  N extends Technique.Name = Technique.Name,
 > extends Requirement {
   public static of<N extends Technique.Name>(name: N): Technique<N> {
     return new Technique(name);

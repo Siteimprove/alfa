@@ -17,6 +17,6 @@ export default Shorthand.of(
     ([start, end = start]) => [
       ["border-inline-start-color", start],
       ["border-inline-end-color", end],
-    ]
-  )
+    ],
+  ),
 );
