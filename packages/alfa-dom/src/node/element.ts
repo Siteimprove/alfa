@@ -38,6 +38,8 @@ export class Element<N extends string = string>
     style: Option<Block> = None,
     box: Option<Rectangle> = None,
     device: Option<Device> = None,
+    externalId?: string,
+    extraData?: any,
   ): Element<N> {
     return new Element(
       namespace,
@@ -48,6 +50,8 @@ export class Element<N extends string = string>
       style,
       box,
       device,
+      externalId,
+      extraData,
     );
   }
 
@@ -71,8 +75,10 @@ export class Element<N extends string = string>
     style: Option<Block>,
     box: Option<Rectangle>,
     device: Option<Device>,
+    externalId?: string,
+    extraData?: any,
   ) {
-    super(children, "element");
+    super(children, "element", externalId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
