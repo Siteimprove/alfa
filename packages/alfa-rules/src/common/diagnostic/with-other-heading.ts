@@ -4,7 +4,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 
 /**
- * @internal
+ * @public
  */
 export type HeadingPosition = "previous" | "next";
 
