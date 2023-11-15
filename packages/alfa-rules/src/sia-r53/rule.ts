@@ -12,7 +12,7 @@ import { Scope, Stability } from "../tags";
 import { WithOtherHeading } from "../common/diagnostic";
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
-const { and, equals } = Predicate;
+const { and, equals, tee } = Predicate;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -29,12 +29,6 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const currentLevel = ariaNode
-          .from(target, device)
-          .attribute("aria-level")
-          .map((level) => Number(level.value))
-          .getUnsafe(); // TODO: Is this safe? Is a heading guaranteed to have aria-level?
-
         // * The target is in headings by construction of the applicability.
         // * The first element of heading is not a target due to the .skip(1)
         // * Therefore headings contain at least on element before the target.
@@ -43,15 +37,29 @@ export default Rule.Atomic.of<Page, Element>({
           .last()
           .getUnsafe();
 
-        const previousLevel = ariaNode
-          .from(previousHeading, device)
-          .attribute("aria-level")
-          .map((level) => Number(level.value))
-          .getUnsafe(); // TODO: Is this safe? Is a heading guaranteed to have aria-level?
+        let previousLevel = -1;
+        let currentLevel = -1;
 
         return {
           1: expectation(
-            previousLevel >= currentLevel - 1,
+            hasHeadingLevel(
+              device,
+              tee(
+                (currentLevel) =>
+                  hasHeadingLevel(
+                    device,
+                    tee(
+                      (previousLevel) => previousLevel >= currentLevel - 1,
+                      (p) => {
+                        previousLevel = p;
+                      },
+                    ),
+                  )(previousHeading),
+                (c) => {
+                  currentLevel = c;
+                },
+              ),
+            )(target),
             () =>
               Outcomes.IsStructured(
                 previousHeading,
@@ -86,7 +94,7 @@ export namespace Outcomes {
         Option.of(previousHeading),
         currentLevel,
         previousLevel,
-        "previous"
+        "previous",
       ),
     );
 
@@ -101,7 +109,7 @@ export namespace Outcomes {
         Option.of(previousHeading),
         currentLevel,
         previousLevel,
-        "previous"
+        "previous",
       ),
     );
 }
