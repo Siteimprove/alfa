@@ -141,6 +141,7 @@ export namespace Outcomes {
         nextHeading,
         currentLevel,
         nextLevel,
+        "next",
       ),
     );
 
@@ -155,6 +156,7 @@ export namespace Outcomes {
         nextHeading,
         currentLevel,
         nextLevel,
+        "next",
       ),
     );
 }

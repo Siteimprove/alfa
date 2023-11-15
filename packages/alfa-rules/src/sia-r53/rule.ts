@@ -86,6 +86,7 @@ export namespace Outcomes {
         Option.of(previousHeading),
         currentLevel,
         previousLevel,
+        "previous"
       ),
     );
 
@@ -100,6 +101,7 @@ export namespace Outcomes {
         Option.of(previousHeading),
         currentLevel,
         previousLevel,
+        "previous"
       ),
     );
 }

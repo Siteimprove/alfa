@@ -4,6 +4,11 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 
 /**
+ * @internal
+ */
+export type HeadingPosition = "previous" | "next" | "unknown";
+
+/**
  * @public
  */
 export class WithOtherHeading extends Diagnostic {
@@ -14,6 +19,7 @@ export class WithOtherHeading extends Diagnostic {
     otherHeading: Option<Element>,
     currentLevel: number,
     otherLevel: number,
+    otherPosition: HeadingPosition,
   ): WithOtherHeading;
 
   public static of(
@@ -21,28 +27,39 @@ export class WithOtherHeading extends Diagnostic {
     otherHeading?: Option<Element>,
     currentLevel?: number,
     otherLevel?: number,
+    otherPosition?: HeadingPosition,
   ): Diagnostic {
     return otherHeading === undefined ||
       currentLevel === undefined ||
-      otherLevel === undefined
+      otherLevel === undefined ||
+      otherPosition === undefined
       ? Diagnostic.of(message)
-      : new WithOtherHeading(message, otherHeading, currentLevel, otherLevel);
+      : new WithOtherHeading(
+          message,
+          otherHeading,
+          currentLevel,
+          otherLevel,
+          otherPosition,
+        );
   }
 
   private readonly _otherHeading: Option<Element>;
   private readonly _currentLevel: number;
   private readonly _otherLevel: number;
+  private readonly _otherPosition: HeadingPosition;
 
   private constructor(
     message: string,
     otherHeading: Option<Element>,
     currentLevel: number,
     otherLevel: number,
+    otherPosition: HeadingPosition,
   ) {
     super(message);
     this._otherHeading = otherHeading;
     this._currentLevel = currentLevel;
     this._otherLevel = otherLevel;
+    this._otherPosition = otherPosition;
   }
 
   public get otherHeading(): Option<Element> {
@@ -57,6 +74,10 @@ export class WithOtherHeading extends Diagnostic {
     return this._otherLevel;
   }
 
+  public get otherPosition(): HeadingPosition {
+    return this._otherPosition;
+  }
+
   public equals(value: WithOtherHeading): boolean;
 
   public equals(value: unknown): value is this;
@@ -67,7 +88,8 @@ export class WithOtherHeading extends Diagnostic {
       value._message === this._message &&
       value._otherHeading.equals(this._otherHeading) &&
       value._currentLevel === this._currentLevel &&
-      value._otherLevel === this._otherLevel
+      value._otherLevel === this._otherLevel &&
+      value._otherPosition === this._otherPosition
     );
   }
 
@@ -75,6 +97,7 @@ export class WithOtherHeading extends Diagnostic {
     super.hash(hash);
     hash.writeNumber(this._currentLevel);
     hash.writeNumber(this._otherLevel);
+    hash.writeString(this._otherPosition);
     this._otherHeading.hash(hash);
   }
 
@@ -84,6 +107,7 @@ export class WithOtherHeading extends Diagnostic {
       otherHeading: this._otherHeading.toJSON(),
       currentHeadingLevel: this._currentLevel,
       otherHeadingLevel: this._otherLevel,
+      otherPosition: this._otherPosition,
     };
   }
 }
@@ -96,6 +120,7 @@ export namespace WithOtherHeading {
     otherHeading: Option.JSON<Element>;
     currentHeadingLevel: number;
     otherHeadingLevel: number;
+    otherPosition: HeadingPosition;
   }
 
   export function isWithOtherHeading(
