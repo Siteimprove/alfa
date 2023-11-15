@@ -21,6 +21,8 @@
     "src/selector/simple/class.ts",
     "src/selector/simple/id.ts",
     "src/selector/simple/index.ts",
+    "src/selector/simple/pseudo-class.ts",
+    "src/selector/simple/pseudo-element.ts",
     "src/selector/simple/simple.ts",
     "src/selector/simple/type.ts",
     "src/selector/simple/universal.ts",

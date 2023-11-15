@@ -31,7 +31,8 @@ export namespace Selector {
   export import Attribute = Selectors.Attribute;
   export import Class = Selectors.Class;
   export import Id = Selectors.Id;
-  export import Pseudo = Selectors.Pseudo;
+  export import PseudoClass = Selectors.PseudoClass;
+  export import PseudoElement = Selectors.PseudoElement;
   export import Type = Selectors.Type;
 
   export type JSON =

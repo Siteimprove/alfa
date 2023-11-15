@@ -31,7 +31,8 @@ const {
   Compound: { isCompound },
   Id: { isId },
   Type: { isType },
-  Pseudo: { isClass: isPseudoClass, isElement: isPseudoElement },
+  PseudoClass: { isPseudoClass },
+  PseudoElement: { isPseudoElement },
 } = Selector;
 
 const isDescendantSelector = and(

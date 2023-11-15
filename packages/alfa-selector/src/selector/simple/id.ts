@@ -2,14 +2,14 @@ import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Simple } from "./simple";
+import { SimpleSelector } from "./simple";
 
 const { map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#id-selector}
  */
-export class Id extends Simple<"id"> {
+export class Id extends SimpleSelector<"id"> {
   public static of(name: string): Id {
     return new Id(name);
   }
@@ -46,7 +46,7 @@ export class Id extends Simple<"id"> {
 }
 
 export namespace Id {
-  export interface JSON extends Simple.JSON<"id"> {}
+  export interface JSON extends SimpleSelector.JSON<"id"> {}
 
   export function isId(value: unknown): value is Id {
     return value instanceof Id;

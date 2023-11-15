@@ -2,14 +2,14 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Simple } from "./simple";
+import { SimpleSelector } from "./simple";
 
 const { map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#type-selector}
  */
-export class Type extends Simple<"type"> {
+export class Type extends SimpleSelector<"type"> {
   public static of(namespace: Option<string>, name: string): Type {
     return new Type(namespace, name);
   }
@@ -70,7 +70,7 @@ export class Type extends Simple<"type"> {
 }
 
 export namespace Type {
-  export interface JSON extends Simple.JSON<"type"> {
+  export interface JSON extends SimpleSelector.JSON<"type"> {
     namespace: string | null;
   }
 
@@ -83,7 +83,7 @@ export namespace Type {
    *
    * @internal
    */
-  export const parse = map(Simple.parseName, ([namespace, name]) =>
+  export const parse = map(SimpleSelector.parseName, ([namespace, name]) =>
     Type.of(namespace, name),
   );
 }

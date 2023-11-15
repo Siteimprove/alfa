@@ -95,7 +95,7 @@ export namespace Compound {
       string
     >,
   ) =>
-    map(oneOrMore(Simple.parseSimple(parseSelector)), (result) => {
+    map(oneOrMore(Simple.parse(parseSelector)), (result) => {
       const [left, ...selectors] = Iterable.reverse(result);
 
       return Iterable.reduce(

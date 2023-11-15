@@ -8,7 +8,7 @@ const { either, left, map, option, pair } = Parser;
 /**
  * @internal
  */
-export abstract class Simple<
+export abstract class SimpleSelector<
   T extends string = string,
   N extends string = string,
 > extends Selector<T> {
@@ -22,19 +22,19 @@ export abstract class Simple<
     return this._name;
   }
 
-  public equals(value: Simple): boolean;
+  public equals(value: SimpleSelector): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
     return (
-      value instanceof Simple &&
+      value instanceof SimpleSelector &&
       super.equals(value) &&
       value._name === this._name
     );
   }
 
-  public toJSON(): Simple.JSON<T, N> {
+  public toJSON(): SimpleSelector.JSON<T, N> {
     return {
       ...super.toJSON(),
       name: this._name,
@@ -42,7 +42,7 @@ export abstract class Simple<
   }
 }
 
-export namespace Simple {
+export namespace SimpleSelector {
   export interface JSON<T extends string = string, N extends string = string>
     extends Selector.JSON<T> {
     name: N;
