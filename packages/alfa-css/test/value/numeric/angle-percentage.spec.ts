@@ -8,10 +8,6 @@ const parseErr = parser(AnglePercentage.parse);
 const parse = parserUnsafe(AnglePercentage.parse);
 const serialize = serializer(AnglePercentage.parse);
 
-const resolver: AnglePercentage.Resolver = {
-  percentageBase: Angle.of(90, "deg"),
-};
-
 test("parse() accepts angles", (t) => {
   t.deepEqual(serialize("2rad"), { type: "angle", value: 2, unit: "rad" });
 });
@@ -79,7 +75,7 @@ test("parse() rejects math expressions without angles", (t) => {
 });
 
 test("resolve() returns canonical angles", (t) => {
-  t.deepEqual(parse("1turn").resolve(resolver).toJSON(), {
+  t.deepEqual(parse("1turn").resolve().toJSON(), {
     type: "angle",
     value: 360,
     unit: "deg",
@@ -87,7 +83,7 @@ test("resolve() returns canonical angles", (t) => {
 });
 
 test("resolve() resolves angle calculations", (t) => {
-  t.deepEqual(parse("calc(0.5turn + 90deg)").resolve(resolver).toJSON(), {
+  t.deepEqual(parse("calc(0.5turn + 90deg)").resolve().toJSON(), {
     type: "angle",
     value: 270,
     unit: "deg",
@@ -95,25 +91,31 @@ test("resolve() resolves angle calculations", (t) => {
 });
 
 test("resolve() resolves pure percentages", (t) => {
-  t.deepEqual(parse("50%").resolve(resolver).toJSON(), {
+  t.deepEqual(AnglePercentage.resolve(parse("50%")).toJSON(), {
     type: "angle",
-    value: 45,
+    value: 180,
     unit: "deg",
   });
 });
 
 test("resolve() resolves percentage calculations", (t) => {
-  t.deepEqual(parse("calc((12% + 9%) * 2)").resolve(resolver).toJSON(), {
-    type: "angle",
-    value: 37.8,
-    unit: "deg",
-  });
+  t.deepEqual(
+    AnglePercentage.resolve(parse("calc((12% + 9%) * 2)")).toJSON(),
+    {
+      type: "angle",
+      value: 151.2,
+      unit: "deg",
+    },
+  );
 });
 
 test("resolve() resolves mix of angles and percentages", (t) => {
-  t.deepEqual(parse("calc(0.5turn + 10%)").resolve(resolver).toJSON(), {
-    type: "angle",
-    value: 189,
-    unit: "deg",
-  });
+  t.deepEqual(
+    AnglePercentage.resolve(parse("calc(0.5turn + 10%)")).toJSON(),
+    {
+      type: "angle",
+      value: 216,
+      unit: "deg",
+    },
+  );
 });

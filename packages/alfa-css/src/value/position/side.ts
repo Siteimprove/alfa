@@ -5,7 +5,7 @@ import { Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { LengthPercentage } from "../numeric";
-import { Resolvable } from "../resolvable";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Keywords } from "./keywords";
@@ -22,7 +22,9 @@ export class Side<
     O extends LengthPercentage = LengthPercentage,
   >
   extends Value<"side", Value.HasCalculation<[O]>>
-  implements Resolvable<Side.Canonical<S>, Side.Resolver>
+  implements
+    Resolvable<Side.Canonical<S>, Side.Resolver>,
+    PartiallyResolvable<Side.PartiallyResolved<S>, Side.PartialResolver>
 {
   public static of<S extends Keywords.Vertical | Keywords.Horizontal>(
     side: S,
@@ -75,6 +77,15 @@ export class Side<
     );
   }
 
+  public partiallyResolve(
+    resolver: Side.PartialResolver,
+  ): Side.PartiallyResolved<S> {
+    return new Side(
+      this._side,
+      this._offset.map(LengthPercentage.partiallyResolve(resolver)),
+    );
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof Side &&
@@ -121,16 +132,6 @@ export namespace Side {
   export type Resolver = LengthPercentage.Resolver;
 
   export type PartialResolver = LengthPercentage.PartialResolver;
-
-  export function partiallyResolve<
-    S extends Keywords.Vertical | Keywords.Horizontal,
-  >(resolver: PartialResolver): (side: Side<S>) => PartiallyResolved<S> {
-    return (side) =>
-      Side.of(
-        side.side,
-        side.offset.map(LengthPercentage.partiallyResolve(resolver)),
-      );
-  }
 
   export function isSide(value: unknown): value is Side {
     return value instanceof Side;

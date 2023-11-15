@@ -84,7 +84,7 @@ export namespace Image {
       Image.of(
         Selective.of(value.image)
           .if(URL.isURL, (url) => url.resolve())
-          .else(Gradient.partiallyResolve(resolver))
+          .else((gradient) => gradient.partiallyResolve(resolver))
           .get(),
       );
   }

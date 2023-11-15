@@ -35,11 +35,8 @@ test("parse() rejects math expressions with only numbers", (t) => {
 });
 
 test("partiallyResolve() returns a bare percentage", (t) => {
-  t.deepEqual(
-    Percentage.partiallyResolve(parse("calc((12% + 9%) * 2)")).toJSON(),
-    {
-      type: "percentage",
-      value: 0.42,
-    },
-  );
+  t.deepEqual(parse("calc((12% + 9%) * 2)").partiallyResolve().toJSON(), {
+    type: "percentage",
+    value: 0.42,
+  });
 });

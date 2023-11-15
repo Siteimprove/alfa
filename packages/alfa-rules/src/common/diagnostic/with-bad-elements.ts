@@ -69,7 +69,7 @@ export namespace WithBadElements {
 
   export function isWithBadElements(value: unknown): value is WithBadElements;
 
-  /** @public */
+  /** @public (knip) */
   export function isWithBadElements(value: unknown): value is WithBadElements {
     return value instanceof WithBadElements;
   }

@@ -96,7 +96,7 @@ export type AnglePercentage<U extends Unit.Angle = Unit.Angle> = AnglePercentage
 
 // @public (undocumented)
 export namespace AnglePercentage {
-    export class Calculated extends Dimension.Calculated<"angle-percentage"> implements Resolvable<Canonical, Resolver> {
+    export class Calculated extends Dimension.Calculated<"angle-percentage"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -104,7 +104,7 @@ export namespace AnglePercentage {
         // (undocumented)
         static of(value: Math_2<"angle-percentage">): Calculated;
         // (undocumented)
-        resolve(resolver: Resolver): Canonical;
+        resolve(): Canonical;
     }
     // (undocumented)
     export namespace Calculated {
@@ -140,9 +140,7 @@ export namespace AnglePercentage {
     export function of(value: Math_2<"angle-percentage">): Calculated;
     // (undocumented)
     export function of(value: Math_2<"percentage">): Percentage.Calculated;
-    export function resolve(resolver: Resolver): (value: AnglePercentage) => Canonical;
-    // (undocumented)
-    export type Resolver = Percentage.Resolver<"angle">;
+    export function resolve(value: AnglePercentage): Canonical;
     const // (undocumented)
     parse: Parser<AnglePercentage>;
 }
@@ -212,9 +210,10 @@ export namespace Box {
 }
 
 // Warning: (ae-forgotten-export) The symbol "BasicShape" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "PartiallyResolvable" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export class Circle<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"circle", Value.HasCalculation<[R, P]>> {
+export class Circle<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"circle", Value.HasCalculation<[R, P]>> implements Resolvable<Circle.Canonical, Circle.Resolver>, PartiallyResolvable<Circle.PartiallyResolved, Circle.PartialResolver> {
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -225,6 +224,8 @@ export class Circle<R extends Radius = Radius, P extends Position = Position> ex
     hash(hash: Hash): void;
     // (undocumented)
     static of<R extends Radius, P extends Position>(radius: R, center: P): Circle<R, P>;
+    // (undocumented)
+    partiallyResolve(resolver: Circle.PartialResolver): Circle.PartiallyResolved;
     // (undocumented)
     get radius(): R;
     // (undocumented)
@@ -248,8 +249,6 @@ export namespace Circle {
         // (undocumented)
         radius: Radius.JSON;
     }
-    // (undocumented)
-    export function partiallyResolve(resolver: PartialResolver): (value: Circle) => PartiallyResolved;
     // (undocumented)
     export type PartiallyResolved = Circle<Radius.PartiallyResolved, Position.PartiallyResolved>;
     // (undocumented)
@@ -392,22 +391,19 @@ export namespace Declaration {
     parseList: Parser<Iterable<Declaration>>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Type" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "Dimensions" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export type Dimension<T extends Type = Type> = Dimension.Calculated<T> | Dimension.Fixed<Dimensions<T>[0]>;
-
 // @public (undocumented)
 export namespace Dimension {
-    export abstract class Calculated<T extends Type = Type> extends Numeric.Calculated<T, Dimensions<T>[0]> implements Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown> {
+    // Warning: (ae-forgotten-export) The symbol "Type" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "DBase" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "DCanonicalUnit" needs to be exported by the entry point index.d.ts
+    export abstract class Calculated<T extends Type = Type, PR extends Type = T> extends Numeric.Calculated<T, DBase[T], PR> implements Resolvable<Fixed<DBase[T], DCanonicalUnit[DBase[T]]>, unknown>, PartiallyResolvable<any, any> {
         protected constructor(math: Numeric.ToMath<T>, type: T);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        hasCalculation(): this is Calculated<T>;
+        hasCalculation(): this is Calculated<T, PR>;
         // (undocumented)
-        abstract resolve(resolver?: unknown): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
+        abstract resolve(resolver?: unknown): Fixed<DBase[T], DCanonicalUnit[DBase[T]]>;
     }
     // (undocumented)
     export namespace Calculated {
@@ -416,10 +412,11 @@ export namespace Dimension {
         }
     }
     // Warning: (ae-forgotten-export) The symbol "Numeric_2" needs to be exported by the entry point index.d.ts
-    export abstract class Fixed<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends Dimensions<T>[1] = Dimensions<T>[1]> extends Numeric.Fixed<T> implements Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown>, Convertible<Dimensions<T>[1]>, Comparable<Fixed<T>> {
+    // Warning: (ae-forgotten-export) The symbol "DUnit" needs to be exported by the entry point index.d.ts
+    export abstract class Fixed<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends DUnit[T] = DUnit[T]> extends Numeric.Fixed<T> implements Resolvable<Fixed<T, DCanonicalUnit[T]>, unknown>, Convertible<DUnit[T]>, Comparable<Fixed<T>> {
         protected constructor(value: number, unit: U, type: T);
         // (undocumented)
-        get canonicalUnit(): Dimensions<T>[2];
+        get canonicalUnit(): DCanonicalUnit[T];
         // (undocumented)
         compare(value: Fixed<T>): Comparison;
         // (undocumented)
@@ -429,9 +426,9 @@ export namespace Dimension {
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        abstract hasUnit<V extends Dimensions<T>[1]>(unit: V): this is Fixed<T, V>;
+        abstract hasUnit<V extends DUnit[T]>(unit: V): this is Fixed<T, V>;
         // (undocumented)
-        abstract resolve(resolver?: unknown): Fixed<T, Dimensions<T>[2]>;
+        abstract resolve(resolver?: unknown): Fixed<T, DCanonicalUnit[T]>;
         // (undocumented)
         toJSON(): Fixed.JSON<T, U>;
         // (undocumented)
@@ -441,12 +438,12 @@ export namespace Dimension {
         // (undocumented)
         protected readonly _unit: U;
         // (undocumented)
-        abstract withUnit<V extends Dimensions<T>[1]>(unit: V): Fixed<T, V>;
+        abstract withUnit<V extends DUnit[T]>(unit: V): Fixed<T, V>;
     }
     // (undocumented)
     export namespace Fixed {
         // (undocumented)
-        export interface JSON<T extends Type = Type, U extends Dimensions<T>[1] = Dimensions<T>[1]> extends Numeric.Fixed.JSON<T> {
+        export interface JSON<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends DUnit[T] = DUnit[T]> extends Numeric.Fixed.JSON<T> {
             // (undocumented)
             unit: U;
         }
@@ -460,7 +457,7 @@ export namespace Dimension {
 }
 
 // @public (undocumented)
-export class Ellipse<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"ellipse", Value.HasCalculation<[R, P]>> {
+export class Ellipse<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"ellipse", Value.HasCalculation<[R, P]>> implements Resolvable<Ellipse.Canonical, Ellipse.Resolver>, PartiallyResolvable<Ellipse.PartiallyResolved, Ellipse.PartialResolver> {
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -471,6 +468,8 @@ export class Ellipse<R extends Radius = Radius, P extends Position = Position> e
     hash(hash: Hash): void;
     // (undocumented)
     static of<R extends Radius = Radius, P extends Position = Position>(rx: R, ry: R, center: P): Ellipse<R, P>;
+    // (undocumented)
+    partiallyResolve(resolver: Ellipse.PartialResolver): Ellipse.PartiallyResolved;
     // (undocumented)
     resolve(resolver: Ellipse.Resolver): Ellipse.Canonical;
     // (undocumented)
@@ -498,8 +497,6 @@ export namespace Ellipse {
         // (undocumented)
         ry: Radius.JSON;
     }
-    // (undocumented)
-    export function partiallyResolve(resolver: PartialResolver): (value: Ellipse) => PartiallyResolved;
     // (undocumented)
     export type PartiallyResolved = Ellipse<Radius.PartiallyResolved, Position.PartiallyResolved>;
     // (undocumented)
@@ -561,8 +558,6 @@ export namespace Gradient {
     import Item = item.Item;
     import Linear = linear.Linear;
     import Radial = radial.Radial;
-    // (undocumented)
-    export function partiallyResolve(resolver: PartialResolver): (value: Gradient) => PartiallyResolved;
     // (undocumented)
     export type PartiallyResolved = Linear.PartiallyResolved | Radial.PartiallyResolved;
     // (undocumented)
@@ -712,7 +707,7 @@ export namespace Image {
 // Warning: (ae-forgotten-export) The symbol "HasCalculation" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2> extends BasicShape<"inset", HasCalculation<O, C>> {
+export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2> extends BasicShape<"inset", HasCalculation<O, C>> implements Resolvable<Inset.Canonical, Inset.Resolver>, PartiallyResolvable<Inset.PartiallyResolved, Inset.PartialResolver> {
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -733,6 +728,8 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = C
     static of<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2>(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>): Inset<O, C>;
     // (undocumented)
     get offsets(): readonly [O, O, O, O];
+    // (undocumented)
+    partiallyResolve(resolver: Inset.PartialResolver): Inset.PartiallyResolved;
     // (undocumented)
     resolve(resolver: Inset.Resolver): Inset.Canonical;
     // (undocumented)
@@ -765,8 +762,6 @@ export namespace Inset {
     // (undocumented)
     export type Offset = LengthPercentage;
     // (undocumented)
-    export function partiallyResolve(resolver: PartialResolver): (value: Inset) => PartiallyResolved;
-    // (undocumented)
     export type PartiallyResolved = Inset<LengthPercentage.PartiallyResolved, Corner_2.PartiallyResolved>;
     // (undocumented)
     export type PartialResolver = LengthPercentage.PartialResolver;
@@ -786,6 +781,8 @@ export namespace Integer {
         equals(value: unknown): value is this;
         // (undocumented)
         static of(value: Math_2<"number">): Calculated;
+        // (undocumented)
+        partiallyResolve(): Canonical;
         // (undocumented)
         resolve(): Canonical;
         // (undocumented)
@@ -808,6 +805,8 @@ export namespace Integer {
         //
         // (undocumented)
         static of(value: number | Integer_2): Fixed;
+        // (undocumented)
+        partiallyResolve(): this;
         // (undocumented)
         resolve(): this;
         // (undocumented)
@@ -956,13 +955,15 @@ export type LengthPercentage<U extends Unit.Length = Unit.Length> = LengthPercen
 
 // @public (undocumented)
 export namespace LengthPercentage {
-    export class Calculated extends Dimension.Calculated<"length-percentage"> implements Resolvable<Length.Canonical, Resolver> {
+    export class Calculated extends Dimension.Calculated<"length-percentage"> implements Resolvable<Length.Canonical, Resolver>, PartiallyResolvable<Calculated, PartialResolver> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
         static of(value: Math_2<"length-percentage">): Calculated;
+        // (undocumented)
+        partiallyResolve(resolver: PartialResolver): this;
         // (undocumented)
         resolve(resolver: Resolver): Canonical;
     }
@@ -1016,7 +1017,7 @@ export namespace Lexer {
 }
 
 // @public (undocumented)
-export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V]>> implements Iterable_2<V>, Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>> {
+export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V]>> implements Iterable_2<V>, Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>>, PartiallyResolvable<List<Resolvable.PartiallyResolved<V>>, Resolvable.PartialResolver<V>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<V>;
     // (undocumented)
@@ -1029,6 +1030,8 @@ export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V
     map<U extends Value>(mapper: Mapper<V, U>): List<U>;
     // (undocumented)
     static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V>;
+    // (undocumented)
+    partiallyResolve(resolver?: Resolvable.PartialResolver<V>): List<Resolvable.PartiallyResolved<V>>;
     // (undocumented)
     resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>>;
     // (undocumented)
@@ -1053,9 +1056,9 @@ export namespace List {
         values: Array<Serializable.ToJSON<V>>;
     }
     const // (undocumented)
-    parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
+    parseCommaSeparated: <V extends Value<string, boolean, string, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
     const // (undocumented)
-    parseSpaceSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
+    parseSpaceSeparated: <V extends Value<string, boolean, string, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
 }
 
 // @public (undocumented)
@@ -1297,6 +1300,8 @@ namespace Number_2 {
         // (undocumented)
         static of(value: Math_2<"number">): Calculated;
         // (undocumented)
+        partiallyResolve(): Canonical;
+        // (undocumented)
         resolve(): Canonical;
         // (undocumented)
         toJSON(): Calculated.JSON;
@@ -1314,6 +1319,8 @@ namespace Number_2 {
         equals(value: unknown): value is this;
         // (undocumented)
         static of(value: number | Number_3): Fixed;
+        // (undocumented)
+        partiallyResolve(): this;
         // (undocumented)
         resolve(): this;
         // (undocumented)
@@ -1351,13 +1358,13 @@ export type Numeric<T extends Numeric.Type = Numeric.Type> = Numeric.Calculated<
 
 // @public (undocumented)
 export namespace Numeric {
-    export abstract class Calculated<T extends Type = Type, R extends Type = T> extends Value<T, true, R> implements Resolvable<Fixed<R>, never> {
+    export abstract class Calculated<T extends Type = Type, R extends Type = T, PR extends Type = R> extends Value<T, true, R, PR> implements Resolvable<Fixed<R>, never> {
         // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "Numeric" which is marked as @internal
         protected constructor(math: ToMath<T>, type: T);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        hasCalculation(): this is Calculated<T, R>;
+        hasCalculation(): this is Calculated<T, R, PR>;
         // (undocumented)
         hash(hash: Hash): void;
         // Warning: (ae-incompatible-release-tags) The symbol "math" is marked as @public, but its signature references "Numeric" which is marked as @internal
@@ -1385,7 +1392,7 @@ export namespace Numeric {
             math: Serializable.ToJSON<ToMath<T>>;
         }
     }
-    export abstract class Fixed<T extends Type = Type, R extends Type = T> extends Value<T, false, R> implements Resolvable<Fixed<R>, never>, Comparable<Fixed> {
+    export abstract class Fixed<T extends Type = Type, R extends Type = T, PR extends Type = R> extends Value<T, false, R, PR> implements Resolvable<Fixed<R>, never>, Comparable<Fixed> {
         protected constructor(value: number, type: T);
         // (undocumented)
         compare(value: Fixed<T>): Comparison;
@@ -1440,13 +1447,15 @@ export type Percentage<H extends Numeric_2.Type = Numeric_2.Type> = Percentage.C
 
 // @public (undocumented)
 export namespace Percentage {
-    export class Calculated<H extends Numeric_2.Type = Numeric_2.Type> extends Numeric.Calculated<"percentage", H> implements Resolvable<Canonicals[H], Resolver<H>> {
+    export class Calculated<H extends Numeric_2.Type = Numeric_2.Type> extends Numeric.Calculated<"percentage", H, "percentage"> implements Resolvable<Canonicals[H], Resolver<H>>, PartiallyResolvable<PartiallyResolved<H>, PartialResolver> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         hasCalculation(): this is Calculated<H>;
         // (undocumented)
         static of<H extends Numeric_2.Type = Numeric_2.Type>(value: Math_2<"percentage">): Calculated<H>;
+        // (undocumented)
+        partiallyResolve(): PartiallyResolved<H>;
         // (undocumented)
         resolve(): Canonical;
         // (undocumented)
@@ -1463,11 +1472,13 @@ export namespace Percentage {
     // (undocumented)
     export type Canonical = Fixed;
     // Warning: (ae-forgotten-export) The symbol "Canonicals" needs to be exported by the entry point index.d.ts
-    export class Fixed<H extends Numeric_2.Type = Numeric_2.Type> extends Numeric.Fixed<"percentage", "percentage" | H> implements Resolvable<Canonical | Canonicals[H], Resolver<H>> {
+    export class Fixed<H extends Numeric_2.Type = Numeric_2.Type> extends Numeric.Fixed<"percentage", "percentage" | H, "percentage"> implements Resolvable<Canonical | Canonicals[H], Resolver<H>>, PartiallyResolvable<PartiallyResolved<H>, PartialResolver> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         static of<H extends Numeric_2.Type = Numeric_2.Type>(value: number | Percentage_2): Fixed<H>;
+        // (undocumented)
+        partiallyResolve(): PartiallyResolved<H>;
         // (undocumented)
         resolve(): Canonical;
         // (undocumented)
@@ -1499,8 +1510,6 @@ export namespace Percentage {
     export function of<H extends Numeric_2.Type = Numeric_2.Type>(value: Math_2<"percentage">): Calculated<H>;
     // (undocumented)
     export function parse<H extends Numeric_2.Type = Numeric_2.Type>(input: Slice<Token>): Result<[Slice<Token>, Fixed<H> | Calculated<H>], string>;
-    // (undocumented)
-    export function partiallyResolve<H extends Numeric_2.Type>(value: Percentage<H>): PartiallyResolved<H>;
     // (undocumented)
     export type PartiallyResolved<H extends Numeric_2.Type> = Fixed<H>;
     // (undocumented)
@@ -1547,7 +1556,7 @@ export namespace Perspective {
 }
 
 // @public (undocumented)
-export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape<"polygon", Value.HasCalculation<[V]>> {
+export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape<"polygon", Value.HasCalculation<[V]>> implements Resolvable<Polygon.Canonical, Polygon.Resolver>, PartiallyResolvable<Polygon.PartiallyResolved, Polygon.PartialResolver> {
     // (undocumented)
     equals(value: Polygon): boolean;
     // (undocumented)
@@ -1558,6 +1567,8 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends LengthPerc
     hash(hash: Hash): void;
     // (undocumented)
     static of<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
+    // (undocumented)
+    partiallyResolve(resolver: Polygon.PartialResolver): Polygon.PartiallyResolved;
     // (undocumented)
     resolve(resolver: Polygon.Resolver): Polygon.Canonical;
     // (undocumented)
@@ -1584,8 +1595,6 @@ export namespace Polygon {
         vertices: Array_2<Serializable.ToJSON<Vertex<V>>>;
     }
     // (undocumented)
-    export function partiallyResolve(resolver: PartialResolver): (value: Polygon) => PartiallyResolved;
-    // (undocumented)
     export type PartiallyResolved = Polygon<Fill, LengthPercentage.PartiallyResolved>;
     // (undocumented)
     export type PartialResolver = LengthPercentage.PartialResolver;
@@ -1601,7 +1610,7 @@ export namespace Polygon {
 }
 
 // @public (undocumented)
-export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>> extends Value<"position", Value.HasCalculation<[HC, VC]>> implements Resolvable<Position.Canonical<H, V>, Position.Resolver> {
+export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>> extends Value<"position", Value.HasCalculation<[HC, VC]>> implements Resolvable<Position.Canonical<H, V>, Position.Resolver>, PartiallyResolvable<Position.PartiallyResolved<H, V>, Position.PartialResolver> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1610,6 +1619,8 @@ export class Position<H extends Position.Keywords.Horizontal = Position.Keywords
     get horizontal(): HC;
     // (undocumented)
     static of<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>>(horizontal: HC, vertical: VC): Position<H, V, HC, VC>;
+    // (undocumented)
+    partiallyResolve(resolver: Position.PartialResolver): Position.PartiallyResolved<H, V>;
     // (undocumented)
     resolve(resolver: Position.Resolver): Position.Canonical<H, V>;
     // (undocumented)
@@ -1639,8 +1650,6 @@ export namespace Position {
     import Side = side.Side;
     import Component = component.Component;
     // (undocumented)
-    export function partiallyResolve<H extends Keywords.Horizontal, V extends Keywords.Vertical>(resolver: PartialResolver): (value: Position<H, V>) => PartiallyResolved<H, V>;
-    // (undocumented)
     export type PartiallyResolved<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component_2.PartiallyResolved<H>, Component_2.PartiallyResolved<V>>;
     // (undocumented)
     export type PartialResolver = Component_2.PartialResolver;
@@ -1653,7 +1662,7 @@ export namespace Position {
 }
 
 // @public (undocumented)
-export class Radius<R extends LengthPercentage | Radius.Side = LengthPercentage | Radius.Side> extends BasicShape<"radius", Value.HasCalculation<[R]>> {
+export class Radius<R extends LengthPercentage | Radius.Side = LengthPercentage | Radius.Side> extends BasicShape<"radius", Value.HasCalculation<[R]>> implements Resolvable<Radius.Canonical, Radius.Resolver>, PartiallyResolvable<Radius.PartiallyResolved, Radius.PartialResolver> {
     // (undocumented)
     equals(value: Radius): boolean;
     // (undocumented)
@@ -1662,6 +1671,8 @@ export class Radius<R extends LengthPercentage | Radius.Side = LengthPercentage 
     hash(hash: Hash): void;
     // (undocumented)
     static of<R extends LengthPercentage | Radius.Side>(value: R): Radius<R>;
+    // (undocumented)
+    partiallyResolve(resolver: Radius.PartialResolver): Radius.PartiallyResolved;
     // (undocumented)
     resolve(resolver: Radius.Resolver): Radius.Canonical;
     // (undocumented)
@@ -1683,8 +1694,6 @@ export namespace Radius {
         // (undocumented)
         value: LengthPercentage.JSON | Keyword.JSON;
     }
-    // (undocumented)
-    export function PartiallyResolve(resolver: PartialResolver): (value: Radius) => PartiallyResolved;
     // (undocumented)
     export type PartiallyResolved = Radius<LengthPercentage.PartiallyResolved | Side>;
     // (undocumented)
@@ -2913,13 +2922,15 @@ export namespace Transform {
 }
 
 // @public (undocumented)
-export class Translate<X extends LengthPercentage = LengthPercentage, Y extends LengthPercentage = LengthPercentage, Z extends Length = Length> extends Function_3<"translate", Value.HasCalculation<[X, Y, Z]>> implements Resolvable<Translate.Canonical, Translate.Resolver> {
+export class Translate<X extends LengthPercentage = LengthPercentage, Y extends LengthPercentage = LengthPercentage, Z extends Length = Length> extends Function_3<"translate", Value.HasCalculation<[X, Y, Z]>> implements Resolvable<Translate.Canonical, Translate.Resolver>, PartiallyResolvable<Translate.PartiallyResolved, Translate.PartialResolver> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
     static of<X extends LengthPercentage = LengthPercentage, Y extends LengthPercentage = LengthPercentage, Z extends Length = Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+    // (undocumented)
+    partiallyResolve(resolver: Translate.PartialResolver): Translate.PartiallyResolved;
     // (undocumented)
     resolve(resolver: Translate.Resolver): Translate.Canonical;
     // (undocumented)
@@ -2950,8 +2961,6 @@ export namespace Translate {
         z: Length.JSON;
     }
     // (undocumented)
-    export function partiallyResolve(resolver: PartialResolver): (value: Translate) => PartiallyResolved;
-    // (undocumented)
     export type PartiallyResolved = Translate<LengthPercentage.PartiallyResolved, LengthPercentage.PartiallyResolved, Length.Canonical>;
     // (undocumented)
     export type PartialResolver = LengthPercentage.PartialResolver & Length.Resolver;
@@ -2962,7 +2971,7 @@ export namespace Translate {
 }
 
 // @public (undocumented)
-export class Tuple<T extends Array<Value>> extends Value<"tuple", Value.HasCalculation<T>> implements Resolvable<Tuple<Tuple.Resolved<T>>, Tuple.Resolver<T>> {
+export class Tuple<T extends Array<Value>> extends Value<"tuple", Value.HasCalculation<T>> implements Resolvable<Tuple<Tuple.Resolved<T>>, Tuple.Resolver<T>>, PartiallyResolvable<Tuple<Tuple.PartiallyResolved<T>>, Tuple.PartialResolver<T>> {
     // (undocumented)
     equals<T extends Array<Value>>(value: Tuple<T>): boolean;
     // (undocumented)
@@ -2971,6 +2980,8 @@ export class Tuple<T extends Array<Value>> extends Value<"tuple", Value.HasCalcu
     hash(hash: Hash): void;
     // (undocumented)
     static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T>;
+    // (undocumented)
+    partiallyResolve(resolver?: Tuple.PartialResolver<T>): Tuple<Tuple.PartiallyResolved<T>>;
     // (undocumented)
     resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>>;
     // (undocumented)
@@ -2990,6 +3001,13 @@ export namespace Tuple {
         // (undocumented)
         values: Serializable.ToJSON<T>;
     }
+    // (undocumented)
+    export type PartiallyResolved<T extends Array<Value>> = T extends [
+    infer Head extends Value,
+    ...infer Tail extends Array<Value>
+    ] ? [Resolvable.PartiallyResolved<Head>, ...PartiallyResolved<Tail>] : [];
+    // (undocumented)
+    export type PartialResolver<T extends Array<Value>> = T extends Array<infer V extends Value> ? Resolvable.PartialResolver<V> : never;
     // @internal
     export type Resolved<T extends Array<Value>> = T extends [
     infer Head extends Value,
@@ -3089,16 +3107,18 @@ export namespace URL {
 }
 
 // @public
-export abstract class Value<T extends string = string, CALC extends boolean = boolean, R extends string = T> implements Equatable, Hashable, Serializable<Value.JSON<T>>, Resolvable<Value<R, false>, Resolvable.Resolver<Value>> {
+export abstract class Value<T extends string = string, CALC extends boolean = boolean, R extends string = T, PR extends string = R> implements Equatable, Hashable, Serializable<Value.JSON<T>>, Resolvable<Value<R, false>, Resolvable.Resolver<Value>>, PartiallyResolvable<Value<PR>, Resolvable.PartialResolver<Value>> {
     protected constructor(type: T, hasCalculation: CALC);
     // (undocumented)
     abstract equals(value: unknown): value is this;
     // (undocumented)
-    hasCalculation(): this is Value<T, true, R>;
+    hasCalculation(): this is Value<T, true, R, PR>;
     // (undocumented)
     protected readonly _hasCalculation: CALC;
     // (undocumented)
     abstract hash(hash: Hash): void;
+    // (undocumented)
+    partiallyResolve(resolver?: unknown): Value<PR>;
     // (undocumented)
     abstract resolve(resolver?: unknown): Value<R, false>;
     // (undocumented)

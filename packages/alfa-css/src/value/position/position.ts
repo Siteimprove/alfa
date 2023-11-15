@@ -4,11 +4,10 @@ import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
-import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
 import { Length } from "../numeric";
-import { Resolvable } from "../resolvable";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import * as component from "./component";
@@ -35,7 +34,12 @@ export class Position<
     VC extends Position.Component<V> = Position.Component<V>,
   >
   extends Value<"position", Value.HasCalculation<[HC, VC]>>
-  implements Resolvable<Position.Canonical<H, V>, Position.Resolver>
+  implements
+    Resolvable<Position.Canonical<H, V>, Position.Resolver>,
+    PartiallyResolvable<
+      Position.PartiallyResolved<H, V>,
+      Position.PartialResolver
+    >
 {
   public static of<
     H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
@@ -73,6 +77,15 @@ export class Position<
         length: resolver.length,
         percentageBase: resolver.percentageVBase,
       })(this._vertical),
+    );
+  }
+
+  public partiallyResolve(
+    resolver: Position.PartialResolver,
+  ): Position.PartiallyResolved<H, V> {
+    return new Position(
+      Position.Component.partiallyResolve<H>(resolver)(this._horizontal),
+      Position.Component.partiallyResolve<V>(resolver)(this._vertical),
     );
   }
 
@@ -140,19 +153,6 @@ export namespace Position {
   }
 
   export type PartialResolver = Component.PartialResolver;
-
-  export function partiallyResolve<
-    H extends Keywords.Horizontal,
-    V extends Keywords.Vertical,
-  >(
-    resolver: PartialResolver,
-  ): (value: Position<H, V>) => PartiallyResolved<H, V> {
-    return (value) =>
-      Position.of(
-        Component.partiallyResolve<H>(resolver)(value.horizontal),
-        Component.partiallyResolve<V>(resolver)(value.vertical),
-      );
-  }
 
   /**
    * @remarks
