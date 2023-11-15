@@ -8,7 +8,6 @@
   "files": [
     "src/context.ts",
     "src/index.ts",
-    "src/selector.ts",
     "src/selector/combinator.ts",
     "src/selector/complex.ts",
     "src/selector/compound.ts",
@@ -16,7 +15,6 @@
     "src/selector/list.ts",
     "src/selector/relative.ts",
     "src/selector/selector.ts",
-    "src/selector/simple.ts",
     "src/selector/simple/attribute.ts",
     "src/selector/simple/class.ts",
     "src/selector/simple/id.ts",

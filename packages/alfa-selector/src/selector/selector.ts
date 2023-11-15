@@ -5,9 +5,10 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+import type { Context } from "../context";
+
 import type { Complex } from "./complex";
 import type { Compound } from "./compound";
-import type { Context } from "../context";
 import type { Relative } from "./relative";
 import type { Simple } from "./simple";
 

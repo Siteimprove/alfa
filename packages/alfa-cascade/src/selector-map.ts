@@ -15,7 +15,19 @@ import { Media } from "@siteimprove/alfa-media";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Context, Selector } from "@siteimprove/alfa-selector";
+import {
+  Attribute,
+  Class,
+  Combinator,
+  Complex,
+  Compound,
+  Context,
+  Id,
+  PseudoClass,
+  PseudoElement,
+  Selector,
+  Type,
+} from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -24,25 +36,21 @@ import { AncestorFilter } from "./ancestor-filter";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
-const {
-  Attribute: { isAttribute },
-  Class: { isClass },
-  Complex: { isComplex },
-  Compound: { isCompound },
-  Id: { isId },
-  Type: { isType },
-  PseudoClass: { isPseudoClass },
-  PseudoElement: { isPseudoElement },
-} = Selector;
+
+const { isAttribute } = Attribute;
+const { isClass } = Class;
+const { isComplex } = Complex;
+const { isCompound } = Compound;
+const { isId } = Id;
+const { isPseudoClass } = PseudoClass;
+const { isPseudoElement } = PseudoElement;
+const { isType } = Type;
 
 const isDescendantSelector = and(
   isComplex,
   property(
     "combinator",
-    equals(
-      Selector.Combinator.Descendant,
-      Selector.Combinator.DirectDescendant,
-    ),
+    equals(Combinator.Descendant, Combinator.DirectDescendant),
   ),
 );
 
@@ -430,9 +438,7 @@ export namespace SelectorMap {
  * key selector. If the right-most selector is a compound selector, then the
  * left-most ID, class, or type selector of the compound selector is returned.
  */
-function getKeySelector(
-  selector: Selector,
-): Selector.Id | Selector.Class | Selector.Type | null {
+function getKeySelector(selector: Selector): Id | Class | Type | null {
   if (isId(selector) || isClass(selector) || isType(selector)) {
     return selector;
   }
@@ -522,8 +528,8 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
     const { combinator } = selector;
 
     if (
-      combinator === Selector.Combinator.Descendant ||
-      combinator === Selector.Combinator.DirectDescendant
+      combinator === Combinator.Descendant ||
+      combinator === Combinator.DirectDescendant
     ) {
       // Complex selectors are left-leaning, so recurse to the right first as it
       // is likely the shortest branch.
