@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -50,14 +50,10 @@ export default Rule.Atomic.of<Page, Element>({
                     device,
                     tee(
                       (previousLevel) => previousLevel >= currentLevel - 1,
-                      (p) => {
-                        previousLevel = p;
-                      },
+                      (p) => (previousLevel = p),
                     ),
                   )(previousHeading),
-                (c) => {
-                  currentLevel = c;
-                },
+                (c) => (currentLevel = c),
               ),
             )(target),
             () =>

@@ -6,7 +6,7 @@ import { Option } from "@siteimprove/alfa-option";
 /**
  * @internal
  */
-export type HeadingPosition = "previous" | "next" | "unknown";
+export type HeadingPosition = "previous" | "next";
 
 /**
  * @public

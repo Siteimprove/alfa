@@ -37,4 +37,5 @@ export namespace Diagnostic {
   export import WithBadElements = diagnostic.WithBadElements;
   export import WithRole = diagnostic.WithRole;
   export import WithAccessibleName = diagnostic.WithAccessibleName;
+  export import WithOtherHeading = diagnostic.WithOtherHeading;
 }
