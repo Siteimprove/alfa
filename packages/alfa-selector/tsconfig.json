@@ -24,6 +24,7 @@
     "src/selector/simple/simple.ts",
     "src/selector/simple/type.ts",
     "src/selector/simple/universal.ts",
+    "test/parser.ts",
     "test/selector.spec.tsx"
   ],
   "references": [
