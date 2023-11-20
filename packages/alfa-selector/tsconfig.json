@@ -25,7 +25,12 @@
     "src/selector/simple/type.ts",
     "src/selector/simple/universal.ts",
     "test/parser.ts",
-    "test/selector.spec.tsx"
+    "test/basic.spec.ts",
+    "test/complex.spec.ts",
+    "test/compound.spec.ts",
+    "test/list.spec.ts",
+    "test/pseudo-class.spec.tsx",
+    "test/pseudo-element.spec.ts"
   ],
   "references": [
     { "path": "../alfa-array" },
