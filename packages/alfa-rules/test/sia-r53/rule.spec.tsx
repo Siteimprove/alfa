@@ -21,10 +21,10 @@ test("evaluate() passes when the document headings are structured", async (t) =>
 
   t.deepEqual(await evaluate(R53, { document }), [
     passed(R53, target1, {
-      1: Outcomes.IsStructured(first),
+      1: Outcomes.IsStructured(first, 2, 1),
     }),
     passed(R53, target2, {
-      1: Outcomes.IsStructured(target1),
+      1: Outcomes.IsStructured(target1, 3, 2),
     }),
   ]);
 });
@@ -46,13 +46,13 @@ test("evaluate() fails when the document headings are not properly structured", 
 
   t.deepEqual(await evaluate(R53, { document }), [
     failed(R53, target1, {
-      1: Outcomes.IsNotStructured(first),
+      1: Outcomes.IsNotStructured(first, 3, 1),
     }),
     passed(R53, target2, {
-      1: Outcomes.IsStructured(target1),
+      1: Outcomes.IsStructured(target1, 2, 3),
     }),
     failed(R53, target3, {
-      1: Outcomes.IsNotStructured(target2),
+      1: Outcomes.IsNotStructured(target2, 6, 2),
     }),
   ]);
 });
@@ -83,10 +83,10 @@ test("evaluate() ignore headings that are not exposed", async (t) => {
 
   t.deepEqual(await evaluate(R53, { document }), [
     passed(R53, target1, {
-      1: Outcomes.IsStructured(first),
+      1: Outcomes.IsStructured(first, 2, 1),
     }),
     passed(R53, target2, {
-      1: Outcomes.IsStructured(target1),
+      1: Outcomes.IsStructured(target1, 2, 2),
     }),
   ]);
 });

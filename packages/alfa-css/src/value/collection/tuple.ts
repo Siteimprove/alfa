@@ -1,7 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import type { Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 /**
@@ -9,7 +9,12 @@ import { Value } from "../value";
  */
 export class Tuple<T extends Array<Value>>
   extends Value<"tuple", Value.HasCalculation<T>>
-  implements Resolvable<Tuple<Tuple.Resolved<T>>, Tuple.Resolver<T>>
+  implements
+    Resolvable<Tuple<Tuple.Resolved<T>>, Tuple.Resolver<T>>,
+    PartiallyResolvable<
+      Tuple<Tuple.PartiallyResolved<T>>,
+      Tuple.PartialResolver<T>
+    >
 {
   public static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T> {
     return new Tuple(values);
@@ -29,6 +34,16 @@ export class Tuple<T extends Array<Value>>
   public resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>> {
     return new Tuple<Tuple.Resolved<T>>(
       this._values.map((value) => value.resolve(resolver)) as Tuple.Resolved<T>,
+    );
+  }
+
+  public partiallyResolve(
+    resolver?: Tuple.PartialResolver<T>,
+  ): Tuple<Tuple.PartiallyResolved<T>> {
+    return new Tuple<Tuple.PartiallyResolved<T>>(
+      this._values.map((value) =>
+        value.resolve(resolver),
+      ) as Tuple.PartiallyResolved<T>,
     );
   }
 
@@ -94,6 +109,13 @@ export namespace Tuple {
     ? [Resolvable.Resolved<Head>, ...Resolved<Tail>]
     : [];
 
+  export type PartiallyResolved<T extends Array<Value>> = T extends [
+    infer Head extends Value,
+    ...infer Tail extends Array<Value>,
+  ]
+    ? [Resolvable.PartiallyResolved<Head>, ...PartiallyResolved<Tail>]
+    : [];
+
   /**
    * Applying Resolver<T> to all members of a tuple, collapsing them into
    * a single union
@@ -104,5 +126,11 @@ export namespace Tuple {
     infer V extends Value
   >
     ? Resolvable.Resolver<V>
+    : never;
+
+  export type PartialResolver<T extends Array<Value>> = T extends Array<
+    infer V extends Value
+  >
+    ? Resolvable.PartialResolver<V>
     : never;
 }

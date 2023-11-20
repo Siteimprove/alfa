@@ -10,7 +10,7 @@ import {
 
 import { Token } from "../../syntax";
 
-import { Resolvable } from "../resolvable";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 
 import type { Angle } from "./angle";
 import type { Integer } from "./integer";
@@ -54,13 +54,17 @@ export type Percentage<H extends BaseNumeric.Type = BaseNumeric.Type> =
 export namespace Percentage {
   export type Canonical = Fixed;
 
+  export type PartiallyResolved<H extends BaseNumeric.Type> = Fixed<H>;
+
   /**
    * Percentages that are the result of a calculation.
    *
    */
   export class Calculated<H extends BaseNumeric.Type = BaseNumeric.Type>
-    extends Numeric.Calculated<"percentage", H>
-    implements Resolvable<Canonicals[H], Resolver<H>>
+    extends Numeric.Calculated<"percentage", H, "percentage">
+    implements
+      Resolvable<Canonicals[H], Resolver<H>>,
+      PartiallyResolvable<PartiallyResolved<H>, PartialResolver>
   {
     public static of<H extends BaseNumeric.Type = BaseNumeric.Type>(
       value: Math<"percentage">,
@@ -97,6 +101,15 @@ export namespace Percentage {
           (resolver.percentageBase.scale(percentage.value) as T);
     }
 
+    public partiallyResolve(): PartiallyResolved<H> {
+      return Fixed.of<H>(
+        this._math
+          .resolve()
+          // Since the expression has been correctly typed, it should always resolve.
+          .getUnsafe(`Could not resolve ${this} as a percentage`),
+      );
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof Calculated && super.equals(value);
     }
@@ -117,8 +130,10 @@ export namespace Percentage {
    * Percentages that are a fixed (not calculated) value.
    */
   export class Fixed<H extends BaseNumeric.Type = BaseNumeric.Type>
-    extends Numeric.Fixed<"percentage", "percentage" | H>
-    implements Resolvable<Canonical | Canonicals[H], Resolver<H>>
+    extends Numeric.Fixed<"percentage", "percentage" | H, "percentage">
+    implements
+      Resolvable<Canonical | Canonicals[H], Resolver<H>>,
+      PartiallyResolvable<PartiallyResolved<H>, PartialResolver>
   {
     public static of<H extends BaseNumeric.Type = BaseNumeric.Type>(
       value: number | BasePercentage,
@@ -145,6 +160,10 @@ export namespace Percentage {
           // the abstract one on Numeric and loses its actual type which needs
           // to be asserted again.
           (resolver.percentageBase.scale(this._value) as T);
+    }
+
+    public partiallyResolve(): PartiallyResolved<H> {
+      return this;
     }
 
     public scale(factor: number): Fixed<H> {
@@ -176,21 +195,6 @@ export namespace Percentage {
     : { percentageBase: Canonicals[H] };
 
   export type PartialResolver = never;
-
-  export type PartiallyResolved<H extends BaseNumeric.Type> = Fixed<H>;
-
-  export function partiallyResolve<H extends BaseNumeric.Type>(
-    value: Percentage<H>,
-  ): PartiallyResolved<H> {
-    return isFixed(value)
-      ? value
-      : Fixed.of<H>(
-          value.math
-            .resolve()
-            // Since the expression has been correctly typed, it should always resolve.
-            .getUnsafe(`Could not resolve ${value} as a percentage`),
-        );
-  }
 
   export function isCalculated(value: unknown): value is Calculated {
     return value instanceof Calculated;

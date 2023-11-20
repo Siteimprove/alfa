@@ -1,7 +1,6 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -11,6 +10,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { Scope, Stability } from "../tags";
+import { WithOtherHeading } from "../common/diagnostic";
+
 import isText = Text.isText;
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
@@ -135,11 +136,12 @@ export namespace Outcomes {
     nextLevel: number,
   ) =>
     Ok.of(
-      WithNextHeading.of(
+      WithOtherHeading.of(
         "There is content between this heading and the next",
         nextHeading,
         currentLevel,
         nextLevel,
+        "next",
       ),
     );
 
@@ -149,118 +151,12 @@ export namespace Outcomes {
     nextLevel: number,
   ) =>
     Err.of(
-      WithNextHeading.of(
+      WithOtherHeading.of(
         "There is no content between this heading and the next",
         nextHeading,
         currentLevel,
         nextLevel,
+        "next",
       ),
     );
-}
-
-/**
- * @public
- */
-export class WithNextHeading extends Diagnostic {
-  public static of(message: string): Diagnostic;
-
-  public static of(
-    message: string,
-    nextHeading: Option<Element>,
-    currentLevel: number,
-    nextLevel: number,
-  ): WithNextHeading;
-
-  public static of(
-    message: string,
-    nextHeading?: Option<Element>,
-    currentLevel?: number,
-    nextLevel?: number,
-  ): Diagnostic {
-    return nextHeading === undefined ||
-      currentLevel === undefined ||
-      nextLevel === undefined
-      ? Diagnostic.of(message)
-      : new WithNextHeading(message, nextHeading, currentLevel, nextLevel);
-  }
-
-  private readonly _nextHeading: Option<Element>;
-  private readonly _currentLevel: number;
-  private readonly _nextLevel: number;
-
-  private constructor(
-    message: string,
-    nextHeading: Option<Element>,
-    currentLevel: number,
-    nextLevel: number,
-  ) {
-    super(message);
-    this._nextHeading = nextHeading;
-    this._currentLevel = currentLevel;
-    this._nextLevel = nextLevel;
-  }
-
-  public get nextHeading(): Option<Element> {
-    return this._nextHeading;
-  }
-
-  public get currentHeadingLevel(): number {
-    return this._currentLevel;
-  }
-
-  public get nextHeadingLevel(): number {
-    return this._nextLevel;
-  }
-
-  public equals(value: WithNextHeading): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return (
-      value instanceof WithNextHeading &&
-      value._message === this._message &&
-      value._nextHeading.equals(this._nextHeading) &&
-      value._currentLevel === this._currentLevel &&
-      value._nextLevel === this._nextLevel
-    );
-  }
-
-  public hash(hash: Hash) {
-    super.hash(hash);
-    hash.writeNumber(this._currentLevel);
-    hash.writeNumber(this._nextLevel);
-    this._nextHeading.hash(hash);
-  }
-
-  public toJSON(): WithNextHeading.JSON {
-    return {
-      ...super.toJSON(),
-      nextHeading: this._nextHeading.toJSON(),
-      currentHeadingLevel: this._currentLevel,
-      nextHeadingLevel: this._nextLevel,
-    };
-  }
-}
-
-/**
- * @public
- */
-export namespace WithNextHeading {
-  export interface JSON extends Diagnostic.JSON {
-    nextHeading: Option.JSON<Element>;
-    currentHeadingLevel: number;
-    nextHeadingLevel: number;
-  }
-
-  export function isWithNextHeading(
-    value: Diagnostic,
-  ): value is WithNextHeading;
-
-  export function isWithNextHeading(value: unknown): value is WithNextHeading;
-
-  /**@public */
-  export function isWithNextHeading(value: unknown): value is WithNextHeading {
-    return value instanceof WithNextHeading;
-  }
 }

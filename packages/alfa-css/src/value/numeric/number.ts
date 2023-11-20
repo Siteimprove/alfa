@@ -51,6 +51,10 @@ export namespace Number {
       );
     }
 
+    public partiallyResolve(): Canonical {
+      return this.resolve();
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof Calculated && super.equals(value);
     }
@@ -83,6 +87,10 @@ export namespace Number {
     }
 
     public resolve(): this {
+      return this;
+    }
+
+    public partiallyResolve(): this {
       return this;
     }
 

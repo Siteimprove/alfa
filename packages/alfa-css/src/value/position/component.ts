@@ -48,7 +48,7 @@ export namespace Component {
     S extends Keywords.Horizontal | Keywords.Vertical,
   >(resolver: PartialResolver): (value: Component<S>) => PartiallyResolved<S> {
     return (value) =>
-      Side.isSide(value) ? Side.partiallyResolve<S>(resolver)(value) : value;
+      Side.isSide(value) ? value.partiallyResolve(resolver) : value;
   }
 
   /**

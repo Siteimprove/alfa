@@ -38,16 +38,6 @@ export namespace Gradient {
 
   export type PartialResolver = Linear.PartialResolver & Radial.PartialResolver;
 
-  export function partiallyResolve(
-    resolver: PartialResolver,
-  ): (value: Gradient) => PartiallyResolved {
-    return (value) =>
-      Selective.of(value)
-        .if(Linear.isLinear, Linear.partiallyResolve(resolver))
-        .else(Radial.partiallyResolve(resolver))
-        .get();
-  }
-
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-gradient}
    */

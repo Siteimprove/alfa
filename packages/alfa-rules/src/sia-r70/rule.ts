@@ -36,7 +36,6 @@ const isDeprecated = hasName(
   "font",
   "frame",
   "frameset",
-  "hgroup",
   "image",
   "keygen",
   "marquee",
