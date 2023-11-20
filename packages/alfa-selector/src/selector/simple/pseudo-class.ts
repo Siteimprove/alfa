@@ -37,7 +37,7 @@ import {
   PseudoClassSelector,
   Root,
   Visited,
-} from "../pseudo-class";
+} from "./pseudo-class/index";
 
 const { either, end, left, mapResult, peek, right } = Parser;
 

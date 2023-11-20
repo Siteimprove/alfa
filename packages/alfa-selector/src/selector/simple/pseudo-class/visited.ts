@@ -1,6 +1,6 @@
 import type { Element } from "@siteimprove/alfa-dom";
 
-import { Context } from "../../context";
+import { Context } from "../../../context";
 
 import { PseudoClassSelector } from "./pseudo-class";
 

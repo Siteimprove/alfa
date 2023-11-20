@@ -2,10 +2,10 @@ import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Context } from "../../context";
-import type { Absolute } from "../../selector";
+import type { Context } from "../../../context";
+import type { Absolute } from "../../../selector";
 
-import { WithName } from "../selector";
+import { WithName } from "../../selector";
 
 const { map, right } = Parser;
 

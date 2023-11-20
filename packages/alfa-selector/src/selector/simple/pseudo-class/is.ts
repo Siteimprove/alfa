@@ -1,23 +1,23 @@
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Serializable } from "@siteimprove/alfa-json";
 
-import type { Context } from "../../context";
-import type { Absolute } from "../../selector";
+import type { Context } from "../../../context";
+import type { Absolute } from "../../../selector";
 
 import { PseudoClassSelector } from "./pseudo-class";
 
 /**
- * {@link https://drafts.csswg.org/selectors/#negation-pseudo}
+ * {@link https://drafts.csswg.org/selectors/#matches-pseudo}
  */
-export class Not extends PseudoClassSelector<"not"> {
-  public static of(selector: Absolute): Not {
-    return new Not(selector);
+export class Is extends PseudoClassSelector<"is"> {
+  public static of(selector: Absolute): Is {
+    return new Is(selector);
   }
 
   private readonly _selector: Absolute;
 
   private constructor(selector: Absolute) {
-    super("not");
+    super("is");
     this._selector = selector;
   }
 
@@ -25,23 +25,23 @@ export class Not extends PseudoClassSelector<"not"> {
     return this._selector;
   }
 
-  public *[Symbol.iterator](): Iterator<Not> {
+  public *[Symbol.iterator](): Iterator<Is> {
     yield this;
   }
 
   public matches(element: Element, context?: Context): boolean {
-    return !this._selector.matches(element, context);
+    return this._selector.matches(element, context);
   }
 
-  public equals(value: Not): boolean;
+  public equals(value: Is): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof Not && value._selector.equals(this._selector);
+    return value instanceof Is && value._selector.equals(this._selector);
   }
 
-  public toJSON(): Not.JSON {
+  public toJSON(): Is.JSON {
     return {
       ...super.toJSON(),
       selector: this._selector.toJSON(),
@@ -53,8 +53,8 @@ export class Not extends PseudoClassSelector<"not"> {
   }
 }
 
-export namespace Not {
-  export interface JSON extends PseudoClassSelector.JSON<"not"> {
+export namespace Is {
+  export interface JSON extends PseudoClassSelector.JSON<"is"> {
     selector: Serializable.ToJSON<Absolute>;
   }
 }
