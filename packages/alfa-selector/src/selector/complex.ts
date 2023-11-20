@@ -3,6 +3,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../context";
 import type { Absolute } from "../selector";
@@ -143,7 +144,7 @@ export namespace Complex {
    *
    * @internal
    */
-  export const parseComplex = (parseSelector: () => CSSParser<Absolute>) =>
+  export const parseComplex = (parseSelector: Thunk<CSSParser<Absolute>>) =>
     map(
       pair(
         Compound.parseCompound(parseSelector),

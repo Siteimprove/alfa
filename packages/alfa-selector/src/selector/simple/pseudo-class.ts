@@ -1,12 +1,7 @@
-import {
-  Function,
-  Nth,
-  type Parser as CSSParser,
-  Token,
-} from "@siteimprove/alfa-css";
+import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute } from "../../selector";
 
@@ -39,7 +34,12 @@ import {
   Visited,
 } from "./pseudo-class/index";
 
-const { either, end, left, mapResult, peek, right } = Parser;
+const { either } = Parser;
+const {
+  parseFunctionalWithNth,
+  parseFunctionalWithSelector,
+  parseNonFunctional,
+} = PseudoClassSelector;
 
 export type PseudoClass =
   | Active
@@ -103,109 +103,38 @@ export namespace PseudoClass {
     return value instanceof PseudoClassSelector;
   }
 
-  const parseNth = left(
-    Nth.parse,
-    end((token) => `Unexpected token ${token}`),
-  );
-
   export function parse(
-    parseSelector: () => CSSParser<Absolute>,
+    parseSelector: Thunk<CSSParser<Absolute>>,
   ): CSSParser<PseudoClass> {
-    return right(
-      Token.parseColon,
-      either(
-        // Non-functional pseudo-classes
-        mapResult(Token.parseIdent(), (ident) => {
-          switch (ident.value) {
-            case "hover":
-              return Result.of<PseudoClass, string>(Hover.of());
-            case "active":
-              return Result.of(Active.of());
-            case "focus":
-              return Result.of(Focus.of());
-            case "focus-within":
-              return Result.of(FocusWithin.of());
-            case "focus-visible":
-              return Result.of(FocusVisible.of());
-            case "link":
-              return Result.of(Link.of());
-            case "visited":
-              return Result.of(Visited.of());
-            case "disabled":
-              return Result.of(Disabled.of());
-            case "enabled":
-              return Result.of(Enabled.of());
-            case "root":
-              return Result.of(Root.of());
-            case "host":
-              return Result.of(Host.of());
-            case "empty":
-              return Result.of(Empty.of());
-            case "first-child":
-              return Result.of(FirstChild.of());
-            case "last-child":
-              return Result.of(LastChild.of());
-            case "only-child":
-              return Result.of(OnlyChild.of());
-            case "first-of-type":
-              return Result.of(FirstOfType.of());
-            case "last-of-type":
-              return Result.of(LastOfType.of());
-            case "only-of-type":
-              return Result.of(OnlyOfType.of());
-          }
+    return either<Slice<Token>, PseudoClass, string>(
+      parseNonFunctional("hover", Hover.of),
+      parseNonFunctional("active", Active.of),
+      parseNonFunctional("focus", Focus.of),
+      parseNonFunctional("focus-within", FocusWithin.of),
+      parseNonFunctional("focus-visible", FocusVisible.of),
+      parseNonFunctional("link", Link.of),
+      parseNonFunctional("visited", Visited.of),
+      parseNonFunctional("disabled", Disabled.of),
+      parseNonFunctional("enabled", Enabled.of),
+      parseNonFunctional("root", Root.of),
+      parseNonFunctional("host", Host.of),
+      parseNonFunctional("empty", Empty.of),
+      parseNonFunctional("first-child", FirstChild.of),
+      parseNonFunctional("last-child", LastChild.of),
+      parseNonFunctional("only-child", OnlyChild.of),
+      parseNonFunctional("first-of-type", FirstOfType.of),
+      parseNonFunctional("last-of-type", LastOfType.of),
+      parseNonFunctional("only-of-type", OnlyOfType.of),
 
-          return Err.of(`Unknown pseudo-class :${ident.value}`);
-        }),
-
-        // Functional pseudo-classes
-        mapResult(
-          right(peek(Token.parseFunction()), Function.consume),
-          (fn) => {
-            const { name } = fn;
-            const tokens = Slice.of(fn.value);
-
-            switch (name) {
-              // :<name>(<selector-list>)
-              // :has() normally only accepts relative selectors, we currently
-              // accept all.
-              case "is":
-              case "not":
-              case "has":
-                return parseSelector()(tokens).map(([, selector]) => {
-                  switch (name) {
-                    case "is":
-                      return Is.of(selector) as PseudoClass;
-                    case "not":
-                      return Not.of(selector);
-                    case "has":
-                      return Has.of(selector);
-                  }
-                });
-
-              // :<name>(<an+b>)
-              case "nth-child":
-              case "nth-last-child":
-              case "nth-of-type":
-              case "nth-last-of-type":
-                return parseNth(tokens).map(([, nth]) => {
-                  switch (name) {
-                    case "nth-child":
-                      return NthChild.of(nth);
-                    case "nth-last-child":
-                      return NthLastChild.of(nth);
-                    case "nth-of-type":
-                      return NthOfType.of(nth);
-                    case "nth-last-of-type":
-                      return NthLastOfType.of(nth);
-                  }
-                });
-            }
-
-            return Err.of(`Unknown pseudo-class :${fn.name}()`);
-          },
-        ),
-      ),
+      parseFunctionalWithNth("nth-child", NthChild.of),
+      parseFunctionalWithNth("nth-last-child", NthLastChild.of),
+      parseFunctionalWithNth("nth-of-type", NthOfType.of),
+      parseFunctionalWithNth("nth-last-of-type", NthLastOfType.of),
+      // :has() normally only accepts relative selectors, we currently
+      // accept only non-relative ones…
+      parseFunctionalWithSelector("has", parseSelector, Has.of),
+      parseFunctionalWithSelector("is", parseSelector, Is.of),
+      parseFunctionalWithSelector("not", parseSelector, Not.of),
     );
   }
 }

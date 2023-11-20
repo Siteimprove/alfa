@@ -1,13 +1,20 @@
-import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import {
+  Function,
+  Nth,
+  type Parser as CSSParser,
+  Token,
+} from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context";
 import type { Absolute } from "../../../selector";
 
 import { WithName } from "../../selector";
 
-const { map, right } = Parser;
+const { end, left, map, right } = Parser;
+const { parseColon } = Token;
 
 export abstract class PseudoClassSelector<
   N extends string = string,
@@ -52,7 +59,7 @@ export namespace PseudoClassSelector {
     name: string,
     of: () => T,
   ): CSSParser<T> {
-    return map(right(Token.parseColon, Token.parseIdent(name)), of);
+    return map(right(parseColon, Token.parseIdent(name)), of);
   }
 
   /**
@@ -60,9 +67,33 @@ export namespace PseudoClassSelector {
    *
    * @internal
    */
-  export function parseFunctionalSelector<T extends PseudoClassSelector>(
+  export function parseFunctionalWithSelector<T extends PseudoClassSelector>(
     name: string,
-    parseSelector: CSSParser<Absolute>,
+    parseSelector: Thunk<CSSParser<Absolute>>,
     of: (selector: Absolute) => T,
-  ) {}
+  ): CSSParser<T> {
+    return map(
+      right(parseColon, Function.parse(name, parseSelector)),
+      ([, selector]) => of(selector),
+    );
+  }
+
+  const parseNth = left(
+    Nth.parse,
+    end((token) => `Unexpected token ${token}`),
+  );
+
+  /**
+   * Parses a functional pseudo-class accepting a nth argument (an+b)
+   *
+   * @internal
+   */
+  export function parseFunctionalWithNth<T extends PseudoClassSelector>(
+    name: string,
+    of: (nth: Nth) => T,
+  ): CSSParser<T> {
+    return map(right(parseColon, Function.parse(name, parseNth)), ([, nth]) =>
+      of(nth),
+    );
+  }
 }

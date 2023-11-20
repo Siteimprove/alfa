@@ -6,6 +6,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context";
 import type { Absolute } from "../../../selector";
@@ -69,7 +70,7 @@ export namespace PseudoElement {
     return value instanceof PseudoElement;
   }
   export function parse(
-    parseSelector: () => CSSParser<Absolute>,
+    parseSelector: Thunk<CSSParser<Absolute>>,
   ): CSSParser<PseudoElement> {
     return either(
       // Functional pseudo-elements need to be first because ::cue and

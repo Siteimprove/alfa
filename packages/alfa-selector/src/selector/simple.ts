@@ -1,6 +1,7 @@
 import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute } from "../selector";
 
@@ -54,7 +55,7 @@ export namespace Simple {
    *
    * @internal
    */
-  export const parse = (parseSelector: () => CSSParser<Absolute>) =>
+  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
     either<Slice<Token>, Simple, string>(
       Class.parse,
       Type.parse,
