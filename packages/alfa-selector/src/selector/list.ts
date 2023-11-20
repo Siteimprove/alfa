@@ -5,10 +5,10 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Context } from "../context";
+import type { Absolute } from "../selector";
 
 import { Complex } from "./complex";
 import { Compound } from "./compound";
-import type { Absolute } from "./index";
 import { Relative } from "./relative";
 import { Selector } from "./selector";
 import { Simple } from "./simple";

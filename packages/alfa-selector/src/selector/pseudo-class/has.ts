@@ -1,6 +1,6 @@
 import type { Serializable } from "@siteimprove/alfa-json";
 
-import type { Absolute } from "../index";
+import type { Absolute } from "../../selector";
 
 import { PseudoClassSelector } from "./pseudo-class";
 

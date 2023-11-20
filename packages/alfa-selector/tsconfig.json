@@ -8,6 +8,7 @@
   "files": [
     "src/context.ts",
     "src/index.ts",
+    "src/selector.ts",
     "src/selector/combinator.ts",
     "src/selector/complex.ts",
     "src/selector/compound.ts",

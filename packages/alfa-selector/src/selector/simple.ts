@@ -2,7 +2,7 @@ import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Absolute } from "./index";
+import type { Absolute } from "../selector";
 
 import { PseudoElement } from "./pseudo-element/pseudo-element";
 

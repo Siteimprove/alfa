@@ -8,7 +8,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import type { Absolute, Selector } from "../index";
+import type { Absolute } from "../../selector";
 
 import {
   Active,
@@ -108,7 +108,7 @@ export namespace PseudoClass {
     end((token) => `Unexpected token ${token}`),
   );
 
-  export function parse<S extends Selector>(
+  export function parse(
     parseSelector: () => CSSParser<Absolute>,
   ): CSSParser<PseudoClass> {
     return right(

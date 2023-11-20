@@ -6,8 +6,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import type { Context } from "../context";
+import type { Absolute } from "../selector";
 
-import type { Absolute } from "./index";
 import { Selector } from "./selector";
 import { Simple } from "./simple";
 

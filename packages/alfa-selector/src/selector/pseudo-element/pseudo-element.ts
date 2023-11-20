@@ -7,12 +7,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Compound } from "../compound";
 import type { Context } from "../../context";
-import type { Absolute, Selector } from "../index";
+import type { Absolute } from "../../selector";
 
+import { Compound } from "../compound";
+import { type Selector, WithName } from "../selector";
 import type { Simple } from "../simple";
-import { WithName } from "../selector";
 
 const {
   either,

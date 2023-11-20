@@ -2,8 +2,7 @@ import type { Element } from "@siteimprove/alfa-dom";
 import type { Serializable } from "@siteimprove/alfa-json";
 
 import type { Context } from "../../context";
-
-import type { Absolute } from "../index";
+import type { Absolute } from "../../selector";
 
 import { PseudoClassSelector } from "./pseudo-class";
 
