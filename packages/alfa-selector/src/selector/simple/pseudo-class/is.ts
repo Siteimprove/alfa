@@ -1,5 +1,5 @@
 import type { Element } from "@siteimprove/alfa-dom";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 
 import type { Context } from "../../../context";
 

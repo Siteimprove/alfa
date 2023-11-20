@@ -1,0 +1,31 @@
+import { Element } from "@siteimprove/alfa-dom";
+
+import { PseudoClassSelector } from "./pseudo-class";
+
+const { hasName, isElement } = Element;
+
+/**
+ * {@link https://drafts.csswg.org/selectors/#last-of-type-pseudo}
+ */
+export class LastOfType extends PseudoClassSelector<"last-of-type"> {
+  public static of(): LastOfType {
+    return new LastOfType();
+  }
+
+  private constructor() {
+    super("last-of-type");
+  }
+
+  public *[Symbol.iterator](): Iterator<LastOfType> {
+    yield this;
+  }
+
+  public matches(element: Element): boolean {
+    return element
+      .inclusiveSiblings()
+      .filter(isElement)
+      .filter(hasName(element.name))
+      .last()
+      .includes(element);
+  }
+}
