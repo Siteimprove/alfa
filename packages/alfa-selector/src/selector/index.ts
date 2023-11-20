@@ -1,4 +1,5 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 // Import the various selectors for use in that file.
@@ -37,22 +38,11 @@ export type Absolute =
   | List<Simple | Compound | Complex>;
 
 /**
- * @internal
- */
-export namespace Absolute {
-  export type JSON =
-    | Simple.JSON
-    | Compound.JSON
-    | Complex.JSON
-    | List.JSON<Simple | Compound | Complex>;
-}
-
-/**
  * @public
  */
 export namespace Selector {
   export type JSON =
-    | Simple.JSON
+    | Serializable.ToJSON<Simple>
     | Compound.JSON
     | Complex.JSON
     | Relative.JSON

@@ -1,3 +1,4 @@
+import { Serializable } from "@siteimprove/alfa-json";
 import { Combinator } from "./combinator";
 import type { Complex } from "./complex";
 import type { Compound } from "./compound";
@@ -74,7 +75,7 @@ export class Relative extends Selector<"relative"> {
 export namespace Relative {
   export interface JSON extends Selector.JSON<"relative"> {
     combinator: string;
-    selector: Simple.JSON | Compound.JSON | Complex.JSON;
+    selector: Serializable.ToJSON<Simple> | Compound.JSON | Complex.JSON;
   }
 }
 

@@ -1,6 +1,7 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Context } from "../context";
@@ -129,8 +130,8 @@ export class Complex extends Selector<"complex"> {
 export namespace Complex {
   export interface JSON extends Selector.JSON<"complex"> {
     combinator: Combinator;
-    left: Simple.JSON | Compound.JSON | Complex.JSON;
-    right: Simple.JSON | Compound.JSON;
+    left: Serializable.ToJSON<Simple> | Compound.JSON | Complex.JSON;
+    right: Serializable.ToJSON<Simple> | Compound.JSON;
   }
 
   export function isComplex(value: unknown): value is Complex {

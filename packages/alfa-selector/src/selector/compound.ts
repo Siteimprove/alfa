@@ -1,6 +1,7 @@
 import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -75,8 +76,8 @@ export class Compound extends Selector<"compound"> {
 
 export namespace Compound {
   export interface JSON extends Selector.JSON<"compound"> {
-    left: Simple.JSON;
-    right: Simple.JSON | JSON;
+    left: Serializable.ToJSON<Simple>;
+    right: Serializable.ToJSON<Simple> | JSON;
   }
 
   export function isCompound(value: unknown): value is Compound {
