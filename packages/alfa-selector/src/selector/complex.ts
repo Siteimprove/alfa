@@ -3,10 +3,11 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Context } from "../context";
+
 import { Combinator } from "./combinator";
 import { Compound } from "./compound";
-import { Context } from "../context";
-import { List } from "./list";
+import type { Absolute } from "./index";
 import { Selector } from "./selector";
 import type { Simple } from "./simple";
 
@@ -141,11 +142,7 @@ export namespace Complex {
    *
    * @internal
    */
-  export const parseComplex = (
-    parseSelector: () => CSSParser<
-      Simple | Compound | Complex | List<Simple | Compound | Complex>
-    >,
-  ) =>
+  export const parseComplex = (parseSelector: () => CSSParser<Absolute>) =>
     map(
       pair(
         Compound.parseCompound(parseSelector),

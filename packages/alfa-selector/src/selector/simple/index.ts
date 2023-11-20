@@ -2,7 +2,9 @@ import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-// Import the various selectors for use in that file.
+import type { Absolute } from "../index";
+
+// Import the various simple selectors for use in that file.
 import { Attribute } from "./attribute";
 import { Class } from "./class";
 import { Id } from "./id";
@@ -19,10 +21,6 @@ export * from "./pseudo-class";
 export * from "./pseudo-element";
 export * from "./type";
 export * from "./universal";
-
-import type { Complex } from "../complex";
-import type { Compound } from "../compound";
-import type { List } from "../list";
 
 const { either } = Parser;
 
@@ -65,11 +63,7 @@ export namespace Simple {
    *
    * @internal
    */
-  export const parse = (
-    parseSelector: () => CSSParser<
-      Simple | Compound | Complex | List<Simple | Compound | Complex>
-    >,
-  ) =>
+  export const parse = (parseSelector: () => CSSParser<Absolute>) =>
     either<Slice<Token>, Simple, string>(
       Class.parse,
       Type.parse,

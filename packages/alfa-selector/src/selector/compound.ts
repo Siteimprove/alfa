@@ -3,10 +3,10 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Complex } from "./complex";
 
 import type { Context } from "../context";
-import { List } from "./list";
+
+import type { Absolute } from "./index";
 import { Selector } from "./selector";
 import { Simple } from "./simple";
 
@@ -89,11 +89,7 @@ export namespace Compound {
    * @internal
    */
   export const parseCompound = (
-    parseSelector: () => Parser<
-      Slice<Token>,
-      Simple | Compound | Complex | List<Simple | Compound | Complex>,
-      string
-    >,
+    parseSelector: () => Parser<Slice<Token>, Absolute, string>,
   ) =>
     map(oneOrMore(Simple.parse(parseSelector)), (result) => {
       const [left, ...selectors] = Iterable.reverse(result);

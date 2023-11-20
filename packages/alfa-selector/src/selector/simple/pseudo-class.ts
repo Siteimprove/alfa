@@ -15,11 +15,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Context } from "../../context";
 
-import { Complex } from "../complex";
-import { Compound } from "../compound";
-import { List } from "../list";
-import { Selector } from "../selector";
-import type { Simple } from "../simple";
+import type { Absolute, Selector } from "../index";
 
 import { SimpleSelector } from "./simple";
 
@@ -76,9 +72,7 @@ export namespace PseudoClass {
   );
 
   export function parse<S extends Selector>(
-    parseSelector: () => CSSParser<
-      Simple | Compound | Complex | List<Simple | Compound | Complex>
-    >,
+    parseSelector: () => CSSParser<Absolute>,
   ): CSSParser<PseudoClass> {
     return right(
       Token.parseColon,
@@ -183,30 +177,18 @@ export namespace PseudoClass {
  * {@link https://drafts.csswg.org/selectors/#matches-pseudo}
  */
 export class Is extends PseudoClass<"is"> {
-  public static of(
-    selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
-  ): Is {
+  public static of(selector: Absolute): Is {
     return new Is(selector);
   }
 
-  private readonly _selector:
-    | Simple
-    | Compound
-    | Complex
-    | List<Simple | Compound | Complex>;
+  private readonly _selector: Absolute;
 
-  private constructor(
-    selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
-  ) {
+  private constructor(selector: Absolute) {
     super("is");
     this._selector = selector;
   }
 
-  public get selector():
-    | Simple
-    | Compound
-    | Complex
-    | List<Simple | Compound | Complex> {
+  public get selector(): Absolute {
     return this._selector;
   }
 
@@ -236,7 +218,7 @@ export class Is extends PseudoClass<"is"> {
 
 export namespace Is {
   export interface JSON extends PseudoClass.JSON<"is"> {
-    selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
+    selector: Absolute.JSON;
   }
 }
 
@@ -244,30 +226,18 @@ export namespace Is {
  * {@link https://drafts.csswg.org/selectors/#negation-pseudo}
  */
 export class Not extends PseudoClass<"not"> {
-  public static of(
-    selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
-  ): Not {
+  public static of(selector: Absolute): Not {
     return new Not(selector);
   }
 
-  private readonly _selector:
-    | Simple
-    | Compound
-    | Complex
-    | List<Simple | Compound | Complex>;
+  private readonly _selector: Absolute;
 
-  private constructor(
-    selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
-  ) {
+  private constructor(selector: Absolute) {
     super("not");
     this._selector = selector;
   }
 
-  public get selector():
-    | Simple
-    | Compound
-    | Complex
-    | List<Simple | Compound | Complex> {
+  public get selector(): Absolute {
     return this._selector;
   }
 
@@ -297,7 +267,7 @@ export class Not extends PseudoClass<"not"> {
 
 export namespace Not {
   export interface JSON extends PseudoClass.JSON<"not"> {
-    selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
+    selector: Absolute.JSON;
   }
 }
 
@@ -305,30 +275,18 @@ export namespace Not {
  * {@link https://drafts.csswg.org/selectors/#has-pseudo}
  */
 export class Has extends PseudoClass<"has"> {
-  public static of(
-    selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
-  ): Has {
+  public static of(selector: Absolute): Has {
     return new Has(selector);
   }
 
-  private readonly _selector:
-    | Simple
-    | Compound
-    | Complex
-    | List<Simple | Compound | Complex>;
+  private readonly _selector: Absolute;
 
-  private constructor(
-    selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
-  ) {
+  private constructor(selector: Absolute) {
     super("has");
     this._selector = selector;
   }
 
-  public get selector():
-    | Simple
-    | Compound
-    | Complex
-    | List<Simple | Compound | Complex> {
+  public get selector(): Absolute {
     return this._selector;
   }
 
@@ -354,7 +312,7 @@ export class Has extends PseudoClass<"has"> {
 
 export namespace Has {
   export interface JSON extends PseudoClass.JSON<"has"> {
-    selector: Simple.JSON | Compound.JSON | Complex.JSON | List.JSON;
+    selector: Absolute.JSON;
   }
 }
 

@@ -6,13 +6,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Context } from "../../context";
-import { Complex } from "../complex";
 import { Compound } from "../compound";
-import { List } from "../list";
-import { Selector } from "../selector";
-import type { Simple } from "../simple";
+import type { Context } from "../../context";
+import type { Absolute, Selector } from "../index";
 
+import type { Simple } from "./index";
 import { SimpleSelector } from "./simple";
 
 const {
@@ -69,9 +67,7 @@ export namespace PseudoElement {
     return value instanceof PseudoElement;
   }
   export function parse(
-    parseSelector: () => CSSParser<
-      Simple | Compound | Complex | List<Simple | Compound | Complex>
-    >,
+    parseSelector: () => CSSParser<Absolute>,
   ): CSSParser<PseudoElement> {
     return either(
       // Functional pseudo-elements need to be first because ::cue and
