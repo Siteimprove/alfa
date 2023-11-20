@@ -6,6 +6,7 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Component } from "./component";
 import type { Parser as CSSParser } from "./parser";
@@ -122,7 +123,7 @@ export namespace Function {
 
   export const parse = <T>(
     query?: string | Predicate<Token.Function>,
-    body?: CSSParser<T>,
+    body?: CSSParser<T> | Thunk<CSSParser<T>>,
   ) =>
     flatMap(
       right(peek(Token.parseFunction(query)), Function.consume),
@@ -131,10 +132,26 @@ export namespace Function {
           return Result.of([input, [fn, undefined as never] as const]);
         }
 
+        // Sadly, JS alone is not capable of differentiating one function from
+        // another. So, at run time we can't differentiate a parser from a
+        // thunk.
+        // We have to rely on exception to handle that.
+        let parse: CSSParser<T>;
+        try {
+          parse = (body as Thunk<CSSParser<T>>)();
+          // In the off case where `body` is a parser that never looks at its
+          // input, the previous call might not throw.
+          if (Result.isResult(parse)) {
+            throw new Error("It was a parser after all");
+          }
+        } catch (err) {
+          parse = body as CSSParser<T>;
+        }
+
         const result = delimited(
           // whitespace just inside the parentheses are OK.
           option(Token.parseWhitespace),
-          body,
+          parse,
         )(Slice.of(fn.value));
 
         if (result.isErr()) {
