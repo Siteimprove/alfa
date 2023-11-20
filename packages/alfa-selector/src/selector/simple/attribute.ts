@@ -6,7 +6,9 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { SimpleSelector } from "./simple";
+import { WithName } from "../selector";
+
+import { parseName } from "./parser";
 
 const { delimited, either, left, map, option, pair } = Parser;
 const { and, equals, property } = Predicate;
@@ -14,7 +16,7 @@ const { and, equals, property } = Predicate;
 /**
  * {@link https://drafts.csswg.org/selectors/#attribute-selector}
  */
-export class Attribute extends SimpleSelector<"attribute"> {
+export class Attribute extends WithName<"attribute"> {
   public static of(
     namespace: Option<string>,
     name: string,
@@ -174,7 +176,7 @@ export class Attribute extends SimpleSelector<"attribute"> {
 }
 
 export namespace Attribute {
-  export interface JSON extends SimpleSelector.JSON<"attribute"> {
+  export interface JSON extends WithName.JSON<"attribute"> {
     namespace: string | null;
     value: string | null;
     matcher: string | null;
@@ -268,7 +270,7 @@ export namespace Attribute {
     delimited(
       Token.parseOpenSquareBracket,
       pair(
-        SimpleSelector.parseName,
+        parseName,
         option(
           pair(
             pair(parseMatcher, either(Token.parseString(), Token.parseIdent())),

@@ -8,35 +8,36 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import type { Absolute, Selector } from "../../index";
+import type { Absolute, Selector } from "../index";
 
-import { Active } from "./active";
-import { Disabled } from "./disabled";
-import { Empty } from "./empty";
-import { Enabled } from "./enabled";
-import { FirstChild } from "./first-child";
-import { FirstOfType } from "./first-of-type";
-import { Focus } from "./focus";
-import { FocusVisible } from "./focus-visible";
-import { FocusWithin } from "./focus-within";
-import { Has } from "./has";
-import { Host } from "./host";
-import { Hover } from "./hover";
-import { Is } from "./is";
-import { LastChild } from "./last-child";
-import { LastOfType } from "./last-of-type";
-import { Link } from "./link";
-import { Not } from "./not";
-import { NthChild } from "./nth-child";
-import { NthLastChild } from "./nth-last-child";
-import { NthLastOfType } from "./nth-last-of-type";
-import { NthOfType } from "./nth-of-type";
-import { OnlyChild } from "./only-child";
-import { OnlyOfType } from "./only-of-type";
-import { Root } from "./root";
-import { Visited } from "./visited";
-
-import { PseudoClassSelector } from "./pseudo-class";
+import {
+  Active,
+  Disabled,
+  Empty,
+  Enabled,
+  FirstChild,
+  FirstOfType,
+  Focus,
+  FocusVisible,
+  FocusWithin,
+  Has,
+  Host,
+  Hover,
+  Is,
+  LastChild,
+  LastOfType,
+  Link,
+  Not,
+  NthChild,
+  NthLastChild,
+  NthLastOfType,
+  NthOfType,
+  OnlyChild,
+  OnlyOfType,
+  PseudoClassSelector,
+  Root,
+  Visited,
+} from "../pseudo-class";
 
 const { either, end, left, mapResult, peek, right } = Parser;
 

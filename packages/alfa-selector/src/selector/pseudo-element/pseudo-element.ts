@@ -11,8 +11,8 @@ import { Compound } from "../compound";
 import type { Context } from "../../context";
 import type { Absolute, Selector } from "../index";
 
-import type { Simple } from "./index";
-import { SimpleSelector } from "./simple";
+import type { Simple } from "../simple";
+import { WithName } from "../selector";
 
 const {
   either,
@@ -26,9 +26,10 @@ const {
   takeBetween,
 } = Parser;
 
-export abstract class PseudoElement<
-  N extends string = string,
-> extends SimpleSelector<"pseudo-element", N> {
+export abstract class PseudoElement<N extends string = string> extends WithName<
+  "pseudo-element",
+  N
+> {
   protected constructor(name: N) {
     super("pseudo-element", name);
   }
@@ -62,7 +63,7 @@ export abstract class PseudoElement<
 
 export namespace PseudoElement {
   export interface JSON<N extends string = string>
-    extends SimpleSelector.JSON<"pseudo-element", N> {}
+    extends WithName.JSON<"pseudo-element", N> {}
 
   export function isPseudoElement(value: unknown): value is PseudoElement {
     return value instanceof PseudoElement;

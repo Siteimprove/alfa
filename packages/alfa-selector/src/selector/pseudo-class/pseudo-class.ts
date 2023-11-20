@@ -1,12 +1,12 @@
 import type { Element } from "@siteimprove/alfa-dom";
 
-import type { Context } from "../../../context";
+import type { Context } from "../../context";
 
-import { SimpleSelector } from "../simple";
+import { WithName } from "../selector";
 
 export abstract class PseudoClassSelector<
   N extends string = string,
-> extends SimpleSelector<"pseudo-class", N> {
+> extends WithName<"pseudo-class", N> {
   protected constructor(name: N) {
     super("pseudo-class", name);
   }
@@ -36,5 +36,5 @@ export abstract class PseudoClassSelector<
 
 export namespace PseudoClassSelector {
   export interface JSON<N extends string = string>
-    extends SimpleSelector.JSON<"pseudo-class", N> {}
+    extends WithName.JSON<"pseudo-class", N> {}
 }

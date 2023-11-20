@@ -4,7 +4,8 @@ import { None, type Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Selector } from "../selector";
-import { SimpleSelector } from "./simple";
+
+import { parseNamespace } from "./parser";
 
 const { left, map, option } = Parser;
 
@@ -84,7 +85,7 @@ export namespace Universal {
    * {@link https://drafts.csswg.org/selectors/#typedef-type-selector}
    */
   export const parse = map(
-    left(option(SimpleSelector.parseNamespace), Token.parseDelim("*")),
+    left(option(parseNamespace), Token.parseDelim("*")),
     (namespace) => Universal.of(namespace),
   );
 }

@@ -3,14 +3,14 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { SimpleSelector } from "./simple";
+import { WithName } from "../selector";
 
 const { map, right } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#class-selector}
  */
-export class Class extends SimpleSelector<"class"> {
+export class Class extends WithName<"class"> {
   public static of(name: string): Class {
     return new Class(name);
   }
@@ -46,7 +46,7 @@ export class Class extends SimpleSelector<"class"> {
 }
 
 export namespace Class {
-  export interface JSON extends SimpleSelector.JSON<"class"> {}
+  export interface JSON extends WithName.JSON<"class"> {}
 
   export function isClass(value: unknown): value is Class {
     return value instanceof Class;

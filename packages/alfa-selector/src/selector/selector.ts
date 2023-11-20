@@ -62,3 +62,53 @@ export namespace Selector {
     type: T;
   }
 }
+
+/**
+ * Selectors who also contain a name.
+ *
+ * @remarks
+ * This can be either specific (e.g., the id is the name of an Id selector),
+ * or generic (e.g., "focus" is the name of the `:focus` pseudo-class).
+ *
+ * @internal
+ */
+export abstract class WithName<
+  T extends string = string,
+  N extends string = string,
+> extends Selector<T> {
+  protected readonly _name: N;
+  protected constructor(type: T, name: N) {
+    super(type);
+    this._name = name;
+  }
+
+  public get name(): N {
+    return this._name;
+  }
+
+  public equals(value: WithName): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof WithName &&
+      super.equals(value) &&
+      value._name === this._name
+    );
+  }
+
+  public toJSON(): WithName.JSON<T, N> {
+    return {
+      ...super.toJSON(),
+      name: this._name,
+    };
+  }
+}
+
+export namespace WithName {
+  export interface JSON<T extends string = string, N extends string = string>
+    extends Selector.JSON<T> {
+    name: N;
+  }
+}

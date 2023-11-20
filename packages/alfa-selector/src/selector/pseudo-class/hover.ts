@@ -2,27 +2,27 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { type Element, Node } from "@siteimprove/alfa-dom";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { Context } from "../../../context";
+import { Context } from "../../context";
 
 import { PseudoClassSelector } from "./pseudo-class";
 
 const { State } = Context;
 
 /**
- * {@link https://drafts.csswg.org/selectors/#focus-within-pseudo}
+ * {@link https://drafts.csswg.org/selectors/#hover-pseudo}
  */
-export class FocusWithin extends PseudoClassSelector<"focus-within"> {
-  public static of(): FocusWithin {
-    return new FocusWithin();
+export class Hover extends PseudoClassSelector<"hover"> {
+  public static of(): Hover {
+    return new Hover();
   }
 
   private constructor() {
-    super("focus-within");
+    super("hover");
   }
 
   private static _cache = Cache.empty<Element, Cache<Context, boolean>>();
 
-  public *[Symbol.iterator](): Iterator<FocusWithin> {
+  public *[Symbol.iterator](): Iterator<Hover> {
     yield this;
   }
 
@@ -30,16 +30,16 @@ export class FocusWithin extends PseudoClassSelector<"focus-within"> {
     element: Element,
     context: Context = Context.empty(),
   ): boolean {
-    return FocusWithin._cache.get(element, Cache.empty).get(context, () => {
+    return Hover._cache.get(element, Cache.empty).get(context, () => {
       // We assume that most of the time the context is near empty and thus it
       // is inexpensive to check if something is in it.
-      const focused = Sequence.from<Node>(context.withState(State.Focus));
+      const hovered = Sequence.from<Node>(context.withState(State.Hover));
 
       return (
-        focused.size !== 0 &&
+        hovered.size !== 0 &&
         element
           .inclusiveDescendants(Node.fullTree)
-          .some((descendant) => focused.includes(descendant))
+          .some((descendant) => hovered.includes(descendant))
       );
     });
   }

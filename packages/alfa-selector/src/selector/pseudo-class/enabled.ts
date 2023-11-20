@@ -1,6 +1,6 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Context } from "../../../context";
+import { Context } from "../../context";
 import { PseudoClassSelector } from "./pseudo-class";
 
 const { hasName } = Element;
