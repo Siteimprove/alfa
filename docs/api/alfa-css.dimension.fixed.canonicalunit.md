@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-get canonicalUnit(): Dimensions<T>[2];
+get canonicalUnit(): DCanonicalUnit[T];
 ```

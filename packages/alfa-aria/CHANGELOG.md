@@ -1,5 +1,13 @@
 # @siteimprove/alfa-aria
 
+## 1.0.0
+
+### Patch Changes
+
+- **Fixed:** The `<hgroup>` element now has an implicit role of `group`. ([#1506](https://github.com/Siteimprove/alfa/pull/1506))
+
+  Following the re-introduction of `<hgroup>`, and subsequent changes to the HTML AAM.
+
 ## 0.68.0
 
 ## 0.67.0

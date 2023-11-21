@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
+static of(children: Iterable<Node>, style?: Iterable<Sheet>, externalId?: string, extraData?: any): Document;
 ```
 
 ## Parameters
@@ -16,6 +16,8 @@ static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
 |  --- | --- | --- |
 |  children | Iterable&lt;Node&gt; |  |
 |  style | Iterable&lt;Sheet&gt; | _(Optional)_ |
+|  externalId | string | _(Optional)_ |
+|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

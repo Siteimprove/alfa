@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function of(value: Math<"angle">): Angle.Calculated;
+function of(value: Math<"angle">): Angle.Calculated;
 ```
 
 ## Parameters

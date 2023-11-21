@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-parseList: import("../../syntax").Parser<List<Transform, boolean>>
+parseList: import("../../syntax").Parser<List<Transform>>
 ```

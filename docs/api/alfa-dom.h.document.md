@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function document(children: Array<Node | string>, style?: Array<Sheet>): Document;
+function document(children: Array<Node | string>, style?: Array<Sheet>, externalId?: string, extraData?: any): Document;
 ```
 
 ## Parameters
@@ -16,6 +16,8 @@ function document(children: Array<Node | string>, style?: Array<Sheet>): Documen
 |  --- | --- | --- |
 |  children | Array&lt;Node \| string&gt; |  |
 |  style | Array&lt;Sheet&gt; | _(Optional)_ |
+|  externalId | string | _(Optional)_ |
+|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

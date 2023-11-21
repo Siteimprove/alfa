@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>): Type<N>;
+static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>, externalId?: string, extraData?: any): Type<N>;
 ```
 
 ## Parameters
@@ -17,6 +17,8 @@ static of<N extends string = string>(name: N, publicId?: Option<string>, systemI
 |  name | N |  |
 |  publicId | Option&lt;string&gt; | _(Optional)_ |
 |  systemId | Option&lt;string&gt; | _(Optional)_ |
+|  externalId | string | _(Optional)_ |
+|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

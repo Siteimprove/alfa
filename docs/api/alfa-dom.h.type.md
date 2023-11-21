@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function type<N extends string = string>(name: N, publicId?: string, systemId?: string): Type<N>;
+function type<N extends string = string>(name: N, publicId?: string, systemId?: string, externalId?: string, extraData?: any): Type<N>;
 ```
 
 ## Parameters
@@ -17,6 +17,8 @@ function type<N extends string = string>(name: N, publicId?: string, systemId?: 
 |  name | N |  |
 |  publicId | string | _(Optional)_ |
 |  systemId | string | _(Optional)_ |
+|  externalId | string | _(Optional)_ |
+|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

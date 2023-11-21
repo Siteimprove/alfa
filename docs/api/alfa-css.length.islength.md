@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function isLength(value: unknown): value is Length;
+function isLength(value: unknown): value is Length;
 ```
 
 ## Parameters

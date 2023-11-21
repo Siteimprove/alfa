@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
+resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
 
 **Returns:**
 
-[List](./alfa-css.list.md)<!-- -->&lt;Resolvable.Resolved&lt;V&gt;, false&gt;
+[List](./alfa-css.list.md)<!-- -->&lt;Resolvable.Resolved&lt;V&gt;&gt;
 

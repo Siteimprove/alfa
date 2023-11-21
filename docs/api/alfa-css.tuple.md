@@ -23,3 +23,10 @@ export declare namespace Tuple
 |  --- | --- |
 |  [JSON](./alfa-css.tuple.json.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [PartiallyResolved](./alfa-css.tuple.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.tuple.partialresolver.md) |  |
+

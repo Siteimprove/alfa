@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function of(value: Math<"percentage">): Calculated;
+function of<H extends BaseNumeric.Type = BaseNumeric.Type>(value: Math<"percentage">): Calculated<H>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ export function of(value: Math<"percentage">): Calculated;
 
 **Returns:**
 
-[Calculated](./alfa-css.percentage.calculated.md)
+[Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;
 

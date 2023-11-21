@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-hasCalculation(): this is Calculated<R>;
+hasCalculation(): this is Calculated<H>;
 ```
 **Returns:**
 
-this is [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;R&gt;
+this is [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;
 

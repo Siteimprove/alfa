@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function isCalculated(value: unknown): value is Calculated | Angle.Calculated | Percentage.Calculated;
+function isCalculated(value: unknown): value is Calculated | Angle.Calculated | Percentage.Calculated;
 ```
 
 ## Parameters

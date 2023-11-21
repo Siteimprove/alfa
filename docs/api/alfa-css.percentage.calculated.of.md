@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(value: Math<"percentage">): Calculated;
+static of<H extends BaseNumeric.Type = BaseNumeric.Type>(value: Math<"percentage">): Calculated<H>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ static of(value: Math<"percentage">): Calculated;
 
 **Returns:**
 
-[Calculated](./alfa-css.percentage.calculated.md)
+[Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;
 

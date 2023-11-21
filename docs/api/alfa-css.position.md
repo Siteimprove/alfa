@@ -16,7 +16,6 @@ export declare namespace Position
 |  Function | Description |
 |  --- | --- |
 |  [parse(legacySyntax)](./alfa-css.position.parse.md) | <p>Parse a position, optionally accepting legacy 3-values syntax.</p><p>[https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position)</p> |
-|  [partiallyResolve(resolver)](./alfa-css.position.partiallyresolve.md) |  |
 
 ## Interfaces
 

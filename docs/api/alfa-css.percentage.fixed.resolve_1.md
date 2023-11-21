@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
+resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;R, T&gt; |  |
+|  resolver | [Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;H&gt; |  |
 
 **Returns:**
 

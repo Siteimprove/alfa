@@ -15,16 +15,16 @@ export declare namespace h
 
 |  Function | Description |
 |  --- | --- |
-|  [attribute(name, value)](./alfa-dom.h.attribute.md) |  |
+|  [attribute(name, value, externalId, extraData)](./alfa-dom.h.attribute.md) |  |
 |  [block(declarations)](./alfa-dom.h.block.md) |  |
 |  [declaration(name, value, important)](./alfa-dom.h.declaration.md) |  |
-|  [document(children, style)](./alfa-dom.h.document.md) |  |
-|  [element(name, attributes, children, style, namespace, box, device)](./alfa-dom.h.element.md) |  |
-|  [fragment(children)](./alfa-dom.h.fragment.md) |  |
-|  [shadow(children, style, mode)](./alfa-dom.h.shadow.md) |  |
+|  [document(children, style, externalId, extraData)](./alfa-dom.h.document.md) |  |
+|  [element(name, attributes, children, style, namespace, box, device, externalId, extraData)](./alfa-dom.h.element.md) |  |
+|  [fragment(children, externalId, extraData)](./alfa-dom.h.fragment.md) |  |
+|  [shadow(children, style, mode, externalId, extraData)](./alfa-dom.h.shadow.md) |  |
 |  [sheet(rules, disabled, condition)](./alfa-dom.h.sheet.md) |  |
-|  [text(data)](./alfa-dom.h.text.md) |  |
-|  [type(name, publicId, systemId)](./alfa-dom.h.type.md) |  |
+|  [text(data, externalId, extraData)](./alfa-dom.h.text.md) |  |
+|  [type(name, publicId, systemId, externalId, extraData)](./alfa-dom.h.type.md) |  |
 
 ## Namespaces
 

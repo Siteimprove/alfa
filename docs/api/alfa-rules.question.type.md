@@ -18,7 +18,6 @@ interface Type
 |  --- | --- | --- | --- |
 |  ["color\[\]"](./alfa-rules.question.type._color___.md) |  | Iterable&lt;RGB&gt; |  |
 |  ["node\[\]"](./alfa-rules.question.type._node___.md) |  | Iterable&lt;Node&gt; |  |
-|  ["string\[\]"](./alfa-rules.question.type._string___.md) |  | Iterable&lt;string&gt; |  |
 |  [boolean](./alfa-rules.question.type.boolean.md) |  | boolean |  |
 |  [node](./alfa-rules.question.type.node.md) |  | Option&lt;Node&gt; |  |
 |  [string](./alfa-rules.question.type.string.md) |  | string |  |

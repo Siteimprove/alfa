@@ -84,10 +84,6 @@ Data: {
             readonly type: "boolean";
             readonly message: "Do these [role] landmarks have the same or equivalent content?";
         };
-        readonly "visible-focus-classes": {
-            readonly type: "string[]";
-            readonly message: "Which classes have a visible focus indicator?";
-        };
         readonly "has-focus-indicator": {
             readonly type: "boolean";
             readonly message: "Does the element have a visible focus indicator?";

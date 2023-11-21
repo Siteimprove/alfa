@@ -15,5 +15,6 @@ interface JSON<T extends string = string>
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [children?](./alfa-tree.node.json.children.md) |  | Array&lt;[JSON](./alfa-tree.node.json.md)<!-- -->&gt; | _(Optional)_ |
+|  [externalId?](./alfa-tree.node.json.externalid.md) |  | string | _(Optional)_ |
 |  [type](./alfa-tree.node.json.type.md) |  | T |  |
 
