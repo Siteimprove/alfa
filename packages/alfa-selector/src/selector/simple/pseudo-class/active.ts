@@ -26,4 +26,17 @@ export class Active extends PseudoClassSelector<"active"> {
   ): boolean {
     return context.isActive(element);
   }
+
+  public toJSON(): Active.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Active {
+  export interface JSON extends PseudoClassSelector.JSON<"active"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "active",
+    Active.of,
+  );
 }

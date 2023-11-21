@@ -27,4 +27,17 @@ export class Disabled extends PseudoClassSelector<"disabled"> {
   ): boolean {
     return Element.isActuallyDisabled(element);
   }
+
+  public toJSON(): Disabled.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Disabled {
+  export interface JSON extends PseudoClassSelector.JSON<"disabled"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "disabled",
+    Disabled.of,
+  );
 }

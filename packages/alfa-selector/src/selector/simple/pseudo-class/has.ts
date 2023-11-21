@@ -1,5 +1,3 @@
-import type { Serializable } from "@siteimprove/alfa-json";
-
 import type { Absolute } from "../../../selector";
 
 import { PseudoClassSelector } from "./pseudo-class";
@@ -49,6 +47,6 @@ export class Has extends PseudoClassSelector<"has"> {
 
 export namespace Has {
   export interface JSON extends PseudoClassSelector.JSON<"has"> {
-    selector: Serializable.ToJSON<Absolute>;
+    selector: Absolute.JSON;
   }
 }

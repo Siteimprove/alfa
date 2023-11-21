@@ -76,8 +76,8 @@ export class Compound extends Selector<"compound"> {
 
 export namespace Compound {
   export interface JSON extends Selector.JSON<"compound"> {
-    left: Serializable.ToJSON<Simple>;
-    right: Serializable.ToJSON<Simple> | JSON;
+    left: Simple.JSON;
+    right: Simple.JSON | JSON;
   }
 
   export function isCompound(value: unknown): value is Compound {

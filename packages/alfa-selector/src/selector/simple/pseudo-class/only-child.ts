@@ -23,4 +23,17 @@ export class OnlyChild extends PseudoClassSelector<"only-child"> {
   public matches(element: Element): boolean {
     return element.inclusiveSiblings().filter(isElement).size === 1;
   }
+
+  public toJSON(): OnlyChild.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace OnlyChild {
+  export interface JSON extends PseudoClassSelector.JSON<"only-child"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "only-child",
+    OnlyChild.of,
+  );
 }

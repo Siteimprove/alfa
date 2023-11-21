@@ -15,4 +15,14 @@ export class Host extends PseudoClassSelector<"host"> {
   public *[Symbol.iterator](): Iterator<Host> {
     yield this;
   }
+
+  public toJSON(): Host.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Host {
+  export interface JSON extends PseudoClassSelector.JSON<"host"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional("host", Host.of);
 }

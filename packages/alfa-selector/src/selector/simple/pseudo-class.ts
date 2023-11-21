@@ -35,11 +35,6 @@ import {
 } from "./pseudo-class/index";
 
 const { either } = Parser;
-const {
-  parseFunctionalWithNth,
-  parseFunctionalWithSelector,
-  parseNonFunctional,
-} = PseudoClassSelector;
 
 export type PseudoClass =
   | Active
@@ -70,31 +65,31 @@ export type PseudoClass =
 
 export namespace PseudoClass {
   export type JSON =
-    | PseudoClassSelector.JSON<"active">
-    | PseudoClassSelector.JSON<"disabled">
-    | PseudoClassSelector.JSON<"empty">
-    | PseudoClassSelector.JSON<"enabled">
-    | PseudoClassSelector.JSON<"first-child">
-    | PseudoClassSelector.JSON<"first-of-type">
-    | PseudoClassSelector.JSON<"focus">
-    | PseudoClassSelector.JSON<"focus-visible">
-    | PseudoClassSelector.JSON<"focus-within">
+    | Active.JSON
+    | Disabled.JSON
+    | Empty.JSON
+    | Enabled.JSON
+    | FirstChild.JSON
+    | FirstOfType.JSON
+    | Focus.JSON
+    | FocusVisible.JSON
+    | FocusWithin.JSON
     | Has.JSON
-    | PseudoClassSelector.JSON<"host">
-    | PseudoClassSelector.JSON<"hover">
+    | Host.JSON
+    | Hover.JSON
     | Is.JSON
-    | PseudoClassSelector.JSON<"Last-child">
-    | PseudoClassSelector.JSON<"last-of-type">
-    | PseudoClassSelector.JSON<"link">
+    | LastChild.JSON
+    | LastOfType.JSON
+    | Link.JSON
     | Not.JSON
     | NthChild.JSON
     | NthLastChild.JSON
     | NthLastOfType.JSON
     | NthOfType.JSON
-    | PseudoClassSelector.JSON<"only-child">
-    | PseudoClassSelector.JSON<"only-of-type">
-    | PseudoClassSelector.JSON<"root">
-    | PseudoClassSelector.JSON<"visited">;
+    | OnlyChild.JSON
+    | OnlyOfType.JSON
+    | Root.JSON
+    | Visited.JSON;
 
   export function isPseudoClass(value: unknown): value is PseudoClass {
     // Note: this is not totally true as we could extend PseudoClassSelector
@@ -107,34 +102,51 @@ export namespace PseudoClass {
     parseSelector: Thunk<CSSParser<Absolute>>,
   ): CSSParser<PseudoClass> {
     return either<Slice<Token>, PseudoClass, string>(
-      parseNonFunctional("hover", Hover.of),
-      parseNonFunctional("active", Active.of),
-      parseNonFunctional("focus", Focus.of),
-      parseNonFunctional("focus-within", FocusWithin.of),
-      parseNonFunctional("focus-visible", FocusVisible.of),
-      parseNonFunctional("link", Link.of),
-      parseNonFunctional("visited", Visited.of),
-      parseNonFunctional("disabled", Disabled.of),
-      parseNonFunctional("enabled", Enabled.of),
-      parseNonFunctional("root", Root.of),
-      parseNonFunctional("host", Host.of),
-      parseNonFunctional("empty", Empty.of),
-      parseNonFunctional("first-child", FirstChild.of),
-      parseNonFunctional("last-child", LastChild.of),
-      parseNonFunctional("only-child", OnlyChild.of),
-      parseNonFunctional("first-of-type", FirstOfType.of),
-      parseNonFunctional("last-of-type", LastOfType.of),
-      parseNonFunctional("only-of-type", OnlyOfType.of),
-
-      parseFunctionalWithNth("nth-child", NthChild.of),
-      parseFunctionalWithNth("nth-last-child", NthLastChild.of),
-      parseFunctionalWithNth("nth-of-type", NthOfType.of),
-      parseFunctionalWithNth("nth-last-of-type", NthLastOfType.of),
+      Active.parse,
+      Disabled.parse,
+      Empty.parse,
+      Enabled.parse,
+      FirstChild.parse,
+      FirstOfType.parse,
+      Focus.parse,
+      FocusVisible.parse,
+      FocusWithin.parse,
+      Host.parse,
+      Hover.parse,
+      LastChild.parse,
+      LastOfType.parse,
+      Link.parse,
+      OnlyChild.parse,
+      OnlyOfType.parse,
+      Root.parse,
+      Visited.parse,
+      PseudoClassSelector.parseFunctionalWithNth("nth-child", NthChild.of),
+      PseudoClassSelector.parseFunctionalWithNth(
+        "nth-last-child",
+        NthLastChild.of,
+      ),
+      PseudoClassSelector.parseFunctionalWithNth("nth-of-type", NthOfType.of),
+      PseudoClassSelector.parseFunctionalWithNth(
+        "nth-last-of-type",
+        NthLastOfType.of,
+      ),
       // :has() normally only accepts relative selectors, we currently
       // accept only non-relative ones…
-      parseFunctionalWithSelector("has", parseSelector, Has.of),
-      parseFunctionalWithSelector("is", parseSelector, Is.of),
-      parseFunctionalWithSelector("not", parseSelector, Not.of),
+      PseudoClassSelector.parseFunctionalWithSelector(
+        "has",
+        parseSelector,
+        Has.of,
+      ),
+      PseudoClassSelector.parseFunctionalWithSelector(
+        "is",
+        parseSelector,
+        Is.of,
+      ),
+      PseudoClassSelector.parseFunctionalWithSelector(
+        "not",
+        parseSelector,
+        Not.of,
+      ),
     );
   }
 }

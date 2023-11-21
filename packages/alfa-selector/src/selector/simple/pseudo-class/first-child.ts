@@ -27,4 +27,17 @@ export class FirstChild extends PseudoClassSelector<"first-child"> {
       .first()
       .includes(element);
   }
+
+  public toJSON(): FirstChild.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace FirstChild {
+  export interface JSON extends PseudoClassSelector.JSON<"first-child"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "first-child",
+    FirstChild.of,
+  );
 }

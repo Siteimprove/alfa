@@ -27,4 +27,17 @@ export class LastChild extends PseudoClassSelector<"last-child"> {
       .last()
       .includes(element);
   }
+
+  public toJSON(): LastChild.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace LastChild {
+  export interface JSON extends PseudoClassSelector.JSON<"last-child"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "last-child",
+    LastChild.of,
+  );
 }

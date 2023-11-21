@@ -1,7 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Function, Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
@@ -483,7 +482,7 @@ export class Slotted extends PseudoElement<"slotted"> {
 
 export namespace Slotted {
   export interface JSON extends PseudoElement.JSON<"slotted"> {
-    selectors: Array<Serializable.ToJSON<Simple> | Compound.JSON>;
+    selectors: Array<Simple.JSON | Compound.JSON>;
   }
 }
 

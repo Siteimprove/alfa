@@ -34,3 +34,12 @@ export class FocusVisible extends PseudoClassSelector<"focus-visible"> {
     return context.isFocused(element);
   }
 }
+
+export namespace FocusVisible {
+  export interface JSON extends PseudoClassSelector.JSON<"focus-visible"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "focus-visible",
+    FocusVisible.of,
+  );
+}

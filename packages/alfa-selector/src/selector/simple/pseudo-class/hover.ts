@@ -43,4 +43,17 @@ export class Hover extends PseudoClassSelector<"hover"> {
       );
     });
   }
+
+  public toJSON(): Hover.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Hover {
+  export interface JSON extends PseudoClassSelector.JSON<"hover"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "hover",
+    Hover.of,
+  );
 }

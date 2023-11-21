@@ -28,4 +28,17 @@ export class FirstOfType extends PseudoClassSelector<"first-of-type"> {
       .first()
       .includes(element);
   }
+
+  public toJSON(): FirstOfType.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace FirstOfType {
+  export interface JSON extends PseudoClassSelector.JSON<"first-of-type"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "first-of-type",
+    FirstOfType.of,
+  );
 }

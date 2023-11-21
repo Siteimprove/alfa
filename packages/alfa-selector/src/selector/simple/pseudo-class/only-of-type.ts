@@ -28,4 +28,17 @@ export class OnlyOfType extends PseudoClassSelector<"only-of-type"> {
         .filter(hasName(element.name)).size === 1
     );
   }
+
+  public toJSON(): OnlyOfType.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace OnlyOfType {
+  export interface JSON extends PseudoClassSelector.JSON<"only-of-type"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "only-of-type",
+    OnlyOfType.of,
+  );
 }

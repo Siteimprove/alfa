@@ -26,4 +26,14 @@ export class Root extends PseudoClassSelector<"root"> {
     // The root element is the element whose parent is NOT itself an element.
     return element.parent().every(not(isElement));
   }
+
+  public toJSON(): Root.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Root {
+  export interface JSON extends PseudoClassSelector.JSON<"root"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional("root", Root.of);
 }

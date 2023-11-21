@@ -20,4 +20,17 @@ export class Empty extends PseudoClassSelector<"empty"> {
   public matches(element: Element): boolean {
     return element.children().isEmpty();
   }
+
+  public toJSON(): Empty.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Empty {
+  export interface JSON extends PseudoClassSelector.JSON<"empty"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "empty",
+    Empty.of,
+  );
 }

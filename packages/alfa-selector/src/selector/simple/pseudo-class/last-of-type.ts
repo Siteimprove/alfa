@@ -28,4 +28,17 @@ export class LastOfType extends PseudoClassSelector<"last-of-type"> {
       .last()
       .includes(element);
   }
+
+  public toJSON(): LastOfType.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace LastOfType {
+  export interface JSON extends PseudoClassSelector.JSON<"last-of-type"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "last-of-type",
+    LastOfType.of,
+  );
 }

@@ -43,4 +43,17 @@ export class FocusWithin extends PseudoClassSelector<"focus-within"> {
       );
     });
   }
+
+  public toJSON(): FocusWithin.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace FocusWithin {
+  export interface JSON extends PseudoClassSelector.JSON<"focus-within"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "focus-within",
+    FocusWithin.of,
+  );
 }

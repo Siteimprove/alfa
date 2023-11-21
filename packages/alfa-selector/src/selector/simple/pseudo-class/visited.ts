@@ -35,4 +35,17 @@ export class Visited extends PseudoClassSelector<"visited"> {
 
     return false;
   }
+
+  public toJSON(): Visited.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Visited {
+  export interface JSON extends PseudoClassSelector.JSON<"visited"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "visited",
+    Visited.of,
+  );
 }

@@ -43,4 +43,17 @@ export class Enabled extends PseudoClassSelector<"enabled"> {
       element,
     );
   }
+
+  public toJSON(): Enabled.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Enabled {
+  export interface JSON extends PseudoClassSelector.JSON<"enabled"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "enabled",
+    Enabled.of,
+  );
 }

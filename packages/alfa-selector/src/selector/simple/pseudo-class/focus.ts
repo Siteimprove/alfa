@@ -26,4 +26,17 @@ export class Focus extends PseudoClassSelector<"focus"> {
   ): boolean {
     return context.isFocused(element);
   }
+
+  public toJSON(): Focus.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Focus {
+  export interface JSON extends PseudoClassSelector.JSON<"focus"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional(
+    "focus",
+    Focus.of,
+  );
 }

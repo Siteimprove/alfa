@@ -75,7 +75,7 @@ export class Relative extends Selector<"relative"> {
 export namespace Relative {
   export interface JSON extends Selector.JSON<"relative"> {
     combinator: string;
-    selector: Serializable.ToJSON<Simple> | Compound.JSON | Complex.JSON;
+    selector: Simple.JSON | Compound.JSON | Complex.JSON;
   }
 }
 

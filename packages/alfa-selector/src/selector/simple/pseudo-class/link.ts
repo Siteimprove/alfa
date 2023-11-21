@@ -35,4 +35,14 @@ export class Link extends PseudoClassSelector<"link"> {
 
     return false;
   }
+
+  public toJSON(): Link.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace Link {
+  export interface JSON extends PseudoClassSelector.JSON<"link"> {}
+
+  export const parse = PseudoClassSelector.parseNonFunctional("link", Link.of);
 }
