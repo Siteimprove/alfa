@@ -20,6 +20,8 @@ type Item = Simple | Compound | Complex | Relative;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector-list}
+ *
+ * @public
  */
 export class List<T extends Item = Item> extends Selector<"list"> {
   public static of<T extends Item>(left: T, right: T | List<T>): List<T> {
@@ -82,6 +84,9 @@ export class List<T extends Item = Item> extends Selector<"list"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace List {
   export interface JSON<T extends Item = Item> extends Selector.JSON<"list"> {
     left: Serializable.ToJSON<T>;

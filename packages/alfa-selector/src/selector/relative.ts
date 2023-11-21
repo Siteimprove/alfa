@@ -7,6 +7,8 @@ import type { Simple } from "./simple";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#relative-selector}
+ *
+ * @public
  */
 export class Relative extends Selector<"relative"> {
   public static of(
@@ -72,6 +74,9 @@ export class Relative extends Selector<"relative"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Relative {
   export interface JSON extends Selector.JSON<"relative"> {
     combinator: string;

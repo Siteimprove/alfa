@@ -1,12 +1,10 @@
-import { Function, Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Absolute } from "../../selector";
 
-import { Compound } from "../compound";
 import {
   After,
   Backdrop,
@@ -30,6 +28,9 @@ import { PseudoElementSelector } from "./pseudo-element/pseudo-element";
 
 const { either, mapResult, peek, right, separatedList, take } = Parser;
 
+/**
+ * @public
+ */
 export type PseudoElement =
   | After
   | Backdrop
@@ -48,6 +49,9 @@ export type PseudoElement =
   | SpellingError
   | TargetText;
 
+/**
+ * @public
+ */
 export namespace PseudoElement {
   export type JSON = PseudoElementSelector.JSON;
 

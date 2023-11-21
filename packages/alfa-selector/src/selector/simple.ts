@@ -23,6 +23,8 @@ const { either } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#simple}
+ *
+ * @public
  */
 export type Simple =
   | Type
@@ -33,6 +35,9 @@ export type Simple =
   | PseudoClass
   | PseudoElement;
 
+/**
+ * @public
+ */
 export namespace Simple {
   export type JSON =
     | Type.JSON

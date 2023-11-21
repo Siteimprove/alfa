@@ -11,6 +11,8 @@ const { left, map, option } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#universal-selector}
+ *
+ * @public
  */
 export class Universal extends Selector<"universal"> {
   public static of(namespace: Option<string>): Universal {
@@ -72,6 +74,9 @@ export class Universal extends Selector<"universal"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Universal {
   export interface JSON extends Selector.JSON<"universal"> {
     namespace: string | null;

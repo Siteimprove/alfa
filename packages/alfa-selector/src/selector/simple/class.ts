@@ -9,6 +9,8 @@ const { map, right } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#class-selector}
+ *
+ * @public
  */
 export class Class extends WithName<"class"> {
   public static of(name: string): Class {
@@ -45,6 +47,9 @@ export class Class extends WithName<"class"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Class {
   export interface JSON extends WithName.JSON<"class"> {}
 

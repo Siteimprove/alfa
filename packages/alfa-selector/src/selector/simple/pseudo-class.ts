@@ -37,6 +37,9 @@ import { PseudoClassSelector } from "./pseudo-class/pseudo-class";
 
 const { either } = Parser;
 
+/**
+ * @public
+ */
 export type PseudoClass =
   | Active
   | Disabled
@@ -64,6 +67,9 @@ export type PseudoClass =
   | Root
   | Visited;
 
+/**
+ * @public
+ */
 export namespace PseudoClass {
   export type JSON =
     | Active.JSON

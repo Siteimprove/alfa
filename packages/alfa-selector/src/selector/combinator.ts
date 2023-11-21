@@ -5,6 +5,8 @@ const { delimited, either, map, option } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector-combinator}
+ *
+ * @public
  */
 export enum Combinator {
   /**
@@ -28,6 +30,9 @@ export enum Combinator {
   DirectSibling = "+",
 }
 
+/**
+ * @public
+ */
 export namespace Combinator {
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-combinator}

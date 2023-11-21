@@ -10,6 +10,8 @@ const { map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#type-selector}
+ *
+ * @public
  */
 export class Type extends WithName<"type"> {
   public static of(namespace: Option<string>, name: string): Type {
@@ -71,6 +73,9 @@ export class Type extends WithName<"type"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Type {
   export interface JSON extends WithName.JSON<"type"> {
     namespace: string | null;

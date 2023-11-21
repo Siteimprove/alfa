@@ -15,6 +15,8 @@ const { and, equals, property } = Predicate;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#attribute-selector}
+ *
+ * @public
  */
 export class Attribute extends WithName<"attribute"> {
   public static of(
@@ -175,6 +177,9 @@ export class Attribute extends WithName<"attribute"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Attribute {
   export interface JSON extends WithName.JSON<"attribute"> {
     namespace: string | null;

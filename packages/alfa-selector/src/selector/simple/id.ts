@@ -8,6 +8,8 @@ const { map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#id-selector}
+ *
+ * @public
  */
 export class Id extends WithName<"id"> {
   public static of(name: string): Id {
@@ -45,6 +47,9 @@ export class Id extends WithName<"id"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Id {
   export interface JSON extends WithName.JSON<"id"> {}
 

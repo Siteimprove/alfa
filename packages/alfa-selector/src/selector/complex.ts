@@ -17,6 +17,8 @@ const { map, pair, zeroOrMore } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#complex}
+ *
+ * @public
  */
 export class Complex extends Selector<"complex"> {
   public static of(
@@ -127,6 +129,9 @@ export class Complex extends Selector<"complex"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Complex {
   export interface JSON extends Selector.JSON<"complex"> {
     combinator: Combinator;

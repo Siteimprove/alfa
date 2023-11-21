@@ -15,6 +15,8 @@ const { map, oneOrMore } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#compound}
+ *
+ * @public
  */
 export class Compound extends Selector<"compound"> {
   public static of(left: Simple, right: Simple | Compound): Compound {
@@ -74,6 +76,9 @@ export class Compound extends Selector<"compound"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Compound {
   export interface JSON extends Selector.JSON<"compound"> {
     left: Simple.JSON;
