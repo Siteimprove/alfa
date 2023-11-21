@@ -9,7 +9,7 @@ These are intended for callers that need to record some extra data during audits
 
 Alfa is guaranteed to never interact with the `extraData` in any way; except that it will be typed as `any`, so any type guard or assertions must be re-applied afterward.
 
-Alfa may, in the future, decide that `Node` with the same `externalId` can be identified in some way, e.g., because they represent two version of the same object that were turned into two different Alfa object. This can for example happen when two copies of the same page in different states (e.g., different tab opened) are audited; this create two Alfa `Document`, but the external caller may have the extra knowledge that some of the nodes should be identified.
+Alfa may, in the future, decide that `Node` with the same `externalId` can be identified in some way, e.g., because they represent two version of the same object that were turned into two different Alfa object. This can for example happen when two copies of the same page in different states (e.g., different tab opened) are audited; this creates two Alfa `Document`, but the external caller may have the extra knowledge that some of the nodes should be identified.
 
 It is up to the callers to ensure that the `externalId` are unique, since they are meant to carry knowledge that Alfa cannot infer.
 
