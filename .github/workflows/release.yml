@@ -19,4 +19,4 @@ jobs:
       user-email: 8577410+siteimprove-builduser@users.noreply.github.com
       generate-documentation: true
     secrets:
-      token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+      token: ${{ secrets.TEST_TOKEN }}
