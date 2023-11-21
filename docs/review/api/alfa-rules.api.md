@@ -69,7 +69,6 @@ export namespace Diagnostic {
     import Languages = languages.Languages;
     import LabelAndName = labelAndName.LabelAndName;
     import RoleAndRequiredAttributes = roleAndRequiredAttributes.RoleAndRequiredAttributes;
-    import WithPreviousHeading = withPreviousHeading.WithPreviousHeading;
     import WithRoleAndName = withRoleAndName.WithRoleAndName;
     import SameNames = sameNames.SameNames;
     import WithFirstHeading = withFirstHeading.WithFirstHeading;
@@ -79,13 +78,13 @@ export namespace Diagnostic {
     import ColorErrors = colorError.ColorErrors;
     import MatchingClasses = matchingClasses.MatchingClasses;
     import WithDeclaration = withDeclaration.WithDeclaration;
-    import WithNextHeading = withNextHeading.WithNextHeading;
     import ClippingAncestors = clippingAncestors.ClippingAncestors;
     import Contrast = diagnostic.Contrast;
     import TextSpacing = diagnostic.TextSpacing;
     import WithBadElements = diagnostic.WithBadElements;
     import WithRole = diagnostic.WithRole;
     import WithAccessibleName = diagnostic.WithAccessibleName;
+    import WithOtherHeading = diagnostic.WithOtherHeading;
 }
 
 declare namespace experimentalRules {
