@@ -56,7 +56,7 @@ export namespace PseudoClassSelector {
    */
   export function parseNonFunctional<T extends PseudoClassSelector>(
     name: string,
-    of: () => T,
+    of: Thunk<T>,
   ): CSSParser<T> {
     return map(right(parseColon, Token.parseIdent(name)), of);
   }

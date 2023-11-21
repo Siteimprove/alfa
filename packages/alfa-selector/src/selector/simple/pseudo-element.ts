@@ -111,62 +111,25 @@ export namespace PseudoElement {
           },
         ),
       ),
-      // Non-functional pseudo-elements
-      flatMap(
-        map(takeBetween(Token.parseColon, 1, 2), (colons) => colons.length),
-        (colons) =>
-          mapResult(Token.parseIdent(), (ident) => {
-            if (colons === 1) {
-              switch (ident.value) {
-                // Legacy pseudo-elements must be accepted with both a single and
-                // double colon.
-                case "after":
-                case "before":
-                case "first-letter":
-                case "first-line":
-                  break;
 
-                default:
-                  return Err.of(
-                    `This pseudo-element is not allowed with single colon: ::${ident.value}`,
-                  );
-              }
-            }
+      PseudoElementSelector.parseNonLegacy("cue", () => Cue.of()),
+      PseudoElementSelector.parseNonLegacy("cue-region", () => CueRegion.of()),
 
-            switch (ident.value) {
-              case "after":
-                return Result.of<PseudoElement, string>(After.of());
-              case "backdrop":
-                return Result.of(Backdrop.of());
-              case "before":
-                return Result.of(Before.of());
-              case "cue":
-                return Result.of(Cue.of());
-              case "cue-region":
-                return Result.of(CueRegion.of());
-              case "file-selector-button":
-                return Result.of(FileSelectorButton.of());
-              case "first-letter":
-                return Result.of(FirstLetter.of());
-              case "first-line":
-                return Result.of(FirstLine.of());
-              case "grammar-error":
-                return Result.of(GrammarError.of());
-              case "marker":
-                return Result.of(Marker.of());
-              case "placeholder":
-                return Result.of(Placeholder.of());
-              case "selection":
-                return Result.of(Selection.of());
-              case "spelling-error":
-                return Result.of(SpellingError.of());
-              case "target-text":
-                return Result.of(TargetText.of());
-            }
-
-            return Err.of(`Unknown pseudo-element ::${ident.value}`);
-          }),
+      PseudoElementSelector.parseLegacy("after", After.of),
+      PseudoElementSelector.parseLegacy("before", Before.of),
+      PseudoElementSelector.parseLegacy("first-letter", FirstLetter.of),
+      PseudoElementSelector.parseLegacy("first-line", FirstLine.of),
+      PseudoElementSelector.parseNonLegacy("backdrop", Backdrop.of),
+      PseudoElementSelector.parseNonLegacy(
+        "file-selector-button",
+        FileSelectorButton.of,
       ),
+      PseudoElementSelector.parseNonLegacy("grammar-error", GrammarError.of),
+      PseudoElementSelector.parseNonLegacy("marker", Marker.of),
+      PseudoElementSelector.parseNonLegacy("placeholder", Placeholder.of),
+      PseudoElementSelector.parseNonLegacy("selection", Selection.of),
+      PseudoElementSelector.parseNonLegacy("spelling-error", SpellingError.of),
+      PseudoElementSelector.parseNonLegacy("target-text", TargetText.of),
     );
   }
 }
