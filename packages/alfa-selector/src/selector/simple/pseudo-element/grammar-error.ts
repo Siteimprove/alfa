@@ -16,3 +16,10 @@ export class GrammarError extends PseudoElementSelector<"grammar-error"> {
     yield this;
   }
 }
+
+export namespace GrammarError {
+  export const parse = PseudoElementSelector.parseNonLegacy(
+    "grammar-error",
+    GrammarError.of,
+  );
+}

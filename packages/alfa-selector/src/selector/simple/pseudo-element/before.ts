@@ -16,3 +16,7 @@ export class Before extends PseudoElementSelector<"before"> {
     yield this;
   }
 }
+
+export namespace Before {
+  export const parse = PseudoElementSelector.parseLegacy("before", Before.of);
+}

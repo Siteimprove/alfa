@@ -16,3 +16,10 @@ export class FirstLetter extends PseudoElementSelector<"first-letter"> {
     yield this;
   }
 }
+
+export namespace FirstLetter {
+  export const parse = PseudoElementSelector.parseLegacy(
+    "first-letter",
+    FirstLetter.of,
+  );
+}

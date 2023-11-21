@@ -16,3 +16,10 @@ export class Marker extends PseudoElementSelector<"marker"> {
     yield this;
   }
 }
+
+export namespace Marker {
+  export const parse = PseudoElementSelector.parseNonLegacy(
+    "marker",
+    Marker.of,
+  );
+}

@@ -16,3 +16,10 @@ export class Backdrop extends PseudoElementSelector<"backdrop"> {
     yield this;
   }
 }
+
+export namespace Backdrop {
+  export const parse = PseudoElementSelector.parseNonLegacy(
+    "backdrop",
+    Backdrop.of,
+  );
+}

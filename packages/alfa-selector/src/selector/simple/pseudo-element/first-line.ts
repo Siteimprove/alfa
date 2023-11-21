@@ -16,3 +16,10 @@ export class FirstLine extends PseudoElementSelector<"first-line"> {
     yield this;
   }
 }
+
+export namespace FirstLine {
+  export const parse = PseudoElementSelector.parseLegacy(
+    "first-line",
+    FirstLine.of,
+  );
+}

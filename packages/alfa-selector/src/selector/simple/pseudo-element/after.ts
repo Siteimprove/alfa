@@ -15,3 +15,7 @@ export class After extends PseudoElementSelector<"after"> {
     yield this;
   }
 }
+
+export namespace After {
+  export const parse = PseudoElementSelector.parseLegacy("after", After.of);
+}

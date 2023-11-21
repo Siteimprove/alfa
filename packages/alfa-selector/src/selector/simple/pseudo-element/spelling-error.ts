@@ -16,3 +16,10 @@ export class SpellingError extends PseudoElementSelector<"spelling-error"> {
     yield this;
   }
 }
+
+export namespace SpellingError {
+  export const parse = PseudoElementSelector.parseNonLegacy(
+    "spelling-error",
+    SpellingError.of,
+  );
+}

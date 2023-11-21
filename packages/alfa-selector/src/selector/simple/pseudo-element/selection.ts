@@ -16,3 +16,10 @@ export class Selection extends PseudoElementSelector<"selection"> {
     yield this;
   }
 }
+
+export namespace Selection {
+  export const parse = PseudoElementSelector.parseNonLegacy(
+    "selection",
+    Selection.of,
+  );
+}

@@ -16,3 +16,10 @@ export class Placeholder extends PseudoElementSelector<"placeholder"> {
     yield this;
   }
 }
+
+export namespace Placeholder {
+  export const parse = PseudoElementSelector.parseNonLegacy(
+    "placeholder",
+    Placeholder.of,
+  );
+}

@@ -1,8 +1,8 @@
 import { Function, Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Result } from "@siteimprove/alfa-result";
+import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Absolute } from "../../selector";
 
@@ -28,17 +28,7 @@ import {
 
 import { PseudoElementSelector } from "./pseudo-element/pseudo-element";
 
-const {
-  either,
-  flatMap,
-  map,
-  mapResult,
-  peek,
-  right,
-  separatedList,
-  take,
-  takeBetween,
-} = Parser;
+const { either, mapResult, peek, right, separatedList, take } = Parser;
 
 export type PseudoElement =
   | After
@@ -73,7 +63,7 @@ export namespace PseudoElement {
   export function parse(
     parseSelector: Thunk<CSSParser<Absolute>>,
   ): CSSParser<PseudoElement> {
-    return either(
+    return either<Slice<Token>, PseudoElement, string>(
       // Functional pseudo-elements need to be first because ::cue and
       // ::cue-region can be both functional and non-functional, so we want to
       // fail them as functional before testing them as non-functional.
@@ -115,21 +105,18 @@ export namespace PseudoElement {
       PseudoElementSelector.parseNonLegacy("cue", () => Cue.of()),
       PseudoElementSelector.parseNonLegacy("cue-region", () => CueRegion.of()),
 
-      PseudoElementSelector.parseLegacy("after", After.of),
-      PseudoElementSelector.parseLegacy("before", Before.of),
-      PseudoElementSelector.parseLegacy("first-letter", FirstLetter.of),
-      PseudoElementSelector.parseLegacy("first-line", FirstLine.of),
-      PseudoElementSelector.parseNonLegacy("backdrop", Backdrop.of),
-      PseudoElementSelector.parseNonLegacy(
-        "file-selector-button",
-        FileSelectorButton.of,
-      ),
-      PseudoElementSelector.parseNonLegacy("grammar-error", GrammarError.of),
-      PseudoElementSelector.parseNonLegacy("marker", Marker.of),
-      PseudoElementSelector.parseNonLegacy("placeholder", Placeholder.of),
-      PseudoElementSelector.parseNonLegacy("selection", Selection.of),
-      PseudoElementSelector.parseNonLegacy("spelling-error", SpellingError.of),
-      PseudoElementSelector.parseNonLegacy("target-text", TargetText.of),
+      After.parse,
+      Before.parse,
+      FirstLetter.parse,
+      FirstLine.parse,
+      Backdrop.parse,
+      FileSelectorButton.parse,
+      GrammarError.parse,
+      Marker.parse,
+      Placeholder.parse,
+      Selection.parse,
+      SpellingError.parse,
+      TargetText.parse,
     );
   }
 }

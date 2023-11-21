@@ -16,3 +16,10 @@ export class TargetText extends PseudoElementSelector<"target-text"> {
     yield this;
   }
 }
+
+export namespace TargetText {
+  export const parse = PseudoElementSelector.parseNonLegacy(
+    "target-text",
+    TargetText.of,
+  );
+}

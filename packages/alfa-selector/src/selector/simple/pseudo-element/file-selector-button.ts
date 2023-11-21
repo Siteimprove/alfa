@@ -16,3 +16,10 @@ export class FileSelectorButton extends PseudoElementSelector<"file-selector-but
     yield this;
   }
 }
+
+export namespace FileSelectorButton {
+  export const parse = PseudoElementSelector.parseNonLegacy(
+    "file-selector-button",
+    FileSelectorButton.of,
+  );
+}
