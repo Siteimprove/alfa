@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-abstract resolve(resolver?: unknown): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
+abstract resolve(resolver?: unknown): Fixed<DBase[T], DCanonicalUnit[DBase[T]]>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ abstract resolve(resolver?: unknown): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
 
 **Returns:**
 
-[Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;Dimensions&lt;T&gt;\[0\], Dimensions&lt;T&gt;\[2\]&gt;
+[Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;DBase\[T\], DCanonicalUnit\[DBase\[T\]\]&gt;
 

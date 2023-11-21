@@ -4,6 +4,7 @@
 
 ## Version.isVersion() function
 
+(knip)
 
 **Signature:**
 

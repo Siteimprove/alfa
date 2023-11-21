@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function isLengthPercentage(value: unknown): value is LengthPercentage;
+function isLengthPercentage(value: unknown): value is LengthPercentage;
 ```
 
 ## Parameters

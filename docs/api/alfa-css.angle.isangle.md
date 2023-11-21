@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function isAngle(value: unknown): value is Angle;
+function isAngle(value: unknown): value is Angle;
 ```
 
 ## Parameters

@@ -2,21 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Inset](./alfa-css.inset.md) &gt; [partiallyResolve](./alfa-css.inset.partiallyresolve.md)
 
-## Inset.partiallyResolve() function
+## Inset.partiallyResolve() method
 
 **Signature:**
 
 ```typescript
-function partiallyResolve(resolver: PartialResolver): (value: Inset) => PartiallyResolved;
+partiallyResolve(resolver: Inset.PartialResolver): Inset.PartiallyResolved;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [PartialResolver](./alfa-css.inset.partialresolver.md) |  |
+|  resolver | [Inset.PartialResolver](./alfa-css.inset.partialresolver.md) |  |
 
 **Returns:**
 
-(value: [Inset](./alfa-css.inset.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.inset.partiallyresolved.md)
+[Inset.PartiallyResolved](./alfa-css.inset.partiallyresolved.md)
 

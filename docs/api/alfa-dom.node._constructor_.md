@@ -9,7 +9,7 @@ Constructs a new instance of the `Node` class
 **Signature:**
 
 ```typescript
-protected constructor(children: Array<Node>, type: T);
+protected constructor(children: Array<Node>, type: T, externalId?: string, extraData?: any);
 ```
 
 ## Parameters
@@ -18,4 +18,6 @@ protected constructor(children: Array<Node>, type: T);
 |  --- | --- | --- |
 |  children | Array&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
 |  type | T |  |
+|  externalId | string | _(Optional)_ |
+|  extraData | any | _(Optional)_ |
 

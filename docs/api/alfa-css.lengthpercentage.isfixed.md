@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function isFixed(value: unknown): value is Length.Fixed;
+function isFixed(value: unknown): value is Length.Fixed;
 ```
 
 ## Parameters

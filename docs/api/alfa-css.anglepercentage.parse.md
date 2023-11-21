@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-parse: Parser<Slice<Token>, AnglePercentage<Unit.Angle>, string, []>
+parse: CSSParser<AnglePercentage>
 ```

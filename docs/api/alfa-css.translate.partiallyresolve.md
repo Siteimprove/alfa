@@ -2,21 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Translate](./alfa-css.translate.md) &gt; [partiallyResolve](./alfa-css.translate.partiallyresolve.md)
 
-## Translate.partiallyResolve() function
+## Translate.partiallyResolve() method
 
 **Signature:**
 
 ```typescript
-function partiallyResolve(resolver: PartialResolver): (value: Translate) => PartiallyResolved;
+partiallyResolve(resolver: Translate.PartialResolver): Translate.PartiallyResolved;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [PartialResolver](./alfa-css.translate.partialresolver.md) |  |
+|  resolver | [Translate.PartialResolver](./alfa-css.translate.partialresolver.md) |  |
 
 **Returns:**
 
-(value: [Translate](./alfa-css.translate.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.translate.partiallyresolved.md)
+[Translate.PartiallyResolved](./alfa-css.translate.partiallyresolved.md)
 

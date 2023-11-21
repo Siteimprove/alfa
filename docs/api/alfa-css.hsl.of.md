@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of<H extends Number.Canonical | Angle.Canonical, A extends Number.Canonical | Percentage.Canonical, S extends Percentage, L extends Percentage>(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
+static of<H extends Number.Canonical | Angle.Canonical, A extends Number.Canonical | Percentage.Canonical, S extends Percentage<"percentage">, L extends Percentage<"percentage">>(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
 ```
 
 ## Parameters

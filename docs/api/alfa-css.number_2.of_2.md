@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function of(value: Math<"number">): Calculated;
+function of(value: Math<"number">): Calculated;
 ```
 
 ## Parameters

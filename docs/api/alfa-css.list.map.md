@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, false> ? false : true>;
+map<U extends Value>(mapper: Mapper<V, U>): List<U>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, fals
 
 **Returns:**
 
-[List](./alfa-css.list.md)<!-- -->&lt;U, U extends Value&lt;string, false&gt; ? false : true&gt;
+[List](./alfa-css.list.md)<!-- -->&lt;U&gt;
 
