@@ -94,6 +94,7 @@
     { "path": "../alfa-result" },
     { "path": "../alfa-sequence" },
     { "path": "../alfa-slice" },
-    { "path": "../alfa-test" }
+    { "path": "../alfa-test" },
+    { "path": "../alfa-thunk" }
   ]
 }
