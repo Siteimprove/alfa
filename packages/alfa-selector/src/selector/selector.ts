@@ -1,4 +1,4 @@
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -84,6 +84,10 @@ export abstract class WithName<
 
   public get name(): N {
     return this._name;
+  }
+
+  public matches(element: Element, context?: Context): boolean {
+    return false;
   }
 
   public equals(value: WithName): boolean;

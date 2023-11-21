@@ -8,7 +8,6 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Context } from "../../../context";
 import type { Absolute } from "../../../selector";
 
 import { WithName } from "../../selector";
@@ -24,10 +23,6 @@ export abstract class PseudoClassSelector<
 > extends WithName<"pseudo-class", N> {
   protected constructor(name: N) {
     super("pseudo-class", name);
-  }
-
-  public matches(element: Element, context?: Context): boolean {
-    return false;
   }
 
   public equals(value: PseudoClassSelector): boolean;

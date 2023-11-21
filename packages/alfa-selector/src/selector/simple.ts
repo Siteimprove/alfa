@@ -5,14 +5,19 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute } from "../selector";
 
-import { PseudoElement } from "./simple/pseudo-element/pseudo-element";
-
 // Import the various simple selectors for use in that file.
-import { Attribute, Class, Id, PseudoClass, Type, Universal } from "./simple";
+import {
+  Attribute,
+  Class,
+  Id,
+  PseudoClass,
+  PseudoElement,
+  Type,
+  Universal,
+} from "./simple";
 
 // Re-export the various selectors for use by others
 export * from "./simple/index";
-export * from "./simple/pseudo-element/pseudo-element";
 
 const { either } = Parser;
 
