@@ -1,5 +1,45 @@
 # Alfa changelog
 
+## [0.69.0](../../compare/v0.68.0...v0.69.0) (2023-11-21)
+
+### Breaking
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0690): The `hasInlineStyleProperty` and `hasCascadedValueDeclaredInInlineStyleOf` predicates have been removed.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0690): Various `Value.partiallyResolve()` functions have been removed.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): Diagnostics `WithPreviousHeading` and `WithNextHeading` have been replaced by `WithOtherHeading`.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0690): The various `Value.parseBase` functions are no more available.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0690): `Angle#resolve()` does not require a resolver anymore, since 100% is always 1 full turn.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): Question `visible-focus-classes`, and question type `string[]` have been removed.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0690): CSS `Value` types no longer accept a `CALC` parameter; it is automatically inferred.
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): Accessible name is now recorded in the diagnostics for R15, R39, R41 and R81.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0690): `Value` now expose a `partiallyResolve()` instance method.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): Role is now recorded in the diagnostic for R8.
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0690), [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#0690): Tree `Node`, and DOM `Node` can now have an `externalId` (`string`) and some `extraData` (`any`).
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0690): `Percentage` can now be partially resolved into fixed `Percentage`.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0690): a `AnglePercentage.resolve()` helper is now available to handle `Percentage` shenanigans.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0690): `Percentage` builders now accept an optional type hint indicating into what the percentage resolves.
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): SIA-R70 ow accepts `<hgroup>`.
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0690): The `<hgroup>` element now has an implicit role of `group`.
+
 ## [0.68.0](../../compare/v0.67.0...v0.68.0) (2023-10-20)
 
 ### Breaking

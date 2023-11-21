@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function of<U extends Unit.Angle>(value: Base.Angle<U>): Angle.Fixed<U>;
+function of<U extends Unit.Angle>(value: Base.Angle<U>): Angle.Fixed<U>;
 ```
 
 ## Parameters

@@ -143,6 +143,7 @@ jobs:
       - name: Make npm release
         run: >
           yarn workspaces foreach
+          --all
           --no-private
           --topological-dev
           npm publish --tolerate-republish

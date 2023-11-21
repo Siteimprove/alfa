@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function of(value: Math<"length">): Length.Calculated;
+function of(value: Math<"length">): Length.Calculated;
 ```
 
 ## Parameters

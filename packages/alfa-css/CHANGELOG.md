@@ -1,5 +1,31 @@
 # @siteimprove/alfa-css
 
+## 0.69.0
+
+### Minor Changes
+
+- **Added:** `Value` now expose a `partiallyResolve()` instance method. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+- **Breaking:** Various `Value.partiallyResolve()` functions have been removed. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+  Instead, use the corresponding `Value#partiallyResolve()` instance method.
+
+- **Added:** `Percentage` can now be partially resolved into fixed `Percentage`. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+- **Breaking:** The various `Value.parseBase` functions are no more available. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+  These where temporary helpers during migration to calculated values.
+
+  Use `filter(Value.parse, value => !value.hasCalculation(), () => "Calculation not allowed")` instead.
+
+- **Breaking:** `Angle#resolve()` does not require a resolver anymore, since 100% is always 1 full turn. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+- **Added:** a `AnglePercentage.resolve()` helper is now available to handle `Percentage` shenanigans. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+- **Added:** `Percentage` builders now accept an optional type hint indicating into what the percentage resolves. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+- **Breaking:** CSS `Value` types no longer accept a `CALC` parameter; it is automatically inferred ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
 ## 0.68.0
 
 ### Minor Changes

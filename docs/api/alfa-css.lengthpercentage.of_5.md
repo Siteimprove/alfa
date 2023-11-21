@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function of(value: Math<"length-percentage">): Calculated;
+function of(value: Math<"length-percentage">): Calculated;
 ```
 
 ## Parameters

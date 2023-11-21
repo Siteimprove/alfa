@@ -2,13 +2,34 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Dimension](./alfa-css.dimension.md)
 
-## Dimension type
+## Dimension namespace
 
 
 **Signature:**
 
 ```typescript
-export type Dimension<T extends Type = Type> = Dimension.Calculated<T> | Dimension.Fixed<Dimensions<T>[0]>;
+export declare namespace Dimension 
 ```
-**References:** [Dimension.Calculated](./alfa-css.dimension.calculated.md)<!-- -->, [Dimension.Fixed](./alfa-css.dimension.fixed.md)
+
+## Abstract Classes
+
+|  Abstract Class | Description |
+|  --- | --- |
+|  [Calculated](./alfa-css.dimension.calculated.md) | Dimensions that are the result of a calculation. |
+|  [Fixed](./alfa-css.dimension.fixed.md) | Dimensions that are a fixed (not calculated) value. |
+
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isCalculated(value)](./alfa-css.dimension.iscalculated.md) |  |
+|  [isDimension(value)](./alfa-css.dimension.isdimension.md) |  |
+|  [isFixed(value)](./alfa-css.dimension.isfixed.md) |  |
+
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Calculated](./alfa-css.dimension.calculated.md) |  |
+|  [Fixed](./alfa-css.dimension.fixed.md) |  |
 

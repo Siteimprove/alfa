@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type JSON = Calculated.JSON | Fixed.JSON;
+type JSON = Calculated.JSON | Fixed.JSON;
 ```
 **References:** [Calculated.JSON](./alfa-css.angle.calculated.json.md)<!-- -->, [Fixed.JSON](./alfa-css.angle.fixed.json.md)
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-interface JSON<T extends Type = Type, U extends Dimensions<T>[1] = Dimensions<T>[1]> extends Numeric.Fixed.JSON<T> 
+interface JSON<T extends BaseNumeric.Dimension = BaseNumeric.Dimension, U extends DUnit[T] = DUnit[T]> extends Numeric.Fixed.JSON<T> 
 ```
 **Extends:** [Numeric.Fixed.JSON](./alfa-css.numeric.fixed.json.md)<!-- -->&lt;T&gt;
 

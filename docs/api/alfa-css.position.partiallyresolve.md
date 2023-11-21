@@ -2,21 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Position](./alfa-css.position.md) &gt; [partiallyResolve](./alfa-css.position.partiallyresolve.md)
 
-## Position.partiallyResolve() function
+## Position.partiallyResolve() method
 
 **Signature:**
 
 ```typescript
-function partiallyResolve<H extends Keywords.Horizontal, V extends Keywords.Vertical>(resolver: PartialResolver): (value: Position<H, V>) => PartiallyResolved<H, V>;
+partiallyResolve(resolver: Position.PartialResolver): Position.PartiallyResolved<H, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [PartialResolver](./alfa-css.position.partialresolver.md) |  |
+|  resolver | [Position.PartialResolver](./alfa-css.position.partialresolver.md) |  |
 
 **Returns:**
 
-(value: [Position](./alfa-css.position.md)<!-- -->&lt;H, V&gt;) =&gt; [PartiallyResolved](./alfa-css.position.partiallyresolved.md)<!-- -->&lt;H, V&gt;
+[Position.PartiallyResolved](./alfa-css.position.partiallyresolved.md)<!-- -->&lt;H, V&gt;
 

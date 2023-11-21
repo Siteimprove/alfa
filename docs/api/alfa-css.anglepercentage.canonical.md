@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type Canonical = Angle.Canonical;
+type Canonical = Angle.Canonical;
 ```
 **References:** [Angle.Canonical](./alfa-css.angle.canonical.md)
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export namespace Calculated 
+namespace Calculated 
 ```
 
 ## Interfaces

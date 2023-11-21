@@ -1,5 +1,23 @@
 # @siteimprove/alfa-rules
 
+## 0.69.0
+
+### Minor Changes
+
+- **Added:** Accessible name is now recorded in the diagnostics for R15, R39, R41 and R81 ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+- **Added:** Role is now recorded in the diagnostic for R8 ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+- **Breaking:** Diagnostics `WithPreviousHeading` and `WithNextHeading` have been replaced by `WithOtherHeading`. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+- **Breaking:** Question `visible-focus-classes`, and question type `string[]` have been removed. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+### Patch Changes
+
+- **Fixed:** SIA-R70 ow accepts `<hgroup>`. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+
+  The element has been re-introduced in the HTML standard, with improved content model.
+
 ## 0.68.0
 
 ## 0.67.0

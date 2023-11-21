@@ -7,15 +7,8 @@
 **Signature:**
 
 ```typescript
-resolve(resolver: Resolver): Canonical;
+resolve(): Canonical;
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.anglepercentage.resolver.md) |  |
-
 **Returns:**
 
 [Canonical](./alfa-css.anglepercentage.canonical.md)

@@ -9,7 +9,7 @@ Fully resolves a length-percentage, when a full resolver is provided.
 **Signature:**
 
 ```typescript
-export function resolve(resolver: Resolver): (value: LengthPercentage) => Canonical;
+function resolve(resolver: Resolver): (value: LengthPercentage) => Canonical;
 ```
 
 ## Parameters
