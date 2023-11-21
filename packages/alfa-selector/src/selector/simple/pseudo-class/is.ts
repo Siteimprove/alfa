@@ -4,7 +4,6 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context";
 import type { Absolute } from "../../../selector";
-import { Has } from "./has";
 
 import { WithSelector } from "./pseudo-class";
 

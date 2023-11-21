@@ -1,7 +1,6 @@
 import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 

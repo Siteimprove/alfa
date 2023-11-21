@@ -1,4 +1,3 @@
-import { Serializable } from "@siteimprove/alfa-json";
 import { Combinator } from "./combinator";
 import type { Complex } from "./complex";
 import type { Compound } from "./compound";

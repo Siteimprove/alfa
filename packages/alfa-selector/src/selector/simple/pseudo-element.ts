@@ -26,7 +26,7 @@ import {
 
 import { PseudoElementSelector } from "./pseudo-element/pseudo-element";
 
-const { either, mapResult, peek, right, separatedList, take } = Parser;
+const { either } = Parser;
 
 /**
  * @public
