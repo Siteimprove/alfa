@@ -32,6 +32,7 @@ import {
   PseudoClassSelector,
   Root,
   Visited,
+  WithIndex,
 } from "./pseudo-class/index";
 
 const { either } = Parser;
@@ -120,16 +121,10 @@ export namespace PseudoClass {
       OnlyOfType.parse,
       Root.parse,
       Visited.parse,
-      PseudoClassSelector.parseFunctionalWithNth("nth-child", NthChild.of),
-      PseudoClassSelector.parseFunctionalWithNth(
-        "nth-last-child",
-        NthLastChild.of,
-      ),
-      PseudoClassSelector.parseFunctionalWithNth("nth-of-type", NthOfType.of),
-      PseudoClassSelector.parseFunctionalWithNth(
-        "nth-last-of-type",
-        NthLastOfType.of,
-      ),
+      NthChild.parse,
+      NthLastChild.parse,
+      NthLastOfType.parse,
+      NthOfType.parse,
       // :has() normally only accepts relative selectors, we currently
       // accept only non-relative ones…
       PseudoClassSelector.parseFunctionalWithSelector(

@@ -1,26 +1,20 @@
 import type { Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { WithIndex } from "./pseudo-class";
 
 const { hasName, isElement } = Element;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#nth-of-type-pseudo}
  */
-export class NthOfType extends PseudoClassSelector<"nth-of-type"> {
+export class NthOfType extends WithIndex<"nth-of-type"> {
   public static of(index: Nth): NthOfType {
     return new NthOfType(index);
   }
 
-  private static readonly _indices = new WeakMap<Element, number>();
-
-  private readonly _index: Nth;
-
   private constructor(index: Nth) {
-    super("nth-of-type");
-
-    this._index = index;
+    super("nth-of-type", index);
   }
 
   public *[Symbol.iterator](): Iterator<NthOfType> {
@@ -54,17 +48,12 @@ export class NthOfType extends PseudoClassSelector<"nth-of-type"> {
   public toJSON(): NthOfType.JSON {
     return {
       ...super.toJSON(),
-      index: this._index.toJSON(),
     };
-  }
-
-  public toString(): string {
-    return `:${this.name}(${this._index})`;
   }
 }
 
 export namespace NthOfType {
-  export interface JSON extends PseudoClassSelector.JSON<"nth-of-type"> {
-    index: Nth.JSON;
-  }
+  export interface JSON extends WithIndex.JSON<"nth-of-type"> {}
+
+  export const parse = WithIndex.parseWithIndex("nth-of-type", NthOfType.of);
 }

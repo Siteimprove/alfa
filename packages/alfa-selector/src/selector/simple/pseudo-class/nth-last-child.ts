@@ -1,26 +1,20 @@
 import type { Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { WithIndex } from "./pseudo-class";
 
 const { isElement } = Element;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#nth-last-child-pseudo}
  */
-export class NthLastChild extends PseudoClassSelector<"nth-last-child"> {
+export class NthLastChild extends WithIndex<"nth-last-child"> {
   public static of(index: Nth): NthLastChild {
     return new NthLastChild(index);
   }
 
-  private static readonly _indices = new WeakMap<Element, number>();
-
-  private readonly _index: Nth;
-
   private constructor(nth: Nth) {
-    super("nth-last-child");
-
-    this._index = nth;
+    super("nth-last-child", nth);
   }
 
   public *[Symbol.iterator](): Iterator<NthLastChild> {
@@ -54,17 +48,15 @@ export class NthLastChild extends PseudoClassSelector<"nth-last-child"> {
   public toJSON(): NthLastChild.JSON {
     return {
       ...super.toJSON(),
-      index: this._index.toJSON(),
     };
-  }
-
-  public toString(): string {
-    return `:${this.name}(${this._index})`;
   }
 }
 
 export namespace NthLastChild {
-  export interface JSON extends PseudoClassSelector.JSON<"nth-last-child"> {
-    index: Nth.JSON;
-  }
+  export interface JSON extends WithIndex.JSON<"nth-last-child"> {}
+
+  export const parse = WithIndex.parseWithIndex(
+    "nth-last-child",
+    NthLastChild.of,
+  );
 }
