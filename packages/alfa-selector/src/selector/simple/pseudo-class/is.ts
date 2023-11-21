@@ -1,27 +1,23 @@
+import { Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context";
 import type { Absolute } from "../../../selector";
+import { Has } from "./has";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { WithSelector } from "./pseudo-class";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#matches-pseudo}
  */
-export class Is extends PseudoClassSelector<"is"> {
+export class Is extends WithSelector<"is"> {
   public static of(selector: Absolute): Is {
     return new Is(selector);
   }
 
-  private readonly _selector: Absolute;
-
   private constructor(selector: Absolute) {
-    super("is");
-    this._selector = selector;
-  }
-
-  public get selector(): Absolute {
-    return this._selector;
+    super("is", selector);
   }
 
   public *[Symbol.iterator](): Iterator<Is> {
@@ -43,17 +39,13 @@ export class Is extends PseudoClassSelector<"is"> {
   public toJSON(): Is.JSON {
     return {
       ...super.toJSON(),
-      selector: this._selector.toJSON(),
     };
-  }
-
-  public toString(): string {
-    return `:${this.name}(${this._selector})`;
   }
 }
 
 export namespace Is {
-  export interface JSON extends PseudoClassSelector.JSON<"is"> {
-    selector: Absolute.JSON;
-  }
+  export interface JSON extends WithSelector.JSON<"is"> {}
+
+  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+    WithSelector.parseWithSelector("is", parseSelector, Is.of);
 }

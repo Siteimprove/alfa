@@ -22,6 +22,5 @@ export * from "./nth-last-of-type";
 export * from "./nth-of-type";
 export * from "./only-child";
 export * from "./only-of-type";
-export * from "./pseudo-class";
 export * from "./root";
 export * from "./visited";

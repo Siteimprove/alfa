@@ -1,24 +1,20 @@
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Thunk } from "@siteimprove/alfa-thunk";
+
 import type { Absolute } from "../../../selector";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { WithSelector } from "./pseudo-class";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#has-pseudo}
  */
-export class Has extends PseudoClassSelector<"has"> {
+export class Has extends WithSelector<"has"> {
   public static of(selector: Absolute): Has {
     return new Has(selector);
   }
 
-  private readonly _selector: Absolute;
-
   private constructor(selector: Absolute) {
-    super("has");
-    this._selector = selector;
-  }
-
-  public get selector(): Absolute {
-    return this._selector;
+    super("has", selector);
   }
 
   public *[Symbol.iterator](): Iterator<Has> {
@@ -36,17 +32,15 @@ export class Has extends PseudoClassSelector<"has"> {
   public toJSON(): Has.JSON {
     return {
       ...super.toJSON(),
-      selector: this._selector.toJSON(),
     };
-  }
-
-  public toString(): string {
-    return `:${this.name}(${this._selector})`;
   }
 }
 
 export namespace Has {
-  export interface JSON extends PseudoClassSelector.JSON<"has"> {
-    selector: Absolute.JSON;
-  }
+  export interface JSON extends WithSelector.JSON<"has"> {}
+
+  // :has() normally only accepts relative selectors, we currently
+  // accept only non-relative ones…
+  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+    WithSelector.parseWithSelector("has", parseSelector, Has.of);
 }

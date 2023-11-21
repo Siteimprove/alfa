@@ -65,20 +65,6 @@ export namespace PseudoClassSelector {
   ): CSSParser<T> {
     return map(right(parseColon, Token.parseIdent(name)), of);
   }
-
-  /**
-   * Parses a functional pseudo-class accepting a selector argument
-   */
-  export function parseFunctionalWithSelector<T extends PseudoClassSelector>(
-    name: string,
-    parseSelector: Thunk<CSSParser<Absolute>>,
-    of: (selector: Absolute) => T,
-  ): CSSParser<T> {
-    return map(
-      right(parseColon, Function.parse(name, parseSelector)),
-      ([, selector]) => of(selector),
-    );
-  }
 }
 
 /**
@@ -140,6 +126,69 @@ export namespace WithIndex {
   ): CSSParser<T> {
     return map(right(parseColon, Function.parse(name, parseNth)), ([, nth]) =>
       of(nth),
+    );
+  }
+}
+
+/**
+ * @internal
+ */
+export abstract class WithSelector<
+  N extends string = string,
+> extends PseudoClassSelector<N> {
+  protected readonly _selector: Absolute;
+
+  protected constructor(name: N, selector: Absolute) {
+    super(name);
+    this._selector = selector;
+  }
+
+  public get selector(): Absolute {
+    return this._selector;
+  }
+
+  public equals(value: WithSelector): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof WithSelector && value._selector.equals(this._selector)
+    );
+  }
+
+  public toJSON(): WithSelector.JSON<N> {
+    return {
+      ...super.toJSON(),
+      selector: this._selector.toJSON(),
+    };
+  }
+
+  public toString(): string {
+    return `:${this.name}(${this._selector})`;
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace WithSelector {
+  export interface JSON<N extends string = string>
+    extends PseudoClassSelector.JSON<N> {
+    selector: Absolute.JSON;
+  }
+
+  /**
+   * Parses a functional pseudo-class accepting a selector argument
+   */
+  export function parseWithSelector<T extends WithSelector>(
+    name: string,
+    parseSelector: Thunk<CSSParser<Absolute>>,
+    of: (selector: Absolute) => T,
+  ): CSSParser<T> {
+    return map(
+      right(parseColon, Function.parse(name, parseSelector)),
+      ([, selector]) => of(selector),
     );
   }
 }
