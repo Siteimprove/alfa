@@ -1,5 +1,5 @@
 import { Element } from "@siteimprove/alfa-dom";
-import * as Selector from "@siteimprove/alfa-selector";
+import { Class, Id, Selector, Type } from "@siteimprove/alfa-selector";
 
 /**
  * The ancestor filter is a data structure used for optimising selector matching
@@ -78,16 +78,16 @@ export class AncestorFilter {
     }
   }
 
-  public matches(selector: Selector.Selector): boolean {
-    if (selector instanceof Selector.Id) {
+  public matches(selector: Selector): boolean {
+    if (selector instanceof Id) {
       return this._ids.has(selector.name);
     }
 
-    if (selector instanceof Selector.Class) {
+    if (selector instanceof Class) {
       return this._classes.has(selector.name);
     }
 
-    if (selector instanceof Selector.Type) {
+    if (selector instanceof Type) {
       return this._types.has(selector.name);
     }
 

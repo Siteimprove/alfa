@@ -160,7 +160,7 @@ If you would like to contribute to Alfa, make sure to check out the [contributio
 
 The special [`scratches`](scratches) directory is reserved for _scratch files_, which are useful for quickly running small code examples or even larger experiments. The directory is primed with a TypeScript configuration that sets up the needed project references and compiler options. All files within the directory, with the exception of the TypeScript configuration, are ignored by version control and so any files may be added without risk of them being checked into version control.
 
-To create a new scratch file, add a new TypeScript file anywhere in the [`scratches`](scratches) directory, such as `scratches/pseudo-class.ts`, and do:
+To create a new scratch file, add a new TypeScript file anywhere in the [`scratches`](scratches) directory, such as `scratches/foo.ts`, and do:
 
 ```console
 $ yarn build scratches
@@ -169,7 +169,7 @@ $ yarn build scratches
 You can then run the built output of your scratch file in any supported JavaScript runtime, such as [Node.js][]:
 
 ```console
-$ node scratches/pseudo-class.js
+$ node scratches/foo.js
 ```
 
 The scratch files are built with the rest of Alfa as per the previous section. When switching between branches, you may experience one or the other scratch file not compiling. To build _just_ the Alfa packages and not the scratch files, you can do:
