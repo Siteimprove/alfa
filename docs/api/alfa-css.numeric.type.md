@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
+export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
 ```

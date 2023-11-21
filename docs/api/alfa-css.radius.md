@@ -16,6 +16,7 @@ export declare namespace Radius
 |  Function | Description |
 |  --- | --- |
 |  [isRadius(value)](./alfa-css.radius.isradius.md) |  |
+|  [PartiallyResolve(resolver)](./alfa-css.radius.partiallyresolve.md) |  |
 
 ## Interfaces
 

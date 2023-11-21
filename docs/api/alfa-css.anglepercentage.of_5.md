@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function of(value: Math<"angle-percentage">): Calculated;
+export function of(value: Math<"angle-percentage">): Calculated;
 ```
 
 ## Parameters

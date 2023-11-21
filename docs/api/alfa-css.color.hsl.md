@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function hsl<H extends Number.Canonical | Angle.Canonical, A extends Number.Canonical | Percentage.Canonical>(hue: H, saturation: Percentage<"percentage">, lightness: Percentage<"percentage">, alpha: A): HSL<H, A>;
+function hsl<H extends Number.Canonical | Angle.Canonical, A extends Number.Canonical | Percentage.Canonical>(hue: H, saturation: Percentage, lightness: Percentage, alpha: A): HSL<H, A>;
 ```
 
 ## Parameters
@@ -15,8 +15,8 @@ function hsl<H extends Number.Canonical | Angle.Canonical, A extends Number.Cano
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  hue | H |  |
-|  saturation | Percentage&lt;"percentage"&gt; |  |
-|  lightness | Percentage&lt;"percentage"&gt; |  |
+|  saturation | Percentage |  |
+|  lightness | Percentage |  |
 |  alpha | A |  |
 
 **Returns:**

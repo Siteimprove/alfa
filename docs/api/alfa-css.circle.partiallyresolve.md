@@ -2,21 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Circle](./alfa-css.circle.md) &gt; [partiallyResolve](./alfa-css.circle.partiallyresolve.md)
 
-## Circle.partiallyResolve() method
+## Circle.partiallyResolve() function
 
 **Signature:**
 
 ```typescript
-partiallyResolve(resolver: Circle.PartialResolver): Circle.PartiallyResolved;
+function partiallyResolve(resolver: PartialResolver): (value: Circle) => PartiallyResolved;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Circle.PartialResolver](./alfa-css.circle.partialresolver.md) |  |
+|  resolver | [PartialResolver](./alfa-css.circle.partialresolver.md) |  |
 
 **Returns:**
 
-[Circle.PartiallyResolved](./alfa-css.circle.partiallyresolved.md)
+(value: [Circle](./alfa-css.circle.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.circle.partiallyresolved.md)
 

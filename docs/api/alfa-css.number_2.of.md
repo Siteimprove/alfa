@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function of(value: number): Fixed;
+export function of(value: number): Fixed;
 ```
 
 ## Parameters

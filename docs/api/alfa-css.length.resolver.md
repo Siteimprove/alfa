@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-interface Resolver 
+export interface Resolver 
 ```
 
 ## Properties

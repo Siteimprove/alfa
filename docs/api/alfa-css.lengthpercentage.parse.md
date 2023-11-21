@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-parse: CSSParser<LengthPercentage>
+parse: Parser<Slice<Token>, LengthPercentage<Unit.Length>, string, []>
 ```

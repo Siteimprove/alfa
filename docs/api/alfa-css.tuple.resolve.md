@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>>;
+resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>, false>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>>;
 
 **Returns:**
 
-[Tuple](./alfa-css.tuple.md)<!-- -->&lt;Tuple.Resolved&lt;T&gt;&gt;
+[Tuple](./alfa-css.tuple.md)<!-- -->&lt;Tuple.Resolved&lt;T&gt;, false&gt;
 

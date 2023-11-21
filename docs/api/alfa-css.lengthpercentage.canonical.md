@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type Canonical = Length.Canonical;
+export type Canonical = Length.Canonical;
 ```
 **References:** [Length.Canonical](./alfa-css.length.canonical.md)
 

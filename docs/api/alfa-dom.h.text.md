@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function text(data: string, externalId?: string, extraData?: any): Text;
+function text(data: string): Text;
 ```
 
 ## Parameters
@@ -15,8 +15,6 @@ function text(data: string, externalId?: string, extraData?: any): Text;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | string |  |
-|  externalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

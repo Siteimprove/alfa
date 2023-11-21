@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function isCalculated(value: unknown): value is Calculated;
+export function isCalculated(value: unknown): value is Calculated;
 ```
 
 ## Parameters

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(data: string, externalId?: string, extraData?: any): Comment;
+static of(data: string): Comment;
 ```
 
 ## Parameters
@@ -15,8 +15,6 @@ static of(data: string, externalId?: string, extraData?: any): Comment;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | string |  |
-|  externalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

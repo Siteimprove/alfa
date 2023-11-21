@@ -1,45 +1,5 @@
 # Alfa changelog
 
-## [1.0.0](../../compare/v0.68.0...v1.0.0) (2023-11-21)
-
-### Breaking
-
-- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#100): The `hasInlineStyleProperty` and `hasCascadedValueDeclaredInInlineStyleOf` predicates have been removed. ([#1499](https://github.com/Siteimprove/alfa/pull/1499))
-
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#100): Various `Value.partiallyResolve()` functions have been removed. ([#1495](https://github.com/Siteimprove/alfa/pull/1495))
-
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#100): Diagnostics `WithPreviousHeading` and `WithNextHeading` have been replaced by `WithOtherHeading`. ([#1505](https://github.com/Siteimprove/alfa/pull/1505))
-
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#100): The various `Value.parseBase` functions are no more available. ([#1487](https://github.com/Siteimprove/alfa/pull/1487))
-
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#100): `Angle#resolve()` does not require a resolver anymore, since 100% is always 1 full turn. ([#1495](https://github.com/Siteimprove/alfa/pull/1495))
-
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#100): Question `visible-focus-classes`, and question type `string[]` have been removed. ([#1497](https://github.com/Siteimprove/alfa/pull/1497))
-
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#100): CSS `Value` types no longer accept a `CALC` parameter; it is automatically inferred. ([#1491](https://github.com/Siteimprove/alfa/pull/1491))
-
-### Added
-
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#100): Accessible name is now recorded in the diagnostics for R15, R39, R41 and R81. ([#1502](https://github.com/Siteimprove/alfa/pull/1502))
-
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#100): `Value` now expose a `partiallyResolve()` instance method. ([#1495](https://github.com/Siteimprove/alfa/pull/1495))
-
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#100): Role is now recorded in the diagnostic for R8. ([#1504](https://github.com/Siteimprove/alfa/pull/1504))
-
-- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#100), [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#100): Tree `Node`, and DOM `Node` can now have an `externalId` (`string`) and some `extraData` (`any`). ([#1498](https://github.com/Siteimprove/alfa/pull/1498))
-
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#100): `Percentage` can now be partially resolved into fixed `Percentage`. ([#1493](https://github.com/Siteimprove/alfa/pull/1493))
-
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#100): a `AnglePercentage.resolve()` helper is now available to handle `Percentage` shenanigans. ([#1493](https://github.com/Siteimprove/alfa/pull/1493))
-
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#100): `Percentage` builders now accept an optional type hint indicating into what the percentage resolves. ([#1493](https://github.com/Siteimprove/alfa/pull/1493))
-
-### Fixed
-
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#100): SIA-R70 ow accepts `<hgroup>`. ([#1506](https://github.com/Siteimprove/alfa/pull/1506))
-
-- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#100): The `<hgroup>` element now has an implicit role of `group`. ([#1506](https://github.com/Siteimprove/alfa/pull/1506))
-
 ## [0.68.0](../../compare/v0.67.0...v0.68.0) (2023-10-20)
 
 ### Breaking

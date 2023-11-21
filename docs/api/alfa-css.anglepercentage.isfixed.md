@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function isFixed(value: unknown): value is Angle.Fixed;
+export function isFixed(value: unknown): value is Angle.Fixed;
 ```
 
 ## Parameters

@@ -2,21 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Ellipse](./alfa-css.ellipse.md) &gt; [partiallyResolve](./alfa-css.ellipse.partiallyresolve.md)
 
-## Ellipse.partiallyResolve() method
+## Ellipse.partiallyResolve() function
 
 **Signature:**
 
 ```typescript
-partiallyResolve(resolver: Ellipse.PartialResolver): Ellipse.PartiallyResolved;
+function partiallyResolve(resolver: PartialResolver): (value: Ellipse) => PartiallyResolved;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Ellipse.PartialResolver](./alfa-css.ellipse.partialresolver.md) |  |
+|  resolver | [PartialResolver](./alfa-css.ellipse.partialresolver.md) |  |
 
 **Returns:**
 
-[Ellipse.PartiallyResolved](./alfa-css.ellipse.partiallyresolved.md)
+(value: [Ellipse](./alfa-css.ellipse.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.ellipse.partiallyresolved.md)
 

@@ -1,13 +1,5 @@
 # @siteimprove/alfa-style
 
-## 1.0.0
-
-### Minor Changes
-
-- **Breaking:** The `hasInlineStyleProperty` and `hasCascadedValueDeclaredInInlineStyleOf` predicates have been removed. ([#1499](https://github.com/Siteimprove/alfa/pull/1499))
-
-  These predicate were deprecated for a year, and the (deprecated) rules using them have already been removed.
-
 ## 0.68.0
 
 ### Minor Changes

@@ -16,6 +16,7 @@ export declare namespace Polygon
 |  Function | Description |
 |  --- | --- |
 |  [isPolygon(value)](./alfa-css.polygon.ispolygon.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.polygon.partiallyresolve.md) |  |
 
 ## Interfaces
 

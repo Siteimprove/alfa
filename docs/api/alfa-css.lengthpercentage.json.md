@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type JSON = Calculated.JSON | Length.Calculated.JSON | Length.Fixed.JSON | Percentage.Calculated.JSON | Percentage.Fixed.JSON;
+export type JSON = Calculated.JSON | Length.Calculated.JSON | Length.Fixed.JSON | Percentage.Calculated.JSON | Percentage.Fixed.JSON;
 ```
 **References:** [Calculated.JSON](./alfa-css.lengthpercentage.calculated.json.md)<!-- -->, [Length.Calculated.JSON](./alfa-css.length.calculated.json.md)<!-- -->, [Length.Fixed.JSON](./alfa-css.length.fixed.json.md)<!-- -->, [Percentage.Calculated.JSON](./alfa-css.percentage.calculated.json.md)<!-- -->, [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
 

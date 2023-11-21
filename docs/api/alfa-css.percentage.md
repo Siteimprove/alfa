@@ -9,17 +9,7 @@
 **Signature:**
 
 ```typescript
-export type Percentage<H extends BaseNumeric.Type = BaseNumeric.Type> = Percentage.Calculated<H> | Percentage.Fixed<H>;
+export type Percentage = Percentage.Calculated | Percentage.Fixed;
 ```
 **References:** [Percentage.Calculated](./alfa-css.percentage.calculated.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
-
-## Remarks
-
-Percentages, even if they do not contain a calc() function, act nearly as calculated value. Given a percentage base (i.e., what is 100%), they can resolve to a numeric value of that type.
-
-The Percentage type contains a type hint, H, that indicate into which type this is intended to resolve. This is normally known at parse time (i.e., is it a length?) This is only stored in the type and does not have any effect on the computation.
-
-Calculated percentages can be partially resolved in the absence of a base, they are then turned into a Fixed percentage with the same hint.
-
-Percentages that represent percentages (e.g., RGB components) are special kids in the sense that their partial and full resolution are the same. This requires resolve() to accept zero argument (no resolver) for them.
 

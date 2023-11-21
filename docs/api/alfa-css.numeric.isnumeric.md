@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function isNumeric(value: unknown): value is Numeric;
+export function isNumeric(value: unknown): value is Numeric;
 ```
 
 ## Parameters

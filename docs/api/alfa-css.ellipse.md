@@ -16,6 +16,7 @@ export declare namespace Ellipse
 |  Function | Description |
 |  --- | --- |
 |  [isEllipse(value)](./alfa-css.ellipse.isellipse.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.ellipse.partiallyresolve.md) |  |
 
 ## Interfaces
 

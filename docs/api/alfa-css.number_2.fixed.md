@@ -8,7 +8,7 @@
 **Signature:**
 
 ```typescript
-namespace Fixed 
+export namespace Fixed 
 ```
 
 ## Interfaces

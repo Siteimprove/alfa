@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type Canonical = Fixed<"px">;
+export type Canonical = Fixed<"px">;
 ```
 **References:** [Fixed](./alfa-css.length.fixed.md)
 

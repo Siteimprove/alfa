@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-get green(): Percentage.Canonical;
+get green(): Percentage.Fixed;
 ```

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of<H extends BaseNumeric.Type = BaseNumeric.Type>(value: number | BasePercentage): Fixed<H>;
+static of<R extends BaseNumeric.Type = BaseNumeric.Type>(value: number | BasePercentage): Fixed<R>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ static of<H extends BaseNumeric.Type = BaseNumeric.Type>(value: number | BasePer
 
 **Returns:**
 
-[Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt;
+[Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;R&gt;
 

@@ -16,6 +16,7 @@ export declare namespace Circle
 |  Function | Description |
 |  --- | --- |
 |  [isCircle(value)](./alfa-css.circle.iscircle.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.circle.partiallyresolve.md) |  |
 
 ## Interfaces
 

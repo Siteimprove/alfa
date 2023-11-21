@@ -44,7 +44,7 @@
 
 |  Abstract Class | Description |
 |  --- | --- |
-|  [Value](./alfa-css.value.md) | Representation of a CSS Value |
+|  [Value](./alfa-css.value.md) | \* T: a string representation of the type stored in the value, e.g. "length", "color", … \* CALC: whether the numeric values in this may include calculation or not. When CALC is true, the value hasn't been resolved. It does not necessarily contain calculation; when CALC is false, the value has been fully resolved and is guaranteed without calculations. \* R: a string representation of the type stored in the resolved value. This differs from T, typically, for dimension-percentage values that are resolved as dimensions only. |
 
 ## Interfaces
 
@@ -119,6 +119,7 @@
 |  [Color](./alfa-css.color.md) |  |
 |  [Converter](./alfa-css.converter.md) | Converters are functions that convert an input value from one unit within a set of units to another unit within the same set of units. |
 |  [Current](./alfa-css.current.md) | [https://drafts.csswg.org/css-color/\#currentcolor-color](https://drafts.csswg.org/css-color/#currentcolor-color) |
+|  [Dimension](./alfa-css.dimension.md) |  |
 |  [Gradient](./alfa-css.gradient.md) | [https://drafts.csswg.org/css-images/\#gradients](https://drafts.csswg.org/css-images/#gradients) |
 |  [Integer](./alfa-css.integer.md) | [https://drafts.csswg.org/css-values/\#integers](https://drafts.csswg.org/css-values/#integers) |
 |  [Length](./alfa-css.length.md) |  |

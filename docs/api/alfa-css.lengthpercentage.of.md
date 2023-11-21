@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function of<U extends Unit.Length>(value: number, unit: U): Length.Fixed<U>;
+export function of<U extends Unit.Length>(value: number, unit: U): Length.Fixed<U>;
 ```
 
 ## Parameters

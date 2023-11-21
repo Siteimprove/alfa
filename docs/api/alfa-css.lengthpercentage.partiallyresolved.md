@@ -9,7 +9,7 @@ Some percentages are resolved against boxes dimensions which we do not always ha
 **Signature:**
 
 ```typescript
-type PartiallyResolved = Canonical | Percentage.PartiallyResolved<"length"> | LengthPercentage.Calculated;
+export type PartiallyResolved = Canonical | Percentage.Canonical | LengthPercentage.Calculated;
 ```
-**References:** [Canonical](./alfa-css.lengthpercentage.canonical.md)<!-- -->, [Percentage.PartiallyResolved](./alfa-css.percentage.partiallyresolved.md)<!-- -->, [LengthPercentage.Calculated](./alfa-css.lengthpercentage.calculated.md)
+**References:** [Canonical](./alfa-css.lengthpercentage.canonical.md)<!-- -->, [Percentage.Canonical](./alfa-css.percentage.canonical.md)<!-- -->, [LengthPercentage.Calculated](./alfa-css.lengthpercentage.calculated.md)
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(children: Iterable<Node>, externalId?: string, extraData?: any): Fragment;
+static of(children: Iterable<Node>): Fragment;
 ```
 
 ## Parameters
@@ -15,8 +15,6 @@ static of(children: Iterable<Node>, externalId?: string, extraData?: any): Fragm
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  children | Iterable&lt;Node&gt; |  |
-|  externalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

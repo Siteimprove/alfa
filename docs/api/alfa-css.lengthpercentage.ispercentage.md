@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function isPercentage(value: unknown): value is Percentage.Fixed;
+export function isPercentage(value: unknown): value is Percentage.Fixed;
 ```
 
 ## Parameters

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function of(value: Math<"percentage">): Percentage.Calculated;
+export function of(value: Math<"percentage">): Percentage.Calculated;
 ```
 
 ## Parameters

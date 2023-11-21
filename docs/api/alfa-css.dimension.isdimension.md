@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function isDimension(value: unknown): value is Numeric;
+export function isDimension(value: unknown): value is Numeric;
 ```
 
 ## Parameters

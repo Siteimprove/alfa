@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function of(value: Base.Percentage): Percentage.Fixed;
+export function of(value: Base.Percentage): Percentage.Fixed;
 ```
 
 ## Parameters

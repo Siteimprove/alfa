@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of<C extends Number | Percentage<"percentage">, A extends Number | Percentage<"percentage">>(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
+static of<C extends Number | Percentage, A extends Number | Percentage>(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
 ```
 
 ## Parameters

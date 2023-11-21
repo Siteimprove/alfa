@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseSpaceSeparated: <V extends Value<string, boolean, string, string>>(parseValue: CSSParser<V>, lower?: number, upper?: number) => CSSParser<List<V>>
+parseSpaceSeparated: <V extends Value<string, boolean, string>>(parseValue: CSSParser<V>, lower?: number, upper?: number) => CSSParser<List<V, boolean>>
 ```

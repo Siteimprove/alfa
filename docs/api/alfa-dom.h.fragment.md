@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function fragment(children: Array<Node | string>, externalId?: string, extraData?: any): Fragment;
+function fragment(children: Array<Node | string>): Fragment;
 ```
 
 ## Parameters
@@ -15,8 +15,6 @@ function fragment(children: Array<Node | string>, externalId?: string, extraData
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  children | Array&lt;Node \| string&gt; |  |
-|  externalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

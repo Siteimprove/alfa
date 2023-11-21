@@ -2,12 +2,17 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Percentage](./alfa-css.percentage.md) &gt; [Resolver](./alfa-css.percentage.resolver.md)
 
-## Percentage.Resolver type
+## Percentage.Resolver interface
 
 **Signature:**
 
 ```typescript
-type Resolver<H extends BaseNumeric.Type> = H extends "percentage" ? never : {
-        percentageBase: Canonicals[H];
-    };
+export interface Resolver<R extends BaseNumeric.Type, T extends Numeric.Fixed<R>> 
 ```
+
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [percentageBase](./alfa-css.percentage.resolver.percentagebase.md) |  | T |  |
+

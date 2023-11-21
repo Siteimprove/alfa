@@ -2,21 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Polygon](./alfa-css.polygon.md) &gt; [partiallyResolve](./alfa-css.polygon.partiallyresolve.md)
 
-## Polygon.partiallyResolve() method
+## Polygon.partiallyResolve() function
 
 **Signature:**
 
 ```typescript
-partiallyResolve(resolver: Polygon.PartialResolver): Polygon.PartiallyResolved;
+function partiallyResolve(resolver: PartialResolver): (value: Polygon) => PartiallyResolved;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Polygon.PartialResolver](./alfa-css.polygon.partialresolver.md) |  |
+|  resolver | [PartialResolver](./alfa-css.polygon.partialresolver.md) |  |
 
 **Returns:**
 
-[Polygon.PartiallyResolved](./alfa-css.polygon.partiallyresolved.md)
+(value: [Polygon](./alfa-css.polygon.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.polygon.partiallyresolved.md)
 

@@ -1,7 +1,5 @@
 # @siteimprove/alfa-json
 
-## 1.0.0
-
 ## 0.68.0
 
 ### Minor Changes

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type Canonical = Fixed<"deg">;
+export type Canonical = Fixed<"deg">;
 ```
 **References:** [Fixed](./alfa-css.angle.fixed.md)
 

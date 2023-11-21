@@ -8,7 +8,7 @@
 **Signature:**
 
 ```typescript
-export type LengthPercentage<U extends Unit.Length = Unit.Length> = LengthPercentage.Calculated | Length.Calculated | Length.Fixed<U> | Percentage.Calculated<"length"> | Percentage.Fixed<"length">;
+export type LengthPercentage<U extends Unit.Length = Unit.Length> = LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated | Length.Fixed<U> | Percentage.Fixed;
 ```
-**References:** [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [LengthPercentage.Calculated](./alfa-css.lengthpercentage.calculated.md)<!-- -->, [Length.Calculated](./alfa-css.length.calculated.md)<!-- -->, [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->, [Percentage.Calculated](./alfa-css.percentage.calculated.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
+**References:** [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [LengthPercentage.Calculated](./alfa-css.lengthpercentage.calculated.md)<!-- -->, [Length.Calculated](./alfa-css.length.calculated.md)<!-- -->, [Percentage.Calculated](./alfa-css.percentage.calculated.md)<!-- -->, [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
 

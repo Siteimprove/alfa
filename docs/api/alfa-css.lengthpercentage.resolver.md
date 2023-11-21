@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type Resolver = Length.Resolver & Percentage.Resolver<"length">;
+export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
 ```
-**References:** [Length.Resolver](./alfa-css.length.resolver.md)<!-- -->, [Percentage.Resolver](./alfa-css.percentage.resolver.md)
+**References:** [Length.Resolver](./alfa-css.length.resolver.md)<!-- -->, [Percentage.Resolver](./alfa-css.percentage.resolver.md)<!-- -->, [Canonical](./alfa-css.lengthpercentage.canonical.md)
 

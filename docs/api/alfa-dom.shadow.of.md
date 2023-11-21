@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
+static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode): Shadow;
 ```
 
 ## Parameters
@@ -17,8 +17,6 @@ static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode,
 |  children | Iterable&lt;Node&gt; |  |
 |  style | Iterable&lt;Sheet&gt; | _(Optional)_ |
 |  mode | [Shadow.Mode](./alfa-dom.shadow.mode.md) | _(Optional)_ |
-|  externalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
 
 **Returns:**
 

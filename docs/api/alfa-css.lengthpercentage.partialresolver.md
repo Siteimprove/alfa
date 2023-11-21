@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type PartialResolver = Length.Resolver;
+export type PartialResolver = Length.Resolver;
 ```
 **References:** [Length.Resolver](./alfa-css.length.resolver.md)
 

@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-type Resolver = {};
+export type Resolver = {};
 ```
