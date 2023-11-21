@@ -1,6 +1,17 @@
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
-import { Selector } from "../../../selector";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Thunk } from "@siteimprove/alfa-thunk";
+
+import { Absolute, Selector } from "../../../selector";
+
 import { PseudoElementSelector } from "./pseudo-element";
+
+const { either, map, right, take } = Parser;
 
 /**
  * {@link https://w3c.github.io/webvtt/#the-cue-pseudo-element}
@@ -50,5 +61,22 @@ export class Cue extends PseudoElementSelector<"cue"> {
 export namespace Cue {
   export interface JSON extends PseudoElementSelector.JSON<"cue"> {
     selector: Option.JSON<Selector>;
+  }
+
+  export function parse(
+    parseSelector: Thunk<CSSParser<Absolute>>,
+  ): CSSParser<Cue> {
+    return right(
+      take(Token.parseColon, 2),
+      // We need to try and fail the functional notation first to avoid accepting
+      // the `::cue` prefix of a `::cue(selector)`.
+      either(
+        map(Function.parse("cue", parseSelector), ([_, selector]) =>
+          Cue.of(selector),
+        ),
+        // We need to eta-expand in order to discard the result of parseIdent.
+        map(Token.parseIdent("cue"), () => Cue.of()),
+      ),
+    );
   }
 }

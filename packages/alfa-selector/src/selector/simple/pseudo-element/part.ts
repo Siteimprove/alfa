@@ -1,7 +1,10 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Token } from "@siteimprove/alfa-css";
+import { Function, Token } from "@siteimprove/alfa-css";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import { PseudoElementSelector } from "./pseudo-element";
+
+const { map, separatedList } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-shadow-parts-1/#part}
@@ -50,4 +53,12 @@ export namespace Part {
   export interface JSON extends PseudoElementSelector.JSON<"part"> {
     idents: Array<Token.Ident.JSON>;
   }
+
+  export const parse = map(
+    Function.parse(
+      "part",
+      separatedList(Token.parseIdent(), Token.parseWhitespace),
+    ),
+    ([_, idents]) => Part.of(idents),
+  );
 }

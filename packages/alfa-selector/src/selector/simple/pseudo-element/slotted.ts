@@ -1,9 +1,20 @@
 import { Array } from "@siteimprove/alfa-array";
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "@siteimprove/alfa-css";
+import { Parser } from "@siteimprove/alfa-parser";
+import type { Thunk } from "@siteimprove/alfa-thunk";
+
+import type { Absolute } from "../../../selector";
 
 import { Compound } from "../../compound";
 import { Simple } from "../../simple";
 
 import { PseudoElementSelector } from "./pseudo-element";
+
+const { map, separatedList } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-scoping/#slotted-pseudo}
@@ -54,5 +65,19 @@ export class Slotted extends PseudoElementSelector<"slotted"> {
 export namespace Slotted {
   export interface JSON extends PseudoElementSelector.JSON<"slotted"> {
     selectors: Array<Simple.JSON | Compound.JSON>;
+  }
+
+  export function parse(
+    parseSelector: Thunk<CSSParser<Absolute>>,
+  ): CSSParser<Slotted> {
+    return map(
+      Function.parse("slotted", () =>
+        separatedList(
+          Compound.parseCompound(parseSelector),
+          Token.parseWhitespace,
+        ),
+      ),
+      ([_, selectors]) => Slotted.of(selectors),
+    );
   }
 }
