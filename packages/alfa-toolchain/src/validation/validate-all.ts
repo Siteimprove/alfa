@@ -27,7 +27,9 @@ export async function validate(cwd: string) {
   const packages = await getPackages(cwd);
 
   if (config["validate-changesets"] ?? false) {
-    errors.push(...(await validateChangesets(cwd)));
+    errors.push(
+      ...(await validateChangesets(cwd, config["forbid-major"] ?? false)),
+    );
   }
 
   if (config["has-api-extractor-config"] ?? false) {
