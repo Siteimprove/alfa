@@ -1,4 +1,5 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import type { Complex } from "./complex";
@@ -15,7 +16,7 @@ export * from "./list";
 export * from "./relative";
 export * from "./simple";
 
-const { end, left } = Parser;
+const { end, left, map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector}
@@ -74,7 +75,9 @@ export namespace Selector {
    */
   function parseSelector(): CSSParser<Absolute> {
     return left(
-      List.parseList(parseSelector),
+      map(List.parseList(parseSelector), (list) =>
+        list.length === 1 ? Iterable.first(list.selectors).getUnsafe() : list,
+      ),
       end((token) => `Unexpected token ${token}`),
     );
   }

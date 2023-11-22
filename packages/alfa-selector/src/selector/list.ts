@@ -26,31 +26,30 @@ type Item = Simple | Compound | Complex | Relative;
  * @public
  */
 export class List<T extends Item = Item> extends Selector<"list"> {
-  public static of<T extends Item>(left: T, right: T | List<T>): List<T> {
-    return new List(left, right);
+  public static of<T extends Item>(...selectors: Array<T>): List<T> {
+    return new List(selectors);
   }
 
-  private readonly _left: T;
-  private readonly _right: T | List<T>;
+  private readonly _selectors: Array<T>;
+  private readonly _length: number;
 
-  private constructor(left: T, right: T | List<T>) {
+  private constructor(selectors: Array<T>) {
     super("list");
-    this._left = left;
-    this._right = right;
+    this._selectors = selectors;
+    this._length = selectors.length;
   }
 
-  public get left(): T {
-    return this._left;
+  public get selectors(): Iterable<T> {
+    return this._selectors;
   }
 
-  public get right(): T | List<T> {
-    return this._right;
+  public get length(): number {
+    return this._length;
   }
 
   public matches(element: Element, context?: Context): boolean {
-    return (
-      this._left.matches(element, context) ||
-      this._right.matches(element, context)
+    return this._selectors.some((selector) =>
+      selector.matches(element, context),
     );
   }
 
@@ -60,29 +59,23 @@ export class List<T extends Item = Item> extends Selector<"list"> {
 
   public equals(value: unknown): boolean {
     return (
-      value instanceof List &&
-      value._left.equals(this._left) &&
-      value._right.equals(this._right)
+      value instanceof List && Array.equals(value._selectors, this._selectors)
     );
   }
 
-  public *[Symbol.iterator](): Iterator<
-    Simple | Compound | Complex | Relative
-  > {
-    yield this._left;
-    yield* this._right;
+  public *[Symbol.iterator](): Iterator<T> {
+    yield* this._selectors;
   }
 
   public toJSON(): List.JSON<T> {
     return {
       ...super.toJSON(),
-      left: this._left.toJSON() as Serializable.ToJSON<T>,
-      right: this._right.toJSON() as Serializable.ToJSON<T> | List.JSON<T>,
+      selectors: Array.toJSON(this._selectors),
     };
   }
 
   public toString(): string {
-    return `${this._left}, ${this._right}`;
+    return this._selectors.map((selector) => selector.toString()).join(", ");
   }
 }
 
@@ -91,8 +84,7 @@ export class List<T extends Item = Item> extends Selector<"list"> {
  */
 export namespace List {
   export interface JSON<T extends Item = Item> extends Selector.JSON<"list"> {
-    left: Serializable.ToJSON<T>;
-    right: Serializable.ToJSON<T> | JSON<T>;
+    selectors: Array<Serializable.ToJSON<T>>;
   }
 
   /**
@@ -103,18 +95,6 @@ export namespace List {
   export const parseList = (parseSelector: Thunk<CSSParser<Absolute>>) =>
     map(
       separatedList(Complex.parseComplex(parseSelector), Comma.parse),
-      (result) => {
-        const [left, ...selectors] = Array.from(Iterable.reverse(result));
-
-        return Iterable.reduce(
-          selectors,
-          (right, left) => List.of(left, right),
-          left as
-            | Simple
-            | Compound
-            | Complex
-            | List<Simple | Compound | Complex>,
-        );
-      },
+      (result) => List.of(...result),
     );
 }
