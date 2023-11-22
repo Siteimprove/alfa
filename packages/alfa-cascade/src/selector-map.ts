@@ -444,7 +444,10 @@ function getKeySelector(selector: Selector): Id | Class | Type | null {
   }
 
   if (isCompound(selector)) {
-    return getKeySelector(selector.left) ?? getKeySelector(selector.right);
+    return Iterable.find(
+      Iterable.map(selector.selectors, getKeySelector),
+      (selector) => selector !== null,
+    ).getOr(null);
   }
 
   if (isComplex(selector)) {
@@ -477,11 +480,7 @@ function getSpecificity(selector: Selector): Specificity {
   const queue: Array<Selector> = [selector];
 
   while (queue.length > 0) {
-    const selector = queue.pop();
-
-    if (selector === undefined) {
-      break;
-    }
+    const selector = queue.pop()!;
 
     if (isId(selector)) {
       a++;
@@ -493,8 +492,10 @@ function getSpecificity(selector: Selector): Specificity {
       b++;
     } else if (isType(selector) || isPseudoElement(selector)) {
       c++;
-    } else if (isCompound(selector) || isComplex(selector)) {
+    } else if (isComplex(selector)) {
       queue.push(selector.left, selector.right);
+    } else if (isCompound(selector)) {
+      queue.push(...selector.selectors);
     }
   }
 
@@ -519,8 +520,8 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
   if (isCompound(selector)) {
     // Compound selectors are right-leaning, so recurse to the left first as it
     // is likely the shortest branch.
-    return (
-      canReject(selector.left, filter) || canReject(selector.right, filter)
+    return Iterable.some(selector.selectors, (selector) =>
+      canReject(selector, filter),
     );
   }
 

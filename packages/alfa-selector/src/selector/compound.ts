@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -5,7 +6,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import type { Context } from "../context";
-import type { Absolute } from "../selector";
+import type { Absolute } from "./index";
 
 import { Selector } from "./selector";
 import { Simple } from "./simple";
@@ -18,31 +19,30 @@ const { map, oneOrMore } = Parser;
  * @public
  */
 export class Compound extends Selector<"compound"> {
-  public static of(left: Simple, right: Simple | Compound): Compound {
-    return new Compound(left, right);
+  public static of(...selectors: Array<Simple>): Compound {
+    return new Compound(selectors);
   }
 
-  private readonly _left: Simple;
-  private readonly _right: Simple | Compound;
+  private readonly _selectors: Array<Simple>;
+  private readonly _length: number;
 
-  private constructor(left: Simple, right: Simple | Compound) {
+  private constructor(selectors: Array<Simple>) {
     super("compound");
-    this._left = left;
-    this._right = right;
+    this._selectors = selectors;
+    this._length = selectors.length;
   }
 
-  public get left(): Simple {
-    return this._left;
+  public get selectors(): Iterable<Simple> {
+    return this._selectors;
   }
 
-  public get right(): Simple | Compound {
-    return this._right;
+  public get length(): number {
+    return this._length;
   }
 
   public matches(element: Element, context?: Context): boolean {
-    return (
-      this._left.matches(element, context) &&
-      this._right.matches(element, context)
+    return this._selectors.every((selector) =>
+      selector.matches(element, context),
     );
   }
 
@@ -53,8 +53,7 @@ export class Compound extends Selector<"compound"> {
   public equals(value: unknown): boolean {
     return (
       value instanceof Compound &&
-      value._left.equals(this._left) &&
-      value._right.equals(this._right)
+      Array.equals(value._selectors, this._selectors)
     );
   }
 
@@ -65,13 +64,12 @@ export class Compound extends Selector<"compound"> {
   public toJSON(): Compound.JSON {
     return {
       ...super.toJSON(),
-      left: this._left.toJSON(),
-      right: this._right.toJSON(),
+      selectors: this._selectors.map((selector) => selector.toJSON()),
     };
   }
 
   public toString(): string {
-    return `${this._left}${this._right}`;
+    return this._selectors.map((selector) => selector.toString()).join("");
   }
 }
 
@@ -80,8 +78,7 @@ export class Compound extends Selector<"compound"> {
  */
 export namespace Compound {
   export interface JSON extends Selector.JSON<"compound"> {
-    left: Simple.JSON;
-    right: Simple.JSON | JSON;
+    selectors: Array<Simple.JSON>;
   }
 
   export function isCompound(value: unknown): value is Compound {
@@ -96,13 +93,7 @@ export namespace Compound {
   export const parseCompound = (
     parseSelector: () => Parser<Slice<Token>, Absolute, string>,
   ) =>
-    map(oneOrMore(Simple.parse(parseSelector)), (result) => {
-      const [left, ...selectors] = Iterable.reverse(result);
-
-      return Iterable.reduce(
-        selectors,
-        (right, left) => Compound.of(left, right),
-        left as Simple | Compound,
-      );
-    });
+    map(oneOrMore(Simple.parse(parseSelector)), (result) =>
+      result.length === 1 ? result[0] : Compound.of(...result),
+    );
 }

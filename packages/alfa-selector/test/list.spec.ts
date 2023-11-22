@@ -21,8 +21,10 @@ test(".parse() parses a list of simple and compound selectors", (t) => {
       { type: "class", name: "foo" },
       {
         type: "compound",
-        left: { type: "id", name: "bar" },
-        right: { type: "class", name: "baz" },
+        selectors: [
+          { type: "id", name: "bar" },
+          { type: "class", name: "baz" },
+        ],
       },
     ],
   });
