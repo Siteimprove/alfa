@@ -1,4 +1,5 @@
-import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import { Array } from "@siteimprove/alfa-array";
+import { Comma, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -14,7 +15,8 @@ import { Relative } from "./relative";
 import { Selector } from "./selector";
 import { Simple } from "./simple";
 
-const { delimited, map, option, pair, right, zeroOrMore } = Parser;
+const { delimited, map, option, pair, right, separatedList, zeroOrMore } =
+  Parser;
 
 type Item = Simple | Compound | Complex | Relative;
 
@@ -100,19 +102,9 @@ export namespace List {
    */
   export const parseList = (parseSelector: Thunk<CSSParser<Absolute>>) =>
     map(
-      pair(
-        Complex.parseComplex(parseSelector),
-        zeroOrMore(
-          right(
-            delimited(option(Token.parseWhitespace), Token.parseComma),
-            Complex.parseComplex(parseSelector),
-          ),
-        ),
-      ),
+      separatedList(Complex.parseComplex(parseSelector), Comma.parse),
       (result) => {
-        let [left, selectors] = result;
-
-        [left, ...selectors] = [...Iterable.reverse(selectors), left];
+        const [left, ...selectors] = Array.from(Iterable.reverse(result));
 
         return Iterable.reduce(
           selectors,
