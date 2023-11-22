@@ -197,13 +197,13 @@ export class Compound extends Selector_2<"compound"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get left(): Simple;
+    get length(): number;
     // (undocumented)
     matches(element: Element, context?: Context): boolean;
     // (undocumented)
-    static of(left: Simple, right: Simple | Compound): Compound;
+    static of(...selectors: Array_2<Simple>): Compound;
     // (undocumented)
-    get right(): Simple | Compound;
+    get selectors(): Iterable_2<Simple>;
     // (undocumented)
     toJSON(): Compound.JSON;
     // (undocumented)
@@ -217,9 +217,7 @@ export namespace Compound {
     // (undocumented)
     export interface JSON extends Selector_2.JSON<"compound"> {
         // (undocumented)
-        left: Simple.JSON;
-        // (undocumented)
-        right: Simple.JSON | JSON;
+        selectors: Array_2<Simple.JSON>;
     }
     const // @internal (undocumented)
     parseCompound: (parseSelector: () => Parser<Slice<Token>, Absolute, string>) => Parser<Slice<Token>, Simple | Compound, string, []>;
@@ -320,19 +318,19 @@ export namespace Id {
 // @public (undocumented)
 export class List<T extends Item = Item> extends Selector_2<"list"> {
     // (undocumented)
-    [Symbol.iterator](): Iterator<Simple | Compound | Complex | Relative>;
+    [Symbol.iterator](): Iterator<T>;
     // (undocumented)
     equals(value: List): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get left(): T;
+    get length(): number;
     // (undocumented)
     matches(element: Element, context?: Context): boolean;
     // (undocumented)
-    static of<T extends Item>(left: T, right: T | List<T>): List<T>;
+    static of<T extends Item>(...selectors: Array_2<T>): List<T>;
     // (undocumented)
-    get right(): T | List<T>;
+    get selectors(): Iterable_2<T>;
     // (undocumented)
     toJSON(): List.JSON<T>;
     // (undocumented)
@@ -344,12 +342,10 @@ export namespace List {
     // (undocumented)
     export interface JSON<T extends Item = Item> extends Selector_2.JSON<"list"> {
         // (undocumented)
-        left: Serializable.ToJSON<T>;
-        // (undocumented)
-        right: Serializable.ToJSON<T> | JSON<T>;
+        selectors: Array_2<Serializable.ToJSON<T>>;
     }
     const // @internal (undocumented)
-    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Simple | Compound | Complex | List<Simple | Compound | Complex>, string, []>;
+    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, List<Simple | Compound | Complex>, string, []>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Active" needs to be exported by the entry point index.d.ts
