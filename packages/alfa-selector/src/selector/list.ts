@@ -1,22 +1,22 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Comma, type Parser as CSSParser } from "@siteimprove/alfa-css";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Context } from "../context";
-import type { Absolute } from "../selector";
+import type { Context } from "../context";
+
+import type { Absolute } from "./index";
 
 import { Complex } from "./complex";
-import { Compound } from "./compound";
-import { Relative } from "./relative";
+import type { Compound } from "./compound";
+import type { Relative } from "./relative";
 import { Selector } from "./selector";
-import { Simple } from "./simple";
+import type { Simple } from "./simple";
 
-const { delimited, map, option, pair, right, separatedList, zeroOrMore } =
-  Parser;
+const { map, separatedList } = Parser;
 
 type Item = Simple | Compound | Complex | Relative;
 
