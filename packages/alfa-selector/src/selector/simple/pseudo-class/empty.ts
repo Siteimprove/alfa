@@ -13,6 +13,7 @@ export class Empty extends PseudoClassSelector<"empty"> {
     super("empty");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Empty> {
     yield this;
   }

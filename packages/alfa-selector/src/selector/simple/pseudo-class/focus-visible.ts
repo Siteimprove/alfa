@@ -16,6 +16,7 @@ export class FocusVisible extends PseudoClassSelector<"focus-visible"> {
     super("focus-visible");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<FocusVisible> {
     yield this;
   }

@@ -22,6 +22,7 @@ export class Hover extends PseudoClassSelector<"hover"> {
 
   private static _cache = Cache.empty<Element, Cache<Context, boolean>>();
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Hover> {
     yield this;
   }

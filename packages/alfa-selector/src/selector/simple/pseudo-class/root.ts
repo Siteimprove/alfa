@@ -18,6 +18,7 @@ export class Root extends PseudoClassSelector<"root"> {
     super("root");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Root> {
     yield this;
   }

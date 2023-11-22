@@ -12,6 +12,7 @@ export class Marker extends PseudoElementSelector<"marker"> {
     super("marker");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Marker> {
     yield this;
   }

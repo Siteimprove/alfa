@@ -16,6 +16,7 @@ export class OnlyChild extends PseudoClassSelector<"only-child"> {
     super("only-child");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<OnlyChild> {
     yield this;
   }

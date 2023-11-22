@@ -27,6 +27,7 @@ export class CueRegion extends PseudoElementSelector<"cue-region"> {
     return this._selector;
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<CueRegion> {
     yield this;
   }

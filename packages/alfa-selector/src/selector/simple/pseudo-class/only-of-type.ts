@@ -16,6 +16,7 @@ export class OnlyOfType extends PseudoClassSelector<"only-of-type"> {
     super("only-of-type");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<OnlyOfType> {
     yield this;
   }

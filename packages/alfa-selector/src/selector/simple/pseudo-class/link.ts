@@ -16,6 +16,7 @@ export class Link extends PseudoClassSelector<"link"> {
     super("link");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Link> {
     yield this;
   }

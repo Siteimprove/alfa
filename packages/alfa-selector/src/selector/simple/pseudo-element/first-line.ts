@@ -12,6 +12,7 @@ export class FirstLine extends PseudoElementSelector<"first-line"> {
     super("first-line");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<FirstLine> {
     yield this;
   }

@@ -19,6 +19,7 @@ export class Not extends WithSelector<"not"> {
     super("not", selector);
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Not> {
     yield this;
   }

@@ -138,6 +138,7 @@ export abstract class WithSelector<
     this._selector = selector;
   }
 
+  /** @public (knip) */
   public get selector(): Absolute {
     return this._selector;
   }

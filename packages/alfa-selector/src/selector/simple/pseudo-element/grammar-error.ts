@@ -12,6 +12,7 @@ export class GrammarError extends PseudoElementSelector<"grammar-error"> {
     super("grammar-error");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<GrammarError> {
     yield this;
   }

@@ -27,6 +27,7 @@ export abstract class Selector<T extends string = string>
     this._type = type;
   }
 
+  /** @public (knip) */
   public get type(): T {
     return this._type;
   }
@@ -44,6 +45,7 @@ export abstract class Selector<T extends string = string>
     return value instanceof Selector && value._type === this._type;
   }
 
+  /** @public (knip) */
   public abstract [Symbol.iterator](): Iterator<
     Simple | Compound | Complex | Relative
   >;
@@ -67,7 +69,7 @@ export namespace Selector {
  * Selectors who also contain a name.
  *
  * @remarks
- * This can be either specific (e.g., the id is the name of an Id selector),
+ * This can be either specific (e.g., the id is the name of a #foo selector),
  * or generic (e.g., "focus" is the name of the `:focus` pseudo-class).
  *
  * @internal

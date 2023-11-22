@@ -17,6 +17,7 @@ export class Disabled extends PseudoClassSelector<"disabled"> {
     super("disabled");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Disabled> {
     yield this;
   }

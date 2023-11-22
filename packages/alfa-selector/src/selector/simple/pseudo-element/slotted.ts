@@ -31,10 +31,12 @@ export class Slotted extends PseudoElementSelector<"slotted"> {
     this._selectors = selectors;
   }
 
+  /** @public (knip) */
   public get selectors(): Iterable<Simple | Compound> {
     return this._selectors;
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Slotted> {
     yield this;
   }

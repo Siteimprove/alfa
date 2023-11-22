@@ -12,6 +12,7 @@ export class Selection extends PseudoElementSelector<"selection"> {
     super("selection");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Selection> {
     yield this;
   }

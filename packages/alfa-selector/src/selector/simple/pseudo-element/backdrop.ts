@@ -12,6 +12,7 @@ export class Backdrop extends PseudoElementSelector<"backdrop"> {
     super("backdrop");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Backdrop> {
     yield this;
   }

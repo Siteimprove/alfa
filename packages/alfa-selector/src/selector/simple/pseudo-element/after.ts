@@ -11,6 +11,7 @@ export class After extends PseudoElementSelector<"after"> {
     super("after");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<After> {
     yield this;
   }

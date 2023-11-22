@@ -12,6 +12,7 @@ export class Before extends PseudoElementSelector<"before"> {
     super("before");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Before> {
     yield this;
   }

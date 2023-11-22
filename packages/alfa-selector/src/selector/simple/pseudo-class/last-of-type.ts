@@ -16,6 +16,7 @@ export class LastOfType extends PseudoClassSelector<"last-of-type"> {
     super("last-of-type");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<LastOfType> {
     yield this;
   }

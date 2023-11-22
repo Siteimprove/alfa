@@ -16,6 +16,7 @@ export class Active extends PseudoClassSelector<"active"> {
     super("active");
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Active> {
     yield this;
   }

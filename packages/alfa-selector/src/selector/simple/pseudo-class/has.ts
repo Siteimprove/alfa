@@ -17,6 +17,7 @@ export class Has extends WithSelector<"has"> {
     super("has", selector);
   }
 
+  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Has> {
     yield this;
   }
