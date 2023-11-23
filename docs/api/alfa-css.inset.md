@@ -16,7 +16,6 @@ export declare namespace Inset
 |  Function | Description |
 |  --- | --- |
 |  [isInset(value)](./alfa-css.inset.isinset.md) |  |
-|  [partiallyResolve(resolver)](./alfa-css.inset.partiallyresolve.md) |  |
 
 ## Interfaces
 

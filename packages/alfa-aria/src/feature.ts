@@ -354,6 +354,8 @@ const Features: Features = {
       ),
     ),
 
+    hgroup: html("group"),
+
     hr: html("separator"),
 
     img: html(
@@ -799,7 +801,6 @@ const Features: Features = {
     body: Feature.generic,
     data: Feature.generic,
     div: Feature.generic,
-    hgroup: Feature.generic,
     i: Feature.generic,
     pre: Feature.generic,
     q: Feature.generic,

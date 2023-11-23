@@ -32,9 +32,7 @@ export declare namespace Style
 |  [hasBorder](./alfa-style.style.hasborder.md) |  |
 |  [hasBoxShadow](./alfa-style.style.hasboxshadow.md) |  |
 |  [hasCascadedStyle](./alfa-style.style.hascascadedstyle.md) |  |
-|  [hasCascadedValueDeclaredInInlineStyleOf](./alfa-style.style.hascascadedvaluedeclaredininlinestyleof.md) |  |
 |  [hasComputedStyle](./alfa-style.style.hascomputedstyle.md) |  |
-|  [hasInlineStyleProperty](./alfa-style.style.hasinlinestyleproperty.md) |  |
 |  [hasOutline](./alfa-style.style.hasoutline.md) |  |
 |  [hasPositioningParent](./alfa-style.style.haspositioningparent.md) |  |
 |  [hasSpecifiedStyle](./alfa-style.style.hasspecifiedstyle.md) |  |

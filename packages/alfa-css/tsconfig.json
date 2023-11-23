@@ -163,6 +163,7 @@
     { "path": "../alfa-result" },
     { "path": "../alfa-selective" },
     { "path": "../alfa-slice" },
-    { "path": "../alfa-test" }
+    { "path": "../alfa-test" },
+    { "path": "../alfa-thunk" }
   ]
 }

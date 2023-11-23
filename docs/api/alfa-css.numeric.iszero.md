@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function isZero(value: Fixed): boolean;
+function isZero(value: Fixed): boolean;
 ```
 
 ## Parameters

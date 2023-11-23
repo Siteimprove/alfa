@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function of(value: BasePercentage): Fixed;
+function of<H extends BaseNumeric.Type = BaseNumeric.Type>(value: BasePercentage): Fixed<H>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ export function of(value: BasePercentage): Fixed;
 
 **Returns:**
 
-[Fixed](./alfa-css.percentage.fixed.md)
+[Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt;
 

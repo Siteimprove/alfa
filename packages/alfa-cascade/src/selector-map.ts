@@ -15,7 +15,19 @@ import { Media } from "@siteimprove/alfa-media";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Context, Selector } from "@siteimprove/alfa-selector";
+import {
+  Attribute,
+  Class,
+  Combinator,
+  Complex,
+  Compound,
+  Context,
+  Id,
+  PseudoClass,
+  PseudoElement,
+  Selector,
+  Type,
+} from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -24,25 +36,21 @@ import { AncestorFilter } from "./ancestor-filter";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
-const {
-  isAttribute,
-  isClass,
-  isComplex,
-  isCompound,
-  isId,
-  isType,
-  isPseudoClass,
-  isPseudoElement,
-} = Selector;
+
+const { isAttribute } = Attribute;
+const { isClass } = Class;
+const { isComplex } = Complex;
+const { isCompound } = Compound;
+const { isId } = Id;
+const { isPseudoClass } = PseudoClass;
+const { isPseudoElement } = PseudoElement;
+const { isType } = Type;
 
 const isDescendantSelector = and(
   isComplex,
   property(
     "combinator",
-    equals(
-      Selector.Combinator.Descendant,
-      Selector.Combinator.DirectDescendant,
-    ),
+    equals(Combinator.Descendant, Combinator.DirectDescendant),
   ),
 );
 
@@ -430,15 +438,16 @@ export namespace SelectorMap {
  * key selector. If the right-most selector is a compound selector, then the
  * left-most ID, class, or type selector of the compound selector is returned.
  */
-function getKeySelector(
-  selector: Selector,
-): Selector.Id | Selector.Class | Selector.Type | null {
+function getKeySelector(selector: Selector): Id | Class | Type | null {
   if (isId(selector) || isClass(selector) || isType(selector)) {
     return selector;
   }
 
   if (isCompound(selector)) {
-    return getKeySelector(selector.left) ?? getKeySelector(selector.right);
+    return Iterable.find(
+      Iterable.map(selector.selectors, getKeySelector),
+      (selector) => selector !== null,
+    ).getOr(null);
   }
 
   if (isComplex(selector)) {
@@ -471,11 +480,7 @@ function getSpecificity(selector: Selector): Specificity {
   const queue: Array<Selector> = [selector];
 
   while (queue.length > 0) {
-    const selector = queue.pop();
-
-    if (selector === undefined) {
-      break;
-    }
+    const selector = queue.pop()!;
 
     if (isId(selector)) {
       a++;
@@ -487,8 +492,10 @@ function getSpecificity(selector: Selector): Specificity {
       b++;
     } else if (isType(selector) || isPseudoElement(selector)) {
       c++;
-    } else if (isCompound(selector) || isComplex(selector)) {
+    } else if (isComplex(selector)) {
       queue.push(selector.left, selector.right);
+    } else if (isCompound(selector)) {
+      queue.push(...selector.selectors);
     }
   }
 
@@ -513,8 +520,8 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
   if (isCompound(selector)) {
     // Compound selectors are right-leaning, so recurse to the left first as it
     // is likely the shortest branch.
-    return (
-      canReject(selector.left, filter) || canReject(selector.right, filter)
+    return Iterable.some(selector.selectors, (selector) =>
+      canReject(selector, filter),
     );
   }
 
@@ -522,8 +529,8 @@ function canReject(selector: Selector, filter: AncestorFilter): boolean {
     const { combinator } = selector;
 
     if (
-      combinator === Selector.Combinator.Descendant ||
-      combinator === Selector.Combinator.DirectDescendant
+      combinator === Combinator.Descendant ||
+      combinator === Combinator.DirectDescendant
     ) {
       // Complex selectors are left-leaning, so recurse to the right first as it
       // is likely the shortest branch.

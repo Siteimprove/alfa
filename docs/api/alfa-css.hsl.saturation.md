@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-get saturation(): Percentage.Fixed;
+get saturation(): Percentage.Canonical;
 ```

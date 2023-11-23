@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-hasCalculation(): this is Value<T, true, R>;
+hasCalculation(): this is Value<T, true, R, PR>;
 ```
 **Returns:**
 
-this is [Value](./alfa-css.value.md)<!-- -->&lt;T, true, R&gt;
+this is [Value](./alfa-css.value.md)<!-- -->&lt;T, true, R, PR&gt;
 

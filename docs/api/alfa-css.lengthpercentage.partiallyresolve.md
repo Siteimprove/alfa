@@ -9,7 +9,7 @@ Partially resolves a length-percentage, when only a length resolver is provided.
 **Signature:**
 
 ```typescript
-export function partiallyResolve(resolver: PartialResolver): (value: LengthPercentage) => PartiallyResolved;
+function partiallyResolve(resolver: PartialResolver): (value: LengthPercentage) => PartiallyResolved;
 ```
 
 ## Parameters

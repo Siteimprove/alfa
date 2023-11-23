@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Percentage](./alfa-css.percentage.md) &gt; [parse](./alfa-css.percentage.parse.md)
 
-## Percentage.parse variable
+## Percentage.parse() function
 
 [https://drafts.csswg.org/css-values/\#number-value](https://drafts.csswg.org/css-values/#number-value)
 
 **Signature:**
 
 ```typescript
-parse: CSSParser<Percentage>
+function parse<H extends BaseNumeric.Type = BaseNumeric.Type>(input: Slice<Token>): import("@siteimprove/alfa-result").Result<[Slice<Token>, Fixed<H> | Calculated<H>], string>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  input | Slice&lt;Token&gt; |  |
+
+**Returns:**
+
+import("@siteimprove/alfa-result").[Result](./alfa-result.result.md)<!-- -->&lt;\[Slice&lt;Token&gt;, [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt; \| [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;\], string&gt;
+
