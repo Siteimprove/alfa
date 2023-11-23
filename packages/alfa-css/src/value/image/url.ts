@@ -2,6 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Function, type Parser as CSSParser, Token } from "../../syntax";
+import { Resolvable } from "../resolvable";
 
 import { Value } from "../value";
 
@@ -12,7 +13,7 @@ const { map, either } = Parser;
  *
  * @public
  */
-export class URL extends Value<"url", false> {
+export class URL extends Value<"url", false> implements Resolvable<URL, never> {
   public static of(url: string): URL {
     return new URL(url);
   }
