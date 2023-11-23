@@ -6,8 +6,6 @@ type Specified = Color;
 
 type Computed = Color.Canonical;
 
-const parse = Color.parse;
-
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color}
  *
@@ -15,6 +13,6 @@ const parse = Color.parse;
  */
 export default Longhand.of<Specified, Computed>(
   Color.current,
-  parse,
-  (textDecorationColor) => textDecorationColor.map((color) => color.resolve()),
+  Color.parse,
+  (value) => value.resolve(),
 );

@@ -63,5 +63,5 @@ export const parse = map(
 export default Longhand.of<Specified, Computed>(
   Tuple.of(Number.of(0), Number.of(0), Number.of(0), Number.of(0)),
   parse,
-  (value, style) => value.map((tuple) => tuple.resolve(Resolver.length(style))),
+  (value, style) => value.resolve(Resolver.length(style)),
 );

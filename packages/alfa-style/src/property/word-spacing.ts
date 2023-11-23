@@ -1,7 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
 import { Length } from "@siteimprove/alfa-css/src/value/numeric";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
@@ -21,15 +20,12 @@ const parse = either(Keyword.parse("normal"), Length.parse);
 export default Longhand.of<Specified, Computed>(
   Length.of(0, "px"),
   parse,
-  (wordSpacing, style) =>
-    wordSpacing.map((wordSpacing) =>
-      Selective.of(wordSpacing)
-        .if(Length.isLength, (spacing) =>
-          spacing.resolve(Resolver.length(style)),
-        )
-        .else(() => Length.of(0, "px"))
-        .get(),
-    ),
+  (value, style) =>
+    value
+      .resolve(Resolver.length(style))
+      .map((wordSpacing) =>
+        Keyword.isKeyword(wordSpacing) ? Length.of(0, "px") : wordSpacing,
+      ),
   {
     inherits: true,
   },

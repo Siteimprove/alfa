@@ -13,7 +13,7 @@ type Computed = Color.Canonical;
 export default Longhand.of<Specified, Computed>(
   Color.system("canvastext"),
   Color.parse,
-  (value) => value.map((color) => color.resolve()),
+  (value) => value.resolve(),
   {
     inherits: true,
   },

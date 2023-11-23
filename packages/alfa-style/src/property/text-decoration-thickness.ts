@@ -1,12 +1,9 @@
 import { Keyword, LengthPercentage, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-import type { Computed as FontSize } from "./font-size";
 
 const { either } = Parser;
 
@@ -22,24 +19,16 @@ const parse = either<Slice<Token>, Specified, string>(
   LengthPercentage.parse,
 );
 
+const longhand: Longhand<Specified, Computed> = Longhand.of(
+  Keyword.of("auto"),
+  parse,
+  (value, style) =>
+    value.resolve(
+      Resolver.lengthPercentage(style.computed("font-size").value, style),
+    ),
+);
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness}
  * @internal
  */
-export default Longhand.of<Specified, Computed>(
-  Keyword.of("auto"),
-  parse,
-  (thickness, style) =>
-    thickness.map((value) => {
-      // We need the type assertion to help TS break a circular type reference:
-      // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
-      const fontSize = style.computed("font-size").value as FontSize;
-
-      return Selective.of(value)
-        .if(
-          LengthPercentage.isLengthPercentage,
-          LengthPercentage.resolve(Resolver.lengthPercentage(fontSize, style)),
-        )
-        .get();
-    }),
-);
+export default longhand;
