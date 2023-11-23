@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import type { ChangelogFunctions } from '@changesets/types';
 import { PackageJSON } from '@changesets/types';
 
@@ -31,7 +32,7 @@ export { individualChangelog }
 function validate(cwd: string): Promise<void>;
 
 // @public
-function validateChangesets(cwd: string): Promise<Array<string>>;
+function validateChangesets(cwd: string, forbidMajor?: boolean): Promise<Array_2<string>>;
 
 // Warning: (ae-forgotten-export) The symbol "Config" needs to be exported by the entry point index.d.ts
 //

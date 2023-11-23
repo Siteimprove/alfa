@@ -1,6 +1,7 @@
 {
   "has-api-extractor-config": true,
   "validate-changesets": true,
+  "forbid-major": true,
   "validate-package-json": {
     "organisation": "@siteimprove",
     "homepage": "https://alfa.siteimprove.com",
