@@ -7,7 +7,6 @@ import {
   URL,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand";
 
