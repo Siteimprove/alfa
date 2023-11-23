@@ -5,6 +5,7 @@ import { Parser as CSSParser, Token } from "../../../../syntax";
 
 import { Keyword } from "../../../keyword";
 import { Length } from "../../../numeric";
+import { Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 /**
@@ -12,10 +13,10 @@ import { Value } from "../../../value";
  *
  * @internal
  */
-export class Circle<R extends Length = Length> extends Value<
-  "circle",
-  Value.HasCalculation<[R]>
-> {
+export class Circle<R extends Length = Length>
+  extends Value<"circle", Value.HasCalculation<[R]>>
+  implements Resolvable<Circle.Canonical, Circle.Resolver>
+{
   public static of<R extends Length>(radius: R): Circle<R> {
     return new Circle(radius);
   }
