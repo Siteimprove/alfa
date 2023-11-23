@@ -20,6 +20,7 @@ import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
+import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
 export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
@@ -539,7 +540,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Function_2>;
     const // (undocumented)
-    parse: <T>(query?: string | Predicate<Token.Function>, body?: Parser<T> | undefined) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(query?: string | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>> | undefined) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 
