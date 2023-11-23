@@ -2,4 +2,4 @@
 "@siteimprove/alfa-css": minor
 ---
 
-**Breaking:** `Image.partiallyResolve()` function has been replaced by `Image#partiallyResolve()` instance method.
+**Breaking:** `Image.partiallyResolve()` and `Shape.partiallyResolve()` functions has been replaced by instance methods of the same name.
