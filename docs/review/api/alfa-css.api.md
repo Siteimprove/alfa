@@ -27,6 +27,7 @@ export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.
 
 // @public (undocumented)
 export namespace Angle {
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Calculated extends Dimension.Calculated<"angle"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -45,7 +46,7 @@ export namespace Angle {
     }
     // (undocumented)
     export type Canonical = Fixed<"deg">;
-    // Warning: (ae-forgotten-export) The symbol "Resolvable" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Fixed<U extends Unit.Angle = Unit.Angle> extends Dimension.Fixed<"angle", U> implements Resolvable<Canonical, never>, Comparable<Fixed<U>> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -97,6 +98,7 @@ export type AnglePercentage<U extends Unit.Angle = Unit.Angle> = AnglePercentage
 
 // @public (undocumented)
 export namespace AnglePercentage {
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Calculated extends Dimension.Calculated<"angle-percentage"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -211,7 +213,8 @@ export namespace Box {
 }
 
 // Warning: (ae-forgotten-export) The symbol "BasicShape" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "PartiallyResolvable" needs to be exported by the entry point index.d.ts
+// Warning: (ae-incompatible-release-tags) The symbol "Circle" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Circle" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
 //
 // @public (undocumented)
 export class Circle<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"circle", Value.HasCalculation<[R, P]>> implements Resolvable<Circle.Canonical, Circle.Resolver>, PartiallyResolvable<Circle.PartiallyResolved, Circle.PartialResolver> {
@@ -397,6 +400,8 @@ export namespace Dimension {
     // Warning: (ae-forgotten-export) The symbol "Type" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "DBase" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "DCanonicalUnit" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
     export abstract class Calculated<T extends Type = Type, PR extends Type = T> extends Numeric.Calculated<T, DBase[T], PR> implements Resolvable<Fixed<DBase[T], DCanonicalUnit[DBase[T]]>, unknown>, PartiallyResolvable<any, any> {
         protected constructor(math: Numeric.ToMath<T>, type: T);
         // (undocumented)
@@ -414,6 +419,7 @@ export namespace Dimension {
     }
     // Warning: (ae-forgotten-export) The symbol "Numeric_2" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "DUnit" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export abstract class Fixed<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends DUnit[T] = DUnit[T]> extends Numeric.Fixed<T> implements Resolvable<Fixed<T, DCanonicalUnit[T]>, unknown>, Convertible<DUnit[T]>, Comparable<Fixed<T>> {
         protected constructor(value: number, unit: U, type: T);
         // (undocumented)
@@ -457,6 +463,9 @@ export namespace Dimension {
     export function isFixed(value: unknown): value is Fixed;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Ellipse" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Ellipse" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Ellipse<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"ellipse", Value.HasCalculation<[R, P]>> implements Resolvable<Ellipse.Canonical, Ellipse.Resolver>, PartiallyResolvable<Ellipse.PartiallyResolved, Ellipse.PartialResolver> {
     // (undocumented)
@@ -663,8 +672,11 @@ export namespace HSL {
     parse: Parser<HSL>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Image" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Image" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
-export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image", Value.HasCalculation<[I]>> {
+export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image", Value.HasCalculation<[I]>> implements Resolvable<Image.Canonical, Image.Resolver>, PartiallyResolvable<Image.PartiallyResolved, Image.PartialResolver> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -673,6 +685,8 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"ima
     get image(): I;
     // (undocumented)
     static of<I extends URL | Gradient>(image: I): Image<I>;
+    // (undocumented)
+    partiallyResolve(resolver: Image.PartialResolver): Image.PartiallyResolved;
     // (undocumented)
     resolve(resolver: Image.Resolver): Image.Canonical;
     // (undocumented)
@@ -693,8 +707,6 @@ export namespace Image {
         image: URL.JSON | Gradient.JSON;
     }
     // (undocumented)
-    export function partiallyResolve(resolver: PartialResolver): (value: Image) => PartiallyResolved;
-    // (undocumented)
     export type PartiallyResolved = Image<URL.Canonical | Gradient.PartiallyResolved>;
     // (undocumented)
     export type PartialResolver = URL.Resolver & Gradient.PartialResolver;
@@ -706,6 +718,8 @@ export namespace Image {
 
 // Warning: (ae-forgotten-export) The symbol "Corner_2" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "HasCalculation" needs to be exported by the entry point index.d.ts
+// Warning: (ae-incompatible-release-tags) The symbol "Inset" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Inset" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
 //
 // @public (undocumented)
 export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2> extends BasicShape<"inset", HasCalculation<O, C>> implements Resolvable<Inset.Canonical, Inset.Resolver>, PartiallyResolvable<Inset.PartiallyResolved, Inset.PartialResolver> {
@@ -777,6 +791,7 @@ export type Integer = Integer.Calculated | Integer.Fixed;
 
 // @public (undocumented)
 export namespace Integer {
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Calculated extends Numeric.Calculated<"number"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -797,6 +812,7 @@ export namespace Integer {
     }
     // (undocumented)
     export type Canonical = Fixed;
+    // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Fixed extends Numeric.Fixed<"number"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -837,6 +853,8 @@ export namespace Integer {
     parse: Parser<Integer>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Keyword" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Keyword<T extends string = string> extends Value<"keyword", false> implements Resolvable<Keyword<T>, never> {
     // (undocumented)
@@ -876,6 +894,7 @@ export type Length<U extends Unit.Length = Unit.Length> = Length.Calculated | Le
 
 // @public (undocumented)
 export namespace Length {
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Calculated extends Dimension.Calculated<"length"> implements Resolvable<Canonical, Resolver> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -894,6 +913,7 @@ export namespace Length {
     }
     // (undocumented)
     export type Canonical = Fixed<"px">;
+    // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Fixed<U extends Unit.Length = Unit.Length> extends Dimension.Fixed<"length", U> implements Resolvable<Canonical, Resolver>, Comparable<Fixed<U>> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -956,6 +976,8 @@ export type LengthPercentage<U extends Unit.Length = Unit.Length> = LengthPercen
 
 // @public (undocumented)
 export namespace LengthPercentage {
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
     export class Calculated extends Dimension.Calculated<"length-percentage"> implements Resolvable<Length.Canonical, Resolver>, PartiallyResolvable<Calculated, PartialResolver> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1017,6 +1039,9 @@ export namespace Lexer {
     export function lex(input: string): Slice<Token>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "List" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "List" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V]>> implements Iterable_2<V>, Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>>, PartiallyResolvable<List<Resolvable.PartiallyResolved<V>>, Resolvable.PartialResolver<V>> {
     // (undocumented)
@@ -1148,6 +1173,7 @@ namespace Math_2 {
 export { Math_2 as Math }
 
 // Warning: (ae-forgotten-export) The symbol "Function_3" needs to be exported by the entry point index.d.ts
+// Warning: (ae-incompatible-release-tags) The symbol "Matrix" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
 export class Matrix extends Function_3<"matrix", false> implements Resolvable<Matrix.Canonical, never> {
@@ -1295,6 +1321,7 @@ type Number_2 = Number_2.Calculated | Number_2.Fixed;
 
 // @public (undocumented)
 namespace Number_2 {
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     class Calculated extends Numeric.Calculated<"number"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1315,6 +1342,7 @@ namespace Number_2 {
     }
     // (undocumented)
     type Canonical = Fixed;
+    // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     class Fixed extends Numeric.Fixed<"number"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1359,6 +1387,7 @@ export type Numeric<T extends Numeric.Type = Numeric.Type> = Numeric.Calculated<
 
 // @public (undocumented)
 export namespace Numeric {
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export abstract class Calculated<T extends Type = Type, R extends Type = T, PR extends Type = R> extends Value<T, true, R, PR> implements Resolvable<Fixed<R>, never> {
         // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "Numeric" which is marked as @internal
         protected constructor(math: ToMath<T>, type: T);
@@ -1393,6 +1422,7 @@ export namespace Numeric {
             math: Serializable.ToJSON<ToMath<T>>;
         }
     }
+    // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export abstract class Fixed<T extends Type = Type, R extends Type = T, PR extends Type = R> extends Value<T, false, R, PR> implements Resolvable<Fixed<R>, never>, Comparable<Fixed> {
         protected constructor(value: number, type: T);
         // (undocumented)
@@ -1443,11 +1473,21 @@ export namespace Numeric {
 // @public (undocumented)
 export type Parser<V> = Parser_2<Slice<Token>, V, string>;
 
+// Warning: (ae-internal-missing-underscore) The name "PartiallyResolvable" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface PartiallyResolvable<V extends Value<string>, in R> {
+    // (undocumented)
+    partiallyResolve(resolver?: R): V;
+}
+
 // @public (undocumented)
 export type Percentage<H extends Numeric_2.Type = Numeric_2.Type> = Percentage.Calculated<H> | Percentage.Fixed<H>;
 
 // @public (undocumented)
 export namespace Percentage {
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
     export class Calculated<H extends Numeric_2.Type = Numeric_2.Type> extends Numeric.Calculated<"percentage", H, "percentage"> implements Resolvable<Canonicals[H], Resolver<H>>, PartiallyResolvable<PartiallyResolved<H>, PartialResolver> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1458,7 +1498,7 @@ export namespace Percentage {
         // (undocumented)
         partiallyResolve(): PartiallyResolved<H>;
         // (undocumented)
-        resolve(): Canonical;
+        resolve(): Fixed<H>;
         // (undocumented)
         resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
         // (undocumented)
@@ -1471,8 +1511,10 @@ export namespace Percentage {
         }
     }
     // (undocumented)
-    export type Canonical = Fixed;
+    export type Canonical = Fixed<"percentage">;
     // Warning: (ae-forgotten-export) The symbol "Canonicals" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
     export class Fixed<H extends Numeric_2.Type = Numeric_2.Type> extends Numeric.Fixed<"percentage", "percentage" | H, "percentage"> implements Resolvable<Canonical | Canonicals[H], Resolver<H>>, PartiallyResolvable<PartiallyResolved<H>, PartialResolver> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1521,6 +1563,8 @@ export namespace Percentage {
     };
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Perspective" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Perspective<D extends Length = Length> extends Function_3<"perspective", Value.HasCalculation<[D]>> implements Resolvable<Perspective.Canonical, Perspective.Resolver> {
     // (undocumented)
@@ -1556,6 +1600,9 @@ export namespace Perspective {
     parse: Parser_2<Slice<Token>, Perspective<Length<import("../..").Unit.Length>>, string, []>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Polygon" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Polygon" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape<"polygon", Value.HasCalculation<[V]>> implements Resolvable<Polygon.Canonical, Polygon.Resolver>, PartiallyResolvable<Polygon.PartiallyResolved, Polygon.PartialResolver> {
     // (undocumented)
@@ -1610,6 +1657,9 @@ export namespace Polygon {
     parse: Parser<Polygon>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Position" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Position" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>> extends Value<"position", Value.HasCalculation<[HC, VC]>> implements Resolvable<Position.Canonical<H, V>, Position.Resolver>, PartiallyResolvable<Position.PartiallyResolved<H, V>, Position.PartialResolver> {
     // (undocumented)
@@ -1662,6 +1712,9 @@ export namespace Position {
     }
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Radius" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Radius" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Radius<R extends LengthPercentage | Radius.Side = LengthPercentage | Radius.Side> extends BasicShape<"radius", Value.HasCalculation<[R]>> implements Resolvable<Radius.Canonical, Radius.Resolver>, PartiallyResolvable<Radius.PartiallyResolved, Radius.PartialResolver> {
     // (undocumented)
@@ -1714,8 +1767,10 @@ export namespace Radius {
     parse: Parser<Radius>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Rectangle" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public @deprecated (undocumented)
-export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Auto> extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>> {
+export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Auto> extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>> implements Resolvable<Rectangle.Canonical, Rectangle.Resolver> {
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -1773,6 +1828,25 @@ export namespace Rectangle {
     parse: Parser<Rectangle>;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "Resolvable" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface Resolvable<V extends Value<string, false>, in R> {
+    // (undocumented)
+    resolve(resolver?: R): V;
+}
+
+// @internal (undocumented)
+export namespace Resolvable {
+    export type PartiallyResolved<V extends Value> = V extends PartiallyResolvable<infer U, unknown> ? U : never;
+    export type PartialResolver<V extends Value> = UnionToIntersection<V extends PartiallyResolvable<Value<string, false>, never> ? never : V extends PartiallyResolvable<Value<string, false>, infer R> ? R : never>;
+    export type Resolved<V extends Value> = V extends Resolvable<infer U, unknown> ? U : never;
+    export type Resolver<V extends Value> = UnionToIntersection<V extends Resolvable<Value<string, false>, never> ? never : V extends Resolvable<Value<string, false>, infer R> ? R : never>;
+    // (undocumented)
+    export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
+        {};
+}
+
 // @public (undocumented)
 export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, A extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">> extends Format<"rgb"> {
     // (undocumented)
@@ -1822,6 +1896,8 @@ export namespace RGB {
     parse: Parser<RGB>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Rotate" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Rotate extends Function_3<"rotate", false> implements Resolvable<Rotate.Canonical, never> {
     // (undocumented)
@@ -1867,6 +1943,8 @@ export namespace Rotate {
     parse: Parser_2<Slice<Token>, Rotate, string, []>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Scale" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Scale extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, never> {
     // (undocumented)
@@ -1906,6 +1984,8 @@ export namespace Scale {
     parse: Parser_2<Slice<Token>, Scale, string, []>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Shadow" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Shadow<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color> extends Value<"shadow", Value.HasCalculation<[H, V, B, S, C]>> implements Resolvable<Shadow.Canonical, Shadow.Resolver> {
     // (undocumented)
@@ -1968,8 +2048,11 @@ export namespace Shadow {
     export type Resolver = Length.Resolver;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Shape" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Shape" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
-export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry> extends Value<"shape", Value.HasCalculation<[S]>> {
+export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry> extends Value<"shape", Value.HasCalculation<[S]>> implements Resolvable<Shape.Canonical, Shape.Resolver>, PartiallyResolvable<Shape.PartiallyResolved, Shape.PartialResolver> {
     // (undocumented)
     get box(): B;
     // (undocumented)
@@ -1980,6 +2063,8 @@ export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry =
     hash(hash: Hash): void;
     // (undocumented)
     static of<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry>(shape: S, box: B): Shape<S, B>;
+    // (undocumented)
+    partiallyResolve(resolver: Shape.PartialResolver): Shape.PartiallyResolved;
     // (undocumented)
     resolve(resolver: Shape.Resolver): Shape.Canonical;
     // (undocumented)
@@ -2024,8 +2109,6 @@ export namespace Shape {
         shape: Basic.JSON;
     }
     // (undocumented)
-    export function partiallyResolve(resolver: PartialResolver): (value: Shape) => PartiallyResolved;
-    // (undocumented)
     export type PartiallyResolved = Shape<Basic.PartiallyResolved, Box.Geometry>;
     // (undocumented)
     export type PartialResolver = Basic.PartialResolver;
@@ -2033,9 +2116,10 @@ export namespace Shape {
     export type Resolver = Basic.Resolver;
     const // (undocumented)
     parse: Parser<Shape<Circle | Ellipse | Inset | Polygon>>;
-        {};
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Skew" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Skew extends Function_3<"skew", false> implements Resolvable<Skew.Canonical, never> {
     // (undocumented)
@@ -2073,6 +2157,8 @@ export namespace Skew {
     parse: Parser_2<Slice<Token>, Skew, string, []>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "String" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public (undocumented)
 class String_2 extends Value<"string", false> implements Resolvable<String_2, never> {
     // (undocumented)
@@ -2922,6 +3008,9 @@ export namespace Transform {
     parseList: Parser<List<Transform>>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Translate" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Translate" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Translate<X extends LengthPercentage = LengthPercentage, Y extends LengthPercentage = LengthPercentage, Z extends Length = Length> extends Function_3<"translate", Value.HasCalculation<[X, Y, Z]>> implements Resolvable<Translate.Canonical, Translate.Resolver>, PartiallyResolvable<Translate.PartiallyResolved, Translate.PartialResolver> {
     // (undocumented)
@@ -2971,6 +3060,9 @@ export namespace Translate {
     parse: Parser<Translate>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Tuple" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Tuple" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public (undocumented)
 export class Tuple<T extends Array<Value>> extends Value<"tuple", Value.HasCalculation<T>> implements Resolvable<Tuple<Tuple.Resolved<T>>, Tuple.Resolver<T>>, PartiallyResolvable<Tuple<Tuple.PartiallyResolved<T>>, Tuple.PartialResolver<T>> {
     // (undocumented)
@@ -3002,11 +3094,15 @@ export namespace Tuple {
         // (undocumented)
         values: Serializable.ToJSON<T>;
     }
+    // Warning: (ae-incompatible-release-tags) The symbol "PartiallyResolved" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+    //
     // (undocumented)
     export type PartiallyResolved<T extends Array<Value>> = T extends [
     infer Head extends Value,
     ...infer Tail extends Array<Value>
     ] ? [Resolvable.PartiallyResolved<Head>, ...PartiallyResolved<Tail>] : [];
+    // Warning: (ae-incompatible-release-tags) The symbol "PartialResolver" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+    //
     // (undocumented)
     export type PartialResolver<T extends Array<Value>> = T extends Array<infer V extends Value> ? Resolvable.PartialResolver<V> : never;
     // @internal
@@ -3072,8 +3168,10 @@ export namespace Unit {
     export type Time = "s" | "ms";
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "URL" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
 // @public (undocumented)
-export class URL extends Value<"url", false> {
+export class URL extends Value<"url", false> implements Resolvable<URL, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -3107,6 +3205,9 @@ export namespace URL {
     parse: Parser<URL>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Value" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "Value" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
+//
 // @public
 export abstract class Value<T extends string = string, CALC extends boolean = boolean, R extends string = T, PR extends string = R> implements Equatable, Hashable, Serializable<Value.JSON<T>>, Resolvable<Value<R, false>, Resolvable.Resolver<Value>>, PartiallyResolvable<Value<PR>, Resolvable.PartialResolver<Value>> {
     protected constructor(type: T, hasCalculation: CALC);
