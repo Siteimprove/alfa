@@ -67,6 +67,7 @@
     "src/selector/simple/pseudo-element/slotted.ts",
     "src/selector/simple/pseudo-element/spelling-error.ts",
     "src/selector/simple/pseudo-element/target-text.ts",
+    "src/specificity.ts",
     "test/parser.ts",
     "test/basic.spec.ts",
     "test/complex.spec.ts",
