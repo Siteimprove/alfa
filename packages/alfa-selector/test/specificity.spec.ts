@@ -1,5 +1,57 @@
-import { test } from "@siteimprove/alfa-test";
+import { RNG, test } from "@siteimprove/alfa-test";
 
-import { serialize } from "./parser";
+import { Specificity } from "../src/specificity";
 
-test(".add() adds specificities components-wise", (t) => {});
+function wrapper(iteration: number, rng: RNG): RNG {
+  // The max value for specificity components is 1024. Picking a "weird"
+  // number that is slightly smaller.
+  return () => Math.floor(rng() * 937);
+}
+
+const controller = { iterations: 10, wrapper };
+
+test(
+  ".add() adds two specificities components-wise",
+  (t, rng, seed) => {
+    const [a1, b1, c1] = [rng(), rng(), rng()];
+    const [a2, b2, c2] = [rng(), rng(), rng()];
+
+    t.deepEqual(
+      Specificity.sum(Specificity.of(a1, b1, c1), Specificity.of(a2, b2, c2)),
+      Specificity.of(a1 + a2, b1 + b2, c1 + c2),
+      `Problem with adding two specificities with seed ${seed} and ${controller.iterations} iterations`,
+    );
+  },
+  controller,
+);
+
+test(
+  ".max() maxes two specificities lexicographically",
+  (t, rng, seed) => {
+    const [a1, b1, c1] = [rng(), rng(), rng()];
+    const [a2, b2, c2] = [rng(), rng(), rng()];
+
+    const specificity1 = Specificity.of(a1, b1, c1);
+    const specificity2 = Specificity.of(a2, b2, c2);
+
+    const max =
+      a1 > a2
+        ? specificity1
+        : a2 > a1
+          ? specificity2
+          : b1 > b2
+            ? specificity1
+            : b2 > b1
+              ? specificity2
+              : c1 > c2
+                ? specificity1
+                : specificity2;
+
+    t.deepEqual(
+      Specificity.max(specificity1, specificity2),
+      max,
+      `Problem with maxing two specificities with seed ${seed} and ${controller.iterations} iterations`,
+    );
+  },
+  controller,
+);

@@ -83,7 +83,9 @@ export async function test(
     for (let i = 0; i < fullController.iterations; i++) {
       await assertion(
         "strict" in assert ? assert.strict : assert,
-        fullController.wrapper(i, rng),
+        // eta-expansion ensures that the wrapper is evaluated on each call o
+        // the rng, not just once per iteration.
+        () => fullController.wrapper(i, rng)(),
         seed,
       );
     }
