@@ -74,7 +74,8 @@
     "test/compound.spec.ts",
     "test/list.spec.ts",
     "test/pseudo-class.spec.tsx",
-    "test/pseudo-element.spec.ts"
+    "test/pseudo-element.spec.ts",
+    "test/specificity.spec.ts"
   ],
   "references": [
     { "path": "../alfa-array" },
