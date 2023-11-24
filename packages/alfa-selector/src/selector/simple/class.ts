@@ -3,6 +3,8 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Specificity } from "../../specificity";
+
 import { WithName } from "../selector";
 
 const { map, right } = Parser;
@@ -17,7 +19,7 @@ export class Class extends WithName<"class"> {
     return new Class(name);
   }
   private constructor(name: string) {
-    super("class", name);
+    super("class", name, Specificity.of(0, 1, 0));
   }
 
   public matches(element: Element): boolean {

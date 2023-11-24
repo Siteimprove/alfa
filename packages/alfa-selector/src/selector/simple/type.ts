@@ -2,6 +2,8 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Specificity } from "../../specificity";
+
 import { WithName } from "../selector";
 
 import { parseName } from "./parser";
@@ -21,7 +23,7 @@ export class Type extends WithName<"type"> {
   private readonly _namespace: Option<string>;
 
   private constructor(namespace: Option<string>, name: string) {
-    super("type", name);
+    super("type", name, Specificity.of(0, 0, 1));
     this._namespace = namespace;
   }
 

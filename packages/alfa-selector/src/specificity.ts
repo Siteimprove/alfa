@@ -38,6 +38,12 @@ export class Specificity
     return new Specificity(a, b, c);
   }
 
+  private static _empty = new Specificity(0, 0, 0);
+
+  public static empty(): Specificity {
+    return Specificity._empty;
+  }
+
   private readonly _a: number;
   private readonly _b: number;
   private readonly _c: number;
@@ -102,5 +108,34 @@ export namespace Specificity {
   /** public (knip) */
   export function isSpecificity(value: unknown): value is Specificity {
     return value instanceof Specificity;
+  }
+
+  export function sum(
+    ...specificities: ReadonlyArray<Specificity>
+  ): Specificity {
+    if (specificities.length === 0) {
+      return Specificity.empty();
+    }
+
+    const [first, ...rest] = specificities;
+
+    return rest.reduce(
+      (pre, cur) => Specificity.of(pre.a + cur.a, pre.b + cur.b, pre.c + cur.c),
+      first,
+    );
+  }
+
+  export function max(
+    ...specificities: ReadonlyArray<Specificity>
+  ): Specificity {
+    if (specificities.length === 0) {
+      return Specificity.empty();
+    }
+
+    const [first, ...rest] = specificities;
+    return rest.reduce(
+      (pre, cur) => (pre.value > cur.value ? pre : cur),
+      first,
+    );
   }
 }

@@ -1,6 +1,7 @@
 import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
+import { Specificity } from "../../../specificity";
 
 import { WithName } from "../../selector";
 
@@ -11,7 +12,7 @@ export abstract class PseudoElementSelector<
   N extends string = string,
 > extends WithName<"pseudo-element", N> {
   protected constructor(name: N) {
-    super("pseudo-element", name);
+    super("pseudo-element", name, Specificity.of(0, 0, 1));
   }
 
   public equals(value: PseudoElementSelector): boolean;

@@ -6,6 +6,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+import { Specificity } from "../../specificity";
+
 import { WithName } from "../selector";
 
 import { parseName } from "./parser";
@@ -41,7 +43,7 @@ export class Attribute extends WithName<"attribute"> {
     matcher: Option<Attribute.Matcher>,
     modifier: Option<Attribute.Modifier>,
   ) {
-    super("attribute", name);
+    super("attribute", name, Specificity.of(0, 1, 0));
     this._namespace = namespace;
     this._value = value;
     this._matcher = matcher;

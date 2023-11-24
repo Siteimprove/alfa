@@ -7,6 +7,7 @@ test(".parse() parses a named pseudo-class selector", (t) => {
   t.deepEqual(serialize(":hover"), {
     type: "pseudo-class",
     name: "hover",
+    specificity: { a: 0, b: 1, c: 0 },
   });
 });
 
@@ -14,6 +15,7 @@ test(".parse() parses :host pseudo-class selector", (t) => {
   t.deepEqual(serialize(":host"), {
     type: "pseudo-class",
     name: "host",
+    specificity: { a: 0, b: 1, c: 0 },
   });
 });
 
@@ -24,7 +26,9 @@ test(".parse() parses a functional pseudo-class selector", (t) => {
     selector: {
       type: "class",
       name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
     },
+    specificity: { a: 0, b: 1, c: 0 },
   });
 });
 
@@ -334,5 +338,6 @@ test(".parse() parses an :nth-child selector", (t) => {
       step: 2,
       offset: 1,
     },
+    specificity: { a: 0, b: 1, c: 0 },
   });
 });
