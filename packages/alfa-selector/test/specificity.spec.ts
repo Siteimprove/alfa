@@ -4,8 +4,8 @@ import { Specificity } from "../src/specificity";
 
 function wrapper(iteration: number, rng: RNG): RNG {
   // The max value for specificity components is 1024. Picking a "weird"
-  // number that is slightly smaller.
-  return () => Math.floor(rng() * 937);
+  // number that is slightly smaller than half to avoid overflows.
+  return () => Math.floor(rng() * 487);
 }
 
 const controller = { iterations: 10, wrapper };
