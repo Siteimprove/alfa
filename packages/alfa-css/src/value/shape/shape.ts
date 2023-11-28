@@ -3,6 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 
 import { Value } from "../value";
 import { type Parser as CSSParser, Token } from "../../syntax";
@@ -22,9 +23,14 @@ const { either } = Parser;
  * @public
  */
 export class Shape<
-  S extends Shape.Basic = Shape.Basic,
-  B extends Box.Geometry = Box.Geometry,
-> extends Value<"shape", Value.HasCalculation<[S]>> {
+    S extends Shape.Basic = Shape.Basic,
+    B extends Box.Geometry = Box.Geometry,
+  >
+  extends Value<"shape", Value.HasCalculation<[S]>>
+  implements
+    Resolvable<Shape.Canonical, Shape.Resolver>,
+    PartiallyResolvable<Shape.PartiallyResolved, Shape.PartialResolver>
+{
   public static of<
     S extends Shape.Basic = Shape.Basic,
     B extends Box.Geometry = Box.Geometry,
@@ -51,6 +57,15 @@ export class Shape<
 
   public resolve(resolver: Shape.Resolver): Shape.Canonical {
     return new Shape(this._shape.resolve(resolver), this._box);
+  }
+
+  public partiallyResolve(
+    resolver: Shape.PartialResolver,
+  ): Shape.PartiallyResolved {
+    return Shape.of(
+      Shape.Basic.partiallyResolve(resolver)(this._shape),
+      this._box,
+    );
   }
 
   public equals(value: Shape): boolean;
@@ -93,7 +108,7 @@ export namespace Shape {
    */
   export type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
 
-  namespace Basic {
+  export namespace Basic {
     export type Canonical =
       | Circle.Canonical
       | Ellipse.Canonical
@@ -160,13 +175,6 @@ export namespace Shape {
   export type PartiallyResolved = Shape<Basic.PartiallyResolved, Box.Geometry>;
 
   export type PartialResolver = Basic.PartialResolver;
-
-  export function partiallyResolve(
-    resolver: PartialResolver,
-  ): (value: Shape) => PartiallyResolved {
-    return (value) =>
-      Shape.of(Basic.partiallyResolve(resolver)(value.shape), value.box);
-  }
 
   /**
    * @remarks

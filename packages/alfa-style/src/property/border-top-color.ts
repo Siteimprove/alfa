@@ -10,6 +10,9 @@ export type Specified = Color;
 type Computed = Color.Canonical;
 
 /**
+ * @remarks
+ * This is used by the shorthand
+ *
  * @internal
  */
 export const parse = Color.parse;
@@ -19,5 +22,5 @@ export const parse = Color.parse;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(Color.current, parse, (value) =>
-  value.map((color) => color.resolve()),
+  value.resolve(),
 );

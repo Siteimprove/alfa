@@ -5,6 +5,7 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Parser as CSSParser, Token } from "../../../../syntax";
 
 import { Keyword } from "../../../keyword";
+import { Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 const { map } = Parser;
@@ -12,7 +13,10 @@ const { map } = Parser;
 /**
  * @internal
  */
-export class Extent extends Value<"extent", false> {
+export class Extent
+  extends Value<"extent", false>
+  implements Resolvable<Extent.Canonical, Extent.Resolver>
+{
   public static of(
     shape: Extent.Shape = Extent.Shape.Circle,
     size: Extent.Size = Extent.Size.FarthestCorner,

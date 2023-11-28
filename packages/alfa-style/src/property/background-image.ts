@@ -41,7 +41,9 @@ export default Longhand.of<Specified, Computed>(
     value.map((images) =>
       images.map((image) =>
         Selective.of(image)
-          .if(Image.isImage, Image.partiallyResolve(Resolver.length(style)))
+          .if(Image.isImage, (image) =>
+            image.partiallyResolve(Resolver.length(style)),
+          )
           .get(),
       ),
     ),

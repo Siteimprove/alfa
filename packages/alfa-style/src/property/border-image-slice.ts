@@ -23,9 +23,9 @@ type ImageSlice<T extends Value> = NoFill<T> | WithFill<T>;
 /**
  * @internal
  */
-export type Specified = ImageSlice<Number | Percentage>;
+export type Specified = ImageSlice<Number | Percentage<"percentage">>;
 
-type Computed = Specified;
+type Computed = ImageSlice<Number.Canonical | Percentage.Canonical>;
 
 const parseItem = filter(
   either(Number.parse, Percentage.parse),
@@ -111,5 +111,5 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(1),
   ),
   parse,
-  (value) => value,
+  (value) => value.resolve(),
 );

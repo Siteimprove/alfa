@@ -57,7 +57,11 @@ namespace Specified {
 
 type Specified = Tuple<[List<Specified.Custom>, Specified.Builtin]>;
 
-type Computed = Specified;
+type Computed = Tuple<[List<Computed.Custom>, Specified.Builtin]>;
+
+namespace Computed {
+  export type Custom = URL | Tuple<[URL, Number.Canonical, Number.Canonical]>;
+}
 
 const parseBuiltin = Keyword.parse(
   "auto",
@@ -124,6 +128,6 @@ const parse = map(
 export default Longhand.of<Specified, Computed>(
   Tuple.of(List.of([], ","), Keyword.of("auto")),
   parse,
-  (value) => value,
+  (value) => value.resolve(),
   { inherits: true },
 );

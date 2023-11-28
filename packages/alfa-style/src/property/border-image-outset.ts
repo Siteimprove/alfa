@@ -63,15 +63,5 @@ export const parse = map(
 export default Longhand.of<Specified, Computed>(
   Tuple.of(Number.of(0), Number.of(0), Number.of(0), Number.of(0)),
   parse,
-  (value, style) =>
-    value.map(({ values: [t, r, b, l] }) => {
-      const resolver = resolve(style);
-      return Tuple.of(resolver(t), resolver(r), resolver(b), resolver(l));
-    }),
+  (value, style) => value.resolve(Resolver.length(style)),
 );
-
-function resolve(style: Style): (specified: Specified.Item) => Computed.Item {
-  const resolver = Resolver.length(style);
-  return (specified) =>
-    Length.isLength(specified) ? specified.resolve(resolver) : specified;
-}
