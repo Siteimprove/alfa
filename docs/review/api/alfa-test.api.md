@@ -25,19 +25,19 @@ export interface Assertions {
 }
 
 // @public (undocumented)
-export interface Controller {
+export interface Controller<T = number> {
     // (undocumented)
     iterations: number;
     // (undocumented)
     seed?: number;
     // (undocumented)
-    wrapper: (iteration: number, rng: RNG) => RNG;
+    wrapper: (rng: RNG<number>, iteration: number) => RNG<T>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "defaultController" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export const defaultController: Controller;
+export const defaultController: Controller<number>;
 
 // Warning: (ae-internal-missing-underscore) The name "format" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -53,12 +53,12 @@ export interface Notifier {
 }
 
 // @public (undocumented)
-export type RNG = () => number;
+export type RNG<T = number> = () => T;
 
 // Warning: (ae-internal-missing-underscore) The name "seedableRNG" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export function seedableRNG(seed: number): RNG;
+export function seedableRNG(seed: number): RNG<number>;
 
 // Warning: (ae-forgotten-export) The symbol "Frame" needs to be exported by the entry point index.d.ts
 // Warning: (ae-internal-missing-underscore) The name "stack" should be prefixed with an underscore because the declaration is marked as @internal
@@ -69,10 +69,10 @@ export function stack(error: Error): Iterable<Frame>;
 // Warning: (ae-internal-mixed-release-tag) Mixed release tags are not allowed for "test" because one of its declarations is marked as @internal
 //
 // @public (undocumented)
-export function test(name: string, assertion: (assert: Assertions, rng: RNG, seed: number) => void | Promise<void>, controller?: Partial<Controller>): Promise<void>;
+export function test<T = number>(name: string, assertion: (assert: Assertions, rng: RNG<T>, seed: number) => void | Promise<void>, controller?: Partial<Controller<T>>): Promise<void>;
 
 // @internal (undocumented)
-export function test(name: string, assertion: (assert: Assertions, rng: RNG, seed: number) => void | Promise<void>, notifier: Notifier, controller?: Partial<Controller>): Promise<void>;
+export function test<T = number>(name: string, assertion: (assert: Assertions, rng: RNG<T>, seed: number) => void | Promise<void>, notifier: Notifier, controller?: Partial<Controller<T>>): Promise<void>;
 
 // (No @packageDocumentation comment for this package)
 
