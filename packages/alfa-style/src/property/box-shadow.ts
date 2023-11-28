@@ -19,6 +19,5 @@ const parseList = List.parseCommaSeparated(Shadow.parse());
 export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   either(Keyword.parse("none"), parseList),
-  (boxShadow, style) =>
-    boxShadow.map((value) => value.resolve(Resolver.length(style))),
+  (value, style) => value.resolve(Resolver.length(style)),
 );

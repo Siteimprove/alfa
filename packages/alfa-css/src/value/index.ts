@@ -5,6 +5,7 @@ export * from "./image";
 export * from "./keyword";
 export * from "./numeric";
 export * from "./position";
+export * from "./resolvable";
 export * from "./shadow";
 export * from "./shape";
 export * from "./string";

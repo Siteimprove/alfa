@@ -3,6 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 
 import type { Parser as CSSParser } from "../../syntax";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 
 import { Value } from "../value";
 
@@ -16,10 +17,12 @@ const { map, either } = Parser;
  *
  * @public
  */
-export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
-  "image",
-  Value.HasCalculation<[I]>
-> {
+export class Image<I extends URL | Gradient = URL | Gradient>
+  extends Value<"image", Value.HasCalculation<[I]>>
+  implements
+    Resolvable<Image.Canonical, Image.Resolver>,
+    PartiallyResolvable<Image.PartiallyResolved, Image.PartialResolver>
+{
   public static of<I extends URL | Gradient>(image: I): Image<I> {
     return new Image(image);
   }
@@ -37,6 +40,17 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
 
   public resolve(resolver: Image.Resolver): Image.Canonical {
     return new Image(this._image.resolve(resolver));
+  }
+
+  public partiallyResolve(
+    resolver: Image.PartialResolver,
+  ): Image.PartiallyResolved {
+    return Image.of(
+      Selective.of(this._image)
+        .if(URL.isURL, (url) => url.resolve())
+        .else((gradient) => gradient.partiallyResolve(resolver))
+        .get(),
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -76,18 +90,6 @@ export namespace Image {
   >;
 
   export type PartialResolver = URL.Resolver & Gradient.PartialResolver;
-
-  export function partiallyResolve(
-    resolver: PartialResolver,
-  ): (value: Image) => PartiallyResolved {
-    return (value) =>
-      Image.of(
-        Selective.of(value.image)
-          .if(URL.isURL, (url) => url.resolve())
-          .else((gradient) => gradient.partiallyResolve(resolver))
-          .get(),
-      );
-  }
 
   export function isImage<I extends URL | Gradient>(
     value: unknown,

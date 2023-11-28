@@ -10,6 +10,9 @@ export type Specified = Color;
 type Computed = Color.Canonical;
 
 /**
+ * @remarks
+ * This is used by the shorthand parser for background.
+ *
  * @internal
  */
 export const parse = Color.parse;
@@ -26,5 +29,5 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(0),
   ),
   parse,
-  (value) => value.map((color) => color.resolve()),
+  (value) => value.resolve(),
 );

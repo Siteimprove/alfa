@@ -52,7 +52,7 @@ export type Percentage<H extends BaseNumeric.Type = BaseNumeric.Type> =
  * @public
  */
 export namespace Percentage {
-  export type Canonical = Fixed;
+  export type Canonical = Fixed<"percentage">;
 
   export type PartiallyResolved<H extends BaseNumeric.Type> = Fixed<H>;
 
@@ -80,13 +80,13 @@ export namespace Percentage {
       return true;
     }
 
-    public resolve(): Canonical;
+    public resolve(): Fixed<H>;
 
     public resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
 
     public resolve<T extends Canonicals[H]>(
       resolver?: Resolver<H>,
-    ): Canonical | T {
+    ): Fixed<H> | T {
       const percentage = Fixed.of<H>(
         this._math
           .resolve()

@@ -5,6 +5,7 @@ import { Comma, Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Length } from "../numeric";
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
@@ -18,8 +19,11 @@ const { either, map, option, separatedList } = Parser;
  * @deprecated Deprecated as of CSS Masking Module Level 1
  */
 export class Rectangle<
-  O extends Length | Rectangle.Auto = Length | Rectangle.Auto,
-> extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>> {
+    O extends Length | Rectangle.Auto = Length | Rectangle.Auto,
+  >
+  extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>>
+  implements Resolvable<Rectangle.Canonical, Rectangle.Resolver>
+{
   public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
     top: O,
     right: O,

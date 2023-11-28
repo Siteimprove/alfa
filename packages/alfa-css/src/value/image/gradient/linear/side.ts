@@ -3,6 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Token } from "../../../../syntax";
 
+import { Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 import { Position } from "./position";
@@ -12,7 +13,10 @@ const { map, option, right } = Parser;
 /**
  * @internal
  */
-export class Side extends Value<"side", false> {
+export class Side
+  extends Value<"side", false>
+  implements Resolvable<Side.Canonical, Side.Resolver>
+{
   public static of(side: Position.Vertical | Position.Horizontal): Side {
     return new Side(side);
   }

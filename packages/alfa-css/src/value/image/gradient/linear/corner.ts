@@ -3,6 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { type Parser as CSSParser, Token } from "../../../../syntax";
 
+import { Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 import { Position } from "./position";
@@ -12,7 +13,10 @@ const { map, either, pair, option, right } = Parser;
 /**
  * @internal
  */
-export class Corner extends Value<"corner", false> {
+export class Corner
+  extends Value<"corner", false>
+  implements Resolvable<Corner.Canonical, Corner.Resolver>
+{
   public static of(
     vertical: Position.Vertical,
     horizontal: Position.Horizontal,
