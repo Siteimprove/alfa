@@ -335,7 +335,7 @@ export namespace SelectorMap {
 
       // Otherwise, determine the specificity of the selector.
       else {
-        this._specificity = getSpecificity(selector);
+        this._specificity = selector.specificity.value;
       }
     }
 
@@ -455,58 +455,6 @@ function getKeySelector(selector: Selector): Id | Class | Type | null {
   }
 
   return null;
-}
-
-type Specificity = number;
-
-// The number of bits to use for every component of the specificity computation.
-// As bitwise operations in JavaScript are limited to 32 bits, we can only use
-// at most 10 bits per component as 3 components are used.
-const componentBits = 10;
-
-// The maximum value that any given component can have. Since we can only use 10
-// bits for every component, this in effect means that any given component count
-// must be strictly less than 1024.
-const componentMax = (1 << componentBits) - 1;
-
-/**
- * {@link https://www.w3.org/TR/selectors/#specificity}
- */
-function getSpecificity(selector: Selector): Specificity {
-  let a = 0;
-  let b = 0;
-  let c = 0;
-
-  const queue: Array<Selector> = [selector];
-
-  while (queue.length > 0) {
-    const selector = queue.pop()!;
-
-    if (isId(selector)) {
-      a++;
-    } else if (
-      isClass(selector) ||
-      isAttribute(selector) ||
-      isPseudoClass(selector)
-    ) {
-      b++;
-    } else if (isType(selector) || isPseudoElement(selector)) {
-      c++;
-    } else if (isComplex(selector)) {
-      queue.push(selector.left, selector.right);
-    } else if (isCompound(selector)) {
-      queue.push(...selector.selectors);
-    }
-  }
-
-  // Concatenate the components to a single number indicating the specificity of
-  // the selector. This allows us to treat specificities as simple numbers and
-  // hence use normal comparison operators when comparing specificities.
-  return (
-    (Math.min(a, componentMax) << (componentBits * 2)) |
-    (Math.min(b, componentMax) << (componentBits * 1)) |
-    Math.min(c, componentMax)
-  );
 }
 
 /**

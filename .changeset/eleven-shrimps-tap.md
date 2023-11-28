@@ -2,4 +2,4 @@
 "@siteimprove/alfa-selector": minor
 ---
 
-**Added:** `Selector` now containt heir own `Specificity`.
+**Added:** `Selector` now contain their own `Specificity`.
