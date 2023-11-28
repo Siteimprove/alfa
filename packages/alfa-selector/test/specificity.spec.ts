@@ -1,6 +1,7 @@
 import { RNG, test } from "@siteimprove/alfa-test";
 
 import { Specificity } from "../src/specificity";
+import { parse } from "./parser";
 
 function wrapper(iteration: number, rng: RNG): RNG {
   // The max value for specificity components is 1024. Picking a "weird"
@@ -55,3 +56,36 @@ test(
   },
   controller,
 );
+
+test("Specificity of :is is correctly computed", (t) => {
+  for (const [selector, a, b, c] of [
+    [".foo, #bar.baz", 1, 1, 0],
+    ["em, #foo", 1, 0, 0],
+  ] as const) {
+    const actual = parse(`:is(${selector})`).specificity;
+
+    t.deepEqual(actual, Specificity.of(a, b, c), selector);
+  }
+});
+
+test("Specificity of :not is correctly computed", (t) => {
+  for (const [selector, a, b, c] of [
+    [".foo, #bar.baz", 1, 1, 0],
+    ["em, strong#foo", 1, 0, 1],
+  ] as const) {
+    const actual = parse(`:not(${selector})`).specificity;
+
+    t.deepEqual(actual, Specificity.of(a, b, c), selector);
+  }
+});
+
+test("Specificity of :has is correctly computed", (t) => {
+  for (const [selector, a, b, c] of [
+    [".foo, #bar.baz", 1, 1, 0],
+    ["em, strong#foo", 1, 0, 1],
+  ] as const) {
+    const actual = parse(`:has(${selector})`).specificity;
+
+    t.deepEqual(actual, Specificity.of(a, b, c), selector);
+  }
+});
