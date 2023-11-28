@@ -83,6 +83,7 @@
     { "path": "../alfa-css" },
     { "path": "../alfa-dom" },
     { "path": "../alfa-equatable" },
+    { "path": "../alfa-hash" },
     { "path": "../alfa-iterable" },
     { "path": "../alfa-json" },
     { "path": "../alfa-map" },
