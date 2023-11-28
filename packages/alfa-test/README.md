@@ -31,19 +31,19 @@ For re-playability, use the `Controller` parameter to select the seed to use (wh
 
 ```typescript
 /**
- * Return a random number between 0 and 100 (inclusive).
+ * Return a random string between "0" and "100" (inclusive).
  * Print the generated number, as well as the iteration number (use for debugging).
  */
-function wrapper(iteration: number, rng: RNG): RNG {
+function wrapper(iteration: number, rng: RNG<number>): RNG<string> {
   return () => {
     const res = rng();
     console.log(`On iteration ${iteration}, I generated ${res}`);
-    return res * 100;
+    return `${res * 100}`;
   };
 }
 
 test(
-  "Sum computes the sum of two numbers",
+  "Sum computes the sum of two numbers represented as strings",
   (t, rng, seed) => {
     // These use the post-wrapper RNG.
     const a = rng();
@@ -51,7 +51,7 @@ test(
     // Print the seed in error message to allow introspection.
     const actual = sum(a, b, `Failed with seed ${seed}`);
 
-    t.deepEqual(actual, a + b);
+    t.deepEqual(actual, `${a + b}`);
   },
   {
     wrapper,
