@@ -1,4 +1,4 @@
-import { Assertions, RNG, seedableRNG, test } from "@siteimprove/alfa-test";
+import { test } from "@siteimprove/alfa-test";
 
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
