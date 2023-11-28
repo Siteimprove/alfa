@@ -29,48 +29,49 @@ function isNotifier(value: unknown): value is Notifier {
 /**
  * @public
  */
-export async function test(
+export async function test<T = number>(
   name: string,
   assertion: (
     assert: Assertions,
-    rng: RNG,
+    rng: RNG<T>,
     seed: number,
   ) => void | Promise<void>,
-  controller?: Partial<Controller>,
+  controller?: Partial<Controller<T>>,
 ): Promise<void>;
 
 /**
  * @internal
  */
-export async function test(
+export async function test<T = number>(
   name: string,
   assertion: (
     assert: Assertions,
-    rng: RNG,
+    rng: RNG<T>,
     seed: number,
   ) => void | Promise<void>,
   notifier: Notifier,
-  controller?: Partial<Controller>,
+  controller?: Partial<Controller<T>>,
 ): Promise<void>;
 
-export async function test(
+export async function test<T = number>(
   name: string,
   assertion: (
     assert: Assertions,
-    rng: RNG,
+    rng: RNG<T>,
     seed: number,
   ) => void | Promise<void>,
-  notifierOrController?: Notifier | Partial<Controller>,
-  controller?: Partial<Controller>,
+  notifierOrController?: Notifier | Partial<Controller<T>>,
+  controller?: Partial<Controller<T>>,
 ): Promise<void> {
   const notifier: Notifier = isNotifier(notifierOrController)
     ? notifierOrController
     : defaultNotifier;
-  const fullController: Controller = {
+  // If the controlled is not overwritten, then T should be number.
+  const fullController = {
     ...defaultController,
     ...controller,
     ...notifierOrController,
-  };
+  } as Controller<T>;
   // "error" may have been copied over from the notifier.
   if ("error" in fullController) {
     delete fullController.error;

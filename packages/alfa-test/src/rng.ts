@@ -1,7 +1,7 @@
 /**
  * @public
  */
-export type RNG = () => number;
+export type RNG<T = number> = () => T;
 
 /**
  * PRNG taken from
@@ -10,7 +10,7 @@ export type RNG = () => number;
  * @internal
  */
 
-export function seedableRNG(seed: number): RNG {
+export function seedableRNG(seed: number): RNG<number> {
   return function () {
     let t = (seed += 0x6d2b79f5);
     t = Math.imul(t ^ (t >>> 15), t | 1);
@@ -22,16 +22,16 @@ export function seedableRNG(seed: number): RNG {
 /**
  * @public
  */
-export interface Controller {
+export interface Controller<T = number> {
   iterations: number;
-  wrapper: (iteration: number, rng: RNG) => RNG;
+  wrapper: (iteration: number, rng: RNG<number>) => RNG<T>;
   seed?: number;
 }
 
 /**
  * @internal
  */
-export const defaultController: Controller = {
+export const defaultController: Controller<number> = {
   iterations: 1,
   wrapper: (iteration: number, rng) => rng,
 };
