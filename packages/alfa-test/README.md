@@ -34,7 +34,7 @@ For re-playability, use the `Controller` parameter to select the seed to use (wh
  * Return a random string between "0" and "100" (inclusive).
  * Print the generated number, as well as the iteration number (use for debugging).
  */
-function wrapper(iteration: number, rng: RNG<number>): RNG<string> {
+function wrapper(rng: RNG<number>, iteration: number): RNG<string> {
   return () => {
     const res = rng();
     console.log(`On iteration ${iteration}, I generated ${res}`);

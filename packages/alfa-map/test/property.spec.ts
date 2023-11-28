@@ -35,7 +35,7 @@ function key(id: number): Key {
   return self;
 }
 
-function wrapper(_: number, rng: RNG<number>): RNG<Key> {
+function wrapper(rng: RNG<number>): RNG<Key> {
   return () => key(makeInt(rng()));
 }
 

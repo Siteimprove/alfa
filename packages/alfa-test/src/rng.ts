@@ -9,7 +9,6 @@ export type RNG<T = number> = () => T;
  *
  * @internal
  */
-
 export function seedableRNG(seed: number): RNG<number> {
   return function () {
     let t = (seed += 0x6d2b79f5);
@@ -24,7 +23,7 @@ export function seedableRNG(seed: number): RNG<number> {
  */
 export interface Controller<T = number> {
   iterations: number;
-  wrapper: (iteration: number, rng: RNG<number>) => RNG<T>;
+  wrapper: (rng: RNG<number>, iteration: number) => RNG<T>;
   seed?: number;
 }
 
@@ -33,5 +32,5 @@ export interface Controller<T = number> {
  */
 export const defaultController: Controller<number> = {
   iterations: 1,
-  wrapper: (iteration: number, rng) => rng,
+  wrapper: (rng, iteration: number) => rng,
 };

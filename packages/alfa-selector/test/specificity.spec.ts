@@ -3,7 +3,7 @@ import { RNG, test } from "@siteimprove/alfa-test";
 import { Specificity } from "../src/specificity";
 import { parse } from "./parser";
 
-function wrapper(iteration: number, rng: RNG): RNG {
+function wrapper(rng: RNG): RNG {
   // The max value for specificity components is 1024. Picking a "weird"
   // number that is slightly smaller than half to avoid overflows.
   return () => Math.floor(rng() * 487);
