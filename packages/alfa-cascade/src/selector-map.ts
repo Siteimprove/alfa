@@ -329,14 +329,11 @@ export namespace SelectorMap {
 
       // For style rules that are presentational hints, the specificity will
       // always be 0 regardless of the selector.
-      if (StyleRule.isStyleRule(rule) && rule.hint) {
-        this._specificity = 0;
-      }
-
-      // Otherwise, determine the specificity of the selector.
-      else {
-        this._specificity = selector.specificity.value;
-      }
+      // Otherwise, use the specificity of the selector.
+      this._specificity =
+        StyleRule.isStyleRule(rule) && rule.hint
+          ? 0
+          : selector.specificity.value;
     }
 
     public get rule(): Rule {
