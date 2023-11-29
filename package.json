@@ -30,6 +30,7 @@
     "@siteimprove/alfa-toolchain": "workspace:^0.69.0",
     "@types/async": "^3.2.20",
     "@types/node": "^20.5.9",
+    "arkit": "^1.6.4",
     "async": "^3.2.1",
     "execa": "^8.0.0",
     "knip": "^2.33.4",
