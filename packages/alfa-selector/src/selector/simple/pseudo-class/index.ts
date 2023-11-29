@@ -30,6 +30,7 @@ import { OnlyChild } from "./only-child";
 import { OnlyOfType } from "./only-of-type";
 import { Root } from "./root";
 import { Visited } from "./visited";
+import { Where } from "./where";
 
 import { PseudoClassSelector } from "./pseudo-class";
 
@@ -63,7 +64,8 @@ export type PseudoClass =
   | OnlyChild
   | OnlyOfType
   | Root
-  | Visited;
+  | Visited
+  | Where;
 
 /**
  * @public
@@ -94,7 +96,8 @@ export namespace PseudoClass {
     | OnlyChild.JSON
     | OnlyOfType.JSON
     | Root.JSON
-    | Visited.JSON;
+    | Visited.JSON
+    | Where.JSON;
 
   export function isPseudoClass(value: unknown): value is PseudoClass {
     // Note: this is not totally true as we could extend PseudoClassSelector
@@ -132,6 +135,7 @@ export namespace PseudoClass {
       Has.parse(parseSelector),
       Is.parse(parseSelector),
       Not.parse(parseSelector),
+      Where.parse(parseSelector),
     );
   }
 }

@@ -89,3 +89,14 @@ test("Specificity of :has is correctly computed", (t) => {
     t.deepEqual(actual, Specificity.of(a, b, c), selector);
   }
 });
+
+test("Specificity of :where is correctly computed", (t) => {
+  for (const [selector, a, b, c] of [
+    [":where(.foo, #bar.baz)", 0, 0, 0],
+    [".qux:where(em, #foo#bar#baz)", 0, 1, 0],
+  ] as const) {
+    const actual = parse(`${selector}`).specificity;
+
+    t.deepEqual(actual, Specificity.of(a, b, c), selector);
+  }
+});

@@ -49,6 +49,7 @@
     "src/selector/simple/pseudo-class/pseudo-class.ts",
     "src/selector/simple/pseudo-class/root.ts",
     "src/selector/simple/pseudo-class/visited.ts",
+    "src/selector/simple/pseudo-class/where.ts",
     "src/selector/simple/pseudo-element/after.ts",
     "src/selector/simple/pseudo-element/backdrop.ts",
     "src/selector/simple/pseudo-element/before.ts",

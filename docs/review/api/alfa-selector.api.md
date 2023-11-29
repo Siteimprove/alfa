@@ -375,16 +375,17 @@ export namespace List {
 // Warning: (ae-forgotten-export) The symbol "OnlyOfType" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Root" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Visited" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Where" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export type PseudoClass = Active | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited;
+export type PseudoClass = Active | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
 
 // @public (undocumented)
 export namespace PseudoClass {
     // (undocumented)
     export function isPseudoClass(value: unknown): value is PseudoClass;
     // (undocumented)
-    export type JSON = Active.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON;
+    export type JSON = Active.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
     // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
     //
     // (undocumented)
