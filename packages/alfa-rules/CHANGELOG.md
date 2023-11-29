@@ -4,17 +4,17 @@
 
 ### Minor Changes
 
-- **Added:** Accessible name is now recorded in the diagnostics for R15, R39, R41 and R81 ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Added:** Accessible name is now recorded in the diagnostics for R15, R39, R41 and R81 ([#1502](https://github.com/Siteimprove/alfa/pull/1502))
 
-- **Added:** Role is now recorded in the diagnostic for R8 ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Added:** Role is now recorded in the diagnostic for R8 ([#1504](https://github.com/Siteimprove/alfa/pull/1504))
 
-- **Breaking:** Diagnostics `WithPreviousHeading` and `WithNextHeading` have been replaced by `WithOtherHeading`. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Breaking:** Diagnostics `WithPreviousHeading` and `WithNextHeading` have been replaced by `WithOtherHeading`. ([#1505](https://github.com/Siteimprove/alfa/pull/1505))
 
-- **Breaking:** Question `visible-focus-classes`, and question type `string[]` have been removed. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Breaking:** Question `visible-focus-classes`, and question type `string[]` have been removed. ([#1497](https://github.com/Siteimprove/alfa/pull/1497))
 
 ### Patch Changes
 
-- **Fixed:** SIA-R70 ow accepts `<hgroup>`. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Fixed:** SIA-R70 now accepts `<hgroup>`. ([#1506](https://github.com/Siteimprove/alfa/pull/1506))
 
   The element has been re-introduced in the HTML standard, with improved content model.
 

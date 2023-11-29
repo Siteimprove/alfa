@@ -36,7 +36,7 @@
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): SIA-R70 ow accepts `<hgroup>`.
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): SIA-R70 now accepts `<hgroup>`.
 
 - [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0690): The `<hgroup>` element now has an implicit role of `group`.
 
