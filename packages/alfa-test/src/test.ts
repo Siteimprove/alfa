@@ -3,6 +3,7 @@
 import * as assert from "assert";
 
 import { format } from "./format";
+import { Controller, defaultController, RNG, seedableRNG } from "./rng";
 import { Assertions } from "./types";
 
 /**
@@ -19,30 +20,76 @@ const defaultNotifier: Notifier = {
   },
 };
 
+// This is not super robust, but sufficient in our use case.
+// Take care before using it elsewhere.
+function isNotifier(value: unknown): value is Notifier {
+  return typeof value === "object" && value !== null && "error" in value;
+}
+
 /**
  * @public
  */
-export async function test(
+export async function test<T = number>(
   name: string,
-  assertion: (assert: Assertions) => void | Promise<void>,
+  assertion: (
+    assert: Assertions,
+    rng: RNG<T>,
+    seed: number,
+  ) => void | Promise<void>,
+  controller?: Partial<Controller<T>>,
 ): Promise<void>;
 
 /**
  * @internal
  */
-export async function test(
+export async function test<T = number>(
   name: string,
-  assertion: (assert: Assertions) => void | Promise<void>,
+  assertion: (
+    assert: Assertions,
+    rng: RNG<T>,
+    seed: number,
+  ) => void | Promise<void>,
   notifier: Notifier,
+  controller?: Partial<Controller<T>>,
 ): Promise<void>;
 
-export async function test(
+export async function test<T = number>(
   name: string,
-  assertion: (assert: Assertions) => void | Promise<void>,
-  notifier = defaultNotifier,
+  assertion: (
+    assert: Assertions,
+    rng: RNG<T>,
+    seed: number,
+  ) => void | Promise<void>,
+  notifierOrController?: Notifier | Partial<Controller<T>>,
+  controller?: Partial<Controller<T>>,
 ): Promise<void> {
+  const notifier: Notifier = isNotifier(notifierOrController)
+    ? notifierOrController
+    : defaultNotifier;
+  // If the controlled is not overwritten, then T should be number.
+  const fullController = {
+    ...defaultController,
+    ...controller,
+    ...notifierOrController,
+  } as Controller<T>;
+  // "error" may have been copied over from the notifier.
+  if ("error" in fullController) {
+    delete fullController.error;
+  }
+
+  const seed = fullController.seed ?? Math.random();
+  const rng = seedableRNG(seed);
+
   try {
-    await assertion("strict" in assert ? assert.strict : assert);
+    for (let i = 0; i < fullController.iterations; i++) {
+      await assertion(
+        "strict" in assert ? assert.strict : assert,
+        // eta-expansion ensures that the wrapper is evaluated on each call of
+        // the rng, not just once per iteration.
+        () => fullController.wrapper(rng, i)(),
+        seed,
+      );
+    }
   } catch (err) {
     const error = err as Error;
 

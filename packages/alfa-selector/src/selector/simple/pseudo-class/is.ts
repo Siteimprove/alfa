@@ -16,7 +16,7 @@ export class Is extends WithSelector<"is"> {
   }
 
   private constructor(selector: Absolute) {
-    super("is", selector);
+    super("is", selector, selector.specificity);
   }
 
   /** @public (knip) */

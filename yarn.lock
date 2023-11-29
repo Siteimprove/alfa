@@ -1582,6 +1582,7 @@ __metadata:
     "@siteimprove/alfa-css": "workspace:^0.69.0"
     "@siteimprove/alfa-dom": "workspace:^0.69.0"
     "@siteimprove/alfa-equatable": "workspace:^0.69.0"
+    "@siteimprove/alfa-hash": "workspace:^0.69.0"
     "@siteimprove/alfa-iterable": "workspace:^0.69.0"
     "@siteimprove/alfa-json": "workspace:^0.69.0"
     "@siteimprove/alfa-map": "workspace:^0.69.0"

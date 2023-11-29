@@ -7,6 +7,8 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Hash } from '@siteimprove/alfa-hash';
+import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Nth } from '@siteimprove/alfa-css';

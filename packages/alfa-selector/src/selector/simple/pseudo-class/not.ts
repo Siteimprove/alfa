@@ -16,7 +16,7 @@ export class Not extends WithSelector<"not"> {
   }
 
   private constructor(selector: Absolute) {
-    super("not", selector);
+    super("not", selector, selector.specificity);
   }
 
   /** @public (knip) */

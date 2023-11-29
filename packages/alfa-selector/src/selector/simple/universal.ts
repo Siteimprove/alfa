@@ -3,6 +3,8 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { None, type Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Specificity } from "../../specificity";
+
 import { Selector } from "../selector";
 
 import { parseNamespace } from "./parser";
@@ -28,7 +30,7 @@ export class Universal extends Selector<"universal"> {
   private readonly _namespace: Option<string>;
 
   private constructor(namespace: Option<string>) {
-    super("universal");
+    super("universal", Specificity.empty());
     this._namespace = namespace;
   }
 
