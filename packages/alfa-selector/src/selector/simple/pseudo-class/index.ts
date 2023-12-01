@@ -128,7 +128,7 @@ export namespace PseudoClass {
       OnlyOfType.parse,
       Root.parse,
       Visited.parse,
-      NthChild.parse,
+      NthChild.parse(parseSelector),
       NthLastChild.parse,
       NthLastOfType.parse,
       NthOfType.parse,
