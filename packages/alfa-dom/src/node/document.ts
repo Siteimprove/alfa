@@ -1,5 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
@@ -124,6 +126,30 @@ export namespace Document {
     return Trampoline.traverse(json.children ?? [], (child) =>
       Node.fromNode(child, device),
     ).map((children) => Document.of(children, json.style.map(Sheet.from)));
+  }
+
+  export function cloneDocument(
+    document: Document,
+    newElements: Element[],
+    predicate: Predicate<Element>,
+    device?: Device,
+  ): Trampoline<Document> {
+    return Trampoline.traverse(document.children(), (child) => {
+      if (Element.isElement(child) && predicate(child)) {
+        return Trampoline.done(newElements);
+      }
+
+      return Node.cloneNode(child, newElements, predicate, device).map(
+        (node) => [node],
+      );
+    }).map((children) => {
+      return Document.of(
+        Iterable.flatten(children),
+        document.style,
+        document.externalId,
+        document.extraData,
+      );
+    });
   }
 }
 

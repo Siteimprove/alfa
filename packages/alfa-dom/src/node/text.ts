@@ -106,4 +106,8 @@ export namespace Text {
   export function fromText(json: JSON): Trampoline<Text> {
     return Trampoline.done(Text.of(json.data));
   }
+
+  export function cloneText(text: Text) {
+    return Trampoline.done(Text.of(text.data, text.externalId, text.extraData));
+  }
 }

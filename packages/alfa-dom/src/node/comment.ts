@@ -81,4 +81,10 @@ export namespace Comment {
   export function fromComment(json: JSON): Trampoline<Comment> {
     return Trampoline.done(Comment.of(json.data));
   }
+
+  export function cloneComment(comment: Comment): Trampoline<Comment> {
+    return Trampoline.done(
+      Comment.of(comment.data, comment.externalId, comment.extraData),
+    );
+  }
 }

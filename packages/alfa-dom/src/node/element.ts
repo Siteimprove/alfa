@@ -447,6 +447,47 @@ export namespace Element {
     });
   }
 
+  export function cloneElement(
+    element: Element,
+    newElements: Element[],
+    predicate: Predicate<Element>,
+    device?: Device,
+  ): Trampoline<Element> {
+    return Trampoline.traverse(element.children(), (child) => {
+      if (Element.isElement(child) && predicate(child)) {
+        return Trampoline.done(newElements);
+      }
+
+      return Node.cloneNode(child, newElements, predicate, device).map(
+        (node) => [node],
+      );
+    }).map((children) => {
+      const deviceOption = Option.from(device);
+      const clonedElement = Element.of(
+        element.namespace,
+        element.prefix,
+        element.name,
+        element.attributes,
+        Iterable.flatten(children),
+        element.style,
+        deviceOption.flatMap((d) => element.getBoundingBox(d)),
+        deviceOption,
+        element.externalId,
+        element.extraData,
+      );
+
+      if (element.shadow.isSome()) {
+        element._attachShadow(element.shadow.get());
+      }
+
+      if (element.content.isSome()) {
+        element._attachContent(element.content.get());
+      }
+
+      return clonedElement;
+    });
+  }
+
   export const {
     hasAttribute,
     hasBox,
