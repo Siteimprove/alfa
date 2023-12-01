@@ -1,5 +1,10 @@
 import type { Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-option";
+
+import { Context } from "../../../context";
+
+import { type Absolute, Universal } from "../../index";
 
 import { WithIndex } from "./pseudo-class";
 
@@ -9,12 +14,19 @@ const { isElement } = Element;
  * {@link https://drafts.csswg.org/selectors/#nth-child-pseudo}
  */
 export class NthChild extends WithIndex<"nth-child"> {
-  public static of(index: Nth): NthChild {
-    return new NthChild(index);
+  public static of(
+    index: Nth,
+    selector: Absolute = Universal.of(Option.of("*")),
+  ): NthChild {
+    return new NthChild(index, selector);
   }
 
-  private constructor(index: Nth) {
+  private _selector: Absolute;
+
+  private constructor(index: Nth, selector: Absolute) {
     super("nth-child", index);
+
+    this._selector = selector;
   }
 
   /** @public (knip) */
@@ -22,13 +34,14 @@ export class NthChild extends WithIndex<"nth-child"> {
     yield this;
   }
 
-  public matches(element: Element): boolean {
+  public matches(element: Element, context?: Context): boolean {
     const indices = NthChild._indices;
 
     if (!indices.has(element)) {
       element
         .inclusiveSiblings()
         .filter(isElement)
+        .filter((element) => this._selector.matches(element, context))
         .forEach((element, i) => {
           indices.set(element, i + 1);
         });
