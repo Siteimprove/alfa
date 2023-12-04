@@ -5,6 +5,7 @@ import { Maybe, None, Option } from "@siteimprove/alfa-option";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context";
+import { Universal } from "../../index";
 
 import type { Absolute } from "../../index";
 
@@ -20,6 +21,8 @@ export class NthChild extends WithIndexAndSelector<"nth-child"> {
     return new NthChild(index, Maybe.toOption(selector));
   }
 
+  private readonly _indices = new WeakMap<Element, number>();
+
   private constructor(index: Nth, selector: Option<Absolute>) {
     super("nth-child", index, selector);
   }
@@ -30,23 +33,25 @@ export class NthChild extends WithIndexAndSelector<"nth-child"> {
   }
 
   public matches(element: Element, context?: Context): boolean {
-    const indices = NthChild._indices;
-
-    if (!indices.has(element)) {
+    if (!this._indices.has(element)) {
       element
         .inclusiveSiblings()
         .filter(isElement)
         .filter((element) =>
-          this._selector.every((selector) =>
-            selector.matches(element, context),
-          ),
+          this._selector
+            .getOr(Universal.of(Option.of("*")))
+            .matches(element, context),
         )
         .forEach((element, i) => {
-          indices.set(element, i + 1);
+          this._indices.set(element, i + 1);
         });
     }
 
-    return this._index.matches(indices.get(element)!);
+    if (!this._indices.has(element)) {
+      return false;
+    }
+
+    return this._index.matches(this._indices.get(element)!);
   }
 
   public equals(value: NthChild): boolean;

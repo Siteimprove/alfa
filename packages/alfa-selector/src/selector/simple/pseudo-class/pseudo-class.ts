@@ -73,6 +73,11 @@ export namespace PseudoClassSelector {
 export abstract class WithIndex<
   N extends string = string,
 > extends PseudoClassSelector<N> {
+  // For pseudo-classes that do not filter the set of elements, we can use a static
+  // map of sibling positions.
+  // For pseudo-classes that may filter the set of elements, we need this to be
+  // an instance map since two instances may have different extra selector and
+  // set of candidates.
   protected static readonly _indices = new WeakMap<Element, number>();
 
   protected readonly _index: Nth;
