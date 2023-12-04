@@ -473,15 +473,15 @@ export namespace Element {
         ),
         Iterable.flatten(children),
         element.style.map((block) => {
-          const foo = Iterable.map(block.declarations, (declaration) =>
-            Declaration.of(
-              declaration.name,
-              declaration.value,
-              declaration.important,
+          return Block.of(
+            Iterable.map(block.declarations, (declaration) =>
+              Declaration.of(
+                declaration.name,
+                declaration.value,
+                declaration.important,
+              ),
             ),
           );
-
-          return Block.of(foo);
         }),
         deviceOption.flatMap((d) => element.getBoundingBox(d)),
         deviceOption,
