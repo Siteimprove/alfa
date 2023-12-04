@@ -7,6 +7,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../context";
+import { Specificity } from "../specificity";
 
 import type { Absolute } from "./index";
 
@@ -34,7 +35,10 @@ export class List<T extends Item = Item> extends Selector<"list"> {
   private readonly _length: number;
 
   private constructor(selectors: Array<T>) {
-    super("list");
+    super(
+      "list",
+      Specificity.max(...selectors.map((selector) => selector.specificity)),
+    );
     this._selectors = selectors;
     this._length = selectors.length;
   }

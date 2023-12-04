@@ -6,6 +6,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../context";
 import type { Absolute } from "../selector";
+import { Specificity } from "../specificity";
 
 import { Combinator } from "./combinator";
 import { Compound } from "./compound";
@@ -38,7 +39,7 @@ export class Complex extends Selector<"complex"> {
     left: Simple | Compound | Complex,
     right: Simple | Compound,
   ) {
-    super("complex");
+    super("complex", Specificity.sum(left.specificity, right.specificity));
     this._combinator = combinator;
     this._left = left;
     this._right = right;

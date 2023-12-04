@@ -49,6 +49,7 @@
     "src/selector/simple/pseudo-class/pseudo-class.ts",
     "src/selector/simple/pseudo-class/root.ts",
     "src/selector/simple/pseudo-class/visited.ts",
+    "src/selector/simple/pseudo-class/where.ts",
     "src/selector/simple/pseudo-element/after.ts",
     "src/selector/simple/pseudo-element/backdrop.ts",
     "src/selector/simple/pseudo-element/before.ts",
@@ -67,13 +68,15 @@
     "src/selector/simple/pseudo-element/slotted.ts",
     "src/selector/simple/pseudo-element/spelling-error.ts",
     "src/selector/simple/pseudo-element/target-text.ts",
+    "src/specificity.ts",
     "test/parser.ts",
     "test/basic.spec.ts",
     "test/complex.spec.ts",
     "test/compound.spec.ts",
     "test/list.spec.ts",
     "test/pseudo-class.spec.tsx",
-    "test/pseudo-element.spec.ts"
+    "test/pseudo-element.spec.ts",
+    "test/specificity.spec.ts"
   ],
   "references": [
     { "path": "../alfa-array" },
@@ -81,6 +84,7 @@
     { "path": "../alfa-css" },
     { "path": "../alfa-dom" },
     { "path": "../alfa-equatable" },
+    { "path": "../alfa-hash" },
     { "path": "../alfa-iterable" },
     { "path": "../alfa-json" },
     { "path": "../alfa-map" },

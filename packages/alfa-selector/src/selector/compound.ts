@@ -6,6 +6,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import type { Context } from "../context";
+import { Specificity } from "../specificity";
 import type { Absolute } from "./index";
 
 import { Selector } from "./selector";
@@ -27,7 +28,10 @@ export class Compound extends Selector<"compound"> {
   private readonly _length: number;
 
   private constructor(selectors: Array<Simple>) {
-    super("compound");
+    super(
+      "compound",
+      Specificity.sum(...selectors.map((selector) => selector.specificity)),
+    );
     this._selectors = selectors;
     this._length = selectors.length;
   }

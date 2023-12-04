@@ -24,7 +24,7 @@ export class Relative extends Selector<"relative"> {
     combinator: Combinator,
     selector: Simple | Compound | Complex,
   ) {
-    super("relative");
+    super("relative", selector.specificity);
     this._combinator = combinator;
     this._selector = selector;
   }

@@ -2,6 +2,8 @@ import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Specificity } from "../../specificity";
+
 import { WithName } from "../selector";
 
 const { map } = Parser;
@@ -17,7 +19,7 @@ export class Id extends WithName<"id"> {
   }
 
   private constructor(name: string) {
-    super("id", name);
+    super("id", name, Specificity.of(1, 0, 0));
   }
 
   public matches(element: Element): boolean {

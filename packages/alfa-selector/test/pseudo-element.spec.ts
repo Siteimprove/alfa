@@ -6,11 +6,13 @@ test(".parse() parses a pseudo-element selector", (t) => {
   t.deepEqual(serialize("::before"), {
     type: "pseudo-element",
     name: "before",
+    specificity: { a: 0, b: 0, c: 1 },
   });
 
   t.deepEqual(serialize(":before"), {
     type: "pseudo-element",
     name: "before",
+    specificity: { a: 0, b: 0, c: 1 },
   });
 });
 
@@ -24,8 +26,13 @@ test(`.parse() parses ::cue both as functional and non-functional selector`, (t)
     name: "cue",
     selector: {
       type: "some",
-      value: { type: "universal", namespace: null },
+      value: {
+        type: "universal",
+        namespace: null,
+        specificity: { a: 0, b: 0, c: 0 },
+      },
     },
+    specificity: { a: 0, b: 0, c: 1 },
   });
 
   t.deepEqual(serialize("::cue"), {
@@ -34,6 +41,7 @@ test(`.parse() parses ::cue both as functional and non-functional selector`, (t)
     selector: {
       type: "none",
     },
+    specificity: { a: 0, b: 0, c: 1 },
   });
 });
 
