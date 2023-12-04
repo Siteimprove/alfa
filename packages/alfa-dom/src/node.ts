@@ -382,64 +382,64 @@ export namespace Node {
 
   export function clone(
     node: Element,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Element;
 
   export function clone(
     node: Attribute,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Attribute;
 
   export function clone(
     node: Text,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Text;
 
   export function clone(
     node: Comment,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Comment;
 
   export function clone(
     node: Document,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Document;
 
   export function clone(
     node: Type,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Document;
 
   export function clone(
     node: Fragment,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Fragment;
 
   export function clone(
     node: Node,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Node;
 
   export function clone(
     node: Node,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements?: Element[],
+    predicate?: Predicate<Element>,
     device?: Device,
   ): Node {
     return cloneNode(node, newElements, predicate, device).run();
@@ -447,8 +447,8 @@ export namespace Node {
 
   export function cloneNode(
     node: Node,
-    newElements: Element[],
-    predicate: Predicate<Element>,
+    newElements: Element[] = [],
+    predicate: Predicate<Element> = () => false,
     device?: Device,
   ): Trampoline<Node> {
     if (Element.isElement(node)) {

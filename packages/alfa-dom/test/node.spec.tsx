@@ -1,7 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 
+import { Device } from "@siteimprove/alfa-device";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { h } from "../h";
-import { Node } from "../src";
+import { Namespace, Node } from "../src";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
@@ -63,7 +65,31 @@ test(`#tabOrder() correctly handles shadow roots with slotted elements after the
   t.deepEqual([...div.tabOrder()], [b, a]);
 });
 
-test(`Node.clone() correctly clones or replaces elements based on predicate`, (t) => {
+test(`Node.clone() creates new instance with same value`, (t) => {
+  const device = Device.standard();
+  const doc = h.document(
+    [
+      h.element(
+        "p",
+        [h.attribute("title", "foo")],
+        [h.text("hello")],
+        [],
+        Namespace.HTML,
+        Rectangle.of(1, 2, 3, 4),
+        device,
+      ),
+    ],
+    [h.sheet([h.rule.style("p", { background: "green" })])],
+    "bar",
+    { extraStuff: "baz" },
+  );
+
+  const clonedDoc = Node.clone(doc);
+
+  t.deepEqual(clonedDoc.toJSON(), doc.toJSON());
+});
+
+test(`Node.clone() correctly replaces elements based on predicate`, (t) => {
   const foo = <div externalId="foo">Foo</div>;
   const bar = <div externalId="bar">Bar</div>;
 

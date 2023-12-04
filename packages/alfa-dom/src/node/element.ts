@@ -16,6 +16,7 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
+import { Declaration } from "@siteimprove/alfa-dom";
 import * as helpers from "./element/input-type";
 import * as predicate from "./element/predicate";
 
@@ -467,9 +468,21 @@ export namespace Element {
         element.namespace,
         element.prefix,
         element.name,
-        element.attributes,
+        element.attributes.map((attribute) =>
+          Attribute.cloneAttribute(attribute).run(),
+        ),
         Iterable.flatten(children),
-        element.style,
+        element.style.map((block) => {
+          const foo = Iterable.map(block.declarations, (declaration) =>
+            Declaration.of(
+              declaration.name,
+              declaration.value,
+              declaration.important,
+            ),
+          );
+
+          return Block.of(foo);
+        }),
         deviceOption.flatMap((d) => element.getBoundingBox(d)),
         deviceOption,
         element.externalId,
