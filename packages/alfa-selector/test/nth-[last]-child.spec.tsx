@@ -73,7 +73,7 @@ test("#matches() checks if an element matches an :nth-child of selector", (t) =>
     {a}
     Hello
     {b}
-    <span>Not a div</span>
+    <span>Not a p</span>
     {c}
     {d}
   </div>;

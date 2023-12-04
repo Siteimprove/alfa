@@ -225,6 +225,7 @@ export abstract class WithIndexAndSelector<
     this._selector = selector;
   }
 
+  /** @public (knip) */
   public get selector(): Option<Absolute> {
     return this._selector;
   }

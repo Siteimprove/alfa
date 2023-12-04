@@ -54,7 +54,7 @@ export class NthChild extends WithIndexAndSelector<"nth-child"> {
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof NthChild && value._index.equals(this._index);
+    return value instanceof NthChild && super.equals(value);
   }
 
   public toJSON(): NthChild.JSON {
