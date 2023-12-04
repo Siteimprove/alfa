@@ -5,6 +5,8 @@ import { Maybe, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Context } from "../../../context";
 
 import { type Absolute, Universal } from "../../index";
@@ -23,18 +25,19 @@ export class NthChild extends WithIndex<"nth-child"> {
     index: Nth,
     selector: Maybe<Absolute> = Universal.of(Option.of("*")),
   ): NthChild {
-    return new NthChild(
-      index,
-      Maybe.toOption(selector).getOr(Universal.of(Option.of("*"))),
-    );
+    return new NthChild(index, Maybe.toOption(selector));
   }
 
-  private _selector: Absolute;
+  private _selector: Option<Absolute>;
 
-  private constructor(index: Nth, selector: Absolute) {
+  private constructor(index: Nth, selector: Option<Absolute>) {
     super("nth-child", index);
 
     this._selector = selector;
+  }
+
+  public get selector(): Option<Absolute> {
+    return this._selector;
   }
 
   /** @public (knip) */
@@ -49,7 +52,11 @@ export class NthChild extends WithIndex<"nth-child"> {
       element
         .inclusiveSiblings()
         .filter(isElement)
-        .filter((element) => this._selector.matches(element, context))
+        .filter((element) =>
+          this._selector.every((selector) =>
+            selector.matches(element, context),
+          ),
+        )
         .forEach((element, i) => {
           indices.set(element, i + 1);
         });
@@ -69,12 +76,15 @@ export class NthChild extends WithIndex<"nth-child"> {
   public toJSON(): NthChild.JSON {
     return {
       ...super.toJSON(),
+      ...(this._selector.isSome() ? { selector: this._selector.toJSON() } : {}),
     };
   }
 }
 
 export namespace NthChild {
-  export interface JSON extends WithIndex.JSON<"nth-child"> {}
+  export interface JSON extends WithIndex.JSON<"nth-child"> {
+    selector?: Absolute.JSON;
+  }
 
   const parseNth = left(
     Nth.parse,
