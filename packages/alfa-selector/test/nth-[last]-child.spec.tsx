@@ -27,7 +27,15 @@ test(".parse() accepts the `of selector` syntax", (t) => {
       name: "div",
       specificity: { a: 0, b: 0, c: 1 },
     },
-    specificity: { a: 0, b: 1, c: 0 },
+    specificity: { a: 0, b: 1, c: 1 },
+  });
+});
+
+test(".parse() correctly computes the specificity of :nth-child of", (t) => {
+  t.deepEqual(serialize(":nth-child(even of li, .item)").specificity, {
+    a: 0,
+    b: 2,
+    c: 0,
   });
 });
 
@@ -43,6 +51,29 @@ test("#matches() checks if an element matches an :nth-child selector", (t) => {
     {a}
     Hello
     {b}
+    {c}
+    {d}
+  </div>;
+
+  t.equal(selector.matches(a), true);
+  t.equal(selector.matches(b), false);
+  t.equal(selector.matches(c), true);
+  t.equal(selector.matches(d), false);
+});
+
+test("#matches() checks if an element matches an :nth-child of selector", (t) => {
+  const selector = parse(":nth-child(odd of p)");
+
+  const a = <p />;
+  const b = <p />;
+  const c = <p />;
+  const d = <p />;
+
+  <div>
+    {a}
+    Hello
+    {b}
+    <span>Not a div</span>
     {c}
     {d}
   </div>;
