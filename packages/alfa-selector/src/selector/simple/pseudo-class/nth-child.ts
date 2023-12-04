@@ -76,7 +76,9 @@ export class NthChild extends WithIndex<"nth-child"> {
   public toJSON(): NthChild.JSON {
     return {
       ...super.toJSON(),
-      ...(this._selector.isSome() ? { selector: this._selector.toJSON() } : {}),
+      ...(this._selector.isSome()
+        ? { selector: this._selector.get().toJSON() }
+        : {}),
     };
   }
 }

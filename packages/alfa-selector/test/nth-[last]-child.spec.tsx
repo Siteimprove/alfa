@@ -21,6 +21,12 @@ test(".parse() accepts the `of selector` syntax", (t) => {
       step: 2,
       offset: 1,
     },
+    selector: {
+      type: "type",
+      namespace: null,
+      name: "div",
+      specificity: { a: 0, b: 0, c: 1 },
+    },
     specificity: { a: 0, b: 1, c: 0 },
   });
 });
