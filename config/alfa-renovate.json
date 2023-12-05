@@ -21,8 +21,8 @@
       "groupName": "Other deps (major)",
       "matchPackagePatterns": ["*"],
       "excludePackagePrefixes": ["@siteimprove/alfa"],
-      "schedule": ["before 3am on Monday"],
-      },
+      "schedule": ["before 3am on Monday"]
+    },
     {
       "description": "Run patch/minor update and automerge them if tests pass.",
       "groupName": "Other deps (minor/patch)",
