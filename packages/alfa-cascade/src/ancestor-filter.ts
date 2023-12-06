@@ -1,5 +1,8 @@
 import { Element } from "@siteimprove/alfa-dom";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Class, Id, Selector, Type } from "@siteimprove/alfa-selector";
+
+import * as json from "@siteimprove/alfa-json";
 
 /**
  * The ancestor filter is a data structure used for optimising selector matching
@@ -18,7 +21,7 @@ import { Class, Id, Selector, Type } from "@siteimprove/alfa-selector";
  * type, in order to evict these from the filter when the last element with a
  * given ID, class, or type is removed from the filter.
  *
- * For example, consider the following tree:
+ * For example, consider the following DOM tree:
  *
  * section#content
  * +-- blockquote
@@ -43,7 +46,7 @@ import { Class, Id, Selector, Type } from "@siteimprove/alfa-selector";
  *
  * @internal
  */
-export class AncestorFilter {
+export class AncestorFilter implements Serializable<AncestorFilter.JSON> {
   public static empty(): AncestorFilter {
     return new AncestorFilter();
   }
@@ -79,19 +82,39 @@ export class AncestorFilter {
   }
 
   public matches(selector: Selector): boolean {
-    if (selector instanceof Id) {
+    if (Id.isId(selector)) {
       return this._ids.has(selector.name);
     }
 
-    if (selector instanceof Class) {
+    if (Class.isClass(selector)) {
       return this._classes.has(selector.name);
     }
 
-    if (selector instanceof Type) {
+    if (Type.isType(selector)) {
       return this._types.has(selector.name);
     }
 
     return false;
+  }
+
+  public toJSON(): AncestorFilter.JSON {
+    return {
+      ids: this._ids.toJSON(),
+      classes: this._classes.toJSON(),
+      types: this._types.toJSON(),
+    };
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace AncestorFilter {
+  export interface JSON {
+    [key: string]: json.JSON;
+    ids: Bucket.JSON;
+    classes: Bucket.JSON;
+    types: Bucket.JSON;
   }
 }
 
@@ -106,8 +129,10 @@ export class AncestorFilter {
  * as we only ever compute cascade once for every context, and native maps are
  * actually much faster than any bloom filter we might be able to cook up in
  * plain JavaScript.
+ *
+ * @internal
  */
-class Bucket {
+export class Bucket implements Serializable<Bucket.JSON> {
   public static empty(): Bucket {
     return new Bucket();
   }
@@ -143,4 +168,15 @@ class Bucket {
       this._entries.set(entry, count - 1);
     }
   }
+
+  public toJSON(): Bucket.JSON {
+    return [...this._entries];
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace Bucket {
+  export type JSON = Array<[string, number]>;
 }
