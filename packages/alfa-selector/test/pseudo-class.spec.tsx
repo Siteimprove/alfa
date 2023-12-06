@@ -27,6 +27,7 @@ test(".parse() parses a functional pseudo-class selector", (t) => {
       type: "class",
       name: "foo",
       specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
     },
     specificity: { a: 0, b: 1, c: 0 },
   });
