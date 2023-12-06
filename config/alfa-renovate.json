@@ -7,14 +7,24 @@
   ],
   "reviewers": ["team:alfa-owners"],
   "dependencyDashboard": true,
+  "allowedPostUpgradeCommands": ["^CI=false yarn dedupe$"],
+  "postUpgradeTasks": {
+    "description": "Dedupe yarn.lock after updating packages.",
+    "task": "CI=false yarn dedupe",
+    "executionMode": "branch",
+    "fileMatch": ["yarn.lock"]
+  },
+
   "packageRules": [
     {
+      "description": "Run major update for non-Alfa packages.These are never automerged and require human approval.",
       "groupName": "Other deps (major)",
       "matchPackagePatterns": ["*"],
       "excludePackagePrefixes": ["@siteimprove/alfa"],
       "schedule": ["before 3am on Monday"]
     },
     {
+      "description": "Run patch/minor update and automerge them if tests pass.",
       "groupName": "Other deps (minor/patch)",
       "matchPackagePatterns": ["*"],
       "excludePackagePrefixes": ["@siteimprove/alfa"],

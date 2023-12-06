@@ -38,4 +38,4 @@ jobs:
         uses: siteimprove/pr-command/check-run/run@v2.4
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
-          token: ${{ secrets.TEST_TOKEN }}
+          token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
