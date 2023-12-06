@@ -1,9 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { h } from "../h";
-import { Namespace, Node } from "../src";
+import { Node } from "../src";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
@@ -69,15 +68,9 @@ test(`Node.clone() creates new instance with same value`, (t) => {
   const device = Device.standard();
   const doc = h.document(
     [
-      h.element(
-        "p",
-        [h.attribute("title", "foo")],
-        [h.text("hello")],
-        [],
-        Namespace.HTML,
-        Rectangle.of(1, 2, 3, 4),
-        device,
-      ),
+      <p title="foo" box={{ device, x: 1, y: 2, width: 3, height: 4 }}>
+        hello
+      </p>,
     ],
     [h.sheet([h.rule.style("p", { background: "green" })])],
     "bar",
@@ -86,7 +79,38 @@ test(`Node.clone() creates new instance with same value`, (t) => {
 
   const clonedDoc = Node.clone(doc);
 
+  t.notEqual(clonedDoc, doc);
+
   t.deepEqual(clonedDoc.toJSON(), doc.toJSON());
+});
+
+test(`Node.clone() clones shadow`, (t) => {
+  const div = <div>hello</div>;
+  const shadow = h.shadow([<div>foo</div>]);
+
+  div._attachShadow(shadow);
+
+  const clonedDiv = Node.clone(div);
+
+  t.notEqual(clonedDiv.shadow.getUnsafe(), shadow);
+
+  t.deepEqual(
+    div.shadow.getUnsafe().toJSON(),
+    clonedDiv.shadow.getUnsafe().toJSON(),
+  );
+});
+
+test(`Node.clone() clones content`, (t) => {
+  const div = <div>hello</div>;
+  const content = h.document([<div>foo</div>]);
+
+  div._attachContent(content);
+
+  const clonedDiv = Node.clone(div);
+
+  t.notEqual(clonedDiv.content.getUnsafe(), content);
+
+  t.deepEqual(div.toJSON(), clonedDiv.toJSON());
 });
 
 test(`Node.clone() correctly replaces elements based on predicate`, (t) => {
