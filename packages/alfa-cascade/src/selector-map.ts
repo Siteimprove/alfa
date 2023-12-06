@@ -202,16 +202,14 @@ export namespace SelectorMap {
     ): void => {
       const node = Node.of(rule, selector, declarations, origin, order);
 
-      const keySelector = getKeySelector(selector);
+      const keySelector = selector.key;
 
-      if (keySelector === null) {
+      if (!keySelector.isSome()) {
         other.push(node);
-      } else if (isId(keySelector)) {
-        ids.add(keySelector.name, node);
-      } else if (isClass(keySelector)) {
-        classes.add(keySelector.name, node);
       } else {
-        types.add(keySelector.name, node);
+        const key = keySelector.get();
+        const buckets = { id: ids, class: classes, type: types };
+        buckets[key.type].add(key.name, node);
       }
     };
 
@@ -422,30 +420,6 @@ export namespace SelectorMap {
   export namespace Bucket {
     export type JSON = Array<[string, Array<SelectorMap.Node.JSON>]>;
   }
-}
-
-/**
- * Given a selector, get the right-most ID, class, or type selector, i.e. the
- * key selector. If the right-most selector is a compound selector, then the
- * left-most ID, class, or type selector of the compound selector is returned.
- */
-function getKeySelector(selector: Selector): Id | Class | Type | null {
-  if (isId(selector) || isClass(selector) || isType(selector)) {
-    return selector;
-  }
-
-  if (isCompound(selector)) {
-    return Iterable.find(
-      Iterable.map(selector.selectors, getKeySelector),
-      (selector) => selector !== null,
-    ).getOr(null);
-  }
-
-  if (isComplex(selector)) {
-    return getKeySelector(selector.right);
-  }
-
-  return null;
 }
 
 /**
