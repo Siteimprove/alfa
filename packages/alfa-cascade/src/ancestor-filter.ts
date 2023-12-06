@@ -6,20 +6,23 @@ import * as json from "@siteimprove/alfa-json";
 
 /**
  * The ancestor filter is a data structure used for optimising selector matching
- * in the case of descendant selectors. When traversing down through the DOM
- * tree during selector matching, the ancestor filter stores information about
- * the ancestor elements that are found up the path from the element that is
- * currently being visited. Given an element and a descendant selector, we can
- * therefore quickly determine if the selector might match an ancestor of the
- * current element.
+ * in the case of descendant selectors.
  *
- * The information stored about elements includes their ID, classes, and type
- * which are what the majority of selectors make use of. A bucket exists for
- * each of these and whenever an element is added to the filter, its associated
- * ID, classes, and type are added to the three buckets. The buckets also keep
- * count of how many elements in the current path match a given ID, class, or
- * type, in order to evict these from the filter when the last element with a
- * given ID, class, or type is removed from the filter.
+ * @remarks
+ * When traversing down through the DOM tree during selector matching, the
+ * ancestor filter stores information about the ancestor elements that are
+ * found up the path from the element that is currently being visited.
+ * Given an element and a descendant selector, we can therefore quickly
+ * determine if the selector might match an ancestor of the current element.
+ *
+ * The ancestor filter simply count the number of each ID, class, and type
+ * amongst the path walked so far. When a descendant selector is encountered, we
+ * can quickly see if the ancestor filter contains the ID, class, or type of the
+ * ancestor bit, without walking up the full tree again.
+ *
+ * We need to remember exact count rather than just existence because the
+ * initial build of the cascade traverses the tree in depth-first order and
+ * therefore needs to be able to *remove* item from the filter when going up.
  *
  * For example, consider the following DOM tree:
  *
@@ -28,11 +31,12 @@ import * as json from "@siteimprove/alfa-json";
  * +-- p.highlight
  *     +-- b
  *
- * If we assume that we're currently visiting the `<b>` element, the ancestor
- * filter would contain the `section` and `p` types, the `#content` ID,
- * and the `.highlight` class. Given a selector `main b`, we can therefore
- * reject that the selector would match `<b>` as the ancestor filter does not
- * contain an entry for the type `main`.
+ * For the `<b>` element, the ancestor filter would be:
+ * { ids: [["content", 1]],
+ *   classes: [["highlight", 1]],
+ *   types: [["p", 1], ["section", 1]]}
+ * Given a selector `main b`, we can therefore reject that the selector would
+ * match the `<b>` as the ancestor filter does not contain the type `main`.
  *
  * NB: None of the operations of the ancestor filter are idempotent to avoid
  * keeping track of more information than strictly necessary. This is however
