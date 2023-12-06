@@ -12,9 +12,16 @@ test(".parse() parses a single descendant selector", (t) => {
       name: "div",
       namespace: null,
       specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
     },
-    right: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    right: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     specificity: { a: 0, b: 1, c: 1 },
+    key: ".foo",
   });
 });
 
@@ -27,14 +34,17 @@ test(".parse() parses a single descendant selector with a right-hand type select
       name: "div",
       namespace: null,
       specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
     },
     right: {
       type: "type",
       name: "span",
       namespace: null,
       specificity: { a: 0, b: 0, c: 1 },
+      key: "span",
     },
     specificity: { a: 0, b: 0, c: 2 },
+    key: "span",
   });
 });
 
@@ -50,12 +60,25 @@ test(".parse() parses a double descendant selector", (t) => {
         name: "div",
         namespace: null,
         specificity: { a: 0, b: 0, c: 1 },
+        key: "div",
       },
-      right: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+      right: {
+        type: "class",
+        name: "foo",
+        specificity: { a: 0, b: 1, c: 0 },
+        key: ".foo",
+      },
       specificity: { a: 0, b: 1, c: 1 },
+      key: ".foo",
     },
-    right: { type: "id", name: "bar", specificity: { a: 1, b: 0, c: 0 } },
+    right: {
+      type: "id",
+      name: "bar",
+      specificity: { a: 1, b: 0, c: 0 },
+      key: "#bar",
+    },
     specificity: { a: 1, b: 1, c: 1 },
+    key: "#bar",
   });
 });
 
@@ -68,9 +91,16 @@ test(".parse() parses a direct descendant selector", (t) => {
       name: "div",
       namespace: null,
       specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
     },
-    right: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    right: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     specificity: { a: 0, b: 1, c: 1 },
+    key: ".foo",
   });
 });
 
@@ -83,9 +113,16 @@ test(".parse() parses a sibling selector", (t) => {
       name: "div",
       namespace: null,
       specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
     },
-    right: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    right: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     specificity: { a: 0, b: 1, c: 1 },
+    key: ".foo",
   });
 });
 
@@ -98,9 +135,16 @@ test(".parse() parses a direct sibling selector", (t) => {
       name: "div",
       namespace: null,
       specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
     },
-    right: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    right: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     specificity: { a: 0, b: 1, c: 1 },
+    key: ".foo",
   });
 });
 
@@ -108,7 +152,12 @@ test(".parse() parses a compound selector relative to a class selector", (t) => 
   t.deepEqual(serialize(".foo div.bar"), {
     type: "complex",
     combinator: Combinator.Descendant,
-    left: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    left: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     right: {
       type: "compound",
       selectors: [
@@ -117,12 +166,20 @@ test(".parse() parses a compound selector relative to a class selector", (t) => 
           name: "div",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "div",
         },
-        { type: "class", name: "bar", specificity: { a: 0, b: 1, c: 0 } },
+        {
+          type: "class",
+          name: "bar",
+          specificity: { a: 0, b: 1, c: 0 },
+          key: ".bar",
+        },
       ],
       specificity: { a: 0, b: 1, c: 1 },
+      key: "div",
     },
     specificity: { a: 0, b: 2, c: 1 },
+    key: "div",
   });
 });
 
@@ -138,10 +195,17 @@ test(".parse() parses a compound selector relative to a compound selector", (t) 
           name: "span",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "span",
         },
-        { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+        {
+          type: "class",
+          name: "foo",
+          specificity: { a: 0, b: 1, c: 0 },
+          key: ".foo",
+        },
       ],
       specificity: { a: 0, b: 1, c: 1 },
+      key: "span",
     },
     right: {
       type: "compound",
@@ -151,12 +215,20 @@ test(".parse() parses a compound selector relative to a compound selector", (t) 
           name: "div",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "div",
         },
-        { type: "class", name: "bar", specificity: { a: 0, b: 1, c: 0 } },
+        {
+          type: "class",
+          name: "bar",
+          specificity: { a: 0, b: 1, c: 0 },
+          key: ".bar",
+        },
       ],
       specificity: { a: 0, b: 1, c: 1 },
+      key: "div",
     },
     specificity: { a: 0, b: 2, c: 2 },
+    key: "div",
   });
 });
 
@@ -172,17 +244,26 @@ test(".parse() parses a descendant selector relative to a sibling selector", (t)
         name: "div",
         namespace: null,
         specificity: { a: 0, b: 0, c: 1 },
+        key: "div",
       },
       right: {
         type: "type",
         name: "span",
         namespace: null,
         specificity: { a: 0, b: 0, c: 1 },
+        key: "span",
       },
       specificity: { a: 0, b: 0, c: 2 },
+      key: "span",
     },
-    right: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    right: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     specificity: { a: 0, b: 1, c: 2 },
+    key: ".foo",
   });
 });
 
@@ -195,6 +276,7 @@ test(".parse() parses an attribute selector when part of a descendant selector",
       name: "div",
       namespace: null,
       specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
     },
     right: {
       type: "attribute",
@@ -217,6 +299,7 @@ test(".parse() parses an attribute selector when part of a compound selector rel
       type: "class",
       name: "foo",
       specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
     },
     right: {
       type: "compound",
@@ -226,6 +309,7 @@ test(".parse() parses an attribute selector when part of a compound selector rel
           name: "div",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "div",
         },
         {
           type: "attribute",
@@ -238,8 +322,10 @@ test(".parse() parses an attribute selector when part of a compound selector rel
         },
       ],
       specificity: { a: 0, b: 1, c: 1 },
+      key: "div",
     },
     specificity: { a: 0, b: 2, c: 1 },
+    key: "div",
   });
 });
 
@@ -252,6 +338,7 @@ test(".parse() parses a pseudo-element selector when part of a descendant select
       name: "div",
       namespace: null,
       specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
     },
     right: {
       type: "pseudo-element",
@@ -266,7 +353,12 @@ test(".parse() parses a pseudo-element selector when part of a compound selector
   t.deepEqual(serialize(".foo div::before"), {
     type: "complex",
     combinator: Combinator.Descendant,
-    left: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    left: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     right: {
       type: "compound",
       selectors: [
@@ -275,6 +367,7 @@ test(".parse() parses a pseudo-element selector when part of a compound selector
           name: "div",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "div",
         },
         {
           type: "pseudo-element",
@@ -283,8 +376,10 @@ test(".parse() parses a pseudo-element selector when part of a compound selector
         },
       ],
       specificity: { a: 0, b: 0, c: 2 },
+      key: "div",
     },
     specificity: { a: 0, b: 1, c: 2 },
+    key: "div",
   });
 });
 
@@ -292,7 +387,12 @@ test(".parse() parses a pseudo-class selector when part of a compound selector r
   t.deepEqual(serialize(".foo div:hover"), {
     type: "complex",
     combinator: Combinator.Descendant,
-    left: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    left: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     right: {
       type: "compound",
       selectors: [
@@ -301,6 +401,7 @@ test(".parse() parses a pseudo-class selector when part of a compound selector r
           name: "div",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "div",
         },
         {
           type: "pseudo-class",
@@ -309,8 +410,10 @@ test(".parse() parses a pseudo-class selector when part of a compound selector r
         },
       ],
       specificity: { a: 0, b: 1, c: 1 },
+      key: "div",
     },
     specificity: { a: 0, b: 2, c: 1 },
+    key: "div",
   });
 });
 
@@ -318,7 +421,12 @@ test(".parse() parses a compound type, class, and pseudo-class selector relative
   t.deepEqual(serialize(".foo div.bar:hover"), {
     type: "complex",
     combinator: Combinator.Descendant,
-    left: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    left: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     right: {
       type: "compound",
       selectors: [
@@ -327,8 +435,14 @@ test(".parse() parses a compound type, class, and pseudo-class selector relative
           name: "div",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "div",
         },
-        { type: "class", name: "bar", specificity: { a: 0, b: 1, c: 0 } },
+        {
+          type: "class",
+          name: "bar",
+          specificity: { a: 0, b: 1, c: 0 },
+          key: ".bar",
+        },
         {
           type: "pseudo-class",
           name: "hover",
@@ -336,8 +450,10 @@ test(".parse() parses a compound type, class, and pseudo-class selector relative
         },
       ],
       specificity: { a: 0, b: 2, c: 1 },
+      key: "div",
     },
     specificity: { a: 0, b: 3, c: 1 },
+    key: "div",
   });
 });
 
@@ -345,7 +461,12 @@ test(".parse() parses a simple selector relative to a compound selector", (t) =>
   t.deepEqual(serialize(".foo > div.bar"), {
     type: "complex",
     combinator: Combinator.DirectDescendant,
-    left: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
+    left: {
+      type: "class",
+      name: "foo",
+      specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
+    },
     right: {
       type: "compound",
       selectors: [
@@ -354,12 +475,20 @@ test(".parse() parses a simple selector relative to a compound selector", (t) =>
           name: "div",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "div",
         },
-        { type: "class", name: "bar", specificity: { a: 0, b: 1, c: 0 } },
+        {
+          type: "class",
+          name: "bar",
+          specificity: { a: 0, b: 1, c: 0 },
+          key: ".bar",
+        },
       ],
       specificity: { a: 0, b: 1, c: 1 },
+      key: "div",
     },
     specificity: { a: 0, b: 2, c: 1 },
+    key: "div",
   });
 });
 
@@ -370,9 +499,20 @@ test(".parse() parses a relative selector relative to a compound selector", (t) 
     left: {
       type: "complex",
       combinator: Combinator.DirectDescendant,
-      left: { type: "class", name: "foo", specificity: { a: 0, b: 1, c: 0 } },
-      right: { type: "class", name: "bar", specificity: { a: 0, b: 1, c: 0 } },
+      left: {
+        type: "class",
+        name: "foo",
+        specificity: { a: 0, b: 1, c: 0 },
+        key: ".foo",
+      },
+      right: {
+        type: "class",
+        name: "bar",
+        specificity: { a: 0, b: 1, c: 0 },
+        key: ".bar",
+      },
       specificity: { a: 0, b: 2, c: 0 },
+      key: ".bar",
     },
     right: {
       type: "compound",
@@ -382,11 +522,19 @@ test(".parse() parses a relative selector relative to a compound selector", (t) 
           name: "div",
           namespace: null,
           specificity: { a: 0, b: 0, c: 1 },
+          key: "div",
         },
-        { type: "class", name: "baz", specificity: { a: 0, b: 1, c: 0 } },
+        {
+          type: "class",
+          name: "baz",
+          specificity: { a: 0, b: 1, c: 0 },
+          key: ".baz",
+        },
       ],
       specificity: { a: 0, b: 1, c: 1 },
+      key: "div",
     },
     specificity: { a: 0, b: 3, c: 1 },
+    key: "div",
   });
 });

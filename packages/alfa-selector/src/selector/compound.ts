@@ -2,6 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -10,7 +11,7 @@ import { Specificity } from "../specificity";
 import type { Absolute } from "./index";
 
 import { Selector } from "./selector";
-import { Simple } from "./simple";
+import { type Class, type Id, Simple, type Type } from "./simple";
 
 const { map, oneOrMore } = Parser;
 
@@ -26,6 +27,7 @@ export class Compound extends Selector<"compound"> {
 
   private readonly _selectors: Array<Simple>;
   private readonly _length: number;
+  protected readonly _key: Option<Id | Class | Type>;
 
   private constructor(selectors: Array<Simple>) {
     super(
@@ -34,6 +36,8 @@ export class Compound extends Selector<"compound"> {
     );
     this._selectors = selectors;
     this._length = selectors.length;
+
+    this._key = selectors[0]?.key ?? None;
   }
 
   public get selectors(): Iterable<Simple> {

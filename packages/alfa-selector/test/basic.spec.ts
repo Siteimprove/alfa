@@ -9,6 +9,7 @@ test(".parse() parses a type selector", (t) => {
     name: "div",
     namespace: null,
     specificity: { a: 0, b: 0, c: 1 },
+    key: "div",
   });
 });
 
@@ -18,6 +19,7 @@ test(".parse() parses an uppercase type selector", (t) => {
     name: "DIV",
     namespace: null,
     specificity: { a: 0, b: 0, c: 1 },
+    key: "DIV",
   });
 });
 
@@ -27,6 +29,7 @@ test(".parse() parses a type selector with a namespace", (t) => {
     name: "a",
     namespace: "svg",
     specificity: { a: 0, b: 0, c: 1 },
+    key: "svg|a",
   });
 });
 
@@ -36,6 +39,7 @@ test(".parse() parses a type selector with an empty namespace", (t) => {
     name: "a",
     namespace: "",
     specificity: { a: 0, b: 0, c: 1 },
+    key: "|a",
   });
 });
 
@@ -45,6 +49,7 @@ test(".parse() parses a type selector with the universal namespace", (t) => {
     name: "a",
     namespace: "*",
     specificity: { a: 0, b: 0, c: 1 },
+    key: "*|a",
   });
 });
 
@@ -77,6 +82,7 @@ test(".parse() parses a class selector", (t) => {
     type: "class",
     name: "foo",
     specificity: { a: 0, b: 1, c: 0 },
+    key: ".foo",
   });
 });
 
@@ -85,6 +91,7 @@ test(".parse() parses an ID selector", (t) => {
     type: "id",
     name: "foo",
     specificity: { a: 1, b: 0, c: 0 },
+    key: "#foo",
   });
 });
 

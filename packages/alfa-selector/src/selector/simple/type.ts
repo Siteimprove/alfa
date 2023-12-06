@@ -21,10 +21,13 @@ export class Type extends WithName<"type"> {
   }
 
   private readonly _namespace: Option<string>;
+  protected readonly _key: Option<Type>;
 
   private constructor(namespace: Option<string>, name: string) {
     super("type", name, Specificity.of(0, 0, 1));
     this._namespace = namespace;
+
+    this._key = Option.of(this);
   }
 
   public get namespace(): Option<string> {

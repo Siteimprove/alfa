@@ -6,7 +6,6 @@ import { AncestorFilter, Bucket } from "../src/ancestor-filter";
 
 test("Buckets behave as expected", (t) => {
   const bucket = Bucket.empty();
-
   t.deepEqual(bucket.toJSON(), []);
   t(!bucket.has("a"));
   t(!bucket.has("b"));
