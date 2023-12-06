@@ -449,53 +449,53 @@ export namespace Element {
   }
 
   export function cloneElement(
-    element: Element,
     options: Node.ElementReplacementOptions,
     device?: Device,
-  ): Trampoline<Element> {
-    return Trampoline.traverse(element.children(), (child) => {
-      if (Element.isElement(child) && options.predicate(child)) {
-        return Trampoline.done(Array.from(options.newElements));
-      }
+  ): (element: Element) => Trampoline<Element> {
+    return (element) =>
+      Trampoline.traverse(element.children(), (child) => {
+        if (Element.isElement(child) && options.predicate(child)) {
+          return Trampoline.done(Array.from(options.newElements));
+        }
 
-      return Node.cloneNode(child, options, device).map((node) => [node]);
-    }).map((children) => {
-      const deviceOption = Option.from(device);
-      const clonedElement = Element.of(
-        element.namespace,
-        element.prefix,
-        element.name,
-        element.attributes.map((attribute) =>
-          Attribute.cloneAttribute(attribute).run(),
-        ),
-        Iterable.flatten(children),
-        element.style.map((block) => {
-          return Block.of(
-            Iterable.map(block.declarations, (declaration) =>
-              Declaration.of(
-                declaration.name,
-                declaration.value,
-                declaration.important,
+        return Node.cloneNode(child, options, device).map((node) => [node]);
+      }).map((children) => {
+        const deviceOption = Option.from(device);
+        const clonedElement = Element.of(
+          element.namespace,
+          element.prefix,
+          element.name,
+          element.attributes.map((attribute) =>
+            Attribute.cloneAttribute(attribute).run(),
+          ),
+          Iterable.flatten(children),
+          element.style.map((block) => {
+            return Block.of(
+              Iterable.map(block.declarations, (declaration) =>
+                Declaration.of(
+                  declaration.name,
+                  declaration.value,
+                  declaration.important,
+                ),
               ),
-            ),
-          );
-        }),
-        deviceOption.flatMap((d) => element.getBoundingBox(d)),
-        deviceOption,
-        element.externalId,
-        element.extraData,
-      );
+            );
+          }),
+          deviceOption.flatMap((d) => element.getBoundingBox(d)),
+          deviceOption,
+          element.externalId,
+          element.extraData,
+        );
 
-      if (element.shadow.isSome()) {
-        element._attachShadow(element.shadow.get());
-      }
+        if (element.shadow.isSome()) {
+          element._attachShadow(element.shadow.get());
+        }
 
-      if (element.content.isSome()) {
-        element._attachContent(element.content.get());
-      }
+        if (element.content.isSome()) {
+          element._attachContent(element.content.get());
+        }
 
-      return clonedElement;
-    });
+        return clonedElement;
+      });
   }
 
   export const {

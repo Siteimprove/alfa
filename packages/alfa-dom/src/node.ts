@@ -24,6 +24,7 @@ import {
 } from ".";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Selective } from "@siteimprove/alfa-selective";
 import * as predicate from "./node/predicate";
 import * as traversal from "./node/traversal";
 
@@ -449,35 +450,18 @@ export namespace Node {
     },
     device?: Device,
   ): Trampoline<Node> {
-    if (Element.isElement(node)) {
-      return Element.cloneElement(node, options, device);
-    }
-
-    if (Attribute.isAttribute(node)) {
-      return Attribute.cloneAttribute(node);
-    }
-
-    if (Text.isText(node)) {
-      return Text.cloneText(node);
-    }
-
-    if (Comment.isComment(node)) {
-      return Comment.cloneComment(node);
-    }
-
-    if (Document.isDocument(node)) {
-      return Document.cloneDocument(node, options, device);
-    }
-
-    if (Type.isType(node)) {
-      return Type.cloneType(node);
-    }
-
-    if (Fragment.isFragment(node)) {
-      return Fragment.cloneFragment(node, options, device);
-    }
-
-    throw new Error(`Unexpected node of type: ${node.type}`);
+    return Selective.of(node)
+      .if(Element.isElement, Element.cloneElement(options, device))
+      .if(Attribute.isAttribute, Attribute.cloneAttribute)
+      .if(Text.isText, Text.cloneText)
+      .if(Comment.isComment, Comment.cloneComment)
+      .if(Document.isDocument, Document.cloneDocument(options, device))
+      .if(Type.isType, Type.cloneType)
+      .if(Fragment.isFragment, Fragment.cloneFragment(options, device))
+      .else(() => {
+        throw new Error(`Unexpected node of type: ${node.type}`);
+      })
+      .get();
   }
 
   export const { getNodesBetween } = traversal;

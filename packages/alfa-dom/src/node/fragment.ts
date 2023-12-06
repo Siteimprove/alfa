@@ -75,19 +75,19 @@ export namespace Fragment {
   }
 
   export function cloneFragment(
-    fragment: Fragment,
     options: Node.ElementReplacementOptions,
     device?: Device,
-  ): Trampoline<Fragment> {
-    return Trampoline.traverse(fragment.children(), (child) => {
-      if (Element.isElement(child) && options.predicate(child)) {
-        return Trampoline.done(Array.from(options.newElements));
-      }
+  ): (fragment: Fragment) => Trampoline<Fragment> {
+    return (fragment) =>
+      Trampoline.traverse(fragment.children(), (child) => {
+        if (Element.isElement(child) && options.predicate(child)) {
+          return Trampoline.done(Array.from(options.newElements));
+        }
 
-      return Node.cloneNode(child, options, device).map((node) => [node]);
-    }).map((children) => {
-      return Fragment.of(Iterable.flatten(children));
-    });
+        return Node.cloneNode(child, options, device).map((node) => [node]);
+      }).map((children) => {
+        return Fragment.of(Iterable.flatten(children));
+      });
   }
 }
 

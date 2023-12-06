@@ -129,24 +129,24 @@ export namespace Document {
   }
 
   export function cloneDocument(
-    document: Document,
     options: Node.ElementReplacementOptions,
     device?: Device,
-  ): Trampoline<Document> {
-    return Trampoline.traverse(document.children(), (child) => {
-      if (Element.isElement(child) && options.predicate(child)) {
-        return Trampoline.done(Array.from(options.newElements));
-      }
+  ): (document: Document) => Trampoline<Document> {
+    return (document) =>
+      Trampoline.traverse(document.children(), (child) => {
+        if (Element.isElement(child) && options.predicate(child)) {
+          return Trampoline.done(Array.from(options.newElements));
+        }
 
-      return Node.cloneNode(child, options, device).map((node) => [node]);
-    }).map((children) => {
-      return Document.of(
-        Iterable.flatten(children),
-        document.style,
-        document.externalId,
-        document.extraData,
-      );
-    });
+        return Node.cloneNode(child, options, device).map((node) => [node]);
+      }).map((children) => {
+        return Document.of(
+          Iterable.flatten(children),
+          document.style,
+          document.externalId,
+          document.extraData,
+        );
+      });
   }
 }
 
