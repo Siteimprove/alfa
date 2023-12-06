@@ -100,11 +100,10 @@ test(`Node.clone() correctly replaces elements based on predicate`, (t) => {
     <span externalId="foo2">Foo2</span>,
   ];
 
-  const cloned = Node.clone(
-    doc,
+  const cloned = Node.clone(doc, {
+    predicate: (element) => element.externalId === "foo",
     newElements,
-    (element) => element.externalId == "foo",
-  );
+  });
 
   t.deepEqual(cloned.toJSON(), {
     style: [],

@@ -380,79 +380,77 @@ export namespace Node {
     }
   }
 
+  export interface ElementReplacementOptions {
+    predicate: Predicate<Element>;
+    newElements: Iterable<Element>;
+  }
+
   export function clone(
     node: Element,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Element;
 
   export function clone(
     node: Attribute,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Attribute;
 
   export function clone(
     node: Text,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Text;
 
   export function clone(
     node: Comment,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Comment;
 
   export function clone(
     node: Document,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Document;
 
   export function clone(
     node: Type,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Document;
 
   export function clone(
     node: Fragment,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Fragment;
 
   export function clone(
     node: Node,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Node;
 
   export function clone(
     node: Node,
-    newElements?: Iterable<Element>,
-    predicate?: Predicate<Element>,
+    options?: ElementReplacementOptions,
     device?: Device,
   ): Node {
-    return cloneNode(node, newElements, predicate, device).run();
+    return cloneNode(node, options, device).run();
   }
 
   export function cloneNode(
     node: Node,
-    newElements: Iterable<Element> = [],
-    predicate: Predicate<Element> = () => false,
+    options: ElementReplacementOptions = {
+      predicate: () => false,
+      newElements: [],
+    },
     device?: Device,
   ): Trampoline<Node> {
     if (Element.isElement(node)) {
-      return Element.cloneElement(node, newElements, predicate, device);
+      return Element.cloneElement(node, options, device);
     }
 
     if (Attribute.isAttribute(node)) {
@@ -468,7 +466,7 @@ export namespace Node {
     }
 
     if (Document.isDocument(node)) {
-      return Document.cloneDocument(node, newElements, predicate, device);
+      return Document.cloneDocument(node, options, device);
     }
 
     if (Type.isType(node)) {
@@ -476,7 +474,7 @@ export namespace Node {
     }
 
     if (Fragment.isFragment(node)) {
-      return Fragment.cloneFragment(node, newElements, predicate, device);
+      return Fragment.cloneFragment(node, options, device);
     }
 
     throw new Error(`Unexpected node of type: ${node.type}`);

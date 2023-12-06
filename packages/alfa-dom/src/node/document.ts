@@ -2,7 +2,6 @@ import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
@@ -131,18 +130,15 @@ export namespace Document {
 
   export function cloneDocument(
     document: Document,
-    newElements: Iterable<Element>,
-    predicate: Predicate<Element>,
+    options: Node.ElementReplacementOptions,
     device?: Device,
   ): Trampoline<Document> {
     return Trampoline.traverse(document.children(), (child) => {
-      if (Element.isElement(child) && predicate(child)) {
-        return Trampoline.done(Array.from(newElements));
+      if (Element.isElement(child) && options.predicate(child)) {
+        return Trampoline.done(Array.from(options.newElements));
       }
 
-      return Node.cloneNode(child, newElements, predicate, device).map(
-        (node) => [node],
-      );
+      return Node.cloneNode(child, options, device).map((node) => [node]);
     }).map((children) => {
       return Document.of(
         Iterable.flatten(children),
