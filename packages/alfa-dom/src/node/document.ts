@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -130,13 +131,13 @@ export namespace Document {
 
   export function cloneDocument(
     document: Document,
-    newElements: Element[],
+    newElements: Iterable<Element>,
     predicate: Predicate<Element>,
     device?: Device,
   ): Trampoline<Document> {
     return Trampoline.traverse(document.children(), (child) => {
       if (Element.isElement(child) && predicate(child)) {
-        return Trampoline.done(newElements);
+        return Trampoline.done(Array.from(newElements));
       }
 
       return Node.cloneNode(child, newElements, predicate, device).map(

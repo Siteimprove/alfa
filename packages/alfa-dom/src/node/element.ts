@@ -450,13 +450,13 @@ export namespace Element {
 
   export function cloneElement(
     element: Element,
-    newElements: Element[],
+    newElements: Iterable<Element>,
     predicate: Predicate<Element>,
     device?: Device,
   ): Trampoline<Element> {
     return Trampoline.traverse(element.children(), (child) => {
       if (Element.isElement(child) && predicate(child)) {
-        return Trampoline.done(newElements);
+        return Trampoline.done(Array.from(newElements));
       }
 
       return Node.cloneNode(child, newElements, predicate, device).map(

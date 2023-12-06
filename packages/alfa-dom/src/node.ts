@@ -382,63 +382,63 @@ export namespace Node {
 
   export function clone(
     node: Element,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Element;
 
   export function clone(
     node: Attribute,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Attribute;
 
   export function clone(
     node: Text,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Text;
 
   export function clone(
     node: Comment,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Comment;
 
   export function clone(
     node: Document,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Document;
 
   export function clone(
     node: Type,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Document;
 
   export function clone(
     node: Fragment,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Fragment;
 
   export function clone(
     node: Node,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Node;
 
   export function clone(
     node: Node,
-    newElements?: Element[],
+    newElements?: Iterable<Element>,
     predicate?: Predicate<Element>,
     device?: Device,
   ): Node {
@@ -447,7 +447,7 @@ export namespace Node {
 
   export function cloneNode(
     node: Node,
-    newElements: Element[] = [],
+    newElements: Iterable<Element> = [],
     predicate: Predicate<Element> = () => false,
     device?: Device,
   ): Trampoline<Node> {
