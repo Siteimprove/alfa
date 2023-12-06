@@ -4,48 +4,49 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context";
 import type { Absolute } from "../../../selector";
+import { Specificity } from "../../../specificity";
 
 import { WithSelector } from "./pseudo-class";
 
 /**
- * {@link https://drafts.csswg.org/selectors/#negation-pseudo}
+ * {@link https://drafts.csswg.org/selectors/#zero-matches}
  */
-export class Not extends WithSelector<"not"> {
-  public static of(selector: Absolute): Not {
-    return new Not(selector);
+export class Where extends WithSelector<"where"> {
+  public static of(selector: Absolute): Where {
+    return new Where(selector);
   }
 
   private constructor(selector: Absolute) {
-    super("not", selector, selector.specificity);
+    super("where", selector, Specificity.of(0, 0, 0));
   }
 
   /** @public (knip) */
-  public *[Symbol.iterator](): Iterator<Not> {
+  public *[Symbol.iterator](): Iterator<Where> {
     yield this;
   }
 
   public matches(element: Element, context?: Context): boolean {
-    return !this._selector.matches(element, context);
+    return this._selector.matches(element, context);
   }
 
-  public equals(value: Not): boolean;
+  public equals(value: Where): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof Not && value._selector.equals(this._selector);
+    return value instanceof Where && value._selector.equals(this._selector);
   }
 
-  public toJSON(): Not.JSON {
+  public toJSON(): Where.JSON {
     return {
       ...super.toJSON(),
     };
   }
 }
 
-export namespace Not {
-  export interface JSON extends WithSelector.JSON<"not"> {}
+export namespace Where {
+  export interface JSON extends WithSelector.JSON<"where"> {}
 
   export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
-    WithSelector.parseWithSelector("not", parseSelector, Not.of);
+    WithSelector.parseWithSelector("where", parseSelector, Where.of);
 }

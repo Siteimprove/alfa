@@ -6,6 +6,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import * as json from "@siteimprove/alfa-json";
 
 import type { Context } from "../context";
+import { Specificity } from "../specificity";
 
 import type { Complex } from "./complex";
 import type { Compound } from "./compound";
@@ -22,14 +23,20 @@ export abstract class Selector<T extends string = string>
     Serializable
 {
   private readonly _type: T;
+  private readonly _specificity: Specificity;
 
-  protected constructor(type: T) {
+  protected constructor(type: T, specificity: Specificity) {
     this._type = type;
+    this._specificity = specificity;
   }
 
   /** @public (knip) */
   public get type(): T {
     return this._type;
+  }
+
+  public get specificity(): Specificity {
+    return this._specificity;
   }
 
   /**
@@ -42,7 +49,11 @@ export abstract class Selector<T extends string = string>
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof Selector && value._type === this._type;
+    return (
+      value instanceof Selector &&
+      value._type === this._type &&
+      value._specificity.equals(this._specificity)
+    );
   }
 
   /** @public (knip) */
@@ -53,6 +64,7 @@ export abstract class Selector<T extends string = string>
   public toJSON(): Selector.JSON<T> {
     return {
       type: this._type,
+      specificity: this._specificity.toJSON(),
     };
   }
 }
@@ -62,6 +74,7 @@ export namespace Selector {
     [key: string]: json.JSON;
 
     type: T;
+    specificity: Specificity.JSON;
   }
 }
 
@@ -79,8 +92,8 @@ export abstract class WithName<
   N extends string = string,
 > extends Selector<T> {
   protected readonly _name: N;
-  protected constructor(type: T, name: N) {
-    super(type);
+  protected constructor(type: T, name: N, specificity: Specificity) {
+    super(type, specificity);
     this._name = name;
   }
 

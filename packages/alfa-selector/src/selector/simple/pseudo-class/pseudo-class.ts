@@ -9,6 +9,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute } from "../../../selector";
+import { Specificity } from "../../../specificity";
 
 import { WithName } from "../../selector";
 
@@ -21,8 +22,11 @@ const { parseColon } = Token;
 export abstract class PseudoClassSelector<
   N extends string = string,
 > extends WithName<"pseudo-class", N> {
-  protected constructor(name: N) {
-    super("pseudo-class", name);
+  // Some pseudo-class manipulate specificity, so we cannot just set it
+  // to (0, 1, 0) for all and must allow for overwriting it.
+  // https://www.w3.org/TR/selectors/#specificity
+  protected constructor(name: N, specificity?: Specificity) {
+    super("pseudo-class", name, specificity ?? Specificity.of(0, 1, 0));
   }
 
   public equals(value: PseudoClassSelector): boolean;
@@ -133,8 +137,8 @@ export abstract class WithSelector<
 > extends PseudoClassSelector<N> {
   protected readonly _selector: Absolute;
 
-  protected constructor(name: N, selector: Absolute) {
-    super(name);
+  protected constructor(name: N, selector: Absolute, specificity: Specificity) {
+    super(name, specificity);
     this._selector = selector;
   }
 
