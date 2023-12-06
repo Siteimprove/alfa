@@ -16,15 +16,12 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import {
-  Attribute,
   Class,
   Combinator,
   Complex,
   Compound,
   Context,
   Id,
-  PseudoClass,
-  PseudoElement,
   Selector,
   Type,
 } from "@siteimprove/alfa-selector";
@@ -37,13 +34,10 @@ import { AncestorFilter } from "./ancestor-filter";
 const { equals, property } = Predicate;
 const { and } = Refinement;
 
-const { isAttribute } = Attribute;
 const { isClass } = Class;
 const { isComplex } = Complex;
 const { isCompound } = Compound;
 const { isId } = Id;
-const { isPseudoClass } = PseudoClass;
-const { isPseudoElement } = PseudoElement;
 const { isType } = Type;
 
 const isDescendantSelector = and(
