@@ -109,6 +109,8 @@ export class Class extends WithName<"class"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    protected readonly _key: Option<Class>;
+    // (undocumented)
     matches(element: Element): boolean;
     // (undocumented)
     static of(name: string): Class;
@@ -160,6 +162,8 @@ export class Complex extends Selector_2<"complex"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    protected readonly _key: Option<Id | Class | Type>;
+    // (undocumented)
     get left(): Simple | Compound | Complex;
     // (undocumented)
     matches(element: Element, context?: Context): boolean;
@@ -187,7 +191,7 @@ export namespace Complex {
         right: Simple.JSON | Compound.JSON;
     }
     const // @internal (undocumented)
-    parseComplex: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Simple | Compound | Complex, string, []>;
+    parseComplex: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Compound | Simple | Complex, string, []>;
 }
 
 // @public (undocumented)
@@ -198,6 +202,8 @@ export class Compound extends Selector_2<"compound"> {
     equals(value: Compound): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    // (undocumented)
+    protected readonly _key: Option<Id | Class | Type>;
     // (undocumented)
     get length(): number;
     // (undocumented)
@@ -222,7 +228,7 @@ export namespace Compound {
         selectors: Array_2<Simple.JSON>;
     }
     const // @internal (undocumented)
-    parseCompound: (parseSelector: () => Parser<Slice<Token>, Absolute, string>) => Parser<Slice<Token>, Simple | Compound, string, []>;
+    parseCompound: (parseSelector: () => Parser<Slice<Token>, Absolute, string>) => Parser<Slice<Token>, Compound | Simple, string, []>;
 }
 
 // @public (undocumented)
@@ -295,6 +301,8 @@ export class Id extends WithName<"id"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    protected readonly _key: Option<Id>;
+    // (undocumented)
     matches(element: Element): boolean;
     // (undocumented)
     static of(name: string): Id;
@@ -347,7 +355,7 @@ export namespace List {
         selectors: Array_2<Serializable.ToJSON<T>>;
     }
     const // @internal (undocumented)
-    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, List<Simple | Compound | Complex>, string, []>;
+    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, List<Compound | Simple | Complex>, string, []>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Active" needs to be exported by the entry point index.d.ts
@@ -493,6 +501,8 @@ export class Type extends WithName<"type"> {
     equals(value: Type): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    // (undocumented)
+    protected readonly _key: Option<Type>;
     // (undocumented)
     matches(element: Element): boolean;
     // (undocumented)

@@ -32,9 +32,9 @@ import * as json from "@siteimprove/alfa-json";
  *     +-- b
  *
  * For the `<b>` element, the ancestor filter would be:
- * { ids: [["content", 1]],
+ * \{ ids: [["content", 1]],
  *   classes: [["highlight", 1]],
- *   types: [["p", 1], ["section", 1]]}
+ *   types: [["p", 1], ["section", 1]]\}
  * Given a selector `main b`, we can therefore reject that the selector would
  * match the `<b>` as the ancestor filter does not contain the type `main`.
  *
