@@ -386,48 +386,97 @@ export namespace Node {
     newElements: Iterable<Element>;
   }
 
+  /**
+   * Creates a new `Element` instance with the same value as the original and deeply referentially non-equal.
+   * Optionally replaces child elements based on a predicate.
+   *
+   * @remarks
+   * We currently have no good way of cloning `Element#extraData` due to the type being `any` hence it is discarded when cloning.
+   */
   export function clone(
     node: Element,
     options?: ElementReplacementOptions,
     device?: Device,
   ): Element;
 
+  /**
+   * Creates a new `Attribute` instance with the same value as the original and referentially non-equal.
+   *
+   * @remarks
+   * We currently have no good way of cloning `Attribute#extraData` due to the type being `any` hence it is discarded when cloning.
+   */
   export function clone(
     node: Attribute,
     options?: ElementReplacementOptions,
     device?: Device,
   ): Attribute;
 
+  /**
+   * Creates a new `Text` instance with the same value as the original and referentially non-equal.
+   *
+   * @remarks
+   * We currently have no good way of cloning `Text#extraData` due to the type being `any` hence it is discarded when cloning.
+   */
   export function clone(
     node: Text,
     options?: ElementReplacementOptions,
     device?: Device,
   ): Text;
 
+  /**
+   * Creates a new `Comment` instance with the same value as the original and referentially non-equal.
+   *
+   * @remarks
+   * We currently have no good way of cloning `Comment#extraData` due to the type being `any` hence it is discarded when cloning.
+   */
   export function clone(
     node: Comment,
     options?: ElementReplacementOptions,
     device?: Device,
   ): Comment;
 
+  /**
+   * Creates a new `Document` instance with the same value as the original and deeply referentially non-equal.
+   *
+   * @remarks
+   * We currently have no good way of cloning `Document#extraData` due to the type being `any` hence it is discarded when cloning.
+   */
   export function clone(
     node: Document,
     options?: ElementReplacementOptions,
     device?: Device,
   ): Document;
 
+  /**
+   * Creates a new `Type` instance with the same value as the original and referentially non-equal.
+   *
+   * @remarks
+   * We currently have no good way of cloning `Type#extraData` due to the type being `any` hence it is discarded when cloning.
+   */
   export function clone(
     node: Type,
     options?: ElementReplacementOptions,
     device?: Device,
   ): Document;
 
+  /**
+   * Creates a new `Fragment` instance with the same value as the original and deeply referentially non-equal.
+   *
+   * @remarks
+   * We currently have no good way of cloning `Fragment#extraData` due to the type being `any` hence it is discarded when cloning.
+   */
   export function clone(
     node: Fragment,
     options?: ElementReplacementOptions,
     device?: Device,
   ): Fragment;
 
+  /**
+   * Creates a new `Node` instance with the same value as the original and deeply referentially non-equal.
+   *
+   * @remarks
+   * We currently have no good way of cloning `Node#extraData` due to the type being `any` hence it is discarded when cloning.
+   */
   export function clone(
     node: Node,
     options?: ElementReplacementOptions,
@@ -442,6 +491,9 @@ export namespace Node {
     return cloneNode(node, options, device).run();
   }
 
+  /**
+   * @internal
+   */
   export function cloneNode(
     node: Node,
     options: ElementReplacementOptions = {

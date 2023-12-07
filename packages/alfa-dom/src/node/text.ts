@@ -107,7 +107,10 @@ export namespace Text {
     return Trampoline.done(Text.of(json.data));
   }
 
+  /**
+   * @internal
+   */
   export function cloneText(text: Text) {
-    return Trampoline.done(Text.of(text.data, text.externalId, text.extraData));
+    return Trampoline.done(Text.of(text.data, text.externalId));
   }
 }

@@ -448,6 +448,9 @@ export namespace Element {
     });
   }
 
+  /**
+   * @internal
+   */
   export function cloneElement(
     options: Node.ElementReplacementOptions,
     device?: Device,
@@ -481,7 +484,6 @@ export namespace Element {
           deviceOption.flatMap((d) => element.getBoundingBox(d)),
           deviceOption,
           element.externalId,
-          element.extraData,
         );
 
         if (element.shadow.isSome()) {

@@ -128,6 +128,9 @@ export namespace Document {
     ).map((children) => Document.of(children, json.style.map(Sheet.from)));
   }
 
+  /**
+   * @internal
+   */
   export function cloneDocument(
     options: Node.ElementReplacementOptions,
     device?: Device,
@@ -144,7 +147,6 @@ export namespace Document {
           Iterable.flatten(children),
           document.style,
           document.externalId,
-          document.extraData,
         );
       });
   }

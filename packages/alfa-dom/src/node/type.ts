@@ -97,17 +97,14 @@ export namespace Type {
     );
   }
 
+  /**
+   * @internal
+   */
   export function cloneType<N extends string = string>(
     type: Type<N>,
   ): Trampoline<Type<N>> {
     return Trampoline.done(
-      Type.of(
-        type.name,
-        type.publicId,
-        type.systemId,
-        type.externalId,
-        type.extraData,
-      ),
+      Type.of(type.name, type.publicId, type.systemId, type.externalId),
     );
   }
 }

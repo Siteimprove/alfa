@@ -213,6 +213,9 @@ export namespace Attribute {
     );
   }
 
+  /**
+   * @internal
+   */
   export function cloneAttribute<N extends string = string>(
     attribute: Attribute<N>,
   ): Trampoline<Attribute<N | Lowercase<N>>> {
@@ -223,7 +226,6 @@ export namespace Attribute {
         attribute.name,
         attribute.value,
         attribute.externalId,
-        attribute.extraData,
       ),
     );
   }

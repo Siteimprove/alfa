@@ -74,6 +74,9 @@ export namespace Fragment {
     ).map((children) => Fragment.of(children));
   }
 
+  /**
+   * @internal
+   */
   export function cloneFragment(
     options: Node.ElementReplacementOptions,
     device?: Device,
@@ -86,7 +89,7 @@ export namespace Fragment {
 
         return Node.cloneNode(child, options, device).map((node) => [node]);
       }).map((children) => {
-        return Fragment.of(Iterable.flatten(children));
+        return Fragment.of(Iterable.flatten(children), fragment.externalId);
       });
   }
 }
