@@ -20,6 +20,7 @@ import {
   Document,
   Element,
   Fragment,
+  Shadow,
   Slot,
   Text,
   Type,
@@ -481,6 +482,20 @@ export namespace Node {
   ): Fragment;
 
   /**
+   * Creates a new `Shadow` instance with the same value as the original and deeply referentially non-equal.
+   * Optionally replaces child elements based on a predicate.
+   *
+   * @remarks
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   */
+  export function clone(
+    node: Shadow,
+    options?: ElementReplacementOptions,
+    device?: Device,
+  ): Shadow;
+
+  /**
    * Creates a new `Node` instance with the same value as the original and deeply referentially non-equal.
    * Optionally replaces child elements based on a predicate.
    *
@@ -521,6 +536,7 @@ export namespace Node {
       .if(Document.isDocument, Document.cloneDocument(options, device))
       .if(Type.isType, Type.cloneType)
       .if(Fragment.isFragment, Fragment.cloneFragment(options, device))
+      .if(Shadow.isShadow, Shadow.cloneShadow(options, device))
       .else(() => {
         throw new Error(`Unexpected node of type: ${node.type}`);
       })

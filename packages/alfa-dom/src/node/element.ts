@@ -468,7 +468,9 @@ export namespace Element {
           element.namespace,
           element.prefix,
           element.name,
-          element.attributes.map((attribute) => Attribute.clone(attribute)),
+          element.attributes.map((attribute) =>
+            Attribute.clone(attribute, options, device),
+          ),
           Iterable.flatten(children),
           element.style.map((block) => {
             return Block.of(
@@ -488,21 +490,13 @@ export namespace Element {
 
         if (element.shadow.isSome()) {
           const shadow = element.shadow.get();
-          clonedElement._attachShadow(
-            Shadow.of(
-              shadow
-                .children()
-                .map((child) => Node.clone(child, options, device)),
-              shadow.style,
-              shadow.mode,
-              shadow.externalId,
-              shadow.extraData,
-            ),
-          );
+          clonedElement._attachShadow(Shadow.clone(shadow, options, device));
         }
 
         if (element.content.isSome()) {
-          clonedElement._attachContent(Document.clone(element.content.get()));
+          clonedElement._attachContent(
+            Document.clone(element.content.get(), options, device),
+          );
         }
 
         return clonedElement;

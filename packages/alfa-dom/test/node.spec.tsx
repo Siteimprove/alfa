@@ -85,10 +85,8 @@ test(`Node.clone() creates new instance with same value`, (t) => {
 });
 
 test(`Node.clone() clones shadow`, (t) => {
-  const div = <div>hello</div>;
   const shadow = h.shadow([<div>foo</div>]);
-
-  div._attachShadow(shadow);
+  const div = <div>{shadow}</div>;
 
   const clonedDiv = Node.clone(div);
 
@@ -101,8 +99,8 @@ test(`Node.clone() clones shadow`, (t) => {
 });
 
 test(`Node.clone() clones content`, (t) => {
-  const div = <div>hello</div>;
   const content = h.document([<div>foo</div>]);
+  const div = <div>{content}</div>;
 
   div._attachContent(content);
 
