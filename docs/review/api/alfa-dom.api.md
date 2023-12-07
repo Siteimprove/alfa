@@ -774,6 +774,7 @@ export namespace Node {
     const fullTree: Traversal;
     const composedNested: Traversal;
     export function clone(node: Fragment, options?: ElementReplacementOptions, device?: Device): Fragment;
+    export function clone(node: Shadow, options?: ElementReplacementOptions, device?: Device): Shadow;
     export function clone(node: Node, options?: ElementReplacementOptions, device?: Device): Node;
     // @internal (undocumented)
     export function cloneNode(node: Node, options?: ElementReplacementOptions, device?: Device): Trampoline<Node>;
@@ -983,11 +984,11 @@ export class Shadow extends Node<"shadow"> {
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
+    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    get style(): Iterable<Sheet>;
+    get style(): Iterable_2<Sheet>;
     // (undocumented)
     toJSON(): Shadow.JSON;
     // (undocumented)
@@ -996,6 +997,8 @@ export class Shadow extends Node<"shadow"> {
 
 // @public (undocumented)
 export namespace Shadow {
+    // @internal (undocumented)
+    export function cloneShadow(options: Node.ElementReplacementOptions, device?: Device): (shadow: Shadow) => Trampoline<Shadow>;
     // @internal (undocumented)
     export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow>;
     // (undocumented)

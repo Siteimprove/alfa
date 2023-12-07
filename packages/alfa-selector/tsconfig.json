@@ -74,6 +74,7 @@
     "test/complex.spec.ts",
     "test/compound.spec.ts",
     "test/list.spec.ts",
+    "test/nth-[last]-child.spec.tsx",
     "test/pseudo-class.spec.tsx",
     "test/pseudo-element.spec.ts",
     "test/specificity.spec.ts"
