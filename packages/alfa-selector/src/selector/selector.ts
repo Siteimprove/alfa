@@ -71,7 +71,7 @@ export abstract class Selector<T extends string = string>
 
 export namespace Selector {
   export interface JSON<T extends string = string> {
-    [key: string]: json.JSON;
+    [key: string]: json.JSON | undefined;
 
     type: T;
     specificity: Specificity.JSON;

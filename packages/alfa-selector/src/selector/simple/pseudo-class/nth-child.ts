@@ -1,20 +1,30 @@
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
+import { Maybe, None, Option } from "@siteimprove/alfa-option";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { WithIndex } from "./pseudo-class";
+import type { Context } from "../../../context";
+import { Universal } from "../../index";
+
+import type { Absolute } from "../../index";
+
+import { WithIndexAndSelector } from "./pseudo-class";
 
 const { isElement } = Element;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#nth-child-pseudo}
  */
-export class NthChild extends WithIndex<"nth-child"> {
-  public static of(index: Nth): NthChild {
-    return new NthChild(index);
+export class NthChild extends WithIndexAndSelector<"nth-child"> {
+  public static of(index: Nth, selector: Maybe<Absolute> = None): NthChild {
+    return new NthChild(index, Maybe.toOption(selector));
   }
 
-  private constructor(index: Nth) {
-    super("nth-child", index);
+  private readonly _indices = new WeakMap<Element, number>();
+
+  private constructor(index: Nth, selector: Option<Absolute>) {
+    super("nth-child", index, selector);
   }
 
   /** @public (knip) */
@@ -22,19 +32,26 @@ export class NthChild extends WithIndex<"nth-child"> {
     yield this;
   }
 
-  public matches(element: Element): boolean {
-    const indices = NthChild._indices;
-
-    if (!indices.has(element)) {
+  public matches(element: Element, context?: Context): boolean {
+    if (!this._indices.has(element)) {
       element
         .inclusiveSiblings()
         .filter(isElement)
+        .filter((element) =>
+          this._selector
+            .getOr(Universal.of(Option.of("*")))
+            .matches(element, context),
+        )
         .forEach((element, i) => {
-          indices.set(element, i + 1);
+          this._indices.set(element, i + 1);
         });
     }
 
-    return this._index.matches(indices.get(element)!);
+    if (!this._indices.has(element)) {
+      return false;
+    }
+
+    return this._index.matches(this._indices.get(element)!);
   }
 
   public equals(value: NthChild): boolean;
@@ -42,18 +59,21 @@ export class NthChild extends WithIndex<"nth-child"> {
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return value instanceof NthChild && value._index.equals(this._index);
+    return value instanceof NthChild && super.equals(value);
   }
 
   public toJSON(): NthChild.JSON {
-    return {
-      ...super.toJSON(),
-    };
+    return super.toJSON();
   }
 }
 
 export namespace NthChild {
-  export interface JSON extends WithIndex.JSON<"nth-child"> {}
+  export interface JSON extends WithIndexAndSelector.JSON<"nth-child"> {}
 
-  export const parse = WithIndex.parseWithIndex("nth-child", NthChild.of);
+  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+    WithIndexAndSelector.parseWithIndexAndSelector(
+      "nth-child",
+      parseSelector,
+      NthChild.of,
+    );
 }

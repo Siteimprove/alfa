@@ -5,16 +5,17 @@ import {
   Token,
 } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "../../../selector";
+import type { Absolute } from "../../index";
 import { Specificity } from "../../../specificity";
 
 import { WithName } from "../../selector";
 
-const { end, left, map, right } = Parser;
-const { parseColon } = Token;
+const { delimited, end, left, map, option, pair, right } = Parser;
+const { parseColon, parseIdent, parseWhitespace } = Token;
 
 /**
  * @internal
@@ -72,12 +73,17 @@ export namespace PseudoClassSelector {
 export abstract class WithIndex<
   N extends string = string,
 > extends PseudoClassSelector<N> {
+  // For pseudo-classes that do not filter the set of elements, we can use a static
+  // map of sibling positions.
+  // For pseudo-classes that may filter the set of elements, we need this to be
+  // an instance map since two instances may have different extra selector and
+  // set of candidates.
   protected static readonly _indices = new WeakMap<Element, number>();
 
   protected readonly _index: Nth;
 
-  protected constructor(name: N, nth: Nth) {
-    super(name);
+  protected constructor(name: N, nth: Nth, specificity?: Specificity) {
+    super(name, specificity);
 
     this._index = nth;
   }
@@ -102,6 +108,11 @@ export abstract class WithIndex<
   }
 }
 
+const parseNth = left(
+  Nth.parse,
+  end((token) => `Unexpected token ${token}`),
+);
+
 /**
  * @internal
  */
@@ -111,13 +122,12 @@ export namespace WithIndex {
     index: Nth.JSON;
   }
 
-  const parseNth = left(
-    Nth.parse,
-    end((token) => `Unexpected token ${token}`),
-  );
-
   /**
    * Parses a functional pseudo-class accepting a nth argument (an+b)
+   *
+   * @privateRemarks
+   * This can't be named just "parse" as it is overwritten by subclasses with a
+   * different type of parameter (namely, the selector parser).
    */
   export function parseWithIndex<T extends WithIndex>(
     name: string,
@@ -180,6 +190,10 @@ export namespace WithSelector {
 
   /**
    * Parses a functional pseudo-class accepting a selector argument
+   *
+   * @privateRemarks
+   * This can't be named just "parse" as it is overwritten by subclasses with a
+   * different type of parameter (namely, no "name" or "of").
    */
   export function parseWithSelector<T extends WithSelector>(
     name: string,
@@ -189,6 +203,100 @@ export namespace WithSelector {
     return map(
       right(parseColon, Function.parse(name, parseSelector)),
       ([, selector]) => of(selector),
+    );
+  }
+}
+
+/**
+ * @internal
+ */
+export abstract class WithIndexAndSelector<
+  N extends string = string,
+> extends WithIndex<N> {
+  protected readonly _selector: Option<Absolute>;
+
+  protected constructor(
+    name: N,
+    nth: Nth,
+    selector: Option<Absolute>,
+    // Both :nth-child and :nth-last-child have this specificity
+    specificity: Specificity = Specificity.sum(
+      Specificity.of(0, 1, 0),
+      selector.map((s) => s.specificity).getOr(Specificity.of(0, 0, 0)),
+    ),
+  ) {
+    super(name, nth, specificity);
+
+    this._selector = selector;
+  }
+
+  /** @public (knip) */
+  public get selector(): Option<Absolute> {
+    return this._selector;
+  }
+
+  public equals(value: WithIndexAndSelector): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof WithIndexAndSelector &&
+      super.equals(value) &&
+      value._selector.equals(this._selector)
+    );
+  }
+
+  public toJSON(): WithIndexAndSelector.JSON<N> {
+    return {
+      ...super.toJSON(),
+      ...(this._selector.isSome()
+        ? { selector: this._selector.get().toJSON() }
+        : {}),
+    };
+  }
+
+  public toString(): string {
+    return `:${this.name}(${this._index} of ${this._selector})`;
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace WithIndexAndSelector {
+  export interface JSON<N extends string = string> extends WithIndex.JSON<N> {
+    selector?: Absolute.JSON;
+  }
+
+  /**
+   * Parses a functional pseudo-class accepting a nth argument (an+b)
+   *
+   * @privateRemarks
+   * This can't be named just "parse" as it is overwritten by subclasses with a
+   * different type of parameter (namely, no "name" or "of").
+   */
+  export function parseWithIndexAndSelector<T extends WithIndex>(
+    name: string,
+    parseSelector: Thunk<CSSParser<Absolute>>,
+    of: (nth: Nth, selector: Option<Absolute>) => T,
+  ): CSSParser<T> {
+    return map(
+      right(
+        parseColon,
+        Function.parse(name, () =>
+          pair(
+            Nth.parse,
+            option(
+              right(
+                delimited(parseWhitespace, parseIdent("of")),
+                parseSelector(),
+              ),
+            ),
+          ),
+        ),
+      ),
+      ([, [nth, selector]]) => of(nth, selector),
     );
   }
 }
