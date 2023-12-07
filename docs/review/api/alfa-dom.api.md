@@ -240,7 +240,7 @@ export class Document extends Node<"document"> {
 // @public (undocumented)
 export namespace Document {
     // (undocumented)
-    export function cloneDocument(document: Document, newElements: Element[], predicate: Predicate<Element>, device?: Device): Trampoline<Document>;
+    export function cloneDocument(options: Node.ElementReplacementOptions, device?: Device): (document: Document) => Trampoline<Document>;
     // @internal (undocumented)
     export function fromDocument(json: JSON, device?: Device): Trampoline<Document>;
     // (undocumented)
@@ -248,7 +248,7 @@ export namespace Document {
     // (undocumented)
     export interface JSON extends Node.JSON<"document"> {
         // (undocumented)
-        style: Array<Sheet.JSON>;
+        style: Array_2<Sheet.JSON>;
     }
 }
 
@@ -309,7 +309,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
 // @public (undocumented)
 export namespace Element {
     // (undocumented)
-    export function cloneElement(element: Element, newElements: Element[], predicate: Predicate<Element>, device?: Device): Trampoline<Element>;
+    export function cloneElement(options: Node.ElementReplacementOptions, device?: Device): (element: Element) => Trampoline<Element>;
     // @internal (undocumented)
     export function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
     // (undocumented)
@@ -407,7 +407,7 @@ export class Fragment extends Node<"fragment"> {
 // @public (undocumented)
 export namespace Fragment {
     // (undocumented)
-    export function cloneFragment(fragment: Fragment, newElements: Element[], predicate: Predicate<Element>, device?: Device): Trampoline<Fragment>;
+    export function cloneFragment(options: Node.ElementReplacementOptions, device?: Device): (fragment: Fragment) => Trampoline<Fragment>;
     // @internal (undocumented)
     export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
     // (undocumented)
@@ -765,26 +765,26 @@ export interface Node {
 // @public (undocumented)
 export namespace Node {
     // (undocumented)
-    export function clone(node: Element, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Element;
+    export function clone(node: Element, options?: ElementReplacementOptions, device?: Device): Element;
     // (undocumented)
-    export function clone(node: Attribute, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Attribute;
+    export function clone(node: Attribute, options?: ElementReplacementOptions, device?: Device): Attribute;
     // (undocumented)
-    export function clone(node: Text, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Text;
+    export function clone(node: Text, options?: ElementReplacementOptions, device?: Device): Text;
     // (undocumented)
-    export function clone(node: Comment, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Comment;
+    export function clone(node: Comment, options?: ElementReplacementOptions, device?: Device): Comment;
     // (undocumented)
-    export function clone(node: Document, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Document;
+    export function clone(node: Document, options?: ElementReplacementOptions, device?: Device): Document;
     // (undocumented)
-    export function clone(node: Type, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Document;
+    export function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document;
     const flatTree: Traversal;
     const fullTree: Traversal;
     const composedNested: Traversal;
     // (undocumented)
-    export function clone(node: Fragment, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Fragment;
+    export function clone(node: Fragment, options?: ElementReplacementOptions, device?: Device): Fragment;
     // (undocumented)
-    export function clone(node: Node, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Node;
+    export function clone(node: Node, options?: ElementReplacementOptions, device?: Device): Node;
     // (undocumented)
-    export function cloneNode(node: Node, newElements?: Element[], predicate?: Predicate<Element>, device?: Device): Trampoline<Node>;
+    export function cloneNode(node: Node, options?: ElementReplacementOptions, device?: Device): Trampoline<Node>;
     // (undocumented)
     export interface EARL extends earl.EARL {
         // (undocumented)
@@ -804,6 +804,13 @@ export namespace Node {
         "ptr:reference"?: {
             "@id": string;
         };
+    }
+    // (undocumented)
+    export interface ElementReplacementOptions {
+        // (undocumented)
+        newElements: Iterable<Element>;
+        // (undocumented)
+        predicate: Predicate<Element>;
     }
     // (undocumented)
     export function from(json: Element.JSON, device?: Device): Element;
