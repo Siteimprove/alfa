@@ -391,7 +391,8 @@ export namespace Node {
    * Optionally replaces child elements based on a predicate.
    *
    * @remarks
-   * We currently have no good way of cloning `Element#extraData` due to the type being `any` hence it is discarded when cloning.
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
    */
   export function clone(
     node: Element,
@@ -403,7 +404,8 @@ export namespace Node {
    * Creates a new `Attribute` instance with the same value as the original and referentially non-equal.
    *
    * @remarks
-   * We currently have no good way of cloning `Attribute#extraData` due to the type being `any` hence it is discarded when cloning.
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
    */
   export function clone(
     node: Attribute,
@@ -415,7 +417,8 @@ export namespace Node {
    * Creates a new `Text` instance with the same value as the original and referentially non-equal.
    *
    * @remarks
-   * We currently have no good way of cloning `Text#extraData` due to the type being `any` hence it is discarded when cloning.
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
    */
   export function clone(
     node: Text,
@@ -427,7 +430,8 @@ export namespace Node {
    * Creates a new `Comment` instance with the same value as the original and referentially non-equal.
    *
    * @remarks
-   * We currently have no good way of cloning `Comment#extraData` due to the type being `any` hence it is discarded when cloning.
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
    */
   export function clone(
     node: Comment,
@@ -440,7 +444,8 @@ export namespace Node {
    * Optionally replaces child elements based on a predicate.
    *
    * @remarks
-   * We currently have no good way of cloning `Document#extraData` due to the type being `any` hence it is discarded when cloning.
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
    */
   export function clone(
     node: Document,
@@ -452,7 +457,8 @@ export namespace Node {
    * Creates a new `Type` instance with the same value as the original and referentially non-equal.
    *
    * @remarks
-   * We currently have no good way of cloning `Type#extraData` due to the type being `any` hence it is discarded when cloning.
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
    */
   export function clone(
     node: Type,
@@ -465,7 +471,8 @@ export namespace Node {
    * Optionally replaces child elements based on a predicate.
    *
    * @remarks
-   * We currently have no good way of cloning `Fragment#extraData` due to the type being `any` hence it is discarded when cloning.
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
    */
   export function clone(
     node: Fragment,
@@ -478,7 +485,8 @@ export namespace Node {
    * Optionally replaces child elements based on a predicate.
    *
    * @remarks
-   * We currently have no good way of cloning `Node#extraData` due to the type being `any` hence it is discarded when cloning.
+   * The clone will have the same `externalId` as the original.
+   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
    */
   export function clone(
     node: Node,
