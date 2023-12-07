@@ -489,8 +489,9 @@ export namespace Element {
         );
 
         if (element.shadow.isSome()) {
-          const shadow = element.shadow.get();
-          clonedElement._attachShadow(Shadow.clone(shadow, options, device));
+          clonedElement._attachShadow(
+            Shadow.clone(element.shadow.get(), options, device),
+          );
         }
 
         if (element.content.isSome()) {

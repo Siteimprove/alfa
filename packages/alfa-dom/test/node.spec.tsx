@@ -102,8 +102,6 @@ test(`Node.clone() clones content`, (t) => {
   const content = h.document([<div>foo</div>]);
   const div = <div>{content}</div>;
 
-  div._attachContent(content);
-
   const clonedDiv = Node.clone(div);
 
   t.notEqual(clonedDiv.content.getUnsafe(), content);
