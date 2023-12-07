@@ -61,6 +61,8 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
 
 // @public (undocumented)
 export namespace Attribute {
+    // @internal (undocumented)
+    export function cloneAttribute<N extends string = string>(attribute: Attribute<N>): Trampoline<Attribute<N | Lowercase<N>>>;
     // @internal
     export function foldCase<N extends string = string>(name: N, owner: Option<Element>): N | Lowercase<N>;
     // @internal (undocumented)
@@ -132,6 +134,8 @@ export class Comment extends Node<"comment"> {
 
 // @public (undocumented)
 export namespace Comment {
+    // @internal (undocumented)
+    export function cloneComment(comment: Comment): Trampoline<Comment>;
     // @internal (undocumented)
     export function fromComment(json: JSON): Trampoline<Comment>;
     // (undocumented)
@@ -222,11 +226,11 @@ export class Document extends Node<"document"> {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>, externalId?: string, extraData?: any): Document;
+    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, externalId?: string, extraData?: any): Document;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    get style(): Iterable<Sheet>;
+    get style(): Iterable_2<Sheet>;
     // (undocumented)
     toJSON(options?: Node.SerializationOptions): Document.JSON;
     // (undocumented)
@@ -236,13 +240,15 @@ export class Document extends Node<"document"> {
 // @public (undocumented)
 export namespace Document {
     // @internal (undocumented)
+    export function cloneDocument(options: Node.ElementReplacementOptions, device?: Device): (document: Document) => Trampoline<Document>;
+    // @internal (undocumented)
     export function fromDocument(json: JSON, device?: Device): Trampoline<Document>;
     // (undocumented)
     export function isDocument(value: unknown): value is Document;
     // (undocumented)
     export interface JSON extends Node.JSON<"document"> {
         // (undocumented)
-        style: Array<Sheet.JSON>;
+        style: Array_2<Sheet.JSON>;
     }
 }
 
@@ -302,6 +308,8 @@ export class Element<N extends string = string> extends Node<"element"> implemen
 
 // @public (undocumented)
 export namespace Element {
+    // @internal (undocumented)
+    export function cloneElement(options: Node.ElementReplacementOptions, device?: Device): (element: Element) => Trampoline<Element>;
     // @internal (undocumented)
     export function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
     // (undocumented)
@@ -391,13 +399,15 @@ export class Fragment extends Node<"fragment"> {
     // @internal (undocumented)
     protected _internalPath(): string;
     // (undocumented)
-    static of(children: Iterable<Node>, externalId?: string, extraData?: any): Fragment;
+    static of(children: Iterable_2<Node>, externalId?: string, extraData?: any): Fragment;
     // (undocumented)
     toString(): string;
 }
 
 // @public (undocumented)
 export namespace Fragment {
+    // @internal (undocumented)
+    export function cloneFragment(options: Node.ElementReplacementOptions, device?: Device): (fragment: Fragment) => Trampoline<Fragment>;
     // @internal (undocumented)
     export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
     // (undocumented)
@@ -754,6 +764,20 @@ export interface Node {
 
 // @public (undocumented)
 export namespace Node {
+    export function clone(node: Element, options?: ElementReplacementOptions, device?: Device): Element;
+    export function clone(node: Attribute, options?: ElementReplacementOptions, device?: Device): Attribute;
+    export function clone(node: Text, options?: ElementReplacementOptions, device?: Device): Text;
+    export function clone(node: Comment, options?: ElementReplacementOptions, device?: Device): Comment;
+    export function clone(node: Document, options?: ElementReplacementOptions, device?: Device): Document;
+    export function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document;
+    const flatTree: Traversal;
+    const fullTree: Traversal;
+    const composedNested: Traversal;
+    export function clone(node: Fragment, options?: ElementReplacementOptions, device?: Device): Fragment;
+    export function clone(node: Shadow, options?: ElementReplacementOptions, device?: Device): Shadow;
+    export function clone(node: Node, options?: ElementReplacementOptions, device?: Device): Node;
+    // @internal (undocumented)
+    export function cloneNode(node: Node, options?: ElementReplacementOptions, device?: Device): Trampoline<Node>;
     // (undocumented)
     export interface EARL extends earl.EARL {
         // (undocumented)
@@ -775,6 +799,13 @@ export namespace Node {
         };
     }
     // (undocumented)
+    export interface ElementReplacementOptions {
+        // (undocumented)
+        newElements: Iterable<Element>;
+        // (undocumented)
+        predicate: Predicate<Element>;
+    }
+    // (undocumented)
     export function from(json: Element.JSON, device?: Device): Element;
     // (undocumented)
     export function from(json: Attribute.JSON, device?: Device): Attribute;
@@ -784,9 +815,6 @@ export namespace Node {
     export function from(json: Comment.JSON, device?: Device): Comment;
     // (undocumented)
     export function from(json: Document.JSON, device?: Device): Document;
-    const flatTree: Traversal;
-    const fullTree: Traversal;
-    const composedNested: Traversal;
     // (undocumented)
     export function from(json: Type.JSON, device?: Device): Document;
     // (undocumented)
@@ -956,11 +984,11 @@ export class Shadow extends Node<"shadow"> {
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
+    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    get style(): Iterable<Sheet>;
+    get style(): Iterable_2<Sheet>;
     // (undocumented)
     toJSON(): Shadow.JSON;
     // (undocumented)
@@ -969,6 +997,8 @@ export class Shadow extends Node<"shadow"> {
 
 // @public (undocumented)
 export namespace Shadow {
+    // @internal (undocumented)
+    export function cloneShadow(options: Node.ElementReplacementOptions, device?: Device): (shadow: Shadow) => Trampoline<Shadow>;
     // @internal (undocumented)
     export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow>;
     // (undocumented)
@@ -1143,6 +1173,8 @@ export class Text extends Node<"text"> implements Slotable {
 // @public (undocumented)
 export namespace Text {
     // @internal (undocumented)
+    export function cloneText(text: Text): Trampoline<Text>;
+    // @internal (undocumented)
     export function fromText(json: JSON): Trampoline<Text>;
     // (undocumented)
     export function isText(value: unknown): value is Text;
@@ -1173,6 +1205,8 @@ export class Type<N extends string = string> extends Node<"type"> {
 
 // @public (undocumented)
 export namespace Type {
+    // @internal (undocumented)
+    export function cloneType<N extends string = string>(type: Type<N>): Trampoline<Type<N>>;
     // @internal (undocumented)
     export function fromType<N extends string = string>(json: JSON<N>): Trampoline<Type<N>>;
     // (undocumented)

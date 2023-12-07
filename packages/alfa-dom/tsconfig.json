@@ -106,6 +106,7 @@
     { "path": "../alfa-rectangle"},
     { "path": "../alfa-refinement" },
     { "path": "../alfa-sarif" },
+    { "path": "../alfa-selective" },
     { "path": "../alfa-sequence" },
     { "path": "../alfa-test" },
     { "path": "../alfa-trampoline" },
