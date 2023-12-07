@@ -61,7 +61,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
 
 // @public (undocumented)
 export namespace Attribute {
-    // (undocumented)
+    // @internal (undocumented)
     export function cloneAttribute<N extends string = string>(attribute: Attribute<N>): Trampoline<Attribute<N | Lowercase<N>>>;
     // @internal
     export function foldCase<N extends string = string>(name: N, owner: Option<Element>): N | Lowercase<N>;
@@ -134,7 +134,7 @@ export class Comment extends Node<"comment"> {
 
 // @public (undocumented)
 export namespace Comment {
-    // (undocumented)
+    // @internal (undocumented)
     export function cloneComment(comment: Comment): Trampoline<Comment>;
     // @internal (undocumented)
     export function fromComment(json: JSON): Trampoline<Comment>;
@@ -239,7 +239,7 @@ export class Document extends Node<"document"> {
 
 // @public (undocumented)
 export namespace Document {
-    // (undocumented)
+    // @internal (undocumented)
     export function cloneDocument(options: Node.ElementReplacementOptions, device?: Device): (document: Document) => Trampoline<Document>;
     // @internal (undocumented)
     export function fromDocument(json: JSON, device?: Device): Trampoline<Document>;
@@ -308,7 +308,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
 
 // @public (undocumented)
 export namespace Element {
-    // (undocumented)
+    // @internal (undocumented)
     export function cloneElement(options: Node.ElementReplacementOptions, device?: Device): (element: Element) => Trampoline<Element>;
     // @internal (undocumented)
     export function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
@@ -406,7 +406,7 @@ export class Fragment extends Node<"fragment"> {
 
 // @public (undocumented)
 export namespace Fragment {
-    // (undocumented)
+    // @internal (undocumented)
     export function cloneFragment(options: Node.ElementReplacementOptions, device?: Device): (fragment: Fragment) => Trampoline<Fragment>;
     // @internal (undocumented)
     export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
@@ -764,26 +764,18 @@ export interface Node {
 
 // @public (undocumented)
 export namespace Node {
-    // (undocumented)
     export function clone(node: Element, options?: ElementReplacementOptions, device?: Device): Element;
-    // (undocumented)
     export function clone(node: Attribute, options?: ElementReplacementOptions, device?: Device): Attribute;
-    // (undocumented)
     export function clone(node: Text, options?: ElementReplacementOptions, device?: Device): Text;
-    // (undocumented)
     export function clone(node: Comment, options?: ElementReplacementOptions, device?: Device): Comment;
-    // (undocumented)
     export function clone(node: Document, options?: ElementReplacementOptions, device?: Device): Document;
-    // (undocumented)
     export function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document;
     const flatTree: Traversal;
     const fullTree: Traversal;
     const composedNested: Traversal;
-    // (undocumented)
     export function clone(node: Fragment, options?: ElementReplacementOptions, device?: Device): Fragment;
-    // (undocumented)
     export function clone(node: Node, options?: ElementReplacementOptions, device?: Device): Node;
-    // (undocumented)
+    // @internal (undocumented)
     export function cloneNode(node: Node, options?: ElementReplacementOptions, device?: Device): Trampoline<Node>;
     // (undocumented)
     export interface EARL extends earl.EARL {
@@ -1177,7 +1169,7 @@ export class Text extends Node<"text"> implements Slotable {
 
 // @public (undocumented)
 export namespace Text {
-    // (undocumented)
+    // @internal (undocumented)
     export function cloneText(text: Text): Trampoline<Text>;
     // @internal (undocumented)
     export function fromText(json: JSON): Trampoline<Text>;
@@ -1210,7 +1202,7 @@ export class Type<N extends string = string> extends Node<"type"> {
 
 // @public (undocumented)
 export namespace Type {
-    // (undocumented)
+    // @internal (undocumented)
     export function cloneType<N extends string = string>(type: Type<N>): Trampoline<Type<N>>;
     // @internal (undocumented)
     export function fromType<N extends string = string>(json: JSON<N>): Trampoline<Type<N>>;
