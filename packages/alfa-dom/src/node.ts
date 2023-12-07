@@ -437,6 +437,7 @@ export namespace Node {
 
   /**
    * Creates a new `Document` instance with the same value as the original and deeply referentially non-equal.
+   * Optionally replaces child elements based on a predicate.
    *
    * @remarks
    * We currently have no good way of cloning `Document#extraData` due to the type being `any` hence it is discarded when cloning.
@@ -461,6 +462,7 @@ export namespace Node {
 
   /**
    * Creates a new `Fragment` instance with the same value as the original and deeply referentially non-equal.
+   * Optionally replaces child elements based on a predicate.
    *
    * @remarks
    * We currently have no good way of cloning `Fragment#extraData` due to the type being `any` hence it is discarded when cloning.
@@ -473,6 +475,7 @@ export namespace Node {
 
   /**
    * Creates a new `Node` instance with the same value as the original and deeply referentially non-equal.
+   * Optionally replaces child elements based on a predicate.
    *
    * @remarks
    * We currently have no good way of cloning `Node#extraData` due to the type being `any` hence it is discarded when cloning.
