@@ -1,8 +1,10 @@
+import { Device } from "@siteimprove/alfa-device";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Selective } from "@siteimprove/alfa-selective";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -23,8 +25,6 @@ import {
   Type,
 } from ".";
 
-import { Device } from "@siteimprove/alfa-device";
-import { Selective } from "@siteimprove/alfa-selective";
 import * as predicate from "./node/predicate";
 import * as traversal from "./node/traversal";
 
