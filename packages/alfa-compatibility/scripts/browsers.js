@@ -3,9 +3,6 @@ const path = require("path");
 const prettier = require("prettier");
 const data = require("@mdn/browser-compat-data");
 
-/**
- * @type {Array<import("mdn-browser-compat-data/types").BrowserNames>}
- */
 const include = ["chrome", "edge", "firefox", "ie", "opera", "safari"];
 
 const { keys } = Object;
@@ -69,12 +66,12 @@ export const Browsers = {
               .map(
                 (release) => `
                   "${release.version}": { date: ${release.date} }
-                `
+                `,
               )
               .join(",\n")}
           }
         }
-      `
+      `,
     )
     .join(",\n\n")}
 };
