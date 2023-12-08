@@ -9,9 +9,10 @@ import R15, { Outcomes } from "../../src/sia-r15/rule";
 
 import { Group } from "../../src/common/act/group";
 
+import { WithAccessibleName } from "../../src/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
 test("evaluate() passes when two iframes embed the exact same resource", async (t) => {
   const accessibleName = "Foo";
@@ -138,25 +139,42 @@ test("evaluate() is inapplicable when there is no two iframe with the same name"
 });
 
 test("evaluate() can't tell if URLs are identical but invalid", async (t) => {
+  const accName = "Foo";
+
   const target = [
-    <iframe title="Foo" src="https:////////@@@" />,
-    <iframe aria-label="Foo" src="https:////////@@@" />,
+    <iframe title={accName} src="https:////////@@@" />,
+    <iframe aria-label={accName} src="https:////////@@@" />,
   ];
 
   const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
-    cantTell(R15, Group.of(target)),
+    cantTell(
+      R15,
+      Group.of(target),
+      WithAccessibleName.of(
+        "Do the <iframe> elements embed equivalent resources?",
+        accName,
+      ),
+    ),
   ]);
 });
 
 test("evaluate() can't tell if there is no source", async (t) => {
-  const target = [<iframe title="Foo" />, <iframe aria-label="Foo" />];
+  const accName = "Foo";
+  const target = [<iframe title={accName} />, <iframe aria-label={accName} />];
 
   const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
-    cantTell(R15, Group.of(target)),
+    cantTell(
+      R15,
+      Group.of(target),
+      WithAccessibleName.of(
+        "Do the <iframe> elements embed equivalent resources?",
+        accName,
+      ),
+    ),
   ]);
 });
 

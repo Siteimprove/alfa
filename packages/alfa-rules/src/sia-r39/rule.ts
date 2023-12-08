@@ -9,8 +9,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { Scope, Stability } from "../tags";
 import { WithAccessibleName } from "../common/diagnostic";
+import { Scope, Stability } from "../tags";
 
 const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasInputType, hasName, hasNamespace } = Element;
@@ -62,6 +62,12 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             "name-describes-purpose",
             target,
             `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`,
+            {
+              diagnostic: WithAccessibleName.of(
+                `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`,
+                accName,
+              ),
+            },
           ).map((nameDescribesPurpose) =>
             expectation(
               nameDescribesPurpose,
