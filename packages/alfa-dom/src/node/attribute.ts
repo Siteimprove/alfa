@@ -214,6 +214,23 @@ export namespace Attribute {
   }
 
   /**
+   * @internal
+   */
+  export function cloneAttribute<N extends string = string>(
+    attribute: Attribute<N>,
+  ): Trampoline<Attribute<N | Lowercase<N>>> {
+    return Trampoline.done(
+      Attribute.of(
+        attribute.namespace,
+        attribute.prefix,
+        attribute.name,
+        attribute.value,
+        attribute.externalId,
+      ),
+    );
+  }
+
+  /**
    * Conditionally fold the case of an attribute name based on its owner; HTML
    * attributes are case insensitive while attributes in other namespaces aren't.
    *

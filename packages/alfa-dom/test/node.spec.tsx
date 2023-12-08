@@ -1,6 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
+import { Device } from "@siteimprove/alfa-device";
 import { h } from "../h";
+import { Node } from "../src";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
@@ -60,4 +62,72 @@ test(`#tabOrder() correctly handles shadow roots with slotted elements after the
   );
 
   t.deepEqual([...div.tabOrder()], [b, a]);
+});
+
+test(`Node.clone() creates new instance with same value`, (t) => {
+  const device = Device.standard();
+  const doc = h.document(
+    [
+      <p title="foo" box={{ device, x: 1, y: 2, width: 3, height: 4 }}>
+        hello
+      </p>,
+    ],
+    [h.sheet([h.rule.style("p", { background: "green" })])],
+    "bar",
+    { extraStuff: "baz" },
+  );
+
+  const clonedDoc = Node.clone(doc);
+
+  t.notEqual(clonedDoc, doc);
+
+  t.deepEqual(clonedDoc.toJSON(), doc.toJSON());
+});
+
+test(`Node.clone() clones shadow`, (t) => {
+  const shadow = h.shadow([<div>foo</div>]);
+  const div = <div>{shadow}</div>;
+
+  const clonedDiv = Node.clone(div);
+
+  t.notEqual(clonedDiv.shadow.getUnsafe(), shadow);
+
+  t.deepEqual(
+    div.shadow.getUnsafe().toJSON(),
+    clonedDiv.shadow.getUnsafe().toJSON(),
+  );
+});
+
+test(`Node.clone() clones content`, (t) => {
+  const content = h.document([<div>foo</div>]);
+  const div = <div>{content}</div>;
+
+  const clonedDiv = Node.clone(div);
+
+  t.notEqual(clonedDiv.content.getUnsafe(), content);
+
+  t.deepEqual(div.toJSON(), clonedDiv.toJSON());
+});
+
+test(`Node.clone() correctly replaces elements based on predicate`, (t) => {
+  const foo = <div externalId="foo">Foo</div>;
+  const bar = <div externalId="bar">Bar</div>;
+
+  const doc = h.document([foo, bar]);
+
+  const newElements = [
+    <p externalId="foo1">Foo1</p>,
+    <span externalId="foo2">Foo2</span>,
+  ];
+
+  const cloned = Node.clone(doc, {
+    predicate: (element) => element.externalId === "foo",
+    newElements,
+  });
+
+  t.deepEqual(cloned.toJSON(), {
+    style: [],
+    type: "document",
+    children: [...newElements.map((e) => e.toJSON()), bar.toJSON()],
+  });
 });
