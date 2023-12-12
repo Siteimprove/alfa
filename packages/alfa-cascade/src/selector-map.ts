@@ -52,16 +52,16 @@ const isDescendantSelector = and(
  * Cascading origins defined in ascending order; origins defined first have
  * lower precedence than origins defined later.
  *
- * {@link https://www.w3.org/TR/css-cascade/#cascading-origins}
+ * {@link https://www.w3.org/TR/css-cascade-5/#cascading-origins}
  */
 enum Origin {
   /**
-   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-ua}
+   * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-ua}
    */
   UserAgent = 1,
 
   /**
-   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-author}
+   * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-author}
    */
   Author = 2,
 }

@@ -14,7 +14,7 @@ import { SelectorMap } from "./selector-map";
 import { UserAgent } from "./user-agent";
 
 /**
- * {@link https://drafts.csswg.org/css-cascade/}
+ * {@link https://drafts.csswg.org/css-cascade-5/}
  *
  * @public
  */
@@ -110,7 +110,7 @@ export namespace Cascade {
 }
 
 /**
- * {@link https://drafts.csswg.org/css-cascade/#cascade-sort}
+ * {@link https://drafts.csswg.org/css-cascade-5/#cascade-sort}
  */
 const compare: Comparer<SelectorMap.Node> = (a, b) => {
   // First priority: Origin
@@ -123,8 +123,8 @@ const compare: Comparer<SelectorMap.Node> = (a, b) => {
     return a.specificity < b.specificity
       ? -1
       : a.specificity > b.specificity
-      ? 1
-      : 0;
+        ? 1
+        : 0;
   }
 
   // Third priority: Order.
