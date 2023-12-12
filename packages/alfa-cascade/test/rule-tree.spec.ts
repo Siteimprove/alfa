@@ -1,16 +1,23 @@
 /// <reference lib="dom" />
-import { h } from "@siteimprove/alfa-dom";
+import { test } from "@siteimprove/alfa-test";
+
+import { h, StyleRule } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 import { Type } from "@siteimprove/alfa-selector";
-import { test } from "@siteimprove/alfa-test";
 
 import { RuleTree } from "../src";
 
+function fakeRule(selector: string): StyleRule {
+  return h.rule.style(selector, []);
+}
+
 test(".of() builds a node", (t) => {
   const node = RuleTree.Node.of(
-    h.rule.style("div", { color: "red" }),
-    Type.of(None, "div"),
-    [],
+    {
+      rule: h.rule.style("div", { color: "red" }),
+      selector: Type.of(None, "div"),
+      declarations: [],
+    },
     [],
     None,
   );

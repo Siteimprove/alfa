@@ -83,12 +83,14 @@ export class RuleTree implements Serializable {
     return new RuleTree();
   }
 
+  // Keeping this allow a more streamlined tree vocabulary later on.
+  private readonly _root: Option<RuleTree.Node> = None;
   private readonly _children: Array<RuleTree.Node> = [];
 
   private constructor() {}
 
   /**
-   * Add a bunch of rules to the tree.
+   * Add a bunch of items to the tree.
    *
    * @remarks
    * The rules are assumed to be:
@@ -101,17 +103,11 @@ export class RuleTree implements Serializable {
    * match the same element; nor to the origin or order of the rules to check
    * cascade order).
    */
-  public add(
-    rules: Iterable<{
-      rule: Rule;
-      selector: Selector;
-      declarations: Iterable<Declaration>;
-    }>,
-  ): Option<RuleTree.Node> {
-    let parent: Option<RuleTree.Node> = None;
+  public add(rules: Iterable<RuleTree.Item>): Option<RuleTree.Node> {
+    let parent = this._root;
     let children = this._children;
 
-    for (const { rule, selector, declarations } of rules) {
+    for (const item of rules) {
       // Insert the next rule into the current parent, using the returned rule
       // entry as the parent of the next rule to insert. This way, we gradually
       // build up a path of rule entries and then return the final entry to the
@@ -119,9 +115,7 @@ export class RuleTree implements Serializable {
       // Because all rules match the same element (by calling assumption), we
       // do want to build them as a single path into the tree (baring some sharing).
       // So each rule essentially creates a child of the preceding one.
-      parent = Option.of(
-        RuleTree.Node.add(rule, selector, declarations, children, parent),
-      );
+      parent = Option.of(RuleTree.Node.add(item, children, parent));
 
       // parent was just build as a non-None Option.
       children = parent.getUnsafe().children;
@@ -141,11 +135,31 @@ export class RuleTree implements Serializable {
 export namespace RuleTree {
   export type JSON = Array<Node.JSON>;
 
+  /**
+   * Items stored in rule tree nodes.
+   *
+   * @remarks
+   * Only the selector is used to actually build the structure. The rule and
+   * declarations are just data passed along to be used when resolving style.
+   */
+  export interface Item {
+    rule: Rule;
+    selector: Selector;
+    declarations: Iterable<Declaration>;
+  }
+
+  export namespace Item {
+    export interface JSON {
+      [key: string]: json.JSON;
+      rule: Rule.JSON;
+      selector: Selector.JSON;
+      declarations: Array<Declaration.JSON>;
+    }
+  }
+
   export class Node implements Serializable {
     public static of(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
+      { rule, selector, declarations }: Item,
       children: Array<Node>,
       parent: Option<Node>,
     ): Node {
@@ -208,14 +222,14 @@ export namespace RuleTree {
      * Adds style rule to a potential node in the tree. Returns the node where
      * the rule was added.
      *
-     * @remarks Initially (for each element), the potential parent is None as
+     * @remarks
+     *
+     * Initially (for each element), the potential parent is None as
      * it is possible to create a new tree in the forest. The forest itself
      * is the children.
      */
     public static add(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
+      item: Item,
       children: Array<Node>,
       parent: Option<Node>,
     ): Node {
@@ -227,7 +241,7 @@ export namespace RuleTree {
       // the rule tree has completely been shared so far).
       // Notably, because it is the exact same selector, it controls the exact
       // same rules, so all the information is already in the tree.
-      if (parent.some((parent) => parent._selector === selector)) {
+      if (parent.some((parent) => parent._selector === item.selector)) {
         return parent.get();
       }
 
@@ -237,21 +251,15 @@ export namespace RuleTree {
       // then sorted by order of appearance (by assumption) and the later must
       // be a descendant of the former as it has higher precedence.
       for (const child of children) {
-        if (child._selector.equals(selector)) {
-          return this.add(
-            rule,
-            selector,
-            declarations,
-            child._children,
-            Option.of(child),
-          );
+        if (child._selector.equals(item.selector)) {
+          return this.add(item, child._children, Option.of(child));
         }
       }
 
       // Otherwise, the selector is brand new (for this branch of the tree).
       // Add it as a new child and return it (further rules in the same batch,
       // matching the same element, should be added as its child.
-      const node = Node.of(rule, selector, declarations, [], parent);
+      const node = Node.of(item, [], parent);
 
       children.push(node);
 
@@ -260,11 +268,13 @@ export namespace RuleTree {
 
     public toJSON(): Node.JSON {
       return {
-        rule: this._rule.toJSON(),
-        selector: this._selector.toJSON(),
-        declarations: [...this._declarations].map((declaration) =>
-          declaration.toJSON(),
-        ),
+        item: {
+          rule: this._rule.toJSON(),
+          selector: this._selector.toJSON(),
+          declarations: [...this._declarations].map((declaration) =>
+            declaration.toJSON(),
+          ),
+        },
         children: this._children.map((node) => node.toJSON()),
       };
     }
@@ -273,9 +283,7 @@ export namespace RuleTree {
   export namespace Node {
     export interface JSON {
       [key: string]: json.JSON;
-      rule: Rule.JSON;
-      selector: Selector.JSON;
-      declarations: Array<Declaration.JSON>;
+      item: Item.JSON;
       children: Array<Node.JSON>;
     }
   }
