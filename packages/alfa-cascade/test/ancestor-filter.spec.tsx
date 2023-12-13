@@ -1,5 +1,3 @@
-import { Lexer } from "@siteimprove/alfa-css";
-import { Selector } from "@siteimprove/alfa-selector";
 import { Assertions, test } from "@siteimprove/alfa-test";
 
 import { parse } from "@siteimprove/alfa-selector/test/parser";
