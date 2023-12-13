@@ -7,5 +7,7 @@
 **Signature:**
 
 ```typescript
-export type PartialResolver = Basic.PartialResolver;
+type PartialResolver = Basic.PartialResolver;
 ```
+**References:** [Basic.PartialResolver](./alfa-css.shape.basic.partialresolver.md)
+

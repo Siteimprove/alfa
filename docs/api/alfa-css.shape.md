@@ -11,12 +11,6 @@
 export declare namespace Shape 
 ```
 
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [partiallyResolve(resolver)](./alfa-css.shape.partiallyresolve.md) |  |
-
 ## Interfaces
 
 |  Interface | Description |

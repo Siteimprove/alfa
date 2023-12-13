@@ -1,5 +1,13 @@
 # @siteimprove/alfa-test
 
+## 0.70.0
+
+### Minor Changes
+
+- **Added:** Test can now accept a `Controller` to generate random tests. ([#1514](https://github.com/Siteimprove/alfa/pull/1514))
+
+  See the [README](./README.md) for more information.
+
 ## 0.69.0
 
 ## 0.68.0

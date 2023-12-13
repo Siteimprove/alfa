@@ -21,6 +21,15 @@ export declare namespace Node
 
 |  Function | Description |
 |  --- | --- |
+|  [clone(node, options, device)](./alfa-dom.node.clone.md) | Creates a new <code>Element</code> instance with the same value as the original and deeply referentially non-equal. Optionally replaces child elements based on a predicate. |
+|  [clone(node, options, device)](./alfa-dom.node.clone_1.md) | Creates a new <code>Attribute</code> instance with the same value as the original and referentially non-equal. |
+|  [clone(node, options, device)](./alfa-dom.node.clone_2.md) | Creates a new <code>Text</code> instance with the same value as the original and referentially non-equal. |
+|  [clone(node, options, device)](./alfa-dom.node.clone_3.md) | Creates a new <code>Comment</code> instance with the same value as the original and referentially non-equal. |
+|  [clone(node, options, device)](./alfa-dom.node.clone_4.md) | Creates a new <code>Document</code> instance with the same value as the original and deeply referentially non-equal. Optionally replaces child elements based on a predicate. |
+|  [clone(node, options, device)](./alfa-dom.node.clone_5.md) | Creates a new <code>Type</code> instance with the same value as the original and referentially non-equal. |
+|  [clone(node, options, device)](./alfa-dom.node.clone_6.md) | Creates a new <code>Fragment</code> instance with the same value as the original and deeply referentially non-equal. Optionally replaces child elements based on a predicate. |
+|  [clone(node, options, device)](./alfa-dom.node.clone_7.md) | Creates a new <code>Shadow</code> instance with the same value as the original and deeply referentially non-equal. Optionally replaces child elements based on a predicate. |
+|  [clone(node, options, device)](./alfa-dom.node.clone_8.md) | Creates a new <code>Node</code> instance with the same value as the original and deeply referentially non-equal. Optionally replaces child elements based on a predicate. |
 |  [from(json, device)](./alfa-dom.node.from.md) |  |
 |  [from(json, device)](./alfa-dom.node.from_1.md) |  |
 |  [from(json, device)](./alfa-dom.node.from_2.md) |  |
@@ -36,6 +45,7 @@ export declare namespace Node
 |  Interface | Description |
 |  --- | --- |
 |  [EARL](./alfa-dom.node.earl.md) |  |
+|  [ElementReplacementOptions](./alfa-dom.node.elementreplacementoptions.md) |  |
 |  [JSON](./alfa-dom.node.json.md) |  |
 |  [SerializationOptions](./alfa-dom.node.serializationoptions.md) |  |
 

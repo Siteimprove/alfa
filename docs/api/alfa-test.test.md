@@ -8,7 +8,7 @@
 **Signature:**
 
 ```typescript
-export declare function test(name: string, assertion: (assert: Assertions) => void | Promise<void>): Promise<void>;
+export declare function test<T = number>(name: string, assertion: (assert: Assertions, rng: RNG<T>, seed: number) => void | Promise<void>, controller?: Partial<Controller<T>>): Promise<void>;
 ```
 
 ## Parameters
@@ -16,7 +16,8 @@ export declare function test(name: string, assertion: (assert: Assertions) => vo
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  assertion | (assert: [Assertions](./alfa-test.assertions.md)<!-- -->) =&gt; void \| Promise&lt;void&gt; |  |
+|  assertion | (assert: [Assertions](./alfa-test.assertions.md)<!-- -->, rng: [RNG](./alfa-test.rng.md)<!-- -->&lt;T&gt;, seed: number) =&gt; void \| Promise&lt;void&gt; |  |
+|  controller | Partial&lt;[Controller](./alfa-test.controller.md)<!-- -->&lt;T&gt;&gt; | _(Optional)_ |
 
 **Returns:**
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type PartiallyResolved = Shape<Basic.PartiallyResolved, Box.Geometry>;
+type PartiallyResolved = Shape<Basic.PartiallyResolved, Box.Geometry>;
 ```
-**References:** [Shape](./alfa-css.shape.md)<!-- -->, [Box.Geometry](./alfa-css.box.geometry.md)
+**References:** [Shape](./alfa-css.shape.md)<!-- -->, [Basic.PartiallyResolved](./alfa-css.shape.basic.partiallyresolved.md)<!-- -->, [Box.Geometry](./alfa-css.box.geometry.md)
 
