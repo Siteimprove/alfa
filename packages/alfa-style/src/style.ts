@@ -301,7 +301,7 @@ export namespace Style {
       .get(device, Cache.empty)
       .get(element.freeze(), Cache.empty)
       .get(context, () => {
-        // First, get all declarations on the `style` attribute. The win
+        // First, get all declarations on the `style` attribute. They win
         // cascade sort at priority 3, trumping everything but origin and
         // (shadow tree) context
         // * origin is de-facto handled by the fact that these are author
@@ -392,7 +392,7 @@ export namespace Style {
  * @privateRemarks
  * This is not correct since importance of declaration reverses precedence of UA
  * and author origins.
- * { @link https://github.com/Siteimprove/alfa/issues/1532}
+ * {@link https://github.com/Siteimprove/alfa/issues/1532}
  *
  * @internal
  */

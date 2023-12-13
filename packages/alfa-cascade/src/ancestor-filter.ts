@@ -18,7 +18,7 @@ import * as json from "@siteimprove/alfa-json";
  * The ancestor filter simply count the number of each ID, class, and type
  * amongst the path walked so far. When a descendant selector is encountered, we
  * can quickly see if the ancestor filter contains the ID, class, or type of the
- * ancestor bit, without walking up the full tree again.
+ * ancestor part, without walking up the full tree again.
  *
  * We need to remember exact count rather than just existence because the
  * initial build of the cascade traverses the tree in depth-first order and
@@ -37,6 +37,11 @@ import * as json from "@siteimprove/alfa-json";
  *   types: [["p", 1], ["section", 1]]\}
  * Given a selector `main b`, we can therefore reject that the selector would
  * match the `<b>` as the ancestor filter does not contain the type `main`.
+ *
+ * However, given a selector `section.highlight`, the ancestor filter can only
+ * tell that it **may** match the `<b>` element. In this case, it doesn't. So,
+ * the filter acts as a quick guaranteed rejection mechanism, but actual match
+ * test is needed to have an accurate final result.
  *
  * NB: None of the operations of the ancestor filter are idempotent to avoid
  * keeping track of more information than strictly necessary. This is however

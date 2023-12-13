@@ -1,8 +1,8 @@
-/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
-import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
+
+import { parse } from "@siteimprove/alfa-selector/test/parser";
 
 import { RuleTree } from "../src";
 
@@ -59,7 +59,7 @@ test(".add() adds a child upon inserting identical selector", (t) => {
 });
 
 test("Chaining .add() creates a single branch in the tree", (t) => {
-  // Selector `div`, `.foo`, `#bar`, matching, e.g., `<div class="foo" id="bar">`
+  // Selectors `div`, `.foo`, `#bar`, matching, e.g., `<div class="foo" id="bar">`
   // and inserted in increasing specificity.
   const node = RuleTree.Node.of(fakeItem("div"), [], None);
   node.add(fakeItem(".foo")).add(fakeItem("#bar"));
@@ -182,10 +182,16 @@ test(".add() share branches as long as selectors are the same", (t) => {
   ]);
 });
 
-test(".add() adds descendants when selectors are identical", (t) => {
+test(".add() adds descendants when selectors are merely identical", (t) => {
   const div = fakeItem("div");
   const tree = RuleTree.empty();
   tree.add([div, fakeItem(".foo"), fakeItem("#bar")]);
+  // This is not an actual possible case. This corresponds to two `.foo`
+  // selectors but each matches different elements, which is impossible.
+  // Hence, the adding of the .foo / .baz branch under the initial .foo
+  // looks very wrong but is actually the correct thing to do. In an actual
+  // case, both .add would contain both .foo selector, since this rules with
+  // identical selectors match the same elements.
   tree.add([div, fakeItem(".foo"), fakeItem(".baz")]);
 
   t.deepEqual(tree.toJSON(), [
@@ -212,6 +218,7 @@ test(".add() branches as soon as selectors differ", (t) => {
   const foo = fakeItem(".foo");
   const tree = RuleTree.empty();
   tree.add([div, foo, fakeItem("#bar")]);
+  // Even if the selector is the same, the tree doesn't try to merge the branches.
   tree.add([div, fakeItem(".baz"), foo]);
 
   t.deepEqual(tree.toJSON(), [

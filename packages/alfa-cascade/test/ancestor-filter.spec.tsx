@@ -2,6 +2,8 @@ import { Lexer } from "@siteimprove/alfa-css";
 import { Selector } from "@siteimprove/alfa-selector";
 import { Assertions, test } from "@siteimprove/alfa-test";
 
+import { parse } from "@siteimprove/alfa-selector/test/parser";
+
 import { AncestorFilter, Bucket } from "../src/ancestor-filter";
 
 test("Buckets behave as expected", (t) => {
@@ -71,10 +73,6 @@ test("Buckets behave as expected", (t) => {
   t(!bucket.has("b"));
 });
 
-function parse(selector: string): Selector {
-  return Selector.parse(Lexer.lex(selector)).getUnsafe()[1];
-}
-
 const selectors = {
   divSel: parse("div"),
   spanSel: parse("span"),
@@ -122,7 +120,8 @@ function match(
  * Since only element's name, id and class matter (not the actual element), we
  * create them on the fly and remove a structurally identical one rather than the
  * exact one that has been added. This simplifies the test a bit. Actual cascading
- * walk through the actual DOM tree and remove the exact same element when moving up.
+ * walks through the actual DOM tree and removes the exact same element when
+ * moving up.
  */
 test("Ancestor filter behaves as expected", (t) => {
   const filter = AncestorFilter.empty();

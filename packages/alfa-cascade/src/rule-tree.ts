@@ -29,15 +29,15 @@ import * as json from "@siteimprove/alfa-json";
  *
  *  "div"
  *  +-- ".foo"
- *      +-- ".foo[href]"    <- A
+ *      +-- ".foo[href]"     (A)
  *
  * We then associate rule `".foo[href]"` with element A and insert the matched
  * rules for element B into the tree:
  *
  *  "div"
  *  +-- ".foo"
- *      +-- ".foo[href]"    <- A
- *      +-- ".bar"          <- B
+ *      +-- ".foo[href]"    (A)
+ *      +-- ".bar"          (B)
  *
  * We then associate the rule `".bar"` with element B, and we're done. Notice how
  * the tree branches at rule `".foo"`, allowing the two elements to share the
@@ -60,9 +60,9 @@ import * as json from "@siteimprove/alfa-json";
  *
  * "div"
  * +-- ".foo"
- *     +-- ".foo[href]"   <- A
+ *     +-- ".foo[href]"   (A)
  * +-- ".bar"
- *     +-- ".foo"         <- B
+ *     +-- ".foo"         (B)
  *
  * {@link http://doc.servo.org/style/rule_tree/struct.RuleTree.html}
  *
@@ -107,7 +107,7 @@ export class RuleTree implements Serializable {
    * cascade order).
    *
    * @privateRemarks
-   * This is not stateless. Adding rules to a rule tree does mutate it!
+   * This is stateful. Adding rules to a rule tree does mutate it!
    *
    * @internal
    */
@@ -115,6 +115,10 @@ export class RuleTree implements Serializable {
     let parent = this._root;
 
     for (const item of rules) {
+      // Insert the next rule into the current parent, using the returned rule
+      // entry as the parent of the next rule to insert. This way, we gradually
+      // build up a path of rule entries and then return the final entry to the
+      // caller.
       parent = parent.add(item);
     }
 
@@ -220,16 +224,11 @@ export namespace RuleTree {
     }
 
     /**
-     * Adds style rule to a potential node in the tree. Returns the node where
-     * the rule was added.
-     *
-     * @remarks
-     * Initially (for each element), the potential parent is None as
-     * it is possible to create a new tree in the forest. The forest itself
-     * is the children.
+     * Adds style rule to a node in the tree. Returns the node where the rule
+     * was added.
      *
      * @privateRemarks
-     * This is not stateless. Adding a rule to a node mutates the node!
+     * This is stateful. Adding a rule to a node mutates the node!
      *
      * @internal
      */
@@ -238,15 +237,15 @@ export namespace RuleTree {
       // we're done.
       // This occurs when the exact same style rule matches several elements.
       // The first element added to the rule tree will add that rule, subsequent
-      // one will just reuse it. (this also only occurs if the path so far in
-      // the rule tree has completely been shared so far).
+      // ones will just reuse it (if the path so far in the rule tree has
+      // completely been shared).
       // Notably, because it is the exact same selector, it controls the exact
       // same rules, so all the information is already in the tree.
       if (this._selector === item.selector) {
         return this;
       }
 
-      // Otherwise, if there is a child with a selector that looks the same,
+      // Otherwise, if there is a child with an identical but separate selector,
       // recursively add to it.
       // This happens, e.g., when encountering two ".foo" selectors. They are
       // then sorted by order of appearance (by assumption) and the later must

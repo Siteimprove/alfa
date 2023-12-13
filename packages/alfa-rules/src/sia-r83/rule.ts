@@ -4,12 +4,12 @@ import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
 import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
-  Rule as CSSRule,
   Document,
   Element,
   MediaRule,
   Namespace,
   Node,
+  Rule as CSSRule,
   Text,
 } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
@@ -485,10 +485,7 @@ const ruleTreeCache = Cache.empty<RuleTree.Node, Sequence<RuleTree.Node>>();
 
 function ancestorsInRuleTree(rule: RuleTree.Node): Sequence<RuleTree.Node> {
   return ruleTreeCache.get(rule, () =>
-    rule.parent
-      .map((parent) => ancestorsInRuleTree(parent))
-      .getOrElse<Sequence<RuleTree.Node>>(Sequence.empty)
-      .prepend(rule),
+    Sequence.from(rule.inclusiveAncestors()),
   );
 }
 
@@ -503,13 +500,11 @@ function getUsedMediaRules(
     return Sequence.empty();
   }
 
-  const node = Cascade.of(root, device).get(element, context);
-
   // Get all nodes (style rules) in the RuleTree that affect the element;
   // for each of these rules, get all ancestor media rules in the CSS tree.
-  return ancestorsInRuleTree(node).flatMap((node) =>
-    ancestorMediaRules(node.rule),
-  );
+  return ancestorsInRuleTree(
+    Cascade.of(root, device).get(element, context),
+  ).flatMap((node) => ancestorMediaRules(node.rule));
 }
 
 function usesMediaRule(
