@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-export type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
+type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
 ```

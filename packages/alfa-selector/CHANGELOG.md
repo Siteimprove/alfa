@@ -1,5 +1,31 @@
 # @siteimprove/alfa-selector
 
+## 0.70.0
+
+### Minor Changes
+
+- **Added:** The `:nth-child` and `:nth-last-child` pseudo-classes now accept the "of selector" syntax. ([#1524](https://github.com/Siteimprove/alfa/pull/1524))
+
+- **Added:** `Selector` now contain their own `Specificity`. ([#1514](https://github.com/Siteimprove/alfa/pull/1514))
+
+- **Breaking:** The type guards on selectors are now under the namespace of the same name. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+  That is, use `Compound.isCompound` instead of `Selector.isCompound`, …
+
+- **Breaking:** `Compound` selectors are now built on top of Iterable, rather than re-inventing chained lists. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+  That is, `Compound#left` and `Compound#right` are no more available, but `Compound#selectors` replaces them.
+
+- **Breaking:** The various kinds of selectors are now directly exported from the package, out of the `Selector` namespace. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+  That is, use `Id` instead of `Selector.Id`, … (or `import * as Selector` and keep using `Selector.Id`).
+
+- **Added:** The `:where` pseudo-class is now handled. ([#1518](https://github.com/Siteimprove/alfa/pull/1518))
+
+- **Breaking:** `List` selectors are now built on top of Iterable, rather than re-inventing chained lists. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+  That is, `List#left` and `List#right` are no more available, but `List#selectors` replaces them.
+
 ## 0.69.0
 
 ## 0.68.0

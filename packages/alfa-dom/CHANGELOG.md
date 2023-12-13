@@ -1,5 +1,11 @@
 # @siteimprove/alfa-dom
 
+## 0.70.0
+
+### Minor Changes
+
+- **Added:** New functions `Node.clone` for cloning nodes and optionally replacing child elements based on a predicate. ([#1523](https://github.com/Siteimprove/alfa/pull/1523))
+
 ## 0.69.0
 
 ### Minor Changes

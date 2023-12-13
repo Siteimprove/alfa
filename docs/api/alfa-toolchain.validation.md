@@ -10,7 +10,7 @@
 |  --- | --- |
 |  [hasExtractorConfig(name, dir)](./alfa-toolchain.validation.hasextractorconfig.md) | Checks that a directory includes an API extractor config file. |
 |  [validate(cwd)](./alfa-toolchain.validation.validate.md) |  |
-|  [validateChangesets(cwd)](./alfa-toolchain.validation.validatechangesets.md) | Validate that all changesets have the expected structure. |
+|  [validateChangesets(cwd, forbidMajor)](./alfa-toolchain.validation.validatechangesets.md) | Validate that all changesets have the expected structure. |
 |  [validatePackageJson({ dir, packageJson, }, config)](./alfa-toolchain.validation.validatepackagejson.md) | Checks that a package.json file has the correct fields and structure. |
 |  [validateWorkspaceTsconfig({ dir, packageJson, })](./alfa-toolchain.validation.validateworkspacetsconfig.md) |  |
 

@@ -1,5 +1,45 @@
 # Alfa changelog
 
+## [0.70.0](../../compare/v0.69.0...v0.70.0) (2023-12-13)
+
+### Breaking
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): The type guards on selectors are now under the namespace of the same name. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): `Compound` selectors are now built on top of Iterable, rather than re-inventing chained lists. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): The various kinds of selectors are now directly exported from the package, out of the `Selector` namespace. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0700): `Image.partiallyResolve()` and `Shape.partiallyResolve()` functions has been replaced by instance methods of the same name. ([#1510](https://github.com/Siteimprove/alfa/pull/1510))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): `List` selectors are now built on top of Iterable, rather than re-inventing chained lists. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+### Added
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): The `:nth-child` and `:nth-last-child` pseudo-classes now accept the "of selector" syntax. ([#1524](https://github.com/Siteimprove/alfa/pull/1524))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): `Selector` now contain their own `Specificity`. ([#1514](https://github.com/Siteimprove/alfa/pull/1514))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0700): all `Value` subtype now correctly implement the `(Partially)Resovable` interfaces. ([#1510](https://github.com/Siteimprove/alfa/pull/1510))
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0700): Structure validation can now optionally check that changeset contain no "major" bump. ([#1509](https://github.com/Siteimprove/alfa/pull/1509))
+
+- [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md#0700): Test can now accept a `Controller` to generate random tests. ([#1514](https://github.com/Siteimprove/alfa/pull/1514))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): The `:where` pseudo-class is now handled. ([#1518](https://github.com/Siteimprove/alfa/pull/1518))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0700): `Function.parse` now also accepts a `Thunk` as body parser. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0700): New functions `Node.clone` for cloning nodes and optionally replacing child elements based on a predicate. ([#1523](https://github.com/Siteimprove/alfa/pull/1523))
+
+### Fixed
+
+- [@siteimprove/alfa-performance](packages/alfa-performance/CHANGELOG.md#0700): A bug caused runtime exceptions when calling `Performance.of()` in node v 19.0.0 and above has been fixed. ([#1513](https://github.com/Siteimprove/alfa/pull/1513))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0700): Accessible name is now also recorded as in #1502 in can't tell outcomes for rules R15, R39, R41 and R81. ([#1529](https://github.com/Siteimprove/alfa/pull/1529))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0700): SIA-R10 now correctly accepts the `one-time-code` token. ([#1517](https://github.com/Siteimprove/alfa/pull/1517))
+
 ## [0.69.0](../../compare/v0.68.0...v0.69.0) (2023-11-21)
 
 ### Breaking

@@ -2,17 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-selector](./alfa-selector.md) &gt; [Selector](./alfa-selector.selector.md) &gt; [JSON](./alfa-selector.selector.json.md)
 
-## Selector.JSON interface
+## Selector.JSON type
 
 **Signature:**
 
 ```typescript
-export interface JSON<T extends string = string> 
+type JSON = Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | List.JSON;
 ```
-
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-selector.selector.json.type.md) |  | T |  |
+**References:** [Simple.JSON](./alfa-selector.simple.json.md)<!-- -->, [Compound.JSON](./alfa-selector.compound.json.md)<!-- -->, [Complex.JSON](./alfa-selector.complex.json.md)<!-- -->, [Relative.JSON](./alfa-selector.relative.json.md)<!-- -->, [List.JSON](./alfa-selector.list.json.md)
 
