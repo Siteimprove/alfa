@@ -284,6 +284,14 @@ export namespace Style {
 
   const cache = Cache.empty<Device, Cache<Element, Cache<Context, Style>>>();
 
+  /**
+   * Build the style of an element.
+   *
+   * @remarks
+   * This gather all style declarations that apply to the element, in decreasing
+   * precedence (according to cascade sort order) and delegate the rest of the
+   * work to `Style.of`.
+   */
   export function from(
     element: Element,
     device: Device,
@@ -293,6 +301,17 @@ export namespace Style {
       .get(device, Cache.empty)
       .get(element.freeze(), Cache.empty)
       .get(context, () => {
+        // First, get all declarations on the `style` attribute. The win
+        // cascade sort at priority 3, trumping everything but origin and
+        // (shadow tree) context
+        // * origin is de-facto handled by the fact that these are author
+        //   declarations, trumping non-important UA declaration at 1.6 vs 1.8.
+        //   important UA declarations will win back through shouldOverride.
+        //   important `style` attribute declarations incorrectly trump
+        //   important UA declarations.
+        //   {@link https://github.com/Siteimprove/alfa/issues/1532}
+        // * (shadow tree) context is not currently handled.
+        //   {@link https://github.com/Siteimprove/alfa/issues/1533}
         const declarations: Array<Declaration> = element.style
           .map((block) => [...block.declarations].reverse())
           .getOr([]);
@@ -304,6 +323,14 @@ export namespace Style {
 
           let next = cascade.get(element, context);
 
+          // Walk up the cascade, starting from the node associated to the
+          // element, and gather all declarations met on the way.
+          // The cascade has been build in decreasing precedence as we move up
+          // (highest precedence rules are at the bottom), thus the declarations
+          // are seen in decreasing precedence and pushed to the end of the
+          // existing list which is thus also ordered in decreasing precedence.
+          // Cascade doesn't handle importance of declaration, hence this will
+          // still have to be done here (through `shouldOverride`).
           while (next.isSome()) {
             const node = next.get();
 
@@ -362,8 +389,13 @@ export namespace Style {
  * The "next" declaration should override the previous if:
  * - either there is no previous; or
  * - next is important and previous isn't.
- * This suppose that the declarations have been pre--ordered in decreasing
- * specificity.
+ * This supposes that the declarations have been pre--ordered in otherwise
+ * decreasing precedence.
+ *
+ * @privateRemarks
+ * This is not correct since importance of declaration reverses precedence of UA
+ * and author origins.
+ * { @link https://github.com/Siteimprove/alfa/issues/1532}
  *
  * @internal
  */

@@ -16,7 +16,7 @@ test(".of() builds a node", (t) => {
     {
       rule: h.rule.style("div", { color: "red" }),
       selector: Type.of(None, "div"),
-      declarations: [],
+      declarations: [h.declaration("color", "red")],
     },
     [],
     None,

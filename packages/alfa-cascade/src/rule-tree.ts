@@ -96,30 +96,33 @@ export class RuleTree implements Serializable {
    * The rules are assumed to be:
    * 1. all matching the same element; and
    * 2. ordered in increasing cascade sort order (lower precedence rule first); and
-   * 3. be all the rules matching that element (this is not problematic).
+   * 3. be all the rules matching that element.
    *
    * It is up to the caller to ensure this is true, as the tree itself cannot
-   * check that (notably, it has no access to the DOM tree to ensure the rule
+   * check that (notably, it has no access to the DOM tree to ensure the rules
    * match the same element; nor to the origin or order of the rules to check
    * cascade order).
+   *
+   * @internal
    */
   public add(rules: Iterable<RuleTree.Item>): Option<RuleTree.Node> {
     let parent = this._root;
     let children = this._children;
-    let needNewBranch = true;
+    let needNewTree = true;
 
     for (const item of rules) {
       // If the lowest precedence item has the same selector as one of the
       // existing tree in the forest, then we can insert the items in this
       // tree, so we select that child as parent for the next step.
+      // Otherwise, we create a new tree in the forest, and add the rule to it.
       for (const child of children) {
         if (child.selector.equals(item.selector)) {
-          parent = Option.of(RuleTree.Node.add(item, child));
-          needNewBranch = false;
+          parent = Option.of(child.add(item));
+          needNewTree = false;
         }
       }
 
-      if (needNewBranch) {
+      if (needNewTree) {
         parent = Option.of(RuleTree.Node.of(item, children, parent));
       }
 
@@ -130,7 +133,6 @@ export class RuleTree implements Serializable {
       // Because all rules match the same element (by calling assumption), we
       // do want to build them as a single path into the tree (baring some sharing).
       // So each rule essentially creates a child of the preceding one.
-      // parent = Option.of(RuleTree.Node.add(item, children, parent));
 
       // parent was just build as a non-None Option.
       children = parent.getUnsafe().children;
@@ -242,8 +244,10 @@ export namespace RuleTree {
      * Initially (for each element), the potential parent is None as
      * it is possible to create a new tree in the forest. The forest itself
      * is the children.
+     *
+     * @internal
      */
-    public static add(item: Item, parent: Node): Node {
+    public add(item: Item): Node {
       // If we have already encountered the exact same selector (physical identity),
       // we're done.
       // This occurs when the exact same style rule matches several elements.
@@ -252,8 +256,8 @@ export namespace RuleTree {
       // the rule tree has completely been shared so far).
       // Notably, because it is the exact same selector, it controls the exact
       // same rules, so all the information is already in the tree.
-      if (parent._selector === item.selector) {
-        return parent;
+      if (this._selector === item.selector) {
+        return this;
       }
 
       // Otherwise, if there is a child with a selector that looks the same,
@@ -261,18 +265,18 @@ export namespace RuleTree {
       // This happens, e.g., when encountering two ".foo" selectors. They are
       // then sorted by order of appearance (by assumption) and the later must
       // be a descendant of the former as it has higher precedence.
-      for (const child of parent._children) {
+      for (const child of this._children) {
         if (child._selector.equals(item.selector)) {
-          return Node.add(item, child);
+          return child.add(item);
         }
       }
 
       // Otherwise, the selector is brand new (for this branch of the tree).
       // Add it as a new child and return it (further rules in the same batch,
       // matching the same element, should be added as its child.
-      const node = Node.of(item, [], Option.of(parent));
+      const node = Node.of(item, [], Option.of(this));
 
-      parent._children.push(node);
+      this._children.push(node);
 
       return node;
     }
