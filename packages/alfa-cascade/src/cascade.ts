@@ -37,7 +37,7 @@ export class Cascade implements Serializable {
 
   private readonly _entries = Cache.empty<
     Element,
-    Cache<Context, Option<RuleTree.Node>>
+    Cache<Context, RuleTree.Node>
   >();
 
   private constructor(root: Document | Shadow, device: Device) {
@@ -76,7 +76,7 @@ export class Cascade implements Serializable {
     element: Element,
     context: Context = Context.empty(),
     filter: Option<AncestorFilter> = None,
-  ): Option<RuleTree.Node> {
+  ): RuleTree.Node {
     return this._entries
       .get(element, Cache.empty)
       .get(context, () =>

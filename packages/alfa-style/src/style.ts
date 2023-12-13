@@ -321,8 +321,6 @@ export namespace Style {
         if (Document.isDocument(root) || Shadow.isShadow(root)) {
           const cascade = Cascade.of(root, device);
 
-          let next = cascade.get(element, context);
-
           // Walk up the cascade, starting from the node associated to the
           // element, and gather all declarations met on the way.
           // The cascade has been build in decreasing precedence as we move up
@@ -331,11 +329,10 @@ export namespace Style {
           // existing list which is thus also ordered in decreasing precedence.
           // Cascade doesn't handle importance of declaration, hence this will
           // still have to be done here (through `shouldOverride`).
-          while (next.isSome()) {
-            const node = next.get();
-
+          for (const node of cascade
+            .get(element, context)
+            .inclusiveAncestors()) {
             declarations.push(...[...node.declarations].reverse());
-            next = node.parent;
           }
         }
 

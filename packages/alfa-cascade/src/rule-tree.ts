@@ -1,8 +1,8 @@
-import { Declaration, Rule } from "@siteimprove/alfa-dom";
+import { Declaration, h, Rule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Selector } from "@siteimprove/alfa-selector";
+import { Selector, Universal } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -51,7 +51,7 @@ import * as json from "@siteimprove/alfa-json";
  *
  * Note that the resulting rule tree depends greatly on the order in which
  * rules are inserted, which must then be by increasing precedence. The `.foo`
- * and `.bar` selectors are not directly comparable, the example above assumes
+ * and `.bar` selectors are not directly comparable; the example above assumes
  * that the `.bar` rule came later in the style sheet order and therefore wins
  * the cascade sort by "Order of Appearance". This information is not available
  * for the rule tree which relies on rules being fed to it in increasing
@@ -68,13 +68,8 @@ import * as json from "@siteimprove/alfa-json";
  *
  * @privateRemarks
  * The rules tree is actually a forest of nodes since many elements do not share
- * any matched selector. We do not artificially root it as it would add little
- * value, there is no natural root, and creating a fake root would actually
- * make processing the tree harder (as we would need to handle that fake node).
- * As a consequence, when inserting new rules in the tree, we may start a
- * completely new tree in that forest. This means that rules may be inserted
- * without a parent, and adding a single rule must be a static method of the
- * Node class, rater than an instance method.
+ * any matched selector. We artificially root it at a fake node with no
+ * declarations, hence no impact on style. The fake root is not serialized.
  *
  * @public
  */
@@ -83,14 +78,22 @@ export class RuleTree implements Serializable {
     return new RuleTree();
   }
 
-  // Keeping this allow a more streamlined tree vocabulary later on.
-  private readonly _root: Option<RuleTree.Node> = None;
-  private readonly _children: Array<RuleTree.Node> = [];
+  // Rooting the forest at a fake node with no declaration.
+  private readonly _root: RuleTree.Node = RuleTree.Node.of(
+    {
+      rule: h.rule.style("*", []),
+      selector: Universal.of(None),
+      declarations: [],
+    },
+    [],
+    None,
+  );
 
   private constructor() {}
 
   /**
-   * Add a bunch of items to the tree.
+   * Add a bunch of items to the tree. Returns the last node created, which is
+   * the highest precedence node for that list of items.
    *
    * @remarks
    * The rules are assumed to be:
@@ -103,46 +106,23 @@ export class RuleTree implements Serializable {
    * match the same element; nor to the origin or order of the rules to check
    * cascade order).
    *
+   * @privateRemarks
+   * This is not stateless. Adding rules to a rule tree does mutate it!
+   *
    * @internal
    */
-  public add(rules: Iterable<RuleTree.Item>): Option<RuleTree.Node> {
+  public add(rules: Iterable<RuleTree.Item>): RuleTree.Node {
     let parent = this._root;
-    let children = this._children;
-    let needNewTree = true;
 
     for (const item of rules) {
-      // If the lowest precedence item has the same selector as one of the
-      // existing tree in the forest, then we can insert the items in this
-      // tree, so we select that child as parent for the next step.
-      // Otherwise, we create a new tree in the forest, and add the rule to it.
-      for (const child of children) {
-        if (child.selector.equals(item.selector)) {
-          parent = Option.of(child.add(item));
-          needNewTree = false;
-        }
-      }
-
-      if (needNewTree) {
-        parent = Option.of(RuleTree.Node.of(item, children, parent));
-      }
-
-      // Insert the next rule into the current parent, using the returned rule
-      // entry as the parent of the next rule to insert. This way, we gradually
-      // build up a path of rule entries and then return the final entry to the
-      // caller.
-      // Because all rules match the same element (by calling assumption), we
-      // do want to build them as a single path into the tree (baring some sharing).
-      // So each rule essentially creates a child of the preceding one.
-
-      // parent was just build as a non-None Option.
-      children = parent.getUnsafe().children;
+      parent = parent.add(item);
     }
 
     return parent;
   }
 
   public toJSON(): RuleTree.JSON {
-    return this._children.map((node) => node.toJSON());
+    return this._root.children.map((node) => node.toJSON());
   }
 }
 
@@ -158,6 +138,10 @@ export namespace RuleTree {
    * @remarks
    * Only the selector is used to actually build the structure. The rule and
    * declarations are just data passed along to be used when resolving style.
+   *
+   * If the selector does not match the one in the rule, behavior is not specified.
+   *
+   * @internal
    */
   export interface Item {
     rule: Rule;
@@ -240,10 +224,12 @@ export namespace RuleTree {
      * the rule was added.
      *
      * @remarks
-     *
      * Initially (for each element), the potential parent is None as
      * it is possible to create a new tree in the forest. The forest itself
      * is the children.
+     *
+     * @privateRemarks
+     * This is not stateless. Adding a rule to a node mutates the node!
      *
      * @internal
      */

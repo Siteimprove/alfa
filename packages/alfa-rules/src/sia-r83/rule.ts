@@ -503,16 +503,13 @@ function getUsedMediaRules(
     return Sequence.empty();
   }
 
-  return Cascade.of(root, device)
-    .get(element, context)
-    .map((node) =>
-      // Get all nodes (style rules) in the RuleTree that affect the element;
-      // for each of these rules, get all ancestor media rules in the CSS tree.
-      ancestorsInRuleTree(node).flatMap((node) =>
-        ancestorMediaRules(node.rule),
-      ),
-    )
-    .getOrElse(Sequence.empty);
+  const node = Cascade.of(root, device).get(element, context);
+
+  // Get all nodes (style rules) in the RuleTree that affect the element;
+  // for each of these rules, get all ancestor media rules in the CSS tree.
+  return ancestorsInRuleTree(node).flatMap((node) =>
+    ancestorMediaRules(node.rule),
+  );
 }
 
 function usesMediaRule(
