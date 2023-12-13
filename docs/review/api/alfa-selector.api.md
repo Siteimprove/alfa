@@ -192,7 +192,7 @@ export namespace Complex {
         right: Simple.JSON | Compound.JSON;
     }
     const // @internal (undocumented)
-    parseComplex: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Compound | Simple | Complex, string, []>;
+    parseComplex: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Simple | Compound | Complex, string, []>;
 }
 
 // @public (undocumented)
@@ -229,7 +229,7 @@ export namespace Compound {
         selectors: Array_2<Simple.JSON>;
     }
     const // @internal (undocumented)
-    parseCompound: (parseSelector: () => Parser<Slice<Token>, Absolute, string>) => Parser<Slice<Token>, Compound | Simple, string, []>;
+    parseCompound: (parseSelector: () => Parser<Slice<Token>, Absolute, string>) => Parser<Slice<Token>, Simple | Compound, string, []>;
 }
 
 // @public (undocumented)
@@ -356,7 +356,7 @@ export namespace List {
         selectors: Array_2<Serializable.ToJSON<T>>;
     }
     const // @internal (undocumented)
-    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, List<Compound | Simple | Complex>, string, []>;
+    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, List<Simple | Compound | Complex>, string, []>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Active" needs to be exported by the entry point index.d.ts
