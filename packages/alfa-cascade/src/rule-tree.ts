@@ -106,8 +106,23 @@ export class RuleTree implements Serializable {
   public add(rules: Iterable<RuleTree.Item>): Option<RuleTree.Node> {
     let parent = this._root;
     let children = this._children;
+    let needNewBranch = true;
 
     for (const item of rules) {
+      // If the lowest precedence item has the same selector as one of the
+      // existing tree in the forest, then we can insert the items in this
+      // tree, so we select that child as parent for the next step.
+      for (const child of children) {
+        if (child.selector.equals(item.selector)) {
+          parent = Option.of(RuleTree.Node.add(item, child));
+          needNewBranch = false;
+        }
+      }
+
+      if (needNewBranch) {
+        parent = Option.of(RuleTree.Node.of(item, children, parent));
+      }
+
       // Insert the next rule into the current parent, using the returned rule
       // entry as the parent of the next rule to insert. This way, we gradually
       // build up a path of rule entries and then return the final entry to the
@@ -115,7 +130,7 @@ export class RuleTree implements Serializable {
       // Because all rules match the same element (by calling assumption), we
       // do want to build them as a single path into the tree (baring some sharing).
       // So each rule essentially creates a child of the preceding one.
-      parent = Option.of(RuleTree.Node.add(item, children, parent));
+      // parent = Option.of(RuleTree.Node.add(item, children, parent));
 
       // parent was just build as a non-None Option.
       children = parent.getUnsafe().children;
@@ -228,11 +243,7 @@ export namespace RuleTree {
      * it is possible to create a new tree in the forest. The forest itself
      * is the children.
      */
-    public static add(
-      item: Item,
-      children: Array<Node>,
-      parent: Option<Node>,
-    ): Node {
+    public static add(item: Item, parent: Node): Node {
       // If we have already encountered the exact same selector (physical identity),
       // we're done.
       // This occurs when the exact same style rule matches several elements.
@@ -241,8 +252,8 @@ export namespace RuleTree {
       // the rule tree has completely been shared so far).
       // Notably, because it is the exact same selector, it controls the exact
       // same rules, so all the information is already in the tree.
-      if (parent.some((parent) => parent._selector === item.selector)) {
-        return parent.get();
+      if (parent._selector === item.selector) {
+        return parent;
       }
 
       // Otherwise, if there is a child with a selector that looks the same,
@@ -250,18 +261,18 @@ export namespace RuleTree {
       // This happens, e.g., when encountering two ".foo" selectors. They are
       // then sorted by order of appearance (by assumption) and the later must
       // be a descendant of the former as it has higher precedence.
-      for (const child of children) {
+      for (const child of parent._children) {
         if (child._selector.equals(item.selector)) {
-          return this.add(item, child._children, Option.of(child));
+          return Node.add(item, child);
         }
       }
 
       // Otherwise, the selector is brand new (for this branch of the tree).
       // Add it as a new child and return it (further rules in the same batch,
       // matching the same element, should be added as its child.
-      const node = Node.of(item, [], parent);
+      const node = Node.of(item, [], Option.of(parent));
 
-      children.push(node);
+      parent._children.push(node);
 
       return node;
     }
