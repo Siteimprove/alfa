@@ -1,6 +1,7 @@
 import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Specificity } from "../../specificity";
@@ -18,8 +19,12 @@ export class Class extends WithName<"class"> {
   public static of(name: string): Class {
     return new Class(name);
   }
+
+  protected readonly _key: Option<Class>;
   private constructor(name: string) {
     super("class", name, Specificity.of(0, 1, 0));
+
+    this._key = Option.of(this);
   }
 
   public matches(element: Element): boolean {

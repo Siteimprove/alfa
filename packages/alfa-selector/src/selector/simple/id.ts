@@ -1,5 +1,6 @@
 import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Specificity } from "../../specificity";
@@ -18,8 +19,12 @@ export class Id extends WithName<"id"> {
     return new Id(name);
   }
 
+  protected readonly _key: Option<Id>;
+
   private constructor(name: string) {
     super("id", name, Specificity.of(1, 0, 0));
+
+    this._key = Option.of(this);
   }
 
   public matches(element: Element): boolean {

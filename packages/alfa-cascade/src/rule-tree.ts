@@ -1,42 +1,45 @@
-import { Declaration, Rule } from "@siteimprove/alfa-dom";
+import { Declaration, h, Rule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Selector } from "@siteimprove/alfa-selector";
+import { Selector, Universal } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
 /**
  * The rule tree is a data structure used for storing the rules that match each
- * element when computing cascade for a document. Rules are stored in order
- * from most to least specific; rules lower in the tree are therefore more
- * specific than rules higher in the tree. Each element gets a pointer to the
- * most specific rule it matched and can then follow pointers up the rule tree
- * to locate decreasingly specific rules that the element also matches. This
- * allows elements that share matched rules to also share a path in the rule
- * tree.
+ * element when computing cascade for a document.
  *
- * As an example, consider elements A and B. Element A matches rules `div`,
- * `.foo` and `.foo[href]` whereas element B matches rules `div`, `.foo` and
- * `.bar`. The naïve approach to associating these matched rules with elements
+ * @remarks
+ * Rules are stored in order from most to least precedence (according to cascade
+ * sorting order); rules lower in the tree have therefore higher precedence than
+ * rules higher in the tree. Each element gets a pointer to the highest
+ * precedence rule it matched and can then follow pointers up the rule tree to
+ * locate rules of decreasing precedence that the element also matches. This
+ * allows elements that share matched rules to also share a path in the rule tree.
+ *
+ * As an example, consider elements `A = <div class="foo" href="A">`  and
+ * `B = <div class="foo bar">`. Element A matches rules `div`, `.foo` and
+ * `.foo[href]` whereas element B matches rules `div`, `.foo` and `.bar`. The
+ * naïve approach to associating these matched rules with elements
  * would be to associate an array of `[".foo[href]", ".foo", "div"]` with
- * element A and an array of `[".foo", "div"]` with element B. With the rule
- * tree, we instead start by inserting the matched rules for element A into the
- * tree:
+ * element A and an array of `[".bar", ".foo", "div"]` with element B. With the
+ * rule tree, we instead start by inserting the matched rules for element A into
+ * the tree:
  *
  *  "div"
  *  +-- ".foo"
- *      +-- ".foo[href]"
+ *      +-- ".foo[href]"     (A)
  *
  * We then associate rule `".foo[href]"` with element A and insert the matched
  * rules for element B into the tree:
  *
  *  "div"
  *  +-- ".foo"
- *      +-- ".foo[href]"
- *      +-- ".bar"
+ *      +-- ".foo[href]"    (A)
+ *      +-- ".bar"          (B)
  *
- * We then associate the rule `".bar"` with element B and we're done. Notice how
+ * We then associate the rule `".bar"` with element B, and we're done. Notice how
  * the tree branches at rule `".foo"`, allowing the two elements to share the
  * path in the rule tree that they have in common. This approach is conceptually
  * similar to associating arrays of matched rules with elements with the
@@ -46,7 +49,27 @@ import * as json from "@siteimprove/alfa-json";
  * rules that match most elements, such as the universal selector or `html` and
  * `body`.
  *
+ * Note that the resulting rule tree depends greatly on the order in which
+ * rules are inserted, which must then be by increasing precedence. The `.foo`
+ * and `.bar` selectors are not directly comparable; the example above assumes
+ * that the `.bar` rule came later in the style sheet order and therefore wins
+ * the cascade sort by "Order of Appearance". This information is not available
+ * for the rule tree which relies on rules being fed to it in increasing
+ * precedence for each element. If `.bar` came before `.foo`, the resulting tree
+ * would be (notice that `.foo` is not sharable anymore):
+ *
+ * "div"
+ * +-- ".foo"
+ *     +-- ".foo[href]"   (A)
+ * +-- ".bar"
+ *     +-- ".foo"         (B)
+ *
  * {@link http://doc.servo.org/style/rule_tree/struct.RuleTree.html}
+ *
+ * @privateRemarks
+ * The rules tree is actually a forest of nodes since many elements do not share
+ * any matched selector. We artificially root it at a fake node with no
+ * declarations, hence no impact on style. The fake root is not serialized.
  *
  * @public
  */
@@ -55,38 +78,55 @@ export class RuleTree implements Serializable {
     return new RuleTree();
   }
 
-  private readonly _children: Array<RuleTree.Node> = [];
+  // Rooting the forest at a fake node with no declaration.
+  private readonly _root: RuleTree.Node = RuleTree.Node.of(
+    {
+      rule: h.rule.style("*", []),
+      selector: Universal.of(None),
+      declarations: [],
+    },
+    [],
+    None,
+  );
 
   private constructor() {}
 
-  public add(
-    rules: Iterable<{
-      rule: Rule;
-      selector: Selector;
-      declarations: Iterable<Declaration>;
-    }>,
-  ): Option<RuleTree.Node> {
-    let parent: Option<RuleTree.Node> = None;
-    let children = this._children;
+  /**
+   * Add a bunch of items to the tree. Returns the last node created, which is
+   * the highest precedence node for that list of items.
+   *
+   * @remarks
+   * The rules are assumed to be:
+   * 1. all matching the same element; and
+   * 2. ordered in increasing cascade sort order (lower precedence rule first); and
+   * 3. be all the rules matching that element.
+   *
+   * It is up to the caller to ensure this is true, as the tree itself cannot
+   * check that (notably, it has no access to the DOM tree to ensure the rules
+   * match the same element; nor to the origin or order of the rules to check
+   * cascade order).
+   *
+   * @privateRemarks
+   * This is stateful. Adding rules to a rule tree does mutate it!
+   *
+   * @internal
+   */
+  public add(rules: Iterable<RuleTree.Item>): RuleTree.Node {
+    let parent = this._root;
 
-    for (const { rule, selector, declarations } of rules) {
+    for (const item of rules) {
       // Insert the next rule into the current parent, using the returned rule
       // entry as the parent of the next rule to insert. This way, we gradually
       // build up a path of rule entries and then return the final entry to the
       // caller.
-      parent = Option.of(
-        RuleTree.Node.add(rule, selector, declarations, children, parent),
-      );
-
-      // parent was just build as a non-None Option.
-      children = parent.getUnsafe().children;
+      parent = parent.add(item);
     }
 
     return parent;
   }
 
   public toJSON(): RuleTree.JSON {
-    return this._children.map((node) => node.toJSON());
+    return this._root.children.map((node) => node.toJSON());
   }
 }
 
@@ -96,11 +136,35 @@ export class RuleTree implements Serializable {
 export namespace RuleTree {
   export type JSON = Array<Node.JSON>;
 
+  /**
+   * Items stored in rule tree nodes.
+   *
+   * @remarks
+   * Only the selector is used to actually build the structure. The rule and
+   * declarations are just data passed along to be used when resolving style.
+   *
+   * If the selector does not match the one in the rule, behavior is not specified.
+   *
+   * @internal
+   */
+  export interface Item {
+    rule: Rule;
+    selector: Selector;
+    declarations: Iterable<Declaration>;
+  }
+
+  export namespace Item {
+    export interface JSON {
+      [key: string]: json.JSON;
+      rule: Rule.JSON;
+      selector: Selector.JSON;
+      declarations: Array<Declaration.JSON>;
+    }
+  }
+
   export class Node implements Serializable {
     public static of(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
+      { rule, selector, declarations }: Item,
       children: Array<Node>,
       parent: Option<Node>,
     ): Node {
@@ -159,43 +223,58 @@ export namespace RuleTree {
       yield* this.ancestors();
     }
 
-    public static add(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
-      children: Array<Node>,
-      parent: Option<Node>,
-    ): Node {
-      if (parent.some((parent) => parent._selector === selector)) {
-        return parent.get();
+    /**
+     * Adds style rule to a node in the tree. Returns the node where the rule
+     * was added.
+     *
+     * @privateRemarks
+     * This is stateful. Adding a rule to a node mutates the node!
+     *
+     * @internal
+     */
+    public add(item: Item): Node {
+      // If we have already encountered the exact same selector (physical identity),
+      // we're done.
+      // This occurs when the exact same style rule matches several elements.
+      // The first element added to the rule tree will add that rule, subsequent
+      // ones will just reuse it (if the path so far in the rule tree has
+      // completely been shared).
+      // Notably, because it is the exact same selector, it controls the exact
+      // same rules, so all the information is already in the tree.
+      if (this._selector === item.selector) {
+        return this;
       }
 
-      for (const child of children) {
-        if (child._selector.equals(selector)) {
-          return this.add(
-            rule,
-            selector,
-            declarations,
-            child._children,
-            Option.of(child),
-          );
+      // Otherwise, if there is a child with an identical but separate selector,
+      // recursively add to it.
+      // This happens, e.g., when encountering two ".foo" selectors. They are
+      // then sorted by order of appearance (by assumption) and the later must
+      // be a descendant of the former as it has higher precedence.
+      for (const child of this._children) {
+        if (child._selector.equals(item.selector)) {
+          return child.add(item);
         }
       }
 
-      const node = Node.of(rule, selector, declarations, [], parent);
+      // Otherwise, the selector is brand new (for this branch of the tree).
+      // Add it as a new child and return it (further rules in the same batch,
+      // matching the same element, should be added as its child.
+      const node = Node.of(item, [], Option.of(this));
 
-      children.push(node);
+      this._children.push(node);
 
       return node;
     }
 
     public toJSON(): Node.JSON {
       return {
-        rule: this._rule.toJSON(),
-        selector: this._selector.toJSON(),
-        declarations: [...this._declarations].map((declaration) =>
-          declaration.toJSON(),
-        ),
+        item: {
+          rule: this._rule.toJSON(),
+          selector: this._selector.toJSON(),
+          declarations: [...this._declarations].map((declaration) =>
+            declaration.toJSON(),
+          ),
+        },
         children: this._children.map((node) => node.toJSON()),
       };
     }
@@ -204,9 +283,7 @@ export namespace RuleTree {
   export namespace Node {
     export interface JSON {
       [key: string]: json.JSON;
-      rule: Rule.JSON;
-      selector: Selector.JSON;
-      declarations: Array<Declaration.JSON>;
+      item: Item.JSON;
       children: Array<Node.JSON>;
     }
   }

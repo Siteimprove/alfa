@@ -16,15 +16,12 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import {
-  Attribute,
   Class,
   Combinator,
   Complex,
   Compound,
   Context,
   Id,
-  PseudoClass,
-  PseudoElement,
   Selector,
   Type,
 } from "@siteimprove/alfa-selector";
@@ -37,13 +34,10 @@ import { AncestorFilter } from "./ancestor-filter";
 const { equals, property } = Predicate;
 const { and } = Refinement;
 
-const { isAttribute } = Attribute;
 const { isClass } = Class;
 const { isComplex } = Complex;
 const { isCompound } = Compound;
 const { isId } = Id;
-const { isPseudoClass } = PseudoClass;
-const { isPseudoElement } = PseudoElement;
 const { isType } = Type;
 
 const isDescendantSelector = and(
@@ -58,16 +52,16 @@ const isDescendantSelector = and(
  * Cascading origins defined in ascending order; origins defined first have
  * lower precedence than origins defined later.
  *
- * {@link https://www.w3.org/TR/css-cascade/#cascading-origins}
+ * {@link https://www.w3.org/TR/css-cascade-5/#cascading-origins}
  */
 enum Origin {
   /**
-   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-ua}
+   * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-ua}
    */
   UserAgent = 1,
 
   /**
-   * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-author}
+   * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-author}
    */
   Author = 2,
 }
@@ -208,16 +202,14 @@ export namespace SelectorMap {
     ): void => {
       const node = Node.of(rule, selector, declarations, origin, order);
 
-      const keySelector = getKeySelector(selector);
+      const keySelector = selector.key;
 
-      if (keySelector === null) {
+      if (!keySelector.isSome()) {
         other.push(node);
-      } else if (isId(keySelector)) {
-        ids.add(keySelector.name, node);
-      } else if (isClass(keySelector)) {
-        classes.add(keySelector.name, node);
       } else {
-        types.add(keySelector.name, node);
+        const key = keySelector.get();
+        const buckets = { id: ids, class: classes, type: types };
+        buckets[key.type].add(key.name, node);
       }
     };
 
@@ -428,30 +420,6 @@ export namespace SelectorMap {
   export namespace Bucket {
     export type JSON = Array<[string, Array<SelectorMap.Node.JSON>]>;
   }
-}
-
-/**
- * Given a selector, get the right-most ID, class, or type selector, i.e. the
- * key selector. If the right-most selector is a compound selector, then the
- * left-most ID, class, or type selector of the compound selector is returned.
- */
-function getKeySelector(selector: Selector): Id | Class | Type | null {
-  if (isId(selector) || isClass(selector) || isType(selector)) {
-    return selector;
-  }
-
-  if (isCompound(selector)) {
-    return Iterable.find(
-      Iterable.map(selector.selectors, getKeySelector),
-      (selector) => selector !== null,
-    ).getOr(null);
-  }
-
-  if (isComplex(selector)) {
-    return getKeySelector(selector.right);
-  }
-
-  return null;
 }
 
 /**

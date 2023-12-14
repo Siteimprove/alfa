@@ -1,6 +1,7 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
@@ -11,7 +12,7 @@ import { Specificity } from "../specificity";
 import { Combinator } from "./combinator";
 import { Compound } from "./compound";
 import { Selector } from "./selector";
-import type { Simple } from "./simple";
+import type { Class, Id, Simple, Type } from "./simple";
 
 const { isElement } = Element;
 const { map, pair, zeroOrMore } = Parser;
@@ -33,6 +34,7 @@ export class Complex extends Selector<"complex"> {
   private readonly _combinator: Combinator;
   private readonly _left: Simple | Compound | Complex;
   private readonly _right: Simple | Compound;
+  protected readonly _key: Option<Id | Class | Type>;
 
   private constructor(
     combinator: Combinator,
@@ -43,6 +45,8 @@ export class Complex extends Selector<"complex"> {
     this._combinator = combinator;
     this._left = left;
     this._right = right;
+
+    this._key = right.key;
   }
 
   public get combinator(): Combinator {
