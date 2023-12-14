@@ -56,7 +56,7 @@ import * as json from "@siteimprove/alfa-json";
  * the cascade sort by "Order of Appearance". This information is not available
  * for the rule tree which relies on rules being fed to it in increasing
  * precedence for each element. If `.bar` came before `.foo`, the resulting tree
- * would be:
+ * would be (notice that `.foo` is not sharable anymore):
  *
  * "div"
  * +-- ".foo"
