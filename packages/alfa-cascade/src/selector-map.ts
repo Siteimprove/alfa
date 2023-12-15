@@ -20,6 +20,7 @@ import {
   Complex,
   Context,
   Selector,
+  Specificity,
 } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
@@ -216,7 +217,7 @@ export namespace SelectorMap {
             add(rule, part, rule.style, {
               origin,
               order,
-              specificity: selector.specificity.value,
+              specificity: selector.specificity,
               // specificity: selector.specificity,
             });
           }
@@ -293,7 +294,7 @@ export namespace SelectorMap {
     private readonly _declarations: Iterable<Declaration>;
     private readonly _origin: Origin;
     private readonly _order: number;
-    private readonly _specificity: number;
+    private readonly _specificity: Specificity;
 
     private constructor(
       rule: Rule,
@@ -313,8 +314,8 @@ export namespace SelectorMap {
       // Otherwise, use the specificity of the selector.
       this._specificity =
         StyleRule.isStyleRule(rule) && rule.hint
-          ? 0
-          : selector.specificity.value;
+          ? Specificity.empty()
+          : selector.specificity;
     }
 
     public get rule(): Rule {
@@ -337,7 +338,7 @@ export namespace SelectorMap {
       return this._order;
     }
 
-    public get specificity(): number {
+    public get specificity(): Specificity {
       return this._specificity;
     }
 
@@ -350,7 +351,7 @@ export namespace SelectorMap {
         ),
         origin: this._origin,
         order: this._order,
-        specificity: this._specificity,
+        specificity: this._specificity.toJSON(),
       };
     }
   }
@@ -363,7 +364,7 @@ export namespace SelectorMap {
       declarations: Array<Declaration.JSON>;
       origin: Origin;
       order: number;
-      specificity: number;
+      specificity: Specificity.JSON;
     }
   }
 

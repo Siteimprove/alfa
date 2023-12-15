@@ -1,3 +1,5 @@
+import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
+
 /**
  * Cascading origins defined in ascending order; origins defined first have
  * lower precedence than origins defined later.
@@ -16,4 +18,11 @@ export enum Origin {
    * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-author}
    */
   Author = 2,
+}
+
+/**
+ * @public
+ */
+export namespace Origin {
+  export const compare: Comparer<Origin> = Comparable.compareNumber;
 }

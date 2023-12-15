@@ -176,6 +176,8 @@ export namespace Comparable {
 
   /**
    * Compare tuples lexicographically
+   *
+   * {@link https://en.wikipedia.org/wiki/Lexicographic_order}
    */
   export function compareLexicographically<T extends Array<unknown>>(
     a: T,

@@ -1,9 +1,9 @@
-import type { Comparer, Comparison } from "@siteimprove/alfa-comparable";
-import type { Specificity } from "@siteimprove/alfa-selector/src/specificity";
-import type { Origin } from "./origin";
+import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
+import { Specificity } from "@siteimprove/alfa-selector/src/specificity";
+import { Origin } from "./origin";
 
 /**
- * Store the varuipous components needed for precedence in the Cascade Sorting Order.
+ * Store the various components needed for precedence in the Cascade Sorting Order.
  *
  * {@link https://drafts.csswg.org/css-cascade-5/#cascade-sort}
  *
@@ -11,8 +11,7 @@ import type { Origin } from "./origin";
  */
 export interface Precedence {
   origin: Origin;
-  // specificity: Specificity;
-  specificity: number;
+  specificity: Specificity;
   order: number;
 }
 
@@ -22,29 +21,10 @@ export interface Precedence {
  * @public
  */
 export namespace Precedence {
-  export const comparer: Comparer<Precedence> = (a, b) => {
-    // First priority: Origin
-    if (a.origin !== b.origin) {
-      return a.origin < b.origin ? -1 : a.origin > b.origin ? 1 : 0;
-    }
-
-    // Second priority: Specificity.
-    // if (a.specificity.value !== b.specificity.value) {
-    //   return a.specificity.value < b.specificity.value
-    //     ? -1
-    //     : a.specificity.value > b.specificity.value
-    //       ? 1
-    //       : 0;
-    // }
-    if (a.specificity !== b.specificity) {
-      return a.specificity < b.specificity
-        ? -1
-        : a.specificity > b.specificity
-          ? 1
-          : 0;
-    }
-
-    // Third priority: Order.
-    return a.order < b.order ? -1 : a.order > b.order ? 1 : 0;
-  };
+  export const comparer: Comparer<Precedence> = (a, b) =>
+    Comparable.compareLexicographically<[Origin, Specificity, number]>(
+      [a.origin, a.specificity, a.order],
+      [b.origin, b.specificity, b.order],
+      [Origin.compare, Specificity.compare, Comparable.compareNumber],
+    );
 }
