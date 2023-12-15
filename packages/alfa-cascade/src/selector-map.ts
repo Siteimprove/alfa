@@ -216,7 +216,8 @@ export namespace SelectorMap {
             add(rule, part, rule.style, {
               origin,
               order,
-              specificity: selector.specificity,
+              specificity: selector.specificity.value,
+              // specificity: selector.specificity,
             });
           }
         }

@@ -9,6 +9,7 @@ import { Context } from "@siteimprove/alfa-selector";
 import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
+import { Precedence } from "./precedence";
 import { RuleTree } from "./rule-tree";
 import { SelectorMap } from "./selector-map";
 import { UserAgent } from "./user-agent";
@@ -81,7 +82,9 @@ export class Cascade implements Serializable {
       .get(element, Cache.empty)
       .get(context, () =>
         this._rules.add(
-          this._selectors.get(element, context, filter).sort(compare),
+          this._selectors
+            .get(element, context, filter)
+            .sort(Precedence.comparer),
         ),
       );
   }
@@ -108,25 +111,3 @@ export namespace Cascade {
     rules: RuleTree.JSON;
   }
 }
-
-/**
- * {@link https://drafts.csswg.org/css-cascade-5/#cascade-sort}
- */
-const compare: Comparer<SelectorMap.Node> = (a, b) => {
-  // First priority: Origin
-  if (a.origin !== b.origin) {
-    return a.origin < b.origin ? -1 : a.origin > b.origin ? 1 : 0;
-  }
-
-  // Second priority: Specificity.
-  if (a.specificity !== b.specificity) {
-    return a.specificity < b.specificity
-      ? -1
-      : a.specificity > b.specificity
-        ? 1
-        : 0;
-  }
-
-  // Third priority: Order.
-  return a.order < b.order ? -1 : a.order > b.order ? 1 : 0;
-};
