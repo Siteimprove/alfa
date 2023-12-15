@@ -7,6 +7,7 @@
   },
   "files": [
     "src/ancestor-filter.ts",
+    "src/block.ts",
     "src/cascade.ts",
     "src/index.ts",
     "src/precedence/index.ts",

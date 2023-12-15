@@ -332,7 +332,7 @@ export namespace Style {
           for (const node of cascade
             .get(element, context)
             .inclusiveAncestors()) {
-            declarations.push(...[...node.declarations].reverse());
+            declarations.push(...[...node.block.declarations].reverse());
           }
         }
 

@@ -1,10 +1,12 @@
 import { Declaration, h, Rule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Selector, Universal } from "@siteimprove/alfa-selector";
+import { Selector, Specificity, Universal } from "@siteimprove/alfa-selector";
 
-import * as json from "@siteimprove/alfa-json";
+import { Block } from "./block";
+import { Origin } from "./precedence";
 
 /**
  * The rule tree is a data structure used for storing the rules that match each
@@ -80,11 +82,11 @@ export class RuleTree implements Serializable {
 
   // Rooting the forest at a fake node with no declaration.
   private readonly _root: RuleTree.Node = RuleTree.Node.of(
-    {
-      rule: h.rule.style("*", []),
-      selector: Universal.of(None),
-      declarations: [],
-    },
+    Block.of(h.rule.style("*", []), Universal.of(None), [], {
+      origin: Origin.UserAgent,
+      specificity: Specificity.empty(),
+      order: Infinity,
+    }),
     [],
     None,
   );
@@ -111,15 +113,15 @@ export class RuleTree implements Serializable {
    *
    * @internal
    */
-  public add(rules: Iterable<RuleTree.Item>): RuleTree.Node {
+  public add(rules: Iterable<Block>): RuleTree.Node {
     let parent = this._root;
 
-    for (const item of rules) {
+    for (const block of rules) {
       // Insert the next rule into the current parent, using the returned rule
       // entry as the parent of the next rule to insert. This way, we gradually
       // build up a path of rule entries and then return the final entry to the
       // caller.
-      parent = parent.add(item);
+      parent = parent.add(block);
     }
 
     return parent;
@@ -136,71 +138,31 @@ export class RuleTree implements Serializable {
 export namespace RuleTree {
   export type JSON = Array<Node.JSON>;
 
-  /**
-   * Items stored in rule tree nodes.
-   *
-   * @remarks
-   * Only the selector is used to actually build the structure. The rule and
-   * declarations are just data passed along to be used when resolving style.
-   *
-   * If the selector does not match the one in the rule, behavior is not specified.
-   *
-   * @internal
-   */
-  export interface Item {
-    rule: Rule;
-    selector: Selector;
-    declarations: Iterable<Declaration>;
-  }
-
-  export namespace Item {
-    export interface JSON {
-      [key: string]: json.JSON;
-      rule: Rule.JSON;
-      selector: Selector.JSON;
-      declarations: Array<Declaration.JSON>;
-    }
-  }
-
   export class Node implements Serializable {
     public static of(
-      { rule, selector, declarations }: Item,
+      block: Block,
       children: Array<Node>,
       parent: Option<Node>,
     ): Node {
-      return new Node(rule, selector, declarations, children, parent);
+      return new Node(block, children, parent);
     }
 
-    private readonly _rule: Rule;
-    private readonly _selector: Selector;
-    private readonly _declarations: Iterable<Declaration>;
+    private readonly _block: Block;
     private readonly _children: Array<Node>;
     private readonly _parent: Option<Node>;
 
     private constructor(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
+      block: Block,
       children: Array<Node>,
       parent: Option<Node>,
     ) {
-      this._rule = rule;
-      this._selector = selector;
-      this._declarations = declarations;
+      this._block = block;
       this._children = children;
       this._parent = parent;
     }
 
-    public get rule(): Rule {
-      return this._rule;
-    }
-
-    public get selector(): Selector {
-      return this._selector;
-    }
-
-    public get declarations(): Iterable<Declaration> {
-      return this._declarations;
+    public get block(): Block {
+      return this._block;
     }
 
     public get children(): Array<Node> {
@@ -232,7 +194,7 @@ export namespace RuleTree {
      *
      * @internal
      */
-    public add(item: Item): Node {
+    public add(block: Block): Node {
       // If we have already encountered the exact same selector (physical identity),
       // we're done.
       // This occurs when the exact same style rule matches several elements.
@@ -241,7 +203,7 @@ export namespace RuleTree {
       // completely been shared).
       // Notably, because it is the exact same selector, it controls the exact
       // same rules, so all the information is already in the tree.
-      if (this._selector === item.selector) {
+      if (this._block.selector === block.selector) {
         return this;
       }
 
@@ -251,15 +213,15 @@ export namespace RuleTree {
       // then sorted by order of appearance (by assumption) and the later must
       // be a descendant of the former as it has higher precedence.
       for (const child of this._children) {
-        if (child._selector.equals(item.selector)) {
-          return child.add(item);
+        if (child._block.selector.equals(block.selector)) {
+          return child.add(block);
         }
       }
 
       // Otherwise, the selector is brand new (for this branch of the tree).
       // Add it as a new child and return it (further rules in the same batch,
       // matching the same element, should be added as its child.
-      const node = Node.of(item, [], Option.of(this));
+      const node = Node.of(block, [], Option.of(this));
 
       this._children.push(node);
 
@@ -268,13 +230,7 @@ export namespace RuleTree {
 
     public toJSON(): Node.JSON {
       return {
-        item: {
-          rule: this._rule.toJSON(),
-          selector: this._selector.toJSON(),
-          declarations: [...this._declarations].map((declaration) =>
-            declaration.toJSON(),
-          ),
-        },
+        block: this._block.toJSON(),
         children: this._children.map((node) => node.toJSON()),
       };
     }
@@ -283,7 +239,7 @@ export namespace RuleTree {
   export namespace Node {
     export interface JSON {
       [key: string]: json.JSON;
-      item: Item.JSON;
+      block: Block.JSON;
       children: Array<Node.JSON>;
     }
   }

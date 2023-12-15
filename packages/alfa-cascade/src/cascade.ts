@@ -1,5 +1,4 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Comparer } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -9,6 +8,7 @@ import { Context } from "@siteimprove/alfa-selector";
 import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
+import { Block } from "./block";
 import { Precedence } from "./precedence";
 import { RuleTree } from "./rule-tree";
 import { SelectorMap } from "./selector-map";
@@ -82,9 +82,7 @@ export class Cascade implements Serializable {
       .get(element, Cache.empty)
       .get(context, () =>
         this._rules.add(
-          this._selectors
-            .get(element, context, filter)
-            .sort(Precedence.comparer),
+          this._selectors.get(element, context, filter).sort(Block.compare),
         ),
       );
   }

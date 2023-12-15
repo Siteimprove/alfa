@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -26,6 +27,7 @@ import {
 import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
+import { Block } from "./block";
 import { type Order, Origin, type Precedence } from "./precedence";
 import { UserAgent } from "./user-agent";
 
@@ -82,7 +84,7 @@ export class SelectorMap implements Serializable {
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
-    other: Array<SelectorMap.Node>,
+    other: Array<Block>,
   ): SelectorMap {
     return new SelectorMap(ids, classes, types, other);
   }
@@ -90,13 +92,13 @@ export class SelectorMap implements Serializable {
   private readonly _ids: SelectorMap.Bucket;
   private readonly _classes: SelectorMap.Bucket;
   private readonly _types: SelectorMap.Bucket;
-  private readonly _other: Array<SelectorMap.Node>;
+  private readonly _other: Array<Block>;
 
   private constructor(
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
-    other: Array<SelectorMap.Node>,
+    other: Array<Block>,
   ) {
     this._ids = ids;
     this._classes = classes;
@@ -108,10 +110,10 @@ export class SelectorMap implements Serializable {
     element: Element,
     context: Context,
     filter: Option<AncestorFilter>,
-  ): Array<SelectorMap.Node> {
-    const nodes: Array<SelectorMap.Node> = [];
+  ): Array<Block> {
+    const nodes: Array<Block> = [];
 
-    const collect = (candidates: Iterable<SelectorMap.Node>) => {
+    const collect = (candidates: Iterable<Block>) => {
       for (const node of candidates) {
         if (
           filter.none((filter) =>
@@ -163,7 +165,7 @@ export namespace SelectorMap {
     ids: Bucket.JSON;
     classes: Bucket.JSON;
     types: Bucket.JSON;
-    other: Array<Node.JSON>;
+    other: Array<Block.JSON>;
   }
 
   export function from(sheets: Iterable<Sheet>, device: Device): SelectorMap {
@@ -177,24 +179,31 @@ export namespace SelectorMap {
     const ids = Bucket.empty();
     const classes = Bucket.empty();
     const types = Bucket.empty();
-    const other: Array<Node> = [];
+    const other: Array<Block> = [];
 
     const add = (
-      rule: Rule,
+      rule: StyleRule,
       selector: Selector,
       declarations: Iterable<Declaration>,
       { origin, order }: Precedence,
     ): void => {
-      const node = Node.of(rule, selector, declarations, origin, order);
+      const block = Block.of(rule, selector, Array.from(declarations), {
+        origin,
+        order,
+        specificity:
+          StyleRule.isStyleRule(rule) && rule.hint
+            ? Specificity.empty()
+            : selector.specificity,
+      });
 
       const keySelector = selector.key;
 
       if (!keySelector.isSome()) {
-        other.push(node);
+        other.push(block);
       } else {
         const key = keySelector.get();
         const buckets = { id: ids, class: classes, type: types };
-        buckets[key.type].add(key.name, node);
+        buckets[key.type].add(key.name, block);
       }
     };
 
@@ -278,108 +287,108 @@ export namespace SelectorMap {
     return SelectorMap.of(ids, classes, types, other);
   }
 
-  export class Node implements Serializable {
-    public static of(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
-      origin: Origin,
-      order: Order,
-    ): Node {
-      return new Node(rule, selector, declarations, origin, order);
-    }
-
-    private readonly _rule: Rule;
-    private readonly _selector: Selector;
-    private readonly _declarations: Iterable<Declaration>;
-    private readonly _origin: Origin;
-    private readonly _order: Order;
-    private readonly _specificity: Specificity;
-
-    private constructor(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
-      origin: Origin,
-      order: Order,
-    ) {
-      this._rule = rule;
-      this._selector = selector;
-      this._declarations = declarations;
-      this._origin = origin;
-      this._order = order;
-
-      // For style rules that are presentational hints, the specificity will
-      // always be 0 regardless of the selector.
-      // Otherwise, use the specificity of the selector.
-      this._specificity =
-        StyleRule.isStyleRule(rule) && rule.hint
-          ? Specificity.empty()
-          : selector.specificity;
-    }
-
-    public get rule(): Rule {
-      return this._rule;
-    }
-
-    public get selector(): Selector {
-      return this._selector;
-    }
-
-    public get declarations(): Iterable<Declaration> {
-      return this._declarations;
-    }
-
-    public get origin(): Origin {
-      return this._origin;
-    }
-
-    public get order(): Order {
-      return this._order;
-    }
-
-    public get specificity(): Specificity {
-      return this._specificity;
-    }
-
-    public toJSON(): Node.JSON {
-      return {
-        rule: this._rule.toJSON(),
-        selector: this._selector.toJSON(),
-        declarations: [...this._declarations].map((declaration) =>
-          declaration.toJSON(),
-        ),
-        origin: this._origin,
-        order: this._order,
-        specificity: this._specificity.toJSON(),
-      };
-    }
-  }
-
-  export namespace Node {
-    export interface JSON {
-      [key: string]: json.JSON;
-      rule: Rule.JSON;
-      selector: Selector.JSON;
-      declarations: Array<Declaration.JSON>;
-      origin: Origin.JSON;
-      order: Order.JSON;
-      specificity: Specificity.JSON;
-    }
-  }
+  // export class Node implements Serializable {
+  //   public static of(
+  //     rule: Rule,
+  //     selector: Selector,
+  //     declarations: Iterable<Declaration>,
+  //     origin: Origin,
+  //     order: Order,
+  //   ): Node {
+  //     return new Node(rule, selector, declarations, origin, order);
+  //   }
+  //
+  //   private readonly _rule: Rule;
+  //   private readonly _selector: Selector;
+  //   private readonly _declarations: Iterable<Declaration>;
+  //   private readonly _origin: Origin;
+  //   private readonly _order: Order;
+  //   private readonly _specificity: Specificity;
+  //
+  //   private constructor(
+  //     rule: Rule,
+  //     selector: Selector,
+  //     declarations: Iterable<Declaration>,
+  //     origin: Origin,
+  //     order: Order,
+  //   ) {
+  //     this._rule = rule;
+  //     this._selector = selector;
+  //     this._declarations = declarations;
+  //     this._origin = origin;
+  //     this._order = order;
+  //
+  //     // For style rules that are presentational hints, the specificity will
+  //     // always be 0 regardless of the selector.
+  //     // Otherwise, use the specificity of the selector.
+  //     this._specificity =
+  //       StyleRule.isStyleRule(rule) && rule.hint
+  //         ? Specificity.empty()
+  //         : selector.specificity;
+  //   }
+  //
+  //   public get rule(): Rule {
+  //     return this._rule;
+  //   }
+  //
+  //   public get selector(): Selector {
+  //     return this._selector;
+  //   }
+  //
+  //   public get declarations(): Iterable<Declaration> {
+  //     return this._declarations;
+  //   }
+  //
+  //   public get origin(): Origin {
+  //     return this._origin;
+  //   }
+  //
+  //   public get order(): Order {
+  //     return this._order;
+  //   }
+  //
+  //   public get specificity(): Specificity {
+  //     return this._specificity;
+  //   }
+  //
+  //   public toJSON(): Node.JSON {
+  //     return {
+  //       rule: this._rule.toJSON(),
+  //       selector: this._selector.toJSON(),
+  //       declarations: [...this._declarations].map((declaration) =>
+  //         declaration.toJSON(),
+  //       ),
+  //       origin: this._origin,
+  //       order: this._order,
+  //       specificity: this._specificity.toJSON(),
+  //     };
+  //   }
+  // }
+  //
+  // export namespace Node {
+  //   export interface JSON {
+  //     [key: string]: json.JSON;
+  //     rule: Rule.JSON;
+  //     selector: Selector.JSON;
+  //     declarations: Array<Declaration.JSON>;
+  //     origin: Origin.JSON;
+  //     order: Order.JSON;
+  //     specificity: Specificity.JSON;
+  //   }
+  // }
 
   export class Bucket implements Serializable {
     public static empty(): Bucket {
       return new Bucket(new Map());
     }
 
-    private readonly _nodes: Map<string, Array<SelectorMap.Node>>;
+    private readonly _nodes: Map<string, Array<Block>>;
 
-    private constructor(nodes: Map<string, Array<SelectorMap.Node>>) {
+    private constructor(nodes: Map<string, Array<Block>>) {
       this._nodes = nodes;
     }
 
-    public add(key: string, node: SelectorMap.Node): void {
+    public add(key: string, node: Block): void {
       const nodes = this._nodes.get(key);
 
       if (nodes === undefined) {
@@ -389,7 +398,7 @@ export namespace SelectorMap {
       }
     }
 
-    public get(key: string): Array<SelectorMap.Node> {
+    public get(key: string): Array<Block> {
       const nodes = this._nodes.get(key);
 
       if (nodes === undefined) {
@@ -408,6 +417,6 @@ export namespace SelectorMap {
   }
 
   export namespace Bucket {
-    export type JSON = Array<[string, Array<SelectorMap.Node.JSON>]>;
+    export type JSON = Array<[string, Array<Block.JSON>]>;
   }
 }
