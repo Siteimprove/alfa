@@ -20,6 +20,9 @@
   "dependencies": {
     "@siteimprove/alfa-refinement": "workspace:^0.70.0"
   },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^0.70.0"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"

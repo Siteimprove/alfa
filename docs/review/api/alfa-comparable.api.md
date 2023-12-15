@@ -22,6 +22,7 @@ export namespace Comparable {
     export function compareBoolean(a: boolean, b: boolean): Comparison;
     // (undocumented)
     export function compareComparable<T extends Comparable<U>, U = T>(a: T, b: U): Comparison;
+    export function compareLexicographically<T extends Array<unknown>>(a: T, b: T, comparer: TupleComparer<T>): Comparison;
     // (undocumented)
     export function compareNumber(a: number, b: number): Comparison;
     // (undocumented)
@@ -46,6 +47,12 @@ export enum Comparison {
     // (undocumented)
     Less = -1
 }
+
+// @public
+export type TupleComparer<T extends Array<unknown>> = T extends [
+infer Head,
+...infer Tail
+] ? [Comparer<Head>, ...TupleComparer<Tail>] : [];
 
 // (No @packageDocumentation comment for this package)
 

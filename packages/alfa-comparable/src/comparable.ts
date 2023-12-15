@@ -1,4 +1,5 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Comparer, TupleComparer } from "./comparer";
 
 import { Comparison } from "./comparison";
 
@@ -168,6 +169,25 @@ export namespace Comparable {
 
     if (a > b) {
       return Comparison.Greater;
+    }
+
+    return Comparison.Equal;
+  }
+
+  /**
+   * Compare tuples lexicographically
+   */
+  export function compareLexicographically<T extends Array<unknown>>(
+    a: T,
+    b: T,
+    comparer: TupleComparer<T>,
+  ): Comparison {
+    for (let i = 0; i < a.length; i++) {
+      const comparison = (comparer[i] as Comparer<T[typeof i]>)(a[i], b[i]);
+      if (comparison === Comparison.Equal) {
+        continue;
+      }
+      return comparison;
     }
 
     return Comparison.Equal;
