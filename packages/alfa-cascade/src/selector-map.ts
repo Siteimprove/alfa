@@ -26,7 +26,7 @@ import {
 import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
-import { Origin, type Precedence } from "./precedence";
+import { type Order, Origin, type Precedence } from "./precedence";
 import { UserAgent } from "./user-agent";
 
 const { equals, property } = Predicate;
@@ -172,7 +172,7 @@ export namespace SelectorMap {
     // order in which they were declared, information related to ordering will
     // otherwise no longer be available once rules from different buckets are
     // combined.
-    let order = 0;
+    let order: Order = 0;
 
     const ids = Bucket.empty();
     const classes = Bucket.empty();
@@ -284,7 +284,7 @@ export namespace SelectorMap {
       selector: Selector,
       declarations: Iterable<Declaration>,
       origin: Origin,
-      order: number,
+      order: Order,
     ): Node {
       return new Node(rule, selector, declarations, origin, order);
     }
@@ -293,7 +293,7 @@ export namespace SelectorMap {
     private readonly _selector: Selector;
     private readonly _declarations: Iterable<Declaration>;
     private readonly _origin: Origin;
-    private readonly _order: number;
+    private readonly _order: Order;
     private readonly _specificity: Specificity;
 
     private constructor(
@@ -301,7 +301,7 @@ export namespace SelectorMap {
       selector: Selector,
       declarations: Iterable<Declaration>,
       origin: Origin,
-      order: number,
+      order: Order,
     ) {
       this._rule = rule;
       this._selector = selector;
@@ -334,7 +334,7 @@ export namespace SelectorMap {
       return this._origin;
     }
 
-    public get order(): number {
+    public get order(): Order {
       return this._order;
     }
 
@@ -362,8 +362,8 @@ export namespace SelectorMap {
       rule: Rule.JSON;
       selector: Selector.JSON;
       declarations: Array<Declaration.JSON>;
-      origin: Origin;
-      order: number;
+      origin: Origin.JSON;
+      order: Order.JSON;
       specificity: Specificity.JSON;
     }
   }

@@ -24,5 +24,7 @@ export enum Origin {
  * @public
  */
 export namespace Origin {
+  export type JSON = Origin;
+
   export const compare: Comparer<Origin> = Comparable.compareNumber;
 }

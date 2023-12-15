@@ -10,6 +10,7 @@
     "src/cascade.ts",
     "src/index.ts",
     "src/precedence/index.ts",
+    "src/precedence/order.ts",
     "src/precedence/origin.ts",
     "src/precedence/precedence.ts",
     "src/rule-tree.ts",

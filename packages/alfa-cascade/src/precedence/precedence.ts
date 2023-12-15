@@ -1,5 +1,6 @@
 import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
 import { Specificity } from "@siteimprove/alfa-selector/src/specificity";
+import { Order } from "./order";
 import { Origin } from "./origin";
 
 /**
@@ -12,7 +13,7 @@ import { Origin } from "./origin";
 export interface Precedence {
   origin: Origin;
   specificity: Specificity;
-  order: number;
+  order: Order;
 }
 
 /**
@@ -22,9 +23,9 @@ export interface Precedence {
  */
 export namespace Precedence {
   export const comparer: Comparer<Precedence> = (a, b) =>
-    Comparable.compareLexicographically<[Origin, Specificity, number]>(
+    Comparable.compareLexicographically<[Origin, Specificity, Order]>(
       [a.origin, a.specificity, a.order],
       [b.origin, b.specificity, b.order],
-      [Origin.compare, Specificity.compare, Comparable.compareNumber],
+      [Origin.compare, Specificity.compare, Order.compare],
     );
 }
