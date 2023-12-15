@@ -68,24 +68,34 @@ enum Origin {
 
 /**
  * The selector map is a data structure used for providing indexed access to the
- * rules that are likely to match a given element. Rules are indexed according
- * to their key selector, which is the selector that a given element MUST match
- * in order for the rest of the selector to also match. A key selector can be
- * either an ID selector, a class selector, or a type selector. In a relative
- * selector, the key selector will be the right-most selector, e.g. given
- * `main .foo + div` the key selector would be `div`. In a compound selector,
- * the key selector will be left-most selector, e.g. given `div.foo` the key
- * selector would also be `div`.
+ * rules that are likely to match a given element.
  *
+ * @remarks
+ * Rules are indexed according to their key selector, which is the selector
+ * that a given element MUST match in order for the rest of the selector to also
+ * match. A key selector can be either an ID selector, a class selector, or a
+ * type selector. In a relative selector, the key selector will be the
+ * right-most selector, e.g. given `main .foo + div` the key selector would be
+ * `div`. In a compound selector, the key selector will be left-most selector,
+ * e.g. given `div.foo` the key selector would also be `div`.
+ *
+ * Any element matching a selector must match its key selector. E.g., anything
+ * matching `main .foo + div` must be a `div`. Reciprocally, a `<div class"bar">`
+ * can only match selectors whose key selector is `div` or `bar`. Thus, filtering
+ * on key selectors decrease the search space for matching selector before the
+ * computation heavy steps of traversing the DOM to loo for siblings or ancestors.
+ *
+ * @privateRemarks
  * Internally, the selector map has three maps and a list in one of which it
  * will store a given selector. The three maps are used for selectors for which
  * a key selector exist; one for ID selectors, one for class selectors, and one
- * for type selectors. The list is used for any remaining selectors. When
- * looking up the rules that match an element, the ID, class names, and type of
- * the element are used for looking up potentially matching selectors in the
- * three maps. Selector matching is then performed against this list of
- * potentially matching selectors, plus the list of remaining selectors, in
- * order to determine the final set of matches.
+ * for type selectors. The list is used for any remaining selectors (e.g.,
+ * pseudo-classes and -elements selectors have no key selector). When looking
+ * up the rules that match an element, the ID, class names, and type of the
+ * element are used for looking up potentially matching selectors in the three
+ * maps. Selector matching is then performed against this list of potentially
+ * matching selectors, plus the list of remaining selectors, in order to
+ * determine the final set of matches.
  *
  * {@link http://doc.servo.org/style/selector_map/struct.SelectorMap.html}
  *
@@ -132,7 +142,7 @@ export class SelectorMap implements Serializable {
             Iterable.every(
               node.selector,
               and(isDescendantSelector, (selector) =>
-                canReject(selector.left, filter),
+                filter.canReject(selector.left),
               ),
             ),
           ) &&
@@ -420,38 +430,4 @@ export namespace SelectorMap {
   export namespace Bucket {
     export type JSON = Array<[string, Array<SelectorMap.Node.JSON>]>;
   }
-}
-
-/**
- * Check if a selector can be rejected based on an ancestor filter.
- */
-function canReject(selector: Selector, filter: AncestorFilter): boolean {
-  if (isId(selector) || isClass(selector) || isType(selector)) {
-    return !filter.matches(selector);
-  }
-
-  if (isCompound(selector)) {
-    // Compound selectors are right-leaning, so recurse to the left first as it
-    // is likely the shortest branch.
-    return Iterable.some(selector.selectors, (selector) =>
-      canReject(selector, filter),
-    );
-  }
-
-  if (isComplex(selector)) {
-    const { combinator } = selector;
-
-    if (
-      combinator === Combinator.Descendant ||
-      combinator === Combinator.DirectDescendant
-    ) {
-      // Complex selectors are left-leaning, so recurse to the right first as it
-      // is likely the shortest branch.
-      return (
-        canReject(selector.right, filter) || canReject(selector.left, filter)
-      );
-    }
-  }
-
-  return false;
 }

@@ -1,6 +1,15 @@
 import { Element } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Class, Id, Selector, Type } from "@siteimprove/alfa-selector";
+import {
+  Class,
+  Combinator,
+  Complex,
+  Compound,
+  Id,
+  Selector,
+  Type,
+} from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -43,13 +52,14 @@ import * as json from "@siteimprove/alfa-json";
  * the filter acts as a quick guaranteed rejection mechanism, but actual match
  * test is needed to have an accurate final result.
  *
- * NB: None of the operations of the ancestor filter are idempotent to avoid
- * keeping track of more information than strictly necessary. This is however
- * not a problem when ancestor filters are used during top-down traversal of the
- * DOM, in which case an element is only ever visited once. If used elsewhere
- * care must however be taken when adding and removing elements; elements must
- * only ever be added and removed once, and an element must not be removed
- * before being added.
+ * @privateRemarks
+ * Ancestor filters are mutable! None of the operations of the ancestor filter
+ * are idempotent to avoid keeping track of more information than strictly
+ * necessary. This is however not a problem when ancestor filters are used
+ * during top-down traversal of the DOM, in which case an element is only ever
+ * visited once. If used elsewhere care must however be taken when adding and
+ * removing elements; elements must only ever be added and removed once, and
+ * an element must not be removed before being added.
  *
  * {@link http://doc.servo.org/style/bloom/struct.StyleBloom.html}
  *
@@ -106,6 +116,44 @@ export class AncestorFilter implements Serializable<AncestorFilter.JSON> {
     return false;
   }
 
+  /**
+   * Check if a selector can be rejected based on the ancestor filter.
+   */
+  public canReject(selector: Selector): boolean {
+    // If the selector is a simple selector, it must be in the filter in order to match.
+    if (Id.isId(selector) || Class.isClass(selector) || Type.isType(selector)) {
+      return !this.matches(selector);
+    }
+
+    // If the selector is a compound selector, each of its component must be in
+    // the filter in order to match
+    if (Compound.isCompound(selector)) {
+      // Compound selectors are right-leaning, so recurse to the left first as it
+      // is likely the shortest branch.
+      return Iterable.some(selector.selectors, (selector) =>
+        this.canReject(selector),
+      );
+    }
+
+    // If the selector is a complex selector with a descendant combinator, rejecting
+    // one side of the combinator is enough to reject the full selector.
+    // Sibling combinator are not handled by ancestor filters.
+    if (Complex.isComplex(selector)) {
+      const { combinator } = selector;
+
+      if (
+        combinator === Combinator.Descendant ||
+        combinator === Combinator.DirectDescendant
+      ) {
+        // Complex selectors are left-leaning, so recurse to the right first as it
+        // is likely the shortest branch.
+        return this.canReject(selector.right) || this.canReject(selector.left);
+      }
+    }
+
+    return false;
+  }
+
   public toJSON(): AncestorFilter.JSON {
     return {
       ids: this._ids.toJSON(),
@@ -129,15 +177,20 @@ export namespace AncestorFilter {
 
 /**
  * An ancestor bucket stores entries with associated counts in order to keep
- * track of how many elements are associated with the entry. When the number of
- * elements associated with a given entry drops to zero then the entry can be
- * removed from the bucket.
+ * track of how many elements are associated with the entry.
+ *
+ * @remarks
+ * When the number of elements associated with a given entry drops to zero then
+ * the entry can be removed from the bucket.
  *
  * While most browser implementations use bloom filters for ancestor filters, we
  * can make do with native maps for two reasons: Memory is not much of a concern
  * as we only ever compute cascade once for every context, and native maps are
  * actually much faster than any bloom filter we might be able to cook up in
  * plain JavaScript.
+ *
+ * @privateRemarks
+ * Buckets are mutable! Adding or removing elements happens by side effect.
  *
  * @internal
  */
