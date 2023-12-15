@@ -16,29 +16,22 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import {
-  Class,
   Combinator,
   Complex,
-  Compound,
   Context,
-  Id,
   Selector,
-  Type,
 } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { UserAgent } from "./user-agent";
 import { AncestorFilter } from "./ancestor-filter";
+import { Origin, type Precedence } from "./precedence";
+import { UserAgent } from "./user-agent";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
 
-const { isClass } = Class;
 const { isComplex } = Complex;
-const { isCompound } = Compound;
-const { isId } = Id;
-const { isType } = Type;
 
 const isDescendantSelector = and(
   isComplex,
@@ -47,24 +40,6 @@ const isDescendantSelector = and(
     equals(Combinator.Descendant, Combinator.DirectDescendant),
   ),
 );
-
-/**
- * Cascading origins defined in ascending order; origins defined first have
- * lower precedence than origins defined later.
- *
- * {@link https://www.w3.org/TR/css-cascade-5/#cascading-origins}
- */
-enum Origin {
-  /**
-   * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-ua}
-   */
-  UserAgent = 1,
-
-  /**
-   * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-author}
-   */
-  Author = 2,
-}
 
 /**
  * The selector map is a data structure used for providing indexed access to the
@@ -207,8 +182,7 @@ export namespace SelectorMap {
       rule: Rule,
       selector: Selector,
       declarations: Iterable<Declaration>,
-      origin: Origin,
-      order: number,
+      { origin, order }: Precedence,
     ): void => {
       const node = Node.of(rule, selector, declarations, origin, order);
 
@@ -239,7 +213,11 @@ export namespace SelectorMap {
           order++;
 
           for (const part of selector) {
-            add(rule, part, rule.style, origin, order);
+            add(rule, part, rule.style, {
+              origin,
+              order,
+              specificity: selector.specificity,
+            });
           }
         }
       }
