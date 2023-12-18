@@ -82,11 +82,7 @@ export class RuleTree implements Serializable {
 
   // Rooting the forest at a fake node with no declaration.
   private readonly _root: RuleTree.Node = RuleTree.Node.of(
-    Block.of(h.rule.style("*", []), Universal.of(None), [], {
-      origin: Origin.UserAgent,
-      specificity: Specificity.empty(),
-      order: Infinity,
-    }),
+    Block.empty(),
     [],
     None,
   );

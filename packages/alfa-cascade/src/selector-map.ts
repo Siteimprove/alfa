@@ -227,7 +227,6 @@ export namespace SelectorMap {
               origin,
               order,
               specificity: selector.specificity,
-              // specificity: selector.specificity,
             });
           }
         }

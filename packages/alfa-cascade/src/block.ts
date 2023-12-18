@@ -1,14 +1,18 @@
 import { Array } from "@siteimprove/alfa-array";
 import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
-import { Declaration, Rule, StyleRule } from "@siteimprove/alfa-dom";
+import { Lexer } from "@siteimprove/alfa-css";
+import { Declaration, h, Rule, StyleRule } from "@siteimprove/alfa-dom";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
-import { Selector } from "@siteimprove/alfa-selector";
+import { None } from "@siteimprove/alfa-option";
+import type { Result } from "@siteimprove/alfa-result";
+import { Selector, Specificity, Universal } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Precedence } from "./precedence";
+import { Origin, Precedence } from "./precedence";
+import { UserAgent } from "./user-agent";
 
 /**
  * While resolving cascade, a Block is a style rule that has been expanded with
@@ -39,6 +43,23 @@ export class Block implements Equatable, Serializable<Block.JSON> {
     precedence: Precedence,
   ): Block {
     return new Block(rule, selector, Array.from(declarations), precedence);
+  }
+
+  private static _empty = new Block(
+    h.rule.style("*", []),
+    Universal.of(None),
+    [],
+    {
+      origin: Origin.UserAgent,
+      specificity: Specificity.empty(),
+      order: Infinity,
+    },
+  );
+  /**
+   * @internal
+   */
+  public static empty(): Block {
+    return this._empty;
   }
 
   private readonly _rule: StyleRule;
@@ -108,6 +129,38 @@ export namespace Block {
     selector: Selector.JSON;
     declarations: Array<Declaration.JSON>;
     precedence: Precedence.JSON;
+  }
+
+  /**
+   * Build Blocks from a style rule.
+   *
+   * @remarks
+   * Order is relative to the list of all style rules and thus cannot be inferred
+   * from the rule itself.
+   *
+   * A single rule creates more than one block. Rules with a list selector are
+   * split into their components. E.g., a `div, span { color: red }` rule will
+   * create one block for `div { color: red }`, and a similar one for `span`.
+   * Since all these blocks are declared at the same time, and are declaring
+   * the exact same declarations, they can safely share order.
+   */
+  export function from(
+    rule: StyleRule,
+    order: number,
+  ): Result<Iterable<Block>, string> {
+    return Selector.parse(Lexer.lex(rule.selector)).map(([_, selectors]) => {
+      const origin = rule.owner.includes(UserAgent)
+        ? Origin.UserAgent
+        : Origin.Author;
+
+      return [...selectors].map((selector) =>
+        Block.of(rule, selector, rule.style, {
+          origin,
+          order,
+          specificity: selector.specificity,
+        }),
+      );
+    });
   }
 
   export const compare: Comparer<Block> = (a, b) =>
