@@ -1,5 +1,13 @@
 # @siteimprove/alfa-rules
 
+## 0.71.0
+
+### Minor Changes
+
+- **Breaking:** Diagnostic `WithAccessibleName` has been renamed to `WithName` and the property `accessibleName` to `name`. ([#1537](https://github.com/Siteimprove/alfa/pull/1537))
+
+  This is to conform to existing diagnostics that refer to accessible name as name and clients that are expecting this convention.
+
 ## 0.70.0
 
 ### Minor Changes
