@@ -218,3 +218,14 @@ test(`evaluate() is inapplicable to streaming audios`, async (t) => {
     [inapplicable(R23, Outcome.Mode.SemiAuto)],
   );
 });
+
+test(`evaluate() is inapplicable when is-audio-streaming is false and is-playing is unanswered`, async (t) => {
+  const target = <audio src="foo.mp3" controls autoplay />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(
+    await evaluate(R23, { document }, oracle({ "is-audio-streaming": false })),
+    [inapplicable(R23, Outcome.Mode.SemiAuto)],
+  );
+});
