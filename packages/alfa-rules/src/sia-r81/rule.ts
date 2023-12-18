@@ -20,8 +20,8 @@ import { referenceSameResource } from "../common/predicate";
 
 import { normalize } from "../common/normalize";
 
-import { Scope, Stability } from "../tags";
 import { WithAccessibleName } from "../common/diagnostic";
+import { Scope, Stability } from "../tags";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
@@ -92,6 +92,12 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 "reference-equivalent-resources",
                 target,
                 `Do the links resolve to equivalent resources?`,
+                {
+                  diagnostic: WithAccessibleName.of(
+                    `Do the links resolve to equivalent resources?`,
+                    name,
+                  ),
+                },
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

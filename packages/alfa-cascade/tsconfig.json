@@ -1,13 +1,19 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "@siteimprove/alfa-dom"
+  },
   "files": [
     "src/ancestor-filter.ts",
     "src/cascade.ts",
     "src/index.ts",
     "src/rule-tree.ts",
     "src/selector-map.ts",
-    "src/user-agent.ts"
+    "src/user-agent.ts",
+    "test/ancestor-filter.spec.tsx",
+    "test/rule-tree.spec.ts"
   ],
   "references": [
     { "path": "../alfa-cache" },
@@ -21,6 +27,7 @@
     { "path": "../alfa-option" },
     { "path": "../alfa-predicate" },
     { "path": "../alfa-refinement" },
-    { "path": "../alfa-selector" }
+    { "path": "../alfa-selector" },
+    { "path": "../alfa-test" }
   ]
 }

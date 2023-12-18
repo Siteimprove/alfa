@@ -7,14 +7,7 @@
   ],
   "reviewers": ["team:alfa-owners"],
   "dependencyDashboard": true,
-  "allowedPostUpgradeCommands": ["^CI=false yarn dedupe$"],
-  "postUpgradeTasks": {
-    "description": "Dedupe yarn.lock after updating packages.",
-    "task": "CI=false yarn dedupe",
-    "executionMode": "branch",
-    "fileMatch": ["yarn.lock"]
-  },
-
+  "postUpdateOptions": ["yarnDedupeHighest"],
   "packageRules": [
     {
       "description": "Run major update for non-Alfa packages.These are never automerged and require human approval.",

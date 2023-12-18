@@ -23,6 +23,7 @@ test(".parse() accepts the `of selector` syntax", (t) => {
         namespace: null,
         name: "div",
         specificity: { a: 0, b: 0, c: 1 },
+        key: "div",
       },
       specificity: { a: 0, b: 1, c: 1 },
     });

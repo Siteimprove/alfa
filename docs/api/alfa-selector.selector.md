@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-export type Selector = Selector.Simple | Selector.Compound | Selector.Complex | Selector.Relative | Selector.List;
+export type Selector = Simple | Compound | Complex | Relative | List;
 ```
-**References:** [Selector.Simple](./alfa-selector.selector.simple.md)<!-- -->, [Selector.Compound](./alfa-selector.selector.compound.md)<!-- -->, [Selector.Complex](./alfa-selector.selector.complex.md)<!-- -->, [Selector.Relative](./alfa-selector.selector.relative.md)<!-- -->, [Selector.List](./alfa-selector.selector.list.md)
+**References:** [Relative](./alfa-selector.relative.md)
 

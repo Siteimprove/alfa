@@ -14,9 +14,9 @@ function partiallyResolve(resolver: PartialResolver): (value: Basic) => Partiall
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | PartialResolver |  |
+|  resolver | [PartialResolver](./alfa-css.shape.basic.partialresolver.md) |  |
 
 **Returns:**
 
-(value: [Basic](./alfa-css.shape.basic.md)<!-- -->) =&gt; PartiallyResolved
+(value: [Basic](./alfa-css.shape.basic.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.shape.basic.partiallyresolved.md)
 

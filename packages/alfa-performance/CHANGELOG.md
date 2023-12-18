@@ -1,5 +1,11 @@
 # @siteimprove/alfa-performance
 
+## 0.70.0
+
+### Patch Changes
+
+- **Fixed:** A bug caused runtime exceptions when calling `Performance.of()` in node v 19.0.0 and above has been fixed. ([#1513](https://github.com/Siteimprove/alfa/pull/1513))
+
 ## 0.69.0
 
 ## 0.68.0

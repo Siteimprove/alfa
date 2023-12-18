@@ -352,7 +352,6 @@ export namespace Style {
     export type Computed<N extends Name> = Longhands.Computed<N>;
     // (undocumented)
     export type Declared<N extends Name> = Longhands.Declared<N>;
-    // (undocumented)
     export function from(element: Element, device: Device, context?: Context): Style;
     // (undocumented)
     export type Inherited<N extends Name> = Longhands.Inherited<N>;

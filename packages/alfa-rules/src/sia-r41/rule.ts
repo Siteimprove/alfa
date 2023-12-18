@@ -1,6 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -16,9 +17,8 @@ import { referenceSameResource } from "../common/predicate";
 
 import { normalize } from "../common/normalize";
 
-import { Scope, Stability } from "../tags";
 import { WithAccessibleName } from "../common/diagnostic";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Scope, Stability } from "../tags";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
@@ -77,6 +77,12 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 "reference-equivalent-resources",
                 target,
                 `Do the links resolve to equivalent resources?`,
+                {
+                  diagnostic: WithAccessibleName.of(
+                    `Do the links resolve to equivalent resources?`,
+                    name,
+                  ),
+                },
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

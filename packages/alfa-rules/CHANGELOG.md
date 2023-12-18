@@ -1,5 +1,15 @@
 # @siteimprove/alfa-rules
 
+## 0.70.0
+
+### Minor Changes
+
+- **Fixed:** Accessible name is now also recorded as in #1502 in can't tell outcomes for rules R15, R39, R41 and R81 ([#1529](https://github.com/Siteimprove/alfa/pull/1529))
+
+### Patch Changes
+
+- **Fixed:** SIA-R10 now correctly accepts the `one-time-code` token. ([#1517](https://github.com/Siteimprove/alfa/pull/1517))
+
 ## 0.69.0
 
 ### Minor Changes

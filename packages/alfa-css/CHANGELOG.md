@@ -1,5 +1,19 @@
 # @siteimprove/alfa-css
 
+## 0.70.0
+
+### Minor Changes
+
+- **Breaking:** `Image.partiallyResolve()` and `Shape.partiallyResolve()` functions has been replaced by instance methods of the same name. ([#1510](https://github.com/Siteimprove/alfa/pull/1510))
+
+- **Added:** `Function.parse` now also accepts a `Thunk` as body parser. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+  This notably allows to build recursive parsers by wrapping them in continuation.
+
+### Patch Changes
+
+- **Added:** all `Value` subtype now correctly implement the `(Partially)Resovable` interfaces. ([#1510](https://github.com/Siteimprove/alfa/pull/1510))
+
 ## 0.69.0
 
 ### Minor Changes

@@ -1,11 +1,11 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 import * as dom from "@siteimprove/alfa-dom";
 
@@ -16,8 +16,8 @@ import { Question } from "../common/act/question";
 import { referenceSameResource } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
-import { normalize } from "../common/normalize";
 import { WithAccessibleName } from "../common/diagnostic";
+import { normalize } from "../common/normalize";
 
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasName, hasNamespace } = Element;
@@ -72,6 +72,12 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 "reference-equivalent-resources",
                 target,
                 "Do the <iframe> elements embed equivalent resources?",
+                {
+                  diagnostic: WithAccessibleName.of(
+                    "Do the <iframe> elements embed equivalent resources?",
+                    name,
+                  ),
+                },
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,

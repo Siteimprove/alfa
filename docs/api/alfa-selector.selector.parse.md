@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parse: Parser<Slice<Token>, Simple | Compound | Complex | List<Simple | Compound | Complex>, string>
+parse: CSSParser<Absolute>
 ```

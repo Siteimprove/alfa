@@ -14,7 +14,7 @@ import { SelectorMap } from "./selector-map";
 import { UserAgent } from "./user-agent";
 
 /**
- * {@link https://drafts.csswg.org/css-cascade/}
+ * {@link https://drafts.csswg.org/css-cascade-5/}
  *
  * @public
  */
@@ -37,7 +37,7 @@ export class Cascade implements Serializable {
 
   private readonly _entries = Cache.empty<
     Element,
-    Cache<Context, Option<RuleTree.Node>>
+    Cache<Context, RuleTree.Node>
   >();
 
   private constructor(root: Document | Shadow, device: Device) {
@@ -76,7 +76,7 @@ export class Cascade implements Serializable {
     element: Element,
     context: Context = Context.empty(),
     filter: Option<AncestorFilter> = None,
-  ): Option<RuleTree.Node> {
+  ): RuleTree.Node {
     return this._entries
       .get(element, Cache.empty)
       .get(context, () =>
@@ -110,7 +110,7 @@ export namespace Cascade {
 }
 
 /**
- * {@link https://drafts.csswg.org/css-cascade/#cascade-sort}
+ * {@link https://drafts.csswg.org/css-cascade-5/#cascade-sort}
  */
 const compare: Comparer<SelectorMap.Node> = (a, b) => {
   // First priority: Origin
@@ -123,8 +123,8 @@ const compare: Comparer<SelectorMap.Node> = (a, b) => {
     return a.specificity < b.specificity
       ? -1
       : a.specificity > b.specificity
-      ? 1
-      : 0;
+        ? 1
+        : 0;
   }
 
   // Third priority: Order.

@@ -110,6 +110,8 @@ export class Class extends WithName<"class"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    protected readonly _key: Option<Class>;
+    // (undocumented)
     matches(element: Element): boolean;
     // (undocumented)
     static of(name: string): Class;
@@ -161,6 +163,8 @@ export class Complex extends Selector_2<"complex"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    protected readonly _key: Option<Id | Class | Type>;
+    // (undocumented)
     get left(): Simple | Compound | Complex;
     // (undocumented)
     matches(element: Element, context?: Context): boolean;
@@ -199,6 +203,8 @@ export class Compound extends Selector_2<"compound"> {
     equals(value: Compound): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    // (undocumented)
+    protected readonly _key: Option<Id | Class | Type>;
     // (undocumented)
     get length(): number;
     // (undocumented)
@@ -295,6 +301,8 @@ export class Id extends WithName<"id"> {
     equals(value: Id): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    // (undocumented)
+    protected readonly _key: Option<Id>;
     // (undocumented)
     matches(element: Element): boolean;
     // (undocumented)
@@ -494,6 +502,8 @@ export class Type extends WithName<"type"> {
     equals(value: Type): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    // (undocumented)
+    protected readonly _key: Option<Type>;
     // (undocumented)
     matches(element: Element): boolean;
     // (undocumented)
