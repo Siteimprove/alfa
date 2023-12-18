@@ -1,3 +1,4 @@
+import type { Simple } from "@siteimprove/alfa-selector";
 import { Assertions, test } from "@siteimprove/alfa-test";
 
 import { parse } from "@siteimprove/alfa-selector/test/parser";
@@ -95,7 +96,7 @@ function match(
     "hashFooSel",
     "hashBarSel",
   ] as const) {
-    t.equal(filter.matches(selectors[sel]), matching.includes(sel));
+    t.equal(filter.matches(selectors[sel] as Simple), matching.includes(sel));
   }
 }
 

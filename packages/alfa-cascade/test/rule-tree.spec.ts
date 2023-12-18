@@ -1,6 +1,11 @@
 import { h } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
-import { Specificity } from "@siteimprove/alfa-selector";
+import {
+  Complex,
+  Compound,
+  type Simple,
+  Specificity,
+} from "@siteimprove/alfa-selector";
 
 import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
@@ -10,11 +15,16 @@ import { Block } from "../src/block";
 import { Origin } from "../src/precedence";
 
 function fakeBlock(selector: string): Block {
-  return Block.of(h.rule.style(selector, []), parse(selector), [], {
-    origin: Origin.UserAgent,
-    specificity: Specificity.empty(),
-    order: -1,
-  });
+  return Block.of(
+    h.rule.style(selector, []),
+    parse(selector) as Compound | Complex | Simple,
+    [],
+    {
+      origin: Origin.UserAgent,
+      specificity: Specificity.empty(),
+      order: -1,
+    },
+  );
 }
 
 function fakeJSON(selector: string): Block.JSON {
