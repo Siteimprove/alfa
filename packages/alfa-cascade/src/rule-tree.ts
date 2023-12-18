@@ -1,12 +1,9 @@
-import { Declaration, h, Rule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Selector, Specificity, Universal } from "@siteimprove/alfa-selector";
 
 import { Block } from "./block";
-import { Origin } from "./precedence";
 
 /**
  * The rule tree is a data structure used for storing the rules that match each

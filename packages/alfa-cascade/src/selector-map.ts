@@ -2,9 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
-  Declaration,
   Element,
-  h,
   ImportRule,
   MediaRule,
   Rule,
@@ -17,20 +15,13 @@ import { Media } from "@siteimprove/alfa-media";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import {
-  Combinator,
-  Complex,
-  Context,
-  Selector,
-  Specificity,
-} from "@siteimprove/alfa-selector";
+import { Combinator, Complex, Context } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
 import { Block } from "./block";
-import { type Order, Origin, type Precedence } from "./precedence";
-import { UserAgent } from "./user-agent";
+import { type Order } from "./precedence";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
@@ -115,19 +106,20 @@ export class SelectorMap implements Serializable {
     const nodes: Array<Block> = [];
 
     const collect = (candidates: Iterable<Block>) => {
-      for (const node of candidates) {
+      for (const block of candidates) {
         if (
+          // If the ancestor filter can reject the selector, escape
           filter.none((filter) =>
             Iterable.every(
-              node.selector,
+              block.selector,
               and(isDescendantSelector, (selector) =>
                 filter.canReject(selector.left),
               ),
             ),
           ) &&
-          node.selector.matches(element, context)
+          block.selector.matches(element, context)
         ) {
-          nodes.push(node);
+          nodes.push(block);
         }
       }
     };
@@ -161,8 +153,6 @@ export class SelectorMap implements Serializable {
  * @internal
  */
 export namespace SelectorMap {
-  import block = h.block;
-
   export interface JSON {
     [key: string]: json.JSON;
     ids: Bucket.JSON;

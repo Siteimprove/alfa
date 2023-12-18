@@ -8,6 +8,7 @@ import {
   Compound,
   Id,
   Selector,
+  type Simple,
   Type,
 } from "@siteimprove/alfa-selector";
 
@@ -100,7 +101,10 @@ export class AncestorFilter implements Serializable<AncestorFilter.JSON> {
     }
   }
 
-  public matches(selector: Selector): boolean {
+  /**
+   * @internal
+   */
+  public matches(selector: Simple): boolean {
     if (Id.isId(selector)) {
       return this._ids.has(selector.name);
     }

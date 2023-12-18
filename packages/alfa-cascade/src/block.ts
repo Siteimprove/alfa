@@ -4,10 +4,16 @@ import { Lexer } from "@siteimprove/alfa-css";
 import { Declaration, h, Rule, StyleRule } from "@siteimprove/alfa-dom";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import type { Serializable } from "@siteimprove/alfa-json";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None } from "@siteimprove/alfa-option";
-import type { Result } from "@siteimprove/alfa-result";
-import { Selector, Specificity, Universal } from "@siteimprove/alfa-selector";
+import {
+  type Complex,
+  type Compound,
+  Selector,
+  type Simple,
+  Specificity,
+  Universal,
+} from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -29,19 +35,25 @@ import { UserAgent } from "./user-agent";
  *
  * @internal
  */
-export class Block implements Equatable, Serializable<Block.JSON> {
+export class Block<
+    S extends Compound | Complex | Simple = Compound | Complex | Simple,
+  >
+  implements Equatable, Serializable<Block.JSON<S>>
+{
   /**
    * Create a block.
    *
    * @remarks
    * This does not validate coupling of the data. Prefer using Block.from()
    */
-  public static of(
+  public static of<
+    S extends Compound | Complex | Simple = Compound | Complex | Simple,
+  >(
     rule: StyleRule,
-    selector: Selector,
+    selector: S,
     declarations: Iterable<Declaration>,
     precedence: Precedence,
-  ): Block {
+  ): Block<S> {
     return new Block(rule, selector, Array.from(declarations), precedence);
   }
 
@@ -63,13 +75,13 @@ export class Block implements Equatable, Serializable<Block.JSON> {
   }
 
   private readonly _rule: StyleRule;
-  private readonly _selector: Selector;
+  private readonly _selector: S;
   private readonly _declarations: Array<Declaration>;
   private readonly _precedence: Precedence;
 
   constructor(
     rule: StyleRule,
-    selector: Selector,
+    selector: S,
     declarations: Array<Declaration>,
     precedence: Precedence,
   ) {
@@ -83,7 +95,7 @@ export class Block implements Equatable, Serializable<Block.JSON> {
     return this._rule;
   }
 
-  public get selector(): Selector {
+  public get selector(): S {
     return this._selector;
   }
 
@@ -110,10 +122,10 @@ export class Block implements Equatable, Serializable<Block.JSON> {
     );
   }
 
-  public toJSON(): Block.JSON {
+  public toJSON(): Block.JSON<S> {
     return {
       rule: this._rule.toJSON(),
-      selector: this._selector.toJSON(),
+      selector: Serializable.toJSON(this._selector),
       declarations: Array.toJSON(this._declarations),
       precedence: Precedence.toJSON(this._precedence),
     };
@@ -123,10 +135,12 @@ export class Block implements Equatable, Serializable<Block.JSON> {
  * @internal
  */
 export namespace Block {
-  export interface JSON {
+  export interface JSON<
+    S extends Compound | Complex | Simple = Compound | Complex | Simple,
+  > {
     [key: string]: json.JSON;
     rule: Rule.JSON;
-    selector: Selector.JSON;
+    selector: Serializable.ToJSON<S>;
     declarations: Array<Declaration.JSON>;
     precedence: Precedence.JSON;
   }
