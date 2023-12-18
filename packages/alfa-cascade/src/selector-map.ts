@@ -4,6 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Declaration,
   Element,
+  h,
   ImportRule,
   MediaRule,
   Rule,
@@ -160,6 +161,8 @@ export class SelectorMap implements Serializable {
  * @internal
  */
 export namespace SelectorMap {
+  import block = h.block;
+
   export interface JSON {
     [key: string]: json.JSON;
     ids: Bucket.JSON;
@@ -181,22 +184,8 @@ export namespace SelectorMap {
     const types = Bucket.empty();
     const other: Array<Block> = [];
 
-    const add = (
-      rule: StyleRule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
-      { origin, order }: Precedence,
-    ): void => {
-      const block = Block.of(rule, selector, Array.from(declarations), {
-        origin,
-        order,
-        specificity:
-          StyleRule.isStyleRule(rule) && rule.hint
-            ? Specificity.empty()
-            : selector.specificity,
-      });
-
-      const keySelector = selector.key;
+    const add = (block: Block): void => {
+      const keySelector = block.selector.key;
 
       if (!keySelector.isSome()) {
         other.push(block);
@@ -215,20 +204,11 @@ export namespace SelectorMap {
           return;
         }
 
-        for (const [, selector] of Selector.parse(Lexer.lex(rule.selector))) {
-          const origin = rule.owner.includes(UserAgent)
-            ? Origin.UserAgent
-            : Origin.Author;
+        let blocks: Array<Block> = [];
+        [blocks, order] = Block.from(rule, order);
 
-          order++;
-
-          for (const part of selector) {
-            add(rule, part, rule.style, {
-              origin,
-              order,
-              specificity: selector.specificity,
-            });
-          }
+        for (const block of blocks) {
+          add(block);
         }
       }
 

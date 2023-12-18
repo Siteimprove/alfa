@@ -132,7 +132,8 @@ export namespace Block {
   }
 
   /**
-   * Build Blocks from a style rule.
+   * Build Blocks from a style rule. Returns the last order used, that is unchanged
+   * if selector couldn't be parsed, increased by 1 otherwise.
    *
    * @remarks
    * Order is relative to the list of all style rules and thus cannot be inferred
@@ -144,23 +145,27 @@ export namespace Block {
    * Since all these blocks are declared at the same time, and are declaring
    * the exact same declarations, they can safely share order.
    */
-  export function from(
-    rule: StyleRule,
-    order: number,
-  ): Result<Iterable<Block>, string> {
-    return Selector.parse(Lexer.lex(rule.selector)).map(([_, selectors]) => {
+  export function from(rule: StyleRule, order: number): [Array<Block>, number] {
+    let blocks = [];
+
+    for (const [_, selectors] of Selector.parse(Lexer.lex(rule.selector))) {
       const origin = rule.owner.includes(UserAgent)
         ? Origin.UserAgent
         : Origin.Author;
 
-      return [...selectors].map((selector) =>
-        Block.of(rule, selector, rule.style, {
-          origin,
-          order,
-          specificity: selector.specificity,
-        }),
-      );
-    });
+      order++;
+
+      for (const selector of selectors) {
+        blocks.push(
+          Block.of(rule, selector, rule.style, {
+            origin,
+            order,
+            specificity: selector.specificity,
+          }),
+        );
+      }
+    }
+    return [blocks, order];
   }
 
   export const compare: Comparer<Block> = (a, b) =>
