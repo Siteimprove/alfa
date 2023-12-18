@@ -200,6 +200,17 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
   );
 });
 
+test(`evaluate() doesn't ask if audio is playing when autoplay attribute is present`, async (t) => {
+  const target = <audio src="foo.mp3" autoplay />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(
+    await evaluate(R23, { document }, oracle({ "is-audio-streaming": false })),
+    [cantTell(R23, target, undefined, Outcome.Mode.SemiAuto)],
+  );
+});
+
 test(`evaluate() is inapplicable when Applicability questions are unanswered`, async (t) => {
   const target = <audio src="foo.mp3" />;
 
@@ -215,17 +226,6 @@ test(`evaluate() is inapplicable to streaming audios`, async (t) => {
 
   t.deepEqual(
     await evaluate(R23, { document }, oracle({ "is-audio-streaming": true })),
-    [inapplicable(R23, Outcome.Mode.SemiAuto)],
-  );
-});
-
-test(`evaluate() is inapplicable when is-audio-streaming is false and is-playing is unanswered`, async (t) => {
-  const target = <audio src="foo.mp3" controls autoplay />;
-
-  const document = h.document([target]);
-
-  t.deepEqual(
-    await evaluate(R23, { document }, oracle({ "is-audio-streaming": false })),
     [inapplicable(R23, Outcome.Mode.SemiAuto)],
   );
 });
