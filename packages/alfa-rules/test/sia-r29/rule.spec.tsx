@@ -198,6 +198,24 @@ test(`evaluate() doesn't ask if audio is playing when autoplay attribute is pres
   );
 });
 
+test(`evaluate() doesn't ask about play button if controls attribute is present`, async (t) => {
+  const target = <audio src="foo.mp3" controls />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(
+    await evaluate(
+      R29,
+      { document },
+      oracle({
+        "is-audio-streaming": false,
+        "is-playing": false,
+      }),
+    ),
+    [cantTell(R29, target, undefined, Outcome.Mode.SemiAuto)],
+  );
+});
+
 test(`evaluate() is inapplicable when Applicability questions are unanswered`, async (t) => {
   const target = <audio src="foo.mp3" />;
 

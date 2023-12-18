@@ -49,13 +49,15 @@ export function audio(
                 .map((isPlaying) =>
                   isPlaying
                     ? Option.of(element)
-                    : Question.of("play-button", element).map((playButton) =>
-                        playButton.some(
-                          and(isElement, isPerceivableForAll(device)),
-                        )
-                          ? Option.of(element)
-                          : None,
-                      ),
+                    : Question.of("play-button", element)
+                        .answerIf(hasAttribute("controls"), Option.of(element))
+                        .map((playButton) =>
+                          playButton.some(
+                            and(isElement, isPerceivableForAll(device)),
+                          )
+                            ? Option.of(element)
+                            : None,
+                        ),
                 ),
         ),
       ),
