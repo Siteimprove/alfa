@@ -21,6 +21,7 @@ export declare namespace RuleTree
 
 |  Namespace | Description |
 |  --- | --- |
+|  [Item](./alfa-cascade.ruletree.item.md) |  |
 |  [Node](./alfa-cascade.ruletree.node.md) |  |
 
 ## Type Aliases

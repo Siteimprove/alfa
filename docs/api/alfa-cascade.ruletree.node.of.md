@@ -7,16 +7,14 @@
 **Signature:**
 
 ```typescript
-static of(rule: Rule, selector: Selector, declarations: Iterable<Declaration>, children: Array<Node>, parent: Option<Node>): Node;
+static of({ rule, selector, declarations }: Item, children: Array<Node>, parent: Option<Node>): Node;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | Rule |  |
-|  selector | Selector |  |
-|  declarations | Iterable&lt;Declaration&gt; |  |
+|  { rule, selector, declarations } | Item |  |
 |  children | Array&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
 |  parent | Option&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
 
