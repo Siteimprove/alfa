@@ -16,7 +16,7 @@ import { Question } from "../common/act/question";
 import { referenceSameResource } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
-import { WithAccessibleName } from "../common/diagnostic";
+import { WithName } from "../common/diagnostic";
 import { normalize } from "../common/normalize";
 
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
@@ -58,7 +58,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             referenceSameResource(response.url)(element, elements[i - 1]),
         );
 
-        const name = WithAccessibleName.getAccessibleName(
+        const name = WithName.getName(
           Iterable.first(target).getUnsafe(), // Existence of first element is guaranteed by applicability
           device,
         ).getUnsafe(); // Existence of accessible name is guaranteed by applicability
@@ -73,7 +73,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 target,
                 "Do the <iframe> elements embed equivalent resources?",
                 {
-                  diagnostic: WithAccessibleName.of(
+                  diagnostic: WithName.of(
                     "Do the <iframe> elements embed equivalent resources?",
                     name,
                   ),
@@ -96,27 +96,21 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
  * @public
  */
 export namespace Outcomes {
-  export const EmbedSameResources = (accessibleName: string) =>
+  export const EmbedSameResources = (name: string) =>
     Ok.of(
-      WithAccessibleName.of(
-        `The \`<iframe>\` elements embed the same resource`,
-        accessibleName,
-      ),
+      WithName.of(`The \`<iframe>\` elements embed the same resource`, name),
     );
 
-  export const EmbedEquivalentResources = (accessibleName: string) =>
+  export const EmbedEquivalentResources = (name: string) =>
     Ok.of(
-      WithAccessibleName.of(
-        `The \`<iframe>\` elements embed equivalent resources`,
-        accessibleName,
-      ),
+      WithName.of(`The \`<iframe>\` elements embed equivalent resources`, name),
     );
 
-  export const EmbedDifferentResources = (accessibleName: string) =>
+  export const EmbedDifferentResources = (name: string) =>
     Err.of(
-      WithAccessibleName.of(
+      WithName.of(
         `The \`<iframe>\` elements do not embed the same or equivalent resources`,
-        accessibleName,
+        name,
       ),
     );
 }
