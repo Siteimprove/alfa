@@ -16,7 +16,7 @@ import { UserAgent } from "./user-agent";
  * {@link https://drafts.csswg.org/css-cascade-5/}
  *
  * @remarks
- * The cascade associate to each element a node into a rule tree.
+ * The cascade associates to each element a node into a rule tree.
  * A single rule tree is built for each document or shadow root. The cascade
  * lazily fills it upon need and caches the associated node for each element.
  *
@@ -39,57 +39,106 @@ export class Cascade implements Serializable {
     Cache<Device, Cascade>
   >();
 
-  public static of(node: Document | Shadow, device: Device): Cascade {
-    return this._cascades
-      .get(node, Cache.empty)
-      .get(device, () => new Cascade(node, device));
+  /**
+   * Unsafely create a cascade.
+   *
+   * @remarks
+   * This doesn't check coupling of data. This stores a cache that can still be
+   * accessed (and modified) from outside. This is only useful for writing tests
+   * without including the User Agent style sheet in the cascade.
+   *
+   * Do not use. Use Cascade.from() instead. Seriously.
+   *
+   * @internal
+   */
+  public static of(
+    root: Document | Shadow,
+    device: Device,
+    selectors: SelectorMap,
+    rules: RuleTree,
+    entries: Cache<Element, Cache<Context, RuleTree.Node>>,
+  ): Cascade {
+    return new Cascade(root, device, selectors, rules, entries);
   }
 
+  /**
+   * Build a cascade.
+   *
+   * @privateRemarks
+   * This needs to be here rather than in the namespace because it also updates
+   * the global cascades cache.
+   */
+  public static from(root: Document | Shadow, device: Device): Cascade {
+    // Caching all existing cascade since we need to maintain one for each
+    // document or shadow tree.
+    return this._cascades.get(root, Cache.empty).get(device, () => {
+      // Build a selector map with the User Agent style sheet, and the root style sheets.
+      const selectors = SelectorMap.from([UserAgent, ...root.style], device);
+      const rules = RuleTree.empty();
+      const entries = Cache.empty<Element, Cache<Context, RuleTree.Node>>();
+
+      // Perform a baseline cascade with an empty context to benefit from ancestor
+      // filtering. As getting style information with an empty context will be the
+      // common case, we benefit a lot from pre-computing this style information
+      // with an ancestor filter applied.
+      const context = Context.empty();
+      const filter = AncestorFilter.empty();
+
+      const visit = (node: Node): void => {
+        if (Element.isElement(node)) {
+          // Since we are traversing the full DOM tree and maintaining our own
+          // ancestor filter on the way, use the simple #add.
+
+          // Entering an element: add it to the rule tree, and to the ancestor filter.
+          entries
+            .get(node, Cache.empty)
+            .get(context, () =>
+              rules.add(selectors.get(node, context, Option.of(filter))),
+            );
+          filter.add(node);
+        }
+
+        for (const child of node.children()) {
+          visit(child);
+        }
+
+        if (Element.isElement(node)) {
+          // Exiting an element: remove it from the ancestor filter.
+          filter.remove(node);
+        }
+      };
+
+      visit(root);
+
+      return Cascade.of(root, device, selectors, rules, entries);
+    });
+  }
+
+  // root and device used to build the cascade. These are only kept for debugging
+  // purpose, since they are not really used after the cascade is built.
   private readonly _root: Document | Shadow;
   private readonly _device: Device;
+  // Selector map of all selectors in the User Agent style sheet and the root style sheets.
   private readonly _selectors: SelectorMap;
-  private readonly _rules = RuleTree.empty();
+  // Rule tree, built incrementally upon need.
+  private readonly _rules: RuleTree;
 
-  private readonly _entries = Cache.empty<
-    Element,
-    Cache<Context, RuleTree.Node>
-  >();
+  // Map from elements (and contexts) to nodes in the rule tree.
+  private readonly _entries: Cache<Element, Cache<Context, RuleTree.Node>>;
 
-  private constructor(root: Document | Shadow, device: Device) {
+  private constructor(
+    root: Document | Shadow,
+    device: Device,
+    selectors: SelectorMap,
+    rules: RuleTree,
+    entries: Cache<Element, Cache<Context, RuleTree.Node>>,
+  ) {
     this._root = root;
     this._device = device;
-    this._selectors = SelectorMap.from([UserAgent, ...root.style], device);
-
-    // Perform a baseline cascade with an empty context to benefit from ancestor
-    // filtering. As getting style information with an empty context will be the
-    // common case, we benefit a lot from pre-computing this style information
-    // with an ancestor filter applied.
-
-    const context = Context.empty();
-
-    const filter = AncestorFilter.empty();
-
-    const visit = (node: Node): void => {
-      if (Element.isElement(node)) {
-        // Since we are traversing the full DOM tree and maintaining our own
-        // ancestor filter on the way, use the simple #add.
-
-        // Entering an element: add it to the rule tree, and to the ancestor filter.
-        this.add(node, context, Option.of(filter));
-        filter.add(node);
-      }
-
-      for (const child of node.children()) {
-        visit(child);
-      }
-
-      if (Element.isElement(node)) {
-        // Exiting an element: remove it from the ancestor filter.
-        filter.remove(node);
-      }
-    };
-
-    visit(root);
+    // Build a selector map with the User Agent style sheet, and the root style sheets.
+    this._selectors = selectors;
+    this._rules = rules;
+    this._entries = entries;
   }
 
   /**
@@ -104,7 +153,13 @@ export class Cascade implements Serializable {
     context: Context = Context.empty(),
     filter: Option<AncestorFilter> = None,
   ): RuleTree.Node {
-    return this._rules.add(this._selectors.get(element, context, filter));
+    // We want to update the cache and therefore rely on the ifMissing mechanism
+    // of its getter.
+    return this._entries
+      .get(element, Cache.empty)
+      .get(context, () =>
+        this._rules.add(this._selectors.get(element, context, filter)),
+      );
   }
 
   /**

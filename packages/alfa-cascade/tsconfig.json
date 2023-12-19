@@ -18,6 +18,7 @@
     "src/selector-map.ts",
     "src/user-agent.ts",
     "test/ancestor-filter.spec.tsx",
+    "test/cascade.spec.ts",
     "test/rule-tree.spec.ts",
     "test/selector-map.spec.tsx"
   ],
