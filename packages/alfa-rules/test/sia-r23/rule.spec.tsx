@@ -37,6 +37,59 @@ test(`evaluate() passes an audio with perceivable transcript`, async (t) => {
   );
 });
 
+test(`evaluate() passes an audio with autoplay attribute and with perceivable transcript`, async (t) => {
+  const target = <audio src="foo.mp3" autoplay />;
+  const transcript = <div>Hello</div>;
+
+  const document = h.document([target, transcript]);
+
+  t.deepEqual(
+    await evaluate(
+      R23,
+      { document },
+      oracle({
+        "is-audio-streaming": false,
+        transcript: Option.of(transcript),
+      }),
+    ),
+    [
+      passed(
+        R23,
+        target,
+        { 1: Outcomes.HasPerceivableTranscript("<audio>") },
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
+  );
+});
+
+test(`evaluate() passes a non-playing audio with controls attribute and with perceivable transcript`, async (t) => {
+  const target = <audio src="foo.mp3" controls />;
+  const transcript = <div>Hello</div>;
+
+  const document = h.document([target, transcript]);
+
+  t.deepEqual(
+    await evaluate(
+      R23,
+      { document },
+      oracle({
+        "is-audio-streaming": false,
+        "is-playing": false,
+        transcript: Option.of(transcript),
+      }),
+    ),
+    [
+      passed(
+        R23,
+        target,
+        { 1: Outcomes.HasPerceivableTranscript("<audio>") },
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
+  );
+});
+
 test(`evaluate() passes an audio with a link to a transcript`, async (t) => {
   const target = <audio src="foo.mp3" />;
   const transcript = <a href="transcript.html">Read transcript</a>;
@@ -77,6 +130,59 @@ test(`evaluate() fails an audio with no transcript`, async (t) => {
       oracle({
         "is-audio-streaming": false,
         "is-playing": true,
+        transcript: None,
+        "transcript-link": None,
+      }),
+    ),
+    [
+      failed(
+        R23,
+        target,
+        { 1: Outcomes.HasNoTranscriptLink("<audio>") },
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
+  );
+});
+
+test(`evaluate() fails an audio with autoplay attribute and no transcript`, async (t) => {
+  const target = <audio src="foo.mp3" autoplay />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(
+    await evaluate(
+      R23,
+      { document },
+      oracle({
+        "is-audio-streaming": false,
+        transcript: None,
+        "transcript-link": None,
+      }),
+    ),
+    [
+      failed(
+        R23,
+        target,
+        { 1: Outcomes.HasNoTranscriptLink("<audio>") },
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
+  );
+});
+
+test(`evaluate() fails a non-playing audio with controls attribute and no transcript`, async (t) => {
+  const target = <audio src="foo.mp3" controls />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(
+    await evaluate(
+      R23,
+      { document },
+      oracle({
+        "is-audio-streaming": false,
+        "is-playing": false,
         transcript: None,
         "transcript-link": None,
       }),
@@ -200,7 +306,7 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
   );
 });
 
-test(`evaluate() doesn't ask if audio is playing when autoplay attribute is present`, async (t) => {
+test(`evaluate() cannot tell for audio with autoplay attribute and not answered expectation questions`, async (t) => {
   const target = <audio src="foo.mp3" autoplay />;
 
   const document = h.document([target]);
@@ -211,7 +317,7 @@ test(`evaluate() doesn't ask if audio is playing when autoplay attribute is pres
   );
 });
 
-test(`evaluate() doesn't ask about play button if controls attribute is present`, async (t) => {
+test(`evaluate() cannot tell for non-playing audio with controls attribute and not answered expectation questions`, async (t) => {
   const target = <audio src="foo.mp3" controls />;
 
   const document = h.document([target]);
