@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Option<RuleTree.Node>;
+get(element: Element, context?: Context, filter?: Option<AncestorFilter>): RuleTree.Node;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Optio
 
 **Returns:**
 
-Option&lt;[RuleTree.Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
+[RuleTree.Node](./alfa-cascade.ruletree.node.md)
 

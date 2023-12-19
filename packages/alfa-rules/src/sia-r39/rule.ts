@@ -9,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { WithAccessibleName } from "../common/diagnostic";
+import { WithName } from "../common/diagnostic";
 import { Scope, Stability } from "../tags";
 
 const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
@@ -52,10 +52,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
       },
 
       expectations(target) {
-        const accName = WithAccessibleName.getAccessibleName(
-          target,
-          device,
-        ).getUnsafe(); // Existence of accessible name is guaranteed by applicability
+        const accName = WithName.getName(target, device).getUnsafe(); // Existence of accessible name is guaranteed by applicability
 
         return {
           1: Question.of(
@@ -63,7 +60,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             target,
             `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`,
             {
-              diagnostic: WithAccessibleName.of(
+              diagnostic: WithName.of(
                 `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`,
                 accName,
               ),
@@ -96,19 +93,19 @@ function getFilename(path: string): string {
  * @public
  */
 export namespace Outcomes {
-  export const NameIsDescriptive = (name: string, accessibleName: string) =>
+  export const NameIsDescriptive = (name: string, accName: string) =>
     Ok.of(
-      WithAccessibleName.of(
+      WithName.of(
         `The accessible name of the \`<${name}>\` element describes its purpose`,
-        accessibleName,
+        accName,
       ),
     );
 
-  export const NameIsNotDescriptive = (name: string, accessibleName: string) =>
+  export const NameIsNotDescriptive = (name: string, accName: string) =>
     Err.of(
-      WithAccessibleName.of(
+      WithName.of(
         `The accessible name of the \`<${name}>\` element does not describe its purpose`,
-        accessibleName,
+        accName,
       ),
     );
 }

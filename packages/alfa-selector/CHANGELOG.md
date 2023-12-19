@@ -1,5 +1,11 @@
 # @siteimprove/alfa-selector
 
+## 0.71.0
+
+### Minor Changes
+
+- **Added:** Selectors now contain a "key selector" which is the leftmost simple selector in a compound one, or the rightmost in a complex one. ([#1534](https://github.com/Siteimprove/alfa/pull/1534))
+
 ## 0.70.0
 
 ### Minor Changes
