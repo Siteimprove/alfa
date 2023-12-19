@@ -81,9 +81,7 @@ export class Cascade implements Serializable {
     return this._entries
       .get(element, Cache.empty)
       .get(context, () =>
-        this._rules.add(
-          this._selectors.get(element, context, filter).sort(Block.compare),
-        ),
+        this._rules.add(this._selectors.get(element, context, filter)),
       );
   }
 

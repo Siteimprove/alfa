@@ -93,8 +93,7 @@ export class RuleTree implements Serializable {
    * @remarks
    * The rules are assumed to be:
    * 1. all matching the same element; and
-   * 2. ordered in increasing cascade sort order (lower precedence rule first); and
-   * 3. be all the rules matching that element.
+   * 2. be all the rules matching that element.
    *
    * It is up to the caller to ensure this is true, as the tree itself cannot
    * check that (notably, it has no access to the DOM tree to ensure the rules
@@ -109,7 +108,7 @@ export class RuleTree implements Serializable {
   public add(rules: Iterable<Block>): RuleTree.Node {
     let parent = this._root;
 
-    for (const block of rules) {
+    for (const block of Iterable.sortWith(rules, Block.compare)) {
       // Insert the next rule into the current parent, using the returned rule
       // entry as the parent of the next rule to insert. This way, we gradually
       // build up a path of rule entries and then return the final entry to the

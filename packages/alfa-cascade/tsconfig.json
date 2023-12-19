@@ -19,7 +19,7 @@
     "src/user-agent.ts",
     "test/ancestor-filter.spec.tsx",
     "test/rule-tree.spec.ts",
-    "test/selector-map.spec.ts"
+    "test/selector-map.spec.tsx"
   ],
   "references": [
     { "path": "../alfa-cache" },

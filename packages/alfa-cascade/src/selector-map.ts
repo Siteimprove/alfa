@@ -102,14 +102,12 @@ export class SelectorMap implements Serializable {
    * Get all blocks matching a given element and context, an optional
    * ancestor filter can be provided to optimize performances.
    */
-  public get(
+  public *get(
     element: Element,
     context: Context,
     filter: Option<AncestorFilter>,
-  ): Array<Block> {
-    const nodes: Array<Block> = [];
-
-    const collect = (candidates: Iterable<Block>) => {
+  ): Iterable<Block> {
+    function* collect(candidates: Iterable<Block>): Iterable<Block> {
       for (const block of candidates) {
         if (
           // If the ancestor filter can reject the selector, escape
@@ -121,24 +119,22 @@ export class SelectorMap implements Serializable {
           // otherwise, do the actual match.
           block.selector.matches(element, context)
         ) {
-          nodes.push(block);
+          yield block;
         }
       }
-    };
+    }
 
     for (const id of element.id) {
-      collect(this._ids.get(id));
+      yield* collect(this._ids.get(id));
     }
 
-    collect(this._types.get(element.name));
+    yield* collect(this._types.get(element.name));
 
     for (const className of element.classes) {
-      collect(this._classes.get(className));
+      yield* collect(this._classes.get(className));
     }
 
-    collect(this._other);
-
-    return nodes;
+    yield* collect(this._other);
   }
 
   public toJSON(): SelectorMap.JSON {
@@ -189,6 +185,7 @@ export namespace SelectorMap {
     };
 
     const visit = (rule: Rule) => {
+      // For style rule, we just store its blocks.
       if (StyleRule.isStyleRule(rule)) {
         // Style rules with empty style blocks aren't relevant and so can be
         // skipped entirely.
