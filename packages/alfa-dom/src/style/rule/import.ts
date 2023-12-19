@@ -10,7 +10,7 @@ import { ConditionRule } from "./condition";
 /**
  * @public
  */
-export class ImportRule extends ConditionRule {
+export class ImportRule extends ConditionRule<"import"> {
   public static of(
     href: string,
     sheet: Sheet,
@@ -24,7 +24,7 @@ export class ImportRule extends ConditionRule {
   private readonly _queries: Media.List;
 
   private constructor(href: string, sheet: Sheet, condition: Option<string>) {
-    super(condition.getOr("all"), []);
+    super("import", condition.getOr("all"), []);
 
     this._href = href;
     this._sheet = sheet;
@@ -51,9 +51,7 @@ export class ImportRule extends ConditionRule {
 
   public toJSON(): ImportRule.JSON {
     return {
-      type: "import",
-      rules: [...this._sheet.rules].map((rule) => rule.toJSON()),
-      condition: this._condition,
+      ...super.toJSON(),
       href: this._href,
     };
   }
@@ -67,8 +65,7 @@ export class ImportRule extends ConditionRule {
  * @public
  */
 export namespace ImportRule {
-  export interface JSON extends ConditionRule.JSON {
-    type: "import";
+  export interface JSON extends ConditionRule.JSON<"import"> {
     href: string;
   }
 
