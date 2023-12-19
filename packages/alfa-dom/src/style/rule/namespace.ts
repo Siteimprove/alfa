@@ -6,7 +6,7 @@ import { Rule } from "../rule";
 /**
  * @public
  */
-export class NamespaceRule extends Rule<"namespace"> {
+export class NamespaceRule extends Rule {
   public static of(namespace: string, prefix: Option<string>): NamespaceRule {
     return new NamespaceRule(namespace, prefix);
   }
@@ -15,7 +15,7 @@ export class NamespaceRule extends Rule<"namespace"> {
   private readonly _prefix: Option<string>;
 
   private constructor(namespace: string, prefix: Option<string>) {
-    super("namespace");
+    super();
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -31,7 +31,7 @@ export class NamespaceRule extends Rule<"namespace"> {
 
   public toJSON(): NamespaceRule.JSON {
     return {
-      ...super.toJSON(),
+      type: "namespace",
       namespace: this._namespace,
       prefix: this._prefix.getOr(null),
     };
@@ -48,7 +48,8 @@ export class NamespaceRule extends Rule<"namespace"> {
  * @public
  */
 export namespace NamespaceRule {
-  export interface JSON extends Rule.JSON<"namespace"> {
+  export interface JSON extends Rule.JSON {
+    type: "namespace";
     namespace: string;
     prefix: string | null;
   }

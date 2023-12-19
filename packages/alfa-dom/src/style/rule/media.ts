@@ -11,7 +11,7 @@ const { map, join } = Iterable;
 /**
  * @public
  */
-export class MediaRule extends ConditionRule<"media"> {
+export class MediaRule extends ConditionRule {
   public static of(condition: string, rules: Iterable<Rule>): MediaRule {
     return new MediaRule(condition, Array.from(rules));
   }
@@ -19,7 +19,7 @@ export class MediaRule extends ConditionRule<"media"> {
   private readonly _queries: Media.List;
 
   private constructor(condition: string, rules: Array<Rule>) {
-    super("media", condition, rules);
+    super(condition, rules);
 
     this._queries = Media.parse(Lexer.lex(condition))
       .map(([, queries]) => queries)
@@ -31,7 +31,11 @@ export class MediaRule extends ConditionRule<"media"> {
   }
 
   public toJSON(): MediaRule.JSON {
-    return super.toJSON();
+    return {
+      type: "media",
+      rules: [...this._rules].map((rule) => rule.toJSON()),
+      condition: this._condition,
+    };
   }
 
   public toString(): string {
@@ -48,7 +52,9 @@ export class MediaRule extends ConditionRule<"media"> {
  * @public
  */
 export namespace MediaRule {
-  export interface JSON extends ConditionRule.JSON<"media"> {}
+  export interface JSON extends ConditionRule.JSON {
+    type: "media";
+  }
 
   export function isMediaRule(value: unknown): value is MediaRule {
     return value instanceof MediaRule;

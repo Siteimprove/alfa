@@ -4,13 +4,11 @@ import { GroupingRule } from "./grouping";
 /**
  * @public
  */
-export abstract class ConditionRule<
-  T extends string = string,
-> extends GroupingRule<T> {
+export abstract class ConditionRule extends GroupingRule {
   protected readonly _condition: string;
 
-  protected constructor(type: T, condition: string, rules: Array<Rule>) {
-    super(type, rules);
+  protected constructor(condition: string, rules: Array<Rule>) {
+    super(rules);
 
     this._condition = condition;
   }
@@ -19,20 +17,14 @@ export abstract class ConditionRule<
     return this._condition;
   }
 
-  public toJSON(): ConditionRule.JSON<T> {
-    return {
-      ...super.toJSON(),
-      condition: this._condition,
-    };
-  }
+  public abstract toJSON(): ConditionRule.JSON;
 }
 
 /**
  * @public
  */
 export namespace ConditionRule {
-  export interface JSON<T extends string = string>
-    extends GroupingRule.JSON<T> {
+  export interface JSON extends GroupingRule.JSON {
     condition: string;
   }
 

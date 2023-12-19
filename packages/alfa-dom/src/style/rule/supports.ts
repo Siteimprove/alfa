@@ -6,17 +6,21 @@ import { ConditionRule } from "./condition";
 /**
  * @public
  */
-export class SupportsRule extends ConditionRule<"supports"> {
+export class SupportsRule extends ConditionRule {
   public static of(condition: string, rules: Iterable<Rule>): SupportsRule {
     return new SupportsRule(condition, Array.from(rules));
   }
 
   private constructor(condition: string, rules: Array<Rule>) {
-    super("supports", condition, rules);
+    super(condition, rules);
   }
 
   public toJSON(): SupportsRule.JSON {
-    return super.toJSON();
+    return {
+      type: "supports",
+      rules: [...this._rules].map((rule) => rule.toJSON()),
+      condition: this._condition,
+    };
   }
 
   public toString(): string {
@@ -34,7 +38,9 @@ export class SupportsRule extends ConditionRule<"supports"> {
  * @public
  */
 export namespace SupportsRule {
-  export interface JSON extends ConditionRule.JSON<"supports"> {}
+  export interface JSON extends ConditionRule.JSON {
+    type: "supports";
+  }
 
   export function isSupportsRue(value: unknown): value is SupportsRule {
     return value instanceof SupportsRule;

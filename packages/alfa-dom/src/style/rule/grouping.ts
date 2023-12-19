@@ -1,14 +1,13 @@
-import { Array } from "@siteimprove/alfa-array";
 import { Rule } from "../rule";
 
 /**
  * @public
  */
-export abstract class GroupingRule<T extends string = string> extends Rule<T> {
+export abstract class GroupingRule extends Rule {
   protected readonly _rules: Array<Rule>;
 
-  protected constructor(type: T, rules: Array<Rule>) {
-    super(type);
+  protected constructor(rules: Array<Rule>) {
+    super();
 
     this._rules = rules.filter((rule) => rule._attachParent(this));
   }
@@ -21,19 +20,14 @@ export abstract class GroupingRule<T extends string = string> extends Rule<T> {
     yield* this._rules;
   }
 
-  public toJSON(): GroupingRule.JSON<T> {
-    return {
-      ...super.toJSON(),
-      rules: Array.toJSON(this._rules),
-    };
-  }
+  public abstract toJSON(): GroupingRule.JSON;
 }
 
 /**
  * @public
  */
 export namespace GroupingRule {
-  export interface JSON<T extends string = string> extends Rule.JSON<T> {
+  export interface JSON extends Rule.JSON {
     rules: Array<Rule.JSON>;
   }
 

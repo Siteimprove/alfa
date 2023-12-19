@@ -7,7 +7,7 @@ import { Rule } from "../rule";
 /**
  * @public
  */
-export class PageRule extends Rule<"page"> {
+export class PageRule extends Rule {
   public static of(
     selector: string,
     declarations: Iterable<Declaration>,
@@ -19,7 +19,7 @@ export class PageRule extends Rule<"page"> {
   private readonly _style: Block;
 
   private constructor(selector: string, declarations: Array<Declaration>) {
-    super("page");
+    super();
 
     this._selector = selector;
     this._style = Block.of(
@@ -37,7 +37,7 @@ export class PageRule extends Rule<"page"> {
 
   public toJSON(): PageRule.JSON {
     return {
-      ...super.toJSON(),
+      type: "page",
       selector: this._selector,
       style: this._style.toJSON(),
     };
@@ -56,7 +56,8 @@ export class PageRule extends Rule<"page"> {
  * @public
  */
 export namespace PageRule {
-  export interface JSON extends Rule.JSON<"page"> {
+  export interface JSON extends Rule.JSON {
+    type: "page";
     selector: string;
     style: Block.JSON;
   }

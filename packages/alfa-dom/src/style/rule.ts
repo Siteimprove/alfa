@@ -22,20 +22,11 @@ import {
 /**
  * @public
  */
-export abstract class Rule<T extends string = string>
-  implements Equatable, Serializable
-{
+export abstract class Rule implements Equatable, Serializable {
   protected _owner: Option<Sheet> = None;
   protected _parent: Option<Rule> = None;
-  private readonly _type: T;
 
-  protected constructor(type: T) {
-    this._type = type;
-  }
-
-  public get type(): T {
-    return this._type;
-  }
+  protected constructor() {}
 
   public get owner(): Option<Sheet> {
     return this._owner;
@@ -70,9 +61,7 @@ export abstract class Rule<T extends string = string>
     return value === this;
   }
 
-  public toJSON(): Rule.JSON<T> {
-    return { type: this._type };
-  }
+  public abstract toJSON(): Rule.JSON;
 
   /**
    * @internal
@@ -105,9 +94,9 @@ export abstract class Rule<T extends string = string>
  * @public
  */
 export namespace Rule {
-  export interface JSON<T extends string = string> {
+  export interface JSON {
     [key: string]: json.JSON;
-    type: T;
+    type: string;
   }
 
   export function from(json: StyleRule.JSON): StyleRule;
