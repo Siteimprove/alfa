@@ -86,6 +86,7 @@ test(`evaluate() passes an non-playing audio with controls attribute that is lab
       { document },
       oracle({
         "is-audio-streaming": false,
+        "is-playing": false,
         "text-alternative": Option.of(text),
         label: Option.of(label),
       }),
