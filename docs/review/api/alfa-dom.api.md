@@ -148,14 +148,14 @@ export namespace Comment {
 }
 
 // @public (undocumented)
-export abstract class ConditionRule extends GroupingRule {
-    protected constructor(condition: string, rules: Array<Rule>);
+export abstract class ConditionRule<T extends string = string> extends GroupingRule<T> {
+    protected constructor(type: T, condition: string, rules: Array<Rule>);
     // (undocumented)
     get condition(): string;
     // (undocumented)
     protected readonly _condition: string;
     // (undocumented)
-    abstract toJSON(): ConditionRule.JSON;
+    toJSON(): ConditionRule.JSON<T>;
 }
 
 // @public (undocumented)
@@ -163,7 +163,7 @@ export namespace ConditionRule {
     // (undocumented)
     export function isConditionRule(value: unknown): value is ConditionRule;
     // (undocumented)
-    export interface JSON extends GroupingRule.JSON {
+    export interface JSON<T extends string = string> extends GroupingRule.JSON<T> {
         // (undocumented)
         condition: string;
     }
@@ -362,7 +362,7 @@ export namespace Element {
 }
 
 // @public (undocumented)
-export class FontFaceRule extends Rule {
+export class FontFaceRule extends Rule<"font-face"> {
     // (undocumented)
     static of(declarations: Iterable<Declaration>): FontFaceRule;
     // (undocumented)
@@ -380,13 +380,9 @@ export namespace FontFaceRule {
     // (undocumented)
     export function isFontFaceRule(value: unknown): value is FontFaceRule;
     // (undocumented)
-    export interface JSON {
-        // (undocumented)
-        [key: string]: json.JSON;
+    export interface JSON extends Rule.JSON<"font-face"> {
         // (undocumented)
         style: Block.JSON;
-        // (undocumented)
-        type: "font-face";
     }
 }
 
@@ -418,16 +414,16 @@ export namespace Fragment {
 }
 
 // @public (undocumented)
-export abstract class GroupingRule extends Rule {
-    protected constructor(rules: Array<Rule>);
+export abstract class GroupingRule<T extends string = string> extends Rule<T> {
+    protected constructor(type: T, rules: Array_2<Rule>);
     // (undocumented)
     children(): Iterable<Rule>;
     // (undocumented)
     get rules(): Iterable<Rule>;
     // (undocumented)
-    protected readonly _rules: Array<Rule>;
+    protected readonly _rules: Array_2<Rule>;
     // (undocumented)
-    abstract toJSON(): GroupingRule.JSON;
+    toJSON(): GroupingRule.JSON<T>;
 }
 
 // @public (undocumented)
@@ -435,9 +431,9 @@ export namespace GroupingRule {
     // (undocumented)
     export function isGroupingRule(value: unknown): value is GroupingRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON<T extends string = string> extends Rule.JSON<T> {
         // (undocumented)
-        rules: Array<Rule.JSON>;
+        rules: Array_2<Rule.JSON>;
     }
 }
 
@@ -488,7 +484,7 @@ export namespace h {
 }
 
 // @public (undocumented)
-export class ImportRule extends ConditionRule {
+export class ImportRule extends ConditionRule<"import"> {
     // (undocumented)
     get href(): string;
     // (undocumented)
@@ -512,11 +508,9 @@ export namespace ImportRule {
     // (undocumented)
     export function isImportRule(value: unknown): value is ImportRule;
     // (undocumented)
-    export interface JSON extends ConditionRule.JSON {
+    export interface JSON extends ConditionRule.JSON<"import"> {
         // (undocumented)
         href: string;
-        // (undocumented)
-        type: "import";
     }
 }
 
@@ -550,7 +544,7 @@ export namespace jsx {
 }
 
 // @public (undocumented)
-export class KeyframeRule extends Rule {
+export class KeyframeRule extends Rule<"keyframe"> {
     // (undocumented)
     get key(): string;
     // (undocumented)
@@ -570,18 +564,16 @@ export namespace KeyframeRule {
     // (undocumented)
     export function isKeyframeRule(value: unknown): value is KeyframeRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON extends Rule.JSON<"keyframe"> {
         // (undocumented)
         key: string;
         // (undocumented)
         style: Block.JSON;
-        // (undocumented)
-        type: "keyframe";
     }
 }
 
 // @public (undocumented)
-export class KeyframesRule extends GroupingRule {
+export class KeyframesRule extends GroupingRule<"keyframes"> {
     // (undocumented)
     get name(): string;
     // (undocumented)
@@ -599,16 +591,14 @@ export namespace KeyframesRule {
     // (undocumented)
     export function isKeyframesRule(value: unknown): value is KeyframesRule;
     // (undocumented)
-    export interface JSON extends GroupingRule.JSON {
+    export interface JSON extends GroupingRule.JSON<"keyframes"> {
         // (undocumented)
         name: string;
-        // (undocumented)
-        type: "keyframes";
     }
 }
 
 // @public (undocumented)
-export class MediaRule extends ConditionRule {
+export class MediaRule extends ConditionRule<"media"> {
     // (undocumented)
     static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
     // (undocumented)
@@ -626,9 +616,7 @@ export namespace MediaRule {
     // (undocumented)
     export function isMediaRule(value: unknown): value is MediaRule;
     // (undocumented)
-    export interface JSON extends ConditionRule.JSON {
-        // (undocumented)
-        type: "media";
+    export interface JSON extends ConditionRule.JSON<"media"> {
     }
 }
 
@@ -655,7 +643,7 @@ export namespace Namespace {
 }
 
 // @public (undocumented)
-export class NamespaceRule extends Rule {
+export class NamespaceRule extends Rule<"namespace"> {
     // (undocumented)
     get namespace(): string;
     // (undocumented)
@@ -675,13 +663,11 @@ export namespace NamespaceRule {
     // (undocumented)
     export function isNamespaceRule(value: unknown): value is NamespaceRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON extends Rule.JSON<"namespace"> {
         // (undocumented)
         namespace: string;
         // (undocumented)
         prefix: string | null;
-        // (undocumented)
-        type: "namespace";
     }
 }
 
@@ -865,7 +851,7 @@ export namespace Node {
 }
 
 // @public (undocumented)
-export class PageRule extends Rule {
+export class PageRule extends Rule<"page"> {
     // (undocumented)
     static of(selector: string, declarations: Iterable<Declaration>): PageRule;
     // (undocumented)
@@ -885,13 +871,11 @@ export namespace PageRule {
     // (undocumented)
     export function isPageRule(value: unknown): value is PageRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON extends Rule.JSON<"page"> {
         // (undocumented)
         selector: string;
         // (undocumented)
         style: Block.JSON;
-        // (undocumented)
-        type: "page";
     }
 }
 
@@ -908,8 +892,8 @@ export namespace Query {
 }
 
 // @public (undocumented)
-export abstract class Rule implements Equatable, Serializable {
-    protected constructor();
+export abstract class Rule<T extends string = string> implements Equatable, Serializable {
+    protected constructor(type: T);
     // (undocumented)
     ancestors(): Iterable<Rule>;
     // @internal (undocumented)
@@ -933,7 +917,9 @@ export abstract class Rule implements Equatable, Serializable {
     // (undocumented)
     protected _parent: Option<Rule>;
     // (undocumented)
-    abstract toJSON(): Rule.JSON;
+    toJSON(): Rule.JSON<T>;
+    // (undocumented)
+    get type(): T;
 }
 
 // @public (undocumented)
@@ -961,11 +947,11 @@ export namespace Rule {
     // @internal (undocumented)
     export function fromRule(json: JSON): Trampoline<Rule>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        type: string;
+        type: T;
     }
 }
 
@@ -1095,7 +1081,7 @@ export namespace Slotable {
 }
 
 // @public (undocumented)
-export class StyleRule extends Rule {
+export class StyleRule extends Rule<"style"> {
     // (undocumented)
     get hint(): boolean;
     // (undocumented)
@@ -1117,18 +1103,16 @@ export namespace StyleRule {
     // (undocumented)
     export function isStyleRule(value: unknown): value is StyleRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON extends Rule.JSON<"style"> {
         // (undocumented)
         selector: string;
         // (undocumented)
         style: Block.JSON;
-        // (undocumented)
-        type: "style";
     }
 }
 
 // @public (undocumented)
-export class SupportsRule extends ConditionRule {
+export class SupportsRule extends ConditionRule<"supports"> {
     // (undocumented)
     static of(condition: string, rules: Iterable<Rule>): SupportsRule;
     // (undocumented)
@@ -1144,9 +1128,7 @@ export namespace SupportsRule {
     // (undocumented)
     export function isSupportsRue(value: unknown): value is SupportsRule;
     // (undocumented)
-    export interface JSON extends ConditionRule.JSON {
-        // (undocumented)
-        type: "supports";
+    export interface JSON extends ConditionRule.JSON<"supports"> {
     }
 }
 
