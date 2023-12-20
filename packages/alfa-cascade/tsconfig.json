@@ -23,11 +23,13 @@
     "test/selector-map.spec.tsx"
   ],
   "references": [
+    { "path": "../alfa-array" },
     { "path": "../alfa-cache" },
     { "path": "../alfa-comparable" },
     { "path": "../alfa-css" },
     { "path": "../alfa-device" },
     { "path": "../alfa-dom" },
+    { "path": "../alfa-equatable" },
     { "path": "../alfa-iterable" },
     { "path": "../alfa-json" },
     { "path": "../alfa-media" },
