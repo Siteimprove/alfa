@@ -944,11 +944,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-cascade@workspace:packages/alfa-cascade"
   dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.71.1"
     "@siteimprove/alfa-cache": "workspace:^0.71.1"
     "@siteimprove/alfa-comparable": "workspace:^0.71.1"
     "@siteimprove/alfa-css": "workspace:^0.71.1"
     "@siteimprove/alfa-device": "workspace:^0.71.1"
     "@siteimprove/alfa-dom": "workspace:^0.71.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.71.1"
     "@siteimprove/alfa-iterable": "workspace:^0.71.1"
     "@siteimprove/alfa-json": "workspace:^0.71.1"
     "@siteimprove/alfa-media": "workspace:^0.71.1"
@@ -994,6 +996,7 @@ __metadata:
   resolution: "@siteimprove/alfa-comparable@workspace:packages/alfa-comparable"
   dependencies:
     "@siteimprove/alfa-refinement": "workspace:^0.71.1"
+    "@siteimprove/alfa-test": "workspace:^0.71.1"
   languageName: unknown
   linkType: soft
 
@@ -1637,6 +1640,7 @@ __metadata:
   dependencies:
     "@siteimprove/alfa-array": "workspace:^0.71.1"
     "@siteimprove/alfa-cache": "workspace:^0.71.1"
+    "@siteimprove/alfa-comparable": "workspace:^0.71.1"
     "@siteimprove/alfa-css": "workspace:^0.71.1"
     "@siteimprove/alfa-dom": "workspace:^0.71.1"
     "@siteimprove/alfa-equatable": "workspace:^0.71.1"
