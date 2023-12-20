@@ -2,7 +2,6 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option } from "@siteimprove/alfa-option";
 import { Context } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";

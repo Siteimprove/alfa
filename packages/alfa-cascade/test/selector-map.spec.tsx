@@ -1,7 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { h, StyleRule } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
 import { Context } from "@siteimprove/alfa-selector";
 import { test } from "@siteimprove/alfa-test";
 import { AncestorFilter } from "../src/ancestor-filter";
