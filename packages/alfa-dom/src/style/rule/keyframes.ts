@@ -6,7 +6,7 @@ import { GroupingRule } from "./grouping";
 /**
  * @public
  */
-export class KeyframesRule extends GroupingRule {
+export class KeyframesRule extends GroupingRule<"keyframes"> {
   public static of(name: string, rules: Iterable<Rule>): KeyframesRule {
     return new KeyframesRule(name, Array.from(rules));
   }
@@ -14,7 +14,7 @@ export class KeyframesRule extends GroupingRule {
   private readonly _name: string;
 
   private constructor(name: string, rules: Array<Rule>) {
-    super(rules);
+    super("keyframes", rules);
 
     this._name = name;
   }
@@ -25,8 +25,7 @@ export class KeyframesRule extends GroupingRule {
 
   public toJSON(): KeyframesRule.JSON {
     return {
-      type: "keyframes",
-      rules: [...this.rules].map((rule) => rule.toJSON()),
+      ...super.toJSON(),
       name: this._name,
     };
   }
@@ -44,8 +43,7 @@ export class KeyframesRule extends GroupingRule {
  * @public
  */
 export namespace KeyframesRule {
-  export interface JSON extends GroupingRule.JSON {
-    type: "keyframes";
+  export interface JSON extends GroupingRule.JSON<"keyframes"> {
     name: string;
   }
 
