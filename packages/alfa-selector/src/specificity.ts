@@ -1,3 +1,4 @@
+import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -24,12 +25,7 @@ const componentMax = (1 << componentBits) - 1;
  * comparison, which is the frequent operation on specificities. Components are
  * therefore limited to 1024 values (10 bits).
  *
- * @privateRemarks
- * This class purposefully doesn't implement the Comparable interface. The
- * interface introduce a tiny overhead in converting the native comparison into
- * the Comparison enum. While this price is gladly payed for more readable code
- * in general, specificity comparison is a hot-path in cascading style which
- * we try to keep as efficient as possible.
+ * @public
  */
 export class Specificity
   implements Serializable<Specificity.JSON>, Equatable, Hashable
@@ -97,6 +93,9 @@ export class Specificity
   }
 }
 
+/**
+ * @public
+ */
 export namespace Specificity {
   export interface JSON {
     [key: string]: json.JSON;
@@ -138,4 +137,7 @@ export namespace Specificity {
       first,
     );
   }
+
+  export const compare: Comparer<Specificity> = (a, b) =>
+    Comparable.compareNumber(a.value, b.value);
 }

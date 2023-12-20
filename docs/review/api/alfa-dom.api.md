@@ -459,6 +459,8 @@ export namespace h {
         // (undocumented)
         export function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
         // (undocumented)
+        export function importRule(url: string, sheet: Sheet, condition?: string): ImportRule;
+        // (undocumented)
         export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): KeyframeRule;
         // (undocumented)
         export function keyframes(name: string, rules: Array<Rule>): KeyframesRule;

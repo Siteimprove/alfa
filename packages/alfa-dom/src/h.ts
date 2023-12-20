@@ -11,6 +11,7 @@ import {
   Element,
   FontFaceRule,
   Fragment,
+  ImportRule,
   KeyframeRule,
   KeyframesRule,
   MediaRule,
@@ -255,6 +256,13 @@ export namespace h {
       return FontFaceRule.of(block(declarations));
     }
 
+    export function importRule(
+      url: string,
+      sheet: Sheet,
+      condition?: string,
+    ): ImportRule {
+      return ImportRule.of(url, sheet, Option.from(condition));
+    }
     export function keyframe(
       key: string,
       declarations: Array<Declaration> | Record<string, string>,

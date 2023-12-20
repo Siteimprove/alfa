@@ -5,6 +5,7 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { Comparer } from '@siteimprove/alfa-comparable';
 import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Hash } from '@siteimprove/alfa-hash';
@@ -492,6 +493,54 @@ export namespace Simple {
     export type JSON = Type.JSON | Universal.JSON | Attribute.JSON | Class.JSON | Id.JSON | PseudoClass.JSON | PseudoElement.JSON;
     const // @internal (undocumented)
     parse: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Simple, string, []>;
+}
+
+// @public (undocumented)
+export class Specificity implements Serializable<Specificity.JSON>, Equatable, Hashable {
+    // (undocumented)
+    get a(): number;
+    // (undocumented)
+    get b(): number;
+    // (undocumented)
+    get c(): number;
+    // (undocumented)
+    static empty(): Specificity;
+    // (undocumented)
+    equals(value: Specificity): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(a: number, b: number, c: number): Specificity;
+    // (undocumented)
+    toJSON(): Specificity.JSON;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    get value(): number;
+}
+
+// @public (undocumented)
+export namespace Specificity {
+    export function isSpecificity(value: unknown): value is Specificity;
+    // (undocumented)
+    export interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        a: number;
+        // (undocumented)
+        b: number;
+        // (undocumented)
+        c: number;
+    }
+    // (undocumented)
+    export function max(...specificities: ReadonlyArray<Specificity>): Specificity;
+    // (undocumented)
+    export function sum(...specificities: ReadonlyArray<Specificity>): Specificity;
+    const // (undocumented)
+    compare: Comparer<Specificity>;
 }
 
 // @public (undocumented)

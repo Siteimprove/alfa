@@ -20,6 +20,7 @@
   "dependencies": {
     "@siteimprove/alfa-array": "workspace:^0.71.1",
     "@siteimprove/alfa-cache": "workspace:^0.71.1",
+    "@siteimprove/alfa-comparable": "workspace:^0.71.1",
     "@siteimprove/alfa-css": "workspace:^0.71.1",
     "@siteimprove/alfa-dom": "workspace:^0.71.1",
     "@siteimprove/alfa-equatable": "workspace:^0.71.1",

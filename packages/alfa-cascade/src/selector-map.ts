@@ -1,7 +1,7 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
-  Declaration,
   Element,
   ImportRule,
   MediaRule,
@@ -15,30 +15,18 @@ import { Media } from "@siteimprove/alfa-media";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import {
-  Class,
-  Combinator,
-  Complex,
-  Compound,
-  Context,
-  Id,
-  Selector,
-  Type,
-} from "@siteimprove/alfa-selector";
+import { Combinator, Complex, Context } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { UserAgent } from "./user-agent";
 import { AncestorFilter } from "./ancestor-filter";
+import { Block } from "./block";
+import { type Order } from "./precedence";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
 
-const { isClass } = Class;
 const { isComplex } = Complex;
-const { isCompound } = Compound;
-const { isId } = Id;
-const { isType } = Type;
 
 const isDescendantSelector = and(
   isComplex,
@@ -49,43 +37,35 @@ const isDescendantSelector = and(
 );
 
 /**
- * Cascading origins defined in ascending order; origins defined first have
- * lower precedence than origins defined later.
- *
- * {@link https://www.w3.org/TR/css-cascade-5/#cascading-origins}
- */
-enum Origin {
-  /**
-   * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-ua}
-   */
-  UserAgent = 1,
-
-  /**
-   * {@link https://www.w3.org/TR/css-cascade-5/#cascade-origin-author}
-   */
-  Author = 2,
-}
-
-/**
  * The selector map is a data structure used for providing indexed access to the
- * rules that are likely to match a given element. Rules are indexed according
- * to their key selector, which is the selector that a given element MUST match
- * in order for the rest of the selector to also match. A key selector can be
- * either an ID selector, a class selector, or a type selector. In a relative
- * selector, the key selector will be the right-most selector, e.g. given
- * `main .foo + div` the key selector would be `div`. In a compound selector,
- * the key selector will be left-most selector, e.g. given `div.foo` the key
- * selector would also be `div`.
+ * rules that are likely to match a given element.
  *
+ * @remarks
+ * Rules are indexed according to their key selector, which is the selector
+ * that a given element MUST match in order for the rest of the selector to also
+ * match. A key selector can be either an ID selector, a class selector, or a
+ * type selector. In a complex selector, the key selector will be the
+ * right-most selector, e.g. given `main .foo + div` the key selector would be
+ * `div`. In a compound selector, the key selector will be left-most selector,
+ * e.g. given `div.foo` the key selector would also be `div`.
+ *
+ * Any element matching a selector must match its key selector. E.g., anything
+ * matching `main .foo + div` must be a `div`. Reciprocally, a `<div class"bar">`
+ * can only match selectors whose key selector is `div` or `bar`. Thus, filtering
+ * on key selectors decrease the search space for matching selector before the
+ * computation heavy steps of traversing the DOM to look for siblings or ancestors.
+ *
+ * @privateRemarks
  * Internally, the selector map has three maps and a list in one of which it
  * will store a given selector. The three maps are used for selectors for which
  * a key selector exist; one for ID selectors, one for class selectors, and one
- * for type selectors. The list is used for any remaining selectors. When
- * looking up the rules that match an element, the ID, class names, and type of
- * the element are used for looking up potentially matching selectors in the
- * three maps. Selector matching is then performed against this list of
- * potentially matching selectors, plus the list of remaining selectors, in
- * order to determine the final set of matches.
+ * for type selectors. The list is used for any remaining selectors (e.g.,
+ * pseudo-classes and -elements selectors have no key selector). When looking
+ * up the rules that match an element, the ID, class names, and type of the
+ * element are used for looking up potentially matching selectors in the three
+ * maps. Selector matching is then performed against this list of potentially
+ * matching selectors, plus the list of remaining selectors, in order to
+ * determine the final set of matches.
  *
  * {@link http://doc.servo.org/style/selector_map/struct.SelectorMap.html}
  *
@@ -96,7 +76,7 @@ export class SelectorMap implements Serializable {
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
-    other: Array<SelectorMap.Node>,
+    other: Array<Block>,
   ): SelectorMap {
     return new SelectorMap(ids, classes, types, other);
   }
@@ -104,13 +84,13 @@ export class SelectorMap implements Serializable {
   private readonly _ids: SelectorMap.Bucket;
   private readonly _classes: SelectorMap.Bucket;
   private readonly _types: SelectorMap.Bucket;
-  private readonly _other: Array<SelectorMap.Node>;
+  private readonly _other: Array<Block>;
 
   private constructor(
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
-    other: Array<SelectorMap.Node>,
+    other: Array<Block>,
   ) {
     this._ids = ids;
     this._classes = classes;
@@ -118,44 +98,43 @@ export class SelectorMap implements Serializable {
     this._other = other;
   }
 
-  public get(
+  /**
+   * Get all blocks matching a given element and context, an optional
+   * ancestor filter can be provided to optimize performances.
+   */
+  public *get(
     element: Element,
     context: Context,
-    filter: Option<AncestorFilter>,
-  ): Array<SelectorMap.Node> {
-    const nodes: Array<SelectorMap.Node> = [];
-
-    const collect = (candidates: Iterable<SelectorMap.Node>) => {
-      for (const node of candidates) {
+    filter: AncestorFilter,
+  ): Iterable<Block> {
+    function* collect(candidates: Iterable<Block>): Iterable<Block> {
+      for (const block of candidates) {
+        // If the ancestor filter can reject the selector, escape
         if (
-          filter.none((filter) =>
-            Iterable.every(
-              node.selector,
-              and(isDescendantSelector, (selector) =>
-                canReject(selector.left, filter),
-              ),
-            ),
-          ) &&
-          node.selector.matches(element, context)
+          isDescendantSelector(block.selector) &&
+          filter.canReject(block.selector.left)
         ) {
-          nodes.push(node);
+          continue;
+        }
+
+        // otherwise, do the actual match.
+        if (block.selector.matches(element, context)) {
+          yield block;
         }
       }
-    };
+    }
 
     for (const id of element.id) {
-      collect(this._ids.get(id));
+      yield* collect(this._ids.get(id));
     }
 
-    collect(this._types.get(element.name));
+    yield* collect(this._types.get(element.name));
 
     for (const className of element.classes) {
-      collect(this._classes.get(className));
+      yield* collect(this._classes.get(className));
     }
 
-    collect(this._other);
-
-    return nodes;
+    yield* collect(this._other);
   }
 
   public toJSON(): SelectorMap.JSON {
@@ -177,7 +156,7 @@ export namespace SelectorMap {
     ids: Bucket.JSON;
     classes: Bucket.JSON;
     types: Bucket.JSON;
-    other: Array<Node.JSON>;
+    other: Array<Block.JSON>;
   }
 
   export function from(sheets: Iterable<Sheet>, device: Device): SelectorMap {
@@ -186,34 +165,27 @@ export namespace SelectorMap {
     // order in which they were declared, information related to ordering will
     // otherwise no longer be available once rules from different buckets are
     // combined.
-    let order = 0;
+    let order: Order = 0;
 
     const ids = Bucket.empty();
     const classes = Bucket.empty();
     const types = Bucket.empty();
-    const other: Array<Node> = [];
+    const other: Array<Block> = [];
 
-    const add = (
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
-      origin: Origin,
-      order: number,
-    ): void => {
-      const node = Node.of(rule, selector, declarations, origin, order);
-
-      const keySelector = selector.key;
+    const add = (block: Block): void => {
+      const keySelector = block.selector.key;
 
       if (!keySelector.isSome()) {
-        other.push(node);
+        other.push(block);
       } else {
         const key = keySelector.get();
         const buckets = { id: ids, class: classes, type: types };
-        buckets[key.type].add(key.name, node);
+        buckets[key.type].add(key.name, block);
       }
     };
 
     const visit = (rule: Rule) => {
+      // For style rule, we just store its blocks.
       if (StyleRule.isStyleRule(rule)) {
         // Style rules with empty style blocks aren't relevant and so can be
         // skipped entirely.
@@ -221,16 +193,11 @@ export namespace SelectorMap {
           return;
         }
 
-        for (const [, selector] of Selector.parse(Lexer.lex(rule.selector))) {
-          const origin = rule.owner.includes(UserAgent)
-            ? Origin.UserAgent
-            : Origin.Author;
+        let blocks: Array<Block> = [];
+        [blocks, order] = Block.from(rule, order);
 
-          order++;
-
-          for (const part of selector) {
-            add(rule, part, rule.style, origin, order);
-          }
+        for (const block of blocks) {
+          add(block);
         }
       }
 
@@ -288,108 +255,21 @@ export namespace SelectorMap {
     return SelectorMap.of(ids, classes, types, other);
   }
 
-  export class Node implements Serializable {
-    public static of(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
-      origin: Origin,
-      order: number,
-    ): Node {
-      return new Node(rule, selector, declarations, origin, order);
-    }
-
-    private readonly _rule: Rule;
-    private readonly _selector: Selector;
-    private readonly _declarations: Iterable<Declaration>;
-    private readonly _origin: Origin;
-    private readonly _order: number;
-    private readonly _specificity: number;
-
-    private constructor(
-      rule: Rule,
-      selector: Selector,
-      declarations: Iterable<Declaration>,
-      origin: Origin,
-      order: number,
-    ) {
-      this._rule = rule;
-      this._selector = selector;
-      this._declarations = declarations;
-      this._origin = origin;
-      this._order = order;
-
-      // For style rules that are presentational hints, the specificity will
-      // always be 0 regardless of the selector.
-      // Otherwise, use the specificity of the selector.
-      this._specificity =
-        StyleRule.isStyleRule(rule) && rule.hint
-          ? 0
-          : selector.specificity.value;
-    }
-
-    public get rule(): Rule {
-      return this._rule;
-    }
-
-    public get selector(): Selector {
-      return this._selector;
-    }
-
-    public get declarations(): Iterable<Declaration> {
-      return this._declarations;
-    }
-
-    public get origin(): Origin {
-      return this._origin;
-    }
-
-    public get order(): number {
-      return this._order;
-    }
-
-    public get specificity(): number {
-      return this._specificity;
-    }
-
-    public toJSON(): Node.JSON {
-      return {
-        rule: this._rule.toJSON(),
-        selector: this._selector.toJSON(),
-        declarations: [...this._declarations].map((declaration) =>
-          declaration.toJSON(),
-        ),
-        origin: this._origin,
-        order: this._order,
-        specificity: this._specificity,
-      };
-    }
-  }
-
-  export namespace Node {
-    export interface JSON {
-      [key: string]: json.JSON;
-      rule: Rule.JSON;
-      selector: Selector.JSON;
-      declarations: Array<Declaration.JSON>;
-      origin: Origin;
-      order: number;
-      specificity: number;
-    }
-  }
-
+  /**
+   * @internal
+   */
   export class Bucket implements Serializable {
     public static empty(): Bucket {
       return new Bucket(new Map());
     }
 
-    private readonly _nodes: Map<string, Array<SelectorMap.Node>>;
+    private readonly _nodes: Map<string, Array<Block>>;
 
-    private constructor(nodes: Map<string, Array<SelectorMap.Node>>) {
+    private constructor(nodes: Map<string, Array<Block>>) {
       this._nodes = nodes;
     }
 
-    public add(key: string, node: SelectorMap.Node): void {
+    public add(key: string, node: Block): void {
       const nodes = this._nodes.get(key);
 
       if (nodes === undefined) {
@@ -399,7 +279,7 @@ export namespace SelectorMap {
       }
     }
 
-    public get(key: string): Array<SelectorMap.Node> {
+    public get(key: string): Array<Block> {
       const nodes = this._nodes.get(key);
 
       if (nodes === undefined) {
@@ -417,41 +297,10 @@ export namespace SelectorMap {
     }
   }
 
+  /**
+   * @internal
+   */
   export namespace Bucket {
-    export type JSON = Array<[string, Array<SelectorMap.Node.JSON>]>;
+    export type JSON = Array<[string, Array<Block.JSON>]>;
   }
-}
-
-/**
- * Check if a selector can be rejected based on an ancestor filter.
- */
-function canReject(selector: Selector, filter: AncestorFilter): boolean {
-  if (isId(selector) || isClass(selector) || isType(selector)) {
-    return !filter.matches(selector);
-  }
-
-  if (isCompound(selector)) {
-    // Compound selectors are right-leaning, so recurse to the left first as it
-    // is likely the shortest branch.
-    return Iterable.some(selector.selectors, (selector) =>
-      canReject(selector, filter),
-    );
-  }
-
-  if (isComplex(selector)) {
-    const { combinator } = selector;
-
-    if (
-      combinator === Combinator.Descendant ||
-      combinator === Combinator.DirectDescendant
-    ) {
-      // Complex selectors are left-leaning, so recurse to the right first as it
-      // is likely the shortest branch.
-      return (
-        canReject(selector.right, filter) || canReject(selector.left, filter)
-      );
-    }
-  }
-
-  return false;
 }
