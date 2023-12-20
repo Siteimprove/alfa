@@ -4,4 +4,4 @@
 
 **Removed:** `AncestorFilter#match` has been made internal.
 
-se `!ANcestorFilter.canReject` instead, which is having less assumptions.
+Use `!AncestorFilter.canReject` instead, which is having fewer assumptions.
