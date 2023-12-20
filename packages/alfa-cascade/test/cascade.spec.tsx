@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
