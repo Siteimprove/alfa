@@ -503,7 +503,7 @@ function getUsedMediaRules(
   // Get all nodes (style rules) in the RuleTree that affect the element;
   // for each of these rules, get all ancestor media rules in the CSS tree.
   return ancestorsInRuleTree(
-    Cascade.of(root, device).get(element, context),
+    Cascade.from(root, device).get(element, context),
   ).flatMap((node) => ancestorMediaRules(node.block.rule));
 }
 

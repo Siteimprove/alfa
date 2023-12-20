@@ -105,20 +105,20 @@ export class SelectorMap implements Serializable {
   public *get(
     element: Element,
     context: Context,
-    filter: Option<AncestorFilter>,
+    filter: AncestorFilter,
   ): Iterable<Block> {
     function* collect(candidates: Iterable<Block>): Iterable<Block> {
       for (const block of candidates) {
+        // If the ancestor filter can reject the selector, escape
         if (
-          // If the ancestor filter can reject the selector, escape
-          filter.none(
-            (filter) =>
-              isDescendantSelector(block.selector) &&
-              filter.canReject(block.selector.left),
-          ) &&
-          // otherwise, do the actual match.
-          block.selector.matches(element, context)
+          isDescendantSelector(block.selector) &&
+          filter.canReject(block.selector.left)
         ) {
+          continue;
+        }
+
+        // otherwise, do the actual match.
+        if (block.selector.matches(element, context)) {
           yield block;
         }
       }

@@ -166,10 +166,12 @@ test("#get() returns all blocks whose selector match an element", (t) => {
 
   const element = <div class="foo"></div>;
 
-  t.deepEqual(Array.toJSON([...map.get(element, Context.empty(), None)]), [
-    ...blocks[0],
-    ...blocks[3],
-  ]);
+  t.deepEqual(
+    Array.toJSON([
+      ...map.get(element, Context.empty(), AncestorFilter.empty()),
+    ]),
+    [...blocks[0], ...blocks[3]],
+  );
 });
 
 /**
@@ -186,31 +188,23 @@ test("#get() respects ancestor filter", (t) => {
 
   const badFilter = AncestorFilter.empty();
   badFilter.add(<main></main>);
-  badFilter.add(<span></span>);
 
   const goodFilter = AncestorFilter.empty();
   goodFilter.add(<main></main>);
   goodFilter.add(<div></div>);
-  goodFilter.add(<span></span>);
 
   const target = <span>Hello</span>;
   const _ = <div>{target}</div>;
 
   // The filter is incorrect by not having the `<div>` and therefore rejects the `div span` rule.
   t.deepEqual(
-    Array.toJSON([...map.get(target, Context.empty(), Option.of(badFilter))]),
+    Array.toJSON([...map.get(target, Context.empty(), badFilter)]),
     blocks[0],
   );
 
   // The filter is correct and let the `div span` rule be matched.
   t.deepEqual(
-    Array.toJSON([...map.get(target, Context.empty(), Option.of(goodFilter))]),
-    blocks[0].concat(blocks[1]),
-  );
-
-  // Without any filter, actual match is performed, and we get both rules.
-  t.deepEqual(
-    Array.toJSON([...map.get(target, Context.empty(), None)]),
+    Array.toJSON([...map.get(target, Context.empty(), goodFilter)]),
     blocks[0].concat(blocks[1]),
   );
 });

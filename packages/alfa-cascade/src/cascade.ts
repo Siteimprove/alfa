@@ -2,7 +2,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Context } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
@@ -39,7 +39,7 @@ export class Cascade implements Serializable {
     Cache<Device, Cascade>
   >();
 
-  public static of(node: Document | Shadow, device: Device): Cascade {
+  public static from(node: Document | Shadow, device: Device): Cascade {
     return this._cascades
       .get(node, Cache.empty)
       .get(device, () => new Cascade(node, device));
@@ -71,11 +71,12 @@ export class Cascade implements Serializable {
 
     const visit = (node: Node): void => {
       if (Element.isElement(node)) {
-        // Since we are traversing the full DOM tree and maintaining our own
-        // ancestor filter on the way, use the simple #add.
-
         // Entering an element: add it to the rule tree, and to the ancestor filter.
-        this.add(node, context, Option.of(filter));
+        this._entries
+          .get(node, Cache.empty)
+          .get(context, () =>
+            this._rules.add(this._selectors.get(node, context, filter)),
+          );
         filter.add(node);
       }
 
@@ -93,31 +94,17 @@ export class Cascade implements Serializable {
   }
 
   /**
-   * Add an element to the rule tree, returns the associated node.
-   *
-   * @remarks
-   * This is idempotent since the rule tree already checks physical identity
-   * of selectors upon insertion. However, calling it too often is bad for performance.
-   */
-  private add(
-    element: Element,
-    context: Context = Context.empty(),
-    filter: Option<AncestorFilter> = None,
-  ): RuleTree.Node {
-    return this._rules.add(this._selectors.get(element, context, filter));
-  }
-
-  /**
    * Adds an element to the tree, with a custom ancestor filter.
    *
    * @remarks
    * A new ancestor filter is built and filled with the element's ancestors.
-   * When building the full cascade for a DOM tree, this is pointless and the
-   * faster #add should be used instead. When looking up the style of a single
-   * element, we assume shat the time spend going up the DOM tree to build an
-   * ancestor filter will be saved by matching less selectors.
+   * When building the full cascade for a DOM tree, this is pointless as we can
+   * just build the filter on the go during DOM tree traversal. When looking up
+   * the style of a single element, we assume shat the time spent going up the
+   * DOM tree to build an ancestor filter will be saved by matching fewer
+   * selectors.
    */
-  private addAncestors(element: Element, context: Context): RuleTree.Node {
+  private add(element: Element, context: Context): RuleTree.Node {
     const filter = AncestorFilter.empty();
     // Because CSS selectors do not cross shadow or document boundaries,
     // only get ancestors in the same tree.
@@ -128,9 +115,7 @@ export class Cascade implements Serializable {
       .filter(Element.isElement)
       .forEach(filter.add.bind(filter));
 
-    return this._rules.add(
-      this._selectors.get(element, context, Option.of(filter)),
-    );
+    return this._rules.add(this._selectors.get(element, context, filter));
   }
 
   /**
@@ -143,8 +128,7 @@ export class Cascade implements Serializable {
    *
    * For other contexts, we assume that we will only need the style of a few elements
    * (e.g., when a link is focused we normally only need the style of the link itself).
-   * Therefore, pre-building the full tree is not worth the cost nor the saving we'd
-   * get with an ancestor filter.
+   * Therefore, pre-building the full tree is not worth the cost.
    */
   public get(
     element: Element,
@@ -155,7 +139,7 @@ export class Cascade implements Serializable {
       // If the entry hasn't been cached already, we assume we are querying
       // for a single element and pay the price of building its custom ancestor
       // filter, hopefully saving on the matching cost.
-      () => this.addAncestors(element, context),
+      () => this.add(element, context),
     );
   }
 
