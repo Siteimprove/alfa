@@ -319,7 +319,7 @@ export namespace Style {
         const root = element.root();
 
         if (Document.isDocument(root) || Shadow.isShadow(root)) {
-          const cascade = Cascade.from(root, device);
+          const cascade = Cascade.of(root, device);
 
           // Walk up the cascade, starting from the node associated to the
           // element, and gather all declarations met on the way.
