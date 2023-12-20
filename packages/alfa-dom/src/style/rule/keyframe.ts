@@ -7,7 +7,7 @@ import { Rule } from "../rule";
 /**
  * @public
  */
-export class KeyframeRule extends Rule {
+export class KeyframeRule extends Rule<"keyframe"> {
   public static of(
     key: string,
     declarations: Iterable<Declaration>,
@@ -19,7 +19,7 @@ export class KeyframeRule extends Rule {
   private readonly _style: Block;
 
   private constructor(key: string, declarations: Array<Declaration>) {
-    super();
+    super("keyframe");
 
     this._key = key;
     this._style = Block.of(
@@ -37,7 +37,7 @@ export class KeyframeRule extends Rule {
 
   public toJSON(): KeyframeRule.JSON {
     return {
-      type: "keyframe",
+      ...super.toJSON(),
       key: this._key,
       style: this._style.toJSON(),
     };
@@ -56,8 +56,7 @@ export class KeyframeRule extends Rule {
  * @public
  */
 export namespace KeyframeRule {
-  export interface JSON extends Rule.JSON {
-    type: "keyframe";
+  export interface JSON extends Rule.JSON<"keyframe"> {
     key: string;
     style: Block.JSON;
   }

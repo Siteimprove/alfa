@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.71.1](../../compare/v0.71.0...v0.71.1) (2023-12-20)
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0711): Media rules R23 and R29 no longer asks if audio is playing or where the play buttons is when the attributes `autoplay` and `controls` are present respectively. ([#1538](https://github.com/Siteimprove/alfa/pull/1538))
+
 ## [0.71.0](../../compare/v0.70.0...v0.71.0) (2023-12-18)
 
 ### Breaking

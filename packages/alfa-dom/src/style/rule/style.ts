@@ -7,7 +7,7 @@ import { Rule } from "../rule";
 /**
  * @public
  */
-export class StyleRule extends Rule {
+export class StyleRule extends Rule<"style"> {
   public static of(
     selector: string,
     declarations: Iterable<Declaration>,
@@ -25,7 +25,7 @@ export class StyleRule extends Rule {
     declarations: Array<Declaration>,
     hint: boolean,
   ) {
-    super();
+    super("style");
 
     this._selector = selector;
     this._style = Block.of(
@@ -48,7 +48,7 @@ export class StyleRule extends Rule {
 
   public toJSON(): StyleRule.JSON {
     return {
-      type: "style",
+      ...super.toJSON(),
       selector: this._selector,
       style: this._style.toJSON(),
     };
@@ -65,8 +65,7 @@ export class StyleRule extends Rule {
  * @public
  */
 export namespace StyleRule {
-  export interface JSON extends Rule.JSON {
-    type: "style";
+  export interface JSON extends Rule.JSON<"style"> {
     selector: string;
     style: Block.JSON;
   }
