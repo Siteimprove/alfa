@@ -23,6 +23,58 @@ test(`evaluate() passes input with type password field and aria-required state`,
   ]);
 });
 
+test(`evaluate() passes input with type file field and aria-disabled state`, async (t) => {
+  const target = <input type="file" aria-disabled="true" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R18, { document }), [
+    passed(R18, target.attribute("aria-disabled").getUnsafe(), {
+      1: Outcomes.IsAllowed,
+      2: Outcomes.IsNotProhibited,
+    }),
+  ]);
+});
+
+test(`evaluate() passes input with type file field and aria-invalid state`, async (t) => {
+  const target = <input type="file" aria-invalid="true" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R18, { document }), [
+    passed(R18, target.attribute("aria-invalid").getUnsafe(), {
+      1: Outcomes.IsAllowed,
+      2: Outcomes.IsNotProhibited,
+    }),
+  ]);
+});
+
+test(`evaluate() passes input with type file field and aria-required state`, async (t) => {
+  const target = <input type="file" aria-required="true" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R18, { document }), [
+    passed(R18, target.attribute("aria-required").getUnsafe(), {
+      1: Outcomes.IsAllowed,
+      2: Outcomes.IsNotProhibited,
+    }),
+  ]);
+});
+
+test(`evaluate() passes input with type color field and aria-disabled state`, async (t) => {
+  const target = <input type="color" aria-disabled="true" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R18, { document }), [
+    passed(R18, target.attribute("aria-disabled").getUnsafe(), {
+      1: Outcomes.IsAllowed,
+      2: Outcomes.IsNotProhibited,
+    }),
+  ]);
+});
+
 test(`evaluate() passes a button with aria-pressed state`, async (t) => {
   const target = <button aria-pressed="false">My button</button>;
 
