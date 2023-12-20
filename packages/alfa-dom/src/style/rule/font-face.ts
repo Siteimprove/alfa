@@ -1,7 +1,5 @@
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { Block } from "../block";
 import { Declaration } from "../declaration";
 import { Rule } from "../rule";
@@ -9,7 +7,7 @@ import { Rule } from "../rule";
 /**
  * @public
  */
-export class FontFaceRule extends Rule {
+export class FontFaceRule extends Rule<"font-face"> {
   public static of(declarations: Iterable<Declaration>): FontFaceRule {
     return new FontFaceRule(Array.from(declarations));
   }
@@ -17,7 +15,7 @@ export class FontFaceRule extends Rule {
   private readonly _style: Block;
 
   private constructor(declarations: Array<Declaration>) {
-    super();
+    super("font-face");
 
     this._style = Block.of(
       declarations.filter((declaration) => declaration._attachParent(this)),
@@ -30,7 +28,7 @@ export class FontFaceRule extends Rule {
 
   public toJSON(): FontFaceRule.JSON {
     return {
-      type: "font-face",
+      ...super.toJSON(),
       style: this._style.toJSON(),
     };
   }
@@ -46,9 +44,7 @@ export class FontFaceRule extends Rule {
  * @public
  */
 export namespace FontFaceRule {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "font-face";
+  export interface JSON extends Rule.JSON<"font-face"> {
     style: Block.JSON;
   }
 

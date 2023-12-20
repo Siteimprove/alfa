@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import R39, { Outcomes } from "../../src/sia-r39/rule";
 
-import { WithAccessibleName } from "../../src/common/diagnostic";
+import { WithName } from "../../src/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";
@@ -76,7 +76,7 @@ test("evaluate() can't tell that name is descriptive", async (t) => {
     cantTell(
       R39,
       target,
-      WithAccessibleName.of(
+      WithName.of(
         "Does the accessible name of the `<img>` element describe its purpose?",
         "Placeholder",
       ),

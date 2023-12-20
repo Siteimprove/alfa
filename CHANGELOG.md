@@ -1,5 +1,25 @@
 # Alfa changelog
 
+## [0.71.1](../../compare/v0.71.0...v0.71.1) (2023-12-20)
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0711): Media rules R23 and R29 no longer asks if audio is playing or where the play buttons is when the attributes `autoplay` and `controls` are present respectively. ([#1538](https://github.com/Siteimprove/alfa/pull/1538))
+
+## [0.71.0](../../compare/v0.70.0...v0.71.0) (2023-12-18)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0710): Diagnostic `WithAccessibleName` has been renamed to `WithName` and the property `accessibleName` to `name`. ([#1537](https://github.com/Siteimprove/alfa/pull/1537))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0710): `RuleTree.add` and `RuleTree.Node.add` have been made internal. ([#1534](https://github.com/Siteimprove/alfa/pull/1534))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0710): `Cascade.get()` now returns a `RuleTree.Node` instead of an `Option`. ([#1534](https://github.com/Siteimprove/alfa/pull/1534))
+
+### Added
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0710): Selectors now contain a "key selector" which is the leftmost simple selector in a compound one, or the rightmost in a complex one. ([#1534](https://github.com/Siteimprove/alfa/pull/1534))
+
 ## [0.70.0](../../compare/v0.69.0...v0.70.0) (2023-12-13)
 
 ### Breaking

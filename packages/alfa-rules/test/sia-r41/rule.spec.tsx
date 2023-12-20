@@ -8,7 +8,7 @@ import { Group } from "../../src/common/act/group";
 
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
-import { WithAccessibleName } from "../../src/common/diagnostic";
+import { WithName } from "../../src/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";
@@ -164,7 +164,7 @@ test(`evaluate() can't tell if two links that have the same name references
     cantTell(
       R41,
       Group.of(target),
-      WithAccessibleName.of(
+      WithName.of(
         "Do the links resolve to equivalent resources?",
         accessibleName,
       ),

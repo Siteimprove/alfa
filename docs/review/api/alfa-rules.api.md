@@ -83,7 +83,7 @@ export namespace Diagnostic {
     import TextSpacing = diagnostic.TextSpacing;
     import WithBadElements = diagnostic.WithBadElements;
     import WithRole = diagnostic.WithRole;
-    import WithAccessibleName = diagnostic.WithAccessibleName;
+    import WithName = diagnostic.WithName;
     import WithOtherHeading = diagnostic.WithOtherHeading;
 }
 
