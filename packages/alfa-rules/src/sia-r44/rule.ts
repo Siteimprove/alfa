@@ -11,7 +11,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
-import { Feature as MediaFeature, Media } from "@siteimprove/alfa-media";
+import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -141,7 +141,7 @@ function isOrientationConditional(declaration: Declaration): boolean {
 }
 
 function hasOrientationCondition(
-  condition: MediaFeature | Media.Condition,
+  condition: Media.Feature | Media.Condition,
 ): boolean {
   for (const feature of condition) {
     if (
