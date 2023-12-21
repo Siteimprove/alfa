@@ -1,11 +1,13 @@
-import { Token } from "@siteimprove/alfa-css";
+import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
+
+import * as json from "@siteimprove/alfa-json";
+
 import { Feature, parseMediaFeature } from "../feature";
 import type { Matchable } from "../matchable";
 
@@ -229,12 +231,12 @@ export namespace Condition {
  * The condition parser is forward-declared as it is needed within its
  * subparsers.
  */
-export let parseCondition: Parser<Slice<Token>, Feature | Condition, string>;
+export let parseCondition: CSSParser<Feature | Condition>;
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-in-parens}
  */
-const parseInParens = either(
+const parseInParens: CSSParser<Feature | Condition> = either(
   delimited(
     Token.parseOpenParenthesis,
     delimited(option(Token.parseWhitespace), (input) => parseCondition(input)),

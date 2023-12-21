@@ -13,7 +13,10 @@
     "src/query.ts",
     "src/resolver.ts",
     "src/type.ts",
+    "src/value/bound.ts",
+    "src/value/discrete.ts",
     "src/value/index.ts",
+    "src/value/range.ts",
     "src/value/value.ts",
     "test/media.spec.ts"
   ],
