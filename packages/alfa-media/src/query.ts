@@ -5,12 +5,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-import {
-  type Condition,
-  Not,
-  parseCondition,
-  parseConditionWithoutOr,
-} from "./condition";
+import { Condition, Not } from "./condition";
 import { Feature } from "./feature";
 import type { Matchable } from "./matchable";
 import { Modifier } from "./modifier";
@@ -135,7 +130,7 @@ export namespace Query {
    */
   export const parse = left(
     either(
-      map(parseCondition, (condition) =>
+      map(Condition.parse, (condition) =>
         Query.of(None, None, Option.of(condition)),
       ),
       map(
@@ -147,7 +142,7 @@ export namespace Query {
           option(
             right(
               delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
-              parseConditionWithoutOr,
+              Condition.parseWithoutOr,
             ),
           ),
         ),

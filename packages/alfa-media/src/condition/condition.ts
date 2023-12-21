@@ -4,7 +4,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -83,6 +83,20 @@ export namespace And {
   export function isAnd(value: unknown): value is And {
     return value instanceof And;
   }
+
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-and}
+   *
+   * @internal
+   */
+  export function parse(
+    parseInParens: Thunk<CSSParser<Feature | Condition>>,
+  ): CSSParser<Feature | Condition> {
+    return right(
+      delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
+      parseInParens(),
+    );
+  }
 }
 
 export class Or
@@ -154,6 +168,20 @@ export namespace Or {
   export function isOr(value: unknown): value is Or {
     return value instanceof Or;
   }
+
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-or}
+   *
+   * @internal
+   */
+  export function parse(
+    parseInParens: Thunk<CSSParser<Feature | Condition>>,
+  ): CSSParser<Feature | Condition> {
+    return right(
+      delimited(option(Token.parseWhitespace), Token.parseIdent("or")),
+      parseInParens(),
+    );
+  }
 }
 
 export class Not
@@ -211,6 +239,23 @@ export namespace Not {
   export function isNot(value: unknown): value is Not {
     return value instanceof Not;
   }
+
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-not}
+   *
+   * @internal
+   */
+  export function parse(
+    parseInParens: Thunk<CSSParser<Feature | Condition>>,
+  ): CSSParser<Not> {
+    return map(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseIdent("not")),
+        parseInParens(),
+      ),
+      Not.of,
+    );
+  }
 }
 
 /**
@@ -224,81 +269,59 @@ export namespace Condition {
   export function isCondition(value: unknown): value is Condition {
     return And.isAnd(value) || Or.isOr(value) || Not.isNot(value);
   }
-}
 
-/**
- * @remarks
- * The condition parser is forward-declared as it is needed within its
- * subparsers.
- */
-export let parseCondition: CSSParser<Feature | Condition>;
-
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-in-parens}
- */
-const parseInParens: CSSParser<Feature | Condition> = either(
-  delimited(
-    Token.parseOpenParenthesis,
-    delimited(option(Token.parseWhitespace), (input) => parseCondition(input)),
-    Token.parseCloseParenthesis,
-  ),
-  parseMediaFeature,
-);
-
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-not}
- */
-const parseNot = map(
-  right(
-    delimited(option(Token.parseWhitespace), Token.parseIdent("not")),
-    parseInParens,
-  ),
-  Not.of,
-);
-
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-and}
- */
-const parseAnd = right(
-  delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
-  parseInParens,
-);
-
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-or}
- */
-const parseOr = right(
-  delimited(option(Token.parseWhitespace), Token.parseIdent("or")),
-  parseInParens,
-);
-
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-condition}
- */
-parseCondition = either(
-  parseNot,
-  either(
-    map(
-      pair(
-        parseInParens,
-        either(
-          map(oneOrMore(parseAnd), (queries) => [And.of, queries] as const),
-          map(oneOrMore(parseOr), (queries) => [Or.of, queries] as const),
-        ),
-      ),
-      ([left, [constructor, right]]) =>
-        Iterable.reduce(right, (left, right) => constructor(left, right), left),
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-in-parens}
+   */
+  const parseInParens = either(
+    delimited(
+      Token.parseOpenParenthesis,
+      delimited(option(Token.parseWhitespace), (input) => parse(input)),
+      Token.parseCloseParenthesis,
     ),
-    parseInParens,
-  ),
-);
+    parseMediaFeature,
+  );
 
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-condition-without-or}
- */
-export const parseConditionWithoutOr = either(
-  parseNot,
-  map(pair(parseInParens, zeroOrMore(parseAnd)), ([left, right]) =>
-    [left, ...right].reduce((left, right) => And.of(left, right)),
-  ),
-);
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-condition}
+   */
+  export const parse: CSSParser<Feature | Condition> = either(
+    Not.parse(() => parseInParens),
+    either(
+      map(
+        pair(
+          parseInParens,
+          either(
+            map(
+              oneOrMore(And.parse(() => parseInParens)),
+              (queries) => [And.of, queries] as const,
+            ),
+            map(
+              oneOrMore(Or.parse(() => parseInParens)),
+              (queries) => [Or.of, queries] as const,
+            ),
+          ),
+        ),
+        ([left, [constructor, right]]) =>
+          Iterable.reduce(
+            right,
+            (left, right) => constructor(left, right),
+            left,
+          ),
+      ),
+      parseInParens,
+    ),
+  );
+
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-condition-without-or}
+   */
+  export const parseWithoutOr = either(
+    Not.parse(() => parseInParens),
+    map(
+      pair(parseInParens, zeroOrMore(And.parse(() => parseInParens))),
+      ([left, right]) =>
+        [left, ...right].reduce((left, right) => And.of(left, right)),
+    ),
+  );
+}

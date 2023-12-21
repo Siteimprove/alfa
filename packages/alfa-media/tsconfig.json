@@ -35,6 +35,7 @@
     { "path": "../alfa-refinement" },
     { "path": "../alfa-result" },
     { "path": "../alfa-slice" },
+    { "path": "../alfa-thunk" },
     { "path": "../alfa-test" }
   ]
 }
