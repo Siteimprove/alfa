@@ -2,9 +2,16 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": [
+    "src/feature/feature.ts",
+    "src/feature/index.ts",
     "src/index.ts",
+    "src/matchable.ts",
     "src/media.ts",
+    "src/modifier.ts",
     "src/resolver.ts",
+    "src/type.ts",
+    "src/value/index.ts",
+    "src/value/value.ts",
     "test/media.spec.ts"
   ],
   "references": [

@@ -14,7 +14,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Media } from "@siteimprove/alfa-media";
+import {
+  Feature as MediaFeature,
+  Value as MediaValue,
+} from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -29,8 +32,8 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope, Stability } from "../tags";
 
-const { isHeight, isWidth } = Media.Feature;
-const { Discrete, Range } = Media.Value;
+const { isHeight, isWidth } = MediaFeature;
+const { Discrete, Range } = MediaValue;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -524,8 +527,8 @@ function usesMediaRule(
  * We currently do not support calculated media queries. But this is lost in the
  * typing of Media.Feature. Here, we simply consider them as "good" (font relative).
  */
-function isFontRelativeMediaRule<F extends Media.Feature>(
-  refinement: Refinement<Media.Feature, F>,
+function isFontRelativeMediaRule<F extends MediaFeature>(
+  refinement: Refinement<MediaFeature, F>,
 ): Predicate<MediaRule> {
   return (rule) =>
     Iterable.some(rule.queries.queries, (query) =>
@@ -551,9 +554,9 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
     );
 }
 
-function usesFontRelativeMediaRule<F extends Media.Feature>(
+function usesFontRelativeMediaRule<F extends MediaFeature>(
   device: Device,
-  refinement: Refinement<Media.Feature, F>,
+  refinement: Refinement<MediaFeature, F>,
   context: Context = Context.empty(),
 ): Predicate<Element> {
   return usesMediaRule(isFontRelativeMediaRule(refinement), device, context);
