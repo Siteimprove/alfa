@@ -1,7 +1,7 @@
 import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-const { either, map, option, right } = Parser;
+const { delimited, either, map, option, right } = Parser;
 
 /**
  * @internal
@@ -24,7 +24,10 @@ export namespace Comparison {
   export const parseLessThan: CSSParser<
     Comparison.LessThan | Comparison.LessThanOrEqual
   > = map(
-    right(Token.parseDelim("<"), option(Token.parseDelim("="))),
+    delimited(
+      option(Token.parseWhitespace),
+      right(Token.parseDelim("<"), option(Token.parseDelim("="))),
+    ),
     (equal) =>
       equal.isNone() ? Comparison.LessThan : Comparison.LessThanOrEqual,
   );
@@ -33,7 +36,10 @@ export namespace Comparison {
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-gt}
    */
   export const parseGreaterThan = map(
-    right(Token.parseDelim(">"), option(Token.parseDelim("="))),
+    delimited(
+      option(Token.parseWhitespace),
+      right(Token.parseDelim(">"), option(Token.parseDelim("="))),
+    ),
     (equal) =>
       equal.isNone() ? Comparison.GreaterThan : Comparison.GreaterThanOrEqual,
   );
@@ -41,7 +47,10 @@ export namespace Comparison {
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-eq}
    */
-  export const parseEqual = map(Token.parseDelim("="), () => Comparison.Equal);
+  export const parseEqual = map(
+    delimited(option(Token.parseWhitespace), Token.parseDelim("=")),
+    () => Comparison.Equal,
+  );
 
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-comparison}

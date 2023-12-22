@@ -112,25 +112,8 @@ export namespace Feature {
    * @remarks
    * We currently do not support calculations in media queries
    */
-  const parseValue = either<
-    Slice<Token>,
-    Keyword | Length.Fixed | Number.Fixed | Percentage.Fixed,
-    string
-  >(
-    filter(
-      Number.parse,
-      (number): number is Number.Fixed => !number.hasCalculation(),
-      () => "Calculations no supported in media queries",
-    ),
+  const parseValue = either<Slice<Token>, Keyword | Length.Fixed, string>(
     map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase())),
-    map(
-      separated(
-        Token.parseNumber((number) => number.isInteger),
-        delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-        Token.parseNumber((number) => number.isInteger),
-      ),
-      ([left, right]) => Percentage.of(left.value / right.value),
-    ),
     filter(
       Length.parse,
       (length): length is Length.Fixed => !length.hasCalculation(),
@@ -192,13 +175,7 @@ export namespace Feature {
       mapResult(
         pair(
           map(
-            pair(
-              parseValue,
-              delimited(
-                option(Token.parseWhitespace),
-                Comparison.parseLessThan,
-              ),
-            ),
+            pair(parseValue, Comparison.parseLessThan),
             ([value, comparison]) =>
               Value.bound(
                 value,
@@ -208,13 +185,7 @@ export namespace Feature {
           pair(
             delimited(option(Token.parseWhitespace), parseName(name)),
             map(
-              pair(
-                delimited(
-                  option(Token.parseWhitespace),
-                  Comparison.parseLessThan,
-                ),
-                parseValue,
-              ),
+              pair(Comparison.parseLessThan, parseValue),
               ([comparison, value]) =>
                 Value.bound(
                   value,
@@ -231,13 +202,7 @@ export namespace Feature {
       mapResult(
         pair(
           map(
-            pair(
-              parseValue,
-              delimited(
-                option(Token.parseWhitespace),
-                Comparison.parseGreaterThan,
-              ),
-            ),
+            pair(parseValue, Comparison.parseGreaterThan),
             ([value, comparison]) =>
               Value.bound(
                 value,
@@ -247,13 +212,7 @@ export namespace Feature {
           pair(
             delimited(option(Token.parseWhitespace), parseName(name)),
             map(
-              pair(
-                delimited(
-                  option(Token.parseWhitespace),
-                  Comparison.parseGreaterThan,
-                ),
-                parseValue,
-              ),
+              pair(Comparison.parseGreaterThan, parseValue),
               ([comparison, value]) =>
                 Value.bound(
                   value,
@@ -269,13 +228,7 @@ export namespace Feature {
 
       // <mf-name> <mf-comparison> <mf-value>
       mapResult(
-        pair(
-          parseName(name),
-          pair(
-            delimited(option(Token.parseWhitespace), Comparison.parse),
-            parseValue,
-          ),
-        ),
+        pair(parseName(name), pair(Comparison.parse, parseValue)),
         ([name, [comparison, value]]) => {
           switch (comparison) {
             case Comparison.Equal:
@@ -321,13 +274,7 @@ export namespace Feature {
 
       // <mf-value> <mf-comparison> <mf-name>
       mapResult(
-        pair(
-          parseValue,
-          pair(
-            delimited(option(Token.parseWhitespace), Comparison.parse),
-            parseName(name),
-          ),
-        ),
+        pair(parseValue, pair(Comparison.parse, parseName(name))),
         ([value, [comparison, name]]) => {
           switch (comparison) {
             case Comparison.Equal:
