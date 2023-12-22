@@ -273,31 +273,32 @@ export namespace Condition {
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-in-parens}
    */
-  const parseInParens = either(
-    delimited(
-      Token.parseOpenParenthesis,
-      delimited(option(Token.parseWhitespace), (input) => parse(input)),
-      Token.parseCloseParenthesis,
-    ),
-    parseMediaFeature,
-  );
+  const parseInParens = () =>
+    either(
+      delimited(
+        Token.parseOpenParenthesis,
+        delimited(option(Token.parseWhitespace), (input) => parse(input)),
+        Token.parseCloseParenthesis,
+      ),
+      parseMediaFeature,
+    );
 
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-condition}
    */
   export const parse: CSSParser<Feature | Condition> = either(
-    Not.parse(() => parseInParens),
+    Not.parse(parseInParens),
     either(
       map(
         pair(
-          parseInParens,
+          parseInParens(),
           either(
             map(
-              oneOrMore(And.parse(() => parseInParens)),
+              oneOrMore(And.parse(parseInParens)),
               (queries) => [And.of, queries] as const,
             ),
             map(
-              oneOrMore(Or.parse(() => parseInParens)),
+              oneOrMore(Or.parse(parseInParens)),
               (queries) => [Or.of, queries] as const,
             ),
           ),
@@ -309,7 +310,7 @@ export namespace Condition {
             left,
           ),
       ),
-      parseInParens,
+      parseInParens(),
     ),
   );
 
@@ -317,9 +318,9 @@ export namespace Condition {
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-condition-without-or}
    */
   export const parseWithoutOr = either(
-    Not.parse(() => parseInParens),
+    Not.parse(parseInParens),
     map(
-      pair(parseInParens, zeroOrMore(And.parse(() => parseInParens))),
+      pair(parseInParens(), zeroOrMore(And.parse(parseInParens))),
       ([left, right]) =>
         [left, ...right].reduce((left, right) => And.of(left, right)),
     ),
