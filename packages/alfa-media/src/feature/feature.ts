@@ -1,9 +1,7 @@
 import {
   Keyword,
   Length,
-  Number,
   type Parser as CSSParser,
-  Percentage,
   Token,
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
@@ -27,20 +25,24 @@ const { delimited, either, filter, map, mapResult, option, pair, separated } =
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#mq-features}
  */
-export abstract class Feature<T = unknown>
+export abstract class Feature<N extends string = string, T = unknown>
   implements
     Matchable,
-    Iterable<Feature<T>>,
+    Iterable<Feature<N, T>>,
     Equatable,
     Serializable<Feature.JSON>
 {
+  private readonly _name: N;
   protected readonly _value: Option<Value<T>>;
 
-  protected constructor(value: Option<Value<T>>) {
+  protected constructor(name: N, value: Option<Value<T>>) {
+    this._name = name;
     this._value = value;
   }
 
-  public abstract get name(): string;
+  public get name(): string {
+    return this._name;
+  }
 
   public get value(): Option<Value<T>> {
     return this._value;
@@ -56,18 +58,18 @@ export abstract class Feature<T = unknown>
     );
   }
 
-  public *iterator(): Iterator<Feature<T>> {
+  public *iterator(): Iterator<Feature<N, T>> {
     yield this;
   }
 
-  public [Symbol.iterator](): Iterator<Feature<T>> {
+  public [Symbol.iterator](): Iterator<Feature<N, T>> {
     return this.iterator();
   }
 
-  public toJSON(): Feature.JSON {
+  public toJSON(): Feature.JSON<N> {
     return {
       type: "feature",
-      name: this.name,
+      name: this._name,
       value: this._value.map((value) => value.toJSON()).getOr(null),
     };
   }
@@ -78,11 +80,11 @@ export abstract class Feature<T = unknown>
 }
 
 export namespace Feature {
-  export interface JSON {
+  export interface JSON<N extends string = string> {
     [key: string]: json.JSON;
 
     type: "feature";
-    name: string;
+    name: N;
     value: Value.JSON | null;
   }
 
@@ -93,13 +95,13 @@ export namespace Feature {
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-name}
    */
-  function parseName(
-    name: string,
+  function parseName<N extends string = string>(
+    name: N,
     withRange: boolean = false,
-  ): CSSParser<string> {
+  ): CSSParser<N | `min-${N}` | `max-${N}`> {
     return filter(
       map(Token.parseIdent(), (ident) => ident.value.toLowerCase()),
-      (parsed) =>
+      (parsed): parsed is N | `min-${N}` | `max-${N}` =>
         parsed === name ||
         (withRange && (parsed === `min-${name}` || parsed === `max-${name}`)),
       (parsed) => `Unknown feature ${parsed}`,
@@ -124,10 +126,10 @@ export namespace Feature {
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-plain}
    */
-  function parsePlain(
-    name: string,
+  function parsePlain<N extends string = string>(
+    name: N,
     withRange: boolean,
-    tryFrom: (value: Option<Value<any>>) => Result<Feature, string>,
+    tryFrom: (value: Option<Value<any>>) => Result<Feature<N>, string>,
   ): CSSParser<Feature> {
     return mapResult(
       separated(
@@ -140,8 +142,6 @@ export namespace Feature {
           const range = name.startsWith("min-")
             ? Value.minimumRange
             : Value.maximumRange;
-
-          name = name.slice(4);
 
           return tryFrom(
             Option.of(range(Value.bound(value, /* isInclusive */ true))),
@@ -156,9 +156,9 @@ export namespace Feature {
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-boolean}
    */
-  function parseBoolean(
-    name: string,
-    tryFrom: (value: Option<Value<any>>) => Result<Feature, string>,
+  function parseBoolean<N extends string = string>(
+    name: N,
+    tryFrom: (value: Option<Value<any>>) => Result<Feature<N>, string>,
   ): CSSParser<Feature> {
     return mapResult(parseName(name), (name) => tryFrom(None));
   }
@@ -166,9 +166,9 @@ export namespace Feature {
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-range}
    */
-  function parseRange(
-    name: string,
-    tryFrom: (value: Option<Value<any>>) => Result<Feature, string>,
+  function parseRange<N extends string = string>(
+    name: N,
+    tryFrom: (value: Option<Value<any>>) => Result<Feature<N>, string>,
   ): CSSParser<Feature> {
     return either(
       // <mf-value> <mf-lt> <mf-name> <mf-lt> <mf-value>
@@ -323,10 +323,10 @@ export namespace Feature {
   /**
    * @internal
    */
-  export function parseFeature(
-    name: string,
+  export function parseFeature<N extends string = string>(
+    name: N,
     withRange: boolean,
-    tryFrom: (value: Option<Value<any>>) => Result<Feature, string>,
+    tryFrom: (value: Option<Value<any>>) => Result<Feature<N>, string>,
   ): CSSParser<Feature> {
     return either(
       withRange

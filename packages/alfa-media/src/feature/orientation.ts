@@ -15,19 +15,19 @@ const { equals, property } = Predicate;
  *
  * @internal
  */
-export class Orientation extends Feature<Keyword> {
+export class Orientation extends Feature<"orientation", Keyword> {
   public static of(value: Value<Keyword>): Orientation {
     return new Orientation(Option.of(value));
   }
 
   private static _boolean = new Orientation(None);
 
-  public static boolean(): Orientation {
-    return Orientation._boolean;
+  private constructor(value: Option<Value<Keyword>>) {
+    super("orientation", value);
   }
 
-  public get name(): "orientation" {
-    return "orientation";
+  public static boolean(): Orientation {
+    return Orientation._boolean;
   }
 
   public matches(device: Device): boolean {

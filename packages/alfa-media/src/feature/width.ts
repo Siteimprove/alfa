@@ -13,19 +13,19 @@ import { Feature } from "./feature";
  *
  * @internal
  */
-export class Width extends Feature<Length.Fixed> {
+export class Width extends Feature<"width", Length.Fixed> {
   public static of(value: Value<Length.Fixed>): Width {
     return new Width(Option.of(value));
   }
 
   private static _boolean = new Width(None);
 
-  public static boolean(): Width {
-    return Width._boolean;
+  private constructor(value: Option<Value<Length.Fixed>>) {
+    super("width", value);
   }
 
-  public get name(): "width" {
-    return "width";
+  public static boolean(): Width {
+    return Width._boolean;
   }
 
   public matches(device: Device): boolean {
