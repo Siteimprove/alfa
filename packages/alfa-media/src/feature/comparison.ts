@@ -18,6 +18,14 @@ export enum Comparison {
  * @internal
  */
 export namespace Comparison {
+  export function isInclusive(comparison: Comparison): boolean {
+    return (
+      comparison === Comparison.LessThanOrEqual ||
+      comparison === Comparison.GreaterThanOrEqual ||
+      comparison === Comparison.Equal
+    );
+  }
+
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-lt}
    */

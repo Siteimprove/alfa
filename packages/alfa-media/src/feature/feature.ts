@@ -17,7 +17,8 @@ import { Value } from "../value";
 
 import { Comparison } from "./comparison";
 
-const { delimited, either, filter, map, option, pair, separated } = Parser;
+const { delimited, either, filter, left, map, option, pair, right, separated } =
+  Parser;
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#mq-features}
@@ -106,20 +107,6 @@ export namespace Feature {
   }
 
   /**
-   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-value}
-   *
-   * @remarks
-   * We currently do not support calculations in media queries
-   * We currently only support media features whose value is keyword
-   * or length, keyword parsing uses the `alfa-css` parser.
-   */
-  const parseLength = filter(
-    Length.parse,
-    (length): length is Length.Fixed => !length.hasCalculation(),
-    () => "Calculations no supported in media queries",
-  );
-
-  /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-plain}
    */
   function parsePlain<
@@ -164,6 +151,38 @@ export namespace Feature {
   }
 
   /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-value}
+   *
+   * @remarks
+   * We currently do not support calculations in media queries
+   * We currently only support media features whose value is keyword
+   * or length, keyword parsing uses the `alfa-css` parser.
+   */
+  const parseLength = filter(
+    Length.parse,
+    (length): length is Length.Fixed => !length.hasCalculation(),
+    () => "Calculations no supported in media queries",
+  );
+
+  function parseComparisonLengthBound<C extends Comparison = Comparison>(
+    parseComparison: CSSParser<C>,
+  ): CSSParser<[Value.Bound<Length.Fixed>, C]> {
+    return map(pair(parseComparison, parseLength), ([comparison, value]) => [
+      Value.bound(value, Comparison.isInclusive(comparison)),
+      comparison,
+    ]);
+  }
+
+  function parseLengthComparisonBound<C extends Comparison = Comparison>(
+    parseComparison: CSSParser<C>,
+  ): CSSParser<[Value.Bound<Length.Fixed>, C]> {
+    return map(pair(parseLength, parseComparison), ([value, comparison]) => [
+      Value.bound(value, Comparison.isInclusive(comparison)),
+      comparison,
+    ]);
+  }
+
+  /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-range}
    */
   function parseRange<N extends string = string>(
@@ -174,146 +193,63 @@ export namespace Feature {
       // <mf-value> <mf-lt> <mf-name> <mf-lt> <mf-value>
       map(
         pair(
-          map(
-            pair(parseLength, Comparison.parseLessThan),
-            ([value, comparison]) =>
-              Value.bound(
-                value,
-                /* isInclusive */ comparison === Comparison.LessThanOrEqual,
-              ),
-          ),
-          pair(
+          parseLengthComparisonBound(Comparison.parseLessThan),
+          right(
             delimited(option(Token.parseWhitespace), parseName(name)),
-            map(
-              pair(Comparison.parseLessThan, parseLength),
-              ([comparison, value]) =>
-                Value.bound(
-                  value,
-                  /* isInclusive */ comparison === Comparison.LessThanOrEqual,
-                ),
-            ),
+            parseComparisonLengthBound(Comparison.parseLessThan),
           ),
         ),
-        ([minimum, [name, maximum]]) =>
+        ([[minimum], [maximum]]) =>
           from(Option.of(Value.range(minimum, maximum))),
       ),
 
       // <mf-value> <mf-gt> <mf-name> <mf-gt> <mf-value>
       map(
         pair(
-          map(
-            pair(parseLength, Comparison.parseGreaterThan),
-            ([value, comparison]) =>
-              Value.bound(
-                value,
-                /* isInclusive */ comparison === Comparison.GreaterThanOrEqual,
-              ),
-          ),
-          pair(
+          parseLengthComparisonBound(Comparison.parseGreaterThan),
+          right(
             delimited(option(Token.parseWhitespace), parseName(name)),
-            map(
-              pair(Comparison.parseGreaterThan, parseLength),
-              ([comparison, value]) =>
-                Value.bound(
-                  value,
-                  /* isInclusive */ comparison ===
-                    Comparison.GreaterThanOrEqual,
-                ),
-            ),
+            parseComparisonLengthBound(Comparison.parseGreaterThan),
           ),
         ),
-        ([maximum, [name, minimum]]) =>
+        ([[maximum], [minimum]]) =>
           from(Option.of(Value.range(minimum, maximum))),
       ),
 
       // <mf-name> <mf-comparison> <mf-value>
       map(
-        pair(parseName(name), pair(Comparison.parse, parseLength)),
-        ([name, [comparison, value]]) => {
+        right(parseName(name), parseComparisonLengthBound(Comparison.parse)),
+        ([bound, comparison]) => {
           switch (comparison) {
             case Comparison.Equal:
-              return from(
-                Option.of(
-                  Value.range(
-                    Value.bound(value, /* isInclude */ true),
-                    Value.bound(value, /* isInclude */ true),
-                  ),
-                ),
-              );
+              return from(Option.of(Value.range(bound, bound)));
 
             case Comparison.LessThan:
             case Comparison.LessThanOrEqual:
-              return from(
-                Option.of(
-                  Value.maximumRange(
-                    Value.bound(
-                      value,
-                      /* isInclusive */ comparison ===
-                        Comparison.LessThanOrEqual,
-                    ),
-                  ),
-                ),
-              );
+              return from(Option.of(Value.maximumRange(bound)));
 
             case Comparison.GreaterThan:
             case Comparison.GreaterThanOrEqual:
-              return from(
-                Option.of(
-                  Value.minimumRange(
-                    Value.bound(
-                      value,
-                      /* isInclusive */ comparison ===
-                        Comparison.GreaterThanOrEqual,
-                    ),
-                  ),
-                ),
-              );
+              return from(Option.of(Value.minimumRange(bound)));
           }
         },
       ),
 
       // <mf-value> <mf-comparison> <mf-name>
       map(
-        pair(parseLength, pair(Comparison.parse, parseName(name))),
-        ([value, [comparison, name]]) => {
+        left(parseLengthComparisonBound(Comparison.parse), parseName(name)),
+        ([bound, comparison]) => {
           switch (comparison) {
             case Comparison.Equal:
-              return from(
-                Option.of(
-                  Value.range(
-                    Value.bound(value, /* isInclude */ true),
-                    Value.bound(value, /* isInclude */ true),
-                  ),
-                ),
-              );
+              return from(Option.of(Value.range(bound, bound)));
 
             case Comparison.LessThan:
             case Comparison.LessThanOrEqual:
-              return from(
-                Option.of(
-                  Value.minimumRange(
-                    Value.bound(
-                      value,
-                      /* isInclusive */ comparison ===
-                        Comparison.LessThanOrEqual,
-                    ),
-                  ),
-                ),
-              );
+              return from(Option.of(Value.minimumRange(bound)));
 
             case Comparison.GreaterThan:
             case Comparison.GreaterThanOrEqual:
-              return from(
-                Option.of(
-                  Value.maximumRange(
-                    Value.bound(
-                      value,
-                      /* isInclusive */ comparison ===
-                        Comparison.GreaterThanOrEqual,
-                    ),
-                  ),
-                ),
-              );
+              return from(Option.of(Value.maximumRange(bound)));
           }
         },
       ),
