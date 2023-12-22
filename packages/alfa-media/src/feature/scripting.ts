@@ -1,14 +1,9 @@
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok, type Result } from "@siteimprove/alfa-result";
 
 import { Value } from "../value";
 import { Feature } from "./feature";
-
-const { property, equals } = Predicate;
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#scripting}
@@ -41,25 +36,15 @@ export class Scripting extends Feature<"scripting", Keyword> {
  * @internal
  */
 export namespace Scripting {
-  function tryFrom(value: Option<Value<any>>): Result<Scripting, string> {
-    return value
-      .map((value) => {
-        if (
-          Value.isDiscrete(value) &&
-          value.hasValue(
-            Refinement.and(
-              Keyword.isKeyword,
-              property("value", equals("none", "enabled", "initial-only")),
-            ),
-          )
-        ) {
-          return Ok.of(Scripting.of(value));
-        } else {
-          return Err.of(`Invalid value`);
-        }
-      })
-      .getOrElse(() => Ok.of(Scripting.boolean()));
+  function from(value: Option<Value<Keyword>>): Scripting {
+    return value.map(Scripting.of).getOrElse(Scripting.boolean);
   }
 
-  export const parse = Feature.parseFeature("scripting", false, tryFrom);
+  export const parse = Feature.parseDiscrete(
+    "scripting",
+    from,
+    "none",
+    "initial-only",
+    "enabled",
+  );
 }

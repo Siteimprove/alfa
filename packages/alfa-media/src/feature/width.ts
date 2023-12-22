@@ -1,7 +1,6 @@
 import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Err, Ok, type Result } from "@siteimprove/alfa-result";
 
 import { Resolver } from "../resolver";
 import { Value } from "../value";
@@ -47,22 +46,8 @@ export class Width extends Feature<"width", Length.Fixed> {
  * @internal
  */
 export namespace Width {
-  function tryFrom(value: Option<Value>): Result<Width, string> {
-    return value
-      .map((value) => (Value.Range.isRange(value) ? value.toLength() : value))
-      .map((value) => {
-        if (
-          value.hasValue(Length.isLength) &&
-          value.hasValue(
-            (value): value is Length.Fixed => !value.hasCalculation(),
-          )
-        ) {
-          return Ok.of(Width.of(value));
-        }
-
-        return Err.of(`Invalid value`);
-      })
-      .getOrElse(() => Ok.of(Width.boolean()));
+  function from(value: Option<Value<Length.Fixed>>): Width {
+    return value.map(Width.of).getOrElse(Width.boolean);
   }
 
   export function isWidth(value: Feature): value is Width;
@@ -73,5 +58,5 @@ export namespace Width {
     return value instanceof Width;
   }
 
-  export const parse = Feature.parseFeature("width", true, tryFrom);
+  export const parse = Feature.parseContinuous("width", from);
 }

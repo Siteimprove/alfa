@@ -11,16 +11,13 @@ import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import type { Matchable } from "../matchable";
 import { Value } from "../value";
 
 import { Comparison } from "./comparison";
 
-const { delimited, either, filter, map, mapResult, option, pair, separated } =
-  Parser;
+const { delimited, either, filter, map, option, pair, separated } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#mq-features}
@@ -113,25 +110,28 @@ export namespace Feature {
    *
    * @remarks
    * We currently do not support calculations in media queries
+   * We currently only support media features whose value is keyword
+   * or length, keyword parsing uses the `alfa-css` parser.
    */
-  const parseValue = either<Slice<Token>, Keyword | Length.Fixed, string>(
-    map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase())),
-    filter(
-      Length.parse,
-      (length): length is Length.Fixed => !length.hasCalculation(),
-      () => "Calculations no supported in media queries",
-    ),
+  const parseLength = filter(
+    Length.parse,
+    (length): length is Length.Fixed => !length.hasCalculation(),
+    () => "Calculations no supported in media queries",
   );
 
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-plain}
    */
-  function parsePlain<N extends string = string>(
+  function parsePlain<
+    N extends string = string,
+    T extends Keyword | Length.Fixed = Keyword | Length.Fixed,
+  >(
     name: N,
+    parseValue: CSSParser<T>,
     withRange: boolean,
-    tryFrom: (value: Option<Value<any>>) => Result<Feature<N>, string>,
-  ): CSSParser<Feature> {
-    return mapResult(
+    from: (value: Option<Value<T>>) => Feature<N, T>,
+  ): CSSParser<Feature<N, T>> {
+    return map(
       separated(
         parseName(name, withRange),
         delimited(option(Token.parseWhitespace), Token.parseColon),
@@ -143,11 +143,11 @@ export namespace Feature {
             ? Value.minimumRange
             : Value.maximumRange;
 
-          return tryFrom(
+          return from(
             Option.of(range(Value.bound(value, /* isInclusive */ true))),
           );
         } else {
-          return tryFrom(Option.of(Value.discrete(value)));
+          return from(Option.of(Value.discrete(value)));
         }
       },
     );
@@ -156,11 +156,11 @@ export namespace Feature {
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-boolean}
    */
-  function parseBoolean<N extends string = string>(
+  function parseBoolean<N extends string = string, T = unknown>(
     name: N,
-    tryFrom: (value: Option<Value<any>>) => Result<Feature<N>, string>,
-  ): CSSParser<Feature> {
-    return mapResult(parseName(name), (name) => tryFrom(None));
+    from: (value: None) => Feature<N, T>,
+  ): CSSParser<Feature<N, T>> {
+    return map(parseName(name), () => from(None));
   }
 
   /**
@@ -168,14 +168,14 @@ export namespace Feature {
    */
   function parseRange<N extends string = string>(
     name: N,
-    tryFrom: (value: Option<Value<any>>) => Result<Feature<N>, string>,
-  ): CSSParser<Feature> {
+    from: (value: Option<Value<Length.Fixed>>) => Feature<N, Length.Fixed>,
+  ): CSSParser<Feature<N, Length.Fixed>> {
     return either(
       // <mf-value> <mf-lt> <mf-name> <mf-lt> <mf-value>
-      mapResult(
+      map(
         pair(
           map(
-            pair(parseValue, Comparison.parseLessThan),
+            pair(parseLength, Comparison.parseLessThan),
             ([value, comparison]) =>
               Value.bound(
                 value,
@@ -185,7 +185,7 @@ export namespace Feature {
           pair(
             delimited(option(Token.parseWhitespace), parseName(name)),
             map(
-              pair(Comparison.parseLessThan, parseValue),
+              pair(Comparison.parseLessThan, parseLength),
               ([comparison, value]) =>
                 Value.bound(
                   value,
@@ -195,14 +195,14 @@ export namespace Feature {
           ),
         ),
         ([minimum, [name, maximum]]) =>
-          tryFrom(Option.of(Value.range(minimum, maximum))),
+          from(Option.of(Value.range(minimum, maximum))),
       ),
 
       // <mf-value> <mf-gt> <mf-name> <mf-gt> <mf-value>
-      mapResult(
+      map(
         pair(
           map(
-            pair(parseValue, Comparison.parseGreaterThan),
+            pair(parseLength, Comparison.parseGreaterThan),
             ([value, comparison]) =>
               Value.bound(
                 value,
@@ -212,7 +212,7 @@ export namespace Feature {
           pair(
             delimited(option(Token.parseWhitespace), parseName(name)),
             map(
-              pair(Comparison.parseGreaterThan, parseValue),
+              pair(Comparison.parseGreaterThan, parseLength),
               ([comparison, value]) =>
                 Value.bound(
                   value,
@@ -223,16 +223,16 @@ export namespace Feature {
           ),
         ),
         ([maximum, [name, minimum]]) =>
-          tryFrom(Option.of(Value.range(minimum, maximum))),
+          from(Option.of(Value.range(minimum, maximum))),
       ),
 
       // <mf-name> <mf-comparison> <mf-value>
-      mapResult(
-        pair(parseName(name), pair(Comparison.parse, parseValue)),
+      map(
+        pair(parseName(name), pair(Comparison.parse, parseLength)),
         ([name, [comparison, value]]) => {
           switch (comparison) {
             case Comparison.Equal:
-              return tryFrom(
+              return from(
                 Option.of(
                   Value.range(
                     Value.bound(value, /* isInclude */ true),
@@ -243,7 +243,7 @@ export namespace Feature {
 
             case Comparison.LessThan:
             case Comparison.LessThanOrEqual:
-              return tryFrom(
+              return from(
                 Option.of(
                   Value.maximumRange(
                     Value.bound(
@@ -257,7 +257,7 @@ export namespace Feature {
 
             case Comparison.GreaterThan:
             case Comparison.GreaterThanOrEqual:
-              return tryFrom(
+              return from(
                 Option.of(
                   Value.minimumRange(
                     Value.bound(
@@ -273,12 +273,12 @@ export namespace Feature {
       ),
 
       // <mf-value> <mf-comparison> <mf-name>
-      mapResult(
-        pair(parseValue, pair(Comparison.parse, parseName(name))),
+      map(
+        pair(parseLength, pair(Comparison.parse, parseName(name))),
         ([value, [comparison, name]]) => {
           switch (comparison) {
             case Comparison.Equal:
-              return tryFrom(
+              return from(
                 Option.of(
                   Value.range(
                     Value.bound(value, /* isInclude */ true),
@@ -289,7 +289,7 @@ export namespace Feature {
 
             case Comparison.LessThan:
             case Comparison.LessThanOrEqual:
-              return tryFrom(
+              return from(
                 Option.of(
                   Value.minimumRange(
                     Value.bound(
@@ -303,7 +303,7 @@ export namespace Feature {
 
             case Comparison.GreaterThan:
             case Comparison.GreaterThanOrEqual:
-              return tryFrom(
+              return from(
                 Option.of(
                   Value.maximumRange(
                     Value.bound(
@@ -323,17 +323,28 @@ export namespace Feature {
   /**
    * @internal
    */
-  export function parseFeature<N extends string = string>(
+  export function parseContinuous<N extends string = string>(
     name: N,
-    withRange: boolean,
-    tryFrom: (value: Option<Value<any>>) => Result<Feature<N>, string>,
-  ): CSSParser<Feature> {
+    from: (value: Option<Value<Length.Fixed>>) => Feature<N, Length.Fixed>,
+  ): CSSParser<Feature<N, Length.Fixed>> {
     return either(
-      withRange
-        ? parseRange(name, tryFrom)
-        : () => Err.of(`${name} not allowed in range context`),
-      parsePlain(name, withRange, tryFrom),
-      parseBoolean(name, tryFrom),
+      parseRange(name, from),
+      parsePlain(name, parseLength, true, from),
+      parseBoolean(name, from),
+    );
+  }
+
+  /**
+   * @internal
+   */
+  export function parseDiscrete<N extends string = string>(
+    name: N,
+    from: (value: Option<Value<Keyword>>) => Feature<N, Keyword>,
+    ...values: Array<string>
+  ): CSSParser<Feature<N, Keyword>> {
+    return either(
+      parsePlain(name, Keyword.parse(...values), false, from),
+      parseBoolean(name, from),
     );
   }
 }

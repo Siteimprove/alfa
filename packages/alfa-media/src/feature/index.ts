@@ -1,5 +1,6 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import * as feature from "./feature";
 
@@ -32,7 +33,12 @@ export namespace Feature {
     Token.parseOpenParenthesis,
     delimited(
       option(Token.parseWhitespace),
-      either(Height.parse, Orientation.parse, Scripting.parse, Width.parse),
+      either<Slice<Token>, Feature, string>(
+        Height.parse,
+        Orientation.parse,
+        Scripting.parse,
+        Width.parse,
+      ),
     ),
     Token.parseCloseParenthesis,
   );

@@ -1,7 +1,6 @@
 import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Err, Ok, type Result } from "@siteimprove/alfa-result";
 
 import { Resolver } from "../resolver";
 import { Value } from "../value";
@@ -47,22 +46,8 @@ export class Height extends Feature<"height", Length.Fixed> {
  * @internal
  */
 export namespace Height {
-  function tryFrom(value: Option<Value>): Result<Height, string> {
-    return value
-      .map((value) => (Value.Range.isRange(value) ? value.toLength() : value))
-      .map((value) => {
-        if (
-          value.hasValue(Length.isLength) &&
-          value.hasValue(
-            (value): value is Length.Fixed => !value.hasCalculation(),
-          )
-        ) {
-          return Ok.of(Height.of(value));
-        }
-
-        return Err.of(`Invalid value`);
-      })
-      .getOrElse(() => Ok.of(Height.boolean()));
+  function from(value: Option<Value<Length.Fixed>>): Height {
+    return value.map(Height.of).getOrElse(Height.boolean);
   }
 
   export function isHeight(value: Feature): value is Height;
@@ -73,5 +58,5 @@ export namespace Height {
     return value instanceof Height;
   }
 
-  export const parse = Feature.parseFeature("height", true, tryFrom);
+  export const parse = Feature.parseContinuous("height", from);
 }

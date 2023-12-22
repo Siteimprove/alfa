@@ -1,14 +1,9 @@
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok, type Result } from "@siteimprove/alfa-result";
 
 import { Value } from "../value";
 import { Feature } from "./feature";
-
-const { equals, property } = Predicate;
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#orientation}
@@ -41,25 +36,14 @@ export class Orientation extends Feature<"orientation", Keyword> {
  * @internal
  */
 export namespace Orientation {
-  function tryFrom(value: Option<Value<any>>): Result<Orientation, string> {
-    return value
-      .map((value) => {
-        if (
-          Value.isDiscrete(value) &&
-          value.hasValue(
-            Refinement.and(
-              Keyword.isKeyword,
-              property("value", equals("landscape", "portrait")),
-            ),
-          )
-        ) {
-          return Ok.of(Orientation.of(value));
-        } else {
-          return Err.of(`Invalid value`);
-        }
-      })
-      .getOrElse(() => Ok.of(Orientation.boolean()));
+  function from(value: Option<Value<Keyword>>): Orientation {
+    return value.map(Orientation.of).getOrElse(Orientation.boolean);
   }
 
-  export const parse = Feature.parseFeature("orientation", false, tryFrom);
+  export const parse = Feature.parseDiscrete(
+    "orientation",
+    from,
+    "portrait",
+    "landscape",
+  );
 }
