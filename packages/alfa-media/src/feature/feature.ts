@@ -2,6 +2,7 @@ import {
   Keyword,
   Length,
   Number,
+  type Parser as CSSParser,
   Percentage,
   Token,
 } from "@siteimprove/alfa-css";
@@ -12,19 +13,16 @@ import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import type { Matchable } from "../matchable";
 import { Value } from "../value";
-import { Resolver } from "../resolver";
 
 import { Comparison } from "./comparison";
 
 const { delimited, either, filter, map, mapResult, option, pair, separated } =
   Parser;
-const { equals, property } = Predicate;
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#mq-features}
@@ -82,284 +80,49 @@ export abstract class Feature<T = unknown>
 export namespace Feature {
   export interface JSON {
     [key: string]: json.JSON;
+
     type: "feature";
     name: string;
     value: Value.JSON | null;
   }
 
-  export function tryFrom(
-    value: Option<Value<any>>,
-    name: string,
-  ): Result<Feature, string> {
-    switch (name) {
-      case "width":
-        return Width.tryFrom(value);
-
-      case "height":
-        return Height.tryFrom(value);
-
-      case "orientation":
-        return Orientation.tryFrom(value);
-
-      case "scripting":
-        return Scripting.tryFrom(value);
-    }
-
-    return Err.of(`Unknown media feature ${name}`);
-  }
-
-  /**
-   * {@link https://drafts.csswg.org/mediaqueries-5/#width}
-   */
-  class Width extends Feature<Length.Fixed> {
-    public static of(value: Value<Length.Fixed>): Width {
-      return new Width(Option.of(value));
-    }
-
-    private static _boolean = new Width(None);
-
-    public static boolean(): Width {
-      return Width._boolean;
-    }
-
-    public get name(): "width" {
-      return "width";
-    }
-
-    public matches(device: Device): boolean {
-      const {
-        viewport: { width },
-      } = device;
-
-      const value = this._value.map((value) =>
-        value.map((length) => length.resolve(Resolver.length(device))),
-      );
-
-      return width > 0
-        ? value.some((value) => value.matches(Length.of(width, "px")))
-        : value.every((value) => value.matches(Length.of(0, "px")));
-    }
-  }
-
-  namespace Width {
-    export function tryFrom(value: Option<Value>): Result<Width, string> {
-      return value
-        .map((value) => (Value.Range.isRange(value) ? value.toLength() : value))
-        .map((value) => {
-          if (
-            value.hasValue(Length.isLength) &&
-            value.hasValue(
-              (value): value is Length.Fixed => !value.hasCalculation(),
-            )
-          ) {
-            return Ok.of(Width.of(value));
-          }
-
-          return Err.of(`Invalid value`);
-        })
-        .getOrElse(() => Ok.of(Width.boolean()));
-    }
-
-    export function isWidth(value: Feature): value is Width;
-
-    export function isWidth(value: unknown): value is Width;
-
-    export function isWidth(value: unknown): value is Width {
-      return value instanceof Width;
-    }
-  }
-
-  export const { isWidth } = Width;
-
-  /**
-   * {@link https://drafts.csswg.org/mediaqueries-5/#height}
-   */
-  class Height extends Feature<Length.Fixed> {
-    public static of(value: Value<Length.Fixed>): Height {
-      return new Height(Option.of(value));
-    }
-
-    private static _boolean = new Height(None);
-
-    public static boolean(): Height {
-      return Height._boolean;
-    }
-
-    public get name(): "height" {
-      return "height";
-    }
-
-    public matches(device: Device): boolean {
-      const {
-        viewport: { height },
-      } = device;
-
-      const value = this._value.map((value) =>
-        value.map((length) => length.resolve(Resolver.length(device))),
-      );
-
-      return height > 0
-        ? value.some((value) => value.matches(Length.of(height, "px")))
-        : value.every((value) => value.matches(Length.of(0, "px")));
-    }
-  }
-
-  namespace Height {
-    export function tryFrom(value: Option<Value>): Result<Height, string> {
-      return value
-        .map((value) => (Value.Range.isRange(value) ? value.toLength() : value))
-        .map((value) => {
-          if (
-            value.hasValue(Length.isLength) &&
-            value.hasValue(
-              (value): value is Length.Fixed => !value.hasCalculation(),
-            )
-          ) {
-            return Ok.of(Height.of(value));
-          }
-
-          return Err.of(`Invalid value`);
-        })
-        .getOrElse(() => Ok.of(Height.boolean()));
-    }
-
-    export function isHeight(value: Feature): value is Height;
-
-    export function isHeight(value: unknown): value is Height;
-
-    export function isHeight(value: unknown): value is Height {
-      return value instanceof Height;
-    }
-  }
-
-  export const { isHeight } = Height;
-
-  /**
-   * {@link https://drafts.csswg.org/mediaqueries-5/#orientation}
-   */
-  class Orientation extends Feature<Keyword> {
-    public static of(value: Value<Keyword>): Orientation {
-      return new Orientation(Option.of(value));
-    }
-
-    private static _boolean = new Orientation(None);
-
-    public static boolean(): Orientation {
-      return Orientation._boolean;
-    }
-
-    public get name(): "orientation" {
-      return "orientation";
-    }
-
-    public matches(device: Device): boolean {
-      return this._value.every((value) =>
-        value.matches(Keyword.of(device.viewport.orientation)),
-      );
-    }
-  }
-
-  namespace Orientation {
-    export function tryFrom(
-      value: Option<Value<any>>,
-    ): Result<Orientation, string> {
-      return value
-        .map((value) => {
-          if (
-            Value.isDiscrete(value) &&
-            value.hasValue(
-              Refinement.and(
-                Keyword.isKeyword,
-                property("value", equals("landscape", "portrait")),
-              ),
-            )
-          ) {
-            return Ok.of(Orientation.of(value));
-          } else {
-            return Err.of(`Invalid value`);
-          }
-        })
-        .getOrElse(() => Ok.of(Orientation.boolean()));
-    }
-  }
-
-  /**
-   * {@link https://drafts.csswg.org/mediaqueries-5/#scripting}
-   */
-  class Scripting extends Feature<Keyword> {
-    public static of(value: Value<Keyword>): Scripting {
-      return new Scripting(Option.of(value));
-    }
-
-    private static _boolean = new Scripting(None);
-
-    public static boolean(): Scripting {
-      return Scripting._boolean;
-    }
-
-    public get name(): "scripting" {
-      return "scripting";
-    }
-
-    public matches(device: Device): boolean {
-      return device.scripting.enabled
-        ? this._value.every((value) => value.matches(Keyword.of("enabled")))
-        : this._value.some((value) => value.matches(Keyword.of("none")));
-    }
-  }
-
-  namespace Scripting {
-    export function tryFrom(
-      value: Option<Value<any>>,
-    ): Result<Scripting, string> {
-      return value
-        .map((value) => {
-          if (
-            Value.isDiscrete(value) &&
-            value.hasValue(
-              Refinement.and(
-                Keyword.isKeyword,
-                property("value", equals("none", "enabled", "initial-only")),
-              ),
-            )
-          ) {
-            return Ok.of(Scripting.of(value));
-          } else {
-            return Err.of(`Invalid value`);
-          }
-        })
-        .getOrElse(() => Ok.of(Scripting.boolean()));
-    }
-  }
-
   export function isFeature(value: unknown): value is Feature {
     return value instanceof Feature;
   }
-}
 
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-name}
- */
-const parseFeatureName = map(Token.parseIdent(), (ident) =>
-  ident.value.toLowerCase(),
-);
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-name}
+   */
+  function parseName(
+    name: string,
+    withRange: boolean = false,
+  ): CSSParser<string> {
+    return filter(
+      map(Token.parseIdent(), (ident) => ident.value.toLowerCase()),
+      (parsed) =>
+        parsed === name ||
+        (withRange && (parsed === `min-${name}` || parsed === `max-${name}`)),
+      (parsed) => `Unknown feature ${parsed}`,
+    );
+  }
 
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-value}
- *
- * @remarks
- * We currently do not support calculations in media queries
- */
-const parseFeatureValue = either(
-  either(
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-value}
+   *
+   * @remarks
+   * We currently do not support calculations in media queries
+   */
+  const parseValue = either<
+    Slice<Token>,
+    Keyword | Length.Fixed | Number.Fixed | Percentage.Fixed,
+    string
+  >(
     filter(
       Number.parse,
-      (number) => !number.hasCalculation(),
+      (number): number is Number.Fixed => !number.hasCalculation(),
       () => "Calculations no supported in media queries",
     ),
     map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase())),
-  ),
-  either(
     map(
       separated(
         Token.parseNumber((number) => number.isInteger),
@@ -370,236 +133,260 @@ const parseFeatureValue = either(
     ),
     filter(
       Length.parse,
-      (length) => !length.hasCalculation(),
+      (length): length is Length.Fixed => !length.hasCalculation(),
       () => "Calculations no supported in media queries",
     ),
-  ),
-);
+  );
 
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-plain}
- */
-const parseFeaturePlain = mapResult(
-  separated(
-    parseFeatureName,
-    delimited(option(Token.parseWhitespace), Token.parseColon),
-    parseFeatureValue,
-  ),
-  ([name, value]) => {
-    if (name.startsWith("min-") || name.startsWith("max-")) {
-      const range = name.startsWith("min-")
-        ? Value.minimumRange
-        : Value.maximumRange;
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-plain}
+   */
+  function parsePlain(
+    name: string,
+    withRange: boolean,
+    tryFrom: (value: Option<Value<any>>) => Result<Feature, string>,
+  ): CSSParser<Feature> {
+    return mapResult(
+      separated(
+        parseName(name, withRange),
+        delimited(option(Token.parseWhitespace), Token.parseColon),
+        parseValue,
+      ),
+      ([name, value]) => {
+        if (withRange && (name.startsWith("min-") || name.startsWith("max-"))) {
+          const range = name.startsWith("min-")
+            ? Value.minimumRange
+            : Value.maximumRange;
 
-      name = name.slice(4);
+          name = name.slice(4);
 
-      return Feature.tryFrom(
-        Option.of(range(Value.bound(value, /* isInclusive */ true))),
-        name,
-      );
-    } else {
-      return Feature.tryFrom(Option.of(Value.discrete(value)), name);
-    }
-  },
-);
+          return tryFrom(
+            Option.of(range(Value.bound(value, /* isInclusive */ true))),
+          );
+        } else {
+          return tryFrom(Option.of(Value.discrete(value)));
+        }
+      },
+    );
+  }
 
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-boolean}
- */
-const parseFeatureBoolean = mapResult(parseFeatureName, (name) =>
-  Feature.tryFrom(None, name),
-);
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-boolean}
+   */
+  function parseBoolean(
+    name: string,
+    tryFrom: (value: Option<Value<any>>) => Result<Feature, string>,
+  ): CSSParser<Feature> {
+    return mapResult(parseName(name), (name) => tryFrom(None));
+  }
 
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-range}
- */
-const parseFeatureRange = either(
-  // <mf-value> <mf-lt> <mf-name> <mf-lt> <mf-value>
-  mapResult(
-    pair(
-      map(
+  /**
+   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-range}
+   */
+  function parseRange(
+    name: string,
+    tryFrom: (value: Option<Value<any>>) => Result<Feature, string>,
+  ): CSSParser<Feature> {
+    return either(
+      // <mf-value> <mf-lt> <mf-name> <mf-lt> <mf-value>
+      mapResult(
         pair(
-          parseFeatureValue,
-          delimited(option(Token.parseWhitespace), Comparison.parseLessThan),
-        ),
-        ([value, comparison]) =>
-          Value.bound(
-            value,
-            /* isInclusive */ comparison === Comparison.LessThanOrEqual,
-          ),
-      ),
-      pair(
-        delimited(option(Token.parseWhitespace), parseFeatureName),
-        map(
-          pair(
-            delimited(option(Token.parseWhitespace), Comparison.parseLessThan),
-            parseFeatureValue,
-          ),
-          ([comparison, value]) =>
-            Value.bound(
-              value,
-              /* isInclusive */ comparison === Comparison.LessThanOrEqual,
-            ),
-        ),
-      ),
-    ),
-    ([minimum, [name, maximum]]) =>
-      Feature.tryFrom(Option.of(Value.range(minimum, maximum)), name),
-  ),
-
-  // <mf-value> <mf-gt> <mf-name> <mf-gt> <mf-value>
-  mapResult(
-    pair(
-      map(
-        pair(
-          parseFeatureValue,
-          delimited(option(Token.parseWhitespace), Comparison.parseGreaterThan),
-        ),
-        ([value, comparison]) =>
-          Value.bound(
-            value,
-            /* isInclusive */ comparison === Comparison.GreaterThanOrEqual,
-          ),
-      ),
-      pair(
-        delimited(option(Token.parseWhitespace), parseFeatureName),
-        map(
-          pair(
-            delimited(
-              option(Token.parseWhitespace),
-              Comparison.parseGreaterThan,
-            ),
-            parseFeatureValue,
-          ),
-          ([comparison, value]) =>
-            Value.bound(
-              value,
-              /* isInclusive */ comparison === Comparison.GreaterThanOrEqual,
-            ),
-        ),
-      ),
-    ),
-    ([maximum, [name, minimum]]) =>
-      Feature.tryFrom(Option.of(Value.range(minimum, maximum)), name),
-  ),
-
-  // <mf-name> <mf-comparison> <mf-value>
-  mapResult(
-    pair(
-      parseFeatureName,
-      pair(
-        delimited(option(Token.parseWhitespace), Comparison.parse),
-        parseFeatureValue,
-      ),
-    ),
-    ([name, [comparison, value]]) => {
-      switch (comparison) {
-        case Comparison.Equal:
-          return Feature.tryFrom(
-            Option.of(
-              Value.range(
-                Value.bound(value, /* isInclude */ true),
-                Value.bound(value, /* isInclude */ true),
+          map(
+            pair(
+              parseValue,
+              delimited(
+                option(Token.parseWhitespace),
+                Comparison.parseLessThan,
               ),
             ),
-            name,
-          );
-
-        case Comparison.LessThan:
-        case Comparison.LessThanOrEqual:
-          return Feature.tryFrom(
-            Option.of(
-              Value.maximumRange(
+            ([value, comparison]) =>
+              Value.bound(
+                value,
+                /* isInclusive */ comparison === Comparison.LessThanOrEqual,
+              ),
+          ),
+          pair(
+            delimited(option(Token.parseWhitespace), parseName(name)),
+            map(
+              pair(
+                delimited(
+                  option(Token.parseWhitespace),
+                  Comparison.parseLessThan,
+                ),
+                parseValue,
+              ),
+              ([comparison, value]) =>
                 Value.bound(
                   value,
                   /* isInclusive */ comparison === Comparison.LessThanOrEqual,
                 ),
+            ),
+          ),
+        ),
+        ([minimum, [name, maximum]]) =>
+          tryFrom(Option.of(Value.range(minimum, maximum))),
+      ),
+
+      // <mf-value> <mf-gt> <mf-name> <mf-gt> <mf-value>
+      mapResult(
+        pair(
+          map(
+            pair(
+              parseValue,
+              delimited(
+                option(Token.parseWhitespace),
+                Comparison.parseGreaterThan,
               ),
             ),
-            name,
-          );
-
-        case Comparison.GreaterThan:
-        case Comparison.GreaterThanOrEqual:
-          return Feature.tryFrom(
-            Option.of(
-              Value.minimumRange(
+            ([value, comparison]) =>
+              Value.bound(
+                value,
+                /* isInclusive */ comparison === Comparison.GreaterThanOrEqual,
+              ),
+          ),
+          pair(
+            delimited(option(Token.parseWhitespace), parseName(name)),
+            map(
+              pair(
+                delimited(
+                  option(Token.parseWhitespace),
+                  Comparison.parseGreaterThan,
+                ),
+                parseValue,
+              ),
+              ([comparison, value]) =>
                 Value.bound(
                   value,
                   /* isInclusive */ comparison ===
                     Comparison.GreaterThanOrEqual,
                 ),
-              ),
             ),
-            name,
-          );
-      }
-    },
-  ),
-
-  // <mf-value> <mf-comparison> <mf-name>
-  mapResult(
-    pair(
-      parseFeatureValue,
-      pair(
-        delimited(option(Token.parseWhitespace), Comparison.parse),
-        parseFeatureName,
+          ),
+        ),
+        ([maximum, [name, minimum]]) =>
+          tryFrom(Option.of(Value.range(minimum, maximum))),
       ),
-    ),
-    ([value, [comparison, name]]) => {
-      switch (comparison) {
-        case Comparison.Equal:
-          return Feature.tryFrom(
-            Option.of(
-              Value.range(
-                Value.bound(value, /* isInclude */ true),
-                Value.bound(value, /* isInclude */ true),
-              ),
-            ),
-            name,
-          );
 
-        case Comparison.LessThan:
-        case Comparison.LessThanOrEqual:
-          return Feature.tryFrom(
-            Option.of(
-              Value.minimumRange(
-                Value.bound(
-                  value,
-                  /* isInclusive */ comparison === Comparison.LessThanOrEqual,
+      // <mf-name> <mf-comparison> <mf-value>
+      mapResult(
+        pair(
+          parseName(name),
+          pair(
+            delimited(option(Token.parseWhitespace), Comparison.parse),
+            parseValue,
+          ),
+        ),
+        ([name, [comparison, value]]) => {
+          switch (comparison) {
+            case Comparison.Equal:
+              return tryFrom(
+                Option.of(
+                  Value.range(
+                    Value.bound(value, /* isInclude */ true),
+                    Value.bound(value, /* isInclude */ true),
+                  ),
                 ),
-              ),
-            ),
-            name,
-          );
+              );
 
-        case Comparison.GreaterThan:
-        case Comparison.GreaterThanOrEqual:
-          return Feature.tryFrom(
-            Option.of(
-              Value.maximumRange(
-                Value.bound(
-                  value,
-                  /* isInclusive */ comparison ===
-                    Comparison.GreaterThanOrEqual,
+            case Comparison.LessThan:
+            case Comparison.LessThanOrEqual:
+              return tryFrom(
+                Option.of(
+                  Value.maximumRange(
+                    Value.bound(
+                      value,
+                      /* isInclusive */ comparison ===
+                        Comparison.LessThanOrEqual,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            name,
-          );
-      }
-    },
-  ),
-);
+              );
 
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-feature}
- */
-export const parseMediaFeature = delimited(
-  Token.parseOpenParenthesis,
-  delimited(
-    option(Token.parseWhitespace),
-    either(parseFeatureRange, parseFeaturePlain, parseFeatureBoolean),
-  ),
-  Token.parseCloseParenthesis,
-);
+            case Comparison.GreaterThan:
+            case Comparison.GreaterThanOrEqual:
+              return tryFrom(
+                Option.of(
+                  Value.minimumRange(
+                    Value.bound(
+                      value,
+                      /* isInclusive */ comparison ===
+                        Comparison.GreaterThanOrEqual,
+                    ),
+                  ),
+                ),
+              );
+          }
+        },
+      ),
+
+      // <mf-value> <mf-comparison> <mf-name>
+      mapResult(
+        pair(
+          parseValue,
+          pair(
+            delimited(option(Token.parseWhitespace), Comparison.parse),
+            parseName(name),
+          ),
+        ),
+        ([value, [comparison, name]]) => {
+          switch (comparison) {
+            case Comparison.Equal:
+              return tryFrom(
+                Option.of(
+                  Value.range(
+                    Value.bound(value, /* isInclude */ true),
+                    Value.bound(value, /* isInclude */ true),
+                  ),
+                ),
+              );
+
+            case Comparison.LessThan:
+            case Comparison.LessThanOrEqual:
+              return tryFrom(
+                Option.of(
+                  Value.minimumRange(
+                    Value.bound(
+                      value,
+                      /* isInclusive */ comparison ===
+                        Comparison.LessThanOrEqual,
+                    ),
+                  ),
+                ),
+              );
+
+            case Comparison.GreaterThan:
+            case Comparison.GreaterThanOrEqual:
+              return tryFrom(
+                Option.of(
+                  Value.maximumRange(
+                    Value.bound(
+                      value,
+                      /* isInclusive */ comparison ===
+                        Comparison.GreaterThanOrEqual,
+                    ),
+                  ),
+                ),
+              );
+          }
+        },
+      ),
+    );
+  }
+
+  /**
+   * @internal
+   */
+  export function parseFeature(
+    name: string,
+    withRange: boolean,
+    tryFrom: (value: Option<Value<any>>) => Result<Feature, string>,
+  ): CSSParser<Feature> {
+    return either(
+      withRange
+        ? parseRange(name, tryFrom)
+        : () => Err.of(`${name} not allowed in range context`),
+      parsePlain(name, withRange, tryFrom),
+      parseBoolean(name, tryFrom),
+    );
+  }
+}

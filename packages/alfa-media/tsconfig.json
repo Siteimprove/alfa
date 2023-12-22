@@ -13,7 +13,7 @@
     "src/feature/index.ts",
     "src/feature/orientation.ts",
     "src/feature/scripting.ts",
-    "src/feature/height.ts",
+    "src/feature/width.ts",
     "src/index.ts",
     "src/list.ts",
     "src/matchable.ts",

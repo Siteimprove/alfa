@@ -2,7 +2,7 @@ import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Feature, parseMediaFeature } from "../feature";
+import { Feature } from "../feature";
 
 import { And } from "./and";
 import { Not } from "./not";
@@ -35,7 +35,7 @@ export namespace Condition {
         delimited(option(Token.parseWhitespace), (input) => parse(input)),
         Token.parseCloseParenthesis,
       ),
-      parseMediaFeature,
+      Feature.parse,
     );
 
   /**
