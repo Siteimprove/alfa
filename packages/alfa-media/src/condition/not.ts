@@ -27,6 +27,7 @@ export class Not
     this._condition = condition;
   }
 
+  /** @public (knip) */
   public get condition(): Feature | Condition {
     return this._condition;
   }
@@ -39,10 +40,11 @@ export class Not
     return value instanceof Not && value._condition.equals(this._condition);
   }
 
-  public *iterator(): Iterator<Feature> {
+  private *iterator(): Iterator<Feature> {
     yield* this._condition;
   }
 
+  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Feature> {
     return this.iterator();
   }

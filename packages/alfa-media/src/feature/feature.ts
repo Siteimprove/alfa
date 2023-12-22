@@ -22,6 +22,8 @@ const { delimited, either, filter, left, map, option, pair, right, separated } =
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#mq-features}
+ *
+ * @public
  */
 export abstract class Feature<N extends string = string, T = unknown>
   implements
@@ -56,10 +58,11 @@ export abstract class Feature<N extends string = string, T = unknown>
     );
   }
 
-  public *iterator(): Iterator<Feature<N, T>> {
+  private *iterator(): Iterator<Feature<N, T>> {
     yield this;
   }
 
+  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Feature<N, T>> {
     return this.iterator();
   }
@@ -156,7 +159,7 @@ export namespace Feature {
    * @remarks
    * We currently do not support calculations in media queries
    * We currently only support media features whose value is keyword
-   * or length, keyword parsing uses the `alfa-css` parser.
+   * or length, keyword parsing uses the `@siteimprove/alfa-css` parser.
    */
   const parseLength = filter(
     Length.parse,
