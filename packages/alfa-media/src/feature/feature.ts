@@ -20,17 +20,10 @@ import type { Matchable } from "../matchable";
 import { Value } from "../value";
 import { Resolver } from "../resolver";
 
-const {
-  delimited,
-  either,
-  filter,
-  map,
-  mapResult,
-  option,
-  pair,
-  right,
-  separated,
-} = Parser;
+import { Comparison } from "./comparison";
+
+const { delimited, either, filter, map, mapResult, option, pair, separated } =
+  Parser;
 const { equals, property } = Predicate;
 
 /**
@@ -344,14 +337,6 @@ export namespace Feature {
   }
 }
 
-export enum Comparison {
-  LessThan = "<",
-  LessThanOrEqual = "<=",
-  Equal = "=",
-  GreaterThan = ">",
-  GreaterThanOrEqual = ">=",
-}
-
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-name}
  */
@@ -426,38 +411,6 @@ const parseFeatureBoolean = mapResult(parseFeatureName, (name) =>
 );
 
 /**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-lt}
- */
-const parseFeatureLessThan = map(
-  right(Token.parseDelim("<"), option(Token.parseDelim("="))),
-  (equal) =>
-    equal.isNone() ? Comparison.LessThan : Comparison.LessThanOrEqual,
-);
-
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-gt}
- */
-const parseFeatureGreaterThan = map(
-  right(Token.parseDelim(">"), option(Token.parseDelim("="))),
-  (equal) =>
-    equal.isNone() ? Comparison.GreaterThan : Comparison.GreaterThanOrEqual,
-);
-
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-eq}
- */
-const parseFeatureEqual = map(Token.parseDelim("="), () => Comparison.Equal);
-
-/**
- * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-comparison}
- */
-const parseFeatureComparison = either(
-  parseFeatureEqual,
-  parseFeatureLessThan,
-  parseFeatureGreaterThan,
-);
-
-/**
  * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-mf-range}
  */
 const parseFeatureRange = either(
@@ -467,7 +420,7 @@ const parseFeatureRange = either(
       map(
         pair(
           parseFeatureValue,
-          delimited(option(Token.parseWhitespace), parseFeatureLessThan),
+          delimited(option(Token.parseWhitespace), Comparison.parseLessThan),
         ),
         ([value, comparison]) =>
           Value.bound(
@@ -479,7 +432,7 @@ const parseFeatureRange = either(
         delimited(option(Token.parseWhitespace), parseFeatureName),
         map(
           pair(
-            delimited(option(Token.parseWhitespace), parseFeatureLessThan),
+            delimited(option(Token.parseWhitespace), Comparison.parseLessThan),
             parseFeatureValue,
           ),
           ([comparison, value]) =>
@@ -500,7 +453,7 @@ const parseFeatureRange = either(
       map(
         pair(
           parseFeatureValue,
-          delimited(option(Token.parseWhitespace), parseFeatureGreaterThan),
+          delimited(option(Token.parseWhitespace), Comparison.parseGreaterThan),
         ),
         ([value, comparison]) =>
           Value.bound(
@@ -512,7 +465,10 @@ const parseFeatureRange = either(
         delimited(option(Token.parseWhitespace), parseFeatureName),
         map(
           pair(
-            delimited(option(Token.parseWhitespace), parseFeatureGreaterThan),
+            delimited(
+              option(Token.parseWhitespace),
+              Comparison.parseGreaterThan,
+            ),
             parseFeatureValue,
           ),
           ([comparison, value]) =>
@@ -532,7 +488,7 @@ const parseFeatureRange = either(
     pair(
       parseFeatureName,
       pair(
-        delimited(option(Token.parseWhitespace), parseFeatureComparison),
+        delimited(option(Token.parseWhitespace), Comparison.parse),
         parseFeatureValue,
       ),
     ),
@@ -586,7 +542,7 @@ const parseFeatureRange = either(
     pair(
       parseFeatureValue,
       pair(
-        delimited(option(Token.parseWhitespace), parseFeatureComparison),
+        delimited(option(Token.parseWhitespace), Comparison.parse),
         parseFeatureName,
       ),
     ),
