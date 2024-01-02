@@ -5,9 +5,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Condition } from "./condition";
-import { Media } from "./media";
-import type { Matchable } from "./matchable";
+import { Condition } from "../condition";
+import type { Matchable } from "../matchable";
+
+import { Media } from "./feature";
 import { Modifier } from "./modifier";
 import { Type } from "./type";
 

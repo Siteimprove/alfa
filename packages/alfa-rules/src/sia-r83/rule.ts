@@ -29,8 +29,8 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope, Stability } from "../tags";
 
-const { isHeight, isWidth } = Feature.Media;
-const { Discrete, Range } = Feature.Value;
+const { isHeight, isWidth } = Feature.Media.Feature;
+const { Discrete, Range } = Feature.Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -524,8 +524,8 @@ function usesMediaRule(
  * We currently do not support calculated media queries. But this is lost in the
  * typing of Media.Feature. Here, we simply consider them as "good" (font relative).
  */
-function isFontRelativeMediaRule<F extends Feature.Media>(
-  refinement: Refinement<Feature.Media, F>,
+function isFontRelativeMediaRule<F extends Feature.Media.Feature>(
+  refinement: Refinement<Feature.Media.Feature, F>,
 ): Predicate<MediaRule> {
   return (rule) =>
     Iterable.some(rule.queries.queries, (query) =>
@@ -551,9 +551,9 @@ function isFontRelativeMediaRule<F extends Feature.Media>(
     );
 }
 
-function usesFontRelativeMediaRule<F extends Feature.Media>(
+function usesFontRelativeMediaRule<F extends Feature.Media.Feature>(
   device: Device,
-  refinement: Refinement<Feature.Media, F>,
+  refinement: Refinement<Feature.Media.Feature, F>,
   context: Context = Context.empty(),
 ): Predicate<Element> {
   return usesMediaRule(isFontRelativeMediaRule(refinement), device, context);

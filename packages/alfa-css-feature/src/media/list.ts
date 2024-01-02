@@ -6,7 +6,8 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import type { Matchable } from "./matchable";
+import type { Matchable } from "../matchable";
+
 import { Query } from "./query";
 
 const { either, end, map, separatedList, takeUntil } = Parser;

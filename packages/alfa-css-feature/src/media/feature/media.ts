@@ -5,16 +5,13 @@ import {
   Token,
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import * as json from "@siteimprove/alfa-json";
-import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Feature } from "../feature";
 
-import type { Matchable } from "../matchable";
-import { Value } from "../value";
+import type { Feature } from "../../feature";
+
+import { Value } from "./value";
 
 import { Comparison } from "./comparison";
 

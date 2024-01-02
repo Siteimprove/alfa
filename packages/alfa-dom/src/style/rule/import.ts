@@ -21,7 +21,7 @@ export class ImportRule extends ConditionRule<"import"> {
 
   private readonly _href: string;
   private readonly _sheet: Sheet;
-  private readonly _queries: Feature.List;
+  private readonly _queries: Feature.Media.List;
 
   private constructor(href: string, sheet: Sheet, condition: Option<string>) {
     super("import", condition.getOr("all"), []);
@@ -33,10 +33,10 @@ export class ImportRule extends ConditionRule<"import"> {
         Feature.parseMediaQuery(Lexer.lex(condition)).ok(),
       )
       .map(([, queries]) => queries)
-      .getOr(Feature.List.of([]));
+      .getOr(Feature.Media.List.of([]));
   }
 
-  public get queries(): Feature.List {
+  public get queries(): Feature.Media.List {
     return this._queries;
   }
   public get rules(): Iterable<Rule> {

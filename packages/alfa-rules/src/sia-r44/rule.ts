@@ -141,7 +141,7 @@ function isOrientationConditional(declaration: Declaration): boolean {
 }
 
 function hasOrientationCondition(
-  condition: Feature.Condition<Feature.Media>,
+  condition: Feature.Condition<Feature.Media.Feature>,
 ): boolean {
   for (const feature of condition) {
     if (

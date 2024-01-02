@@ -1,12 +1,9 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import type { Equatable } from "@siteimprove/alfa-equatable";
-import type { Serializable } from "@siteimprove/alfa-json";
+import { Parser } from "@siteimprove/alfa-parser";
+import type { Feature } from "../feature";
 
 import * as json from "@siteimprove/alfa-json";
-import { Parser } from "@siteimprove/alfa-parser";
-
-import type { Matchable } from "./matchable";
 
 const { map } = Parser;
 
@@ -15,7 +12,7 @@ const { map } = Parser;
  *
  * @public
  */
-export class Type implements Matchable, Equatable, Serializable<Type.JSON> {
+export class Type implements Feature<Type> {
   public static of(name: string): Type {
     return new Type(name);
   }
@@ -47,6 +44,15 @@ export class Type implements Matchable, Equatable, Serializable<Type.JSON> {
       default:
         return false;
     }
+  }
+
+  private *iterator(): Iterator<Type> {
+    yield this;
+  }
+
+  /** @public (knip) */
+  public [Symbol.iterator](): Iterator<Type> {
+    return this.iterator();
   }
 
   public equals(value: unknown): value is this {

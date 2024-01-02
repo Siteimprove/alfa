@@ -1,45 +1,26 @@
-import { Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import * as mediaFeature from "./feature";
+import * as mediaList from "./list";
+import * as modifier from "./modifier";
+import * as mediaQuery from "./query";
+import * as mediaType from "./type";
 
-import * as media from "./media";
+import * as value from "./feature/value";
 
-import * as height from "./height";
-import * as orientation from "./orientation";
-import * as scripting from "./scripting";
-import * as width from "./width";
-
-const { delimited, either, option } = Parser;
-
-export type Media = media.Media;
-
+/**
+ * @public
+ */
 export namespace Media {
-  export type JSON = media.Media.JSON;
+  export import Feature = mediaFeature.Media;
+  export import List = mediaList.List;
+  export import Modifier = modifier.Modifier;
+  export import Query = mediaQuery.Query;
+  export import Type = mediaType.Type;
+  export import Value = value.Value;
 
-  export import Height = height.Height;
-  export import Orientation = orientation.Orientation;
-  export import Scripting = scripting.Scripting;
-  export import Width = width.Width;
+  export const { of: type, isType } = Type;
+  export const { isMedia } = Feature;
+  export const { of: query, isQuery } = Query;
+  export const { of: list, isList } = List;
 
-  export const { isHeight } = Height;
-  export const { isWidth } = Width;
-
-  export const { isMedia } = media.Media;
-
-  /**
-   * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-feature}
-   */
-  export const parse = delimited(
-    Token.parseOpenParenthesis,
-    delimited(
-      option(Token.parseWhitespace),
-      either<Slice<Token>, Media, string>(
-        Height.parse,
-        Orientation.parse,
-        Scripting.parse,
-        Width.parse,
-      ),
-    ),
-    Token.parseCloseParenthesis,
-  );
+  export const parse = List.parse;
 }
