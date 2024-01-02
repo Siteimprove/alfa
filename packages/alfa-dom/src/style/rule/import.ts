@@ -29,7 +29,9 @@ export class ImportRule extends ConditionRule<"import"> {
     this._href = href;
     this._sheet = sheet;
     this._queries = condition
-      .flatMap((condition) => Feature.parse(Lexer.lex(condition)).ok())
+      .flatMap((condition) =>
+        Feature.parseMediaQuery(Lexer.lex(condition)).ok(),
+      )
       .map(([, queries]) => queries)
       .getOr(Feature.List.of([]));
   }

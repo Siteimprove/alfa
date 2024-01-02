@@ -31,5 +31,5 @@ export namespace Feature {
   export const { of: query, isQuery } = Query;
   export const { of: list, isList } = List;
 
-  export const parse = List.parse;
+  export const parseMediaQuery = List.parse;
 }

@@ -21,7 +21,7 @@ export class MediaRule extends ConditionRule<"media"> {
   private constructor(condition: string, rules: Array<Rule>) {
     super("media", condition, rules);
 
-    this._queries = Feature.parse(Lexer.lex(condition))
+    this._queries = Feature.parseMediaQuery(Lexer.lex(condition))
       .map(([, queries]) => queries)
       .getOr(Feature.List.of([]));
   }
