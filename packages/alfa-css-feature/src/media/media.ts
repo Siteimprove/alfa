@@ -11,6 +11,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import type { Feature } from "../feature";
 
 import type { Matchable } from "../matchable";
 import { Value } from "../value";
@@ -29,11 +30,7 @@ const { delimited, either, filter, left, map, option, pair, right, separated } =
  * @public
  */
 export abstract class Media<N extends string = string, T = unknown>
-  implements
-    Matchable,
-    Iterable<Media<N, T>>,
-    Equatable,
-    Serializable<Media.JSON>
+  implements Feature<Media<N, T>>
 {
   private readonly _name: N;
   protected readonly _value: Option<Value<T>>;

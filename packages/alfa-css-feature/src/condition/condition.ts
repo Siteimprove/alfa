@@ -1,11 +1,10 @@
 import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
-import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import type { Feature } from "../feature";
 import { Media } from "../media";
-import type { Matchable } from "../matchable";
 
 import { And } from "./and";
 import { Not } from "./not";
@@ -14,27 +13,18 @@ import { Or } from "./or";
 const { delimited, either, map, oneOrMore, option, pair, zeroOrMore } = Parser;
 
 /**
- * @internal
- */
-export interface Foo<T>
-  extends Equatable,
-    Matchable,
-    Serializable<Serializable.ToJSON<T>>,
-    Iterable<T> {}
-
-/**
  * {@link https://drafts.csswg.org/mediaqueries-5/#media-conditions}
  */
-export type Condition<T extends Foo<T>> = T | And<T> | Or<T> | Not<T>;
+export type Condition<T extends Feature<T>> = T | And<T> | Or<T> | Not<T>;
 
 export namespace Condition {
-  export type JSON<T extends Foo<T>> =
+  export type JSON<T extends Feature<T>> =
     | Serializable.ToJSON<T>
     | And.JSON<T>
     | Or.JSON<T>
     | Not.JSON<T>;
 
-  export function isCondition<T extends Foo<T>>(
+  export function isCondition<T extends Feature<T>>(
     value: unknown,
   ): value is Condition<T> {
     return And.isAnd(value) || Or.isOr(value) || Not.isNot(value);

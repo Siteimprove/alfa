@@ -8,15 +8,17 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
+import type { Feature } from "../feature";
 import type { Matchable } from "../matchable";
-import type { Condition, Foo } from "./condition";
+
+import type { Condition } from "./condition";
 
 const { delimited, option, right } = Parser;
 
-export class And<T extends Foo<T>>
+export class And<T extends Feature<T>>
   implements Matchable, Iterable<T>, Equatable, Serializable<And.JSON<T>>
 {
-  public static of<T extends Foo<T>>(
+  public static of<T extends Feature<T>>(
     left: Condition<T>,
     right: Condition<T>,
   ): And<T> {
@@ -78,14 +80,14 @@ export class And<T extends Foo<T>>
 }
 
 export namespace And {
-  export interface JSON<T extends Foo<T>> {
+  export interface JSON<T extends Feature<T>> {
     [key: string]: json.JSON;
     type: "and";
     left: Condition.JSON<T>;
     right: Condition.JSON<T>;
   }
 
-  export function isAnd<T extends Foo<T>>(value: unknown): value is And<T> {
+  export function isAnd<T extends Feature<T>>(value: unknown): value is And<T> {
     return value instanceof And;
   }
 
@@ -94,7 +96,7 @@ export namespace And {
    *
    * @internal
    */
-  export function parse<T extends Foo<T>>(
+  export function parse<T extends Feature<T>>(
     parseInParens: Thunk<CSSParser<Condition<T>>>,
   ): CSSParser<Condition<T>> {
     return right(

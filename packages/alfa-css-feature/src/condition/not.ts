@@ -8,15 +8,17 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
+import type { Feature } from "../feature";
 import type { Matchable } from "../matchable";
-import type { Condition, Foo } from "./condition";
+
+import type { Condition } from "./condition";
 
 const { delimited, map, option, right } = Parser;
 
-export class Not<T extends Foo<T>>
+export class Not<T extends Feature<T>>
   implements Matchable, Iterable<T>, Equatable, Serializable<Not.JSON<T>>
 {
-  public static of<T extends Foo<T>>(condition: Condition<T>): Not<T> {
+  public static of<T extends Feature<T>>(condition: Condition<T>): Not<T> {
     return new Not(condition);
   }
 
@@ -61,13 +63,13 @@ export class Not<T extends Foo<T>>
 }
 
 export namespace Not {
-  export interface JSON<T extends Foo<T>> {
+  export interface JSON<T extends Feature<T>> {
     [key: string]: json.JSON;
     type: "not";
     condition: Condition.JSON<T>;
   }
 
-  export function isNot<T extends Foo<T>>(value: unknown): value is Not<T> {
+  export function isNot<T extends Feature<T>>(value: unknown): value is Not<T> {
     return value instanceof Not;
   }
 
@@ -76,7 +78,7 @@ export namespace Not {
    *
    * @internal
    */
-  export function parse<T extends Foo<T>>(
+  export function parse<T extends Feature<T>>(
     parseInParens: Thunk<CSSParser<Condition<T>>>,
   ): CSSParser<Not<T>> {
     return map(
