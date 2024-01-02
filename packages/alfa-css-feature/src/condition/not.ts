@@ -1,23 +1,16 @@
 import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
 import type { Feature } from "../feature";
-import type { Matchable } from "../matchable";
 
 import type { Condition } from "./condition";
 
 const { delimited, map, option, right } = Parser;
 
-export class Not<F extends Feature<F>>
-  implements Matchable, Iterable<F>, Equatable, Serializable<Not.JSON<F>>
-{
+export class Not<F extends Feature<F>> implements Feature<F, Not.JSON<F>> {
   public static of<F extends Feature<F>>(condition: Condition<F>): Not<F> {
     return new Not(condition);
   }

@@ -1,12 +1,10 @@
 import { Component, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import type { Matchable } from "../matchable";
+import type { Feature } from "../feature";
 
 import { Query } from "./query";
 
@@ -17,9 +15,7 @@ const { either, end, map, separatedList, takeUntil } = Parser;
  *
  * @public
  */
-export class List
-  implements Matchable, Iterable<Query>, Equatable, Serializable<List.JSON>
-{
+export class List implements Feature<Query, List.JSON> {
   public static of(queries: Iterable<Query>): List {
     return new List(queries);
   }

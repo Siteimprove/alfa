@@ -1,23 +1,16 @@
 import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
 import type { Feature } from "../feature";
-import type { Matchable } from "../matchable";
 
 import type { Condition } from "./condition";
 
 const { delimited, option, right } = Parser;
 
-export class Or<F extends Feature<F>>
-  implements Matchable, Iterable<F>, Equatable, Serializable<Or.JSON<F>>
-{
+export class Or<F extends Feature<F>> implements Feature<F, Or.JSON<F>> {
   public static of<F extends Feature<F>>(
     left: Condition<F>,
     right: Condition<F>,

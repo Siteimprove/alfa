@@ -6,7 +6,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import * as json from "@siteimprove/alfa-json";
 
 import { Condition } from "../condition";
-import type { Matchable } from "../matchable";
+import type { Feature } from "../feature";
 
 import { Media } from "./feature";
 import { Modifier } from "./modifier";
@@ -22,7 +22,7 @@ const { delimited, either, end, left, map, option, pair, right } = Parser;
  *
  * @public
  */
-export class Query implements Matchable {
+export class Query implements Feature<Condition<Media>, Query.JSON> {
   public static of(
     modifier: Option<Modifier>,
     type: Option<Type>,
@@ -69,6 +69,15 @@ export class Query implements Matchable {
     );
 
     return negated !== (type && condition);
+  }
+
+  private *iterator(): Iterator<Condition<Media>> {
+    yield* this._condition;
+  }
+
+  /** @public (knip) */
+  public [Symbol.iterator](): Iterator<Condition<Media>> {
+    return this.iterator();
   }
 
   public equals(value: unknown): value is this {

@@ -9,7 +9,6 @@
     "src/condition/or.ts",
     "src/feature.ts",
     "src/index.ts",
-    "src/matchable.ts",
     "src/media/feature/comparison.ts",
     "src/media/feature/media.ts",
     "src/media/feature/height.ts",
