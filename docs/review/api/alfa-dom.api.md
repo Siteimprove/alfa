@@ -1128,7 +1128,7 @@ export namespace SupportsRule {
     // @internal (undocumented)
     export function fromSupportsRule(json: JSON): Trampoline<SupportsRule>;
     // (undocumented)
-    export function isSupportsRue(value: unknown): value is SupportsRule;
+    export function isSupportsRule(value: unknown): value is SupportsRule;
     // (undocumented)
     export interface JSON extends ConditionRule.JSON<"supports"> {
     }

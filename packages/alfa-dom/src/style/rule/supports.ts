@@ -36,7 +36,7 @@ export class SupportsRule extends ConditionRule<"supports"> {
 export namespace SupportsRule {
   export interface JSON extends ConditionRule.JSON<"supports"> {}
 
-  export function isSupportsRue(value: unknown): value is SupportsRule {
+  export function isSupportsRule(value: unknown): value is SupportsRule {
     return value instanceof SupportsRule;
   }
 
