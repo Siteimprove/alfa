@@ -22,19 +22,19 @@ export class Query implements Matchable {
   public static of(
     modifier: Option<Modifier>,
     type: Option<Type>,
-    condition: Option<Feature | Condition>,
+    condition: Option<Condition<Feature>>,
   ): Query {
     return new Query(modifier, type, condition);
   }
 
   private readonly _modifier: Option<Modifier>;
   private readonly _type: Option<Type>;
-  private readonly _condition: Option<Feature | Condition>;
+  private readonly _condition: Option<Condition<Feature>>;
 
   private constructor(
     modifier: Option<Modifier>,
     type: Option<Type>,
-    condition: Option<Feature | Condition>,
+    condition: Option<Condition<Feature>>,
   ) {
     this._modifier = modifier;
     this._type = type;
@@ -49,7 +49,7 @@ export class Query implements Matchable {
     return this._type;
   }
 
-  public get condition(): Option<Feature | Condition> {
+  public get condition(): Option<Condition<Feature>> {
     return this._condition;
   }
 
@@ -109,7 +109,7 @@ export namespace Query {
     [key: string]: json.JSON;
     modifier: string | null;
     type: Type.JSON | null;
-    condition: Feature.JSON | Condition.JSON | Not.JSON | null;
+    condition: Condition.JSON<Feature> | null;
   }
 
   export function isQuery(value: unknown): value is Query {

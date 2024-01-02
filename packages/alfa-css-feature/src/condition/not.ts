@@ -10,25 +10,25 @@ import * as json from "@siteimprove/alfa-json";
 
 import type { Feature } from "../feature";
 import type { Matchable } from "../matchable";
-import type { Condition } from "./condition";
+import type { Condition, Foo } from "./condition";
 
 const { delimited, map, option, right } = Parser;
 
-export class Not
-  implements Matchable, Iterable<Feature>, Equatable, Serializable<Not.JSON>
+export class Not<T extends Foo<T>>
+  implements Matchable, Iterable<T>, Equatable, Serializable<Not.JSON<T>>
 {
-  public static of(condition: Feature | Condition): Not {
+  public static of<T extends Foo<T>>(condition: Condition<T>): Not<T> {
     return new Not(condition);
   }
 
-  private readonly _condition: Feature | Condition;
+  private readonly _condition: Condition<T>;
 
-  private constructor(condition: Feature | Condition) {
+  private constructor(condition: Condition<T>) {
     this._condition = condition;
   }
 
   /** @public (knip) */
-  public get condition(): Feature | Condition {
+  public get condition(): Condition<T> {
     return this._condition;
   }
 
@@ -40,16 +40,16 @@ export class Not
     return value instanceof Not && value._condition.equals(this._condition);
   }
 
-  private *iterator(): Iterator<Feature> {
+  private *iterator(): Iterator<T> {
     yield* this._condition;
   }
 
   /** @public (knip) */
-  public [Symbol.iterator](): Iterator<Feature> {
+  public [Symbol.iterator](): Iterator<T> {
     return this.iterator();
   }
 
-  public toJSON(): Not.JSON {
+  public toJSON(): Not.JSON<T> {
     return {
       type: "not",
       condition: this._condition.toJSON(),
@@ -62,13 +62,13 @@ export class Not
 }
 
 export namespace Not {
-  export interface JSON {
+  export interface JSON<T extends Foo<T>> {
     [key: string]: json.JSON;
     type: "not";
-    condition: Condition.JSON | Feature.JSON;
+    condition: Condition.JSON<T>;
   }
 
-  export function isNot(value: unknown): value is Not {
+  export function isNot<T extends Foo<T>>(value: unknown): value is Not<T> {
     return value instanceof Not;
   }
 
@@ -77,9 +77,9 @@ export namespace Not {
    *
    * @internal
    */
-  export function parse(
-    parseInParens: Thunk<CSSParser<Feature | Condition>>,
-  ): CSSParser<Not> {
+  export function parse<T extends Foo<T>>(
+    parseInParens: Thunk<CSSParser<Condition<T>>>,
+  ): CSSParser<Not<T>> {
     return map(
       right(
         delimited(option(Token.parseWhitespace), Token.parseIdent("not")),

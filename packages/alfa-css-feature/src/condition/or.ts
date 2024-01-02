@@ -10,32 +10,35 @@ import * as json from "@siteimprove/alfa-json";
 
 import type { Feature } from "../feature";
 import type { Matchable } from "../matchable";
-import type { Condition } from "./condition";
+import type { Condition, Foo } from "./condition";
 
 const { delimited, option, right } = Parser;
 
-export class Or
-  implements Matchable, Iterable<Feature>, Equatable, Serializable<Or.JSON>
+export class Or<T extends Foo<T>>
+  implements Matchable, Iterable<T>, Equatable, Serializable<Or.JSON<T>>
 {
-  public static of(left: Feature | Condition, right: Feature | Condition): Or {
+  public static of<T extends Foo<T>>(
+    left: Condition<T>,
+    right: Condition<T>,
+  ): Or<T> {
     return new Or(left, right);
   }
 
-  private readonly _left: Feature | Condition;
-  private readonly _right: Feature | Condition;
+  private readonly _left: Condition<T>;
+  private readonly _right: Condition<T>;
 
-  private constructor(left: Feature | Condition, right: Feature | Condition) {
+  private constructor(left: Condition<T>, right: Condition<T>) {
     this._left = left;
     this._right = right;
   }
 
   /** @public (knip) */
-  public get left(): Feature | Condition {
+  public get left(): Condition<T> {
     return this._left;
   }
 
   /** @public (knip) */
-  public get right(): Feature | Condition {
+  public get right(): Condition<T> {
     return this._right;
   }
 
@@ -51,18 +54,18 @@ export class Or
     );
   }
 
-  private *iterator(): Iterator<Feature> {
+  private *iterator(): Iterator<T> {
     for (const condition of [this._left, this._right]) {
       yield* condition;
     }
   }
 
   /** @public (knip) */
-  public [Symbol.iterator](): Iterator<Feature> {
+  public [Symbol.iterator](): Iterator<T> {
     return this.iterator();
   }
 
-  public toJSON(): Or.JSON {
+  public toJSON(): Or.JSON<T> {
     return {
       type: "or",
       left: this._left.toJSON(),
@@ -76,14 +79,14 @@ export class Or
 }
 
 export namespace Or {
-  export interface JSON {
+  export interface JSON<T extends Foo<T>> {
     [key: string]: json.JSON;
     type: "or";
-    left: Feature.JSON | Condition.JSON;
-    right: Feature.JSON | Condition.JSON;
+    left: Condition.JSON<T>;
+    right: Condition.JSON<T>;
   }
 
-  export function isOr(value: unknown): value is Or {
+  export function isOr<T extends Foo<T>>(value: unknown): value is Or<T> {
     return value instanceof Or;
   }
 
@@ -92,9 +95,9 @@ export namespace Or {
    *
    * @internal
    */
-  export function parse(
-    parseInParens: Thunk<CSSParser<Feature | Condition>>,
-  ): CSSParser<Feature | Condition> {
+  export function parse<T extends Foo<T>>(
+    parseInParens: Thunk<CSSParser<Condition<T>>>,
+  ): CSSParser<Condition<T>> {
     return right(
       delimited(option(Token.parseWhitespace), Token.parseIdent("or")),
       parseInParens(),

@@ -12,23 +12,24 @@ import { Or } from "./or";
 
 const { delimited, either, map, oneOrMore, option, pair, zeroOrMore } = Parser;
 
+export interface Foo<T>
+  extends Matchable,
+    Serializable<Serializable.ToJSON<T>>,
+    Iterable<T> {}
+
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#media-conditions}
  */
-export type Condition<T extends Matchable & Serializable> =
-  | T
-  | And<T>
-  | Or<T>
-  | Not<T>;
+export type Condition<T extends Foo<T>> = T | And<T> | Or<T> | Not<T>;
 
 export namespace Condition {
-  export type JSON<T extends Matchable & Serializable> =
+  export type JSON<T extends Foo<T>> =
     | Serializable.ToJSON<T>
     | And.JSON<T>
-    | Or.JSON
-    | Not.JSON;
+    | Or.JSON<T>
+    | Not.JSON<T>;
 
-  export function isCondition<T extends Matchable & Serializable>(
+  export function isCondition<T extends Foo<T>>(
     value: unknown,
   ): value is Condition<T> {
     return And.isAnd(value) || Or.isOr(value) || Not.isNot(value);

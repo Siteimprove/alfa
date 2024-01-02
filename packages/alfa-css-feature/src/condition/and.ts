@@ -8,16 +8,15 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Feature } from "../feature";
 import type { Matchable } from "../matchable";
-import type { Condition } from "./condition";
+import type { Condition, Foo } from "./condition";
 
 const { delimited, option, right } = Parser;
 
-export class And<T extends Matchable & Serializable>
-  implements Matchable, Iterable<Feature>, Equatable, Serializable<And.JSON<T>>
+export class And<T extends Foo<T>>
+  implements Matchable, Iterable<T>, Equatable, Serializable<And.JSON<T>>
 {
-  public static of<T extends Matchable & Serializable>(
+  public static of<T extends Foo<T>>(
     left: Condition<T>,
     right: Condition<T>,
   ): And<T> {
@@ -54,14 +53,14 @@ export class And<T extends Matchable & Serializable>
     );
   }
 
-  private *iterator(): Iterator<Feature> {
+  private *iterator(): Iterator<T> {
     for (const condition of [this._left, this._right]) {
       yield* condition;
     }
   }
 
   /** @public (knip) */
-  public [Symbol.iterator](): Iterator<Feature> {
+  public [Symbol.iterator](): Iterator<T> {
     return this.iterator();
   }
 
@@ -79,16 +78,14 @@ export class And<T extends Matchable & Serializable>
 }
 
 export namespace And {
-  export interface JSON<T extends Matchable & Serializable> {
+  export interface JSON<T extends Foo<T>> {
     [key: string]: json.JSON;
     type: "and";
     left: Condition.JSON<T>;
     right: Condition.JSON<T>;
   }
 
-  export function isAnd<T extends Matchable & Serializable>(
-    value: unknown,
-  ): value is And<T> {
+  export function isAnd<T extends Foo<T>>(value: unknown): value is And<T> {
     return value instanceof And;
   }
 
@@ -97,7 +94,7 @@ export namespace And {
    *
    * @internal
    */
-  export function parse<T extends Matchable & Serializable>(
+  export function parse<T extends Foo<T>>(
     parseInParens: Thunk<CSSParser<Condition<T>>>,
   ): CSSParser<Condition<T>> {
     return right(
