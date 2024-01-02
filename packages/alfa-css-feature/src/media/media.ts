@@ -23,14 +23,17 @@ const { delimited, either, filter, left, map, option, pair, right, separated } =
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#mq-features}
  *
+ * @remarks
+ * Media features all have a name and a value.
+ *
  * @public
  */
-export abstract class Feature<N extends string = string, T = unknown>
+export abstract class Media<N extends string = string, T = unknown>
   implements
     Matchable,
-    Iterable<Feature<N, T>>,
+    Iterable<Media<N, T>>,
     Equatable,
-    Serializable<Feature.JSON>
+    Serializable<Media.JSON>
 {
   private readonly _name: N;
   protected readonly _value: Option<Value<T>>;
@@ -52,22 +55,22 @@ export abstract class Feature<N extends string = string, T = unknown>
 
   public equals(value: unknown): value is this {
     return (
-      value instanceof Feature &&
+      value instanceof Media &&
       value.name === this.name &&
       value._value.equals(this._value)
     );
   }
 
-  private *iterator(): Iterator<Feature<N, T>> {
+  private *iterator(): Iterator<Media<N, T>> {
     yield this;
   }
 
   /** @public (knip) */
-  public [Symbol.iterator](): Iterator<Feature<N, T>> {
+  public [Symbol.iterator](): Iterator<Media<N, T>> {
     return this.iterator();
   }
 
-  public toJSON(): Feature.JSON<N> {
+  public toJSON(): Media.JSON<N> {
     return {
       type: "feature",
       name: this._name,
@@ -80,7 +83,7 @@ export abstract class Feature<N extends string = string, T = unknown>
   }
 }
 
-export namespace Feature {
+export namespace Media {
   export interface JSON<N extends string = string> {
     [key: string]: json.JSON;
 
@@ -89,8 +92,8 @@ export namespace Feature {
     value: Value.JSON | null;
   }
 
-  export function isFeature(value: unknown): value is Feature {
-    return value instanceof Feature;
+  export function isMedia(value: unknown): value is Media {
+    return value instanceof Media;
   }
 
   /**
@@ -119,8 +122,8 @@ export namespace Feature {
     name: N,
     parseValue: CSSParser<T>,
     withRange: boolean,
-    from: (value: Option<Value<T>>) => Feature<N, T>,
-  ): CSSParser<Feature<N, T>> {
+    from: (value: Option<Value<T>>) => Media<N, T>,
+  ): CSSParser<Media<N, T>> {
     return map(
       separated(
         parseName(name, withRange),
@@ -148,8 +151,8 @@ export namespace Feature {
    */
   function parseBoolean<N extends string = string, T = unknown>(
     name: N,
-    from: (value: None) => Feature<N, T>,
-  ): CSSParser<Feature<N, T>> {
+    from: (value: None) => Media<N, T>,
+  ): CSSParser<Media<N, T>> {
     return map(parseName(name), () => from(None));
   }
 
@@ -190,8 +193,8 @@ export namespace Feature {
    */
   function parseRange<N extends string = string>(
     name: N,
-    from: (value: Option<Value<Length.Fixed>>) => Feature<N, Length.Fixed>,
-  ): CSSParser<Feature<N, Length.Fixed>> {
+    from: (value: Option<Value<Length.Fixed>>) => Media<N, Length.Fixed>,
+  ): CSSParser<Media<N, Length.Fixed>> {
     return either(
       // <mf-value> <mf-lt> <mf-name> <mf-lt> <mf-value>
       map(
@@ -264,8 +267,8 @@ export namespace Feature {
    */
   export function parseContinuous<N extends string = string>(
     name: N,
-    from: (value: Option<Value<Length.Fixed>>) => Feature<N, Length.Fixed>,
-  ): CSSParser<Feature<N, Length.Fixed>> {
+    from: (value: Option<Value<Length.Fixed>>) => Media<N, Length.Fixed>,
+  ): CSSParser<Media<N, Length.Fixed>> {
     return either(
       parseRange(name, from),
       parsePlain(name, parseLength, true, from),
@@ -278,9 +281,9 @@ export namespace Feature {
    */
   export function parseDiscrete<N extends string = string>(
     name: N,
-    from: (value: Option<Value<Keyword>>) => Feature<N, Keyword>,
+    from: (value: Option<Value<Keyword>>) => Media<N, Keyword>,
     ...values: Array<string>
-  ): CSSParser<Feature<N, Keyword>> {
+  ): CSSParser<Media<N, Keyword>> {
     return either(
       parsePlain(name, Keyword.parse(...values), false, from),
       parseBoolean(name, from),

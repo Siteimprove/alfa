@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
-import { Media } from "@siteimprove/alfa-css-feature";
+import { Feature } from "@siteimprove/alfa-css-feature";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
@@ -239,7 +239,7 @@ export namespace SelectorMap {
       }
 
       if (sheet.condition.isSome()) {
-        const query = Media.parse(Lexer.lex(sheet.condition.get()));
+        const query = Feature.parse(Lexer.lex(sheet.condition.get()));
 
         if (query.every(([, query]) => !query.matches(device))) {
           continue;

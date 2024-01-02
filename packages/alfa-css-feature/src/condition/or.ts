@@ -8,7 +8,6 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Feature } from "../feature";
 import type { Matchable } from "../matchable";
 import type { Condition, Foo } from "./condition";
 

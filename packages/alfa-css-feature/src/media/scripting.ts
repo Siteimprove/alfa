@@ -3,14 +3,14 @@ import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Value } from "../value";
-import { Feature } from "./feature";
+import { Media } from "./media";
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#scripting}
  *
  * @internal
  */
-export class Scripting extends Feature<"scripting", Keyword> {
+export class Scripting extends Media<"scripting", Keyword> {
   public static of(value: Value<Keyword>): Scripting {
     return new Scripting(Option.of(value));
   }
@@ -40,7 +40,7 @@ export namespace Scripting {
     return value.map(Scripting.of).getOrElse(Scripting.boolean);
   }
 
-  export const parse = Feature.parseDiscrete(
+  export const parse = Media.parseDiscrete(
     "scripting",
     from,
     "none",

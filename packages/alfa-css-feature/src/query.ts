@@ -5,8 +5,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Condition, Not } from "./condition";
-import { Feature } from "./feature";
+import { Condition } from "./condition";
+import { Media } from "./media";
 import type { Matchable } from "./matchable";
 import { Modifier } from "./modifier";
 import { Type } from "./type";
@@ -22,19 +22,19 @@ export class Query implements Matchable {
   public static of(
     modifier: Option<Modifier>,
     type: Option<Type>,
-    condition: Option<Condition<Feature>>,
+    condition: Option<Condition<Media>>,
   ): Query {
     return new Query(modifier, type, condition);
   }
 
   private readonly _modifier: Option<Modifier>;
   private readonly _type: Option<Type>;
-  private readonly _condition: Option<Condition<Feature>>;
+  private readonly _condition: Option<Condition<Media>>;
 
   private constructor(
     modifier: Option<Modifier>,
     type: Option<Type>,
-    condition: Option<Condition<Feature>>,
+    condition: Option<Condition<Media>>,
   ) {
     this._modifier = modifier;
     this._type = type;
@@ -49,7 +49,7 @@ export class Query implements Matchable {
     return this._type;
   }
 
-  public get condition(): Option<Condition<Feature>> {
+  public get condition(): Option<Condition<Media>> {
     return this._condition;
   }
 
@@ -109,7 +109,7 @@ export namespace Query {
     [key: string]: json.JSON;
     modifier: string | null;
     type: Type.JSON | null;
-    condition: Condition.JSON<Feature> | null;
+    condition: Condition.JSON<Media> | null;
   }
 
   export function isQuery(value: unknown): value is Query {

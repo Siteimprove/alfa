@@ -1,9 +1,10 @@
 import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Feature } from "../feature";
+import { Media } from "../media";
 import type { Matchable } from "../matchable";
 
 import { And } from "./and";
@@ -12,8 +13,12 @@ import { Or } from "./or";
 
 const { delimited, either, map, oneOrMore, option, pair, zeroOrMore } = Parser;
 
+/**
+ * @internal
+ */
 export interface Foo<T>
-  extends Matchable,
+  extends Equatable,
+    Matchable,
     Serializable<Serializable.ToJSON<T>>,
     Iterable<T> {}
 
@@ -48,13 +53,13 @@ export namespace Condition {
         delimited(option(Token.parseWhitespace), (input) => parse(input)),
         Token.parseCloseParenthesis,
       ),
-      Feature.parse,
+      Media.parse,
     );
 
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-condition}
    */
-  export const parse: CSSParser<Condition<Feature>> = either(
+  export const parse: CSSParser<Condition<Media>> = either(
     Not.parse(parseInParens),
     either(
       map(

@@ -5,14 +5,14 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Resolver } from "../resolver";
 import { Value } from "../value";
 
-import { Feature } from "./feature";
+import { Media } from "./media";
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#width}
  *
  * @internal
  */
-export class Width extends Feature<"width", Length.Fixed> {
+export class Width extends Media<"width", Length.Fixed> {
   public static of(value: Value<Length.Fixed>): Width {
     return new Width(Option.of(value));
   }
@@ -50,7 +50,7 @@ export namespace Width {
     return value.map(Width.of).getOrElse(Width.boolean);
   }
 
-  export function isWidth(value: Feature): value is Width;
+  export function isWidth(value: Media): value is Width;
 
   export function isWidth(value: unknown): value is Width;
 
@@ -58,5 +58,5 @@ export namespace Width {
     return value instanceof Width;
   }
 
-  export const parse = Feature.parseContinuous("width", from);
+  export const parse = Media.parseContinuous("width", from);
 }

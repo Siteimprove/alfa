@@ -3,14 +3,14 @@ import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Value } from "../value";
-import { Feature } from "./feature";
+import { Media } from "./media";
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#orientation}
  *
  * @internal
  */
-export class Orientation extends Feature<"orientation", Keyword> {
+export class Orientation extends Media<"orientation", Keyword> {
   public static of(value: Value<Keyword>): Orientation {
     return new Orientation(Option.of(value));
   }
@@ -40,7 +40,7 @@ export namespace Orientation {
     return value.map(Orientation.of).getOrElse(Orientation.boolean);
   }
 
-  export const parse = Feature.parseDiscrete(
+  export const parse = Media.parseDiscrete(
     "orientation",
     from,
     "portrait",

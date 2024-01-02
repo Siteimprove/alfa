@@ -1,7 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
-import type { Media } from "@siteimprove/alfa-css-feature";
+import type { Feature } from "@siteimprove/alfa-css-feature";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import {
   Declaration,
@@ -141,7 +141,7 @@ function isOrientationConditional(declaration: Declaration): boolean {
 }
 
 function hasOrientationCondition(
-  condition: Media.Condition<Media.Feature>,
+  condition: Feature.Condition<Feature.Media>,
 ): boolean {
   for (const feature of condition) {
     if (

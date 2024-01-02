@@ -1,5 +1,5 @@
 import { Lexer } from "@siteimprove/alfa-css";
-import { Media } from "@siteimprove/alfa-css-feature";
+import { Feature } from "@siteimprove/alfa-css-feature";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -16,17 +16,17 @@ export class MediaRule extends ConditionRule<"media"> {
     return new MediaRule(condition, Array.from(rules));
   }
 
-  private readonly _queries: Media.List;
+  private readonly _queries: Feature.List;
 
   private constructor(condition: string, rules: Array<Rule>) {
     super("media", condition, rules);
 
-    this._queries = Media.parse(Lexer.lex(condition))
+    this._queries = Feature.parse(Lexer.lex(condition))
       .map(([, queries]) => queries)
-      .getOr(Media.List.of([]));
+      .getOr(Feature.List.of([]));
   }
 
-  public get queries(): Media.List {
+  public get queries(): Feature.List {
     return this._queries;
   }
 

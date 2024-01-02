@@ -3,10 +3,10 @@ import { test } from "@siteimprove/alfa-test";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Device, Viewport, Display } from "@siteimprove/alfa-device";
 
-import { Media } from "../src";
+import { Feature } from "../src";
 
 function parse(input: string) {
-  return Media.parse(Lexer.lex(input)).map(([, query]) => query);
+  return Feature.parse(Lexer.lex(input)).map(([, query]) => query);
 }
 
 test(".parse() parses a simple query for an orientation feature", (t) => {

@@ -5,14 +5,14 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Resolver } from "../resolver";
 import { Value } from "../value";
 
-import { Feature } from "./feature";
+import { Media } from "./media";
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#height}
  *
  * @internal
  */
-export class Height extends Feature<"height", Length.Fixed> {
+export class Height extends Media<"height", Length.Fixed> {
   public static of(value: Value<Length.Fixed>): Height {
     return new Height(Option.of(value));
   }
@@ -50,7 +50,7 @@ export namespace Height {
     return value.map(Height.of).getOrElse(Height.boolean);
   }
 
-  export function isHeight(value: Feature): value is Height;
+  export function isHeight(value: Media): value is Height;
 
   export function isHeight(value: unknown): value is Height;
 
@@ -58,5 +58,5 @@ export namespace Height {
     return value instanceof Height;
   }
 
-  export const parse = Feature.parseContinuous("height", from);
+  export const parse = Media.parseContinuous("height", from);
 }

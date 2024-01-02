@@ -2,7 +2,7 @@ import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import * as feature from "./feature";
+import * as media from "./media";
 
 import * as height from "./height";
 import * as orientation from "./orientation";
@@ -11,10 +11,10 @@ import * as width from "./width";
 
 const { delimited, either, option } = Parser;
 
-export type Feature = feature.Feature;
+export type Media = media.Media;
 
-export namespace Feature {
-  export type JSON = feature.Feature.JSON;
+export namespace Media {
+  export type JSON = media.Media.JSON;
 
   export import Height = height.Height;
   export import Orientation = orientation.Orientation;
@@ -24,7 +24,7 @@ export namespace Feature {
   export const { isHeight } = Height;
   export const { isWidth } = Width;
 
-  export const { isFeature } = feature.Feature;
+  export const { isMedia } = media.Media;
 
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-feature}
@@ -33,7 +33,7 @@ export namespace Feature {
     Token.parseOpenParenthesis,
     delimited(
       option(Token.parseWhitespace),
-      either<Slice<Token>, Feature, string>(
+      either<Slice<Token>, Media, string>(
         Height.parse,
         Orientation.parse,
         Scripting.parse,
