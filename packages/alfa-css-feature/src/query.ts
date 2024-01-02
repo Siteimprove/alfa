@@ -16,6 +16,9 @@ const { delimited, either, end, left, map, option, pair, right } = Parser;
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#media-query}
  *
+ * @remarks
+ * Media query can contain both a modifier, type and media feature.
+ *
  * @public
  */
 export class Query implements Matchable {
@@ -130,7 +133,7 @@ export namespace Query {
    */
   export const parse = left(
     either(
-      map(Condition.parse, (condition) =>
+      map(Condition.parse(Media.parse), (condition) =>
         Query.of(None, None, Option.of(condition)),
       ),
       map(
@@ -142,7 +145,7 @@ export namespace Query {
           option(
             right(
               delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
-              Condition.parseWithoutOr,
+              Condition.parseWithoutOr(Media.parse),
             ),
           ),
         ),

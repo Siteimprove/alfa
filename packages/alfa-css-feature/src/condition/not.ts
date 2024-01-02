@@ -15,21 +15,21 @@ import type { Condition } from "./condition";
 
 const { delimited, map, option, right } = Parser;
 
-export class Not<T extends Feature<T>>
-  implements Matchable, Iterable<T>, Equatable, Serializable<Not.JSON<T>>
+export class Not<F extends Feature<F>>
+  implements Matchable, Iterable<F>, Equatable, Serializable<Not.JSON<F>>
 {
-  public static of<T extends Feature<T>>(condition: Condition<T>): Not<T> {
+  public static of<F extends Feature<F>>(condition: Condition<F>): Not<F> {
     return new Not(condition);
   }
 
-  private readonly _condition: Condition<T>;
+  private readonly _condition: Condition<F>;
 
-  private constructor(condition: Condition<T>) {
+  private constructor(condition: Condition<F>) {
     this._condition = condition;
   }
 
   /** @public (knip) */
-  public get condition(): Condition<T> {
+  public get condition(): Condition<F> {
     return this._condition;
   }
 
@@ -41,16 +41,16 @@ export class Not<T extends Feature<T>>
     return value instanceof Not && value._condition.equals(this._condition);
   }
 
-  private *iterator(): Iterator<T> {
+  private *iterator(): Iterator<F> {
     yield* this._condition;
   }
 
   /** @public (knip) */
-  public [Symbol.iterator](): Iterator<T> {
+  public [Symbol.iterator](): Iterator<F> {
     return this.iterator();
   }
 
-  public toJSON(): Not.JSON<T> {
+  public toJSON(): Not.JSON<F> {
     return {
       type: "not",
       condition: this._condition.toJSON(),
@@ -63,10 +63,10 @@ export class Not<T extends Feature<T>>
 }
 
 export namespace Not {
-  export interface JSON<T extends Feature<T>> {
+  export interface JSON<F extends Feature<F>> {
     [key: string]: json.JSON;
     type: "not";
-    condition: Condition.JSON<T>;
+    condition: Condition.JSON<F>;
   }
 
   export function isNot<T extends Feature<T>>(value: unknown): value is Not<T> {
@@ -78,13 +78,14 @@ export namespace Not {
    *
    * @internal
    */
-  export function parse<T extends Feature<T>>(
-    parseInParens: Thunk<CSSParser<Condition<T>>>,
-  ): CSSParser<Not<T>> {
+  export function parse<F extends Feature<F>>(
+    parseInParens: (featureParser: CSSParser<F>) => CSSParser<Condition<F>>,
+    featureParser: CSSParser<F>,
+  ): CSSParser<Not<F>> {
     return map(
       right(
         delimited(option(Token.parseWhitespace), Token.parseIdent("not")),
-        parseInParens(),
+        parseInParens(featureParser),
       ),
       Not.of,
     );

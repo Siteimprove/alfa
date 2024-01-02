@@ -15,31 +15,31 @@ import type { Condition } from "./condition";
 
 const { delimited, option, right } = Parser;
 
-export class And<T extends Feature<T>>
-  implements Matchable, Iterable<T>, Equatable, Serializable<And.JSON<T>>
+export class And<F extends Feature<F>>
+  implements Matchable, Iterable<F>, Equatable, Serializable<And.JSON<F>>
 {
-  public static of<T extends Feature<T>>(
-    left: Condition<T>,
-    right: Condition<T>,
-  ): And<T> {
+  public static of<F extends Feature<F>>(
+    left: Condition<F>,
+    right: Condition<F>,
+  ): And<F> {
     return new And(left, right);
   }
 
-  private readonly _left: Condition<T>;
-  private readonly _right: Condition<T>;
+  private readonly _left: Condition<F>;
+  private readonly _right: Condition<F>;
 
-  private constructor(left: Condition<T>, right: Condition<T>) {
+  private constructor(left: Condition<F>, right: Condition<F>) {
     this._left = left;
     this._right = right;
   }
 
   /** @public (knip) */
-  public get left(): Condition<T> {
+  public get left(): Condition<F> {
     return this._left;
   }
 
   /** @public (knip) */
-  public get right(): Condition<T> {
+  public get right(): Condition<F> {
     return this._right;
   }
 
@@ -55,18 +55,18 @@ export class And<T extends Feature<T>>
     );
   }
 
-  private *iterator(): Iterator<T> {
+  private *iterator(): Iterator<F> {
     for (const condition of [this._left, this._right]) {
       yield* condition;
     }
   }
 
   /** @public (knip) */
-  public [Symbol.iterator](): Iterator<T> {
+  public [Symbol.iterator](): Iterator<F> {
     return this.iterator();
   }
 
-  public toJSON(): And.JSON<T> {
+  public toJSON(): And.JSON<F> {
     return {
       type: "and",
       left: this._left.toJSON(),
@@ -80,11 +80,11 @@ export class And<T extends Feature<T>>
 }
 
 export namespace And {
-  export interface JSON<T extends Feature<T>> {
+  export interface JSON<F extends Feature<F>> {
     [key: string]: json.JSON;
     type: "and";
-    left: Condition.JSON<T>;
-    right: Condition.JSON<T>;
+    left: Condition.JSON<F>;
+    right: Condition.JSON<F>;
   }
 
   export function isAnd<T extends Feature<T>>(value: unknown): value is And<T> {
@@ -96,12 +96,13 @@ export namespace And {
    *
    * @internal
    */
-  export function parse<T extends Feature<T>>(
-    parseInParens: Thunk<CSSParser<Condition<T>>>,
-  ): CSSParser<Condition<T>> {
+  export function parse<F extends Feature<F>>(
+    parseInParens: (featureParser: CSSParser<F>) => CSSParser<Condition<F>>,
+    featureParser: CSSParser<F>,
+  ): CSSParser<Condition<F>> {
     return right(
       delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
-      parseInParens(),
+      parseInParens(featureParser),
     );
   }
 }
