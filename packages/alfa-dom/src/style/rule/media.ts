@@ -1,6 +1,6 @@
 import { Lexer } from "@siteimprove/alfa-css";
+import { Media } from "@siteimprove/alfa-css-feature";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Media } from "@siteimprove/alfa-media";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";

@@ -1,5 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
+import { Media } from "@siteimprove/alfa-css-feature";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
@@ -11,7 +12,6 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Media } from "@siteimprove/alfa-media";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Combinator, Complex, Context } from "@siteimprove/alfa-selector";

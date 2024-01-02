@@ -1,5 +1,5 @@
 import { Lexer } from "@siteimprove/alfa-css";
-import { Media } from "@siteimprove/alfa-media";
+import { Media } from "@siteimprove/alfa-css-feature";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 

@@ -2,6 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
 import { Length } from "@siteimprove/alfa-css";
+import { Media } from "@siteimprove/alfa-css-feature";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -14,7 +15,6 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";

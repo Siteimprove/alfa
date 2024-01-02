@@ -53,7 +53,7 @@ export namespace Condition {
   /**
    * {@link https://drafts.csswg.org/mediaqueries-5/#typedef-media-condition}
    */
-  export const parse: CSSParser<Feature | Condition> = either(
+  export const parse: CSSParser<Condition<Feature>> = either(
     Not.parse(parseInParens),
     either(
       map(

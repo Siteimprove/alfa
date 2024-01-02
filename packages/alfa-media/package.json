@@ -5,6 +5,7 @@
   "version": "0.71.1",
   "license": "MIT",
   "description": "Functionality for working with CSS media queries",
+  "deprecated": "Use @siteimprove/alfa-css-feature instead",
   "repository": {
     "type": "git",
     "url": "https://github.com/siteimprove/alfa.git",
