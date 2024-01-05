@@ -9,6 +9,7 @@ import {
   Rule,
   Sheet,
   StyleRule,
+  SupportsRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -220,6 +221,15 @@ export namespace SelectorMap {
         }
 
         for (const child of rule.sheet.children()) {
+          visit(child);
+        }
+      } else if (SupportsRule.isSupportsRule(rule)) {
+        if (rule.query.every((query) => !query.matches(device))) {
+          // If the option is None, the condition failed to parse and the rule is discarded.
+          return;
+        }
+
+        for (const child of rule.children()) {
           visit(child);
         }
       }
