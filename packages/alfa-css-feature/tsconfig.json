@@ -27,7 +27,13 @@
     "src/media/modifier.ts",
     "src/media/query.ts",
     "src/media/type.ts",
-    "test/media.spec.ts"
+    "src/supports/feature/function.ts",
+    "src/supports/feature/index.ts",
+    "src/supports/feature/property.ts",
+    "src/supports/index.ts",
+    "src/supports/query.ts",
+    "test/media.spec.ts",
+    "test/supports.spec.ts"
   ],
   "references": [
     { "path": "../alfa-comparable" },
