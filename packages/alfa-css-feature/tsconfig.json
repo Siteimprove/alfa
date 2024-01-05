@@ -27,7 +27,6 @@
     "src/media/modifier.ts",
     "src/media/query.ts",
     "src/media/type.ts",
-    "src/supports/feature/function.ts",
     "src/supports/feature/index.ts",
     "src/supports/feature/property.ts",
     "src/supports/index.ts",
@@ -48,8 +47,8 @@
     { "path": "../alfa-parser" },
     { "path": "../alfa-predicate" },
     { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
     { "path": "../alfa-slice" },
-    { "path": "../alfa-thunk" },
     { "path": "../alfa-test" }
   ]
 }
