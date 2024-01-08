@@ -1518,7 +1518,7 @@ This release contains only internal API changes.
 
 ### Breaking
 
-- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Feature#value` property. The new type is used for modelling both discrete and range values which was not previously possible. Additionally, the `Media.Condition` type has been split into `Media.And` and `Media.Or`, and `Media.Negation` has been renamed `Media.Not`. `Media.Condition` is now an alias for `Media.And | Media.Or | Media.Not`. ([#722](../../pull/722))
+- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Media#value` property. The new type is used for modelling both discrete and range values which was not previously possible. Additionally, the `Media.Condition` type has been split into `Media.And` and `Media.Or`, and `Media.Negation` has been renamed `Media.Not`. `Media.Condition` is now an alias for `Media.And | Media.Or | Media.Not`. ([#722](../../pull/722))
 
 - [@siteimprove/alfa-act](packages/alfa-act): The `Oracle<Q>` type has now become `Oracle<I, T, Q>`. As such, the input type `I` and test target type `T` must now be declared up front. Additionally, the `Question<Q, A, S, T>` type has now become `Question<Q, S, A, T>` to ensure alignment with the remaining types of the package. ([#699](../../pull/699))
 

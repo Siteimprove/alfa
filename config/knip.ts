@@ -7,7 +7,7 @@ const config: KnipConfig = {
   workspaces: {
     ".": {
       entry: ["scripts/*.mjs"],
-      project: ["scripts/**/*.ts", "scripts/**/*.mjs"],
+      project: ["scripts/**/*.mjs"],
       ignoreDependencies: ["prettier"],
     },
     "packages/*": { entry, project },
