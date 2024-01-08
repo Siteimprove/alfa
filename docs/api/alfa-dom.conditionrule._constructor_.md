@@ -9,13 +9,14 @@ Constructs a new instance of the `ConditionRule` class
 **Signature:**
 
 ```typescript
-protected constructor(condition: string, rules: Array<Rule>);
+protected constructor(type: T, condition: string, rules: Array<Rule>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  type | T |  |
 |  condition | string |  |
 |  rules | Array&lt;Rule&gt; |  |
 

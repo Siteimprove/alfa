@@ -11,51 +11,6 @@
 export declare namespace Media 
 ```
 
-## Classes
-
-|  Class | Description |
-|  --- | --- |
-|  [And](./alfa-media.media.and.md) |  |
-|  [List](./alfa-media.media.list.md) | [https://drafts.csswg.org/mediaqueries/\#media-query-list](https://drafts.csswg.org/mediaqueries/#media-query-list) |
-|  [Not](./alfa-media.media.not.md) |  |
-|  [Or](./alfa-media.media.or.md) |  |
-|  [Query](./alfa-media.media.query.md) | [https://drafts.csswg.org/mediaqueries/\#media-query](https://drafts.csswg.org/mediaqueries/#media-query) |
-|  [Type](./alfa-media.media.type.md) | [https://drafts.csswg.org/mediaqueries/\#media-type](https://drafts.csswg.org/mediaqueries/#media-type) |
-
-## Abstract Classes
-
-|  Abstract Class | Description |
-|  --- | --- |
-|  [Feature](./alfa-media.media.feature.md) | [https://drafts.csswg.org/mediaqueries/\#media-feature](https://drafts.csswg.org/mediaqueries/#media-feature) |
-
-## Enumerations
-
-|  Enumeration | Description |
-|  --- | --- |
-|  [Comparison](./alfa-media.media.comparison.md) |  |
-|  [Modifier](./alfa-media.media.modifier.md) | [https://drafts.csswg.org/mediaqueries/\#media-query-modifier](https://drafts.csswg.org/mediaqueries/#media-query-modifier) |
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [Matchable](./alfa-media.media.matchable.md) |  |
-|  [Value](./alfa-media.media.value.md) |  |
-
-## Namespaces
-
-|  Namespace | Description |
-|  --- | --- |
-|  [And](./alfa-media.media.and.md) |  |
-|  [Condition](./alfa-media.media.condition.md) |  |
-|  [Feature](./alfa-media.media.feature.md) |  |
-|  [List](./alfa-media.media.list.md) |  |
-|  [Not](./alfa-media.media.not.md) |  |
-|  [Or](./alfa-media.media.or.md) |  |
-|  [Query](./alfa-media.media.query.md) |  |
-|  [Type](./alfa-media.media.type.md) |  |
-|  [Value](./alfa-media.media.value.md) |  |
-
 ## Variables
 
 |  Variable | Description |
@@ -75,10 +30,4 @@ export declare namespace Media
 |  [parse](./alfa-media.media.parse.md) |  |
 |  [query](./alfa-media.media.query.md) |  |
 |  [type](./alfa-media.media.type.md) |  |
-
-## Type Aliases
-
-|  Type Alias | Description |
-|  --- | --- |
-|  [Condition](./alfa-media.media.condition.md) | [https://drafts.csswg.org/mediaqueries/\#media-condition](https://drafts.csswg.org/mediaqueries/#media-condition) |
 

@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.72.0
+
+### Patch Changes
+
+- **Fixed:** SIA-R18 now accepts attributes for `input type=file` and `input type=color` according to the [ARIA in HTML](https://w3c.github.io/html-aria/#el-input-file) specification ([#1541](https://github.com/Siteimprove/alfa/pull/1541))
+
 ## 0.71.1
 
 ### Patch Changes

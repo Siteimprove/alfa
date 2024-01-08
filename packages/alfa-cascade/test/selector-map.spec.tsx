@@ -150,6 +150,32 @@ test(".from() only recurses into import rules that match the device", (t) => {
   });
 });
 
+test(".from() only recurses into supports rules that match the device", (t) => {
+  const rule = h.rule.style("foo", { foo: "bar" });
+  const actual = SelectorMap.from(
+    [
+      // correct generic property
+      h.sheet([h.rule.supports("(foo: bar)", [rule])]),
+      // incorrect, vendor prefix
+      h.sheet([
+        h.rule.supports("(-foo: bar)", [h.rule.style("bar", { foo: "bar" })]),
+      ]),
+      // incorrect syntax, parsing fails
+      h.sheet([
+        h.rule.supports("foo: bar", [h.rule.style("bar", { foo: "bar" })]),
+      ]),
+    ],
+    device,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [["foo", ruleToBlockJSON(rule, 0)]],
+    other: [],
+  });
+});
+
 test("#get() returns all blocks whose selector match an element", (t) => {
   const rules = [
     h.rule.style("div", { foo: "bar" }),

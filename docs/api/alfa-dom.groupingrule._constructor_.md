@@ -9,12 +9,13 @@ Constructs a new instance of the `GroupingRule` class
 **Signature:**
 
 ```typescript
-protected constructor(rules: Array<Rule>);
+protected constructor(type: T, rules: Array<Rule>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  type | T |  |
 |  rules | Array&lt;Rule&gt; |  |
 

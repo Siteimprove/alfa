@@ -1,3 +1,6 @@
+import { Lexer } from "@siteimprove/alfa-css";
+import { Feature } from "@siteimprove/alfa-css-feature";
+import type { Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
@@ -11,8 +14,18 @@ export class SupportsRule extends ConditionRule<"supports"> {
     return new SupportsRule(condition, Array.from(rules));
   }
 
+  private readonly _query: Option<Feature.Supports.Query>;
+
   private constructor(condition: string, rules: Array<Rule>) {
     super("supports", condition, rules);
+
+    this._query = Feature.parseSupportsQuery(Lexer.lex(condition))
+      .map(([, query]) => query)
+      .ok();
+  }
+
+  public get query(): Option<Feature.Supports.Query> {
+    return this._query;
   }
 
   public toJSON(): SupportsRule.JSON {

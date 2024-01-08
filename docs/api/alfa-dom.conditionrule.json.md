@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-interface JSON extends GroupingRule.JSON 
+interface JSON<T extends string = string> extends GroupingRule.JSON<T> 
 ```
-**Extends:** [GroupingRule.JSON](./alfa-dom.groupingrule.json.md)
+**Extends:** [GroupingRule.JSON](./alfa-dom.groupingrule.json.md)<!-- -->&lt;T&gt;
 
 ## Properties
 

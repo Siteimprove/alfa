@@ -7,14 +7,13 @@
 **Signature:**
 
 ```typescript
-interface JSON extends ConditionRule.JSON 
+interface JSON extends ConditionRule.JSON<"import"> 
 ```
-**Extends:** [ConditionRule.JSON](./alfa-dom.conditionrule.json.md)
+**Extends:** [ConditionRule.JSON](./alfa-dom.conditionrule.json.md)<!-- -->&lt;"import"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [href](./alfa-dom.importrule.json.href.md) |  | string |  |
-|  [type](./alfa-dom.importrule.json.type.md) |  | "import" |  |
 

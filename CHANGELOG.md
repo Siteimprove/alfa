@@ -1,5 +1,35 @@
 # Alfa changelog
 
+## [0.72.0](../../compare/v0.71.1...v0.72.0) (2024-01-08)
+
+### Breaking
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): `SelectorMap.#get` now requires an `AncestorFilter` rather than an `Option<AncestorFilter>`. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-css-feature](packages/alfa-css-feature/CHANGELOG.md#0720), [@siteimprove/alfa-media](packages/alfa-media/CHANGELOG.md#0720): `@siteimprove/alfa-media` has been deprecated and replaced by `@siteimprove/alfa-css-feature`. ([#1544](https://github.com/Siteimprove/alfa/pull/1544))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): `Cascade.of` has been renamed `Cascade.from`. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): Data in Rule tree nodes is now wrapped in a `Block` object that need to be opened. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+### Removed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): `AncestorFilter#match` has been made internal. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+### Added
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable/CHANGELOG.md#0720): A `Comparable.compareLexicographically` function to compare tuples is now available. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0720): `Specificity` is now exported for external use. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): Functionalities for dealing with Cascade Sorting Order (origin, specificity, order) are now grouped in a `Precedence` interface. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-css-feature](packages/alfa-css-feature/CHANGELOG.md#0720), [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): Simple feature query (`@supports` rules) are now supported. ([#1544](https://github.com/Siteimprove/alfa/pull/1544))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0720): SIA-R18 now accepts attributes for `input type=file` and `input type=color` according to the [ARIA in HTML](https://w3c.github.io/html-aria/#el-input-file) specification. ([#1541](https://github.com/Siteimprove/alfa/pull/1541))
+
 ## [0.71.1](../../compare/v0.71.0...v0.71.1) (2023-12-20)
 
 ### Changed
@@ -1518,7 +1548,7 @@ This release contains only internal API changes.
 
 ### Breaking
 
-- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Feature#value` property. The new type is used for modelling both discrete and range values which was not previously possible. Additionally, the `Media.Condition` type has been split into `Media.And` and `Media.Or`, and `Media.Negation` has been renamed `Media.Not`. `Media.Condition` is now an alias for `Media.And | Media.Or | Media.Not`. ([#722](../../pull/722))
+- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Media#value` property. The new type is used for modelling both discrete and range values which was not previously possible. Additionally, the `Media.Condition` type has been split into `Media.And` and `Media.Or`, and `Media.Negation` has been renamed `Media.Not`. `Media.Condition` is now an alias for `Media.And | Media.Or | Media.Not`. ([#722](../../pull/722))
 
 - [@siteimprove/alfa-act](packages/alfa-act): The `Oracle<Q>` type has now become `Oracle<I, T, Q>`. As such, the input type `I` and test target type `T` must now be declared up front. Additionally, the `Question<Q, A, S, T>` type has now become `Question<Q, S, A, T>` to ensure alignment with the remaining types of the package. ([#699](../../pull/699))
 
