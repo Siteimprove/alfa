@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Rule.JSON 
+interface JSON extends Rule.JSON<"namespace"> 
 ```
-**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)
+**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&lt;"namespace"&gt;
 
 ## Properties
 
@@ -17,5 +17,4 @@ interface JSON extends Rule.JSON
 |  --- | --- | --- | --- |
 |  [namespace](./alfa-dom.namespacerule.json.namespace.md) |  | string |  |
 |  [prefix](./alfa-dom.namespacerule.json.prefix.md) |  | string \| null |  |
-|  [type](./alfa-dom.namespacerule.json.type.md) |  | "namespace" |  |
 

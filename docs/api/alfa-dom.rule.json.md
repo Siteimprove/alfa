@@ -7,12 +7,12 @@
 **Signature:**
 
 ```typescript
-interface JSON 
+interface JSON<T extends string = string> 
 ```
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-dom.rule.json.type.md) |  | string |  |
+|  [type](./alfa-dom.rule.json.type.md) |  | T |  |
 

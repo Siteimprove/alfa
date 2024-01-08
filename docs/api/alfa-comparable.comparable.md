@@ -24,6 +24,7 @@ export declare namespace Comparable
 |  [compareBigInt(a, b)](./alfa-comparable.comparable.comparebigint.md) |  |
 |  [compareBoolean(a, b)](./alfa-comparable.comparable.compareboolean.md) |  |
 |  [compareComparable(a, b)](./alfa-comparable.comparable.comparecomparable.md) |  |
+|  [compareLexicographically(a, b, comparer)](./alfa-comparable.comparable.comparelexicographically.md) | <p>Compare tuples lexicographically</p><p>[https://en.wikipedia.org/wiki/Lexicographic\_order](https://en.wikipedia.org/wiki/Lexicographic_order)</p> |
 |  [compareNumber(a, b)](./alfa-comparable.comparable.comparenumber.md) |  |
 |  [compareString(a, b)](./alfa-comparable.comparable.comparestring.md) |  |
 |  [isComparable(value)](./alfa-comparable.comparable.iscomparable.md) | Check if an unknown value implements the [Comparable](./alfa-comparable.comparable.md) interface. |

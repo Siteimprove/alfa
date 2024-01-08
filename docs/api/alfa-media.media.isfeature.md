@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-isFeature: typeof Feature.isFeature
+isFeature: typeof import("./feature/feature").Feature.isFeature
 ```

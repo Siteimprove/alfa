@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Rule.JSON 
+interface JSON extends Rule.JSON<"keyframe"> 
 ```
-**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)
+**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&lt;"keyframe"&gt;
 
 ## Properties
 
@@ -17,5 +17,4 @@ interface JSON extends Rule.JSON
 |  --- | --- | --- | --- |
 |  [key](./alfa-dom.keyframerule.json.key.md) |  | string |  |
 |  [style](./alfa-dom.keyframerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) |  |
-|  [type](./alfa-dom.keyframerule.json.type.md) |  | "keyframe" |  |
 

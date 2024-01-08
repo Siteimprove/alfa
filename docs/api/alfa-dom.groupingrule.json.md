@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Rule.JSON 
+interface JSON<T extends string = string> extends Rule.JSON<T> 
 ```
-**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)
+**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&lt;T&gt;
 
 ## Properties
 
