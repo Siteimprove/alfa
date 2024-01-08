@@ -7,8 +7,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Feature } from "../../feature";
 
-const { delimited, either, filter, left, map, option, pair, right, separated } =
-  Parser;
+const { delimited, map, option, separated } = Parser;
 
 /**
  * @public

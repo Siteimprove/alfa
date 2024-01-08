@@ -1,6 +1,4 @@
-import { Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
@@ -10,7 +8,7 @@ import type { Feature } from "../feature";
 
 import { Property } from "./feature";
 
-const { delimited, either, end, left, map, option, pair, right } = Parser;
+const { end, left, map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-conditional-3/#at-supports}

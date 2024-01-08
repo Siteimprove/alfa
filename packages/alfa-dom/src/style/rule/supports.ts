@@ -1,6 +1,5 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
-import { Device } from "@siteimprove/alfa-device";
 import type { Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
