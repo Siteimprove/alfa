@@ -161,26 +161,6 @@ export class Element<N extends string = string>
     return this._boxes.get(device);
   }
 
-  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
-    const parent = this._parent as Option<Node>;
-
-    if (options.isSet(Node.Traversal.flattened)) {
-      return parent.flatMap((parent) => {
-        if (Shadow.isShadow(parent)) {
-          return parent.host;
-        }
-
-        if (Element.isElement(parent) && parent.shadow.isSome()) {
-          return this.assignedSlot().flatMap((slot) => slot.parent(options));
-        }
-
-        return Option.of(parent);
-      });
-    }
-
-    return parent;
-  }
-
   public children(
     options: Node.Traversal = Node.Traversal.empty,
   ): Sequence<Node> {

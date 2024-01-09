@@ -86,7 +86,8 @@
     "test/node/traversal/get-nodes-between.spec.tsx",
     "test/node/traversal/lowest-common-ancestor.spec.tsx",
     "test/node/query/element-descendants.spec.tsx",
-    "test/node/query/element-id-map.spec.tsx"
+    "test/node/query/element-id-map.spec.tsx",
+    "test/traversal.spec.tsx"
   ],
   "references": [
     { "path": "../alfa-array" },
@@ -103,7 +104,7 @@
     { "path": "../alfa-map" },
     { "path": "../alfa-option" },
     { "path": "../alfa-predicate" },
-    { "path": "../alfa-rectangle"},
+    { "path": "../alfa-rectangle" },
     { "path": "../alfa-refinement" },
     { "path": "../alfa-sarif" },
     { "path": "../alfa-selective" },
