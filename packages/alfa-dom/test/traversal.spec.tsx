@@ -1,4 +1,4 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import { h, Comment, Node } from "../src";
