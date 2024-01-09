@@ -10,7 +10,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2020",
-    "types": []
+    "types": [],
+    "skipLibCheck": true
   },
   "files": [],
   "references": [{ "path": "packages" }, { "path": "scratches" }]
