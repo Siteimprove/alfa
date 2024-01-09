@@ -2,14 +2,14 @@
   "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
   "mutate": [
     "packages/**/*.ts",
+    "!packages/alfa-css/**/*.ts",
     "!packages/**/*.d.ts",
     "!packages/**/*.spec.ts"
   ],
   "buildCommand": "./stryker-build.sh",
-  "commandRunner": { "command": "echo 'No test runner configured.'" },
+  "commandRunner": { "command": "yarn stryker-test" },
   "coverageAnalysis": "off",
   "timeoutMS": 600000,
   "checkers": ["typescript"],
-  "tsconfigFile": "tsconfig.json",
   "symlinkNodeModules": false
 }
