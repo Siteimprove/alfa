@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Rule.JSON 
+interface JSON extends Rule.JSON<"style"> 
 ```
-**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)
+**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&lt;"style"&gt;
 
 ## Properties
 
@@ -17,5 +17,4 @@ interface JSON extends Rule.JSON
 |  --- | --- | --- | --- |
 |  [selector](./alfa-dom.stylerule.json.selector.md) |  | string |  |
 |  [style](./alfa-dom.stylerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) |  |
-|  [type](./alfa-dom.stylerule.json.type.md) |  | "style" |  |
 

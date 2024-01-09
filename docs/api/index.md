@@ -24,6 +24,7 @@
 |  [@siteimprove/alfa-compatibility](./alfa-compatibility.md) |  |
 |  [@siteimprove/alfa-continuation](./alfa-continuation.md) |  |
 |  [@siteimprove/alfa-css](./alfa-css.md) |  |
+|  [@siteimprove/alfa-css-feature](./alfa-css-feature.md) |  |
 |  [@siteimprove/alfa-device](./alfa-device.md) |  |
 |  [@siteimprove/alfa-dom](./alfa-dom.md) |  |
 |  [@siteimprove/alfa-earl](./alfa-earl.md) |  |

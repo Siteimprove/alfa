@@ -1,5 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
+import { Feature } from "@siteimprove/alfa-css-feature";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
@@ -8,10 +9,10 @@ import {
   Rule,
   Sheet,
   StyleRule,
+  SupportsRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Media } from "@siteimprove/alfa-media";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Combinator, Complex, Context } from "@siteimprove/alfa-selector";
@@ -222,6 +223,15 @@ export namespace SelectorMap {
         for (const child of rule.sheet.children()) {
           visit(child);
         }
+      } else if (SupportsRule.isSupportsRule(rule)) {
+        if (rule.query.every((query) => !query.matches(device))) {
+          // If the option is None, the condition failed to parse and the rule is discarded.
+          return;
+        }
+
+        for (const child of rule.children()) {
+          visit(child);
+        }
       }
 
       // Otherwise, we recurse into whichever child rules are declared by the
@@ -239,7 +249,7 @@ export namespace SelectorMap {
       }
 
       if (sheet.condition.isSome()) {
-        const query = Media.parse(Lexer.lex(sheet.condition.get()));
+        const query = Feature.parseMediaQuery(Lexer.lex(sheet.condition.get()));
 
         if (query.every(([, query]) => !query.matches(device))) {
           continue;

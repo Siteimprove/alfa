@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
+import type { Feature } from "@siteimprove/alfa-css-feature";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import {
   Declaration,
@@ -11,7 +12,6 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
-import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -141,7 +141,7 @@ function isOrientationConditional(declaration: Declaration): boolean {
 }
 
 function hasOrientationCondition(
-  condition: Media.Feature | Media.Condition,
+  condition: Feature.Condition<Feature.Media.Feature>,
 ): boolean {
   for (const feature of condition) {
     if (

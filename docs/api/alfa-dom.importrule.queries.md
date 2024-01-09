@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-get queries(): Media.List;
+get queries(): Feature.Media.List;
 ```

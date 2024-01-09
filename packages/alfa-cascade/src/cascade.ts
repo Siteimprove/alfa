@@ -15,7 +15,7 @@ import { UserAgent } from "./user-agent";
  * {@link https://drafts.csswg.org/css-cascade-5/}
  *
  * @remarks
- * The cascade associate to each element a node into a rule tree.
+ * The cascade associates to each element a node into a rule tree.
  * A single rule tree is built for each document or shadow root. The cascade
  * lazily fills it upon need and caches the associated node for each element.
  *
@@ -99,7 +99,7 @@ export class Cascade implements Serializable {
    * A new ancestor filter is built and filled with the element's ancestors.
    * When building the full cascade for a DOM tree, this is pointless as we can
    * just build the filter on the go during DOM tree traversal. When looking up
-   * the style of a single element, we assume shat the time spent going up the
+   * the style of a single element, we assume that the time spent going up the
    * DOM tree to build an ancestor filter will be saved by matching fewer
    * selectors.
    */

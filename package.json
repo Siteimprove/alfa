@@ -29,7 +29,7 @@
     "@changesets/cli": "^2.26.2",
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
-    "@siteimprove/alfa-toolchain": "workspace:^0.71.1",
+    "@siteimprove/alfa-toolchain": "workspace:^0.72.0",
     "@stryker-mutator/core": "^8.0.0",
     "@stryker-mutator/typescript-checker": "^8.0.0",
     "@types/async": "^3.2.20",

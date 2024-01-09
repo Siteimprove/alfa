@@ -7,13 +7,13 @@
 **Signature:**
 
 ```typescript
-interface JSON 
+interface JSON extends Rule.JSON<"font-face"> 
 ```
+**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&lt;"font-face"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [style](./alfa-dom.fontfacerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) |  |
-|  [type](./alfa-dom.fontfacerule.json.type.md) |  | "font-face" |  |
 

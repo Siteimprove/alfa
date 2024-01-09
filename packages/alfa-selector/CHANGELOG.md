@@ -1,5 +1,11 @@
 # @siteimprove/alfa-selector
 
+## 0.72.0
+
+### Minor Changes
+
+- **Added:** `Specificity` is now exported for external use. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
 ## 0.71.1
 
 ## 0.71.0

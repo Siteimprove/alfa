@@ -14,6 +14,6 @@ interface JSON
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [block](./alfa-cascade.ruletree.node.json.block.md) |  | Block.JSON |  |
 |  [children](./alfa-cascade.ruletree.node.json.children.md) |  | Array&lt;[Node.JSON](./alfa-cascade.ruletree.node.json.md)<!-- -->&gt; |  |
-|  [item](./alfa-cascade.ruletree.node.json.item.md) |  | [Item.JSON](./alfa-cascade.ruletree.item.json.md) |  |
 

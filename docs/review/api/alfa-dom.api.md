@@ -8,11 +8,11 @@ import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Device } from '@siteimprove/alfa-device';
 import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Feature } from '@siteimprove/alfa-css-feature';
 import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
-import { Media } from '@siteimprove/alfa-media';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-rectangle';
@@ -492,7 +492,7 @@ export class ImportRule extends ConditionRule<"import"> {
     // (undocumented)
     static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
     // (undocumented)
-    get queries(): Media.List;
+    get queries(): Feature.Media.List;
     // (undocumented)
     get rules(): Iterable<Rule>;
     // (undocumented)
@@ -604,7 +604,7 @@ export class MediaRule extends ConditionRule<"media"> {
     // (undocumented)
     static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
     // (undocumented)
-    get queries(): Media.List;
+    get queries(): Feature.Media.List;
     // (undocumented)
     toJSON(): MediaRule.JSON;
     // (undocumented)
@@ -1117,6 +1117,8 @@ export namespace StyleRule {
 export class SupportsRule extends ConditionRule<"supports"> {
     // (undocumented)
     static of(condition: string, rules: Iterable<Rule>): SupportsRule;
+    // (undocumented)
+    get query(): Option<Feature.Supports.Query>;
     // (undocumented)
     toJSON(): SupportsRule.JSON;
     // (undocumented)

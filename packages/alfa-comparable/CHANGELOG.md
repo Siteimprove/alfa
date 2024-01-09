@@ -1,5 +1,13 @@
 # @siteimprove/alfa-comparable
 
+## 0.72.0
+
+### Minor Changes
+
+- **Added:** A `Comparable.compareLexicographically` function to compare tuples is now available. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+  Both tuples must have the same type, and an adequate tuple of comparers must be provided as a third argument.
+
 ## 0.71.1
 
 ## 0.71.0

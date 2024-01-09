@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-static of({ rule, selector, declarations }: Item, children: Array<Node>, parent: Option<Node>): Node;
+static of(block: Block, children: Array<Node>, parent: Option<Node>): Node;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  { rule, selector, declarations } | Item |  |
+|  block | Block |  |
 |  children | Array&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
 |  parent | Option&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
 

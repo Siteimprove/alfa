@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-abstract toJSON(): ConditionRule.JSON;
+toJSON(): ConditionRule.JSON<T>;
 ```
 **Returns:**
 
-[ConditionRule.JSON](./alfa-dom.conditionrule.json.md)
+[ConditionRule.JSON](./alfa-dom.conditionrule.json.md)<!-- -->&lt;T&gt;
 

@@ -1,5 +1,33 @@
 # @siteimprove/alfa-cascade
 
+## 0.72.0
+
+### Minor Changes
+
+- **Breaking:** `SelectorMap.#get` now requires an `AncestorFilter` rather than an `Option<AncestorFilter>`. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+  All actual use cases in the code are now passing an ancestor filter, so there is no need to wrap it as an option anymore.
+
+- **Breaking:** `Cascade.of` has been renamed `Cascade.from`. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+  This matches better naming conventions in other packages, since it does perform some heavy computation before building the cascade.
+
+- **Removed:** `AncestorFilter#match` has been made internal. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+  Use `!AncestorFilter.canReject` instead, which is having fewer assumptions.
+
+- **Breaking:** Data in Rule tree nodes is now wrapped in a `Block` object that need to be opened. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+  That is, replace, e.g., `node.declarations` with `node.block.declarations` to access the declarations associated to a node in the rule tree, and so forth for other data.
+
+- **Added:** Functionalities for dealing with Cascade Sorting Order (origin, specificity, order) are now grouped in a `Precedence` interface. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- **Added:** Simple feature query (`@supports` rules) are now supported. ([#1544](https://github.com/Siteimprove/alfa/pull/1544))
+
+  Only the property testing is implemented (`@supports (foo: bar)`), not the function notations. Properties are considered supported if they do not start with `"-"` (i.e. they do not have a vendor prefix).
+
+  Support feature testing is grouped int he `Feature.Supports` namespace.
+
 ## 0.71.1
 
 ## 0.71.0
