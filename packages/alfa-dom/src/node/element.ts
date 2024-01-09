@@ -9,14 +9,16 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
+
 import { Block } from "../style/block";
+import { Declaration } from "../style/declaration";
+
 import { Attribute } from "./attribute";
 import { Document } from "./document";
 import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
-import { Declaration } from "@siteimprove/alfa-dom";
 import * as helpers from "./element/input-type";
 import * as predicate from "./element/predicate";
 
