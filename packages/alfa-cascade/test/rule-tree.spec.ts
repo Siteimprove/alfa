@@ -1,11 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
-import {
-  Complex,
-  Compound,
-  type Simple,
-  Specificity,
-} from "@siteimprove/alfa-selector";
+import { Complex, Compound, type Simple } from "@siteimprove/alfa-selector";
 
 import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
@@ -14,34 +9,27 @@ import { RuleTree } from "../src";
 import { Block } from "../src/block";
 import { Origin } from "../src/precedence";
 
-function fakeBlock(selector: string): Block {
-  return Block.of(
-    h.rule.style(selector, []),
-    parse(selector) as Compound | Complex | Simple,
-    [],
-    {
-      origin: Origin.NormalUserAgent,
-      importance: false,
-      specificity: Specificity.empty(),
-      order: -1,
-    },
-  );
+function fakeBlock(
+  selector: string,
+  origin: Origin = Origin.NormalUserAgent,
+  importance: boolean = false,
+): Block {
+  const sel = parse(selector) as Compound | Complex | Simple;
+
+  return Block.of(h.rule.style(selector, []), sel, [], {
+    origin,
+    importance,
+    specificity: sel.specificity,
+    order: -1,
+  });
 }
 
-function fakeJSON(selector: string): Block.JSON {
-  const item = fakeBlock(selector);
-
-  return {
-    rule: item.rule.toJSON(),
-    selector: item.selector.toJSON(),
-    declarations: [],
-    precedence: {
-      origin: 1,
-      importance: false,
-      specificity: { a: 0, b: 0, c: 0 },
-      order: -1,
-    },
-  };
+function fakeJSON(
+  selector: string,
+  origin?: Origin,
+  importance?: boolean,
+): Block.JSON {
+  return fakeBlock(selector, origin, importance).toJSON();
 }
 
 /**
@@ -114,25 +102,6 @@ test(".add() creates a single branch in the rule tree", (t) => {
         {
           block: fakeJSON(".foo"),
           children: [{ block: fakeJSON("#bar"), children: [] }],
-        },
-      ],
-    },
-  ]);
-});
-
-test(".add() does not change the order of items", (t) => {
-  const tree = RuleTree.empty();
-  // Items are not correctly ordered (#bar has higher specificity). Rule tree
-  // doesn't care.
-  tree.add([fakeBlock("#bar"), fakeBlock("div"), fakeBlock(".foo")]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: fakeJSON("#bar"),
-      children: [
-        {
-          block: fakeJSON("div"),
-          children: [{ block: fakeJSON(".foo"), children: [] }],
         },
       ],
     },
@@ -260,6 +229,78 @@ test(".add() branches as soon as selectors differ", (t) => {
               children: [],
             },
           ],
+        },
+      ],
+    },
+  ]);
+});
+
+/**
+ * Sorting blocks upon insertion
+ */
+test(".add() sort items by specificity", (t) => {
+  const tree = RuleTree.empty();
+  tree.add([fakeBlock("#bar"), fakeBlock("div"), fakeBlock(".foo")]);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: fakeJSON("div"),
+      children: [
+        {
+          block: fakeJSON(".foo"),
+          children: [{ block: fakeJSON("#bar"), children: [] }],
+        },
+      ],
+    },
+  ]);
+});
+
+test(".add() sort items by origin and importance", (t) => {
+  const UAImportant = fakeBlock("div", Origin.ImportantUserAgent, true);
+  const UANormal = fakeBlock("div", Origin.NormalUserAgent);
+  const AuthorImportant = fakeBlock("div", Origin.ImportantAuthor, true);
+  const AuthorNormal = fakeBlock("div", Origin.NormalAuthor);
+
+  const tree = RuleTree.empty();
+  tree.add([UAImportant, UANormal, AuthorImportant, AuthorNormal]);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: fakeJSON("div", Origin.NormalUserAgent),
+      children: [
+        {
+          block: fakeJSON("div", Origin.NormalAuthor),
+          children: [
+            {
+              block: fakeJSON("div", Origin.ImportantAuthor, true),
+              children: [
+                {
+                  block: fakeJSON("div", Origin.ImportantUserAgent, true),
+                  children: [],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]);
+});
+
+test(".add() prioritise origin over specificity", (t) => {
+  const highSpecificity = fakeBlock("#foo", Origin.ImportantAuthor, true);
+  const highOrigin = fakeBlock("div", Origin.ImportantUserAgent, true);
+
+  const tree = RuleTree.empty();
+  tree.add([highSpecificity, highOrigin]);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: fakeJSON("#foo", Origin.ImportantAuthor, true),
+      children: [
+        {
+          block: fakeJSON("div", Origin.ImportantUserAgent, true),
+          children: [],
         },
       ],
     },
