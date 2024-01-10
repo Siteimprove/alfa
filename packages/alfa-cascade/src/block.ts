@@ -159,13 +159,17 @@ export namespace Block {
    * * Rules with a list selector are split into their components.
    *   E.g., a `div, span { color: red }` rule will create one block
    *   for `div { color: red }`, and a similar one for `span`.
-   * Since all these blocks are declared at the same time, and are declaring
-   * the exact same declarations, they can safely share order.
+   * Since all these blocks are declared at the same time, and are either declaring
+   * the exact same declarations, or non-conflicting ones (due to importance), they can
+   * share the exact same order.
    */
   export function from(rule: StyleRule, order: number): [Array<Block>, number] {
     let blocks: Array<Block> = [];
 
     for (const [_, selectors] of Selector.parse(Lexer.lex(rule.selector))) {
+      // The selector was parsed succsefully, so blocks will be created and we need to update order.
+      order++;
+
       for (const [importance, declarations] of Iterable.groupBy(
         rule.style.declarations,
         (declaration) => declaration.important,
@@ -177,8 +181,6 @@ export namespace Block {
           : importance
             ? Origin.ImportantAuthor
             : Origin.NormalAuthor;
-
-        order++;
 
         for (const selector of selectors) {
           blocks.push(
