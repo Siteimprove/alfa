@@ -303,7 +303,7 @@ export namespace Style {
       .get(context, () => {
         // First, get all declarations on the `style` attribute. They win
         // cascade sort at priority 3, trumping everything but origin and
-        // (shadow tree) context
+        // (shadow tree) encapsulation
         // * origin is de-facto handled by the fact that these are author
         //   declarations, trumping non-important UA declaration at 1.6 vs 1.8.
         //   important UA declarations will win back through shouldOverride.

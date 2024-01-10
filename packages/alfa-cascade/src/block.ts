@@ -62,7 +62,8 @@ export class Block<
     Universal.of(None),
     [],
     {
-      origin: Origin.UserAgent,
+      origin: Origin.NormalUserAgent,
+      importance: false,
       specificity: Specificity.empty(),
       order: Infinity,
     },
@@ -153,30 +154,42 @@ export namespace Block {
    * Order is relative to the list of all style rules and thus cannot be inferred
    * from the rule itself.
    *
-   * A single rule creates more than one block. Rules with a list selector are
-   * split into their components. E.g., a `div, span { color: red }` rule will
-   * create one block for `div { color: red }`, and a similar one for `span`.
+   * A single rule creates more than one block.
+   * * Declarations inside the rule are split by importance.
+   * * Rules with a list selector are split into their components.
+   *   E.g., a `div, span { color: red }` rule will create one block
+   *   for `div { color: red }`, and a similar one for `span`.
    * Since all these blocks are declared at the same time, and are declaring
    * the exact same declarations, they can safely share order.
    */
   export function from(rule: StyleRule, order: number): [Array<Block>, number] {
-    let blocks = [];
+    let blocks: Array<Block> = [];
 
     for (const [_, selectors] of Selector.parse(Lexer.lex(rule.selector))) {
-      const origin = rule.owner.includes(UserAgent)
-        ? Origin.UserAgent
-        : Origin.Author;
+      for (const [importance, declarations] of Iterable.groupBy(
+        rule.style.declarations,
+        (declaration) => declaration.important,
+      )) {
+        const origin = rule.owner.includes(UserAgent)
+          ? importance
+            ? Origin.ImportantUserAgent
+            : Origin.NormalUserAgent
+          : importance
+            ? Origin.ImportantAuthor
+            : Origin.NormalAuthor;
 
-      order++;
+        order++;
 
-      for (const selector of selectors) {
-        blocks.push(
-          Block.of(rule, selector, rule.style, {
-            origin,
-            order,
-            specificity: selector.specificity,
-          }),
-        );
+        for (const selector of selectors) {
+          blocks.push(
+            Block.of(rule, selector, declarations, {
+              origin,
+              importance,
+              order,
+              specificity: selector.specificity,
+            }),
+          );
+        }
       }
     }
     return [blocks, order];

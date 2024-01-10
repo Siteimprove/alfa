@@ -20,7 +20,8 @@ function fakeBlock(selector: string): Block {
     parse(selector) as Compound | Complex | Simple,
     [],
     {
-      origin: Origin.UserAgent,
+      origin: Origin.NormalUserAgent,
+      importance: false,
       specificity: Specificity.empty(),
       order: -1,
     },
@@ -34,7 +35,12 @@ function fakeJSON(selector: string): Block.JSON {
     rule: item.rule.toJSON(),
     selector: item.selector.toJSON(),
     declarations: [],
-    precedence: { origin: 1, specificity: { a: 0, b: 0, c: 0 }, order: -1 },
+    precedence: {
+      origin: 1,
+      importance: false,
+      specificity: { a: 0, b: 0, c: 0 },
+      order: -1,
+    },
   };
 }
 

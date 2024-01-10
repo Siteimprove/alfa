@@ -37,7 +37,8 @@ test(".from() builds a selector map with a single rule", (t) => {
             ],
             precedence: {
               order: 1,
-              origin: 2,
+              importance: false,
+              origin: 3,
               specificity: { a: 0, b: 0, c: 1 },
             },
             rule: {
