@@ -289,8 +289,6 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, extraData?: any): Element<N>;
     // (undocumented)
-    parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
     get qualifiedName(): string;
@@ -1148,8 +1146,6 @@ export class Text extends Node<"text"> implements Slotable {
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     static of(data: string, externalId?: string, extraData?: any): Text;
-    // (undocumented)
-    parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     toJSON(): Text.JSON;
     // (undocumented)

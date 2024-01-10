@@ -22,6 +22,7 @@ import {
   Fragment,
   Shadow,
   Slot,
+  Slotable,
   Text,
   Type,
 } from ".";
@@ -133,6 +134,33 @@ export abstract class Node<T extends string = string>
 
         return Sequence.of(element);
       });
+  }
+
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    const parent = this._parent as Option<Node>;
+
+    // If we traverse the flat tree, we want to jump over shadow roots.
+    if (options.isSet(Node.Traversal.flattened)) {
+      return parent.flatMap((parent) => {
+        if (Shadow.isShadow(parent)) {
+          return parent.host;
+        }
+
+        // Additionally, if this is a slottable light child of a shadow host, we want
+        // to search for where it is slotted, and return that parent instead.
+        if (
+          Element.isElement(parent) &&
+          parent.shadow.isSome() &&
+          Slotable.isSlotable(this)
+        ) {
+          return this.assignedSlot().flatMap((slot) => slot.parent(options));
+        }
+
+        return Option.of(parent);
+      });
+    }
+
+    return parent;
   }
 
   private _path: Array<string> = [];
