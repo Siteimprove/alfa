@@ -63,7 +63,6 @@ export class Block<
     [],
     {
       origin: Origin.NormalUserAgent,
-      importance: false,
       specificity: Specificity.empty(),
       order: Infinity,
     },
@@ -186,7 +185,6 @@ export namespace Block {
           blocks.push(
             Block.of(rule, selector, declarations, {
               origin,
-              importance,
               order,
               specificity: selector.specificity,
             }),

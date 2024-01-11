@@ -16,8 +16,6 @@ import { Origin } from "./origin";
 export interface Precedence {
   // Origin also contains importance for faster comparison.
   origin: Origin;
-  // Standalone importance is needed to resolve encapsulation.
-  importance: boolean;
   specificity: Specificity;
   order: Order;
 }
@@ -38,7 +36,6 @@ export namespace Precedence {
   export function toJSON(precedence: Precedence): JSON {
     return {
       origin: precedence.origin,
-      importance: precedence.importance,
       specificity: precedence.specificity.toJSON(),
       order: precedence.order,
     };

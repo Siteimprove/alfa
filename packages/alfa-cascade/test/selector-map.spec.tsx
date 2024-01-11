@@ -43,7 +43,6 @@ test(".from() builds a selector map with a single rule", (t) => {
             ],
             precedence: {
               order: 1,
-              importance: false,
               origin: 3,
               specificity: { a: 0, b: 0, c: 1 },
             },
@@ -135,7 +134,6 @@ test(".from() split important and non-important declarations in two blocks", (t)
             declarations: [{ name: "foo", value: "bar", important: false }],
             precedence: {
               origin: 3,
-              importance: false,
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
             },
@@ -146,7 +144,6 @@ test(".from() split important and non-important declarations in two blocks", (t)
             declarations: [{ name: "hello", value: "world", important: true }],
             precedence: {
               origin: 5,
-              importance: true,
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
             },

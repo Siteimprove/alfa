@@ -54,7 +54,6 @@ test(".get() returns the rule tree node of the given element", (t) => {
           declarations: [{ name: "display", value: "block", important: false }],
           precedence: {
             origin: 1,
-            importance: false,
             specificity: { a: 0, b: 0, c: 1 },
             order: 7,
           },

@@ -12,24 +12,18 @@ import { Origin } from "../src/precedence";
 function fakeBlock(
   selector: string,
   origin: Origin = Origin.NormalUserAgent,
-  importance: boolean = false,
 ): Block {
   const sel = parse(selector) as Compound | Complex | Simple;
 
   return Block.of(h.rule.style(selector, []), sel, [], {
     origin,
-    importance,
     specificity: sel.specificity,
     order: -1,
   });
 }
 
-function fakeJSON(
-  selector: string,
-  origin?: Origin,
-  importance?: boolean,
-): Block.JSON {
-  return fakeBlock(selector, origin, importance).toJSON();
+function fakeJSON(selector: string, origin?: Origin): Block.JSON {
+  return fakeBlock(selector, origin).toJSON();
 }
 
 /**
@@ -256,9 +250,9 @@ test(".add() sort items by specificity", (t) => {
 });
 
 test(".add() sort items by origin and importance", (t) => {
-  const UAImportant = fakeBlock("div", Origin.ImportantUserAgent, true);
+  const UAImportant = fakeBlock("div", Origin.ImportantUserAgent);
   const UANormal = fakeBlock("div", Origin.NormalUserAgent);
-  const AuthorImportant = fakeBlock("div", Origin.ImportantAuthor, true);
+  const AuthorImportant = fakeBlock("div", Origin.ImportantAuthor);
   const AuthorNormal = fakeBlock("div", Origin.NormalAuthor);
 
   const tree = RuleTree.empty();
@@ -272,10 +266,10 @@ test(".add() sort items by origin and importance", (t) => {
           block: fakeJSON("div", Origin.NormalAuthor),
           children: [
             {
-              block: fakeJSON("div", Origin.ImportantAuthor, true),
+              block: fakeJSON("div", Origin.ImportantAuthor),
               children: [
                 {
-                  block: fakeJSON("div", Origin.ImportantUserAgent, true),
+                  block: fakeJSON("div", Origin.ImportantUserAgent),
                   children: [],
                 },
               ],
@@ -288,18 +282,18 @@ test(".add() sort items by origin and importance", (t) => {
 });
 
 test(".add() prioritise origin over specificity", (t) => {
-  const highSpecificity = fakeBlock("#foo", Origin.ImportantAuthor, true);
-  const highOrigin = fakeBlock("div", Origin.ImportantUserAgent, true);
+  const highSpecificity = fakeBlock("#foo", Origin.ImportantAuthor);
+  const highOrigin = fakeBlock("div", Origin.ImportantUserAgent);
 
   const tree = RuleTree.empty();
   tree.add([highSpecificity, highOrigin]);
 
   t.deepEqual(tree.toJSON(), [
     {
-      block: fakeJSON("#foo", Origin.ImportantAuthor, true),
+      block: fakeJSON("#foo", Origin.ImportantAuthor),
       children: [
         {
-          block: fakeJSON("div", Origin.ImportantUserAgent, true),
+          block: fakeJSON("div", Origin.ImportantUserAgent),
           children: [],
         },
       ],
