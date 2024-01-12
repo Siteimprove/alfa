@@ -1,8 +1,14 @@
 import { Array } from "@siteimprove/alfa-array";
 import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Lexer } from "@siteimprove/alfa-css";
-import { Declaration, h, Rule, StyleRule } from "@siteimprove/alfa-dom";
-import type { Equatable } from "@siteimprove/alfa-equatable";
+import {
+  Declaration,
+  Element,
+  h,
+  Rule,
+  StyleRule,
+} from "@siteimprove/alfa-dom";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None } from "@siteimprove/alfa-option";
@@ -35,9 +41,7 @@ import { UserAgent } from "./user-agent";
  *
  * @internal
  */
-export class Block<
-    S extends Compound | Complex | Simple = Compound | Complex | Simple,
-  >
+export class Block<S extends Element | Block.Source = Block.Source>
   implements Equatable, Serializable<Block.JSON<S>>
 {
   /**
@@ -46,25 +50,25 @@ export class Block<
    * @remarks
    * This does not validate coupling of the data. Prefer using Block.from()
    */
-  public static of<
-    S extends Compound | Complex | Simple = Compound | Complex | Simple,
-  >(
-    rule: StyleRule,
-    selector: S,
+  public static of<S extends Element | Block.Source = Block.Source>(
+    source: S,
     declarations: Iterable<Declaration>,
     precedence: Precedence,
   ): Block<S> {
-    return new Block(rule, selector, Array.from(declarations), precedence);
+    return new Block(source, Array.from(declarations), precedence);
   }
 
   private static _empty = new Block(
-    h.rule.style("*", []),
-    Universal.of(None),
+    {
+      rule: h.rule.style("*", []),
+      selector: Universal.of(None),
+    },
     [],
     {
       origin: Origin.NormalUserAgent,
+      isElementAttached: false,
       specificity: Specificity.empty(),
-      order: Infinity,
+      order: -Infinity,
     },
   );
   /**
@@ -74,29 +78,59 @@ export class Block<
     return this._empty;
   }
 
-  private readonly _rule: StyleRule;
-  private readonly _selector: S;
+  // These could be Options instead.
+  // However, these (especially the selector) are used on hot path when
+  // resolving cascade. Having them nullable, and encoding the nullability
+  // in the type, allow for direct access without the small overhead of Options.
+  private readonly _rule: S extends Block.Source ? StyleRule : null;
+  private readonly _selector: S extends Block.Source
+    ? Compound | Complex | Simple
+    : null;
+  private readonly _owner: S extends Element ? Element : null;
   private readonly _declarations: Array<Declaration>;
   private readonly _precedence: Precedence;
 
   constructor(
-    rule: StyleRule,
-    selector: S,
+    source: S,
     declarations: Array<Declaration>,
     precedence: Precedence,
   ) {
-    this._rule = rule;
-    this._selector = selector;
+    if (Element.isElement(source)) {
+      this._rule = null as S extends Block.Source ? StyleRule : null;
+      this._selector = null as S extends Block.Source
+        ? Compound | Complex | Simple
+        : null;
+      this._owner = source as unknown as S extends Element ? Element : null;
+    } else {
+      this._rule = source.rule as S extends Block.Source ? StyleRule : null;
+      this._selector = source.selector as S extends Block.Source
+        ? Compound | Complex | Simple
+        : null;
+      this._owner = null as S extends Element ? Element : null;
+    }
     this._declarations = declarations;
     this._precedence = precedence;
   }
 
-  public get rule(): StyleRule {
+  public get source(): S {
+    return this._owner !== null
+      ? (this._owner as unknown as S)
+      : // By construction if owner is unset, then rule and selector are set.
+        ({ rule: this._rule, selector: this._selector } as S);
+  }
+
+  public get rule(): S extends Block.Source ? StyleRule : null {
     return this._rule;
   }
 
-  public get selector(): S {
+  public get selector(): S extends Block.Source
+    ? Compound | Complex | Simple
+    : null {
     return this._selector;
+  }
+
+  public get owner(): S extends Element ? Element : null {
+    return this._owner;
   }
 
   public get declarations(): Iterable<Declaration> {
@@ -114,8 +148,9 @@ export class Block<
   public equals(value: unknown): boolean {
     return (
       value instanceof Block &&
-      this._rule.equals(value._rule) &&
-      this._selector.equals(value._selector) &&
+      Equatable.equals(value._rule, this._rule) &&
+      Equatable.equals(value._selector, this._selector) &&
+      Equatable.equals(value._owner, this._owner) &&
       Array.equals(value._declarations, this._declarations) &&
       Precedence.compare(value._precedence, this._precedence) ===
         Comparison.Equal
@@ -124,8 +159,17 @@ export class Block<
 
   public toJSON(): Block.JSON<S> {
     return {
-      rule: this._rule.toJSON(),
-      selector: Serializable.toJSON(this._selector),
+      source: (Element.isElement(this._owner)
+        ? this._owner.toJSON()
+        : {
+            rule: this._rule!.toJSON(),
+            selector: Serializable.toJSON(this._selector),
+          }) as S extends Element
+        ? Element.JSON
+        : {
+            rule: Rule.JSON;
+            selector: Serializable.ToJSON<S>;
+          },
       declarations: Array.toJSON(this._declarations),
       precedence: Precedence.toJSON(this._precedence),
     };
@@ -135,14 +179,24 @@ export class Block<
  * @internal
  */
 export namespace Block {
-  export interface JSON<
-    S extends Compound | Complex | Simple = Compound | Complex | Simple,
-  > {
+  export interface JSON<S extends Element | Source = Source> {
     [key: string]: json.JSON;
-    rule: Rule.JSON;
-    selector: Serializable.ToJSON<S>;
+    source: S extends Element
+      ? Element.JSON
+      : {
+          rule: Rule.JSON;
+          selector: Serializable.ToJSON<S>;
+        };
     declarations: Array<Declaration.JSON>;
     precedence: Precedence.JSON;
+  }
+
+  /**
+   * @internal
+   */
+  export interface Source {
+    rule: StyleRule;
+    selector: Compound | Complex | Simple;
   }
 
   /**
@@ -166,7 +220,7 @@ export namespace Block {
     let blocks: Array<Block> = [];
 
     for (const [_, selectors] of Selector.parse(Lexer.lex(rule.selector))) {
-      // The selector was parsed succsefully, so blocks will be created and we need to update order.
+      // The selector was parsed successfully, so blocks will be created, and we need to update order.
       order++;
 
       for (const [importance, declarations] of Iterable.groupBy(
@@ -183,8 +237,9 @@ export namespace Block {
 
         for (const selector of selectors) {
           blocks.push(
-            Block.of(rule, selector, declarations, {
+            Block.of({ rule, selector }, declarations, {
               origin,
+              isElementAttached: false,
               order,
               specificity: selector.specificity,
             }),

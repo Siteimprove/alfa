@@ -265,6 +265,10 @@ export namespace SelectorMap {
   }
 
   /**
+   * @remarks
+   * Selector maps only store selectors from rules, not style attribute.
+   * So, they always receive Blocks with a Source.
+   *
    * @internal
    */
   export class Bucket implements Serializable {
@@ -272,13 +276,13 @@ export namespace SelectorMap {
       return new Bucket(new Map());
     }
 
-    private readonly _nodes: Map<string, Array<Block>>;
+    private readonly _nodes: Map<string, Array<Block<Block.Source>>>;
 
-    private constructor(nodes: Map<string, Array<Block>>) {
+    private constructor(nodes: Map<string, Array<Block<Block.Source>>>) {
       this._nodes = nodes;
     }
 
-    public add(key: string, node: Block): void {
+    public add(key: string, node: Block<Block.Source>): void {
       const nodes = this._nodes.get(key);
 
       if (nodes === undefined) {
@@ -288,7 +292,7 @@ export namespace SelectorMap {
       }
     }
 
-    public get(key: string): Array<Block> {
+    public get(key: string): Array<Block<Block.Source>> {
       const nodes = this._nodes.get(key);
 
       if (nodes === undefined) {
@@ -310,6 +314,6 @@ export namespace SelectorMap {
    * @internal
    */
   export namespace Bucket {
-    export type JSON = Array<[string, Array<Block.JSON>]>;
+    export type JSON = Array<[string, Array<Block.JSON<Block.Source>>]>;
   }
 }

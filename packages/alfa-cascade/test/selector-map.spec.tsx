@@ -43,20 +43,23 @@ test(".from() builds a selector map with a single rule", (t) => {
             ],
             precedence: {
               order: 1,
+              isElementAttached: false,
               origin: 3,
               specificity: { a: 0, b: 0, c: 1 },
             },
-            rule: {
-              selector: "div",
-              style: [{ important: false, name: "foo", value: "not parsed" }],
-              type: "style",
-            },
-            selector: {
-              key: "div",
-              name: "div",
-              namespace: null,
-              specificity: { a: 0, b: 0, c: 1 },
-              type: "type",
+            source: {
+              rule: {
+                selector: "div",
+                style: [{ important: false, name: "foo", value: "not parsed" }],
+                type: "style",
+              },
+              selector: {
+                key: "div",
+                name: "div",
+                namespace: null,
+                specificity: { a: 0, b: 0, c: 1 },
+                type: "type",
+              },
             },
           },
         ],
@@ -129,21 +132,21 @@ test(".from() split important and non-important declarations in two blocks", (t)
         "div",
         [
           {
-            rule: rule.toJSON(),
-            selector: selector.toJSON(),
+            source: { rule: rule.toJSON(), selector: selector.toJSON() },
             declarations: [{ name: "foo", value: "bar", important: false }],
             precedence: {
               origin: 3,
+              isElementAttached: false,
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
             },
           },
           {
-            rule: rule.toJSON(),
-            selector: selector.toJSON(),
+            source: { rule: rule.toJSON(), selector: selector.toJSON() },
             declarations: [{ name: "hello", value: "world", important: true }],
             precedence: {
               origin: 5,
+              isElementAttached: false,
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
             },

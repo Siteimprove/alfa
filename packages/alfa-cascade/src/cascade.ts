@@ -74,7 +74,10 @@ export class Cascade implements Serializable {
         this._entries
           .get(node, Cache.empty)
           .get(context, () =>
-            this._rules.add(this._selectors.get(node, context, filter)),
+            this._rules.add(
+              this._selectors.get(node, context, filter),
+              node.style,
+            ),
           );
         filter.add(node);
       }
@@ -114,7 +117,10 @@ export class Cascade implements Serializable {
       .filter(Element.isElement)
       .forEach(filter.add.bind(filter));
 
-    return this._rules.add(this._selectors.get(element, context, filter));
+    return this._rules.add(
+      this._selectors.get(element, context, filter),
+      element.style,
+    );
   }
 
   /**

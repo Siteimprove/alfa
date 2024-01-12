@@ -15,8 +15,9 @@ function fakeBlock(
 ): Block {
   const sel = parse(selector) as Compound | Complex | Simple;
 
-  return Block.of(h.rule.style(selector, []), sel, [], {
+  return Block.of({ rule: h.rule.style(selector, []), selector: sel }, [], {
     origin,
+    isElementAttached: false,
     specificity: sel.specificity,
     order: -1,
   });
@@ -44,7 +45,11 @@ test(".add() doesn't change a tree that already has the exact same selector", (t
   const node = RuleTree.Node.of(item1, [], None);
   // This is not a mistake, we want to share the exact same selector but have otherwise different parts.
   node.add(
-    Block.of(item2.rule, item1.selector, item2.declarations, item2.precedence),
+    Block.of(
+      { rule: item2.rule!, selector: item1.selector! },
+      item2.declarations,
+      item2.precedence,
+    ),
   );
 
   t.deepEqual(node.toJSON(), {
@@ -150,7 +155,7 @@ test(".add() share branches as long as selectors are the same", (t) => {
   const foo = fakeBlock(".foo");
   const tree = RuleTree.empty();
   tree.add([div, foo, fakeBlock("#bar")]);
-  tree.add([div, foo, fakeBlock(".baz")]);
+  tree.add([div, foo, fakeBlock(".baz")], None);
 
   t.deepEqual(tree.toJSON(), [
     {
