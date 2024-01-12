@@ -2,6 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Lexer } from "@siteimprove/alfa-css";
 import {
+  type Block as StyleBlock,
   Declaration,
   Element,
   h,
@@ -41,7 +42,7 @@ import { UserAgent } from "./user-agent";
  *
  * @internal
  */
-export class Block<S extends Element | Block.Source = Block.Source>
+export class Block<S extends Element | Block.Source = Element | Block.Source>
   implements Equatable, Serializable<Block.JSON<S>>
 {
   /**
@@ -50,7 +51,7 @@ export class Block<S extends Element | Block.Source = Block.Source>
    * @remarks
    * This does not validate coupling of the data. Prefer using Block.from()
    */
-  public static of<S extends Element | Block.Source = Block.Source>(
+  public static of<S extends Element | Block.Source = Element | Block.Source>(
     source: S,
     declarations: Iterable<Declaration>,
     precedence: Precedence,
@@ -179,7 +180,7 @@ export class Block<S extends Element | Block.Source = Block.Source>
  * @internal
  */
 export namespace Block {
-  export interface JSON<S extends Element | Source = Source> {
+  export interface JSON<S extends Element | Source = Element | Source> {
     [key: string]: json.JSON;
     source: S extends Element
       ? Element.JSON
@@ -216,8 +217,11 @@ export namespace Block {
    * the exact same declarations, or non-conflicting ones (due to importance), they can
    * share the exact same order.
    */
-  export function from(rule: StyleRule, order: number): [Array<Block>, number] {
-    let blocks: Array<Block> = [];
+  export function from(
+    rule: StyleRule,
+    order: number,
+  ): [Array<Block<Source>>, number] {
+    let blocks: Array<Block<Source>> = [];
 
     for (const [_, selectors] of Selector.parse(Lexer.lex(rule.selector))) {
       // The selector was parsed successfully, so blocks will be created, and we need to update order.
@@ -248,6 +252,34 @@ export namespace Block {
       }
     }
     return [blocks, order];
+  }
+
+  /**
+   * Turns the style attribute of an element into blocks (one for important
+   * declaration, one for normal declarations).
+   * @param element
+   */
+  export function fromStyle(element: Element): Iterable<Block> {
+    return element.style
+      .map((style) =>
+        Iterable.map(
+          Iterable.groupBy(
+            style.declarations,
+            (declaration) => declaration.important,
+          ),
+          ([importance, declarations]) =>
+            Block.of(element, declarations, {
+              origin: importance ? Origin.ImportantAuthor : Origin.NormalAuthor,
+              isElementAttached: true,
+              specificity: Specificity.empty(),
+              // Since style attribute trumps style rules in the cascade sort,
+              // and there is at most one style attribute per element,
+              // the order never matters.
+              order: -1,
+            }),
+        ),
+      )
+      .getOr<Iterable<Block>>([]);
   }
 
   export const compare: Comparer<Block> = (a, b) =>

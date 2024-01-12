@@ -16,7 +16,10 @@ import { Block } from "../src/block";
 
 const device = Device.standard();
 
-function ruleToBlockJSON(rule: StyleRule, order: number): Array<Block.JSON> {
+function ruleToBlockJSON(
+  rule: StyleRule,
+  order: number,
+): Array<Block.JSON<Block.Source>> {
   return Array.toJSON(Block.from(rule, order)[0]);
 }
 

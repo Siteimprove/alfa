@@ -1,4 +1,4 @@
-import { Block as StyleBlock } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -107,10 +107,7 @@ export class RuleTree implements Serializable {
    *
    * @internal
    */
-  public add(
-    rules: Iterable<Block>,
-    style: Option<StyleBlock> = None,
-  ): RuleTree.Node {
+  public add(rules: Iterable<Block>): RuleTree.Node {
     let parent = this._root;
 
     for (const block of Iterable.sortWith(rules, Block.compare)) {
