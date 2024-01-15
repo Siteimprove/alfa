@@ -61,6 +61,8 @@ export class Shadow extends Node<"shadow"> {
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    // We only "land" on Shadow roots when traversing the composed tree.
+    // Notably, flattening the tree "jumps" over them.
     if (options.isSet(Node.Traversal.composed)) {
       return this._host;
     }
