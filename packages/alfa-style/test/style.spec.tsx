@@ -199,7 +199,7 @@ test(`#cascaded() expands a var() function`, (t) => {
   });
 });
 
-test("#cascaded() prefer important var() declarations", (t) => {
+test("#cascaded() prefers important var() declarations", (t) => {
   const element = <div class="foo" id="foo" />;
 
   h.document(

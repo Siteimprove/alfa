@@ -15,22 +15,18 @@ import { Block } from "../src/block";
 import { Origin } from "../src/precedence";
 
 function fakeBlock(
-  selector: string,
+  selectorText: string,
   origin: Origin = Origin.NormalUserAgent,
 ): Block {
-  const sel = parse(selector) as Compound | Complex | Simple;
+  const selector = parse(selectorText) as Compound | Complex | Simple;
 
-  return Block.of({ rule: h.rule.style(selector, []), selector: sel }, [], {
+  return Block.of({ rule: h.rule.style(selectorText, []), selector }, [], {
     origin,
     isElementAttached: false,
-    specificity: sel.specificity,
+    specificity: selector.specificity,
     order: -1,
   });
 }
-
-// function fakeJSON(selector: string, origin?: Origin): Block.JSON {
-//   return fakeBlock(selector, origin).toJSON();
-// }
 
 // Selectors `div`, `.foo`, `#bar`, matching, e.g., `<div class="foo" id="bar">`
 // and inserted in increasing specificity.

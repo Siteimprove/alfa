@@ -34,13 +34,7 @@ export namespace Variable {
    * This builds a map from variable names to their lexed value
    * i.e. "--foo: lorem ipsum" becomes "foo => [lorem, ipsum]"
    **/
-  export function gather(
-    declarations: Array<Declaration>,
-    // shouldOverride: <T>(
-    //   previous: Option<Value<T>>,
-    //   next: Declaration,
-    // ) => boolean,
-  ): DefinitionMap {
+  export function gather(declarations: Array<Declaration>): DefinitionMap {
     let currentVariables: DefinitionMap = Map.empty();
 
     for (const declaration of declarations.filter((declaration) =>

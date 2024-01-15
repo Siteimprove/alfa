@@ -10,7 +10,7 @@ import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
  * Mixing both here allows for the comparison to be simple number comparison,
  * which should be faster than looking at more than one field.
  *
- * Cascading origins defined in ascending order; origins defined first have
+ * Cascading origins are defined in ascending order; origins defined first have
  * lower precedence than origins defined later. Thus, an origin with higher
  * value takes precedence over an origin with lower value. This means that
  * comparing origins is the same as comparing numbers.

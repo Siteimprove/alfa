@@ -256,7 +256,7 @@ export namespace Block {
 
   /**
    * Turns the style attribute of an element into blocks (one for important
-   * declaration, one for normal declarations).
+   * declarations, one for normal declarations).
    * @param element
    */
   export function fromStyle(element: Element): Iterable<Block> {
