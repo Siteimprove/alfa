@@ -301,20 +301,7 @@ export namespace Style {
       .get(device, Cache.empty)
       .get(element.freeze(), Cache.empty)
       .get(context, () => {
-        // First, get all declarations on the `style` attribute. They win
-        // cascade sort at priority 3, trumping everything but origin and
-        // (shadow tree) encapsulation
-        // * origin is de-facto handled by the fact that these are author
-        //   declarations, trumping non-important UA declaration at 1.6 vs 1.8.
-        //   important UA declarations will win back through shouldOverride.
-        //   important `style` attribute declarations incorrectly trump
-        //   important UA declarations.
-        //   {@link https://github.com/Siteimprove/alfa/issues/1532}
-        // * (shadow tree) context is not currently handled.
-        //   {@link https://github.com/Siteimprove/alfa/issues/1533}
-        const declarations: Array<Declaration> = element.style
-          .map((block) => [...block.declarations].reverse())
-          .getOr([]);
+        const declarations: Array<Declaration> = [];
 
         const root = element.root();
 
@@ -334,6 +321,15 @@ export namespace Style {
             .inclusiveAncestors()) {
             declarations.push(...[...node.block.declarations].reverse());
           }
+        } else {
+          // If the element is not part of a Document, this is likely
+          // a standalone code snippet. In that case, we still want
+          // to gather the `style` attribute.
+          declarations.push(
+            ...element.style
+              .map((block) => [...block.declarations].reverse())
+              .getOr([]),
+          );
         }
 
         return Style.of(
@@ -405,6 +401,7 @@ export function shouldOverride<T>(
       next.important &&
       previous.source.every((declaration) => !declaration.important),
   );
+  // return false;
 }
 
 function parseLonghand<N extends Longhands.Name>(
