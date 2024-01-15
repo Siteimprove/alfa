@@ -199,6 +199,30 @@ test(`#cascaded() expands a var() function`, (t) => {
   });
 });
 
+test("#cascaded() prefer important var() declarations", (t) => {
+  const element = <div class="foo" id="foo" />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", { overflowX: "var(--hidden)" }),
+        h.rule.style(".foo", { "--hidden": "hidden !important" }),
+        // Higher specificity, but not important
+        h.rule.style("#foo", { "--hidden": "visible" }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(cascaded(element, "overflow-x"), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
 test(`#cascaded() expands a var() function with a fallback`, (t) => {
   const element = <div />;
 
