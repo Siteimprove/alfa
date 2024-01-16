@@ -10,6 +10,7 @@
     "src/block.ts",
     "src/cascade.ts",
     "src/index.ts",
+    "src/precedence/encapsulation.ts",
     "src/precedence/index.ts",
     "src/precedence/order.ts",
     "src/precedence/origin.ts",

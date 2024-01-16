@@ -10,9 +10,11 @@ import {
 import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
 import { AncestorFilter } from "../src/ancestor-filter";
-import { SelectorMap } from "../src/selector-map";
 
 import { Block } from "../src/block";
+import { Origin } from "../src/precedence";
+import { Encapsulation } from "../src/precedence/encapsulation";
+import { SelectorMap } from "../src/selector-map";
 
 const device = Device.standard();
 
@@ -45,10 +47,11 @@ test(".from() builds a selector map with a single rule", (t) => {
               { important: false, name: "foo", value: "not parsed" },
             ],
             precedence: {
-              order: 1,
+              origin: Origin.NormalAuthor,
+              encapsulation: Encapsulation.NormalOuter,
               isElementAttached: false,
-              origin: 3,
               specificity: { a: 0, b: 0, c: 1 },
+              order: 1,
             },
             source: {
               rule: {
@@ -138,7 +141,8 @@ test(".from() split important and non-important declarations in two blocks", (t)
             source: { rule: rule.toJSON(), selector: selector.toJSON() },
             declarations: [{ name: "foo", value: "bar", important: false }],
             precedence: {
-              origin: 3,
+              origin: Origin.NormalAuthor,
+              encapsulation: Encapsulation.NormalOuter,
               isElementAttached: false,
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
@@ -148,7 +152,8 @@ test(".from() split important and non-important declarations in two blocks", (t)
             source: { rule: rule.toJSON(), selector: selector.toJSON() },
             declarations: [{ name: "hello", value: "world", important: true }],
             precedence: {
-              origin: 5,
+              origin: Origin.ImportantAuthor,
+              encapsulation: Encapsulation.ImportantOuter,
               isElementAttached: false,
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,

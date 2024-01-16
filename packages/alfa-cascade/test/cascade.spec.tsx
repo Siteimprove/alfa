@@ -5,6 +5,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Block } from "../src/block";
 import { Cascade } from "../src";
+import { Origin } from "../src/precedence";
+import { Encapsulation } from "../src/precedence/encapsulation";
 
 const device = Device.standard();
 
@@ -55,7 +57,8 @@ test(".get() returns the rule tree node of the given element", (t) => {
           },
           declarations: [{ name: "display", value: "block", important: false }],
           precedence: {
-            origin: 1,
+            origin: Origin.NormalUserAgent,
+            encapsulation: Encapsulation.NormalOuter,
             isElementAttached: false,
             specificity: { a: 0, b: 0, c: 1 },
             order: 7,

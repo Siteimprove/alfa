@@ -25,6 +25,7 @@ import {
 import * as json from "@siteimprove/alfa-json";
 
 import { Origin, Precedence } from "./precedence";
+import { Encapsulation } from "./precedence/encapsulation";
 import { UserAgent } from "./user-agent";
 
 /**
@@ -67,6 +68,7 @@ export class Block<S extends Element | Block.Source = Element | Block.Source>
     [],
     {
       origin: Origin.NormalUserAgent,
+      encapsulation: Encapsulation.NormalOuter,
       isElementAttached: false,
       specificity: Specificity.empty(),
       order: -Infinity,
@@ -245,6 +247,9 @@ export namespace Block {
           blocks.push(
             Block.of({ rule, selector }, declarations, {
               origin,
+              encapsulation: importance
+                ? Encapsulation.ImportantOuter
+                : Encapsulation.NormalOuter,
               isElementAttached: false,
               order,
               specificity: selector.specificity,
@@ -272,6 +277,9 @@ export namespace Block {
           ([importance, declarations]) =>
             Block.of(element, declarations, {
               origin: importance ? Origin.ImportantAuthor : Origin.NormalAuthor,
+              encapsulation: importance
+                ? Encapsulation.ImportantOuter
+                : Encapsulation.NormalOuter,
               isElementAttached: true,
               specificity: Specificity.empty(),
               // Since style attribute trumps style rules in the cascade sort,

@@ -13,6 +13,7 @@ import { RuleTree } from "../src";
 
 import { Block } from "../src/block";
 import { Origin } from "../src/precedence";
+import { Encapsulation } from "../src/precedence/encapsulation";
 
 function fakeBlock(
   selectorText: string,
@@ -22,6 +23,7 @@ function fakeBlock(
 
   return Block.of({ rule: h.rule.style(selectorText, []), selector }, [], {
     origin,
+    encapsulation: Encapsulation.NormalOuter,
     isElementAttached: false,
     specificity: selector.specificity,
     order: -1,
@@ -278,12 +280,14 @@ test(".add() prioritise style attribute over specificity", (t) => {
   const highSpecificityNormal = fakeBlock("#bar", Origin.NormalAuthor);
   const styleAttributeImportant = Block.of(h.element("div"), [], {
     origin: Origin.ImportantAuthor,
+    encapsulation: Encapsulation.NormalOuter,
     isElementAttached: true,
     specificity: Specificity.empty(),
     order: -1,
   });
   const styleAttributeNormal = Block.of(h.element("span"), [], {
     origin: Origin.NormalAuthor,
+    encapsulation: Encapsulation.NormalOuter,
     isElementAttached: true,
     specificity: Specificity.empty(),
     order: -1,
