@@ -76,7 +76,7 @@ export class SelectorMap implements Serializable {
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
-    other: Array<Block>,
+    other: Array<Block<Block.Source>>,
   ): SelectorMap {
     return new SelectorMap(ids, classes, types, other);
   }
@@ -84,13 +84,13 @@ export class SelectorMap implements Serializable {
   private readonly _ids: SelectorMap.Bucket;
   private readonly _classes: SelectorMap.Bucket;
   private readonly _types: SelectorMap.Bucket;
-  private readonly _other: Array<Block>;
+  private readonly _other: Array<Block<Block.Source>>;
 
   private constructor(
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
-    other: Array<Block>,
+    other: Array<Block<Block.Source>>,
   ) {
     this._ids = ids;
     this._classes = classes;
@@ -106,8 +106,10 @@ export class SelectorMap implements Serializable {
     element: Element,
     context: Context,
     filter: AncestorFilter,
-  ): Iterable<Block> {
-    function* collect(candidates: Iterable<Block>): Iterable<Block> {
+  ): Iterable<Block<Block.Source>> {
+    function* collect(
+      candidates: Iterable<Block<Block.Source>>,
+    ): Iterable<Block<Block.Source>> {
       for (const block of candidates) {
         // If the ancestor filter can reject the selector, escape
         if (
@@ -170,9 +172,9 @@ export namespace SelectorMap {
     const ids = Bucket.empty();
     const classes = Bucket.empty();
     const types = Bucket.empty();
-    const other: Array<Block> = [];
+    const other: Array<Block<Block.Source>> = [];
 
-    const add = (block: Block): void => {
+    const add = (block: Block<Block.Source>): void => {
       const keySelector = block.selector.key;
 
       if (!keySelector.isSome()) {
@@ -193,7 +195,7 @@ export namespace SelectorMap {
           return;
         }
 
-        let blocks: Array<Block> = [];
+        let blocks: Array<Block<Block.Source>> = [];
         [blocks, order] = Block.from(rule, order);
 
         for (const block of blocks) {
@@ -265,6 +267,10 @@ export namespace SelectorMap {
   }
 
   /**
+   * @remarks
+   * Selector maps only store selectors from rules, not style attribute.
+   * So, they always receive Blocks with a Source.
+   *
    * @internal
    */
   export class Bucket implements Serializable {
@@ -272,13 +278,13 @@ export namespace SelectorMap {
       return new Bucket(new Map());
     }
 
-    private readonly _nodes: Map<string, Array<Block>>;
+    private readonly _nodes: Map<string, Array<Block<Block.Source>>>;
 
-    private constructor(nodes: Map<string, Array<Block>>) {
+    private constructor(nodes: Map<string, Array<Block<Block.Source>>>) {
       this._nodes = nodes;
     }
 
-    public add(key: string, node: Block): void {
+    public add(key: string, node: Block<Block.Source>): void {
       const nodes = this._nodes.get(key);
 
       if (nodes === undefined) {
@@ -288,7 +294,7 @@ export namespace SelectorMap {
       }
     }
 
-    public get(key: string): Array<Block> {
+    public get(key: string): Array<Block<Block.Source>> {
       const nodes = this._nodes.get(key);
 
       if (nodes === undefined) {
@@ -310,6 +316,6 @@ export namespace SelectorMap {
    * @internal
    */
   export namespace Bucket {
-    export type JSON = Array<[string, Array<Block.JSON>]>;
+    export type JSON = Array<[string, Array<Block.JSON<Block.Source>>]>;
   }
 }

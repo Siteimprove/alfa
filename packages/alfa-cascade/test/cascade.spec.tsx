@@ -38,22 +38,25 @@ test(".get() returns the rule tree node of the given element", (t) => {
       {
         // UA rule
         block: {
-          rule: {
-            type: "style",
-            selector:
-              "address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp",
-            style: [{ name: "display", value: "block", important: false }],
-          },
-          selector: {
-            type: "type",
-            specificity: { a: 0, b: 0, c: 1 },
-            key: "div",
-            name: "div",
-            namespace: null,
+          source: {
+            rule: {
+              type: "style",
+              selector:
+                "address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp",
+              style: [{ name: "display", value: "block", important: false }],
+            },
+            selector: {
+              type: "type",
+              specificity: { a: 0, b: 0, c: 1 },
+              key: "div",
+              name: "div",
+              namespace: null,
+            },
           },
           declarations: [{ name: "display", value: "block", important: false }],
           precedence: {
             origin: 1,
+            isElementAttached: false,
             specificity: { a: 0, b: 0, c: 1 },
             order: 7,
           },

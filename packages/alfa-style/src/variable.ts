@@ -1,6 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Component, Keyword, Lexer } from "@siteimprove/alfa-css";
-import { Token } from "@siteimprove/alfa-css";
+import { Component, Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import type { Declaration } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
@@ -26,29 +25,23 @@ export namespace Variable {
 
   /**
    * Gather variables that are declared on the declarations.
+   *
+   * @remarks
    * The same variable may be declared several times, so we rely on
-   * declarations being pre-ordered by decreasing specificity and only take
+   * declarations being pre-ordered by decreasing precedence and only take
    * the first declaration.
    *
    * This builds a map from variable names to their lexed value
    * i.e. "--foo: lorem ipsum" becomes "foo => [lorem, ipsum]"
    **/
-  export function gather(
-    declarations: Array<Declaration>,
-    shouldOverride: <T>(
-      previous: Option<Value<T>>,
-      next: Declaration,
-    ) => boolean,
-  ): DefinitionMap {
+  export function gather(declarations: Array<Declaration>): DefinitionMap {
     let currentVariables: DefinitionMap = Map.empty();
 
     for (const declaration of declarations.filter((declaration) =>
       declaration.name.startsWith("--"),
     )) {
       const { name, value } = declaration;
-      const previous = currentVariables.get(name);
-
-      if (shouldOverride(previous, declaration)) {
+      if (currentVariables.get(name).isNone()) {
         currentVariables = currentVariables.set(
           name,
           Value.of(Lexer.lex(value), Option.of(declaration)),
