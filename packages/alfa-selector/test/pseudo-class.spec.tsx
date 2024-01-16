@@ -1,5 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 import { Context } from "../src";
+import type { Host } from "../src/selector/simple/pseudo-class/host";
 
 import { parse, serialize } from "./parser";
 
@@ -300,5 +301,36 @@ test("#matches() checks if an element matches a :visited selector", (t) => {
   // These elements aren't links
   for (const element of [<a />, <p />]) {
     t.equal(selector.matches(element), false, element.toString());
+  }
+});
+
+test("#matches() never matches a :host selector", (t) => {
+  for (const target of [<p />, <div class="foo" />]) {
+    for (const input of [
+      ":host",
+      ":host(p)",
+      ":host(.foo)",
+      ":host(div.foo)",
+    ]) {
+      const selector = parse(input);
+
+      t.equal(selector.matches(target), false);
+    }
+  }
+});
+
+test("Host#matchHost() matches when the element matches", (t) => {
+  const div = <div class="foo" />;
+
+  for (const input of [":host", ":host(.foo)", ":host(div.foo)"]) {
+    const selector = parse(input) as Host;
+
+    t.equal(selector.matchHost(div), true);
+  }
+
+  for (const input of [":host(span)", ":host(div.bar)"]) {
+    const selector = parse(input) as Host;
+
+    t.equal(selector.matchHost(div), false);
   }
 });
