@@ -39,5 +39,5 @@ export default Rule.Atomic.of<
 });
 
 function isOnlyPunctuation(text: Text): boolean {
-  return text.data.replace(/\p{P}|\p{S}|\p{Cf}/gu, "").length === 0;
+  return /^[\p{P}\p{S}\p{Cf}]+$/gu.test(text.data);
 }
