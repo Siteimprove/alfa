@@ -1,7 +1,9 @@
+import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Block } from "./block";
 
@@ -181,6 +183,10 @@ export namespace RuleTree {
      * Adds style rule to a node in the tree. Returns the node where the rule
      * was added.
      *
+     * @remarks
+     * Blocks with no selector, aka coming from a style attribute, will always be
+     * added as new nodes.
+     *
      * @privateRemarks
      * This is stateful. Adding a rule to a node mutates the node!
      *
@@ -195,7 +201,11 @@ export namespace RuleTree {
       // completely been shared).
       // Notably, because it is the exact same selector, it controls the exact
       // same rules, so all the information is already in the tree.
-      if (this._block.selector === block.selector) {
+      if (
+        // We cannot simply test === between the .selector because we do not
+        // want to identify two null.
+        (this._block.selector ?? 0) === (block.selector ?? 1)
+      ) {
         return this;
       }
 
@@ -205,7 +215,12 @@ export namespace RuleTree {
       // then sorted by order of appearance (by assumption) and the later must
       // be a descendant of the former as it has higher precedence.
       for (const child of this._children) {
-        if (child._block.selector.equals(block.selector)) {
+        if (
+          // We cannot simply test .equals between the .selector because we do not
+          // want to identify two None.
+          child._block.selector !== null &&
+          child._block.selector.equals(block.selector)
+        ) {
           return child.add(block);
         }
       }

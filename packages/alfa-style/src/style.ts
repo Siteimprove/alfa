@@ -20,10 +20,10 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as element from "./element/element";
-import * as node from "./node/node";
 
 import { Longhand } from "./longhand";
 import { Longhands } from "./longhands";
+import * as node from "./node/node";
 import { Shorthand } from "./shorthand";
 import { Shorthands } from "./shorthands";
 
@@ -36,6 +36,13 @@ type Name = Longhands.Name;
  * @public
  */
 export class Style implements Serializable<Style.JSON> {
+  /**
+   * Build a style from a list of declarations.
+   *
+   * @remarks
+   * Declarations must be in pre-sorted in decreasing Cascade order.
+   * Prefer using Style.from(), which has fewer assumptions.
+   */
   public static of(
     styleDeclarations: Iterable<Declaration>,
     device: Device,
@@ -49,7 +56,8 @@ export class Style implements Serializable<Style.JSON> {
     /**
      * First pass, substitute all variable by their definition
      */
-    const declaredVariables = Variable.gather(declarations, shouldOverride);
+    // First step: gather all variable declarations.
+    const declaredVariables = Variable.gather(declarations);
 
     // Second step: since CSS variables are always inherited, and inheritance
     // takes precedence over fallback, we can merge the current variables with
@@ -68,6 +76,10 @@ export class Style implements Serializable<Style.JSON> {
     /**
      * Second pass: Resolve cascading properties using the cascading variables
      * from the first pass.
+     *
+     * Since declarations have been sorted in decreasing cascade order by the
+     * cascade, the first value we encounter for each property is the correct
+     * one for the cascaded value.
      */
     let properties = Map.empty<Name, Value>();
 
@@ -75,9 +87,7 @@ export class Style implements Serializable<Style.JSON> {
       const { name, value } = declaration;
 
       if (Longhands.isName(name)) {
-        const previous = properties.get(name);
-
-        if (shouldOverride(previous, declaration)) {
+        if (properties.get(name).isNone()) {
           for (const result of parseLonghand(
             Longhands.get(name),
             value,
@@ -96,9 +106,7 @@ export class Style implements Serializable<Style.JSON> {
           variables,
         )) {
           for (const [name, value] of result) {
-            const previous = properties.get(name);
-
-            if (shouldOverride(previous, declaration)) {
+            if (properties.get(name).isNone()) {
               properties = properties.set(
                 name,
                 Value.of(value, Option.of(declaration)),
@@ -301,20 +309,7 @@ export namespace Style {
       .get(device, Cache.empty)
       .get(element.freeze(), Cache.empty)
       .get(context, () => {
-        // First, get all declarations on the `style` attribute. They win
-        // cascade sort at priority 3, trumping everything but origin and
-        // (shadow tree) context
-        // * origin is de-facto handled by the fact that these are author
-        //   declarations, trumping non-important UA declaration at 1.6 vs 1.8.
-        //   important UA declarations will win back through shouldOverride.
-        //   important `style` attribute declarations incorrectly trump
-        //   important UA declarations.
-        //   {@link https://github.com/Siteimprove/alfa/issues/1532}
-        // * (shadow tree) context is not currently handled.
-        //   {@link https://github.com/Siteimprove/alfa/issues/1533}
-        const declarations: Array<Declaration> = element.style
-          .map((block) => [...block.declarations].reverse())
-          .getOr([]);
+        const declarations: Array<Declaration> = [];
 
         const root = element.root();
 
@@ -334,6 +329,15 @@ export namespace Style {
             .inclusiveAncestors()) {
             declarations.push(...[...node.block.declarations].reverse());
           }
+        } else {
+          // If the element is not part of a Document, this is likely
+          // a standalone code snippet. In that case, we still want
+          // to gather the `style` attribute.
+          declarations.push(
+            ...element.style
+              .map((block) => [...block.declarations].reverse())
+              .getOr([]),
+          );
         }
 
         return Style.of(
@@ -380,31 +384,6 @@ export namespace Style {
   } = element;
 
   export const { isRendered, isVisible } = node;
-}
-
-/**
- * The "next" declaration should override the previous if:
- * - either there is no previous; or
- * - next is important and previous isn't.
- * This supposes that the declarations have been pre--ordered in otherwise
- * decreasing precedence.
- *
- * @privateRemarks
- * This is not correct since importance of declaration reverses precedence of UA
- * and author origins.
- * {@link https://github.com/Siteimprove/alfa/issues/1532}
- *
- * @internal
- */
-export function shouldOverride<T>(
-  previous: Option<Value<T>>,
-  next: Declaration,
-): boolean {
-  return previous.every(
-    (previous) =>
-      next.important &&
-      previous.source.every((declaration) => !declaration.important),
-  );
 }
 
 function parseLonghand<N extends Longhands.Name>(

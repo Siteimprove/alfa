@@ -471,7 +471,11 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
  */
 const mediaRulesCache = Cache.empty<CSSRule, Sequence<MediaRule>>();
 
-function ancestorMediaRules(rule: CSSRule): Sequence<MediaRule> {
+function ancestorMediaRules(rule: CSSRule | null): Sequence<MediaRule> {
+  if (rule === null) {
+    return Sequence.empty();
+  }
+
   return mediaRulesCache.get(rule, () => {
     const mediaRules = rule.parent
       .map((parent) => ancestorMediaRules(parent))
