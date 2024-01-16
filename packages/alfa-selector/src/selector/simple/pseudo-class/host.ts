@@ -108,6 +108,10 @@ export namespace Host {
     selector?: Compound.JSON | Simple.JSON;
   }
 
+  export function isHost(value: unknown): value is Host {
+    return value instanceof Host;
+  }
+
   export const parse = (parseSelector: Thunk<CSSParser<Compound | Simple>>) =>
     either(
       // We need to try the functional variant first to avoid the non-functional

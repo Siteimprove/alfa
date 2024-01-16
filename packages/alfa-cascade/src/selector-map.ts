@@ -15,7 +15,12 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Combinator, Complex, Context } from "@siteimprove/alfa-selector";
+import {
+  Combinator,
+  Complex,
+  Context,
+  Selector,
+} from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -56,14 +61,19 @@ const isDescendantSelector = and(
  * computation heavy steps of traversing the DOM to look for siblings or ancestors.
  *
  * @privateRemarks
- * Internally, the selector map has three maps and a list in one of which it
- * will store a given selector. The three maps are used for selectors for which
- * a key selector exist; one for ID selectors, one for class selectors, and one
- * for type selectors. The list is used for any remaining selectors (e.g.,
- * pseudo-classes and -elements selectors have no key selector). When looking
- * up the rules that match an element, the ID, class names, and type of the
- * element are used for looking up potentially matching selectors in the three
- * maps. Selector matching is then performed against this list of potentially
+ * Internally, the selector map has three maps and two lists in one of which it
+ * will store a given selector.
+ * * The three maps are used for selectors for which a key selector exist;
+ *   one for ID selectors, one for class selectors, and one for type selectors.
+ * * The first list is used for any remaining selectors (e.g., pseudo-classes
+ *   and -elements selectors have no key selector).
+ * * The second list is used for the special shadow selectors that can select
+ *   into the light tree. These should never be matched against elements of the
+ *   same tree, but against the host tree.
+ *
+ * When looking up the rules that match an element, the ID, class names, and type
+ * of the element are used for looking up potentially matching selectors in the
+ * three maps. Selector matching is then performed against this list of potentially
  * matching selectors, plus the list of remaining selectors, in order to
  * determine the final set of matches.
  *
@@ -77,25 +87,29 @@ export class SelectorMap implements Serializable {
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
     other: Array<Block<Block.Source>>,
+    shadow: Array<Block<Block.Source>>,
   ): SelectorMap {
-    return new SelectorMap(ids, classes, types, other);
+    return new SelectorMap(ids, classes, types, other, shadow);
   }
 
   private readonly _ids: SelectorMap.Bucket;
   private readonly _classes: SelectorMap.Bucket;
   private readonly _types: SelectorMap.Bucket;
   private readonly _other: Array<Block<Block.Source>>;
+  private readonly _shadow: Array<Block<Block.Source>>;
 
   private constructor(
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
     other: Array<Block<Block.Source>>,
+    shadow: Array<Block<Block.Source>>,
   ) {
     this._ids = ids;
     this._classes = classes;
     this._types = types;
     this._other = other;
+    this._shadow = shadow;
   }
 
   /**
@@ -145,6 +159,7 @@ export class SelectorMap implements Serializable {
       classes: this._classes.toJSON(),
       types: this._types.toJSON(),
       other: this._other.map((node) => node.toJSON()),
+      shadow: this._shadow.map((node) => node.toJSON()),
     };
   }
 }
@@ -159,6 +174,7 @@ export namespace SelectorMap {
     classes: Bucket.JSON;
     types: Bucket.JSON;
     other: Array<Block.JSON>;
+    shadow: Array<Block.JSON>;
   }
 
   export function from(sheets: Iterable<Sheet>, device: Device): SelectorMap {
@@ -173,12 +189,17 @@ export namespace SelectorMap {
     const classes = Bucket.empty();
     const types = Bucket.empty();
     const other: Array<Block<Block.Source>> = [];
+    const shadow: Array<Block<Block.Source>> = [];
 
     const add = (block: Block<Block.Source>): void => {
       const keySelector = block.selector.key;
 
       if (!keySelector.isSome()) {
-        other.push(block);
+        if (Selector.isShadow(block.selector)) {
+          shadow.push(block);
+        } else {
+          other.push(block);
+        }
       } else {
         const key = keySelector.get();
         const buckets = { id: ids, class: classes, type: types };
@@ -263,7 +284,7 @@ export namespace SelectorMap {
       }
     }
 
-    return SelectorMap.of(ids, classes, types, other);
+    return SelectorMap.of(ids, classes, types, other, shadow);
   }
 
   /**

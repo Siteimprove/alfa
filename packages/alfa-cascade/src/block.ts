@@ -2,7 +2,6 @@ import { Array } from "@siteimprove/alfa-array";
 import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Lexer } from "@siteimprove/alfa-css";
 import {
-  type Block as StyleBlock,
   Declaration,
   Element,
   h,
@@ -244,12 +243,18 @@ export namespace Block {
             : Origin.NormalAuthor;
 
         for (const selector of selectors) {
+          const encapsulation = Selector.isShadow(selector)
+            ? importance
+              ? Encapsulation.ImportantInner
+              : Encapsulation.NormalInner
+            : importance
+              ? Encapsulation.ImportantOuter
+              : Encapsulation.NormalOuter;
+
           blocks.push(
             Block.of({ rule, selector }, declarations, {
               origin,
-              encapsulation: importance
-                ? Encapsulation.ImportantOuter
-                : Encapsulation.NormalOuter,
+              encapsulation,
               isElementAttached: false,
               order,
               specificity: selector.specificity,
@@ -258,13 +263,13 @@ export namespace Block {
         }
       }
     }
+
     return [blocks, order];
   }
 
   /**
    * Turns the style attribute of an element into blocks (one for important
    * declarations, one for normal declarations).
-   * @param element
    */
   export function fromStyle(element: Element): Iterable<Block> {
     return element.style

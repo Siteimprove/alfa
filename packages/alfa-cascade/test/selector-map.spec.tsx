@@ -26,9 +26,9 @@ function ruleToBlockJSON(
 }
 
 /**
- * This initial test should have the full explicit JSON rather than rely on ruleToBlockJSON
- * in order to circumvent possible issues in Block.from.
- */
+//  * This initial test should have the full explicit JSON rather than rely on ruleToBlockJSON
+//  * in order to circumvent possible issues in Block.from.
+//  */
 test(".from() builds a selector map with a single rule", (t) => {
   const actual = SelectorMap.from(
     [h.sheet([h.rule.style("div", { foo: "not parsed" })])],
@@ -72,6 +72,7 @@ test(".from() builds a selector map with a single rule", (t) => {
       ],
     ],
     other: [],
+    shadow: [],
   });
 });
 
@@ -81,7 +82,13 @@ test(".from() rejects rules with invalid selectors", (t) => {
     device,
   );
 
-  t.deepEqual(actual.toJSON(), { ids: [], classes: [], types: [], other: [] });
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [],
+    other: [],
+    shadow: [],
+  });
 });
 
 test(".from() stores rules in increasing order, amongst all non-disabled sheets", (t) => {
@@ -91,7 +98,8 @@ test(".from() stores rules in increasing order, amongst all non-disabled sheets"
     h.rule.style(".bar", { foo: "bar" }),
     h.rule.style(".foo", { foo: "bar" }),
     h.rule.style("#hello", { foo: "bar" }),
-    h.rule.style("::focus", { foo: "bar" }),
+    h.rule.style(":focus", { foo: "bar" }),
+    h.rule.style(":host", { foo: "bar" }),
   ];
 
   const actual = SelectorMap.from(
@@ -100,7 +108,7 @@ test(".from() stores rules in increasing order, amongst all non-disabled sheets"
       h.sheet([rules[2]]),
       h.sheet([h.rule.style("div", { foo: "bar" })], true),
       h.sheet([rules[3], rules[4]]),
-      h.sheet([rules[5]]),
+      h.sheet([rules[5], rules[6]]),
     ],
     device,
   );
@@ -120,6 +128,7 @@ test(".from() stores rules in increasing order, amongst all non-disabled sheets"
       ["bar", blocks[1]],
     ],
     other: blocks[5],
+    shadow: blocks[6],
   });
 });
 
@@ -163,6 +172,7 @@ test(".from() split important and non-important declarations in two blocks", (t)
       ],
     ],
     other: [],
+    shadow: [],
   });
 });
 
@@ -181,6 +191,7 @@ test(".from() only recurses into media rules that match the device", (t) => {
     classes: [],
     types: [["foo", ruleToBlockJSON(rule, 0)]],
     other: [],
+    shadow: [],
   });
 });
 
@@ -205,6 +216,7 @@ test(".from() only recurses into import rules that match the device", (t) => {
     classes: [],
     types: [["foo", ruleToBlockJSON(rule, 0)]],
     other: [],
+    shadow: [],
   });
 });
 
@@ -231,6 +243,7 @@ test(".from() only recurses into supports rules that match the device", (t) => {
     classes: [],
     types: [["foo", ruleToBlockJSON(rule, 0)]],
     other: [],
+    shadow: [],
   });
 });
 
