@@ -1,15 +1,84 @@
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "@siteimprove/alfa-css";
+import type { Element } from "@siteimprove/alfa-dom";
+import { Option } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
+import type { Thunk } from "@siteimprove/alfa-thunk";
+
+import { Context } from "../../../context";
+import { Specificity } from "../../../specificity";
+
+import type { Compound, Simple } from "../../index";
+
 import { PseudoClassSelector } from "./pseudo-class";
+
+const { either, map, right } = Parser;
+const { parseColon } = Token;
 
 /**
  * {@link https://drafts.csswg.org/css-scoping-1/#selectordef-host}
+ *
+ * @privateRemarks
+ * Since WithSelector has a mandatory selector, it is not convenient
+ * to use it to group both the functional and non-functional variants.
+ *
+ * In CSS lingo, `:host` only accepts a compound selector, but simple
+ * selectors are also compounds. Alfa does make a type difference between
+ * a Simple selector and a compound selector with only a single Simple
+ * selector. Hence, this also accepts Simple selector.
+ *
+ * @public
  */
 export class Host extends PseudoClassSelector<"host"> {
-  public static of(): Host {
-    return new Host();
+  public static of(selector?: Compound | Simple): Host {
+    return new Host(Option.from(selector));
   }
 
-  private constructor() {
-    super("host");
+  private readonly _selector: Option<Compound | Simple>;
+
+  private constructor(selector: Option<Compound | Simple>) {
+    super(
+      "host",
+      Specificity.sum(
+        selector
+          .map((selector) => selector.specificity)
+          .getOr(Specificity.empty()),
+        Specificity.of(0, 1, 0),
+      ),
+    );
+
+    this._selector = selector;
+  }
+
+  public get selector(): Option<Compound | Simple> {
+    return this._selector;
+  }
+
+  /**
+   * @remarks
+   * `:host` never matches anything in its own tree.
+   */
+  public matches(): boolean {
+    return false;
+  }
+
+  public matchHost(
+    /**
+     * Checks whether a shadow host matches.
+     *
+     * @remarks
+     * This must be called with `element` being the shadow host of
+     * the Document that defines the selector.
+     */
+    element: Element,
+    context: Context = Context.empty(),
+  ): boolean {
+    return this._selector.every((selector) =>
+      selector.matches(element, context),
+    );
   }
 
   /** @public (knip) */
@@ -17,13 +86,36 @@ export class Host extends PseudoClassSelector<"host"> {
     yield this;
   }
 
+  public equals(value: unknown): value is this {
+    return value instanceof Host && value._selector.equals(this._selector);
+  }
+
   public toJSON(): Host.JSON {
-    return super.toJSON();
+    return {
+      ...super.toJSON(),
+      ...(this._selector.isSome()
+        ? { selector: this._selector.get().toJSON() }
+        : {}),
+    };
   }
 }
 
+/**
+ * @public
+ */
 export namespace Host {
-  export interface JSON extends PseudoClassSelector.JSON<"host"> {}
+  export interface JSON extends PseudoClassSelector.JSON<"host"> {
+    selector?: Compound.JSON | Simple.JSON;
+  }
 
-  export const parse = PseudoClassSelector.parseNonFunctional("host", Host.of);
+  export const parse = (parseSelector: Thunk<CSSParser<Compound | Simple>>) =>
+    either(
+      // We need to try the functional variant first to avoid the non-functional
+      // greedily passing.
+      map(
+        right(parseColon, Function.parse("host", parseSelector)),
+        ([, selector]) => Host.of(selector),
+      ),
+      PseudoClassSelector.parseNonFunctional("host", Host.of),
+    );
 }

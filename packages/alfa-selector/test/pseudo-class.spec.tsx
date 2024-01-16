@@ -11,11 +11,26 @@ test(".parse() parses a named pseudo-class selector", (t) => {
   });
 });
 
-test(".parse() parses :host pseudo-class selector", (t) => {
+test(".parse() parses :host non-functional pseudo-class selector", (t) => {
   t.deepEqual(serialize(":host"), {
     type: "pseudo-class",
     name: "host",
     specificity: { a: 0, b: 1, c: 0 },
+  });
+});
+
+test(".parse() parses :host functional pseudo-class selector", (t) => {
+  t.deepEqual(serialize(":host(div)"), {
+    type: "pseudo-class",
+    name: "host",
+    selector: {
+      type: "type",
+      name: "div",
+      namespace: null,
+      specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
+    },
+    specificity: { a: 0, b: 1, c: 1 },
   });
 });
 

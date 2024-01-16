@@ -63,7 +63,12 @@ export namespace PseudoClassSelector {
     name: string,
     of: Thunk<T>,
   ): CSSParser<T> {
-    return map(right(parseColon, Token.parseIdent(name)), of);
+    return map(
+      right(parseColon, parseIdent(name)),
+      // We explicitly need to discard the parsed identifier and not pass it
+      // to a function that may use it (but was super-typed as a Thunk).
+      () => of(),
+    );
   }
 }
 
