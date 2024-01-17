@@ -19,6 +19,7 @@ import {
   Combinator,
   Complex,
   Context,
+  PseudoClass,
   Selector,
 } from "@siteimprove/alfa-selector";
 
@@ -151,6 +152,17 @@ export class SelectorMap implements Serializable {
     }
 
     yield* collect(this._other);
+  }
+
+  public *getForHost(
+    host: Element,
+    context: Context,
+  ): Iterable<Block<Block.Source>> {
+    yield* this._shadow.filter(
+      (block) =>
+        PseudoClass.isHost(block.selector) &&
+        block.selector.matchHost(host, context),
+    );
   }
 
   public toJSON(): SelectorMap.JSON {

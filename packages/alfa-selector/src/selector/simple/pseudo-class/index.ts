@@ -109,6 +109,8 @@ export namespace PseudoClass {
     return value instanceof PseudoClassSelector;
   }
 
+  export const { isHost } = Host;
+
   export function parse(
     parseSelector: Thunk<CSSParser<Absolute>>,
   ): CSSParser<PseudoClass> {

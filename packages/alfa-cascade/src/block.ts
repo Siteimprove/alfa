@@ -243,6 +243,11 @@ export namespace Block {
             : Origin.NormalAuthor;
 
         for (const selector of selectors) {
+          // While we don't really know where the rules will be used, and they all look
+          // "outer" from this point of view, we also know that the shadow rules cannot
+          // match within the current tree, and can only match an encapsulating light tree.
+          // Therefore, for anything that will actually match a shadow selector, the selector
+          // appears as encapsulated.
           const encapsulation = Selector.isShadow(selector)
             ? importance
               ? Encapsulation.ImportantInner

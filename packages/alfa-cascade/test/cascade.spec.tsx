@@ -26,6 +26,63 @@ test(".from() builds a cascade with the User Agent style sheet", (t) => {
 test(".get() returns the rule tree node of the given element", (t) => {
   const div = <div>Hello</div>;
   const rule = h.rule.style("div", { color: "red" });
+  const document = h.document(
+    [div],
+    [h.sheet([rule, h.rule.style("span", { color: "blue" })])],
+  );
+  const cascade = Cascade.from(document, device);
+
+  // The rule tree has 3 items on the way to the <div>:
+  // The fake root, the UA rule `div { display: block }`, and the document rule
+  // `div { color: red }`
+  // We thus just grab and check the path down from the fake root.
+  t.deepEqual(Iterable.toJSON(cascade.get(div).inclusiveAncestors())[2], {
+    // fake root
+    block: Block.empty().toJSON(),
+    children: [
+      {
+        // UA rule
+        block: {
+          source: {
+            rule: {
+              type: "style",
+              selector:
+                "address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp",
+              style: [{ name: "display", value: "block", important: false }],
+            },
+            selector: {
+              type: "type",
+              specificity: { a: 0, b: 0, c: 1 },
+              key: "div",
+              name: "div",
+              namespace: null,
+            },
+          },
+          declarations: [{ name: "display", value: "block", important: false }],
+          precedence: {
+            origin: Origin.NormalUserAgent,
+            encapsulation: Encapsulation.NormalOuter,
+            isElementAttached: false,
+            specificity: { a: 0, b: 0, c: 1 },
+            order: 7,
+          },
+        },
+        children: [
+          {
+            // Actual rule
+            // There are 58 rules in the UA sheet.
+            block: Block.from(rule, 58)[0][0].toJSON(),
+            children: [],
+          },
+        ],
+      },
+    ],
+  });
+});
+
+test(".get() fetches `:host` rules from shadow, when relevant.", (t) => {
+  const div = <div>Hello</div>;
+  const rule = h.rule.style("div", { color: "red" });
   const document = h.document([div], [h.sheet([rule])]);
   const cascade = Cascade.from(document, device);
 

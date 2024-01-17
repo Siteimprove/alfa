@@ -73,16 +73,27 @@ export class Cascade implements Serializable {
     const visit = (node: Node): void => {
       if (Element.isElement(node)) {
         // Entering an element: add it to the rule tree, and to the ancestor filter.
-        this._entries
-          .get(node, Cache.empty)
-          .get(context, () =>
-            this._rules.add(
-              Iterable.concat(
-                this._selectors.get(node, context, filter),
-                Block.fromStyle(node),
-              ),
+        this._entries.get(node, Cache.empty).get(context, () =>
+          this._rules.add(
+            Iterable.concat(
+              // Blocks defined in style sheet of the current tree, that match `node`
+              this._selectors.get(node, context, filter),
+              // Blocks defined in the `style` attribute of `node`.
+              Block.fromStyle(node),
+              // Blocks defined in a shadow tree hosted at `node`, and that apply to it.
+              node.shadow
+                .map((shadow) =>
+                  // Since selectors can pierce shadow upwards but not downwards, we
+                  // only recurse downwards and this is safe.
+                  Cascade.from(shadow, device)._selectors.getForHost(
+                    node,
+                    context,
+                  ),
+                )
+                .getOr([]),
             ),
-          );
+          ),
+        );
         filter.add(node);
       }
 
