@@ -1,6 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Text } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -11,8 +10,6 @@ import { nonDisabledTexts } from "../common/applicability/non-disabled-texts";
 import { hasSufficientContrast } from "../common/expectation/contrast";
 
 import { Scope, Stability, Version } from "../tags";
-
-const { not } = Predicate;
 
 export default Rule.Atomic.of<
   Page,
@@ -26,9 +23,7 @@ export default Rule.Atomic.of<
   evaluate({ device, document }) {
     return {
       applicability() {
-        return nonDisabledTexts(document, device).filter(
-          not(isOnlyPunctuation),
-        );
+        return nonDisabledTexts(document, device).reject(isOnlyPunctuation);
       },
 
       expectations(target) {

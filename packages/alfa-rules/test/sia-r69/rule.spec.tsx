@@ -401,8 +401,8 @@ test("evaluate() is inapplicable to text that would otherwise pass if it was not
   const document = h.document([
     <html
       style={{
-        backgroundImage: "url('foo.png')",
-        color: "#000",
+        backgroundColor: "black",
+        color: "white",
       }}
     >
       {target}
@@ -418,7 +418,8 @@ test("evaluate() is inapplicable to text that would otherwise fail if it was not
   const document = h.document([
     <html
       style={{
-        backgroundImage: "url('foo.png')",
+        backgroundImage: "linear-gradient(#000 50%, transparent 50%)",
+        backgroundColor: "#000",
         color: "#000",
       }}
     >
