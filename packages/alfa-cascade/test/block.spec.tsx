@@ -198,20 +198,18 @@ test(".fromStyle() creates blocks for a style attribute", (t) => {
         origin: Origin.NormalAuthor,
         encapsulation: Encapsulation.NormalOuter,
         isElementAttached: true,
-        specificity: { a: 0, b: 1, c: 0 },
+        specificity: { a: 0, b: 0, c: 0 },
         order: -1,
       },
     },
     {
       source: element.toJSON(),
-      declarations: [
-        h.declaration("display", "block !important", true).toJSON(),
-      ],
+      declarations: [h.declaration("display", "block", true).toJSON()],
       precedence: {
         origin: Origin.ImportantAuthor,
         encapsulation: Encapsulation.ImportantOuter,
         isElementAttached: true,
-        specificity: { a: 0, b: 1, c: 0 },
+        specificity: { a: 0, b: 0, c: 0 },
         order: -1,
       },
     },
