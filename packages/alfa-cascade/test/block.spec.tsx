@@ -186,3 +186,34 @@ test(".from() marks shadow selectors as encapsulated", (t) => {
     1,
   ]);
 });
+
+test(".fromStyle() creates blocks for a style attribute", (t) => {
+  const element = <div style={{ color: "red", display: "block !important" }} />;
+
+  t.deepEqual(Array.toJSON([...Block.fromStyle(element)]), [
+    {
+      source: element.toJSON(),
+      declarations: [h.declaration("color", "red").toJSON()],
+      precedence: {
+        origin: Origin.NormalAuthor,
+        encapsulation: Encapsulation.NormalOuter,
+        isElementAttached: true,
+        specificity: { a: 0, b: 1, c: 0 },
+        order: -1,
+      },
+    },
+    {
+      source: element.toJSON(),
+      declarations: [
+        h.declaration("display", "block !important", true).toJSON(),
+      ],
+      precedence: {
+        origin: Origin.ImportantAuthor,
+        encapsulation: Encapsulation.ImportantOuter,
+        isElementAttached: true,
+        specificity: { a: 0, b: 1, c: 0 },
+        order: -1,
+      },
+    },
+  ]);
+});

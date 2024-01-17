@@ -19,7 +19,7 @@
     "src/selector-map.ts",
     "src/user-agent.ts",
     "test/ancestor-filter.spec.tsx",
-    "test/block.spec.ts",
+    "test/block.spec.tsx",
     "test/cascade.spec.tsx",
     "test/rule-tree.spec.ts",
     "test/selector-map.spec.tsx"
