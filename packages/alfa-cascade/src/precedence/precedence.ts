@@ -14,7 +14,12 @@ import { Origin } from "./origin";
  * @public
  */
 export interface Precedence {
+  // Origin also contains importance for faster comparison.
   origin: Origin;
+  // TODO: encapsulation context
+  // Do the declarations come from a style attribute?
+  isElementAttached: boolean;
+  // TODO: layers
   specificity: Specificity;
   order: Order;
 }
@@ -28,6 +33,7 @@ export namespace Precedence {
   export interface JSON {
     [key: string]: json.JSON;
     origin: Origin.JSON;
+    isElementAttached: boolean;
     specificity: Specificity.JSON;
     order: Order.JSON;
   }
@@ -35,14 +41,30 @@ export namespace Precedence {
   export function toJSON(precedence: Precedence): JSON {
     return {
       origin: precedence.origin,
+      isElementAttached: precedence.isElementAttached,
       specificity: precedence.specificity.toJSON(),
       order: precedence.order,
     };
   }
+
+  export function toTuple(
+    precedence: Precedence,
+  ): [Origin, boolean, Specificity, Order] {
+    return [
+      precedence.origin,
+      precedence.isElementAttached,
+      precedence.specificity,
+      precedence.order,
+    ];
+  }
   export const compare: Comparer<Precedence> = (a, b) =>
-    Comparable.compareLexicographically<[Origin, Specificity, Order]>(
-      [a.origin, a.specificity, a.order],
-      [b.origin, b.specificity, b.order],
-      [Origin.compare, Specificity.compare, Order.compare],
-    );
+    Comparable.compareLexicographically(toTuple(a), toTuple(b), [
+      Origin.compare,
+      // In JS, true > false. This matches the behaviour of declarations from
+      // a style attribute (isElementAttached = true) taking precedence over
+      // declarations from a style rule.
+      Comparable.compareBoolean,
+      Specificity.compare,
+      Order.compare,
+    ]);
 }

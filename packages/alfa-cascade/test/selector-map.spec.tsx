@@ -1,7 +1,13 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { h, StyleRule } from "@siteimprove/alfa-dom";
-import { Context } from "@siteimprove/alfa-selector";
+import {
+  Complex,
+  Compound,
+  Context,
+  type Simple,
+} from "@siteimprove/alfa-selector";
+import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
 import { AncestorFilter } from "../src/ancestor-filter";
 import { SelectorMap } from "../src/selector-map";
@@ -10,7 +16,10 @@ import { Block } from "../src/block";
 
 const device = Device.standard();
 
-function ruleToBlockJSON(rule: StyleRule, order: number): Array<Block.JSON> {
+function ruleToBlockJSON(
+  rule: StyleRule,
+  order: number,
+): Array<Block.JSON<Block.Source>> {
   return Array.toJSON(Block.from(rule, order)[0]);
 }
 
@@ -37,20 +46,23 @@ test(".from() builds a selector map with a single rule", (t) => {
             ],
             precedence: {
               order: 1,
-              origin: 2,
+              isElementAttached: false,
+              origin: 3,
               specificity: { a: 0, b: 0, c: 1 },
             },
-            rule: {
-              selector: "div",
-              style: [{ important: false, name: "foo", value: "not parsed" }],
-              type: "style",
-            },
-            selector: {
-              key: "div",
-              name: "div",
-              namespace: null,
-              specificity: { a: 0, b: 0, c: 1 },
-              type: "type",
+            source: {
+              rule: {
+                selector: "div",
+                style: [{ important: false, name: "foo", value: "not parsed" }],
+                type: "style",
+              },
+              selector: {
+                key: "div",
+                name: "div",
+                namespace: null,
+                specificity: { a: 0, b: 0, c: 1 },
+                type: "type",
+              },
             },
           },
         ],
@@ -105,6 +117,47 @@ test(".from() stores rules in increasing order, amongst all non-disabled sheets"
       ["bar", blocks[1]],
     ],
     other: blocks[5],
+  });
+});
+
+test(".from() split important and non-important declarations in two blocks", (t) => {
+  const rule = h.rule.style("div", { foo: "bar", hello: "world !important" });
+  const selector = parse("div") as Compound | Complex | Simple;
+  const actual = SelectorMap.from([h.sheet([rule])], device);
+
+  // Each of the split blocks contain the full rule (with both declarations), but only one
+  // of the declarations.
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [
+      [
+        "div",
+        [
+          {
+            source: { rule: rule.toJSON(), selector: selector.toJSON() },
+            declarations: [{ name: "foo", value: "bar", important: false }],
+            precedence: {
+              origin: 3,
+              isElementAttached: false,
+              specificity: { a: 0, b: 0, c: 1 },
+              order: 1,
+            },
+          },
+          {
+            source: { rule: rule.toJSON(), selector: selector.toJSON() },
+            declarations: [{ name: "hello", value: "world", important: true }],
+            precedence: {
+              origin: 5,
+              isElementAttached: false,
+              specificity: { a: 0, b: 0, c: 1 },
+              order: 1,
+            },
+          },
+        ],
+      ],
+    ],
+    other: [],
   });
 });
 

@@ -1,12 +1,14 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Context } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
+import { Block } from "./block";
 import { RuleTree } from "./rule-tree";
 import { SelectorMap } from "./selector-map";
 import { UserAgent } from "./user-agent";
@@ -74,7 +76,12 @@ export class Cascade implements Serializable {
         this._entries
           .get(node, Cache.empty)
           .get(context, () =>
-            this._rules.add(this._selectors.get(node, context, filter)),
+            this._rules.add(
+              Iterable.concat(
+                this._selectors.get(node, context, filter),
+                Block.fromStyle(node),
+              ),
+            ),
           );
         filter.add(node);
       }
@@ -114,7 +121,12 @@ export class Cascade implements Serializable {
       .filter(Element.isElement)
       .forEach(filter.add.bind(filter));
 
-    return this._rules.add(this._selectors.get(element, context, filter));
+    return this._rules.add(
+      Iterable.concat(
+        this._selectors.get(element, context, filter),
+        Block.fromStyle(element),
+      ),
+    );
   }
 
   /**
