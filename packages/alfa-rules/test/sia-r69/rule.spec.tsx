@@ -395,6 +395,41 @@ test(`evaluate() is inapplicable to the text that is part of a label of a disabl
   t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
+test("evaluate() is inapplicable to text that would otherwise pass if it was not only punctuation", async (t) => {
+  const target = h.text(",./;'[]\\-=?<>:\"{}|_+!@#$%^&*()");
+
+  const document = h.document([
+    <html
+      style={{
+        backgroundColor: "black",
+        color: "white",
+      }}
+    >
+      {target}
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+});
+
+test("evaluate() is inapplicable to text that would otherwise fail if it was not only punctuation", async (t) => {
+  const target = h.text(",./;'[]\\-=?<>:\"{}|_+!@#$%^&*()");
+
+  const document = h.document([
+    <html
+      style={{
+        backgroundImage: "linear-gradient(#000 50%, transparent 50%)",
+        backgroundColor: "#000",
+        color: "#000",
+      }}
+    >
+      {target}
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+});
+
 test("evaluate() passes when a background color with sufficient contrast is input", async (t) => {
   const target = h.text("Hello world");
 

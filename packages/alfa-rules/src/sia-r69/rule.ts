@@ -23,7 +23,7 @@ export default Rule.Atomic.of<
   evaluate({ device, document }) {
     return {
       applicability() {
-        return nonDisabledTexts(document, device);
+        return nonDisabledTexts(document, device).reject(isOnlyPunctuation);
       },
 
       expectations(target) {
@@ -32,3 +32,7 @@ export default Rule.Atomic.of<
     };
   },
 });
+
+function isOnlyPunctuation(text: Text): boolean {
+  return /^[\p{P}\p{S}\p{Cf}]+$/gu.test(text.data);
+}
