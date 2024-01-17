@@ -25,52 +25,14 @@ function ruleToBlockJSON(
   return Array.toJSON(Block.from(rule, order)[0]);
 }
 
-/**
-//  * This initial test should have the full explicit JSON rather than rely on ruleToBlockJSON
-//  * in order to circumvent possible issues in Block.from.
-//  */
 test(".from() builds a selector map with a single rule", (t) => {
-  const actual = SelectorMap.from(
-    [h.sheet([h.rule.style("div", { foo: "not parsed" })])],
-    device,
-  );
+  const rule = h.rule.style("div", { foo: "not parsed" });
+  const actual = SelectorMap.from([h.sheet([rule])], device);
 
   t.deepEqual(actual.toJSON(), {
     ids: [],
     classes: [],
-    types: [
-      [
-        "div",
-        [
-          {
-            declarations: [
-              { important: false, name: "foo", value: "not parsed" },
-            ],
-            precedence: {
-              origin: Origin.NormalAuthor,
-              encapsulation: Encapsulation.NormalOuter,
-              isElementAttached: false,
-              specificity: { a: 0, b: 0, c: 1 },
-              order: 1,
-            },
-            source: {
-              rule: {
-                selector: "div",
-                style: [{ important: false, name: "foo", value: "not parsed" }],
-                type: "style",
-              },
-              selector: {
-                key: "div",
-                name: "div",
-                namespace: null,
-                specificity: { a: 0, b: 0, c: 1 },
-                type: "type",
-              },
-            },
-          },
-        ],
-      ],
-    ],
+    types: [["div", ruleToBlockJSON(rule, 0)]],
     other: [],
     shadow: [],
   });
@@ -220,7 +182,7 @@ test(".from() only recurses into import rules that match the device", (t) => {
   });
 });
 
-test(".from() only recurses into supports rules that match the device", (t) => {
+test(".from() only recurses into supports rules whose condition matches", (t) => {
   const rule = h.rule.style("foo", { foo: "bar" });
   const actual = SelectorMap.from(
     [
@@ -302,5 +264,39 @@ test("#get() respects ancestor filter", (t) => {
   t.deepEqual(
     Array.toJSON([...map.get(target, Context.empty(), goodFilter)]),
     blocks[0].concat(blocks[1]),
+  );
+});
+
+test("#get() does not return shadow rules", (t) => {
+  const rules = [
+    h.rule.style("div", { foo: "bar" }),
+    h.rule.style(":host(div)", { hello: "world" }),
+  ];
+
+  const map = SelectorMap.from([h.sheet(rules)], device);
+  const blocks = rules.map(ruleToBlockJSON);
+  const element = <div></div>;
+
+  t.deepEqual(
+    Array.toJSON([
+      ...map.get(element, Context.empty(), AncestorFilter.empty()),
+    ]),
+    blocks[0],
+  );
+});
+
+test("#getForHost() only returns shadow rules", (t) => {
+  const rules = [
+    h.rule.style("div", { foo: "bar" }),
+    h.rule.style(":host(div)", { hello: "world" }),
+  ];
+
+  const map = SelectorMap.from([h.sheet(rules)], device);
+  const blocks = rules.map(ruleToBlockJSON);
+  const element = <div></div>;
+
+  t.deepEqual(
+    Array.toJSON([...map.getForHost(element, Context.empty())]),
+    blocks[1],
   );
 });

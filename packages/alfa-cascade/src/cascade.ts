@@ -76,7 +76,7 @@ export class Cascade implements Serializable {
         this._entries.get(node, Cache.empty).get(context, () =>
           this._rules.add(
             Iterable.concat(
-              // Blocks defined in style sheet of the current tree, that match `node`
+              // Blocks defined in style sheets of the current tree, that match `node`
               this._selectors.get(node, context, filter),
               // Blocks defined in the `style` attribute of `node`.
               Block.fromStyle(node),
