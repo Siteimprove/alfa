@@ -84,7 +84,7 @@ test(".get() returns the rule tree node of the given element", (t) => {
 
 test(".get() fetches `:host` rules from shadow, when relevant.", (t) => {
   const innerNormalRule = h.rule.style(":host(div)", { color: "red" });
-  const innerImportantRule = h.rule.style(":host(div)", {
+  const innerImportantRule = h.rule.style(":host", {
     color: "green !important",
   });
   const outerNormalRule = h.rule.style("div", { color: "blue" });
