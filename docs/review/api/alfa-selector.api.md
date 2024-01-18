@@ -396,6 +396,8 @@ export namespace PseudoClass {
     export function isPseudoClass(value: unknown): value is PseudoClass;
     // (undocumented)
     export type JSON = Active.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
+    const // (undocumented)
+    isHost: typeof Host.isHost;
     // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
     //
     // (undocumented)
@@ -474,6 +476,7 @@ export type Selector = Simple | Compound | Complex | Relative | List;
 
 // @public (undocumented)
 export namespace Selector {
+    export function isShadow(selector: Selector): boolean;
     // (undocumented)
     export type JSON = Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | List.JSON;
     const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
