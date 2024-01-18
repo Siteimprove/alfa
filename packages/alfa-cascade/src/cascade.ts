@@ -134,8 +134,19 @@ export class Cascade implements Serializable {
 
     return this._rules.add(
       Iterable.concat(
+        // Blocks defined in style sheets of the current tree, that match `element`
         this._selectors.get(element, context, filter),
+        // Blocks defined in the `style` attribute of `element`.
         Block.fromStyle(element),
+        // Blocks defined in a shadow tree hosted at `element`, and that apply to it.
+        element.shadow
+          .map((shadow) =>
+            Cascade.from(shadow, this._device)._selectors.getForHost(
+              element,
+              context,
+            ),
+          )
+          .getOr([]),
       ),
     );
   }
