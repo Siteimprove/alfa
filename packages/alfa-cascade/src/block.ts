@@ -23,8 +23,7 @@ import {
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Origin, Precedence } from "./precedence";
-import { Encapsulation } from "./precedence/encapsulation";
+import { Encapsulation, Origin, Precedence } from "./precedence";
 import { UserAgent } from "./user-agent";
 
 /**
