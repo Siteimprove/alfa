@@ -160,7 +160,7 @@ export class SelectorMap implements Serializable {
   ): Iterable<Block<Block.Source>> {
     yield* this._shadow.filter(
       (block) =>
-        PseudoClass.isHost(block.selector) &&
+        Selector.isShadow(block.selector) &&
         block.selector.matchHost(host, context),
     );
   }

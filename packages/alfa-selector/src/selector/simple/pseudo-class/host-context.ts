@@ -3,6 +3,7 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../../../context";
+import { Specificity } from "../../../specificity";
 import type { Compound, Simple } from "../../index";
 
 import { WithSelector } from "./pseudo-class";
@@ -28,7 +29,11 @@ export class HostContext extends WithSelector<
   }
 
   private constructor(selector: Compound | Simple) {
-    super("host-context", selector, selector.specificity);
+    super(
+      "host-context",
+      selector,
+      Specificity.sum(selector.specificity, Specificity.of(0, 1, 0)),
+    );
   }
 
   /** @public (knip) */
