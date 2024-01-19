@@ -1,6 +1,7 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import type { Complex } from "./complex";
 import type { Compound } from "./compound";
@@ -8,6 +9,7 @@ import { List } from "./list";
 import type { Relative } from "./relative";
 import type { Simple } from "./simple/index";
 import { Host } from "./simple/pseudo-class/host";
+import { HostContext } from "./simple/pseudo-class/host-context";
 
 // Re-export for further users
 export * from "./combinator";
@@ -18,6 +20,7 @@ export * from "./relative";
 export * from "./simple";
 
 const { end, left, map } = Parser;
+const { or } = Predicate;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector}
@@ -62,9 +65,10 @@ export namespace Selector {
   /**
    * Whether a selector is a shadow selector selecting a light node.
    */
-  export function isShadow(selector: Selector): boolean {
-    return Host.isHost(selector);
-  }
+  export const isShadow: Predicate<Selector> = or(
+    Host.isHost,
+    HostContext.isHostContext,
+  );
 
   /**
    * Parsers for Selectors

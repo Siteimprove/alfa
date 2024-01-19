@@ -33,6 +33,7 @@
     "src/selector/simple/pseudo-class/focus-within.ts",
     "src/selector/simple/pseudo-class/has.ts",
     "src/selector/simple/pseudo-class/host.ts",
+    "src/selector/simple/pseudo-class/host-context.ts",
     "src/selector/simple/pseudo-class/hover.ts",
     "src/selector/simple/pseudo-class/index.ts",
     "src/selector/simple/pseudo-class/is.ts",

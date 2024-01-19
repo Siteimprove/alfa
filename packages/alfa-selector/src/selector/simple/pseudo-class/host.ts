@@ -28,7 +28,8 @@ const { parseColon } = Token;
  * In CSS lingo, `:host` only accepts a compound selector, but simple
  * selectors are also compounds. Alfa does make a type difference between
  * a Simple selector and a compound selector with only a single Simple
- * selector. Hence, this also accepts Simple selector.
+ * selector. Hence, this also accepts Simple selector. This also accepts
+ * pseudo-elements, which seems to not be really allowed by the specification.
  *
  * @public
  */
@@ -86,7 +87,10 @@ export class Host extends PseudoClassSelector<"host"> {
     yield this;
   }
 
-  public equals(value: unknown): value is this {
+  public equals(value: Host): boolean;
+
+  public equals(value: unknown): value is this;
+  public equals(value: unknown): boolean {
     return value instanceof Host && value._selector.equals(this._selector);
   }
 

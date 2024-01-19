@@ -1,6 +1,9 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
+
 import { Context } from "../src";
 import type { Host } from "../src/selector/simple/pseudo-class/host";
+import type { HostContext } from "../src/selector/simple/pseudo-class/host-context";
 
 import { parse, serialize } from "./parser";
 
@@ -304,13 +307,16 @@ test("#matches() checks if an element matches a :visited selector", (t) => {
   }
 });
 
-test("#matches() never matches a :host selector", (t) => {
+test("#matches() never matches a :host or :host-context selector", (t) => {
   for (const target of [<p />, <div class="foo" />]) {
     for (const input of [
       ":host",
       ":host(p)",
       ":host(.foo)",
       ":host(div.foo)",
+      ":host-context(p)",
+      ":host-context(.foo)",
+      ":host-context(div.foo)",
     ]) {
       const selector = parse(input);
 
@@ -332,5 +338,25 @@ test("Host#matchHost() matches when the element matches", (t) => {
     const selector = parse(input) as Host;
 
     t.equal(selector.matchHost(div), false);
+  }
+});
+
+test("HostContext#matchHost() matches when one shadow including ancestor matches", (t) => {
+  const target = <div class="foo" />;
+  h.document([
+    <body>
+      <div class="main">{h.shadow([<p>{target}</p>])}</div>
+    </body>,
+  ]);
+
+  for (const input of [
+    ":host-context(.foo)",
+    ":host-context(p)",
+    ":host-context(.main)",
+    ":host-context(body)",
+  ]) {
+    const selector = parse(input) as HostContext;
+
+    t.equal(selector.matchHost(target), true);
   }
 });

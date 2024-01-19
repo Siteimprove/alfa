@@ -18,6 +18,7 @@ import { FocusVisible } from "./focus-visible";
 import { FocusWithin } from "./focus-within";
 import { Has } from "./has";
 import { Host } from "./host";
+import { HostContext } from "./host-context";
 import { Hover } from "./hover";
 import { Is } from "./is";
 import { LastChild } from "./last-child";
@@ -54,6 +55,7 @@ export type PseudoClass =
   | FocusWithin
   | Has
   | Host
+  | HostContext
   | Hover
   | Is
   | LastChild
@@ -86,6 +88,7 @@ export namespace PseudoClass {
     | FocusWithin.JSON
     | Has.JSON
     | Host.JSON
+    | HostContext.JSON
     | Hover.JSON
     | Is.JSON
     | LastChild.JSON
@@ -129,6 +132,13 @@ export namespace PseudoClass {
           parseSelector(),
           or(Compound.isCompound, Simple.isSimple),
           () => ":host() only accepts compound selectors",
+        ),
+      ),
+      HostContext.parse(() =>
+        filter(
+          parseSelector(),
+          or(Compound.isCompound, Simple.isSimple),
+          () => ":host-context() only accepts compound selectors",
         ),
       ),
       Hover.parse,
