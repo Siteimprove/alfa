@@ -8,7 +8,7 @@ While resolving the cascade is in theory somewhat easy (for each element and pro
 
 The ancestor filter is a structure to optimize matching of descendants selectors. It is build during a depth-first traversal of the DOM tree. While inspecting each element (and trying to match selectors), we keep a list of the ancestors we've found.
 
-In order to be compact and efficient, we just count the number of each type, class, and id on the path to the element. So, for example, a `div.foo .bar` selector cannot match if there is no `div` type or `.foo` class along the path. We cannot just keep a boolean because we want to be able to update the ancestor filter during the "upward moves" of the traversal, which requires removing elements from it, so we need a precise count to figure out when it reaches 0.
+In order to be compact and efficient, we just count the number of each type, class, and id on the path to the element. So, for example, a `div.foo .bar` selector cannot match if there is no `div` type nor `.foo` class along the path. We cannot just keep a boolean because we want to be able to update the ancestor filter during the "upward moves" of the traversal, which requires removing elements from it, so we need a precise count to figure out when it reaches 0.
 
 The ancestor filter only allows for guaranteed "won't match" answers, because the type, class and id have been separated for the sake of compactness. For example, a `div.foo .bar` selector won't match if the `div` and `.foo` ancestors are different, but the ancestor filter doesn't hold that information. However, the filter greatly reduce the actual number of elements to test against each descendant selector and thus the amount of work to be done.
 
@@ -33,3 +33,7 @@ Using a tree, rather than a separated list for each element allows to share the 
 ## Cascade
 
 The cascade itself is a rule tree associated with a map from elements to nodes in it. Each element is mapped to its highest precedence selector in the rule tree. Thus, in order to find the cascaded value of any property for a given element, we can simply walk up the rule tree until we find a selector (and associated rule) declaring that property. Since we've walk up the tree from the highest possible precedence to the lowest, this will be the cascaded value, no matter if more rules up the tree also define this property. 
+
+## Shadow-piercing selectors
+
+Some selectors (`:host`, `:host-context`, and `::slotted`) are defined in the sheet of a shadow tree but match elements from the hosting light tree. For these, we cannot easily fully delegate matching to the selector itself, which doesn't store where it was defined. Instead, the selector map of the shadow tree stores these in a separate list, and when building the cascade for elements that are likely to match (that is shadow host and their children), we access the cascade of the shadow tree to retrieve these selectors and perform a special "match in the light" test. 

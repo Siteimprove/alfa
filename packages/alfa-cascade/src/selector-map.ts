@@ -154,13 +154,25 @@ export class SelectorMap implements Serializable {
     yield* collect(this._other);
   }
 
+  /**
+   * Get all blocks from the "shadow" selectors that match a shadow host.
+   *
+   * @remarks
+   * The host must be the shadow host of the tree whose style sheets define this
+   * selector map.
+   *
+   * @privateRemarks
+   * Because `:host-context` is searching for shadow-including ancestors of the host,
+   * we cannot use the ancestor filter that does not escape its tree. This is therefore
+   * fairly costly, and hopefully not too frequent.
+   */
   public *getForHost(
     host: Element,
     context: Context,
   ): Iterable<Block<Block.Source>> {
     yield* this._shadow.filter(
       (block) =>
-        PseudoClass.isHost(block.selector) &&
+        Selector.isShadow(block.selector) &&
         block.selector.matchHost(host, context),
     );
   }

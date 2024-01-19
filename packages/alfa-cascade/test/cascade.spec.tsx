@@ -5,8 +5,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Block } from "../src/block";
 import { Cascade } from "../src";
-import { Origin } from "../src/precedence";
-import { Encapsulation } from "../src/precedence/encapsulation";
+import { Encapsulation, Origin } from "../src/precedence";
 
 const device = Device.standard();
 
@@ -135,6 +134,61 @@ test(".get() fetches `:host` rules from shadow, when relevant.", (t) => {
                 ],
               },
             ],
+          },
+        ],
+      },
+    ],
+  });
+});
+
+test(".get() fetches `:host-context` rules from shadow, when relevant.", (t) => {
+  const rules = [
+    h.rule.style(":host-context(.foo)", { color: "green" }),
+    h.rule.style(":host-context(div)", { color: "red" }),
+    h.rule.style(":host-context(.bar)", { color: "blue" }),
+  ];
+  const div = (
+    <div>
+      Hello
+      {h.shadow([<span></span>], [h.sheet(rules)])}
+    </div>
+  );
+  const document = h.document([<main class="foo">{div}</main>]);
+  const cascade = Cascade.from(document, device);
+
+  // The rule tree has 4 items on the way to the <div>:
+  // The fake root, the UA rule `div { display: block }`, and the 2 relevant rules declared here.
+  // We thus just grab and check the path down from the fake root.
+  t.deepEqual(Iterable.toJSON(cascade.get(div).inclusiveAncestors())[3], {
+    // fake root
+    block: Block.empty().toJSON(),
+    children: [
+      // The <main> element also generates a node with the UA block, on a separate branch.
+      {
+        block: {
+          ...UAblock,
+          source: {
+            ...UAblock.source,
+            selector: {
+              type: "type",
+              specificity: { a: 0, b: 0, c: 1 },
+              key: "main",
+              name: "main",
+              namespace: null,
+            },
+          },
+        },
+        children: [],
+      },
+      {
+        // UA rule
+        block: UAblock,
+        children: [
+          {
+            // Actual rules, there are 58 rules in the UA sheet.
+            // The "div" rule is declared first, but also inserted higher due to lower precedence.
+            block: getBlock(rules[1], 59),
+            children: [{ block: getBlock(rules[0], 58), children: [] }],
           },
         ],
       },
