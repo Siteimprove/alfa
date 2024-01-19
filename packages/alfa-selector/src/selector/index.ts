@@ -7,6 +7,7 @@ import type { Compound } from "./compound";
 import { List } from "./list";
 import type { Relative } from "./relative";
 import type { Simple } from "./simple/index";
+import { Host } from "./simple/pseudo-class/host";
 
 // Re-export for further users
 export * from "./combinator";
@@ -57,6 +58,13 @@ export namespace Selector {
     | Complex.JSON
     | Relative.JSON
     | List.JSON;
+
+  /**
+   * Whether a selector is a shadow selector selecting a light node.
+   */
+  export function isShadow(selector: Selector): boolean {
+    return Host.isHost(selector);
+  }
 
   /**
    * Parsers for Selectors

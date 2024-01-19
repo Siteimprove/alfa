@@ -17,6 +17,7 @@ const componentMax = (1 << componentBits) - 1;
 
 /**
  * {@link https://www.w3.org/TR/selectors/#specificity}
+ * {@link https://drafts.csswg.org/css-cascade-5/#cascade-specificity}
  *
  * @remarks
  * Specificities are triplet (a, b, c), ordered lexicographically.

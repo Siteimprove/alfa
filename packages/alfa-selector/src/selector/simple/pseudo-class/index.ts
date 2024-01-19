@@ -1,9 +1,11 @@
 import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "../../../selector";
+import { type Absolute, Simple } from "../../index";
+import { Compound } from "../../compound";
 
 import { Active } from "./active";
 import { Disabled } from "./disabled";
@@ -34,7 +36,8 @@ import { Where } from "./where";
 
 import { PseudoClassSelector } from "./pseudo-class";
 
-const { either } = Parser;
+const { either, filter } = Parser;
+const { or } = Refinement;
 
 /**
  * @public
@@ -106,6 +109,8 @@ export namespace PseudoClass {
     return value instanceof PseudoClassSelector;
   }
 
+  export const { isHost } = Host;
+
   export function parse(
     parseSelector: Thunk<CSSParser<Absolute>>,
   ): CSSParser<PseudoClass> {
@@ -119,7 +124,13 @@ export namespace PseudoClass {
       Focus.parse,
       FocusVisible.parse,
       FocusWithin.parse,
-      Host.parse,
+      Host.parse(() =>
+        filter(
+          parseSelector(),
+          or(Compound.isCompound, Simple.isSimple),
+          () => ":host() only accepts compound selectors",
+        ),
+      ),
       Hover.parse,
       LastChild.parse,
       LastOfType.parse,

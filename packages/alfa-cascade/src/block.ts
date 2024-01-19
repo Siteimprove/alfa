@@ -2,7 +2,6 @@ import { Array } from "@siteimprove/alfa-array";
 import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Lexer } from "@siteimprove/alfa-css";
 import {
-  type Block as StyleBlock,
   Declaration,
   Element,
   h,
@@ -24,7 +23,7 @@ import {
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Origin, Precedence } from "./precedence";
+import { Encapsulation, Origin, Precedence } from "./precedence";
 import { UserAgent } from "./user-agent";
 
 /**
@@ -67,6 +66,7 @@ export class Block<S extends Element | Block.Source = Element | Block.Source>
     [],
     {
       origin: Origin.NormalUserAgent,
+      encapsulation: Encapsulation.NormalOuter,
       isElementAttached: false,
       specificity: Specificity.empty(),
       order: -Infinity,
@@ -242,9 +242,23 @@ export namespace Block {
             : Origin.NormalAuthor;
 
         for (const selector of selectors) {
+          // While we don't really know where the rules will be used, and they all look
+          // "outer" from this point of view, we also know that the shadow rules cannot
+          // match within the current tree, and can only match an encapsulating light tree.
+          // Therefore, for anything that will actually match a shadow selector, the selector
+          // appears as encapsulated.
+          const encapsulation = Selector.isShadow(selector)
+            ? importance
+              ? Encapsulation.ImportantInner
+              : Encapsulation.NormalInner
+            : importance
+              ? Encapsulation.ImportantOuter
+              : Encapsulation.NormalOuter;
+
           blocks.push(
             Block.of({ rule, selector }, declarations, {
               origin,
+              encapsulation,
               isElementAttached: false,
               order,
               specificity: selector.specificity,
@@ -253,13 +267,13 @@ export namespace Block {
         }
       }
     }
+
     return [blocks, order];
   }
 
   /**
    * Turns the style attribute of an element into blocks (one for important
    * declarations, one for normal declarations).
-   * @param element
    */
   export function fromStyle(element: Element): Iterable<Block> {
     return element.style
@@ -272,6 +286,9 @@ export namespace Block {
           ([importance, declarations]) =>
             Block.of(element, declarations, {
               origin: importance ? Origin.ImportantAuthor : Origin.NormalAuthor,
+              encapsulation: importance
+                ? Encapsulation.ImportantOuter
+                : Encapsulation.NormalOuter,
               isElementAttached: true,
               specificity: Specificity.empty(),
               // Since style attribute trumps style rules in the cascade sort,

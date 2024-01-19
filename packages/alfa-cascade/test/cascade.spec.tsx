@@ -1,10 +1,12 @@
 import { Device } from "@siteimprove/alfa-device";
-import { h } from "@siteimprove/alfa-dom";
+import { h, StyleRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { test } from "@siteimprove/alfa-test";
 
 import { Block } from "../src/block";
 import { Cascade } from "../src";
+import { Origin } from "../src/precedence";
+import { Encapsulation } from "../src/precedence/encapsulation";
 
 const device = Device.standard();
 
@@ -21,10 +23,43 @@ test(".from() builds a cascade with the User Agent style sheet", (t) => {
   t.deepEqual(cascade.toJSON().selectors.classes.length, 0);
 });
 
+const UAblock: Block.JSON = {
+  source: {
+    rule: {
+      type: "style",
+      selector:
+        "address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp",
+      style: [{ name: "display", value: "block", important: false }],
+    },
+    selector: {
+      type: "type",
+      specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
+      name: "div",
+      namespace: null,
+    },
+  },
+  declarations: [{ name: "display", value: "block", important: false }],
+  precedence: {
+    origin: Origin.NormalUserAgent,
+    encapsulation: Encapsulation.NormalOuter,
+    isElementAttached: false,
+    specificity: { a: 0, b: 0, c: 1 },
+    order: 7,
+  },
+};
+
+function getBlock(rule: StyleRule, order: number): Block.JSON {
+  return Block.from(rule, order)[0][0].toJSON();
+}
+
 test(".get() returns the rule tree node of the given element", (t) => {
   const div = <div>Hello</div>;
   const rule = h.rule.style("div", { color: "red" });
-  const document = h.document([div], [h.sheet([rule])]);
+  const document = h.document(
+    [div],
+    [h.sheet([rule, h.rule.style("span", { color: "blue" })])],
+  );
   const cascade = Cascade.from(document, device);
 
   // The rule tree has 3 items on the way to the <div>:
@@ -37,36 +72,69 @@ test(".get() returns the rule tree node of the given element", (t) => {
     children: [
       {
         // UA rule
-        block: {
-          source: {
-            rule: {
-              type: "style",
-              selector:
-                "address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp",
-              style: [{ name: "display", value: "block", important: false }],
-            },
-            selector: {
-              type: "type",
-              specificity: { a: 0, b: 0, c: 1 },
-              key: "div",
-              name: "div",
-              namespace: null,
-            },
-          },
-          declarations: [{ name: "display", value: "block", important: false }],
-          precedence: {
-            origin: 1,
-            isElementAttached: false,
-            specificity: { a: 0, b: 0, c: 1 },
-            order: 7,
-          },
-        },
+        block: UAblock,
+        children: [
+          // Actual rule, there are 58 rules in the UA sheet.
+          { block: getBlock(rule, 58), children: [] },
+        ],
+      },
+    ],
+  });
+});
+
+test(".get() fetches `:host` rules from shadow, when relevant.", (t) => {
+  const innerNormalRule = h.rule.style(":host(div)", { color: "red" });
+  const innerImportantRule = h.rule.style(":host", {
+    color: "green !important",
+  });
+  const outerNormalRule = h.rule.style("div", { color: "blue" });
+  const outerImportantRule = h.rule.style("div", {
+    color: "yellow !important",
+  });
+  const ignoredRule = h.rule.style(":host(div)", { color: "black" });
+  const div = (
+    <div>
+      Hello
+      {h.shadow(
+        [<span></span>],
+        [h.sheet([innerNormalRule, innerImportantRule])],
+      )}
+    </div>
+  );
+  const document = h.document(
+    [div],
+    [h.sheet([outerNormalRule, outerImportantRule, ignoredRule])],
+  );
+  const cascade = Cascade.from(document, device);
+
+  // The rule tree has 6 items on the way to the <div>:
+  // The fake root, the UA rule `div { display: block }`, and the 4 rules declared here.
+  // We thus just grab and check the path down from the fake root.
+  t.deepEqual(Iterable.toJSON(cascade.get(div).inclusiveAncestors())[5], {
+    // fake root
+    block: Block.empty().toJSON(),
+    children: [
+      {
+        // UA rule
+        block: UAblock,
         children: [
           {
-            // Actual rule
-            // There are 58 rules in the UA sheet.
-            block: Block.from(rule, 58)[0][0].toJSON(),
-            children: [],
+            // Actual rules, there are 58 rules in the UA sheet.
+            block: getBlock(innerNormalRule, 58),
+            children: [
+              {
+                // Rules order is computed separately for each encapsulation context.
+                block: getBlock(outerNormalRule, 58),
+                children: [
+                  {
+                    block: getBlock(outerImportantRule, 59),
+                    children: [
+                      { block: getBlock(innerImportantRule, 59), children: [] },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
