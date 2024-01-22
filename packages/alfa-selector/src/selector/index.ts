@@ -2,9 +2,9 @@ import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
-
 import type { Complex } from "./complex";
-import type { Compound } from "./compound";
+
+import { Compound } from "./compound";
 import { List } from "./list";
 import type { Relative } from "./relative";
 import type { Simple } from "./simple/index";
@@ -69,6 +69,8 @@ export namespace Selector {
     Host.isHost,
     HostContext.isHostContext,
   );
+
+  export const matchSlotted = Compound.matchSlotted;
 
   /**
    * Parsers for Selectors

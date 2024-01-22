@@ -77,7 +77,8 @@
     "test/list.spec.ts",
     "test/nth-[last]-child.spec.tsx",
     "test/pseudo-class.spec.tsx",
-    "test/pseudo-element.spec.ts",
+    "test/pseudo-element.spec.tsx",
+    "test/shadow.spec.tsx",
     "test/specificity.spec.ts"
   ],
   "references": [

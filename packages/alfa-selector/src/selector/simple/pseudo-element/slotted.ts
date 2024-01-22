@@ -1,16 +1,28 @@
-import { Function, type Parser as CSSParser } from "@siteimprove/alfa-css";
+/// <reference lib="dom" />
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "@siteimprove/alfa-css";
+import { Element, type Slotable } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
+import { Context } from "../../../context";
+import { Specificity } from "../../../specificity";
 
-import { Compound } from "../../compound";
-import { Simple } from "../../simple";
+import type { Compound } from "../../compound";
+import type { Simple } from "../../simple";
 
 import { PseudoElementSelector } from "./pseudo-element";
 
-const { map } = Parser;
+const { map, right, take } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-scoping/#slotted-pseudo}
+ *
+ * @public
  */
 export class Slotted extends PseudoElementSelector<"slotted"> {
   public static of(selector: Compound | Simple): Slotted {
@@ -20,13 +32,24 @@ export class Slotted extends PseudoElementSelector<"slotted"> {
   private readonly _selector: Compound | Simple;
 
   private constructor(selector: Compound | Simple) {
-    super("slotted");
+    super(
+      "slotted",
+      Specificity.sum(selector.specificity, Specificity.of(0, 0, 1)),
+    );
     this._selector = selector;
   }
 
   /** @public (knip) */
   public get selector(): Compound | Simple {
     return this._selector;
+  }
+
+  /**
+   * @remarks
+   * `::slotted` never aliases an element in its own tree.
+   */
+  public matches(): boolean {
+    return false;
   }
 
   /** @public (knip) */
@@ -54,16 +77,27 @@ export class Slotted extends PseudoElementSelector<"slotted"> {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Slotted {
   export interface JSON extends PseudoElementSelector.JSON<"slotted"> {
     selector: Compound.JSON | Simple.JSON;
   }
 
+  export function isSlotted(value: unknown): value is Slotted {
+    return value instanceof Slotted;
+  }
+
   export function parse(
     parseSelector: Thunk<CSSParser<Compound | Simple>>,
   ): CSSParser<Slotted> {
-    return map(Function.parse("slotted", parseSelector), ([_, selector]) =>
-      Slotted.of(selector),
+    return map(
+      right(
+        take(Token.parseColon, 2),
+        Function.parse("slotted", parseSelector),
+      ),
+      ([_, selector]) => Slotted.of(selector),
     );
   }
 }

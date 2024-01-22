@@ -1,5 +1,5 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -13,6 +13,7 @@ import { Combinator } from "./combinator";
 import { Compound } from "./compound";
 import { Selector } from "./selector";
 import type { Class, Id, Simple, Type } from "./simple";
+import { Slotted } from "./simple/pseudo-element/slotted";
 
 const { isElement } = Element;
 const { map, pair, zeroOrMore } = Parser;
@@ -61,7 +62,37 @@ export class Complex extends Selector<"complex"> {
     return this._right;
   }
 
+  /**
+   * Does the element match?
+   *
+   * @remarks
+   * This gets pretty hairy when shadow selectors (:host, :host-context, ::slotted)
+   * are used in a complex selector.
+   * * ::slotted may be used as the rightmost, e.g., `div ::slotted(p)`.
+   *   In that case, the full selector matches something in the light, depending
+   *   on the structure of the shadow tree. Thus, the full selector must be considered
+   *   as a shadow selector (it matches out of its tree), and this can simply use tree
+   *   traversal options to navigate the flat tree structure. However, the actual match
+   *   toward the element must use the advanced #matchSlotted.
+   * * :host and :host-context may be used as the leftmost, e.g., `:host(.foo) p`. This is
+   *   useful to let users customise components through a simple class name on the custom
+   *   element.
+   *   In this case, the full selector matches something in the shadow tree and the full
+   *   selector must **not** be considered as shadow selector (it matches in its own tree).
+   *   But upon hitting the :host or :host-context, the matching must be delegated to the
+   *   advance #matchHost (and jump over the shadow root to the actual host).
+   */
   public matches(element: Element, context?: Context): boolean {
+    let traversal = Node.Traversal.empty;
+    // let rightMatches = false
+    //
+    // if (Slotted.isSlotted(this._right)) {
+    //   traversal = Node.flatTree;
+    //   rightMatches = this._right.matchSlotted(element, this._right, context);
+    // } else if (Compound.isCompound(this._right) && Iterable.some(this._right.selectors,Slotted.isSlotted)) {
+    //
+    // }
+
     // First, make sure that the right side of the selector, i.e. the part
     // that relates to the current element, matches.
     if (this._right.matches(element, context)) {
@@ -71,25 +102,25 @@ export class Complex extends Selector<"complex"> {
       switch (this._combinator) {
         case Combinator.Descendant:
           return element
-            .ancestors()
+            .ancestors(traversal)
             .filter(isElement)
             .some((element) => this._left.matches(element, context));
 
         case Combinator.DirectDescendant:
           return element
-            .parent()
+            .parent(traversal)
             .filter(isElement)
             .some((element) => this._left.matches(element, context));
 
         case Combinator.Sibling:
           return element
-            .preceding()
+            .preceding(traversal)
             .filter(isElement)
             .some((element) => this._left.matches(element, context));
 
         case Combinator.DirectSibling:
           return element
-            .preceding()
+            .preceding(traversal)
             .find(isElement)
             .some((element) => this._left.matches(element, context));
       }
