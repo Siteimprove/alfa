@@ -20,20 +20,20 @@ const { map, separatedList } = Parser;
  * {@link https://drafts.csswg.org/css-scoping/#slotted-pseudo}
  */
 export class Slotted extends PseudoElementSelector<"slotted"> {
-  public static of(selectors: Iterable<Simple | Compound>): Slotted {
-    return new Slotted(Array.from(selectors));
+  public static of(selector: Compound | Simple): Slotted {
+    return new Slotted(selector);
   }
 
-  private readonly _selectors: ReadonlyArray<Simple | Compound>;
+  private readonly _selector: Compound | Simple;
 
-  private constructor(selectors: Array<Simple | Compound>) {
+  private constructor(selector: Compound | Simple) {
     super("slotted");
-    this._selectors = selectors;
+    this._selector = selector;
   }
 
   /** @public (knip) */
-  public get selectors(): Iterable<Simple | Compound> {
-    return this._selectors;
+  public get selector(): Compound | Simple {
+    return this._selector;
   }
 
   /** @public (knip) */
@@ -46,40 +46,31 @@ export class Slotted extends PseudoElementSelector<"slotted"> {
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
-    return (
-      value instanceof Slotted &&
-      Array.equals(value._selectors, this._selectors)
-    );
+    return value instanceof Slotted && value._selector.equals(this._selector);
   }
 
   public toJSON(): Slotted.JSON {
     return {
       ...super.toJSON(),
-      selectors: Array.toJSON(this._selectors),
+      selector: this._selector.toJSON(),
     };
   }
 
   public toString(): string {
-    return `::${this.name}(${this._selectors})`;
+    return `::${this.name}(${this._selector})`;
   }
 }
 
 export namespace Slotted {
   export interface JSON extends PseudoElementSelector.JSON<"slotted"> {
-    selectors: Array<Simple.JSON | Compound.JSON>;
+    selector: Compound.JSON | Simple.JSON;
   }
 
   export function parse(
-    parseSelector: Thunk<CSSParser<Absolute>>,
+    parseSelector: Thunk<CSSParser<Compound | Simple>>,
   ): CSSParser<Slotted> {
-    return map(
-      Function.parse("slotted", () =>
-        separatedList(
-          Compound.parseCompound(parseSelector),
-          Token.parseWhitespace,
-        ),
-      ),
-      ([_, selectors]) => Slotted.of(selectors),
+    return map(Function.parse("slotted", parseSelector), ([_, selector]) =>
+      Slotted.of(selector),
     );
   }
 }
