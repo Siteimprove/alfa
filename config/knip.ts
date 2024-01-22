@@ -18,6 +18,9 @@ const config: KnipConfig = {
     },
     "packages/alfa-web": { entry: [...entry, "native.ts!"], project },
   },
+  // Do not check deprecated packages since we do not want to spend time
+  // updating them.
+  ignoreWorkspaces: ["packages/alfa-media"],
 };
 
 export default config;
