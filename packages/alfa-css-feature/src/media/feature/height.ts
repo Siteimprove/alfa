@@ -9,7 +9,7 @@ import { Value } from "./value";
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#height}
  *
- * @internal
+ * @public
  */
 export class Height extends Media<"height", Length.Fixed> {
   public static of(value: Value<Length.Fixed>): Height {
@@ -42,7 +42,7 @@ export class Height extends Media<"height", Length.Fixed> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace Height {
   function from(value: Option<Value<Length.Fixed>>): Height {

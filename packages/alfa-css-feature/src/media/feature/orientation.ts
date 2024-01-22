@@ -8,7 +8,7 @@ import { Value } from "./value";
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#orientation}
  *
- * @internal
+ * @public
  */
 export class Orientation extends Media<"orientation", Keyword> {
   public static of(value: Value<Keyword>): Orientation {
@@ -33,7 +33,7 @@ export class Orientation extends Media<"orientation", Keyword> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace Orientation {
   function from(value: Option<Value<Keyword>>): Orientation {

@@ -9,7 +9,7 @@ import { Value } from "./value";
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#width}
  *
- * @internal
+ * @public
  */
 export class Width extends Media<"width", Length.Fixed> {
   public static of(value: Value<Length.Fixed>): Width {
@@ -42,7 +42,7 @@ export class Width extends Media<"width", Length.Fixed> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace Width {
   function from(value: Option<Value<Length.Fixed>>): Width {
