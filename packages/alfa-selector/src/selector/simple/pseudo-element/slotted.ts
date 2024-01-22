@@ -1,20 +1,13 @@
-import { Array } from "@siteimprove/alfa-array";
-import {
-  Function,
-  type Parser as CSSParser,
-  Token,
-} from "@siteimprove/alfa-css";
+import { Function, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
-
-import type { Absolute } from "../../../selector";
 
 import { Compound } from "../../compound";
 import { Simple } from "../../simple";
 
 import { PseudoElementSelector } from "./pseudo-element";
 
-const { map, separatedList } = Parser;
+const { map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-scoping/#slotted-pseudo}
