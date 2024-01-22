@@ -13,6 +13,9 @@ const { delimited, either, option } = Parser;
 
 export type Media = media.Media;
 
+/**
+ * @public
+ */
 export namespace Media {
   export type JSON = media.Media.JSON;
 

@@ -12,10 +12,7 @@ import * as Ligatures from "./font-variant-ligatures";
 import * as Numeric from "./font-variant-numeric";
 import { Longhand } from "../longhand";
 
-/**
- * @internal
- */
-export const parse: Parser<
+const parse: Parser<
   Slice<Token>,
   [
     ["font-variant-caps", Longhand.Parsed<typeof Caps> | Keyword<"initial">],
