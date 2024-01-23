@@ -134,7 +134,8 @@ test("Compound Slotted.matchSlotted() matches with qualifier and context", (t) =
 });
 
 test("Complex selector with a rightmost ::slotted match according to shadow tree structure", (t) => {
-  const target = <span slot="foo">from the light</span>;
+  const inner = <i>light</i>;
+  const target = <span slot="foo">from the {inner}</span>;
   <div>
     <div>
       {h.shadow([
@@ -153,4 +154,8 @@ test("Complex selector with a rightmost ::slotted match according to shadow tree
   // After the ::slotted tree structure match, the rest of the structure stays in its tree
   // and the <b> is not a descendant of the host nor its ancestors in the light tree.
   t.deepEqual(parse("div b > ::slotted(span)").matches(target), false);
+
+  // This should not match. Only the actual slotted element can be reached in the light tree.
+  // Check comment on Complex#matches for more info.
+  t.deepEqual(parse("b > ::slotted(span) i").matches(inner), true);
 });

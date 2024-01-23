@@ -81,6 +81,14 @@ export class Complex extends Selector<"complex"> {
    *   selector must **not** be considered as shadow selector (it matches in its own tree).
    *   But upon hitting the :host or :host-context, the matching must be delegated to the
    *   advance #matchHost (and jump over the shadow root to the actual host).
+   *
+   * @privateRemarks
+   * Due to the recursive nature of the check, we oversimplify it a bit.
+   * Namely, we do not really check that ::slotted appears in the rightmost position only.
+   * This means that we incorrectly match thinks like `div ::slotted(*) span` to a <span>
+   * descendant **in the light tree** of the slotted element. This is incorrect, see CSS
+   * discussions about the deprecated ::content. Hopefully, this is not really used and
+   * won't cause any actual problem, but we might need to revisit.
    */
   public matches(element: Element, context?: Context): boolean {
     let traversal = Node.Traversal.empty;
