@@ -87,7 +87,10 @@ test("Isolated Slotted.matchSlotted() matches when the element is slotted and ma
   }
 
   // Slotting the target.
-  h.element("div", [], [h.shadow([<slot>Fallback</slot>]), target]);
+  <div>
+    {h.shadow([<slot>Fallback</slot>])}
+    {target}
+  </div>;
 
   // Now, the target is slotted and matches these.
   for (const input of ["::slotted(.foo)", "::slotted(div.foo)"]) {
@@ -106,11 +109,10 @@ test("Isolated Slotted.matchSlotted() matches when the element is slotted and ma
 
 test("Compound Slotted.matchSlotted() matches when both slot and element match", (t) => {
   const target = <div class="foo" />;
-  h.element(
-    "div",
-    [],
-    [h.shadow([<slot class="the-slot">Fallback</slot>]), target],
-  );
+  <div>
+    {h.shadow([<slot class="the-slot">Fallback</slot>])}
+    {target}
+  </div>;
 
   for (const input of ["slot::slotted(.foo)", ".the-slot::slotted(div.foo)"]) {
     const selector = parse(input) as Compound;
@@ -121,13 +123,34 @@ test("Compound Slotted.matchSlotted() matches when both slot and element match",
 
 test("Compound Slotted.matchSlotted() matches with qualifier and context", (t) => {
   const target = <div class="foo" />;
-  h.element(
-    "div",
-    [],
-    [h.shadow([<slot class="the-slot">Fallback</slot>]), target],
-  );
+  <div>
+    {h.shadow([<slot class="the-slot">Fallback</slot>])}
+    {target}
+  </div>;
 
   const selector = parse(".the-slot::slotted(div.foo):hover") as Compound;
   t.equal(Slotted.matchSlotted(target, selector), false);
   t.equal(Slotted.matchSlotted(target, selector, Context.hover(target)), true);
+});
+
+test("Complex selector with a rightmost ::slotted match according to shadow tree structure", (t) => {
+  const target = <span slot="foo">from the light</span>;
+  <div>
+    <div>
+      {h.shadow([
+        <b id="my-elt">
+          Hello <slot name="foo">from the shadow</slot>
+        </b>,
+      ])}
+      {target}
+    </div>
+  </div>;
+
+  // The <span> is slotted as (flat tree) child of the <b>.
+  t.deepEqual(parse("b > ::slotted(span)").matches(target), true);
+  // The non-slotted <span> has no <b> parent.
+  t.deepEqual(parse("b > span").matches(target), false);
+  // After the ::slotted tree structure match, the rest of the structure stays in its tree
+  // and the <b> is not a descendant of the host nor its ancestors in the light tree.
+  t.deepEqual(parse("div b > ::slotted(span)").matches(target), false);
 });

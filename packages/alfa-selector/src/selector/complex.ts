@@ -84,18 +84,23 @@ export class Complex extends Selector<"complex"> {
    */
   public matches(element: Element, context?: Context): boolean {
     let traversal = Node.Traversal.empty;
-    // let rightMatches = false
-    //
-    // if (Slotted.isSlotted(this._right)) {
-    //   traversal = Node.flatTree;
-    //   rightMatches = this._right.matchSlotted(element, this._right, context);
-    // } else if (Compound.isCompound(this._right) && Iterable.some(this._right.selectors,Slotted.isSlotted)) {
-    //
-    // }
+    let rightMatches = false;
+
+    if (
+      Slotted.isSlotted(this._right) ||
+      (Compound.isCompound(this._right) &&
+        Iterable.some(this._right.selectors, Slotted.isSlotted))
+    ) {
+      // The right side of the selector contains a ::slotted pseudo-element.
+      traversal = Node.flatTree;
+      rightMatches = Slotted.matchSlotted(element, this._right, context);
+    } else {
+      rightMatches = this._right.matches(element, context);
+    }
 
     // First, make sure that the right side of the selector, i.e. the part
     // that relates to the current element, matches.
-    if (this._right.matches(element, context)) {
+    if (rightMatches) {
       // If it does, move on to the heavy part of the work: Looking either up
       // the tree for a descendant match or looking to the side of the tree
       // for a sibling match.
