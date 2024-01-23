@@ -70,8 +70,6 @@ export namespace Selector {
     HostContext.isHostContext,
   );
 
-  export const matchSlotted = Compound.matchSlotted;
-
   /**
    * Parsers for Selectors
    *

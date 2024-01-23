@@ -1,6 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { Compound, Selector } from "../src";
+import { Compound } from "../src";
 import type { Host } from "../src/selector/simple/pseudo-class/host";
 import type { HostContext } from "../src/selector/simple/pseudo-class/host-context";
 
@@ -83,7 +83,7 @@ test("Isolated Selector.matchSlotted() matches when the element is slotted and m
   for (const input of ["::slotted(.foo)", "::slotted(div.foo)"]) {
     const selector = parse(input) as Slotted;
 
-    t.equal(Selector.matchSlotted(target, selector), false);
+    t.equal(Slotted.matchSlotted(target, selector), false);
   }
 
   // Slotting the target.
@@ -93,14 +93,14 @@ test("Isolated Selector.matchSlotted() matches when the element is slotted and m
   for (const input of ["::slotted(.foo)", "::slotted(div.foo)"]) {
     const selector = parse(input) as Slotted;
 
-    t.equal(Selector.matchSlotted(target, selector), true);
+    t.equal(Slotted.matchSlotted(target, selector), true);
   }
 
   // But it still doesn't match these.
   for (const input of ["::slotted(span)", "::slotted(div.bar)"]) {
     const selector = parse(input) as Slotted;
 
-    t.equal(Selector.matchSlotted(target, selector), false);
+    t.equal(Slotted.matchSlotted(target, selector), false);
   }
 });
 
@@ -115,6 +115,6 @@ test("Compound Selector.matchSlotted() matches when both slot and element match"
   for (const input of ["slot::slotted(.foo)", ".the-slot::slotted(div.foo)"]) {
     const selector = parse(input) as Compound;
 
-    t.equal(Selector.matchSlotted(target, selector), true);
+    t.equal(Slotted.matchSlotted(target, selector), true);
   }
 });
