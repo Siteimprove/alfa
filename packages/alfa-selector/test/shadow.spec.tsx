@@ -1,6 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { Compound } from "../src";
+import { Compound, Context } from "../src";
 import type { Host } from "../src/selector/simple/pseudo-class/host";
 import type { HostContext } from "../src/selector/simple/pseudo-class/host-context";
 
@@ -76,7 +76,7 @@ test("#matches() never matches a ::slotted selector", (t) => {
   }
 });
 
-test("Isolated Selector.matchSlotted() matches when the element is slotted and matches", (t) => {
+test("Isolated Slotted.matchSlotted() matches when the element is slotted and matches", (t) => {
   const target = <div class="foo" />;
 
   // The target hasn't been slotted, so it won't match
@@ -104,7 +104,7 @@ test("Isolated Selector.matchSlotted() matches when the element is slotted and m
   }
 });
 
-test("Compound Selector.matchSlotted() matches when both slot and element match", (t) => {
+test("Compound Slotted.matchSlotted() matches when both slot and element match", (t) => {
   const target = <div class="foo" />;
   h.element(
     "div",
@@ -117,4 +117,17 @@ test("Compound Selector.matchSlotted() matches when both slot and element match"
 
     t.equal(Slotted.matchSlotted(target, selector), true);
   }
+});
+
+test("Compound Slotted.matchSlotted() matches with qualifier and context", (t) => {
+  const target = <div class="foo" />;
+  h.element(
+    "div",
+    [],
+    [h.shadow([<slot class="the-slot">Fallback</slot>]), target],
+  );
+
+  const selector = parse(".the-slot::slotted(div.foo):hover") as Compound;
+  t.equal(Slotted.matchSlotted(target, selector), false);
+  t.equal(Slotted.matchSlotted(target, selector, Context.hover(target)), true);
 });

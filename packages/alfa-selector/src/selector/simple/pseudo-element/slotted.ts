@@ -4,7 +4,7 @@ import {
   Token,
 } from "@siteimprove/alfa-css";
 import { Element, type Slotable } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 import { Context } from "../../../context";
@@ -95,14 +95,18 @@ export namespace Slotted {
    * start of the compound selector must match the assigned slot.
    * E.g., `div.foo::slotted(.bar)` matches a `.bar` slotted in a `div.foo`.
    *
-   * @privateRemarks
-   * This must be defined here to avoid circular dependencies:
-   * Slotted -> Compound -> Simple -> Slotted.
-   * Yet, this may not fully live at the top-level Selector due to
-   * Complex.matches requiring to call this. For the sake of simplicity,
-   * we re-export that from Selector.
+   * Due to jumping between the light and shadow trees (and the nature of
+   * pseudo-element where part of the compound selector must match the originating
+   * element and other part must match the aliased element), matching a compound
+   * selector containing a ::slotted pseudo-element is more complex than each
+   * part individually. Therefore, this needs the full compound selector and
+   * cannot simply be a method on the Slotted class.
    *
-   * @internal
+   * @privateRemarks
+   * There is a potential circular dependency: Slotted -> Compound -> Simple -> Slotted.
+   * We avoid this by checking `selector.type` rather than using Compound.isCompound.
+   *
+   *
    */
   export function matchSlotted(
     element: Element & Slotable,
@@ -110,31 +114,30 @@ export namespace Slotted {
     context: Context = Context.empty(),
   ): boolean {
     // The part of `selector` that must match the slot.
-    let slotSelector: Iterable<Simple> = [];
+    const slotSelectors: Array<Simple> = [];
     // The part of `selector` that must match the slotted element
     // (pseudo-classes after ::slotted).
-    let qualifier: Iterable<Simple> = [];
+    const qualifier: Array<Simple> = [];
 
     const selectors =
-      selector.type === "compound" ? [...selector.selectors] : [selector];
+      selector.type === "compound" ? selector.selectors : [selector];
 
-    if (selectors.filter(Slotted.isSlotted).length !== 1) {
-      // There is either 0, or several `::slotted()` in the compound selector.
-      return false;
-    }
+    let actualSelector: Option<Slotted> = None;
+    let seen = false;
 
-    // We know there is exactly one `::slotted()` in the compound selector.
-    const actualSelector = selectors.find(Slotted.isSlotted) as Slotted;
-
-    if (selectors.length > 1) {
-      // The slot selector is the start of the compound selector, until ::slotted.
-      slotSelector = Iterable.takeUntil(selectors, (selector) =>
-        Slotted.isSlotted(selector),
-      );
-
-      qualifier = Iterable.takeLastUntil(selectors, (selector) =>
-        Slotted.isSlotted(selector),
-      );
+    for (const candidate of selectors) {
+      if (Slotted.isSlotted(candidate)) {
+        if (actualSelector.isSome()) {
+          // If there is more than one ::slotted selector, this cannot match.
+          return false;
+        }
+        actualSelector = Option.of(candidate);
+        seen = true;
+      } else if (seen) {
+        qualifier.push(candidate);
+      } else {
+        slotSelectors.push(candidate);
+      }
     }
 
     const slot = element.assignedSlot();
@@ -142,17 +145,16 @@ export namespace Slotted {
     return (
       // `element` must be slotted.
       slot.some((slot) =>
-        // The slot must match the slot selector, if any.
-        Iterable.every(slotSelector, (selector) =>
-          selector.matches(slot, context),
-        ),
+        // The slot must match the slot selectors, if any.
+        slotSelectors.every((selector) => selector.matches(slot, context)),
       ) &&
-      // `element` must match the argument of the actual ::slotted selector.
-      actualSelector.selector.matches(element, context) &&
+      // There must be an actual ::slotted selector.
+      actualSelector.some((slotted) =>
+        // `element` must match the argument of the actual ::slotted selector.
+        slotted.selector.matches(element, context),
+      ) &&
       // `element` must match the qualifier, if any.
-      Iterable.every(qualifier, (selector) =>
-        selector.matches(element, context),
-      )
+      qualifier.every((selector) => selector.matches(element, context))
     );
   }
 
