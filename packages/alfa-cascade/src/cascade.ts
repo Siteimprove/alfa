@@ -47,6 +47,7 @@ export class Cascade implements Serializable {
   }
 
   private readonly _root: Document | Shadow;
+  private readonly _depth: number;
   private readonly _device: Device;
   private readonly _selectors: SelectorMap;
   private readonly _rules = RuleTree.empty();
@@ -58,8 +59,13 @@ export class Cascade implements Serializable {
 
   private constructor(root: Document | Shadow, device: Device) {
     this._root = root;
+    this._depth = getDepth(root);
     this._device = device;
-    this._selectors = SelectorMap.from([UserAgent, ...root.style], device);
+    this._selectors = SelectorMap.from(
+      [UserAgent, ...root.style],
+      device,
+      this._depth,
+    );
 
     // Perform a baseline cascade with an empty context to benefit from ancestor
     // filtering. As getting style information with an empty context will be the
@@ -79,13 +85,23 @@ export class Cascade implements Serializable {
               // Blocks defined in style sheets of the current tree, that match `node`
               this._selectors.get(node, context, filter),
               // Blocks defined in the `style` attribute of `node`.
-              Block.fromStyle(node),
+              Block.fromStyle(node, this._depth),
               // Blocks defined in a shadow tree hosted at `node`, and that apply to it.
               node.shadow
                 .map((shadow) =>
                   // Since selectors can pierce shadow upwards but not downwards, we
                   // only recurse downwards and this is safe.
                   Cascade.from(shadow, device)._selectors.getForHost(
+                    node,
+                    context,
+                  ),
+                )
+                .getOr([]),
+              node.shadow
+                .map((shadow) =>
+                  // Since selectors can pierce shadow upwards but not downwards, we
+                  // only recurse downwards and this is safe.
+                  Cascade.from(shadow, device)._selectors.getForSlotted(
                     node,
                     context,
                   ),
@@ -137,11 +153,21 @@ export class Cascade implements Serializable {
         // Blocks defined in style sheets of the current tree, that match `element`
         this._selectors.get(element, context, filter),
         // Blocks defined in the `style` attribute of `element`.
-        Block.fromStyle(element),
+        Block.fromStyle(element, this._depth),
         // Blocks defined in a shadow tree hosted at `element`, and that apply to it.
         element.shadow
           .map((shadow) =>
             Cascade.from(shadow, this._device)._selectors.getForHost(
+              element,
+              context,
+            ),
+          )
+          .getOr([]),
+        element.shadow
+          .map((shadow) =>
+            // Since selectors can pierce shadow upwards but not downwards, we
+            // only recurse downwards and this is safe.
+            Cascade.from(shadow, this._device)._selectors.getForSlotted(
               element,
               context,
             ),
@@ -197,4 +223,31 @@ export namespace Cascade {
     selectors: SelectorMap.JSON;
     rules: RuleTree.JSON;
   }
+}
+
+const shadowDepths = Cache.empty<Document | Shadow, number>();
+function getDepth(node: Document | Shadow): number {
+  return shadowDepths.get(node, () => {
+    if (!Shadow.isShadow(node)) {
+      // This is a top-level document. We do not use 0 in encapsulation depth
+      // in order to allow negative/positive mirrors for normal/important declarations.
+      return 1;
+    }
+
+    const host = node.host;
+
+    if (!host.isSome()) {
+      // Somehow, this shadow is not hosted.
+      return 1;
+    }
+
+    const root = host.get().root();
+    if (!Document.isDocument(root) && !Shadow.isShadow(root)) {
+      // Somehow, the element is not hosted in a properly rooted tree.
+      // The host (and its root) is at depth 1, so node is at depth 2.
+      return 2;
+    }
+
+    return 1 + getDepth(root);
+  });
 }

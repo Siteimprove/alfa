@@ -41,15 +41,19 @@ const UAblock: Block.JSON = {
   declarations: [{ name: "display", value: "block", important: false }],
   precedence: {
     origin: Origin.NormalUserAgent,
-    encapsulation: Encapsulation.NormalOuter,
+    encapsulation: -1,
     isElementAttached: false,
     specificity: { a: 0, b: 0, c: 1 },
     order: 7,
   },
 };
 
-function getBlock(rule: StyleRule, order: number): Block.JSON {
-  return Block.from(rule, order)[0][0].toJSON();
+function getBlock(
+  rule: StyleRule,
+  order: number,
+  encapsulationDepth: number = 1,
+): Block.JSON {
+  return Block.from(rule, order, encapsulationDepth)[0][0].toJSON();
 }
 
 test(".get() returns the rule tree node of the given element", (t) => {
@@ -119,7 +123,7 @@ test(".get() fetches `:host` rules from shadow, when relevant.", (t) => {
         children: [
           {
             // Actual rules, there are 58 rules in the UA sheet.
-            block: getBlock(innerNormalRule, 58),
+            block: getBlock(innerNormalRule, 58, 2),
             children: [
               {
                 // Rules order is computed separately for each encapsulation context.
@@ -128,7 +132,10 @@ test(".get() fetches `:host` rules from shadow, when relevant.", (t) => {
                   {
                     block: getBlock(outerImportantRule, 59),
                     children: [
-                      { block: getBlock(innerImportantRule, 59), children: [] },
+                      {
+                        block: getBlock(innerImportantRule, 59, 2),
+                        children: [],
+                      },
                     ],
                   },
                 ],
@@ -187,8 +194,8 @@ test(".get() fetches `:host-context` rules from shadow, when relevant.", (t) => 
           {
             // Actual rules, there are 58 rules in the UA sheet.
             // The "div" rule is declared first, but also inserted higher due to lower precedence.
-            block: getBlock(rules[1], 59),
-            children: [{ block: getBlock(rules[0], 58), children: [] }],
+            block: getBlock(rules[1], 59, 2),
+            children: [{ block: getBlock(rules[0], 58, 2), children: [] }],
           },
         ],
       },

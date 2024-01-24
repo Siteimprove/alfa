@@ -78,6 +78,8 @@ test("Complex :host(-context) selector match elements in the shadow tree", (t) =
   t.equal(parse(":host-context(body) > b").matches(target), true);
   t.equal(parse(":host-context(body) > i").matches(inner), false);
   t.equal(parse(":host-context(body) i").matches(inner), true);
+
+  t.equal(parse("body > :host > b").matches(target), false);
 });
 
 test("#matches() never matches a ::slotted selector", (t) => {

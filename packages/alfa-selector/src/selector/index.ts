@@ -2,14 +2,15 @@ import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import type { Complex } from "./complex";
 
+import { Complex } from "./complex";
 import { Compound } from "./compound";
 import { List } from "./list";
 import type { Relative } from "./relative";
 import type { Simple } from "./simple/index";
 import { Host } from "./simple/pseudo-class/host";
 import { HostContext } from "./simple/pseudo-class/host-context";
+import { Slotted } from "./simple/pseudo-element/slotted";
 
 // Re-export for further users
 export * from "./combinator";
@@ -20,7 +21,7 @@ export * from "./relative";
 export * from "./simple";
 
 const { end, left, map } = Parser;
-const { or } = Refinement;
+const { and, or, test } = Refinement;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector}
@@ -63,12 +64,45 @@ export namespace Selector {
     | List.JSON;
 
   /**
-   * Whether a selector is a shadow selector selecting a light node.
+   * Whether a selector targets slotted elements (living in another tree).
+   *
+   * @remarks
+   * `::slotted` inside a complex selector, not in rightmost position,
+   * does not match anything. Complex.matches currently let it match stuff,
+   * but hasSlotted should make sure we never call it that way…
    */
-  export const isShadow: Refinement<Selector, Host | HostContext> = or(
-    Host.isHost,
-    HostContext.isHostContext,
-  );
+  export function hasSlotted(selector: Selector): boolean {
+    return test(
+      or(
+        Slotted.isSlotted,
+        and(Compound.isCompound, (compound) =>
+          Iterable.some(compound.selectors, Slotted.isSlotted),
+        ),
+        // `::slotted` only works in the rightmost position of complex selectors.
+        and(Complex.isComplex, (complex) => hasSlotted(complex.right)),
+      ),
+      selector,
+    );
+  }
+
+  /**
+   * Whether a selector targets the shadow host of its tree (hence in another tree).
+   *
+   * @remarks
+   * * `:host` and `:context` as part of a compound selector never match.
+   * * `:host` and `:host-context` as the leftmost part of a complex selector
+   *   actually match a node within the shadow tree. Thus, they are not
+   *   considered as "host selector" and Complex.matches handles the case.
+   * * `:host` and `:host-context` in other place of a complex selector do
+   *   not match anything.
+   */
+  export const isHostSelector = or(Host.isHost, HostContext.isHostContext);
+
+  /**
+   * Whether a selector is a shadow selector selecting a light node (in another tree).
+   *
+   */
+  export const isShadow = or(isHostSelector, hasSlotted);
 
   /**
    * Parsers for Selectors

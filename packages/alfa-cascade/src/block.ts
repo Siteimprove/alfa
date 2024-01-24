@@ -66,7 +66,7 @@ export class Block<S extends Element | Block.Source = Element | Block.Source>
     [],
     {
       origin: Origin.NormalUserAgent,
-      encapsulation: Encapsulation.NormalOuter,
+      encapsulation: -1 /* outermost normal */,
       isElementAttached: false,
       specificity: Specificity.empty(),
       order: -Infinity,
@@ -222,6 +222,7 @@ export namespace Block {
   export function from(
     rule: StyleRule,
     order: number,
+    encapsulationDepth: number,
   ): [Array<Block<Source>>, number] {
     let blocks: Array<Block<Source>> = [];
 
@@ -247,13 +248,11 @@ export namespace Block {
           // match within the current tree, and can only match an encapsulating light tree.
           // Therefore, for anything that will actually match a shadow selector, the selector
           // appears as encapsulated.
-          const encapsulation = Selector.isShadow(selector)
-            ? importance
-              ? Encapsulation.ImportantInner
-              : Encapsulation.NormalInner
-            : importance
-              ? Encapsulation.ImportantOuter
-              : Encapsulation.NormalOuter;
+          const encapsulation = importance
+            ? // Important declarations have positive encapsulation depth, deeper wins.
+              encapsulationDepth
+            : // Normal declarations have negative encapsulation depth, deeper loses.
+              -encapsulationDepth;
 
           blocks.push(
             Block.of({ rule, selector }, declarations, {
@@ -275,7 +274,10 @@ export namespace Block {
    * Turns the style attribute of an element into blocks (one for important
    * declarations, one for normal declarations).
    */
-  export function fromStyle(element: Element): Iterable<Block> {
+  export function fromStyle(
+    element: Element,
+    encapsulationDepth: number,
+  ): Iterable<Block> {
     return element.style
       .map((style) =>
         Iterable.map(
@@ -287,8 +289,10 @@ export namespace Block {
             Block.of(element, declarations, {
               origin: importance ? Origin.ImportantAuthor : Origin.NormalAuthor,
               encapsulation: importance
-                ? Encapsulation.ImportantOuter
-                : Encapsulation.NormalOuter,
+                ? // Important declarations have positive encapsulation depth, deeper wins.
+                  encapsulationDepth
+                : // Normal declarations have negative encapsulation depth, deeper loses.
+                  -encapsulationDepth,
               isElementAttached: true,
               specificity: Specificity.empty(),
               // Since style attribute trumps style rules in the cascade sort,
