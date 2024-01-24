@@ -1,6 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
-import { h, StyleRule } from "@siteimprove/alfa-dom";
+import { Document, h, Node, Shadow, StyleRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 
 import { Block } from "../src/block";
@@ -8,6 +9,8 @@ import { Cascade } from "../src";
 import { Encapsulation, Origin } from "../src/precedence";
 
 const device = Device.standard();
+
+const { or } = Predicate;
 
 test(".from() builds a cascade with the User Agent style sheet", (t) => {
   const document = h.document([<div>Hello</div>]);
@@ -203,14 +206,25 @@ test(".get() fetches `:host-context` rules from shadow, when relevant.", (t) => 
 });
 
 test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
-  const rules = [h.rule.style("::slotted(*)", { color: "green" })];
+  const rules = [
+    h.rule.style("::slotted(span)", { color: "red" }),
+    h.rule.style("b > ::slotted(.foo)", { color: "blue" }),
+    h.rule.style("::slotted(*)", { color: "green" }),
+  ];
 
   const slotted1 = <div class="foo">Hello</div>;
 
   const document = h.document([
     <main>
       {slotted1}
-      {h.shadow([<slot></slot>], [h.sheet(rules)])}
+      {h.shadow(
+        [
+          <b>
+            <slot></slot>
+          </b>,
+        ],
+        [h.sheet(rules)],
+      )}
     </main>,
   ]);
   const cascade = Cascade.from(document, device);
@@ -218,7 +232,7 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
   // The rule tree has 4 items on the way to slotted1:
   // The fake root, the UA rule `div { display: block }`, and the 2 relevant rules declared here.
   // We thus just grab and check the path down from the fake root.
-  t.deepEqual(Iterable.toJSON(cascade.get(slotted1).inclusiveAncestors())[2], {
+  t.deepEqual(Iterable.toJSON(cascade.get(slotted1).inclusiveAncestors())[3], {
     // fake root
     block: Block.empty().toJSON(),
     children: [
@@ -244,10 +258,114 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
         block: UAblock,
         children: [
           {
-            // Actual rules, there are 58 rules in the UA sheet.
-            // The "div" rule is declared first, but also inserted higher due to lower precedence.
-            block: getBlock(rules[0], 58, 2),
-            children: [], //[{ block: getBlock(rules[0], 58, 2), children: [] }],
+            // Actual rules, there are 58 rules in the UA sheet, plus the ignored one.
+            block: getBlock(rules[2], 60, 2),
+            children: [{ block: getBlock(rules[1], 59, 2), children: [] }],
+          },
+        ],
+      },
+    ],
+  });
+});
+
+test(".get() correctly sort rules from different depths.", (t) => {
+  const outerNormalRule = h.rule.style("div", { color: "blue" });
+  const outerImportantRule = h.rule.style("div", {
+    color: "yellow !important",
+  });
+  const middleNormalRule = h.rule.style("::slotted(*)", { color: "cyan" });
+  const middleImportantRule = h.rule.style("::slotted(*)", {
+    color: "magenta !important",
+  });
+  const innerNormalRule = h.rule.style(":host", { color: "green" });
+  const innerImportantRule = h.rule.style(":host", {
+    color: "red !important",
+  });
+
+  const innerShadow = h.shadow(
+    [<span>Hello</span>],
+    [h.sheet([innerNormalRule, innerImportantRule])],
+  );
+  const target = <div>{innerShadow}</div>;
+  const document = h.document(
+    [
+      <main>
+        {target}
+        {h.shadow(
+          [<slot></slot>],
+          [h.sheet([middleNormalRule, middleImportantRule])],
+        )}
+      </main>,
+    ],
+    [h.sheet([outerNormalRule, outerImportantRule])],
+  );
+  // Resulting flat tree:
+  // #document  <- has outer rules
+  // main
+  // +-- #shadow <- has middle rules, apply to the slotted div.
+  //     slot
+  //     +-- div
+  //         +-- #shadow  <- has inner rules, apply to the hosting div.
+  //             span
+  const cascade = Cascade.from(document, device);
+
+  // The rule tree has 8 items on the way to slotted1:
+  // The fake root, the UA rule `div { display: block }`, and the 6 rules declared here.
+  // We thus just grab and check the path down from the fake root.
+  t.deepEqual(Iterable.toJSON(cascade.get(target).inclusiveAncestors())[7], {
+    // fake root
+    block: Block.empty().toJSON(),
+    children: [
+      // The <main> element also generates a node with the UA block, on a separate branch.
+      {
+        block: {
+          ...UAblock,
+          source: {
+            ...UAblock.source,
+            selector: {
+              type: "type",
+              specificity: { a: 0, b: 0, c: 1 },
+              key: "main",
+              name: "main",
+              namespace: null,
+            },
+          },
+        },
+        children: [],
+      },
+      {
+        // UA rule
+        block: UAblock,
+        children: [
+          {
+            // Actual rules, there are 58 rules in the UA sheet, for each encapsulation context.
+            block: getBlock(innerNormalRule, 58, 3),
+            children: [
+              {
+                block: getBlock(middleNormalRule, 58, 2),
+                children: [
+                  {
+                    block: getBlock(outerNormalRule, 58, 1),
+                    children: [
+                      {
+                        block: getBlock(outerImportantRule, 59, 1),
+                        children: [
+                          {
+                            block: getBlock(middleImportantRule, 59, 2),
+                            children: [
+                              {
+                                block: getBlock(innerImportantRule, 59, 3),
+                                children: [],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

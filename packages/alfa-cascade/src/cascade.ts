@@ -1,6 +1,12 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
+import {
+  Document,
+  Element,
+  Node,
+  Shadow,
+  Slotable,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -208,29 +214,46 @@ export namespace Cascade {
   }
 }
 
-const shadowDepths = Cache.empty<Document | Shadow, number>();
-function getDepth(node: Document | Shadow): number {
+const shadowDepths = Cache.empty<Node, number>();
+
+/**
+ * Get the encapsulation depth
+ *
+ * @remarks
+ * This one is a bit tricky because a shadow host `host` may itself
+ * be slotted inside another shadow tree. In that case, host's shadow
+ * tree has an encapsulation depth of 3 (itself, the slotting tree,
+ * the main light tree). However, when looking at the tree structure,
+ * there is only one shadow host on its way to the main root.
+ *
+ * Using the flat tree does not really help, because it purposefully jumps
+ * over shadow hosts and slots, which doesn't hepl for counting shadow hosts…
+ *
+ * Using the composed tree does not really help, because it does not resolve
+ * slotting.
+ *
+ * Thus, we must do a custom traversal to both count the shadow hosts and
+ * follow the slots.
+ */
+function getDepth(node: Node): number {
   return shadowDepths.get(node, () => {
-    if (!Shadow.isShadow(node)) {
-      // This is a top-level document. We do not use 0 in encapsulation depth
-      // in order to allow negative/positive mirrors for normal/important declarations.
-      return 1;
+    // If this is a Shadow root, get the depth of its host and increase
+    // it. If it is not hosted, it has the minimum depth of 1 (0 is not
+    // used to allow for negative/positive trick).
+    if (Shadow.isShadow(node)) {
+      return 1 + node.host.map(getDepth).getOr(0);
     }
 
-    const host = node.host;
-
-    if (!host.isSome()) {
-      // Somehow, this shadow is not hosted.
-      return 1;
+    // If it is slotted, jump to the slot. Otherwise, go to the parent.
+    // If there is not parent, we've reached the root and the depth is 1.
+    if (Slotable.isSlotable(node)) {
+      return node
+        .assignedSlot()
+        .map(getDepth)
+        .getOr(node.parent().map(getDepth).getOr(1));
     }
 
-    const root = host.get().root();
-    if (!Document.isDocument(root) && !Shadow.isShadow(root)) {
-      // Somehow, the element is not hosted in a properly rooted tree.
-      // The host (and its root) is at depth 1, so node is at depth 2.
-      return 2;
-    }
-
-    return 1 + getDepth(root);
+    // Otherwise, just go to the parent.
+    return node.parent().map(getDepth).getOr(1);
   });
 }
