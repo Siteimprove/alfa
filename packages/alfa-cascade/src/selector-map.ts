@@ -19,7 +19,6 @@ import {
   Combinator,
   Complex,
   Context,
-  PseudoClass,
   Selector,
 } from "@siteimprove/alfa-selector";
 
@@ -194,12 +193,14 @@ export class SelectorMap implements Serializable {
   public *getForSlotted(
     slotted: Element,
     context: Context,
+    debug: boolean = false,
   ): Iterable<Block<Block.Source>> {
-    yield* this._shadow.filter(
-      (block) =>
+    yield* this._shadow.filter((block) => {
+      return (
         Selector.hasSlotted(block.selector) &&
-        block.selector.matches(slotted, context),
-    );
+        Selector.matchSlotted(block.selector, slotted, context)
+      );
+    });
   }
 
   public toJSON(): SelectorMap.JSON {

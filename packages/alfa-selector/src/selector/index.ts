@@ -1,7 +1,9 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Context } from "../context";
 
 import { Complex } from "./complex";
 import { Compound } from "./compound";
@@ -103,6 +105,31 @@ export namespace Selector {
    *
    */
   export const isShadow = or(isHostSelector, hasSlotted);
+
+  /**
+   * Checks if a selector matches a slotted element.
+   *
+   * @remarks
+   * This will automatically be false is `selector` does not contain a `::slotted`
+   * pseudo-element or if `slotted` is not indeed slotted, and shouldn't be used
+   * in these cases.
+   *
+   * @privateRemarks
+   * For ::slotted or compound containing ::slotted, we need to use Slotted.matchSlotted
+   * to do the magic. For Complex selectors, their own #matches method does the magic.
+   */
+  export function matchSlotted(
+    selector: Selector,
+    slotted: Element,
+    context: Context = Context.empty(),
+  ): boolean {
+    return (
+      hasSlotted(selector) &&
+      (Slotted.isSlotted(selector) || Compound.isCompound(selector)
+        ? Slotted.matchSlotted(slotted, selector, context)
+        : selector.matches(slotted, context))
+    );
+  }
 
   /**
    * Parsers for Selectors

@@ -109,7 +109,7 @@ export namespace Slotted {
    *
    */
   export function matchSlotted(
-    element: Element & Slotable,
+    element: Element,
     selector: Compound | Simple,
     context: Context = Context.empty(),
   ): boolean {
