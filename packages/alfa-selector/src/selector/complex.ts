@@ -80,8 +80,8 @@ export class Complex extends Selector<"complex"> {
    *   can simply use tree traversal options to navigate the flat tree
    *   structure. However, the actual match toward the element must use the
    *   advanced #matchSlotted.
-   * * :host and :host-context may be used as the leftmost, e.g., `:host(.foo)
-   *   p`. This is useful to let users customise components through a simple
+   * * :host and :host-context may be used as the leftmost, e.g., `:host(.foo) p`.
+   *   This is useful to let users customise components through a simple
    *   class name on the custom element. In this case, the full selector
    *   matches something in the shadow tree and the full selector must **not**
    *   be considered as shadow selector (it matches in its own tree). But upon
@@ -92,17 +92,18 @@ export class Complex extends Selector<"complex"> {
    * @privateRemarks
    * Due to the recursive nature of the check, we oversimplify it a bit.
    * Namely, we do not really check that ::slotted appears in the rightmost
-   *   position only. This means that we incorrectly match thinks like `div
-   *   ::slotted(*) span` to a <span> descendant **in the light tree** of the
-   *   slotted element. This is incorrect, see CSS discussions about the
-   *   deprecated ::content. However, this shouldn't be a problem because
-   *   Selector.isShadow classify complex selectors by the presence of
-   *   ::slotted in the rightmost position only. Therefore, such a selector
-   *   will try to match in its own tree and fail to match the slotted element.
-   *   In the rare case where (i) people use this incorrect structure and (ii)
-   *   it happens that there is a sub-shadow tree with structure similar enough
-   *   to cause the match, this will be incorrect but we can probably live with
-   *   it until we see it.
+   * position only. This means that we incorrectly match thinks like
+   * `div ::slotted(*) span` to a <span> descendant **in the light tree** of the
+   * slotted element. This is incorrect, see CSS discussions about the
+   * deprecated ::content. However, this shouldn't be a problem because
+   * Selector.isShadow classify complex selectors by the presence of
+   * ::slotted in the rightmost position only. Therefore, such a selector
+   * will try to match in its own tree and fail to match the slotted element.
+   *
+   * In the rare case where (i) people use this incorrect structure and (ii)
+   * it happens that there is a sub-shadow tree with structure similar enough
+   * to cause the match, this will be incorrect, but we can probably live with
+   * it until we see it.
    */
   public matches(element: Element, context?: Context): boolean {
     let traversal = Node.Traversal.empty;

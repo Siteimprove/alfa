@@ -43,13 +43,11 @@ const isDescendantSelector = and(
 
 /**
  * The selector map is a data structure used for providing indexed access to
- * the
- * rules that are likely to match a given element.
+ * the rules that are likely to match a given element.
  *
  * @remarks
  * Rules are indexed according to their key selector, which is the selector
- * that a given element MUST match in order for the rest of the selector to
- *   also
+ * that a given element MUST match in order for the rest of the selector to also
  * match. A key selector can be either an ID selector, a class selector, or a
  * type selector. In a complex selector, the key selector will be the
  * right-most selector, e.g. given `main .foo + div` the key selector would be
@@ -57,11 +55,11 @@ const isDescendantSelector = and(
  * e.g. given `div.foo` the key selector would also be `div`.
  *
  * Any element matching a selector must match its key selector. E.g., anything
- * matching `main .foo + div` must be a `div`. Reciprocally, a `<div
- *   class"bar">` can only match selectors whose key selector is `div` or
- *   `bar`. Thus, filtering on key selectors decrease the search space for
- *   matching selector before the computation heavy steps of traversing the DOM
- *   to look for siblings or ancestors.
+ * matching `main .foo + div` must be a `div`. Reciprocally, a
+ * `<div class"bar">` can only match selectors whose key selector is `div` or
+ * `bar`. Thus, filtering on key selectors decrease the search space for
+ * matching selector before the computation heavy steps of traversing the DOM
+ * to look for siblings or ancestors.
  *
  * @privateRemarks
  * Internally, the selector map has three maps and two lists in one of which it
