@@ -1,16 +1,13 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Document, h, Node, Shadow, StyleRule } from "@siteimprove/alfa-dom";
+import { h, StyleRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 
 import { Block } from "../src/block";
 import { Cascade } from "../src";
-import { Encapsulation, Origin } from "../src/precedence";
+import { Origin } from "../src/precedence";
 
 const device = Device.standard();
-
-const { or } = Predicate;
 
 test(".from() builds a cascade with the User Agent style sheet", (t) => {
   const document = h.document([<div>Hello</div>]);

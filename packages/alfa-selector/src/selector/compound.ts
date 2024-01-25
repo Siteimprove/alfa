@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Token } from "@siteimprove/alfa-css";
-import { Element, type Slotable } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -12,8 +12,6 @@ import type { Absolute } from "./index";
 
 import { Selector } from "./selector";
 import { type Class, type Id, Simple, type Type } from "./simple";
-
-import { Slotted } from "./simple/pseudo-element/slotted";
 
 const { map, oneOrMore } = Parser;
 
