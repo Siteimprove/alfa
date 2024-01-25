@@ -168,7 +168,6 @@ export class Complex extends Selector_2<"complex"> {
     protected readonly _key: Option<Id | Class | Type>;
     // (undocumented)
     get left(): Simple | Compound | Complex;
-    // (undocumented)
     matches(element: Element, context?: Context): boolean;
     // (undocumented)
     static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
@@ -478,9 +477,12 @@ export type Selector = Simple | Compound | Complex | Relative | List;
 
 // @public (undocumented)
 export namespace Selector {
+    export function hasSlotted(selector: Selector): boolean;
     // (undocumented)
     export type JSON = Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | List.JSON;
-    const isShadow: Refinement<Selector, Host | HostContext>;
+    const isHostSelector: Refinement<unknown, Host | HostContext, []>;
+    const isShadow: Refinement<Selector, Selector, []>;
+    export function matchSlotted(selector: Selector, slotted: Element, context?: Context): boolean;
     const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
     //
     // (undocumented)
