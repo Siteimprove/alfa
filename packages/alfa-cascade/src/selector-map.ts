@@ -56,8 +56,8 @@ const isDescendantSelector = and(
  *
  * Any element matching a selector must match its key selector. E.g., anything
  * matching `main .foo + div` must be a `div`. Reciprocally, a
- * `<div class"bar">` can only match selectors whose key selector is `div` or
- * `bar`. Thus, filtering on key selectors decrease the search space for
+ * `<div class="bar">` can only match selectors whose key selector is `div` or
+ * `.bar`. Thus, filtering on key selectors decrease the search space for
  * matching selector before the computation heavy steps of traversing the DOM
  * to look for siblings or ancestors.
  *
@@ -73,10 +73,10 @@ const isDescendantSelector = and(
  *   same tree, but against the host tree.
  *
  * When looking up the rules that match an element, the ID, class names, and
- *   type of the element are used for looking up potentially matching selectors
- *   in the three maps. Selector matching is then performed against this list
- *   of potentially matching selectors, plus the list of remaining selectors,
- *   in order to determine the final set of matches.
+ * type of the element are used for looking up potentially matching selectors
+ * in the three maps. Selector matching is then performed against this list
+ * of potentially matching selectors, plus the list of remaining selectors,
+ * in order to determine the final set of matches.
  *
  * {@link http://doc.servo.org/style/selector_map/struct.SelectorMap.html}
  *

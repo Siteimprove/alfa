@@ -2,9 +2,9 @@ import { Device } from "@siteimprove/alfa-device";
 import { h, StyleRule } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { test } from "@siteimprove/alfa-test";
+import { Cascade } from "../src";
 
 import { Block } from "../src/block";
-import { Cascade } from "../src";
 import { Origin } from "../src/precedence";
 
 const device = Device.standard();
@@ -279,11 +279,15 @@ test(".get() correctly sort rules from different depths.", (t) => {
     color: "red !important",
   });
 
-  const innerShadow = h.shadow(
-    [<span>Hello</span>],
-    [h.sheet([innerNormalRule, innerImportantRule])],
+  const target = (
+    <div>
+      {h.shadow(
+        [<span>Hello</span>],
+        [h.sheet([innerNormalRule, innerImportantRule])],
+      )}
+    </div>
   );
-  const target = <div>{innerShadow}</div>;
+
   const document = h.document(
     [
       <main>
@@ -297,16 +301,16 @@ test(".get() correctly sort rules from different depths.", (t) => {
     [h.sheet([outerNormalRule, outerImportantRule])],
   );
   // Resulting flat tree:
-  // #document  <- has outer rules
+  // #document  <- has outer rules, apply to the target div.
   // main
-  // +-- #shadow <- has middle rules, apply to the slotted div.
+  // +-- #shadow <- has middle rules, apply to the slotted target div.
   //     slot
-  //     +-- div
-  //         +-- #shadow  <- has inner rules, apply to the hosting div.
+  //     +-- div [target, defined in the light, slotted, hosting]
+  //         +-- #shadow  <- has inner rules, apply to the hosting target div.
   //             span
   const cascade = Cascade.from(document, device);
 
-  // The rule tree has 8 items on the way to slotted1:
+  // The rule tree has 8 items on the way to target:
   // The fake root, the UA rule `div { display: block }`, and the 6 rules declared here.
   // We thus just grab and check the path down from the fake root.
   t.deepEqual(Iterable.toJSON(cascade.get(target).inclusiveAncestors())[7], {

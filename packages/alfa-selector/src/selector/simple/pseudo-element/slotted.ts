@@ -105,8 +105,6 @@ export namespace Slotted {
    * @privateRemarks
    * There is a potential circular dependency: Slotted -> Compound -> Simple -> Slotted.
    * We avoid this by checking `selector.type` rather than using Compound.isCompound.
-   *
-   *
    */
   export function matchSlotted(
     element: Element,

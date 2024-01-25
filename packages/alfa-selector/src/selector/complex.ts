@@ -71,12 +71,11 @@ export class Complex extends Selector<"complex"> {
    *
    * @remarks
    * This gets pretty hairy when shadow selectors (:host, :host-context,
-   *   ::slotted) are used in a complex selector.
-   * * ::slotted may be used as the rightmost, e.g., `div ::slotted(p)`.
+   * ::slotted) are used in a complex selector.
+   * * ::slotted may be used in the rightmost, e.g., `div ::slotted(p)`.
    *   In that case, the full selector matches something in the light,
-   *   depending
-   *   on the structure of the shadow tree. Thus, the full selector must be
-   *   considered as a shadow selector (it matches out of its tree), and this
+   *   depending on the structure of the shadow tree. Thus, the full selector must
+   *   be considered as a shadow selector (it matches out of its tree), and this
    *   can simply use tree traversal options to navigate the flat tree
    *   structure. However, the actual match toward the element must use the
    *   advanced #matchSlotted.
@@ -129,7 +128,7 @@ export class Complex extends Selector<"complex"> {
       // for a sibling match.
 
       // avoid performing the actual left match in the off case where there is no
-      // ancestor/sibling/…
+      // ancestor/sibling/… Hence, use a continuation here, evaluate it later.
       let leftMatches = this._left.matches.bind(this._left);
       let filter: Refinement<Node, Element> = isElement;
       if (Host.isHost(this._left) || HostContext.isHostContext(this._left)) {

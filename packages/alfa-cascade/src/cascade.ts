@@ -8,9 +8,10 @@ import {
   Slotable,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Context } from "@siteimprove/alfa-selector";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
 import { Block } from "./block";
@@ -32,8 +33,8 @@ import { UserAgent } from "./user-agent";
  * and thus benefit from pre-building it for all elements.
  *
  * For specific contexts, we only add the nodes in the rule tree as needed. We
- *   assume that we mostly query only a few elements in a specific context, and
- *   that the cost of rebuilding a full cascade would be too expensive.
+ * assume that we mostly query only a few elements in a specific context, and
+ * that the cost of rebuilding a full cascade would be too expensive.
  *
  * The cascade automatically includes the user agent style sheet.
  *
@@ -111,19 +112,32 @@ export class Cascade implements Serializable {
     context: Context,
     filter: AncestorFilter,
   ): RuleTree.Node {
-    const slotted = element
+    // Blocks defined in a shadow tree hosted at `element`, and that apply to it
+    // through a :host(-context) selector.
+    const forHost = element.shadow
+      .map((shadow) =>
+        // Since selectors can pierce shadow upwards but not downwards, we
+        // only recurse downwards and this is safe.
+        Cascade.from(shadow, this._device)._selectors.getForHost(
+          element,
+          context,
+        ),
+      )
+      .getOr([]);
+
+    // Blocks defined in a shadow tree hosted at the parent of `element`,
+    // and that apply to `element` through a ::slotted selector.
+    const forSlotted = element
       .parent()
       .filter(Element.isElement)
       .flatMap((parent) => parent.shadow)
       .map((shadow) =>
         // Since selectors can pierce shadow upwards but not downwards, we
         // only recurse downwards and this is safe.
-        {
-          return Cascade.from(shadow, this._device)._selectors.getForSlotted(
-            element,
-            context,
-          );
-        },
+        Cascade.from(shadow, this._device)._selectors.getForSlotted(
+          element,
+          context,
+        ),
       )
       .getOr([]);
 
@@ -133,21 +147,8 @@ export class Cascade implements Serializable {
         this._selectors.get(element, context, filter),
         // Blocks defined in the `style` attribute of `element`.
         Block.fromStyle(element, this._depth),
-        // Blocks defined in a shadow tree hosted at `element`, and that apply to it
-        // through a :host(-context) selector.
-        element.shadow
-          .map((shadow) =>
-            // Since selectors can pierce shadow upwards but not downwards, we
-            // only recurse downwards and this is safe.
-            Cascade.from(shadow, this._device)._selectors.getForHost(
-              element,
-              context,
-            ),
-          )
-          .getOr([]),
-        // Blocks defined in a shadow tree hosted at the parent of `element`,
-        // and that apply to `element` through a ::slotted selector.
-        slotted,
+        forHost,
+        forSlotted,
       ),
     );
   }
@@ -158,13 +159,12 @@ export class Cascade implements Serializable {
    * @remarks
    * This also adds the element to the rule tree if needed. That is, the rule
    * tree is build lazily upon need. For the empty context, we pre-build the
-   *   full tree, so we can benefit from an ancestor filter as we traverse the
-   *   full DOM tree.
+   * full tree, so we can benefit from an ancestor filter as we traverse the
+   * full DOM tree.
    *
-   * For other contexts, we assume that we will only need the style of a few
-   *   elements
+   * For other contexts, we assume that we will only need the style of a few elements
    * (e.g., when a link is focused we normally only need the style of the link
-   *   itself). Therefore, pre-building the full tree is not worth the cost.
+   * itself). Therefore, pre-building the full tree is not worth the cost.
    */
   public get(
     element: Element,
@@ -223,11 +223,11 @@ const shadowDepths = Cache.empty<Node, number>();
  * This one is a bit tricky because a shadow host `host` may itself
  * be slotted inside another shadow tree. In that case, host's shadow
  * tree has an encapsulation depth of 3 (itself, the slotting tree,
- * the main light tree). However, when looking at the tree structure,
+ * the main light tree). However, when looking at the DOM tree structure,
  * there is only one shadow host on its way to the main root.
  *
  * Using the flat tree does not really help, because it purposefully jumps
- * over shadow hosts and slots, which doesn't hepl for counting shadow hosts…
+ * over shadow hosts and slots, which doesn't help for counting shadow hosts…
  *
  * Using the composed tree does not really help, because it does not resolve
  * slotting.
@@ -245,7 +245,7 @@ function getDepth(node: Node): number {
     }
 
     // If it is slotted, jump to the slot. Otherwise, go to the parent.
-    // If there is not parent, we've reached the root and the depth is 1.
+    // If there is no parent, we've reached the root and the depth is 1.
     if (Slotable.isSlotable(node)) {
       return node
         .assignedSlot()
@@ -253,7 +253,7 @@ function getDepth(node: Node): number {
         .getOr(node.parent().map(getDepth).getOr(1));
     }
 
-    // Otherwise, just go to the parent.
+    // Otherwise, just go to the parent, if none, this is the toplevel root.
     return node.parent().map(getDepth).getOr(1);
   });
 }

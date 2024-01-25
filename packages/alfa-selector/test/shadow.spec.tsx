@@ -153,29 +153,29 @@ test("Compound Slotted.matchSlotted() matches with qualifier and context", (t) =
   t.equal(Slotted.matchSlotted(target, selector, Context.hover(target)), true);
 });
 
-// test("Complex selector with a rightmost ::slotted match according to shadow tree structure", (t) => {
-//   const inner = <i>light</i>;
-//   const target = <span slot="foo">from the {inner}</span>;
-//   <div>
-//     <div>
-//       {h.shadow([
-//         <b id="my-elt">
-//           Hello <slot name="foo">from the shadow</slot>
-//         </b>,
-//       ])}
-//       {target}
-//     </div>
-//   </div>;
-//
-//   // The <span> is slotted as (flat tree) child of the <b>.
-//   t.equal(parse("b > ::slotted(span)").matches(target), true);
-//   // The non-slotted <span> has no <b> parent.
-//   t.equal(parse("b > span").matches(target), false);
-//   // After the ::slotted tree structure match, the rest of the structure stays in its tree
-//   // and the <b> is not a descendant of the host nor its ancestors in the light tree.
-//   t.equal(parse("div b > ::slotted(span)").matches(target), false);
-//
-//   // This should not match. Only the actual slotted element can be reached in the light tree.
-//   // Check comment on Complex#matches for more info.
-//   t.equal(parse("b > ::slotted(span) i").matches(inner), true);
-// });
+test("Complex selector with a rightmost ::slotted match according to shadow tree structure", (t) => {
+  const inner = <i>light</i>;
+  const target = <span slot="foo">from the {inner}</span>;
+  <div>
+    <div>
+      {h.shadow([
+        <b id="my-elt">
+          Hello <slot name="foo">from the shadow</slot>
+        </b>,
+      ])}
+      {target}
+    </div>
+  </div>;
+
+  // The <span> is slotted as (flat tree) child of the <b>.
+  t.equal(parse("b > ::slotted(span)").matches(target), true);
+  // The non-slotted <span> has no <b> parent.
+  t.equal(parse("b > span").matches(target), false);
+  // After the ::slotted tree structure match, the rest of the structure stays in its tree
+  // and the <b> is not a descendant of the host nor its ancestors in the light tree.
+  t.equal(parse("div b > ::slotted(span)").matches(target), false);
+
+  // This should not match. Only the actual slotted element can be reached in the light tree.
+  // Check comment on Complex#matches for more info.
+  t.equal(parse("b > ::slotted(span) i").matches(inner), true);
+});
