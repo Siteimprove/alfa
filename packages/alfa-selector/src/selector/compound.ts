@@ -1,12 +1,12 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Token } from "@siteimprove/alfa-css";
-import type { Element } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import type { Context } from "../context";
+import { Context } from "../context";
 import { Specificity } from "../specificity";
 import type { Absolute } from "./index";
 

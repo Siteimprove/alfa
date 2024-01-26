@@ -10,7 +10,7 @@ test(".from() creates a single block for a simple rule", (t) => {
   const declaration = h.declaration("color", "red");
   const rule = h.rule.style("a", [declaration]);
 
-  t.deepEqual(Array.toJSON(Block.from(rule, 0)), [
+  t.deepEqual(Array.toJSON(Block.from(rule, 0, 1)), [
     [
       {
         source: {
@@ -26,7 +26,7 @@ test(".from() creates a single block for a simple rule", (t) => {
         declarations: [declaration.toJSON()],
         precedence: {
           origin: Origin.NormalAuthor,
-          encapsulation: Encapsulation.NormalOuter,
+          encapsulation: -1,
           isElementAttached: false,
           specificity: { a: 0, b: 0, c: 1 },
           order: 1,
@@ -41,7 +41,7 @@ test(".from() respects order", (t) => {
   const declaration = h.declaration("color", "red");
   const rule = h.rule.style("a", [declaration]);
 
-  t.deepEqual(Array.toJSON(Block.from(rule, 41)), [
+  t.deepEqual(Array.toJSON(Block.from(rule, 41, 1)), [
     [
       {
         source: {
@@ -57,7 +57,7 @@ test(".from() respects order", (t) => {
         declarations: [declaration.toJSON()],
         precedence: {
           origin: Origin.NormalAuthor,
-          encapsulation: Encapsulation.NormalOuter,
+          encapsulation: -1,
           isElementAttached: false,
           specificity: { a: 0, b: 0, c: 1 },
           order: 42,
@@ -73,7 +73,7 @@ test(".from() splits blocks by selector and importance, with the same order", (t
   const important = h.declaration("display", "block", true);
   const rule = h.rule.style("a, .foo", [normal, important]);
 
-  t.deepEqual(Array.toJSON(Block.from(rule, 0)), [
+  t.deepEqual(Array.toJSON(Block.from(rule, 0, 1)), [
     [
       {
         source: {
@@ -89,7 +89,7 @@ test(".from() splits blocks by selector and importance, with the same order", (t
         declarations: [normal.toJSON()],
         precedence: {
           origin: Origin.NormalAuthor,
-          encapsulation: Encapsulation.NormalOuter,
+          encapsulation: -1,
           isElementAttached: false,
           specificity: { a: 0, b: 0, c: 1 },
           order: 1,
@@ -108,7 +108,7 @@ test(".from() splits blocks by selector and importance, with the same order", (t
         declarations: [normal.toJSON()],
         precedence: {
           origin: Origin.NormalAuthor,
-          encapsulation: Encapsulation.NormalOuter,
+          encapsulation: -1,
           isElementAttached: false,
           specificity: { a: 0, b: 1, c: 0 },
           order: 1,
@@ -128,7 +128,7 @@ test(".from() splits blocks by selector and importance, with the same order", (t
         declarations: [important.toJSON()],
         precedence: {
           origin: Origin.ImportantAuthor,
-          encapsulation: Encapsulation.ImportantOuter,
+          encapsulation: 1,
           isElementAttached: false,
           specificity: { a: 0, b: 0, c: 1 },
           order: 1,
@@ -147,7 +147,7 @@ test(".from() splits blocks by selector and importance, with the same order", (t
         declarations: [important.toJSON()],
         precedence: {
           origin: Origin.ImportantAuthor,
-          encapsulation: Encapsulation.ImportantOuter,
+          encapsulation: 1,
           isElementAttached: false,
           specificity: { a: 0, b: 1, c: 0 },
           order: 1,
@@ -158,11 +158,11 @@ test(".from() splits blocks by selector and importance, with the same order", (t
   ]);
 });
 
-test(".from() marks shadow selectors as encapsulated", (t) => {
+test(".from() respects encapsulation depth", (t) => {
   const declaration = h.declaration("color", "red");
   const rule = h.rule.style(":host", [declaration]);
 
-  t.deepEqual(Array.toJSON(Block.from(rule, 0)), [
+  t.deepEqual(Array.toJSON(Block.from(rule, 0, 42)), [
     [
       {
         source: {
@@ -176,7 +176,7 @@ test(".from() marks shadow selectors as encapsulated", (t) => {
         declarations: [declaration.toJSON()],
         precedence: {
           origin: Origin.NormalAuthor,
-          encapsulation: Encapsulation.NormalInner,
+          encapsulation: -42,
           isElementAttached: false,
           specificity: { a: 0, b: 1, c: 0 },
           order: 1,
@@ -190,13 +190,13 @@ test(".from() marks shadow selectors as encapsulated", (t) => {
 test(".fromStyle() creates blocks for a style attribute", (t) => {
   const element = <div style={{ color: "red", display: "block !important" }} />;
 
-  t.deepEqual(Array.toJSON([...Block.fromStyle(element)]), [
+  t.deepEqual(Array.toJSON([...Block.fromStyle(element, 1)]), [
     {
       source: element.toJSON(),
       declarations: [h.declaration("color", "red").toJSON()],
       precedence: {
         origin: Origin.NormalAuthor,
-        encapsulation: Encapsulation.NormalOuter,
+        encapsulation: -1,
         isElementAttached: true,
         specificity: { a: 0, b: 0, c: 0 },
         order: -1,
@@ -207,7 +207,7 @@ test(".fromStyle() creates blocks for a style attribute", (t) => {
       declarations: [h.declaration("display", "block", true).toJSON()],
       precedence: {
         origin: Origin.ImportantAuthor,
-        encapsulation: Encapsulation.ImportantOuter,
+        encapsulation: 1,
         isElementAttached: true,
         specificity: { a: 0, b: 0, c: 0 },
         order: -1,

@@ -19,7 +19,6 @@ import {
   Combinator,
   Complex,
   Context,
-  PseudoClass,
   Selector,
 } from "@siteimprove/alfa-selector";
 
@@ -43,8 +42,8 @@ const isDescendantSelector = and(
 );
 
 /**
- * The selector map is a data structure used for providing indexed access to the
- * rules that are likely to match a given element.
+ * The selector map is a data structure used for providing indexed access to
+ * the rules that are likely to match a given element.
  *
  * @remarks
  * Rules are indexed according to their key selector, which is the selector
@@ -56,10 +55,11 @@ const isDescendantSelector = and(
  * e.g. given `div.foo` the key selector would also be `div`.
  *
  * Any element matching a selector must match its key selector. E.g., anything
- * matching `main .foo + div` must be a `div`. Reciprocally, a `<div class"bar">`
- * can only match selectors whose key selector is `div` or `bar`. Thus, filtering
- * on key selectors decrease the search space for matching selector before the
- * computation heavy steps of traversing the DOM to look for siblings or ancestors.
+ * matching `main .foo + div` must be a `div`. Reciprocally, a
+ * `<div class="bar">` can only match selectors whose key selector is `div` or
+ * `.bar`. Thus, filtering on key selectors decrease the search space for
+ * matching selector before the computation heavy steps of traversing the DOM
+ * to look for siblings or ancestors.
  *
  * @privateRemarks
  * Internally, the selector map has three maps and two lists in one of which it
@@ -72,11 +72,11 @@ const isDescendantSelector = and(
  *   into the light tree. These should never be matched against elements of the
  *   same tree, but against the host tree.
  *
- * When looking up the rules that match an element, the ID, class names, and type
- * of the element are used for looking up potentially matching selectors in the
- * three maps. Selector matching is then performed against this list of potentially
- * matching selectors, plus the list of remaining selectors, in order to
- * determine the final set of matches.
+ * When looking up the rules that match an element, the ID, class names, and
+ * type of the element are used for looking up potentially matching selectors
+ * in the three maps. Selector matching is then performed against this list
+ * of potentially matching selectors, plus the list of remaining selectors,
+ * in order to determine the final set of matches.
  *
  * {@link http://doc.servo.org/style/selector_map/struct.SelectorMap.html}
  *
@@ -158,13 +158,13 @@ export class SelectorMap implements Serializable {
    * Get all blocks from the "shadow" selectors that match a shadow host.
    *
    * @remarks
-   * The host must be the shadow host of the tree whose style sheets define this
-   * selector map.
+   * The host must be the shadow host of the tree whose style sheets define
+   * this selector map.
    *
    * @privateRemarks
-   * Because `:host-context` is searching for shadow-including ancestors of the host,
-   * we cannot use the ancestor filter that does not escape its tree. This is therefore
-   * fairly costly, and hopefully not too frequent.
+   * Because `:host-context` is searching for shadow-including ancestors of the
+   * host, we cannot use the ancestor filter that does not escape its tree.
+   * This is therefore fairly costly, and hopefully not too frequent.
    */
   public *getForHost(
     host: Element,
@@ -172,9 +172,33 @@ export class SelectorMap implements Serializable {
   ): Iterable<Block<Block.Source>> {
     yield* this._shadow.filter(
       (block) =>
-        Selector.isShadow(block.selector) &&
+        Selector.isHostSelector(block.selector) &&
         block.selector.matchHost(host, context),
     );
+  }
+
+  /**
+   * Get all blocks from the "shadow" selectors that match a slotted element.
+   *
+   * @remarks
+   * `slotted` should be a light node slotted in the tree whose style sheets
+   * define this selector map. If this is not the case, all matches will fail.
+   *
+   * @privateRemarks
+   * Because this navigates (partly) in the flat tree rather than the normal DOM
+   * tree, we cannot easily re-use the ancestor filter.
+   */
+  public *getForSlotted(
+    slotted: Element,
+    context: Context,
+    debug: boolean = false,
+  ): Iterable<Block<Block.Source>> {
+    yield* this._shadow.filter((block) => {
+      return (
+        Selector.hasSlotted(block.selector) &&
+        Selector.matchSlotted(block.selector, slotted, context)
+      );
+    });
   }
 
   public toJSON(): SelectorMap.JSON {
@@ -201,7 +225,11 @@ export namespace SelectorMap {
     shadow: Array<Block.JSON>;
   }
 
-  export function from(sheets: Iterable<Sheet>, device: Device): SelectorMap {
+  export function from(
+    sheets: Iterable<Sheet>,
+    device: Device,
+    encapsulationDepth: number,
+  ): SelectorMap {
     // Every rule encountered in style sheets is assigned an increasing number
     // that denotes declaration order. While rules are stored in buckets in the
     // order in which they were declared, information related to ordering will
@@ -220,6 +248,9 @@ export namespace SelectorMap {
 
       if (!keySelector.isSome()) {
         if (Selector.isShadow(block.selector)) {
+          // These selectors select nodes in the light tree, they are stored
+          // separately and need to be checked when building the cascade of
+          // the hosting tree, not of the same tree.
           shadow.push(block);
         } else {
           other.push(block);
@@ -241,7 +272,7 @@ export namespace SelectorMap {
         }
 
         let blocks: Array<Block<Block.Source>> = [];
-        [blocks, order] = Block.from(rule, order);
+        [blocks, order] = Block.from(rule, order, encapsulationDepth);
 
         for (const block of blocks) {
           add(block);

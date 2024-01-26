@@ -3,4 +3,4 @@
 "@siteimprove/alfa-cascade": minor
 ---
 
-**Added:** The `:host-context` pseudo-class is now supported.
+**Added:** The `:host` and `:host-context` pseudo-classes, as well as the `::slotted` pseudo-element are now supported.

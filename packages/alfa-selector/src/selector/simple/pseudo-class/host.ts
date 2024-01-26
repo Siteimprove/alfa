@@ -66,14 +66,14 @@ export class Host extends PseudoClassSelector<"host"> {
     return false;
   }
 
+  /**
+   * Checks whether a shadow host matches.
+   *
+   * @remarks
+   * This must be called with `element` being the shadow host of
+   * the Document that defines the selector.
+   */
   public matchHost(
-    /**
-     * Checks whether a shadow host matches.
-     *
-     * @remarks
-     * This must be called with `element` being the shadow host of
-     * the Document that defines the selector.
-     */
     element: Element,
     context: Context = Context.empty(),
   ): boolean {
