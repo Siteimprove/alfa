@@ -85,10 +85,8 @@ export abstract class Rule<T extends string = string>
 
     this._owner = Option.of(owner);
 
-    // Recursively attach the owner to all descendants.
-    return Iterable.every(this.descendants(), (rule) =>
-      rule._attachOwner(owner),
-    );
+    // Recursively attach the owner to all children.
+    return Iterable.every(this.children(), (rule) => rule._attachOwner(owner));
   }
 
   /**
