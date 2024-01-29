@@ -5,6 +5,7 @@ import {
   Token,
 } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -63,7 +64,12 @@ export namespace PseudoClassSelector {
     name: string,
     of: Thunk<T>,
   ): CSSParser<T> {
-    return map(right(parseColon, Token.parseIdent(name)), of);
+    return map(
+      right(parseColon, parseIdent(name)),
+      // We explicitly need to discard the parsed identifier and not pass it
+      // to a function that may use it (but was super-typed as a Thunk).
+      () => of(),
+    );
   }
 }
 
@@ -144,16 +150,17 @@ export namespace WithIndex {
  */
 export abstract class WithSelector<
   N extends string = string,
+  S extends Absolute = Absolute,
 > extends PseudoClassSelector<N> {
-  protected readonly _selector: Absolute;
+  protected readonly _selector: S;
 
-  protected constructor(name: N, selector: Absolute, specificity: Specificity) {
+  protected constructor(name: N, selector: S, specificity: Specificity) {
     super(name, specificity);
     this._selector = selector;
   }
 
   /** @public (knip) */
-  public get selector(): Absolute {
+  public get selector(): S {
     return this._selector;
   }
 
@@ -167,10 +174,10 @@ export abstract class WithSelector<
     );
   }
 
-  public toJSON(): WithSelector.JSON<N> {
+  public toJSON(): WithSelector.JSON<N, S> {
     return {
       ...super.toJSON(),
-      selector: this._selector.toJSON(),
+      selector: Serializable.toJSON(this._selector),
     };
   }
 
@@ -183,9 +190,11 @@ export abstract class WithSelector<
  * @internal
  */
 export namespace WithSelector {
-  export interface JSON<N extends string = string>
-    extends PseudoClassSelector.JSON<N> {
-    selector: Absolute.JSON;
+  export interface JSON<
+    N extends string = string,
+    S extends Absolute = Absolute,
+  > extends PseudoClassSelector.JSON<N> {
+    selector: Serializable.ToJSON<S>;
   }
 
   /**
@@ -195,10 +204,14 @@ export namespace WithSelector {
    * This can't be named just "parse" as it is overwritten by subclasses with a
    * different type of parameter (namely, no "name" or "of").
    */
-  export function parseWithSelector<T extends WithSelector>(
+  export function parseWithSelector<
+    S extends Absolute,
+    N extends string,
+    T extends WithSelector<N, S>,
+  >(
     name: string,
-    parseSelector: Thunk<CSSParser<Absolute>>,
-    of: (selector: Absolute) => T,
+    parseSelector: Thunk<CSSParser<S>>,
+    of: (selector: S) => T,
   ): CSSParser<T> {
     return map(
       right(parseColon, Function.parse(name, parseSelector)),

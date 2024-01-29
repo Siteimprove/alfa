@@ -8,7 +8,7 @@ import { Value } from "./value";
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#scripting}
  *
- * @internal
+ * @public
  */
 export class Scripting extends Media<"scripting", Keyword> {
   public static of(value: Value<Keyword>): Scripting {
@@ -33,7 +33,7 @@ export class Scripting extends Media<"scripting", Keyword> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace Scripting {
   function from(value: Option<Value<Keyword>>): Scripting {

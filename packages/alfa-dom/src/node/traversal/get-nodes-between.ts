@@ -1,6 +1,6 @@
-import { Node } from "../..";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Node } from "../..";
 
 import { lowestCommonAncestor } from "./lowest-common-ancestor";
 
@@ -43,7 +43,7 @@ export function getNodesBetween(
     // of the closest ancestor having one.
     between = first
       // Closest ancestor with a next sibling.
-      .closest((ancestor) => ancestor.next(treeOptions).isSome())
+      .closest((ancestor) => ancestor.next(treeOptions).isSome(), treeOptions)
       // Get that sibling.
       .flatMap((node) => node.next(treeOptions))
       // Skip everything until next.
@@ -71,7 +71,6 @@ function getNodesInclusivelyBetween(
 ): Sequence<Node> {
   const isFrontier = or(equals(node1), equals(node2));
 
-  // Get descendants of the LCA, and skip everything before and after both nodes.
   return lowestCommonAncestor(node1, node2, treeOptions)
     .map((context) =>
       context

@@ -11,8 +11,11 @@ const { parseColon, parseIdent } = Token;
 export abstract class PseudoElementSelector<
   N extends string = string,
 > extends WithName<"pseudo-element", N> {
-  protected constructor(name: N) {
-    super("pseudo-element", name, Specificity.of(0, 0, 1));
+  protected constructor(
+    name: N,
+    specificity: Specificity = Specificity.of(0, 0, 1),
+  ) {
+    super("pseudo-element", name, specificity);
   }
 
   public equals(value: PseudoElementSelector): boolean;

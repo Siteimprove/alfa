@@ -33,6 +33,7 @@
     "src/selector/simple/pseudo-class/focus-within.ts",
     "src/selector/simple/pseudo-class/has.ts",
     "src/selector/simple/pseudo-class/host.ts",
+    "src/selector/simple/pseudo-class/host-context.ts",
     "src/selector/simple/pseudo-class/hover.ts",
     "src/selector/simple/pseudo-class/index.ts",
     "src/selector/simple/pseudo-class/is.ts",
@@ -76,7 +77,8 @@
     "test/list.spec.ts",
     "test/nth-[last]-child.spec.tsx",
     "test/pseudo-class.spec.tsx",
-    "test/pseudo-element.spec.ts",
+    "test/pseudo-element.spec.tsx",
+    "test/shadow.spec.tsx",
     "test/specificity.spec.ts"
   ],
   "references": [
@@ -93,6 +95,7 @@
     { "path": "../alfa-option" },
     { "path": "../alfa-parser" },
     { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
     { "path": "../alfa-sequence" },
     { "path": "../alfa-slice" },
     { "path": "../alfa-test" },

@@ -13,7 +13,7 @@ import { Declaration } from '@siteimprove/alfa-dom';
 import { Device } from '@siteimprove/alfa-device';
 import { Document } from '@siteimprove/alfa-dom';
 import { Element } from '@siteimprove/alfa-dom';
-import type { Equatable } from '@siteimprove/alfa-equatable';
+import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';

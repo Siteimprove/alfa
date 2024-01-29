@@ -44,8 +44,3 @@ test(`.parse() parses ::cue both as functional and non-functional selector`, (t)
     specificity: { a: 0, b: 0, c: 1 },
   });
 });
-
-test(".parse() only allows pseudo-element selectors as the last selector", (t) => {
-  t.equal(parseErr("::foo.foo").isErr(), true);
-  t.equal(parseErr("::foo+foo").isErr(), true);
-});

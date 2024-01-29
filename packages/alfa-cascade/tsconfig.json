@@ -10,6 +10,7 @@
     "src/block.ts",
     "src/cascade.ts",
     "src/index.ts",
+    "src/precedence/encapsulation.ts",
     "src/precedence/index.ts",
     "src/precedence/order.ts",
     "src/precedence/origin.ts",
@@ -18,6 +19,7 @@
     "src/selector-map.ts",
     "src/user-agent.ts",
     "test/ancestor-filter.spec.tsx",
+    "test/block.spec.tsx",
     "test/cascade.spec.tsx",
     "test/rule-tree.spec.ts",
     "test/selector-map.spec.tsx"

@@ -17,6 +17,7 @@ import { Nth } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Parser as Parser_2 } from '@siteimprove/alfa-css';
+import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
 import { Thunk } from '@siteimprove/alfa-thunk';
@@ -167,7 +168,6 @@ export class Complex extends Selector_2<"complex"> {
     protected readonly _key: Option<Id | Class | Type>;
     // (undocumented)
     get left(): Simple | Compound | Complex;
-    // (undocumented)
     matches(element: Element, context?: Context): boolean;
     // (undocumented)
     static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
@@ -371,6 +371,7 @@ export namespace List {
 // Warning: (ae-forgotten-export) The symbol "FocusWithin" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Has" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Host" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "HostContext" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Hover" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Is" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "LastChild" needs to be exported by the entry point index.d.ts
@@ -388,14 +389,16 @@ export namespace List {
 // Warning: (ae-forgotten-export) The symbol "Where" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export type PseudoClass = Active | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
+export type PseudoClass = Active | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | HostContext | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
 
 // @public (undocumented)
 export namespace PseudoClass {
     // (undocumented)
     export function isPseudoClass(value: unknown): value is PseudoClass;
     // (undocumented)
-    export type JSON = Active.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
+    export type JSON = Active.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | HostContext.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
+    const // (undocumented)
+    isHost: typeof Host.isHost;
     // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
     //
     // (undocumented)
@@ -474,8 +477,12 @@ export type Selector = Simple | Compound | Complex | Relative | List;
 
 // @public (undocumented)
 export namespace Selector {
+    export function hasSlotted(selector: Selector): boolean;
     // (undocumented)
     export type JSON = Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | List.JSON;
+    const isHostSelector: Refinement<unknown, Host | HostContext, []>;
+    const isShadow: Refinement<Selector, Selector, []>;
+    export function matchSlotted(selector: Selector, slotted: Element, context?: Context): boolean;
     const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
     //
     // (undocumented)

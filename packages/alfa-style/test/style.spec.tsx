@@ -15,11 +15,7 @@ test("#cascaded() returns the cascaded value of a property", (t) => {
   const element = <div style={{ color: "red" }} />;
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
+    value: { type: "color", format: "named", color: "red" },
     source: h.declaration("color", "red").toJSON(),
   });
 });
@@ -40,11 +36,7 @@ test("#cascaded() correctly handles duplicate properties", (t) => {
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "green",
-    },
+    value: { type: "color", format: "named", color: "green" },
     source: h.declaration("color", "green").toJSON(),
   });
 });
@@ -63,11 +55,7 @@ test("#cascaded() returns the most specific property value", (t) => {
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "green",
-    },
+    value: { type: "color", format: "named", color: "green" },
     source: h.declaration("color", "green", true).toJSON(),
   });
 });
@@ -78,11 +66,7 @@ test("#cascaded() correctly handles inline styles overriding the sheet", (t) => 
   h.document([element], [h.sheet([h.rule.style("div", { color: "red" })])]);
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "green",
-    },
+    value: { type: "color", format: "named", color: "green" },
     source: h.declaration("color", "green", true).toJSON(),
   });
 });
@@ -97,11 +81,7 @@ test(`#cascaded() correctly handles an important declaration overriding inline
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
+    value: { type: "color", format: "named", color: "red" },
     source: h.declaration("color", "red", true).toJSON(),
   });
 });
@@ -116,11 +96,7 @@ test(`#cascaded() correctly handles important inline styles overriding an
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "green",
-    },
+    value: { type: "color", format: "named", color: "green" },
     source: h.declaration("color", "green", true).toJSON(),
   });
 });
@@ -142,10 +118,7 @@ test(`#cascaded() correctly handles a shorthand declaration overriding a
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow", "hidden").toJSON(),
   });
 });
@@ -167,10 +140,7 @@ test(`#cascaded() correctly handles a longhand declaration overriding a
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "visible",
-    },
+    value: { type: "keyword", value: "visible" },
     source: h.declaration("overflow-x", "visible").toJSON(),
   });
 });
@@ -191,10 +161,28 @@ test(`#cascaded() expands a var() function`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
+    source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+});
+
+test("#cascaded() prefers important var() declarations", (t) => {
+  const element = <div class="foo" id="foo" />;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", { overflowX: "var(--hidden)" }),
+        h.rule.style(".foo", { "--hidden": "hidden !important" }),
+        // Higher specificity, but not important
+        h.rule.style("#foo", { "--hidden": "visible" }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(cascaded(element, "overflow-x"), {
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -214,10 +202,7 @@ test(`#cascaded() expands a var() function with a fallback`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow-x", "var(--hidden, hidden)").toJSON(),
   });
 });
@@ -241,10 +226,7 @@ test(`#cascaded() expands a var() function with an inherited value`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -268,10 +250,7 @@ test(`#cascaded() prefers inheriting var() function over using fallback`, (t) =>
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow-x", "var(--hidden, visible)").toJSON(),
   });
 });
@@ -297,10 +276,7 @@ test(`#cascaded() expands a var() function with an overridden value`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "visible",
-    },
+    value: { type: "keyword", value: "visible" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -324,10 +300,7 @@ test(`#cascaded() expands a var() function with a value that contains another
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -350,18 +323,12 @@ test(`#cascaded() expands multiple var() functions in the same declaration`, (t)
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow", "var(--hidden) var(--visible)").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "overflow-y"), {
-    value: {
-      type: "keyword",
-      value: "visible",
-    },
+    value: { type: "keyword", value: "visible" },
     source: h.declaration("overflow", "var(--hidden) var(--visible)").toJSON(),
   });
 });
@@ -383,18 +350,12 @@ test(`#cascaded() expands several var() function references to the same variable
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow", "var(--hidden) var(--hidden)").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "overflow-y"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow", "var(--hidden) var(--hidden)").toJSON(),
   });
 });
@@ -415,10 +376,7 @@ test(`#cascaded() expands a var() function with a fallback with a var() function
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h
       .declaration("overflow-x", "var(--foo, var(--bar, hidden))")
       .toJSON(),
@@ -440,10 +398,7 @@ test(`#cascaded() returns "unset" when a var() function variable isn't defined`,
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--visible)").toJSON(),
   });
 });
@@ -463,10 +418,7 @@ test(`#cascaded() returns "unset" when a var() function fallback is empty`, (t) 
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--visible,)").toJSON(),
   });
 });
@@ -489,10 +441,7 @@ test(`#cascaded() returns "unset" when declaration with a var() function is
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--visible)").toJSON(),
   });
 });
@@ -514,10 +463,7 @@ test(`#cascaded() returns "unset" when a var() function is invalid`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -540,10 +486,7 @@ test(`#cascaded() returns "unset" when var() functions contain cyclic references
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -566,10 +509,7 @@ test(`#cascaded() returns "unset" when a custom property referenced by a var()
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -620,10 +560,7 @@ test(`#cascaded() returns "unset" when confronted with a billion laughs`, (t) =>
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--prop30)").toJSON(),
   });
 });
@@ -664,18 +601,12 @@ test(`#cascaded() correctly resolves var() function references within context
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("color", "var(--foo)").toJSON(),
   });
 });
@@ -702,10 +633,7 @@ test(`#cascaded() gives precedence to !important custom properties used in var()
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -732,10 +660,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
   });
 });
@@ -763,10 +688,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "unset",
-    },
+    value: { type: "keyword", value: "unset" },
     source: h.declaration("overflow-x", "var(--hidden, foo)").toJSON(),
   });
 });
@@ -787,10 +709,7 @@ test(`#cascaded() accept spaces around variable name in a var() function`, (t) =
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
-    value: {
-      type: "keyword",
-      value: "hidden",
-    },
+    value: { type: "keyword", value: "hidden" },
     source: h.declaration("overflow-x", "var( --hidden )").toJSON(),
   });
 });
@@ -814,20 +733,12 @@ test(`#cascaded() resolves :hover style for an element`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "color", Context.hover(element)), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "blue",
-    },
+    value: { type: "color", format: "named", color: "blue" },
     source: h.declaration("color", "blue").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
+    value: { type: "color", format: "named", color: "red" },
     source: h.declaration("color", "red").toJSON(),
   });
 });
@@ -851,20 +762,12 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "color", Context.focus(element)), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "blue",
-    },
+    value: { type: "color", format: "named", color: "blue" },
     source: h.declaration("color", "blue").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
+    value: { type: "color", format: "named", color: "red" },
     source: h.declaration("color", "red").toJSON(),
   });
 });
@@ -884,5 +787,57 @@ test(`#specified() keeps the !important flag of properties set to initial`, (t) 
       alpha: { type: "percentage", value: 0 },
     },
     source: { name: "background-color", value: "initial", important: true },
+  });
+});
+
+test("#cascaded() accepts rules from the shadow tree, when relevant", (t) => {
+  const element = (
+    <div>
+      {h.shadow(
+        [<span></span>],
+        [h.sheet([h.rule.style(":host", { color: "red" })])],
+      )}
+    </div>
+  );
+  h.document([element]);
+
+  t.deepEqual(cascaded(element, "color"), {
+    value: { type: "color", format: "named", color: "red" },
+    source: h.declaration("color", "red").toJSON(),
+  });
+});
+
+test("#cascaded() prefers important declaration from the shadow tree, and normal ones from the light tree", (t) => {
+  const element = (
+    <div>
+      {h.shadow(
+        [<span></span>],
+        [
+          h.sheet([
+            h.rule.style(":host", { color: "red !important" }),
+            h.rule.style(":host", { "background-color": "red" }),
+          ]),
+        ],
+      )}
+    </div>
+  );
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", { color: "blue !important" }),
+        h.rule.style("div", { "background-color": "blue" }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(cascaded(element, "color"), {
+    value: { type: "color", format: "named", color: "red" },
+    source: h.declaration("color", "red", true).toJSON(),
+  });
+
+  t.deepEqual(cascaded(element, "background-color"), {
+    value: { type: "color", format: "named", color: "blue" },
+    source: h.declaration("background-color", "blue").toJSON(),
   });
 });
