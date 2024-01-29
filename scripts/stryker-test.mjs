@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import async from "async";
 import { execaNode } from "execa";
 import os from "os";

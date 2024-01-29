@@ -6,10 +6,16 @@
     "!packages/**/*.d.ts",
     "!packages/**/*.spec.ts"
   ],
-  "buildCommand": "./stryker-build.sh",
+  "buildCommand": "yarn stryker-build",
   "commandRunner": { "command": "yarn stryker-test" },
   "coverageAnalysis": "off",
   "timeoutMS": 600000,
   "checkers": ["typescript"],
-  "symlinkNodeModules": false
+  "symlinkNodeModules": false,
+  "incremental": true,
+  "tsconfigFile": ".stryker/tsconfig.stryker.json",
+  "htmlReporter": {
+    "fileName": "docs/mutation-report.html"
+  },
+  "incrementalFile": ".stryker/incremental.json"
 }
