@@ -32,11 +32,13 @@
     "@types/madge": "^5.0.3",
     "@types/node": "^20.5.9",
     "async": "^3.2.1",
+    "dependency-tree": "^10.0.9",
     "execa": "^8.0.0",
     "knip": "^4.0.0",
     "madge": "^6.1.0",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
+    "precinct": "^11.0.5",
     "prettier": "^3.0.0",
     "ts-graphviz": "^1.8.1",
     "typescript": "^5.2.2"
