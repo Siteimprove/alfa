@@ -13,7 +13,7 @@
   "checkers": ["typescript"],
   "symlinkNodeModules": false,
   "incremental": true,
-  "tsconfigFile": ".stryker/tsconfig.stryker.json",
+  "tsconfigFile": ".stryker/tsconfig.json",
   "htmlReporter": {
     "fileName": "docs/mutation-report.html"
   },
