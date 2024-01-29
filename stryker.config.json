@@ -1,12 +1,13 @@
 {
   "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
   "mutate": [
-    "packages/**/*.ts",
-    "!packages/alfa-css/**/*.ts",
-    "!packages/**/*.d.ts",
-    "!packages/**/*.spec.ts"
+    "packages/alfa-act/src/**/*.ts",
+    "packages/alfa-affine/src/**/*.ts",
+    "packages/alfa-applicative/src/**/*.ts",
+    "packages/alfa-aria/src/**/*.ts",
+    "packages/alfa-array/src/**/*.ts"
   ],
-  "buildCommand": "yarn stryker-build",
+  "buildCommand": "sh scripts/stryker-build.sh",
   "commandRunner": { "command": "yarn stryker-test" },
   "coverageAnalysis": "off",
   "timeoutMS": 600000,
@@ -17,5 +18,10 @@
   "htmlReporter": {
     "fileName": "docs/mutation-report.html"
   },
-  "incrementalFile": ".stryker/incremental.json"
+  "incrementalFile": ".stryker/incremental.json",
+  "thresholds": {
+    "high": 80,
+    "low": 60,
+    "break": 40
+  }
 }
