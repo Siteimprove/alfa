@@ -8,9 +8,10 @@ import { Group } from "../../src/common/act/group";
 
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
+import { WithName } from "../../src/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
-import { failed, inapplicable, passed } from "../common/outcome";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource`, async (t) => {
@@ -145,5 +146,28 @@ test(`evaluate() gather links from the full page`, async (t) => {
     passed(R41, Group.of(target), {
       1: Outcomes.ResolveSameResource(accessibleName),
     }),
+  ]);
+});
+
+test(`evaluate() can't tell if two links that have the same name references
+      equivalent resources`, async (t) => {
+  const accessibleName = "Foo";
+
+  const target = [
+    <a href="foo.html">{accessibleName}</a>,
+    <a href="bar.html">{accessibleName}</a>,
+  ];
+
+  const document = h.document(target);
+
+  t.deepEqual(await evaluate(R41, { document }), [
+    cantTell(
+      R41,
+      Group.of(target),
+      WithName.of(
+        "Do the links resolve to equivalent resources?",
+        accessibleName,
+      ),
+    ),
   ]);
 });

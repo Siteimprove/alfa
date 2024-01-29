@@ -70,6 +70,33 @@ export default Rule.Atomic.of<Page, Attribute>({
   },
 });
 
+function allowedForInputType(
+  attributeName: aria.Attribute.Name,
+): Predicate<Element> {
+  return hasInputType((inputType) => {
+    switch (inputType) {
+      case "color":
+        return attributeName === "aria-disabled";
+      case "date":
+      case "datetime-local":
+      case "email":
+      case "month":
+      case "password":
+      case "time":
+      case "week":
+        return Role.of("textbox").isAttributeSupported(attributeName);
+      case "file":
+        return (
+          attributeName === "aria-disabled" ||
+          attributeName === "aria-invalid" ||
+          attributeName === "aria-required"
+        );
+      default:
+        return false;
+    }
+  });
+}
+
 function ariaHtmlAllowed(target: Attribute): boolean {
   const attributeName = target.name as aria.Attribute.Name;
   for (const element of target.owner) {
@@ -78,17 +105,7 @@ function ariaHtmlAllowed(target: Attribute): boolean {
         return Role.of("document").isAttributeSupported(attributeName);
 
       case "input":
-        return (
-          hasInputType(
-            "date",
-            "datetime-local",
-            "email",
-            "month",
-            "password",
-            "time",
-            "week",
-          )(element) && Role.of("textbox").isAttributeSupported(attributeName)
-        );
+        return allowedForInputType(attributeName)(element);
 
       case "select":
         return (

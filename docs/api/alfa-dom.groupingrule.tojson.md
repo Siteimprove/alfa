@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-abstract toJSON(): GroupingRule.JSON;
+toJSON(): GroupingRule.JSON<T>;
 ```
 **Returns:**
 
-[GroupingRule.JSON](./alfa-dom.groupingrule.json.md)
+[GroupingRule.JSON](./alfa-dom.groupingrule.json.md)<!-- -->&lt;T&gt;
 

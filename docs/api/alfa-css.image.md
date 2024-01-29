@@ -16,7 +16,6 @@ export declare namespace Image
 |  Function | Description |
 |  --- | --- |
 |  [isImage(value)](./alfa-css.image.isimage.md) |  |
-|  [partiallyResolve(resolver)](./alfa-css.image.partiallyresolve.md) |  |
 
 ## Interfaces
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type Canonical = Shape<Basic.Canonical, Box.Geometry>;
+type Canonical = Shape<Basic.Canonical, Box.Geometry>;
 ```
-**References:** [Shape](./alfa-css.shape.md)<!-- -->, [Box.Geometry](./alfa-css.box.geometry.md)
+**References:** [Shape](./alfa-css.shape.md)<!-- -->, [Basic.Canonical](./alfa-css.shape.basic.canonical.md)<!-- -->, [Box.Geometry](./alfa-css.box.geometry.md)
 

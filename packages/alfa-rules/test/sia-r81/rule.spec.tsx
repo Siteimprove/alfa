@@ -6,11 +6,12 @@ import R81, { Outcomes } from "../../src/sia-r81/rule";
 
 import { Group } from "../../src/common/act/group";
 
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { passed, failed, inapplicable } from "../common/outcome";
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
+import { WithName } from "../../src/common/diagnostic";
+import { evaluate } from "../common/evaluate";
+import { oracle } from "../common/oracle";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource in the same context`, async (t) => {
@@ -221,5 +222,34 @@ test(`evaluate() gather links from the full page`, async (t) => {
     passed(R81, Group.of(target), {
       1: Outcomes.ResolveSameResource(accessibleName),
     }),
+  ]);
+});
+
+test(`evaluate() can't tell if two links that have the same name references
+      equivalent resources in the same context`, async (t) => {
+  const accessibleName = "Foo";
+  const target = [
+    <a href="foo.html">{accessibleName}</a>,
+    <a href="bar.html">{accessibleName}</a>,
+  ];
+
+  const document = h.document([
+    <html>
+      <p>
+        {target[0]}
+        {target[1]}
+      </p>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R81, { document }), [
+    cantTell(
+      R81,
+      Group.of(target),
+      WithName.of(
+        "Do the links resolve to equivalent resources?",
+        accessibleName,
+      ),
+    ),
   ]);
 });

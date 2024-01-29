@@ -17,7 +17,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { Question } from "../act/question";
 
 const { isPerceivableForAll } = DOM;
-const { isElement, hasName, hasNamespace } = Element;
+const { isElement, hasName, hasNamespace, hasAttribute } = Element;
 const { and } = Predicate;
 const { isRendered } = Style;
 const { getElementDescendants } = Query;
@@ -44,17 +44,21 @@ export function audio(
         Question.of("is-audio-streaming", element).map((isStreaming) =>
           isStreaming
             ? None
-            : Question.of("is-playing", element).map((isPlaying) =>
-                isPlaying
-                  ? Option.of(element)
-                  : Question.of("play-button", element).map((playButton) =>
-                      playButton.some(
-                        and(isElement, isPerceivableForAll(device)),
-                      )
-                        ? Option.of(element)
-                        : None,
-                    ),
-              ),
+            : Question.of("is-playing", element)
+                .answerIf(hasAttribute("autoplay"), true)
+                .map((isPlaying) =>
+                  isPlaying
+                    ? Option.of(element)
+                    : Question.of("play-button", element)
+                        .answerIf(hasAttribute("controls"), Option.of(element))
+                        .map((playButton) =>
+                          playButton.some(
+                            and(isElement, isPerceivableForAll(device)),
+                          )
+                            ? Option.of(element)
+                            : None,
+                        ),
+                ),
         ),
       ),
   );

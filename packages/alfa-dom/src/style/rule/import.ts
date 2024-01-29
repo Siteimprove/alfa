@@ -1,5 +1,5 @@
 import { Lexer } from "@siteimprove/alfa-css";
-import { Media } from "@siteimprove/alfa-media";
+import { Feature } from "@siteimprove/alfa-css-feature";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -10,7 +10,7 @@ import { ConditionRule } from "./condition";
 /**
  * @public
  */
-export class ImportRule extends ConditionRule {
+export class ImportRule extends ConditionRule<"import"> {
   public static of(
     href: string,
     sheet: Sheet,
@@ -21,20 +21,22 @@ export class ImportRule extends ConditionRule {
 
   private readonly _href: string;
   private readonly _sheet: Sheet;
-  private readonly _queries: Media.List;
+  private readonly _queries: Feature.Media.List;
 
   private constructor(href: string, sheet: Sheet, condition: Option<string>) {
-    super(condition.getOr("all"), []);
+    super("import", condition.getOr("all"), []);
 
     this._href = href;
     this._sheet = sheet;
     this._queries = condition
-      .flatMap((condition) => Media.parse(Lexer.lex(condition)).ok())
+      .flatMap((condition) =>
+        Feature.parseMediaQuery(Lexer.lex(condition)).ok(),
+      )
       .map(([, queries]) => queries)
-      .getOr(Media.List.of([]));
+      .getOr(Feature.Media.List.of([]));
   }
 
-  public get queries(): Media.List {
+  public get queries(): Feature.Media.List {
     return this._queries;
   }
   public get rules(): Iterable<Rule> {
@@ -51,9 +53,7 @@ export class ImportRule extends ConditionRule {
 
   public toJSON(): ImportRule.JSON {
     return {
-      type: "import",
-      rules: [...this._sheet.rules].map((rule) => rule.toJSON()),
-      condition: this._condition,
+      ...super.toJSON(),
       href: this._href,
     };
   }
@@ -67,8 +67,7 @@ export class ImportRule extends ConditionRule {
  * @public
  */
 export namespace ImportRule {
-  export interface JSON extends ConditionRule.JSON {
-    type: "import";
+  export interface JSON extends ConditionRule.JSON<"import"> {
     href: string;
   }
 

@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-abstract toJSON(): Rule.JSON;
+toJSON(): Rule.JSON<T>;
 ```
 **Returns:**
 
-[Rule.JSON](./alfa-dom.rule.json.md)
+[Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&lt;T&gt;
 

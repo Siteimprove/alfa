@@ -8,11 +8,18 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [test(name, assertion)](./alfa-test.test.md) |  |
+|  [test(name, assertion, controller)](./alfa-test.test.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [Assertions](./alfa-test.assertions.md) |  |
+|  [Controller](./alfa-test.controller.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [RNG](./alfa-test.rng.md) |  |
 

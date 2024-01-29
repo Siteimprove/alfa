@@ -1,9 +1,10 @@
 import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Absolute } from "../../../selector";
+import { Absolute, Compound, Simple } from "../../../selector";
 import { After } from "./after";
 import { Backdrop } from "./backdrop";
 import { Before } from "./before";
@@ -23,7 +24,8 @@ import { TargetText } from "./target-text";
 
 import { PseudoElementSelector } from "./pseudo-element";
 
-const { either } = Parser;
+const { either, filter } = Parser;
+const { or } = Refinement;
 
 /**
  * @public
@@ -78,7 +80,13 @@ export namespace PseudoElement {
       Part.parse,
       Placeholder.parse,
       Selection.parse,
-      Slotted.parse(parseSelector),
+      Slotted.parse(() =>
+        filter(
+          parseSelector(),
+          or(Compound.isCompound, Simple.isSimple),
+          () => "::slotted() only accepts compound selectors",
+        ),
+      ),
       SpellingError.parse,
       TargetText.parse,
     );

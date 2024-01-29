@@ -4,11 +4,16 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { Comparer } from '@siteimprove/alfa-comparable';
+import { Complex } from '@siteimprove/alfa-selector';
+import { Compound } from '@siteimprove/alfa-selector';
 import { Context } from '@siteimprove/alfa-selector';
 import { Declaration } from '@siteimprove/alfa-dom';
 import { Device } from '@siteimprove/alfa-device';
 import { Document } from '@siteimprove/alfa-dom';
 import { Element } from '@siteimprove/alfa-dom';
+import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
@@ -17,15 +22,15 @@ import { Selector } from '@siteimprove/alfa-selector';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Shadow } from '@siteimprove/alfa-dom';
 import { Sheet } from '@siteimprove/alfa-dom';
+import { Simple } from '@siteimprove/alfa-selector';
+import { Specificity } from '@siteimprove/alfa-selector/src/specificity';
+import { StyleRule } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
 export class Cascade implements Serializable {
-    // Warning: (ae-forgotten-export) The symbol "AncestorFilter" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
-    get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Option<RuleTree.Node>;
-    // (undocumented)
-    static of(node: Document | Shadow, device: Device): Cascade;
+    static from(node: Document | Shadow, device: Device): Cascade;
+    get(element: Element, context?: Context): RuleTree.Node;
     // (undocumented)
     toJSON(): Cascade.JSON;
 }
@@ -51,12 +56,10 @@ export namespace Cascade {
 
 // @public
 export class RuleTree implements Serializable {
-    // (undocumented)
-    add(rules: Iterable_2<{
-        rule: Rule;
-        selector: Selector;
-        declarations: Iterable_2<Declaration>;
-    }>): Option<RuleTree.Node>;
+    // Warning: (ae-forgotten-export) The symbol "Block" needs to be exported by the entry point index.d.ts
+    //
+    // @internal
+    add(rules: Iterable_2<Block>): RuleTree.Node;
     // (undocumented)
     static empty(): RuleTree;
     // (undocumented)
@@ -69,24 +72,20 @@ export namespace RuleTree {
     export type JSON = Array<Node.JSON>;
     // (undocumented)
     export class Node implements Serializable {
-        // (undocumented)
-        static add(rule: Rule, selector: Selector, declarations: Iterable_2<Declaration>, children: Array<Node>, parent: Option<Node>): Node;
+        // @internal
+        add(block: Block): Node;
         // (undocumented)
         ancestors(): Iterable_2<Node>;
         // (undocumented)
-        get children(): Array<Node>;
+        get block(): Block;
         // (undocumented)
-        get declarations(): Iterable_2<Declaration>;
+        get children(): Array<Node>;
         // (undocumented)
         inclusiveAncestors(): Iterable_2<Node>;
         // (undocumented)
-        static of(rule: Rule, selector: Selector, declarations: Iterable_2<Declaration>, children: Array<Node>, parent: Option<Node>): Node;
+        static of(block: Block, children: Array<Node>, parent: Option<Node>): Node;
         // (undocumented)
         get parent(): Option<Node>;
-        // (undocumented)
-        get rule(): Rule;
-        // (undocumented)
-        get selector(): Selector;
         // (undocumented)
         toJSON(): Node.JSON;
     }
@@ -97,13 +96,9 @@ export namespace RuleTree {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
+            block: Block.JSON;
+            // (undocumented)
             children: Array<Node.JSON>;
-            // (undocumented)
-            declarations: Array<Declaration.JSON>;
-            // (undocumented)
-            rule: Rule.JSON;
-            // (undocumented)
-            selector: Selector.JSON;
         }
     }
 }

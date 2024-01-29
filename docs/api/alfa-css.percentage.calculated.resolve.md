@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-resolve(): Canonical;
+resolve(): Fixed<H>;
 ```
 **Returns:**
 
-[Canonical](./alfa-css.percentage.canonical.md)
+[Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt;
 

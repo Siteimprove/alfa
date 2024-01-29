@@ -9,5 +9,12 @@ Constructs a new instance of the `Rule` class
 **Signature:**
 
 ```typescript
-protected constructor();
+protected constructor(type: T);
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  type | T |  |
+

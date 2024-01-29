@@ -27,4 +27,5 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [Comparer](./alfa-comparable.comparer.md) |  |
+|  [TupleComparer](./alfa-comparable.tuplecomparer.md) | Turns a tuple of types into a tuple of comparer over these types. |
 

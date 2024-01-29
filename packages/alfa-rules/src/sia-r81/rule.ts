@@ -20,8 +20,8 @@ import { referenceSameResource } from "../common/predicate";
 
 import { normalize } from "../common/normalize";
 
+import { WithName } from "../common/diagnostic";
 import { Scope, Stability } from "../tags";
-import { WithAccessibleName } from "../common/diagnostic";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
@@ -69,7 +69,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
       },
 
       expectations(target) {
-        const name = WithAccessibleName.getAccessibleName(
+        const name = WithName.getName(
           Iterable.first(target).getUnsafe(), // Existence of first element is guaranteed by applicability
           device,
         ).getUnsafe(); // Existence of accessible name is guaranteed by applicability
@@ -92,6 +92,12 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 "reference-equivalent-resources",
                 target,
                 `Do the links resolve to equivalent resources?`,
+                {
+                  diagnostic: WithName.of(
+                    `Do the links resolve to equivalent resources?`,
+                    name,
+                  ),
+                },
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
@@ -110,27 +116,17 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
  * @public
  */
 export namespace Outcomes {
-  export const ResolveSameResource = (accessibleName: string) =>
-    Ok.of(
-      WithAccessibleName.of(
-        `The links resolve to the same resource`,
-        accessibleName,
-      ),
-    );
+  export const ResolveSameResource = (name: string) =>
+    Ok.of(WithName.of(`The links resolve to the same resource`, name));
 
-  export const ResolveEquivalentResource = (accessibleName: string) =>
-    Ok.of(
-      WithAccessibleName.of(
-        `The links resolve to equivalent resources`,
-        accessibleName,
-      ),
-    );
+  export const ResolveEquivalentResource = (name: string) =>
+    Ok.of(WithName.of(`The links resolve to equivalent resources`, name));
 
-  export const ResolveDifferentResource = (accessibleName: string) =>
+  export const ResolveDifferentResource = (name: string) =>
     Err.of(
-      WithAccessibleName.of(
+      WithName.of(
         `The links do not resolve to the same or equivalent resources`,
-        accessibleName,
+        name,
       ),
     );
 }

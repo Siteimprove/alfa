@@ -2,19 +2,19 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
 import { Length } from "@siteimprove/alfa-css";
+import { Feature } from "@siteimprove/alfa-css-feature";
 import { Device } from "@siteimprove/alfa-device";
 import {
-  Rule as CSSRule,
   Document,
   Element,
   MediaRule,
   Namespace,
   Node,
+  Rule as CSSRule,
   Text,
 } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -29,8 +29,8 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope, Stability } from "../tags";
 
-const { isHeight, isWidth } = Media.Feature;
-const { Discrete, Range } = Media.Value;
+const { isHeight, isWidth } = Feature.Media.Feature;
+const { Discrete, Range } = Feature.Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -471,7 +471,11 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
  */
 const mediaRulesCache = Cache.empty<CSSRule, Sequence<MediaRule>>();
 
-function ancestorMediaRules(rule: CSSRule): Sequence<MediaRule> {
+function ancestorMediaRules(rule: CSSRule | null): Sequence<MediaRule> {
+  if (rule === null) {
+    return Sequence.empty();
+  }
+
   return mediaRulesCache.get(rule, () => {
     const mediaRules = rule.parent
       .map((parent) => ancestorMediaRules(parent))
@@ -485,10 +489,7 @@ const ruleTreeCache = Cache.empty<RuleTree.Node, Sequence<RuleTree.Node>>();
 
 function ancestorsInRuleTree(rule: RuleTree.Node): Sequence<RuleTree.Node> {
   return ruleTreeCache.get(rule, () =>
-    rule.parent
-      .map((parent) => ancestorsInRuleTree(parent))
-      .getOrElse<Sequence<RuleTree.Node>>(Sequence.empty)
-      .prepend(rule),
+    Sequence.from(rule.inclusiveAncestors()),
   );
 }
 
@@ -503,16 +504,11 @@ function getUsedMediaRules(
     return Sequence.empty();
   }
 
-  return Cascade.of(root, device)
-    .get(element, context)
-    .map((node) =>
-      // Get all nodes (style rules) in the RuleTree that affect the element;
-      // for each of these rules, get all ancestor media rules in the CSS tree.
-      ancestorsInRuleTree(node).flatMap((node) =>
-        ancestorMediaRules(node.rule),
-      ),
-    )
-    .getOrElse(Sequence.empty);
+  // Get all nodes (style rules) in the RuleTree that affect the element;
+  // for each of these rules, get all ancestor media rules in the CSS tree.
+  return ancestorsInRuleTree(
+    Cascade.from(root, device).get(element, context),
+  ).flatMap((node) => ancestorMediaRules(node.block.rule));
 }
 
 function usesMediaRule(
@@ -532,8 +528,8 @@ function usesMediaRule(
  * We currently do not support calculated media queries. But this is lost in the
  * typing of Media.Feature. Here, we simply consider them as "good" (font relative).
  */
-function isFontRelativeMediaRule<F extends Media.Feature>(
-  refinement: Refinement<Media.Feature, F>,
+function isFontRelativeMediaRule<F extends Feature.Media.Feature>(
+  refinement: Refinement<Feature.Media.Feature, F>,
 ): Predicate<MediaRule> {
   return (rule) =>
     Iterable.some(rule.queries.queries, (query) =>
@@ -559,9 +555,9 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
     );
 }
 
-function usesFontRelativeMediaRule<F extends Media.Feature>(
+function usesFontRelativeMediaRule<F extends Feature.Media.Feature>(
   device: Device,
-  refinement: Refinement<Media.Feature, F>,
+  refinement: Refinement<Feature.Media.Feature, F>,
   context: Context = Context.empty(),
 ): Predicate<Element> {
   return usesMediaRule(isFontRelativeMediaRule(refinement), device, context);

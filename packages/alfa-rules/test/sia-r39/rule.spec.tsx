@@ -4,9 +4,10 @@ import { test } from "@siteimprove/alfa-test";
 
 import R39, { Outcomes } from "../../src/sia-r39/rule";
 
+import { WithName } from "../../src/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
 test("evaluate() passes images whose name is descriptive", async (t) => {
   const target = <img src="Placeholder" alt="Placeholder" />;
@@ -64,4 +65,21 @@ test("evaluate() is inapplicable to images whose name differ from source", async
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R39, { document }), [inapplicable(R39)]);
+});
+
+test("evaluate() can't tell that name is descriptive", async (t) => {
+  const target = <img src="Placeholder" alt="Placeholder" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R39, { document }), [
+    cantTell(
+      R39,
+      target,
+      WithName.of(
+        "Does the accessible name of the `<img>` element describe its purpose?",
+        "Placeholder",
+      ),
+    ),
+  ]);
 });

@@ -5,7 +5,8 @@
     "src/comparable.ts",
     "src/comparer.ts",
     "src/comparison.ts",
-    "src/index.ts"
+    "src/index.ts",
+    "test/comparable.spec.ts"
   ],
-  "references": [{ "path": "../alfa-refinement" }]
+  "references": [{ "path": "../alfa-refinement" }, { "path": "../alfa-test" }]
 }

@@ -307,11 +307,6 @@ export namespace Shorthands {
     export type Property = typeof shortHands;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "shouldOverride" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export function shouldOverride<T>(previous: Option<Value<T>>, next: Declaration): boolean;
-
 // @public (undocumented)
 export class Style implements Serializable<Style.JSON> {
     // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
@@ -328,7 +323,6 @@ export class Style implements Serializable<Style.JSON> {
     inherited<N extends Name>(name: N): Value<Style.Inherited<N>>;
     // (undocumented)
     initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
-    // (undocumented)
     static of(styleDeclarations: Iterable_2<Declaration>, device: Device, parent?: Option<Style>): Style;
     // (undocumented)
     get parent(): Style;
@@ -352,7 +346,6 @@ export namespace Style {
     export type Computed<N extends Name> = Longhands.Computed<N>;
     // (undocumented)
     export type Declared<N extends Name> = Longhands.Declared<N>;
-    // (undocumented)
     export function from(element: Element, device: Device, context?: Context): Style;
     // (undocumented)
     export type Inherited<N extends Name> = Longhands.Inherited<N>;

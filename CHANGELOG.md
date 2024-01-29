@@ -1,5 +1,95 @@
 # Alfa changelog
 
+## [0.72.0](../../compare/v0.71.1...v0.72.0) (2024-01-08)
+
+### Breaking
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): `SelectorMap.#get` now requires an `AncestorFilter` rather than an `Option<AncestorFilter>`. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-css-feature](packages/alfa-css-feature/CHANGELOG.md#0720), [@siteimprove/alfa-media](packages/alfa-media/CHANGELOG.md#0720): `@siteimprove/alfa-media` has been deprecated and replaced by `@siteimprove/alfa-css-feature`. ([#1544](https://github.com/Siteimprove/alfa/pull/1544))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): `Cascade.of` has been renamed `Cascade.from`. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): Data in Rule tree nodes is now wrapped in a `Block` object that need to be opened. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+### Removed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): `AncestorFilter#match` has been made internal. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+### Added
+
+- [@siteimprove/alfa-comparable](packages/alfa-comparable/CHANGELOG.md#0720): A `Comparable.compareLexicographically` function to compare tuples is now available. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0720): `Specificity` is now exported for external use. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): Functionalities for dealing with Cascade Sorting Order (origin, specificity, order) are now grouped in a `Precedence` interface. ([#1540](https://github.com/Siteimprove/alfa/pull/1540))
+
+- [@siteimprove/alfa-css-feature](packages/alfa-css-feature/CHANGELOG.md#0720), [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0720): Simple feature query (`@supports` rules) are now supported. ([#1544](https://github.com/Siteimprove/alfa/pull/1544))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0720): SIA-R18 now accepts attributes for `input type=file` and `input type=color` according to the [ARIA in HTML](https://w3c.github.io/html-aria/#el-input-file) specification. ([#1541](https://github.com/Siteimprove/alfa/pull/1541))
+
+## [0.71.1](../../compare/v0.71.0...v0.71.1) (2023-12-20)
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0711): Media rules R23 and R29 no longer asks if audio is playing or where the play buttons is when the attributes `autoplay` and `controls` are present respectively. ([#1538](https://github.com/Siteimprove/alfa/pull/1538))
+
+## [0.71.0](../../compare/v0.70.0...v0.71.0) (2023-12-18)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0710): Diagnostic `WithAccessibleName` has been renamed to `WithName` and the property `accessibleName` to `name`. ([#1537](https://github.com/Siteimprove/alfa/pull/1537))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0710): `RuleTree.add` and `RuleTree.Node.add` have been made internal. ([#1534](https://github.com/Siteimprove/alfa/pull/1534))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0710): `Cascade.get()` now returns a `RuleTree.Node` instead of an `Option`. ([#1534](https://github.com/Siteimprove/alfa/pull/1534))
+
+### Added
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0710): Selectors now contain a "key selector" which is the leftmost simple selector in a compound one, or the rightmost in a complex one. ([#1534](https://github.com/Siteimprove/alfa/pull/1534))
+
+## [0.70.0](../../compare/v0.69.0...v0.70.0) (2023-12-13)
+
+### Breaking
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): The type guards on selectors are now under the namespace of the same name. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): `Compound` selectors are now built on top of Iterable, rather than re-inventing chained lists. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): The various kinds of selectors are now directly exported from the package, out of the `Selector` namespace. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0700): `Image.partiallyResolve()` and `Shape.partiallyResolve()` functions has been replaced by instance methods of the same name. ([#1510](https://github.com/Siteimprove/alfa/pull/1510))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): `List` selectors are now built on top of Iterable, rather than re-inventing chained lists. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+### Added
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): The `:nth-child` and `:nth-last-child` pseudo-classes now accept the "of selector" syntax. ([#1524](https://github.com/Siteimprove/alfa/pull/1524))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): `Selector` now contain their own `Specificity`. ([#1514](https://github.com/Siteimprove/alfa/pull/1514))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0700): all `Value` subtype now correctly implement the `(Partially)Resovable` interfaces. ([#1510](https://github.com/Siteimprove/alfa/pull/1510))
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0700): Structure validation can now optionally check that changeset contain no "major" bump. ([#1509](https://github.com/Siteimprove/alfa/pull/1509))
+
+- [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md#0700): Test can now accept a `Controller` to generate random tests. ([#1514](https://github.com/Siteimprove/alfa/pull/1514))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0700): The `:where` pseudo-class is now handled. ([#1518](https://github.com/Siteimprove/alfa/pull/1518))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0700): `Function.parse` now also accepts a `Thunk` as body parser. ([#1508](https://github.com/Siteimprove/alfa/pull/1508))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0700): New functions `Node.clone` for cloning nodes and optionally replacing child elements based on a predicate. ([#1523](https://github.com/Siteimprove/alfa/pull/1523))
+
+### Fixed
+
+- [@siteimprove/alfa-performance](packages/alfa-performance/CHANGELOG.md#0700): A bug caused runtime exceptions when calling `Performance.of()` in node v 19.0.0 and above has been fixed. ([#1513](https://github.com/Siteimprove/alfa/pull/1513))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0700): Accessible name is now also recorded as in #1502 in can't tell outcomes for rules R15, R39, R41 and R81. ([#1529](https://github.com/Siteimprove/alfa/pull/1529))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0700): SIA-R10 now correctly accepts the `one-time-code` token. ([#1517](https://github.com/Siteimprove/alfa/pull/1517))
+
 ## [0.69.0](../../compare/v0.68.0...v0.69.0) (2023-11-21)
 
 ### Breaking
@@ -36,7 +126,7 @@
 
 ### Fixed
 
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): SIA-R70 ow accepts `<hgroup>`.
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0690): SIA-R70 now accepts `<hgroup>`.
 
 - [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0690): The `<hgroup>` element now has an implicit role of `group`.
 
@@ -1458,7 +1548,7 @@ This release contains only internal API changes.
 
 ### Breaking
 
-- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Feature#value` property. The new type is used for modelling both discrete and range values which was not previously possible. Additionally, the `Media.Condition` type has been split into `Media.And` and `Media.Or`, and `Media.Negation` has been renamed `Media.Not`. `Media.Condition` is now an alias for `Media.And | Media.Or | Media.Not`. ([#722](../../pull/722))
+- [@siteimprove/alfa-media](packages/alfa-media): A new `Media.Value` type has been introduced and is now used for the `Media#value` property. The new type is used for modelling both discrete and range values which was not previously possible. Additionally, the `Media.Condition` type has been split into `Media.And` and `Media.Or`, and `Media.Negation` has been renamed `Media.Not`. `Media.Condition` is now an alias for `Media.And | Media.Or | Media.Not`. ([#722](../../pull/722))
 
 - [@siteimprove/alfa-act](packages/alfa-act): The `Oracle<Q>` type has now become `Oracle<I, T, Q>`. As such, the input type `I` and test target type `T` must now be declared up front. Additionally, the `Question<Q, A, S, T>` type has now become `Question<Q, S, A, T>` to ensure alignment with the remaining types of the package. ([#699](../../pull/699))
 

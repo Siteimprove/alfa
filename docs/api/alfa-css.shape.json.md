@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export interface JSON extends Value.JSON<"shape"> 
+interface JSON extends Value.JSON<"shape"> 
 ```
 **Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"shape"&gt;
 
@@ -16,5 +16,5 @@ export interface JSON extends Value.JSON<"shape">
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [box](./alfa-css.shape.json.box.md) |  | [Box.Geometry.JSON](./alfa-css.box.geometry.json.md) |  |
-|  [shape](./alfa-css.shape.json.shape.md) |  | Basic.JSON |  |
+|  [shape](./alfa-css.shape.json.shape.md) |  | [Basic.JSON](./alfa-css.shape.basic.json.md) |  |
 

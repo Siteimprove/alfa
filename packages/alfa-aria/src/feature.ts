@@ -399,6 +399,7 @@ const Features: Features = {
             return element.attribute("list").isSome()
               ? "combobox"
               : "searchbox";
+          // Note: The specification for email has changed, it now has role textbox. We should look into this if it becomes an issue.
           case "email":
           case "tel":
           case "text":

@@ -1,9 +1,11 @@
 import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "../../../selector";
+import { type Absolute, Simple } from "../../index";
+import { Compound } from "../../compound";
 
 import { Active } from "./active";
 import { Disabled } from "./disabled";
@@ -16,6 +18,7 @@ import { FocusVisible } from "./focus-visible";
 import { FocusWithin } from "./focus-within";
 import { Has } from "./has";
 import { Host } from "./host";
+import { HostContext } from "./host-context";
 import { Hover } from "./hover";
 import { Is } from "./is";
 import { LastChild } from "./last-child";
@@ -30,10 +33,12 @@ import { OnlyChild } from "./only-child";
 import { OnlyOfType } from "./only-of-type";
 import { Root } from "./root";
 import { Visited } from "./visited";
+import { Where } from "./where";
 
 import { PseudoClassSelector } from "./pseudo-class";
 
-const { either } = Parser;
+const { either, filter } = Parser;
+const { or } = Refinement;
 
 /**
  * @public
@@ -50,6 +55,7 @@ export type PseudoClass =
   | FocusWithin
   | Has
   | Host
+  | HostContext
   | Hover
   | Is
   | LastChild
@@ -63,7 +69,8 @@ export type PseudoClass =
   | OnlyChild
   | OnlyOfType
   | Root
-  | Visited;
+  | Visited
+  | Where;
 
 /**
  * @public
@@ -81,6 +88,7 @@ export namespace PseudoClass {
     | FocusWithin.JSON
     | Has.JSON
     | Host.JSON
+    | HostContext.JSON
     | Hover.JSON
     | Is.JSON
     | LastChild.JSON
@@ -94,7 +102,8 @@ export namespace PseudoClass {
     | OnlyChild.JSON
     | OnlyOfType.JSON
     | Root.JSON
-    | Visited.JSON;
+    | Visited.JSON
+    | Where.JSON;
 
   export function isPseudoClass(value: unknown): value is PseudoClass {
     // Note: this is not totally true as we could extend PseudoClassSelector
@@ -102,6 +111,8 @@ export namespace PseudoClass {
     // that case…
     return value instanceof PseudoClassSelector;
   }
+
+  export const { isHost } = Host;
 
   export function parse(
     parseSelector: Thunk<CSSParser<Absolute>>,
@@ -116,7 +127,20 @@ export namespace PseudoClass {
       Focus.parse,
       FocusVisible.parse,
       FocusWithin.parse,
-      Host.parse,
+      Host.parse(() =>
+        filter(
+          parseSelector(),
+          or(Compound.isCompound, Simple.isSimple),
+          () => ":host() only accepts compound selectors",
+        ),
+      ),
+      HostContext.parse(() =>
+        filter(
+          parseSelector(),
+          or(Compound.isCompound, Simple.isSimple),
+          () => ":host-context() only accepts compound selectors",
+        ),
+      ),
       Hover.parse,
       LastChild.parse,
       LastOfType.parse,
@@ -125,13 +149,14 @@ export namespace PseudoClass {
       OnlyOfType.parse,
       Root.parse,
       Visited.parse,
-      NthChild.parse,
-      NthLastChild.parse,
+      NthChild.parse(parseSelector),
+      NthLastChild.parse(parseSelector),
       NthLastOfType.parse,
       NthOfType.parse,
       Has.parse(parseSelector),
       Is.parse(parseSelector),
       Not.parse(parseSelector),
+      Where.parse(parseSelector),
     );
   }
 }

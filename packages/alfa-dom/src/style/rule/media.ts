@@ -1,6 +1,6 @@
 import { Lexer } from "@siteimprove/alfa-css";
+import { Feature } from "@siteimprove/alfa-css-feature";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Media } from "@siteimprove/alfa-media";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
@@ -11,31 +11,27 @@ const { map, join } = Iterable;
 /**
  * @public
  */
-export class MediaRule extends ConditionRule {
+export class MediaRule extends ConditionRule<"media"> {
   public static of(condition: string, rules: Iterable<Rule>): MediaRule {
     return new MediaRule(condition, Array.from(rules));
   }
 
-  private readonly _queries: Media.List;
+  private readonly _queries: Feature.Media.List;
 
   private constructor(condition: string, rules: Array<Rule>) {
-    super(condition, rules);
+    super("media", condition, rules);
 
-    this._queries = Media.parse(Lexer.lex(condition))
+    this._queries = Feature.parseMediaQuery(Lexer.lex(condition))
       .map(([, queries]) => queries)
-      .getOr(Media.List.of([]));
+      .getOr(Feature.Media.List.of([]));
   }
 
-  public get queries(): Media.List {
+  public get queries(): Feature.Media.List {
     return this._queries;
   }
 
   public toJSON(): MediaRule.JSON {
-    return {
-      type: "media",
-      rules: [...this._rules].map((rule) => rule.toJSON()),
-      condition: this._condition,
-    };
+    return super.toJSON();
   }
 
   public toString(): string {
@@ -52,9 +48,7 @@ export class MediaRule extends ConditionRule {
  * @public
  */
 export namespace MediaRule {
-  export interface JSON extends ConditionRule.JSON {
-    type: "media";
-  }
+  export interface JSON extends ConditionRule.JSON<"media"> {}
 
   export function isMediaRule(value: unknown): value is MediaRule {
     return value instanceof MediaRule;

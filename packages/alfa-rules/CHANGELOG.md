@@ -1,20 +1,50 @@
 # @siteimprove/alfa-rules
 
+## 0.72.0
+
+### Patch Changes
+
+- **Fixed:** SIA-R18 now accepts attributes for `input type=file` and `input type=color` according to the [ARIA in HTML](https://w3c.github.io/html-aria/#el-input-file) specification ([#1541](https://github.com/Siteimprove/alfa/pull/1541))
+
+## 0.71.1
+
+### Patch Changes
+
+- **Changed:** Media rules R23 and R29 no longer asks if audio is playing or where the play buttons is when the attributes `autoplay` and `controls` are present respectively. ([#1538](https://github.com/Siteimprove/alfa/pull/1538))
+
+## 0.71.0
+
+### Minor Changes
+
+- **Breaking:** Diagnostic `WithAccessibleName` has been renamed to `WithName` and the property `accessibleName` to `name`. ([#1537](https://github.com/Siteimprove/alfa/pull/1537))
+
+  This is to conform to existing diagnostics that refer to accessible name as name and clients that are expecting this convention.
+
+## 0.70.0
+
+### Minor Changes
+
+- **Fixed:** Accessible name is now also recorded as in #1502 in can't tell outcomes for rules R15, R39, R41 and R81 ([#1529](https://github.com/Siteimprove/alfa/pull/1529))
+
+### Patch Changes
+
+- **Fixed:** SIA-R10 now correctly accepts the `one-time-code` token. ([#1517](https://github.com/Siteimprove/alfa/pull/1517))
+
 ## 0.69.0
 
 ### Minor Changes
 
-- **Added:** Accessible name is now recorded in the diagnostics for R15, R39, R41 and R81 ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Added:** Accessible name is now recorded in the diagnostics for R15, R39, R41 and R81 ([#1502](https://github.com/Siteimprove/alfa/pull/1502))
 
-- **Added:** Role is now recorded in the diagnostic for R8 ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Added:** Role is now recorded in the diagnostic for R8 ([#1504](https://github.com/Siteimprove/alfa/pull/1504))
 
-- **Breaking:** Diagnostics `WithPreviousHeading` and `WithNextHeading` have been replaced by `WithOtherHeading`. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Breaking:** Diagnostics `WithPreviousHeading` and `WithNextHeading` have been replaced by `WithOtherHeading`. ([#1505](https://github.com/Siteimprove/alfa/pull/1505))
 
-- **Breaking:** Question `visible-focus-classes`, and question type `string[]` have been removed. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Breaking:** Question `visible-focus-classes`, and question type `string[]` have been removed. ([#1497](https://github.com/Siteimprove/alfa/pull/1497))
 
 ### Patch Changes
 
-- **Fixed:** SIA-R70 ow accepts `<hgroup>`. ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Fixed:** SIA-R70 now accepts `<hgroup>`. ([#1506](https://github.com/Siteimprove/alfa/pull/1506))
 
   The element has been re-introduced in the HTML standard, with improved content model.
 

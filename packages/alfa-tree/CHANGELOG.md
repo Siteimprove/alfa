@@ -1,16 +1,24 @@
 # @siteimprove/alfa-tree
 
+## 0.72.0
+
+## 0.71.1
+
+## 0.71.0
+
+## 0.70.0
+
 ## 0.69.0
 
 ### Minor Changes
 
-- **Added:** Tree `Node`, and DOM `Node` can now have an `externalId` (`string`) and some `extraData` (`any`). ([`e2fe7c6f2`](https://github.com/Siteimprove/alfa/commit/e2fe7c6f2262327ce60b4a29504a20069f69e76c))
+- **Added:** Tree `Node`, and DOM `Node` can now have an `externalId` (`string`) and some `extraData` (`any`). ([#1498](https://github.com/Siteimprove/alfa/pull/1498))
 
   These are intended for callers that need to record some extra data during audits and retrieve it afterward. Especially, the `externalId` is intended for callers who already have an identifier for nodes and do not want to lose it during audits, nor maintain a map between these identifiers and Alfa nodes.
 
   Alfa is guaranteed to never interact with the `extraData` in any way; except that it will be typed as `any`, so any type guard or assertions must be re-applied afterward.
 
-  Alfa may, in the future, decide that `Node` with the same `externalId` can be identified in some way, e.g., because they represent two version of the same object that were turned into two different Alfa object. This can for example happen when two copies of the same page in different states (e.g., different tab opened) are audited; this creates two Alfa `Document`, but the external caller may have the extra knowledge that some of the nodes should be identified.
+  Alfa may, in the future, decide that `Node` with the same `externalId` can be identified in some way, e.g., because they represent two versions of the same object that were turned into two different Alfa object. This can for example happen when two copies of the same page in different states (e.g., different tab opened) are audited; this creates two Alfa `Document`, but the external caller may have the extra knowledge that some of the nodes should be identified.
 
   It is up to the callers to ensure that the `externalId` are unique, since they are meant to carry knowledge that Alfa cannot infer.
 

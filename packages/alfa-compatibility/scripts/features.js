@@ -33,7 +33,7 @@ const { keys } = Object;
 
 /**
  * @param {string} key
- * @return {import("mdn-browser-compat-data/types").Identifier}
+ * @return {import("@mdn/browser-compat-data/types").Identifier}
  */
 const get = (key) => {
   const [entry, ...keys] = key.split(".");
@@ -62,8 +62,8 @@ const version = (version) =>
   typeof version === "string"
     ? `"${version}"`
     : version === undefined || version === null
-    ? false
-    : version;
+      ? false
+      : version;
 
 /**
  * @type {Array<Feature>}
@@ -183,12 +183,12 @@ export const Features = {
                         : ""
                     }
                   }
-                `
+                `,
               )
               .join(",\n")}
           }
         }
-      `
+      `,
     )
     .join(",\n\n")}
 };

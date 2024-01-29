@@ -36,6 +36,6 @@ export namespace Diagnostic {
   export import TextSpacing = diagnostic.TextSpacing;
   export import WithBadElements = diagnostic.WithBadElements;
   export import WithRole = diagnostic.WithRole;
-  export import WithAccessibleName = diagnostic.WithAccessibleName;
+  export import WithName = diagnostic.WithName;
   export import WithOtherHeading = diagnostic.WithOtherHeading;
 }

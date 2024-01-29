@@ -9,7 +9,10 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
+
 import { Block } from "../style/block";
+import { Declaration } from "../style/declaration";
+
 import { Attribute } from "./attribute";
 import { Document } from "./document";
 import { Shadow } from "./shadow";
@@ -156,26 +159,6 @@ export class Element<N extends string = string>
 
   public getBoundingBox(device: Device): Option<Rectangle> {
     return this._boxes.get(device);
-  }
-
-  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
-    const parent = this._parent as Option<Node>;
-
-    if (options.isSet(Node.Traversal.flattened)) {
-      return parent.flatMap((parent) => {
-        if (Shadow.isShadow(parent)) {
-          return parent.host;
-        }
-
-        if (Element.isElement(parent) && parent.shadow.isSome()) {
-          return this.assignedSlot().flatMap((slot) => slot.parent(options));
-        }
-
-        return Option.of(parent);
-      });
-    }
-
-    return parent;
   }
 
   public children(
@@ -445,6 +428,62 @@ export namespace Element {
 
       return element;
     });
+  }
+
+  /**
+   * @internal
+   */
+  export function cloneElement(
+    options: Node.ElementReplacementOptions,
+    device?: Device,
+  ): (element: Element) => Trampoline<Element> {
+    return (element) =>
+      Trampoline.traverse(element.children(), (child) => {
+        if (Element.isElement(child) && options.predicate(child)) {
+          return Trampoline.done(Array.from(options.newElements));
+        }
+
+        return Node.cloneNode(child, options, device).map((node) => [node]);
+      }).map((children) => {
+        const deviceOption = Option.from(device);
+        const clonedElement = Element.of(
+          element.namespace,
+          element.prefix,
+          element.name,
+          element.attributes.map((attribute) =>
+            Attribute.clone(attribute, options, device),
+          ),
+          Iterable.flatten(children),
+          element.style.map((block) => {
+            return Block.of(
+              Iterable.map(block.declarations, (declaration) =>
+                Declaration.of(
+                  declaration.name,
+                  declaration.value,
+                  declaration.important,
+                ),
+              ),
+            );
+          }),
+          deviceOption.flatMap((d) => element.getBoundingBox(d)),
+          deviceOption,
+          element.externalId,
+        );
+
+        if (element.shadow.isSome()) {
+          clonedElement._attachShadow(
+            Shadow.clone(element.shadow.get(), options, device),
+          );
+        }
+
+        if (element.content.isSome()) {
+          clonedElement._attachContent(
+            Document.clone(element.content.get(), options, device),
+          );
+        }
+
+        return clonedElement;
+      });
   }
 
   export const {

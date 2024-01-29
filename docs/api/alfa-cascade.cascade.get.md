@@ -4,10 +4,12 @@
 
 ## Cascade.get() method
 
+Get the rule tree node associated with an element.
+
 **Signature:**
 
 ```typescript
-get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Option<RuleTree.Node>;
+get(element: Element, context?: Context): RuleTree.Node;
 ```
 
 ## Parameters
@@ -16,9 +18,14 @@ get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Optio
 |  --- | --- | --- |
 |  element | Element |  |
 |  context | Context | _(Optional)_ |
-|  filter | Option&lt;AncestorFilter&gt; | _(Optional)_ |
 
 **Returns:**
 
-Option&lt;[RuleTree.Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
+[RuleTree.Node](./alfa-cascade.ruletree.node.md)
+
+## Remarks
+
+This also adds the element to the rule tree if needed. That is, the rule tree is build lazily upon need. For the empty context, we pre-build the full tree, so we can benefit from an ancestor filter as we traverse the full DOM tree.
+
+For other contexts, we assume that we will only need the style of a few elements (e.g., when a link is focused we normally only need the style of the link itself). Therefore, pre-building the full tree is not worth the cost.
 

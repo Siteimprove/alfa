@@ -2,6 +2,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
@@ -60,6 +61,8 @@ export class Shadow extends Node<"shadow"> {
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    // We only "land" on Shadow roots when traversing the composed tree.
+    // Notably, flattening the tree "jumps" over them.
     if (options.isSet(Node.Traversal.composed)) {
       return this._host;
     }
@@ -155,6 +158,30 @@ export namespace Shadow {
     ).map((children) =>
       Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode),
     );
+  }
+
+  /**
+   * @internal
+   */
+  export function cloneShadow(
+    options: Node.ElementReplacementOptions,
+    device?: Device,
+  ): (shadow: Shadow) => Trampoline<Shadow> {
+    return (shadow) =>
+      Trampoline.traverse(shadow.children(), (child) => {
+        if (Element.isElement(child) && options.predicate(child)) {
+          return Trampoline.done(Array.from(options.newElements));
+        }
+
+        return Node.cloneNode(child, options, device).map((node) => [node]);
+      }).map((children) => {
+        return Shadow.of(
+          Iterable.flatten(children),
+          shadow.style,
+          shadow.mode,
+          shadow.externalId,
+        );
+      });
   }
 }
 

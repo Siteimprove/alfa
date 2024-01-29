@@ -1,5 +1,19 @@
 # @siteimprove/alfa-toolchain
 
+## 0.72.0
+
+## 0.71.1
+
+## 0.71.0
+
+## 0.70.0
+
+### Minor Changes
+
+- **Added:** Structure validation can now optionally check that changeset contain no "major" bump. ([#1509](https://github.com/Siteimprove/alfa/pull/1509))
+
+  The option can be turned on for pre-1.0.0 projects, and turned off when moving to 1.0.0.
+
 ## 0.69.0
 
 ## 0.68.0

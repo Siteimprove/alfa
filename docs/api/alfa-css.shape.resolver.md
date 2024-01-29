@@ -7,5 +7,7 @@
 **Signature:**
 
 ```typescript
-export type Resolver = Basic.Resolver;
+type Resolver = Basic.Resolver;
 ```
+**References:** [Basic.Resolver](./alfa-css.shape.basic.resolver.md)
+

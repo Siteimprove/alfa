@@ -1,11 +1,11 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 import * as dom from "@siteimprove/alfa-dom";
 
@@ -16,8 +16,8 @@ import { Question } from "../common/act/question";
 import { referenceSameResource } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
+import { WithName } from "../common/diagnostic";
 import { normalize } from "../common/normalize";
-import { WithAccessibleName } from "../common/diagnostic";
 
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasName, hasNamespace } = Element;
@@ -58,7 +58,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             referenceSameResource(response.url)(element, elements[i - 1]),
         );
 
-        const name = WithAccessibleName.getAccessibleName(
+        const name = WithName.getName(
           Iterable.first(target).getUnsafe(), // Existence of first element is guaranteed by applicability
           device,
         ).getUnsafe(); // Existence of accessible name is guaranteed by applicability
@@ -72,6 +72,12 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
                 "reference-equivalent-resources",
                 target,
                 "Do the <iframe> elements embed equivalent resources?",
+                {
+                  diagnostic: WithName.of(
+                    "Do the <iframe> elements embed equivalent resources?",
+                    name,
+                  ),
+                },
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
@@ -90,27 +96,21 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
  * @public
  */
 export namespace Outcomes {
-  export const EmbedSameResources = (accessibleName: string) =>
+  export const EmbedSameResources = (name: string) =>
     Ok.of(
-      WithAccessibleName.of(
-        `The \`<iframe>\` elements embed the same resource`,
-        accessibleName,
-      ),
+      WithName.of(`The \`<iframe>\` elements embed the same resource`, name),
     );
 
-  export const EmbedEquivalentResources = (accessibleName: string) =>
+  export const EmbedEquivalentResources = (name: string) =>
     Ok.of(
-      WithAccessibleName.of(
-        `The \`<iframe>\` elements embed equivalent resources`,
-        accessibleName,
-      ),
+      WithName.of(`The \`<iframe>\` elements embed equivalent resources`, name),
     );
 
-  export const EmbedDifferentResources = (accessibleName: string) =>
+  export const EmbedDifferentResources = (name: string) =>
     Err.of(
-      WithAccessibleName.of(
+      WithName.of(
         `The \`<iframe>\` elements do not embed the same or equivalent resources`,
-        accessibleName,
+        name,
       ),
     );
 }

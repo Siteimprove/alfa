@@ -19,10 +19,7 @@ test(".parse() parses a simple query for an orientation feature", (t) => {
         name: "orientation",
         value: {
           type: "discrete",
-          value: {
-            type: "keyword",
-            value: "portrait",
-          },
+          value: { type: "keyword", value: "portrait" },
         },
       },
     },
@@ -40,11 +37,7 @@ test(".parse() parses a simple query for a length feature", (t) => {
         value: {
           type: "range",
           minimum: {
-            value: {
-              type: "length",
-              value: 0,
-              unit: "px",
-            },
+            value: { type: "length", value: 0, unit: "px" },
             isInclusive: true,
           },
           maximum: null,
@@ -62,13 +55,7 @@ test(".parse() parses a list of queries", (t) => {
       .getUnsafe()
       .toJSON(),
     [
-      {
-        modifier: null,
-        type: {
-          name: "screen",
-        },
-        condition: null,
-      },
+      { modifier: null, type: { name: "screen" }, condition: null },
       {
         modifier: null,
         type: null,
@@ -79,10 +66,7 @@ test(".parse() parses a list of queries", (t) => {
             name: "orientation",
             value: {
               type: "discrete",
-              value: {
-                type: "keyword",
-                value: "landscape",
-              },
+              value: { type: "keyword", value: "landscape" },
             },
           },
           right: {
@@ -94,11 +78,7 @@ test(".parse() parses a list of queries", (t) => {
                 type: "range",
                 minimum: null,
                 maximum: {
-                  value: {
-                    type: "length",
-                    value: 640,
-                    unit: "px",
-                  },
+                  value: { type: "length", value: 640, unit: "px" },
                   isInclusive: true,
                 },
               },
@@ -111,11 +91,7 @@ test(".parse() parses a list of queries", (t) => {
                 value: {
                   type: "range",
                   minimum: {
-                    value: {
-                      type: "length",
-                      value: 100,
-                      unit: "px",
-                    },
+                    value: { type: "length", value: 100, unit: "px" },
                     isInclusive: true,
                   },
                   maximum: null,
@@ -137,9 +113,7 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
     [
       {
         modifier: null,
-        type: {
-          name: "screen",
-        },
+        type: { name: "screen" },
         condition: {
           type: "and",
           left: {
@@ -147,10 +121,7 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
             name: "orientation",
             value: {
               type: "discrete",
-              value: {
-                type: "keyword",
-                value: "portrait",
-              },
+              value: { type: "keyword", value: "portrait" },
             },
           },
           right: {
@@ -159,11 +130,7 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
             value: {
               type: "range",
               minimum: {
-                value: {
-                  type: "length",
-                  value: 100,
-                  unit: "px",
-                },
+                value: { type: "length", value: 100, unit: "px" },
                 isInclusive: true,
               },
               maximum: null,
@@ -181,18 +148,13 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
     [
       {
         modifier: "not",
-        type: {
-          name: "screen",
-        },
+        type: { name: "screen" },
         condition: {
           type: "feature",
           name: "orientation",
           value: {
             type: "discrete",
-            value: {
-              type: "keyword",
-              value: "landscape",
-            },
+            value: { type: "keyword", value: "landscape" },
           },
         },
       },
@@ -210,10 +172,7 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
           name: "orientation",
           value: {
             type: "discrete",
-            value: {
-              type: "keyword",
-              value: "landscape",
-            },
+            value: { type: "keyword", value: "landscape" },
           },
         },
       },
@@ -240,9 +199,7 @@ for (const input of [
     t.deepEqual(parse(`${input}`).getUnsafe().toJSON(), [
       {
         modifier: "not",
-        type: {
-          name: "all",
-        },
+        type: { name: "all" },
         condition: null,
       },
     ]);
@@ -253,9 +210,7 @@ test(`.parse() only drops invalid queries in a list, but leaves valid queries`, 
   t.deepEqual(parse("(max-weight: 3px), (width: 100px)").getUnsafe().toJSON(), [
     {
       modifier: "not",
-      type: {
-        name: "all",
-      },
+      type: { name: "all" },
       condition: null,
     },
     {
@@ -266,11 +221,7 @@ test(`.parse() only drops invalid queries in a list, but leaves valid queries`, 
         name: "width",
         value: {
           type: "discrete",
-          value: {
-            type: "length",
-            value: 100,
-            unit: "px",
-          },
+          value: { type: "length", value: 100, unit: "px" },
         },
       },
     },
@@ -281,9 +232,7 @@ test(".parse() accepts unknown media types", (t) => {
   t.deepEqual(parse("unknown").getUnsafe().toJSON(), [
     {
       modifier: null,
-      type: {
-        name: "unknown",
-      },
+      type: { name: "unknown" },
       condition: null,
     },
   ]);
@@ -300,11 +249,7 @@ test(".parse() parses a value < feature range", (t) => {
         value: {
           type: "range",
           minimum: {
-            value: {
-              type: "length",
-              value: 100,
-              unit: "px",
-            },
+            value: { type: "length", value: 100, unit: "px" },
             isInclusive: false,
           },
           maximum: null,
@@ -325,11 +270,7 @@ test(".parse() parses a feature > value range", (t) => {
         value: {
           type: "range",
           minimum: {
-            value: {
-              type: "length",
-              value: 100,
-              unit: "px",
-            },
+            value: { type: "length", value: 100, unit: "px" },
             isInclusive: false,
           },
           maximum: null,
@@ -350,11 +291,7 @@ test(".parse() parses a length feature > 0 as a dimensional bound", (t) => {
         value: {
           type: "range",
           minimum: {
-            value: {
-              type: "length",
-              value: 0,
-              unit: "px",
-            },
+            value: { type: "length", value: 0, unit: "px" },
             isInclusive: false,
           },
           maximum: null,
@@ -375,19 +312,11 @@ test(".parse() parses a value < feature < value range", (t) => {
         value: {
           type: "range",
           minimum: {
-            value: {
-              type: "length",
-              value: 100,
-              unit: "px",
-            },
+            value: { type: "length", value: 100, unit: "px" },
             isInclusive: false,
           },
           maximum: {
-            value: {
-              type: "length",
-              value: 500,
-              unit: "px",
-            },
+            value: { type: "length", value: 500, unit: "px" },
             isInclusive: false,
           },
         },
@@ -407,19 +336,11 @@ test(".parse() parses 0 in a length range as a dimensional bound", (t) => {
         value: {
           type: "range",
           minimum: {
-            value: {
-              type: "length",
-              value: 0,
-              unit: "px",
-            },
+            value: { type: "length", value: 0, unit: "px" },
             isInclusive: false,
           },
           maximum: {
-            value: {
-              type: "length",
-              value: 500,
-              unit: "px",
-            },
+            value: { type: "length", value: 500, unit: "px" },
             isInclusive: false,
           },
         },

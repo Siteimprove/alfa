@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parse: <T>(query?: string | Predicate<Token.Function>, body?: CSSParser<T> | undefined) => Parser<Slice<Token>, readonly [Function, T], string, []>
+parse: <T>(query?: string | Predicate<Token.Function>, body?: CSSParser<T> | Thunk<CSSParser<T>> | undefined) => Parser<Slice<Token>, readonly [Function, T], string, []>
 ```

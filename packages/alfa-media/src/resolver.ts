@@ -15,7 +15,8 @@ export namespace Resolver {
    *
    * @remarks
    * Relative lengths in media queries are based on initial values of the
-   * associated properties.
+   * associated properties. They are hard-coded here to avoid circular dependcy
+   * to @siteimprove/alfa-style.
    */
   export function length(device: Device): Length.Resolver {
     const { viewport } = device;

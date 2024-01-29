@@ -1,8 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Numeric } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Text, Node } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
@@ -30,16 +29,16 @@ export function isVisible(device: Device, context?: Context): Predicate<Node> {
   return not(isInvisible(device, context));
 }
 
-const cache = Cache.empty<
-  Device,
-  Cache<Option<Context>, Cache<Node, boolean>>
->();
+const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
-function isInvisible(device: Device, context?: Context): Predicate<Node> {
+function isInvisible(
+  device: Device,
+  context: Context = Context.empty(),
+): Predicate<Node> {
   return (node) =>
     cache
       .get(device, Cache.empty)
-      .get(Option.from(context), Cache.empty)
+      .get(context, Cache.empty)
       .get(node, () =>
         test(
           or(

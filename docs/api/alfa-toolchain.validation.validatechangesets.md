@@ -9,7 +9,7 @@ Validate that all changesets have the expected structure.
 **Signature:**
 
 ```typescript
-export declare function validateChangesets(cwd: string): Promise<Array<string>>;
+export declare function validateChangesets(cwd: string, forbidMajor?: boolean): Promise<Array<string>>;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ export declare function validateChangesets(cwd: string): Promise<Array<string>>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  cwd | string |  |
+|  forbidMajor | boolean | _(Optional)_ |
 
 **Returns:**
 

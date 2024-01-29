@@ -117,6 +117,7 @@ const unmodifiables = Array.from([
   "username",
   "new-password",
   "current-password",
+  "one-time-code",
   "organization-title",
   "organization",
   "street-address",

@@ -7,13 +7,7 @@
 **Signature:**
 
 ```typescript
-interface JSON extends ConditionRule.JSON 
+interface JSON extends ConditionRule.JSON<"media"> 
 ```
-**Extends:** [ConditionRule.JSON](./alfa-dom.conditionrule.json.md)
-
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-dom.mediarule.json.type.md) |  | "media" |  |
+**Extends:** [ConditionRule.JSON](./alfa-dom.conditionrule.json.md)<!-- -->&lt;"media"&gt;
 

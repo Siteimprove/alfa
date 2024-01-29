@@ -7,14 +7,13 @@
 **Signature:**
 
 ```typescript
-interface JSON extends GroupingRule.JSON 
+interface JSON extends GroupingRule.JSON<"keyframes"> 
 ```
-**Extends:** [GroupingRule.JSON](./alfa-dom.groupingrule.json.md)
+**Extends:** [GroupingRule.JSON](./alfa-dom.groupingrule.json.md)<!-- -->&lt;"keyframes"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [name](./alfa-dom.keyframesrule.json.name.md) |  | string |  |
-|  [type](./alfa-dom.keyframesrule.json.type.md) |  | "keyframes" |  |
 

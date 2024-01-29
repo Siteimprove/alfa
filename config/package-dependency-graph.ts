@@ -131,7 +131,7 @@ export default {
         },
         {
           name: "CSS syntax",
-          children: ["@siteimprove/alfa-css", "@siteimprove/alfa-media"],
+          children: ["@siteimprove/alfa-css", "@siteimprove/alfa-css-feature"],
         },
         {
           name: "HTML",

@@ -4,6 +4,8 @@
 
 ## Style.from() function
 
+Build the style of an element.
+
 **Signature:**
 
 ```typescript
@@ -21,4 +23,8 @@ function from(element: Element, device: Device, context?: Context): Style;
 **Returns:**
 
 [Style](./alfa-style.style.md)
+
+## Remarks
+
+This gather all style declarations that apply to the element, in decreasing precedence (according to cascade sort order) and delegate the rest of the work to `Style.of`<!-- -->.
 

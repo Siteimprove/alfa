@@ -8,11 +8,11 @@ import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Device } from '@siteimprove/alfa-device';
 import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Feature } from '@siteimprove/alfa-css-feature';
 import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
-import { Media } from '@siteimprove/alfa-media';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-rectangle';
@@ -61,6 +61,8 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
 
 // @public (undocumented)
 export namespace Attribute {
+    // @internal (undocumented)
+    export function cloneAttribute<N extends string = string>(attribute: Attribute<N>): Trampoline<Attribute<N | Lowercase<N>>>;
     // @internal
     export function foldCase<N extends string = string>(name: N, owner: Option<Element>): N | Lowercase<N>;
     // @internal (undocumented)
@@ -133,6 +135,8 @@ export class Comment extends Node<"comment"> {
 // @public (undocumented)
 export namespace Comment {
     // @internal (undocumented)
+    export function cloneComment(comment: Comment): Trampoline<Comment>;
+    // @internal (undocumented)
     export function fromComment(json: JSON): Trampoline<Comment>;
     // (undocumented)
     export function isComment(value: unknown): value is Comment;
@@ -144,14 +148,14 @@ export namespace Comment {
 }
 
 // @public (undocumented)
-export abstract class ConditionRule extends GroupingRule {
-    protected constructor(condition: string, rules: Array<Rule>);
+export abstract class ConditionRule<T extends string = string> extends GroupingRule<T> {
+    protected constructor(type: T, condition: string, rules: Array<Rule>);
     // (undocumented)
     get condition(): string;
     // (undocumented)
     protected readonly _condition: string;
     // (undocumented)
-    abstract toJSON(): ConditionRule.JSON;
+    toJSON(): ConditionRule.JSON<T>;
 }
 
 // @public (undocumented)
@@ -159,7 +163,7 @@ export namespace ConditionRule {
     // (undocumented)
     export function isConditionRule(value: unknown): value is ConditionRule;
     // (undocumented)
-    export interface JSON extends GroupingRule.JSON {
+    export interface JSON<T extends string = string> extends GroupingRule.JSON<T> {
         // (undocumented)
         condition: string;
     }
@@ -222,11 +226,11 @@ export class Document extends Node<"document"> {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>, externalId?: string, extraData?: any): Document;
+    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, externalId?: string, extraData?: any): Document;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    get style(): Iterable<Sheet>;
+    get style(): Iterable_2<Sheet>;
     // (undocumented)
     toJSON(options?: Node.SerializationOptions): Document.JSON;
     // (undocumented)
@@ -236,13 +240,15 @@ export class Document extends Node<"document"> {
 // @public (undocumented)
 export namespace Document {
     // @internal (undocumented)
+    export function cloneDocument(options: Node.ElementReplacementOptions, device?: Device): (document: Document) => Trampoline<Document>;
+    // @internal (undocumented)
     export function fromDocument(json: JSON, device?: Device): Trampoline<Document>;
     // (undocumented)
     export function isDocument(value: unknown): value is Document;
     // (undocumented)
     export interface JSON extends Node.JSON<"document"> {
         // (undocumented)
-        style: Array<Sheet.JSON>;
+        style: Array_2<Sheet.JSON>;
     }
 }
 
@@ -283,8 +289,6 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, extraData?: any): Element<N>;
     // (undocumented)
-    parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
     get qualifiedName(): string;
@@ -302,6 +306,8 @@ export class Element<N extends string = string> extends Node<"element"> implemen
 
 // @public (undocumented)
 export namespace Element {
+    // @internal (undocumented)
+    export function cloneElement(options: Node.ElementReplacementOptions, device?: Device): (element: Element) => Trampoline<Element>;
     // @internal (undocumented)
     export function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
     // (undocumented)
@@ -354,7 +360,7 @@ export namespace Element {
 }
 
 // @public (undocumented)
-export class FontFaceRule extends Rule {
+export class FontFaceRule extends Rule<"font-face"> {
     // (undocumented)
     static of(declarations: Iterable<Declaration>): FontFaceRule;
     // (undocumented)
@@ -372,13 +378,9 @@ export namespace FontFaceRule {
     // (undocumented)
     export function isFontFaceRule(value: unknown): value is FontFaceRule;
     // (undocumented)
-    export interface JSON {
-        // (undocumented)
-        [key: string]: json.JSON;
+    export interface JSON extends Rule.JSON<"font-face"> {
         // (undocumented)
         style: Block.JSON;
-        // (undocumented)
-        type: "font-face";
     }
 }
 
@@ -391,13 +393,15 @@ export class Fragment extends Node<"fragment"> {
     // @internal (undocumented)
     protected _internalPath(): string;
     // (undocumented)
-    static of(children: Iterable<Node>, externalId?: string, extraData?: any): Fragment;
+    static of(children: Iterable_2<Node>, externalId?: string, extraData?: any): Fragment;
     // (undocumented)
     toString(): string;
 }
 
 // @public (undocumented)
 export namespace Fragment {
+    // @internal (undocumented)
+    export function cloneFragment(options: Node.ElementReplacementOptions, device?: Device): (fragment: Fragment) => Trampoline<Fragment>;
     // @internal (undocumented)
     export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
     // (undocumented)
@@ -408,16 +412,16 @@ export namespace Fragment {
 }
 
 // @public (undocumented)
-export abstract class GroupingRule extends Rule {
-    protected constructor(rules: Array<Rule>);
+export abstract class GroupingRule<T extends string = string> extends Rule<T> {
+    protected constructor(type: T, rules: Array_2<Rule>);
     // (undocumented)
     children(): Iterable<Rule>;
     // (undocumented)
     get rules(): Iterable<Rule>;
     // (undocumented)
-    protected readonly _rules: Array<Rule>;
+    protected readonly _rules: Array_2<Rule>;
     // (undocumented)
-    abstract toJSON(): GroupingRule.JSON;
+    toJSON(): GroupingRule.JSON<T>;
 }
 
 // @public (undocumented)
@@ -425,9 +429,9 @@ export namespace GroupingRule {
     // (undocumented)
     export function isGroupingRule(value: unknown): value is GroupingRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON<T extends string = string> extends Rule.JSON<T> {
         // (undocumented)
-        rules: Array<Rule.JSON>;
+        rules: Array_2<Rule.JSON>;
     }
 }
 
@@ -452,6 +456,8 @@ export namespace h {
     export namespace rule {
         // (undocumented)
         export function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
+        // (undocumented)
+        export function importRule(url: string, sheet: Sheet, condition?: string): ImportRule;
         // (undocumented)
         export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): KeyframeRule;
         // (undocumented)
@@ -478,13 +484,13 @@ export namespace h {
 }
 
 // @public (undocumented)
-export class ImportRule extends ConditionRule {
+export class ImportRule extends ConditionRule<"import"> {
     // (undocumented)
     get href(): string;
     // (undocumented)
     static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
     // (undocumented)
-    get queries(): Media.List;
+    get queries(): Feature.Media.List;
     // (undocumented)
     get rules(): Iterable<Rule>;
     // (undocumented)
@@ -502,11 +508,9 @@ export namespace ImportRule {
     // (undocumented)
     export function isImportRule(value: unknown): value is ImportRule;
     // (undocumented)
-    export interface JSON extends ConditionRule.JSON {
+    export interface JSON extends ConditionRule.JSON<"import"> {
         // (undocumented)
         href: string;
-        // (undocumented)
-        type: "import";
     }
 }
 
@@ -540,7 +544,7 @@ export namespace jsx {
 }
 
 // @public (undocumented)
-export class KeyframeRule extends Rule {
+export class KeyframeRule extends Rule<"keyframe"> {
     // (undocumented)
     get key(): string;
     // (undocumented)
@@ -560,18 +564,16 @@ export namespace KeyframeRule {
     // (undocumented)
     export function isKeyframeRule(value: unknown): value is KeyframeRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON extends Rule.JSON<"keyframe"> {
         // (undocumented)
         key: string;
         // (undocumented)
         style: Block.JSON;
-        // (undocumented)
-        type: "keyframe";
     }
 }
 
 // @public (undocumented)
-export class KeyframesRule extends GroupingRule {
+export class KeyframesRule extends GroupingRule<"keyframes"> {
     // (undocumented)
     get name(): string;
     // (undocumented)
@@ -589,20 +591,18 @@ export namespace KeyframesRule {
     // (undocumented)
     export function isKeyframesRule(value: unknown): value is KeyframesRule;
     // (undocumented)
-    export interface JSON extends GroupingRule.JSON {
+    export interface JSON extends GroupingRule.JSON<"keyframes"> {
         // (undocumented)
         name: string;
-        // (undocumented)
-        type: "keyframes";
     }
 }
 
 // @public (undocumented)
-export class MediaRule extends ConditionRule {
+export class MediaRule extends ConditionRule<"media"> {
     // (undocumented)
     static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
     // (undocumented)
-    get queries(): Media.List;
+    get queries(): Feature.Media.List;
     // (undocumented)
     toJSON(): MediaRule.JSON;
     // (undocumented)
@@ -616,9 +616,7 @@ export namespace MediaRule {
     // (undocumented)
     export function isMediaRule(value: unknown): value is MediaRule;
     // (undocumented)
-    export interface JSON extends ConditionRule.JSON {
-        // (undocumented)
-        type: "media";
+    export interface JSON extends ConditionRule.JSON<"media"> {
     }
 }
 
@@ -645,7 +643,7 @@ export namespace Namespace {
 }
 
 // @public (undocumented)
-export class NamespaceRule extends Rule {
+export class NamespaceRule extends Rule<"namespace"> {
     // (undocumented)
     get namespace(): string;
     // (undocumented)
@@ -665,13 +663,11 @@ export namespace NamespaceRule {
     // (undocumented)
     export function isNamespaceRule(value: unknown): value is NamespaceRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON extends Rule.JSON<"namespace"> {
         // (undocumented)
         namespace: string;
         // (undocumented)
         prefix: string | null;
-        // (undocumented)
-        type: "namespace";
     }
 }
 
@@ -754,6 +750,20 @@ export interface Node {
 
 // @public (undocumented)
 export namespace Node {
+    export function clone(node: Element, options?: ElementReplacementOptions, device?: Device): Element;
+    export function clone(node: Attribute, options?: ElementReplacementOptions, device?: Device): Attribute;
+    export function clone(node: Text, options?: ElementReplacementOptions, device?: Device): Text;
+    export function clone(node: Comment, options?: ElementReplacementOptions, device?: Device): Comment;
+    export function clone(node: Document, options?: ElementReplacementOptions, device?: Device): Document;
+    export function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document;
+    const flatTree: Traversal;
+    const fullTree: Traversal;
+    const composedNested: Traversal;
+    export function clone(node: Fragment, options?: ElementReplacementOptions, device?: Device): Fragment;
+    export function clone(node: Shadow, options?: ElementReplacementOptions, device?: Device): Shadow;
+    export function clone(node: Node, options?: ElementReplacementOptions, device?: Device): Node;
+    // @internal (undocumented)
+    export function cloneNode(node: Node, options?: ElementReplacementOptions, device?: Device): Trampoline<Node>;
     // (undocumented)
     export interface EARL extends earl.EARL {
         // (undocumented)
@@ -775,6 +785,13 @@ export namespace Node {
         };
     }
     // (undocumented)
+    export interface ElementReplacementOptions {
+        // (undocumented)
+        newElements: Iterable<Element>;
+        // (undocumented)
+        predicate: Predicate<Element>;
+    }
+    // (undocumented)
     export function from(json: Element.JSON, device?: Device): Element;
     // (undocumented)
     export function from(json: Attribute.JSON, device?: Device): Attribute;
@@ -784,9 +801,6 @@ export namespace Node {
     export function from(json: Comment.JSON, device?: Device): Comment;
     // (undocumented)
     export function from(json: Document.JSON, device?: Device): Document;
-    const flatTree: Traversal;
-    const fullTree: Traversal;
-    const composedNested: Traversal;
     // (undocumented)
     export function from(json: Type.JSON, device?: Device): Document;
     // (undocumented)
@@ -837,7 +851,7 @@ export namespace Node {
 }
 
 // @public (undocumented)
-export class PageRule extends Rule {
+export class PageRule extends Rule<"page"> {
     // (undocumented)
     static of(selector: string, declarations: Iterable<Declaration>): PageRule;
     // (undocumented)
@@ -857,13 +871,11 @@ export namespace PageRule {
     // (undocumented)
     export function isPageRule(value: unknown): value is PageRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON extends Rule.JSON<"page"> {
         // (undocumented)
         selector: string;
         // (undocumented)
         style: Block.JSON;
-        // (undocumented)
-        type: "page";
     }
 }
 
@@ -880,8 +892,8 @@ export namespace Query {
 }
 
 // @public (undocumented)
-export abstract class Rule implements Equatable, Serializable {
-    protected constructor();
+export abstract class Rule<T extends string = string> implements Equatable, Serializable {
+    protected constructor(type: T);
     // (undocumented)
     ancestors(): Iterable<Rule>;
     // @internal (undocumented)
@@ -905,7 +917,9 @@ export abstract class Rule implements Equatable, Serializable {
     // (undocumented)
     protected _parent: Option<Rule>;
     // (undocumented)
-    abstract toJSON(): Rule.JSON;
+    toJSON(): Rule.JSON<T>;
+    // (undocumented)
+    get type(): T;
 }
 
 // @public (undocumented)
@@ -933,11 +947,11 @@ export namespace Rule {
     // @internal (undocumented)
     export function fromRule(json: JSON): Trampoline<Rule>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        type: string;
+        type: T;
     }
 }
 
@@ -956,11 +970,11 @@ export class Shadow extends Node<"shadow"> {
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
+    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    get style(): Iterable<Sheet>;
+    get style(): Iterable_2<Sheet>;
     // (undocumented)
     toJSON(): Shadow.JSON;
     // (undocumented)
@@ -969,6 +983,8 @@ export class Shadow extends Node<"shadow"> {
 
 // @public (undocumented)
 export namespace Shadow {
+    // @internal (undocumented)
+    export function cloneShadow(options: Node.ElementReplacementOptions, device?: Device): (shadow: Shadow) => Trampoline<Shadow>;
     // @internal (undocumented)
     export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow>;
     // (undocumented)
@@ -1065,7 +1081,7 @@ export namespace Slotable {
 }
 
 // @public (undocumented)
-export class StyleRule extends Rule {
+export class StyleRule extends Rule<"style"> {
     // (undocumented)
     get hint(): boolean;
     // (undocumented)
@@ -1087,20 +1103,20 @@ export namespace StyleRule {
     // (undocumented)
     export function isStyleRule(value: unknown): value is StyleRule;
     // (undocumented)
-    export interface JSON extends Rule.JSON {
+    export interface JSON extends Rule.JSON<"style"> {
         // (undocumented)
         selector: string;
         // (undocumented)
         style: Block.JSON;
-        // (undocumented)
-        type: "style";
     }
 }
 
 // @public (undocumented)
-export class SupportsRule extends ConditionRule {
+export class SupportsRule extends ConditionRule<"supports"> {
     // (undocumented)
     static of(condition: string, rules: Iterable<Rule>): SupportsRule;
+    // (undocumented)
+    get query(): Option<Feature.Supports.Query>;
     // (undocumented)
     toJSON(): SupportsRule.JSON;
     // (undocumented)
@@ -1112,11 +1128,9 @@ export namespace SupportsRule {
     // @internal (undocumented)
     export function fromSupportsRule(json: JSON): Trampoline<SupportsRule>;
     // (undocumented)
-    export function isSupportsRue(value: unknown): value is SupportsRule;
+    export function isSupportsRule(value: unknown): value is SupportsRule;
     // (undocumented)
-    export interface JSON extends ConditionRule.JSON {
-        // (undocumented)
-        type: "supports";
+    export interface JSON extends ConditionRule.JSON<"supports"> {
     }
 }
 
@@ -1133,8 +1147,6 @@ export class Text extends Node<"text"> implements Slotable {
     // (undocumented)
     static of(data: string, externalId?: string, extraData?: any): Text;
     // (undocumented)
-    parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
     toJSON(): Text.JSON;
     // (undocumented)
     toString(): string;
@@ -1142,6 +1154,8 @@ export class Text extends Node<"text"> implements Slotable {
 
 // @public (undocumented)
 export namespace Text {
+    // @internal (undocumented)
+    export function cloneText(text: Text): Trampoline<Text>;
     // @internal (undocumented)
     export function fromText(json: JSON): Trampoline<Text>;
     // (undocumented)
@@ -1173,6 +1187,8 @@ export class Type<N extends string = string> extends Node<"type"> {
 
 // @public (undocumented)
 export namespace Type {
+    // @internal (undocumented)
+    export function cloneType<N extends string = string>(type: Type<N>): Trampoline<Type<N>>;
     // @internal (undocumented)
     export function fromType<N extends string = string>(json: JSON<N>): Trampoline<Type<N>>;
     // (undocumented)

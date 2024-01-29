@@ -1,4 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
+
 import { Context } from "../src";
 
 import { parse, serialize } from "./parser";
@@ -11,11 +12,26 @@ test(".parse() parses a named pseudo-class selector", (t) => {
   });
 });
 
-test(".parse() parses :host pseudo-class selector", (t) => {
+test(".parse() parses :host non-functional pseudo-class selector", (t) => {
   t.deepEqual(serialize(":host"), {
     type: "pseudo-class",
     name: "host",
     specificity: { a: 0, b: 1, c: 0 },
+  });
+});
+
+test(".parse() parses :host functional pseudo-class selector", (t) => {
+  t.deepEqual(serialize(":host(div)"), {
+    type: "pseudo-class",
+    name: "host",
+    selector: {
+      type: "type",
+      name: "div",
+      namespace: null,
+      specificity: { a: 0, b: 0, c: 1 },
+      key: "div",
+    },
+    specificity: { a: 0, b: 1, c: 1 },
   });
 });
 
@@ -27,53 +43,10 @@ test(".parse() parses a functional pseudo-class selector", (t) => {
       type: "class",
       name: "foo",
       specificity: { a: 0, b: 1, c: 0 },
+      key: ".foo",
     },
     specificity: { a: 0, b: 1, c: 0 },
   });
-});
-
-test("#matches() checks if an element matches an :nth-child selector", (t) => {
-  const selector = parse(":nth-child(odd)");
-
-  const a = <p />;
-  const b = <p />;
-  const c = <p />;
-  const d = <p />;
-
-  <div>
-    {a}
-    Hello
-    {b}
-    {c}
-    {d}
-  </div>;
-
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
-  t.equal(selector.matches(c), true);
-  t.equal(selector.matches(d), false);
-});
-
-test("#matches() checks if an element matches an :nth-last-child selector", (t) => {
-  const selector = parse(":nth-last-child(odd)");
-
-  const a = <p />;
-  const b = <p />;
-  const c = <p />;
-  const d = <p />;
-
-  <div>
-    {a}
-    Hello
-    {b}
-    {c}
-    {d}
-  </div>;
-
-  t.equal(selector.matches(a), false);
-  t.equal(selector.matches(b), true);
-  t.equal(selector.matches(c), false);
-  t.equal(selector.matches(d), true);
 });
 
 test("#matches() checks if an element matches a :first-child selector", (t) => {
@@ -329,15 +302,4 @@ test("#matches() checks if an element matches a :visited selector", (t) => {
   for (const element of [<a />, <p />]) {
     t.equal(selector.matches(element), false, element.toString());
   }
-});
-test(".parse() parses an :nth-child selector", (t) => {
-  t.deepEqual(serialize(":nth-child(odd)"), {
-    type: "pseudo-class",
-    name: "nth-child",
-    index: {
-      step: 2,
-      offset: 1,
-    },
-    specificity: { a: 0, b: 1, c: 0 },
-  });
 });
