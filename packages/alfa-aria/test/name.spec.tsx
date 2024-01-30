@@ -1746,3 +1746,88 @@ test(".from() does not recurse into content documents", (t) => {
 
   t.deepEqual(Name.from(target, Device.standard()).isNone(), true);
 });
+
+test(".from() adds spaces when needed based on CSS display", (t) => {
+  const targets = [
+    [
+      <button>
+        <span>inline</span>
+        <span>no space</span>
+      </button>,
+      "inlineno space",
+    ],
+    [
+      <button>
+        <span>inline</span> <span>with space</span>
+      </button>,
+      "inline with space",
+    ],
+    [
+      <button>
+        <div>block</div>
+        <div>no space</div>
+      </button>,
+      "block no space",
+    ],
+    [
+      <button>
+        <div>block</div>
+        <div>with space</div>
+      </button>,
+      "block with space",
+    ],
+    [
+      <button>
+        <div>block</div>
+        <span>inline</span>
+      </button>,
+      "block inline",
+    ],
+    [
+      <button>
+        <span>inline</span>
+        <div>block</div>
+      </button>,
+      "inline block",
+    ],
+  ] as const;
+  h.document(targets.map(([target]) => target));
+
+  for (const [target, expected] of targets) {
+    t.equal(getName(target).value, expected);
+  }
+});
+
+test(".from() correctly add spaces in aria-labelledby traversal", (t) => {
+  const target = (
+    <button
+      type="button"
+      aria-labelledby="dropdown-button-148"
+      id="dropdown-button-148"
+    >
+      <div>List of fruits</div>
+      <div>
+        <p>Blueberry</p>
+        <p>It’s a berry and it’s blue.</p>
+      </div>
+    </button>
+  );
+  h.document([target]);
+
+  t.equal(
+    getName(target).value,
+    "List of fruits Blueberry It’s a berry and it’s blue.",
+  );
+});
+
+test(".from() doesn't trim spaces between parts of the name", (t) => {
+  const target = (
+    <button>
+      <span>Hello</span>
+      <span> World</span>
+    </button>
+  );
+  h.document([target]);
+
+  t.equal(getName(target).value, "Hello World");
+});
