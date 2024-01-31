@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Name } from "../../name";
+import { Name } from "../../name/name";
 import { Node } from "../../node";
 
 import { hasName } from "../../node/predicate/has-name";

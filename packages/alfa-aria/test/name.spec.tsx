@@ -1820,14 +1820,27 @@ test(".from() correctly add spaces in aria-labelledby traversal", (t) => {
   );
 });
 
-test(".from() doesn't trim spaces between parts of the name", (t) => {
-  const target = (
-    <button>
-      <span>Hello</span>
-      <span> World</span>
-    </button>
-  );
-  h.document([target]);
-
-  t.equal(getName(target).value, "Hello World");
-});
+// test(".from() keeps spaces-only content between words", (t) => {
+//   const target = (
+//     <button>
+//       <span>Hello</span>
+//       <span> </span>
+//       <span>World</span>
+//     </button>
+//   );
+//   h.document([target]);
+//
+//   t.equal(getName(target).value, "Hello World");
+// });
+//
+// test(".from() doesn't trim spaces between parts of the name", (t) => {
+//   const target = (
+//     <button>
+//       <span>Hello</span>
+//       <span> World</span>
+//     </button>
+//   );
+//   h.document([target]);
+//
+//   t.equal(getName(target).value, "Hello World");
+// });

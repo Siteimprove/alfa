@@ -1,6 +1,6 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Name } from "../../name";
+import { Name } from "../../name/name";
 import { Node } from "../../node";
 
 /**

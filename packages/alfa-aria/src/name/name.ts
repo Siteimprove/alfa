@@ -14,12 +14,12 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Feature } from "./feature";
-import { Role } from "./role";
+import { Feature } from "../feature";
+import { Role } from "../role";
 
-import * as predicate from "./name/predicate";
+import * as predicate from "./predicate";
 
-import { isProgrammaticallyHidden } from "./dom/predicate/is-programmatically-hidden";
+import { isProgrammaticallyHidden } from "../dom/predicate/is-programmatically-hidden";
 
 const { isElement } = Element;
 const { isText } = Text;
@@ -785,6 +785,11 @@ export namespace Name {
         }
 
         return fromDescendants(element, device, state);
+        //   .flatMap((name) =>
+        //   normalize(name.value) === ""
+        //     ? None
+        //     : Option.of(Name.of(normalize(name.value), name.source)),
+        // );
       },
 
       // Step 2H: Use the subtree content, if descending.
@@ -845,6 +850,7 @@ export namespace Name {
         ),
       );
 
+    // const name = flatten(names.map(([value]) => value).join(""));
     const name = flatten(names.map(([value]) => value).join("")).trim();
 
     if (name === "") {
@@ -942,4 +948,11 @@ export namespace Name {
 
 function flatten(string: string): string {
   return string.replace(/\s+/g, " ");
+}
+
+/**
+ *
+ */
+function normalize(value: string): string {
+  return value.trim().replace(/\s+/g, " ");
 }

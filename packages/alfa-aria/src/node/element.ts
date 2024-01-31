@@ -6,7 +6,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import * as dom from "@siteimprove/alfa-dom";
 
 import { Attribute } from "../attribute";
-import { Name } from "../name";
+import { Name } from "../name/name";
 import { Node } from "../node";
 import { Role } from "../role";
 
