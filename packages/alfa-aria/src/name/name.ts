@@ -41,6 +41,43 @@ export class Name implements Equatable, Serializable<Name.JSON> {
   private readonly _value: string;
   private readonly _sources: Array<Source>;
 
+  // Accessible names are computed piece-wise (e.g., aria-labelledby, or from
+  // content), and then joined. The handling of spaces when joining is tricky
+  // and while it is often clear what the "good" result should be, defining it
+  // is much more tricky.
+  // see https://github.com/w3c/accname/issues/225 for the latest iteration.
+  //
+  // Consider notably:
+  // 1 <button><span>foo</span> <span>bar</span></button> => "foo bar" (inter-element space)
+  // 2 <button><span>foo</span><span>bar</span></button> => "foobar" (no inter-element space)
+  // 3 <button><span>foo</span><span> bar</span></button> => "foo bar" (leading space)
+  // 4 <button><span> foo</span><span> bar</span></button> => "foo bar" (trimming final leading space)
+  // 5 <button><span>foo</span><span> </span><span>bar</span></button> => "foo bar" (keeping isolated space)
+  // 6 <button><span> </span></button> => "" (aka no name) (killing final isolated space)
+  // 7 <button><span>foo</span><div>bar</div></button> => "foo bar" (block element)
+  //
+  // Anyway, the older version was aggressively trimming, resulting in too many
+  // dropped spaces. Upon recursing into content, names were joined looking at
+  // `display` and spaces added if needed. But cases 3 or 5 were trimmed before
+  // join and the space was incorrectly dropped.
+  //
+  // Another possibility is to keep the spaces and trim them at the final end.
+  // This is a bit annoying given the multiple layers of back and forth (also with
+  // Feature). Moreover, it would be a bit inconsistent for compositionality (and
+  // sources). For example, in case 5, the name "foo bar" would come from elements
+  // <span>foo</span>, <span> </span> and <span>bar</span>, with respective "names"
+  // ["foo", " ", "bar"]. But the actual name of the second <span> is actually empty…
+  // This solution is also a bit trickier when concatenating names from different
+  // elements since it requires looking at the elements to figure out whether extra
+  // spaces are needed.
+  //
+  // The solution we attempt now it to trim the spaces asap, but record within the
+  // name that it needs spaces before or after upon concatenation. This way,
+  // each name is fully self-contained and concatenating names doesn't require to
+  // look at their sources.
+  private readonly _spaceBefore: boolean;
+  private readonly _spaceAfter: boolean;
+
   private constructor(value: string, sources: Array<Source>) {
     this._value = value;
     this._sources = sources;
