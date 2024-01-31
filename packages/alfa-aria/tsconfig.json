@@ -28,6 +28,8 @@
     "src/name/name.ts",
     "src/name/predicate/index.ts",
     "src/name/predicate/has-value.ts",
+    "src/name/source.ts",
+    "src/name/state.ts",
     "src/node.ts",
     "src/node/container.ts",
     "src/node/element.ts",
