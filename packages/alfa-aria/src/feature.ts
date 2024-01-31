@@ -248,11 +248,19 @@ type Features = {
   };
 };
 
+/**
+ * @remarks
+ * The third parameter (`name`) is called during Step 2E of name computation,
+ * that is after `aria-labelledby` and `aria-label`, and before content.
+ * The `html` wrapper adds `nameFromAttributes(element, title)` at its end.
+ */
 const Features: Features = {
   [Namespace.HTML]: {
     a: html(
       ifHasAttribute("href", "link", "generic"),
       () => [],
+      // Content takes precedence over title for `<a>` elements, so we need to
+      // call Name.fromDescendants() before `html` looks into `title`.
       (element, device, state) =>
         Name.fromDescendants(element, device, state.visit(element)),
     ),
