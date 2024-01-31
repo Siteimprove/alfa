@@ -3,7 +3,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "@siteimprove/alfa-dom"
+    "jsxImportSource": "@siteimprove/alfa-dom",
   },
   "files": [
     "src/element/element.ts",
@@ -157,6 +157,7 @@
     "src/property/overflow.ts",
     "src/property/overflow-x.ts",
     "src/property/overflow-y.ts",
+    "src/property/pointer-events.ts",
     "src/property/position.ts",
     "src/property/right.ts",
     "src/property/rotate.ts",
@@ -232,7 +233,7 @@
     "test/property/text-shadow.spec.tsx",
     "test/property/top.spec.tsx",
     "test/style.spec.tsx",
-    "test/variable.spec.ts"
+    "test/variable.spec.ts",
   ],
   "references": [
     { "path": "../alfa-applicative" },
@@ -261,6 +262,6 @@
     { "path": "../alfa-set" },
     { "path": "../alfa-slice" },
     { "path": "../alfa-test" },
-    { "path": "../alfa-trilean" }
-  ]
+    { "path": "../alfa-trilean" },
+  ],
 }

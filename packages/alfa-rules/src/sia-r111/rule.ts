@@ -1,12 +1,18 @@
 import { Page } from "@siteimprove/alfa-web";
-import { Element, Query } from "@siteimprove/alfa-dom";
+import { Element, Query, Node } from "@siteimprove/alfa-dom";
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-
-import * as dom from "@siteimprove/alfa-dom";
-import { expectation } from "../common/act/expectation";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { DOM } from "@siteimprove/alfa-aria";
+import { Refinement } from "@siteimprove/alfa-refinement";
+import { Style } from "@siteimprove/alfa-style";
+
+import { expectation } from "../common/act/expectation";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { getElementDescendants } = Query;
+const { and } = Refinement;
+const { hasRole } = DOM;
+const { hasComputedStyle, isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",
@@ -14,8 +20,17 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        // TODO: Get elements that can receive pointer events
-        return getElementDescendants(document, dom.Node.fullTree);
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(
+            hasComputedStyle(
+              "pointer-events",
+              (keyword) => keyword.value !== "none",
+              device,
+            ),
+            isFocusable(device),
+            hasRole(device, (role) => role.isWidget()),
+          ),
+        );
       },
 
       expectations(target) {
