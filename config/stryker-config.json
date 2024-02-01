@@ -1,0 +1,35 @@
+{
+  "$schema": "../node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "mutate": [
+    "packages/alfa-act/src/**/*.ts",
+    "packages/alfa-affine/src/**/*.ts",
+    "packages/alfa-applicative/src/**/*.ts",
+    "packages/alfa-aria/src/**/*.ts",
+    "packages/alfa-array/src/**/*.ts",
+    "packages/alfa-bits/src/**/*.ts",
+    "packages/alfa-branched/src/**/*.ts",
+    "packages/alfa-cache/src/**/*.ts",
+    "packages/alfa-callback/src/**/*.ts"
+  ],
+  "buildCommand": "sh scripts/stryker-build.sh",
+  "commandRunner": { "command": "yarn stryker-test" },
+  "coverageAnalysis": "off",
+  "checkers": ["typescript"],
+  "symlinkNodeModules": false,
+  "incremental": true,
+  "tsconfigFile": "config/tsconfig.stryker.json",
+  "htmlReporter": {
+    "fileName": "docs/mutation-report.html"
+  },
+  "incrementalFile": "config/stryker-incremental.json",
+  "thresholds": {
+    "high": 80,
+    "low": 60,
+    "break": 40
+  },
+  "typescriptChecker": {
+    "prioritizePerformanceOverAccuracy": false
+  },
+  "reporters": ["html", "progress"],
+  "timeoutFactor": 15
+}

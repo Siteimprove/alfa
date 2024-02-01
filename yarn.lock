@@ -2478,8 +2478,8 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.19.9"
     "@microsoft/api-extractor": "npm:^7.29.5"
     "@siteimprove/alfa-toolchain": "workspace:^0.72.0"
-    "@stryker-mutator/core": "npm:^8.1.0"
-    "@stryker-mutator/typescript-checker": "npm:^8.1.0"
+    "@stryker-mutator/core": "npm:^8.2.2"
+    "@stryker-mutator/typescript-checker": "npm:^8.2.2"
     "@types/async": "npm:^3.2.20"
     "@types/node": "npm:^20.5.9"
     async: "npm:^3.2.1"
@@ -2505,25 +2505,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stryker-mutator/api@npm:8.1.0":
-  version: 8.1.0
-  resolution: "@stryker-mutator/api@npm:8.1.0"
+"@stryker-mutator/api@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@stryker-mutator/api@npm:8.2.2"
   dependencies:
     mutation-testing-metrics: "npm:3.0.2"
     mutation-testing-report-schema: "npm:3.0.2"
     tslib: "npm:~2.6.2"
     typed-inject: "npm:~4.0.0"
-  checksum: 5ebf3d7746a848d38d1def488b2226bff62ce8675e7f0e723a54bd0762f588ecd3cb01660c4d00525b6b129c84ca72991735e93d2d431c5fe7dbf6b69de3c5bf
+  checksum: ae2167f24a2d493d16de413f526625318275163753a07354625f1870bbd741b865b3a9b20edf98bfa2f040f2fa3e381f819b3281547e720e3341fe38a6c3cc01
   languageName: node
   linkType: hard
 
-"@stryker-mutator/core@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "@stryker-mutator/core@npm:8.1.0"
+"@stryker-mutator/core@npm:^8.2.2":
+  version: 8.2.2
+  resolution: "@stryker-mutator/core@npm:8.2.2"
   dependencies:
-    "@stryker-mutator/api": "npm:8.1.0"
-    "@stryker-mutator/instrumenter": "npm:8.1.0"
-    "@stryker-mutator/util": "npm:8.1.0"
+    "@stryker-mutator/api": "npm:8.2.2"
+    "@stryker-mutator/instrumenter": "npm:8.2.2"
+    "@stryker-mutator/util": "npm:8.2.2"
     ajv: "npm:~8.12.0"
     chalk: "npm:~5.3.0"
     commander: "npm:~11.1.0"
@@ -2551,46 +2551,46 @@ __metadata:
     typed-rest-client: "npm:~1.8.11"
   bin:
     stryker: bin/stryker.js
-  checksum: eadc8cc85b357625d8f71bb37d0c0a2302701a87f67b7df4439203ed72c8fe44a719496fd5cca4a76a715c1965ee67d4f6cb672330e049d44b947f39457bd1db
+  checksum: c8fd32a7f3186ac48a6c138ae6c536899905299f5feebab99699adf4cbc91e303122b9c1bc68a4decad31fe4fa21ae3e793d8d1dc96b718e3bd4b49ef8c15148
   languageName: node
   linkType: hard
 
-"@stryker-mutator/instrumenter@npm:8.1.0":
-  version: 8.1.0
-  resolution: "@stryker-mutator/instrumenter@npm:8.1.0"
+"@stryker-mutator/instrumenter@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@stryker-mutator/instrumenter@npm:8.2.2"
   dependencies:
     "@babel/core": "npm:~7.23.9"
     "@babel/generator": "npm:~7.23.6"
     "@babel/parser": "npm:~7.23.9"
     "@babel/plugin-proposal-decorators": "npm:~7.23.9"
     "@babel/preset-typescript": "npm:~7.23.3"
-    "@stryker-mutator/api": "npm:8.1.0"
-    "@stryker-mutator/util": "npm:8.1.0"
+    "@stryker-mutator/api": "npm:8.2.2"
+    "@stryker-mutator/util": "npm:8.2.2"
     angular-html-parser: "npm:~5.2.0"
     semver: "npm:~7.5.4"
     weapon-regex: "npm:~1.3.0"
-  checksum: 4718015c7593ed29996abd668448153f34df995a10b3ae36a107ce59b49d64432933f988836a593214aa6bf721e981deeeb26fd87c305a787dcf3e94dd14b753
+  checksum: b268ea9336fffc90ca81b94004e4c9c68a3f0374e253f0d67e7aa1cac4c4979797c89ed9ac2094f8e8583c5ff92cb8fd02096182f79d53f5dd5d2cf59e2492d2
   languageName: node
   linkType: hard
 
-"@stryker-mutator/typescript-checker@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "@stryker-mutator/typescript-checker@npm:8.1.0"
+"@stryker-mutator/typescript-checker@npm:^8.2.2":
+  version: 8.2.2
+  resolution: "@stryker-mutator/typescript-checker@npm:8.2.2"
   dependencies:
-    "@stryker-mutator/api": "npm:8.1.0"
-    "@stryker-mutator/util": "npm:8.1.0"
+    "@stryker-mutator/api": "npm:8.2.2"
+    "@stryker-mutator/util": "npm:8.2.2"
     semver: "npm:~7.5.4"
   peerDependencies:
-    "@stryker-mutator/core": ~8.1.0
+    "@stryker-mutator/core": ~8.2.0
     typescript: ">=3.6"
-  checksum: c5fe39e964ed53cae450914ade7d7991d6d5bffa996b8088d14b124d38097109879879f4bdfa443b76bc38f176dbb3408f91e9deaa0e9373db9de93e126085b5
+  checksum: 671d7d5bca6c14d2a0c11f6651e9f4e98e722c330743aa4215294299d87d916dbb25cfcbee2f56abc539bbbb7975e6c8ede132e0d9c47cd4b94ff68fae9cf676
   languageName: node
   linkType: hard
 
-"@stryker-mutator/util@npm:8.1.0":
-  version: 8.1.0
-  resolution: "@stryker-mutator/util@npm:8.1.0"
-  checksum: e1a82c33f10ed6ced7401599078371b138ae493eff84756e8a558bffb5c9a075cd065d8fc4fb05a68194dcf0175f0f1f4b2a048f1f5d63ae62af3f29ed9934ea
+"@stryker-mutator/util@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@stryker-mutator/util@npm:8.2.2"
+  checksum: cf41061f79d5a76843c80e0a08aa83d77c51d177706d25dfd06ce178e525ee52a9bf0131a10117449776dac3d023aac61c9e7ecfa4754d62269d2a36882e83c3
   languageName: node
   linkType: hard
 
