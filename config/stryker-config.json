@@ -9,7 +9,16 @@
     "packages/alfa-bits/src/**/*.ts",
     "packages/alfa-branched/src/**/*.ts",
     "packages/alfa-cache/src/**/*.ts",
-    "packages/alfa-callback/src/**/*.ts"
+    "packages/alfa-callback/src/**/*.ts",
+    "packages/alfa-cascade/src/**/*.ts",
+    "packages/alfa-clone/src/**/*.ts",
+    "packages/alfa-collection/src/**/*.ts",
+    "packages/alfa-comparable/src/**/*.ts",
+    "packages/alfa-continuation/src/**/*.ts",
+    "packages/alfa-css-feature/src/**/*.ts",
+    "packages/alfa-device/src/**/*.ts",
+    "packages/alfa-dom/src/**/*.ts",
+    "packages/alfa-earl/src/**/*.ts"
   ],
   "buildCommand": "sh scripts/stryker-build.sh",
   "commandRunner": { "command": "yarn stryker-test" },
