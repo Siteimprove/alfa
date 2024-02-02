@@ -3,7 +3,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "@siteimprove/alfa-dom"
+    "jsxImportSource": "@siteimprove/alfa-dom",
   },
   "files": [
     "src/attribute.ts",
@@ -41,12 +41,13 @@
     "src/role/predicate.ts",
     "src/role/predicate/has-name.ts",
     "test/dom/predicate/has-accessible-name.spec.tsx",
+    "test/dom/predicate/has-heading-level.spec.tsx",
     "test/dom/predicate/has-incorrect-role-without-name.spec.tsx",
     "test/dom/predicate/has-role.spec.tsx",
     "test/name.spec.tsx",
     "test/name-testable-statements.spec.tsx",
     "test/node.spec.tsx",
-    "test/role.spec.tsx"
+    "test/role.spec.tsx",
   ],
   "references": [
     { "path": "../alfa-array" },
@@ -71,6 +72,6 @@
     { "path": "../alfa-table" },
     { "path": "../alfa-test" },
     { "path": "../alfa-thunk" },
-    { "path": "../alfa-tree" }
-  ]
+    { "path": "../alfa-tree" },
+  ],
 }
