@@ -67,6 +67,28 @@ test("evaluate() is inapplicable to disabled button", async (t) => {
   t.deepEqual(await evaluate(R111, { document, device }), [inapplicable(R111)]);
 });
 
+test("evaluate() is inapplicable to button with pointer-events: none", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <button
+      style={{
+        width: "43px",
+        height: "43px",
+        borderRadius: "0",
+        pointerEvents: "none",
+      }}
+      box={{ device, x: 8, y: 8, width: 43, height: 43 }}
+    >
+      Hello
+    </button>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R111, { document, device }), [inapplicable(R111)]);
+});
+
 test("evaluate() is inapplicable when there is no layout information", async (t) => {
   const device = Device.standard();
 
