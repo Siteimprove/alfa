@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
@@ -84,7 +85,8 @@ export abstract class Rule<T extends string = string>
 
     this._owner = Option.of(owner);
 
-    return true;
+    // Recursively attach the owner to all children.
+    return Iterable.every(this.children(), (rule) => rule._attachOwner(owner));
   }
 
   /**
