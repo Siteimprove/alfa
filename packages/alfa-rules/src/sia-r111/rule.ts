@@ -7,7 +7,6 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Style } from "@siteimprove/alfa-style";
 
 import { expectation } from "../common/act/expectation";
-import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { getElementDescendants } = Query;
 const { and } = Refinement;
@@ -16,7 +15,7 @@ const { hasComputedStyle, isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",
-  requirements: [], // TODO
+  requirements: [], // TODO: Not sure how to determine these
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -29,12 +28,13 @@ export default Rule.Atomic.of<Page, Element>({
             ),
             isFocusable(device),
             hasRole(device, (role) => role.isWidget()),
+            (target) => target.getBoundingBox(device).isSome(),
           ),
         );
       },
 
       expectations(target) {
-        // TODO: Handle missing layout
+        // Existence of bounding box is guaranteed by applicability
         const box = target.getBoundingBox(device).getUnsafe();
 
         return {
