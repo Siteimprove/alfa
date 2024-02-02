@@ -157,6 +157,7 @@
     "src/property/overflow.ts",
     "src/property/overflow-x.ts",
     "src/property/overflow-y.ts",
+    "src/property/pointer-events.ts",
     "src/property/position.ts",
     "src/property/right.ts",
     "src/property/rotate.ts",
