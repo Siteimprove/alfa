@@ -895,19 +895,19 @@ export namespace Query {
 export abstract class Rule<T extends string = string> implements Equatable, Serializable {
     protected constructor(type: T);
     // (undocumented)
-    ancestors(): Iterable<Rule>;
+    ancestors(): Iterable_2<Rule>;
     // @internal (undocumented)
     _attachOwner(owner: Sheet): boolean;
     // @internal (undocumented)
     _attachParent(parent: Rule): boolean;
     // (undocumented)
-    children(): Iterable<Rule>;
+    children(): Iterable_2<Rule>;
     // (undocumented)
-    descendants(): Iterable<Rule>;
+    descendants(): Iterable_2<Rule>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    inclusiveAncestors(): Iterable<Rule>;
+    inclusiveAncestors(): Iterable_2<Rule>;
     // (undocumented)
     get owner(): Option<Sheet>;
     // (undocumented)
