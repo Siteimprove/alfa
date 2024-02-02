@@ -3,7 +3,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "@siteimprove/alfa-dom",
+    "jsxImportSource": "@siteimprove/alfa-dom"
   },
   "files": [
     "src/element/element.ts",
@@ -233,7 +233,7 @@
     "test/property/text-shadow.spec.tsx",
     "test/property/top.spec.tsx",
     "test/style.spec.tsx",
-    "test/variable.spec.ts",
+    "test/variable.spec.ts"
   ],
   "references": [
     { "path": "../alfa-applicative" },
