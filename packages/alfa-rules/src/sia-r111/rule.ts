@@ -15,7 +15,7 @@ const { hasComputedStyle, isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",
-  requirements: [], // TODO: Not sure how to determine these
+  requirements: [Criterion.of("2.5.5")], 
   evaluate({ device, document }) {
     return {
       applicability() {
