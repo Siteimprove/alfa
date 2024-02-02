@@ -1,10 +1,11 @@
-import { Page } from "@siteimprove/alfa-web";
-import { Element, Query, Node } from "@siteimprove/alfa-dom";
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Err, Ok } from "@siteimprove/alfa-result";
 import { DOM } from "@siteimprove/alfa-aria";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
+import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
@@ -15,7 +16,7 @@ const { hasComputedStyle, isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",
-  requirements: [Criterion.of("2.5.5")], 
+  requirements: [Criterion.of("2.5.5")],
   evaluate({ device, document }) {
     return {
       applicability() {
