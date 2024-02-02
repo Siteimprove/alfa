@@ -262,6 +262,6 @@
     { "path": "../alfa-set" },
     { "path": "../alfa-slice" },
     { "path": "../alfa-test" },
-    { "path": "../alfa-trilean" },
-  ],
+    { "path": "../alfa-trilean" }
+  ]
 }

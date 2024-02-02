@@ -305,6 +305,6 @@
     { "path": "../alfa-trilean" },
     { "path": "../alfa-url" },
     { "path": "../alfa-wcag" },
-    { "path": "../alfa-web" },
-  ],
+    { "path": "../alfa-web" }
+  ]
 }
