@@ -9,3 +9,6 @@ node_modules
 
 !**/scripts/**/*.js
 !**/types/**/*.d.ts
+
+# stryker temp files
+.stryker-tmp

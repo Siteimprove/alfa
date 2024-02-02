@@ -12,7 +12,8 @@
     "src/question.ts",
     "src/requirement.ts",
     "src/rule.ts",
-    "src/tag.ts"
+    "src/tag.ts",
+    "test/diagnostic.spec.ts"
   ],
   "references": [
     { "path": "../alfa-applicative" },
