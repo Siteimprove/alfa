@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -10,6 +9,7 @@ import { Name } from "../src";
 const device = Device.standard();
 const no = { before: false, after: false };
 const yes = { before: true, after: true };
+const before = { before: true, after: false };
 
 function getName(node: Element | Text) {
   return Name.from(node, device).getUnsafe().toJSON();
@@ -164,32 +164,32 @@ test(`.from() determines the name of a <button> element with an empty aria-label
 });
 
 test(`.from() determines the name of a <button> element with an aria-labelledby
-      attribute that points to a <p> element with child text content`, (t) => {
+      attribute that points to a <span> element with child text content`, (t) => {
   const button = <button aria-labelledby="foo" />;
 
   <div>
     {button}
-    <p id="foo">Hello world</p>
+    <span id="foo">Hello world</span>
   </div>;
 
   t.deepEqual(getName(button), {
     value: "Hello world",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Hello world",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
-              element: "/div[1]/p[1]",
+              element: "/div[1]/span[1]",
               name: {
                 value: "Hello world",
                 spaces: no,
-                sources: [{ type: "data", text: "/div[1]/p[1]/text()[1]" }],
+                sources: [{ type: "data", text: "/div[1]/span[1]/text()[1]" }],
               },
             },
           ],
@@ -200,44 +200,44 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
 });
 
 test(`.from() determines the name of a <button> element with an aria-labelledby
-      attribute that points to two <p> elements with child text content`, (t) => {
+      attribute that points to two <span> elements with child text content`, (t) => {
   const button = <button aria-labelledby="foo bar" />;
 
   h.document([
     <div>
       {button}
-      <p id="foo">Hello</p>
-      <p id="bar">world</p>
+      <span id="foo">Hello</span>
+      <span id="bar">world</span>
     </div>,
   ]);
 
   t.deepEqual(getName(button), {
     value: "Hello world",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Hello world",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
-              element: "/div[1]/p[1]",
+              element: "/div[1]/span[1]",
               name: {
                 value: "Hello",
                 spaces: no,
-                sources: [{ type: "data", text: "/div[1]/p[1]/text()[1]" }],
+                sources: [{ type: "data", text: "/div[1]/span[1]/text()[1]" }],
               },
             },
             {
               type: "descendant",
-              element: "/div[1]/p[2]",
+              element: "/div[1]/span[2]",
               name: {
                 value: "world",
                 spaces: no,
-                sources: [{ type: "data", text: "/div[1]/p[2]/text()[1]" }],
+                sources: [{ type: "data", text: "/div[1]/span[2]/text()[1]" }],
               },
             },
           ],
@@ -260,14 +260,14 @@ test(".from() order tokens in aria-labelledby order, not DOM order", (t) => {
 
   t.deepEqual(getName(target), {
     value: "foo bar",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "foo bar",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               element: "/div[1]/div[1]",
@@ -647,7 +647,7 @@ test(`.from() joins block descendant names with a space`, (t) => {
 
   t.deepEqual(getName(button), {
     value: "Block element",
-    spaces: no,
+    spaces: yes,
     sources: [
       {
         type: "descendant",
@@ -1225,14 +1225,14 @@ test(`.from() correctly handles aria-labelledby references to hidden elements
 
   t.deepEqual(getName(label), {
     value: "Hello world",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/label[1]/@aria-labelledby",
         name: {
           value: "Hello world",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
@@ -1278,21 +1278,21 @@ test(`.from() correctly handles aria-labelledby references to elements
 
   t.deepEqual(getName(button), {
     value: "world",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "world",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
               element: "/div[1]/div[1]",
               name: {
                 value: "world",
-                spaces: { before: true, after: false },
+                spaces: before,
                 sources: [{ type: "data", text: "/div[1]/div[1]/text()[1]" }],
               },
             },
@@ -1323,14 +1323,14 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
 
   t.deepEqual(getName(foo), {
     value: "Bar",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Bar",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
@@ -1351,14 +1351,14 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
 
   t.deepEqual(getName(bar), {
     value: "Foo",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[2]/@aria-labelledby",
         name: {
           value: "Foo",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
@@ -1401,14 +1401,14 @@ test(`.from() correctly handles direct chained aria-labelledby references`, (t) 
   // `aria-labelledby` reference isn't followed.
   t.deepEqual(getName(foo), {
     value: "Bar",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Bar",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
@@ -1431,14 +1431,14 @@ test(`.from() correctly handles direct chained aria-labelledby references`, (t) 
   // about `foo` and therefore only sees a single `aria-labelledby` reference.
   t.deepEqual(getName(bar), {
     value: "Baz",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[2]/@aria-labelledby",
         name: {
           value: "Baz",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
@@ -1479,14 +1479,14 @@ test(`.from() correctly handles indirect chained aria-labelledby references`, (t
   // `aria-labelledby` reference isn't followed.
   t.deepEqual(getName(foo), {
     value: "Bar",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Bar",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
@@ -1522,21 +1522,21 @@ test(`.from() correctly handles indirect chained aria-labelledby references`, (t
   // about `foo` and therefore only sees a single `aria-labelledby` reference.
   t.deepEqual(getName(bar), {
     value: "Baz",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "descendant",
         element: "/div[1]/button[2]",
         name: {
           value: "Baz",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "reference",
               attribute: "/div[1]/button[2]/span[1]/@aria-labelledby",
               name: {
                 value: "Baz",
-                spaces: no,
+                spaces: before,
                 sources: [
                   {
                     type: "descendant",
@@ -1573,14 +1573,14 @@ test(`.from() correctly handles self-referencing aria-labelledby references`, (t
 
   t.deepEqual(getName(foo), {
     value: "Hello world",
-    spaces: no,
+    spaces: before,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Hello world",
-          spaces: no,
+          spaces: before,
           sources: [
             {
               type: "descendant",
@@ -1981,27 +1981,27 @@ test(".from() correctly add spaces in aria-labelledby traversal", (t) => {
   );
 });
 
-// test(".from() keeps spaces-only content between words", (t) => {
-//   const target = (
-//     <button>
-//       <span>Hello</span>
-//       <span> </span>
-//       <span>World</span>
-//     </button>
-//   );
-//   h.document([target]);
-//
-//   t.equal(getName(target).value, "Hello World");
-// });
-//
-// test(".from() doesn't trim spaces between parts of the name", (t) => {
-//   const target = (
-//     <button>
-//       <span>Hello</span>
-//       <span> World</span>
-//     </button>
-//   );
-//   h.document([target]);
-//
-//   t.equal(getName(target).value, "Hello World");
-// });
+test(".from() keeps spaces-only content between words", (t) => {
+  const target = (
+    <button>
+      <span>Hello</span>
+      <span> </span>
+      <span>World</span>
+    </button>
+  );
+  h.document([target]);
+
+  t.equal(getName(target).value, "Hello World");
+});
+
+test(".from() doesn't trim spaces between parts of the name", (t) => {
+  const target = (
+    <button>
+      <span>Hello</span>
+      <span> World</span>
+    </button>
+  );
+  h.document([target]);
+
+  t.equal(getName(target).value, "Hello World");
+});

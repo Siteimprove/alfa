@@ -103,6 +103,14 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     return this._value;
   }
 
+  public get spaces(): { before: boolean; after: boolean } {
+    return { before: this._spaceBefore, after: this._spaceAfter };
+  }
+
+  public get hasSpaces(): boolean {
+    return this._spaceBefore || this._spaceAfter;
+  }
+
   public get source(): ReadonlyArray<Source> {
     return this._sources;
   }
@@ -159,7 +167,7 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     return names.reduce((acc, name) => acc.add(name), Name.of("")).normalize();
   }
   public isEmpty(): boolean {
-    return this._value.length === 0;
+    return this._value.length === 0 && !this.hasSpaces;
   }
 
   public equals(value: unknown): value is this {
@@ -196,7 +204,11 @@ export namespace Name {
   }
 
   export function from(node: Element | Text, device: Device): Option<Name> {
-    return fromNode(node, device, State.empty());
+    return fromNode(node, device, State.empty()).andThen((name) =>
+      // Once the computation is finished, we can safely discard empty names that
+      // would need spacing if combined. These won't be combined further.
+      name.value === "" ? None : Option.of(name),
+    );
   }
 
   const names = Cache.empty<Device, Cache<Node, Option<Name>>>();
@@ -421,11 +433,6 @@ export namespace Name {
         return fromDescendants(element, device, state).map((name) =>
           name.spaced(spaced),
         );
-        //   .flatMap((name) =>
-        //   normalize(name.value) === ""
-        //     ? None
-        //     : Option.of(Name.of(normalize(name.value), name.source)),
-        // );
       },
 
       // Step 2H: Use the subtree content, if descending.
@@ -482,11 +489,9 @@ export namespace Name {
         fromNode(element, device, state.recurse(true).descend(true)),
       );
 
-    // const name = flatten(names.map(([value]) => value).join(""));
-    // const name = flatten(names.map(([value]) => value).join("")).trim();
     const name = Name.join(...names);
 
-    if (name.value === "") {
+    if (name.isEmpty()) {
       return None;
     }
 
@@ -494,6 +499,7 @@ export namespace Name {
       Name.of(
         name.value,
         names.map((name) => Source.descendant(element, name)),
+        name.spaces,
       ),
     );
   }
@@ -542,28 +548,35 @@ export namespace Name {
 
     const name = Name.join(...names);
 
-    if (name.value === "") {
+    if (name.isEmpty()) {
       return None;
     }
 
     return Option.of(
-      Name.of(name.value, [
-        Source.reference(
-          attribute,
-          Name.of(
-            name.value,
-            names.flatMap((name) => Sequence.from(name.source)),
+      Name.of(
+        name.value,
+        [
+          Source.reference(
+            attribute,
+            Name.of(
+              name.value,
+              names.flatMap((name) => Sequence.from(name.source)),
+              name.spaces,
+            ),
           ),
-        ),
-      ]),
+        ],
+        name.spaces,
+      ),
     );
   }
 
   /**
    * @remarks
-   * For isolated spaces (e.g., <span> </span>), we need to keep memory of the space
-   * and thus must carry over an empty name with spacing. This is however not
-   * valid for steps and we must go to the next step in this case.
+   * For isolated spaces (e.g., <span> </span>), we need to keep memory of the
+   * space and thus must carry over an empty name with spacing. This is
+   * however more complex for steps. Here, we want to go to the next step in case
+   * of whitespace name, but if we find no name, then we are possibly facing a
+   * whitespace element's text and must keep it when concatenating sibling names.
    *
    * @internal
    */
@@ -572,6 +585,10 @@ export namespace Name {
   ): Option<Name> {
     return Array.collectFirst(steps, (step) =>
       step().reject((name) => name.value === ""),
+    ).orElse(() =>
+      Array.collectFirst(steps, (step) =>
+        step().reject((name) => name.isEmpty()),
+      ),
     );
   }
 
