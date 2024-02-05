@@ -290,6 +290,10 @@ export namespace Name {
     device: Device,
     state: State,
   ): Option<Name> {
+    if (element.name === "br") {
+      return Option.of(Name.of("", [], { before: true, after: true }));
+    }
+
     if (state.hasVisited(element)) {
       // While self-references are allowed, any other forms of circular
       // references are not. If the referrer therefore isn't the element itself,
@@ -389,10 +393,14 @@ export namespace Name {
       // Step 2D: Use the `aria-label` attribute, if present.
       // https://w3c.github.io/accname/#step2D
       () => {
-        return element
-          .attribute("aria-label")
-          .flatMap((attribute) => fromLabel(attribute))
-          .map((name) => name.spaced(spaced));
+        return (
+          element
+            .attribute("aria-label")
+            .flatMap((attribute) => fromLabel(attribute))
+            // As of Feb. 2024, both Chrome and Firefox add spaces when concatenating
+            // `aria-label` nodes. Accname spec hasn't resolved this point yet.
+            .map((name) => name.spaced(true))
+        );
       },
 
       // Step 2E: Use native features, if present and allowed.

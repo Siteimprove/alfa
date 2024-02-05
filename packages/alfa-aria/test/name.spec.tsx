@@ -137,7 +137,7 @@ test(`.from() determines the name of a <button> element with an aria-label
 
   t.deepEqual(getName(button), {
     value: "Hello world",
-    spaces: no,
+    spaces: yes,
     sources: [{ type: "label", attribute: "/button[1]/@aria-label" }],
   });
 });
@@ -260,14 +260,16 @@ test(".from() order tokens in aria-labelledby order, not DOM order", (t) => {
 
   t.deepEqual(getName(target), {
     value: "foo bar",
-    spaces: before,
+    spaces: yes,
     sources: [
       {
         type: "reference",
         attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "foo bar",
-          spaces: before,
+          // The space before comes from aria-labelledby.
+          // The space after is the leftover of aria-label.
+          spaces: yes,
           sources: [
             {
               element: "/div[1]/div[1]",
@@ -1133,7 +1135,7 @@ test(`.from() determines the name of a <img> element with a an empty alt
 
   t.deepEqual(getName(img), {
     value: "Hello world",
-    spaces: no,
+    spaces: yes,
     sources: [{ type: "label", attribute: "/img[1]/@aria-label" }],
   });
 });
