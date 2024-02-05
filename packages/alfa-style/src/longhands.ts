@@ -89,6 +89,7 @@ import OutlineStyle from "./property/outline-style";
 import OutlineWidth from "./property/outline-width";
 import OverflowX from "./property/overflow-x";
 import OverflowY from "./property/overflow-y";
+import PointerEvents from "./property/pointer-events";
 import Position from "./property/position";
 import Right from "./property/right";
 import Rotate from "./property/rotate";
@@ -264,6 +265,7 @@ export namespace Longhands {
     "outline-width": OutlineWidth,
     "overflow-x": OverflowX,
     "overflow-y": OverflowY,
+    "pointer-events": PointerEvents,
     position: Position,
     right: Right,
     rotate: Rotate,
