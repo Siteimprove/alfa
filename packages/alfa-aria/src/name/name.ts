@@ -34,8 +34,17 @@ const { getElementIdMap } = Query;
  * @public
  */
 export class Name implements Equatable, Serializable<Name.JSON> {
-  public static of(value: string, sources: Iterable<Source> = []): Name {
-    return new Name(value, Array.from(sources));
+  public static of(
+    value: string,
+    sources: Iterable<Source> = [],
+    spaces?: { before?: boolean; after?: boolean },
+  ): Name {
+    return new Name(
+      value,
+      Array.from(sources),
+      spaces?.before ?? false,
+      spaces?.after ?? false,
+    );
   }
 
   private readonly _value: string;
@@ -78,9 +87,16 @@ export class Name implements Equatable, Serializable<Name.JSON> {
   private readonly _spaceBefore: boolean;
   private readonly _spaceAfter: boolean;
 
-  private constructor(value: string, sources: Array<Source>) {
+  private constructor(
+    value: string,
+    sources: Array<Source>,
+    spaceBefore: boolean,
+    spaceAfter: boolean,
+  ) {
     this._value = value;
     this._sources = sources;
+    this._spaceBefore = spaceBefore;
+    this._spaceAfter = spaceAfter;
   }
 
   public get value(): string {
@@ -97,6 +113,51 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     }
   }
 
+  /**
+   * Normalize the name by trimming and collapsing spaces.
+   *
+   * @remarks
+   * If the name starts or end with spaces that are removed upon trimming,
+   * also records that they are needing upon concatenation.
+   */
+  public normalize(): Name {
+    // We need to flatten the string first, so that we can easily detects
+    // leading and trailing spaces.
+    const flatName = this._value.replace(/\s+/g, " ");
+
+    return new Name(
+      flatName.trim(),
+      this._sources,
+      this._spaceBefore || flatName.startsWith(" "),
+      this._spaceAfter || flatName.endsWith(" "),
+    );
+  }
+
+  /**
+   * Add spaces before or after. Do not remove spaces if they are already there.
+   */
+  public spaced(spaceBefore: boolean, spaceAfter: boolean = spaceBefore): Name {
+    return new Name(
+      this._value,
+      this._sources,
+      spaceBefore || this._spaceBefore,
+      spaceAfter || this._spaceAfter,
+    );
+  }
+  private add(that: Name): Name {
+    return new Name(
+      this._value +
+        (this._spaceAfter || that._spaceBefore ? " " : "") +
+        that._value,
+      this._sources.concat(that._sources),
+      this._spaceBefore,
+      that._spaceAfter,
+    );
+  }
+
+  public static join(...names: Array<Name>): Name {
+    return names.reduce((acc, name) => acc.add(name), Name.of("")).normalize();
+  }
   public isEmpty(): boolean {
     return this._value.length === 0;
   }
@@ -113,6 +174,7 @@ export class Name implements Equatable, Serializable<Name.JSON> {
   public toJSON(): Name.JSON {
     return {
       value: this._value,
+      spaces: { before: this._spaceBefore, after: this._spaceAfter },
       sources: this._sources.map((source) => source.toJSON()),
     };
   }
@@ -129,6 +191,7 @@ export namespace Name {
   export interface JSON {
     [key: string]: json.JSON;
     value: string;
+    spaces: { before: boolean; after: boolean };
     sources: Array<Source.JSON>;
   }
 
@@ -279,6 +342,16 @@ export namespace Name {
       // was hidden, keep going.
     }
 
+    // If the element is a block element, record that it needs spaces when combined.
+    const spaced = test(
+      hasComputedStyle(
+        "display",
+        ({ values: [outside] }) => outside.value === "block",
+        device,
+      ),
+      element,
+    );
+
     return fromSteps(
       // Step 2B: Use the `aria-labelledby` attribute, if present and allowed.
       // https://w3c.github.io/accname/#step2B
@@ -294,7 +367,8 @@ export namespace Name {
           .attribute("aria-labelledby")
           .flatMap((attribute) =>
             fromReferences(attribute, element, device, state),
-          );
+          )
+          .map((name) => name.spaced(spaced));
       },
 
       // Step 2C: control embedded in a label, not currently handled
@@ -305,7 +379,8 @@ export namespace Name {
       () => {
         return element
           .attribute("aria-label")
-          .flatMap((attribute) => fromLabel(attribute));
+          .flatMap((attribute) => fromLabel(attribute))
+          .map((name) => name.spaced(spaced));
       },
 
       // Step 2E: Use native features, if present and allowed.
@@ -323,9 +398,9 @@ export namespace Name {
           return None;
         }
 
-        return Feature.from(element.namespace.get(), element.name).flatMap(
-          (feature) => feature.name(element, device, state),
-        );
+        return Feature.from(element.namespace.get(), element.name)
+          .flatMap((feature) => feature.name(element, device, state))
+          .map((name) => name.spaced(spaced));
       },
 
       // Step 2F: Use the subtree content, if referencing or allowed.
@@ -343,7 +418,9 @@ export namespace Name {
           return None;
         }
 
-        return fromDescendants(element, device, state);
+        return fromDescendants(element, device, state).map((name) =>
+          name.spaced(spaced),
+        );
         //   .flatMap((name) =>
         //   normalize(name.value) === ""
         //     ? None
@@ -360,7 +437,9 @@ export namespace Name {
           return None;
         }
 
-        return fromDescendants(element, device, state);
+        return fromDescendants(element, device, state).map((name) =>
+          name.spaced(spaced),
+        );
       },
     );
   }
@@ -371,7 +450,17 @@ export namespace Name {
   export function fromText(text: Text): Option<Name> {
     // Step 2G: Use the data of the text node.
     // https://w3c.github.io/accname/#step2G
-    return fromData(text);
+    const data = text.data;
+    if (data === "") {
+      return None;
+    }
+
+    return Option.of(
+      Name.of(data, [Source.data(text)], {
+        before: false,
+        after: false,
+      }).normalize(),
+    );
   }
 
   /**
@@ -386,40 +475,25 @@ export namespace Name {
     device: Device,
     state: State,
   ): Option<Name> {
-    const names: Sequence<readonly [string, Name]> = element
+    const names: Sequence<Name> = element
       .children(Node.flatTree)
       .filter(or(isText, isElement))
       .collect((element) =>
-        fromNode(element, device, state.recurse(true).descend(true)).map(
-          (name) => {
-            if (
-              test(
-                hasComputedStyle(
-                  "display",
-                  ({ values: [outside] }) => outside.value === "block",
-                  device,
-                ),
-                element,
-              )
-            ) {
-              return [` ${name.value} `, name];
-            }
-            return [name.value, name];
-          },
-        ),
+        fromNode(element, device, state.recurse(true).descend(true)),
       );
 
     // const name = flatten(names.map(([value]) => value).join(""));
-    const name = flatten(names.map(([value]) => value).join("")).trim();
+    // const name = flatten(names.map(([value]) => value).join("")).trim();
+    const name = Name.join(...names);
 
-    if (name === "") {
+    if (name.value === "") {
       return None;
     }
 
     return Option.of(
       Name.of(
-        name,
-        names.map(([, name]) => Source.descendant(element, name)),
+        name.value,
+        names.map((name) => Source.descendant(element, name)),
       ),
     );
   }
@@ -428,13 +502,16 @@ export namespace Name {
    * @internal
    */
   export function fromLabel(attribute: Attribute): Option<Name> {
-    const name = flatten(attribute.value);
-
-    if (name === "") {
+    if (attribute.value === "") {
       return None;
     }
 
-    return Option.of(Name.of(name, [Source.label(attribute)]));
+    return Option.of(
+      Name.of(attribute.value, [Source.label(attribute)], {
+        before: false,
+        after: false,
+      }).normalize(),
+    );
   }
 
   /**
@@ -459,20 +536,22 @@ export namespace Name {
           device,
           state.reference(referrer, element).recurse(true).descend(false),
         ),
-      );
+      )
+      // Step 2.B.ii.c
+      .map((name) => name.spaced(true, false));
 
-    const name = flatten(names.map((name) => name.value).join(" "));
+    const name = Name.join(...names);
 
-    if (name === "") {
+    if (name.value === "") {
       return None;
     }
 
     return Option.of(
-      Name.of(name, [
+      Name.of(name.value, [
         Source.reference(
           attribute,
           Name.of(
-            name,
+            name.value,
             names.flatMap((name) => Sequence.from(name.source)),
           ),
         ),
@@ -481,30 +560,20 @@ export namespace Name {
   }
 
   /**
-   * @internal
-   */
-  export function fromData(text: Text): Option<Name> {
-    const name = flatten(text.data);
-
-    if (name === "") {
-      return None;
-    }
-
-    return Option.of(Name.of(name, [Source.data(text)]));
-  }
-
-  /**
+   * @remarks
+   * For isolated spaces (e.g., <span> </span>), we need to keep memory of the space
+   * and thus must carry over an empty name with spacing. This is however not
+   * valid for steps and we must go to the next step in this case.
+   *
    * @internal
    */
   export function fromSteps(
     ...steps: Array<Thunk<Option<Name>>>
   ): Option<Name> {
-    return Array.collectFirst(steps, (step) => step());
+    return Array.collectFirst(steps, (step) =>
+      step().reject((name) => name.value === ""),
+    );
   }
 
   export const { hasValue } = predicate;
-}
-
-function flatten(string: string): string {
-  return string.replace(/\s+/g, " ");
 }
