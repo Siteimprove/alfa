@@ -330,7 +330,16 @@ export class Element<N extends string = string>
     }
 
     const children = [...this._shadow, ...this._children, ...this._content]
-      .map((child) => child.toString().trim())
+      .map((child) => {
+        const value = child.toString();
+
+        // If the child is only spaces, we do not want to trim them to nothingness.
+        if (value.match(/\s+/) !== null) {
+          return value;
+        }
+
+        return value.trim();
+      })
       .filter(not(isEmpty))
       .map(indent)
       .join("\n");
