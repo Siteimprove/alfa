@@ -21,7 +21,7 @@ puppeteer.launch().then(async (browser) => {
         const heading = criterion.querySelector("h4, .sc-handle");
 
         const [, chapter, title] = heading.textContent.match(
-          /(\d\.\d\.\d{1,2}) ([^§:]+)/
+          /(\d\.\d\.\d{1,2}) ([^§:]+)/,
         );
 
         const id = criterion.id;
@@ -34,7 +34,7 @@ puppeteer.launch().then(async (browser) => {
           title,
           level,
         };
-      })
+      }),
     );
 
     for (const { chapter, id, title, level } of data) {
@@ -71,12 +71,12 @@ export type Criteria = typeof Criteria;
 export const Criteria = ${JSON.stringify(criteria, null, 2)} as const;
   `;
 
-  code = prettier.format(code, {
+  code = await prettier.format(code, {
     parser: "typescript",
   });
 
   fs.writeFileSync(
     path.join(__dirname, "..", "src", "criterion", "data.ts"),
-    code
+    code,
   );
 });
