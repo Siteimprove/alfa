@@ -31,8 +31,8 @@ puppeteer.launch().then(async (browser) => {
             uri,
           },
         ];
-      })
-    )
+      }),
+    ),
   );
 
   browser.close();
@@ -53,12 +53,12 @@ export type Techniques = typeof Techniques;
 export const Techniques = ${JSON.stringify(techniques, null, 2)} as const;
   `;
 
-  code = prettier.format(code, {
+  code = await prettier.format(code, {
     parser: "typescript",
   });
 
   fs.writeFileSync(
     path.join(__dirname, "..", "src", "technique", "data.ts"),
-    code
+    code,
   );
 });
