@@ -100,15 +100,20 @@ function testExceptions(testId) {
         reason: "Alfa does not support :before and :after pseudo-elements",
         issue: "https://github.com/Siteimprove/alfa/issues/954",
       };
+    case "Name_file-label-inline-hidden-elements":
+      return {
+        reason:
+          "Browsers (Chrome, Firefox) disagree with testable statement on this case",
+        issue: "none",
+      };
     case "Name_from_content":
     case "Name_from_content_of_labelledby_element":
     case "Name_from_content_of_label":
-    case "Name_file-label-inline-block-elements":
-    case "Name_file-label-inline-hidden-elements":
     case "Name_link-mixed-content":
       return {
-        reason: "Alfa joins content traversal without spaces",
-        issue: "https://github.com/Siteimprove/alfa/issues/1203",
+        reason:
+          "JSX emitter is too eager in trimming spaces on text nodes alone on a line",
+        issue: "https://github.com/microsoft/TypeScript/issues/57298",
       };
     case "Name_test_case_596":
     case "Name_test_case_597":
@@ -147,7 +152,7 @@ async function main() {
       const [_, code, targetId, result] = statement.match(
         // if given [code] then the accessible [name|description] of the element
         // with id of "[targetId]" is "[result]"
-        /if given\n([^]*)\nthen the accessible.*"(.*)".*"(.*)"/m
+        /if given\n([^]*)\nthen the accessible.*"(.*)".*"(.*)"/m,
       );
 
       statements.push({
@@ -173,18 +178,18 @@ async function main() {
         ({ testId }) =>
           testId !== "Name_test_case_663_.28DO_NOT_USE.29" &&
           testId !==
-            "Description_from_content_of_describedby_element_which_is_hidden_.28DO_NOT_USE.29"
+            "Description_from_content_of_describedby_element_which_is_hidden_.28DO_NOT_USE.29",
       )
       .map(printNameTestCase)
       .join("\n");
 
-  code = prettier.format(code, {
+  code = await prettier.format(code, {
     parser: "typescript",
   });
 
   fs.writeFileSync(
     path.join(__dirname, "..", "test", "name-testable-statements.spec.tsx"),
-    code
+    code,
   );
 }
 
@@ -208,13 +213,13 @@ function printNameTestCase({ title, kind, testId, code, targetId, result }) {
     ? ""
     : `/**
  * {@link ${url}#${testId}} ${
-        exception === undefined
-          ? ""
-          : `
+   exception === undefined
+     ? ""
+     : `
  *
  * ${exception.reason}
  * {@link ${exception.issue}}`
-      }
+ }
  */
 test("${title}", (t) => {
   const testCase = (
@@ -253,8 +258,10 @@ function styleStringToStyleObjectString(str) {
             .trim()
             // turn the kebab-case property name into a camelCase one by
             // replacing "-x" match to "X"
-            .replace(/-(.)/gm, (_, p1) => p1.toUpperCase())}: "${value.trim()}"`
-      )
+            .replace(/-(.)/gm, (_, p1) =>
+              p1.toUpperCase(),
+            )}: "${value.trim()}"`,
+      ),
     )
     .replace(/;/g, ", ")} }}`;
 }
@@ -263,7 +270,7 @@ function fixStyleAttribute(code) {
   // style="[style in kebab-case]" => style={{[style im camelCase]}}
   return code.replace(
     /style="([^"]*)"/gm,
-    (_, style) => `style=${styleStringToStyleObjectString(style)}`
+    (_, style) => `style=${styleStringToStyleObjectString(style)}`,
   );
 }
 
@@ -302,8 +309,8 @@ function styleElementToStyleSheet(style) {
         // Each declaration is mapped into a Declaration.of and they are
         // then joined as an array (enclosing []).
         /([^:]*):[ "]*([^ ";]*)[ ";]*/g,
-        `Declaration.of("$1", "$2"),`
-      )}]),`
+        `Declaration.of("$1", "$2"),`,
+      )}]),`,
   );
 }
 
