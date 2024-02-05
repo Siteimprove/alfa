@@ -11,6 +11,9 @@ import * as json from "@siteimprove/alfa-json";
 
 import type { Name } from "./name";
 
+/**
+ * @public
+ */
 export type Source =
   | Source.Data
   | Source.Descendant
@@ -18,6 +21,9 @@ export type Source =
   | Source.Label
   | Source.Reference;
 
+/**
+ * @public
+ */
 export namespace Source {
   export type JSON =
     | Data.JSON
