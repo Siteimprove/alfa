@@ -106,15 +106,6 @@ function testExceptions(testId) {
           "Browsers (Chrome, Firefox) disagree with testable statement on this case",
         issue: "none",
       };
-    case "Name_from_content":
-    case "Name_from_content_of_labelledby_element":
-    case "Name_from_content_of_label":
-    case "Name_link-mixed-content":
-      return {
-        reason:
-          "JSX emitter is too eager in trimming spaces on text nodes alone on a line",
-        issue: "https://github.com/microsoft/TypeScript/issues/57298",
-      };
     case "Name_test_case_596":
     case "Name_test_case_597":
     case "Name_test_case_598":
@@ -267,15 +258,29 @@ function styleStringToStyleObjectString(str) {
 }
 
 function fixStyleAttribute(code) {
-  // style="[style in kebab-case]" => style={{[style im camelCase]}}
+  // style="[style in kebab-case]" => style={{[style in camelCase]}}
   return code.replace(
     /style="([^"]*)"/gm,
     (_, style) => `style=${styleStringToStyleObjectString(style)}`,
   );
 }
 
+// In HTML, spaces are significant (including newline and tabs), in JSX they are
+// not and get trimmed upon generation.
+// See https://github.com/microsoft/TypeScript/issues/57298
+// for more discussion and pointers.
+// In our case, there are some
+// <span>
+//   (QED)
+// </span>
+// that get turned into <span>(QED)</span> by JSX, thus losing the spacing.
+// We solve that by adding spaces in curly brackets to force preservation.
+function fixSingleLineString(code) {
+  return code.replace(/\(QED\)/gm, '{" (QED) "}');
+}
+
 function fixcode(code) {
-  return fixStyleAttribute(fixMissingClosingTag(code));
+  return fixStyleAttribute(fixMissingClosingTag(fixSingleLineString(code)));
 }
 
 // Some test cases just have broken code :-/
