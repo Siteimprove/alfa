@@ -1,5 +1,15 @@
 # @siteimprove/alfa-dom
 
+## 0.73.0
+
+### Patch Changes
+
+- **Fixed:** Parents of `Comment` inside a shadow tree now correctly skip over the shadow root when traversing the flat tree. ([#1547](https://github.com/Siteimprove/alfa/pull/1547))
+
+- **Fixed:** Nested style rules now correctly get their sheet as owner. ([#1560](https://github.com/Siteimprove/alfa/pull/1560))
+
+- **Fixed:** `Node.toString()` now stops dropping text nodes with only spaces. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
 ## 0.72.0
 
 ## 0.71.1

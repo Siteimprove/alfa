@@ -23,22 +23,9 @@ export declare namespace Name
 |  --- | --- |
 |  [JSON](./alfa-aria.name.json.md) |  |
 
-## Namespaces
-
-|  Namespace | Description |
-|  --- | --- |
-|  [Source](./alfa-aria.name.source.md) |  |
-|  [State](./alfa-aria.name.state.md) |  |
-
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
 |  [hasValue](./alfa-aria.name.hasvalue.md) |  |
-
-## Type Aliases
-
-|  Type Alias | Description |
-|  --- | --- |
-|  [Source](./alfa-aria.name.source.md) |  |
 

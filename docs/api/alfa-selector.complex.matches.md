@@ -4,6 +4,8 @@
 
 ## Complex.matches() method
 
+Does the element match?
+
 **Signature:**
 
 ```typescript
@@ -20,4 +22,8 @@ matches(element: Element, context?: Context): boolean;
 **Returns:**
 
 boolean
+
+## Remarks
+
+This gets pretty hairy when shadow selectors (:host, :host-context, ::slotted) are used in a complex selector. \* ::slotted may be used in the rightmost, e.g., `div ::slotted(p)`<!-- -->. In that case, the full selector matches something in the light, depending on the structure of the shadow tree. Thus, the full selector must be considered as a shadow selector (it matches out of its tree), and this can simply use tree traversal options to navigate the flat tree structure. However, the actual match toward the element must use the advanced \#matchSlotted. \* :host and :host-context may be used as the leftmost, e.g., `:host(.foo) p`<!-- -->. This is useful to let users customise components through a simple class name on the custom element. In this case, the full selector matches something in the shadow tree and the full selector must \*\*not\*\* be considered as shadow selector (it matches in its own tree). But upon hitting the :host or :host-context, the matching must be delegated to the advance \#matchHost (and jump over the shadow root to the actual host).
 

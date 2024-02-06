@@ -1,5 +1,37 @@
 # Alfa changelog
 
+## [0.73.0](../../compare/v0.72.0...v0.73.0) (2024-02-06)
+
+### Breaking
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0730): `Name.Source` and `Name.State` are now exported from the top-level of the package. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
+### Added
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0730): `Cascade` now handles declarations from encapsulated contexts (shadow DOM). ([#1553](https://github.com/Siteimprove/alfa/pull/1553))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0730): Cascade now handle importance of declarations, and `style` attribute. ([#1550](https://github.com/Siteimprove/alfa/pull/1550))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0730): New rule SIA-R111 for testing target size of clickable elements. ([#1564](https://github.com/Siteimprove/alfa/pull/1564))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0730): New property `pointer-events`. ([#1564](https://github.com/Siteimprove/alfa/pull/1564))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0730), [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0730): The `:host` and `:host-context` pseudo-classes, as well as the `::slotted` pseudo-element are now supported. ([#1554](https://github.com/Siteimprove/alfa/pull/1554))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0730): R69 is no longer applicable to text that only contains punctuation. ([#1551](https://github.com/Siteimprove/alfa/pull/1551))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0730): Alfa now correctly handle spaces in accessible names. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0730): Parents of `Comment` inside a shadow tree now correctly skip over the shadow root when traversing the flat tree. ([#1547](https://github.com/Siteimprove/alfa/pull/1547))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0730): Nested style rules now correctly get their sheet as owner. ([#1560](https://github.com/Siteimprove/alfa/pull/1560))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0730): `Node.toString()` now stops dropping text nodes with only spaces. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
 ## [0.72.0](../../compare/v0.71.1...v0.72.0) (2024-01-08)
 
 ### Breaking

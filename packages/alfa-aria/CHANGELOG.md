@@ -1,5 +1,20 @@
 # @siteimprove/alfa-aria
 
+## 0.73.0
+
+### Minor Changes
+
+- **Breaking:** `Name.Source` and `Name.State` are now exported from the top-level of the package. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
+### Patch Changes
+
+- **Fixed:** Alfa now correctly handle spaces in accessible names. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
+  - `<br>` elements add a space to the name.
+  - Text nodes with leading or trailing spaces (including space only nodes) keep the space when concatenated.
+  - Names of descendants with an `aria-label` are spaced, following browsers' behavior.
+  - Names of descendants displayed as `table-cell` are spaced, following browsers' behavior.
+
 ## 0.72.0
 
 ## 0.71.1

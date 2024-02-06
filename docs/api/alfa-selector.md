@@ -16,7 +16,7 @@
 |  [Id](./alfa-selector.id.md) | [https://drafts.csswg.org/selectors/\#id-selector](https://drafts.csswg.org/selectors/#id-selector) |
 |  [List](./alfa-selector.list.md) | [https://drafts.csswg.org/selectors/\#selector-list](https://drafts.csswg.org/selectors/#selector-list) |
 |  [Relative](./alfa-selector.relative.md) | [https://drafts.csswg.org/selectors/\#relative-selector](https://drafts.csswg.org/selectors/#relative-selector) |
-|  [Specificity](./alfa-selector.specificity.md) | [https://www.w3.org/TR/selectors/\#specificity](https://www.w3.org/TR/selectors/#specificity) |
+|  [Specificity](./alfa-selector.specificity.md) | [https://www.w3.org/TR/selectors/\#specificity](https://www.w3.org/TR/selectors/#specificity) [https://drafts.csswg.org/css-cascade-5/\#cascade-specificity](https://drafts.csswg.org/css-cascade-5/#cascade-specificity) |
 |  [Type](./alfa-selector.type.md) | [https://drafts.csswg.org/selectors/\#type-selector](https://drafts.csswg.org/selectors/#type-selector) |
 |  [Universal](./alfa-selector.universal.md) | [https://drafts.csswg.org/selectors/\#universal-selector](https://drafts.csswg.org/selectors/#universal-selector) |
 

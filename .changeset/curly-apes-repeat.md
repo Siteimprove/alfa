@@ -1,9 +1,0 @@
----
-"@siteimprove/alfa-cascade": minor
----
-
-**Added:** `Cascade` now handles declarations from encapsulated contexts (shadow DOM).
-
-CSS selectors and rules that are affecting the host tree are now stored separately and retrieved when computing the cascade of said host.
-
-As with other rules from style sheets, these are only effective when the shadow host is part of a document tree. Otherwise, only the `style` attribute is taken into consideration.

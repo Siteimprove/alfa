@@ -1,5 +1,11 @@
 # @siteimprove/alfa-selector
 
+## 0.73.0
+
+### Minor Changes
+
+- **Added:** The `:host` and `:host-context` pseudo-classes, as well as the `::slotted` pseudo-element are now supported. ([#1554](https://github.com/Siteimprove/alfa/pull/1554))
+
 ## 0.72.0
 
 ### Minor Changes

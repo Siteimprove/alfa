@@ -1,5 +1,13 @@
 # @siteimprove/alfa-rules
 
+## 0.73.0
+
+### Minor Changes
+
+- **Added:** New rule SIA-R111 for testing target size of clickable elements. ([#1564](https://github.com/Siteimprove/alfa/pull/1564))
+
+- **Changed:** R69 is no longer applicable to text that only contains punctuation. ([#1551](https://github.com/Siteimprove/alfa/pull/1551))
+
 ## 0.72.0
 
 ### Patch Changes

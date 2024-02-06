@@ -1,5 +1,22 @@
 # @siteimprove/alfa-cascade
 
+## 0.73.0
+
+### Minor Changes
+
+- **Added:** `Cascade` now handles declarations from encapsulated contexts (shadow DOM). ([#1553](https://github.com/Siteimprove/alfa/pull/1553))
+
+  CSS selectors and rules that are affecting the host tree are now stored separately and retrieved when computing the cascade of said host.
+
+  As with other rules from style sheets, these are only effective when the shadow host is part of a document tree. Otherwise, only the `style` attribute is taken into consideration.
+
+- **Added:** Cascade now handle importance of declarations, and `style` attribute. ([#1550](https://github.com/Siteimprove/alfa/pull/1550))
+
+  This should have no impact on regular usage of `Style.from()` but may affect code trying to use the cascade directly.
+  Most notably, the internal rule tree `Block` can now come either from a rule or an element. Therefore, `Block.rule` and `Block.selector` may now be `null`.
+
+- **Added:** The `:host` and `:host-context` pseudo-classes, as well as the `::slotted` pseudo-element are now supported. ([#1554](https://github.com/Siteimprove/alfa/pull/1554))
+
 ## 0.72.0
 
 ### Minor Changes
