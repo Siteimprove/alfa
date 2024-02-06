@@ -358,11 +358,13 @@ export namespace Name {
       // was hidden, keep going.
     }
 
-    // If the element is a block element, record that it needs spaces when combined.
+    // If the element is a block element or a table cell, record that it needs
+    // spaces when combined.
     const spaced = test(
       hasComputedStyle(
         "display",
-        ({ values: [outside] }) => outside.value === "block",
+        ({ values: [outside] }) =>
+          outside.value === "block" || outside.value === "table-cell",
         device,
       ),
       element,
