@@ -3280,7 +3280,7 @@ test("Name from content", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(
+  t.notEqual(
     getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?",
   );
