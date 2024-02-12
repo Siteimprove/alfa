@@ -1,4 +1,5 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -100,7 +101,7 @@ export class Shadow extends Node<"shadow"> {
 
   public toString(): string {
     const children = this._children
-      .map((child) => indent(child.toString()))
+      .map((child) => String.indent(child.toString()))
       .join("\n");
 
     return `#shadow-root (${this._mode})${
@@ -183,8 +184,4 @@ export namespace Shadow {
         );
       });
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

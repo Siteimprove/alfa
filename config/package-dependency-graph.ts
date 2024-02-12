@@ -114,6 +114,7 @@ export default {
         "@siteimprove/alfa-math",
         "@siteimprove/alfa-parser",
         "@siteimprove/alfa-rectangle",
+        "@siteimprove/alfa-string",
         "@siteimprove/alfa-test",
         "@siteimprove/alfa-time",
       ],

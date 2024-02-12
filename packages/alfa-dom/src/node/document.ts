@@ -2,7 +2,9 @@ import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
@@ -76,7 +78,7 @@ export class Document extends Node<"document"> {
 
   public toString(): string {
     const children = this._children
-      .map((child) => indent(child.toString()))
+      .map((child) => String.indent(child.toString()))
       .join("\n");
 
     return `#document${children === "" ? "" : `\n${children}`}`;
@@ -150,8 +152,4 @@ export namespace Document {
         );
       });
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

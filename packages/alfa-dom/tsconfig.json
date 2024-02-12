@@ -110,6 +110,7 @@
     { "path": "../alfa-sarif" },
     { "path": "../alfa-selective" },
     { "path": "../alfa-sequence" },
+    { "path": "../alfa-string" },
     { "path": "../alfa-test" },
     { "path": "../alfa-trampoline" },
     { "path": "../alfa-tree" }

@@ -2,6 +2,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { String } from "@siteimprove/alfa-string";
 
 import * as dom from "@siteimprove/alfa-dom";
 
@@ -110,7 +111,7 @@ export class Element extends Node<"element"> {
         this._role.map((role) => role.name).getOr("element"),
         ...this._name.map((name) => `"${name}"`),
       ].join(" "),
-      ...this._children.map((child) => indent(child.toString())),
+      ...this._children.map((child) => String.indent(child.toString())),
     ].join("\n");
   }
 }
@@ -124,8 +125,4 @@ export namespace Element {
     name: string | null;
     attributes: Array<Attribute.JSON>;
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

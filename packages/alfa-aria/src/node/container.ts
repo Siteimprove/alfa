@@ -1,4 +1,5 @@
 import { None, Option } from "@siteimprove/alfa-option";
+import { String } from "@siteimprove/alfa-string";
 
 import * as dom from "@siteimprove/alfa-dom";
 
@@ -62,7 +63,7 @@ export class Container extends Node<"container"> {
   public toString(): string {
     return [
       "container",
-      ...this._children.map((child) => indent(child.toString())),
+      ...this._children.map((child) => String.indent(child.toString())),
     ].join("\n");
   }
 }
@@ -74,8 +75,4 @@ export namespace Container {
   export interface JSON extends Node.JSON<"container"> {
     role: Role.Name | null;
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

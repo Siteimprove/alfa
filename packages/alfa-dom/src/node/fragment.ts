@@ -1,4 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -38,7 +39,7 @@ export class Fragment extends Node<"fragment"> {
 
   public toString(): string {
     const children = this._children
-      .map((child) => indent(child.toString()))
+      .map((child) => String.indent(child.toString()))
       .join("\n");
 
     return `#document-fragment${children === "" ? "" : `\n${children}`}`;
@@ -92,8 +93,4 @@ export namespace Fragment {
         return Fragment.of(Iterable.flatten(children), fragment.externalId);
       });
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

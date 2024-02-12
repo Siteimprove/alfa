@@ -70,6 +70,7 @@
     { "path": "../alfa-selector" },
     { "path": "../alfa-sequence" },
     { "path": "../alfa-set" },
+    { "path": "../alfa-string" },
     { "path": "../alfa-style" },
     { "path": "../alfa-table" },
     { "path": "../alfa-test" },
