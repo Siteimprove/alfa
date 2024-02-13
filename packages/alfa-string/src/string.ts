@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /**
  * @public
  */
@@ -15,9 +16,23 @@ export namespace String {
     }
 
     /**
+     * Collapses adjacent whitespace into a single ASCII space
+     */
+    export function flatten(input: string): string {
+        return input.replace(/\s+/g, " ")
+    }
+
+    /**
      * Trims, collapses adjacent whitespace into a single ASCII space, optionally lowercases (default: true).
      */
     export function normalize(input: string, toLowerCase: boolean = true): string {
-        return toLowerCase ? input.trim().toLowerCase().replace(/\s+/g, " ") : input.trim().replace(/\s+/g, " ");
+        return flatten(toLowerCase ? input.toLowerCase() : input).trim();
+    }
+
+    /**
+     * Checks whether the input contains only whitespace
+     */
+    export function isWhitespace(input: string, allowEmpty: boolean = true): boolean {
+        return (allowEmpty || input.length > 0) && input.trim() === ""
     }
 }
