@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: yarn
+      - run: yarn workspaces list
       - run: yarn install --immutable
       - run: yarn dedupe --check
       - run: yarn build --quiet
