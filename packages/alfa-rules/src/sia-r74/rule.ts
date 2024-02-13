@@ -4,6 +4,7 @@ import { Length } from "@siteimprove/alfa-css";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,7 +14,7 @@ import { expectation } from "../common/act/expectation";
 import { Scope, Stability } from "../tags";
 
 const { hasRole } = DOM;
-const { and } = Predicate;
+const { and, not } = Predicate;
 const { isVisible, hasCascadedStyle } = Style;
 const { getElementDescendants } = Query;
 
@@ -27,7 +28,7 @@ export default Rule.Atomic.of<Page, Element>({
         return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasRole(device, "paragraph"),
-            Node.hasTextContent(),
+            Node.hasTextContent(not(String.isWhitespace)),
             isVisible(device),
             // If the font-size ultimately computes to size 0, the element is not
             // visible.
@@ -46,10 +47,10 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             // Keyword, percentage, number
             !Length.isLength(fontSize) ||
-              // Calculated length
-              fontSize.hasCalculation() ||
-              // Fixed length in relative units
-              fontSize.isRelative(),
+            // Calculated length
+            fontSize.hasCalculation() ||
+            // Fixed length in relative units
+            fontSize.isRelative(),
             () => Outcomes.HasRelativeUnit,
             () => Outcomes.HasAbsoluteUnit,
           ),
