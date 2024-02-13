@@ -24,11 +24,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - run: ls packages
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: yarn workspaces list
+          cache: yarn
       - run: yarn install --immutable
       - run: yarn dedupe --check
       - run: yarn build --quiet
