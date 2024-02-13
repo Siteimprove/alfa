@@ -2,4 +2,4 @@
 "@siteimprove/alfa-string": minor
 ---
 
-**Added:** `@siteimprove/alfa-string`, a new package to group low-level string manipulations.
+**Added:** Package `@siteimprove/alfa-string` grouping low-level string manipulations is now available.

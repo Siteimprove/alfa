@@ -36,6 +36,7 @@
     { "path": "../alfa-result" },
     { "path": "../alfa-sarif" },
     { "path": "../alfa-sequence" },
+    { "path": "../alfa-string" },
     { "path": "../alfa-thunk" },
     { "path": "../alfa-trilean" },
     { "path": "../alfa-tuple" }

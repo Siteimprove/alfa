@@ -1,7 +1,6 @@
 import { Keyword, Numeric } from "@siteimprove/alfa-css";
+import { String } from "@siteimprove/alfa-string";
 import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
-
-import { normalize } from "../common/normalize";
 
 type Name = Longhands.Name | Shorthands.Name;
 
@@ -55,7 +54,7 @@ export namespace Serialise {
   }
 
   export function outline(style: Style): string {
-    return normalize(
+    return String.normalize(
       (["color", "style", "width"] as const)
         .map((property) => getLonghand(style, `outline-${property}`))
         .join(" "),
@@ -66,7 +65,7 @@ export namespace Serialise {
   // important for deciding if there is a text-decoration, they are important
   // for rendering the link with the correct styling.
   export function textDecoration(style: Style): string {
-    return normalize(
+    return String.normalize(
       (["line", "color", "style", "thickness"] as const)
         .map((property) => getLonghand(style, `text-decoration-${property}`))
         .join(" "),
@@ -90,7 +89,7 @@ export namespace Serialise {
       const spreadToString = omitSpread ? "" : spread.toString();
       const insetToString = isInset ? "inset" : "";
       const colorToString = Keyword.isKeyword(color) ? "" : `${color}`;
-      const serialized = normalize(
+      const serialized = String.normalize(
         `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`,
       );
       serializedShadows.push(serialized);
@@ -109,7 +108,7 @@ export namespace Serialise {
 
     if (optional !== " ") {
       // Optional properties were changed, need to output the mandatory ones.
-      return normalize(`${optional} ${size} ${family}`);
+      return String.normalize(`${optional} ${size} ${family}`);
     }
 
     if (
@@ -124,7 +123,7 @@ export namespace Serialise {
     }
 
     // Optional properties were not changed but some mandatory ones were.
-    return normalize(`${size} ${family}`);
+    return String.normalize(`${size} ${family}`);
   }
 
   // Only background-color and background-image are used for deciding if the
@@ -205,13 +204,13 @@ export namespace Serialise {
 
       return originBox === clipBox
         ? // Since they have different initial value, they can't be both at their
-          // initial value and therefore we need to output something
-          originBox
+        // initial value and therefore we need to output something
+        originBox
         : originBox === Longhands.get("background-origin").initial.toString() &&
           clipBox === Longhands.get("background-clip").initial.toString()
-        ? // They are both at their initial value and nothing is needed
+          ? // They are both at their initial value and nothing is needed
           ""
-        : // They are different and at least one is not initial, hence needed;
+          : // They are different and at least one is not initial, hence needed;
           // we can't skip one without the remaining value leaking to both.
           originBox + " " + clipBox;
     }
@@ -223,10 +222,10 @@ export namespace Serialise {
       return imageValue === "none"
         ? ""
         : `${imageValue} ${getPosition(n)} ${getRepeat(n)} ${getValue(
-            attachment,
-            n,
-            "background-attachment",
-          )} ${getBoxes(n)}`;
+          attachment,
+          n,
+          "background-attachment",
+        )} ${getBoxes(n)}`;
     }
 
     const layers = image.map((_, i) => getLayer(i));
@@ -236,7 +235,7 @@ export namespace Serialise {
       getLonghand(style, "background-color") + " " + layers[layers.length - 1];
 
     return layers
-      .map(normalize)
+      .map((input) => String.normalize(input, true))
       .filter((layer) => layer !== "")
       .join(", ");
   }

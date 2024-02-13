@@ -7,14 +7,13 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
-
-import { normalize } from "../common/normalize";
 
 import { Scope, Stability } from "../tags";
 
@@ -62,7 +61,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
         const byNames = List.from(target)
           .groupBy((landmark) =>
             Node.from(landmark, device).name.map((name) =>
-              normalize(name.value),
+              String.normalize(name.value),
             ),
           )
           .filter((landmarks) => landmarks.size > 1);

@@ -10,6 +10,7 @@ type String_2 = globalThis.String;
 // @public (undocumented)
 namespace String_2 {
     function indent(input: string): string;
+    function normalize(input: string, toLowerCase?: boolean): string;
 }
 export { String_2 as String }
 

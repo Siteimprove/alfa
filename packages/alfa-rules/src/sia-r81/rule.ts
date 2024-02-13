@@ -18,10 +18,9 @@ import { Question } from "../common/act/question";
 
 import { referenceSameResource } from "../common/predicate";
 
-import { normalize } from "../common/normalize";
-
 import { WithName } from "../common/diagnostic";
 import { Scope, Stability } from "../tags";
+import { String } from "@siteimprove/alfa-string";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
@@ -54,7 +53,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
           .map((elements) =>
             elements.groupBy((element) =>
               Node.from(element, device).name.map((name) =>
-                normalize(name.value),
+                String.normalize(name.value),
               ),
             ),
           );
