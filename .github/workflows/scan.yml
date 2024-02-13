@@ -30,7 +30,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
       - run: yarn install --immutable
       - run: yarn build --quiet
       - uses: github/codeql-action/init@v3
