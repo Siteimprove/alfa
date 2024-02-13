@@ -29,6 +29,7 @@ import {
 
 import * as predicate from "./node/predicate";
 import * as traversal from "./node/traversal";
+import { String } from "@siteimprove/alfa-string";
 
 /**
  * @public
@@ -53,7 +54,7 @@ export abstract class Node<T extends string = string>
    * {@link https://dom.spec.whatwg.org/#concept-descendant-text-content}
    */
   public textContent(options: Node.Traversal = Node.Traversal.empty): string {
-    return this.descendants(options).filter(Text.isText).join("");
+    return String.flatten(this.descendants(options).filter(Text.isText).join(""));
   }
 
   /**
