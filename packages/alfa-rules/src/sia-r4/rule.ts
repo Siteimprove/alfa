@@ -1,19 +1,17 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isWhitespace } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
 const { hasAttribute, isDocumentElement } = Element;
-const { isEmpty } = Iterable;
-const { nor } = Predicate;
+const { not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r4",
@@ -28,7 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
+            hasAttribute("lang", not(String.isWhitespace))(target),
             () => Outcomes.HasLanguage,
             () => Outcomes.HasNoLanguage,
           ),

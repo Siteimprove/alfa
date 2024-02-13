@@ -12,7 +12,6 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isWhitespace } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
 const { hasAccessibleName, hasRole, isPerceivableForAll } = DOM;
@@ -96,7 +95,7 @@ function getPerceivableInnerTextFromTextNode(
 
   if (
     and(not(isPerceivableForAll(device)), isRendered(device))(text) &&
-    isWhitespace(text.data)
+    String.isWhitespace(text.data, false)
   ) {
     return " ";
   }
