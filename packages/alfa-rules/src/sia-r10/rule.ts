@@ -6,6 +6,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
+import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,7 +14,6 @@ import { Page } from "@siteimprove/alfa-web";
 import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/act/expectation";
-import { normalize } from "../common/normalize";
 
 import { Scope, Stability } from "../tags";
 
@@ -42,8 +42,8 @@ export default Rule.Atomic.of<Page, Attribute>({
                 hasAttribute(
                   "autocomplete",
                   (autocomplete) =>
-                    normalize(autocomplete) !== "on" &&
-                    normalize(autocomplete) !== "off",
+                    String.normalize(autocomplete) !== "on" &&
+                    String.normalize(autocomplete) !== "off",
                 ),
                 or(
                   isTabbable(device),

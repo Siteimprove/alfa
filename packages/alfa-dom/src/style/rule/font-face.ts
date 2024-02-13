@@ -1,3 +1,4 @@
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block";
@@ -36,7 +37,7 @@ export class FontFaceRule extends Rule<"font-face"> {
   public toString(): string {
     const style = this._style.toString();
 
-    return `@font-face {${style === "" ? "" : `\n${indent(style)}\n`}}`;
+    return `@font-face {${style === "" ? "" : `\n${String.indent(style)}\n`}}`;
   }
 }
 
@@ -58,8 +59,4 @@ export namespace FontFaceRule {
   export function fromFontFaceRule(json: JSON): Trampoline<FontFaceRule> {
     return Trampoline.done(FontFaceRule.of(json.style.map(Declaration.from)));
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }
