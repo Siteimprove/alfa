@@ -8,7 +8,23 @@
   "reviewers": ["team:alfa-owners"],
   "dependencyDashboard": true,
   "postUpdateOptions": ["yarnDedupeHighest"],
+  "npmrc": "@siteimprove:registry=https://npm.pkg.github.com/",
+  "hostRules": [
+      {
+        "hostType": "npm",
+        "matchHost": "https://npm.pkg.github.com/",
+        "description": "Token of a public user with 'Packages:read' permission only, needed due to https://github.com/renovatebot/renovate/discussions/26475",
+        "encrypted": {
+          "token": "wcFMA/xDdHCJBTolAQ/8DXIkSyZf8L/ItuZAlgcEuAIrO8ejFqLQ6A+jXb1LrH5JDr5Z+35Q6hV89yW+aEsuzq3LPmdn0z44RHqJpm6Vz0w5Dn03gz1tcK2BkgnlJeWsbPBmHYt628BDIU7l7gIpzaLMH0l5KfjQFR7jiMth4fss7aTaDMGbdTilv07FBxa12xweM7gJOZzn0p4yJRtrRsGch04o7tp9zFL1lUZVj7Sis7wEyuSsVSRfZGlMGxaRcjJqu920LTlr9+hjYynQqnvmD9igpKD4ZbGwdAyDafL/5otjNfJQu5H/UTgqZEWPRNUGCRkzTQTnyHrVzMsYhBVs0B2Vz4GMQIF91tTyhUDTh2l240RG4vnpgcTrYZxGxVp0S2RvnCfiW79lkXomJ+bREkg6Mntr/7+5OFCkueq21jqKX0BHBExys8R8wlnYNEcf6adZH4NMcLH6VaDhPB7vPYkKXaMcKsWW9hf+FJr566LU8LNbwBVLIZFXzX7nF/gLTIVAufv9tvsJW8FBSf9r+jIXot7LPCWTzGy6h+FFjJhXsoNoU7v6EWwYgQxhDMHlNoHpTKMtREESPqEdy4dwMcZCzoRNvtc4MVnhEK3hTeDm3PgQOVbGKZ4FmGtLXWHa9G0RHogj33I38JOWdR+hLF77S4bdH3D5ZkyyFeHH07vpqhXKSgT0KkdT7E7SegEzcPy636xmrCL2nkRpXCqW4Rw25wKDY1zEatUyxSJKVqTubI2nljd5JS2G6Bs+Oj715X5xBoOeHUPCCCSdzuL5uGHvbL3kJvxVUH/KIpi74ysvviZNm4C6fc+vJLqGUFSFrY4sX7KlLKgm1Iq+SB/gqBUgiha2C2Hj"
+        }
+      }
+    ],
   "packageRules": [
+    {
+      "description": "Update Alfa as soon as a new release is published",
+      "groupName": "Alfa",
+      "matchPackagePrefixes": ["@siteimprove/alfa"]
+    },
     {
       "description": "Run major update for non-Alfa packages.These are never automerged and require human approval.",
       "groupName": "Other deps (major)",
