@@ -7,6 +7,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
+import { String } from "@siteimprove/alfa-string";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -20,7 +21,6 @@ import { referenceSameResource } from "../common/predicate";
 
 import { WithName } from "../common/diagnostic";
 import { Scope, Stability } from "../tags";
-import { String } from "@siteimprove/alfa-string";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;

@@ -4,6 +4,7 @@ import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
@@ -14,7 +15,6 @@ import { Question } from "../common/act/question";
 import { WithRole } from "../common/diagnostic/with-role";
 
 import { Scope, Stability } from "../tags";
-import { String } from "@siteimprove/alfa-string";
 
 const {
   hasIncorrectRoleWithoutName,
