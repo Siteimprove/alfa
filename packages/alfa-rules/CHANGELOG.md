@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.74.0
+
+### Patch Changes
+
+- **Fixed:** A regression on R1 for `<title>` with whitespace but not empty content has been fixed (was introduced in v0.73.0). ([#1573](https://github.com/Siteimprove/alfa/pull/1573))
+
 ## 0.73.0
 
 ### Minor Changes

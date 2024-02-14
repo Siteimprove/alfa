@@ -1,5 +1,15 @@
 # Alfa changelog
 
+## [0.74.0](../../compare/v0.73.0...v0.74.0) (2024-02-14)
+
+### Added
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0740): Package `@siteimprove/alfa-string` grouping low-level string manipulations is now available. ([#1572](https://github.com/Siteimprove/alfa/pull/1572))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0740): A regression on R1 for `<title>` with whitespace but not empty content has been fixed (was introduced in v0.73.0). ([#1573](https://github.com/Siteimprove/alfa/pull/1573))
+
 ## [0.73.0](../../compare/v0.72.0...v0.73.0) (2024-02-06)
 
 ### Breaking
