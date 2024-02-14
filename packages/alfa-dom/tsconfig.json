@@ -71,6 +71,7 @@
     "src/style/rule/import.ts",
     "src/style/rule/keyframe.ts",
     "src/style/rule/keyframes.ts",
+    "src/style/rule/layer.ts",
     "src/style/rule/media.ts",
     "src/style/rule/namespace.ts",
     "src/style/rule/page.ts",
