@@ -597,6 +597,54 @@ export namespace KeyframesRule {
     }
 }
 
+// @public
+export namespace Layer {
+    // (undocumented)
+    export class BlockRule extends GroupingRule<"layer-block"> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        get layer(): Option<string>;
+        // (undocumented)
+        static of(rules: Iterable<Rule>, layer?: string | null): BlockRule;
+        // (undocumented)
+        toJSON(): BlockRule.JSON;
+        // (undocumented)
+        toString(): string;
+    }
+    // (undocumented)
+    export namespace BlockRule {
+        // (undocumented)
+        export function fromLayerBlockRule(json: JSON): Trampoline<BlockRule>;
+        // (undocumented)
+        export interface JSON extends GroupingRule.JSON<"layer-block"> {
+            // (undocumented)
+            layer: string | null;
+        }
+    }
+    // (undocumented)
+    export class StatementRule extends Rule<"layer-statement"> {
+        // (undocumented)
+        get layers(): Iterable<string>;
+        // (undocumented)
+        static of(layers: Iterable<string>): StatementRule;
+        // (undocumented)
+        toJSON(): StatementRule.JSON;
+        // (undocumented)
+        toString(): string;
+    }
+    // (undocumented)
+    export namespace StatementRule {
+        // (undocumented)
+        export function fromLayerStatementRule(json: JSON): Trampoline<StatementRule>;
+        // (undocumented)
+        export interface JSON extends Rule.JSON<"layer-statement"> {
+            // (undocumented)
+            layers: Array_2<string>;
+        }
+    }
+}
+
 // @public (undocumented)
 export class MediaRule extends ConditionRule<"media"> {
     // (undocumented)
@@ -925,21 +973,25 @@ export abstract class Rule<T extends string = string> implements Equatable, Seri
 // @public (undocumented)
 export namespace Rule {
     // (undocumented)
-    export function from(json: StyleRule.JSON): StyleRule;
-    // (undocumented)
-    export function from(json: ImportRule.JSON): ImportRule;
-    // (undocumented)
-    export function from(json: MediaRule.JSON): MediaRule;
-    // (undocumented)
     export function from(json: FontFaceRule.JSON): FontFaceRule;
     // (undocumented)
-    export function from(json: PageRule.JSON): PageRule;
+    export function from(json: ImportRule.JSON): ImportRule;
     // (undocumented)
     export function from(json: KeyframeRule.JSON): KeyframeRule;
     // (undocumented)
     export function from(json: KeyframesRule.JSON): KeyframesRule;
     // (undocumented)
+    export function from(json: Layer.BlockRule.JSON): Layer.BlockRule;
+    // (undocumented)
+    export function from(json: Layer.StatementRule.JSON): Layer.StatementRule;
+    // (undocumented)
+    export function from(json: MediaRule.JSON): MediaRule;
+    // (undocumented)
     export function from(json: NamespaceRule.JSON): NamespaceRule;
+    // (undocumented)
+    export function from(json: PageRule.JSON): PageRule;
+    // (undocumented)
+    export function from(json: StyleRule.JSON): StyleRule;
     // (undocumented)
     export function from(json: SupportsRule.JSON): SupportsRule;
     // (undocumented)

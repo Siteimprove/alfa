@@ -36,10 +36,9 @@ export class MediaRule extends ConditionRule<"media"> {
   }
 
   public toString(): string {
-    const rules = join(
-      map(this._rules, (rule) => String.indent(rule.toString())),
-      "\n\n",
-    );
+    const rules = this._rules
+      .map((rule) => String.indent(rule.toString()))
+      .join("\n\n");
 
     return `@media ${this._condition} {${rules === "" ? "" : `\n${rules}\n`}}`;
   }
