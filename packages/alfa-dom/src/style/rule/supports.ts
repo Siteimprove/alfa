@@ -1,6 +1,7 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Option } from "@siteimprove/alfa-option";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
@@ -34,7 +35,7 @@ export class SupportsRule extends ConditionRule<"supports"> {
 
   public toString(): string {
     const rules = this._rules
-      .map((rule) => indent(rule.toString()))
+      .map((rule) => String.indent(rule.toString()))
       .join("\n\n");
 
     return `@supports ${this._condition} {${
@@ -61,8 +62,4 @@ export namespace SupportsRule {
       SupportsRule.of(json.condition, rules),
     );
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

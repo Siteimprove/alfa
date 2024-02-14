@@ -39,6 +39,7 @@
     "@siteimprove/alfa-selector": "workspace:^0.73.0",
     "@siteimprove/alfa-sequence": "workspace:^0.73.0",
     "@siteimprove/alfa-set": "workspace:^0.73.0",
+    "@siteimprove/alfa-string": "workspace:^0.73.0",
     "@siteimprove/alfa-style": "workspace:^0.73.0",
     "@siteimprove/alfa-table": "workspace:^0.73.0",
     "@siteimprove/alfa-thunk": "workspace:^0.73.0",

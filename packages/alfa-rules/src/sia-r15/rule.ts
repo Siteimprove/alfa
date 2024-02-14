@@ -4,6 +4,7 @@ import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -17,7 +18,6 @@ import { referenceSameResource } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
 import { WithName } from "../common/diagnostic";
-import { normalize } from "../common/normalize";
 
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasName, hasNamespace } = Element;
@@ -41,7 +41,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             ),
           )
           .groupBy((iframe) =>
-            Node.from(iframe, device).name.map((name) => normalize(name.value)),
+            Node.from(iframe, device).name.map((name) => String.normalize(name.value)),
           )
           .filter((elements) => elements.size > 1)
           .map(Group.of)

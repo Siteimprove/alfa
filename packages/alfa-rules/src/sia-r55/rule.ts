@@ -4,6 +4,7 @@ import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
@@ -12,8 +13,6 @@ import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 import { WithRole } from "../common/diagnostic/with-role";
-
-import { normalize } from "../common/normalize";
 
 import { Scope, Stability } from "../tags";
 
@@ -47,7 +46,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             // names are less frequent than duplicated roles.
             .groupBy((landmark) =>
               Node.from(landmark, device).name.map((name) =>
-                normalize(name.value),
+                String.normalize(name.value),
               ),
             )
             .filter((landmarks) => landmarks.size > 1)
@@ -144,8 +143,8 @@ export class WithRoleAndName extends WithRole {
     return role === undefined
       ? new Diagnostic(message)
       : name === undefined
-      ? new WithRole(message, role)
-      : new WithRoleAndName(message, role, name);
+        ? new WithRole(message, role)
+        : new WithRoleAndName(message, role, name);
   }
 
   private readonly _name: string;

@@ -1,6 +1,7 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
@@ -36,7 +37,7 @@ export class MediaRule extends ConditionRule<"media"> {
 
   public toString(): string {
     const rules = join(
-      map(this._rules, (rule) => indent(rule.toString())),
+      map(this._rules, (rule) => String.indent(rule.toString())),
       "\n\n",
     );
 
@@ -62,8 +63,4 @@ export namespace MediaRule {
       MediaRule.of(json.condition, rules),
     );
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

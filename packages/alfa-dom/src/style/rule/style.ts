@@ -1,3 +1,4 @@
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block";
@@ -57,7 +58,7 @@ export class StyleRule extends Rule<"style"> {
   public toString(): string {
     const style = this._style.toString();
 
-    return `${this._selector} {${style === "" ? "" : `\n${indent(style)}\n`}}`;
+    return `${this._selector} {${style === "" ? "" : `\n${String.indent(style)}\n`}}`;
   }
 }
 
@@ -82,8 +83,4 @@ export namespace StyleRule {
       StyleRule.of(json.selector, json.style.map(Declaration.from)),
     );
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }
