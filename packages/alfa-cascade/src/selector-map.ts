@@ -246,20 +246,22 @@ export namespace SelectorMap {
     const add = (block: Block<Block.Source>): void => {
       const keySelector = block.selector.key;
 
-      if (!keySelector.isSome()) {
-        if (Selector.isShadow(block.selector)) {
-          // These selectors select nodes in the light tree, they are stored
-          // separately and need to be checked when building the cascade of
-          // the hosting tree, not of the same tree.
-          shadow.push(block);
-        } else {
-          other.push(block);
-        }
-      } else {
-        const key = keySelector.get();
-        const buckets = { id: ids, class: classes, type: types };
-        buckets[key.type].add(key.name, block);
+      if (Selector.isShadow(block.selector)) {
+        // These selectors select nodes in the light tree, they are stored
+        // separately and need to be checked when building the cascade of
+        // the hosting tree, not of the same tree.
+        shadow.push(block);
+        return;
       }
+
+      if (!keySelector.isSome()) {
+        other.push(block);
+        return;
+      }
+
+      const key = keySelector.get();
+      const buckets = { id: ids, class: classes, type: types };
+      buckets[key.type].add(key.name, block);
     };
 
     const visit = (rule: Rule) => {

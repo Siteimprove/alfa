@@ -209,11 +209,11 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
     h.rule.style("::slotted(*)", { color: "green" }),
   ];
 
-  const slotted1 = <div class="foo">Hello</div>;
+  const slotted = <div class="foo">Hello</div>;
 
   const document = h.document([
     <main>
-      {slotted1}
+      {slotted}
       {h.shadow(
         [
           <b>
@@ -226,10 +226,10 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
   ]);
   const cascade = Cascade.from(document, device);
 
-  // The rule tree has 4 items on the way to slotted1:
+  // The rule tree has 4 items on the way to slotted:
   // The fake root, the UA rule `div { display: block }`, and the 2 relevant rules declared here.
   // We thus just grab and check the path down from the fake root.
-  t.deepEqual(Iterable.toJSON(cascade.get(slotted1).inclusiveAncestors())[3], {
+  t.deepEqual(Iterable.toJSON(cascade.get(slotted).inclusiveAncestors())[3], {
     // fake root
     block: Block.empty().toJSON(),
     children: [
@@ -259,6 +259,113 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
             block: getBlock(rules[2], 60, 2),
             children: [{ block: getBlock(rules[1], 59, 2), children: [] }],
           },
+        ],
+      },
+    ],
+  });
+});
+
+test(".get() fetches `:host-context` rules from shadow, when relevant.", (t) => {
+  const rules = [
+    h.rule.style(":host-context(.foo)", { color: "green" }),
+    h.rule.style(":host-context(div)", { color: "red" }),
+    h.rule.style(":host-context(.bar)", { color: "blue" }),
+  ];
+  const div = (
+    <div>
+      Hello
+      {h.shadow([<span></span>], [h.sheet(rules)])}
+    </div>
+  );
+  const document = h.document([<main class="foo">{div}</main>]);
+  const cascade = Cascade.from(document, device);
+
+  // The rule tree has 4 items on the way to the <div>:
+  // The fake root, the UA rule `div { display: block }`, and the 2 relevant rules declared here.
+  // We thus just grab and check the path down from the fake root.
+  t.deepEqual(Iterable.toJSON(cascade.get(div).inclusiveAncestors())[3], {
+    // fake root
+    block: Block.empty().toJSON(),
+    children: [
+      // The <main> element also generates a node with the UA block, on a separate branch.
+      {
+        block: {
+          ...UAblock,
+          source: {
+            ...UAblock.source,
+            selector: {
+              type: "type",
+              specificity: { a: 0, b: 0, c: 1 },
+              key: "main",
+              name: "main",
+              namespace: null,
+            },
+          },
+        },
+        children: [],
+      },
+      {
+        // UA rule
+        block: UAblock,
+        children: [
+          {
+            // Actual rules, there are 58 rules in the UA sheet.
+            // The "div" rule is declared first, but also inserted higher due to lower precedence.
+            block: getBlock(rules[1], 59, 2),
+            children: [{ block: getBlock(rules[0], 58, 2), children: [] }],
+          },
+        ],
+      },
+    ],
+  });
+});
+
+test(".get() matches `::slotted` rules within compound selector.", (t) => {
+  const rule = h.rule.style(".foo::slotted(*)", { color: "green" })
+
+  const slotted = <div>Hello</div>;
+
+  const document = h.document([
+    <main>
+      {slotted}
+      {h.shadow(
+        [<slot class="foo"></slot>],
+        [h.sheet([rule])],
+      )}
+    </main>,
+  ]);
+  const cascade = Cascade.from(document, device);
+
+  // The rule tree has 3 items on the way to slotted:
+  // The fake root, the UA rule `div { display: block }`, and the rule declared here.
+  // We thus just grab and check the path down from the fake root.
+  t.deepEqual(Iterable.toJSON(cascade.get(slotted).inclusiveAncestors())[2], {
+    // fake root
+    block: Block.empty().toJSON(),
+    children: [
+      // The <main> element also generates a node with the UA block, on a separate branch.
+      {
+        block: {
+          ...UAblock,
+          source: {
+            ...UAblock.source,
+            selector: {
+              type: "type",
+              specificity: { a: 0, b: 0, c: 1 },
+              key: "main",
+              name: "main",
+              namespace: null,
+            },
+          },
+        },
+        children: [],
+      },
+      {
+        // UA rule
+        block: UAblock,
+        children: [
+          // Actual rule, there are 58 rules in the UA sheet.
+          { block: getBlock(rule, 58, 2), children: [] },
         ],
       },
     ],
@@ -373,3 +480,4 @@ test(".get() correctly sort rules from different depths.", (t) => {
     ],
   });
 });
+
