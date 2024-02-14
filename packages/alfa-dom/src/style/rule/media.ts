@@ -1,13 +1,11 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import type { Iterable } from "@siteimprove/alfa-iterable";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { ConditionRule } from "./condition";
-
-const { map, join } = Iterable;
 
 /**
  * @public

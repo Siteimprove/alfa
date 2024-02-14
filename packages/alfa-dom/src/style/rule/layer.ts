@@ -1,10 +1,10 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { GroupingRule } from "./grouping";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 /**
  * Model for CSS layers
@@ -105,7 +105,9 @@ export namespace Layer {
         .map((rule) => String.indent(rule.toString()))
         .join("\n\n");
 
-      return `@layer ${this._layer.isSome() ? this._layer.getUnsafe() + " " : ""}{${rules === "" ? "" : `\n${rules}\n`}}`;
+      return `@layer ${this._layer.isSome() ? this._layer.getUnsafe() + " " : ""}{${
+        rules === "" ? "" : `\n${rules}\n`
+      }}`;
     }
   }
 
