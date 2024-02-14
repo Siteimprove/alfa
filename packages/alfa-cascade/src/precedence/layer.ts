@@ -65,6 +65,12 @@ export class Layer
     return this._order;
   }
 
+  /**
+   * Set the order of the layer
+   *
+   * @remarks
+   * This actually mutates the layer, it does not create a new one.
+   */
   public setOrder(order: number): boolean {
     if (!isNaN(this._order)) {
       // only allow to set the order once.
