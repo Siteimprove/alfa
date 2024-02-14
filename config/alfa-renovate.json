@@ -9,6 +9,7 @@
   "dependencyDashboard": true,
   "postUpdateOptions": ["yarnDedupeHighest"],
   "npmrc": "@siteimprove:registry=https://npm.pkg.github.com/",
+  "rangeStrategy": "replace",
   "hostRules": [
       {
         "hostType": "npm",
