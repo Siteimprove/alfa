@@ -1,13 +1,11 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import type { Iterable } from "@siteimprove/alfa-iterable";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { ConditionRule } from "./condition";
-
-const { map, join } = Iterable;
 
 /**
  * @public
@@ -36,10 +34,9 @@ export class MediaRule extends ConditionRule<"media"> {
   }
 
   public toString(): string {
-    const rules = join(
-      map(this._rules, (rule) => String.indent(rule.toString())),
-      "\n\n",
-    );
+    const rules = this._rules
+      .map((rule) => String.indent(rule.toString()))
+      .join("\n\n");
 
     return `@media ${this._condition} {${rules === "" ? "" : `\n${rules}\n`}}`;
   }

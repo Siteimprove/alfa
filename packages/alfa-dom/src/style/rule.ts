@@ -13,6 +13,7 @@ import {
   ImportRule,
   KeyframeRule,
   KeyframesRule,
+  Layer,
   MediaRule,
   NamespaceRule,
   PageRule,
@@ -112,21 +113,25 @@ export namespace Rule {
     type: T;
   }
 
-  export function from(json: StyleRule.JSON): StyleRule;
-
-  export function from(json: ImportRule.JSON): ImportRule;
-
-  export function from(json: MediaRule.JSON): MediaRule;
-
   export function from(json: FontFaceRule.JSON): FontFaceRule;
 
-  export function from(json: PageRule.JSON): PageRule;
+  export function from(json: ImportRule.JSON): ImportRule;
 
   export function from(json: KeyframeRule.JSON): KeyframeRule;
 
   export function from(json: KeyframesRule.JSON): KeyframesRule;
 
+  export function from(json: Layer.BlockRule.JSON): Layer.BlockRule;
+
+  export function from(json: Layer.StatementRule.JSON): Layer.StatementRule;
+
+  export function from(json: MediaRule.JSON): MediaRule;
+
   export function from(json: NamespaceRule.JSON): NamespaceRule;
+
+  export function from(json: PageRule.JSON): PageRule;
+
+  export function from(json: StyleRule.JSON): StyleRule;
 
   export function from(json: SupportsRule.JSON): SupportsRule;
 
@@ -141,20 +146,11 @@ export namespace Rule {
    */
   export function fromRule(json: JSON): Trampoline<Rule> {
     switch (json.type) {
-      case "style":
-        return StyleRule.fromStyleRule(json as StyleRule.JSON);
-
-      case "import":
-        return ImportRule.fromImportRule(json as ImportRule.JSON);
-
-      case "media":
-        return MediaRule.fromMediaRule(json as MediaRule.JSON);
-
       case "font-face":
         return FontFaceRule.fromFontFaceRule(json as FontFaceRule.JSON);
 
-      case "page":
-        return PageRule.fromPageRule(json as PageRule.JSON);
+      case "import":
+        return ImportRule.fromImportRule(json as ImportRule.JSON);
 
       case "keyframe":
         return KeyframeRule.fromKeyframeRule(json as KeyframeRule.JSON);
@@ -162,8 +158,25 @@ export namespace Rule {
       case "keyframes":
         return KeyframesRule.fromKeyframesRule(json as KeyframesRule.JSON);
 
+      case "layer-block":
+        return Layer.BlockRule.fromLayerBlockRule(json as Layer.BlockRule.JSON);
+
+      case "layer-statement":
+        return Layer.StatementRule.fromLayerStatementRule(
+          json as Layer.StatementRule.JSON,
+        );
+
+      case "media":
+        return MediaRule.fromMediaRule(json as MediaRule.JSON);
+
       case "namespace":
         return NamespaceRule.fromNamespaceRule(json as NamespaceRule.JSON);
+
+      case "page":
+        return PageRule.fromPageRule(json as PageRule.JSON);
+
+      case "style":
+        return StyleRule.fromStyleRule(json as StyleRule.JSON);
 
       case "supports":
         return SupportsRule.fromSupportsRule(json as SupportsRule.JSON);

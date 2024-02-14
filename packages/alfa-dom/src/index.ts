@@ -11,6 +11,7 @@ export * from "./style/rule/font-face";
 export * from "./style/rule/import";
 export * from "./style/rule/keyframe";
 export * from "./style/rule/keyframes";
+export * from "./style/rule/layer";
 export * from "./style/rule/media";
 export * from "./style/rule/namespace";
 export * from "./style/rule/page";
