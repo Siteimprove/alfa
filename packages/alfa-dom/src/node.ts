@@ -29,6 +29,7 @@ import {
 
 import * as predicate from "./node/predicate";
 import * as traversal from "./node/traversal";
+import { String } from "@siteimprove/alfa-string";
 
 /**
  * @public
@@ -36,9 +37,9 @@ import * as traversal from "./node/traversal";
 export abstract class Node<T extends string = string>
   extends tree.Node<Node.Traversal.Flag, T>
   implements
-    earl.Serializable<Node.EARL>,
-    json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>,
-    sarif.Serializable<sarif.Location>
+  earl.Serializable<Node.EARL>,
+  json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>,
+  sarif.Serializable<sarif.Location>
 {
   protected constructor(
     children: Array<Node>,
@@ -53,7 +54,7 @@ export abstract class Node<T extends string = string>
    * {@link https://dom.spec.whatwg.org/#concept-descendant-text-content}
    */
   public textContent(options: Node.Traversal = Node.Traversal.empty): string {
-    return this.descendants(options).filter(Text.isText).join("");
+    return String.flatten(this.descendants(options).filter(Text.isText).join(""));
   }
 
   /**
@@ -277,7 +278,7 @@ export interface Node {
  * @public
  */
 export namespace Node {
-  export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
+  export interface JSON<T extends string = string> extends tree.Node.JSON<T> { }
 
   export interface SerializationOptions {
     device: Device;

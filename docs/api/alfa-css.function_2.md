@@ -11,6 +11,12 @@
 export declare namespace Function 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [parse(query, body)](./alfa-css.function_2.parse.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
@@ -22,5 +28,4 @@ export declare namespace Function
 |  Variable | Description |
 |  --- | --- |
 |  [consume](./alfa-css.function_2.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-function](https://drafts.csswg.org/css-syntax/#consume-a-function) |
-|  [parse](./alfa-css.function_2.parse.md) |  |
 

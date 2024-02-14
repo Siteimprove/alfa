@@ -1,20 +1,18 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isWhitespace } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
 const { hasAttribute, isDocumentElement } = Element;
-const { isEmpty } = Iterable;
-const { nor } = Predicate;
+const { not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r5",
@@ -27,7 +25,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           document
             .children()
             .filter(isDocumentElement)
-            .filter(hasAttribute("lang", nor(isEmpty, isWhitespace)))
+            .filter(hasAttribute("lang", not(String.isWhitespace)))
             // The previous filter ensures that lang exists
             .map((element) => element.attribute("lang").getUnsafe())
         );

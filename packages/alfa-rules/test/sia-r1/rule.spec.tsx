@@ -45,6 +45,20 @@ test("evaluate() fails a document that has an empty <title> element", async (t) 
   ]);
 });
 
+test("evaluate() fails a document that has a whitespace only <title> element", async (t) => {
+  const document = h.document([
+    <html>
+      <head>
+        <title> </title>
+      </head>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R1, { document }), [
+    failed(R1, document, { 1: Outcomes.HasTitle, 2: Outcomes.HasEmptyTitle }),
+  ]);
+});
+
 test("evaluate() is inapplicable to a document that is not an HTML document", async (t) => {
   const document = h.document([]);
 
