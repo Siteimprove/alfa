@@ -25,6 +25,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Encapsulation, Origin, Precedence } from "./precedence";
 import { UserAgent } from "./user-agent";
+import { Layer } from "./precedence/layer";
 
 /**
  * While resolving cascade, a Block is a style rule that has been expanded with
@@ -64,14 +65,9 @@ export class Block<S extends Element | Block.Source = Element | Block.Source>
       selector: Universal.of(None),
     },
     [],
-    {
-      origin: Origin.NormalUserAgent,
-      encapsulation: -1 /* outermost normal */,
-      isElementAttached: false,
-      specificity: Specificity.empty(),
-      order: -Infinity,
-    },
+    Precedence.empty,
   );
+
   /**
    * @internal
    */
@@ -223,6 +219,9 @@ export namespace Block {
     rule: StyleRule,
     order: number,
     encapsulationDepth: number,
+    // It is actually the same layer, but the rules are split into block by importance,
+    // and we need to reflect that in the layers.
+    layer: { normal: Layer; important: Layer },
   ): [Array<Block<Source>>, number] {
     let blocks: Array<Block<Source>> = [];
 
@@ -259,6 +258,7 @@ export namespace Block {
               origin,
               encapsulation,
               isElementAttached: false,
+              layer: importance ? layer.important : layer.normal,
               order,
               specificity: selector.specificity,
             }),
@@ -294,10 +294,11 @@ export namespace Block {
                 : // Normal declarations have negative encapsulation depth, deeper loses.
                   -encapsulationDepth,
               isElementAttached: true,
-              specificity: Specificity.empty(),
-              // Since style attribute trumps style rules in the cascade sort,
+              // Since style attribute trumps layer, specificity and order in the cascade sort,
               // and there is at most one style attribute per element,
-              // the order never matters.
+              // these never matters and we can use any placeholder.
+              layer: Layer.empty(),
+              specificity: Specificity.empty(),
               order: -1,
             }),
         ),

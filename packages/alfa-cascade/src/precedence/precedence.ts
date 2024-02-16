@@ -4,6 +4,7 @@ import { Specificity } from "@siteimprove/alfa-selector/src/specificity";
 import * as json from "@siteimprove/alfa-json";
 
 import { Encapsulation } from "./encapsulation";
+import { Layer } from "./layer";
 import { Order } from "./order";
 import { Origin } from "./origin";
 
@@ -22,7 +23,7 @@ export interface Precedence {
   // Do the declarations come from a style attribute?
   // {@link https://drafts.csswg.org/css-cascade-5/#style-attr}
   isElementAttached: boolean;
-  // TODO: layers
+  layer: Layer;
   specificity: Specificity;
   order: Order;
 }
@@ -38,15 +39,26 @@ export namespace Precedence {
     origin: Origin.JSON;
     encapsulation: Encapsulation.JSON;
     isElementAttached: boolean;
+    layer: Layer.JSON;
     specificity: Specificity.JSON;
     order: Order.JSON;
   }
+
+  export const empty: Precedence = {
+    origin: Origin.NormalUserAgent,
+    encapsulation: -1 /* outermost normal */,
+    isElementAttached: false,
+    layer: Layer.empty(),
+    specificity: Specificity.empty(),
+    order: -Infinity,
+  };
 
   export function toJSON(precedence: Precedence): JSON {
     return {
       origin: precedence.origin,
       encapsulation: precedence.encapsulation,
       isElementAttached: precedence.isElementAttached,
+      layer: precedence.layer.toJSON(),
       specificity: precedence.specificity.toJSON(),
       order: precedence.order,
     };
@@ -54,11 +66,12 @@ export namespace Precedence {
 
   export function toTuple(
     precedence: Precedence,
-  ): [Origin, Encapsulation, boolean, Specificity, Order] {
+  ): [Origin, Encapsulation, boolean, Layer, Specificity, Order] {
     return [
       precedence.origin,
       precedence.encapsulation,
       precedence.isElementAttached,
+      precedence.layer,
       precedence.specificity,
       precedence.order,
     ];
@@ -71,6 +84,7 @@ export namespace Precedence {
       // a style attribute (isElementAttached = true) taking precedence over
       // declarations from a style rule.
       Comparable.compareBoolean,
+      Layer.compare,
       Specificity.compare,
       Order.compare,
     ]);

@@ -27,6 +27,7 @@ import * as json from "@siteimprove/alfa-json";
 import { AncestorFilter } from "./ancestor-filter";
 import { Block } from "./block";
 import { type Order } from "./precedence";
+import { Layer } from "./precedence/layer";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
@@ -243,6 +244,19 @@ export namespace SelectorMap {
     const other: Array<Block<Block.Source>> = [];
     const shadow: Array<Block<Block.Source>> = [];
 
+    // We store layers in the order we encounter them. Later on, we will
+    // sort them in the correct order. We cannot sort on the fly because
+    // un-layered rules come after all layered rules, but the full list of
+    // layers is not known until the end.
+    // layers are also duplicated by importance of the blocks in them, since
+    // it reverses the winner of the cascade.
+    // We also maintain a counter for uniquely naming anonymous layer.
+    //
+    // It is of the uttermost importance that blocks share the same Layer
+    // object, since we will laters mutate them to add the correct order.
+    const layers: Array<{ normal: Layer; important: Layer }> = [];
+    let anonymousLayers = 0;
+
     const add = (block: Block<Block.Source>): void => {
       const keySelector = block.selector.key;
 
@@ -272,7 +286,10 @@ export namespace SelectorMap {
         }
 
         let blocks: Array<Block<Block.Source>> = [];
-        [blocks, order] = Block.from(rule, order, encapsulationDepth);
+        [blocks, order] = Block.from(rule, order, encapsulationDepth, {
+          normal: Layer.empty(),
+          important: Layer.empty(),
+        });
 
         for (const block of blocks) {
           add(block);

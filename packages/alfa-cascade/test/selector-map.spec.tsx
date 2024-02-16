@@ -12,8 +12,7 @@ import { test } from "@siteimprove/alfa-test";
 import { AncestorFilter } from "../src/ancestor-filter";
 
 import { Block } from "../src/block";
-import { Origin } from "../src/precedence";
-import { Encapsulation } from "../src/precedence/encapsulation";
+import { Layer, Origin } from "../src/precedence";
 import { SelectorMap } from "../src/selector-map";
 
 const device = Device.standard();
@@ -23,7 +22,7 @@ function ruleToBlockJSON(
   order: number,
   encapsulationDepth: number = 1,
 ): Array<Block.JSON<Block.Source>> {
-  return Array.toJSON(Block.from(rule, order, encapsulationDepth)[0]);
+  return Array.toJSON(Block.from(rule, order, encapsulationDepth, {normal:Layer.empty(), important: Layer.empty()})[0]);
 }
 
 test(".from() builds a selector map with a single rule", (t) => {
@@ -118,6 +117,7 @@ test(".from() split important and non-important declarations in two blocks", (t)
               origin: Origin.NormalAuthor,
               encapsulation: -1,
               isElementAttached: false,
+              layer: Layer.empty().toJSON(),
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
             },
@@ -129,6 +129,7 @@ test(".from() split important and non-important declarations in two blocks", (t)
               origin: Origin.ImportantAuthor,
               encapsulation: 1,
               isElementAttached: false,
+              layer: Layer.empty().toJSON(),
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
             },

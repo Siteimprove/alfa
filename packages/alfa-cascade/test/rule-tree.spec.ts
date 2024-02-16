@@ -12,12 +12,12 @@ import { test } from "@siteimprove/alfa-test";
 import { RuleTree } from "../src";
 
 import { Block } from "../src/block";
-import { Origin } from "../src/precedence";
-import { Encapsulation } from "../src/precedence/encapsulation";
+import { Layer, Origin } from "../src/precedence";
 
 function fakeBlock(
   selectorText: string,
   origin: Origin = Origin.NormalUserAgent,
+  layer: Layer = Layer.empty(),
 ): Block {
   const selector = parse(selectorText) as Compound | Complex | Simple;
 
@@ -25,6 +25,7 @@ function fakeBlock(
     origin,
     encapsulation: -1,
     isElementAttached: false,
+    layer,
     specificity: selector.specificity,
     order: -1,
   });
@@ -260,6 +261,29 @@ test(".add() sort items by origin and importance", (t) => {
   ]);
 });
 
+test(".add() sort items by layer order", (t) => {
+  const block1 = fakeBlock(
+    "div",
+    Origin.NormalAuthor,
+    Layer.of("foo", false).withOrder(2),
+  );
+  const block2 = fakeBlock(
+    "div",
+    Origin.NormalAuthor,
+    Layer.of("foo", false).withOrder(1),
+  );
+
+  const tree = RuleTree.empty();
+  tree.add([block1, block2]);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: block2.toJSON(),
+      children: [{ block: block1.toJSON(), children: [] }],
+    },
+  ]);
+});
+
 test(".add() prioritise origin over specificity", (t) => {
   const highSpecificity = fakeBlock("#foo", Origin.ImportantAuthor);
   const highOrigin = fakeBlock("div", Origin.ImportantUserAgent);
@@ -282,6 +306,7 @@ test(".add() prioritise style attribute over specificity", (t) => {
     origin: Origin.ImportantAuthor,
     encapsulation: -1,
     isElementAttached: true,
+    layer: Layer.empty(),
     specificity: Specificity.empty(),
     order: -1,
   });
@@ -289,6 +314,7 @@ test(".add() prioritise style attribute over specificity", (t) => {
     origin: Origin.NormalAuthor,
     encapsulation: -1,
     isElementAttached: true,
+    layer: Layer.empty(),
     specificity: Specificity.empty(),
     order: -1,
   });

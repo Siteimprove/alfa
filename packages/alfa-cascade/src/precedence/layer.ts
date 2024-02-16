@@ -44,16 +44,25 @@ import * as json from "@siteimprove/alfa-json";
 export class Layer
   implements Serializable<Layer.JSON>, Equatable, Comparable<Layer>
 {
-  public static of(name: string): Layer {
-    return new Layer(name, NaN);
+  public static of(name: string, importance: boolean): Layer {
+    return new Layer(name, importance, NaN);
+  }
+
+  private static _empty = new Layer("", false, -Infinity);
+
+  public static empty(): Layer {
+    return this._empty;
   }
 
   // Fully qualified name, including dot-separated path.
   private readonly _name: string;
+  // Storing importance of blocks in this layer helps computing order.
+  private readonly _importance: boolean;
   private _order: number;
 
-  private constructor(name: string, order: number) {
+  private constructor(name: string, importance: boolean, order: number) {
     this._name = name;
+    this._importance = importance;
     this._order = order;
   }
 
@@ -66,19 +75,19 @@ export class Layer
   }
 
   /**
-   * Set the order of the layer
+   * Mutate the layer by setting the order.
    *
    * @remarks
    * This actually mutates the layer, it does not create a new one.
+   * This is on purpose to automatically update all blocks using this layer.
    */
-  public setOrder(order: number): boolean {
-    if (!isNaN(this._order)) {
+  public withOrder(order: number): Layer {
+    if (isNaN(this._order)) {
       // only allow to set the order once.
-      return false;
+      this._order = order;
     }
 
-    this._order = order;
-    return true;
+    return this;
   }
 
   public compare(value: Layer): Comparison {

@@ -5,7 +5,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Cascade } from "../src";
 
 import { Block } from "../src/block";
-import { Origin } from "../src/precedence";
+import { Layer, Origin } from "../src/precedence";
 
 const device = Device.standard();
 
@@ -43,6 +43,7 @@ const UAblock: Block.JSON = {
     origin: Origin.NormalUserAgent,
     encapsulation: -1,
     isElementAttached: false,
+    layer: Layer.empty().toJSON(),
     specificity: { a: 0, b: 0, c: 1 },
     order: 7,
   },
@@ -53,7 +54,7 @@ function getBlock(
   order: number,
   encapsulationDepth: number = 1,
 ): Block.JSON {
-  return Block.from(rule, order, encapsulationDepth)[0][0].toJSON();
+  return Block.from(rule, order, encapsulationDepth, {normal:Layer.empty(), important: Layer.empty()})[0][0].toJSON();
 }
 test(".get() returns the rule tree node of the given element", (t) => {
   const div = <div>Hello</div>;
