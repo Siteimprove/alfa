@@ -1,11 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
-import {
-  Complex,
-  Compound,
-  type Simple,
-  Specificity,
-} from "@siteimprove/alfa-selector";
+import { Complex, Compound, type Simple } from "@siteimprove/alfa-selector";
 
 import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
@@ -13,6 +8,10 @@ import { RuleTree } from "../src";
 
 import { Block } from "../src/block";
 import { Layer, Origin, Precedence } from "../src/precedence";
+
+// The name and importance do not matter at this point, only the order.
+const lowLayer = Layer.of("foo", false).withOrder(-Infinity);
+const highLayer = Layer.of("bar", false).withOrder(+Infinity);
 
 function fakeBlock(
   selectorText: string,
@@ -283,12 +282,8 @@ test(".add() sort items by presence in style attribute", (t) => {
 });
 
 test(".add() sort items by layer order", (t) => {
-  const block1 = fakeBlock("div", {
-    layer: Layer.of("foo", false).withOrder(2),
-  });
-  const block2 = fakeBlock("div", {
-    layer: Layer.of("foo", false).withOrder(1),
-  });
+  const block1 = fakeBlock("div", { layer: highLayer });
+  const block2 = fakeBlock("div", { layer: lowLayer });
 
   const tree = RuleTree.empty();
   tree.add([block1, block2]);
@@ -334,71 +329,139 @@ test(".add() sort items by order", (t) => {
 });
 
 test(".add() prioritise origin over everthing else", (t) => {
-  const highSpecificity = fakeBlock("#foo", { origin: Origin.ImportantAuthor });
-  const highOrigin = fakeBlock("div", { origin: Origin.ImportantUserAgent });
+  const highEverything = fakeBlock("#foo", {
+    origin: Origin.ImportantAuthor,
+    encapsulation: +Infinity,
+    isElementAttached: true,
+    layer: highLayer,
+    order: +Infinity,
+  });
+  const highOrigin = fakeBlock("div", {
+    origin: Origin.ImportantUserAgent,
+    encapsulation: -Infinity,
+    isElementAttached: false,
+    layer: lowLayer,
+    order: -Infinity,
+  });
 
   const tree = RuleTree.empty();
-  tree.add([highSpecificity, highOrigin]);
+  tree.add([highEverything, highOrigin]);
 
   t.deepEqual(tree.toJSON(), [
     {
-      block: highSpecificity.toJSON(),
+      block: highEverything.toJSON(),
       children: [{ block: highOrigin.toJSON(), children: [] }],
     },
   ]);
 });
 
-test(".add() prioritise style attribute over specificity", (t) => {
-  const highSpecificityImportant = fakeBlock("#foo", {
+test(".add() prioritise origin over everthing else", (t) => {
+  const highEverything = fakeBlock("#foo", {
     origin: Origin.ImportantAuthor,
-  });
-  const highSpecificityNormal = fakeBlock("#bar", {
-    origin: Origin.NormalAuthor,
-  });
-  const styleAttributeImportant = Block.of(h.element("div"), [], {
-    origin: Origin.ImportantAuthor,
-    encapsulation: -1,
+    encapsulation: +Infinity,
     isElementAttached: true,
-    layer: Layer.empty(),
-    specificity: Specificity.empty(),
-    order: -1,
+    layer: highLayer,
+    order: +Infinity,
   });
-  const styleAttributeNormal = Block.of(h.element("span"), [], {
-    origin: Origin.NormalAuthor,
-    encapsulation: -1,
-    isElementAttached: true,
-    layer: Layer.empty(),
-    specificity: Specificity.empty(),
-    order: -1,
+  const highOrigin = fakeBlock("div", {
+    origin: Origin.ImportantUserAgent,
+    encapsulation: -Infinity,
+    isElementAttached: false,
+    layer: lowLayer,
+    order: -Infinity,
   });
 
   const tree = RuleTree.empty();
-  tree.add([
-    highSpecificityImportant,
-    highSpecificityNormal,
-    styleAttributeImportant,
-    styleAttributeNormal,
-  ]);
+  tree.add([highEverything, highOrigin]);
 
   t.deepEqual(tree.toJSON(), [
     {
-      block: highSpecificityNormal.toJSON(),
-      children: [
-        {
-          block: styleAttributeNormal.toJSON(),
-          children: [
-            {
-              block: highSpecificityImportant.toJSON(),
-              children: [
-                {
-                  block: styleAttributeImportant.toJSON(),
-                  children: [],
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      block: highEverything.toJSON(),
+      children: [{ block: highOrigin.toJSON(), children: [] }],
+    },
+  ]);
+});
+
+test(".add() prioritise encapsulation context over everthing except origin", (t) => {
+  const highEverything = fakeBlock("#foo", {
+    encapsulation: -Infinity,
+    isElementAttached: true,
+    layer: highLayer,
+    order: +Infinity,
+  });
+  const highEncapsulation = fakeBlock("div", {
+    encapsulation: +Infinity,
+    isElementAttached: false,
+    layer: lowLayer,
+    order: -Infinity,
+  });
+
+  const tree = RuleTree.empty();
+  tree.add([highEverything, highEncapsulation]);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: highEverything.toJSON(),
+      children: [{ block: highEncapsulation.toJSON(), children: [] }],
+    },
+  ]);
+});
+
+test(".add() prioritise presence in style over everthing except origin and encapsulation", (t) => {
+  const highEverything = fakeBlock("#foo", {
+    isElementAttached: false,
+    layer: highLayer,
+    order: +Infinity,
+  });
+  const inStyleAttribute = fakeBlock("div", {
+    isElementAttached: true,
+    layer: lowLayer,
+    order: -Infinity,
+  });
+
+  const tree = RuleTree.empty();
+  tree.add([highEverything, inStyleAttribute]);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: highEverything.toJSON(),
+      children: [{ block: inStyleAttribute.toJSON(), children: [] }],
+    },
+  ]);
+});
+
+test(".add() prioritise layer order over specificity and order", (t) => {
+  const highSpecificityAndOrder = fakeBlock("#foo", {
+    layer: lowLayer,
+    order: +Infinity,
+  });
+  const highLayerOrder = fakeBlock("div", {
+    layer: highLayer,
+    order: -Infinity,
+  });
+
+  const tree = RuleTree.empty();
+  tree.add([highSpecificityAndOrder, highLayerOrder]);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: highSpecificityAndOrder.toJSON(),
+      children: [{ block: highLayerOrder.toJSON(), children: [] }],
+    },
+  ]);
+});
+
+test(".add() prioritise specificity over order", (t) => {
+  const highOrder = fakeBlock("div", { order: +Infinity });
+  const highSpecificity = fakeBlock("#foo", { order: -Infinity });
+
+  const tree = RuleTree.empty();
+  tree.add([highSpecificity, highOrder]);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: highOrder.toJSON(),
+      children: [{ block: highSpecificity.toJSON(), children: [] }],
     },
   ]);
 });
