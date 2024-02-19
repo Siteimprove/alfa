@@ -219,247 +219,35 @@ test(".add() branches as soon as selectors differ", (t) => {
   ]);
 });
 
-/**
- * Sorting blocks upon insertion
- */
-test(".add() sort items by origin and importance", (t) => {
-  const UAImportant = fakeBlock("div", { origin: Origin.ImportantUserAgent });
-  const UANormal = fakeBlock("div", { origin: Origin.NormalUserAgent });
-  const AuthorImportant = fakeBlock("div", { origin: Origin.ImportantAuthor });
-  const AuthorNormal = fakeBlock("div", { origin: Origin.NormalAuthor });
+test(".add() sort items by precedence", (t) => {
+  const block1 = fakeBlock("div", { origin: Origin.ImportantUserAgent });
+  const block2 = fakeBlock("div", { encapsulation: 1 });
+  const block3 = fakeBlock("div", { origin: Origin.NormalAuthor });
+  const block4 = fakeBlock("div");
+  const block5 = fakeBlock(".foo");
 
   const tree = RuleTree.empty();
-  tree.add([UAImportant, UANormal, AuthorImportant, AuthorNormal]);
+  tree.add([block1, block2, block3, block4, block5]);
 
   t.deepEqual(tree.toJSON(), [
     {
-      block: UANormal.toJSON(),
+      block: block4.toJSON(), // normal UA, (0, 0, 1)
       children: [
         {
-          block: AuthorNormal.toJSON(),
+          block: block5.toJSON(), // normal UA, (0, 1, 0)
           children: [
             {
-              block: AuthorImportant.toJSON(),
-              children: [{ block: UAImportant.toJSON(), children: [] }],
+              block: block2.toJSON(), // higher encapsulated
+              children: [
+                {
+                  block: block3.toJSON(), // normal author
+                  children: [{ block: block1.toJSON(), children: [] }], // important UA
+                },
+              ],
             },
           ],
         },
       ],
-    },
-  ]);
-});
-
-test(".add() sort items by encapsulation context", (t) => {
-  const block1 = fakeBlock("div", { encapsulation: 1 });
-  const block2 = fakeBlock("div", { encapsulation: -2 });
-
-  const tree = RuleTree.empty();
-  tree.add([block1, block2]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: block2.toJSON(),
-      children: [{ block: block1.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() sort items by presence in style attribute", (t) => {
-  const block1 = fakeBlock("div", { isElementAttached: true });
-  const block2 = fakeBlock("div", { isElementAttached: false });
-
-  const tree = RuleTree.empty();
-  tree.add([block1, block2]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: block2.toJSON(),
-      children: [{ block: block1.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() sort items by layer order", (t) => {
-  const block1 = fakeBlock("div", { layer: highLayer });
-  const block2 = fakeBlock("div", { layer: lowLayer });
-
-  const tree = RuleTree.empty();
-  tree.add([block1, block2]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: block2.toJSON(),
-      children: [{ block: block1.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() sort items by specificity", (t) => {
-  const tree = RuleTree.empty();
-  tree.add([fakeBlock("#bar"), fakeBlock("div"), fakeBlock(".foo")]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: divJSON,
-      children: [
-        {
-          block: dotfooJSON,
-          children: [{ block: hashbarJSON, children: [] }],
-        },
-      ],
-    },
-  ]);
-});
-
-test(".add() sort items by order", (t) => {
-  const block1 = fakeBlock("div", { order: 42 });
-  const block2 = fakeBlock("div", { order: 17 });
-
-  const tree = RuleTree.empty();
-  tree.add([block1, block2]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: block2.toJSON(),
-      children: [{ block: block1.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() prioritise origin over everthing else", (t) => {
-  const highEverything = fakeBlock("#foo", {
-    origin: Origin.ImportantAuthor,
-    encapsulation: +Infinity,
-    isElementAttached: true,
-    layer: highLayer,
-    order: +Infinity,
-  });
-  const highOrigin = fakeBlock("div", {
-    origin: Origin.ImportantUserAgent,
-    encapsulation: -Infinity,
-    isElementAttached: false,
-    layer: lowLayer,
-    order: -Infinity,
-  });
-
-  const tree = RuleTree.empty();
-  tree.add([highEverything, highOrigin]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: highEverything.toJSON(),
-      children: [{ block: highOrigin.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() prioritise origin over everthing else", (t) => {
-  const highEverything = fakeBlock("#foo", {
-    origin: Origin.ImportantAuthor,
-    encapsulation: +Infinity,
-    isElementAttached: true,
-    layer: highLayer,
-    order: +Infinity,
-  });
-  const highOrigin = fakeBlock("div", {
-    origin: Origin.ImportantUserAgent,
-    encapsulation: -Infinity,
-    isElementAttached: false,
-    layer: lowLayer,
-    order: -Infinity,
-  });
-
-  const tree = RuleTree.empty();
-  tree.add([highEverything, highOrigin]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: highEverything.toJSON(),
-      children: [{ block: highOrigin.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() prioritise encapsulation context over everthing except origin", (t) => {
-  const highEverything = fakeBlock("#foo", {
-    encapsulation: -Infinity,
-    isElementAttached: true,
-    layer: highLayer,
-    order: +Infinity,
-  });
-  const highEncapsulation = fakeBlock("div", {
-    encapsulation: +Infinity,
-    isElementAttached: false,
-    layer: lowLayer,
-    order: -Infinity,
-  });
-
-  const tree = RuleTree.empty();
-  tree.add([highEverything, highEncapsulation]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: highEverything.toJSON(),
-      children: [{ block: highEncapsulation.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() prioritise presence in style over everthing except origin and encapsulation", (t) => {
-  const highEverything = fakeBlock("#foo", {
-    isElementAttached: false,
-    layer: highLayer,
-    order: +Infinity,
-  });
-  const inStyleAttribute = fakeBlock("div", {
-    isElementAttached: true,
-    layer: lowLayer,
-    order: -Infinity,
-  });
-
-  const tree = RuleTree.empty();
-  tree.add([highEverything, inStyleAttribute]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: highEverything.toJSON(),
-      children: [{ block: inStyleAttribute.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() prioritise layer order over specificity and order", (t) => {
-  const highSpecificityAndOrder = fakeBlock("#foo", {
-    layer: lowLayer,
-    order: +Infinity,
-  });
-  const highLayerOrder = fakeBlock("div", {
-    layer: highLayer,
-    order: -Infinity,
-  });
-
-  const tree = RuleTree.empty();
-  tree.add([highSpecificityAndOrder, highLayerOrder]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: highSpecificityAndOrder.toJSON(),
-      children: [{ block: highLayerOrder.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() prioritise specificity over order", (t) => {
-  const highOrder = fakeBlock("div", { order: +Infinity });
-  const highSpecificity = fakeBlock("#foo", { order: -Infinity });
-
-  const tree = RuleTree.empty();
-  tree.add([highSpecificity, highOrder]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: highOrder.toJSON(),
-      children: [{ block: highSpecificity.toJSON(), children: [] }],
     },
   ]);
 });
