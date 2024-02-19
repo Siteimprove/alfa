@@ -26,8 +26,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
 import { Block } from "./block";
-import { type Order } from "./precedence";
-import { Layer } from "./precedence/layer";
+import { Layer, type Order } from "./precedence";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
@@ -264,7 +263,7 @@ export namespace SelectorMap {
     // layers is not known until the end.
     // layers are also duplicated by importance of the blocks in them, since
     // it reverses the winner of the cascade.
-    // We also maintain a counter for uniquely naming anonymous layer.
+    // We also maintain a counter for uniquely naming anonymous layers.
     //
     // It is of the uttermost importance that blocks share the same Layer
     // object, since we will laters mutate them to add the correct order.
