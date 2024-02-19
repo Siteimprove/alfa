@@ -181,7 +181,7 @@ export class Complex extends Selector<"complex"> {
    * @remarks
    * The result is cached, so that when matching `div.foo li`, we do not waste
    * time going all the way to the root for every `<li>`, instead we'll stop at
-   * the first ancestor already encountered, e.g., the common parent `<ul>` or
+   * the first ancestor already encountered, e.g., the common parent `<ul>` of
    * a bunch of siblings `<li>`.
    */
   private ancestorMatchesLeft(
