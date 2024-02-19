@@ -5,7 +5,9 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
 import { Complex } from '@siteimprove/alfa-selector';
 import { Compound } from '@siteimprove/alfa-selector';
 import { Context } from '@siteimprove/alfa-selector';
