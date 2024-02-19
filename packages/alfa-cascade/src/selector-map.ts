@@ -26,7 +26,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
 import { Block } from "./block";
-import { type Order } from "./precedence";
+import { Layer, type Order } from "./precedence";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
@@ -116,15 +116,19 @@ export class SelectorMap implements Serializable {
   /**
    * Get all blocks matching a given element and context, an optional
    * ancestor filter can be provided to optimize performances.
+   *
+   * @remarks
+   * Blocks whose layers haven't been ordered are discarded at that point.
+   * Under normal flow, this should only be called once layers have been ordered.
    */
   public *get(
     element: Element,
     context: Context,
     filter: AncestorFilter,
-  ): Iterable<Block<Block.Source>> {
+  ): Iterable<Block<Block.Source, true>> {
     function* collect(
       candidates: Iterable<Block<Block.Source>>,
-    ): Iterable<Block<Block.Source>> {
+    ): Iterable<Block<Block.Source, true>> {
       for (const block of candidates) {
         // If the ancestor filter can reject the selector, escape
         if (
@@ -135,8 +139,11 @@ export class SelectorMap implements Serializable {
         }
 
         // otherwise, do the actual match.
-        if (block.selector.matches(element, context)) {
-          yield block;
+        if (
+          block.precedence.layer.isOrdered &&
+          block.selector.matches(element, context)
+        ) {
+          yield block as Block<Block.Source, true>;
         }
       }
     }
@@ -161,6 +168,9 @@ export class SelectorMap implements Serializable {
    * The host must be the shadow host of the tree whose style sheets define
    * this selector map.
    *
+   * Blocks whose layers haven't been ordered are discarded at that point.
+   * Under normal flow, this should only be called once layers have been ordered.
+   *
    * @privateRemarks
    * Because `:host-context` is searching for shadow-including ancestors of the
    * host, we cannot use the ancestor filter that does not escape its tree.
@@ -169,9 +179,10 @@ export class SelectorMap implements Serializable {
   public *getForHost(
     host: Element,
     context: Context,
-  ): Iterable<Block<Block.Source>> {
+  ): Iterable<Block<Block.Source, true>> {
     yield* this._shadow.filter(
-      (block) =>
+      (block): block is Block<Block.Source, true> =>
+        block.precedence.layer.isOrdered &&
         Selector.isHostSelector(block.selector) &&
         block.selector.matchHost(host, context),
     );
@@ -184,6 +195,9 @@ export class SelectorMap implements Serializable {
    * `slotted` should be a light node slotted in the tree whose style sheets
    * define this selector map. If this is not the case, all matches will fail.
    *
+   * Blocks whose layers haven't been ordered are discarded at that point.
+   * Under normal flow, this should only be called once layers have been ordered.
+   *
    * @privateRemarks
    * Because this navigates (partly) in the flat tree rather than the normal DOM
    * tree, we cannot easily re-use the ancestor filter.
@@ -192,13 +206,13 @@ export class SelectorMap implements Serializable {
     slotted: Element,
     context: Context,
     debug: boolean = false,
-  ): Iterable<Block<Block.Source>> {
-    yield* this._shadow.filter((block) => {
-      return (
+  ): Iterable<Block<Block.Source, true>> {
+    yield* this._shadow.filter(
+      (block): block is Block<Block.Source, true> =>
+        block.precedence.layer.isOrdered &&
         Selector.hasSlotted(block.selector) &&
-        Selector.matchSlotted(block.selector, slotted, context)
-      );
-    });
+        Selector.matchSlotted(block.selector, slotted, context),
+    );
   }
 
   public toJSON(): SelectorMap.JSON {
@@ -243,6 +257,19 @@ export namespace SelectorMap {
     const other: Array<Block<Block.Source>> = [];
     const shadow: Array<Block<Block.Source>> = [];
 
+    // We store layers in the order we encounter them. Later on, we will
+    // sort them in the correct order. We cannot sort on the fly because
+    // un-layered rules come after all layered rules, but the full list of
+    // layers is not known until the end.
+    // layers are also duplicated by importance of the blocks in them, since
+    // it reverses the winner of the cascade.
+    // We also maintain a counter for uniquely naming anonymous layers.
+    //
+    // It is of the uttermost importance that blocks share the same Layer
+    // object, since we will laters mutate them to add the correct order.
+    const layers: Array<{ normal: Layer; important: Layer }> = [];
+    let anonymousLayers = 0;
+
     const add = (block: Block<Block.Source>): void => {
       const keySelector = block.selector.key;
 
@@ -274,7 +301,10 @@ export namespace SelectorMap {
         }
 
         let blocks: Array<Block<Block.Source>> = [];
-        [blocks, order] = Block.from(rule, order, encapsulationDepth);
+        [blocks, order] = Block.from(rule, order, encapsulationDepth, {
+          normal: Layer.empty(),
+          important: Layer.empty(),
+        });
 
         for (const block of blocks) {
           add(block);

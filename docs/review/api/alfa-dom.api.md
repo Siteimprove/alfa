@@ -463,6 +463,10 @@ export namespace h {
         // (undocumented)
         export function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
         // (undocumented)
+        export function layerBlock(rules: Array<Rule>, layer?: string): Layer.BlockRule;
+        // (undocumented)
+        export function layerStatement(layers: Array<string>): Layer.StatementRule;
+        // (undocumented)
         export function media(condition: string, rules: Array<Rule>): MediaRule;
         // (undocumented)
         export function namespace(namespace: string, prefix?: string): NamespaceRule;

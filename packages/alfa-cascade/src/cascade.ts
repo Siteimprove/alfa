@@ -142,7 +142,7 @@ export class Cascade implements Serializable {
       .getOr([]);
 
     return this._rules.add(
-      Iterable.concat(
+      Iterable.concat<Block<Element | Block.Source, true>>(
         // Blocks defined in style sheets of the current tree, that match `element`
         this._selectors.get(element, context, filter),
         // Blocks defined in the `style` attribute of `element`.

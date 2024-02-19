@@ -12,6 +12,7 @@
     "src/index.ts",
     "src/precedence/encapsulation.ts",
     "src/precedence/index.ts",
+    "src/precedence/layer.ts",
     "src/precedence/order.ts",
     "src/precedence/origin.ts",
     "src/precedence/precedence.ts",
@@ -21,6 +22,7 @@
     "test/ancestor-filter.spec.tsx",
     "test/block.spec.tsx",
     "test/cascade.spec.tsx",
+    "test/precedence.spec.ts",
     "test/rule-tree.spec.ts",
     "test/selector-map.spec.tsx"
   ],
