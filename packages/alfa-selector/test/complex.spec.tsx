@@ -1,7 +1,8 @@
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Combinator } from "../src";
-import { serialize } from "./parser";
+import { parse, serialize } from "./parser";
 
 test(".parse() parses a single descendant selector", (t) => {
   t.deepEqual(serialize("div .foo"), {
@@ -537,4 +538,22 @@ test(".parse() parses a relative selector relative to a compound selector", (t) 
     specificity: { a: 0, b: 3, c: 1 },
     key: "div",
   });
+});
+
+test("match() matches descendant selector (hit)", (t) => {
+  const selector = parse("main span");
+
+  const target = <span></span>
+  h.document([<main><div><div><div>{target}</div></div></div></main>])
+
+  t.equal(selector.matches(target), true)
+});
+
+test("match() matches descendant selector (miss)", (t) => {
+  const selector = parse("main b");
+
+  const target = <span></span>
+  h.document([<main><div><div><div>{target}</div></div></div></main>])
+
+  t.equal(selector.matches(target), false)
 });

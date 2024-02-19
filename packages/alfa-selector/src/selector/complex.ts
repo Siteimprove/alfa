@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -131,20 +132,24 @@ export class Complex extends Selector<"complex"> {
       // ancestor/sibling/… Hence, use a continuation here, evaluate it later.
       let leftMatches = this._left.matches.bind(this._left);
       let filter: Refinement<Node, Element> = isElement;
+      let inShadow = false;
       if (Host.isHost(this._left) || HostContext.isHostContext(this._left)) {
         leftMatches = this._left.matchHost.bind(this._left);
         traversal = Node.flatTree;
         // .matchHost expects to be called on the shadow host, so we filter away
         // other elements beforehand.
         filter = and(isElement, (element) => element.shadow.isSome());
+        inShadow = true;
       }
 
       switch (this._combinator) {
         case Combinator.Descendant:
-          return element
-            .ancestors(traversal)
-            .filter(filter)
-            .some((element) => leftMatches(element, context));
+          return inShadow
+            ? element
+                .ancestors(traversal)
+                .filter(filter)
+                .some((element) => leftMatches(element, context))
+            : this.ancestorMatchesLeft(element, context);
 
         case Combinator.DirectDescendant:
           return element
@@ -167,6 +172,32 @@ export class Complex extends Selector<"complex"> {
     }
 
     return false;
+  }
+
+  private _ancestorMatchCache = Cache.empty<Element, Cache<Context, boolean>>();
+  /**
+   * Checks if a (strict) ancestor of element matches.
+   *
+   * @remarks
+   * The result is cached, so that when matching `div.foo li`, we do not waste
+   * time going all the way to the root for every `<li>`, instead we'll stop at
+   * the first ancestor already encountered, e.g., the common parent `<ul>` of
+   * a bunch of siblings `<li>`.
+   */
+  private ancestorMatchesLeft(
+    element: Element,
+    context: Context = Context.empty(),
+  ): boolean {
+    return this._ancestorMatchCache.get(element, Cache.empty).get(context, () =>
+      element
+        .parent()
+        .filter(isElement)
+        .some(
+          (parent) =>
+            this._left.matches(parent, context) ||
+            this.ancestorMatchesLeft(parent, context),
+        ),
+    );
   }
 
   public equals(value: Complex): boolean;
