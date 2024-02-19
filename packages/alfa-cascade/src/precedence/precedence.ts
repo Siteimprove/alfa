@@ -64,9 +64,9 @@ export namespace Precedence {
     };
   }
 
-  export function toTuple(
-    precedence: Precedence,
-  ): [Origin, Encapsulation, boolean, Layer, Specificity, Order] {
+  export function toTuple<LAYERED extends boolean>(
+    precedence: Precedence<LAYERED>,
+  ): [Origin, Encapsulation, boolean, Layer<LAYERED>, Specificity, Order] {
     return [
       precedence.origin,
       precedence.encapsulation,
@@ -76,6 +76,18 @@ export namespace Precedence {
       precedence.order,
     ];
   }
+
+  export function equals(a: Precedence, b: Precedence) {
+    return (
+      a.origin === b.origin &&
+      a.encapsulation === b.encapsulation &&
+      a.isElementAttached === b.isElementAttached &&
+      a.layer.equals(b.layer) &&
+      a.specificity.equals(b.specificity) &&
+      a.order === b.order
+    );
+  }
+
   export const compare: Comparer<Precedence<true>> = (a, b) =>
     Comparable.compareLexicographically(toTuple(a), toTuple(b), [
       Origin.compare,

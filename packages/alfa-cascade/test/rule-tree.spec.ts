@@ -15,8 +15,8 @@ const highLayer = Layer.of("bar", false).withOrder(2);
 
 function fakeBlock(
   selectorText: string,
-  precedence?: Partial<Precedence>,
-): Block {
+  precedence?: Partial<Precedence<true>>,
+): Block<Block.Source, true> {
   const {
     origin = Origin.NormalUserAgent,
     encapsulation = -1,

@@ -7,7 +7,7 @@ import { Layer, Origin, Precedence } from "../src/precedence";
 const lowLayer = Layer.of("foo", false).withOrder(1);
 const highLayer = Layer.of("bar", false).withOrder(2);
 
-function precedence(input: Partial<Precedence>): Precedence {
+function precedence(input: Partial<Precedence<true>>): Precedence<true> {
   return {
     origin: Origin.NormalUserAgent,
     encapsulation: -1,
@@ -23,7 +23,9 @@ function serialize(array: Array<Precedence>): Array<Precedence.JSON> {
   return array.map(Precedence.toJSON);
 }
 
-function sortAndSerialize(array: Array<Precedence>): Array<Precedence.JSON> {
+function sortAndSerialize(
+  array: Array<Precedence<true>>,
+): Array<Precedence.JSON> {
   return serialize(array.sort(Precedence.compare));
 }
 

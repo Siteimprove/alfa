@@ -1,5 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import { type Comparer } from "@siteimprove/alfa-comparable";
 import { Lexer } from "@siteimprove/alfa-css";
 import {
   Declaration,
@@ -41,7 +41,10 @@ import { UserAgent } from "./user-agent";
  *
  * @internal
  */
-export class Block<S extends Element | Block.Source = Element | Block.Source>
+export class Block<
+    S extends Element | Block.Source = Element | Block.Source,
+    LAYERED extends boolean = boolean,
+  >
   implements Equatable, Serializable<Block.JSON<S>>
 {
   /**
@@ -49,12 +52,18 @@ export class Block<S extends Element | Block.Source = Element | Block.Source>
    *
    * @remarks
    * This does not validate coupling of the data. Prefer using Block.from()
+   *
+   * @privateRemarks
+   * We need to accept unlayered blocks since this is how they are built.
    */
-  public static of<S extends Element | Block.Source = Element | Block.Source>(
+  public static of<
+    S extends Element | Block.Source = Element | Block.Source,
+    LAYERED extends boolean = boolean,
+  >(
     source: S,
     declarations: Iterable<Declaration>,
-    precedence: Precedence,
-  ): Block<S> {
+    precedence: Precedence<LAYERED>,
+  ): Block<S, LAYERED> {
     return new Block(source, Array.from(declarations), precedence);
   }
 
@@ -84,12 +93,12 @@ export class Block<S extends Element | Block.Source = Element | Block.Source>
     : null;
   private readonly _owner: S extends Element ? Element : null;
   private readonly _declarations: Array<Declaration>;
-  private readonly _precedence: Precedence;
+  private readonly _precedence: Precedence<LAYERED>;
 
   constructor(
     source: S,
     declarations: Array<Declaration>,
-    precedence: Precedence,
+    precedence: Precedence<LAYERED>,
   ) {
     if (Element.isElement(source)) {
       this._rule = null as S extends Block.Source ? StyleRule : null;
@@ -135,7 +144,7 @@ export class Block<S extends Element | Block.Source = Element | Block.Source>
     return this._declarations;
   }
 
-  public get precedence(): Readonly<Precedence> {
+  public get precedence(): Readonly<Precedence<LAYERED>> {
     return this._precedence;
   }
 
@@ -150,8 +159,7 @@ export class Block<S extends Element | Block.Source = Element | Block.Source>
       Equatable.equals(value._selector, this._selector) &&
       Equatable.equals(value._owner, this._owner) &&
       Array.equals(value._declarations, this._declarations) &&
-      Precedence.compare(value._precedence, this._precedence) ===
-        Comparison.Equal
+      Precedence.equals(value._precedence, this._precedence)
     );
   }
 
@@ -276,7 +284,7 @@ export namespace Block {
   export function fromStyle(
     element: Element,
     encapsulationDepth: number,
-  ): Iterable<Block> {
+  ): Iterable<Block<Element, true>> {
     return element.style
       .map((style) =>
         Iterable.map(
@@ -302,9 +310,9 @@ export namespace Block {
             }),
         ),
       )
-      .getOr<Iterable<Block>>([]);
+      .getOr<Iterable<Block<Element, true>>>([]);
   }
 
-  export const compare: Comparer<Block> = (a, b) =>
+  export const compare: Comparer<Block<Element | Source, true>> = (a, b) =>
     Precedence.compare(a.precedence, b.precedence);
 }

@@ -35,7 +35,7 @@ import * as json from "@siteimprove/alfa-json";
  * @privateRemarks
  * This is mutable!
  *
- * Since layers' name are CSS indent, they may not contain parenthesis.
+ * Since layers' name are CSS identifiers, they may not contain parenthesis.
  * Thus we may safely use parenthesis in name of "special" layers (anonymous)
  * and implicit), and not treat them differently than other layers.
  *
@@ -58,6 +58,7 @@ export class Layer<ORDERED extends boolean = boolean>
   private readonly _name: string;
   // Storing importance of blocks in this layer helps computing order.
   private readonly _importance: boolean;
+  private _ordered: ORDERED;
   private _order: number;
 
   private constructor(
@@ -68,6 +69,7 @@ export class Layer<ORDERED extends boolean = boolean>
   ) {
     this._name = name;
     this._importance = importance;
+    this._ordered = ordered;
     this._order = order;
   }
 
@@ -79,6 +81,10 @@ export class Layer<ORDERED extends boolean = boolean>
     return this._order;
   }
 
+  public get isOrdered(): ORDERED {
+    return this._ordered;
+  }
+
   /**
    * Mutate the layer by setting the order.
    *
@@ -87,8 +93,12 @@ export class Layer<ORDERED extends boolean = boolean>
    * This is on purpose to automatically update all blocks using this layer.
    */
   public withOrder(this: Layer<false>, order: number): Layer<true> {
-    this._order = order;
-    return this;
+    // Since we mutate the boolean that fixes the type, TS is out of its
+    // league and we need some weird type assertion.
+    const that = this as unknown as Layer<true>;
+    that._ordered = true;
+    that._order = order;
+    return that;
   }
 
   public compare(this: Layer<true>, value: Layer<true>): Comparison {
