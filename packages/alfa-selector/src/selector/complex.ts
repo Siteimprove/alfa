@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -173,6 +174,7 @@ export class Complex extends Selector<"complex"> {
     return false;
   }
 
+  private _ancestorMatchCache = Cache.empty<Element, Cache<Context, boolean>>();
   private ancestorMatchesLeft(element: Element, context?: Context): boolean {
     for (const parent of element.parent().filter(isElement)) {
       return (
