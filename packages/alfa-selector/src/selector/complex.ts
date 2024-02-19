@@ -175,15 +175,29 @@ export class Complex extends Selector<"complex"> {
   }
 
   private _ancestorMatchCache = Cache.empty<Element, Cache<Context, boolean>>();
-  private ancestorMatchesLeft(element: Element, context?: Context): boolean {
-    for (const parent of element.parent().filter(isElement)) {
-      return (
-        this._left.matches(parent, context) ||
-        this.ancestorMatchesLeft(parent, context)
-      );
-    }
-
-    return false;
+  /**
+   * Checks if a (strict) ancestor of element matches.
+   *
+   * @remarks
+   * The result is cached, so that when matching `div.foo li`, we do not waste
+   * time going all the way to the root for every `<li>`, instead we'll stop at
+   * the first ancestor already encountered, e.g., the common parent `<ul>` or
+   * a bunch of siblings `<li>`.
+   */
+  private ancestorMatchesLeft(
+    element: Element,
+    context: Context = Context.empty(),
+  ): boolean {
+    return this._ancestorMatchCache.get(element, Cache.empty).get(context, () =>
+      element
+        .parent()
+        .filter(isElement)
+        .some(
+          (parent) =>
+            this._left.matches(parent, context) ||
+            this.ancestorMatchesLeft(parent, context),
+        ),
+    );
   }
 
   public equals(value: Complex): boolean;
