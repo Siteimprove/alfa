@@ -15,7 +15,7 @@ import { Origin } from "./origin";
  *
  * @public
  */
-export interface Precedence {
+export interface Precedence<LAYERED extends boolean = boolean> {
   // Origin also contains importance for faster comparison.
   origin: Origin;
   // Encapsulation also contains importance for faster comparison.
@@ -23,7 +23,7 @@ export interface Precedence {
   // Do the declarations come from a style attribute?
   // {@link https://drafts.csswg.org/css-cascade-5/#style-attr}
   isElementAttached: boolean;
-  layer: Layer;
+  layer: Layer<LAYERED>;
   specificity: Specificity;
   order: Order;
 }
@@ -44,7 +44,7 @@ export namespace Precedence {
     order: Order.JSON;
   }
 
-  export const empty: Precedence = {
+  export const empty: Precedence<true> = {
     origin: Origin.NormalUserAgent,
     encapsulation: -1 /* outermost normal */,
     isElementAttached: false,
@@ -76,7 +76,7 @@ export namespace Precedence {
       precedence.order,
     ];
   }
-  export const compare: Comparer<Precedence> = (a, b) =>
+  export const compare: Comparer<Precedence<true>> = (a, b) =>
     Comparable.compareLexicographically(toTuple(a), toTuple(b), [
       Origin.compare,
       Encapsulation.compare,

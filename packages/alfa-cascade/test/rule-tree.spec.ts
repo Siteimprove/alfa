@@ -10,14 +10,12 @@ import { Block } from "../src/block";
 import { Layer, Origin, Precedence } from "../src/precedence";
 
 // The name and importance do not matter at this point, only the order.
-const lowLayer = Layer.of("foo", false).withOrder(-Infinity);
-const highLayer = Layer.of("bar", false).withOrder(+Infinity);
+const lowLayer = Layer.of("foo", false).withOrder(1);
+const highLayer = Layer.of("bar", false).withOrder(2);
 
 function fakeBlock(
   selectorText: string,
   precedence?: Partial<Precedence>,
-  //origin: Origin = Origin.NormalUserAgent,
-  //layer: Layer = Layer.empty(),
 ): Block {
   const {
     origin = Origin.NormalUserAgent,

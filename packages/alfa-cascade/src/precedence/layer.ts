@@ -1,4 +1,4 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 
@@ -41,16 +41,16 @@ import * as json from "@siteimprove/alfa-json";
  *
  * @public
  */
-export class Layer
-  implements Serializable<Layer.JSON>, Equatable, Comparable<Layer>
+export class Layer<ORDERED extends boolean = boolean>
+  implements Serializable<Layer.JSON>, Equatable, Comparable<Layer<true>>
 {
-  public static of(name: string, importance: boolean): Layer {
-    return new Layer(name, importance, NaN);
+  public static of(name: string, importance: boolean): Layer<false> {
+    return new Layer(false, name, importance, NaN);
   }
 
-  private static _empty = new Layer("", false, -Infinity);
+  private static _empty = new Layer(true, "", false, -Infinity);
 
-  public static empty(): Layer {
+  public static empty(): Layer<true> {
     return this._empty;
   }
 
@@ -60,7 +60,12 @@ export class Layer
   private readonly _importance: boolean;
   private _order: number;
 
-  private constructor(name: string, importance: boolean, order: number) {
+  private constructor(
+    ordered: ORDERED,
+    name: string,
+    importance: boolean,
+    order: number,
+  ) {
     this._name = name;
     this._importance = importance;
     this._order = order;
@@ -81,20 +86,16 @@ export class Layer
    * This actually mutates the layer, it does not create a new one.
    * This is on purpose to automatically update all blocks using this layer.
    */
-  public withOrder(order: number): Layer {
-    if (isNaN(this._order)) {
-      // only allow to set the order once.
-      this._order = order;
-    }
-
+  public withOrder(this: Layer<false>, order: number): Layer<true> {
+    this._order = order;
     return this;
   }
 
-  public compare(value: Layer): Comparison {
+  public compare(this: Layer<true>, value: Layer<true>): Comparison {
     return Comparable.compareNumber(this._order, value._order);
   }
 
-  public equals(value: this): boolean;
+  public equals(value: Layer): boolean;
 
   public equals(value: unknown): value is this;
 
@@ -124,7 +125,5 @@ export namespace Layer {
     order: number;
   }
 
-  export function compare(a: Layer, b: Layer): Comparison {
-    return a.compare(b);
-  }
+  export const compare: Comparer<Layer<true>> = (a, b) => a.compare(b);
 }
