@@ -61,7 +61,7 @@ export class RuleTree implements Serializable {
     // Warning: (ae-forgotten-export) The symbol "Block" needs to be exported by the entry point index.d.ts
     //
     // @internal
-    add(rules: Iterable_2<Block>): RuleTree.Node;
+    add(rules: Iterable_2<Block<Element | Block.Source, true>>): RuleTree.Node;
     // (undocumented)
     static empty(): RuleTree;
     // (undocumented)
