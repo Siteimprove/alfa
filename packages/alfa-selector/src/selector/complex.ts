@@ -131,20 +131,24 @@ export class Complex extends Selector<"complex"> {
       // ancestor/sibling/… Hence, use a continuation here, evaluate it later.
       let leftMatches = this._left.matches.bind(this._left);
       let filter: Refinement<Node, Element> = isElement;
+      let inShadow = false;
       if (Host.isHost(this._left) || HostContext.isHostContext(this._left)) {
         leftMatches = this._left.matchHost.bind(this._left);
         traversal = Node.flatTree;
         // .matchHost expects to be called on the shadow host, so we filter away
         // other elements beforehand.
         filter = and(isElement, (element) => element.shadow.isSome());
+        inShadow = true;
       }
 
       switch (this._combinator) {
         case Combinator.Descendant:
-          return element
-            .ancestors(traversal)
-            .filter(filter)
-            .some((element) => leftMatches(element, context));
+          return inShadow
+            ? element
+                .ancestors(traversal)
+                .filter(filter)
+                .some((element) => leftMatches(element, context))
+            : this.ancestorMatchesLeft(element, context);
 
         case Combinator.DirectDescendant:
           return element
@@ -164,6 +168,17 @@ export class Complex extends Selector<"complex"> {
             .find(filter)
             .some((element) => leftMatches(element, context));
       }
+    }
+
+    return false;
+  }
+
+  private ancestorMatchesLeft(element: Element, context?: Context): boolean {
+    for (const parent of element.parent().filter(isElement)) {
+      return (
+        this._left.matches(parent, context) ||
+        this.ancestorMatchesLeft(parent, context)
+      );
     }
 
     return false;

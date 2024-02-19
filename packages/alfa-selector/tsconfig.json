@@ -72,7 +72,7 @@
     "src/specificity.ts",
     "test/parser.ts",
     "test/basic.spec.ts",
-    "test/complex.spec.ts",
+    "test/complex.spec.tsx",
     "test/compound.spec.ts",
     "test/list.spec.ts",
     "test/nth-[last]-child.spec.tsx",
