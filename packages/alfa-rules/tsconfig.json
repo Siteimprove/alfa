@@ -290,6 +290,7 @@
     { "path": "../alfa-parser" },
     { "path": "../alfa-predicate" },
     { "path": "../alfa-record" },
+    { "path": "../alfa-rectangle" },
     { "path": "../alfa-refinement" },
     { "path": "../alfa-result" },
     { "path": "../alfa-sarif" },
