@@ -7,6 +7,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Device } from "@siteimprove/alfa-device";
 
 import { expectation } from "../common/act/expectation";
 
@@ -14,6 +16,7 @@ import { WithBoundingBox } from "../common/diagnostic";
 
 const { getElementDescendants } = Query;
 const { and } = Refinement;
+const { or, test } = Predicate;
 const { hasRole } = DOM;
 const { hasComputedStyle, isFocusable } = Style;
 
@@ -38,12 +41,14 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Existence of bounding box is guaranteed by applicability
+        // Existence of a bounding box is guaranteed by applicability
         const box = target.getBoundingBox(device).getUnsafe();
-
         return {
           1: expectation(
-            box.width >= 44 && box.height >= 44,
+            test(
+              or(hasSufficientSize(44, device), isUserAgentControlled),
+              target,
+            ),
             () => Outcomes.HasSufficientSize(box),
             () => Outcomes.HasInsufficientSize(box),
           ),
@@ -62,4 +67,17 @@ export namespace Outcomes {
 
   export const HasInsufficientSize = (box: Rectangle) =>
     Err.of(WithBoundingBox.of("Target has insufficient size", box));
+}
+
+// This predicate is assumed to only be used on elements with bounding boxes which should be guaranteed by applicability
+function hasSufficientSize(size: number, device: Device): Predicate<Element> {
+  return (element) => {
+    const box = element.getBoundingBox(device).getUnsafe();
+    return box.width >= size && box.height >= size;
+  };
+}
+
+function isUserAgentControlled(element: Element): boolean {
+  // Crude approximation of user agent controlled elements, to be refined
+  return element.name === "input";
 }
