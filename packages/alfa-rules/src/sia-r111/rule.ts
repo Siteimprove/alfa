@@ -46,7 +46,7 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             test(
-              or(hasSufficientSize(44, device), isUserAgentControlled),
+              or(isUserAgentControlled, hasSufficientSize(44, device)),
               target,
             ),
             () => Outcomes.HasSufficientSize(box),

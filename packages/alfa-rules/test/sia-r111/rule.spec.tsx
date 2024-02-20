@@ -23,7 +23,26 @@ test("evaluate() passes button with clickable area of exactly 44x44 pixels", asy
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     passed(R111, target, {
-      1: Outcomes.HasSufficientSize,
+      1: Outcomes.HasSufficientSize(target.getBoundingBox(device).getUnsafe()),
+    }),
+  ]);
+});
+
+test("evaluate() passes input element regardless of size", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <input
+      type="checkbox"
+      box={{ device, x: 8, y: 8, width: 13, height: 13 }}
+    ></input>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R111, { document, device }), [
+    passed(R111, target, {
+      1: Outcomes.HasSufficientSize(target.getBoundingBox(device).getUnsafe()),
     }),
   ]);
 });
@@ -44,7 +63,9 @@ test("evaluate() fails button with clickable area of less than 44x44 pixels", as
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     failed(R111, target, {
-      1: Outcomes.HasInsufficientSize,
+      1: Outcomes.HasInsufficientSize(
+        target.getBoundingBox(device).getUnsafe(),
+      ),
     }),
   ]);
 });
