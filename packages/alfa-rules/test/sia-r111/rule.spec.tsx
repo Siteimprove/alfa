@@ -42,7 +42,7 @@ test("evaluate() passes input element regardless of size", async (t) => {
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     passed(R111, target, {
-      1: Outcomes.HasSufficientSize(target.getBoundingBox(device).getUnsafe()),
+      1: Outcomes.IsUserAgentControlled,
     }),
   ]);
 });
