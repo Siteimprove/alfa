@@ -7,3 +7,4 @@ export * from "./diagnostic/with-bad-elements";
 export * from "./diagnostic/with-role";
 export * from "./diagnostic/with-name";
 export * from "./diagnostic/with-other-heading";
+export * from "./diagnostic/with-bounding-box";

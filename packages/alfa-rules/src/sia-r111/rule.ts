@@ -1,6 +1,7 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -8,6 +9,8 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
+
+import { WithBoundingBox } from "../common/diagnostic";
 
 const { getElementDescendants } = Query;
 const { and } = Refinement;
@@ -41,8 +44,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             box.width >= 44 && box.height >= 44,
-            () => Outcomes.HasSufficientSize,
-            () => Outcomes.HasInsufficientSize,
+            () => Outcomes.HasSufficientSize(box),
+            () => Outcomes.HasInsufficientSize(box),
           ),
         };
       },
@@ -54,11 +57,9 @@ export default Rule.Atomic.of<Page, Element>({
  * @public
  */
 export namespace Outcomes {
-  export const HasSufficientSize = Ok.of(
-    Diagnostic.of("Target has sufficient size"),
-  );
+  export const HasSufficientSize = (box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target has sufficient size", box));
 
-  export const HasInsufficientSize = Err.of(
-    Diagnostic.of("Target has insufficient size"),
-  );
+  export const HasInsufficientSize = (box: Rectangle) =>
+    Err.of(WithBoundingBox.of("Target has insufficient size", box));
 }
