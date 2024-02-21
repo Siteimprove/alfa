@@ -31,6 +31,7 @@
     "@siteimprove/alfa-option": "workspace:^0.74.0",
     "@siteimprove/alfa-predicate": "workspace:^0.74.0",
     "@siteimprove/alfa-refinement": "workspace:^0.74.0",
+    "@siteimprove/alfa-selective": "workspace:^0.74.0",
     "@siteimprove/alfa-selector": "workspace:^0.74.0"
   },
   "devDependencies": {

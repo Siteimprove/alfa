@@ -5,6 +5,7 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   ImportRule,
+  Layer as LayerRules,
   MediaRule,
   Rule,
   Sheet,
@@ -15,6 +16,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Selective } from "@siteimprove/alfa-selective";
 import {
   Combinator,
   Complex,
@@ -28,11 +30,10 @@ import { AncestorFilter } from "./ancestor-filter";
 import { Block } from "./block";
 import { Layer, type Order } from "./precedence";
 
-const { equals, property } = Predicate;
+const { equals, not, property } = Predicate;
 const { and } = Refinement;
 
 const { isComplex } = Complex;
-
 const isDescendantSelector = and(
   isComplex,
   property(
@@ -40,6 +41,13 @@ const isDescendantSelector = and(
     equals(Combinator.Descendant, Combinator.DirectDescendant),
   ),
 );
+
+const { isImportRule } = ImportRule;
+const { isLayerBlockRule } = LayerRules.BlockRule;
+const { isLayerStatementRule } = LayerRules.StatementRule;
+const { isMediaRule } = MediaRule;
+const { isStyleRule } = StyleRule;
+const { isSupportsRule } = SupportsRule;
 
 /**
  * The selector map is a data structure used for providing indexed access to
@@ -251,9 +259,11 @@ export namespace SelectorMap {
     // combined.
     let order: Order = 0;
 
+    // Create buckets for storing the rules, based on their key selector.
     const ids = Bucket.empty();
     const classes = Bucket.empty();
     const types = Bucket.empty();
+    const buckets = { id: ids, class: classes, type: types };
     const other: Array<Block<Block.Source>> = [];
     const shadow: Array<Block<Block.Source>> = [];
 
@@ -282,7 +292,7 @@ export namespace SelectorMap {
     /**
      * Gets the layers pair for a name, create it if needed.
      */
-    function getLayers(name: string): Layer.Pair<false> {
+    function getLayer(name: string): Layer.Pair<false> {
       let pair = layers.find((pair) => pair.name === name);
 
       if (pair === undefined) {
@@ -297,13 +307,7 @@ export namespace SelectorMap {
       return pair;
     }
     // Create the top-level implicit layer
-    const implicitLayer = getLayers("");
-
-    const foo = {
-      name: "",
-      normal: Layer.empty(),
-      important: Layer.empty(),
-    } as unknown as Layer.Pair<false>;
+    const implicitLayer = getLayer("");
 
     /**
      * Adds a block to the correct bucket
@@ -325,78 +329,66 @@ export namespace SelectorMap {
       }
 
       const key = keySelector.get();
-      const buckets = { id: ids, class: classes, type: types };
       buckets[key.type].add(key.name, block);
+    }
+
+    /**
+     * Helpers for visit.
+     */
+    const skip = () => undefined;
+    function visitChildren(
+      visitor: (rule: Rule) => void,
+    ): (rule: Rule) => void {
+      return (rule) => Iterable.forEach(rule.children(), visitor);
     }
 
     /**
      * Recursively visits a rule and adds its declarations to the correct buckets.
      */
-    function visit(rule: Rule, layers: Layer.Pair<false>): void {
-      // For style rule, we just store its blocks.
-      if (StyleRule.isStyleRule(rule)) {
-        // Style rules with empty style blocks aren't relevant and so can be
-        // skipped entirely.
-        if (rule.style.isEmpty()) {
-          return;
-        }
+    function visit(layer: Layer.Pair<false>): (rule: Rule) => void {
+      return (rule) =>
+        Selective.of(rule)
+          // For style rules, store its blocks; this is where he actual work happens.
+          // Style rules with empty style blocks aren't relevant and so can be
+          // skipped entirely to avoid increasing order.
+          .if(and(isStyleRule, StyleRule.isEmpty), skip)
+          .if(isStyleRule, (rule) => {
+            let blocks: Array<Block<Block.Source>> = [];
+            [blocks, order] = Block.from(
+              rule,
+              order,
+              encapsulationDepth,
+              layer,
+            );
 
-        let blocks: Array<Block<Block.Source>> = [];
-        [blocks, order] = Block.from(rule, order, encapsulationDepth, layers);
+            for (const block of blocks) {
+              add(block);
+            }
+          })
 
-        for (const block of blocks) {
-          add(block);
-        }
-      }
-
-      // For media rules, we recurse into the child rules if and only if the
-      // media condition matches the device.
-      else if (MediaRule.isMediaRule(rule)) {
-        if (!rule.queries.matches(device)) {
-          return;
-        }
-
-        for (const child of rule.children()) {
-          visit(child, layers);
-        }
-      }
-
-      // For import rules, we recurse into the imported style sheet if and only
-      // if the import condition matches the device.
-      else if (ImportRule.isImportRule(rule)) {
-        if (!rule.queries.matches(device)) {
-          return;
-        }
-
-        for (const child of rule.sheet.children()) {
-          visit(child, layers);
-        }
-      } else if (SupportsRule.isSupportsRule(rule)) {
-        if (rule.query.every((query) => !query.matches(device))) {
-          // If the option is None, the condition failed to parse and the rule is discarded.
-          return;
-        }
-
-        for (const child of rule.children()) {
-          visit(child, layers);
-        }
-      }
-
-      // Otherwise, we recurse into whichever child rules are declared by the
-      // current rule.
-      else {
-        for (const child of rule.children()) {
-          visit(child, layers);
-        }
-      }
+          // For import rules, we recurse into the imported style sheet if and only
+          // if the import condition matches the device.
+          .if(and(isImportRule, not(ImportRule.matches(device))), skip)
+          .if(isImportRule, (rule) =>
+            Iterable.forEach(rule.sheet.children(), visit(layer)),
+          )
+          // For media rules, we recurse into the child rules if and only if the
+          // media condition matches the device.
+          .if(and(isMediaRule, not(MediaRule.matches(device))), skip)
+          .if(isMediaRule, visitChildren(visit(layer)))
+          // For support rules, we recurse into the child rules if and only
+          // if the support condition matches the device.
+          .if(and(isSupportsRule, not(SupportsRule.matches(device))), skip)
+          .if(isSupportsRule, visitChildren(visit(layer)))
+          // Otherwise, we recurse into whichever child rules are declared by the
+          // current rule.
+          .else(visitChildren(visit(layer)));
     }
 
-    for (const sheet of sheets) {
-      if (sheet.disabled) {
-        continue;
-      }
-
+    // Visit all rules in all sheets.
+    for (const sheet of Iterable.reject(sheets, (sheet) => sheet.disabled)) {
       if (sheet.condition.isSome()) {
+        // If the sheet is conditional and the query doesn't match, skip the sheet.
         const query = Feature.parseMediaQuery(Lexer.lex(sheet.condition.get()));
 
         if (query.every(([, query]) => !query.matches(device))) {
@@ -405,9 +397,7 @@ export namespace SelectorMap {
       }
 
       // Visit all rules in the sheet.
-      for (const rule of sheet.children()) {
-        visit(rule, implicitLayer);
-      }
+      Iterable.forEach(sheet.children(), visit(implicitLayer));
     }
 
     // After visiting all rules in all sheets, order the layers.
