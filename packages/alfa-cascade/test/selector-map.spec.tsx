@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { h, StyleRule } from "@siteimprove/alfa-dom";
@@ -17,10 +18,17 @@ import { SelectorMap } from "../src/selector-map";
 
 const device = Device.standard();
 
-const implicitLayer = {
-  normal: Layer.of("", false).withOrder(-1),
-  important: Layer.of("", true).withOrder(1),
-};
+function layer(
+  name: string,
+  order: number,
+): { normal: Layer<true>; important: Layer<true> } {
+  return {
+    normal: Layer.of(name, false).withOrder(-order),
+    important: Layer.of(name, true).withOrder(order),
+  };
+}
+
+const implicitLayer = layer("", 1);
 
 function ruleToBlockJSON(
   rule: StyleRule,
@@ -230,6 +238,177 @@ test(".from() recurses into block layer rules", (t) => {
     device,
     1,
   );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [["foo", ruleToBlockJSON(rule, 0, 1, layer("hello", 2))]],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".from() creates anonymous layer for unammed layer block rules", (t) => {
+  const rule = h.rule.style("foo", { foo: "bar" });
+
+  const actual = SelectorMap.from(
+    [h.sheet([h.rule.layerBlock([rule])])],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [["foo", ruleToBlockJSON(rule, 0, 1, layer("(anonymous 1)", 2))]],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".from() orders incomparable layers in reverse declaration order", (t) => {
+  const rule1 = h.rule.style("type", { foo: "bar" });
+  const rule2 = h.rule.style(".class", { foo: "bar" });
+  const rule3 = h.rule.style("#id", { foo: "bar" });
+
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.layerBlock([rule1], "lorem"),
+        h.rule.layerBlock([rule2], "ipsum"),
+        h.rule.layerBlock([rule3], "dolor"),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [["id", ruleToBlockJSON(rule3, 2, 1, layer("dolor", 2))]],
+    classes: [["class", ruleToBlockJSON(rule2, 1, 1, layer("ipsum", 3))]],
+    types: [["type", ruleToBlockJSON(rule1, 0, 1, layer("lorem", 4))]],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".from() orders comparable layers in reverse nesting order", (t) => {
+  const rule1 = h.rule.style("type", { foo: "bar" });
+  const rule2 = h.rule.style(".class", { foo: "bar" });
+  const rule3 = h.rule.style("#id", { foo: "bar" });
+
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.layerBlock([rule1], "lorem.ipsum.dolor"),
+        h.rule.layerBlock([rule2], "lorem"),
+        h.rule.layerBlock([rule3], "lorem.ipsum"),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [["id", ruleToBlockJSON(rule3, 2, 1, layer("lorem.ipsum", 3))]],
+    classes: [["class", ruleToBlockJSON(rule2, 1, 1, layer("lorem", 2))]],
+    types: [
+      ["type", ruleToBlockJSON(rule1, 0, 1, layer("lorem.ipsum.dolor", 4))],
+    ],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".from() creates sublayers for nested layer block rules", (t) => {
+  const rule1 = h.rule.style("type", { foo: "bar" });
+  const rule2 = h.rule.style(".class", { foo: "bar" });
+  const rule3 = h.rule.style("#id", { foo: "bar" });
+
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.layerBlock(
+          [
+            rule1,
+            h.rule.layerBlock([rule2, h.rule.layerBlock([rule3], "dolor")]),
+          ],
+          "lorem",
+        ),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [
+      [
+        "id",
+        ruleToBlockJSON(rule3, 2, 1, layer("lorem.(anonymous 1).dolor", 4)),
+      ],
+    ],
+    classes: [
+      ["class", ruleToBlockJSON(rule2, 1, 1, layer("lorem.(anonymous 1)", 3))],
+    ],
+    types: [["type", ruleToBlockJSON(rule1, 0, 1, layer("lorem", 2))]],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".form() order layers according to statement rules coming before block rules", (t) => {
+  const rule1 = h.rule.style("type", { foo: "bar" });
+  const rule2 = h.rule.style(".class", { foo: "bar" });
+  const rule3 = h.rule.style("#id", { foo: "bar" });
+
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.layerStatement(["lorem", "ipsum", "dolor"]),
+        h.rule.layerBlock([rule1], "dolor"),
+        h.rule.layerBlock([rule2], "ipsum"),
+        h.rule.layerBlock([rule3], "lorem"),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [["id", ruleToBlockJSON(rule3, 2, 1, layer("lorem", 4))]],
+    classes: [["class", ruleToBlockJSON(rule2, 1, 1, layer("ipsum", 3))]],
+    types: [["type", ruleToBlockJSON(rule1, 0, 1, layer("dolor", 2))]],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".form() order layers according to block rules coming before statement rules", (t) => {
+  const rule1 = h.rule.style("type", { foo: "bar" });
+  const rule2 = h.rule.style(".class", { foo: "bar" });
+  const rule3 = h.rule.style("#id", { foo: "bar" });
+
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.layerBlock([rule1], "dolor"),
+        h.rule.layerBlock([rule2], "ipsum"),
+        h.rule.layerBlock([rule3], "lorem"),
+        h.rule.layerStatement(["lorem", "ipsum", "dolor"]),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [["id", ruleToBlockJSON(rule3, 2, 1, layer("lorem", 2))]],
+    classes: [["class", ruleToBlockJSON(rule2, 1, 1, layer("ipsum", 3))]],
+    types: [["type", ruleToBlockJSON(rule1, 0, 1, layer("dolor", 4))]],
+    other: [],
+    shadow: [],
+  });
 });
 
 test("#get() returns all blocks whose selector match an element", (t) => {

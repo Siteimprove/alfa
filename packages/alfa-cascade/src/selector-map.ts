@@ -14,6 +14,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Maybe } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
@@ -291,9 +292,6 @@ export namespace SelectorMap {
 
     /**
      * Gets a specific layer, create it if needed.
-     *
-     * @remarks
-     * Do not use me; use getLayer instead.
      */
     function getSingleLayer(name: string): Layer.Pair<false> {
       let layer = layers.find((pair) => pair.name === name);
@@ -314,19 +312,33 @@ export namespace SelectorMap {
      * Gets the layer for a name, create it and its ancestors if needed.
      */
     function getLayer(name: string): Layer.Pair<false> {
-      let layer = getSingleLayer("");
       // Since it is possible to declare sub-layers without the intermediate
       // ones, we check for all layers on the path and create them if needed.
-      const path = name.split(".");
-      for (
-        let current = "", i = 0;
-        i < path.length;
-        current = `${current}.${path[i]}`, i++
-      ) {
+      let current = "";
+      let layer = getSingleLayer(current);
+
+      for (const segment of name.split(".")) {
+        current = (current === "" ? "" : `${current}.`) + segment;
         layer = getSingleLayer(current);
       }
 
       return layer;
+    }
+
+    /**
+     * Gets the layer obtained by adding a new segment to the current one.
+     * Handles shenanigans around the empty implicit layer, and anonymous layers.
+     */
+    function nextLayer(
+      current: Layer.Pair<false>,
+      segment: Maybe<string>,
+    ): Layer.Pair<false> {
+      return getLayer(
+        // If the current layer name is not empty, add a dot to it;
+        (current.name === "" ? "" : `${current.name}.`) +
+          // add the new segment, or create an anonymous layer.
+          Maybe.toOption(segment).getOrElse(anonymous),
+      );
     }
 
     /**
@@ -394,15 +406,11 @@ export namespace SelectorMap {
           )
           // For layer block rules, we fetch/create the layer and recurse into it.
           .if(isLayerBlockRule, (rule) =>
-            visitChildren(
-              visit(
-                getLayer(`${layer.name}.${rule.layer.getOrElse(anonymous)}`),
-              ),
-            )(rule),
+            visitChildren(visit(nextLayer(layer, rule.layer)))(rule),
           )
           // For layer statement rules, we just fetch/create the layers in order
           .if(isLayerStatementRule, (rule) =>
-            Iterable.forEach(rule.layers, getLayer),
+            Iterable.forEach(rule.layers, (name) => nextLayer(layer, name)),
           )
           // For media rules, we recurse into the child rules if and only if the
           // media condition matches the device.
