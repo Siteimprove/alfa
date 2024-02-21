@@ -1,7 +1,6 @@
-/// <reference lib="dom" />
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
-import { h, StyleRule } from "@siteimprove/alfa-dom";
+import { h } from "@siteimprove/alfa-dom";
 import {
   Complex,
   Compound,
@@ -12,32 +11,11 @@ import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
 import { AncestorFilter } from "../src/ancestor-filter";
 
-import { Block } from "../src/block";
 import { Layer, Origin } from "../src/precedence";
 import { SelectorMap } from "../src/selector-map";
+import { layer, ruleToBlockJSON } from "./common";
 
 const device = Device.standard();
-
-function layer(
-  name: string,
-  order: number,
-): { normal: Layer<true>; important: Layer<true> } {
-  return {
-    normal: Layer.of(name, false).withOrder(-order),
-    important: Layer.of(name, true).withOrder(order),
-  };
-}
-
-const implicitLayer = layer("", 1);
-
-function ruleToBlockJSON(
-  rule: StyleRule,
-  order: number,
-  encapsulationDepth: number = 1,
-  layer: { normal: Layer<true>; important: Layer<true> } = implicitLayer,
-): Array<Block.JSON<Block.Source>> {
-  return Array.toJSON(Block.from(rule, order, encapsulationDepth, layer)[0]);
-}
 
 test(".from() builds a selector map with a single rule", (t) => {
   const rule = h.rule.style("div", { foo: "not parsed" });
