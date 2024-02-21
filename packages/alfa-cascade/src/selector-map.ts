@@ -267,10 +267,48 @@ export namespace SelectorMap {
     //
     // It is of the uttermost importance that blocks share the same Layer
     // object, since we will laters mutate them to add the correct order.
-    const layers: Array<{ normal: Layer; important: Layer }> = [];
+    const layers: Array<Layer.Pair<false>> = [];
     let anonymousLayers = 0;
 
-    const add = (block: Block<Block.Source>): void => {
+    /**
+     * Creates a unique name for anonymous layers. Parenthesis and space
+     * ensure it doesn't collide with CSS ident used as name for other layers.
+     */
+    function anonymous(): string {
+      anonymousLayers++;
+      return `(anonymous ${anonymousLayers})`;
+    }
+
+    /**
+     * Gets the layers pair for a name, create it if needed.
+     */
+    function getLayers(name: string): Layer.Pair<false> {
+      let pair = layers.find((pair) => pair.name === name);
+
+      if (pair === undefined) {
+        pair = {
+          name,
+          normal: Layer.of(name, false),
+          important: Layer.of(name, true),
+        };
+        layers.push(pair);
+      }
+
+      return pair;
+    }
+    // Create the top-level implicit layer
+    const implicitLayer = getLayers("");
+
+    const foo = {
+      name: "",
+      normal: Layer.empty(),
+      important: Layer.empty(),
+    } as unknown as Layer.Pair<false>;
+
+    /**
+     * Adds a block to the correct bucket
+     */
+    function add(block: Block<Block.Source>): void {
       const keySelector = block.selector.key;
 
       if (Selector.isShadow(block.selector)) {
@@ -289,9 +327,12 @@ export namespace SelectorMap {
       const key = keySelector.get();
       const buckets = { id: ids, class: classes, type: types };
       buckets[key.type].add(key.name, block);
-    };
+    }
 
-    const visit = (rule: Rule) => {
+    /**
+     * Recursively visits a rule and adds its declarations to the correct buckets.
+     */
+    function visit(rule: Rule, layers: Layer.Pair<false>): void {
       // For style rule, we just store its blocks.
       if (StyleRule.isStyleRule(rule)) {
         // Style rules with empty style blocks aren't relevant and so can be
@@ -301,10 +342,7 @@ export namespace SelectorMap {
         }
 
         let blocks: Array<Block<Block.Source>> = [];
-        [blocks, order] = Block.from(rule, order, encapsulationDepth, {
-          normal: Layer.empty(),
-          important: Layer.empty(),
-        });
+        [blocks, order] = Block.from(rule, order, encapsulationDepth, layers);
 
         for (const block of blocks) {
           add(block);
@@ -319,7 +357,7 @@ export namespace SelectorMap {
         }
 
         for (const child of rule.children()) {
-          visit(child);
+          visit(child, layers);
         }
       }
 
@@ -331,7 +369,7 @@ export namespace SelectorMap {
         }
 
         for (const child of rule.sheet.children()) {
-          visit(child);
+          visit(child, layers);
         }
       } else if (SupportsRule.isSupportsRule(rule)) {
         if (rule.query.every((query) => !query.matches(device))) {
@@ -340,7 +378,7 @@ export namespace SelectorMap {
         }
 
         for (const child of rule.children()) {
-          visit(child);
+          visit(child, layers);
         }
       }
 
@@ -348,10 +386,10 @@ export namespace SelectorMap {
       // current rule.
       else {
         for (const child of rule.children()) {
-          visit(child);
+          visit(child, layers);
         }
       }
-    };
+    }
 
     for (const sheet of sheets) {
       if (sheet.disabled) {
@@ -366,10 +404,15 @@ export namespace SelectorMap {
         }
       }
 
+      // Visit all rules in the sheet.
       for (const rule of sheet.children()) {
-        visit(rule);
+        visit(rule, implicitLayer);
       }
     }
+
+    // After visiting all rules in all sheets, order the layers.
+    // This mutates the layers, thus updating the blocks accordingly.
+    Layer.sortUnordered(layers);
 
     return SelectorMap.of(ids, classes, types, other, shadow);
   }

@@ -43,7 +43,7 @@ const UAblock: Block.JSON = {
     origin: Origin.NormalUserAgent,
     encapsulation: -1,
     isElementAttached: false,
-    layer: Layer.empty().toJSON(),
+    layer: Layer.of("", false).withOrder(-1).toJSON(),
     specificity: { a: 0, b: 0, c: 1 },
     order: 7,
   },
@@ -54,8 +54,12 @@ function getBlock(
   order: number,
   encapsulationDepth: number = 1,
 ): Block.JSON {
-  return Block.from(rule, order, encapsulationDepth, {normal:Layer.empty(), important: Layer.empty()})[0][0].toJSON();
+  return Block.from(rule, order, encapsulationDepth, {
+    normal: Layer.of("", false).withOrder(-1), 
+    important: Layer.of("", true).withOrder(1)
+  })[0][0].toJSON();
 }
+
 test(".get() returns the rule tree node of the given element", (t) => {
   const div = <div>Hello</div>;
   const rule = h.rule.style("div", { color: "red" });

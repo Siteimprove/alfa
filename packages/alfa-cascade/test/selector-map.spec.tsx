@@ -22,7 +22,10 @@ function ruleToBlockJSON(
   order: number,
   encapsulationDepth: number = 1,
 ): Array<Block.JSON<Block.Source>> {
-  return Array.toJSON(Block.from(rule, order, encapsulationDepth, {normal:Layer.empty(), important: Layer.empty()})[0]);
+  return Array.toJSON(Block.from(rule, order, encapsulationDepth, { 
+    normal: Layer.of("", false).withOrder(-1), 
+    important: Layer.of("", true).withOrder(1)
+  })[0]);
 }
 
 test(".from() builds a selector map with a single rule", (t) => {
@@ -117,7 +120,7 @@ test(".from() split important and non-important declarations in two blocks", (t)
               origin: Origin.NormalAuthor,
               encapsulation: -1,
               isElementAttached: false,
-              layer: Layer.empty().toJSON(),
+              layer: Layer.of("", false).withOrder(-1).toJSON(),
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
             },
@@ -129,7 +132,7 @@ test(".from() split important and non-important declarations in two blocks", (t)
               origin: Origin.ImportantAuthor,
               encapsulation: 1,
               isElementAttached: false,
-              layer: Layer.empty().toJSON(),
+              layer: Layer.of("", true).withOrder(1).toJSON(),
               specificity: { a: 0, b: 0, c: 1 },
               order: 1,
             },
