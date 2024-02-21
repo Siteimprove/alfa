@@ -6,6 +6,8 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
 import { ConditionRule } from "./condition";
+import { Device } from "@siteimprove/alfa-device";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 /**
  * @public
@@ -73,6 +75,10 @@ export namespace ImportRule {
 
   export function isImportRule(value: unknown): value is ImportRule {
     return value instanceof ImportRule;
+  }
+
+  export function matches(device: Device): Predicate<ImportRule> {
+    return (rule) => rule.queries.matches(device);
   }
 
   /**
