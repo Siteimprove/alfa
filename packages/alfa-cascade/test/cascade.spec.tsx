@@ -55,8 +55,8 @@ function getBlock(
   encapsulationDepth: number = 1,
 ): Block.JSON {
   return Block.from(rule, order, encapsulationDepth, {
-    normal: Layer.of("", false).withOrder(-1), 
-    important: Layer.of("", true).withOrder(1)
+    normal: Layer.of("", false).withOrder(-1),
+    important: Layer.of("", true).withOrder(1),
   })[0][0].toJSON();
 }
 
@@ -271,17 +271,14 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
 });
 
 test(".get() matches `::slotted` rules within compound selector.", (t) => {
-  const rule = h.rule.style(".foo::slotted(*)", { color: "green" })
+  const rule = h.rule.style(".foo::slotted(*)", { color: "green" });
 
   const slotted = <div>Hello</div>;
 
   const document = h.document([
     <main>
       {slotted}
-      {h.shadow(
-        [<slot class="foo"></slot>],
-        [h.sheet([rule])],
-      )}
+      {h.shadow([<slot class="foo"></slot>], [h.sheet([rule])])}
     </main>,
   ]);
   const cascade = Cascade.from(document, device);
@@ -430,4 +427,3 @@ test(".get() correctly sort rules from different depths.", (t) => {
     ],
   });
 });
-

@@ -290,24 +290,44 @@ export namespace SelectorMap {
     }
 
     /**
-     * Gets the layers pair for a name, create it if needed.
+     * Gets a specific layer, create it if needed.
+     *
+     * @remarks
+     * Do not use me; use getLayer instead.
      */
-    function getLayer(name: string): Layer.Pair<false> {
-      let pair = layers.find((pair) => pair.name === name);
+    function getSingleLayer(name: string): Layer.Pair<false> {
+      let layer = layers.find((pair) => pair.name === name);
 
-      if (pair === undefined) {
-        pair = {
+      if (layer === undefined) {
+        layer = {
           name,
           normal: Layer.of(name, false),
           important: Layer.of(name, true),
         };
-        layers.push(pair);
+        layers.push(layer);
       }
 
-      return pair;
+      return layer;
     }
-    // Create the top-level implicit layer
-    const implicitLayer = getLayer("");
+
+    /**
+     * Gets the layer for a name, create it and its ancestors if needed.
+     */
+    function getLayer(name: string): Layer.Pair<false> {
+      let layer = getSingleLayer("");
+      // Since it is possible to declare sub-layers without the intermediate
+      // ones, we check for all layers on the path and create them if needed.
+      const path = name.split(".");
+      for (
+        let current = "", i = 0;
+        i < path.length;
+        current = `${current}.${path[i]}`, i++
+      ) {
+        layer = getSingleLayer(current);
+      }
+
+      return layer;
+    }
 
     /**
      * Adds a block to the correct bucket
@@ -372,6 +392,18 @@ export namespace SelectorMap {
           .if(isImportRule, (rule) =>
             Iterable.forEach(rule.sheet.children(), visit(layer)),
           )
+          // For layer block rules, we fetch/create the layer and recurse into it.
+          .if(isLayerBlockRule, (rule) =>
+            visitChildren(
+              visit(
+                getLayer(`${layer.name}.${rule.layer.getOrElse(anonymous)}`),
+              ),
+            )(rule),
+          )
+          // For layer statement rules, we just fetch/create the layers in order
+          .if(isLayerStatementRule, (rule) =>
+            Iterable.forEach(rule.layers, getLayer),
+          )
           // For media rules, we recurse into the child rules if and only if the
           // media condition matches the device.
           .if(and(isMediaRule, not(MediaRule.matches(device))), skip)
@@ -396,8 +428,8 @@ export namespace SelectorMap {
         }
       }
 
-      // Visit all rules in the sheet.
-      Iterable.forEach(sheet.children(), visit(implicitLayer));
+      // Visit all rules in the sheet, with the top-level implicit layer.
+      Iterable.forEach(sheet.children(), visit(getLayer("")));
     }
 
     // After visiting all rules in all sheets, order the layers.

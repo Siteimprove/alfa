@@ -17,15 +17,18 @@ import { SelectorMap } from "../src/selector-map";
 
 const device = Device.standard();
 
+const implicitLayer = {
+  normal: Layer.of("", false).withOrder(-1),
+  important: Layer.of("", true).withOrder(1),
+};
+
 function ruleToBlockJSON(
   rule: StyleRule,
   order: number,
   encapsulationDepth: number = 1,
+  layer: { normal: Layer<true>; important: Layer<true> } = implicitLayer,
 ): Array<Block.JSON<Block.Source>> {
-  return Array.toJSON(Block.from(rule, order, encapsulationDepth, { 
-    normal: Layer.of("", false).withOrder(-1), 
-    important: Layer.of("", true).withOrder(1)
-  })[0]);
+  return Array.toJSON(Block.from(rule, order, encapsulationDepth, layer)[0]);
 }
 
 test(".from() builds a selector map with a single rule", (t) => {
@@ -217,6 +220,16 @@ test(".from() only recurses into supports rules whose condition matches", (t) =>
     other: [],
     shadow: [],
   });
+});
+
+test(".from() recurses into block layer rules", (t) => {
+  const rule = h.rule.style("foo", { foo: "bar" });
+
+  const actual = SelectorMap.from(
+    [h.sheet([h.rule.layerBlock([rule], "hello")])],
+    device,
+    1,
+  );
 });
 
 test("#get() returns all blocks whose selector match an element", (t) => {
