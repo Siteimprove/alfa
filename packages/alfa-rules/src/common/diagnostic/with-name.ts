@@ -18,7 +18,7 @@ export class WithName extends Diagnostic {
       : new WithName(message, name);
   }
 
-  private readonly _name: string;
+  protected readonly _name: string;
 
   protected constructor(message: string, name: string) {
     super(message);

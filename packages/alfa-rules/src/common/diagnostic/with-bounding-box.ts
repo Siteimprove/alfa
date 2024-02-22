@@ -1,22 +1,39 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
+import { WithName } from "./with-name";
 
-export class WithBoundingBox extends Diagnostic {
+export class WithBoundingBox extends WithName {
   public static of(message: string): Diagnostic;
 
-  public static of(message: string, box: Rectangle): WithBoundingBox;
+  public static of(message: string, name: string): WithName;
 
-  public static of(message: string, box?: Rectangle): Diagnostic {
-    return box === undefined
-      ? new Diagnostic(message)
-      : new WithBoundingBox(message, box);
+  public static of(
+    message: string,
+    name: string,
+    box: Rectangle,
+  ): WithBoundingBox;
+
+  public static of(
+    message: string,
+    name?: string,
+    box?: Rectangle,
+  ): Diagnostic {
+    if (name === undefined) {
+      return new Diagnostic(message);
+    }
+
+    if (box === undefined) {
+      return new WithName(message, name);
+    }
+
+    return new WithBoundingBox(message, name, box);
   }
 
-  private readonly _box: Rectangle;
+  protected readonly _box: Rectangle;
 
-  private constructor(message: string, box: Rectangle) {
-    super(message);
+  protected constructor(message: string, name: string, box: Rectangle) {
+    super(message, name);
     this._box = box;
   }
 
@@ -32,6 +49,7 @@ export class WithBoundingBox extends Diagnostic {
     return (
       value instanceof WithBoundingBox &&
       value._message === this._message &&
+      value._name === this._name &&
       value._box.equals(this._box)
     );
   }
@@ -50,7 +68,7 @@ export class WithBoundingBox extends Diagnostic {
 }
 
 export namespace WithBoundingBox {
-  export interface JSON extends Diagnostic.JSON {
+  export interface JSON extends WithName.JSON {
     box: Rectangle.JSON;
   }
 

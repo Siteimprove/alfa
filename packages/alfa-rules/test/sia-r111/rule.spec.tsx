@@ -23,7 +23,10 @@ test("evaluate() passes button with clickable area of exactly 44x44 pixels", asy
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     passed(R111, target, {
-      1: Outcomes.HasSufficientSize(target.getBoundingBox(device).getUnsafe()),
+      1: Outcomes.HasSufficientSize(
+        "Hello",
+        target.getBoundingBox(device).getUnsafe(),
+      ),
     }),
   ]);
 });
@@ -42,7 +45,7 @@ test("evaluate() passes input element regardless of size", async (t) => {
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     passed(R111, target, {
-      1: Outcomes.IsUserAgentControlled,
+      1: Outcomes.IsUserAgentControlled(""),
     }),
   ]);
 });
@@ -64,6 +67,7 @@ test("evaluate() fails button with clickable area of less than 44x44 pixels", as
   t.deepEqual(await evaluate(R111, { document, device }), [
     failed(R111, target, {
       1: Outcomes.HasInsufficientSize(
+        "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),
     }),

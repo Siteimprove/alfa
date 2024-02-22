@@ -1,4 +1,4 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
@@ -12,7 +12,7 @@ import { Device } from "@siteimprove/alfa-device";
 
 import { expectation } from "../common/act/expectation";
 
-import { WithBoundingBox } from "../common/diagnostic";
+import { WithBoundingBox, WithName } from "../common/diagnostic";
 
 const { getElementDescendants } = Query;
 const { and } = Refinement;
@@ -42,13 +42,14 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         // Existence of a bounding box is guaranteed by applicability
         const box = target.getBoundingBox(device).getUnsafe();
+        const name = WithName.getName(target, device).getOr("");
         return {
           1: expectation(
             isUserAgentControlled(target),
-            () => Outcomes.IsUserAgentControlled,
+            () => Outcomes.IsUserAgentControlled(name),
             hasSufficientSize(44, device)(target)
-              ? () => Outcomes.HasSufficientSize(box)
-              : () => Outcomes.HasInsufficientSize(box),
+              ? () => Outcomes.HasSufficientSize(name, box)
+              : () => Outcomes.HasInsufficientSize(name, box),
           ),
         };
       },
@@ -60,15 +61,14 @@ export default Rule.Atomic.of<Page, Element>({
  * @public
  */
 export namespace Outcomes {
-  export const HasSufficientSize = (box: Rectangle) =>
-    Ok.of(WithBoundingBox.of("Target has sufficient size", box));
+  export const HasSufficientSize = (name: string, box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target has sufficient size", name, box));
 
-  export const HasInsufficientSize = (box: Rectangle) =>
-    Err.of(WithBoundingBox.of("Target has insufficient size", box));
+  export const HasInsufficientSize = (name: string, box: Rectangle) =>
+    Err.of(WithBoundingBox.of("Target has insufficient size", name, box));
 
-  export const IsUserAgentControlled = Ok.of(
-    Diagnostic.of("Target is user agent controlled"),
-  );
+  export const IsUserAgentControlled = (name: string) =>
+    Ok.of(WithName.of("Target is user agent controlled", name));
 }
 
 /**
