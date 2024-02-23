@@ -1,6 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Comparison } from "@siteimprove/alfa-comparable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { test } from "@siteimprove/alfa-test";
 
 import { Layer } from "../src/precedence";
@@ -13,18 +12,11 @@ function pair(name: string): Layer.Pair<false> {
   };
 }
 
-function toJSON(pair: Layer.Pair): Serializable.ToJSON<Layer.Pair> {
-  return {
-    name: pair.name,
-    normal: pair.normal.toJSON(),
-    important: pair.important.toJSON(),
-  };
-}
-
 test("#withOrder() mutates layers", (t) => {
   const layer = Layer.of("foo", false);
-  layer.withOrder(42);
+  t(isNaN(layer.order));
 
+  layer.withOrder(42);
   t.equal(layer.order, 42);
 });
 
@@ -135,6 +127,7 @@ test(".sortUnordered() sorts and update layers with order", (t) => {
     },
   ]);
 
+  // Check that the initial layers have been mutated.
   t.equal(pair1.normal.order, -6);
   t.equal(pair1.important.order, 6);
   t.equal(pair2.normal.order, -1);

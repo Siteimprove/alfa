@@ -310,6 +310,14 @@ export namespace SelectorMap {
 
     /**
      * Gets the layer for a name, create it and its ancestors if needed.
+     *
+     * @remarks
+     * This is quite inefficient in always getting/creating all ancestors.
+     * We could instead assume that the array is path-prefix complete and stop
+     * as soon as we encounter an existing ancestor. We assume that both the
+     * total number of layers, the depth of the layers tree, and the amount
+     * of re-declaration of a layer block rule with an existing layer will
+     * be very low, so this is not critical.
      */
     function getLayer(name: string): Layer.Pair<false> {
       // Since it is possible to declare sub-layers without the intermediate
@@ -318,6 +326,7 @@ export namespace SelectorMap {
       let layer = getSingleLayer(current);
 
       for (const segment of name.split(".")) {
+        // If the current layer name is not empty, add a dot to it;
         current = (current === "" ? "" : `${current}.`) + segment;
         layer = getSingleLayer(current);
       }
@@ -328,6 +337,10 @@ export namespace SelectorMap {
     /**
      * Gets the layer obtained by adding a new segment to the current one.
      * Handles shenanigans around the empty implicit layer, and anonymous layers.
+     *
+     * @remarks
+     * The new segment may actually be a dot-separated path, actually creating
+     * several intermediate layers.
      */
     function nextLayer(
       current: Layer.Pair<false>,
@@ -380,7 +393,7 @@ export namespace SelectorMap {
     function visit(layer: Layer.Pair<false>): (rule: Rule) => void {
       return (rule) =>
         Selective.of(rule)
-          // For style rules, store its blocks; this is where he actual work happens.
+          // For style rules, store its blocks; this is where the actual work happens.
           // Style rules with empty style blocks aren't relevant and so can be
           // skipped entirely to avoid increasing order.
           .if(and(isStyleRule, StyleRule.isEmpty), skip)

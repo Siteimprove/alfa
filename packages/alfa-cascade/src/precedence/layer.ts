@@ -31,7 +31,11 @@ import * as json from "@siteimprove/alfa-json";
  * used here refer to them as object and thus updating the order will
  * automatically update it in all blocks, without needing to revisit them.
  *
- * Comparing layers is then just a matter of comparing their order.
+ * Comparing layers is then just a matter of comparing their order. Layers with
+ * normal declarations have negative order, layers with important declaration
+ * have positive order (with the same absolute value for the same layer). This
+ * account for important declaration winning (this is actually handled by Origin
+ * comparison), and reversing the layer order.
  *
  * @privateRemarks
  * This is mutable!
@@ -153,12 +157,16 @@ export namespace Layer {
 
   /**
    * Order layers, according to their names (and importance), and relative order of declaration.
+   * The arary must contain path-prefix layers (up to the empty path) for each layer!
    *
    * @remarks
    * Layers are named in a tree structure, with dot separated paths (including
    * the empty path for the implicit top layer, and "(anonymous X)" for anonymous
    * layers). They are sorted in depth-first postfix traversal order. The relative
-   * order of siblings is the declaration order.
+   * order of siblings is **reverse** the declaration order. Thus, layer with important
+   * declarations win if they come earlier (larger order), while layer with normal
+   * declarations win if the come later (smaller absolute order, but normal layers have
+   * negative order).
    *
    * Thus, in order to compare foo.bar.lorem.ipsum and foo.bar.dolor.sit, we need to
    * 1. find the common ancestor (common path), here foo.bar.
@@ -173,6 +181,7 @@ export namespace Layer {
       .sort(compareUnordered(layers))
       .map(({ name, normal, important }, idx) => ({
         name,
+        // We skip 0 for the sake of having different order on each layer
         normal: normal.withOrder(-idx - 1),
         important: important.withOrder(idx + 1),
       }));
@@ -180,6 +189,7 @@ export namespace Layer {
 
   /**
    * Compare layers (pairs) according to an array of declaration order.
+   * The arary must contain path-prefix layers (up to the empty path) for both layer!
    *
    * @remarks
    * Because importance reverses the order of layers, we split layers
@@ -212,7 +222,9 @@ export namespace Layer {
       const short = Math.min(pathA.length, pathB.length);
 
       let i = 0;
-      while (i < short && pathA[i] === pathB[i]) i++;
+      while (i < short && pathA[i] === pathB[i]) {
+        i++;
+      }
 
       const common = pathA.slice(0, i).join(".");
 
@@ -231,8 +243,8 @@ export namespace Layer {
       // Otherwise, we need to find the relative order of the first diverging
       // childrens.
       // E.g., "foo.bar.baz" and "foo.lorem.ipsum" are relatively ordered
-      // in the declaration order of "foo.bar" and "foo.lorem"
-      // build diverging names, up to the common part +1 item
+      // in the declaration order of "foo.bar" and "foo.lorem".
+      // Build diverging names, up to the common part +1 item
       const divergeA = pathA.slice(0, i + 1).join(".");
       const divergeB = pathB.slice(0, i + 1).join(".");
 
