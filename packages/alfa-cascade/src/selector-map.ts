@@ -396,8 +396,7 @@ export namespace SelectorMap {
           // For style rules, store its blocks; this is where the actual work happens.
           // Style rules with empty style blocks aren't relevant and so can be
           // skipped entirely to avoid increasing order.
-          .if(and(isStyleRule, StyleRule.isEmpty), skip)
-          .if(isStyleRule, (rule) => {
+          .ifGuarded(isStyleRule, StyleRule.isEmpty, skip, (rule) => {
             let blocks: Array<Block<Block.Source>> = [];
             [blocks, order] = Block.from(
               rule,
@@ -413,9 +412,11 @@ export namespace SelectorMap {
 
           // For import rules, we recurse into the imported style sheet if and only
           // if the import condition matches the device.
-          .if(and(isImportRule, not(ImportRule.matches(device))), skip)
-          .if(isImportRule, (rule) =>
-            Iterable.forEach(rule.sheet.children(), visit(layer)),
+          .ifGuarded(
+            isImportRule,
+            ImportRule.matches(device),
+            (rule) => Iterable.forEach(rule.sheet.children(), visit(layer)),
+            skip,
           )
           // For layer block rules, we fetch/create the layer and recurse into it.
           .if(isLayerBlockRule, (rule) =>
@@ -427,12 +428,20 @@ export namespace SelectorMap {
           )
           // For media rules, we recurse into the child rules if and only if the
           // media condition matches the device.
-          .if(and(isMediaRule, not(MediaRule.matches(device))), skip)
-          .if(isMediaRule, visitChildren(visit(layer)))
+          .ifGuarded(
+            isMediaRule,
+            MediaRule.matches(device),
+            visitChildren(visit(layer)),
+            skip,
+          )
           // For support rules, we recurse into the child rules if and only
           // if the support condition matches the device.
-          .if(and(isSupportsRule, not(SupportsRule.matches(device))), skip)
-          .if(isSupportsRule, visitChildren(visit(layer)))
+          .ifGuarded(
+            isSupportsRule,
+            SupportsRule.matches(device),
+            visitChildren(visit(layer)),
+            skip,
+          )
           // Otherwise, we recurse into whichever child rules are declared by the
           // current rule.
           .else(visitChildren(visit(layer)));
