@@ -31,7 +31,7 @@ import { AncestorFilter } from "./ancestor-filter";
 import { Block } from "./block";
 import { Layer, type Order } from "./precedence";
 
-const { equals, not, property } = Predicate;
+const { equals, property } = Predicate;
 const { and } = Refinement;
 
 const { isComplex } = Complex;
