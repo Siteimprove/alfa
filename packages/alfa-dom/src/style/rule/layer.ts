@@ -62,6 +62,12 @@ export namespace Layer {
     ): Trampoline<StatementRule> {
       return Trampoline.done(StatementRule.of(json.layers));
     }
+
+    export function isLayerStatementRule(
+      value: unknown,
+    ): value is StatementRule {
+      return value instanceof StatementRule;
+    }
   }
 
   /**
@@ -120,6 +126,10 @@ export namespace Layer {
       return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
         BlockRule.of(rules, json.layer),
       );
+    }
+
+    export function isLayerBlockRule(value: unknown): value is BlockRule {
+      return value instanceof BlockRule;
     }
   }
 }

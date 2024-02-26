@@ -1,5 +1,6 @@
 ---
 "@siteimprove/alfa-dom": minor
+"@siteimprove/alfa-cascade": minor
 ---
 
-**Added:** A model for CSS `@layer` rules is now available.
+**Added:** CSS `@layer` rules are now handled when building cascades.

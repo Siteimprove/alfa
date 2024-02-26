@@ -1,6 +1,8 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
+import { Device } from "@siteimprove/alfa-device";
 import type { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -50,6 +52,10 @@ export namespace MediaRule {
 
   export function isMediaRule(value: unknown): value is MediaRule {
     return value instanceof MediaRule;
+  }
+
+  export function matches(device: Device): Predicate<MediaRule> {
+    return (rule) => rule.queries.matches(device);
   }
 
   /**

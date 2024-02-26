@@ -6,6 +6,8 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { ConditionRule } from "./condition";
+import { Device } from "@siteimprove/alfa-device";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 /**
  * @public
@@ -52,6 +54,12 @@ export namespace SupportsRule {
 
   export function isSupportsRule(value: unknown): value is SupportsRule {
     return value instanceof SupportsRule;
+  }
+
+  export function matches(device: Device): Predicate<SupportsRule> {
+    // If rule.query is None, Alfa couldn't parse the query which
+    // means it does not support it.
+    return (rule) => rule.query.some((query) => query.matches(device));
   }
 
   /**
