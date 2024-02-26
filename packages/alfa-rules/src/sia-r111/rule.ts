@@ -1,13 +1,18 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Device } from "@siteimprove/alfa-device";
 
 import { expectation } from "../common/act/expectation";
+
+import { WithBoundingBox, WithName } from "../common/diagnostic";
 
 const { getElementDescendants } = Query;
 const { and } = Refinement;
@@ -35,14 +40,16 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Existence of bounding box is guaranteed by applicability
+        // Existence of a bounding box is guaranteed by applicability
         const box = target.getBoundingBox(device).getUnsafe();
-
+        const name = WithName.getName(target, device).getOr("");
         return {
           1: expectation(
-            box.width >= 44 && box.height >= 44,
-            () => Outcomes.HasSufficientSize,
-            () => Outcomes.HasInsufficientSize,
+            isUserAgentControlled(target),
+            () => Outcomes.IsUserAgentControlled(name, box),
+            hasSufficientSize(44, device)(target)
+              ? () => Outcomes.HasSufficientSize(name, box)
+              : () => Outcomes.HasInsufficientSize(name, box),
           ),
         };
       },
@@ -54,11 +61,29 @@ export default Rule.Atomic.of<Page, Element>({
  * @public
  */
 export namespace Outcomes {
-  export const HasSufficientSize = Ok.of(
-    Diagnostic.of("Target has sufficient size"),
-  );
+  export const HasSufficientSize = (name: string, box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target has sufficient size", name, box));
 
-  export const HasInsufficientSize = Err.of(
-    Diagnostic.of("Target has insufficient size"),
-  );
+  export const HasInsufficientSize = (name: string, box: Rectangle) =>
+    Err.of(WithBoundingBox.of("Target has insufficient size", name, box));
+
+  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
+}
+
+/**
+ * @remarks
+ * This predicate is assumed to only be used on elements with bounding boxes
+ * which should be guaranteed by applicability
+ */
+function hasSufficientSize(size: number, device: Device): Predicate<Element> {
+  return (element) => {
+    const box = element.getBoundingBox(device).getUnsafe();
+    return box.width >= size && box.height >= size;
+  };
+}
+
+function isUserAgentControlled(element: Element): boolean {
+  // Crude approximation of user agent controlled elements, to be refined
+  return element.name === "input";
 }
