@@ -463,6 +463,10 @@ export namespace h {
         // (undocumented)
         export function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
         // (undocumented)
+        export function layerBlock(rules: Array<Rule>, layer?: string): Layer.BlockRule;
+        // (undocumented)
+        export function layerStatement(layers: Array<string>): Layer.StatementRule;
+        // (undocumented)
         export function media(condition: string, rules: Array<Rule>): MediaRule;
         // (undocumented)
         export function namespace(namespace: string, prefix?: string): NamespaceRule;
@@ -512,6 +516,8 @@ export namespace ImportRule {
         // (undocumented)
         href: string;
     }
+    // (undocumented)
+    export function matches(device: Device): Predicate<ImportRule>;
 }
 
 // @public (undocumented)
@@ -617,6 +623,8 @@ export namespace Layer {
         // (undocumented)
         export function fromLayerBlockRule(json: JSON): Trampoline<BlockRule>;
         // (undocumented)
+        export function isLayerBlockRule(value: unknown): value is BlockRule;
+        // (undocumented)
         export interface JSON extends GroupingRule.JSON<"layer-block"> {
             // (undocumented)
             layer: string | null;
@@ -637,6 +645,8 @@ export namespace Layer {
     export namespace StatementRule {
         // (undocumented)
         export function fromLayerStatementRule(json: JSON): Trampoline<StatementRule>;
+        // (undocumented)
+        export function isLayerStatementRule(value: unknown): value is StatementRule;
         // (undocumented)
         export interface JSON extends Rule.JSON<"layer-statement"> {
             // (undocumented)
@@ -666,6 +676,8 @@ export namespace MediaRule {
     // (undocumented)
     export interface JSON extends ConditionRule.JSON<"media"> {
     }
+    // (undocumented)
+    export function matches(device: Device): Predicate<MediaRule>;
 }
 
 // @public (undocumented)
@@ -1153,6 +1165,8 @@ export namespace StyleRule {
     // @internal (undocumented)
     export function fromStyleRule(json: JSON): Trampoline<StyleRule>;
     // (undocumented)
+    export function isEmpty(rule: StyleRule): boolean;
+    // (undocumented)
     export function isStyleRule(value: unknown): value is StyleRule;
     // (undocumented)
     export interface JSON extends Rule.JSON<"style"> {
@@ -1184,6 +1198,8 @@ export namespace SupportsRule {
     // (undocumented)
     export interface JSON extends ConditionRule.JSON<"supports"> {
     }
+    // (undocumented)
+    export function matches(device: Device): Predicate<SupportsRule>;
 }
 
 // @public (undocumented)

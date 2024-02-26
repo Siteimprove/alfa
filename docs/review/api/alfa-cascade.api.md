@@ -5,7 +5,9 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
 import { Complex } from '@siteimprove/alfa-selector';
 import { Compound } from '@siteimprove/alfa-selector';
 import { Context } from '@siteimprove/alfa-selector';
@@ -59,7 +61,7 @@ export class RuleTree implements Serializable {
     // Warning: (ae-forgotten-export) The symbol "Block" needs to be exported by the entry point index.d.ts
     //
     // @internal
-    add(rules: Iterable_2<Block>): RuleTree.Node;
+    add(rules: Iterable_2<Block<Element | Block.Source, true>>): RuleTree.Node;
     // (undocumented)
     static empty(): RuleTree;
     // (undocumented)

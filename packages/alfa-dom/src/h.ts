@@ -12,6 +12,7 @@ import {
   FontFaceRule,
   Fragment,
   ImportRule,
+  Layer,
   KeyframeRule,
   KeyframesRule,
   MediaRule,
@@ -272,6 +273,17 @@ export namespace h {
 
     export function keyframes(name: string, rules: Array<Rule>): KeyframesRule {
       return KeyframesRule.of(name, rules);
+    }
+
+    export function layerBlock(
+      rules: Array<Rule>,
+      layer?: string,
+    ): Layer.BlockRule {
+      return Layer.BlockRule.of(rules, layer);
+    }
+
+    export function layerStatement(layers: Array<string>): Layer.StatementRule {
+      return Layer.StatementRule.of(layers);
     }
 
     export function media(condition: string, rules: Array<Rule>): MediaRule {

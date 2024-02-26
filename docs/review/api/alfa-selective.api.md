@@ -42,6 +42,12 @@ export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Mona
     // (undocumented)
     if<U>(predicate: Predicate<S>, mapper: Mapper<S, U>): Selective<S, T | U>;
     // (undocumented)
+    ifGuarded<P, Q extends P, R extends Q, U>(predicate: Refinement<P, Q>, guard: Refinement<Q, R>, ifTrue: Mapper<S & R, U>, ifFalse: Mapper<S & Q, U>): Selective<Exclude<S, Q>, T | U>;
+    // (undocumented)
+    ifGuarded<P, Q extends P, U>(predicate: Refinement<P, Q>, guard: Predicate<S & Q>, ifTrue: Mapper<S & Q, U>, ifFalse: Mapper<S & Q, U>): Selective<Exclude<S, Q>, T | U>;
+    // (undocumented)
+    ifGuarded<U>(predicate: Predicate<S>, guard: Predicate<S>, ifTrue: Mapper<S, U>, ifFalse: Mapper<S, U>): Selective<S, T | U>;
+    // (undocumented)
     iterator(): Iterator<S | T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Selective<S, U>;

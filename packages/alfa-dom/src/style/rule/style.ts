@@ -75,6 +75,10 @@ export namespace StyleRule {
     return value instanceof StyleRule;
   }
 
+  export function isEmpty(rule: StyleRule): boolean {
+    return rule.style.isEmpty();
+  }
+
   /**
    * @internal
    */

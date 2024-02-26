@@ -71,6 +71,44 @@ export class Selective<S, T = never>
     );
   }
 
+  public ifGuarded<P, Q extends P, R extends Q, U>(
+    predicate: Refinement<P, Q>,
+    guard: Refinement<Q, R>,
+    ifTrue: Mapper<S & R, U>,
+    ifFalse: Mapper<S & Q, U>,
+  ): Selective<Exclude<S, Q>, T | U>;
+
+  public ifGuarded<P, Q extends P, U>(
+    predicate: Refinement<P, Q>,
+    guard: Predicate<S & Q>,
+    ifTrue: Mapper<S & Q, U>,
+    ifFalse: Mapper<S & Q, U>,
+  ): Selective<Exclude<S, Q>, T | U>;
+
+  public ifGuarded<U>(
+    predicate: Predicate<S>,
+    guard: Predicate<S>,
+    ifTrue: Mapper<S, U>,
+    ifFalse: Mapper<S, U>,
+  ): Selective<S, T | U>;
+
+  public ifGuarded<U>(
+    predicate: Predicate<S>,
+    guard: Predicate<S>,
+    ifTrue: Mapper<S, U>,
+    ifFalse: Mapper<S, U>,
+  ): Selective<S, T | U> {
+    return this._value.either(
+      (value) =>
+        predicate(value)
+          ? guard(value)
+            ? new Selective<S, U>(Right.of(ifTrue(value)))
+            : new Selective<S, U>(Right.of(ifFalse(value)))
+          : this,
+      () => this,
+    );
+  }
+
   public else<U>(mapper: Mapper<S, U>): Selective<never, T | U> {
     return new Selective<never, T | U>(
       Right.of(

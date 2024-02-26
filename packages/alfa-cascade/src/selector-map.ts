@@ -5,6 +5,7 @@ import { Device } from "@siteimprove/alfa-device";
 import {
   Element,
   ImportRule,
+  Layer as LayerRules,
   MediaRule,
   Rule,
   Sheet,
@@ -13,8 +14,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Maybe } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Selective } from "@siteimprove/alfa-selective";
 import {
   Combinator,
   Complex,
@@ -26,13 +29,12 @@ import * as json from "@siteimprove/alfa-json";
 
 import { AncestorFilter } from "./ancestor-filter";
 import { Block } from "./block";
-import { type Order } from "./precedence";
+import { Layer, type Order } from "./precedence";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;
 
 const { isComplex } = Complex;
-
 const isDescendantSelector = and(
   isComplex,
   property(
@@ -40,6 +42,13 @@ const isDescendantSelector = and(
     equals(Combinator.Descendant, Combinator.DirectDescendant),
   ),
 );
+
+const { isImportRule } = ImportRule;
+const { isLayerBlockRule } = LayerRules.BlockRule;
+const { isLayerStatementRule } = LayerRules.StatementRule;
+const { isMediaRule } = MediaRule;
+const { isStyleRule } = StyleRule;
+const { isSupportsRule } = SupportsRule;
 
 /**
  * The selector map is a data structure used for providing indexed access to
@@ -116,15 +125,19 @@ export class SelectorMap implements Serializable {
   /**
    * Get all blocks matching a given element and context, an optional
    * ancestor filter can be provided to optimize performances.
+   *
+   * @remarks
+   * Blocks whose layers haven't been ordered are discarded at that point.
+   * Under normal flow, this should only be called once layers have been ordered.
    */
   public *get(
     element: Element,
     context: Context,
     filter: AncestorFilter,
-  ): Iterable<Block<Block.Source>> {
+  ): Iterable<Block<Block.Source, true>> {
     function* collect(
       candidates: Iterable<Block<Block.Source>>,
-    ): Iterable<Block<Block.Source>> {
+    ): Iterable<Block<Block.Source, true>> {
       for (const block of candidates) {
         // If the ancestor filter can reject the selector, escape
         if (
@@ -135,8 +148,11 @@ export class SelectorMap implements Serializable {
         }
 
         // otherwise, do the actual match.
-        if (block.selector.matches(element, context)) {
-          yield block;
+        if (
+          block.precedence.layer.isOrdered &&
+          block.selector.matches(element, context)
+        ) {
+          yield block as Block<Block.Source, true>;
         }
       }
     }
@@ -161,6 +177,9 @@ export class SelectorMap implements Serializable {
    * The host must be the shadow host of the tree whose style sheets define
    * this selector map.
    *
+   * Blocks whose layers haven't been ordered are discarded at that point.
+   * Under normal flow, this should only be called once layers have been ordered.
+   *
    * @privateRemarks
    * Because `:host-context` is searching for shadow-including ancestors of the
    * host, we cannot use the ancestor filter that does not escape its tree.
@@ -169,9 +188,10 @@ export class SelectorMap implements Serializable {
   public *getForHost(
     host: Element,
     context: Context,
-  ): Iterable<Block<Block.Source>> {
+  ): Iterable<Block<Block.Source, true>> {
     yield* this._shadow.filter(
-      (block) =>
+      (block): block is Block<Block.Source, true> =>
+        block.precedence.layer.isOrdered &&
         Selector.isHostSelector(block.selector) &&
         block.selector.matchHost(host, context),
     );
@@ -184,6 +204,9 @@ export class SelectorMap implements Serializable {
    * `slotted` should be a light node slotted in the tree whose style sheets
    * define this selector map. If this is not the case, all matches will fail.
    *
+   * Blocks whose layers haven't been ordered are discarded at that point.
+   * Under normal flow, this should only be called once layers have been ordered.
+   *
    * @privateRemarks
    * Because this navigates (partly) in the flat tree rather than the normal DOM
    * tree, we cannot easily re-use the ancestor filter.
@@ -192,13 +215,13 @@ export class SelectorMap implements Serializable {
     slotted: Element,
     context: Context,
     debug: boolean = false,
-  ): Iterable<Block<Block.Source>> {
-    yield* this._shadow.filter((block) => {
-      return (
+  ): Iterable<Block<Block.Source, true>> {
+    yield* this._shadow.filter(
+      (block): block is Block<Block.Source, true> =>
+        block.precedence.layer.isOrdered &&
         Selector.hasSlotted(block.selector) &&
-        Selector.matchSlotted(block.selector, slotted, context)
-      );
-    });
+        Selector.matchSlotted(block.selector, slotted, context),
+    );
   }
 
   public toJSON(): SelectorMap.JSON {
@@ -237,13 +260,104 @@ export namespace SelectorMap {
     // combined.
     let order: Order = 0;
 
+    // Create buckets for storing the rules, based on their key selector.
     const ids = Bucket.empty();
     const classes = Bucket.empty();
     const types = Bucket.empty();
+    const buckets = { id: ids, class: classes, type: types };
     const other: Array<Block<Block.Source>> = [];
     const shadow: Array<Block<Block.Source>> = [];
 
-    const add = (block: Block<Block.Source>): void => {
+    // We store layers in the order we encounter them. Later on, we will
+    // sort them in the correct order. We cannot sort on the fly because
+    // un-layered rules come after all layered rules, but the full list of
+    // layers is not known until the end.
+    // layers are also duplicated by importance of the blocks in them, since
+    // it reverses the winner of the cascade.
+    // We also maintain a counter for uniquely naming anonymous layers.
+    //
+    // It is of the uttermost importance that blocks share the same Layer
+    // object, since we will laters mutate them to add the correct order.
+    const layers: Array<Layer.Pair<false>> = [];
+    let anonymousLayers = 0;
+
+    /**
+     * Creates a unique name for anonymous layers. Parenthesis and space
+     * ensure it doesn't collide with CSS ident used as name for other layers.
+     */
+    function anonymous(): string {
+      anonymousLayers++;
+      return `(anonymous ${anonymousLayers})`;
+    }
+
+    /**
+     * Gets a specific layer, create it if needed.
+     */
+    function getSingleLayer(name: string): Layer.Pair<false> {
+      let layer = layers.find((pair) => pair.name === name);
+
+      if (layer === undefined) {
+        layer = {
+          name,
+          normal: Layer.of(name, false),
+          important: Layer.of(name, true),
+        };
+        layers.push(layer);
+      }
+
+      return layer;
+    }
+
+    /**
+     * Gets the layer for a name, create it and its ancestors if needed.
+     *
+     * @remarks
+     * This is quite inefficient in always getting/creating all ancestors.
+     * We could instead assume that the array is path-prefix complete and stop
+     * as soon as we encounter an existing ancestor. We assume that both the
+     * total number of layers, the depth of the layers tree, and the amount
+     * of re-declaration of a layer block rule with an existing layer will
+     * be very low, so this is not critical.
+     */
+    function getLayer(name: string): Layer.Pair<false> {
+      // Since it is possible to declare sub-layers without the intermediate
+      // ones, we check for all layers on the path and create them if needed.
+      let current = "";
+      let layer = getSingleLayer(current);
+
+      for (const segment of name.split(".")) {
+        // If the current layer name is not empty, add a dot to it;
+        current = (current === "" ? "" : `${current}.`) + segment;
+        layer = getSingleLayer(current);
+      }
+
+      return layer;
+    }
+
+    /**
+     * Gets the layer obtained by adding a new segment to the current one.
+     * Handles shenanigans around the empty implicit layer, and anonymous layers.
+     *
+     * @remarks
+     * The new segment may actually be a dot-separated path, actually creating
+     * several intermediate layers.
+     */
+    function nextLayer(
+      current: Layer.Pair<false>,
+      segment: Maybe<string>,
+    ): Layer.Pair<false> {
+      return getLayer(
+        // If the current layer name is not empty, add a dot to it;
+        (current.name === "" ? "" : `${current.name}.`) +
+          // add the new segment, or create an anonymous layer.
+          Maybe.toOption(segment).getOrElse(anonymous),
+      );
+    }
+
+    /**
+     * Adds a block to the correct bucket
+     */
+    function add(block: Block<Block.Source>): void {
       const keySelector = block.selector.key;
 
       if (Selector.isShadow(block.selector)) {
@@ -260,75 +374,83 @@ export namespace SelectorMap {
       }
 
       const key = keySelector.get();
-      const buckets = { id: ids, class: classes, type: types };
       buckets[key.type].add(key.name, block);
-    };
+    }
 
-    const visit = (rule: Rule) => {
-      // For style rule, we just store its blocks.
-      if (StyleRule.isStyleRule(rule)) {
-        // Style rules with empty style blocks aren't relevant and so can be
-        // skipped entirely.
-        if (rule.style.isEmpty()) {
-          return;
-        }
+    /**
+     * Helpers for visit.
+     */
+    const skip = () => undefined;
+    function visitChildren(
+      visitor: (rule: Rule) => void,
+    ): (rule: Rule) => void {
+      return (rule) => Iterable.forEach(rule.children(), visitor);
+    }
 
-        let blocks: Array<Block<Block.Source>> = [];
-        [blocks, order] = Block.from(rule, order, encapsulationDepth);
+    /**
+     * Recursively visits a rule and adds its declarations to the correct buckets.
+     */
+    function visit(layer: Layer.Pair<false>): (rule: Rule) => void {
+      return (rule) =>
+        Selective.of(rule)
+          // For style rules, store its blocks; this is where the actual work happens.
+          // Style rules with empty style blocks aren't relevant and so can be
+          // skipped entirely to avoid increasing order.
+          .ifGuarded(isStyleRule, StyleRule.isEmpty, skip, (rule) => {
+            let blocks: Array<Block<Block.Source>> = [];
+            [blocks, order] = Block.from(
+              rule,
+              order,
+              encapsulationDepth,
+              layer,
+            );
 
-        for (const block of blocks) {
-          add(block);
-        }
-      }
+            for (const block of blocks) {
+              add(block);
+            }
+          })
 
-      // For media rules, we recurse into the child rules if and only if the
-      // media condition matches the device.
-      else if (MediaRule.isMediaRule(rule)) {
-        if (!rule.queries.matches(device)) {
-          return;
-        }
+          // For import rules, we recurse into the imported style sheet if and only
+          // if the import condition matches the device.
+          .ifGuarded(
+            isImportRule,
+            ImportRule.matches(device),
+            (rule) => Iterable.forEach(rule.sheet.children(), visit(layer)),
+            skip,
+          )
+          // For layer block rules, we fetch/create the layer and recurse into it.
+          .if(isLayerBlockRule, (rule) =>
+            visitChildren(visit(nextLayer(layer, rule.layer)))(rule),
+          )
+          // For layer statement rules, we just fetch/create the layers in order
+          .if(isLayerStatementRule, (rule) =>
+            Iterable.forEach(rule.layers, (name) => nextLayer(layer, name)),
+          )
+          // For media rules, we recurse into the child rules if and only if the
+          // media condition matches the device.
+          .ifGuarded(
+            isMediaRule,
+            MediaRule.matches(device),
+            visitChildren(visit(layer)),
+            skip,
+          )
+          // For support rules, we recurse into the child rules if and only
+          // if the support condition matches the device.
+          .ifGuarded(
+            isSupportsRule,
+            SupportsRule.matches(device),
+            visitChildren(visit(layer)),
+            skip,
+          )
+          // Otherwise, we recurse into whichever child rules are declared by the
+          // current rule.
+          .else(visitChildren(visit(layer)));
+    }
 
-        for (const child of rule.children()) {
-          visit(child);
-        }
-      }
-
-      // For import rules, we recurse into the imported style sheet if and only
-      // if the import condition matches the device.
-      else if (ImportRule.isImportRule(rule)) {
-        if (!rule.queries.matches(device)) {
-          return;
-        }
-
-        for (const child of rule.sheet.children()) {
-          visit(child);
-        }
-      } else if (SupportsRule.isSupportsRule(rule)) {
-        if (rule.query.every((query) => !query.matches(device))) {
-          // If the option is None, the condition failed to parse and the rule is discarded.
-          return;
-        }
-
-        for (const child of rule.children()) {
-          visit(child);
-        }
-      }
-
-      // Otherwise, we recurse into whichever child rules are declared by the
-      // current rule.
-      else {
-        for (const child of rule.children()) {
-          visit(child);
-        }
-      }
-    };
-
-    for (const sheet of sheets) {
-      if (sheet.disabled) {
-        continue;
-      }
-
+    // Visit all rules in all sheets.
+    for (const sheet of Iterable.reject(sheets, (sheet) => sheet.disabled)) {
       if (sheet.condition.isSome()) {
+        // If the sheet is conditional and the query doesn't match, skip the sheet.
         const query = Feature.parseMediaQuery(Lexer.lex(sheet.condition.get()));
 
         if (query.every(([, query]) => !query.matches(device))) {
@@ -336,10 +458,13 @@ export namespace SelectorMap {
         }
       }
 
-      for (const rule of sheet.children()) {
-        visit(rule);
-      }
+      // Visit all rules in the sheet, with the top-level implicit layer.
+      Iterable.forEach(sheet.children(), visit(getLayer("")));
     }
+
+    // After visiting all rules in all sheets, order the layers.
+    // This mutates the layers, thus updating the blocks accordingly.
+    Layer.sortUnordered(layers);
 
     return SelectorMap.of(ids, classes, types, other, shadow);
   }
