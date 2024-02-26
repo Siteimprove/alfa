@@ -46,7 +46,7 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             isUserAgentControlled(target),
-            () => Outcomes.IsUserAgentControlled(name),
+            () => Outcomes.IsUserAgentControlled(name, box),
             hasSufficientSize(44, device)(target)
               ? () => Outcomes.HasSufficientSize(name, box)
               : () => Outcomes.HasInsufficientSize(name, box),
@@ -67,8 +67,8 @@ export namespace Outcomes {
   export const HasInsufficientSize = (name: string, box: Rectangle) =>
     Err.of(WithBoundingBox.of("Target has insufficient size", name, box));
 
-  export const IsUserAgentControlled = (name: string) =>
-    Ok.of(WithName.of("Target is user agent controlled", name));
+  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
 }
 
 /**
