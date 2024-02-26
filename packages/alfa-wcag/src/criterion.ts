@@ -44,14 +44,14 @@ export class Criterion<
    * URI and use that.
    */
   public get uri(): Criterion.URI<C, "2.1" | "2.2"> {
+    const versions = [...Criteria[this._chapter].versions];
     // Use the criterion URI from the recommendation, if available, otherwise
-    // use the URI from the draft. This ensures that the most stable identifier
+    // use the URI from the previous version. This ensures that the most recent identifier
     // is used when avaiable.
-    const [, { uri }] = [...Criteria[this._chapter].versions].find(
-      ([version]) =>
-        version === Criterion.Version.Recommendation ||
-        version === Criterion.Version.Draft,
-    )!;
+    const [, { uri }] =
+      versions.find(
+        ([version]) => version === Criterion.Version.Recommendation,
+      ) ?? versions.find(([version]) => version === Criterion.Version.Old)!;
 
     return uri as Criterion.URI<C, "2.1" | "2.2">;
   }
@@ -144,7 +144,7 @@ export namespace Criterion {
     /**
      * The current version of the WCAG Recommendation.
      */
-    export const Recommendation = "2.1";
+    export const Recommendation = "2.2";
 
     /**
      * The current version of the WCAG Recommendation.
@@ -154,37 +154,43 @@ export namespace Criterion {
     /**
      * The current version of the WCAG Working Draft.
      */
-    export const Draft = "2.2";
+    // export const Draft = "2.2";
 
     /**
      * The current version of the WCAG Working Draft.
      */
-    export type Draft = typeof Draft;
+    // export type Draft = typeof Draft;
+
+    /**
+     * The Old recommendation.
+     */
+    export const Old = "2.1";
+
+    /**
+     * The old recommendation.
+     */
+    export type Old = typeof Old;
   }
 
   /**
    * The URI of the specified criterion.
    */
-  export type URI<
-    C extends Chapter = Chapter,
-    V extends Version = Version,
-  > = Criteria[C]["versions"] extends Iterable<infer T>
-    ? T extends readonly [V, { readonly uri: infer U }]
-      ? U
-      : never
-    : never;
+  export type URI<C extends Chapter = Chapter, V extends Version = Version> =
+    Criteria[C]["versions"] extends Iterable<infer T>
+      ? T extends readonly [V, { readonly uri: infer U }]
+        ? U
+        : never
+      : never;
 
   /**
    * The level of the specified criterion under the specified version.
    */
-  export type Level<
-    C extends Chapter = Chapter,
-    V extends Version = Version,
-  > = Criteria[C]["versions"] extends Iterable<infer T>
-    ? T extends readonly [V, { readonly level: infer L }]
-      ? L
-      : never
-    : never;
+  export type Level<C extends Chapter = Chapter, V extends Version = Version> =
+    Criteria[C]["versions"] extends Iterable<infer T>
+      ? T extends readonly [V, { readonly level: infer L }]
+        ? L
+        : never
+      : never;
 
   export namespace Level {
     /**
@@ -230,10 +236,10 @@ export namespace Criterion {
     const rewrittenUri = uri
       // Keeping slashes in URL rewritting to ensure proper delimiting of path
       // pieces.
-      // rewrite WCAG21 -> WCAG2 since we only parse the latter.
+      // rewrite WCAG22 -> WCAG2 since this is how we store it.
       // We should use the shared way of tracking which version is the latest as
       // this will require manual updates.
-      .replace("/WCAG21/", "/WCAG2/")
+      .replace("/WCAG22/", "/WCAG2/")
       // rewrite WCAG -> WCAG2 since we only parse the latter.
       .replace("/WCAG/", "/WCAG2/");
 
