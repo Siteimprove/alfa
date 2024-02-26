@@ -2,9 +2,9 @@
 "@siteimprove/alfa-selective": minor
 ---
 
-**Added:** A `#ifGuarded` method is not available.
+**Added:** A `#ifGuarded` method is now available.
 
-This is useful for selective that share part of the branch, to avoid re-doing potentially costly test or building nested Selective. E.g., it can replace
+This is useful for `Selective` that share part of the branch, to avoid re-doing potentially costly tests or building nested `Selective`. E.g., it can replace
 
 ```typescript
 Selective.of(x)
