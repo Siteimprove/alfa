@@ -2,4 +2,4 @@
 "@siteimprove/alfa-rules": patch
 ---
 
-**Fixed:** New diagnostic is now exported
+**Fixed:** New diagnostic `WithBoundingBox` is now exported
