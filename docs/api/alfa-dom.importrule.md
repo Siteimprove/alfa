@@ -16,6 +16,7 @@ export declare namespace ImportRule
 |  Function | Description |
 |  --- | --- |
 |  [isImportRule(value)](./alfa-dom.importrule.isimportrule.md) |  |
+|  [matches(device)](./alfa-dom.importrule.matches.md) |  |
 
 ## Interfaces
 

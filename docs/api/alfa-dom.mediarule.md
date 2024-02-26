@@ -16,6 +16,7 @@ export declare namespace MediaRule
 |  Function | Description |
 |  --- | --- |
 |  [isMediaRule(value)](./alfa-dom.mediarule.ismediarule.md) |  |
+|  [matches(device)](./alfa-dom.mediarule.matches.md) |  |
 
 ## Interfaces
 

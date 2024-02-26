@@ -1,5 +1,13 @@
 # @siteimprove/alfa-dom
 
+## 0.75.0
+
+### Minor Changes
+
+- **Added:** Most CSS conditional rules now have a `.matches(device)` helper, checking against the parsed queries. ([#1581](https://github.com/Siteimprove/alfa/pull/1581))
+
+- **Added:** CSS `@layer` rules are now handled when building cascades. ([#1574](https://github.com/Siteimprove/alfa/pull/1574))
+
 ## 0.74.0
 
 ## 0.73.0

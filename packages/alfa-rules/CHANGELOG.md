@@ -1,5 +1,15 @@
 # @siteimprove/alfa-rules
 
+## 0.75.0
+
+### Minor Changes
+
+- **Added:** Extended diagnostic `WithBoundingBox` for reporting bounding box is now available. ([#1579](https://github.com/Siteimprove/alfa/pull/1579))
+
+- **Added:** User agent controlled expectation to R111. ([#1579](https://github.com/Siteimprove/alfa/pull/1579))
+
+  The rule should pass targets that are user agent controlled like `input type="checkbox"` where the size has not been modified. As a first approximation we let it pass all `input` elements, but this is subject to change.
+
 ## 0.74.0
 
 ### Patch Changes

@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-function from(json: PageRule.JSON): PageRule;
+function from(json: Layer.BlockRule.JSON): Layer.BlockRule;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [PageRule.JSON](./alfa-dom.pagerule.json.md) |  |
+|  json | [Layer.BlockRule.JSON](./alfa-dom.layer.blockrule.json.md) |  |
 
 **Returns:**
 
-PageRule
+[Layer.BlockRule](./alfa-dom.layer.blockrule.md)
 

@@ -1,5 +1,15 @@
 # @siteimprove/alfa-cascade
 
+## 0.75.0
+
+### Minor Changes
+
+- **Added:** CSS `@layer` rules are now handled when building cascades. ([#1574](https://github.com/Siteimprove/alfa/pull/1574))
+
+### Patch Changes
+
+- **Fixed:** `::slotted` selectors within a compound selector are now correctly handled. ([#1575](https://github.com/Siteimprove/alfa/pull/1575))
+
 ## 0.74.0
 
 ## 0.73.0

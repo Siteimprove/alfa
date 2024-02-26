@@ -78,6 +78,7 @@
 |  [jsx](./alfa-dom.jsx.md) |  |
 |  [KeyframeRule](./alfa-dom.keyframerule.md) |  |
 |  [KeyframesRule](./alfa-dom.keyframesrule.md) |  |
+|  [Layer](./alfa-dom.layer.md) | Model for CSS layers |
 |  [MediaRule](./alfa-dom.mediarule.md) |  |
 |  [Namespace](./alfa-dom.namespace.md) |  |
 |  [NamespaceRule](./alfa-dom.namespacerule.md) |  |

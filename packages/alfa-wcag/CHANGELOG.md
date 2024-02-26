@@ -1,5 +1,11 @@
 # @siteimprove/alfa-wcag
 
+## 0.75.0
+
+### Minor Changes
+
+- **Changed:** Update WCAG Success Criteria to get data from WCAG 2.2 by default. ([#1583](https://github.com/Siteimprove/alfa/pull/1583))
+
 ## 0.74.0
 
 ## 0.73.0

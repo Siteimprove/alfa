@@ -15,6 +15,7 @@ export declare namespace StyleRule
 
 |  Function | Description |
 |  --- | --- |
+|  [isEmpty(rule)](./alfa-dom.stylerule.isempty.md) |  |
 |  [isStyleRule(value)](./alfa-dom.stylerule.isstylerule.md) |  |
 
 ## Interfaces
