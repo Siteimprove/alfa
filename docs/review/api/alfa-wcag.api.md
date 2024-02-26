@@ -83,9 +83,9 @@ export namespace Criterion {
     export type Version = "2.0" | "2.1" | "2.2";
     // (undocumented)
     export namespace Version {
-        const Recommendation = "2.1";
-        export type Draft = typeof Draft;
-        const Draft = "2.2";
+        const Recommendation = "2.2";
+        export type Old = typeof Old;
+        const Old = "2.1";
         export type Recommendation = typeof Recommendation;
     }
 }
