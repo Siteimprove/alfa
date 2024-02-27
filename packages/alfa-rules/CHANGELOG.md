@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.75.1
+
+### Patch Changes
+
+- **Fixed:** New diagnostic `WithBoundingBox` is now exported ([#1584](https://github.com/Siteimprove/alfa/pull/1584))
+
 ## 0.75.0
 
 ### Minor Changes

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-lazy
 
+## 0.75.1
+
 ## 0.75.0
 
 ## 0.74.0

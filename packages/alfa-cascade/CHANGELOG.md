@@ -1,5 +1,7 @@
 # @siteimprove/alfa-cascade
 
+## 0.75.1
+
 ## 0.75.0
 
 ### Minor Changes
