@@ -322,8 +322,6 @@ export namespace Style {
           // (highest precedence rules are at the bottom), thus the declarations
           // are seen in decreasing precedence and pushed to the end of the
           // existing list which is thus also ordered in decreasing precedence.
-          // Cascade doesn't handle importance of declaration, hence this will
-          // still have to be done here (through `shouldOverride`).
           for (const node of cascade
             .get(element, context)
             .inclusiveAncestors()) {
