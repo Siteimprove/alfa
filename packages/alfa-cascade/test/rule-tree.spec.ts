@@ -247,3 +247,27 @@ test(".add() sort items by precedence", (t) => {
     },
   ]);
 });
+
+test(".add() adds several block when a rule has both normal and important declarations", (t) => {
+  const blocks = (
+    Block.from(
+      h.rule.style("div", { foo: "bar", hello: "world !important" }),
+      0,
+      1,
+      {
+        normal: Layer.of("", false).withOrder(0),
+        important: Layer.of("", true).withOrder(0),
+      },
+    )[0] as Array<Block<Block.Source, true>>
+  ).sort(Block.compare);
+
+  const tree = RuleTree.empty();
+  tree.add(blocks);
+
+  t.deepEqual(tree.toJSON(), [
+    {
+      block: blocks[0].toJSON(),
+      children: [{ block: blocks[1].toJSON(), children: [] }],
+    },
+  ]);
+});
