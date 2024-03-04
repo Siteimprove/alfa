@@ -64,6 +64,12 @@ export namespace Precedence {
     };
   }
 
+  export function isImportant<LAYERED extends boolean>(
+    precedence: Precedence<LAYERED>,
+  ): boolean {
+    return Origin.isImportant(precedence.origin);
+  }
+
   export function toTuple<LAYERED extends boolean>(
     precedence: Precedence<LAYERED>,
   ): [Origin, Encapsulation, boolean, Layer<LAYERED>, Specificity, Order] {
