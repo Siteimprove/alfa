@@ -6,6 +6,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import * as json from "@siteimprove/alfa-json";
 
 import { Block } from "./block";
+import { Precedence } from "./precedence";
 
 /**
  * The rule tree is a data structure used for storing the rules that match each
@@ -196,7 +197,9 @@ export namespace RuleTree {
      */
     public add(block: Block): Node {
       // If we have already encountered the exact same selector (physical identity),
-      // we're done.
+      // with declarations of the same importance, we're done.
+      // Because blocks are split by importance, the same selector can appear
+      // once per importance when the rules are grouped.
       // This occurs when the exact same style rule matches several elements.
       // The first element added to the rule tree will add that rule, subsequent
       // ones will just reuse it (if the path so far in the rule tree has
@@ -206,7 +209,9 @@ export namespace RuleTree {
       if (
         // We cannot simply test === between the .selector because we do not
         // want to identify two null.
-        (this._block.selector ?? 0) === (block.selector ?? 1)
+        (this._block.selector ?? 0) === (block.selector ?? 1) &&
+        Precedence.isImportant(this._block.precedence) ===
+          Precedence.isImportant(block.precedence)
       ) {
         return this;
       }
