@@ -17,6 +17,8 @@ export declare namespace Rule
 |  --- | --- |
 |  [from(json)](./alfa-dom.rule.from.md) |  |
 |  [from(json)](./alfa-dom.rule.from_9.md) |  |
+|  [from(json)](./alfa-dom.rule.from_10.md) |  |
+|  [from(json)](./alfa-dom.rule.from_11.md) |  |
 |  [from(json)](./alfa-dom.rule.from_1.md) |  |
 |  [from(json)](./alfa-dom.rule.from_2.md) |  |
 |  [from(json)](./alfa-dom.rule.from_3.md) |  |

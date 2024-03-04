@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-type JSON = Active.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
+type JSON = Active.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | HostContext.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
 ```

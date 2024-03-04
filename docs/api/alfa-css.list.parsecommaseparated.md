@@ -2,10 +2,23 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [List](./alfa-css.list.md) &gt; [parseCommaSeparated](./alfa-css.list.parsecommaseparated.md)
 
-## List.parseCommaSeparated variable
+## List.parseCommaSeparated() function
 
 **Signature:**
 
 ```typescript
 parseCommaSeparated: <V extends Value<string, boolean, string, string>>(parseValue: CSSParser<V>, lower?: number, upper?: number) => CSSParser<List<V>>
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  parseValue | [CSSParser](./alfa-css.parser.md)<!-- -->&lt;V&gt; |  |
+|  lower | number | _(Optional)_ |
+|  upper | number | _(Optional)_ |
+
+**Returns:**
+
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[List](./alfa-css.list.md)<!-- -->&lt;V&gt;&gt;
+

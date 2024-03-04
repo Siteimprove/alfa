@@ -3235,9 +3235,6 @@ test("Name text-title", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content}
- *
- * Alfa joins content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name from content", (t) => {
   const testCase = (
@@ -3254,7 +3251,7 @@ test("Name from content", (t) => {
           <span aria-label="Garaventa">Zambino</span>
         </span>
         <span>the weird.</span>
-        (QED)
+        {" (QED) "}
         <span class="hidden">
           <i>
             <b>and don't you forget it.</b>
@@ -3283,7 +3280,7 @@ test("Name from content", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.notEqual(
+  t.equal(
     getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?",
   );
@@ -3291,9 +3288,6 @@ test("Name from content", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content_of_labelledby_element}
- *
- * Alfa joins content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name from content of labelledby element", (t) => {
   const testCase = (
@@ -3311,7 +3305,7 @@ test("Name from content of labelledby element", (t) => {
           <span aria-label="Garaventa">Zambino</span>
         </span>
         <span>the weird.</span>
-        (QED)
+        {" (QED) "}
         <span class="hidden">
           <i>
             <b>and don't you forget it.</b>
@@ -3340,7 +3334,7 @@ test("Name from content of labelledby element", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.notEqual(
+  t.equal(
     getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?",
   );
@@ -3348,9 +3342,6 @@ test("Name from content of labelledby element", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content_of_label}
- *
- * Alfa joins content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name from content of label", (t) => {
   const testCase = (
@@ -3368,7 +3359,7 @@ test("Name from content of label", (t) => {
           <span aria-label="Garaventa">Zambino</span>
         </span>
         <span>the weird.</span>
-        (QED)
+        {" (QED) "}
         <span class="hidden">
           <i>
             <b>and don't you forget it.</b>
@@ -3397,7 +3388,7 @@ test("Name from content of label", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.notEqual(
+  t.equal(
     getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?",
   );
@@ -3440,7 +3431,7 @@ test("Name from content of labelledby elements one of which is hidden", (t) => {
             <span aria-label="Garaventa">Zambino</span>
           </span>
           <span>the weird.</span>
-          (QED)
+          {" (QED) "}
           <span class="hidden">
             <i>
               <b>and don't you forget it.</b>
@@ -3612,9 +3603,6 @@ test("Name checkbox-label-multiple-label", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-inline-block-elements}
- *
- * Alfa joins content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name file-label-inline-block-elements", (t) => {
   const testCase = (
@@ -3641,7 +3629,7 @@ test("Name file-label-inline-block-elements", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.notEqual(getName(target), "What is your name?");
+  t.equal(getName(target), "What is your name?");
 });
 
 /**
@@ -3679,8 +3667,8 @@ test("Name file-label-inline-block-styles", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-inline-hidden-elements}
  *
- * Alfa joins content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1203}
+ * Browsers (Chrome, Firefox) disagree with testable statement on this case
+ * {@link none}
  */
 test("Name file-label-inline-hidden-elements", (t) => {
   const testCase = (
@@ -3787,9 +3775,6 @@ test("Name file-label-owned-combobox", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_link-mixed-content}
- *
- * Alfa joins content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name link-mixed-content", (t) => {
   const testCase = (
@@ -3806,7 +3791,7 @@ test("Name link-mixed-content", (t) => {
           <span aria-label="Garaventa">Zambino</span>
         </span>
         <span>the weird.</span>
-        (QED)
+        {" (QED) "}
         <span class="hidden">
           <i>
             <b>and don't you forget it.</b>
@@ -3823,7 +3808,7 @@ test("Name link-mixed-content", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.notEqual(getName(target), "My name is Eli the weird. (QED)");
+  t.equal(getName(target), "My name is Eli the weird. (QED)");
 });
 
 /**

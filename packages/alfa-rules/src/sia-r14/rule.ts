@@ -5,14 +5,13 @@ import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { normalize } from "../common/normalize";
 
-import { isWhitespace } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
 const { hasAccessibleName, hasRole, isPerceivableForAll } = DOM;
@@ -55,7 +54,7 @@ export default Rule.Atomic.of<Page, Element>({
         // Removes all punctuation (underscore, hyphen, brackets, quotation marks, etc)
         // and normalise
         function removePunctuationAndNormalise(input: string): string {
-          return normalize(input.replace(/\p{P}|\p{S}|\p{Cf}/gu, ""));
+          return String.normalize(input.replace(/\p{P}|\p{S}|\p{Cf}/gu, ""));
         }
 
         const textContent = removePunctuationAndNormalise(
@@ -96,7 +95,7 @@ function getPerceivableInnerTextFromTextNode(
 
   if (
     and(not(isPerceivableForAll(device)), isRendered(device))(text) &&
-    isWhitespace(text.data)
+    String.isWhitespace(text.data, false)
   ) {
     return " ";
   }

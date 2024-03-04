@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-function from(json: FontFaceRule.JSON): FontFaceRule;
+function from(json: KeyframesRule.JSON): KeyframesRule;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [FontFaceRule.JSON](./alfa-dom.fontfacerule.json.md) |  |
+|  json | [KeyframesRule.JSON](./alfa-dom.keyframesrule.json.md) |  |
 
 **Returns:**
 
-FontFaceRule
+KeyframesRule
 

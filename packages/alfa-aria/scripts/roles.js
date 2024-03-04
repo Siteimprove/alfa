@@ -64,7 +64,7 @@ puppeteer.launch().then(async (browser) => {
                 // need to parse that note :-/
                 .filter(
                   (element) =>
-                    !element.parentElement.textContent.includes("deprecated")
+                    !element.parentElement.textContent.includes("deprecated"),
                 )
                 .map((reference) => hash(reference.getAttribute("href")));
 
@@ -93,7 +93,7 @@ puppeteer.launch().then(async (browser) => {
                   const href = reference.getAttribute("href");
                   const key = hash(href);
                   const value = reference.parentElement.querySelector(
-                    `[href="${href}"] + .default`
+                    `[href="${href}"] + .default`,
                   );
 
                   if (value === null) {
@@ -101,7 +101,7 @@ puppeteer.launch().then(async (browser) => {
                   }
 
                   return [[key, value.textContent]];
-                })
+                }),
               );
 
               // Finally gathering all attributes, with the correct flags.
@@ -112,7 +112,7 @@ puppeteer.launch().then(async (browser) => {
                     ...required,
                     ...prohibited,
                     ...values.keys(),
-                  ].sort()
+                  ].sort(),
                 ),
               ].map((attribute) => {
                 return [
@@ -156,8 +156,8 @@ puppeteer.launch().then(async (browser) => {
                   .filter((references) => references.length > 0)
                   .map((references) =>
                     references.map((reference) =>
-                      hash(reference.getAttribute("href"))
-                    )
+                      hash(reference.getAttribute("href")),
+                    ),
                   ),
               };
 
@@ -169,7 +169,7 @@ puppeteer.launch().then(async (browser) => {
 
                 required: [
                   ...role.querySelectorAll(
-                    ".role-mustcontain, .role-mustcontain li"
+                    ".role-mustcontain, .role-mustcontain li",
                   ),
                 ]
                   .map((scope) => [
@@ -178,8 +178,8 @@ puppeteer.launch().then(async (browser) => {
                   .filter((references) => references.length > 0)
                   .map((references) =>
                     references.map((reference) =>
-                      hash(reference.getAttribute("href"))
-                    )
+                      hash(reference.getAttribute("href")),
+                    ),
                   ),
               };
 
@@ -195,9 +195,9 @@ puppeteer.launch().then(async (browser) => {
                 },
               ];
             })
-            .sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0))
+            .sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0)),
         );
-      })
+      }),
     );
   }
 
@@ -220,7 +220,7 @@ export type Roles = typeof Roles;
 export const Roles = ${JSON.stringify(roles, null, 2)} as const;
   `;
 
-  code = prettier.format(code, {
+  code = await prettier.format(code, {
     parser: "typescript",
   });
 

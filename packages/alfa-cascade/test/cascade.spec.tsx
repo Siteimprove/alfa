@@ -5,7 +5,8 @@ import { test } from "@siteimprove/alfa-test";
 import { Cascade } from "../src";
 
 import { Block } from "../src/block";
-import { Origin } from "../src/precedence";
+import { Layer, Origin } from "../src/precedence";
+import { layer, getBlock, authorOrder } from "./common";
 
 const device = Device.standard();
 
@@ -22,6 +23,7 @@ test(".from() builds a cascade with the User Agent style sheet", (t) => {
   t.deepEqual(cascade.toJSON().selectors.classes.length, 0);
 });
 
+// The block of the UA sheet for `<div>` and `<main>`, that are used in tests.
 const UAblock: Block.JSON = {
   source: {
     rule: {
@@ -43,18 +45,12 @@ const UAblock: Block.JSON = {
     origin: Origin.NormalUserAgent,
     encapsulation: -1,
     isElementAttached: false,
+    layer: Layer.of("", false).withOrder(-1).toJSON(),
     specificity: { a: 0, b: 0, c: 1 },
     order: 7,
   },
 };
 
-function getBlock(
-  rule: StyleRule,
-  order: number,
-  encapsulationDepth: number = 1,
-): Block.JSON {
-  return Block.from(rule, order, encapsulationDepth)[0][0].toJSON();
-}
 test(".get() returns the rule tree node of the given element", (t) => {
   const div = <div>Hello</div>;
   const rule = h.rule.style("div", { color: "red" });
@@ -75,10 +71,7 @@ test(".get() returns the rule tree node of the given element", (t) => {
       {
         // UA rule
         block: UAblock,
-        children: [
-          // Actual rule, there are 58 rules in the UA sheet.
-          { block: getBlock(rule, 58), children: [] },
-        ],
+        children: [{ block: getBlock(rule, authorOrder(0)), children: [] }],
       },
     ],
   });
@@ -121,18 +114,17 @@ test(".get() fetches `:host` rules from shadow, when relevant.", (t) => {
         block: UAblock,
         children: [
           {
-            // Actual rules, there are 58 rules in the UA sheet.
-            block: getBlock(innerNormalRule, 58, 2),
+            block: getBlock(innerNormalRule, authorOrder(0), 2),
             children: [
               {
                 // Rules order is computed separately for each encapsulation context.
-                block: getBlock(outerNormalRule, 58),
+                block: getBlock(outerNormalRule, authorOrder(0)),
                 children: [
                   {
-                    block: getBlock(outerImportantRule, 59),
+                    block: getBlock(outerImportantRule, authorOrder(1)),
                     children: [
                       {
-                        block: getBlock(innerImportantRule, 59, 2),
+                        block: getBlock(innerImportantRule, authorOrder(1), 2),
                         children: [],
                       },
                     ],
@@ -191,10 +183,11 @@ test(".get() fetches `:host-context` rules from shadow, when relevant.", (t) => 
         block: UAblock,
         children: [
           {
-            // Actual rules, there are 58 rules in the UA sheet.
             // The "div" rule is declared first, but also inserted higher due to lower precedence.
-            block: getBlock(rules[1], 59, 2),
-            children: [{ block: getBlock(rules[0], 58, 2), children: [] }],
+            block: getBlock(rules[1], authorOrder(1), 2),
+            children: [
+              { block: getBlock(rules[0], authorOrder(0), 2), children: [] },
+            ],
           },
         ],
       },
@@ -209,11 +202,11 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
     h.rule.style("::slotted(*)", { color: "green" }),
   ];
 
-  const slotted1 = <div class="foo">Hello</div>;
+  const slotted = <div class="foo">Hello</div>;
 
   const document = h.document([
     <main>
-      {slotted1}
+      {slotted}
       {h.shadow(
         [
           <b>
@@ -226,10 +219,10 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
   ]);
   const cascade = Cascade.from(document, device);
 
-  // The rule tree has 4 items on the way to slotted1:
+  // The rule tree has 4 items on the way to slotted:
   // The fake root, the UA rule `div { display: block }`, and the 2 relevant rules declared here.
   // We thus just grab and check the path down from the fake root.
-  t.deepEqual(Iterable.toJSON(cascade.get(slotted1).inclusiveAncestors())[3], {
+  t.deepEqual(Iterable.toJSON(cascade.get(slotted).inclusiveAncestors())[3], {
     // fake root
     block: Block.empty().toJSON(),
     children: [
@@ -255,11 +248,59 @@ test(".get() fetches `::slotted` rules from shadow, when relevant.", (t) => {
         block: UAblock,
         children: [
           {
-            // Actual rules, there are 58 rules in the UA sheet, plus the ignored one.
-            block: getBlock(rules[2], 60, 2),
-            children: [{ block: getBlock(rules[1], 59, 2), children: [] }],
+            // Actual rules, skipping the ignored one.
+            block: getBlock(rules[2], authorOrder(2), 2),
+            children: [
+              { block: getBlock(rules[1], authorOrder(1), 2), children: [] },
+            ],
           },
         ],
+      },
+    ],
+  });
+});
+
+test(".get() matches `::slotted` rules within compound selector.", (t) => {
+  const rule = h.rule.style(".foo::slotted(*)", { color: "green" });
+
+  const slotted = <div>Hello</div>;
+
+  const document = h.document([
+    <main>
+      {slotted}
+      {h.shadow([<slot class="foo"></slot>], [h.sheet([rule])])}
+    </main>,
+  ]);
+  const cascade = Cascade.from(document, device);
+
+  // The rule tree has 3 items on the way to slotted:
+  // The fake root, the UA rule `div { display: block }`, and the rule declared here.
+  // We thus just grab and check the path down from the fake root.
+  t.deepEqual(Iterable.toJSON(cascade.get(slotted).inclusiveAncestors())[2], {
+    // fake root
+    block: Block.empty().toJSON(),
+    children: [
+      // The <main> element also generates a node with the UA block, on a separate branch.
+      {
+        block: {
+          ...UAblock,
+          source: {
+            ...UAblock.source,
+            selector: {
+              type: "type",
+              specificity: { a: 0, b: 0, c: 1 },
+              key: "main",
+              name: "main",
+              namespace: null,
+            },
+          },
+        },
+        children: [],
+      },
+      {
+        // UA rule
+        block: UAblock,
+        children: [{ block: getBlock(rule, authorOrder(0), 2), children: [] }],
       },
     ],
   });
@@ -339,28 +380,109 @@ test(".get() correctly sort rules from different depths.", (t) => {
         block: UAblock,
         children: [
           {
-            // Actual rules, there are 58 rules in the UA sheet, for each encapsulation context.
-            block: getBlock(innerNormalRule, 58, 3),
+            // Actual rules, rules are ordered separately in each encapsulation context.
+            block: getBlock(innerNormalRule, authorOrder(0), 3),
             children: [
               {
-                block: getBlock(middleNormalRule, 58, 2),
+                block: getBlock(middleNormalRule, authorOrder(0), 2),
                 children: [
                   {
-                    block: getBlock(outerNormalRule, 58, 1),
+                    block: getBlock(outerNormalRule, authorOrder(0), 1),
                     children: [
                       {
-                        block: getBlock(outerImportantRule, 59, 1),
+                        block: getBlock(outerImportantRule, authorOrder(1), 1),
                         children: [
                           {
-                            block: getBlock(middleImportantRule, 59, 2),
+                            block: getBlock(
+                              middleImportantRule,
+                              authorOrder(1),
+                              2,
+                            ),
                             children: [
                               {
-                                block: getBlock(innerImportantRule, 59, 3),
+                                block: getBlock(
+                                  innerImportantRule,
+                                  authorOrder(1),
+                                  3,
+                                ),
                                 children: [],
                               },
                             ],
                           },
                         ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+});
+
+test(".get() respects layer ordering", (t) => {
+  const div = (
+    <div class="my-class" id="my-id">
+      Hello
+    </div>
+  );
+
+  const rule0 = h.rule.style("div", { color: "red" });
+  const rule1 = h.rule.style("div", { color: "black !important" });
+  const rule2 = h.rule.style(".my-class", { color: "blue !important" });
+  const rule3 = h.rule.style("#my-id", { color: "green" });
+
+  const document = h.document(
+    [div],
+    [
+      h.sheet([
+        h.rule.layerStatement(["lorem", "ipsum", "dolor"]),
+        h.rule.layerBlock([rule0], "dolor"),
+        h.rule.layerBlock([rule1], "ipsum"),
+        h.rule.layerBlock([rule2, h.rule.layerBlock([rule3], "sit")], "lorem"),
+      ]),
+    ],
+  );
+  const cascade = Cascade.from(document, device);
+
+  // The rule tree has 6 items on the way to the <div>:
+  // The fake root, the UA rule `div { display: block }`, and the 4 rules here.
+  // We thus just grab and check the path down from the fake root.
+  t.deepEqual(Iterable.toJSON(cascade.get(div).inclusiveAncestors())[5], {
+    // fake root
+    block: Block.empty().toJSON(),
+    children: [
+      {
+        // UA rule
+        block: UAblock,
+        children: [
+          {
+            // Normal rules, last declared layer first.
+            block: getBlock(rule3, authorOrder(3), 1, layer("lorem.sit", 5)),
+            children: [
+              {
+                block: getBlock(rule0, authorOrder(0), 1, layer("dolor", 2)),
+                children: [
+                  {
+                    // important rules, first declared layer first.
+                    block: getBlock(
+                      rule1,
+                      authorOrder(1),
+                      1,
+                      layer("ipsum", 3),
+                    ),
+                    children: [
+                      {
+                        block: getBlock(
+                          rule2,
+                          authorOrder(2),
+                          1,
+                          layer("lorem", 4),
+                        ),
+                        children: [],
                       },
                     ],
                   },

@@ -18,6 +18,8 @@ namespace rule
 |  [importRule(url, sheet, condition)](./alfa-dom.h.rule.importrule.md) |  |
 |  [keyframe(key, declarations)](./alfa-dom.h.rule.keyframe.md) |  |
 |  [keyframes(name, rules)](./alfa-dom.h.rule.keyframes.md) |  |
+|  [layerBlock(rules, layer)](./alfa-dom.h.rule.layerblock.md) |  |
+|  [layerStatement(layers)](./alfa-dom.h.rule.layerstatement.md) |  |
 |  [media(condition, rules)](./alfa-dom.h.rule.media.md) |  |
 |  [namespace(namespace, prefix)](./alfa-dom.h.rule.namespace.md) |  |
 |  [page(selector, declarations)](./alfa-dom.h.rule.page.md) |  |

@@ -463,6 +463,10 @@ export namespace h {
         // (undocumented)
         export function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
         // (undocumented)
+        export function layerBlock(rules: Array<Rule>, layer?: string): Layer.BlockRule;
+        // (undocumented)
+        export function layerStatement(layers: Array<string>): Layer.StatementRule;
+        // (undocumented)
         export function media(condition: string, rules: Array<Rule>): MediaRule;
         // (undocumented)
         export function namespace(namespace: string, prefix?: string): NamespaceRule;
@@ -512,6 +516,8 @@ export namespace ImportRule {
         // (undocumented)
         href: string;
     }
+    // (undocumented)
+    export function matches(device: Device): Predicate<ImportRule>;
 }
 
 // @public (undocumented)
@@ -597,6 +603,58 @@ export namespace KeyframesRule {
     }
 }
 
+// @public
+export namespace Layer {
+    // (undocumented)
+    export class BlockRule extends GroupingRule<"layer-block"> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        get layer(): Option<string>;
+        // (undocumented)
+        static of(rules: Iterable<Rule>, layer?: string | null): BlockRule;
+        // (undocumented)
+        toJSON(): BlockRule.JSON;
+        // (undocumented)
+        toString(): string;
+    }
+    // (undocumented)
+    export namespace BlockRule {
+        // (undocumented)
+        export function fromLayerBlockRule(json: JSON): Trampoline<BlockRule>;
+        // (undocumented)
+        export function isLayerBlockRule(value: unknown): value is BlockRule;
+        // (undocumented)
+        export interface JSON extends GroupingRule.JSON<"layer-block"> {
+            // (undocumented)
+            layer: string | null;
+        }
+    }
+    // (undocumented)
+    export class StatementRule extends Rule<"layer-statement"> {
+        // (undocumented)
+        get layers(): Iterable<string>;
+        // (undocumented)
+        static of(layers: Iterable<string>): StatementRule;
+        // (undocumented)
+        toJSON(): StatementRule.JSON;
+        // (undocumented)
+        toString(): string;
+    }
+    // (undocumented)
+    export namespace StatementRule {
+        // (undocumented)
+        export function fromLayerStatementRule(json: JSON): Trampoline<StatementRule>;
+        // (undocumented)
+        export function isLayerStatementRule(value: unknown): value is StatementRule;
+        // (undocumented)
+        export interface JSON extends Rule.JSON<"layer-statement"> {
+            // (undocumented)
+            layers: Array_2<string>;
+        }
+    }
+}
+
 // @public (undocumented)
 export class MediaRule extends ConditionRule<"media"> {
     // (undocumented)
@@ -618,6 +676,8 @@ export namespace MediaRule {
     // (undocumented)
     export interface JSON extends ConditionRule.JSON<"media"> {
     }
+    // (undocumented)
+    export function matches(device: Device): Predicate<MediaRule>;
 }
 
 // @public (undocumented)
@@ -895,19 +955,19 @@ export namespace Query {
 export abstract class Rule<T extends string = string> implements Equatable, Serializable {
     protected constructor(type: T);
     // (undocumented)
-    ancestors(): Iterable<Rule>;
+    ancestors(): Iterable_2<Rule>;
     // @internal (undocumented)
     _attachOwner(owner: Sheet): boolean;
     // @internal (undocumented)
     _attachParent(parent: Rule): boolean;
     // (undocumented)
-    children(): Iterable<Rule>;
+    children(): Iterable_2<Rule>;
     // (undocumented)
-    descendants(): Iterable<Rule>;
+    descendants(): Iterable_2<Rule>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    inclusiveAncestors(): Iterable<Rule>;
+    inclusiveAncestors(): Iterable_2<Rule>;
     // (undocumented)
     get owner(): Option<Sheet>;
     // (undocumented)
@@ -925,21 +985,25 @@ export abstract class Rule<T extends string = string> implements Equatable, Seri
 // @public (undocumented)
 export namespace Rule {
     // (undocumented)
-    export function from(json: StyleRule.JSON): StyleRule;
-    // (undocumented)
-    export function from(json: ImportRule.JSON): ImportRule;
-    // (undocumented)
-    export function from(json: MediaRule.JSON): MediaRule;
-    // (undocumented)
     export function from(json: FontFaceRule.JSON): FontFaceRule;
     // (undocumented)
-    export function from(json: PageRule.JSON): PageRule;
+    export function from(json: ImportRule.JSON): ImportRule;
     // (undocumented)
     export function from(json: KeyframeRule.JSON): KeyframeRule;
     // (undocumented)
     export function from(json: KeyframesRule.JSON): KeyframesRule;
     // (undocumented)
+    export function from(json: Layer.BlockRule.JSON): Layer.BlockRule;
+    // (undocumented)
+    export function from(json: Layer.StatementRule.JSON): Layer.StatementRule;
+    // (undocumented)
+    export function from(json: MediaRule.JSON): MediaRule;
+    // (undocumented)
     export function from(json: NamespaceRule.JSON): NamespaceRule;
+    // (undocumented)
+    export function from(json: PageRule.JSON): PageRule;
+    // (undocumented)
+    export function from(json: StyleRule.JSON): StyleRule;
     // (undocumented)
     export function from(json: SupportsRule.JSON): SupportsRule;
     // (undocumented)
@@ -1101,6 +1165,8 @@ export namespace StyleRule {
     // @internal (undocumented)
     export function fromStyleRule(json: JSON): Trampoline<StyleRule>;
     // (undocumented)
+    export function isEmpty(rule: StyleRule): boolean;
+    // (undocumented)
     export function isStyleRule(value: unknown): value is StyleRule;
     // (undocumented)
     export interface JSON extends Rule.JSON<"style"> {
@@ -1132,6 +1198,8 @@ export namespace SupportsRule {
     // (undocumented)
     export interface JSON extends ConditionRule.JSON<"supports"> {
     }
+    // (undocumented)
+    export function matches(device: Device): Predicate<SupportsRule>;
 }
 
 // @public (undocumented)

@@ -5,6 +5,7 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Namespace } from "../namespace";
@@ -330,9 +331,18 @@ export class Element<N extends string = string>
     }
 
     const children = [...this._shadow, ...this._children, ...this._content]
-      .map((child) => child.toString().trim())
+      .map((child) => {
+        const value = child.toString();
+
+        // If the child is only spaces, we do not want to trim them to nothingness.
+        if (value.match(/\s+/) !== null) {
+          return value;
+        }
+
+        return value.trim();
+      })
       .filter(not(isEmpty))
-      .map(indent)
+      .map(String.indent)
       .join("\n");
 
     return `<${name}${attributes}>${
@@ -509,8 +519,4 @@ export namespace Element {
   } = predicate;
 
   export const { inputType } = helpers;
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

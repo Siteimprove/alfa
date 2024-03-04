@@ -1,5 +1,35 @@
 # @siteimprove/alfa-rules
 
+## 0.75.1
+
+### Patch Changes
+
+- **Fixed:** New diagnostic `WithBoundingBox` is now exported ([#1584](https://github.com/Siteimprove/alfa/pull/1584))
+
+## 0.75.0
+
+### Minor Changes
+
+- **Added:** Extended diagnostic `WithBoundingBox` for reporting bounding box is now available. ([#1579](https://github.com/Siteimprove/alfa/pull/1579))
+
+- **Added:** User agent controlled expectation to R111. ([#1579](https://github.com/Siteimprove/alfa/pull/1579))
+
+  The rule should pass targets that are user agent controlled like `input type="checkbox"` where the size has not been modified. As a first approximation we let it pass all `input` elements, but this is subject to change.
+
+## 0.74.0
+
+### Patch Changes
+
+- **Fixed:** A regression on R1 for `<title>` with whitespace but not empty content has been fixed (was introduced in v0.73.0). ([#1573](https://github.com/Siteimprove/alfa/pull/1573))
+
+## 0.73.0
+
+### Minor Changes
+
+- **Added:** New rule SIA-R111 for testing target size of clickable elements. ([#1564](https://github.com/Siteimprove/alfa/pull/1564))
+
+- **Changed:** R69 is no longer applicable to text that only contains punctuation. ([#1551](https://github.com/Siteimprove/alfa/pull/1551))
+
 ## 0.72.0
 
 ### Patch Changes

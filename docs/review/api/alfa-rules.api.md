@@ -85,6 +85,7 @@ export namespace Diagnostic {
     import WithRole = diagnostic.WithRole;
     import WithName = diagnostic.WithName;
     import WithOtherHeading = diagnostic.WithOtherHeading;
+    import WithBoundingBox = diagnostic.WithBoundingBox;
 }
 
 declare namespace experimentalRules {

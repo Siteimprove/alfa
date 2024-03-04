@@ -71,6 +71,7 @@
     "src/style/rule/import.ts",
     "src/style/rule/keyframe.ts",
     "src/style/rule/keyframes.ts",
+    "src/style/rule/layer.ts",
     "src/style/rule/media.ts",
     "src/style/rule/namespace.ts",
     "src/style/rule/page.ts",
@@ -87,6 +88,7 @@
     "test/node/traversal/lowest-common-ancestor.spec.tsx",
     "test/node/query/element-descendants.spec.tsx",
     "test/node/query/element-id-map.spec.tsx",
+    "test/style.spec.ts",
     "test/traversal.spec.tsx"
   ],
   "references": [
@@ -109,6 +111,7 @@
     { "path": "../alfa-sarif" },
     { "path": "../alfa-selective" },
     { "path": "../alfa-sequence" },
+    { "path": "../alfa-string" },
     { "path": "../alfa-test" },
     { "path": "../alfa-trampoline" },
     { "path": "../alfa-tree" }

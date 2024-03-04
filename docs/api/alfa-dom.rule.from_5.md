@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-function from(json: KeyframeRule.JSON): KeyframeRule;
+function from(json: Layer.StatementRule.JSON): Layer.StatementRule;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [KeyframeRule.JSON](./alfa-dom.keyframerule.json.md) |  |
+|  json | [Layer.StatementRule.JSON](./alfa-dom.layer.statementrule.json.md) |  |
 
 **Returns:**
 
-KeyframeRule
+[Layer.StatementRule](./alfa-dom.layer.statementrule.md)
 

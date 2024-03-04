@@ -35,7 +35,7 @@ puppeteer.launch().then(async (browser) => {
           const options =
             type === "token" || type === "token-list"
               ? [...attribute.querySelectorAll(".value-name")].map((option) =>
-                  option.textContent.replace(/\(default\):?/, "").trim()
+                  option.textContent.replace(/\(default\):?/, "").trim(),
                 )
               : null;
 
@@ -49,8 +49,8 @@ puppeteer.launch().then(async (browser) => {
             },
           ];
         })
-        .sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0))
-    )
+        .sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0)),
+    ),
   );
 
   browser.close();
@@ -71,12 +71,12 @@ export type Attributes = typeof Attributes;
 export const Attributes = ${JSON.stringify(attributes, null, 2)} as const;
   `;
 
-  code = prettier.format(code, {
+  code = await prettier.format(code, {
     parser: "typescript",
   });
 
   fs.writeFileSync(
     path.join(__dirname, "..", "src", "attribute", "data.ts"),
-    code
+    code,
   );
 });

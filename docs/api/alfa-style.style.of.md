@@ -4,6 +4,8 @@
 
 ## Style.of() method
 
+Build a style from a list of declarations.
+
 **Signature:**
 
 ```typescript
@@ -21,4 +23,8 @@ static of(styleDeclarations: Iterable<Declaration>, device: Device, parent?: Opt
 **Returns:**
 
 [Style](./alfa-style.style.md)
+
+## Remarks
+
+Declarations must be in pre-sorted in decreasing Cascade order. Prefer using Style.from(), which has fewer assumptions.
 

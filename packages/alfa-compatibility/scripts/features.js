@@ -194,7 +194,7 @@ export const Features = {
 };
 `;
 
-code = prettier.format(code, {
+code = await prettier.format(code, {
   parser: "typescript",
 });
 

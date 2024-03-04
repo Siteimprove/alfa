@@ -11,7 +11,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Cell, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute";
-import { Name } from "./name";
+import { Name, Source, State } from "./name";
 import { Role } from "./role";
 
 const {
@@ -82,7 +82,7 @@ export namespace Feature {
 
   export type AttributesAspect = Aspect<Iterable<Attribute>>;
 
-  export type NameAspect = Aspect<Option<Name>, [Device, Name.State]>;
+  export type NameAspect = Aspect<Option<Name>, [Device, State]>;
 
   export function from(namespace: Namespace, name: string): Option<Feature> {
     return Option.from(Features[namespace]?.[name]).orElse(() => {
@@ -143,14 +143,14 @@ const nameFromAttribute = (element: Element, ...attributes: Array<string>) => {
 
 const nameFromChild =
   (predicate: Predicate<Element>) =>
-  (element: Element, device: Device, state: Name.State) =>
+  (element: Element, device: Device, state: State) =>
     element
       .children()
       .filter(isElement)
       .find(predicate)
       .flatMap((child) =>
         Name.fromDescendants(child, device, state.visit(child)).map((name) =>
-          Name.of(name.value, [Name.Source.descendant(element, name)]),
+          Name.of(name.value, [Source.descendant(element, name)]),
         ),
       );
 
@@ -158,7 +158,7 @@ const ids = Cache.empty<Node, Map<string, Element>>();
 
 const labels = Cache.empty<Node, Sequence<Element>>();
 
-const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
+const nameFromLabel = (element: Element, device: Device, state: State) => {
   const root = element.root();
 
   const elements = getElementDescendants(root);
@@ -215,10 +215,10 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
       name,
       names.map(([name, element]) => {
         for (const attribute of element.attribute("for")) {
-          return Name.Source.reference(attribute, name);
+          return Source.reference(attribute, name);
         }
 
-        return Name.Source.ancestor(element, name);
+        return Source.ancestor(element, name);
       }),
     ),
   );
@@ -248,11 +248,19 @@ type Features = {
   };
 };
 
+/**
+ * @remarks
+ * The third parameter (`name`) is called during Step 2E of name computation,
+ * that is after `aria-labelledby` and `aria-label`, and before content.
+ * The `html` wrapper adds `nameFromAttributes(element, title)` at its end.
+ */
 const Features: Features = {
   [Namespace.HTML]: {
     a: html(
       ifHasAttribute("href", "link", "generic"),
       () => [],
+      // Content takes precedence over title for `<a>` elements, so we need to
+      // call Name.fromDescendants() before `html` looks into `title`.
       (element, device, state) =>
         Name.fromDescendants(element, device, state.visit(element)),
     ),

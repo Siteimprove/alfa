@@ -6,33 +6,35 @@ const puppeteer = require("puppeteer");
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
 
-  await page.goto("https://www.w3.org/WAI/WCAG21/Techniques/");
+  await page.goto("https://www.w3.org/WAI/WCAG22/Techniques/");
 
   const techniques = await page.evaluate(() =>
     Object.fromEntries(
-      [...document.querySelectorAll("#toc ul li a")].map((technique) => {
-        const uri = technique.href;
+      [...document.querySelectorAll("ul.toc-wcag-docs li a")].map(
+        (technique) => {
+          const uri = technique.href;
 
-        const match = technique.textContent
-          .replace(/\s+/, " ")
-          .trim()
-          .match(/^(\w+\d+): (.+)/);
+          const match = technique.textContent
+            .replace(/\s+/, " ")
+            .trim()
+            .match(/^(\w+\d+): (.+)/);
 
-        if (match === null) {
-          return [];
-        }
+          if (match === null) {
+            return [];
+          }
 
-        const [, name, title] = match;
+          const [, name, title] = match;
 
-        return [
-          name,
-          {
-            title,
-            uri,
-          },
-        ];
-      })
-    )
+          return [
+            name,
+            {
+              title,
+              uri,
+            },
+          ];
+        },
+      ),
+    ),
   );
 
   browser.close();
@@ -53,12 +55,12 @@ export type Techniques = typeof Techniques;
 export const Techniques = ${JSON.stringify(techniques, null, 2)} as const;
   `;
 
-  code = prettier.format(code, {
+  code = await prettier.format(code, {
     parser: "typescript",
   });
 
   fs.writeFileSync(
     path.join(__dirname, "..", "src", "technique", "data.ts"),
-    code
+    code,
   );
 });

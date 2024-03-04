@@ -1,3 +1,4 @@
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block";
@@ -47,7 +48,7 @@ export class KeyframeRule extends Rule<"keyframe"> {
     const style = this._style.toString();
 
     return `@keyframe ${this._key} {${
-      style === "" ? "" : `\n${indent(style)}\n`
+      style === "" ? "" : `\n${String.indent(style)}\n`
     }}`;
   }
 }
@@ -73,8 +74,4 @@ export namespace KeyframeRule {
       KeyframeRule.of(json.key, json.style.map(Declaration.from)),
     );
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

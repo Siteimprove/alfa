@@ -552,7 +552,7 @@ test(`.from() behaves when encountering an element with global properties where
           {
             type: "text",
             node: "/div[1]/label[1]/text()[1]",
-            name: "Foo ",
+            name: "Foo",
           },
           {
             type: "element",

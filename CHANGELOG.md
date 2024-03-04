@@ -1,5 +1,75 @@
 # Alfa changelog
 
+## [0.75.1](../../compare/v0.75.0...v0.75.1) (2024-02-27)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0751): New diagnostic `WithBoundingBox` is now exported. ([#1584](https://github.com/Siteimprove/alfa/pull/1584))
+
+## [0.75.0](../../compare/v0.74.0...v0.75.0) (2024-02-26)
+
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0750): Most CSS conditional rules now have a `.matches(device)` helper, checking against the parsed queries. ([#1581](https://github.com/Siteimprove/alfa/pull/1581))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0750): Extended diagnostic `WithBoundingBox` for reporting bounding box is now available. ([#1579](https://github.com/Siteimprove/alfa/pull/1579))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0750): User agent controlled expectation to R111. ([#1579](https://github.com/Siteimprove/alfa/pull/1579))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0750), [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0750): CSS `@layer` rules are now handled when building cascades. ([#1574](https://github.com/Siteimprove/alfa/pull/1574))
+
+- [@siteimprove/alfa-selective](packages/alfa-selective/CHANGELOG.md#0750): A `#ifGuarded` method is now available. ([#1581](https://github.com/Siteimprove/alfa/pull/1581))
+
+### Changed
+
+- [@siteimprove/alfa-wcag](packages/alfa-wcag/CHANGELOG.md#0750): Update WCAG Success Criteria to get data from WCAG 2.2 by default. ([#1583](https://github.com/Siteimprove/alfa/pull/1583))
+
+### Fixed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0750): `::slotted` selectors within a compound selector are now correctly handled. ([#1575](https://github.com/Siteimprove/alfa/pull/1575))
+
+## [0.74.0](../../compare/v0.73.0...v0.74.0) (2024-02-14)
+
+### Added
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0740): Package `@siteimprove/alfa-string` grouping low-level string manipulations is now available. ([#1572](https://github.com/Siteimprove/alfa/pull/1572))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0740): A regression on R1 for `<title>` with whitespace but not empty content has been fixed (was introduced in v0.73.0). ([#1573](https://github.com/Siteimprove/alfa/pull/1573))
+
+## [0.73.0](../../compare/v0.72.0...v0.73.0) (2024-02-06)
+
+### Breaking
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0730): `Name.Source` and `Name.State` are now exported from the top-level of the package. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
+### Added
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0730): `Cascade` now handles declarations from encapsulated contexts (shadow DOM). ([#1553](https://github.com/Siteimprove/alfa/pull/1553))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0730): Cascade now handle importance of declarations, and `style` attribute. ([#1550](https://github.com/Siteimprove/alfa/pull/1550))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0730): New rule SIA-R111 for testing target size of clickable elements. ([#1564](https://github.com/Siteimprove/alfa/pull/1564))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0730): New property `pointer-events`. ([#1564](https://github.com/Siteimprove/alfa/pull/1564))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0730), [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0730): The `:host` and `:host-context` pseudo-classes, as well as the `::slotted` pseudo-element are now supported. ([#1554](https://github.com/Siteimprove/alfa/pull/1554))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0730): R69 is no longer applicable to text that only contains punctuation. ([#1551](https://github.com/Siteimprove/alfa/pull/1551))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0730): Alfa now correctly handle spaces in accessible names. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0730): Parents of `Comment` inside a shadow tree now correctly skip over the shadow root when traversing the flat tree. ([#1547](https://github.com/Siteimprove/alfa/pull/1547))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0730): Nested style rules now correctly get their sheet as owner. ([#1560](https://github.com/Siteimprove/alfa/pull/1560))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0730): `Node.toString()` now stops dropping text nodes with only spaces. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
+
 ## [0.72.0](../../compare/v0.71.1...v0.72.0) (2024-01-08)
 
 ### Breaking

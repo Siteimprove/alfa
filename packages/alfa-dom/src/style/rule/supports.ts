@@ -1,10 +1,13 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Option } from "@siteimprove/alfa-option";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { ConditionRule } from "./condition";
+import { Device } from "@siteimprove/alfa-device";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 /**
  * @public
@@ -34,7 +37,7 @@ export class SupportsRule extends ConditionRule<"supports"> {
 
   public toString(): string {
     const rules = this._rules
-      .map((rule) => indent(rule.toString()))
+      .map((rule) => String.indent(rule.toString()))
       .join("\n\n");
 
     return `@supports ${this._condition} {${
@@ -53,6 +56,12 @@ export namespace SupportsRule {
     return value instanceof SupportsRule;
   }
 
+  export function matches(device: Device): Predicate<SupportsRule> {
+    // If rule.query is None, Alfa couldn't parse the query which
+    // means it does not support it.
+    return (rule) => rule.query.some((query) => query.matches(device));
+  }
+
   /**
    * @internal
    */
@@ -61,8 +70,4 @@ export namespace SupportsRule {
       SupportsRule.of(json.condition, rules),
     );
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

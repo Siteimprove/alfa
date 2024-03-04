@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-function from(json: KeyframesRule.JSON): KeyframesRule;
+function from(json: MediaRule.JSON): MediaRule;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [KeyframesRule.JSON](./alfa-dom.keyframesrule.json.md) |  |
+|  json | [MediaRule.JSON](./alfa-dom.mediarule.json.md) |  |
 
 **Returns:**
 
-KeyframesRule
+MediaRule
 

@@ -1,6 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+import { String } from "@siteimprove/alfa-string";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -11,7 +12,7 @@ export class Diagnostic
   implements Equatable, Hashable, Serializable<Diagnostic.JSON>
 {
   public static of(message: string): Diagnostic {
-    return new Diagnostic(normalize(message));
+    return new Diagnostic(String.normalize(message, false));
   }
 
   protected readonly _message: string;
@@ -57,8 +58,4 @@ export namespace Diagnostic {
   }
 
   export const empty = Diagnostic.of("No extra information");
-}
-
-function normalize(input: string): string {
-  return input.trim().replace(/\s+/g, " ");
 }

@@ -62,7 +62,14 @@ export class Text extends Node<"text"> implements Slotable {
   }
 
   public toString(): string {
-    return this.data.trim();
+    const value = this.data;
+
+    // If the child is only spaces, we do not want to trim them to nothingness.
+    if (value.match(/\s+/) !== null) {
+      return value;
+    }
+
+    return value.trim();
   }
 }
 

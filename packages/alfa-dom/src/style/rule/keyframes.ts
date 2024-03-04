@@ -1,3 +1,4 @@
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
@@ -32,7 +33,7 @@ export class KeyframesRule extends GroupingRule<"keyframes"> {
 
   public toString(): string {
     const rules = this._rules
-      .map((rule) => indent(rule.toString()))
+      .map((rule) => String.indent(rule.toString()))
       .join("\n\n");
 
     return `@keyframes ${this._name} {${rules === "" ? "" : `\n${rules}\n`}}`;
@@ -59,8 +60,4 @@ export namespace KeyframesRule {
       KeyframesRule.of(json.name, rules),
     );
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

@@ -17,17 +17,12 @@ export declare namespace List
 |  --- | --- |
 |  [isList(value)](./alfa-css.list.islist.md) |  |
 |  [isList(value)](./alfa-css.list.islist_1.md) |  |
+|  [parseCommaSeparated(parseValue, lower, upper)](./alfa-css.list.parsecommaseparated.md) |  |
+|  [parseSpaceSeparated(parseValue, lower, upper)](./alfa-css.list.parsespaceseparated.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-css.list.json.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parseCommaSeparated](./alfa-css.list.parsecommaseparated.md) |  |
-|  [parseSpaceSeparated](./alfa-css.list.parsespaceseparated.md) |  |
 

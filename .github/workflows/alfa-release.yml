@@ -1,4 +1,4 @@
-  # Create a release for the Alfa repos.
+# Create a release for the Alfa repos.
 #
 # WARNING! This workflow pushes to main which **does** trigger other workflow (build, scan, …)
 # WARNING! Therefore, there is a risk of creating infinite workflow loops if this workflow is
@@ -68,8 +68,8 @@ jobs:
         with:
           node-version: 20
           cache: yarn
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@siteimprove'
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@siteimprove"
       - name: Configure token for Alfa packages
         run: >
           yarn config set
@@ -95,7 +95,7 @@ jobs:
         # This is needed to push the correct git tag
         id: new
         run: |
-          echo "version=$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
+          echo "version=$(grep \"version\": */alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
 
       - name: Hack around toplevel dependencies
         # https://github.com/changesets/changesets/issues/1229

@@ -7,7 +7,10 @@
 **Signature:**
 
 ```typescript
-static of(value: string, sources?: Iterable<Name.Source>): Name;
+static of(value: string, sources?: Iterable<Source>, spaces?: {
+        before?: boolean;
+        after?: boolean;
+    }): Name;
 ```
 
 ## Parameters
@@ -15,7 +18,8 @@ static of(value: string, sources?: Iterable<Name.Source>): Name;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
-|  sources | Iterable&lt;[Name.Source](./alfa-aria.name.source.md)<!-- -->&gt; | _(Optional)_ |
+|  sources | Iterable&lt;Source&gt; | _(Optional)_ |
+|  spaces | { before?: boolean; after?: boolean; } | _(Optional)_ |
 
 **Returns:**
 

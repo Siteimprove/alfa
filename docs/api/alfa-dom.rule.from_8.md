@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-function from(json: SupportsRule.JSON): SupportsRule;
+function from(json: PageRule.JSON): PageRule;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [SupportsRule.JSON](./alfa-dom.supportsrule.json.md) |  |
+|  json | [PageRule.JSON](./alfa-dom.pagerule.json.md) |  |
 
 **Returns:**
 
-SupportsRule
+PageRule
 

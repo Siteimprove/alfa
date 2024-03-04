@@ -56,6 +56,12 @@ test("evaluate() is inapplicable to a paragraph that has no text", async (t) => 
   t.deepEqual(await evaluate(R74, { document }), [inapplicable(R74)]);
 });
 
+test("evaluate() is inapplicable to a paragraph that has only whitespace text", async (t) => {
+  const document = h.document([<p style={{ fontSize: "16px" }}> </p>]);
+
+  t.deepEqual(await evaluate(R74, { document }), [inapplicable(R74)]);
+});
+
 test("evaluate() is inapplicable to a paragraph that isn't visible", async (t) => {
   const document = h.document([
     <p style={{ fontSize: "16px" }} hidden>

@@ -2,10 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-xpath](./alfa-xpath.md) &gt; [Token](./alfa-xpath.token.md) &gt; [parseCharacter](./alfa-xpath.token.parsecharacter.md)
 
-## Token.parseCharacter variable
+## Token.parseCharacter() function
 
 **Signature:**
 
 ```typescript
 parseCharacter: (query?: string | Predicate<Character>) => Parser<Slice<Token>, Character, string, []>
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  query | string \| Predicate&lt;[Character](./alfa-xpath.token.character.md)<!-- -->&gt; | _(Optional)_ |
+
+**Returns:**
+
+Parser&lt;Slice&lt;[Token](./alfa-xpath.token.md)<!-- -->&gt;, [Character](./alfa-xpath.token.character.md)<!-- -->, string, \[\]&gt;
+

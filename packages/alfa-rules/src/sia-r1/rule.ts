@@ -8,6 +8,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -18,7 +19,7 @@ import { Scope, Stability } from "../tags";
 
 const { hasName, hasNamespace } = Element;
 const { hasTextContent } = Node;
-const { and } = Predicate;
+const { and, not } = Predicate;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Document>({
@@ -48,7 +49,7 @@ export default Rule.Atomic.of<Page, Document>({
           ),
 
           2: expectation(
-            title.some(hasTextContent()),
+            title.some(hasTextContent(not(String.isWhitespace))),
             () => Outcomes.HasNonEmptyTitle,
             () => Outcomes.HasEmptyTitle,
           ),

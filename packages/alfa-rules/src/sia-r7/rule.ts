@@ -15,16 +15,16 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isWhitespace } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
-const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
+const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { isEmpty } = Iterable;
 const { not, or } = Predicate;
@@ -52,16 +52,13 @@ export default Rule.Atomic.of<Page, Attribute>({
               isText,
               and(
                 or(isVisible(device), isIncludedInTheAccessibilityTree(device)),
-                (text: Text) => !isWhitespace(text.data),
+                (text: Text) => !String.isWhitespace(text.data, false),
               ),
             );
 
             const isElementWithAccessibleName = and(
               isElement,
-              hasAccessibleName(
-                device,
-                (accessibleName) => !isWhitespace(accessibleName.value),
-              ),
+              hasNonEmptyAccessibleName(device),
             );
 
             if (test(or(isVisibleText, isElementWithAccessibleName), node)) {

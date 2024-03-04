@@ -7,6 +7,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
+import { String } from "@siteimprove/alfa-string";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -17,8 +18,6 @@ import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 
 import { referenceSameResource } from "../common/predicate";
-
-import { normalize } from "../common/normalize";
 
 import { WithName } from "../common/diagnostic";
 import { Scope, Stability } from "../tags";
@@ -54,7 +53,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
           .map((elements) =>
             elements.groupBy((element) =>
               Node.from(element, device).name.map((name) =>
-                normalize(name.value),
+                String.normalize(name.value),
               ),
             ),
           );

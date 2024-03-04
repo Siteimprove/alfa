@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-function from(json: StyleRule.JSON): StyleRule;
+function from(json: FontFaceRule.JSON): FontFaceRule;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [StyleRule.JSON](./alfa-dom.stylerule.json.md) |  |
+|  json | [FontFaceRule.JSON](./alfa-dom.fontfacerule.json.md) |  |
 
 **Returns:**
 
-StyleRule
+FontFaceRule
 

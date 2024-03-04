@@ -8,5 +8,5 @@
 **Signature:**
 
 ```typescript
-export type PseudoClass = Active | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
+export type PseudoClass = Active | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | HostContext | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
 ```

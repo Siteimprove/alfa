@@ -1,12 +1,13 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Device } from "@siteimprove/alfa-device";
+import type { Iterable } from "@siteimprove/alfa-iterable";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { ConditionRule } from "./condition";
-
-const { map, join } = Iterable;
 
 /**
  * @public
@@ -35,10 +36,9 @@ export class MediaRule extends ConditionRule<"media"> {
   }
 
   public toString(): string {
-    const rules = join(
-      map(this._rules, (rule) => indent(rule.toString())),
-      "\n\n",
-    );
+    const rules = this._rules
+      .map((rule) => String.indent(rule.toString()))
+      .join("\n\n");
 
     return `@media ${this._condition} {${rules === "" ? "" : `\n${rules}\n`}}`;
   }
@@ -54,6 +54,10 @@ export namespace MediaRule {
     return value instanceof MediaRule;
   }
 
+  export function matches(device: Device): Predicate<MediaRule> {
+    return (rule) => rule.queries.matches(device);
+  }
+
   /**
    * @internal
    */
@@ -62,8 +66,4 @@ export namespace MediaRule {
       MediaRule.of(json.condition, rules),
     );
   }
-}
-
-function indent(input: string): string {
-  return input.replace(/^/gm, "  ");
 }

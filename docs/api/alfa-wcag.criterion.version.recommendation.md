@@ -9,5 +9,5 @@ The current version of the WCAG Recommendation.
 **Signature:**
 
 ```typescript
-Recommendation = "2.1"
+Recommendation = "2.2"
 ```

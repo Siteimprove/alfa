@@ -186,12 +186,18 @@ export namespace Feature {
     // (undocumented)
     export function from(namespace: Namespace, name: string): Option<Feature>;
     // (undocumented)
-    export type NameAspect = Aspect<Option<Name>, [Device, Name.State]>;
+    export type NameAspect = Aspect<Option<Name>, [Device, State]>;
     // (undocumented)
     export type RoleAspect = Aspect<Iterable_2<Role>>;
     const // (undocumented)
     generic: Feature;
 }
+
+// @public (undocumented)
+export function hasValue(predicate: Predicate<string>): Predicate<Name>;
+
+// @public (undocumented)
+export function hasValue(value: string, ...rest: Array<string>): Predicate<Name>;
 
 // @public (undocumented)
 export class Inert extends Node<"inert"> {
@@ -212,13 +218,27 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    get hasSpaces(): boolean;
+    // (undocumented)
     isEmpty(): boolean;
     // (undocumented)
-    static of(value: string, sources?: Iterable_2<Name.Source>): Name;
+    static join(...names: Array_2<Name>): Name;
+    normalize(): Name;
     // (undocumented)
-    get source(): ReadonlyArray<Name.Source>;
+    static of(value: string, sources?: Iterable_2<Source>, spaces?: {
+        before?: boolean;
+        after?: boolean;
+    }): Name;
+    // (undocumented)
+    get source(): ReadonlyArray<Source>;
     // (undocumented)
     sourceNodes(): Iterable_2<Node_2>;
+    spaced(spaceBefore: boolean, spaceAfter?: boolean): Name;
+    // (undocumented)
+    get spaces(): {
+        before: boolean;
+        after: boolean;
+    };
     // (undocumented)
     toJSON(): Name.JSON;
     // (undocumented)
@@ -231,8 +251,6 @@ export class Name implements Equatable, Serializable<Name.JSON> {
 export namespace Name {
     // (undocumented)
     export function from(node: Element_2 | Text_2, device: Device): Option<Name>;
-    // @internal (undocumented)
-    export function fromData(text: Text_2): Option<Name>;
     // @internal (undocumented)
     export function fromDescendants(element: Element_2, device: Device, state: State): Option<Name>;
     // @internal (undocumented)
@@ -254,216 +272,12 @@ export namespace Name {
         // (undocumented)
         sources: Array_2<Source.JSON>;
         // (undocumented)
+        spaces: {
+            before: boolean;
+            after: boolean;
+        };
+        // (undocumented)
         value: string;
-    }
-    // (undocumented)
-    export type Source = Source.Data | Source.Descendant | Source.Ancestor | Source.Label | Source.Reference;
-    // (undocumented)
-    export namespace Source {
-        // (undocumented)
-        export class Ancestor implements Equatable, Serializable<Ancestor.JSON> {
-            // (undocumented)
-            [Symbol.iterator](): Iterator<Node_2>;
-            // (undocumented)
-            get element(): Element_2;
-            // (undocumented)
-            equals(value: unknown): value is this;
-            // (undocumented)
-            get name(): Name;
-            // (undocumented)
-            static of(element: Element_2, name: Name): Ancestor;
-            // (undocumented)
-            toJSON(): Ancestor.JSON;
-            // (undocumented)
-            get type(): "ancestor";
-        }
-        // (undocumented)
-        export namespace Ancestor {
-            // (undocumented)
-            export interface JSON {
-                // (undocumented)
-                [key: string]: json.JSON;
-                // (undocumented)
-                element: string;
-                // (undocumented)
-                name: Name.JSON;
-                // (undocumented)
-                type: "ancestor";
-            }
-        }
-        // (undocumented)
-        export function ancestor(element: Element_2, name: Name): Ancestor;
-        // (undocumented)
-        export class Data implements Equatable, Serializable<Data.JSON> {
-            // (undocumented)
-            [Symbol.iterator](): Iterator<Node_2>;
-            // (undocumented)
-            equals(value: unknown): value is this;
-            // (undocumented)
-            static of(text: Text_2): Data;
-            // (undocumented)
-            get text(): Text_2;
-            // (undocumented)
-            toJSON(): Data.JSON;
-            // (undocumented)
-            get type(): "data";
-        }
-        // (undocumented)
-        export namespace Data {
-            // (undocumented)
-            export interface JSON {
-                // (undocumented)
-                [key: string]: json.JSON;
-                // (undocumented)
-                text: string;
-                // (undocumented)
-                type: "data";
-            }
-        }
-        // (undocumented)
-        export function data(text: Text_2): Data;
-        // (undocumented)
-        export class Descendant implements Equatable, Serializable<Descendant.JSON> {
-            // (undocumented)
-            [Symbol.iterator](): Iterator<Node_2>;
-            // (undocumented)
-            get element(): Element_2;
-            // (undocumented)
-            equals(value: unknown): value is this;
-            // (undocumented)
-            get name(): Name;
-            // (undocumented)
-            static of(element: Element_2, name: Name): Descendant;
-            // (undocumented)
-            toJSON(): Descendant.JSON;
-            // (undocumented)
-            get type(): "descendants";
-        }
-        // (undocumented)
-        export namespace Descendant {
-            // (undocumented)
-            export interface JSON {
-                // (undocumented)
-                [key: string]: json.JSON;
-                // (undocumented)
-                element: string;
-                // (undocumented)
-                name: Name.JSON;
-                // (undocumented)
-                type: "descendant";
-            }
-        }
-        // (undocumented)
-        export function descendant(element: Element_2, name: Name): Descendant;
-        // (undocumented)
-        export type JSON = Data.JSON | Descendant.JSON | Ancestor.JSON | Label.JSON | Reference.JSON;
-        // (undocumented)
-        export class Label implements Equatable, Serializable<Label.JSON> {
-            // (undocumented)
-            [Symbol.iterator](): Iterator<Node_2>;
-            // (undocumented)
-            get attribute(): Attribute_2;
-            // (undocumented)
-            equals(value: unknown): value is this;
-            // (undocumented)
-            static of(attribute: Attribute_2): Label;
-            // (undocumented)
-            toJSON(): Label.JSON;
-            // (undocumented)
-            get type(): "label";
-        }
-        // (undocumented)
-        export namespace Label {
-            // (undocumented)
-            export interface JSON {
-                // (undocumented)
-                [key: string]: json.JSON;
-                // (undocumented)
-                attribute: string;
-                // (undocumented)
-                type: "label";
-            }
-        }
-        // (undocumented)
-        export function label(attribute: Attribute_2): Label;
-        // (undocumented)
-        export class Reference implements Equatable, Serializable<Reference.JSON> {
-            // (undocumented)
-            [Symbol.iterator](): Iterator<Node_2>;
-            // (undocumented)
-            get attribute(): Attribute_2;
-            // (undocumented)
-            equals(value: unknown): value is this;
-            // (undocumented)
-            get name(): Name;
-            // (undocumented)
-            static of(attribute: Attribute_2, name: Name): Reference;
-            // (undocumented)
-            toJSON(): Reference.JSON;
-            // (undocumented)
-            get type(): "reference";
-        }
-        // (undocumented)
-        export namespace Reference {
-            // (undocumented)
-            export interface JSON {
-                // (undocumented)
-                [key: string]: json.JSON;
-                // (undocumented)
-                attribute: string;
-                // (undocumented)
-                name: Name.JSON;
-                // (undocumented)
-                type: "reference";
-            }
-        }
-        // (undocumented)
-        export function reference(attribute: Attribute_2, name: Name): Reference;
-    }
-    // @internal (undocumented)
-    export class State implements Equatable, Serializable<State.JSON> {
-        // (undocumented)
-        descend(isDescending: boolean): State;
-        // (undocumented)
-        static empty(): State;
-        // (undocumented)
-        equals(state: State): boolean;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hasVisited(element: Element_2): boolean;
-        get isDescending(): boolean;
-        get isRecursing(): boolean;
-        get isReferencing(): boolean;
-        // (undocumented)
-        recurse(isRecursing: boolean): State;
-        // (undocumented)
-        reference(referrer: Element_2, referred: Element_2): State;
-        get referred(): Option<Element_2>;
-        get referrer(): Option<Element_2>;
-        // (undocumented)
-        toJSON(): State.JSON;
-        // (undocumented)
-        visit(element: Element_2): State;
-        get visited(): Iterable_2<Element_2>;
-    }
-    // (undocumented)
-    export namespace State {
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            isDescending: boolean;
-            // (undocumented)
-            isRecursing: boolean;
-            // (undocumented)
-            referred: string | null;
-            // (undocumented)
-            referrer: string | null;
-            // (undocumented)
-            visited: Array_2<string>;
-        }
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
@@ -662,6 +476,221 @@ export namespace Role {
     //
     // (undocumented)
     hasName: typeof predicate_2.hasName;
+}
+
+// @public (undocumented)
+export type Source = Source.Data | Source.Descendant | Source.Ancestor | Source.Label | Source.Reference;
+
+// @public (undocumented)
+export namespace Source {
+    // (undocumented)
+    export class Ancestor implements Equatable, Serializable<Ancestor.JSON> {
+        // (undocumented)
+        [Symbol.iterator](): Iterator<Node_2>;
+        // (undocumented)
+        get element(): Element_2;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        get name(): Name;
+        // (undocumented)
+        static of(element: Element_2, name: Name): Ancestor;
+        // (undocumented)
+        toJSON(): Ancestor.JSON;
+        // (undocumented)
+        get type(): "ancestor";
+    }
+    // (undocumented)
+    export namespace Ancestor {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            element: string;
+            // (undocumented)
+            name: Name.JSON;
+            // (undocumented)
+            type: "ancestor";
+        }
+    }
+    // (undocumented)
+    export function ancestor(element: Element_2, name: Name): Ancestor;
+    // (undocumented)
+    export class Data implements Equatable, Serializable<Data.JSON> {
+        // (undocumented)
+        [Symbol.iterator](): Iterator<Node_2>;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(text: Text_2): Data;
+        // (undocumented)
+        get text(): Text_2;
+        // (undocumented)
+        toJSON(): Data.JSON;
+        // (undocumented)
+        get type(): "data";
+    }
+    // (undocumented)
+    export namespace Data {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            text: string;
+            // (undocumented)
+            type: "data";
+        }
+    }
+    // (undocumented)
+    export function data(text: Text_2): Data;
+    // (undocumented)
+    export class Descendant implements Equatable, Serializable<Descendant.JSON> {
+        // (undocumented)
+        [Symbol.iterator](): Iterator<Node_2>;
+        // (undocumented)
+        get element(): Element_2;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        get name(): Name;
+        // (undocumented)
+        static of(element: Element_2, name: Name): Descendant;
+        // (undocumented)
+        toJSON(): Descendant.JSON;
+        // (undocumented)
+        get type(): "descendants";
+    }
+    // (undocumented)
+    export namespace Descendant {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            element: string;
+            // (undocumented)
+            name: Name.JSON;
+            // (undocumented)
+            type: "descendant";
+        }
+    }
+    // (undocumented)
+    export function descendant(element: Element_2, name: Name): Descendant;
+    // (undocumented)
+    export type JSON = Data.JSON | Descendant.JSON | Ancestor.JSON | Label.JSON | Reference.JSON;
+    // (undocumented)
+    export class Label implements Equatable, Serializable<Label.JSON> {
+        // (undocumented)
+        [Symbol.iterator](): Iterator<Node_2>;
+        // (undocumented)
+        get attribute(): Attribute_2;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(attribute: Attribute_2): Label;
+        // (undocumented)
+        toJSON(): Label.JSON;
+        // (undocumented)
+        get type(): "label";
+    }
+    // (undocumented)
+    export namespace Label {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            attribute: string;
+            // (undocumented)
+            type: "label";
+        }
+    }
+    // (undocumented)
+    export function label(attribute: Attribute_2): Label;
+    // (undocumented)
+    export class Reference implements Equatable, Serializable<Reference.JSON> {
+        // (undocumented)
+        [Symbol.iterator](): Iterator<Node_2>;
+        // (undocumented)
+        get attribute(): Attribute_2;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        get name(): Name;
+        // (undocumented)
+        static of(attribute: Attribute_2, name: Name): Reference;
+        // (undocumented)
+        toJSON(): Reference.JSON;
+        // (undocumented)
+        get type(): "reference";
+    }
+    // (undocumented)
+    export namespace Reference {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            attribute: string;
+            // (undocumented)
+            name: Name.JSON;
+            // (undocumented)
+            type: "reference";
+        }
+    }
+    // (undocumented)
+    export function reference(attribute: Attribute_2, name: Name): Reference;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "State" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export class State implements Equatable, Serializable<State.JSON> {
+    // (undocumented)
+    descend(isDescending: boolean): State;
+    // (undocumented)
+    static empty(): State;
+    // (undocumented)
+    equals(state: State): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hasVisited(element: Element_2): boolean;
+    get isDescending(): boolean;
+    get isRecursing(): boolean;
+    get isReferencing(): boolean;
+    // (undocumented)
+    recurse(isRecursing: boolean): State;
+    // (undocumented)
+    reference(referrer: Element_2, referred: Element_2): State;
+    get referred(): Option<Element_2>;
+    get referrer(): Option<Element_2>;
+    // (undocumented)
+    toJSON(): State.JSON;
+    // (undocumented)
+    visit(element: Element_2): State;
+    get visited(): Iterable_2<Element_2>;
+}
+
+// @internal (undocumented)
+export namespace State {
+    // (undocumented)
+    export interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        isDescending: boolean;
+        // (undocumented)
+        isRecursing: boolean;
+        // (undocumented)
+        referred: string | null;
+        // (undocumented)
+        referrer: string | null;
+        // (undocumented)
+        visited: Array_2<string>;
+    }
 }
 
 // @public (undocumented)

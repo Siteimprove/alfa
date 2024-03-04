@@ -2,10 +2,22 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Function\_2](./alfa-css.function_2.md) &gt; [parse](./alfa-css.function_2.parse.md)
 
-## Function\_2.parse variable
+## Function\_2.parse() function
 
 **Signature:**
 
 ```typescript
 parse: <T>(query?: string | Predicate<Token.Function>, body?: CSSParser<T> | Thunk<CSSParser<T>> | undefined) => Parser<Slice<Token>, readonly [Function, T], string, []>
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  query | string \| Predicate&lt;[Token.Function](./alfa-css.token.function.md)<!-- -->&gt; | _(Optional)_ |
+|  body | [CSSParser](./alfa-css.parser.md)<!-- -->&lt;T&gt; \| Thunk&lt;[CSSParser](./alfa-css.parser.md)<!-- -->&lt;T&gt;&gt; \| undefined | _(Optional)_ |
+
+**Returns:**
+
+Parser&lt;Slice&lt;Token&gt;, readonly \[[Function](./alfa-css.function_2.md)<!-- -->, T\], string, \[\]&gt;
+

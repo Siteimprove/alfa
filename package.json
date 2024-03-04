@@ -27,14 +27,14 @@
     "@changesets/cli": "^2.26.2",
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
-    "@siteimprove/alfa-toolchain": "workspace:^0.72.0",
+    "@siteimprove/alfa-toolchain": "workspace:^0.75.1",
     "@types/async": "^3.2.20",
     "@types/madge": "^5.0.3",
     "@types/node": "^20.5.9",
     "async": "^3.2.1",
     "dependency-tree": "^10.0.9",
     "execa": "^8.0.0",
-    "knip": "^4.0.0",
+    "knip": "^5.0.0",
     "madge": "^6.1.0",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
@@ -43,5 +43,5 @@
     "ts-graphviz": "^1.8.1",
     "typescript": "^5.2.2"
   },
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.1.0"
 }

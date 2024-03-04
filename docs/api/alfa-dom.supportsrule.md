@@ -16,6 +16,7 @@ export declare namespace SupportsRule
 |  Function | Description |
 |  --- | --- |
 |  [isSupportsRule(value)](./alfa-dom.supportsrule.issupportsrule.md) |  |
+|  [matches(device)](./alfa-dom.supportsrule.matches.md) |  |
 
 ## Interfaces
 

@@ -24,6 +24,13 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 |  --- | --- |
 |  [Node](./alfa-aria.node.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [hasValue(predicate)](./alfa-aria.hasvalue.md) |  |
+|  [hasValue(value, rest)](./alfa-aria.hasvalue_1.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
@@ -41,5 +48,12 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 |  [Name](./alfa-aria.name.md) |  |
 |  [Node](./alfa-aria.node.md) |  |
 |  [Role](./alfa-aria.role.md) |  |
+|  [Source](./alfa-aria.source.md) |  |
 |  [Text](./alfa-aria.text.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Source](./alfa-aria.source.md) |  |
 

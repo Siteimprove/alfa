@@ -1,10 +1,10 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Query, Text } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -12,7 +12,6 @@ import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/act/expectation";
 
-import { isWhitespace } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
 const {
@@ -21,8 +20,7 @@ const {
   isIncludedInTheAccessibilityTree,
 } = DOM;
 const { isElement } = Element;
-const { isEmpty } = Iterable;
-const { nor, not, or, property, test } = Predicate;
+const { not, or, property, test } = Predicate;
 const { and } = Refinement;
 const { isTabbable } = Style;
 const { isText } = Text;
@@ -53,7 +51,7 @@ export default Rule.Atomic.of<Page, Text>({
             .filter(isText)
             .filter(
               and(
-                property("data", nor(isEmpty, isWhitespace)),
+                property("data", not(String.isWhitespace)),
                 isIncludedInTheAccessibilityTree(device),
               ),
             );

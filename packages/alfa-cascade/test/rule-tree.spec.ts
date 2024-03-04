@@ -1,30 +1,32 @@
 import { h } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
-import {
-  Complex,
-  Compound,
-  type Simple,
-  Specificity,
-} from "@siteimprove/alfa-selector";
+import { Complex, Compound, type Simple } from "@siteimprove/alfa-selector";
 
 import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
 import { RuleTree } from "../src";
 
 import { Block } from "../src/block";
-import { Origin } from "../src/precedence";
-import { Encapsulation } from "../src/precedence/encapsulation";
+import { Layer, Origin, Precedence } from "../src/precedence";
 
 function fakeBlock(
   selectorText: string,
-  origin: Origin = Origin.NormalUserAgent,
-): Block {
+  precedence?: Partial<Precedence<true>>,
+): Block<Block.Source, true> {
+  const {
+    origin = Origin.NormalUserAgent,
+    encapsulation = -1,
+    isElementAttached = false,
+    layer = Layer.empty(),
+  } = precedence ?? {};
+
   const selector = parse(selectorText) as Compound | Complex | Simple;
 
   return Block.of({ rule: h.rule.style(selectorText, []), selector }, [], {
     origin,
-    encapsulation: -1,
-    isElementAttached: false,
+    encapsulation,
+    isElementAttached,
+    layer,
     specificity: selector.specificity,
     order: -1,
   });
@@ -213,107 +215,29 @@ test(".add() branches as soon as selectors differ", (t) => {
   ]);
 });
 
-/**
- * Sorting blocks upon insertion
- */
-test(".add() sort items by specificity", (t) => {
+test(".add() sort items by precedence", (t) => {
+  const block1 = fakeBlock("div", { origin: Origin.ImportantUserAgent });
+  const block2 = fakeBlock("div", { encapsulation: 1 });
+  const block3 = fakeBlock("div", { origin: Origin.NormalAuthor });
+  const block4 = fakeBlock("div");
+  const block5 = fakeBlock(".foo");
+
   const tree = RuleTree.empty();
-  tree.add([fakeBlock("#bar"), fakeBlock("div"), fakeBlock(".foo")]);
+  tree.add([block1, block2, block3, block4, block5]);
 
   t.deepEqual(tree.toJSON(), [
     {
-      block: divJSON,
+      block: block4.toJSON(), // normal UA, (0, 0, 1)
       children: [
         {
-          block: dotfooJSON,
-          children: [{ block: hashbarJSON, children: [] }],
-        },
-      ],
-    },
-  ]);
-});
-
-test(".add() sort items by origin and importance", (t) => {
-  const UAImportant = fakeBlock("div", Origin.ImportantUserAgent);
-  const UANormal = fakeBlock("div", Origin.NormalUserAgent);
-  const AuthorImportant = fakeBlock("div", Origin.ImportantAuthor);
-  const AuthorNormal = fakeBlock("div", Origin.NormalAuthor);
-
-  const tree = RuleTree.empty();
-  tree.add([UAImportant, UANormal, AuthorImportant, AuthorNormal]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: UANormal.toJSON(),
-      children: [
-        {
-          block: AuthorNormal.toJSON(),
+          block: block5.toJSON(), // normal UA, (0, 1, 0)
           children: [
             {
-              block: AuthorImportant.toJSON(),
-              children: [{ block: UAImportant.toJSON(), children: [] }],
-            },
-          ],
-        },
-      ],
-    },
-  ]);
-});
-
-test(".add() prioritise origin over specificity", (t) => {
-  const highSpecificity = fakeBlock("#foo", Origin.ImportantAuthor);
-  const highOrigin = fakeBlock("div", Origin.ImportantUserAgent);
-
-  const tree = RuleTree.empty();
-  tree.add([highSpecificity, highOrigin]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: highSpecificity.toJSON(),
-      children: [{ block: highOrigin.toJSON(), children: [] }],
-    },
-  ]);
-});
-
-test(".add() prioritise style attribute over specificity", (t) => {
-  const highSpecificityImportant = fakeBlock("#foo", Origin.ImportantAuthor);
-  const highSpecificityNormal = fakeBlock("#bar", Origin.NormalAuthor);
-  const styleAttributeImportant = Block.of(h.element("div"), [], {
-    origin: Origin.ImportantAuthor,
-    encapsulation: -1,
-    isElementAttached: true,
-    specificity: Specificity.empty(),
-    order: -1,
-  });
-  const styleAttributeNormal = Block.of(h.element("span"), [], {
-    origin: Origin.NormalAuthor,
-    encapsulation: -1,
-    isElementAttached: true,
-    specificity: Specificity.empty(),
-    order: -1,
-  });
-
-  const tree = RuleTree.empty();
-  tree.add([
-    highSpecificityImportant,
-    highSpecificityNormal,
-    styleAttributeImportant,
-    styleAttributeNormal,
-  ]);
-
-  t.deepEqual(tree.toJSON(), [
-    {
-      block: highSpecificityNormal.toJSON(),
-      children: [
-        {
-          block: styleAttributeNormal.toJSON(),
-          children: [
-            {
-              block: highSpecificityImportant.toJSON(),
+              block: block2.toJSON(), // higher encapsulated
               children: [
                 {
-                  block: styleAttributeImportant.toJSON(),
-                  children: [],
+                  block: block3.toJSON(), // normal author
+                  children: [{ block: block1.toJSON(), children: [] }], // important UA
                 },
               ],
             },
