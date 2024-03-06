@@ -1,5 +1,7 @@
 # @siteimprove/alfa-predicate
 
+## 0.75.2
+
 ## 0.75.1
 
 ## 0.75.0

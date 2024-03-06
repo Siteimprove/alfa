@@ -1,5 +1,15 @@
 # @siteimprove/alfa-cascade
 
+## 0.75.2
+
+### Patch Changes
+
+- **Fixed:** `!important` declarations in rules with normal declarations are not dropped anymore. ([#1585](https://github.com/Siteimprove/alfa/pull/1585))
+
+  While moving handling of `!important` from `alfa-style` to `alfa-cascade`, a regression was introduced that effectively dropped `!important` declarations from rules having both normal and important ones (e.g. `div {color: blue; background: red !important }`); this is now fixed.
+
+- **Added:** An `isImportant` predicate is available on `Origin` and `Precedence`. ([#1585](https://github.com/Siteimprove/alfa/pull/1585))
+
 ## 0.75.1
 
 ## 0.75.0

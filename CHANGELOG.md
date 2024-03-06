@@ -1,5 +1,15 @@
 # Alfa changelog
 
+## [0.75.2](../../compare/v0.75.1...v0.75.2) (2024-03-04)
+
+### Added
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0752): An `isImportant` predicate is available on `Origin` and `Precedence`. ([#1585](https://github.com/Siteimprove/alfa/pull/1585))
+
+### Fixed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0752): `!important` declarations in rules with normal declarations are not dropped anymore. ([#1585](https://github.com/Siteimprove/alfa/pull/1585))
+
 ## [0.75.1](../../compare/v0.75.0...v0.75.1) (2024-02-27)
 
 ### Fixed

@@ -57,5 +57,11 @@ export enum Origin {
 export namespace Origin {
   export type JSON = Origin;
 
+  export function isImportant(origin: Origin): boolean {
+    return (
+      Origin.ImportantAuthor <= origin && origin <= Origin.ImportantUserAgent
+    );
+  }
+
   export const compare: Comparer<Origin> = Comparable.compareNumber;
 }
