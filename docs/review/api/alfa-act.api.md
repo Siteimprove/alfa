@@ -328,6 +328,8 @@ export namespace Outcome {
         // (undocumented)
         Automatic = "automatic",
         // (undocumented)
+        Manual = "manual",
+        // (undocumented)
         SemiAuto = "semiAuto"
     }
     const // (undocumented)
