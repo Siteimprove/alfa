@@ -15,8 +15,8 @@ import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 import { BoundingBox } from "../common/outcome/bounding-box";
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r111",
-  requirements: [Criterion.of("2.5.5")],
+  uri: "https://alfa.siteimprove.com/rules/sia-r113",
+  requirements: [Criterion.of("2.5.8")],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             isUserAgentControlled()(target),
             () => BoundingBox.IsUserAgentControlled(name, box),
-            hasSufficientSize(44, device)(target)
+            hasSufficientSize(24, device)(target)
               ? () => BoundingBox.HasSufficientSize(name, box)
               : () => BoundingBox.HasInsufficientSize(name, box),
           ),
