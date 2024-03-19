@@ -1,7 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+import { Device } from "@siteimprove/alfa-device";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { expectation } from "../common/act/expectation";
 
@@ -13,6 +15,8 @@ import { isUserAgentControlled } from "../common/predicate/is-user-agent-control
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 
 import { BoundingBox } from "../common/outcome/bounding-box";
+
+const { or } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r113",
@@ -31,7 +35,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             isUserAgentControlled()(target),
             () => BoundingBox.IsUserAgentControlled(name, box),
-            hasSufficientSize(24, device)(target)
+            hasSufficientSizeOrSpacing(document, device)(target)
               ? () => BoundingBox.HasSufficientSize(name, box)
               : () => BoundingBox.HasInsufficientSize(name, box),
           ),
@@ -40,3 +44,50 @@ export default Rule.Atomic.of<Page, Element>({
     };
   },
 });
+
+function hasSufficientSizeOrSpacing(
+  document: Document,
+  device: Device,
+): Predicate<Element> {
+  return or(
+    hasSufficientSize(24, device),
+    hasSufficientSpacing(document, device),
+  );
+}
+
+/**
+ * Spacing is calculated by
+ * 1. drawing a 24px diameter circle around the center of the bounding box of the target,
+ * 2. checking if the circle intersects with the bounding box of any other target, or
+ * 3. if the circle intersects with the 24px diameter circle of another undersized target.
+ */
+function hasSufficientSpacing(
+  document: Document,
+  device: Device,
+): Predicate<Element> {
+  return (target) => {
+    const box = target.getBoundingBox(device).getUnsafe();
+
+    for (const otherTarget of targetsOfPointerEvents(document, device)) {
+      if (target === otherTarget) {
+        continue;
+      }
+
+      const other = otherTarget.getBoundingBox(device).getUnsafe();
+
+      // TODO: Check if the 24px diameter circle of the target intersect with the bounding box of the other target
+
+      if (other.width < 24 || other.height < 24) {
+        if (
+          (box.center.x - other.center.x) ** 2 +
+            (box.center.y - other.center.y) ** 2 <
+          576
+        ) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  };
+}
