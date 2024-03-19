@@ -87,6 +87,7 @@ import R95 from "./sia-r95/rule";
 import R96 from "./sia-r96/rule";
 import R110 from "./sia-r110/rule";
 import R111 from "./sia-r111/rule";
+import R113 from "./sia-r113/rule";
 
 export {
   /** @public (knip) */ R1,
@@ -178,4 +179,5 @@ export {
   /** @public (knip) */ R96,
   /** @public (knip) */ R110,
   /** @public (knip) */ R111,
+  /** @public (knip) */ R113,
 };
