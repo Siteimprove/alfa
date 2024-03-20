@@ -1,11 +1,12 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Criterion } from "@siteimprove/alfa-wcag";
+import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
@@ -13,8 +14,8 @@ import { targetsOfPointerEvents } from "../common/applicability/targets-of-point
 
 import { WithBoundingBox, WithName } from "../common/diagnostic";
 
-import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
+import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
 
 const { or } = Predicate;
 
@@ -73,6 +74,11 @@ function hasSufficientSizeOrSpacing(
   );
 }
 
+const spacingCache = Cache.empty<
+  Document,
+  Cache<Device, Cache<Element, boolean>>
+>();
+
 /**
  * @remarks
  * Spacing is calculated by
@@ -85,6 +91,16 @@ function hasSufficientSpacing(
   device: Device,
 ): Predicate<Element> {
   return (target) => {
+    // The target might have been cached while computing the spacing for another target
+    const cachedTarget = spacingCache
+      .get(document, Cache.empty)
+      .get(device, Cache.empty)
+      .get(target);
+
+    if (cachedTarget.isSome()) {
+      return cachedTarget.get();
+    }
+
     // Existence of a bounding box is guaranteed by applicability
     const box = target.getBoundingBox(device).getUnsafe();
 
@@ -114,6 +130,12 @@ function hasSufficientSpacing(
           (box.center.y - other.center.y) ** 2 <
           24 ** 2
       ) {
+        // If the other is undersized and too close to this we already know it will also fail the rule, so we might as well cache it
+        spacingCache
+          .get(document, Cache.empty)
+          .get(device, Cache.empty)
+          .set(otherTarget, false);
+
         return false;
       }
     }
