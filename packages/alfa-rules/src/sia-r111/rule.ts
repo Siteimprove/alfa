@@ -2,17 +2,17 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
+import { Err, Ok } from "@siteimprove/alfa-result";
 
 import { expectation } from "../common/act/expectation";
 
 import { targetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
 
-import { WithName } from "../common/diagnostic";
+import { WithBoundingBox, WithName } from "../common/diagnostic";
 
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
-
-import { BoundingBox } from "../common/outcome/bounding-box";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",
@@ -30,13 +30,27 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () => BoundingBox.IsUserAgentControlled(name, box),
+            () => Outcomes.IsUserAgentControlled(name, box),
             hasSufficientSize(44, device)(target)
-              ? () => BoundingBox.HasSufficientSize(name, box)
-              : () => BoundingBox.HasInsufficientSize(name, box),
+              ? () => Outcomes.HasSufficientSize(name, box)
+              : () => Outcomes.HasInsufficientSize(name, box),
           ),
         };
       },
     };
   },
 });
+
+/**
+ * @public
+ */
+export namespace Outcomes {
+  export const HasSufficientSize = (name: string, box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target has sufficient size", name, box));
+
+  export const HasInsufficientSize = (name: string, box: Rectangle) =>
+    Err.of(WithBoundingBox.of("Target has insufficient size", name, box));
+
+  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
+}

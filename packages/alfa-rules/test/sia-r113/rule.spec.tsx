@@ -3,12 +3,10 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import R113 from "../../src/sia-r113/rule";
+import R113, { Outcomes } from "../../src/sia-r113/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
-
-import { BoundingBox } from "../../src/common/outcome/bounding-box";
 
 test("evaluate() passes button with clickable area of exactly 44x44 pixels", async (t) => {
   const device = Device.standard();
@@ -26,7 +24,7 @@ test("evaluate() passes button with clickable area of exactly 44x44 pixels", asy
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target, {
-      1: BoundingBox.HasSufficientSize(
+      1: Outcomes.HasSufficientSizeOrSpacing(
         "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),
@@ -48,12 +46,12 @@ test("evaluate() passes input element regardless of size", async (t) => {
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target, {
-      1: BoundingBox.IsUserAgentControlled("", target.getBoundingBox(device).getUnsafe()),
+      1: Outcomes.IsUserAgentControlled("", target.getBoundingBox(device).getUnsafe()),
     }),
   ]);
 });
 
-test("evaluate() fails button with clickable area of less than 24x24 pixels", async (t) => {
+test("evaluate() passes button with clickable area of less than 24x24 pixels and no adjacent targets", async (t) => {
   const device = Device.standard();
 
   const target = (
@@ -68,8 +66,8 @@ test("evaluate() fails button with clickable area of less than 24x24 pixels", as
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R113, { document, device }), [
-    failed(R113, target, {
-      1: BoundingBox.HasInsufficientSize(
+    passed(R113, target, {
+      1: Outcomes.HasSufficientSizeOrSpacing(
         "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),

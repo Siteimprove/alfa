@@ -39,7 +39,6 @@
     "src/common/expectation/media-text-alternative.ts",
     "src/common/expectation/media-transcript.ts",
     "src/common/expectation/video-description-track-accurate.ts",
-    "src/common/outcome/bounding-box.ts",
     "src/common/outcome/contrast.ts",
     "src/common/outcome/refresh-delay.ts",
     "src/common/predicate.ts",

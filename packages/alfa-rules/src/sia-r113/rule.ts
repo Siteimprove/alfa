@@ -5,17 +5,16 @@ import { Page } from "@siteimprove/alfa-web";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
+import { Err, Ok } from "@siteimprove/alfa-result";
 
 import { expectation } from "../common/act/expectation";
 
 import { targetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
 
-import { WithName } from "../common/diagnostic";
+import { WithBoundingBox, WithName } from "../common/diagnostic";
 
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
-
-import { BoundingBox } from "../common/outcome/bounding-box";
 
 const { or } = Predicate;
 
@@ -35,16 +34,34 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () => BoundingBox.IsUserAgentControlled(name, box),
+            () => Outcomes.IsUserAgentControlled(name, box),
             hasSufficientSizeOrSpacing(document, device)(target)
-              ? () => BoundingBox.HasSufficientSize(name, box)
-              : () => BoundingBox.HasInsufficientSize(name, box),
+              ? () => Outcomes.HasSufficientSizeOrSpacing(name, box)
+              : () => Outcomes.HasInsufficientSizeAndSpacing(name, box),
           ),
         };
       },
     };
   },
 });
+
+/**
+ * @public
+ */
+export namespace Outcomes {
+  export const HasSufficientSizeOrSpacing = (name: string, box: Rectangle) =>
+    Ok.of(
+      WithBoundingBox.of("Target has sufficient size or spacing", name, box),
+    );
+
+  export const HasInsufficientSizeAndSpacing = (name: string, box: Rectangle) =>
+    Err.of(
+      WithBoundingBox.of("Target has insufficient size and spacing", name, box),
+    );
+
+  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
+}
 
 function hasSufficientSizeOrSpacing(
   document: Document,
