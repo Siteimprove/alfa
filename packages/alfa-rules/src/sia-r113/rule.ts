@@ -4,6 +4,7 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 
 import { expectation } from "../common/act/expectation";
 
@@ -56,6 +57,7 @@ function hasSufficientSizeOrSpacing(
 }
 
 /**
+ * @remarks
  * Spacing is calculated by
  * 1. drawing a 24px diameter circle around the center of the bounding box of the target,
  * 2. checking if the circle intersects with the bounding box of any other target, or
@@ -66,6 +68,7 @@ function hasSufficientSpacing(
   device: Device,
 ): Predicate<Element> {
   return (target) => {
+    // Existence of a bounding box is guaranteed by applicability
     const box = target.getBoundingBox(device).getUnsafe();
 
     for (const otherTarget of targetsOfPointerEvents(document, device)) {
@@ -73,18 +76,28 @@ function hasSufficientSpacing(
         continue;
       }
 
+      // Existence of a bounding box is guaranteed by applicability
       const other = otherTarget.getBoundingBox(device).getUnsafe();
+
+      // If the box of the target doesn't intersect with the circumscribed square of the other target, we know they are far enough apart
+      if (
+        !box.intersects(
+          Rectangle.of(other.center.x - 12, other.center.y - 12, 24, 24),
+        )
+      ) {
+        continue;
+      }
 
       // TODO: Check if the 24px diameter circle of the target intersect with the bounding box of the other target
 
-      if (other.width < 24 || other.height < 24) {
-        if (
-          (box.center.x - other.center.x) ** 2 +
-            (box.center.y - other.center.y) ** 2 <
-          576
-        ) {
-          return false;
-        }
+      // If the other target is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the other target
+      if (
+        (other.width < 24 || other.height < 24) &&
+        (box.center.x - other.center.x) ** 2 +
+          (box.center.y - other.center.y) ** 2 <
+          24 ** 2
+      ) {
+        return false;
       }
     }
 
