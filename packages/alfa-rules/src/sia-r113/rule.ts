@@ -127,7 +127,7 @@ function hasSufficientSpacing(
       if (
         (other.width < 24 || other.height < 24) &&
         (box.center.x - other.center.x) ** 2 +
-          (box.center.y - other.center.y) ** 2 <
+          (box.center.y - other.center.y) ** 2 <=
           24 ** 2
       ) {
         // If the other is undersized and too close to this we already know it will also fail the rule, so we might as well cache it
