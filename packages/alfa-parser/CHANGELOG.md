@@ -1,5 +1,7 @@
 # @siteimprove/alfa-parser
 
+## 0.76.0
+
 ## 0.75.2
 
 ## 0.75.1

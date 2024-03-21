@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.76.0
+
+### Minor Changes
+
+- **Added:** New rule SIA-R113 for testing minimum target size and spacing of clickable elements. ([#1589](https://github.com/Siteimprove/alfa/pull/1589))
+
 ## 0.75.2
 
 ## 0.75.1

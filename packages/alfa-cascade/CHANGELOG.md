@@ -1,5 +1,7 @@
 # @siteimprove/alfa-cascade
 
+## 0.76.0
+
 ## 0.75.2
 
 ### Patch Changes
