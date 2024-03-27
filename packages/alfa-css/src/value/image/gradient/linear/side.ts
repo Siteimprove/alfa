@@ -28,7 +28,6 @@ export class Side
     this._side = side;
   }
 
-  /** @public (knip) */
   public get side(): Position.Vertical | Position.Horizontal {
     return this._side;
   }

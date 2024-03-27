@@ -20,7 +20,6 @@ export class Where extends WithSelector<"where"> {
     super("where", selector, Specificity.of(0, 0, 0));
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Where> {
     yield this;
   }

@@ -19,7 +19,6 @@ export class Is extends WithSelector<"is"> {
     super("is", selector, selector.specificity);
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Is> {
     yield this;
   }

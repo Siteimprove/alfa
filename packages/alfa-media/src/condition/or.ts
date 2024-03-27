@@ -29,12 +29,10 @@ export class Or
     this._right = right;
   }
 
-  /** @public (knip) */
   public get left(): Feature | Condition {
     return this._left;
   }
 
-  /** @public (knip) */
   public get right(): Feature | Condition {
     return this._right;
   }
@@ -57,7 +55,6 @@ export class Or
     }
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Feature> {
     return this.iterator();
   }

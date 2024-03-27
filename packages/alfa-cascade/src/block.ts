@@ -117,7 +117,6 @@ export class Block<
     this._precedence = precedence;
   }
 
-  /** @public (knip) */
   public get source(): S {
     return this._owner !== null
       ? (this._owner as unknown as S)
@@ -135,7 +134,6 @@ export class Block<
     return this._selector;
   }
 
-  /** @public (knip) */
   public get owner(): S extends Element ? Element : null {
     return this._owner;
   }

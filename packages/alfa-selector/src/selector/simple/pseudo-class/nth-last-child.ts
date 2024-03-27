@@ -27,7 +27,6 @@ export class NthLastChild extends WithIndexAndSelector<"nth-last-child"> {
     super("nth-last-child", nth, selector);
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<NthLastChild> {
     yield this;
   }

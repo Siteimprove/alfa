@@ -16,7 +16,6 @@ export class Focus extends PseudoClassSelector<"focus"> {
     super("focus");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Focus> {
     yield this;
   }

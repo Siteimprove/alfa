@@ -27,7 +27,6 @@ export class Not
     this._condition = condition;
   }
 
-  /** @public (knip) */
   public get condition(): Feature | Condition {
     return this._condition;
   }
@@ -44,7 +43,6 @@ export class Not
     yield* this._condition;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Feature> {
     return this.iterator();
   }

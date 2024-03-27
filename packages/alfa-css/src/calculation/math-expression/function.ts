@@ -87,7 +87,6 @@ export namespace Function {
     }
   }
 
-  /** @public (knip) */
   export function isCalculation(value: unknown): value is Calculation {
     return value instanceof Calculation;
   }

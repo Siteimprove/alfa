@@ -26,12 +26,10 @@ export class And<F extends Feature<F>> implements Feature<F, And.JSON<F>> {
     this._right = right;
   }
 
-  /** @public (knip) */
   public get left(): Condition<F> {
     return this._left;
   }
 
-  /** @public (knip) */
   public get right(): Condition<F> {
     return this._right;
   }
@@ -54,7 +52,6 @@ export class And<F extends Feature<F>> implements Feature<F, And.JSON<F>> {
     }
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<F> {
     return this.iterator();
   }

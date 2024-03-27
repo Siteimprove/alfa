@@ -159,7 +159,6 @@ export abstract class WithSelector<
     this._selector = selector;
   }
 
-  /** @public (knip) */
   public get selector(): S {
     return this._selector;
   }
@@ -243,7 +242,6 @@ export abstract class WithIndexAndSelector<
     this._selector = selector;
   }
 
-  /** @public (knip) */
   public get selector(): Option<Absolute> {
     return this._selector;
   }

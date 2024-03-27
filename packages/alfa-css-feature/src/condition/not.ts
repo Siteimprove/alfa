@@ -21,7 +21,6 @@ export class Not<F extends Feature<F>> implements Feature<F, Not.JSON<F>> {
     this._condition = condition;
   }
 
-  /** @public (knip) */
   public get condition(): Condition<F> {
     return this._condition;
   }
@@ -38,7 +37,6 @@ export class Not<F extends Feature<F>> implements Feature<F, Not.JSON<F>> {
     yield* this._condition;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<F> {
     return this.iterator();
   }

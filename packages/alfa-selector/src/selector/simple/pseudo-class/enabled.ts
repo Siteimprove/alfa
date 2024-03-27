@@ -19,7 +19,6 @@ export class Enabled extends PseudoClassSelector<"enabled"> {
     super("enabled");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Enabled> {
     yield this;
   }

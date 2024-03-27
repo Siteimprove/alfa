@@ -16,7 +16,6 @@ export class FirstOfType extends PseudoClassSelector<"first-of-type"> {
     super("first-of-type");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<FirstOfType> {
     yield this;
   }

@@ -32,7 +32,6 @@ export class Cue extends PseudoElementSelector<"cue"> {
     return this._selector;
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Cue> {
     yield this;
   }

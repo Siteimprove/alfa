@@ -62,7 +62,6 @@ export abstract class Feature<N extends string = string, T = unknown>
     yield this;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Feature<N, T>> {
     return this.iterator();
   }

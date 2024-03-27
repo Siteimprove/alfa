@@ -16,7 +16,6 @@ export class FirstChild extends PseudoClassSelector<"first-child"> {
     super("first-child");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<FirstChild> {
     yield this;
   }

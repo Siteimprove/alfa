@@ -21,12 +21,10 @@ export class Part extends PseudoElementSelector<"part"> {
     this._idents = idents;
   }
 
-  /** @public (knip) */
   public get idents(): Iterable<Token.Ident> {
     return this._idents;
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Part> {
     yield this;
   }

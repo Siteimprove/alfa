@@ -36,12 +36,10 @@ export class Corner
     this._horizontal = horizontal;
   }
 
-  /** @public (knip) */
   public get vertical(): Position.Vertical {
     return this._vertical;
   }
 
-  /** @public (knip) */
   public get horizontal(): Position.Horizontal {
     return this._horizontal;
   }

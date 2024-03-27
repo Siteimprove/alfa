@@ -12,7 +12,6 @@ export class SpellingError extends PseudoElementSelector<"spelling-error"> {
     super("spelling-error");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<SpellingError> {
     yield this;
   }

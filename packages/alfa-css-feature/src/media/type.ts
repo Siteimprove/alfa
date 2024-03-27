@@ -50,7 +50,6 @@ export class Type implements Feature<Type> {
     yield this;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Type> {
     return this.iterator();
   }

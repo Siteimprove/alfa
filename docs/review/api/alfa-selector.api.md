@@ -530,6 +530,7 @@ export class Specificity implements Serializable<Specificity.JSON>, Equatable, H
 
 // @public (undocumented)
 export namespace Specificity {
+    // (undocumented)
     export function isSpecificity(value: unknown): value is Specificity;
     // (undocumented)
     export interface JSON {

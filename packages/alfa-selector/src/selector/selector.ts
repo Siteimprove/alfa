@@ -62,7 +62,6 @@ export abstract class Selector<T extends string = string>
     this._specificity = specificity;
   }
 
-  /** @public (knip) */
   public get type(): T {
     return this._type;
   }
@@ -92,7 +91,6 @@ export abstract class Selector<T extends string = string>
     );
   }
 
-  /** @public (knip) */
   public abstract [Symbol.iterator](): Iterator<
     Simple | Compound | Complex | Relative
   >;

@@ -12,7 +12,6 @@ export class FirstLetter extends PseudoElementSelector<"first-letter"> {
     super("first-letter");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<FirstLetter> {
     yield this;
   }

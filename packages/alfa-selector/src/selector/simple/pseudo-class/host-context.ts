@@ -36,7 +36,6 @@ export class HostContext extends WithSelector<
     );
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<HostContext> {
     yield this;
   }
