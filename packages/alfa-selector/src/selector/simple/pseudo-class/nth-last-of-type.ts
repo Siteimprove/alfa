@@ -17,7 +17,6 @@ export class NthLastOfType extends WithIndex<"nth-last-of-type"> {
     super("nth-last-of-type", index);
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<NthLastOfType> {
     yield this;
   }

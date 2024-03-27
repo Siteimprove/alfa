@@ -16,7 +16,6 @@ export class LastChild extends PseudoClassSelector<"last-child"> {
     super("last-child");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<LastChild> {
     yield this;
   }
