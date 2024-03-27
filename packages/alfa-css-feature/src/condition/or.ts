@@ -26,12 +26,10 @@ export class Or<F extends Feature<F>> implements Feature<F, Or.JSON<F>> {
     this._right = right;
   }
 
-  /** @public (knip) */
   public get left(): Condition<F> {
     return this._left;
   }
 
-  /** @public (knip) */
   public get right(): Condition<F> {
     return this._right;
   }
@@ -54,7 +52,6 @@ export class Or<F extends Feature<F>> implements Feature<F, Or.JSON<F>> {
     }
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<F> {
     return this.iterator();
   }

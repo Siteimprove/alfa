@@ -41,7 +41,6 @@ export class Query implements Feature<Condition<Property>, Query.JSON> {
     yield* this._condition;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Condition<Property>> {
     return this.iterator();
   }
