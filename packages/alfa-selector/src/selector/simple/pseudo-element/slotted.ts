@@ -37,7 +37,6 @@ export class Slotted extends PseudoElementSelector<"slotted"> {
     this._selector = selector;
   }
 
-  /** @public (knip) */
   public get selector(): Compound | Simple {
     return this._selector;
   }

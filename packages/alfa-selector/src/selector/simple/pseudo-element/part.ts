@@ -21,7 +21,6 @@ export class Part extends PseudoElementSelector<"part"> {
     this._idents = idents;
   }
 
-  /** @public (knip) */
   public get idents(): Iterable<Token.Ident> {
     return this._idents;
   }
