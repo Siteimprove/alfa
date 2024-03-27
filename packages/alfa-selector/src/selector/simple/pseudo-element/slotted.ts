@@ -50,7 +50,6 @@ export class Slotted extends PseudoElementSelector<"slotted"> {
     return false;
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Slotted> {
     yield this;
   }

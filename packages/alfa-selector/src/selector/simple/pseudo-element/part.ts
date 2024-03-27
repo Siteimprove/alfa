@@ -26,7 +26,6 @@ export class Part extends PseudoElementSelector<"part"> {
     return this._idents;
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Part> {
     yield this;
   }
