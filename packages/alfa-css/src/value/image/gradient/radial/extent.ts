@@ -33,12 +33,10 @@ export class Extent
     this._size = size;
   }
 
-  /** @public (knip) */
   public get shape(): Extent.Shape {
     return this._shape;
   }
 
-  /** @public (knip) */
   public get size(): Extent.Size {
     return this._size;
   }

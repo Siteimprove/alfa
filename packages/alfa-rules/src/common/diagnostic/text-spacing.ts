@@ -167,7 +167,6 @@ export namespace TextSpacing {
     value: unknown,
   ): value is TextSpacing<Longhands.Name>;
 
-  /** @public (knip) */
   export function isTextSpacing(
     value: unknown,
   ): value is TextSpacing<Longhands.Name> {
