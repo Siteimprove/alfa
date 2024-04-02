@@ -82,7 +82,6 @@ export class Host extends PseudoClassSelector<"host"> {
     );
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Host> {
     yield this;
   }

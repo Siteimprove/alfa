@@ -12,7 +12,6 @@ export class FileSelectorButton extends PseudoElementSelector<"file-selector-but
     super("file-selector-button");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<FileSelectorButton> {
     yield this;
   }

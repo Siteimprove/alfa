@@ -16,7 +16,6 @@ export class Visited extends PseudoClassSelector<"visited"> {
     super("visited");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Visited> {
     yield this;
   }

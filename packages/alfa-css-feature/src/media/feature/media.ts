@@ -59,7 +59,6 @@ export abstract class Media<N extends string = string, T = unknown>
     yield this;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Media<N, T>> {
     return this.iterator();
   }

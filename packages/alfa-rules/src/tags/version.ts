@@ -47,7 +47,6 @@ export namespace Version {
     version: N;
   }
 
-  /** @public (knip) */
   export function isVersion<T extends string>(
     value: unknown,
   ): value is Version {

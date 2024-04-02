@@ -17,7 +17,6 @@ export class NthOfType extends WithIndex<"nth-of-type"> {
     super("nth-of-type", index);
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<NthOfType> {
     yield this;
   }
