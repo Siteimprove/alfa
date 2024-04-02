@@ -154,8 +154,7 @@ test("evaluate() fails undersized button with vertically adjacent undersized but
   ]);
 });
 
-// TODO: This test is added to document wrong behavior, we should change the assertion from passing to failing and fix the implementation
-test("evaluate() incorrectly passes undersized button whose 24px diameter circle intersects other targets bounding box, but not other targets circle", async (t) => {
+test("evaluate() fails an undersized button whose 24px diameter circle intersects other targets bounding box, but not other targets circle", async (t) => {
   const device = Device.standard();
 
   const target1 = (
@@ -179,8 +178,8 @@ test("evaluate() incorrectly passes undersized button whose 24px diameter circle
   const document = h.document([target1, target2]);
 
   t.deepEqual(await evaluate(R113, { document, device }), [
-    passed(R113, target1, {
-      1: Outcomes.HasSufficientSpacing(
+    failed(R113, target1, {
+      1: Outcomes.HasInsufficientSizeAndSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
       ),

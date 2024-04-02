@@ -16,6 +16,7 @@ import { WithBoundingBox, WithName } from "../common/diagnostic";
 
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r113",
@@ -86,72 +87,104 @@ export namespace Outcomes {
     );
 }
 
-const spacingCache = Cache.empty<
+const undersizedCache = Cache.empty<
   Document,
-  Cache<Device, Cache<Element, boolean>>
+  Cache<Device, Sequence<Element>>
 >();
 
 /**
  * @remarks
- * Spacing is calculated by
- * 1. drawing a 24px diameter circle around the center of the bounding box of the target,
- * 2. checking if the circle intersects with the bounding box of any other target, or
- * 3. if the circle intersects with the 24px diameter circle of another undersized target.
+ * This predicate tests that the target has sufficient spacing around it.
+ * The spacing is calculated by drawing a circle around the center of the bounding box of the target of radius 12.
+ * The target is underspaced, if
+ * 1) the circle intersects with the bounding box of any other target, or
+ * 2) the distance between the center of the bounding box of the target
+ *    and the center of the bounding box of any other **undersized** target is less than 24.
  */
 function hasSufficientSpacing(
   document: Document,
   device: Device,
 ): Predicate<Element> {
   return (target) => {
-    // The target might have been cached while computing the spacing for another target
-    const cachedTarget = spacingCache
-      .get(document, Cache.empty)
-      .get(device, Cache.empty)
-      .get(target);
-
-    if (cachedTarget.isSome()) {
-      return cachedTarget.get();
-    }
-
     // Existence of a bounding box is guaranteed by applicability
-    const box = target.getBoundingBox(device).getUnsafe();
+    const targetRect = target.getBoundingBox(device).getUnsafe();
 
-    for (const otherTarget of targetsOfPointerEvents(document, device)) {
-      if (target === otherTarget) {
+    const undersizedTargets = undersizedCache
+      .get(document, Cache.empty)
+      .get(device, () =>
+        targetsOfPointerEvents(document, device).reject(
+          hasSufficientSize(24, device),
+        ),
+      );
+
+    for (const candidate of targetsOfPointerEvents(document, device)) {
+      if (target === candidate) {
         continue;
       }
 
       // Existence of a bounding box is guaranteed by applicability
-      const other = otherTarget.getBoundingBox(device).getUnsafe();
+      const candidateRect = candidate.getBoundingBox(device).getUnsafe();
 
-      // If the box of the target doesn't intersect with the circumscribed square of the other target, we know they are far enough apart
       if (
-        !box.intersects(
-          Rectangle.of(other.center.x - 12, other.center.y - 12, 24, 24),
+        circleIntersectsRect(
+          targetRect.center.x,
+          targetRect.center.y,
+          12,
+          candidateRect,
         )
       ) {
-        continue;
+        return false;
       }
 
-      // TODO: Check if the 24px diameter circle of the target intersect with the bounding box of the other target
-
-      // If the other target is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the other target
       if (
-        (other.width < 24 || other.height < 24) &&
-        (box.center.x - other.center.x) ** 2 +
-          (box.center.y - other.center.y) ** 2 <=
-          24 ** 2
+        undersizedTargets.includes(candidate) &&
+        distanceSquared(targetRect, candidateRect) < 24 ** 2
       ) {
-        // If the other is undersized and too close to this we already know it will also fail the rule, so we might as well cache it
-        spacingCache
-          .get(document, Cache.empty)
-          .get(device, Cache.empty)
-          .set(otherTarget, false);
-
         return false;
       }
     }
 
     return true;
   };
+}
+
+function circleIntersectsRect(
+  cx: number,
+  cy: number,
+  r: number,
+  rect: Rectangle,
+): boolean {
+  // To check intersection, we pad the rectangle by the radius of the circle and divide the problem into three cases:
+  // 1. The circle center is outside the padded rectangle.
+  // 2. The circle center is inside the padded rectangle, but not in one of the corners.
+  // 3. The circle center lies in one of the corners of the padded rectangle.
+
+  const center = rect.center;
+  const halfWidth = rect.width / 2;
+  const halfHeight = rect.height / 2;
+
+  const dx = Math.abs(cx - center.x);
+  const dy = Math.abs(cy - center.y);
+
+  if (dx > halfWidth + r || dy > halfHeight + r) {
+    // The circle center is outside the padded rectangle
+    return false;
+  }
+
+  // The circle center is inside the padded rectangle
+  if (dx <= rect.width / 2 || dy <= rect.height / 2) {
+    // The circle lies at most a radius away from the rectangle in the x or y directions
+    return true;
+  }
+
+  // The circle center lies in one of the corners of the padded rectangle.
+  // If the distance from the circle center to the closest corner of the rectangle
+  // is less than the radius of the circle, the circle intersects the rectangle.
+  return (dx - halfWidth) ** 2 + (dy - halfHeight) ** 2 <= r ** 2;
+}
+
+function distanceSquared(rect1: Rectangle, rect2: Rectangle): number {
+  const c1 = rect1.center;
+  const c2 = rect2.center;
+  return (c1.x - c2.x) ** 2 + (c1.y - c2.y) ** 2;
 }
