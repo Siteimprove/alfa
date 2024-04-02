@@ -5,6 +5,7 @@ import { Document, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -16,7 +17,6 @@ import { WithBoundingBox, WithName } from "../common/diagnostic";
 
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r113",
