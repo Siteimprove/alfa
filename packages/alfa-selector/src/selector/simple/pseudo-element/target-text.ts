@@ -12,7 +12,6 @@ export class TargetText extends PseudoElementSelector<"target-text"> {
     super("target-text");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<TargetText> {
     yield this;
   }

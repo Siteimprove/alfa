@@ -51,7 +51,6 @@ export class Property<N extends string = string>
     yield this;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Property<N>> {
     return this.iterator();
   }

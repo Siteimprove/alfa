@@ -49,7 +49,6 @@ export class Stop<
     return this._color;
   }
 
-  /** @public (knip) */
   public get position(): Option<P> {
     return this._position;
   }
@@ -114,7 +113,6 @@ export namespace Stop {
 
   export type PartialResolver = LengthPercentage.PartialResolver;
 
-  /** @public (knip) */
   export function isStop(value: unknown): value is Stop {
     return value instanceof Stop;
   }

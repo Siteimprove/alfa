@@ -28,7 +28,6 @@ export class Circle<R extends Length = Length>
     this._radius = radius;
   }
 
-  /** @public (knip) */
   public get radius(): R {
     return this._radius;
   }

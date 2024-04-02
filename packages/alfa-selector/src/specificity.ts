@@ -105,7 +105,6 @@ export namespace Specificity {
     c: number;
   }
 
-  /** public (knip) */
   export function isSpecificity(value: unknown): value is Specificity {
     return value instanceof Specificity;
   }

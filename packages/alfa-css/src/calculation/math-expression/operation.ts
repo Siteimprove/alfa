@@ -154,7 +154,6 @@ export namespace Operation {
     }
   }
 
-  /** @public (knip) */
   export function isSumExpression(value: unknown): value is Sum {
     return value instanceof Sum;
   }
@@ -276,7 +275,6 @@ export namespace Operation {
     }
   }
 
-  /** @public (knip) */
   export function isProductExpression(value: unknown): value is Product {
     return value instanceof Product;
   }

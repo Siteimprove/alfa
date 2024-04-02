@@ -119,7 +119,6 @@ export namespace WithBoundingBox {
 
   export function isWithBoundingBox(value: unknown): value is WithBoundingBox;
 
-  /** @public (knip) */
   export function isWithBoundingBox(value: unknown): value is WithBoundingBox {
     return value instanceof WithBoundingBox;
   }
