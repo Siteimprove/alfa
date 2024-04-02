@@ -24,7 +24,7 @@ test("evaluate() passes button with clickable area of exactly 24x24 pixels", asy
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSize(
         "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),
@@ -67,7 +67,7 @@ test("evaluate() passes button with clickable area of less than 24x24 pixels and
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),
@@ -100,13 +100,13 @@ test("evaluate() passes button with clickable area of less than 24x24 pixels and
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target1, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
       ),
     }),
     passed(R113, target2, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "World",
         target2.getBoundingBox(device).getUnsafe(),
       ),
@@ -180,13 +180,13 @@ test("evaluate() incorrectly passes undersized button whose 24px diameter circle
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target1, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
       ),
     }),
     passed(R113, target2, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "World",
         target2.getBoundingBox(device).getUnsafe(),
       ),

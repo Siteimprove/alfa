@@ -17,8 +17,6 @@ import { WithBoundingBox, WithName } from "../common/diagnostic";
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
 
-const { or } = Predicate;
-
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r113",
   requirements: [Criterion.of("2.5.8")],
@@ -32,13 +30,22 @@ export default Rule.Atomic.of<Page, Element>({
         // Existence of a bounding box is guaranteed by applicability
         const box = target.getBoundingBox(device).getUnsafe();
         const name = WithName.getName(target, device).getOr("");
+
         return {
           1: expectation(
             isUserAgentControlled()(target),
             () => Outcomes.IsUserAgentControlled(name, box),
-            hasSufficientSizeOrSpacing(document, device)(target)
-              ? () => Outcomes.HasSufficientSizeOrSpacing(name, box)
-              : () => Outcomes.HasInsufficientSizeAndSpacing(name, box),
+            () =>
+              expectation(
+                hasSufficientSize(24, device)(target),
+                () => Outcomes.HasSufficientSize(name, box),
+                () =>
+                  expectation(
+                    hasSufficientSpacing(document, device)(target),
+                    () => Outcomes.HasSufficientSpacing(name, box),
+                    () => Outcomes.HasInsufficientSizeAndSpacing(name, box),
+                  ),
+              ),
           ),
         };
       },
@@ -50,28 +57,33 @@ export default Rule.Atomic.of<Page, Element>({
  * @public
  */
 export namespace Outcomes {
-  export const HasSufficientSizeOrSpacing = (name: string, box: Rectangle) =>
+  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
+    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
+
+  export const HasSufficientSize = (name: string, box: Rectangle) =>
     Ok.of(
-      WithBoundingBox.of("Target has sufficient size or spacing", name, box),
+      WithBoundingBox.of("Target has sufficient size", name, box, {
+        size: true,
+      }),
+    );
+
+  export const HasSufficientSpacing = (name: string, box: Rectangle) =>
+    Ok.of(
+      WithBoundingBox.of("Target has sufficient spacing", name, box, {
+        size: false,
+        spacing: true,
+      }),
     );
 
   export const HasInsufficientSizeAndSpacing = (name: string, box: Rectangle) =>
     Err.of(
-      WithBoundingBox.of("Target has insufficient size and spacing", name, box),
+      WithBoundingBox.of(
+        "Target has insufficient size and spacing",
+        name,
+        box,
+        { size: false, spacing: false },
+      ),
     );
-
-  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
-    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
-}
-
-function hasSufficientSizeOrSpacing(
-  document: Document,
-  device: Device,
-): Predicate<Element> {
-  return or(
-    hasSufficientSize(24, device),
-    hasSufficientSpacing(document, device),
-  );
 }
 
 const spacingCache = Cache.empty<
