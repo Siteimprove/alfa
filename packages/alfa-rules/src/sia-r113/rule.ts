@@ -155,9 +155,66 @@ function circleIntersectsRect(
   rect: Rectangle,
 ): boolean {
   // To check intersection, we pad the rectangle by the radius of the circle and divide the problem into three cases:
+  //
   // 1. The circle center is outside the padded rectangle.
+  //
+  //
+  //    ***          -------------------------------------
+  //  *    r*        |    |r                        |    |
+  // *   *---*       | r  |                         |    |
+  //  *     *        |---- ------------------------- ----|
+  //    ***          |    |                         |    |
+  //                 |    |                         |    |
+  //                 |    |            *            |    |
+  //                 |    |                         |    |
+  //                 |    |                         |    |
+  //                 |---- ------------------------- ----|
+  //                 |    |                         |    |
+  //                 |    |                         |    |
+  //                 -------------------------------------
+  //
+  //    |------------- dx -------------|
+  //                 |-- halfwidth+r --|
+  //
   // 2. The circle center is inside the padded rectangle, but not in one of the corners.
-  // 3. The circle center lies in one of the corners of the padded rectangle.
+  //
+  //
+  //                 -------------------------------------
+  //                 |    |                         |    |
+  //                 |    |                         |    |
+  //                 |---- ------------------------- ----|
+  //                 |    |                         |    |
+  //                 |    |                         |    |
+  //                 |    |            *            |    |
+  //                 |    |                         |    |
+  //                 |    |                         |    |
+  //                 |---- -----***----------------- ----|
+  //                 |    |   *     *               |    |
+  //                 |    |  *   *   *              |    |
+  //                 ---------*-----*---------------------
+  //                            ***
+  //                             |- dx-|
+  //                      |- halfwidth-|
+  //
+  // 3. The circle center lies in one of the corners of the padded rectangle in which case we need to compute the distance to the corner
+  //
+  //
+  //                |              |
+  //                |              |
+  //                |              |
+  //                |     *******  |
+  //                |            ****
+  //                @@@@@@@        |  **
+  //             @@ |------@@@@----|----**--------
+  //                |           @@ |     *
+  //                |             @@     *
+  //                |        *     @     **
+  //                |              @@     *
+  //                |  @            @     *
+  //                |              |@@
+  //                -----------------@------------
+  //                                 @
+  //
 
   const center = rect.center;
   const halfWidth = rect.width / 2;
@@ -172,7 +229,7 @@ function circleIntersectsRect(
   }
 
   // The circle center is inside the padded rectangle
-  if (dx <= rect.width / 2 || dy <= rect.height / 2) {
+  if (dx <= halfWidth || dy <= halfHeight) {
     // The circle lies at most a radius away from the rectangle in the x or y directions
     return true;
   }
