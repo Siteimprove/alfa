@@ -199,7 +199,7 @@ export class Rectangle
   /**
    * @remarks
    * Checks if the rectangle intersects a given circle.
-   * See {@link ../docs/circle-rectangle-intersection.png} for a visual explanation of the case
+   * @see ../docs/circle-rectangle-intersection.png for a visual explanation of the case
    * where the circle center lies in one of the corners of the padded rectangle.
    */
   public intersectsCircle(cx: number, cy: number, r: number): boolean {
