@@ -18,7 +18,10 @@ export class WithBoundingBox extends WithName {
     message: string,
     name: string,
     box: Rectangle,
-    condition: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
+    condition: Either<
+      WithBoundingBox.UACondition,
+      WithBoundingBox.SizeAndSpacingCondition
+    >,
     tooCloseNeighbors: Iterable<Element>,
   ): WithBoundingBox;
 
@@ -26,7 +29,10 @@ export class WithBoundingBox extends WithName {
     message: string,
     name?: string,
     box?: Rectangle,
-    condition?: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
+    condition?: Either<
+      WithBoundingBox.UACondition,
+      WithBoundingBox.SizeAndSpacingCondition
+    >,
     tooCloseNeighbors?: Iterable<Element>,
   ): Diagnostic {
     if (name === undefined) {
@@ -61,7 +67,10 @@ export class WithBoundingBox extends WithName {
     message: string,
     name: string,
     box: Rectangle,
-    condition: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
+    condition: Either<
+      WithBoundingBox.UACondition,
+      WithBoundingBox.SizeAndSpacingCondition
+    >,
     tooCloseNeighbors: Iterable<Element>,
   ) {
     super(message, name);
