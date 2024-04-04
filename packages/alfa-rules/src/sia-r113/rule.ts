@@ -140,11 +140,10 @@ function hasSufficientSpacing(
       const candidateRect = candidate.getBoundingBox(device).getUnsafe();
 
       if (
-        circleIntersectsRect(
+        candidateRect.intersectsCircle(
           targetRect.center.x,
           targetRect.center.y,
           12,
-          candidateRect,
         )
       ) {
         // The 24px diameter circle of the target must not intersect with the bounding box of any other target
@@ -154,7 +153,7 @@ function hasSufficientSpacing(
       if (
         // If the candidate is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the candidate
         undersizedTargets.includes(candidate) &&
-        distanceSquared(targetRect, candidateRect) < 24 ** 2
+        targetRect.distanceSquared(candidateRect) < 24 ** 2
       ) {
         return false;
       }
@@ -162,72 +161,4 @@ function hasSufficientSpacing(
 
     return true;
   };
-}
-
-/**
- * TODO: Add link to docs/image
- *
- * TODO: Move to alfa-rectangle
- *
- * @internal
- */
-export function circleIntersectsRect(
-  cx: number,
-  cy: number,
-  r: number,
-  rect: Rectangle,
-): boolean {
-  // To check intersection, we pad the rectangle by the radius of the circle and divide the problem into three cases:
-  //
-  // 1. The circle center is outside the padded rectangle.
-  // 2. The circle center is inside the padded rectangle, but not in one of the corners.
-  // 3. The circle center lies in one of the corners of the padded rectangle in which case we need to compute the distance to the corner
-  //
-  //
-  //    ***          -------------------------------------
-  //  *    r*        |    |r                        |    |
-  // *   1---*       | r  |                         |    |
-  //  *     *        |---- ------------------------- ----|
-  //    ***          |    |                         |    |
-  //                 |    |                         |    |
-  //                 |    |            *            |    |
-  //                 |    |                         |    |
-  //                 |    |                         |    |
-  //                 |---- ------------------------- ----|
-  //                 |    |            2            |    |
-  //                 |3   |                         |    |
-  //                 -------------------------------------
-  //
-  //    |------------- dx -------------|
-  //                 |-- halfwidth+r --|
-  //
-
-  const center = rect.center;
-  const halfWidth = rect.width / 2;
-  const halfHeight = rect.height / 2;
-
-  const dx = Math.abs(cx - center.x);
-  const dy = Math.abs(cy - center.y);
-
-  if (dx > halfWidth + r || dy > halfHeight + r) {
-    // The circle center is outside the padded rectangle
-    return false;
-  }
-
-  // The circle center is inside the padded rectangle
-  if (dx <= halfWidth || dy <= halfHeight) {
-    // The circle lies at most a radius away from the rectangle in the x or y directions
-    return true;
-  }
-
-  // The circle center lies in one of the corners of the padded rectangle.
-  // If the distance from the circle center to the closest corner of the rectangle
-  // is less than the radius of the circle, the circle intersects the rectangle.
-  return (dx - halfWidth) ** 2 + (dy - halfHeight) ** 2 <= r ** 2;
-}
-
-function distanceSquared(rect1: Rectangle, rect2: Rectangle): number {
-  const c1 = rect1.center;
-  const c2 = rect2.center;
-  return (c1.x - c2.x) ** 2 + (c1.y - c2.y) ** 2;
 }
