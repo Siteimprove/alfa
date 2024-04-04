@@ -281,6 +281,7 @@
     { "path": "../alfa-device" },
     { "path": "../alfa-dom" },
     { "path": "../alfa-earl" },
+    { "path": "../alfa-either" },
     { "path": "../alfa-equatable" },
     { "path": "../alfa-future" },
     { "path": "../alfa-hash" },
