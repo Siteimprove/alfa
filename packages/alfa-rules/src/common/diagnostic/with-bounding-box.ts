@@ -1,7 +1,9 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import { Element } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { WithName } from "./with-name";
 
@@ -16,13 +18,8 @@ export class WithBoundingBox extends WithName {
     message: string,
     name: string,
     box: Rectangle,
-  ): WithBoundingBox;
-
-  public static of(
-    message: string,
-    name: string,
-    box: Rectangle,
     condition: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
+    tooCloseNeighbors: Iterable<Element>,
   ): WithBoundingBox;
 
   public static of(
@@ -30,16 +27,27 @@ export class WithBoundingBox extends WithName {
     name?: string,
     box?: Rectangle,
     condition?: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
+    tooCloseNeighbors?: Iterable<Element>,
   ): Diagnostic {
     if (name === undefined) {
       return new Diagnostic(message);
     }
 
-    if (box === undefined || condition === undefined) {
+    if (
+      box === undefined ||
+      condition === undefined ||
+      tooCloseNeighbors === undefined
+    ) {
       return new WithName(message, name);
     }
 
-    return new WithBoundingBox(message, name, box, condition);
+    return new WithBoundingBox(
+      message,
+      name,
+      box,
+      condition,
+      tooCloseNeighbors,
+    );
   }
 
   protected readonly _box: Rectangle;
@@ -47,12 +55,14 @@ export class WithBoundingBox extends WithName {
     WithBoundingBox.UACondition,
     WithBoundingBox.SizeAndSpacingCondition
   >;
+  protected readonly _tooCloseNeighbors: Sequence<Element>;
 
   protected constructor(
     message: string,
     name: string,
     box: Rectangle,
     condition: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
+    tooCloseNeighbors: Iterable<Element>,
   ) {
     super(message, name);
     this._box = box;
@@ -66,6 +76,8 @@ export class WithBoundingBox extends WithName {
           spacing: sizeAndSpacingCond.spacing,
         }),
     );
+
+    this._tooCloseNeighbors = Sequence.from(tooCloseNeighbors);
   }
 
   public get box(): Rectangle {
@@ -79,6 +91,10 @@ export class WithBoundingBox extends WithName {
     return this._condition;
   }
 
+  public get tooCloseNeighbors(): Sequence<Element> {
+    return this._tooCloseNeighbors;
+  }
+
   public equals(value: WithBoundingBox): boolean;
 
   public equals(value: unknown): value is this;
@@ -89,7 +105,8 @@ export class WithBoundingBox extends WithName {
       value._message === this._message &&
       value._name === this._name &&
       value._box.equals(this._box) &&
-      value._condition.equals(this._condition)
+      value._condition.equals(this._condition) &&
+      value._tooCloseNeighbors.equals(this._tooCloseNeighbors)
     );
   }
 
@@ -97,6 +114,7 @@ export class WithBoundingBox extends WithName {
     super.hash(hash);
     this._box.hash(hash);
     this._condition.hash(hash);
+    this._tooCloseNeighbors.hash(hash);
   }
 
   public toJSON(): WithBoundingBox.JSON {
@@ -104,6 +122,7 @@ export class WithBoundingBox extends WithName {
       ...super.toJSON(),
       box: this._box.toJSON(),
       condition: this._condition.toJSON(),
+      tooCloseNeighbors: this._tooCloseNeighbors.toJSON(),
     };
   }
 }
@@ -112,6 +131,7 @@ export namespace WithBoundingBox {
   export interface JSON extends WithName.JSON {
     box: Rectangle.JSON;
     condition: json.JSON;
+    tooCloseNeighbors: Sequence.JSON<Element>;
   }
 
   export interface UACondition {

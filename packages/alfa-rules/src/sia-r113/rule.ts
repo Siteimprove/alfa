@@ -3,6 +3,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -33,6 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
         const box = target.getBoundingBox(device).getUnsafe();
         const name = WithName.getName(target, device).getOr("");
 
+        const tooCloseNeighbors: Array<Element> = [];
         return {
           1: expectation(
             isUserAgentControlled()(target),
@@ -43,9 +45,17 @@ export default Rule.Atomic.of<Page, Element>({
                 () => Outcomes.HasSufficientSize(name, box),
                 () =>
                   expectation(
-                    hasSufficientSpacing(document, device)(target),
+                    hasSufficientSpacing(document, device)(
+                      target,
+                      tooCloseNeighbors,
+                    ),
                     () => Outcomes.HasSufficientSpacing(name, box),
-                    () => Outcomes.HasInsufficientSizeAndSpacing(name, box),
+                    () =>
+                      Outcomes.HasInsufficientSizeAndSpacing(
+                        name,
+                        box,
+                        tooCloseNeighbors,
+                      ),
                   ),
               ),
           ),
@@ -66,6 +76,7 @@ export namespace Outcomes {
         name,
         box,
         Either.left({ ua: true }),
+        [],
       ),
     );
 
@@ -76,6 +87,7 @@ export namespace Outcomes {
         name,
         box,
         Either.right({ size: true, spacing: true }),
+        [],
       ),
     );
 
@@ -86,18 +98,40 @@ export namespace Outcomes {
         name,
         box,
         Either.right({ size: false, spacing: true }),
+        [],
       ),
     );
 
-  export const HasInsufficientSizeAndSpacing = (name: string, box: Rectangle) =>
+  export const HasInsufficientSizeAndSpacing = (
+    name: string,
+    box: Rectangle,
+    tooCloseNeighbors: Iterable<Element>,
+  ) =>
     Err.of(
       WithBoundingBox.of(
         "Target has insufficient size and spacing",
         name,
         box,
         Either.right({ size: false, spacing: false }),
+        tooCloseNeighbors,
       ),
     );
+}
+
+function hasSufficientSpacing(
+  document: Document,
+  device: Device,
+): Predicate<Element, [Array<Element>]> {
+  return (target, tooCloseNeighbors) => {
+    for (const underspacedOther of findElementsWithInsufficientSpacingToTarget(
+      document,
+      device,
+      target,
+    )) {
+      tooCloseNeighbors.push(underspacedOther);
+    }
+    return tooCloseNeighbors.length === 0;
+  };
 }
 
 const undersizedCache = Cache.empty<
@@ -107,35 +141,32 @@ const undersizedCache = Cache.empty<
 
 /**
  * @remarks
- * This predicate tests that the target has sufficient spacing around it.
+ * This generator functions yields all elements that have insufficient spacing to the target.
  * The spacing is calculated by drawing a circle around the center of the bounding box of the target of radius 12.
  * The target is underspaced, if
  * 1) the circle intersects with the bounding box of any other target, or
  * 2) the distance between the center of the bounding box of the target
  *    and the center of the bounding box of any other **undersized** target is less than 24.
  */
-// TODO: Return all offending other candidates
-function hasSufficientSpacing(
-  document: Document, // TODO: Should we pass in the targets instead?
+function* findElementsWithInsufficientSpacingToTarget(
+  document: Document,
   device: Device,
-): Predicate<Element> {
-  return (target) => {
-    // Existence of a bounding box is guaranteed by applicability
-    const targetRect = target.getBoundingBox(device).getUnsafe();
+  target: Element,
+): Iterable<Element> {
+  // Existence of a bounding box is guaranteed by applicability
+  const targetRect = target.getBoundingBox(device).getUnsafe();
 
-    const undersizedTargets = undersizedCache
-      .get(document, Cache.empty)
-      .get(device, () =>
-        targetsOfPointerEvents(document, device).reject(
-          hasSufficientSize(24, device),
-        ),
-      );
+  const undersizedTargets = undersizedCache
+    .get(document, Cache.empty)
+    .get(device, () =>
+      targetsOfPointerEvents(document, device).reject(
+        hasSufficientSize(24, device),
+      ),
+    );
 
-    for (const candidate of targetsOfPointerEvents(document, device)) {
-      if (target === candidate) {
-        continue;
-      }
-
+  // TODO: This needs to be optimized, we should be able to use some spatial data structure like a quadtree to reduce the number of comparisons
+  for (const candidate of targetsOfPointerEvents(document, device)) {
+    if (target !== candidate) {
       // Existence of a bounding box is guaranteed by applicability
       const candidateRect = candidate.getBoundingBox(device).getUnsafe();
 
@@ -144,21 +175,14 @@ function hasSufficientSpacing(
           targetRect.center.x,
           targetRect.center.y,
           12,
-        )
+        ) ||
+        (undersizedTargets.includes(candidate) &&
+          targetRect.distanceSquared(candidateRect) < 24 ** 2)
       ) {
-        // The 24px diameter circle of the target must not intersect with the bounding box of any other target
-        return false;
-      }
-
-      if (
-        // If the candidate is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the candidate
-        undersizedTargets.includes(candidate) &&
-        targetRect.distanceSquared(candidateRect) < 24 ** 2
-      ) {
-        return false;
+        // The 24px diameter circle of the target must not intersect with the bounding box of any other target, or
+        // if the candidate is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the candidate
+        yield candidate;
       }
     }
-
-    return true;
-  };
+  }
 }

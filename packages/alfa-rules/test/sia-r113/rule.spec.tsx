@@ -2,7 +2,6 @@ import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 
 import R113, { Outcomes } from "../../src/sia-r113/rule";
 
@@ -144,12 +143,14 @@ test("evaluate() fails undersized button with vertically adjacent undersized but
       1: Outcomes.HasInsufficientSizeAndSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
+        [target2],
       ),
     }),
     failed(R113, target2, {
       1: Outcomes.HasInsufficientSizeAndSpacing(
         "World",
         target2.getBoundingBox(device).getUnsafe(),
+        [target1],
       ),
     }),
   ]);
@@ -183,6 +184,7 @@ test("evaluate() fails an undersized button whose 24px diameter circle intersect
       1: Outcomes.HasInsufficientSizeAndSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
+        [target2],
       ),
     }),
     passed(R113, target2, {

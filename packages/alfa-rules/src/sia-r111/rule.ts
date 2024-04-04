@@ -53,6 +53,7 @@ export namespace Outcomes {
         name,
         box,
         Left.of({ ua: true }),
+        [],
       ),
     );
 
@@ -63,6 +64,7 @@ export namespace Outcomes {
         name,
         box,
         Right.of({ size: true, spacing: true }),
+        [],
       ),
     );
 
@@ -73,6 +75,7 @@ export namespace Outcomes {
         name,
         box,
         Right.of({ size: false, spacing: true }),
+        [],
       ),
     );
 }
