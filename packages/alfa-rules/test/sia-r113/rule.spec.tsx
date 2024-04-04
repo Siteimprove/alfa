@@ -2,8 +2,9 @@ import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 
-import R113, { Outcomes } from "../../src/sia-r113/rule";
+import R113, { Outcomes, circleIntersectsRect } from "../../src/sia-r113/rule";
 
 import { evaluate } from "../common/evaluate";
 import { failed, inapplicable, passed } from "../common/outcome";
@@ -245,5 +246,81 @@ test("evaluate() is inapplicable when there is no layout information", async (t)
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
+});
+
+test("circleIntersectsRect() returns false when the circle center is to the left of the radius-padded rectangle", (t) => {
+  t.equal(circleIntersectsRect(3, 11, 4, Rectangle.of(8, 8, 10, 6)), false);
+});
+
+test("circleIntersectsRect() returns false when the circle center is above the radius-padded rectangle", (t) => {
+  t.equal(circleIntersectsRect(13, 3, 4, Rectangle.of(8, 8, 10, 6)), false);
+});
+
+test("circleIntersectsRect() returns false when the circle center is to the right of the radius-padded rectangle", (t) => {
+  t.equal(circleIntersectsRect(23, 11, 4, Rectangle.of(8, 8, 10, 6)), false);
+});
+
+test("circleIntersectsRect() returns false when the circle center is below the radius-padded rectangle", (t) => {
+  t.equal(circleIntersectsRect(13, 19, 4, Rectangle.of(8, 8, 10, 6)), false);
+});
+
+test("circleIntersectsRect() returns true when the circle center is inside the radius-padded rectangle on the left, but not in the corners", (t) => {
+  t.equal(circleIntersectsRect(5, 11, 4, Rectangle.of(8, 8, 10, 6)), true);
+});
+
+test("circleIntersectsRect() returns true when the circle center is inside the radius-padded rectangle on the top, but not in the corners", (t) => {
+  t.equal(circleIntersectsRect(13, 5, 4, Rectangle.of(8, 8, 10, 6)), true);
+});
+
+test("circleIntersectsRect() returns true when the circle center is inside the radius-padded rectangle on the right, but not in the corners", (t) => {
+  t.equal(circleIntersectsRect(21, 11, 4, Rectangle.of(8, 8, 10, 6)), true);
+});
+
+test("circleIntersectsRect() returns true when the circle center is inside the radius-padded rectangle on the bottom, but not in the corners", (t) => {
+  t.equal(circleIntersectsRect(13, 17, 4, Rectangle.of(8, 8, 10, 6)), true);
+});
+
+test("circleIntersectsRect() returns true when the circle center is inside the rectangle", (t) => {
+  t.equal(circleIntersectsRect(12, 12, 4, Rectangle.of(8, 8, 10, 6)), true);
+});
+
+test(`circleIntersectsRect() returns false when the circle center is inside the radius-padded rectangle in the top left corner,
+      but more than a radius distance away from the corner`, (t) => {
+  t.equal(circleIntersectsRect(5, 5, 4, Rectangle.of(8, 8, 10, 6)), false);
+});
+
+test(`circleIntersectsRect() returns false when the circle center is inside the radius-padded rectangle in the top right corner,
+      but more than a radius distance away from the corner`, (t) => {
+  t.equal(circleIntersectsRect(21, 5, 4, Rectangle.of(8, 8, 10, 6)), false);
+});
+
+test(`circleIntersectsRect() returns false when the circle center is inside the radius-padded rectangle in the bottom right corner,
+      but more than a radius distance away from the corner`, (t) => {
+  t.equal(circleIntersectsRect(21, 17, 4, Rectangle.of(8, 8, 10, 6)), false);
+});
+
+test(`circleIntersectsRect() returns false when the circle center is inside the radius-padded rectangle in the bottom left corner,
+      but more than a radius distance away from the corner`, (t) => {
+  t.equal(circleIntersectsRect(5, 17, 4, Rectangle.of(8, 8, 10, 6)), false);
+});
+
+test(`circleIntersectsRect() returns true when the circle center is inside the radius-padded rectangle in the top left corner,
+      and less than a radius distance away from the corner`, (t) => {
+  t.equal(circleIntersectsRect(6, 6, 4, Rectangle.of(8, 8, 10, 6)), true);
+});
+
+test(`circleIntersectsRect() returns true when the circle center is inside the radius-padded rectangle in the top right corner,
+      and less than a radius distance away from the corner`, (t) => {
+  t.equal(circleIntersectsRect(20, 6, 4, Rectangle.of(8, 8, 10, 6)), true);
+});
+
+test(`circleIntersectsRect() returns true when the circle center is inside the radius-padded rectangle in the bottom right corner,
+      and less than a radius distance away from the corner`, (t) => {
+  t.equal(circleIntersectsRect(20, 16, 4, Rectangle.of(8, 8, 10, 6)), true);
+});
+
+test(`circleIntersectsRect() returns true when the circle center is inside the radius-padded rectangle in the bottom left corner,
+      and less than a radius distance away from the corner`, (t) => {
+  t.equal(circleIntersectsRect(6, 16, 4, Rectangle.of(8, 8, 10, 6)), true);
 });
 

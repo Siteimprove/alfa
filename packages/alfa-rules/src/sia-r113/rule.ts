@@ -148,7 +148,10 @@ function hasSufficientSpacing(
   };
 }
 
-function circleIntersectsRect(
+/**
+ * @internal
+ */
+export function circleIntersectsRect(
   cx: number,
   cy: number,
   r: number,
