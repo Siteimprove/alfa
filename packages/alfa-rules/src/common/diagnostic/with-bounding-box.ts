@@ -1,4 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import { Either } from "@siteimprove/alfa-either";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 
@@ -21,49 +22,60 @@ export class WithBoundingBox extends WithName {
     message: string,
     name: string,
     box: Rectangle,
-    condition: WithBoundingBox.Condition,
+    condition: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
   ): WithBoundingBox;
 
   public static of(
     message: string,
     name?: string,
     box?: Rectangle,
-    condition?: WithBoundingBox.Condition,
+    condition?: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
   ): Diagnostic {
     if (name === undefined) {
       return new Diagnostic(message);
     }
 
-    if (box === undefined) {
+    if (box === undefined || condition === undefined) {
       return new WithName(message, name);
-    }
-
-    if (condition === undefined) {
-      return new WithBoundingBox(message, name, box, {});
     }
 
     return new WithBoundingBox(message, name, box, condition);
   }
 
   protected readonly _box: Rectangle;
-  protected readonly _condition: WithBoundingBox.Condition;
+  protected readonly _condition: Either<
+    WithBoundingBox.UACondition,
+    WithBoundingBox.SizeAndSpacingCondition
+  >;
 
   protected constructor(
     message: string,
     name: string,
     box: Rectangle,
-    condition: WithBoundingBox.Condition,
+    condition: Either<{ ua: boolean }, { size: boolean; spacing: boolean }>,
   ) {
     super(message, name);
     this._box = box;
-    this._condition = condition;
+
+    // Copy the objects to ensure they are immutable from the outside.
+    this._condition = condition.either(
+      (uaCond) => Either.left({ ua: uaCond.ua }),
+      (sizeAndSpacingCond) =>
+        Either.right({
+          size: sizeAndSpacingCond.size,
+          spacing: sizeAndSpacingCond.spacing,
+        }),
+    );
   }
 
   public get box(): Rectangle {
     return this._box;
   }
 
-  public get condition(): WithBoundingBox.Condition {
+  public get condition(): Either<
+    WithBoundingBox.UACondition,
+    WithBoundingBox.SizeAndSpacingCondition
+  > {
     return this._condition;
   }
 
@@ -77,27 +89,21 @@ export class WithBoundingBox extends WithName {
       value._message === this._message &&
       value._name === this._name &&
       value._box.equals(this._box) &&
-      value._condition.size === this._condition.size &&
-      value._condition.spacing === this._condition.spacing
+      value._condition.equals(this._condition)
     );
   }
 
   public hash(hash: Hash) {
     super.hash(hash);
     this._box.hash(hash);
-    hash.writeUnknown(this._condition.size);
-    hash.writeUnknown(this._condition.spacing);
+    this._condition.hash(hash);
   }
 
   public toJSON(): WithBoundingBox.JSON {
     return {
       ...super.toJSON(),
       box: this._box.toJSON(),
-      condition: {
-        type: "condition",
-        size: this._condition.size,
-        spacing: this._condition.spacing,
-      },
+      condition: this._condition.toJSON(),
     };
   }
 }
@@ -108,9 +114,13 @@ export namespace WithBoundingBox {
     condition: json.JSON;
   }
 
-  export interface Condition {
-    size?: boolean;
-    spacing?: boolean;
+  export interface UACondition {
+    ua: boolean;
+  }
+
+  export interface SizeAndSpacingCondition {
+    size: boolean;
+    spacing: boolean;
   }
 
   export function isWithBoundingBox(

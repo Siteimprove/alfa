@@ -2,6 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element } from "@siteimprove/alfa-dom";
+import { Either } from "@siteimprove/alfa-either";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -59,21 +60,33 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsUserAgentControlled = (name: string, box: Rectangle) =>
-    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
+    Ok.of(
+      WithBoundingBox.of(
+        "Target is user agent controlled",
+        name,
+        box,
+        Either.left({ ua: true }),
+      ),
+    );
 
   export const HasSufficientSize = (name: string, box: Rectangle) =>
     Ok.of(
-      WithBoundingBox.of("Target has sufficient size", name, box, {
-        size: true,
-      }),
+      WithBoundingBox.of(
+        "Target has sufficient size",
+        name,
+        box,
+        Either.right({ size: true, spacing: true }),
+      ),
     );
 
   export const HasSufficientSpacing = (name: string, box: Rectangle) =>
     Ok.of(
-      WithBoundingBox.of("Target has sufficient spacing", name, box, {
-        size: false,
-        spacing: true,
-      }),
+      WithBoundingBox.of(
+        "Target has sufficient spacing",
+        name,
+        box,
+        Either.right({ size: false, spacing: true }),
+      ),
     );
 
   export const HasInsufficientSizeAndSpacing = (name: string, box: Rectangle) =>
@@ -82,7 +95,7 @@ export namespace Outcomes {
         "Target has insufficient size and spacing",
         name,
         box,
-        { size: false, spacing: false },
+        Either.right({ size: false, spacing: false }),
       ),
     );
 }
@@ -101,8 +114,9 @@ const undersizedCache = Cache.empty<
  * 2) the distance between the center of the bounding box of the target
  *    and the center of the bounding box of any other **undersized** target is less than 24.
  */
+// TODO: Return all offending other candidates
 function hasSufficientSpacing(
-  document: Document,
+  document: Document, // TODO: Should we pass in the targets instead?
   device: Device,
 ): Predicate<Element> {
   return (target) => {
@@ -133,10 +147,12 @@ function hasSufficientSpacing(
           candidateRect,
         )
       ) {
+        // The 24px diameter circle of the target must not intersect with the bounding box of any other target
         return false;
       }
 
       if (
+        // If the candidate is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the candidate
         undersizedTargets.includes(candidate) &&
         distanceSquared(targetRect, candidateRect) < 24 ** 2
       ) {
@@ -149,6 +165,10 @@ function hasSufficientSpacing(
 }
 
 /**
+ * TODO: Add link to docs/image
+ *
+ * TODO: Move to alfa-rectangle
+ *
  * @internal
  */
 export function circleIntersectsRect(
@@ -160,11 +180,13 @@ export function circleIntersectsRect(
   // To check intersection, we pad the rectangle by the radius of the circle and divide the problem into three cases:
   //
   // 1. The circle center is outside the padded rectangle.
+  // 2. The circle center is inside the padded rectangle, but not in one of the corners.
+  // 3. The circle center lies in one of the corners of the padded rectangle in which case we need to compute the distance to the corner
   //
   //
   //    ***          -------------------------------------
   //  *    r*        |    |r                        |    |
-  // *   *---*       | r  |                         |    |
+  // *   1---*       | r  |                         |    |
   //  *     *        |---- ------------------------- ----|
   //    ***          |    |                         |    |
   //                 |    |                         |    |
@@ -172,51 +194,12 @@ export function circleIntersectsRect(
   //                 |    |                         |    |
   //                 |    |                         |    |
   //                 |---- ------------------------- ----|
-  //                 |    |                         |    |
-  //                 |    |                         |    |
+  //                 |    |            2            |    |
+  //                 |3   |                         |    |
   //                 -------------------------------------
   //
   //    |------------- dx -------------|
   //                 |-- halfwidth+r --|
-  //
-  // 2. The circle center is inside the padded rectangle, but not in one of the corners.
-  //
-  //
-  //                 -------------------------------------
-  //                 |    |                         |    |
-  //                 |    |                         |    |
-  //                 |---- ------------------------- ----|
-  //                 |    |                         |    |
-  //                 |    |                         |    |
-  //                 |    |            *            |    |
-  //                 |    |                         |    |
-  //                 |    |                         |    |
-  //                 |---- -----***----------------- ----|
-  //                 |    |   *     *               |    |
-  //                 |    |  *   *   *              |    |
-  //                 ---------*-----*---------------------
-  //                            ***
-  //                             |- dx-|
-  //                      |- halfwidth-|
-  //
-  // 3. The circle center lies in one of the corners of the padded rectangle in which case we need to compute the distance to the corner
-  //
-  //
-  //                |              |
-  //                |              |
-  //                |              |
-  //                |     *******  |
-  //                |            ****
-  //                @@@@@@@        |  **
-  //             @@ |------@@@@----|----**--------
-  //                |           @@ |     *
-  //                |             @@     *
-  //                |        *     @     **
-  //                |              @@     *
-  //                |  @            @     *
-  //                |              |@@
-  //                -----------------@------------
-  //                                 @
   //
 
   const center = rect.center;
