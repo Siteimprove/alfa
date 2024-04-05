@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
+import { Left, Right } from "@siteimprove/alfa-either";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -45,12 +46,36 @@ export default Rule.Atomic.of<Page, Element>({
  * @public
  */
 export namespace Outcomes {
+  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
+    Ok.of(
+      WithBoundingBox.of(
+        "Target is user agent controlled",
+        name,
+        box,
+        Left.of({ ua: true }),
+        [],
+      ),
+    );
+
   export const HasSufficientSize = (name: string, box: Rectangle) =>
-    Ok.of(WithBoundingBox.of("Target has sufficient size", name, box));
+    Ok.of(
+      WithBoundingBox.of(
+        "Target has sufficient size",
+        name,
+        box,
+        Right.of({ size: true, spacing: true }),
+        [],
+      ),
+    );
 
   export const HasInsufficientSize = (name: string, box: Rectangle) =>
-    Err.of(WithBoundingBox.of("Target has insufficient size", name, box));
-
-  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
-    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
+    Err.of(
+      WithBoundingBox.of(
+        "Target has insufficient size",
+        name,
+        box,
+        Right.of({ size: false, spacing: true }),
+        [],
+      ),
+    );
 }

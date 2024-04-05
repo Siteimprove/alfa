@@ -2,9 +2,11 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Either } from "@siteimprove/alfa-either";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -16,8 +18,6 @@ import { WithBoundingBox, WithName } from "../common/diagnostic";
 
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
-
-const { or } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r113",
@@ -32,13 +32,36 @@ export default Rule.Atomic.of<Page, Element>({
         // Existence of a bounding box is guaranteed by applicability
         const box = target.getBoundingBox(device).getUnsafe();
         const name = WithName.getName(target, device).getOr("");
+
         return {
           1: expectation(
             isUserAgentControlled()(target),
             () => Outcomes.IsUserAgentControlled(name, box),
-            hasSufficientSizeOrSpacing(document, device)(target)
-              ? () => Outcomes.HasSufficientSizeOrSpacing(name, box)
-              : () => Outcomes.HasInsufficientSizeAndSpacing(name, box),
+            () =>
+              expectation(
+                hasSufficientSize(24, device)(target),
+                () => Outcomes.HasSufficientSize(name, box),
+                () => {
+                  const tooCloseNeighbors = Sequence.from(
+                    findElementsWithInsufficientSpacingToTarget(
+                      document,
+                      device,
+                      target,
+                    ),
+                  );
+
+                  return expectation(
+                    tooCloseNeighbors.isEmpty(),
+                    () => Outcomes.HasSufficientSpacing(name, box),
+                    () =>
+                      Outcomes.HasInsufficientSizeAndSpacing(
+                        name,
+                        box,
+                        tooCloseNeighbors,
+                      ),
+                  );
+                },
+              ),
           ),
         };
       },
@@ -50,96 +73,105 @@ export default Rule.Atomic.of<Page, Element>({
  * @public
  */
 export namespace Outcomes {
-  export const HasSufficientSizeOrSpacing = (name: string, box: Rectangle) =>
-    Ok.of(
-      WithBoundingBox.of("Target has sufficient size or spacing", name, box),
-    );
-
-  export const HasInsufficientSizeAndSpacing = (name: string, box: Rectangle) =>
-    Err.of(
-      WithBoundingBox.of("Target has insufficient size and spacing", name, box),
-    );
-
   export const IsUserAgentControlled = (name: string, box: Rectangle) =>
-    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
+    Ok.of(
+      WithBoundingBox.of(
+        "Target is user agent controlled",
+        name,
+        box,
+        Either.left({ ua: true }),
+        [],
+      ),
+    );
+
+  export const HasSufficientSize = (name: string, box: Rectangle) =>
+    Ok.of(
+      WithBoundingBox.of(
+        "Target has sufficient size",
+        name,
+        box,
+        Either.right({ size: true, spacing: true }),
+        [],
+      ),
+    );
+
+  export const HasSufficientSpacing = (name: string, box: Rectangle) =>
+    Ok.of(
+      WithBoundingBox.of(
+        "Target has sufficient spacing",
+        name,
+        box,
+        Either.right({ size: false, spacing: true }),
+        [],
+      ),
+    );
+
+  export const HasInsufficientSizeAndSpacing = (
+    name: string,
+    box: Rectangle,
+    tooCloseNeighbors: Iterable<Element>,
+  ) =>
+    Err.of(
+      WithBoundingBox.of(
+        "Target has insufficient size and spacing",
+        name,
+        box,
+        Either.right({ size: false, spacing: false }),
+        tooCloseNeighbors,
+      ),
+    );
 }
 
-function hasSufficientSizeOrSpacing(
-  document: Document,
-  device: Device,
-): Predicate<Element> {
-  return or(
-    hasSufficientSize(24, device),
-    hasSufficientSpacing(document, device),
-  );
-}
-
-const spacingCache = Cache.empty<
+const undersizedCache = Cache.empty<
   Document,
-  Cache<Device, Cache<Element, boolean>>
+  Cache<Device, Sequence<Element>>
 >();
 
 /**
+ * Yields all elements that have insufficient spacing to the target.
+ *
  * @remarks
- * Spacing is calculated by
- * 1. drawing a 24px diameter circle around the center of the bounding box of the target,
- * 2. checking if the circle intersects with the bounding box of any other target, or
- * 3. if the circle intersects with the 24px diameter circle of another undersized target.
+ * The spacing is calculated by drawing a circle around the center of the bounding box of the target of radius 12.
+ * The target is underspaced, if
+ * 1) the circle intersects with the bounding box of any other target, or
+ * 2) the distance between the center of the bounding box of the target
+ *    and the center of the bounding box of any other **undersized** target is less than 24.
  */
-function hasSufficientSpacing(
+function* findElementsWithInsufficientSpacingToTarget(
   document: Document,
   device: Device,
-): Predicate<Element> {
-  return (target) => {
-    // The target might have been cached while computing the spacing for another target
-    const cachedTarget = spacingCache
-      .get(document, Cache.empty)
-      .get(device, Cache.empty)
-      .get(target);
+  target: Element,
+): Iterable<Element> {
+  // Existence of a bounding box is guaranteed by applicability
+  const targetRect = target.getBoundingBox(device).getUnsafe();
 
-    if (cachedTarget.isSome()) {
-      return cachedTarget.get();
-    }
+  const undersizedTargets = undersizedCache
+    .get(document, Cache.empty)
+    .get(device, () =>
+      targetsOfPointerEvents(document, device).reject(
+        hasSufficientSize(24, device),
+      ),
+    );
 
-    // Existence of a bounding box is guaranteed by applicability
-    const box = target.getBoundingBox(device).getUnsafe();
-
-    for (const otherTarget of targetsOfPointerEvents(document, device)) {
-      if (target === otherTarget) {
-        continue;
-      }
-
+  // TODO: This needs to be optimized, we should be able to use some spatial data structure like a quadtree to reduce the number of comparisons
+  for (const candidate of targetsOfPointerEvents(document, device)) {
+    if (target !== candidate) {
       // Existence of a bounding box is guaranteed by applicability
-      const other = otherTarget.getBoundingBox(device).getUnsafe();
+      const candidateRect = candidate.getBoundingBox(device).getUnsafe();
 
-      // If the box of the target doesn't intersect with the circumscribed square of the other target, we know they are far enough apart
       if (
-        !box.intersects(
-          Rectangle.of(other.center.x - 12, other.center.y - 12, 24, 24),
-        )
+        candidateRect.intersectsCircle(
+          targetRect.center.x,
+          targetRect.center.y,
+          12,
+        ) ||
+        (undersizedTargets.includes(candidate) &&
+          targetRect.distanceSquared(candidateRect) < 24 ** 2)
       ) {
-        continue;
-      }
-
-      // TODO: Check if the 24px diameter circle of the target intersect with the bounding box of the other target
-
-      // If the other target is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the other target
-      if (
-        (other.width < 24 || other.height < 24) &&
-        (box.center.x - other.center.x) ** 2 +
-          (box.center.y - other.center.y) ** 2 <=
-          24 ** 2
-      ) {
-        // If the other is undersized and too close to this we already know it will also fail the rule, so we might as well cache it
-        spacingCache
-          .get(document, Cache.empty)
-          .get(device, Cache.empty)
-          .set(otherTarget, false);
-
-        return false;
+        // The 24px diameter circle of the target must not intersect with the bounding box of any other target, or
+        // if the candidate is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the candidate
+        yield candidate;
       }
     }
-
-    return true;
-  };
+  }
 }

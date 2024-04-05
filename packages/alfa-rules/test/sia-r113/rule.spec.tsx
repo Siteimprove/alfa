@@ -24,7 +24,7 @@ test("evaluate() passes button with clickable area of exactly 24x24 pixels", asy
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSize(
         "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),
@@ -67,7 +67,7 @@ test("evaluate() passes button with clickable area of less than 24x24 pixels and
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),
@@ -100,13 +100,13 @@ test("evaluate() passes button with clickable area of less than 24x24 pixels and
 
   t.deepEqual(await evaluate(R113, { document, device }), [
     passed(R113, target1, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
       ),
     }),
     passed(R113, target2, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "World",
         target2.getBoundingBox(device).getUnsafe(),
       ),
@@ -143,19 +143,20 @@ test("evaluate() fails undersized button with vertically adjacent undersized but
       1: Outcomes.HasInsufficientSizeAndSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
+        [target2],
       ),
     }),
     failed(R113, target2, {
       1: Outcomes.HasInsufficientSizeAndSpacing(
         "World",
         target2.getBoundingBox(device).getUnsafe(),
+        [target1],
       ),
     }),
   ]);
 });
 
-// TODO: This test is added to document wrong behavior, we should change the assertion from passing to failing and fix the implementation
-test("evaluate() incorrectly passes undersized button whose 24px diameter circle intersects other targets bounding box, but not other targets circle", async (t) => {
+test("evaluate() fails an undersized button whose 24px diameter circle intersects other targets bounding box, but not other targets circle", async (t) => {
   const device = Device.standard();
 
   const target1 = (
@@ -179,14 +180,15 @@ test("evaluate() incorrectly passes undersized button whose 24px diameter circle
   const document = h.document([target1, target2]);
 
   t.deepEqual(await evaluate(R113, { document, device }), [
-    passed(R113, target1, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+    failed(R113, target1, {
+      1: Outcomes.HasInsufficientSizeAndSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
+        [target2],
       ),
     }),
     passed(R113, target2, {
-      1: Outcomes.HasSufficientSizeOrSpacing(
+      1: Outcomes.HasSufficientSpacing(
         "World",
         target2.getBoundingBox(device).getUnsafe(),
       ),
@@ -247,4 +249,5 @@ test("evaluate() is inapplicable when there is no layout information", async (t)
 
   t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
 });
+
 
