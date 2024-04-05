@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rectangle
 
+## 0.77.0
+
+### Minor Changes
+
+- **Added:** Methods `Rectangle#insersectsCircle` and `Rectangle#distanceSquared`. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
 ## 0.76.0
 
 ## 0.75.2

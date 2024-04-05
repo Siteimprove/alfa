@@ -1,5 +1,17 @@
 # @siteimprove/alfa-rules
 
+## 0.77.0
+
+### Minor Changes
+
+- **Changed:** R113 now sends more information about how it succeed and the other targets that caused the spacing criteria to fail. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
+### Patch Changes
+
+- **Fixed:** R113 spacing condition is now calculated more accurately. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
+  The part of the condition requiring computation of intersections between the circle around the center of the target and the bounding box of all other targets has been implemented.
+
 ## 0.76.0
 
 ### Minor Changes

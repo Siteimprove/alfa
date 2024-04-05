@@ -1,5 +1,19 @@
 # Alfa changelog
 
+## [0.77.0](../../compare/v0.76.0...v0.77.0) (2024-04-05)
+
+### Added
+
+- [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md#0770): Methods `Rectangle#insersectsCircle` and `Rectangle#distanceSquared`. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0770): R113 now sends more information about how it succeed and the other targets that caused the spacing criteria to fail. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0770): R113 spacing condition is now calculated more accurately. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
 ## [0.76.0](../../compare/v0.75.2...v0.76.0) (2024-03-21)
 
 ### Added
