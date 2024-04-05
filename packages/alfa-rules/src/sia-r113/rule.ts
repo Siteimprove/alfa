@@ -4,7 +4,6 @@ import { Device } from "@siteimprove/alfa-device";
 import { Document, Element } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -34,7 +33,6 @@ export default Rule.Atomic.of<Page, Element>({
         const box = target.getBoundingBox(device).getUnsafe();
         const name = WithName.getName(target, device).getOr("");
 
-        const tooCloseNeighbors: Array<Element> = [];
         return {
           1: expectation(
             isUserAgentControlled()(target),
@@ -43,12 +41,17 @@ export default Rule.Atomic.of<Page, Element>({
               expectation(
                 hasSufficientSize(24, device)(target),
                 () => Outcomes.HasSufficientSize(name, box),
-                () =>
-                  expectation(
-                    hasSufficientSpacing(document, device)(
+                () => {
+                  const tooCloseNeighbors = Sequence.from(
+                    findElementsWithInsufficientSpacingToTarget(
+                      document,
+                      device,
                       target,
-                      tooCloseNeighbors,
                     ),
+                  );
+
+                  return expectation(
+                    tooCloseNeighbors.isEmpty(),
                     () => Outcomes.HasSufficientSpacing(name, box),
                     () =>
                       Outcomes.HasInsufficientSizeAndSpacing(
@@ -56,7 +59,8 @@ export default Rule.Atomic.of<Page, Element>({
                         box,
                         tooCloseNeighbors,
                       ),
-                  ),
+                  );
+                },
               ),
           ),
         };
@@ -118,30 +122,15 @@ export namespace Outcomes {
     );
 }
 
-function hasSufficientSpacing(
-  document: Document,
-  device: Device,
-): Predicate<Element, [Array<Element>]> {
-  return (target, tooCloseNeighbors) => {
-    for (const underspacedOther of findElementsWithInsufficientSpacingToTarget(
-      document,
-      device,
-      target,
-    )) {
-      tooCloseNeighbors.push(underspacedOther);
-    }
-    return tooCloseNeighbors.length === 0;
-  };
-}
-
 const undersizedCache = Cache.empty<
   Document,
   Cache<Device, Sequence<Element>>
 >();
 
 /**
+ * Yields all elements that have insufficient spacing to the target.
+ *
  * @remarks
- * This generator functions yields all elements that have insufficient spacing to the target.
  * The spacing is calculated by drawing a circle around the center of the bounding box of the target of radius 12.
  * The target is underspaced, if
  * 1) the circle intersects with the bounding box of any other target, or
