@@ -23,7 +23,6 @@ export class Rectangle implements Equatable, Hashable, Serializable<Rectangle.JS
     };
     // (undocumented)
     contains(other: Rectangle): boolean;
-    // (undocumented)
     distanceSquared(other: Rectangle): number;
     // (undocumented)
     static empty(): Rectangle;
@@ -41,7 +40,6 @@ export class Rectangle implements Equatable, Hashable, Serializable<Rectangle.JS
     intersection(other: Rectangle): Rectangle;
     // (undocumented)
     intersects(other: Rectangle): boolean;
-    // (undocumented)
     intersectsCircle(cx: number, cy: number, r: number): boolean;
     // (undocumented)
     isEmpty(): boolean;
