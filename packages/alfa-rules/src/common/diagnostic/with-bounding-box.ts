@@ -100,7 +100,7 @@ export class WithBoundingBox extends WithName {
     return this._condition;
   }
 
-  public get tooCloseNeighbors(): Sequence<Element> {
+  public get tooCloseNeighbors(): Iterable<Element> {
     return this._tooCloseNeighbors;
   }
 
