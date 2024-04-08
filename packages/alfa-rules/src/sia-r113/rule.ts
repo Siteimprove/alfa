@@ -1,7 +1,8 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
@@ -9,6 +10,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Style } from "@siteimprove/alfa-style";
 
 import { expectation } from "../common/act/expectation";
 
@@ -18,6 +21,11 @@ import { WithBoundingBox, WithName } from "../common/diagnostic";
 
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
+import { hasName } from "@siteimprove/alfa-aria/src/role/predicate";
+
+const { and } = Predicate;
+const { hasComputedStyle, isFocusable, isVisible } = Style;
+const { hasRole } = DOM;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r113",
@@ -25,7 +33,47 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return targetsOfPointerEvents(document, device);
+        // Strategy: Traverse tree and
+        // 1) reject subtrees that are text blocks, see sia-r62
+        // 2) collect targets of pointer events
+
+        const isParagraph = hasRole(device, "paragraph");
+        const targetOfPointerEvent = and(
+          hasComputedStyle(
+            "pointer-events",
+            (keyword) => keyword.value !== "none",
+            device,
+          ),
+          isFocusable(device),
+          isVisible(device),
+          hasRole(device, (role) => role.isWidget()),
+          (target) => target.getBoundingBox(device).isSome(),
+        );
+
+        let targets: Array<Element> = [];
+
+        function visit(node: Node): void {
+          if (Element.isElement(node)) {
+            if (isParagraph(node)) {
+              // If we encounter a paragraph, we can skip the entire subtree
+              return;
+            }
+
+            if (targetOfPointerEvent(node)) {
+              targets.push(node);
+            }
+          }
+
+          for (const child of node.children(Node.fullTree)) {
+            visit(child);
+          }
+        }
+
+        visit(document);
+
+        return Sequence.from(targets);
+
+        // return targetsOfPointerEvents(document, device);
       },
 
       expectations(target) {
