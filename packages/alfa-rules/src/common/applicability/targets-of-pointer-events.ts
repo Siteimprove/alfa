@@ -1,27 +1,90 @@
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Node, Query } from "@siteimprove/alfa-dom";
+import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
+import { Query } from "@siteimprove/alfa-dom";
 
 const { hasRole } = DOM;
-const { hasComputedStyle, isFocusable } = Style;
+const { hasComputedStyle, isFocusable, isVisible } = Style;
 
 const { and } = Predicate;
+
 const { getElementDescendants } = Query;
 
-const cache = Cache.empty<Document, Cache<Device, Sequence<Element>>>();
+const applicabilityCache = Cache.empty<
+  Document,
+  Cache<Device, Sequence<Element>>
+>();
 
 /**
  * @internal
  */
-export function targetsOfPointerEvents(
+export function applicableTargetsOfPointerEvents(
   document: Document,
   device: Device,
 ): Sequence<Element> {
-  return cache.get(document, Cache.empty).get(device, () =>
+  return applicabilityCache.get(document, Cache.empty).get(device, () => {
+    const isParagraph = hasRole(device, "paragraph");
+    const targetOfPointerEvent = and(
+      hasComputedStyle(
+        "pointer-events",
+        (keyword) => keyword.value !== "none",
+        device,
+      ),
+      isFocusable(device),
+      isVisible(device),
+      // TODO: Exclude <area> elements
+      hasRole(device, (role) => role.isWidget()),
+      hasBoundingBox(device),
+    );
+
+    function visit(node: Node, result: Array<Element> = []): Iterable<Element> {
+      if (Element.isElement(node)) {
+        if (isParagraph(node)) {
+          // If we encounter a paragraph, we can skip the entire subtree
+          return result;
+        }
+
+        // TODO: It's not enough to reject paragraphs, we need to reject all text blocks in order to avoid false positives
+
+        if (targetOfPointerEvent(node)) {
+          result.push(node);
+        }
+      }
+
+      for (const child of node.children(Node.fullTree)) {
+        visit(child, result);
+      }
+
+      return result;
+    }
+
+    return Sequence.from(visit(document));
+  });
+}
+
+const allTargetsCache = Cache.empty<
+  Document,
+  Cache<Device, Sequence<Element>>
+>();
+
+/**
+ * @internal
+ *
+ * @privateRemarks
+ * This function is not used in the applicability of R111 or R113,
+ * but in the expectation of R113 since all other targets are needed
+ * to determine if an applicable target is underspaced.
+ * It's kept here since it's closely related to the applicability.
+ */
+export function allTargetsOfPointerEvents(
+  document: Document,
+  device: Device,
+): Sequence<Element> {
+  return allTargetsCache.get(document, Cache.empty).get(device, () =>
     getElementDescendants(document, Node.fullTree).filter(
       and(
         hasComputedStyle(
@@ -29,10 +92,13 @@ export function targetsOfPointerEvents(
           (keyword) => keyword.value !== "none",
           device,
         ),
-        isFocusable(device),
         hasRole(device, (role) => role.isWidget()),
-        (target) => target.getBoundingBox(device).isSome(),
+        hasBoundingBox(device),
       ),
     ),
   );
+}
+
+function hasBoundingBox(device: Device): Predicate<Element> {
+  return (element) => element.getBoundingBox(device).isSome();
 }
