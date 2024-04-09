@@ -160,6 +160,7 @@ export namespace Outcome {
   export enum Mode {
     Automatic = "automatic",
     SemiAuto = "semiAuto",
+    Manual = "manual",
   }
 
   export interface JSON<V extends Value = Value> {
