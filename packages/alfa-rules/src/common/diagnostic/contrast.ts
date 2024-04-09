@@ -91,7 +91,6 @@ export namespace Contrast {
     value: unknown,
   ): value is Contrast<N>;
 
-  /** @public (knip) */
   export function isContrast<N extends Name>(
     value: unknown,
   ): value is Contrast<N> {

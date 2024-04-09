@@ -15,7 +15,7 @@ export declare namespace Specificity
 
 |  Function | Description |
 |  --- | --- |
-|  [isSpecificity(value)](./alfa-selector.specificity.isspecificity.md) | public (knip) |
+|  [isSpecificity(value)](./alfa-selector.specificity.isspecificity.md) |  |
 |  [max(specificities)](./alfa-selector.specificity.max.md) |  |
 |  [sum(specificities)](./alfa-selector.specificity.sum.md) |  |
 

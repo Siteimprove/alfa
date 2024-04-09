@@ -22,7 +22,6 @@ export class FocusWithin extends PseudoClassSelector<"focus-within"> {
 
   private static _cache = Cache.empty<Element, Cache<Context, boolean>>();
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<FocusWithin> {
     yield this;
   }

@@ -1,11 +1,12 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
+import { Device } from "@siteimprove/alfa-device";
+
 import R111, { Outcomes } from "../../src/sia-r111/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
-import { Device } from "@siteimprove/alfa-device";
+import { failed, inapplicable, passed } from "../common/outcome";
 
 test("evaluate() passes button with clickable area of exactly 44x44 pixels", async (t) => {
   const device = Device.standard();

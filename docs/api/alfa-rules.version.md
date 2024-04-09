@@ -15,7 +15,7 @@ export declare namespace Version
 
 |  Function | Description |
 |  --- | --- |
-|  [isVersion(value)](./alfa-rules.version.isversion.md) | (knip) |
+|  [isVersion(value)](./alfa-rules.version.isversion.md) |  |
 
 ## Interfaces
 

@@ -1,5 +1,9 @@
 # @siteimprove/alfa-callback
 
+## 0.77.0
+
+## 0.76.0
+
 ## 0.75.2
 
 ## 0.75.1

@@ -414,6 +414,7 @@ export class Version<N extends number = number> extends Tag<"version"> {
 
 // @public (undocumented)
 export namespace Version {
+    // (undocumented)
     export function isVersion<T extends string>(value: unknown): value is Version;
     // (undocumented)
     export interface JSON<N extends number = number> extends Tag.JSON<"version"> {
