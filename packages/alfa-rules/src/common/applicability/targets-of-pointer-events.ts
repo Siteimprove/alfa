@@ -10,7 +10,7 @@ import { Query } from "@siteimprove/alfa-dom";
 const { hasRole } = DOM;
 const { hasComputedStyle, isFocusable, isVisible } = Style;
 
-const { and } = Predicate;
+const { and, not } = Predicate;
 
 const { getElementDescendants } = Query;
 
@@ -28,18 +28,7 @@ export function applicableTargetsOfPointerEvents(
 ): Sequence<Element> {
   return applicabilityCache.get(document, Cache.empty).get(device, () => {
     const isParagraph = hasRole(device, "paragraph");
-    const targetOfPointerEvent = and(
-      hasComputedStyle(
-        "pointer-events",
-        (keyword) => keyword.value !== "none",
-        device,
-      ),
-      isFocusable(device),
-      isVisible(device),
-      // TODO: Exclude <area> elements
-      hasRole(device, (role) => role.isWidget()),
-      hasBoundingBox(device),
-    );
+    const isArea = (element: Element) => element.name === "area";
 
     function* visit(node: Node): Iterable<Element> {
       if (Element.isElement(node)) {
@@ -50,7 +39,7 @@ export function applicableTargetsOfPointerEvents(
 
         // TODO: It's not enough to reject paragraphs, we need to reject all text blocks in order to avoid false positives
 
-        if (targetOfPointerEvent(node)) {
+        if (and(isTarget(device), isVisible(device), not(isArea))(node)) {
           yield node;
         }
       }
@@ -82,18 +71,23 @@ export function allTargetsOfPointerEvents(
   document: Document,
   device: Device,
 ): Sequence<Element> {
-  return allTargetsCache.get(document, Cache.empty).get(device, () =>
-    getElementDescendants(document, Node.fullTree).filter(
-      and(
-        hasComputedStyle(
-          "pointer-events",
-          (keyword) => keyword.value !== "none",
-          device,
-        ),
-        hasRole(device, (role) => role.isWidget()),
-        hasBoundingBox(device),
-      ),
+  return allTargetsCache
+    .get(document, Cache.empty)
+    .get(device, () =>
+      getElementDescendants(document, Node.fullTree).filter(isTarget(device)),
+    );
+}
+
+function isTarget(device: Device): Predicate<Element> {
+  return and(
+    hasComputedStyle(
+      "pointer-events",
+      (keyword) => keyword.value !== "none",
+      device,
     ),
+    isFocusable(device),
+    hasRole(device, (role) => role.isWidget()),
+    hasBoundingBox(device),
   );
 }
 
