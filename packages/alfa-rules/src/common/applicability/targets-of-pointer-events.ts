@@ -41,25 +41,23 @@ export function applicableTargetsOfPointerEvents(
       hasBoundingBox(device),
     );
 
-    function visit(node: Node, result: Array<Element> = []): Iterable<Element> {
+    function* visit(node: Node): Iterable<Element> {
       if (Element.isElement(node)) {
         if (isParagraph(node)) {
           // If we encounter a paragraph, we can skip the entire subtree
-          return result;
+          return;
         }
 
         // TODO: It's not enough to reject paragraphs, we need to reject all text blocks in order to avoid false positives
 
         if (targetOfPointerEvent(node)) {
-          result.push(node);
+          yield node;
         }
       }
 
       for (const child of node.children(Node.fullTree)) {
-        visit(child, result);
+        yield* visit(child);
       }
-
-      return result;
     }
 
     return Sequence.from(visit(document));
