@@ -39,7 +39,7 @@ export function applicableTargetsOfPointerEvents(
 
         // TODO: It's not enough to reject paragraphs, we need to reject all text blocks in order to avoid false positives
 
-        if (and(isTarget(device), isVisible(device), not(isArea))(node)) {
+        if (and(isTarget(device), not(isArea))(node)) {
           yield node;
         }
       }
@@ -86,6 +86,7 @@ function isTarget(device: Device): Predicate<Element> {
       device,
     ),
     isFocusable(device),
+    isVisible(device),
     hasRole(device, (role) => role.isWidget()),
     hasBoundingBox(device),
   );
