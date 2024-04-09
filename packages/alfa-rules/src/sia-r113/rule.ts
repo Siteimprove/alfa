@@ -125,6 +125,10 @@ export namespace Outcomes {
     );
 }
 
+const undersizedCache = Cache.empty<
+  Document,
+  Cache<Device, Sequence<Element>>
+>();
 /**
  * Yields all elements that have insufficient spacing to the target.
  *
@@ -143,6 +147,14 @@ function* findElementsWithInsufficientSpacingToTarget(
   // Existence of a bounding box is guaranteed by applicability
   const targetRect = target.getBoundingBox(device).getUnsafe();
 
+  const undersizedTargets = undersizedCache
+    .get(document, Cache.empty)
+    .get(device, () =>
+      allTargetsOfPointerEvents(document, device).reject(
+        hasSufficientSize(24, device),
+      ),
+    );
+
   // TODO: This needs to be optimized, we should be able to use some spatial data structure like a quadtree to reduce the number of comparisons
   for (const candidate of allTargetsOfPointerEvents(document, device)) {
     if (target !== candidate) {
@@ -155,7 +167,7 @@ function* findElementsWithInsufficientSpacingToTarget(
           targetRect.center.y,
           12,
         ) ||
-        (!hasSufficientSize(24, device)(candidate) &&
+        (undersizedTargets.includes(candidate) &&
           targetRect.distanceSquared(candidateRect) < 24 ** 2)
       ) {
         // The 24px diameter circle of the target must not intersect with the bounding box of any other target, or
