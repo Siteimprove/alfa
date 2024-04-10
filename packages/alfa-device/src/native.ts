@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 
-import type { Device } from ".";
+import type { Device, Preference } from ".";
 
 /**
  * @internal
@@ -27,7 +27,29 @@ export namespace Native {
       scripting: {
         enabled: !window.matchMedia("(scripting: none)").matches,
       },
-      preferences: [],
+      preferences: [...toPreferences(window)],
     };
+  }
+
+  const userPreferences: Array<[name: string, values: Array<string>]> = [
+    ["forced-colors", ["active", "none"]],
+    ["inverted", ["none", "inverted"]],
+    ["prefers-color-scheme", ["no-preference", "light", "dark"]],
+    ["prefers-contrast", ["no-preference", "high", "low"]],
+    ["prefers-reduced-motion", ["no-preference", "reduce"]],
+    ["prefers-reduced-transparency", ["no-preference", "reduce"]],
+  ];
+
+  function* toPreferences(
+    window: globalThis.Window,
+  ): Iterable<Preference.JSON> {
+    // It seems we need to manually query each preference individually.
+    for (const [name, values] of userPreferences) {
+      for (const value of values) {
+        if (window.matchMedia(`(${name}: ${value})`).matches) {
+          yield { name, value };
+        }
+      }
+    }
   }
 }
