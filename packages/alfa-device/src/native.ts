@@ -32,12 +32,13 @@ export namespace Native {
   }
 
   const userPreferences: Array<[name: string, values: Array<string>]> = [
-    ["forced-colors", ["active", "none"]],
+    ["forced-colors", ["none", "active"]],
     ["inverted", ["none", "inverted"]],
-    ["prefers-color-scheme", ["no-preference", "light", "dark"]],
-    ["prefers-contrast", ["no-preference", "high", "low"]],
+    ["prefers-color-scheme", ["light", "dark"]],
+    ["prefers-contrast", ["no-preference", "less", "more", "custom"]],
     ["prefers-reduced-motion", ["no-preference", "reduce"]],
     ["prefers-reduced-transparency", ["no-preference", "reduce"]],
+    ["prefers-reduced-data", ["no-preference", "reduce"]],
   ];
 
   function* toPreferences(
