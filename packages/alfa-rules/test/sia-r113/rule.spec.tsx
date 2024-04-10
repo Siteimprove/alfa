@@ -114,6 +114,74 @@ test("evaluate() passes button with clickable area of less than 24x24 pixels and
   ]);
 });
 
+test("evaluate() passes undersized button with vertically adjacent undersized button that is not displayed", async (t) => {
+  const device = Device.standard();
+
+  // The 24px diameter circles of the targets does not intersect with the bounding box of the other target, but the circles do intersect
+  const target1 = (
+    <button
+      style={{ position: "absolute", top: "80px", left: "80px", width: "20px", height: "20px", borderRadius: "0" }}
+      box={{ device, x: 80, y: 80, width: 20, height: 20 }}
+    >
+      Hello
+    </button>
+  );
+
+  const target2 = (
+    <button
+      style={{ position: "absolute", top: "58px", left: "80px", width: "20px", height: "20px", borderRadius: "0", display: "none" }}
+      box={{ device, x: 80, y: 58, width: 20, height: 20 }}
+    >
+      World
+    </button>
+  );
+
+  const document = h.document([target1, target2]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, target1, {
+      1: Outcomes.HasSufficientSpacing(
+        "Hello",
+        target1.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
+test("evaluate() passes undersized button with vertically adjacent undersized button that is hidden", async (t) => {
+  const device = Device.standard();
+
+  // The 24px diameter circles of the targets does not intersect with the bounding box of the other target, but the circles do intersect
+  const target1 = (
+    <button
+      style={{ position: "absolute", top: "80px", left: "80px", width: "20px", height: "20px", borderRadius: "0" }}
+      box={{ device, x: 80, y: 80, width: 20, height: 20 }}
+    >
+      Hello
+    </button>
+  );
+
+  const target2 = (
+    <button
+      style={{ position: "absolute", top: "58px", left: "80px", width: "20px", height: "20px", borderRadius: "0", visibility: "hidden" }}
+      box={{ device, x: 80, y: 58, width: 20, height: 20 }}
+    >
+      World
+    </button>
+  );
+
+  const document = h.document([target1, target2]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, target1, {
+      1: Outcomes.HasSufficientSpacing(
+        "Hello",
+        target1.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
 test("evaluate() fails undersized button with vertically adjacent undersized button", async (t) => {
   const device = Device.standard();
 
@@ -250,4 +318,51 @@ test("evaluate() is inapplicable when there is no layout information", async (t)
   t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
 });
 
+test("evaluate() is inapplicable to <area> elements", async (t) => {
+  const device = Device.standard();
 
+  const img = <img src="foo.jpg" alt="foo" usemap="#bar" width="500" />;
+  const map = <map name="bar"><area shape="rect" coords="8,8,31,31" href="foo.html" box={{ device, x: 8, y: 8, width: 0, height: 0 }} /></map>;
+
+  const document = h.document([img, map]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
+});
+
+test("evaluate() is inapplicable to button with display: none", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <button
+      style={{ width: "24px", height: "24px", display: "none" }}
+      box={{ device, x: 8, y: 8, width: 24, height: 24 }}
+    >
+      Hello
+    </button>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    inapplicable(R113),
+  ]);
+});
+
+test("evaluate() is inapplicable to button with visibility: hidden", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <button
+      style={{ width: "24px", height: "24px", visibility: "hidden" }}
+      box={{ device, x: 8, y: 8, width: 24, height: 24 }}
+    >
+      Hello
+    </button>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    inapplicable(R113),
+  ]);
+});

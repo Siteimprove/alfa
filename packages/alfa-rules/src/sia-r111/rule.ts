@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { targetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
+import { applicableTargetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
 
 import { WithBoundingBox, WithName } from "../common/diagnostic";
 
@@ -21,7 +21,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return targetsOfPointerEvents(document, device);
+        return applicableTargetsOfPointerEvents(document, device);
       },
 
       expectations(target) {

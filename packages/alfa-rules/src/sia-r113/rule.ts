@@ -12,7 +12,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { targetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
+import {
+  applicableTargetsOfPointerEvents,
+  allTargetsOfPointerEvents,
+} from "../common/applicability/targets-of-pointer-events";
 
 import { WithBoundingBox, WithName } from "../common/diagnostic";
 
@@ -25,7 +28,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return targetsOfPointerEvents(document, device);
+        return applicableTargetsOfPointerEvents(document, device);
       },
 
       expectations(target) {
@@ -126,7 +129,6 @@ const undersizedCache = Cache.empty<
   Document,
   Cache<Device, Sequence<Element>>
 >();
-
 /**
  * Yields all elements that have insufficient spacing to the target.
  *
@@ -148,15 +150,15 @@ function* findElementsWithInsufficientSpacingToTarget(
   const undersizedTargets = undersizedCache
     .get(document, Cache.empty)
     .get(device, () =>
-      targetsOfPointerEvents(document, device).reject(
+      allTargetsOfPointerEvents(document, device).reject(
         hasSufficientSize(24, device),
       ),
     );
 
   // TODO: This needs to be optimized, we should be able to use some spatial data structure like a quadtree to reduce the number of comparisons
-  for (const candidate of targetsOfPointerEvents(document, device)) {
+  for (const candidate of allTargetsOfPointerEvents(document, device)) {
     if (target !== candidate) {
-      // Existence of a bounding box is guaranteed by applicability
+      // Existence of a bounding box should be guaranteed by implementation of allTargetsOfPointerEvents
       const candidateRect = candidate.getBoundingBox(device).getUnsafe();
 
       if (
