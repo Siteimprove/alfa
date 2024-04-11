@@ -5,7 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as media from "./media";
 
 import * as height from "./height";
-import * as orientation from "./orientation";
+import { Discrete } from "./discrete";
 import * as scripting from "./scripting";
 import * as width from "./width";
 
@@ -20,7 +20,7 @@ export namespace Media {
   export type JSON = media.Media.JSON;
 
   export import Height = height.Height;
-  export import Orientation = orientation.Orientation;
+  export import Orientation = Discrete.Orientation;
   export import Scripting = scripting.Scripting;
   export import Width = width.Width;
 
