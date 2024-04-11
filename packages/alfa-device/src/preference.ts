@@ -107,7 +107,7 @@ export namespace Preference {
      * @remarks
      * For consistency, "no-preference" is also included.
      */
-    "prefers-contrast": "no-preference" | "high" | "low";
+    "prefers-contrast": "no-preference" | "less" | "more" | "custom";
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion}
@@ -118,6 +118,11 @@ export namespace Preference {
      * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-transparency}
      */
     "prefers-reduced-transparency": "no-preference" | "reduce";
+
+    /**
+     * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-data}
+     */
+    "prefers-reduced-data": "no-preference" | "reduce";
   }
 
   export function unset<N extends Name>(name: N): Value<N> {
@@ -131,6 +136,7 @@ export namespace Preference {
         case "prefers-contrast":
         case "prefers-reduced-motion":
         case "prefers-reduced-transparency":
+        case "prefers-reduced-data":
           return "no-preference";
       }
     }
