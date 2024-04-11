@@ -47,7 +47,7 @@ export class Preference<N extends Preference.Name = Preference.Name>
     hash.writeString(this._name).writeString(this._value);
   }
 
-  public toJSON(): Preference.JSON {
+  public toJSON(): Preference.JSON<N> {
     return {
       name: this._name,
       value: this._value,
@@ -59,10 +59,10 @@ export class Preference<N extends Preference.Name = Preference.Name>
  * @public
  */
 export namespace Preference {
-  export interface JSON {
+  export interface JSON<N extends Name = Name> {
     [key: string]: json.JSON;
-    name: string;
-    value: string;
+    name: N;
+    value: Value<N>;
   }
 
   export function isPreference<N extends Name>(
@@ -74,24 +74,20 @@ export namespace Preference {
     );
   }
 
-  export function from<N extends Name>(json: JSON): Preference<N> {
-    return Preference.of(json.name as N, json.value as Preference.Value<N>);
+  export function from<N extends Name>(json: JSON<N>): Preference<N> {
+    return Preference.of(json.name, json.value);
   }
 
-  export type Name = keyof Preferences;
-
-  export type Value<N extends Name = Name> = Preferences[N];
-
-  interface Preferences {
+  export const preferences = {
     /**
      * {@link https://drafts.csswg.org/mediaqueries-5/#forced-colors}
      */
-    "forced-colors": "none" | "active";
+    "forced-colors": ["none", "active"],
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries-5/#inverted}
      */
-    inverted: "none" | "inverted";
+    inverted: ["none", "inverted"],
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme}
@@ -99,7 +95,7 @@ export namespace Preference {
      * @remarks
      * For consistency, "no-preference" is also included.
      */
-    "prefers-color-scheme": "no-preference" | "light" | "dark";
+    "prefers-color-scheme": ["no-preference", "light", "dark"],
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-contrast}
@@ -107,23 +103,27 @@ export namespace Preference {
      * @remarks
      * For consistency, "no-preference" is also included.
      */
-    "prefers-contrast": "no-preference" | "less" | "more" | "custom";
+    "prefers-contrast": ["no-preference", "less", "more", "custom"],
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion}
      */
-    "prefers-reduced-motion": "no-preference" | "reduce";
+    "prefers-reduced-motion": ["no-preference", "reduce"],
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-transparency}
      */
-    "prefers-reduced-transparency": "no-preference" | "reduce";
+    "prefers-reduced-transparency": ["no-preference", "reduce"],
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-data}
      */
-    "prefers-reduced-data": "no-preference" | "reduce";
-  }
+    "prefers-reduced-data": ["no-preference", "reduce"],
+  } as const;
+
+  export type Name = keyof typeof preferences;
+
+  export type Value<N extends Name = Name> = (typeof preferences)[N][number];
 
   export function unset<N extends Name>(name: N): Value<N> {
     function unset(name: Name): Value {
