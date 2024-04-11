@@ -32,7 +32,8 @@
     "src/supports/index.ts",
     "src/supports/query.ts",
     "test/media.spec.ts",
-    "test/supports.spec.ts"
+    "test/supports.spec.ts",
+    "test/user-preferences.spec.ts"
   ],
   "references": [
     { "path": "../alfa-comparable" },

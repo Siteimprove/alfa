@@ -24,6 +24,14 @@ export namespace Media {
   export import Scripting = scripting.Scripting;
   export import Width = width.Width;
 
+  export import ForcedColors = Discrete.ForcedColors;
+  export import Inverted = Discrete.Inverted;
+  export import PrefersColorScheme = Discrete.PrefersColorScheme;
+  export import PrefersContrast = Discrete.PrefersContrast;
+  export import PrefersReducedData = Discrete.PrefersReducedData;
+  export import PrefersReducedMotion = Discrete.PrefersReducedMotion;
+  export import PrefersReducedTransparency = Discrete.PrefersReducedTransparency;
+
   export const { isHeight } = Height;
   export const { isWidth } = Width;
 
@@ -41,6 +49,13 @@ export namespace Media {
         Orientation.parse,
         Scripting.parse,
         Width.parse,
+        ForcedColors.parse,
+        Inverted.parse,
+        PrefersColorScheme.parse,
+        PrefersContrast.parse,
+        PrefersReducedData.parse,
+        PrefersReducedMotion.parse,
+        PrefersReducedTransparency.parse,
       ),
     ),
     Token.parseCloseParenthesis,
