@@ -118,7 +118,7 @@ export class Preference<N extends Preference.Name = Preference.Name> implements 
     // (undocumented)
     static of<N extends Preference.Name>(name: N, value: Preference.Value<N>): Preference<N>;
     // (undocumented)
-    toJSON(): Preference.JSON;
+    toJSON(): Preference.JSON<N>;
     // (undocumented)
     get value(): Preference.Value<N>;
 }
@@ -126,40 +126,34 @@ export class Preference<N extends Preference.Name = Preference.Name> implements 
 // @public (undocumented)
 export namespace Preference {
     // (undocumented)
-    export function from<N extends Name>(json: JSON): Preference<N>;
+    export function from<N extends Name>(json: JSON<N>): Preference<N>;
     // (undocumented)
     export function isPreference<N extends Name>(value: unknown, name?: N): value is Preference<N>;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<N extends Name = Name> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        name: string;
+        name: N;
         // (undocumented)
-        value: string;
+        value: Value<N>;
     }
+    const // (undocumented)
+    preferences: {
+        readonly "forced-colors": readonly ["none", "active"];
+        readonly inverted: readonly ["none", "inverted"];
+        readonly "prefers-color-scheme": readonly ["no-preference", "light", "dark"];
+        readonly "prefers-contrast": readonly ["no-preference", "less", "more", "custom"];
+        readonly "prefers-reduced-motion": readonly ["no-preference", "reduce"];
+        readonly "prefers-reduced-transparency": readonly ["no-preference", "reduce"];
+        readonly "prefers-reduced-data": readonly ["no-preference", "reduce"];
+    };
     // (undocumented)
-    export type Name = keyof Preferences;
-    // (undocumented)
-    export interface Preferences {
-        // (undocumented)
-        "forced-colors": "none" | "active";
-        // (undocumented)
-        "prefers-color-scheme": "no-preference" | "light" | "dark";
-        // (undocumented)
-        "prefers-contrast": "no-preference" | "high" | "low";
-        // (undocumented)
-        "prefers-reduced-motion": "no-preference" | "reduce";
-        // (undocumented)
-        "prefers-reduced-transparency": "no-preference" | "reduce";
-        // (undocumented)
-        inverted: "none" | "inverted";
-    }
+    export type Name = keyof typeof preferences;
     // (undocumented)
     export function unset<N extends Name>(name: N): Value<N>;
     // (undocumented)
-    export type Value<N extends Name = Name> = Preferences[N];
-        {};
+    export type Value<N extends Name = Name> = (typeof preferences)[N][number];
 }
 
 // @public (undocumented)
