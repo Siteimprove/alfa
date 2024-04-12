@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 import { Lexer } from "@siteimprove/alfa-css";
 import {
   Device,

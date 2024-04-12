@@ -369,7 +369,7 @@ test("#matches() matches simple orientation query", (t) => {
   t.deepEqual(isPortrait.matches(largeLandscape), false);
 });
 
-test("#matches() accept any orientation in boolean context", (t) => {
+test("#matches() accepts any orientation in boolean context", (t) => {
   const isNone = parse("(orientation)").getUnsafe();
 
   t.deepEqual(isNone.matches(smallPortrait), true);
