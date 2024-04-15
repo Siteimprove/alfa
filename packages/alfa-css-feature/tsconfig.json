@@ -10,10 +10,10 @@
     "src/feature.ts",
     "src/index.ts",
     "src/media/feature/comparison.ts",
-    "src/media/feature/media.ts",
+    "src/media/feature/discrete.ts",
     "src/media/feature/height.ts",
     "src/media/feature/index.ts",
-    "src/media/feature/orientation.ts",
+    "src/media/feature/media.ts",
     "src/media/feature/resolver.ts",
     "src/media/feature/scripting.ts",
     "src/media/feature/value/bound.ts",
@@ -32,7 +32,8 @@
     "src/supports/index.ts",
     "src/supports/query.ts",
     "test/media.spec.ts",
-    "test/supports.spec.ts"
+    "test/supports.spec.ts",
+    "test/user-preferences.spec.ts"
   ],
   "references": [
     { "path": "../alfa-comparable" },
