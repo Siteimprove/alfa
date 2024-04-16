@@ -1,5 +1,7 @@
 # @siteimprove/alfa-cascade
 
+## 0.78.1
+
 ## 0.78.0
 
 ## 0.77.0

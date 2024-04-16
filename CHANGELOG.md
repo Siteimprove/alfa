@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.78.1](../../compare/v0.78.0...v0.78.1) (2024-04-16)
+
+### Fixed
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0781): `Native.fromWindow` is properly bundled so it can be injected into pages by browser automation or extension scripting. ([#1597](https://github.com/Siteimprove/alfa/pull/1597))
+
 ## [0.78.0](../../compare/v0.77.0...v0.78.0) (2024-04-16)
 
 ### Added
