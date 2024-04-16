@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type Value<N extends Name = Name> = Preferences[N];
+type Value<N extends Name = Name> = (typeof preferences)[N][number];
 ```
-**References:** [Name](./alfa-device.preference.name.md)
+**References:** [Name](./alfa-device.preference.name.md)<!-- -->, [preferences](./alfa-device.preference.preferences.md)
 

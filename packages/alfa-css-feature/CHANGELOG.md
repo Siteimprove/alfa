@@ -1,5 +1,11 @@
 # @siteimprove/alfa-css-feature
 
+## 0.78.0
+
+### Minor Changes
+
+- **Added:** User-preferences media queries are now supported. ([#1596](https://github.com/Siteimprove/alfa/pull/1596))
+
 ## 0.77.0
 
 ## 0.76.0

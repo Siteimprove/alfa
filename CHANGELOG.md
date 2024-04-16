@@ -1,5 +1,19 @@
 # Alfa changelog
 
+## [0.78.0](../../compare/v0.77.0...v0.78.0) (2024-04-16)
+
+### Added
+
+- [@siteimprove/alfa-css-feature](packages/alfa-css-feature/CHANGELOG.md#0780): User-preferences media queries are now supported. ([#1596](https://github.com/Siteimprove/alfa/pull/1596))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#0780): `Ouctome` can now be produced with a `Mode.Manual`. ([#1587](https://github.com/Siteimprove/alfa/pull/1587))
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0780): `Native.fromWindow` now grabs user preferences. ([#1596](https://github.com/Siteimprove/alfa/pull/1596))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0780): R111 and R113 are no longer applicable to invisible targets and targets inside a paragraph. ([#1594](https://github.com/Siteimprove/alfa/pull/1594))
+
 ## [0.77.0](../../compare/v0.76.0...v0.77.0) (2024-04-05)
 
 ### Added
