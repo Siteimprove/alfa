@@ -118,17 +118,22 @@ function hasBoundingBox(device: Device): Predicate<Element> {
   return (element) => element.getBoundingBox(device).isSome();
 }
 
+const nonTargetTextCache = Cache.empty<Device, Cache<Element, boolean>>();
+
 function hasNonTargetText(device: Device): Predicate<Element> {
-  return (element) => {
-    if (isTarget(device)(element)) {
-      return false;
-    }
+  return (element) =>
+    nonTargetTextCache.get(device, Cache.empty).get(element, () => {
+      if (isTarget(device)(element)) {
+        return false;
+      }
 
-    const children = element.children(Node.flatTree);
-    if (children.some(and(isText, isVisible(device)))) {
-      return true;
-    }
-
-    return children.filter(isElement).some(hasNonTargetText(device));
-  };
+      const children = element.children(Node.flatTree);
+      return (
+        children.some(and(isText, isVisible(device))) ||
+        children
+          .filter(isElement)
+          .reject(isTarget(device))
+          .some(hasNonTargetText(device))
+      );
+    });
 }
