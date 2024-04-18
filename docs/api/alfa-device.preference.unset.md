@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function unset<N extends Name>(name: N): Value<N>;
+function unset<N extends Name>(name: N): Value<N>;
 ```
 
 ## Parameters

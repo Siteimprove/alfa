@@ -5,7 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as media from "./media";
 
 import * as height from "./height";
-import * as orientation from "./orientation";
+import { Discrete } from "./discrete";
 import * as scripting from "./scripting";
 import * as width from "./width";
 
@@ -20,9 +20,17 @@ export namespace Media {
   export type JSON = media.Media.JSON;
 
   export import Height = height.Height;
-  export import Orientation = orientation.Orientation;
+  export import Orientation = Discrete.Orientation;
   export import Scripting = scripting.Scripting;
   export import Width = width.Width;
+
+  export import ForcedColors = Discrete.ForcedColors;
+  export import Inverted = Discrete.Inverted;
+  export import PrefersColorScheme = Discrete.PrefersColorScheme;
+  export import PrefersContrast = Discrete.PrefersContrast;
+  export import PrefersReducedData = Discrete.PrefersReducedData;
+  export import PrefersReducedMotion = Discrete.PrefersReducedMotion;
+  export import PrefersReducedTransparency = Discrete.PrefersReducedTransparency;
 
   export const { isHeight } = Height;
   export const { isWidth } = Width;
@@ -41,6 +49,13 @@ export namespace Media {
         Orientation.parse,
         Scripting.parse,
         Width.parse,
+        ForcedColors.parse,
+        Inverted.parse,
+        PrefersColorScheme.parse,
+        PrefersContrast.parse,
+        PrefersReducedData.parse,
+        PrefersReducedMotion.parse,
+        PrefersReducedTransparency.parse,
       ),
     ),
     Token.parseCloseParenthesis,

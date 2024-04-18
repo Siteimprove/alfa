@@ -1,5 +1,15 @@
 # @siteimprove/alfa-act
 
+## 0.78.1
+
+## 0.78.0
+
+### Patch Changes
+
+- **Added:** `Ouctome` can now be produced with a `Mode.Manual`. ([#1587](https://github.com/Siteimprove/alfa/pull/1587))
+
+  This is intended to merge manual testing results into Alfa ones seamlessly.
+
 ## 0.77.0
 
 ## 0.76.0

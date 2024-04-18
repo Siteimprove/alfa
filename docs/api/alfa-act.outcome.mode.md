@@ -17,5 +17,6 @@ enum Mode
 |  Member | Value | Description |
 |  --- | --- | --- |
 |  Automatic | <code>&quot;automatic&quot;</code> |  |
+|  Manual | <code>&quot;manual&quot;</code> |  |
 |  SemiAuto | <code>&quot;semiAuto&quot;</code> |  |
 
