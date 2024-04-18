@@ -366,3 +366,44 @@ test("evaluate() is inapplicable to button with visibility: hidden", async (t) =
     inapplicable(R113),
   ]);
 });
+
+test("evaluate() is inapplicable when link is part of text", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <a
+      href="#"
+      box={{ device, x: 44, y: 80, width: 37, height: 17 }}
+    >world</a>
+  );
+
+  const div = <div><span>hello</span>{target}</div>;
+
+  const document = h.document([div]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
+});
+
+test("evaluate() is applicable when link is not part of text", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <a
+      href="#"
+      box={{ device, x: 44, y: 80, width: 37, height: 17 }}
+    >hello</a>
+  );
+
+  const div = <p>{target}</p>;
+
+  const document = h.document([div]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, target, {
+      1: Outcomes.HasSufficientSpacing(
+        "hello",
+        target.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
