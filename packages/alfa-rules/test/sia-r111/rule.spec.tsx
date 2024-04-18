@@ -128,3 +128,44 @@ test("evaluate() is inapplicable when there is no layout information", async (t)
 
   t.deepEqual(await evaluate(R111, { document, device }), [inapplicable(R111)]);
 });
+
+test("evaluate() is inapplicable when link is part of text", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <a
+      href="#"
+      box={{ device, x: 44, y: 80, width: 37, height: 17 }}
+    >world</a>
+  );
+
+  const div = <div><span>hello</span>{target}</div>;
+
+  const document = h.document([div]);
+
+  t.deepEqual(await evaluate(R111, { document, device }), [inapplicable(R111)]);
+});
+
+test("evaluate() is applicable when link is not part of text", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <a
+      href="#"
+      box={{ device, x: 44, y: 80, width: 37, height: 17 }}
+    >hello</a>
+  );
+
+  const div = <p>{target}</p>;
+
+  const document = h.document([div]);
+
+  t.deepEqual(await evaluate(R111, { document, device }), [
+    failed(R111, target, {
+      1: Outcomes.HasInsufficientSize(
+        "hello",
+        target.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
