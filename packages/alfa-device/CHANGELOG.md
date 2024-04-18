@@ -1,5 +1,17 @@
 # @siteimprove/alfa-device
 
+## 0.78.1
+
+### Patch Changes
+
+- **Fixed:** `Native.fromWindow` is properly bundled so it can be injected into pages by browser automation or extension scripting. ([#1597](https://github.com/Siteimprove/alfa/pull/1597))
+
+## 0.78.0
+
+### Minor Changes
+
+- **Added:** `Native.fromWindow` now grabs user preferences. ([#1596](https://github.com/Siteimprove/alfa/pull/1596))
+
 ## 0.77.0
 
 ## 0.76.0

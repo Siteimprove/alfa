@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-export function from<N extends Name>(json: JSON): Preference<N>;
+function from<N extends Name>(json: JSON<N>): Preference<N>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [JSON](./alfa-device.preference.json.md) |  |
+|  json | [JSON](./alfa-device.preference.json.md)<!-- -->&lt;N&gt; |  |
 
 **Returns:**
 

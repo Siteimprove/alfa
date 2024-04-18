@@ -7,13 +7,13 @@
 **Signature:**
 
 ```typescript
-export interface JSON 
+interface JSON<N extends Name = Name> 
 ```
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-device.preference.json.name.md) |  | string |  |
-|  [value](./alfa-device.preference.json.value.md) |  | string |  |
+|  [name](./alfa-device.preference.json.name.md) |  | N |  |
+|  [value](./alfa-device.preference.json.value.md) |  | [Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt; |  |
 

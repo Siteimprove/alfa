@@ -1,5 +1,9 @@
 # @siteimprove/alfa-continuation
 
+## 0.78.1
+
+## 0.78.0
+
 ## 0.77.0
 
 ## 0.76.0

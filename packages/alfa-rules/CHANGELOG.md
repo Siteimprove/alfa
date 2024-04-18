@@ -1,5 +1,13 @@
 # @siteimprove/alfa-rules
 
+## 0.78.1
+
+## 0.78.0
+
+### Patch Changes
+
+- **Fixed:** R111 and R113 are no longer applicable to invisible targets and targets inside a paragraph ([#1594](https://github.com/Siteimprove/alfa/pull/1594))
+
 ## 0.77.0
 
 ### Minor Changes

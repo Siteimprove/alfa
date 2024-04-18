@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-toJSON(): Preference.JSON;
+toJSON(): Preference.JSON<N>;
 ```
 **Returns:**
 
-[Preference.JSON](./alfa-device.preference.json.md)
+[Preference.JSON](./alfa-device.preference.json.md)<!-- -->&lt;N&gt;
 

@@ -369,6 +369,13 @@ test("#matches() matches simple orientation query", (t) => {
   t.deepEqual(isPortrait.matches(largeLandscape), false);
 });
 
+test("#matches() accepts any orientation in boolean context", (t) => {
+  const isNone = parse("(orientation)").getUnsafe();
+
+  t.deepEqual(isNone.matches(smallPortrait), true);
+  t.deepEqual(isNone.matches(largeLandscape), true);
+});
+
 test("#matches() matches conjunction query", (t) => {
   const isLargeLandscape = parse(
     "(min-width: 640px) and (orientation: landscape)",
