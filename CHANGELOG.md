@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.78.2](../../compare/v0.78.1...v0.78.2) (2024-04-18)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0782): R111 and R113 now more accurately detects targets that are part of text. ([#1598](https://github.com/Siteimprove/alfa/pull/1598))
+
 ## [0.78.1](../../compare/v0.78.0...v0.78.1) (2024-04-16)
 
 ### Fixed

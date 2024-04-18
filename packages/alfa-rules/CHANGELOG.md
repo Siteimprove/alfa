@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.78.2
+
+### Patch Changes
+
+- **Fixed:** R111 and R113 now more accurately detects targets that are part of text. ([#1598](https://github.com/Siteimprove/alfa/pull/1598))
+
 ## 0.78.1
 
 ## 0.78.0

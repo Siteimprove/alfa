@@ -1,5 +1,7 @@
 # @siteimprove/alfa-device
 
+## 0.78.2
+
 ## 0.78.1
 
 ### Patch Changes

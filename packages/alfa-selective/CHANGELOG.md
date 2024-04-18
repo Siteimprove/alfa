@@ -1,5 +1,7 @@
 # @siteimprove/alfa-selective
 
+## 0.78.2
+
 ## 0.78.1
 
 ## 0.78.0
