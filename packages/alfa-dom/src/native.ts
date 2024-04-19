@@ -1,5 +1,19 @@
 /// <reference lib="dom" />
 
+/**
+ * The function defined in this file is destined to be injected into a browser
+ * page, either through a web extension or browser automation tool.
+ *
+ * As such, it must be serializable, meaning it must not reference any external
+ * file (only import type are allowed), and may not use annex functions (who
+ * must instead be inlined in the main function).
+ *
+ * We could use Webpack or the like to bundle the current file with its
+ * dependencies into a single file. This is however somewhat heavy-handed, and
+ * the rest of Alfa has no need for such complex machinery, so we stick to a
+ * simple solution for now.
+ */
+
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import type {
   Attribute,
