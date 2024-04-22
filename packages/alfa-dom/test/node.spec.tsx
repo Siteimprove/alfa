@@ -66,7 +66,7 @@ test(`#tabOrder() does not mix explicit taborder between trees`, (t) => {
     </div>
   );
 
-  // a and b, with >0 tabindex, come before the hosts and e.
+  // a and c, with >0 tabindex, come before the hosts and f.
   t.deepEqual([...div.tabOrder()], [a, c, e, d, b, f]);
 });
 

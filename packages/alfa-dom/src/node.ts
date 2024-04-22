@@ -1,19 +1,22 @@
-import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import {
+  Comparable,
+  type Comparer,
+  Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
-
-import * as earl from "@siteimprove/alfa-earl";
 import { Flags } from "@siteimprove/alfa-flags";
-import * as json from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import * as sarif from "@siteimprove/alfa-sarif";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 import * as tree from "@siteimprove/alfa-tree";
 
 import {
@@ -72,8 +75,8 @@ export abstract class Node<T extends string = string>
      *
      * @remarks
      * These are all elements that are keyboard focusable (non-negative
-     *   tabIndex), plus the shadow hosts and content elements that may contain
-     *   focusable descendants.
+     * tabIndex), plus the shadow hosts and content elements that may contain
+     * focusable descendants.
      *
      * It is important that the traversal is done here on the DOM tree only.
      * The shadow trees and content documents will be expanded later. Doing it
@@ -129,31 +132,25 @@ export abstract class Node<T extends string = string>
      *
      * @remarks
      * Due to non-focusable shadow hosts being candidates (for shadow DOM
-     *   expansion), we may have some indexes being None. These must be treated
-     *   as 0 (insert in DOM order), rather than smaller than actual indexes
-     *   (insert at start). Therefore, we cannot use Option.compareWith.
+     * expansion), we may have some indexes being None. These must be treated
+     * as 0 (insert in DOM order), rather than smaller than actual indexes
+     * (insert at start). Therefore, we cannot use Option.compareWith.
      */
     const comparer: Comparer<[Element, Option<number>]> = ([, a], [, b]) => {
       const aValue = a.getOr(0);
       const bValue = b.getOr(0);
 
-      if (aValue === 0) {
-        // "normal order" must come after any "specific order",
-        // i.e., 0 is greater than any positive number.
-        return bValue === 0 ? Comparison.Equal : Comparison.Greater;
-      }
-
-      if (bValue === 0) {
-        // a cannot be 0 anymore.
-        return Comparison.Less;
-      }
-
-      // If none are 0, simply compare the values.
-      return aValue < bValue
-        ? Comparison.Less
-        : aValue > bValue
-          ? Comparison.Greater
-          : Comparison.Equal;
+      return aValue === 0
+        ? // "normal order" must come after any "specific order",
+          // i.e., 0 is greater than any positive number.
+          bValue === 0
+          ? Comparison.Equal
+          : Comparison.Greater
+        : bValue === 0
+          ? // aValue cannot be 0 anymore.
+            Comparison.Less
+          : // If none are 0, simply compare the values.
+            Comparable.compare(aValue, bValue);
     };
 
     /**
@@ -161,12 +158,11 @@ export abstract class Node<T extends string = string>
      * shadow tree or content document.
      *
      * @remarks
-     * It is important that this expansion happens **after** sorting by
-     *   tabindex
+     * It is important that this expansion happens **after** sorting by tabindex
      * since shadow DOM and content documents build their own sequential focus
-     * order that is inserted as-is in the light tree or parent browsing
-     *   context. That is, a tabindex of 1 in a shadow tree or content document
-     *   does **not** come before a tabindex of 2 in the main document.
+     * order that is inserted as-is in the light tree or parent browsing context.
+     * That is, a tabindex of 1 in a shadow tree or content document does
+     * **not** come before a tabindex of 2 in the main document.
      */
     function expand([element, tabIndex]: [
       Element,
@@ -191,7 +187,7 @@ export abstract class Node<T extends string = string>
         return content.tabOrder();
       }
 
-      // If no shadow or content document, just keep the document.
+      // If no shadow or content document, just keep the element.
       return Sequence.of(element);
     }
 
@@ -485,7 +481,7 @@ export namespace Node {
    * @remarks
    * The clone will have the same `externalId` as the original.
    * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
+   * `undefined`.
    */
   export function clone(
     node: Element,
@@ -500,7 +496,7 @@ export namespace Node {
    * @remarks
    * The clone will have the same `externalId` as the original.
    * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
+   * `undefined`.
    */
   export function clone(
     node: Attribute,
@@ -515,7 +511,7 @@ export namespace Node {
    * @remarks
    * The clone will have the same `externalId` as the original.
    * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
+   * `undefined`.
    */
   export function clone(
     node: Text,
@@ -530,7 +526,7 @@ export namespace Node {
    * @remarks
    * The clone will have the same `externalId` as the original.
    * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
+   * `undefined`.
    */
   export function clone(
     node: Comment,
@@ -546,7 +542,7 @@ export namespace Node {
    * @remarks
    * The clone will have the same `externalId` as the original.
    * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
+   * `undefined`.
    */
   export function clone(
     node: Document,
@@ -561,7 +557,7 @@ export namespace Node {
    * @remarks
    * The clone will have the same `externalId` as the original.
    * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
+   * `undefined`.
    */
   export function clone(
     node: Type,
@@ -577,7 +573,7 @@ export namespace Node {
    * @remarks
    * The clone will have the same `externalId` as the original.
    * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
+   * `undefined`.
    */
   export function clone(
     node: Fragment,
@@ -593,7 +589,7 @@ export namespace Node {
    * @remarks
    * The clone will have the same `externalId` as the original.
    * The clone will *not* get `extraData` from the original, instead it will be
-   *   `undefined`.
+   * `undefined`.
    */
   export function clone(
     node: Shadow,
