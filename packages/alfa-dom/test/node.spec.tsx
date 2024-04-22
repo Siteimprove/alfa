@@ -34,6 +34,42 @@ test("#tabOrder() correctly handles explicitly ordered tab indices", (t) => {
   t.deepEqual([...div.tabOrder()], [b, a, c]);
 });
 
+test(`#tabOrder() correctly orders light and shadow elements`, (t) => {
+  const a = <button />;
+  const b = <button />;
+
+  const div = (
+    <div>
+      {a}
+      <div>{h.shadow([b])}</div>
+    </div>
+  );
+
+  t.deepEqual([...div.tabOrder()], [a, b]);
+});
+
+test(`#tabOrder() does not mix explicit taborder between trees`, (t) => {
+  const a = <button tabindex="1" />;
+  const b = <button tabindex="2" />;
+  const c = <button tabindex="3" />;
+  const d = <button tabindex="4" />;
+  const e = <button tabindex="1" />;
+  const f = <button />;
+
+  const div = (
+    <div>
+      {c}
+      <div>{h.shadow([d, e])}</div>
+      <iframe>{h.document([b])}</iframe>
+      {a}
+      {f}
+    </div>
+  );
+
+  // a and b, with >0 tabindex, come before the hosts and e.
+  t.deepEqual([...div.tabOrder()], [a, c, e, d, b, f]);
+});
+
 test(`#tabOrder() correctly handles shadow roots with slotted elements before
       the shadow contents`, (t) => {
   const a = <button />;
