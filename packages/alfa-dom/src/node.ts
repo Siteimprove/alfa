@@ -1,3 +1,4 @@
+import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Lazy } from "@siteimprove/alfa-lazy";
@@ -37,9 +38,9 @@ import { String } from "@siteimprove/alfa-string";
 export abstract class Node<T extends string = string>
   extends tree.Node<Node.Traversal.Flag, T>
   implements
-  earl.Serializable<Node.EARL>,
-  json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>,
-  sarif.Serializable<sarif.Location>
+    earl.Serializable<Node.EARL>,
+    json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>,
+    sarif.Serializable<sarif.Location>
 {
   protected constructor(
     children: Array<Node>,
@@ -54,22 +55,39 @@ export abstract class Node<T extends string = string>
    * {@link https://dom.spec.whatwg.org/#concept-descendant-text-content}
    */
   public textContent(options: Node.Traversal = Node.Traversal.empty): string {
-    return String.flatten(this.descendants(options).filter(Text.isText).join(""));
+    return String.flatten(
+      this.descendants(options).filter(Text.isText).join(""),
+    );
   }
 
   /**
    * Construct a sequence of descendants of this node sorted by tab index. Only
    * nodes with a non-negative tab index are included in the sequence.
    *
-   * {@link https://html.spec.whatwg.org/#tabindex-value}
+   * {@link https://html.spec.whatwg.org/multipage/#tabindex-value}
    */
   public tabOrder(): Sequence<Element> {
-    const candidates = (node: Node): Sequence<Element> => {
+    /**
+     * Gather candidates for sequential focus navigation.
+     *
+     * @remarks
+     * These are all elements that are keyboard focusable (non-negative tabIndex),
+     * plus the shadow hosts and content elements that may contain focusable
+     * descendants.
+     *
+     * It is important that the traversal is done here on the DOM tree only.
+     * The shadow trees and content documents will be expanded later. Doing it
+     * too early potentially would mix their elements during sorting of the
+     * tabIndexes.
+     */
+    function candidates(node: Node): Sequence<Element> {
       if (Element.isElement(node)) {
         const element = node;
 
         const tabIndex = element.tabIndex();
 
+        // If the element is a shadow host that doesn't block keyboard navigation
+        // we record it to later expand its shadow tree.
         if (element.shadow.isSome()) {
           // If the element has a negative tab index and is a shadow host then
           // none of its descendants will be part of the tab order.
@@ -80,16 +98,20 @@ export abstract class Node<T extends string = string>
           }
         }
 
+        // If the element contains a content document, we record it to later
+        // expand its content.
         if (element.content.isSome()) {
           return Sequence.of(element);
         }
 
+        // If the element is a slot, we replace it by its assigned nodes.
         if (Slot.isSlot(element)) {
           return Sequence.from(element.assignedNodes()).filter(
             Element.isElement,
           );
         }
 
+        // If the element is keyboard focusable, record it and recurse.
         if (tabIndex.some((i) => i >= 0)) {
           return Sequence.of(
             element,
@@ -98,43 +120,82 @@ export abstract class Node<T extends string = string>
         }
       }
 
+      // Otherwise (not an element, or not keyboard focusable), recurse into the children.
       return node.children().flatMap(candidates);
+    }
+
+    /**
+     * Compare two non-negative tabindexes.
+     *
+     * @remarks
+     * Due to non-focusable shadow hosts being candidates (for shadow DOM
+     *   expansion), we may have some indexes being None. These must be treated
+     *   as 0 (insert in DOM order), rather than smaller than actual indexes
+     *   (insert at start). Therefore, we cannot use Option.compareWith.
+     */
+    const comparer: Comparer<Option<number>> = (a, b) => {
+      const aValue = a.getOr(0);
+      const bValue = b.getOr(0);
+
+      if (aValue === 0) {
+        // "normal order" must come after any "specific order",
+        // i.e., 0 is greater than any positive number.
+        return bValue === 0 ? Comparison.Equal : Comparison.Greater;
+      }
+
+      if (bValue === 0) {
+        // a cannot be 0 anymore.
+        return Comparison.Less;
+      }
+
+      // If none are 0, simply compare the values.
+      return aValue < bValue
+        ? Comparison.Less
+        : aValue > bValue
+          ? Comparison.Greater
+          : Comparison.Equal;
     };
 
+    /**
+     * Expand an element into the sequentially focusable elements in its
+     * shadow tree or content document.
+     *
+     * @remarks
+     * It is important that this expansion happens **after** sorting by tabindex
+     * since shadow DOM and content documents build their own sequential focus
+     * order that is inserted as-is in the light tree or parent browsing context.
+     * That is, a tabindex of 1 in a shadow tree or content document does **not**
+     * come before a tabindex of 2 in the main document.
+     */
+    function expand(element: Element): Sequence<Element> {
+      const tabIndex = element.tabIndex();
+
+      // In case of shadow host, we include it if its sequentially focusable,
+      // and always recurse into the shadow tree.
+      for (const shadow of element.shadow) {
+        if (tabIndex.some((i) => i >= 0)) {
+          return Sequence.of(
+            element,
+            Lazy.of(() => shadow.tabOrder()),
+          );
+        } else {
+          return shadow.tabOrder();
+        }
+      }
+
+      // In case of content document, we always ignore the host (iframe) which
+      // usually redirects focus to the content.
+      for (const content of element.content) {
+        return content.tabOrder();
+      }
+
+      // If no shadow or content document, just keep the document.
+      return Sequence.of(element);
+    }
+
     return candidates(this)
-      .sortWith((a, b) =>
-        a.tabIndex().compareWith(b.tabIndex(), (a, b) => {
-          if (a === 0) {
-            return b === 0 ? 0 : 1;
-          }
-
-          if (b === 0) {
-            return -1;
-          }
-
-          return a < b ? -1 : a > b ? 1 : 0;
-        }),
-      )
-      .flatMap((element) => {
-        const tabIndex = element.tabIndex();
-
-        for (const shadow of element.shadow) {
-          if (tabIndex.some((i) => i >= 0)) {
-            return Sequence.of(
-              element,
-              Lazy.of(() => shadow.tabOrder()),
-            );
-          } else {
-            return shadow.tabOrder();
-          }
-        }
-
-        for (const content of element.content) {
-          return content.tabOrder();
-        }
-
-        return Sequence.of(element);
-      });
+      .sortWith((a, b) => comparer(a.tabIndex(), b.tabIndex()))
+      .flatMap(expand);
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
@@ -278,7 +339,7 @@ export interface Node {
  * @public
  */
 export namespace Node {
-  export interface JSON<T extends string = string> extends tree.Node.JSON<T> { }
+  export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
   export interface SerializationOptions {
     device: Device;
@@ -417,12 +478,14 @@ export namespace Node {
   }
 
   /**
-   * Creates a new `Element` instance with the same value as the original and deeply referentially non-equal.
-   * Optionally replaces child elements based on a predicate.
+   * Creates a new `Element` instance with the same value as the original and
+   * deeply referentially non-equal. Optionally replaces child elements based
+   * on a predicate.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Element,
@@ -431,11 +494,13 @@ export namespace Node {
   ): Element;
 
   /**
-   * Creates a new `Attribute` instance with the same value as the original and referentially non-equal.
+   * Creates a new `Attribute` instance with the same value as the original and
+   * referentially non-equal.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Attribute,
@@ -444,11 +509,13 @@ export namespace Node {
   ): Attribute;
 
   /**
-   * Creates a new `Text` instance with the same value as the original and referentially non-equal.
+   * Creates a new `Text` instance with the same value as the original and
+   * referentially non-equal.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Text,
@@ -457,11 +524,13 @@ export namespace Node {
   ): Text;
 
   /**
-   * Creates a new `Comment` instance with the same value as the original and referentially non-equal.
+   * Creates a new `Comment` instance with the same value as the original and
+   * referentially non-equal.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Comment,
@@ -470,12 +539,14 @@ export namespace Node {
   ): Comment;
 
   /**
-   * Creates a new `Document` instance with the same value as the original and deeply referentially non-equal.
-   * Optionally replaces child elements based on a predicate.
+   * Creates a new `Document` instance with the same value as the original and
+   * deeply referentially non-equal. Optionally replaces child elements based
+   * on a predicate.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Document,
@@ -484,11 +555,13 @@ export namespace Node {
   ): Document;
 
   /**
-   * Creates a new `Type` instance with the same value as the original and referentially non-equal.
+   * Creates a new `Type` instance with the same value as the original and
+   * referentially non-equal.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Type,
@@ -497,12 +570,14 @@ export namespace Node {
   ): Document;
 
   /**
-   * Creates a new `Fragment` instance with the same value as the original and deeply referentially non-equal.
-   * Optionally replaces child elements based on a predicate.
+   * Creates a new `Fragment` instance with the same value as the original and
+   * deeply referentially non-equal. Optionally replaces child elements based
+   * on a predicate.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Fragment,
@@ -511,12 +586,14 @@ export namespace Node {
   ): Fragment;
 
   /**
-   * Creates a new `Shadow` instance with the same value as the original and deeply referentially non-equal.
-   * Optionally replaces child elements based on a predicate.
+   * Creates a new `Shadow` instance with the same value as the original and
+   * deeply referentially non-equal. Optionally replaces child elements based
+   * on a predicate.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Shadow,
@@ -525,12 +602,14 @@ export namespace Node {
   ): Shadow;
 
   /**
-   * Creates a new `Node` instance with the same value as the original and deeply referentially non-equal.
-   * Optionally replaces child elements based on a predicate.
+   * Creates a new `Node` instance with the same value as the original and
+   * deeply referentially non-equal. Optionally replaces child elements based
+   * on a predicate.
    *
    * @remarks
    * The clone will have the same `externalId` as the original.
-   * The clone will *not* get `extraData` from the original, instead it will be `undefined`.
+   * The clone will *not* get `extraData` from the original, instead it will be
+   *   `undefined`.
    */
   export function clone(
     node: Node,
