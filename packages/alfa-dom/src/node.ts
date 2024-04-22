@@ -1,17 +1,18 @@
 import { type Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
+
+import * as earl from "@siteimprove/alfa-earl";
 import { Flags } from "@siteimprove/alfa-flags";
+import * as json from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import * as sarif from "@siteimprove/alfa-sarif";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
-
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
-import * as sarif from "@siteimprove/alfa-sarif";
 
 import * as tree from "@siteimprove/alfa-tree";
 
@@ -30,7 +31,6 @@ import {
 
 import * as predicate from "./node/predicate";
 import * as traversal from "./node/traversal";
-import { String } from "@siteimprove/alfa-string";
 
 /**
  * @public
@@ -71,16 +71,16 @@ export abstract class Node<T extends string = string>
      * Gather candidates for sequential focus navigation.
      *
      * @remarks
-     * These are all elements that are keyboard focusable (non-negative tabIndex),
-     * plus the shadow hosts and content elements that may contain focusable
-     * descendants.
+     * These are all elements that are keyboard focusable (non-negative
+     *   tabIndex), plus the shadow hosts and content elements that may contain
+     *   focusable descendants.
      *
      * It is important that the traversal is done here on the DOM tree only.
      * The shadow trees and content documents will be expanded later. Doing it
      * too early potentially would mix their elements during sorting of the
      * tabIndexes.
      */
-    function candidates(node: Node): Sequence<Element> {
+    function candidates(node: Node): Sequence<[Element, Option<number>]> {
       if (Element.isElement(node)) {
         const element = node;
 
@@ -94,27 +94,27 @@ export abstract class Node<T extends string = string>
           if (tabIndex.some((i) => i < 0)) {
             return Sequence.empty();
           } else {
-            return Sequence.of(element);
+            return Sequence.of([element, tabIndex]);
           }
         }
 
         // If the element contains a content document, we record it to later
         // expand its content.
         if (element.content.isSome()) {
-          return Sequence.of(element);
+          return Sequence.of([element, tabIndex]);
         }
 
         // If the element is a slot, we replace it by its assigned nodes.
         if (Slot.isSlot(element)) {
-          return Sequence.from(element.assignedNodes()).filter(
-            Element.isElement,
-          );
+          return Sequence.from(element.assignedNodes())
+            .filter(Element.isElement)
+            .map((element) => [element, tabIndex]);
         }
 
         // If the element is keyboard focusable, record it and recurse.
         if (tabIndex.some((i) => i >= 0)) {
           return Sequence.of(
-            element,
+            [element, tabIndex],
             Lazy.of(() => element.children().flatMap(candidates)),
           );
         }
@@ -125,7 +125,7 @@ export abstract class Node<T extends string = string>
     }
 
     /**
-     * Compare two non-negative tabindexes.
+     * Compare two elements, with non-negative tabindexes, by tabindex.
      *
      * @remarks
      * Due to non-focusable shadow hosts being candidates (for shadow DOM
@@ -133,7 +133,7 @@ export abstract class Node<T extends string = string>
      *   as 0 (insert in DOM order), rather than smaller than actual indexes
      *   (insert at start). Therefore, we cannot use Option.compareWith.
      */
-    const comparer: Comparer<Option<number>> = (a, b) => {
+    const comparer: Comparer<[Element, Option<number>]> = ([, a], [, b]) => {
       const aValue = a.getOr(0);
       const bValue = b.getOr(0);
 
@@ -161,15 +161,17 @@ export abstract class Node<T extends string = string>
      * shadow tree or content document.
      *
      * @remarks
-     * It is important that this expansion happens **after** sorting by tabindex
+     * It is important that this expansion happens **after** sorting by
+     *   tabindex
      * since shadow DOM and content documents build their own sequential focus
-     * order that is inserted as-is in the light tree or parent browsing context.
-     * That is, a tabindex of 1 in a shadow tree or content document does **not**
-     * come before a tabindex of 2 in the main document.
+     * order that is inserted as-is in the light tree or parent browsing
+     *   context. That is, a tabindex of 1 in a shadow tree or content document
+     *   does **not** come before a tabindex of 2 in the main document.
      */
-    function expand(element: Element): Sequence<Element> {
-      const tabIndex = element.tabIndex();
-
+    function expand([element, tabIndex]: [
+      Element,
+      Option<number>,
+    ]): Sequence<Element> {
       // In case of shadow host, we include it if its sequentially focusable,
       // and always recurse into the shadow tree.
       for (const shadow of element.shadow) {
@@ -193,9 +195,7 @@ export abstract class Node<T extends string = string>
       return Sequence.of(element);
     }
 
-    return candidates(this)
-      .sortWith((a, b) => comparer(a.tabIndex(), b.tabIndex()))
-      .flatMap(expand);
+    return candidates(this).sortWith(comparer).flatMap(expand);
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
