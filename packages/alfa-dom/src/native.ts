@@ -12,8 +12,6 @@
  * dependencies into a single file. This is however somewhat heavy-handed, and
  * the rest of Alfa has no need for such complex machinery, so we stick to a
  * simple solution for now.
- *
- * As a consequence, `import` must be avoided, but `import type` is OK.
  */
 
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
