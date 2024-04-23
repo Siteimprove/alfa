@@ -46,7 +46,7 @@ export class FontFaceRule extends Rule<"font-face"> {
  */
 export namespace FontFaceRule {
   export interface JSON extends Rule.JSON<"font-face"> {
-    style: Block.JSON;
+    style: Block.JSON | string;
   }
 
   export function isFontFaceRule(value: unknown): value is FontFaceRule {
@@ -57,6 +57,6 @@ export namespace FontFaceRule {
    * @internal
    */
   export function fromFontFaceRule(json: JSON): Trampoline<FontFaceRule> {
-    return Trampoline.done(FontFaceRule.of(json.style.map(Declaration.from)));
+    return Trampoline.done(FontFaceRule.of(Block.from(json.style)));
   }
 }

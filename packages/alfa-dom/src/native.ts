@@ -42,24 +42,50 @@ import type {
  * @internal
  */
 export namespace Native {
-  export function fromNode(node: globalThis.Element): Element.JSON;
+  export async function fromNode(
+    node: globalThis.Element,
+    options?: Options,
+  ): Promise<Element.JSON>;
 
-  export function fromNode(node: globalThis.Attr): Attribute.JSON;
+  export async function fromNode(
+    node: globalThis.Attr,
+    options?: Options,
+  ): Promise<Attribute.JSON>;
 
-  export function fromNode(node: globalThis.Text): Text.JSON;
+  export async function fromNode(
+    node: globalThis.Text,
+    options?: Options,
+  ): Promise<Text.JSON>;
 
-  export function fromNode(node: globalThis.Comment): Comment.JSON;
+  export async function fromNode(
+    node: globalThis.Comment,
+    options?: Options,
+  ): Promise<Comment.JSON>;
 
-  export function fromNode(node: globalThis.Document): Document.JSON;
+  export async function fromNode(
+    node: globalThis.Document,
+    options?: Options,
+  ): Promise<Document.JSON>;
 
-  export function fromNode(node: globalThis.DocumentType): Type.JSON;
+  export async function fromNode(
+    node: globalThis.DocumentType,
+    options?: Options,
+  ): Promise<Type.JSON>;
 
-  export function fromNode(node: globalThis.Node): Node.JSON;
+  export async function fromNode(
+    node: globalThis.Node,
+    options?: Options,
+  ): Promise<Node.JSON>;
 
-  export function fromNode(node: globalThis.Node): Node.JSON {
+  export async function fromNode(
+    node: globalThis.Node,
+    options?: Options,
+  ): Promise<Node.JSON> {
+    const { withCrossOrigin = false } = options ?? {};
+
     return toNode(node);
 
-    function toNode(node: globalThis.Node): Node.JSON {
+    async function toNode(node: globalThis.Node): Promise<Node.JSON> {
       switch (node.nodeType) {
         case node.ELEMENT_NODE:
           return toElement(node as globalThis.Element);
@@ -83,13 +109,13 @@ export namespace Native {
       throw new Error(`Unsupported node of type: ${node.nodeType}`);
     }
 
-    function toElement(
+    async function toElement(
       element:
         | globalThis.Element
         | globalThis.HTMLElement
         | globalThis.HTMLIFrameElement
         | globalThis.SVGElement,
-    ): Element.JSON {
+    ): Promise<Element.JSON> {
       return {
         type: "element",
         namespace: element.namespaceURI,
@@ -97,12 +123,14 @@ export namespace Native {
         name: element.localName,
         attributes: map(element.attributes, toAttribute),
         style: "style" in element ? toBlock(element.style) : null,
-        children: map(element.childNodes, toNode),
+        children: await mapAsync(element.childNodes, toNode),
         shadow:
-          element.shadowRoot !== null ? toShadow(element.shadowRoot) : null,
+          element.shadowRoot !== null
+            ? await toShadow(element.shadowRoot)
+            : null,
         content:
           "contentDocument" in element && element.contentDocument !== null
-            ? toDocument(element.contentDocument)
+            ? await toDocument(element.contentDocument)
             : null,
         box: toRectangle(element.getBoundingClientRect()),
       };
@@ -132,10 +160,16 @@ export namespace Native {
       };
     }
 
-    function toDocument(document: globalThis.Document): Document.JSON {
+    async function toDocument(
+      document: globalThis.Document,
+    ): Promise<Document.JSON> {
+      if (withCrossOrigin) {
+        await ensureCrossOrigin(document);
+      }
+
       return {
         type: "document",
-        children: map(document.childNodes, toNode),
+        children: await mapAsync(document.childNodes, toNode),
         style: map(document.styleSheets, toSheet),
       };
     }
@@ -149,11 +183,17 @@ export namespace Native {
       };
     }
 
-    function toShadow(shadow: globalThis.ShadowRoot): Shadow.JSON {
+    async function toShadow(
+      shadow: globalThis.ShadowRoot,
+    ): Promise<Shadow.JSON> {
+      if (withCrossOrigin) {
+        await ensureCrossOrigin(document);
+      }
+
       return {
         type: "shadow",
         mode: shadow.mode,
-        children: map(shadow.childNodes, toNode),
+        children: await mapAsync(shadow.childNodes, toNode),
         style: map(shadow.styleSheets, toSheet),
       };
     }
@@ -315,14 +355,24 @@ export namespace Native {
       };
     }
 
-    function toBlock(block: globalThis.CSSStyleDeclaration): Block.JSON {
-      return map(block, (name) => {
-        return {
-          name,
-          value: block.getPropertyValue(name),
-          important: block.getPropertyPriority(name) === "important",
-        };
-      });
+    /**
+     * @privateRemarks
+     * User Agents normally expose the pre-parsed declarations.
+     * However, there is a corner case of shorthands whose value is a `var()`
+     * where several UAs (as of April 2024: at least Chrome and Firefox) list
+     * the **longhands** in their CSSStyleDeclaration object (in the enumerable
+     * part), but associate no values to them, only to the corresponding
+     * shorthand (as expected and declared). This causes attempts to access
+     * the apparently declared properties through the `getPropertyValue()`
+     * method to return an empty string.
+     *
+     * {@link https://github.com/Siteimprove/alfa/issues/1563}
+     *
+     * To circumvent that, we simply return the raw CSS text; and delegate parsing
+     * to consumers, aka Block.from.
+     */
+    function toBlock(block: globalThis.CSSStyleDeclaration): string {
+      return block.cssText;
     }
 
     function toRectangle(domRect: globalThis.DOMRect): Rectangle.JSON {
@@ -347,5 +397,117 @@ export namespace Native {
 
       return result;
     }
+  }
+
+  async function mapAsync<T, U>(
+    arrayLike: ArrayLike<T>,
+    mapper: (value: T) => U | Promise<U>,
+  ): Promise<Array<U>> {
+    const result = new Array<U>(arrayLike.length);
+
+    for (let i = 0, n = arrayLike.length; i < n; i++) {
+      result[i] = await mapper(arrayLike[i]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Ensure that the needed resources for the document or shadow root, such as
+   * style sheets, adhere to CORS policy.
+   */
+  async function ensureCrossOrigin(
+    documentOrShadowRoot: globalThis.Document | globalThis.ShadowRoot,
+  ): Promise<void> {
+    /**
+     * Ensure that all `<link>` elements specify the `crossorigin` attribute.
+     * Even `<link>` elements that reference same-origin resources will need
+     * this attribute as they may contain nested resource imports that risk
+     * violating CORS policy.
+     *
+     * Do keep in mind that this will only work for resources that also set
+     * appropriate CORS request headers.
+     */
+    for (const link of documentOrShadowRoot.querySelectorAll("link")) {
+      /**
+       * Skip `<link>` elements for which the `crossorigin` attribute is already
+       * set to a valid value.
+       */
+      if (link.crossOrigin !== null) {
+        continue;
+      }
+
+      /**
+       * Simply setting the `crossorigin` attribute for the `<link>` element
+       * will not work as it must be reevaluated. We therefore create a clone,
+       * set the `crossorigin` attribute, and replace the original `<link>`
+       * element.
+       */
+      const clone = link.cloneNode() as HTMLLinkElement;
+
+      /**
+       * Set the `crossorigin` attribute to `anonymous`, ensuring that
+       * credentials are not sent as part of the cross-origin request. This is
+       * incredibly important as we don't want to risk leaking credentials!
+       */
+      clone.crossOrigin = "anonymous";
+
+      /**
+       * Replace the original `<link>` element with its clone. For style sheets,
+       * this will unfortunately cause a FOUC while the browser recomputes
+       * styles.
+       *
+       * {@link https://en.wikipedia.org/wiki/Flash_of_unstyled_content}
+       */
+      link.parentNode!.replaceChild(clone, link);
+
+      /**
+       * While certain resources will load synchronously from cache, others will
+       * not and we therefore need to await these.
+       */
+      if (shouldAwait(link)) {
+        /**
+         * Construct a promise that resolves once the `<link>` element either
+         * loads successfully or fails to load. If the `<link>` element fails to
+         * load, a request error will be logged to the console which should be
+         * enough indication that something didn't go quite as expected. Either
+         * way, we will deliver audit results even in the event of a missing
+         * resource.
+         */
+        await new Promise<void>((resolve) =>
+          ["load", "error"].forEach((event) =>
+            clone.addEventListener(event, () => resolve()),
+          ),
+        );
+      }
+    }
+
+    /**
+     * Check if the given `<link>` element should be awaited.
+     */
+    function shouldAwait(link: HTMLLinkElement): boolean {
+      /**
+       * A `<link>` element with an empty `href` will cause the fetch process to
+       * abort with no events to await.
+       */
+      if (link.getAttribute("href")?.trim() === "") {
+        return false;
+      }
+
+      /**
+       * Style sheets should be awaited as these are loaded and applied
+       * asynchronously, often times causing additional resources to be loaded
+       * via `url()` references and `@import` rules.
+       */
+      if (link.rel === "stylesheet") {
+        return true;
+      }
+
+      return false;
+    }
+  }
+
+  export interface Options {
+    withCrossOrigin?: boolean;
   }
 }
