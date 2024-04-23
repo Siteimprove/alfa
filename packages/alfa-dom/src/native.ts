@@ -508,6 +508,7 @@ export namespace Native {
   }
 
   export interface Options {
+    /** Whether to enforce anonymous CORS on <link> missing one */
     withCrossOrigin?: boolean;
   }
 }
