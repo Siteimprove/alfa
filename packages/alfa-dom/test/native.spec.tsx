@@ -5,6 +5,22 @@ import { type Document, h, Node } from "../src";
 import { Native } from "../src/native";
 
 /**
+ * Note: This test suite uses JSDOM parser to easily build native documents.
+ * We could instead manually build the documents as needed. It would be more
+ * complete as it could escape the quirks of JSDOM, but it would be more
+ * work to write and maintain.
+ *
+ * Full integration tests should be written in the browser automation packages
+ * of the `alfa-integrations` repository.
+ */
+
+/**
+ * Note: JSDOM only has partial support for part of CSS, this seems to be
+ * due to using an unmaintained library CSSOM 🙈
+ * Therefore, it is not possible to test @layer rules and probably some others.
+ */
+
+/**
  * Note: all tests loop Native.fromNode through Node.from and .toJSON()
  * This effectively removes the box that is added by Native.fromNode.
  * Since we run in JSDOM, the document is not rendered and the box is always

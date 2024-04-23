@@ -12,12 +12,13 @@
  * dependencies into a single file. This is however somewhat heavy-handed, and
  * the rest of Alfa has no need for such complex machinery, so we stick to a
  * simple solution for now.
+ *
+ * As a consequence, `import` must be avoided, but `import type` is OK.
  */
 
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import type {
   Attribute,
-  Block,
   Comment,
   Document,
   Element,
@@ -25,6 +26,7 @@ import type {
   ImportRule,
   KeyframeRule,
   KeyframesRule,
+  Layer,
   MediaRule,
   NamespaceRule,
   Node,
@@ -218,29 +220,35 @@ export namespace Native {
 
     function toRule(rule: globalThis.CSSRule): Rule.JSON {
       switch (rule.constructor.name) {
-        case "CSSStyleRule":
-          return toStyleRule(rule as globalThis.CSSStyleRule);
+        case "CSSFontFaceRule":
+          return toFontFaceRule(rule as globalThis.CSSFontFaceRule);
 
         case "CSSImportRule":
           return toImportRule(rule as globalThis.CSSImportRule);
 
-        case "CSSMediaRule":
-          return toMediaRule(rule as globalThis.CSSMediaRule);
-
-        case "CSSFontFaceRule":
-          return toFontFaceRule(rule as globalThis.CSSFontFaceRule);
-
-        case "CSSPageRule":
-          return toPageRule(rule as globalThis.CSSPageRule);
+        case "CSSKeyframeRule":
+          return toKeyframeRule(rule as globalThis.CSSKeyframeRule);
 
         case "CSSKeyframesRule":
           return toKeyframesRule(rule as globalThis.CSSKeyframesRule);
 
-        case "CSSKeyframeRule":
-          return toKeyframeRule(rule as globalThis.CSSKeyframeRule);
+        case "CSSLayerBlockRule":
+          return toLayerBlockRule(rule as globalThis.CSSLayerBlockRule);
+
+        case "CSSLayerStatementRule":
+          return toLayerStatementRule(rule as globalThis.CSSLayerStatementRule);
+
+        case "CSSMediaRule":
+          return toMediaRule(rule as globalThis.CSSMediaRule);
 
         case "CSSNamespaceRule":
           return toNamespaceRule(rule as globalThis.CSSNamespaceRule);
+
+        case "CSSPageRule":
+          return toPageRule(rule as globalThis.CSSPageRule);
+
+        case "CSSStyleRule":
+          return toStyleRule(rule as globalThis.CSSStyleRule);
 
         case "CSSSupportsRule":
           return toSupportsRule(rule as globalThis.CSSSupportsRule);
@@ -249,11 +257,12 @@ export namespace Native {
       throw new Error(`Unsupported rule of type: ${rule.type}`);
     }
 
-    function toStyleRule(styleRule: globalThis.CSSStyleRule): StyleRule.JSON {
+    function toFontFaceRule(
+      rule: globalThis.CSSFontFaceRule,
+    ): FontFaceRule.JSON {
       return {
-        type: "style",
-        selector: styleRule.selectorText,
-        style: toBlock(styleRule.style),
+        type: "font-face",
+        style: toBlock(rule.style),
       };
     }
 
@@ -266,35 +275,12 @@ export namespace Native {
       };
     }
 
-    function toMediaRule(rule: globalThis.CSSMediaRule): MediaRule.JSON {
-      let rules: Array<Rule.JSON>;
-
-      try {
-        rules = map(rule.cssRules, toRule);
-      } catch {
-        rules = [];
-      }
-
+    function toKeyframeRule(
+      rule: globalThis.CSSKeyframeRule,
+    ): KeyframeRule.JSON {
       return {
-        type: "media",
-        condition: rule.conditionText,
-        rules,
-      };
-    }
-
-    function toFontFaceRule(
-      rule: globalThis.CSSFontFaceRule,
-    ): FontFaceRule.JSON {
-      return {
-        type: "font-face",
-        style: toBlock(rule.style),
-      };
-    }
-
-    function toPageRule(rule: globalThis.CSSPageRule): PageRule.JSON {
-      return {
-        type: "page",
-        selector: rule.selectorText,
+        type: "keyframe",
+        key: rule.keyText,
         style: toBlock(rule.style),
       };
     }
@@ -317,13 +303,38 @@ export namespace Native {
       };
     }
 
-    function toKeyframeRule(
-      rule: globalThis.CSSKeyframeRule,
-    ): KeyframeRule.JSON {
+    function toLayerBlockRule(
+      rule: globalThis.CSSLayerBlockRule,
+    ): Layer.BlockRule.JSON {
       return {
-        type: "keyframe",
-        key: rule.keyText,
-        style: toBlock(rule.style),
+        type: "layer-block",
+        layer: rule.name,
+        rules: map(rule.cssRules, toRule),
+      };
+    }
+
+    function toLayerStatementRule(
+      rule: globalThis.CSSLayerStatementRule,
+    ): Layer.StatementRule.JSON {
+      return {
+        type: "layer-statement",
+        layers: [...rule.nameList],
+      };
+    }
+
+    function toMediaRule(rule: globalThis.CSSMediaRule): MediaRule.JSON {
+      let rules: Array<Rule.JSON>;
+
+      try {
+        rules = map(rule.cssRules, toRule);
+      } catch {
+        rules = [];
+      }
+
+      return {
+        type: "media",
+        condition: rule.conditionText,
+        rules,
       };
     }
 
@@ -334,6 +345,22 @@ export namespace Native {
         type: "namespace",
         namespace: rule.namespaceURI,
         prefix: rule.prefix,
+      };
+    }
+
+    function toPageRule(rule: globalThis.CSSPageRule): PageRule.JSON {
+      return {
+        type: "page",
+        selector: rule.selectorText,
+        style: toBlock(rule.style),
+      };
+    }
+
+    function toStyleRule(styleRule: globalThis.CSSStyleRule): StyleRule.JSON {
+      return {
+        type: "style",
+        selector: styleRule.selectorText,
+        style: toBlock(styleRule.style),
       };
     }
 
@@ -370,6 +397,10 @@ export namespace Native {
      *
      * To circumvent that, we simply return the raw CSS text; and delegate parsing
      * to consumers, aka Block.from.
+     *
+     * Note that somehow JSDOM behaves differently and correctly associate the
+     * value with the shorthand. This means that the local tests using JSDOM
+     * are brittle and cannot detect a regression on this issue.
      */
     function toBlock(block: globalThis.CSSStyleDeclaration): string {
       return block.cssText;
