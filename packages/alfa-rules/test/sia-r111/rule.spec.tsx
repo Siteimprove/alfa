@@ -3,10 +3,11 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import R111, { Outcomes } from "../../src/sia-r111/rule";
+import R111 from "../../src/sia-r111/rule";
 
 import { evaluate } from "../common/evaluate";
 import { failed, inapplicable, passed } from "../common/outcome";
+import { TargetSize } from "../../src/common/outcome/target-size";
 
 test("evaluate() passes button with clickable area of exactly 44x44 pixels", async (t) => {
   const device = Device.standard();
@@ -24,7 +25,7 @@ test("evaluate() passes button with clickable area of exactly 44x44 pixels", asy
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     passed(R111, target, {
-      1: Outcomes.HasSufficientSize(
+      1: TargetSize.HasSufficientSize(
         "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),
@@ -46,7 +47,10 @@ test("evaluate() passes input element regardless of size", async (t) => {
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     passed(R111, target, {
-      1: Outcomes.IsUserAgentControlled("", target.getBoundingBox(device).getUnsafe()),
+      1: TargetSize.IsUserAgentControlled(
+        "",
+        target.getBoundingBox(device).getUnsafe(),
+      ),
     }),
   ]);
 });
@@ -67,7 +71,7 @@ test("evaluate() fails button with clickable area of less than 44x44 pixels", as
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     failed(R111, target, {
-      1: Outcomes.HasInsufficientSize(
+      1: TargetSize.HasInsufficientSize(
         "Hello",
         target.getBoundingBox(device).getUnsafe(),
       ),
@@ -133,13 +137,17 @@ test("evaluate() is inapplicable when link is part of text", async (t) => {
   const device = Device.standard();
 
   const target = (
-    <a
-      href="#"
-      box={{ device, x: 44, y: 80, width: 37, height: 17 }}
-    >world</a>
+    <a href="#" box={{ device, x: 44, y: 80, width: 37, height: 17 }}>
+      world
+    </a>
   );
 
-  const div = <div><span>hello</span>{target}</div>;
+  const div = (
+    <div>
+      <span>hello</span>
+      {target}
+    </div>
+  );
 
   const document = h.document([div]);
 
@@ -150,10 +158,9 @@ test("evaluate() is applicable when link is not part of text", async (t) => {
   const device = Device.standard();
 
   const target = (
-    <a
-      href="#"
-      box={{ device, x: 44, y: 80, width: 37, height: 17 }}
-    >hello</a>
+    <a href="#" box={{ device, x: 44, y: 80, width: 37, height: 17 }}>
+      hello
+    </a>
   );
 
   const div = <p>{target}</p>;
@@ -162,7 +169,7 @@ test("evaluate() is applicable when link is not part of text", async (t) => {
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     failed(R111, target, {
-      1: Outcomes.HasInsufficientSize(
+      1: TargetSize.HasInsufficientSize(
         "hello",
         target.getBoundingBox(device).getUnsafe(),
       ),

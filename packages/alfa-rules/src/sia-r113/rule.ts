@@ -2,10 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element } from "@siteimprove/alfa-dom";
-import { Either } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
-import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -17,7 +14,9 @@ import {
   allTargetsOfPointerEvents,
 } from "../common/applicability/targets-of-pointer-events";
 
-import { WithBoundingBox, WithName } from "../common/diagnostic";
+import { WithName } from "../common/diagnostic";
+
+import { TargetSize } from "../common/outcome/target-size";
 
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
@@ -39,11 +38,11 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () => Outcomes.IsUserAgentControlled(name, box),
+            () => TargetSize.IsUserAgentControlled(name, box),
             () =>
               expectation(
                 hasSufficientSize(24, device)(target),
-                () => Outcomes.HasSufficientSize(name, box),
+                () => TargetSize.HasSufficientSize(name, box),
                 () => {
                   const tooCloseNeighbors = Sequence.from(
                     findElementsWithInsufficientSpacingToTarget(
@@ -55,9 +54,9 @@ export default Rule.Atomic.of<Page, Element>({
 
                   return expectation(
                     tooCloseNeighbors.isEmpty(),
-                    () => Outcomes.HasSufficientSpacing(name, box),
+                    () => TargetSize.HasSufficientSpacing(name, box),
                     () =>
-                      Outcomes.HasInsufficientSizeAndSpacing(
+                      TargetSize.HasInsufficientSizeAndSpacing(
                         name,
                         box,
                         tooCloseNeighbors,
@@ -71,59 +70,6 @@ export default Rule.Atomic.of<Page, Element>({
     };
   },
 });
-
-/**
- * @public
- */
-export namespace Outcomes {
-  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
-    Ok.of(
-      WithBoundingBox.of(
-        "Target is user agent controlled",
-        name,
-        box,
-        Either.left({ ua: true }),
-        [],
-      ),
-    );
-
-  export const HasSufficientSize = (name: string, box: Rectangle) =>
-    Ok.of(
-      WithBoundingBox.of(
-        "Target has sufficient size",
-        name,
-        box,
-        Either.right({ size: true, spacing: true }),
-        [],
-      ),
-    );
-
-  export const HasSufficientSpacing = (name: string, box: Rectangle) =>
-    Ok.of(
-      WithBoundingBox.of(
-        "Target has sufficient spacing",
-        name,
-        box,
-        Either.right({ size: false, spacing: true }),
-        [],
-      ),
-    );
-
-  export const HasInsufficientSizeAndSpacing = (
-    name: string,
-    box: Rectangle,
-    tooCloseNeighbors: Iterable<Element>,
-  ) =>
-    Err.of(
-      WithBoundingBox.of(
-        "Target has insufficient size and spacing",
-        name,
-        box,
-        Either.right({ size: false, spacing: false }),
-        tooCloseNeighbors,
-      ),
-    );
-}
 
 const undersizedCache = Cache.empty<
   Document,
