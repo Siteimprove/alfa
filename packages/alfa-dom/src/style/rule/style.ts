@@ -68,7 +68,7 @@ export class StyleRule extends Rule<"style"> {
 export namespace StyleRule {
   export interface JSON extends Rule.JSON<"style"> {
     selector: string;
-    style: Block.JSON;
+    style: Block.JSON | string;
   }
 
   export function isStyleRule(value: unknown): value is StyleRule {
@@ -83,8 +83,6 @@ export namespace StyleRule {
    * @internal
    */
   export function fromStyleRule(json: JSON): Trampoline<StyleRule> {
-    return Trampoline.done(
-      StyleRule.of(json.selector, json.style.map(Declaration.from)),
-    );
+    return Trampoline.done(StyleRule.of(json.selector, Block.from(json.style)));
   }
 }

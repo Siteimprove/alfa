@@ -113,7 +113,10 @@ export namespace h {
       children
         .filter(nor(Document.isDocument, Shadow.isShadow))
         .map((child) => (typeof child === "string" ? h.text(child) : child)),
-      style.length === 0 ? None : Option.of(block),
+      (Array.isArray(style) && style.length === 0) ||
+        Object.keys(style).length === 0
+        ? None
+        : Option.of(block),
       Option.from(box),
       Option.from(device),
       externalId,

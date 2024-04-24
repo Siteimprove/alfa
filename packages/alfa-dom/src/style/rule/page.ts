@@ -59,7 +59,7 @@ export class PageRule extends Rule<"page"> {
 export namespace PageRule {
   export interface JSON extends Rule.JSON<"page"> {
     selector: string;
-    style: Block.JSON;
+    style: Block.JSON | string;
   }
 
   export function isPageRule(value: unknown): value is PageRule {
@@ -70,8 +70,6 @@ export namespace PageRule {
    * @internal
    */
   export function fromPageRule(json: JSON): Trampoline<PageRule> {
-    return Trampoline.done(
-      PageRule.of(json.selector, json.style.map(Declaration.from)),
-    );
+    return Trampoline.done(PageRule.of(json.selector, Block.from(json.style)));
   }
 }

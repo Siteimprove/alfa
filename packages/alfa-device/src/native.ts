@@ -1,7 +1,7 @@
 /// <reference lib="dom" />
 
 /**
- * The function defined in this file is destined to be injected into browser
+ * The function defined in this file is destined to be injected into a browser
  * page, either through a web extension or browser automation tool.
  *
  * As such, it must be serializable, meaning it must not reference any external

@@ -59,7 +59,7 @@ export class KeyframeRule extends Rule<"keyframe"> {
 export namespace KeyframeRule {
   export interface JSON extends Rule.JSON<"keyframe"> {
     key: string;
-    style: Block.JSON;
+    style: Block.JSON | string;
   }
 
   export function isKeyframeRule(value: unknown): value is KeyframeRule {
@@ -71,7 +71,7 @@ export namespace KeyframeRule {
    */
   export function fromKeyframeRule(json: JSON): Trampoline<KeyframeRule> {
     return Trampoline.done(
-      KeyframeRule.of(json.key, json.style.map(Declaration.from)),
+      KeyframeRule.of(json.key, Block.from(json.style).declarations),
     );
   }
 }

@@ -391,7 +391,7 @@ export namespace Element {
     prefix: string | null;
     name: N;
     attributes: Array<Attribute.JSON>;
-    style: Block.JSON | null;
+    style: Block.JSON | string | null;
     shadow: Shadow.JSON | null;
     content: Document.JSON | null;
     box: Rectangle.JSON | null;
