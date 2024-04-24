@@ -1,7 +1,7 @@
+import { Element } from "@siteimprove/alfa-dom";
+import { Either } from "@siteimprove/alfa-either";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Either } from "@siteimprove/alfa-either";
-import { Element } from "@siteimprove/alfa-dom";
 
 import { WithBoundingBox } from "../diagnostic";
 

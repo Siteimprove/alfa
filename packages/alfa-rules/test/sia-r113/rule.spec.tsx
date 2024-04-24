@@ -6,7 +6,9 @@ import { Device } from "@siteimprove/alfa-device";
 import R113 from "../../src/sia-r113/rule";
 
 import { evaluate } from "../common/evaluate";
+
 import { failed, inapplicable, passed } from "../common/outcome";
+
 import { TargetSize } from "../../src/common/outcome/target-size";
 
 test("evaluate() passes button with clickable area of exactly 24x24 pixels", async (t) => {

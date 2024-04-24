@@ -10,8 +10,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import {
-  applicableTargetsOfPointerEvents,
   allTargetsOfPointerEvents,
+  applicableTargetsOfPointerEvents,
 } from "../common/applicability/targets-of-pointer-events";
 
 import { WithName } from "../common/diagnostic";
