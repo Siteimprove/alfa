@@ -263,9 +263,15 @@ export namespace h {
     export function importRule(
       url: string,
       sheet: Sheet,
-      condition?: string,
+      mediaCondition?: string,
+      supportCondition?: string,
     ): ImportRule {
-      return ImportRule.of(url, sheet, Option.from(condition));
+      return ImportRule.of(
+        url,
+        sheet,
+        Option.from(mediaCondition),
+        Option.from(supportCondition),
+      );
     }
     export function keyframe(
       key: string,

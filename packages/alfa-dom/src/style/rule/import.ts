@@ -1,13 +1,15 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
+import { Device } from "@siteimprove/alfa-device";
 import { Option, None } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
 import { ConditionRule } from "./condition";
-import { Device } from "@siteimprove/alfa-device";
-import { Predicate } from "@siteimprove/alfa-predicate";
+
+const { and } = Predicate;
 
 /**
  * @public
@@ -25,7 +27,7 @@ export class ImportRule extends ConditionRule<"import"> {
   private readonly _href: string;
   private readonly _sheet: Sheet;
   private readonly _mediaQueries: Feature.Media.List;
-  private readonly _supportConditon: Option<string>;
+  private readonly _supportCondition: Option<string>;
   // There may be no support condition, or an unparsable (i.e. non-supported) one.
   // The former is None, the later is Some(None).
   private readonly _supportQuery: Option<Option<Feature.Supports.Query>>;
@@ -40,7 +42,7 @@ export class ImportRule extends ConditionRule<"import"> {
 
     this._href = href;
     this._sheet = sheet;
-    this._supportConditon = supportCondition;
+    this._supportCondition = supportCondition;
 
     this._mediaQueries = mediaCondition
       .flatMap((condition) =>
@@ -50,14 +52,20 @@ export class ImportRule extends ConditionRule<"import"> {
       .getOr(Feature.Media.List.of([]));
 
     this._supportQuery = supportCondition.map((condition) =>
-      Feature.parseSupportsQuery(Lexer.lex(condition))
+      Feature.parseSupportsQuery(
+        // We're not sure where the condition comes from, but Alfa only parses
+        // them when they are parenthesised, while CSSImportRule.supportsText
+        // provides the raw text. Extra parenthesis don't block Alfa.
+        // In doubt, adding some to avoid potential problems.
+        Lexer.lex(`(${condition})`),
+      )
         .ok()
         .map(([, query]) => query),
     );
   }
 
   public get supportCondition(): Option<string> {
-    return this._supportConditon;
+    return this._supportCondition;
   }
 
   public get mediaQueries(): Feature.Media.List {
@@ -88,7 +96,7 @@ export class ImportRule extends ConditionRule<"import"> {
   }
 
   public toString(): string {
-    return `@import url(${this._href}) ${this._condition}`;
+    return `@import url(${this._href}) ${this._supportCondition.map((condition) => `supports(${condition}) `).getOr("")}${this._condition}`;
   }
 }
 
@@ -118,7 +126,7 @@ export namespace ImportRule {
   }
 
   export function matches(device: Device): Predicate<ImportRule> {
-    return Predicate.and(matchesMedia(device), matchesSupport(device));
+    return and(matchesMedia(device), matchesSupport(device));
   }
 
   /**

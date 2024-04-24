@@ -154,7 +154,7 @@ test(".from() only recurses into media rules that match the device", (t) => {
   });
 });
 
-test(".from() only recurses into import rules that match the device", (t) => {
+test(".from() only recurses into import rules whose media condition match the device", (t) => {
   const rule = h.rule.style("foo", { foo: "bar" });
   const actual = SelectorMap.from(
     [
@@ -164,6 +164,76 @@ test(".from() only recurses into import rules that match the device", (t) => {
           "bar.com",
           h.sheet([h.rule.style("bar", { foo: "bar" })]),
           "print",
+        ),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [["foo", ruleToBlockJSON(rule, 0)]],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".from() only recurses into import rules whose support condition match the device", (t) => {
+  const rule = h.rule.style("foo", { foo: "bar" });
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.importRule("foo.com", h.sheet([rule]), undefined, "foo: bar"),
+      ]),
+      h.sheet([
+        h.rule.importRule(
+          "bar.com",
+          h.sheet([h.rule.style("bar", { foo: "bar" })]),
+          undefined,
+          "-foo: bar",
+        ),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [["foo", ruleToBlockJSON(rule, 0)]],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".from() only recurses into import rules when both media and support conditions match the device", (t) => {
+  const rule = h.rule.style("foo", { foo: "bar" });
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.importRule("foo.com", h.sheet([rule]), "screen", "foo: bar"),
+      ]),
+      h.sheet([
+        h.rule.importRule(
+          "bar.com",
+          h.sheet([h.rule.style("bar", { foo: "bar" })]),
+          "screen",
+          "-foo: bar",
+        ),
+        h.rule.importRule(
+          "bar.com",
+          h.sheet([h.rule.style("bar", { foo: "bar" })]),
+          "print",
+          "-foo: bar",
+        ),
+        h.rule.importRule(
+          "bar.com",
+          h.sheet([h.rule.style("bar", { foo: "bar" })]),
+          "print",
+          "foo: bar",
         ),
       ]),
     ],
