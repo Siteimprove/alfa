@@ -16,21 +16,25 @@ export class ImportRule extends ConditionRule<"import"> {
   public static of(
     href: string,
     sheet: Sheet,
-    condition: Option<string> = None,
+    mediaCondition: Option<string> = None,
   ): ImportRule {
-    return new ImportRule(href, sheet, condition);
+    return new ImportRule(href, sheet, mediaCondition);
   }
 
   private readonly _href: string;
   private readonly _sheet: Sheet;
-  private readonly _queries: Feature.Media.List;
+  private readonly _mediaQueries: Feature.Media.List;
 
-  private constructor(href: string, sheet: Sheet, condition: Option<string>) {
-    super("import", condition.getOr("all"), []);
+  private constructor(
+    href: string,
+    sheet: Sheet,
+    mediaCondition: Option<string>,
+  ) {
+    super("import", mediaCondition.getOr("all"), []);
 
     this._href = href;
     this._sheet = sheet;
-    this._queries = condition
+    this._mediaQueries = mediaCondition
       .flatMap((condition) =>
         Feature.parseMediaQuery(Lexer.lex(condition)).ok(),
       )
@@ -38,8 +42,8 @@ export class ImportRule extends ConditionRule<"import"> {
       .getOr(Feature.Media.List.of([]));
   }
 
-  public get queries(): Feature.Media.List {
-    return this._queries;
+  public get mediaQueries(): Feature.Media.List {
+    return this._mediaQueries;
   }
   public get rules(): Iterable<Rule> {
     return this._sheet.rules;
@@ -78,7 +82,7 @@ export namespace ImportRule {
   }
 
   export function matches(device: Device): Predicate<ImportRule> {
-    return (rule) => rule.queries.matches(device);
+    return (rule) => rule.mediaQueries.matches(device);
   }
 
   /**
