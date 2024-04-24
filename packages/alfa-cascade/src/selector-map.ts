@@ -214,7 +214,6 @@ export class SelectorMap implements Serializable {
   public *getForSlotted(
     slotted: Element,
     context: Context,
-    debug: boolean = false,
   ): Iterable<Block<Block.Source, true>> {
     yield* this._shadow.filter(
       (block): block is Block<Block.Source, true> =>
@@ -277,7 +276,7 @@ export namespace SelectorMap {
     // We also maintain a counter for uniquely naming anonymous layers.
     //
     // It is of the uttermost importance that blocks share the same Layer
-    // object, since we will laters mutate them to add the correct order.
+    // object, since we will later mutate them to add the correct order.
     const layers: Array<Layer.Pair<false>> = [];
     let anonymousLayers = 0;
 
