@@ -95,6 +95,7 @@
   "references": [
     { "path": "../alfa-array" },
     { "path": "../alfa-cache" },
+    { "path": "../alfa-comparable" },
     { "path": "../alfa-css" },
     { "path": "../alfa-css-feature" },
     { "path": "../alfa-device" },
