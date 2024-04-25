@@ -1,8 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
-import { Left, Right } from "@siteimprove/alfa-either";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
-import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -10,7 +7,9 @@ import { expectation } from "../common/act/expectation";
 
 import { applicableTargetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
 
-import { WithBoundingBox, WithName } from "../common/diagnostic";
+import { WithName } from "../common/diagnostic";
+
+import { TargetSize } from "../common/outcome/target-size";
 
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
@@ -31,51 +30,13 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () => Outcomes.IsUserAgentControlled(name, box),
+            () => TargetSize.IsUserAgentControlled(name, box),
             hasSufficientSize(44, device)(target)
-              ? () => Outcomes.HasSufficientSize(name, box)
-              : () => Outcomes.HasInsufficientSize(name, box),
+              ? () => TargetSize.HasSufficientSize(name, box)
+              : () => TargetSize.HasInsufficientSize(name, box),
           ),
         };
       },
     };
   },
 });
-
-/**
- * @public
- */
-export namespace Outcomes {
-  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
-    Ok.of(
-      WithBoundingBox.of(
-        "Target is user agent controlled",
-        name,
-        box,
-        Left.of({ ua: true }),
-        [],
-      ),
-    );
-
-  export const HasSufficientSize = (name: string, box: Rectangle) =>
-    Ok.of(
-      WithBoundingBox.of(
-        "Target has sufficient size",
-        name,
-        box,
-        Right.of({ size: true, spacing: true }),
-        [],
-      ),
-    );
-
-  export const HasInsufficientSize = (name: string, box: Rectangle) =>
-    Err.of(
-      WithBoundingBox.of(
-        "Target has insufficient size",
-        name,
-        box,
-        Right.of({ size: false, spacing: true }),
-        [],
-      ),
-    );
-}

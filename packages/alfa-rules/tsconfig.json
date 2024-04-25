@@ -41,6 +41,7 @@
     "src/common/expectation/video-description-track-accurate.ts",
     "src/common/outcome/contrast.ts",
     "src/common/outcome/refresh-delay.ts",
+    "src/common/outcome/target-size.ts",
     "src/common/predicate.ts",
     "src/common/predicate/has-sufficient-size.ts",
     "src/common/predicate/is-aria-controls-optional.ts",
