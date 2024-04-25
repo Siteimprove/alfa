@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
@@ -250,6 +251,64 @@ test(".from() only recurses into import rules when both media and support condit
   });
 });
 
+test(".from() add imports rules to a layer when needed", (t) => {
+  const rule1 = h.rule.style("foo", { foo: "bar1" });
+  const rule2 = h.rule.style("foo", { foo: "bar2" });
+  const rule3 = h.rule.style("foo", { foo: "bar3" });
+  const rule4 = h.rule.style("foo", { foo: "bar4" });
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.importRule("foo.com", h.sheet([rule1])),
+        h.rule.importRule(
+          "foo.com",
+          h.sheet([rule2]),
+          undefined,
+          undefined,
+          "layer.sublayer",
+        ),
+        h.rule.importRule(
+          "foo.com",
+          h.sheet([rule3]),
+          undefined,
+          undefined,
+          "",
+        ),
+        h.rule.importRule(
+          "foo.com",
+          h.sheet([rule4]),
+          undefined,
+          undefined,
+          "layer.sublayer",
+        ),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [
+      [
+        "foo",
+        // Default layer is number 1, as always.
+        // (anonymous 1) is declared later and thus get number 2.
+        // layer is number 3, and layer.sublayer is number 4.
+        [
+          ...ruleToBlockJSON(rule1, 0),
+          ...ruleToBlockJSON(rule2, 1, 1, layer("layer.sublayer", 4)),
+          ...ruleToBlockJSON(rule3, 2, 1, layer("(anonymous 1)", 2)),
+          ...ruleToBlockJSON(rule4, 3, 1, layer("layer.sublayer", 4)),
+        ],
+      ],
+    ],
+    other: [],
+    shadow: [],
+  });
+});
+
 test(".from() only recurses into supports rules whose condition matches", (t) => {
   const rule = h.rule.style("foo", { foo: "bar" });
   const actual = SelectorMap.from(
@@ -454,6 +513,43 @@ test(".form() order layers according to block rules coming before statement rule
     ids: [["id", ruleToBlockJSON(rule3, 2, 1, layer("lorem", 2))]],
     classes: [["class", ruleToBlockJSON(rule2, 1, 1, layer("ipsum", 3))]],
     types: [["type", ruleToBlockJSON(rule1, 0, 1, layer("dolor", 4))]],
+    other: [],
+    shadow: [],
+  });
+});
+
+test(".from() merge layers from import and layer rules", (t) => {
+  const rule1 = h.rule.style("foo", { foo: "bar1" });
+  const rule2 = h.rule.style("foo", { foo: "bar2" });
+  const actual = SelectorMap.from(
+    [
+      h.sheet([
+        h.rule.importRule(
+          "foo.com",
+          h.sheet([rule1]),
+          undefined,
+          undefined,
+          "layer",
+        ),
+        h.rule.layerBlock([rule2], "layer"),
+      ]),
+    ],
+    device,
+    1,
+  );
+
+  t.deepEqual(actual.toJSON(), {
+    ids: [],
+    classes: [],
+    types: [
+      [
+        "foo",
+        [
+          ...ruleToBlockJSON(rule1, 0, 1, layer("layer", 2)),
+          ...ruleToBlockJSON(rule2, 1, 1, layer("layer", 2)),
+        ],
+      ],
+    ],
     other: [],
     shadow: [],
   });

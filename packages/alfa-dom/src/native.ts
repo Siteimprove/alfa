@@ -270,9 +270,7 @@ export namespace Native {
         rules: rule.styleSheet === null ? [] : toSheet(rule.styleSheet).rules,
         condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
         href: rule.href,
-        // While supportsText is part of the interface and seems to be supported
-        // by all browser, node somehow doesn't know about it.
-        supportText: rule?.supportsText ?? null,
+        supportText: rule.supportsText,
         layer: rule.layerName,
       };
     }
