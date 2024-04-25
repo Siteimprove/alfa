@@ -14,7 +14,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Maybe } from "@siteimprove/alfa-option";
+import { Maybe, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
@@ -414,7 +414,17 @@ export namespace SelectorMap {
           .ifGuarded(
             isImportRule,
             ImportRule.matches(device),
-            (rule) => Iterable.forEach(rule.sheet.children(), visit(layer)),
+            (rule) =>
+              Iterable.forEach(
+                rule.sheet.children(),
+                visit(
+                  // Here, we use None for anonymous layers. However, ImportRule
+                  // uses None for no layer, and Some("") for an anonymous layer.
+                  rule.layer
+                    .map((name) => nextLayer(layer, name === "" ? None : name))
+                    .getOr(layer),
+                ),
+              ),
             skip,
           )
           // For layer block rules, we fetch/create the layer and recurse into it.

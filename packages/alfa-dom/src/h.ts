@@ -265,12 +265,15 @@ export namespace h {
       sheet: Sheet,
       mediaCondition?: string,
       supportCondition?: string,
+      // Use "" for anonymous layer.
+      layer?: string,
     ): ImportRule {
       return ImportRule.of(
         url,
         sheet,
         Option.from(mediaCondition),
         Option.from(supportCondition),
+        Option.from(layer),
       );
     }
     export function keyframe(

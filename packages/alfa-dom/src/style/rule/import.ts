@@ -20,8 +20,9 @@ export class ImportRule extends ConditionRule<"import"> {
     sheet: Sheet,
     mediaCondition: Option<string> = None,
     supportCondition: Option<string> = None,
+    layer: Option<string> = None,
   ): ImportRule {
-    return new ImportRule(href, sheet, mediaCondition, supportCondition);
+    return new ImportRule(href, sheet, mediaCondition, supportCondition, layer);
   }
 
   private readonly _href: string;
@@ -31,18 +32,23 @@ export class ImportRule extends ConditionRule<"import"> {
   // There may be no support condition, or an unparsable (i.e. non-supported) one.
   // The former is None, the later is Some(None).
   private readonly _supportQuery: Option<Option<Feature.Supports.Query>>;
+  // Anonymous layers are represented with the empty string, matching the
+  // CSSImportRule interface
+  private _layer: Option<string>;
 
   private constructor(
     href: string,
     sheet: Sheet,
     mediaCondition: Option<string>,
     supportCondition: Option<string>,
+    layer: Option<string>,
   ) {
     super("import", mediaCondition.getOr("all"), []);
 
     this._href = href;
     this._sheet = sheet;
     this._supportCondition = supportCondition;
+    this._layer = layer;
 
     this._mediaQueries = mediaCondition
       .flatMap((condition) =>
@@ -76,6 +82,10 @@ export class ImportRule extends ConditionRule<"import"> {
     return this._supportQuery;
   }
 
+  public get layer(): Option<string> {
+    return this._layer;
+  }
+
   public get rules(): Iterable<Rule> {
     return this._sheet.rules;
   }
@@ -92,6 +102,12 @@ export class ImportRule extends ConditionRule<"import"> {
     return {
       ...super.toJSON(),
       href: this._href,
+      // We match the CSSImportRule interface returning null when no support
+      // text exist
+      supportText: this._supportCondition.getOr(null),
+      // We match the CSSImportRule interface returning null when no layer
+      // is declared, and "" for an anonymous layer.
+      layer: this._layer.getOr(null),
     };
   }
 
@@ -106,6 +122,8 @@ export class ImportRule extends ConditionRule<"import"> {
 export namespace ImportRule {
   export interface JSON extends ConditionRule.JSON<"import"> {
     href: string;
+    supportText: string | null;
+    layer: string | null;
   }
 
   export function isImportRule(value: unknown): value is ImportRule {
@@ -134,7 +152,13 @@ export namespace ImportRule {
    */
   export function fromImportRule(json: JSON): Trampoline<ImportRule> {
     return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
-      ImportRule.of(json.href, Sheet.of(rules), Option.of(json.condition)),
+      ImportRule.of(
+        json.href,
+        Sheet.of(rules),
+        Option.of(json.condition),
+        Option.from(json.supportText),
+        Option.from(json.layer),
+      ),
     );
   }
 }
