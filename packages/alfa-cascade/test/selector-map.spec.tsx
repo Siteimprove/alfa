@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
@@ -294,7 +293,7 @@ test(".from() add imports rules to a layer when needed", (t) => {
       [
         "foo",
         // Default layer is number 1, as always.
-        // (anonymous 1) is declared later and thus get number 2.
+        // (anonymous 1) is declared last and thus get number 2.
         // layer is number 3, and layer.sublayer is number 4.
         [
           ...ruleToBlockJSON(rule1, 0),

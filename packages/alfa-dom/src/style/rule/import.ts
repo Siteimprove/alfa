@@ -61,7 +61,7 @@ export class ImportRule extends ConditionRule<"import"> {
       Feature.parseSupportsQuery(
         // We're not sure where the condition comes from, but Alfa only parses
         // them when they are parenthesised, while CSSImportRule.supportsText
-        // provides the raw text. Extra parenthesis don't block Alfa.
+        // provides the raw text. Extra parenthesis don't block parsing.
         // In doubt, adding some to avoid potential problems.
         Lexer.lex(`(${condition})`),
       )
@@ -112,7 +112,12 @@ export class ImportRule extends ConditionRule<"import"> {
   }
 
   public toString(): string {
-    return `@import url(${this._href}) ${this._supportCondition.map((condition) => `supports(${condition}) `).getOr("")}${this._condition}`;
+    return (
+      `@import url(${this._href}) ` +
+      `${this._layer.map((layer) => `layer${layer === "" ? "" : `(${layer}) `}`)}` +
+      `${this._supportCondition.map((condition) => `supports(${condition}) `).getOr("")}` +
+      `${this._condition}`
+    );
   }
 }
 

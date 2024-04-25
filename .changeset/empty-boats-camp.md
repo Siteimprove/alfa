@@ -4,4 +4,4 @@
 
 **Breaking:** `ImportRule.queries` has been renamed `ImportRule.mediaQueries`.
 
-This allow%s support queries in improt rules in a unified naming scheme.
+This allows support queries in import rules in a unified naming scheme.
