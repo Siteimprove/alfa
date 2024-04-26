@@ -270,6 +270,8 @@ export namespace Native {
         rules: rule.styleSheet === null ? [] : toSheet(rule.styleSheet).rules,
         condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
         href: rule.href,
+        supportText: rule.supportsText,
+        layer: rule.layerName,
       };
     }
 

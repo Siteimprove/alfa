@@ -549,7 +549,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Function_2>;
     const // (undocumented)
-    parse: <T>(query?: string | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>> | undefined) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(query?: string | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 
