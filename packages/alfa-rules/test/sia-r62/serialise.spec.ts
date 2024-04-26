@@ -1,3 +1,4 @@
+import { Origin } from "@siteimprove/alfa-cascade";
 import { Device } from "@siteimprove/alfa-device";
 import { Declaration } from "@siteimprove/alfa-dom";
 import { Style } from "@siteimprove/alfa-style";
@@ -9,7 +10,10 @@ const device = Device.standard();
 
 function mkStyle(properties: Array<[string, string]>): Style {
   return Style.of(
-    properties.map(([name, value]) => Declaration.of(name, value)),
+    properties.map(([name, value]) => [
+      Declaration.of(name, value),
+      Origin.NormalAuthor,
+    ]),
     device,
   );
 }
@@ -148,10 +152,10 @@ test(`background correctly shortens background-repeat`, (t) => {
             ? ""
             : x
           : x === "repeat" && y === "no-repeat"
-          ? "repeat-x"
-          : x === "no-repeat" && y === "repeat"
-          ? "repeat-y"
-          : x + " " + y;
+            ? "repeat-x"
+            : x === "no-repeat" && y === "repeat"
+              ? "repeat-y"
+              : x + " " + y;
 
       t.deepEqual(actual, ("url(a) " + expected).trim());
     }

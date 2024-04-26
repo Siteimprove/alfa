@@ -63,5 +63,9 @@ export namespace Origin {
     );
   }
 
+  export function isAuthor(origin: Origin): boolean {
+    return origin === Origin.NormalAuthor || origin === Origin.ImportantAuthor;
+  }
+
   export const compare: Comparer<Origin> = Comparable.compareNumber;
 }

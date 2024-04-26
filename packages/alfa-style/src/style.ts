@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Cascade } from "@siteimprove/alfa-cascade";
+import { Cascade, Origin } from "@siteimprove/alfa-cascade";
 import { Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -17,6 +17,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as element from "./element/element";
@@ -40,11 +41,11 @@ export class Style implements Serializable<Style.JSON> {
    * Build a style from a list of declarations.
    *
    * @remarks
-   * Declarations must be in pre-sorted in decreasing Cascade order.
+   * Declarations must be pre-sorted in decreasing Cascade order.
    * Prefer using Style.from(), which has fewer assumptions.
    */
   public static of(
-    styleDeclarations: Iterable<Declaration>,
+    styleDeclarations: Iterable<[Declaration, Origin]>,
     device: Device,
     parent: Option<Style> = None,
   ): Style {
@@ -54,10 +55,12 @@ export class Style implements Serializable<Style.JSON> {
     const declarations = Array.from(styleDeclarations);
 
     /**
-     * First pass, substitute all variable by their definition
+     * First pass, substitute all variables by their definition
      */
     // First step: gather all variable declarations.
-    const declaredVariables = Variable.gather(declarations);
+    const declaredVariables = Variable.gather(
+      declarations.map(([declaration]) => declaration),
+    );
 
     // Second step: since CSS variables are always inherited, and inheritance
     // takes precedence over fallback, we can merge the current variables with
@@ -81,24 +84,84 @@ export class Style implements Serializable<Style.JSON> {
      * cascade, the first value we encounter for each property is the correct
      * one for the cascaded value.
      */
-    let properties = Map.empty<Name, Value>();
 
-    for (const declaration of declarations) {
+    let properties = Map.empty<Name, Value>();
+    // Since we effectively only handle User-Agent and Author origins, we can
+    // go for a simple version of `revert`. We don't use it in the User Agent
+    // style sheet, and will simply skip all author origin declarations.
+    // So, we simply keep a set of reverted properties, and skip author
+    // declarations for these.
+    let reverted = Set.empty<Name>();
+
+    function registerParsed<N extends Name>(
+      name: N,
+      value: Style.Declared<N>,
+      declaration: Declaration,
+    ): void {
+      if (Keyword.of("revert").equals(value)) {
+        reverted = reverted.add(name);
+      } else {
+        properties = properties.set(
+          name,
+          Value.of(value, Option.of(declaration)),
+        );
+      }
+    }
+
+    function register<N extends Name>(
+      name: N,
+      value: Style.Declared<N>,
+      declaration: Declaration,
+      origin: Origin,
+      parsed: true,
+    ): void;
+
+    function register<N extends Name>(
+      name: N,
+      value: string,
+      declaration: Declaration,
+      origin: Origin,
+      parsed: false,
+    ): void;
+
+    function register<N extends Name>(
+      name: N,
+      value: Style.Declared<N> | string,
+      declaration: Declaration,
+      origin: Origin,
+      parsed: boolean,
+    ): void {
+      // If the property has been reverted to User Agent origin,
+      // discard any Author declaration.
+      if (reverted.has(name) && Origin.isAuthor(origin)) {
+        return;
+      }
+
+      // If the property is already set by a more specific declaration, skip.
+      if (properties.get(name).isNone()) {
+        // If the declaration comes from a shorthand, it is pre-parsed in a
+        // Value. Otherwise, be only have the string and need to parse it
+        // (avoid parsing everything before we know we'll need it).
+        if (parsed) {
+          return registerParsed(name, value as Style.Declared<N>, declaration);
+        } else {
+          for (const result of parseLonghand(
+            Longhands.get(name),
+            // Type is ensured by the overload.
+            value as string,
+            variables,
+          )) {
+            registerParsed(name, result, declaration);
+          }
+        }
+      }
+    }
+
+    for (const [declaration, origin] of declarations) {
       const { name, value } = declaration;
 
       if (Longhands.isName(name)) {
-        if (properties.get(name).isNone()) {
-          for (const result of parseLonghand(
-            Longhands.get(name),
-            value,
-            variables,
-          )) {
-            properties = properties.set(
-              name,
-              Value.of(result, Option.of(declaration)),
-            );
-          }
-        }
+        register(name, value, declaration, origin, false);
       } else if (Shorthands.isName(name)) {
         for (const result of parseShorthand(
           Shorthands.get(name),
@@ -106,12 +169,7 @@ export class Style implements Serializable<Style.JSON> {
           variables,
         )) {
           for (const [name, value] of result) {
-            if (properties.get(name).isNone()) {
-              properties = properties.set(
-                name,
-                Value.of(value, Option.of(declaration)),
-              );
-            }
+            register(name, value, declaration, origin, true);
           }
         }
       }
@@ -309,7 +367,7 @@ export namespace Style {
       .get(device, Cache.empty)
       .get(element.freeze(), Cache.empty)
       .get(context, () => {
-        const declarations: Array<Declaration> = [];
+        const declarations: Array<[Declaration, Origin]> = [];
 
         const root = element.root();
 
@@ -325,7 +383,14 @@ export namespace Style {
           for (const node of cascade
             .get(element, context)
             .inclusiveAncestors()) {
-            declarations.push(...[...node.block.declarations].reverse());
+            declarations.push(
+              ...Iterable.reverse(
+                Iterable.map<Declaration, [Declaration, Origin]>(
+                  node.block.declarations,
+                  (declaration) => [declaration, node.block.precedence.origin],
+                ),
+              ),
+            );
           }
         } else {
           // If the element is not part of a Document, this is likely
@@ -333,7 +398,19 @@ export namespace Style {
           // to gather the `style` attribute.
           declarations.push(
             ...element.style
-              .map((block) => [...block.declarations].reverse())
+              .map((block) =>
+                Iterable.reverse(
+                  Iterable.map<Declaration, [Declaration, Origin]>(
+                    block.declarations,
+                    (declaration) => [
+                      declaration,
+                      declaration.important
+                        ? Origin.ImportantAuthor
+                        : Origin.NormalAuthor,
+                    ],
+                  ),
+                ),
+              )
               .getOr([]),
           );
         }
@@ -388,7 +465,7 @@ function parseLonghand<N extends Longhands.Name>(
   property: Longhands.Property[N],
   value: string,
   variables: Map<string, Value<Slice<Token>>>,
-) {
+): Result<Style.Declared<N>, string> {
   const substitution = Variable.substitute(Lexer.lex(value), variables);
 
   if (!substitution.isSome()) {
@@ -397,7 +474,7 @@ function parseLonghand<N extends Longhands.Name>(
 
   const [tokens, substituted] = substitution.get();
 
-  const parse = property.parse as unknown as Longhand.Parser<N>;
+  const parse = property.parse as Longhand.Parser<Style.Declared<N>>;
 
   const result = parse(trim(tokens)).map(([, value]) => value);
 
@@ -412,42 +489,58 @@ function parseShorthand<N extends Shorthands.Name>(
   shorthand: Shorthands.Property[N],
   value: string,
   variables: Map<string, Value<Slice<Token>>>,
-) {
+): Result<
+  Iterable<
+    {
+      [M in Shorthands.Longhands<N>]: readonly [M, Longhands.Declared<M>];
+    }[Shorthands.Longhands<N>]
+  >,
+  string
+> {
   const substitution = Variable.substitute(Lexer.lex(value), variables);
+  // The typing are ensured by the construction of Shorthands.Longhands<N>. We should
+  // nonetheless try and find a way to enforce it automatically. Probably by
+  // adding the shorthand name in the typing of Shorthand.
+  const longhands = shorthand.properties as Iterable<Shorthands.Longhands<N>>;
+  const parse = shorthand.parse as Shorthand.Parser<Shorthands.Longhands<N>>;
 
   if (!substitution.isSome()) {
+    // If the substitution failed, the declaration is syntactically invalid,
+    // and acts as unset.
+    // See https://drafts.csswg.org/css-variables/#invalid-variables
     return Result.of(
       Iterable.map(
-        shorthand.properties,
+        longhands,
         (property) => [property, Keyword.of("unset")] as const,
       ),
     );
   }
 
+  // Perform variable substitution and parse the result.
   const [tokens, substituted] = substitution.get();
-
-  const parse = shorthand.parse as Shorthand.Parser;
-
   const result = parse(trim(tokens)).map(([, value]) => {
+    // If we get a single keyword (instead of an iterable of [longhand, value]),
+    // it must be a global keyword, apply to all longhands.
     if (Keyword.isKeyword(value)) {
-      return Iterable.map(
-        shorthand.properties,
-        (property) => [property, value] as const,
-      );
+      return Iterable.map(longhands, (property) => [property, value] as const);
     }
 
     return value;
   });
 
+  // If there is an error following a substitution, the declaration is discarded
+  // and acts as unset.
+  // See https://drafts.csswg.org/css-variables/#invalid-variables
   if (result.isErr() && substituted) {
     return Result.of(
       Iterable.map(
-        shorthand.properties,
+        longhands,
         (property) => [property, Keyword.of("unset")] as const,
       ),
     );
   }
 
+  // Otherwise (no error or no substitution), return the result (value or error).
   return result;
 }
 

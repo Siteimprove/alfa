@@ -841,3 +841,30 @@ test("#cascaded() prefers important declaration from the shadow tree, and normal
     source: h.declaration("background-color", "blue").toJSON(),
   });
 });
+
+// See https://developer.mozilla.org/en-US/docs/Web/CSS/revert#examples
+test("#cascaded() respect revert keyword", (t) => {
+  const target1 = <h1 class="revert">Hello</h1>;
+  const target2 = <h1>World</h1>;
+
+  h.document(
+    [target1, target2],
+    [
+      h.sheet([
+        // Apply to both
+        h.rule.style("h1", { "font-weight": "normal" }),
+        // Revert target2 to the UA value of bold.
+        h.rule.style(".revert", { "font-weight": "revert" }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(cascaded(target1, "font-weight"), {
+    value: { type: "keyword", value: "bold" },
+    source: h.declaration("font-weight", "bold").toJSON(),
+  });
+  t.deepEqual(cascaded(target2, "font-weight"), {
+    value: { type: "keyword", value: "normal" },
+    source: h.declaration("font-weight", "normal").toJSON(),
+  });
+});

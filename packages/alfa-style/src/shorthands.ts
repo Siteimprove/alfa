@@ -33,6 +33,7 @@ import Margin from "./property/margin";
 import Outline from "./property/outline";
 import Overflow from "./property/overflow";
 import TextDecoration from "./property/text-decoration";
+import type { Shorthand } from "./shorthand";
 
 /**
  * @public
@@ -79,6 +80,9 @@ export namespace Shorthands {
     overflow: Overflow,
     "text-decoration": TextDecoration,
   } as const;
+
+  export type Longhands<N extends Name> =
+    Property[N] extends Shorthand<infer L> ? L : never;
 
   export function isName(name: string): name is Name {
     return name in shortHands;
