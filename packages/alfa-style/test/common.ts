@@ -19,3 +19,14 @@ export function cascaded<N extends Longhands.Name>(
     .getUnsafe()
     .toJSON();
 }
+
+/**
+ * @internal
+ */
+export function specified<N extends Longhands.Name>(
+  element: Element,
+  name: N,
+  context: Context = Context.empty(),
+): Value.JSON<Style.Specified<N>> {
+  return Style.from(element, device, context).specified(name).toJSON();
+}
