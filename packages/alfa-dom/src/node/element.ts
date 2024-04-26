@@ -299,7 +299,7 @@ export class Element<N extends string = string>
 
   public toJSON(options?: Node.SerializationOptions): Element.JSON<N> {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
@@ -307,8 +307,10 @@ export class Element<N extends string = string>
         attribute.toJSON(),
       ),
       style: this._style.map((style) => style.toJSON()).getOr(null),
-      shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
-      content: this._content.map((content) => content.toJSON()).getOr(null),
+      shadow: this._shadow.map((shadow) => shadow.toJSON(options)).getOr(null),
+      content: this._content
+        .map((content) => content.toJSON(options))
+        .getOr(null),
       box:
         options?.device === undefined
           ? null

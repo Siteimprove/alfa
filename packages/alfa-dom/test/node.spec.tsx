@@ -1,6 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+
 import { h } from "../h";
 import { Node } from "../src";
 
@@ -166,4 +167,36 @@ test(`Node.clone() correctly replaces elements based on predicate`, (t) => {
     type: "document",
     children: [...newElements.map((e) => e.toJSON()), bar.toJSON()],
   });
+});
+
+test(`#toJSON() serializes boxes of all descendants when device is passed in`, (t) => {
+  const device = Device.standard();
+
+  const doc = h.document(
+    [
+      <div box={{ device, x: 8, y: 8, width: 100, height: 100 }}>
+        Hello
+        <div box={{ device, x: 16, y: 16, width: 50, height: 50 }}>
+          World
+        </div>
+      </div>,
+    ]
+  );
+
+  function visit(node: Node.JSON) {
+    if (node.type === "element") {
+      t.notEqual(node.box, null);
+      t.notEqual(node.box, undefined);
+    }
+
+    if (node.children === undefined) {
+      return;
+    }
+
+    for (let child of node.children) {
+      visit(child);
+    }
+  }
+
+  visit(doc.toJSON({ device }));
 });
