@@ -14,7 +14,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Maybe } from "@siteimprove/alfa-option";
+import { Maybe, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
@@ -214,7 +214,6 @@ export class SelectorMap implements Serializable {
   public *getForSlotted(
     slotted: Element,
     context: Context,
-    debug: boolean = false,
   ): Iterable<Block<Block.Source, true>> {
     yield* this._shadow.filter(
       (block): block is Block<Block.Source, true> =>
@@ -277,7 +276,7 @@ export namespace SelectorMap {
     // We also maintain a counter for uniquely naming anonymous layers.
     //
     // It is of the uttermost importance that blocks share the same Layer
-    // object, since we will laters mutate them to add the correct order.
+    // object, since we will later mutate them to add the correct order.
     const layers: Array<Layer.Pair<false>> = [];
     let anonymousLayers = 0;
 
@@ -415,7 +414,17 @@ export namespace SelectorMap {
           .ifGuarded(
             isImportRule,
             ImportRule.matches(device),
-            (rule) => Iterable.forEach(rule.sheet.children(), visit(layer)),
+            (rule) =>
+              Iterable.forEach(
+                rule.sheet.children(),
+                visit(
+                  // Here, we use None for anonymous layers. However, ImportRule
+                  // uses None for no layer, and Some("") for an anonymous layer.
+                  rule.layer
+                    .map((name) => nextLayer(layer, name === "" ? None : name))
+                    .getOr(layer),
+                ),
+              ),
             skip,
           )
           // For layer block rules, we fetch/create the layer and recurse into it.

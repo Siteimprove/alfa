@@ -457,7 +457,7 @@ export namespace h {
         // (undocumented)
         export function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
         // (undocumented)
-        export function importRule(url: string, sheet: Sheet, condition?: string): ImportRule;
+        export function importRule(url: string, sheet: Sheet, mediaCondition?: string, supportCondition?: string, layer?: string): ImportRule;
         // (undocumented)
         export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): KeyframeRule;
         // (undocumented)
@@ -492,13 +492,19 @@ export class ImportRule extends ConditionRule<"import"> {
     // (undocumented)
     get href(): string;
     // (undocumented)
-    static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
+    get layer(): Option<string>;
     // (undocumented)
-    get queries(): Feature.Media.List;
+    get mediaQueries(): Feature.Media.List;
+    // (undocumented)
+    static of(href: string, sheet: Sheet, mediaCondition?: Option<string>, supportCondition?: Option<string>, layer?: Option<string>): ImportRule;
     // (undocumented)
     get rules(): Iterable<Rule>;
     // (undocumented)
     get sheet(): Sheet;
+    // (undocumented)
+    get supportCondition(): Option<string>;
+    // (undocumented)
+    get supportQuery(): Option<Option<Feature.Supports.Query>>;
     // (undocumented)
     toJSON(): ImportRule.JSON;
     // (undocumented)
@@ -515,6 +521,10 @@ export namespace ImportRule {
     export interface JSON extends ConditionRule.JSON<"import"> {
         // (undocumented)
         href: string;
+        // (undocumented)
+        layer: string | null;
+        // (undocumented)
+        supportText: string | null;
     }
     // (undocumented)
     export function matches(device: Device): Predicate<ImportRule>;

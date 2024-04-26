@@ -14,7 +14,7 @@ const { end, left, map } = Parser;
  * {@link https://drafts.csswg.org/css-conditional-3/#at-supports}
  *
  * @remarks
- * Supports query are just a wrapper for a condition..
+ * Supports query are just a wrapper for a condition.
  *
  * @public
  */
