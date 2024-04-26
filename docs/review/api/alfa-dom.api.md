@@ -1050,7 +1050,7 @@ export class Shadow extends Node<"shadow"> {
     // (undocumented)
     get style(): Iterable_2<Sheet>;
     // (undocumented)
-    toJSON(): Shadow.JSON;
+    toJSON(options?: Node.SerializationOptions): Shadow.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -1258,7 +1258,7 @@ export class Type<N extends string = string> extends Node<"type"> {
     // (undocumented)
     get systemId(): Option<string>;
     // (undocumented)
-    toJSON(): Type.JSON<N>;
+    toJSON(options?: Node.SerializationOptions): Type.JSON<N>;
     // (undocumented)
     toString(): string;
 }
