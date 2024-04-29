@@ -91,9 +91,9 @@ export class Shadow extends Node<"shadow"> {
     return "/";
   }
 
-  public toJSON(): Shadow.JSON {
+  public toJSON(options?: Node.SerializationOptions): Shadow.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       mode: this._mode,
       style: this._style.map((sheet) => sheet.toJSON()),
     };
