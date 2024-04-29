@@ -98,7 +98,7 @@ export class Style implements Serializable<Style.JSON> {
       value: Style.Declared<N>,
       declaration: Declaration,
     ): void {
-      if (Keyword.of("revert").equals(value)) {
+      if (value.equals(Keyword.of("revert"))) {
         reverted = reverted.add(name);
       } else {
         properties = properties.set(
@@ -140,9 +140,10 @@ export class Style implements Serializable<Style.JSON> {
       // If the property is already set by a more specific declaration, skip.
       if (properties.get(name).isNone()) {
         // If the declaration comes from a shorthand, it is pre-parsed in a
-        // Value. Otherwise, be only have the string and need to parse it
+        // Value. Otherwise, we only have the string and need to parse it
         // (avoid parsing everything before we know we'll need it).
         if (parsed) {
+          // Type is ensured by the overload.
           return registerParsed(name, value as Style.Declared<N>, declaration);
         } else {
           for (const result of parseLonghand(
