@@ -1,9 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import * as json from "@siteimprove/alfa-json";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
+import { Option } from "@siteimprove/alfa-option";
 
 import { h } from "../h";
-import { Node } from "../src";
+import { Element, Node, Shadow } from "../src";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
@@ -172,21 +175,21 @@ test(`Node.clone() correctly replaces elements based on predicate`, (t) => {
 test(`#toJSON() serializes boxes of all descendants when device is passed in`, (t) => {
   const device = Device.standard();
 
-  const doc = h.document(
-    [
-      <div box={{ device, x: 8, y: 8, width: 100, height: 100 }}>
-        Hello
-        <div box={{ device, x: 16, y: 16, width: 50, height: 50 }}>
-          World
-        </div>
-      </div>,
-    ]
-  );
+  const box1 = { device, x: 8, y: 8, width: 100, height: 100 };
+  const box2 = { device, x: 16, y: 16, width: 50, height: 50 };
+
+  const doc = h.document([
+    <div box={box1}>
+      Hello
+      <div box={box2}>World</div>
+    </div>,
+  ]);
+
+  const boxes: Array<json.JSON> = [];
 
   function visit(node: Node.JSON) {
-    if (node.type === "element") {
-      t.notEqual(node.box, null);
-      t.notEqual(node.box, undefined);
+    if (node.type === "element" && node.box !== undefined) {
+      boxes.push(node.box);
     }
 
     if (node.children === undefined) {
@@ -199,4 +202,105 @@ test(`#toJSON() serializes boxes of all descendants when device is passed in`, (
   }
 
   visit(doc.toJSON({ device }));
+
+  t.deepEqual(boxes, [
+    Rectangle.of(8, 8, 100, 100).toJSON(),
+    Rectangle.of(16, 16, 50, 50).toJSON(),
+  ]);
+});
+
+test(`#toJSON() serializes box of descendant inside shadow DOM`, (t) => {
+  const device = Device.standard();
+
+  const doc = h.document([
+    <div box={{ device, x: 8, y: 8, width: 100, height: 100 }}>
+      Hello
+      {h.shadow([
+        <span box={{ device, x: 16, y: 16, width: 50, height: 50 }}>
+          World
+        </span>,
+      ])}
+    </div>,
+  ]);
+
+  const boxes: Array<json.JSON> = [];
+
+  function visit(node: Node.JSON) {
+    if (node.type === "element") {
+      const element = node as Element.JSON;
+      if (element.box !== undefined) {
+        boxes.push(element.box);
+      }
+    }
+
+    if (Option.from(node.shadow).isSome()) {
+      const shadow = node.shadow as Shadow.JSON;
+      if (shadow.children !== undefined) {
+        for (let child of shadow.children) {
+          visit(child);
+        }
+      }
+    }
+
+    if (node.children !== undefined) {
+      for (let child of node.children) {
+        visit(child);
+      }
+    }
+  }
+
+  visit(doc.toJSON({ device }));
+
+  t.deepEqual(boxes, [
+    Rectangle.of(8, 8, 100, 100).toJSON(),
+    Rectangle.of(16, 16, 50, 50).toJSON(),
+  ]);
+});
+
+test(`#toJSON() serializes box of descendant inside content`, (t) => {
+  const device = Device.standard();
+
+  const doc = h.document([
+    <div box={{ device, x: 8, y: 8, width: 100, height: 100 }}>
+      Hello
+      {h.document([
+        <span box={{ device, x: 16, y: 16, width: 50, height: 50 }}>
+          World
+        </span>,
+      ])}
+    </div>,
+  ]);
+
+  const boxes: Array<json.JSON> = [];
+
+  function visit(node: Node.JSON) {
+    if (node.type === "element") {
+      const element = node as Element.JSON;
+      if (element.box !== undefined) {
+        boxes.push(element.box);
+      }
+    }
+
+    if (Option.from(node.content).isSome()) {
+      const content = node.content as Node.JSON;
+      if (content.children !== undefined) {
+        for (let child of content.children) {
+          visit(child);
+        }
+      }
+    }
+
+    if (node.children !== undefined) {
+      for (let child of node.children) {
+        visit(child);
+      }
+    }
+  }
+
+  visit(doc.toJSON({ device }));
+
+  t.deepEqual(boxes, [
+    Rectangle.of(8, 8, 100, 100).toJSON(),
+    Rectangle.of(16, 16, 50, 50).toJSON(),
+  ]);
 });
