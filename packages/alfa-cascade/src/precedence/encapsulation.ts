@@ -14,7 +14,7 @@ import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
  * * its shadow tree (`:host` selectors);
  * * the shadow tree of its parent (`::slotted` selectors).
  * In the case of a slotted element being itself an host, the nesting is pretty clear.
- * (light > shadow of the parent slotting the element > shadow of the slotted element).
+ * (light / shadow of the parent slotting the element / shadow of the slotted element).
  *
  * Therefore, for any given element, it is not needed to keep track of the full tree
  * structure of the encapsulation contexts. The encapsulation depth is enough.

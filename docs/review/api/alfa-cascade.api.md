@@ -56,6 +56,159 @@ export namespace Cascade {
     }
 }
 
+// @public (undocumented)
+export type Encapsulation = number;
+
+// @public (undocumented)
+export namespace Encapsulation {
+    // (undocumented)
+    export type JSON = Encapsulation;
+    const // (undocumented)
+    compare: Comparer<Encapsulation>;
+}
+
+// @public (undocumented)
+export class Layer<ORDERED extends boolean = boolean> implements Serializable<Layer.JSON>, Equatable, Comparable<Layer<true>> {
+    // (undocumented)
+    compare(this: Layer<true>, value: Layer<true>): Comparison;
+    // (undocumented)
+    static empty(): Layer<true>;
+    // (undocumented)
+    equals(value: Layer): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get importance(): boolean;
+    // (undocumented)
+    get isOrdered(): ORDERED;
+    // (undocumented)
+    get name(): string;
+    // (undocumented)
+    static of(name: string, importance: boolean): Layer<false>;
+    // (undocumented)
+    get order(): number;
+    // (undocumented)
+    toJSON(): Layer.JSON;
+    withOrder(this: Layer<false>, order: number): Layer<true>;
+}
+
+// @public (undocumented)
+export namespace Layer {
+    // @internal
+    export function compareUnordered(layers: ReadonlyArray<Pair<false>>): Comparer<Pair<false>>;
+    const // (undocumented)
+    compare: Comparer<Layer<true>>;
+    // (undocumented)
+    export interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        name: string;
+        // (undocumented)
+        order: number;
+    }
+    // @internal (undocumented)
+    export type Pair<ORDERED extends boolean = boolean> = {
+        name: string;
+        normal: Layer<ORDERED>;
+        important: Layer<ORDERED>;
+    };
+    // Warning: (ae-incompatible-release-tags) The symbol "sortUnordered" is marked as @public, but its signature references "Layer" which is marked as @internal
+    export function sortUnordered(layers: ReadonlyArray<Pair<false>>): Array_2<Pair<true>>;
+}
+
+// @public
+export type Order = number;
+
+// @public (undocumented)
+export namespace Order {
+    // (undocumented)
+    export type JSON = Order;
+    const // (undocumented)
+    compare: Comparer<Order>;
+}
+
+// @public (undocumented)
+export enum Origin {
+    // (undocumented)
+    Animation = 4,
+    // (undocumented)
+    ImportantAuthor = 5,
+    // (undocumented)
+    ImportantUser = 6,
+    // (undocumented)
+    ImportantUserAgent = 7,
+    // (undocumented)
+    NormalAuthor = 3,
+    // (undocumented)
+    NormalUser = 2,
+    // (undocumented)
+    NormalUserAgent = 1,
+    // (undocumented)
+    Transition = 8
+}
+
+// @public (undocumented)
+export namespace Origin {
+    // (undocumented)
+    export function isAuthor(origin: Origin): boolean;
+    // (undocumented)
+    export function isImportant(origin: Origin): boolean;
+    // (undocumented)
+    export type JSON = Origin;
+    const // (undocumented)
+    compare: Comparer<Origin>;
+}
+
+// @public
+export interface Precedence<LAYERED extends boolean = boolean> {
+    // (undocumented)
+    encapsulation: Encapsulation;
+    // (undocumented)
+    isElementAttached: boolean;
+    // (undocumented)
+    layer: Layer<LAYERED>;
+    // (undocumented)
+    order: Order;
+    // (undocumented)
+    origin: Origin;
+    // (undocumented)
+    specificity: Specificity;
+}
+
+// @public (undocumented)
+export namespace Precedence {
+    // (undocumented)
+    export function equals(a: Precedence, b: Precedence): boolean;
+    const // (undocumented)
+    empty: Precedence<true>;
+    // (undocumented)
+    export function isImportant<LAYERED extends boolean>(precedence: Precedence<LAYERED>): boolean;
+    // (undocumented)
+    export interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        encapsulation: Encapsulation.JSON;
+        // (undocumented)
+        isElementAttached: boolean;
+        // (undocumented)
+        layer: Layer.JSON;
+        // (undocumented)
+        order: Order.JSON;
+        // (undocumented)
+        origin: Origin.JSON;
+        // (undocumented)
+        specificity: Specificity.JSON;
+    }
+    // (undocumented)
+    export function toJSON(precedence: Precedence): JSON;
+    // (undocumented)
+    export function toTuple<LAYERED extends boolean>(precedence: Precedence<LAYERED>): [Origin, Encapsulation, boolean, Layer<LAYERED>, Specificity, Order];
+    const // (undocumented)
+    compare: Comparer<Precedence<true>>;
+}
+
 // @public
 export class RuleTree implements Serializable {
     // Warning: (ae-forgotten-export) The symbol "Block" needs to be exported by the entry point index.d.ts
