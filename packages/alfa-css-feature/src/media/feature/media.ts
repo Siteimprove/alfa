@@ -59,7 +59,6 @@ export abstract class Media<N extends string = string, T = unknown>
     yield this;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Media<N, T>> {
     return this.iterator();
   }
@@ -273,13 +272,16 @@ export namespace Media {
   /**
    * @internal
    */
-  export function parseDiscrete<N extends string = string>(
+  export function parseDiscrete<
+    N extends string = string,
+    K extends string = string,
+  >(
     name: N,
-    from: (value: Option<Value<Keyword>>) => Media<N, Keyword>,
-    ...values: Array<string>
-  ): CSSParser<Media<N, Keyword>> {
+    from: (value: Option<Value<Keyword<K>>>) => Media<N, Keyword<K>>,
+    ...values: Array<K>
+  ): CSSParser<Media<N, Keyword<K>>> {
     return either(
-      parsePlain(name, Keyword.parse(...values), false, from),
+      parsePlain(name, Keyword.parse<K>(...values), false, from),
       parseBoolean(name, from),
     );
   }

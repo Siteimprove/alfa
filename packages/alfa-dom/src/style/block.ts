@@ -1,4 +1,6 @@
+import { Declaration as CSSDeclaration, Lexer } from "@siteimprove/alfa-css";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -72,7 +74,23 @@ export class Block implements Iterable<Declaration>, Equatable, Serializable {
 export namespace Block {
   export type JSON = Array<Declaration.JSON>;
 
-  export function from(json: JSON): Block {
-    return Block.of(json.map(Declaration.from));
+  export function from(jsonOrText: JSON | string): Block {
+    if (typeof jsonOrText === "string") {
+      return Block.of(
+        Iterable.map(
+          CSSDeclaration.parseList(Lexer.lex(jsonOrText)).getUnsafe(
+            `Could not parse CSS declarations "${jsonOrText}"`,
+          )[1],
+          (declaration) =>
+            Declaration.from({
+              name: declaration.name,
+              value: declaration.value.join(""),
+              important: declaration.important,
+            }),
+        ),
+      );
+    } else {
+      return Block.of(jsonOrText.map(Declaration.from));
+    }
   }
 }

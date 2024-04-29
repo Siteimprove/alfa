@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function isPreference<N extends Name>(value: unknown, name?: N): value is Preference<N>;
+function isPreference<N extends Name>(value: unknown, name?: N): value is Preference<N>;
 ```
 
 ## Parameters

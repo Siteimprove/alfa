@@ -1,9 +1,22 @@
 /// <reference lib="dom" />
 
+/**
+ * The function defined in this file is destined to be injected into a browser
+ * page, either through a web extension or browser automation tool.
+ *
+ * As such, it must be serializable, meaning it must not reference any external
+ * file (only import type are allowed), and may not use annex functions (who
+ * must instead be inlined in the main function).
+ *
+ * We could use Webpack or the like to bundle the current file with its
+ * dependencies into a single file. This is however somewhat heavy-handed, and
+ * the rest of Alfa has no need for such complex machinery, so we stick to a
+ * simple solution for now.
+ */
+
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import type {
   Attribute,
-  Block,
   Comment,
   Document,
   Element,
@@ -11,6 +24,7 @@ import type {
   ImportRule,
   KeyframeRule,
   KeyframesRule,
+  Layer,
   MediaRule,
   NamespaceRule,
   Node,
@@ -28,24 +42,50 @@ import type {
  * @internal
  */
 export namespace Native {
-  export function fromNode(node: globalThis.Element): Element.JSON;
+  export async function fromNode(
+    node: globalThis.Element,
+    options?: Options,
+  ): Promise<Element.JSON>;
 
-  export function fromNode(node: globalThis.Attr): Attribute.JSON;
+  export async function fromNode(
+    node: globalThis.Attr,
+    options?: Options,
+  ): Promise<Attribute.JSON>;
 
-  export function fromNode(node: globalThis.Text): Text.JSON;
+  export async function fromNode(
+    node: globalThis.Text,
+    options?: Options,
+  ): Promise<Text.JSON>;
 
-  export function fromNode(node: globalThis.Comment): Comment.JSON;
+  export async function fromNode(
+    node: globalThis.Comment,
+    options?: Options,
+  ): Promise<Comment.JSON>;
 
-  export function fromNode(node: globalThis.Document): Document.JSON;
+  export async function fromNode(
+    node: globalThis.Document,
+    options?: Options,
+  ): Promise<Document.JSON>;
 
-  export function fromNode(node: globalThis.DocumentType): Type.JSON;
+  export async function fromNode(
+    node: globalThis.DocumentType,
+    options?: Options,
+  ): Promise<Type.JSON>;
 
-  export function fromNode(node: globalThis.Node): Node.JSON;
+  export async function fromNode(
+    node: globalThis.Node,
+    options?: Options,
+  ): Promise<Node.JSON>;
 
-  export function fromNode(node: globalThis.Node): Node.JSON {
+  export async function fromNode(
+    node: globalThis.Node,
+    options?: Options,
+  ): Promise<Node.JSON> {
+    const { withCrossOrigin = false } = options ?? {};
+
     return toNode(node);
 
-    function toNode(node: globalThis.Node): Node.JSON {
+    async function toNode(node: globalThis.Node): Promise<Node.JSON> {
       switch (node.nodeType) {
         case node.ELEMENT_NODE:
           return toElement(node as globalThis.Element);
@@ -69,13 +109,13 @@ export namespace Native {
       throw new Error(`Unsupported node of type: ${node.nodeType}`);
     }
 
-    function toElement(
+    async function toElement(
       element:
         | globalThis.Element
         | globalThis.HTMLElement
         | globalThis.HTMLIFrameElement
         | globalThis.SVGElement,
-    ): Element.JSON {
+    ): Promise<Element.JSON> {
       return {
         type: "element",
         namespace: element.namespaceURI,
@@ -83,12 +123,14 @@ export namespace Native {
         name: element.localName,
         attributes: map(element.attributes, toAttribute),
         style: "style" in element ? toBlock(element.style) : null,
-        children: map(element.childNodes, toNode),
+        children: await mapAsync(element.childNodes, toNode),
         shadow:
-          element.shadowRoot !== null ? toShadow(element.shadowRoot) : null,
+          element.shadowRoot !== null
+            ? await toShadow(element.shadowRoot)
+            : null,
         content:
           "contentDocument" in element && element.contentDocument !== null
-            ? toDocument(element.contentDocument)
+            ? await toDocument(element.contentDocument)
             : null,
         box: toRectangle(element.getBoundingClientRect()),
       };
@@ -118,10 +160,16 @@ export namespace Native {
       };
     }
 
-    function toDocument(document: globalThis.Document): Document.JSON {
+    async function toDocument(
+      document: globalThis.Document,
+    ): Promise<Document.JSON> {
+      if (withCrossOrigin) {
+        await ensureCrossOrigin(document);
+      }
+
       return {
         type: "document",
-        children: map(document.childNodes, toNode),
+        children: await mapAsync(document.childNodes, toNode),
         style: map(document.styleSheets, toSheet),
       };
     }
@@ -135,11 +183,17 @@ export namespace Native {
       };
     }
 
-    function toShadow(shadow: globalThis.ShadowRoot): Shadow.JSON {
+    async function toShadow(
+      shadow: globalThis.ShadowRoot,
+    ): Promise<Shadow.JSON> {
+      if (withCrossOrigin) {
+        await ensureCrossOrigin(document);
+      }
+
       return {
         type: "shadow",
         mode: shadow.mode,
-        children: map(shadow.childNodes, toNode),
+        children: await mapAsync(shadow.childNodes, toNode),
         style: map(shadow.styleSheets, toSheet),
       };
     }
@@ -156,74 +210,49 @@ export namespace Native {
       return {
         rules,
         disabled: sheet.disabled,
-        condition: sheet.media.mediaText === "" ? null : sheet.media.mediaText,
+        condition:
+          // Sheets generated by pre-renderers like JSDOM do not contain media
+          sheet?.media?.mediaText ?? "" === "" ? null : sheet.media.mediaText,
       };
     }
 
     function toRule(rule: globalThis.CSSRule): Rule.JSON {
-      switch (rule.type) {
-        case rule.STYLE_RULE:
-          return toStyleRule(rule as globalThis.CSSStyleRule);
-
-        case rule.IMPORT_RULE:
-          return toImportRule(rule as globalThis.CSSImportRule);
-
-        case rule.MEDIA_RULE:
-          return toMediaRule(rule as globalThis.CSSMediaRule);
-
-        case rule.FONT_FACE_RULE:
+      switch (rule.constructor.name) {
+        case "CSSFontFaceRule":
           return toFontFaceRule(rule as globalThis.CSSFontFaceRule);
 
-        case rule.PAGE_RULE:
-          return toPageRule(rule as globalThis.CSSPageRule);
+        case "CSSImportRule":
+          return toImportRule(rule as globalThis.CSSImportRule);
 
-        case rule.KEYFRAMES_RULE:
-          return toKeyframesRule(rule as globalThis.CSSKeyframesRule);
-
-        case rule.KEYFRAME_RULE:
+        case "CSSKeyframeRule":
           return toKeyframeRule(rule as globalThis.CSSKeyframeRule);
 
-        case rule.NAMESPACE_RULE:
+        case "CSSKeyframesRule":
+          return toKeyframesRule(rule as globalThis.CSSKeyframesRule);
+
+        case "CSSLayerBlockRule":
+          return toLayerBlockRule(rule as globalThis.CSSLayerBlockRule);
+
+        case "CSSLayerStatementRule":
+          return toLayerStatementRule(rule as globalThis.CSSLayerStatementRule);
+
+        case "CSSMediaRule":
+          return toMediaRule(rule as globalThis.CSSMediaRule);
+
+        case "CSSNamespaceRule":
           return toNamespaceRule(rule as globalThis.CSSNamespaceRule);
 
-        case rule.SUPPORTS_RULE:
+        case "CSSPageRule":
+          return toPageRule(rule as globalThis.CSSPageRule);
+
+        case "CSSStyleRule":
+          return toStyleRule(rule as globalThis.CSSStyleRule);
+
+        case "CSSSupportsRule":
           return toSupportsRule(rule as globalThis.CSSSupportsRule);
       }
 
       throw new Error(`Unsupported rule of type: ${rule.type}`);
-    }
-
-    function toStyleRule(styleRule: globalThis.CSSStyleRule): StyleRule.JSON {
-      return {
-        type: "style",
-        selector: styleRule.selectorText,
-        style: toBlock(styleRule.style),
-      };
-    }
-
-    function toImportRule(rule: globalThis.CSSImportRule): ImportRule.JSON {
-      return {
-        type: "import",
-        rules: rule.styleSheet === null ? [] : toSheet(rule.styleSheet).rules,
-        condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
-        href: rule.href,
-      };
-    }
-
-    function toMediaRule(rule: globalThis.CSSMediaRule): MediaRule.JSON {
-      let rules: Array<Rule.JSON>;
-
-      try {
-        rules = map(rule.cssRules, toRule);
-      } catch {
-        rules = [];
-      }
-
-      return {
-        type: "media",
-        condition: rule.conditionText,
-        rules,
-      };
     }
 
     function toFontFaceRule(
@@ -235,10 +264,23 @@ export namespace Native {
       };
     }
 
-    function toPageRule(rule: globalThis.CSSPageRule): PageRule.JSON {
+    function toImportRule(rule: globalThis.CSSImportRule): ImportRule.JSON {
       return {
-        type: "page",
-        selector: rule.selectorText,
+        type: "import",
+        rules: rule.styleSheet === null ? [] : toSheet(rule.styleSheet).rules,
+        condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
+        href: rule.href,
+        supportText: rule.supportsText,
+        layer: rule.layerName,
+      };
+    }
+
+    function toKeyframeRule(
+      rule: globalThis.CSSKeyframeRule,
+    ): KeyframeRule.JSON {
+      return {
+        type: "keyframe",
+        key: rule.keyText,
         style: toBlock(rule.style),
       };
     }
@@ -261,13 +303,38 @@ export namespace Native {
       };
     }
 
-    function toKeyframeRule(
-      rule: globalThis.CSSKeyframeRule,
-    ): KeyframeRule.JSON {
+    function toLayerBlockRule(
+      rule: globalThis.CSSLayerBlockRule,
+    ): Layer.BlockRule.JSON {
       return {
-        type: "keyframe",
-        key: rule.keyText,
-        style: toBlock(rule.style),
+        type: "layer-block",
+        layer: rule.name,
+        rules: map(rule.cssRules, toRule),
+      };
+    }
+
+    function toLayerStatementRule(
+      rule: globalThis.CSSLayerStatementRule,
+    ): Layer.StatementRule.JSON {
+      return {
+        type: "layer-statement",
+        layers: [...rule.nameList],
+      };
+    }
+
+    function toMediaRule(rule: globalThis.CSSMediaRule): MediaRule.JSON {
+      let rules: Array<Rule.JSON>;
+
+      try {
+        rules = map(rule.cssRules, toRule);
+      } catch {
+        rules = [];
+      }
+
+      return {
+        type: "media",
+        condition: rule.conditionText,
+        rules,
       };
     }
 
@@ -278,6 +345,22 @@ export namespace Native {
         type: "namespace",
         namespace: rule.namespaceURI,
         prefix: rule.prefix,
+      };
+    }
+
+    function toPageRule(rule: globalThis.CSSPageRule): PageRule.JSON {
+      return {
+        type: "page",
+        selector: rule.selectorText,
+        style: toBlock(rule.style),
+      };
+    }
+
+    function toStyleRule(styleRule: globalThis.CSSStyleRule): StyleRule.JSON {
+      return {
+        type: "style",
+        selector: styleRule.selectorText,
+        style: toBlock(styleRule.style),
       };
     }
 
@@ -299,14 +382,28 @@ export namespace Native {
       };
     }
 
-    function toBlock(block: globalThis.CSSStyleDeclaration): Block.JSON {
-      return map(block, (name) => {
-        return {
-          name,
-          value: block.getPropertyValue(name),
-          important: block.getPropertyPriority(name) === "important",
-        };
-      });
+    /**
+     * @privateRemarks
+     * User Agents normally expose the pre-parsed declarations.
+     * However, there is a corner case of shorthands whose value is a `var()`
+     * where several UAs (as of April 2024: at least Chrome and Firefox) list
+     * the **longhands** in their CSSStyleDeclaration object (in the enumerable
+     * part), but associate no values to them, only to the corresponding
+     * shorthand (as expected and declared). This causes attempts to access
+     * the apparently declared properties through the `getPropertyValue()`
+     * method to return an empty string.
+     *
+     * {@link https://github.com/Siteimprove/alfa/issues/1563}
+     *
+     * To circumvent that, we simply return the raw CSS text; and delegate parsing
+     * to consumers, aka Block.from.
+     *
+     * Note that somehow JSDOM behaves differently and correctly associate the
+     * value with the shorthand. This means that the local tests using JSDOM
+     * are brittle and cannot detect a regression on this issue.
+     */
+    function toBlock(block: globalThis.CSSStyleDeclaration): string {
+      return block.cssText;
     }
 
     function toRectangle(domRect: globalThis.DOMRect): Rectangle.JSON {
@@ -331,5 +428,118 @@ export namespace Native {
 
       return result;
     }
+  }
+
+  async function mapAsync<T, U>(
+    arrayLike: ArrayLike<T>,
+    mapper: (value: T) => U | Promise<U>,
+  ): Promise<Array<U>> {
+    const result = new Array<U>(arrayLike.length);
+
+    for (let i = 0, n = arrayLike.length; i < n; i++) {
+      result[i] = await mapper(arrayLike[i]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Ensure that the needed resources for the document or shadow root, such as
+   * style sheets, adhere to CORS policy.
+   */
+  async function ensureCrossOrigin(
+    documentOrShadowRoot: globalThis.Document | globalThis.ShadowRoot,
+  ): Promise<void> {
+    /**
+     * Ensure that all `<link>` elements specify the `crossorigin` attribute.
+     * Even `<link>` elements that reference same-origin resources will need
+     * this attribute as they may contain nested resource imports that risk
+     * violating CORS policy.
+     *
+     * Do keep in mind that this will only work for resources that also set
+     * appropriate CORS request headers.
+     */
+    for (const link of documentOrShadowRoot.querySelectorAll("link")) {
+      /**
+       * Skip `<link>` elements for which the `crossorigin` attribute is already
+       * set to a valid value.
+       */
+      if (link.crossOrigin !== null) {
+        continue;
+      }
+
+      /**
+       * Simply setting the `crossorigin` attribute for the `<link>` element
+       * will not work as it must be reevaluated. We therefore create a clone,
+       * set the `crossorigin` attribute, and replace the original `<link>`
+       * element.
+       */
+      const clone = link.cloneNode() as HTMLLinkElement;
+
+      /**
+       * Set the `crossorigin` attribute to `anonymous`, ensuring that
+       * credentials are not sent as part of the cross-origin request. This is
+       * incredibly important as we don't want to risk leaking credentials!
+       */
+      clone.crossOrigin = "anonymous";
+
+      /**
+       * Replace the original `<link>` element with its clone. For style sheets,
+       * this will unfortunately cause a FOUC while the browser recomputes
+       * styles.
+       *
+       * {@link https://en.wikipedia.org/wiki/Flash_of_unstyled_content}
+       */
+      link.parentNode!.replaceChild(clone, link);
+
+      /**
+       * While certain resources will load synchronously from cache, others will
+       * not and we therefore need to await these.
+       */
+      if (shouldAwait(link)) {
+        /**
+         * Construct a promise that resolves once the `<link>` element either
+         * loads successfully or fails to load. If the `<link>` element fails to
+         * load, a request error will be logged to the console which should be
+         * enough indication that something didn't go quite as expected. Either
+         * way, we will deliver audit results even in the event of a missing
+         * resource.
+         */
+        await new Promise<void>((resolve) =>
+          ["load", "error"].forEach((event) =>
+            clone.addEventListener(event, () => resolve()),
+          ),
+        );
+      }
+    }
+
+    /**
+     * Check if the given `<link>` element should be awaited.
+     */
+    function shouldAwait(link: HTMLLinkElement): boolean {
+      /**
+       * A `<link>` element with an empty `href` will cause the fetch process to
+       * abort with no events to await.
+       */
+      if (link.getAttribute("href")?.trim() === "") {
+        return false;
+      }
+
+      /**
+       * Style sheets should be awaited as these are loaded and applied
+       * asynchronously, often times causing additional resources to be loaded
+       * via `url()` references and `@import` rules.
+       */
+      if (link.rel === "stylesheet") {
+        return true;
+      }
+
+      return false;
+    }
+  }
+
+  export interface Options {
+    /** Whether to enforce anonymous CORS on <link> missing one */
+    withCrossOrigin?: boolean;
   }
 }

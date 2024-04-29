@@ -80,6 +80,7 @@
     "src/style/sheet.ts",
     "test/h.spec.ts",
     "test/jsx.spec.tsx",
+    "test/native.spec.tsx",
     "test/node.spec.tsx",
     "test/node/attribute.spec.ts",
     "test/node/element.spec.tsx",
@@ -94,6 +95,7 @@
   "references": [
     { "path": "../alfa-array" },
     { "path": "../alfa-cache" },
+    { "path": "../alfa-comparable" },
     { "path": "../alfa-css" },
     { "path": "../alfa-css-feature" },
     { "path": "../alfa-device" },

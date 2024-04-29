@@ -196,6 +196,74 @@ export class Rectangle
     );
   }
 
+  /**
+   * Checks if the rectangle intersects a given circle.
+   *
+   * @remarks
+   * @see ../docs/circle-rectangle-intersection.png for a visual explanation of the case
+   * where the circle center lies in one of the corners of the padded rectangle.
+   *
+   * @privateRemarks
+    * To check intersection, we pad the rectangle by the radius of the circle and divide the problem into three cases:
+    *
+    * 1. The circle center is outside the padded rectangle.
+    * 2. The circle center is inside the padded rectangle, but not in one of the corners.
+    * 3. The circle center lies in one of the corners of the padded rectangle in which case we need to compute the distance to the corner
+    *
+    *                 r
+    *              +-------+-------------------------+-------+
+    *              |       |                         |       |
+    *     1        |       |                         |       |
+    *              +-------+-------------------------+-------+
+    *              |       |                         |       |
+    *              |       |                         |       |
+    *              |       |                         |       |
+    *              |       |                         |       |
+    *              |       |                         |       |
+    *              +-------+-------------------------+-------+
+    *              |       |            2            |       |
+    *              | 3     |                         |       |
+    *              +-------+-------------------------+-------+
+   */
+  public intersectsCircle(cx: number, cy: number, r: number): boolean {
+
+    const center = this.center;
+    const halfWidth = this.width / 2;
+    const halfHeight = this.height / 2;
+
+    const dx = Math.abs(cx - center.x);
+    const dy = Math.abs(cy - center.y);
+
+    if (dx > halfWidth + r || dy > halfHeight + r) {
+      // 1. The circle center is outside the padded rectangle
+      return false;
+    }
+
+    // The circle center is inside the padded rectangle
+    if (dx <= halfWidth || dy <= halfHeight) {
+      // 2. The circle lies at most a radius away from the rectangle in the x or y directions
+      return true;
+    }
+
+    // 3. The circle center lies in one of the corners of the padded rectangle.
+    // If the distance from the circle center to the closest corner of the rectangle
+    // is less than the radius of the circle, the circle intersects the rectangle.
+    return (dx - halfWidth) ** 2 + (dy - halfHeight) ** 2 <= r ** 2;
+  }
+
+  /**
+   * Computes the squared distance between the centers of two rectangles.
+   *
+   * @remarks
+   * The squared distance is used to avoid the expensive square root operation.
+   * If the actual distance is needed, the square root of the squared distance can be taken.
+   */
+  public distanceSquared(other: Rectangle): number {
+    const c1 = this.center;
+    const c2 = other.center;
+    return (c1.x - c2.x) ** 2 + (c1.y - c2.y) ** 2;
+  }
+
   public equals(value: this): boolean;
   public equals(value: unknown): value is this;
   public equals(value: unknown): boolean {

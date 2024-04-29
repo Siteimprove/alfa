@@ -7,5 +7,7 @@
 **Signature:**
 
 ```typescript
-export type Name = keyof Preferences;
+type Name = keyof typeof preferences;
 ```
+**References:** [preferences](./alfa-device.preference.preferences.md)
+

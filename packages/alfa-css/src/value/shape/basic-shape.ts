@@ -13,7 +13,6 @@ export abstract class BasicShape<
     this._kind = kind;
   }
 
-  /** @public (knip) */
   public get kind(): K {
     return this._kind;
   }

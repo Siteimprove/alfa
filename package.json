@@ -27,23 +27,23 @@
     "@changesets/cli": "^2.26.2",
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
-    "@siteimprove/alfa-toolchain": "workspace:^0.75.2",
+    "@siteimprove/alfa-toolchain": "workspace:^0.78.2",
     "@types/async": "^3.2.20",
     "@types/madge": "^5.0.3",
     "@types/node": "^20.5.9",
     "async": "^3.2.1",
     "execa": "^8.0.0",
-    "knip": "^5.0.0",
+    "knip": "^5.6.1",
     "madge": "^6.1.0",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "precinct": "^11.0.5",
     "prettier": "^3.0.0",
     "ts-graphviz": "^1.8.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.5"
   },
   "resolutions": {
     "dependency-tree": "^10.0.9"
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.1.1"
 }

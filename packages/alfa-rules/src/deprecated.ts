@@ -5,11 +5,4 @@ import DR36 from "./sia-dr36/rule";
 import DR66 from "./sia-dr66/rule";
 import DR69 from "./sia-dr69/rule";
 
-export {
-  /** @public (knip) */ DR6,
-  /** @public (knip) */ DR18,
-  /** @public (knip) */ DR34,
-  /** @public (knip) */ DR36,
-  /** @public (knip) */ DR66,
-  /** @public (knip) */ DR69,
-};
+export { DR6, DR18, DR34, DR36, DR66, DR69 };

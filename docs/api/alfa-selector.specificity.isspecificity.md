@@ -4,8 +4,6 @@
 
 ## Specificity.isSpecificity() function
 
-public (knip)
-
 **Signature:**
 
 ```typescript

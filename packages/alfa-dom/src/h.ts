@@ -113,7 +113,10 @@ export namespace h {
       children
         .filter(nor(Document.isDocument, Shadow.isShadow))
         .map((child) => (typeof child === "string" ? h.text(child) : child)),
-      style.length === 0 ? None : Option.of(block),
+      (Array.isArray(style) && style.length === 0) ||
+        Object.keys(style).length === 0
+        ? None
+        : Option.of(block),
       Option.from(box),
       Option.from(device),
       externalId,
@@ -260,9 +263,18 @@ export namespace h {
     export function importRule(
       url: string,
       sheet: Sheet,
-      condition?: string,
+      mediaCondition?: string,
+      supportCondition?: string,
+      // Use "" for anonymous layer.
+      layer?: string,
     ): ImportRule {
-      return ImportRule.of(url, sheet, Option.from(condition));
+      return ImportRule.of(
+        url,
+        sheet,
+        Option.from(mediaCondition),
+        Option.from(supportCondition),
+        Option.from(layer),
+      );
     }
     export function keyframe(
       key: string,

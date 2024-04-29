@@ -14,7 +14,7 @@ const { end, left, map } = Parser;
  * {@link https://drafts.csswg.org/css-conditional-3/#at-supports}
  *
  * @remarks
- * Supports query are just a wrapper for a condition..
+ * Supports query are just a wrapper for a condition.
  *
  * @public
  */
@@ -41,7 +41,6 @@ export class Query implements Feature<Condition<Property>, Query.JSON> {
     yield* this._condition;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Condition<Property>> {
     return this.iterator();
   }

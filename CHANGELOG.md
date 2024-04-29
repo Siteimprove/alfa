@@ -1,5 +1,51 @@
 # Alfa changelog
 
+## [0.78.2](../../compare/v0.78.1...v0.78.2) (2024-04-18)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0782): R111 and R113 now more accurately detects targets that are part of text. ([#1598](https://github.com/Siteimprove/alfa/pull/1598))
+
+## [0.78.1](../../compare/v0.78.0...v0.78.1) (2024-04-16)
+
+### Fixed
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0781): `Native.fromWindow` is properly bundled so it can be injected into pages by browser automation or extension scripting. ([#1597](https://github.com/Siteimprove/alfa/pull/1597))
+
+## [0.78.0](../../compare/v0.77.0...v0.78.0) (2024-04-16)
+
+### Added
+
+- [@siteimprove/alfa-css-feature](packages/alfa-css-feature/CHANGELOG.md#0780): User-preferences media queries are now supported. ([#1596](https://github.com/Siteimprove/alfa/pull/1596))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#0780): `Ouctome` can now be produced with a `Mode.Manual`. ([#1587](https://github.com/Siteimprove/alfa/pull/1587))
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0780): `Native.fromWindow` now grabs user preferences. ([#1596](https://github.com/Siteimprove/alfa/pull/1596))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0780): R111 and R113 are no longer applicable to invisible targets and targets inside a paragraph. ([#1594](https://github.com/Siteimprove/alfa/pull/1594))
+
+## [0.77.0](../../compare/v0.76.0...v0.77.0) (2024-04-05)
+
+### Added
+
+- [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md#0770): Methods `Rectangle#insersectsCircle` and `Rectangle#distanceSquared`. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0770): R113 now sends more information about how it succeed and the other targets that caused the spacing criteria to fail. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0770): R113 spacing condition is now calculated more accurately. ([#1592](https://github.com/Siteimprove/alfa/pull/1592))
+
+## [0.76.0](../../compare/v0.75.2...v0.76.0) (2024-03-21)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0760): New rule SIA-R113 for testing minimum target size and spacing of clickable elements. ([#1589](https://github.com/Siteimprove/alfa/pull/1589))
+
 ## [0.75.2](../../compare/v0.75.1...v0.75.2) (2024-03-04)
 
 ### Added

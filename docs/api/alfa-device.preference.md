@@ -24,7 +24,12 @@ export declare namespace Preference
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-device.preference.json.md) |  |
-|  [Preferences](./alfa-device.preference.preferences.md) |  |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [preferences](./alfa-device.preference.preferences.md) |  |
 
 ## Type Aliases
 

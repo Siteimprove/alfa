@@ -11,11 +11,13 @@ import { Page } from ".";
  * @internal
  */
 export namespace Native {
-  export function fromDocument(document: globalThis.Document): Page.JSON {
+  export async function fromDocument(
+    document: globalThis.Document,
+  ): Promise<Page.JSON> {
     return {
       request: Request.empty().toJSON(),
       response: Response.empty().toJSON(),
-      document: dom.Native.fromNode(document),
+      document: await dom.Native.fromNode(document),
       device: device.Native.fromWindow(document.defaultView ?? window),
     };
   }

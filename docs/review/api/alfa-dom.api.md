@@ -87,19 +87,19 @@ export namespace Attribute {
 }
 
 // @public (undocumented)
-export class Block implements Iterable<Declaration>, Equatable, Serializable {
+export class Block implements Iterable_2<Declaration>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Declaration>;
     // (undocumented)
     declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
     // (undocumented)
-    get declarations(): Iterable<Declaration>;
+    get declarations(): Iterable_2<Declaration>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     isEmpty(): boolean;
     // (undocumented)
-    static of(declarations: Iterable<Declaration>): Block;
+    static of(declarations: Iterable_2<Declaration>): Block;
     // (undocumented)
     get size(): number;
     // (undocumented)
@@ -111,7 +111,7 @@ export class Block implements Iterable<Declaration>, Equatable, Serializable {
 // @public (undocumented)
 export namespace Block {
     // (undocumented)
-    export function from(json: JSON): Block;
+    export function from(jsonOrText: JSON | string): Block;
     // (undocumented)
     export type JSON = Array<Declaration.JSON>;
 }
@@ -329,7 +329,7 @@ export namespace Element {
         // (undocumented)
         shadow: Shadow.JSON | null;
         // (undocumented)
-        style: Block.JSON | null;
+        style: Block.JSON | string | null;
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
@@ -380,7 +380,7 @@ export namespace FontFaceRule {
     // (undocumented)
     export interface JSON extends Rule.JSON<"font-face"> {
         // (undocumented)
-        style: Block.JSON;
+        style: Block.JSON | string;
     }
 }
 
@@ -457,7 +457,7 @@ export namespace h {
         // (undocumented)
         export function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
         // (undocumented)
-        export function importRule(url: string, sheet: Sheet, condition?: string): ImportRule;
+        export function importRule(url: string, sheet: Sheet, mediaCondition?: string, supportCondition?: string, layer?: string): ImportRule;
         // (undocumented)
         export function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): KeyframeRule;
         // (undocumented)
@@ -492,13 +492,19 @@ export class ImportRule extends ConditionRule<"import"> {
     // (undocumented)
     get href(): string;
     // (undocumented)
-    static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
+    get layer(): Option<string>;
     // (undocumented)
-    get queries(): Feature.Media.List;
+    get mediaQueries(): Feature.Media.List;
+    // (undocumented)
+    static of(href: string, sheet: Sheet, mediaCondition?: Option<string>, supportCondition?: Option<string>, layer?: Option<string>): ImportRule;
     // (undocumented)
     get rules(): Iterable<Rule>;
     // (undocumented)
     get sheet(): Sheet;
+    // (undocumented)
+    get supportCondition(): Option<string>;
+    // (undocumented)
+    get supportQuery(): Option<Option<Feature.Supports.Query>>;
     // (undocumented)
     toJSON(): ImportRule.JSON;
     // (undocumented)
@@ -515,6 +521,10 @@ export namespace ImportRule {
     export interface JSON extends ConditionRule.JSON<"import"> {
         // (undocumented)
         href: string;
+        // (undocumented)
+        layer: string | null;
+        // (undocumented)
+        supportText: string | null;
     }
     // (undocumented)
     export function matches(device: Device): Predicate<ImportRule>;
@@ -574,7 +584,7 @@ export namespace KeyframeRule {
         // (undocumented)
         key: string;
         // (undocumented)
-        style: Block.JSON;
+        style: Block.JSON | string;
     }
 }
 
@@ -935,7 +945,7 @@ export namespace PageRule {
         // (undocumented)
         selector: string;
         // (undocumented)
-        style: Block.JSON;
+        style: Block.JSON | string;
     }
 }
 
@@ -1173,7 +1183,7 @@ export namespace StyleRule {
         // (undocumented)
         selector: string;
         // (undocumented)
-        style: Block.JSON;
+        style: Block.JSON | string;
     }
 }
 

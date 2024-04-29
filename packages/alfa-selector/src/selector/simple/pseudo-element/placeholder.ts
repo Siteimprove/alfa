@@ -12,7 +12,6 @@ export class Placeholder extends PseudoElementSelector<"placeholder"> {
     super("placeholder");
   }
 
-  /** @public (knip) */
   public *[Symbol.iterator](): Iterator<Placeholder> {
     yield this;
   }

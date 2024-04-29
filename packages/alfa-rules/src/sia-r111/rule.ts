@@ -1,23 +1,18 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Node, Query } from "@siteimprove/alfa-dom";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok } from "@siteimprove/alfa-result";
-import { Style } from "@siteimprove/alfa-style";
+import { Element } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Device } from "@siteimprove/alfa-device";
 
 import { expectation } from "../common/act/expectation";
 
-import { WithBoundingBox, WithName } from "../common/diagnostic";
+import { applicableTargetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
 
-const { getElementDescendants } = Query;
-const { and } = Refinement;
-const { hasRole } = DOM;
-const { hasComputedStyle, isFocusable } = Style;
+import { WithName } from "../common/diagnostic";
+
+import { TargetSize } from "../common/outcome/target-size";
+
+import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
+import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",
@@ -25,18 +20,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return getElementDescendants(document, Node.fullTree).filter(
-          and(
-            hasComputedStyle(
-              "pointer-events",
-              (keyword) => keyword.value !== "none",
-              device,
-            ),
-            isFocusable(device),
-            hasRole(device, (role) => role.isWidget()),
-            (target) => target.getBoundingBox(device).isSome(),
-          ),
-        );
+        return applicableTargetsOfPointerEvents(document, device);
       },
 
       expectations(target) {
@@ -45,45 +29,14 @@ export default Rule.Atomic.of<Page, Element>({
         const name = WithName.getName(target, device).getOr("");
         return {
           1: expectation(
-            isUserAgentControlled(target),
-            () => Outcomes.IsUserAgentControlled(name, box),
+            isUserAgentControlled()(target),
+            () => TargetSize.IsUserAgentControlled(name, box),
             hasSufficientSize(44, device)(target)
-              ? () => Outcomes.HasSufficientSize(name, box)
-              : () => Outcomes.HasInsufficientSize(name, box),
+              ? () => TargetSize.HasSufficientSize(name, box)
+              : () => TargetSize.HasInsufficientSize(name, box),
           ),
         };
       },
     };
   },
 });
-
-/**
- * @public
- */
-export namespace Outcomes {
-  export const HasSufficientSize = (name: string, box: Rectangle) =>
-    Ok.of(WithBoundingBox.of("Target has sufficient size", name, box));
-
-  export const HasInsufficientSize = (name: string, box: Rectangle) =>
-    Err.of(WithBoundingBox.of("Target has insufficient size", name, box));
-
-  export const IsUserAgentControlled = (name: string, box: Rectangle) =>
-    Ok.of(WithBoundingBox.of("Target is user agent controlled", name, box));
-}
-
-/**
- * @remarks
- * This predicate is assumed to only be used on elements with bounding boxes
- * which should be guaranteed by applicability
- */
-function hasSufficientSize(size: number, device: Device): Predicate<Element> {
-  return (element) => {
-    const box = element.getBoundingBox(device).getUnsafe();
-    return box.width >= size && box.height >= size;
-  };
-}
-
-function isUserAgentControlled(element: Element): boolean {
-  // Crude approximation of user agent controlled elements, to be refined
-  return element.name === "input";
-}

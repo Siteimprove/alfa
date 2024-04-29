@@ -75,7 +75,6 @@ export class Query implements Feature<Condition<Media>, Query.JSON> {
     yield* this._condition;
   }
 
-  /** @public (knip) */
   public [Symbol.iterator](): Iterator<Condition<Media>> {
     return this.iterator();
   }
