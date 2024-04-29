@@ -28,6 +28,7 @@ export declare namespace Shorthands
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [Longhands](./alfa-style.shorthands.longhands.md) |  |
 |  [Name](./alfa-style.shorthands.name.md) |  |
 |  [Property](./alfa-style.shorthands.property.md) |  |
 

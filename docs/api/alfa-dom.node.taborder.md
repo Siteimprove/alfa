@@ -6,7 +6,7 @@
 
 Construct a sequence of descendants of this node sorted by tab index. Only nodes with a non-negative tab index are included in the sequence.
 
-[https://html.spec.whatwg.org/\#tabindex-value](https://html.spec.whatwg.org/#tabindex-value)
+[https://html.spec.whatwg.org/multipage/\#tabindex-value](https://html.spec.whatwg.org/multipage/#tabindex-value)
 
 **Signature:**
 

@@ -9,14 +9,14 @@ Build a style from a list of declarations.
 **Signature:**
 
 ```typescript
-static of(styleDeclarations: Iterable<Declaration>, device: Device, parent?: Option<Style>): Style;
+static of(styleDeclarations: Iterable<[Declaration, Origin]>, device: Device, parent?: Option<Style>): Style;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  styleDeclarations | Iterable&lt;Declaration&gt; |  |
+|  styleDeclarations | Iterable&lt;\[Declaration, Origin\]&gt; |  |
 |  device | Device |  |
 |  parent | Option&lt;[Style](./alfa-style.style.md)<!-- -->&gt; | _(Optional)_ |
 
@@ -26,5 +26,5 @@ static of(styleDeclarations: Iterable<Declaration>, device: Device, parent?: Opt
 
 ## Remarks
 
-Declarations must be in pre-sorted in decreasing Cascade order. Prefer using Style.from(), which has fewer assumptions.
+Declarations must be pre-sorted in decreasing Cascade order. Prefer using Style.from(), which has fewer assumptions.
 

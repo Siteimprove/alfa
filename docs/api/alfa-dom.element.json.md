@@ -22,5 +22,5 @@ interface JSON<N extends string = string> extends Node.JSON<"element">
 |  [namespace](./alfa-dom.element.json.namespace.md) |  | string \| null |  |
 |  [prefix](./alfa-dom.element.json.prefix.md) |  | string \| null |  |
 |  [shadow](./alfa-dom.element.json.shadow.md) |  | [Shadow.JSON](./alfa-dom.shadow.json.md) \| null |  |
-|  [style](./alfa-dom.element.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) \| null |  |
+|  [style](./alfa-dom.element.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) \| string \| null |  |
 

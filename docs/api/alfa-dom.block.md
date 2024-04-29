@@ -15,7 +15,7 @@ export declare namespace Block
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-dom.block.from.md) |  |
+|  [from(jsonOrText)](./alfa-dom.block.from.md) |  |
 
 ## Type Aliases
 

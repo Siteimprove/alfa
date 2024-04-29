@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function importRule(url: string, sheet: Sheet, condition?: string): ImportRule;
+function importRule(url: string, sheet: Sheet, mediaCondition?: string, supportCondition?: string, layer?: string): ImportRule;
 ```
 
 ## Parameters
@@ -16,7 +16,9 @@ function importRule(url: string, sheet: Sheet, condition?: string): ImportRule;
 |  --- | --- | --- |
 |  url | string |  |
 |  sheet | Sheet |  |
-|  condition | string | _(Optional)_ |
+|  mediaCondition | string | _(Optional)_ |
+|  supportCondition | string | _(Optional)_ |
+|  layer | string | _(Optional)_ |
 
 **Returns:**
 

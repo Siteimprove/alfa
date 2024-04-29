@@ -16,4 +16,6 @@ interface JSON extends ConditionRule.JSON<"import">
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [href](./alfa-dom.importrule.json.href.md) |  | string |  |
+|  [layer](./alfa-dom.importrule.json.layer.md) |  | string \| null |  |
+|  [supportText](./alfa-dom.importrule.json.supporttext.md) |  | string \| null |  |
 

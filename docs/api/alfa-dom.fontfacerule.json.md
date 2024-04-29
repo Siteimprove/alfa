@@ -15,5 +15,5 @@ interface JSON extends Rule.JSON<"font-face">
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [style](./alfa-dom.fontfacerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) |  |
+|  [style](./alfa-dom.fontfacerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) \| string |  |
 

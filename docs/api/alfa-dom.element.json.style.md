@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-style: Block.JSON | null;
+style: Block.JSON | string | null;
 ```

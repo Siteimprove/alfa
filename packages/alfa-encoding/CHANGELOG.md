@@ -1,5 +1,7 @@
 # @siteimprove/alfa-encoding
 
+## 0.79.0
+
 ## 0.78.2
 
 ## 0.78.1

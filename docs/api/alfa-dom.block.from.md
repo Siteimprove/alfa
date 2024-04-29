@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-function from(json: JSON): Block;
+function from(jsonOrText: JSON | string): Block;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [JSON](./alfa-dom.block.json.md) |  |
+|  jsonOrText | [JSON](./alfa-dom.block.json.md) \| string |  |
 
 **Returns:**
 
