@@ -51,9 +51,9 @@ export class Type<N extends string = string> extends Node<"type"> {
     return this._systemId;
   }
 
-  public toJSON(): Type.JSON<N> {
+  public toJSON(options?: Node.SerializationOptions): Type.JSON<N> {
     const result = {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       name: this._name,
       publicId: this._publicId.getOr(null),
       systemId: this._systemId.getOr(null),

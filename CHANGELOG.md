@@ -1,5 +1,37 @@
 # Alfa changelog
 
+## [0.79.0](../../compare/v0.78.2...v0.79.0) (2024-04-29)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0790): `ImportRule.queries` has been renamed `ImportRule.mediaQueries`. ([#1603](https://github.com/Siteimprove/alfa/pull/1603))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0790): `Style.of` now requires the `Declaration` to be paired with their `Origin`. ([#1604](https://github.com/Siteimprove/alfa/pull/1604))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0790): `Native.fromNode()` is now asynchronous. ([#1600](https://github.com/Siteimprove/alfa/pull/1600))
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0790): The `revert` global keyword is now handled. ([#1604](https://github.com/Siteimprove/alfa/pull/1604))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0790): `Native.fromNode()` now includes an option to enforce `crossorigin: anonymous` on `<link>` elements missing a CORS. ([#1600](https://github.com/Siteimprove/alfa/pull/1600))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0790): `Native.fromNode` now parses `@layer` rules. ([#1600](https://github.com/Siteimprove/alfa/pull/1600))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0790), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0790): CSS `import` rules now support `layer`, and `supports` condition. ([#1603](https://github.com/Siteimprove/alfa/pull/1603))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0790): R111 and R113 `Outcome` namespaces have been combined and renamed to `TargetSize`. ([#1601](https://github.com/Siteimprove/alfa/pull/1601))
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0790): `Native.fromNode()` now correctly handles CSS shorthands whose value is a `var(…)`. ([#1600](https://github.com/Siteimprove/alfa/pull/1600))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0790): Bug where boxes where not being serialized due to device not being passed down when recursing has been fixed. ([#1605](https://github.com/Siteimprove/alfa/pull/1605))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0790): `Node.tabOrder()` now correctly inserts shadow tree content in its place, instead of at the start. ([#1599](https://github.com/Siteimprove/alfa/pull/1599))
+
 ## [0.78.2](../../compare/v0.78.1...v0.78.2) (2024-04-18)
 
 ### Fixed

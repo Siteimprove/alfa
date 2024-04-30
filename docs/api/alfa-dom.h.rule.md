@@ -15,7 +15,7 @@ namespace rule
 |  Function | Description |
 |  --- | --- |
 |  [fontFace(declarations)](./alfa-dom.h.rule.fontface.md) |  |
-|  [importRule(url, sheet, condition)](./alfa-dom.h.rule.importrule.md) |  |
+|  [importRule(url, sheet, mediaCondition, supportCondition, layer)](./alfa-dom.h.rule.importrule.md) |  |
 |  [keyframe(key, declarations)](./alfa-dom.h.rule.keyframe.md) |  |
 |  [keyframes(name, rules)](./alfa-dom.h.rule.keyframes.md) |  |
 |  [layerBlock(rules, layer)](./alfa-dom.h.rule.layerblock.md) |  |

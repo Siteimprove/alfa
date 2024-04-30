@@ -136,16 +136,17 @@ export namespace Longhand {
    *
    * @internal
    */
-  export type Parsed<T> = T extends Longhand<
-    infer S,
-    // Computed is only used in a covariant position in Longhand (as output of
-    // compute). Therefore, it does not need to be inferred exactly.
-    // C extends C' => Longhand<S, C> extends Longhand<S, C'>
-    // Especially, Longhand<S, C> extends Longhand<S, unknown> for all C.
-    unknown
-  >
-    ? S
-    : never;
+  export type Parsed<T> =
+    T extends Longhand<
+      infer S,
+      // Computed is only used in a covariant position in Longhand (as output of
+      // compute). Therefore, it does not need to be inferred exactly.
+      // C extends C' => Longhand<S, C> extends Longhand<S, C'>
+      // Especially, Longhand<S, C> extends Longhand<S, unknown> for all C.
+      unknown
+    >
+      ? S
+      : never;
 
   /**
    * Extracts the computed type a property.
@@ -157,15 +158,16 @@ export namespace Longhand {
    *
    * @internal
    */
-  export type Computed<T> = T extends Longhand<
-    // Specified is used both in a covariant (output of the parser) and
-    // contravariant (input of compute) position in Longhand. Therefore,
-    // it needs to be exactly inferred for the subtyping to exist.
-    infer S,
-    infer C
-  >
-    ? C
-    : never;
+  export type Computed<T> =
+    T extends Longhand<
+      // Specified is used both in a covariant (output of the parser) and
+      // contravariant (input of compute) position in Longhand. Therefore,
+      // it needs to be exactly inferred for the subtyping to exist.
+      infer S,
+      infer C
+    >
+      ? C
+      : never;
 
   /**
    * The default keywords recognised by all properties.
@@ -173,9 +175,15 @@ export namespace Longhand {
   export type Default =
     | Keyword<"initial">
     | Keyword<"inherit">
+    | Keyword<"revert">
     | Keyword<"unset">;
 
-  export const parseDefaults = Keyword.parse("initial", "inherit", "unset");
+  export const parseDefaults = Keyword.parse(
+    "initial",
+    "inherit",
+    "revert",
+    "unset",
+  );
 
   /**
    * Utility function for longhands whose value can only be a list of keywords.

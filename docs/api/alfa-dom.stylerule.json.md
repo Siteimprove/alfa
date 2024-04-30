@@ -16,5 +16,5 @@ interface JSON extends Rule.JSON<"style">
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [selector](./alfa-dom.stylerule.json.selector.md) |  | string |  |
-|  [style](./alfa-dom.stylerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) |  |
+|  [style](./alfa-dom.stylerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) \| string |  |
 

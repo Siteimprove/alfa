@@ -1,5 +1,33 @@
 # @siteimprove/alfa-dom
 
+## 0.79.0
+
+### Minor Changes
+
+- **Breaking:** `ImportRule.queries` has been renamed `ImportRule.mediaQueries`. ([#1603](https://github.com/Siteimprove/alfa/pull/1603))
+
+  This allows support queries in import rules in a unified naming scheme.
+
+- **Breaking:** `Native.fromNode()` is now asynchronous. ([#1600](https://github.com/Siteimprove/alfa/pull/1600))
+
+  This allows to perform asynchronous operations on the page being scraped.
+
+- **Added:** CSS `import` rules now support `layer`, and `supports` condition. ([#1603](https://github.com/Siteimprove/alfa/pull/1603))
+
+### Patch Changes
+
+- **Added:** `Native.fromNode()` now includes an option to enforce `crossorigin: anonymous` on `<link>` elements missing a CORS. ([#1600](https://github.com/Siteimprove/alfa/pull/1600))
+
+  This can help solve some problems encountered during scraping, when they are tied to missing CORS policy.
+
+- **Fixed:** `Native.fromNode()` now correctly handles CSS shorthands whose value is a `var(…)`. ([#1600](https://github.com/Siteimprove/alfa/pull/1600))
+
+- **Fixed:** Bug where boxes where not being serialized due to device not being passed down when recursing has been fixed. ([#1605](https://github.com/Siteimprove/alfa/pull/1605))
+
+- **Fixed:** `Node.tabOrder()` now correctly inserts shadow tree content in its place, instead of at the start. ([#1599](https://github.com/Siteimprove/alfa/pull/1599))
+
+- **Added:** `Native.fromNode` now parses `@layer` rules. ([#1600](https://github.com/Siteimprove/alfa/pull/1600))
+
 ## 0.78.2
 
 ## 0.78.1

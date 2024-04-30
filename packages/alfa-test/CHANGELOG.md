@@ -1,5 +1,7 @@
 # @siteimprove/alfa-test
 
+## 0.79.0
+
 ## 0.78.2
 
 ## 0.78.1

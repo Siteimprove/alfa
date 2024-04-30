@@ -1,5 +1,11 @@
 # @siteimprove/alfa-cascade
 
+## 0.79.0
+
+### Minor Changes
+
+- **Added:** CSS `import` rules now support `layer`, and `supports` condition. ([#1603](https://github.com/Siteimprove/alfa/pull/1603))
+
 ## 0.78.2
 
 ## 0.78.1
