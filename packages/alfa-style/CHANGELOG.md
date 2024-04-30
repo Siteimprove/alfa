@@ -1,5 +1,15 @@
 # @siteimprove/alfa-style
 
+## 0.79.0
+
+### Minor Changes
+
+- **Added:** The `revert` global keyword is now handled. ([#1604](https://github.com/Siteimprove/alfa/pull/1604))
+
+- **Breaking:** `Style.of` now requires the `Declaration` to be paired with their `Origin`. ([#1604](https://github.com/Siteimprove/alfa/pull/1604))
+
+  As always with it, prefer using `Style.from` when possible as it has fewer assumptions.
+
 ## 0.78.2
 
 ## 0.78.1

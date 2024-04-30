@@ -16,5 +16,5 @@ interface JSON extends Rule.JSON<"page">
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [selector](./alfa-dom.pagerule.json.selector.md) |  | string |  |
-|  [style](./alfa-dom.pagerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) |  |
+|  [style](./alfa-dom.pagerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) \| string |  |
 

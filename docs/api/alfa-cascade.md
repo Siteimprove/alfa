@@ -9,12 +9,37 @@
 |  Class | Description |
 |  --- | --- |
 |  [Cascade](./alfa-cascade.cascade.md) | [https://drafts.csswg.org/css-cascade-5/](https://drafts.csswg.org/css-cascade-5/) |
+|  [Layer](./alfa-cascade.layer.md) |  |
 |  [RuleTree](./alfa-cascade.ruletree.md) | The rule tree is a data structure used for storing the rules that match each element when computing cascade for a document. |
+
+## Enumerations
+
+|  Enumeration | Description |
+|  --- | --- |
+|  [Origin](./alfa-cascade.origin.md) | [https://www.w3.org/TR/css-cascade-5/\#cascading-origins](https://www.w3.org/TR/css-cascade-5/#cascading-origins) [https://www.w3.org/TR/css-cascade-5/\#cascade-origin](https://www.w3.org/TR/css-cascade-5/#cascade-origin) |
+
+## Interfaces
+
+|  Interface | Description |
+|  --- | --- |
+|  [Precedence](./alfa-cascade.precedence.md) | <p>Store the various components needed for precedence in the Cascade Sorting Order.</p><p>[https://drafts.csswg.org/css-cascade-5/\#cascade-sort](https://drafts.csswg.org/css-cascade-5/#cascade-sort)</p> |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
 |  [Cascade](./alfa-cascade.cascade.md) |  |
+|  [Encapsulation](./alfa-cascade.encapsulation.md) |  |
+|  [Layer](./alfa-cascade.layer.md) |  |
+|  [Order](./alfa-cascade.order.md) |  |
+|  [Origin](./alfa-cascade.origin.md) |  |
+|  [Precedence](./alfa-cascade.precedence.md) | [https://drafts.csswg.org/css-cascade-5/\#cascade-sort](https://drafts.csswg.org/css-cascade-5/#cascade-sort) |
 |  [RuleTree](./alfa-cascade.ruletree.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Encapsulation](./alfa-cascade.encapsulation.md) | [https://drafts.csswg.org/css-cascade-5/\#cascade-context](https://drafts.csswg.org/css-cascade-5/#cascade-context) |
+|  [Order](./alfa-cascade.order.md) | Order of appearance of CSS rules in a sheet. [https://drafts.csswg.org/css-cascade-5/\#cascade-order](https://drafts.csswg.org/css-cascade-5/#cascade-order) |
 

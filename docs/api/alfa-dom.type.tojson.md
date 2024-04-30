@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Type.JSON<N>;
+toJSON(options?: Node.SerializationOptions): Type.JSON<N>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) | _(Optional)_ |
+
 **Returns:**
 
 [Type.JSON](./alfa-dom.type.json.md)<!-- -->&lt;N&gt;

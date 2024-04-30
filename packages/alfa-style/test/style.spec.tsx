@@ -7,7 +7,7 @@ import { h } from "@siteimprove/alfa-dom/h";
 
 import { Style } from "../src/style";
 
-import { cascaded } from "./common";
+import { cascaded, specified } from "./common";
 
 const device = Device.standard();
 
@@ -839,5 +839,79 @@ test("#cascaded() prefers important declaration from the shadow tree, and normal
   t.deepEqual(cascaded(element, "background-color"), {
     value: { type: "color", format: "named", color: "blue" },
     source: h.declaration("background-color", "blue").toJSON(),
+  });
+});
+
+// See https://developer.mozilla.org/en-US/docs/Web/CSS/revert#examples
+test("#cascaded() respect revert keyword", (t) => {
+  const target1 = <h1 class="revert">Hello</h1>;
+  const target2 = <h1>World</h1>;
+
+  h.document(
+    [target1, target2],
+    [
+      h.sheet([
+        // Apply to both
+        h.rule.style("h1", { "font-weight": "normal" }),
+        // Revert target1 to the UA value of bold.
+        h.rule.style(".revert", { "font-weight": "revert" }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(cascaded(target1, "font-weight"), {
+    value: { type: "keyword", value: "bold" },
+    source: h.declaration("font-weight", "bold").toJSON(),
+  });
+  t.deepEqual(cascaded(target2, "font-weight"), {
+    value: { type: "keyword", value: "normal" },
+    source: h.declaration("font-weight", "normal").toJSON(),
+  });
+});
+
+test("#specified() handles revert on inherited properties", (t) => {
+  const target1 = <h1>Hello</h1>;
+  const target2 = <h1>World</h1>;
+
+  h.document(
+    [
+      <main>
+        <section>{target1}</section> <section class="revert">{target2}</section>
+      </main>,
+    ],
+    [
+      h.sheet([
+        // Apply to main and is inherited by sections, then h1s
+        h.rule.style("main", { color: "blue" }),
+        // Apply to section, override inheritance, is inherited into h1
+        h.rule.style("section", { color: "red" }),
+        // revert the second section to `color: inherited`, since the UA sheet
+        // doesn't define one.
+        h.rule.style(".revert", { color: "revert" }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(specified(target1, "color"), {
+    value: {
+      type: "color",
+      format: "rgb",
+      alpha: { type: "percentage", value: 1 },
+      red: { type: "percentage", value: 1 },
+      green: { type: "percentage", value: 0 },
+      blue: { type: "percentage", value: 0 },
+    },
+    source: h.declaration("color", "red").toJSON(),
+  });
+  t.deepEqual(specified(target2, "color"), {
+    value: {
+      type: "color",
+      format: "rgb",
+      alpha: { type: "percentage", value: 1 },
+      red: { type: "percentage", value: 0 },
+      green: { type: "percentage", value: 0 },
+      blue: { type: "percentage", value: 1 },
+    },
+    source: h.declaration("color", "blue").toJSON(),
   });
 });

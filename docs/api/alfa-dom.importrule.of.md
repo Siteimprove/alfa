@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
+static of(href: string, sheet: Sheet, mediaCondition?: Option<string>, supportCondition?: Option<string>, layer?: Option<string>): ImportRule;
 ```
 
 ## Parameters
@@ -16,7 +16,9 @@ static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
 |  --- | --- | --- |
 |  href | string |  |
 |  sheet | Sheet |  |
-|  condition | Option&lt;string&gt; | _(Optional)_ |
+|  mediaCondition | Option&lt;string&gt; | _(Optional)_ |
+|  supportCondition | Option&lt;string&gt; | _(Optional)_ |
+|  layer | Option&lt;string&gt; | _(Optional)_ |
 
 **Returns:**
 

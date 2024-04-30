@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.79.0
+
+### Minor Changes
+
+- **Changed:** R111 and R113 `Outcome` namespaces have been combined and renamed to `TargetSize` ([#1601](https://github.com/Siteimprove/alfa/pull/1601))
+
 ## 0.78.2
 
 ### Patch Changes
