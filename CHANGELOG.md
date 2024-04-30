@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.79.1](../../compare/v0.79.0...v0.79.1) (2024-04-30)
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0791): Correctly encapsulated sub-functions of `Native.fromNode`. ([#1606](https://github.com/Siteimprove/alfa/pull/1606))
+
 ## [0.79.0](../../compare/v0.78.2...v0.79.0) (2024-04-29)
 
 ### Breaking
