@@ -1,5 +1,11 @@
 # @siteimprove/alfa-dom
 
+## 0.79.1
+
+### Patch Changes
+
+- **Fixed:** Correctly encapsulated sub-functions of `Native.fromNode`. ([#1606](https://github.com/Siteimprove/alfa/pull/1606))
+
 ## 0.79.0
 
 ### Minor Changes

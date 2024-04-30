@@ -1,5 +1,7 @@
 # @siteimprove/alfa-collection
 
+## 0.79.1
+
 ## 0.79.0
 
 ## 0.78.2
