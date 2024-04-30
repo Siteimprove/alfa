@@ -428,113 +428,113 @@ export namespace Native {
 
       return result;
     }
-  }
 
-  async function mapAsync<T, U>(
-    arrayLike: ArrayLike<T>,
-    mapper: (value: T) => U | Promise<U>,
-  ): Promise<Array<U>> {
-    const result = new Array<U>(arrayLike.length);
+    async function mapAsync<T, U>(
+      arrayLike: ArrayLike<T>,
+      mapper: (value: T) => U | Promise<U>,
+    ): Promise<Array<U>> {
+      const result = new Array<U>(arrayLike.length);
 
-    for (let i = 0, n = arrayLike.length; i < n; i++) {
-      result[i] = await mapper(arrayLike[i]);
-    }
-
-    return result;
-  }
-
-  /**
-   * Ensure that the needed resources for the document or shadow root, such as
-   * style sheets, adhere to CORS policy.
-   */
-  async function ensureCrossOrigin(
-    documentOrShadowRoot: globalThis.Document | globalThis.ShadowRoot,
-  ): Promise<void> {
-    /**
-     * Ensure that all `<link>` elements specify the `crossorigin` attribute.
-     * Even `<link>` elements that reference same-origin resources will need
-     * this attribute as they may contain nested resource imports that risk
-     * violating CORS policy.
-     *
-     * Do keep in mind that this will only work for resources that also set
-     * appropriate CORS request headers.
-     */
-    for (const link of documentOrShadowRoot.querySelectorAll("link")) {
-      /**
-       * Skip `<link>` elements for which the `crossorigin` attribute is already
-       * set to a valid value.
-       */
-      if (link.crossOrigin !== null) {
-        continue;
+      for (let i = 0, n = arrayLike.length; i < n; i++) {
+        result[i] = await mapper(arrayLike[i]);
       }
 
-      /**
-       * Simply setting the `crossorigin` attribute for the `<link>` element
-       * will not work as it must be reevaluated. We therefore create a clone,
-       * set the `crossorigin` attribute, and replace the original `<link>`
-       * element.
-       */
-      const clone = link.cloneNode() as HTMLLinkElement;
+      return result;
+    }
 
+    /**
+     * Ensure that the needed resources for the document or shadow root, such as
+     * style sheets, adhere to CORS policy.
+     */
+    async function ensureCrossOrigin(
+      documentOrShadowRoot: globalThis.Document | globalThis.ShadowRoot,
+    ): Promise<void> {
       /**
-       * Set the `crossorigin` attribute to `anonymous`, ensuring that
-       * credentials are not sent as part of the cross-origin request. This is
-       * incredibly important as we don't want to risk leaking credentials!
-       */
-      clone.crossOrigin = "anonymous";
-
-      /**
-       * Replace the original `<link>` element with its clone. For style sheets,
-       * this will unfortunately cause a FOUC while the browser recomputes
-       * styles.
+       * Ensure that all `<link>` elements specify the `crossorigin` attribute.
+       * Even `<link>` elements that reference same-origin resources will need
+       * this attribute as they may contain nested resource imports that risk
+       * violating CORS policy.
        *
-       * {@link https://en.wikipedia.org/wiki/Flash_of_unstyled_content}
+       * Do keep in mind that this will only work for resources that also set
+       * appropriate CORS request headers.
        */
-      link.parentNode!.replaceChild(clone, link);
-
-      /**
-       * While certain resources will load synchronously from cache, others will
-       * not and we therefore need to await these.
-       */
-      if (shouldAwait(link)) {
+      for (const link of documentOrShadowRoot.querySelectorAll("link")) {
         /**
-         * Construct a promise that resolves once the `<link>` element either
-         * loads successfully or fails to load. If the `<link>` element fails to
-         * load, a request error will be logged to the console which should be
-         * enough indication that something didn't go quite as expected. Either
-         * way, we will deliver audit results even in the event of a missing
-         * resource.
+         * Skip `<link>` elements for which the `crossorigin` attribute is already
+         * set to a valid value.
          */
-        await new Promise<void>((resolve) =>
-          ["load", "error"].forEach((event) =>
-            clone.addEventListener(event, () => resolve()),
-          ),
-        );
-      }
-    }
+        if (link.crossOrigin !== null) {
+          continue;
+        }
 
-    /**
-     * Check if the given `<link>` element should be awaited.
-     */
-    function shouldAwait(link: HTMLLinkElement): boolean {
+        /**
+         * Simply setting the `crossorigin` attribute for the `<link>` element
+         * will not work as it must be reevaluated. We therefore create a clone,
+         * set the `crossorigin` attribute, and replace the original `<link>`
+         * element.
+         */
+        const clone = link.cloneNode() as HTMLLinkElement;
+
+        /**
+         * Set the `crossorigin` attribute to `anonymous`, ensuring that
+         * credentials are not sent as part of the cross-origin request. This is
+         * incredibly important as we don't want to risk leaking credentials!
+         */
+        clone.crossOrigin = "anonymous";
+
+        /**
+         * Replace the original `<link>` element with its clone. For style sheets,
+         * this will unfortunately cause a FOUC while the browser recomputes
+         * styles.
+         *
+         * {@link https://en.wikipedia.org/wiki/Flash_of_unstyled_content}
+         */
+        link.parentNode!.replaceChild(clone, link);
+
+        /**
+         * While certain resources will load synchronously from cache, others will
+         * not and we therefore need to await these.
+         */
+        if (shouldAwait(link)) {
+          /**
+           * Construct a promise that resolves once the `<link>` element either
+           * loads successfully or fails to load. If the `<link>` element fails to
+           * load, a request error will be logged to the console which should be
+           * enough indication that something didn't go quite as expected. Either
+           * way, we will deliver audit results even in the event of a missing
+           * resource.
+           */
+          await new Promise<void>((resolve) =>
+            ["load", "error"].forEach((event) =>
+              clone.addEventListener(event, () => resolve()),
+            ),
+          );
+        }
+      }
+
       /**
-       * A `<link>` element with an empty `href` will cause the fetch process to
-       * abort with no events to await.
+       * Check if the given `<link>` element should be awaited.
        */
-      if (link.getAttribute("href")?.trim() === "") {
+      function shouldAwait(link: HTMLLinkElement): boolean {
+        /**
+         * A `<link>` element with an empty `href` will cause the fetch process to
+         * abort with no events to await.
+         */
+        if (link.getAttribute("href")?.trim() === "") {
+          return false;
+        }
+
+        /**
+         * Style sheets should be awaited as these are loaded and applied
+         * asynchronously, often times causing additional resources to be loaded
+         * via `url()` references and `@import` rules.
+         */
+        if (link.rel === "stylesheet") {
+          return true;
+        }
+
         return false;
       }
-
-      /**
-       * Style sheets should be awaited as these are loaded and applied
-       * asynchronously, often times causing additional resources to be loaded
-       * via `url()` references and `@import` rules.
-       */
-      if (link.rel === "stylesheet") {
-        return true;
-      }
-
-      return false;
     }
   }
 
