@@ -546,7 +546,12 @@ const Features: Features = {
     li: html(
       (element) =>
         element
-          .parent()
+          // As of April 2024, Firefox seems to do the lookup in the DOM tree,
+          // but Chrome does in the flat tree. Strict interpretation of ARIA
+          // specs would rather side with FF, but the Chrome way does make sense…
+          // Sticking with Chrome interpretation so far.
+          // See https://github.com/w3c/aria/issues/2173
+          .parent(Node.fullTree)
           .some(and(Element.isElement, hasName("ol", "ul", "menu")))
           ? "listitem"
           : "generic",
@@ -680,6 +685,10 @@ const Features: Features = {
     td: html(
       (element) =>
         element
+          // Since `<slot>` are only allowed as phrasing content, i.e. not in the
+          // structural part of a table, and that the structural table elements
+          // do not allow `attachShadow`, we can restrict this lookup to the
+          // current tree.
           .ancestors()
           .filter(isElement)
           .find(hasName("table"))
@@ -748,6 +757,10 @@ const Features: Features = {
     th: html(
       (element) =>
         element
+          // Since `<slot>` are only allowed as phrasing content, i.e. not in the
+          // structural part of a table, and that the structural table elements
+          // do not allow `attachShadow`, we can restrict this lookup to the
+          // current tree.
           .ancestors()
           .filter(isElement)
           .find(hasName("table"))

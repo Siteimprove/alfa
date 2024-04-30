@@ -108,7 +108,7 @@ export abstract class Node<T extends string = string>
   public toJSON(): Node.JSON<T> {
     return {
       ...super.toJSON(),
-      node: this._node.path(),
+      node: this._node.path(dom.Node.fullTree),
     };
   }
 }
