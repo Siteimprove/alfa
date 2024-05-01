@@ -2,4 +2,4 @@
 "@siteimprove/alfa-dom": patch
 ---
 
-**Fixed:** `Native.fromMode` now correctly handles sheets without conditions.
+**Fixed:** `Native.fromNode` now correctly handles sheets without conditions.
