@@ -1,6 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { h } from "@siteimprove/alfa-dom";
 
 import { Node } from "../src";
 
@@ -168,4 +169,47 @@ test(`.from() maps \`<img>\` with no source to presentational role`, (t) => {
   for (const img of images) {
     t.deepEqual(Node.from(img, device).toJSON(), empty);
   }
+});
+
+test(`.from() correctly handles slotted list items`, (t) => {
+  const target = (
+    <div>
+      {h.shadow([
+        <ul>
+          <slot></slot>
+        </ul>,
+      ])}
+      <li>Hello</li>
+    </div>
+  );
+
+  t.deepEqual(
+    Node.from(target, device).children().first().getUnsafe().toJSON(),
+    {
+      type: "element",
+      node: "/div[1]/ul[1]",
+      role: "list",
+      name: null,
+      attributes: [],
+      children: [
+        {
+          type: "element",
+          node: "/div[1]/ul[1]/li[1]",
+          role: "listitem",
+          name: null,
+          attributes: [
+            { name: "aria-setsize", value: "1" },
+            { name: "aria-posinset", value: "1" },
+          ],
+          children: [
+            {
+              type: "text",
+              node: "/div[1]/ul[1]/li[1]/text()[1]",
+              name: "Hello",
+            },
+          ],
+        },
+      ],
+    },
+  );
 });
