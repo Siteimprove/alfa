@@ -1,5 +1,17 @@
 # @siteimprove/alfa-aria
 
+## 0.80.0
+
+### Minor Changes
+
+- **Changed:** `Node.toJSON` now serialises the corresponding DOM node as its path in the **flat tree**, not in the DOM tree. ([#1607](https://github.com/Siteimprove/alfa/pull/1607))
+
+### Patch Changes
+
+- **Changed:** Role computation for `<li>` elements now looks for a parent `<ul>` in the flat tree, not the DOM tree. ([#1607](https://github.com/Siteimprove/alfa/pull/1607))
+
+  Browsers seem to behave differently on that case, but allowing slotted `<li>` makes sense, so taking this interpretation for now.
+
 ## 0.79.1
 
 ## 0.79.0
