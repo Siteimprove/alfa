@@ -19,7 +19,9 @@
         "@changesets/read",
         "@manypkg/get-packages",
         "@svitejs/changesets-changelog-github-compact",
-        "resolve-from"
+        "madge",
+        "resolve-from",
+        "ts-graphviz"
       ]
     }
   },
