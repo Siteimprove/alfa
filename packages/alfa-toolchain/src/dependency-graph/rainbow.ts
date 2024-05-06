@@ -1,4 +1,4 @@
-import * as gv from "ts-graphviz";
+import type { Color } from "ts-graphviz";
 
 /**
  * @internal
@@ -14,7 +14,7 @@ export namespace Rainbow {
    * HSL colors instead) to ensure the contrast is at least 3:1 with white,
    * preferably 4.5:1.
    */
-  function rainbowStop(percentage: number): gv.Color.RGB_RGBA {
+  function rainbowStop(percentage: number): Color.RGB_RGBA {
     const f: (n: number, k?: number) => number = (
       n,
       k = (n + percentage * 12) % 12,
@@ -26,8 +26,8 @@ export namespace Rainbow {
   /**
    * Return a set of n colors evenly spaced along the rainbow spectrum.
    */
-  export function rainbow(n: number): Array<gv.Color.RGB_RGBA> {
-    let result: Array<gv.Color.RGB_RGBA> = [];
+  export function rainbow(n: number): Array<Color.RGB_RGBA> {
+    let result: Array<Color.RGB_RGBA> = [];
 
     for (let i = 0; i < n; i++) {
       result.push(rainbowStop(i / n));
@@ -36,7 +36,7 @@ export namespace Rainbow {
     return result;
   }
 
-  function rgb2hex(r: number, g: number, b: number): gv.Color.RGB_RGBA {
+  function rgb2hex(r: number, g: number, b: number): Color.RGB_RGBA {
     return ("#" +
       [r, g, b]
         .map((x) =>
@@ -44,6 +44,6 @@ export namespace Rainbow {
             .toString(16)
             .padStart(2, "0"),
         )
-        .join("")) as gv.Color.RGB_RGBA;
+        .join("")) as Color.RGB_RGBA;
   }
 }
