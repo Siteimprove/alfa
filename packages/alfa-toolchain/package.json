@@ -22,7 +22,8 @@
   "types": "src/index.d.ts",
   "bin": {
     "alfa-changelog": "src/changeset/changelog-global.js",
-    "validate-structure": "src/validation/validate-all.js"
+    "validate-structure": "src/validation/validate-all.js",
+    "generate-dependency-graphs": "src/dependency-graph/generate-graphs.js"
   },
   "files": [
     "src/**/*.js",

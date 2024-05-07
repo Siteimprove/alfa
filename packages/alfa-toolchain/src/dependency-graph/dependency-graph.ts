@@ -1,12 +1,14 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Map } from "@siteimprove/alfa-map";
-import { None, Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
 
+import type { Package } from "@manypkg/get-packages";
 import * as fs from "fs";
 import * as madge from "madge";
+import * as path from "path";
 import * as gv from "ts-graphviz";
 import * as adapter from "ts-graphviz/adapter";
+
 import { Rainbow } from "./rainbow";
 
 /**
@@ -47,15 +49,15 @@ import { Rainbow } from "./rainbow";
  * @public
  */
 export class DependencyGraph {
-  public static async of(
-    pkg: string,
+  public static of(
+    pkg: Package,
     fullDepTree: madge.MadgeInstance,
     noTypeDepTree: madge.MadgeInstance,
   ) {
     return new DependencyGraph(pkg, fullDepTree, noTypeDepTree);
   }
 
-  private readonly _pkg: string;
+  private readonly _pkg: Package;
 
   private readonly _full: madge.MadgeInstance;
   private readonly _noType: madge.MadgeInstance;
@@ -68,7 +70,7 @@ export class DependencyGraph {
   private readonly _clusters: Map<string, gv.Color>;
 
   private constructor(
-    pkg: string,
+    pkg: Package,
     fullDepTree: madge.MadgeInstance,
     noTypeDepTree: madge.MadgeInstance,
   ) {
@@ -311,10 +313,15 @@ export class DependencyGraph {
 
   public save() {
     const dot = gv.toDot(this._graph);
+    const docDir = path.join(this._pkg.dir, "docs");
 
-    fs.writeFileSync(`./test-${this._pkg}.dot`, dot, "utf8");
+    if (!fs.existsSync(docDir)) {
+      fs.mkdirSync(docDir, { recursive: true });
+    }
 
-    return adapter.toFile(dot, `./test-${this._pkg}.svg`, {
+    fs.writeFileSync(path.join(docDir, "dependency-graph.dot"), dot, "utf8");
+
+    return adapter.toFile(dot, path.join(docDir, "dependency-graph.svg"), {
       ...DependencyGraph.Options.graphviz,
       format: "svg",
     });
@@ -325,27 +332,25 @@ export class DependencyGraph {
  * @public
  */
 export namespace DependencyGraph {
-  export async function from(
-    dir: string,
-    prefix: string,
-    pkg: string,
-  ): Promise<DependencyGraph> {
-    // Exclude paths that contain the prefix, but not followed by the package name
-    // These are other packages in the same prefixed directory.
-    const notPkg = new RegExp(`${prefix}-(?!${pkg})`);
+  export async function from(pkg: Package): Promise<DependencyGraph> {
+    // Exclude files that are not inside the base directory.
+    // These are in other packages, which we don't care about here.
+    const notPkg = new RegExp(`^../`);
 
-    const fullDepTree = await madge(`${dir}/${prefix}-${pkg}/src`, {
+    const fullDepTree = await madge(`${pkg.dir}/src`, {
       fileExtensions: ["ts", "tsx"],
-      excludeRegExp: [/[.]d[.]ts/, new RegExp(`${prefix}-(?!${pkg})`)],
+      excludeRegExp: [/[.]d[.]ts/, notPkg],
+      baseDir: pkg.dir,
     });
 
-    const noTypeDepTree = await madge(`${dir}/${prefix}-${pkg}/src`, {
+    const noTypeDepTree = await madge(`${pkg.dir}/src`, {
       fileExtensions: ["ts", "tsx"],
-      excludeRegExp: [/[.]d[.]ts/, new RegExp(`${prefix}-(?!${pkg})`)],
+      excludeRegExp: [/[.]d[.]ts/, notPkg],
       detectiveOptions: { ts: { skipTypeImports: true } },
+      baseDir: pkg.dir,
     });
 
-    return DependencyGraph.of(`${prefix}-${pkg}`, fullDepTree, noTypeDepTree);
+    return DependencyGraph.of(pkg, fullDepTree, noTypeDepTree);
   }
 
   /**

@@ -10,7 +10,7 @@
     "src/changeset/changelog-global.ts",
     "src/changeset/changelog-individual.ts",
     "src/dependency-graph/dependency-graph.ts",
-    "src/dependency-graph/index.ts",
+    "src/dependency-graph/generate-graphs.ts",
     "src/dependency-graph/rainbow.ts",
     "src/changeset/get-changeset-details.ts",
     "src/changeset/helpers.ts",
