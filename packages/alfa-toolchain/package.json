@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@changesets/types": "^6.0.0",
-    "@siteimprove/alfa-test": "workspace:^0.80.0"
+    "@siteimprove/alfa-test": "workspace:^0.80.0",
+    "@types/madge": "^5.0.3"
   }
 }
