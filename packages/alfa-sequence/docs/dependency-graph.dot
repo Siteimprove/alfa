@@ -1,0 +1,163 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/nil.ts";
+  "src/sequence.ts";
+  "src/cons.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/cons.ts" [
+        label = "cons.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/nil.ts" [
+        label = "nil.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/sequence.ts" [
+        label = "sequence.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/cons.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/nil.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/sequence.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/cons.ts" -> "src/nil.ts" [
+    style = "invis";
+  ];
+  "src/cons.ts" -> "src/nil.ts" [
+    style = "solid";
+    ltail = "cluster_src/cons.ts";
+    lhead = "cluster_src/nil.ts";
+    color = "black";
+  ];
+  "src/cons.ts" -> "src/sequence.ts" [
+    style = "invis";
+  ];
+  "src/cons.ts" -> "src/sequence.ts" [
+    style = "solid";
+    ltail = "cluster_src/cons.ts";
+    lhead = "cluster_src/sequence.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/cons.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/cons.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/cons.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/nil.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/nil.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/nil.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/sequence.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/sequence.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/sequence.ts";
+    color = "black";
+  ];
+  "src/nil.ts" -> "src/cons.ts" [
+    style = "invis";
+  ];
+  "src/nil.ts" -> "src/cons.ts" [
+    style = "solid";
+    ltail = "cluster_src/nil.ts";
+    lhead = "cluster_src/cons.ts";
+    color = "black";
+  ];
+  "src/nil.ts" -> "src/sequence.ts" [
+    style = "invis";
+  ];
+  "src/nil.ts" -> "src/sequence.ts" [
+    style = "solid";
+    ltail = "cluster_src/nil.ts";
+    lhead = "cluster_src/sequence.ts";
+    color = "black";
+  ];
+  "src/sequence.ts" -> "src/cons.ts" [
+    style = "invis";
+  ];
+  "src/sequence.ts" -> "src/cons.ts" [
+    style = "solid";
+    ltail = "cluster_src/sequence.ts";
+    lhead = "cluster_src/cons.ts";
+    color = "black";
+  ];
+  "src/sequence.ts" -> "src/nil.ts" [
+    style = "invis";
+  ];
+  "src/sequence.ts" -> "src/nil.ts" [
+    style = "solid";
+    ltail = "cluster_src/sequence.ts";
+    lhead = "cluster_src/nil.ts";
+    color = "black";
+  ];
+}

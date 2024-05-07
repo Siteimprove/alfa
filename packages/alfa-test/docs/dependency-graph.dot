@@ -1,0 +1,177 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/stack.ts";
+  "src/format.ts";
+  "src/rng.ts";
+  "src/test.ts";
+  "src/types.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/format.ts" [
+        label = "format.ts";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/rng.ts" [
+        label = "rng.ts";
+      ];
+      "src/stack.ts" [
+        label = "stack.ts";
+      ];
+      "src/test.ts" [
+        label = "test.ts";
+      ];
+      "src/types.ts" [
+        label = "types.ts";
+      ];
+      "src/format.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/rng.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/stack.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/test.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/types.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/format.ts" -> "src/stack.ts" [
+    style = "invis";
+  ];
+  "src/format.ts" -> "src/stack.ts" [
+    style = "solid";
+    ltail = "cluster_src/format.ts";
+    lhead = "cluster_src/stack.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/format.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/format.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/format.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/rng.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/rng.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/rng.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/stack.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/stack.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/stack.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/test.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/test.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/test.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/types.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/types.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/types.ts";
+    color = "black";
+  ];
+  "src/test.ts" -> "src/format.ts" [
+    style = "invis";
+  ];
+  "src/test.ts" -> "src/format.ts" [
+    style = "solid";
+    ltail = "cluster_src/test.ts";
+    lhead = "cluster_src/format.ts";
+    color = "black";
+  ];
+  "src/test.ts" -> "src/rng.ts" [
+    style = "invis";
+  ];
+  "src/test.ts" -> "src/rng.ts" [
+    style = "solid";
+    ltail = "cluster_src/test.ts";
+    lhead = "cluster_src/rng.ts";
+    color = "black";
+  ];
+  "src/test.ts" -> "src/types.ts" [
+    style = "invis";
+  ];
+  "src/test.ts" -> "src/types.ts" [
+    style = "solid";
+    ltail = "cluster_src/test.ts";
+    lhead = "cluster_src/types.ts";
+    color = "black";
+  ];
+}

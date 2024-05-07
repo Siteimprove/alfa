@@ -1,0 +1,121 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/matrix.ts";
+  "src/real.ts";
+  "src/vector.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/matrix.ts" [
+        label = "matrix.ts";
+      ];
+      "src/real.ts" [
+        label = "real.ts";
+      ];
+      "src/vector.ts" [
+        label = "vector.ts";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/matrix.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/real.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/vector.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/matrix.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/matrix.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/matrix.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/real.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/real.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/real.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/vector.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/vector.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/vector.ts";
+    color = "black";
+  ];
+  "src/matrix.ts" -> "src/real.ts" [
+    style = "invis";
+  ];
+  "src/matrix.ts" -> "src/real.ts" [
+    style = "solid";
+    ltail = "cluster_src/matrix.ts";
+    lhead = "cluster_src/real.ts";
+    color = "black";
+  ];
+  "src/vector.ts" -> "src/real.ts" [
+    style = "invis";
+  ];
+  "src/vector.ts" -> "src/real.ts" [
+    style = "solid";
+    ltail = "cluster_src/vector.ts";
+    lhead = "cluster_src/real.ts";
+    color = "black";
+  ];
+}

@@ -1,0 +1,2794 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/context.ts";
+  "src/selector/index.ts";
+  "name_src/selector";
+  "src/specificity.ts";
+  "exit_src/selector";
+  "src/selector/combinator.ts";
+  "src/selector/compound.ts";
+  "src/selector/selector.ts";
+  "src/selector/simple/index.ts";
+  "name_src/selector/simple";
+  "src/selector/simple/pseudo-class/host-context.ts";
+  "src/selector/simple/pseudo-class/host.ts";
+  "src/selector/simple/pseudo-element/slotted.ts";
+  "src/selector/complex.ts";
+  "src/selector/list.ts";
+  "src/selector/relative.ts";
+  "exit_src/selector/simple";
+  "src/selector/simple/parser.ts";
+  "src/selector/simple/attribute.ts";
+  "src/selector/simple/class.ts";
+  "src/selector/simple/id.ts";
+  "src/selector/simple/pseudo-class/index.ts";
+  "name_src/selector/simple/pseudo-class";
+  "src/selector/simple/pseudo-element/index.ts";
+  "name_src/selector/simple/pseudo-element";
+  "src/selector/simple/type.ts";
+  "src/selector/simple/universal.ts";
+  "src/selector/simple/pseudo-class/pseudo-class.ts";
+  "src/selector/simple/pseudo-class/active.ts";
+  "src/selector/simple/pseudo-class/disabled.ts";
+  "src/selector/simple/pseudo-class/empty.ts";
+  "src/selector/simple/pseudo-class/enabled.ts";
+  "src/selector/simple/pseudo-class/first-child.ts";
+  "src/selector/simple/pseudo-class/first-of-type.ts";
+  "src/selector/simple/pseudo-class/focus-visible.ts";
+  "src/selector/simple/pseudo-class/focus-within.ts";
+  "src/selector/simple/pseudo-class/focus.ts";
+  "src/selector/simple/pseudo-class/has.ts";
+  "src/selector/simple/pseudo-class/hover.ts";
+  "src/selector/simple/pseudo-class/is.ts";
+  "src/selector/simple/pseudo-class/last-child.ts";
+  "src/selector/simple/pseudo-class/last-of-type.ts";
+  "src/selector/simple/pseudo-class/link.ts";
+  "src/selector/simple/pseudo-class/not.ts";
+  "src/selector/simple/pseudo-class/nth-child.ts";
+  "src/selector/simple/pseudo-class/nth-last-child.ts";
+  "src/selector/simple/pseudo-class/nth-last-of-type.ts";
+  "src/selector/simple/pseudo-class/nth-of-type.ts";
+  "src/selector/simple/pseudo-class/only-child.ts";
+  "src/selector/simple/pseudo-class/only-of-type.ts";
+  "src/selector/simple/pseudo-class/root.ts";
+  "src/selector/simple/pseudo-class/visited.ts";
+  "src/selector/simple/pseudo-class/where.ts";
+  "src/selector/simple/pseudo-element/pseudo-element.ts";
+  "src/selector/simple/pseudo-element/after.ts";
+  "src/selector/simple/pseudo-element/backdrop.ts";
+  "src/selector/simple/pseudo-element/before.ts";
+  "src/selector/simple/pseudo-element/cue-region.ts";
+  "src/selector/simple/pseudo-element/cue.ts";
+  "src/selector/simple/pseudo-element/file-selector-button.ts";
+  "src/selector/simple/pseudo-element/first-letter.ts";
+  "src/selector/simple/pseudo-element/first-line.ts";
+  "src/selector/simple/pseudo-element/grammar-error.ts";
+  "src/selector/simple/pseudo-element/marker.ts";
+  "src/selector/simple/pseudo-element/part.ts";
+  "src/selector/simple/pseudo-element/placeholder.ts";
+  "src/selector/simple/pseudo-element/selection.ts";
+  "src/selector/simple/pseudo-element/spelling-error.ts";
+  "src/selector/simple/pseudo-element/target-text.ts";
+  "exit_src/selector/simple/pseudo-element";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ccff00";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ccff00";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/context.ts" [
+        label = "context.ts";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ccff00";
+        penwidth = 5;
+      ];
+      "src/specificity.ts" [
+        label = "specificity.ts";
+      ];
+      subgraph "cluster_src/selector" {
+        color = "#000000";
+        label = "";
+        "name_src/selector" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#cc00ff";
+          label = "selector";
+        ];
+        "exit_src/selector" [
+          style = "invis";
+        ];
+        "src/selector/combinator.ts" [
+          label = "combinator.ts";
+        ];
+        "src/selector/complex.ts" [
+          label = "complex.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/selector/compound.ts" [
+          label = "compound.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/selector/index.ts" [
+          label = "index.ts";
+          color = "#cc00ff";
+          penwidth = 5;
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/selector/list.ts" [
+          label = "list.ts";
+        ];
+        "src/selector/relative.ts" [
+          label = "relative.ts";
+        ];
+        "src/selector/selector.ts" [
+          label = "selector.ts";
+        ];
+        subgraph "cluster_src/selector/simple" {
+          color = "#000000";
+          label = "";
+          "name_src/selector/simple" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ff0000";
+            label = "simple";
+          ];
+          "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "src/selector/simple/attribute.ts" [
+            label = "attribute.ts";
+          ];
+          "src/selector/simple/class.ts" [
+            label = "class.ts";
+          ];
+          "src/selector/simple/id.ts" [
+            label = "id.ts";
+          ];
+          "src/selector/simple/index.ts" [
+            label = "index.ts";
+            color = "#ff0000";
+            penwidth = 5;
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/selector/simple/parser.ts" [
+            label = "parser.ts";
+          ];
+          "src/selector/simple/type.ts" [
+            label = "type.ts";
+          ];
+          "src/selector/simple/universal.ts" [
+            label = "universal.ts";
+          ];
+          subgraph "cluster_src/selector/simple/pseudo-class" {
+            color = "#000000";
+            label = "";
+            "name_src/selector/simple/pseudo-class" [
+              penwidth = 5;
+              shape = "rectangle";
+              color = "#0066ff";
+              label = "pseudo-class";
+            ];
+            "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/active.ts" [
+              label = "active.ts";
+            ];
+            "src/selector/simple/pseudo-class/disabled.ts" [
+              label = "disabled.ts";
+            ];
+            "src/selector/simple/pseudo-class/empty.ts" [
+              label = "empty.ts";
+            ];
+            "src/selector/simple/pseudo-class/enabled.ts" [
+              label = "enabled.ts";
+            ];
+            "src/selector/simple/pseudo-class/first-child.ts" [
+              label = "first-child.ts";
+            ];
+            "src/selector/simple/pseudo-class/first-of-type.ts" [
+              label = "first-of-type.ts";
+            ];
+            "src/selector/simple/pseudo-class/focus-visible.ts" [
+              label = "focus-visible.ts";
+            ];
+            "src/selector/simple/pseudo-class/focus-within.ts" [
+              label = "focus-within.ts";
+            ];
+            "src/selector/simple/pseudo-class/focus.ts" [
+              label = "focus.ts";
+            ];
+            "src/selector/simple/pseudo-class/has.ts" [
+              label = "has.ts";
+            ];
+            "src/selector/simple/pseudo-class/host-context.ts" [
+              label = "host-context.ts";
+            ];
+            "src/selector/simple/pseudo-class/host.ts" [
+              label = "host.ts";
+            ];
+            "src/selector/simple/pseudo-class/hover.ts" [
+              label = "hover.ts";
+            ];
+            "src/selector/simple/pseudo-class/index.ts" [
+              label = "index.ts";
+              color = "#0066ff";
+              penwidth = 5;
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/selector/simple/pseudo-class/is.ts" [
+              label = "is.ts";
+            ];
+            "src/selector/simple/pseudo-class/last-child.ts" [
+              label = "last-child.ts";
+            ];
+            "src/selector/simple/pseudo-class/last-of-type.ts" [
+              label = "last-of-type.ts";
+            ];
+            "src/selector/simple/pseudo-class/link.ts" [
+              label = "link.ts";
+            ];
+            "src/selector/simple/pseudo-class/not.ts" [
+              label = "not.ts";
+            ];
+            "src/selector/simple/pseudo-class/nth-child.ts" [
+              label = "nth-child.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/selector/simple/pseudo-class/nth-last-child.ts" [
+              label = "nth-last-child.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/selector/simple/pseudo-class/nth-last-of-type.ts" [
+              label = "nth-last-of-type.ts";
+            ];
+            "src/selector/simple/pseudo-class/nth-of-type.ts" [
+              label = "nth-of-type.ts";
+            ];
+            "src/selector/simple/pseudo-class/only-child.ts" [
+              label = "only-child.ts";
+            ];
+            "src/selector/simple/pseudo-class/only-of-type.ts" [
+              label = "only-of-type.ts";
+            ];
+            "src/selector/simple/pseudo-class/pseudo-class.ts" [
+              label = "pseudo-class.ts";
+            ];
+            "src/selector/simple/pseudo-class/root.ts" [
+              label = "root.ts";
+            ];
+            "src/selector/simple/pseudo-class/visited.ts" [
+              label = "visited.ts";
+            ];
+            "src/selector/simple/pseudo-class/where.ts" [
+              label = "where.ts";
+            ];
+            "src/selector/simple/pseudo-class/active.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/disabled.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/empty.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/enabled.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/first-child.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/first-of-type.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/focus-visible.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/focus-within.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/focus.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/has.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/host-context.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/host.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/hover.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/index.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/is.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/last-child.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/last-of-type.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/link.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/not.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/nth-child.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/nth-last-child.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/nth-last-of-type.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/nth-of-type.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/only-child.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/only-of-type.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/pseudo-class.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/root.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/visited.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/where.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+          }
+          subgraph "cluster_src/selector/simple/pseudo-element" {
+            color = "#000000";
+            label = "";
+            "name_src/selector/simple/pseudo-element" [
+              penwidth = 5;
+              shape = "rectangle";
+              color = "#00ff66";
+              label = "pseudo-element";
+            ];
+            "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/after.ts" [
+              label = "after.ts";
+            ];
+            "src/selector/simple/pseudo-element/backdrop.ts" [
+              label = "backdrop.ts";
+            ];
+            "src/selector/simple/pseudo-element/before.ts" [
+              label = "before.ts";
+            ];
+            "src/selector/simple/pseudo-element/cue-region.ts" [
+              label = "cue-region.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/selector/simple/pseudo-element/cue.ts" [
+              label = "cue.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/selector/simple/pseudo-element/file-selector-button.ts" [
+              label = "file-selector-button.ts";
+            ];
+            "src/selector/simple/pseudo-element/first-letter.ts" [
+              label = "first-letter.ts";
+            ];
+            "src/selector/simple/pseudo-element/first-line.ts" [
+              label = "first-line.ts";
+            ];
+            "src/selector/simple/pseudo-element/grammar-error.ts" [
+              label = "grammar-error.ts";
+            ];
+            "src/selector/simple/pseudo-element/index.ts" [
+              label = "index.ts";
+              color = "#00ff66";
+              penwidth = 5;
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/selector/simple/pseudo-element/marker.ts" [
+              label = "marker.ts";
+            ];
+            "src/selector/simple/pseudo-element/part.ts" [
+              label = "part.ts";
+            ];
+            "src/selector/simple/pseudo-element/placeholder.ts" [
+              label = "placeholder.ts";
+            ];
+            "src/selector/simple/pseudo-element/pseudo-element.ts" [
+              label = "pseudo-element.ts";
+            ];
+            "src/selector/simple/pseudo-element/selection.ts" [
+              label = "selection.ts";
+            ];
+            "src/selector/simple/pseudo-element/slotted.ts" [
+              label = "slotted.ts";
+            ];
+            "src/selector/simple/pseudo-element/spelling-error.ts" [
+              label = "spelling-error.ts";
+            ];
+            "src/selector/simple/pseudo-element/target-text.ts" [
+              label = "target-text.ts";
+            ];
+            "src/selector/simple/pseudo-element/after.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/backdrop.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/before.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/cue-region.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/cue.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/file-selector-button.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/first-letter.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/first-line.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/grammar-error.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/index.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/marker.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/part.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/placeholder.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/pseudo-element.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/selection.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/slotted.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/spelling-error.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-element/target-text.ts" -> "exit_src/selector/simple/pseudo-element" [
+              style = "invis";
+            ];
+          }
+          "src/selector/simple/attribute.ts" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "src/selector/simple/class.ts" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "src/selector/simple/id.ts" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "src/selector/simple/index.ts" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "src/selector/simple/parser.ts" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-element" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "src/selector/simple/type.ts" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "src/selector/simple/universal.ts" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+        }
+        "src/selector/combinator.ts" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "src/selector/complex.ts" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "src/selector/compound.ts" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "src/selector/index.ts" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "src/selector/list.ts" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "src/selector/relative.ts" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "src/selector/selector.ts" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
+      }
+      "src/context.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/specificity.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/context.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/context.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/selector" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/selector";
+    color = "#ccff00";
+  ];
+  "src/index.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/specificity.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/specificity.ts";
+    color = "black";
+  ];
+  "src/selector/complex.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector";
+    lhead = "cluster_src/context.ts";
+    color = "#cc00ff";
+  ];
+  "src/selector/complex.ts" -> "src/selector/combinator.ts" [
+    style = "invis";
+  ];
+  "src/selector/complex.ts" -> "src/selector/combinator.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/complex.ts";
+    lhead = "cluster_src/selector/combinator.ts";
+    color = "black";
+  ];
+  "src/selector/complex.ts" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "src/selector/complex.ts" -> "src/selector/compound.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/complex.ts";
+    lhead = "cluster_src/selector/compound.ts";
+    color = "black";
+  ];
+  "src/selector/complex.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/complex.ts" -> "src/selector/index.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/complex.ts";
+    lhead = "cluster_src/selector/index.ts";
+    color = "black";
+  ];
+  "src/selector/complex.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/complex.ts" -> "src/selector/selector.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/complex.ts";
+    lhead = "cluster_src/selector/selector.ts";
+    color = "black";
+  ];
+  "src/selector/complex.ts" -> "name_src/selector/simple" [
+    style = "dotted";
+    ltail = "cluster_src/selector/complex.ts";
+    lhead = "cluster_src/selector/simple";
+    color = "#cc00ff";
+  ];
+  "src/selector/complex.ts" -> "name_src/selector/simple" [
+    style = "invis";
+  ];
+  "src/selector/complex.ts" -> "name_src/selector/simple" [
+    style = "invis";
+  ];
+  "src/selector/complex.ts" -> "name_src/selector/simple" [
+    style = "invis";
+  ];
+  "src/selector/complex.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector";
+    lhead = "cluster_src/specificity.ts";
+    color = "#cc00ff";
+  ];
+  "src/selector/compound.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/compound.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/compound.ts" -> "src/selector/index.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/compound.ts";
+    lhead = "cluster_src/selector/index.ts";
+    color = "black";
+  ];
+  "src/selector/compound.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/compound.ts" -> "src/selector/selector.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/compound.ts";
+    lhead = "cluster_src/selector/selector.ts";
+    color = "black";
+  ];
+  "src/selector/compound.ts" -> "name_src/selector/simple" [
+    style = "solid";
+    ltail = "cluster_src/selector/compound.ts";
+    lhead = "cluster_src/selector/simple";
+    color = "#cc00ff";
+  ];
+  "src/selector/compound.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "src/selector/combinator.ts" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "src/selector/combinator.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/index.ts";
+    lhead = "cluster_src/selector/combinator.ts";
+    color = "black";
+  ];
+  "src/selector/index.ts" -> "src/selector/complex.ts" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "src/selector/complex.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/index.ts";
+    lhead = "cluster_src/selector/complex.ts";
+    color = "black";
+  ];
+  "src/selector/index.ts" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "src/selector/compound.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/index.ts";
+    lhead = "cluster_src/selector/compound.ts";
+    color = "black";
+  ];
+  "src/selector/index.ts" -> "src/selector/list.ts" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "src/selector/list.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/index.ts";
+    lhead = "cluster_src/selector/list.ts";
+    color = "black";
+  ];
+  "src/selector/index.ts" -> "src/selector/relative.ts" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "src/selector/relative.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/index.ts";
+    lhead = "cluster_src/selector/relative.ts";
+    color = "black";
+  ];
+  "src/selector/index.ts" -> "name_src/selector/simple" [
+    style = "solid";
+    ltail = "cluster_src/selector/index.ts";
+    lhead = "cluster_src/selector/simple";
+    color = "#cc00ff";
+  ];
+  "src/selector/index.ts" -> "name_src/selector/simple" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "name_src/selector/simple" [
+    style = "invis";
+  ];
+  "src/selector/index.ts" -> "name_src/selector/simple" [
+    style = "invis";
+  ];
+  "src/selector/list.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/list.ts" -> "src/selector/complex.ts" [
+    style = "invis";
+  ];
+  "src/selector/list.ts" -> "src/selector/complex.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/list.ts";
+    lhead = "cluster_src/selector/complex.ts";
+    color = "black";
+  ];
+  "src/selector/list.ts" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "src/selector/list.ts" -> "src/selector/compound.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/list.ts";
+    lhead = "cluster_src/selector/compound.ts";
+    color = "black";
+  ];
+  "src/selector/list.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/list.ts" -> "src/selector/index.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/list.ts";
+    lhead = "cluster_src/selector/index.ts";
+    color = "black";
+  ];
+  "src/selector/list.ts" -> "src/selector/relative.ts" [
+    style = "invis";
+  ];
+  "src/selector/list.ts" -> "src/selector/relative.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/list.ts";
+    lhead = "cluster_src/selector/relative.ts";
+    color = "black";
+  ];
+  "src/selector/list.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/list.ts" -> "src/selector/selector.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/list.ts";
+    lhead = "cluster_src/selector/selector.ts";
+    color = "black";
+  ];
+  "src/selector/list.ts" -> "name_src/selector/simple" [
+    style = "dotted";
+    ltail = "cluster_src/selector/list.ts";
+    lhead = "cluster_src/selector/simple";
+    color = "#cc00ff";
+  ];
+  "src/selector/list.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/relative.ts" -> "src/selector/combinator.ts" [
+    style = "invis";
+  ];
+  "src/selector/relative.ts" -> "src/selector/combinator.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/relative.ts";
+    lhead = "cluster_src/selector/combinator.ts";
+    color = "black";
+  ];
+  "src/selector/relative.ts" -> "src/selector/complex.ts" [
+    style = "invis";
+  ];
+  "src/selector/relative.ts" -> "src/selector/complex.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/relative.ts";
+    lhead = "cluster_src/selector/complex.ts";
+    color = "black";
+  ];
+  "src/selector/relative.ts" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "src/selector/relative.ts" -> "src/selector/compound.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/relative.ts";
+    lhead = "cluster_src/selector/compound.ts";
+    color = "black";
+  ];
+  "src/selector/relative.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/relative.ts" -> "src/selector/selector.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/relative.ts";
+    lhead = "cluster_src/selector/selector.ts";
+    color = "black";
+  ];
+  "src/selector/relative.ts" -> "name_src/selector/simple" [
+    style = "dotted";
+    ltail = "cluster_src/selector/relative.ts";
+    lhead = "cluster_src/selector/simple";
+    color = "#cc00ff";
+  ];
+  "src/selector/selector.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/selector.ts" -> "src/selector/complex.ts" [
+    style = "invis";
+  ];
+  "src/selector/selector.ts" -> "src/selector/complex.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/selector.ts";
+    lhead = "cluster_src/selector/complex.ts";
+    color = "black";
+  ];
+  "src/selector/selector.ts" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "src/selector/selector.ts" -> "src/selector/compound.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/selector.ts";
+    lhead = "cluster_src/selector/compound.ts";
+    color = "black";
+  ];
+  "src/selector/selector.ts" -> "src/selector/relative.ts" [
+    style = "invis";
+  ];
+  "src/selector/selector.ts" -> "src/selector/relative.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/selector.ts";
+    lhead = "cluster_src/selector/relative.ts";
+    color = "black";
+  ];
+  "src/selector/selector.ts" -> "name_src/selector/simple" [
+    style = "dotted";
+    ltail = "cluster_src/selector/selector.ts";
+    lhead = "cluster_src/selector/simple";
+    color = "#cc00ff";
+  ];
+  "src/selector/selector.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/attribute.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/selector.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple";
+    lhead = "cluster_src/selector/selector.ts";
+    color = "#ff0000";
+  ];
+  "src/selector/simple/attribute.ts" -> "src/selector/simple/parser.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/attribute.ts" -> "src/selector/simple/parser.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/attribute.ts";
+    lhead = "cluster_src/selector/simple/parser.ts";
+    color = "black";
+  ];
+  "src/selector/simple/attribute.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/class.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/class.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/id.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/id.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/simple";
+    lhead = "cluster_src/selector/index.ts";
+    color = "#ff0000";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/attribute.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/attribute.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/index.ts";
+    lhead = "cluster_src/selector/simple/attribute.ts";
+    color = "black";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/index.ts";
+    lhead = "cluster_src/selector/simple/class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/id.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/id.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/index.ts";
+    lhead = "cluster_src/selector/simple/id.ts";
+    color = "black";
+  ];
+  "src/selector/simple/index.ts" -> "name_src/selector/simple/pseudo-class" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class";
+    color = "#ff0000";
+  ];
+  "src/selector/simple/index.ts" -> "name_src/selector/simple/pseudo-element" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element";
+    color = "#ff0000";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/type.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/type.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/index.ts";
+    lhead = "cluster_src/selector/simple/type.ts";
+    color = "black";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/universal.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/index.ts" -> "src/selector/simple/universal.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/index.ts";
+    lhead = "cluster_src/selector/simple/universal.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/active.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/active.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/active.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/active.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/disabled.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/disabled.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/disabled.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/disabled.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/empty.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/empty.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/empty.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/enabled.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/enabled.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/enabled.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/enabled.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/first-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/first-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/first-child.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/first-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/first-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/first-of-type.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/focus-visible.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/focus-visible.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/focus-visible.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/focus-visible.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/focus-within.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/focus-within.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/focus-within.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/focus-within.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/focus.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/focus.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/focus.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/focus.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/has.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/has.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/has.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/has.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/host-context.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/host-context.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/host-context.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/host-context.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/host-context.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/host-context.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/host.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/host.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/host.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/host.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/host.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/host.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/hover.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/hover.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/hover.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/hover.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/compound.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple";
+    lhead = "cluster_src/selector/compound.ts";
+    color = "#ff0000";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/active.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/active.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/active.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/disabled.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/disabled.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/disabled.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/empty.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/empty.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/empty.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/enabled.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/enabled.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/enabled.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/first-child.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/first-child.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/first-child.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/first-of-type.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/first-of-type.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/first-of-type.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/focus-visible.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/focus-visible.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/focus-visible.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/focus-within.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/focus-within.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/focus-within.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/focus.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/focus.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/focus.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/has.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/has.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/has.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/host-context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/host-context.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/host-context.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/host.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/host.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/host.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/hover.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/hover.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/hover.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/is.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/is.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/is.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/last-child.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/last-child.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/last-child.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/last-of-type.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/last-of-type.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/last-of-type.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/link.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/link.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/link.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/not.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/not.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/not.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/nth-child.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/nth-child.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/nth-child.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/nth-last-child.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/nth-last-child.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/nth-last-child.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/nth-last-of-type.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/nth-last-of-type.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/nth-last-of-type.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/nth-of-type.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/nth-of-type.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/nth-of-type.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/only-child.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/only-child.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/only-child.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/only-of-type.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/only-of-type.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/only-of-type.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/root.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/root.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/root.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/visited.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/visited.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/visited.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/where.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/where.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/where.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/is.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/is.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/is.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/is.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/is.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/last-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/last-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/last-child.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/last-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/last-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/last-of-type.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/link.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/link.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/link.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/link.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/not.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/not.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/not.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/not.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/not.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/nth-child.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/nth-child.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/nth-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/nth-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/nth-child.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/nth-last-child.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/nth-last-child.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/nth-last-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/nth-last-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/nth-last-child.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/nth-last-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/nth-last-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/nth-last-of-type.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/nth-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/nth-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/nth-of-type.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/only-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/only-child.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/only-child.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/only-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/only-of-type.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/only-of-type.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/pseudo-class.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/pseudo-class.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/pseudo-class.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/root.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/root.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/root.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/visited.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/visited.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/visited.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/visited.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/where.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/where.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/where.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/where.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/where.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/where.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/after.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/after.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/after.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/backdrop.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/backdrop.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/backdrop.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/before.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/before.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/before.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/cue-region.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/cue-region.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/cue-region.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/cue-region.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/cue.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/cue.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/cue.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/cue.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/file-selector-button.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/file-selector-button.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/file-selector-button.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/first-letter.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/first-letter.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/first-letter.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/first-line.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/first-line.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/first-line.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/grammar-error.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/grammar-error.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/grammar-error.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/after.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/after.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/after.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/backdrop.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/backdrop.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/backdrop.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/before.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/before.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/before.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/cue-region.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/cue-region.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/cue-region.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/cue.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/cue.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/cue.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/file-selector-button.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/file-selector-button.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/file-selector-button.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/first-letter.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/first-letter.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/first-letter.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/first-line.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/first-line.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/first-line.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/grammar-error.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/grammar-error.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/grammar-error.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/marker.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/marker.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/marker.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/part.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/part.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/part.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/placeholder.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/placeholder.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/placeholder.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/selection.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/selection.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/selection.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/slotted.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/slotted.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/slotted.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/spelling-error.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/spelling-error.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/spelling-error.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/target-text.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/index.ts" -> "src/selector/simple/pseudo-element/target-text.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/target-text.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/marker.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/marker.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/marker.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/part.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/part.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/part.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/placeholder.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/placeholder.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/placeholder.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/pseudo-element.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/pseudo-element.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/selection.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/selection.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/selection.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/slotted.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/slotted.ts" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/slotted.ts" -> "src/selector/simple/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple/pseudo-element" -> "src/selector/simple/index.ts" [
+    style = "dotted";
+    ltail = "cluster_src/selector/simple/pseudo-element";
+    lhead = "cluster_src/selector/simple/index.ts";
+    color = "#00ff66";
+  ];
+  "src/selector/simple/pseudo-element/slotted.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/slotted.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/slotted.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/slotted.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/spelling-error.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/spelling-error.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/spelling-error.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-element/target-text.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-element/target-text.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-element/target-text.ts";
+    lhead = "cluster_src/selector/simple/pseudo-element/pseudo-element.ts";
+    color = "black";
+  ];
+  "src/selector/simple/type.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/type.ts" -> "src/selector/simple/parser.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/type.ts" -> "src/selector/simple/parser.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/type.ts";
+    lhead = "cluster_src/selector/simple/parser.ts";
+    color = "black";
+  ];
+  "src/selector/simple/type.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/universal.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/simple" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/universal.ts" -> "src/selector/simple/parser.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/universal.ts" -> "src/selector/simple/parser.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/universal.ts";
+    lhead = "cluster_src/selector/simple/parser.ts";
+    color = "black";
+  ];
+  "src/selector/simple/universal.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+}

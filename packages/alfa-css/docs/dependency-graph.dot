@@ -1,0 +1,4876 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/index.ts";
+  "name_src/calculation/math-expression";
+  "src/calculation/math-expression/kind.ts";
+  "src/calculation/numeric/index.ts";
+  "exit_src/calculation/math-expression";
+  "name_src/calculation/numeric";
+  "src/unit/index.ts";
+  "exit_src/calculation";
+  "name_src/unit";
+  "src/calculation/math-expression/expression.ts";
+  "src/calculation/math-expression/value.ts";
+  "src/calculation/math-expression/math.ts";
+  "src/calculation/math-expression/function.ts";
+  "src/calculation/math-expression/operation.ts";
+  "src/syntax/index.ts";
+  "name_src/syntax";
+  "src/calculation/numeric/dimension.ts";
+  "src/calculation/numeric/numeric.ts";
+  "src/calculation/numeric/angle.ts";
+  "src/calculation/numeric/integer.ts";
+  "src/calculation/numeric/length.ts";
+  "src/calculation/numeric/number.ts";
+  "src/calculation/numeric/percentage.ts";
+  "src/calculation/index.ts";
+  "name_src/calculation";
+  "src/value/index.ts";
+  "name_src/value";
+  "src/syntax/component.ts";
+  "src/syntax/parser.ts";
+  "src/syntax/token.ts";
+  "src/syntax/block.ts";
+  "src/syntax/function.ts";
+  "src/syntax/comma.ts";
+  "src/syntax/declaration.ts";
+  "src/syntax/lexer.ts";
+  "src/syntax/nth.ts";
+  "src/unit/unit.ts";
+  "src/unit/converter.ts";
+  "exit_src/value";
+  "src/value/keyword.ts";
+  "src/value/collection/list.ts";
+  "src/value/collection/tuple.ts";
+  "src/value/resolvable.ts";
+  "exit_src/value/collection";
+  "src/value/value.ts";
+  "src/value/color/current.ts";
+  "src/value/color/hex.ts";
+  "src/value/color/hsl.ts";
+  "src/value/color/named.ts";
+  "src/value/color/rgb.ts";
+  "src/value/color/system.ts";
+  "exit_src/value/color";
+  "src/value/numeric/index.ts";
+  "name_src/value/numeric";
+  "src/value/color/format.ts";
+  "src/value/color/color.ts";
+  "src/value/image/gradient/item/index.ts";
+  "name_src/value/image/gradient/item";
+  "src/value/image/gradient/linear/index.ts";
+  "name_src/value/image/gradient/linear";
+  "src/value/image/gradient/radial/index.ts";
+  "name_src/value/image/gradient/radial";
+  "src/value/image/gradient/gradient.ts";
+  "exit_src/value/image";
+  "src/value/image/gradient/item/item.ts";
+  "src/value/image/gradient/item/hint.ts";
+  "src/value/image/gradient/item/stop.ts";
+  "src/value/color/index.ts";
+  "name_src/value/color";
+  "src/value/image/gradient/linear/position.ts";
+  "src/value/image/gradient/linear/corner.ts";
+  "src/value/image/gradient/linear/side.ts";
+  "src/value/image/gradient/linear/linear.ts";
+  "exit_src/value/image/gradient/linear";
+  "src/value/image/gradient/linear/direction.ts";
+  "src/value/image/gradient/radial/radial.ts";
+  "exit_src/value/image/gradient/radial";
+  "src/value/image/gradient/radial/extent.ts";
+  "src/value/image/gradient/radial/shape.ts";
+  "src/value/position/index.ts";
+  "name_src/value/position";
+  "src/value/image/gradient/radial/circle.ts";
+  "src/value/image/gradient/radial/ellipse.ts";
+  "src/value/image/gradient/index.ts";
+  "name_src/value/image/gradient";
+  "src/value/image/url.ts";
+  "src/value/image/image.ts";
+  "src/value/box.ts";
+  "src/value/collection/index.ts";
+  "name_src/value/collection";
+  "src/value/image/index.ts";
+  "name_src/value/image";
+  "src/value/shadow.ts";
+  "src/value/shape/index.ts";
+  "name_src/value/shape";
+  "src/value/string.ts";
+  "src/value/transform/index.ts";
+  "name_src/value/transform";
+  "src/value/numeric/angle.ts";
+  "src/value/numeric/dimension.ts";
+  "src/value/numeric/percentage.ts";
+  "exit_src/value/numeric";
+  "src/value/numeric/numeric.ts";
+  "src/value/numeric/angle-percentage.ts";
+  "src/value/numeric/integer.ts";
+  "src/value/numeric/length-percentage.ts";
+  "src/value/numeric/length.ts";
+  "src/value/numeric/number.ts";
+  "exit_src/value/position";
+  "src/value/position/keywords.ts";
+  "src/value/position/side.ts";
+  "src/value/position/position.ts";
+  "src/value/position/component.ts";
+  "exit_src/value/shape";
+  "src/value/shape/basic-shape.ts";
+  "src/value/shape/radius.ts";
+  "src/value/shape/circle.ts";
+  "src/value/shape/ellipse.ts";
+  "src/value/shape/inset.ts";
+  "src/value/shape/polygon.ts";
+  "src/value/shape/rectangle.ts";
+  "src/value/shape/shape.ts";
+  "src/value/shape/corner.ts";
+  "exit_src/value/transform";
+  "src/value/transform/matrix.ts";
+  "src/value/transform/perspective.ts";
+  "src/value/transform/rotate.ts";
+  "src/value/transform/scale.ts";
+  "src/value/transform/skew.ts";
+  "src/value/transform/transform.ts";
+  "src/value/transform/translate.ts";
+  "src/value/transform/function.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#55ff00";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#55ff00";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#55ff00";
+        penwidth = 5;
+      ];
+      subgraph "cluster_src/calculation" {
+        color = "#000000";
+        label = "";
+        "name_src/calculation" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0055";
+          label = "calculation";
+        ];
+        "exit_src/calculation" [
+          style = "invis";
+        ];
+        "src/calculation/index.ts" [
+          label = "index.ts";
+          color = "#ff0055";
+          penwidth = 5;
+        ];
+        subgraph "cluster_src/calculation/math-expression" {
+          color = "#000000";
+          label = "";
+          "name_src/calculation/math-expression" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#00ff55";
+            label = "math-expression";
+          ];
+          "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/expression.ts" [
+            label = "expression.ts";
+          ];
+          "src/calculation/math-expression/function.ts" [
+            label = "function.ts";
+          ];
+          "src/calculation/math-expression/index.ts" [
+            label = "index.ts";
+            color = "#00ff55";
+            penwidth = 5;
+          ];
+          "src/calculation/math-expression/kind.ts" [
+            label = "kind.ts";
+          ];
+          "src/calculation/math-expression/math.ts" [
+            label = "math.ts";
+          ];
+          "src/calculation/math-expression/operation.ts" [
+            label = "operation.ts";
+          ];
+          "src/calculation/math-expression/value.ts" [
+            label = "value.ts";
+          ];
+          "src/calculation/math-expression/expression.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/function.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/index.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/kind.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/math.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/operation.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+          "src/calculation/math-expression/value.ts" -> "exit_src/calculation/math-expression" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/calculation/numeric" {
+          color = "#000000";
+          label = "";
+          "name_src/calculation/numeric" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#00ff00";
+            label = "numeric";
+          ];
+          "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/angle.ts" [
+            label = "angle.ts";
+          ];
+          "src/calculation/numeric/dimension.ts" [
+            label = "dimension.ts";
+          ];
+          "src/calculation/numeric/index.ts" [
+            label = "index.ts";
+            color = "#00ff00";
+            penwidth = 5;
+          ];
+          "src/calculation/numeric/integer.ts" [
+            label = "integer.ts";
+          ];
+          "src/calculation/numeric/length.ts" [
+            label = "length.ts";
+          ];
+          "src/calculation/numeric/number.ts" [
+            label = "number.ts";
+          ];
+          "src/calculation/numeric/numeric.ts" [
+            label = "numeric.ts";
+          ];
+          "src/calculation/numeric/percentage.ts" [
+            label = "percentage.ts";
+          ];
+          "src/calculation/numeric/angle.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/dimension.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/index.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/integer.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/length.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/number.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/numeric.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+          "src/calculation/numeric/percentage.ts" -> "exit_src/calculation/numeric" [
+            style = "invis";
+          ];
+        }
+        "src/calculation/index.ts" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/math-expression" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+        "exit_src/calculation/numeric" -> "exit_src/calculation" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/syntax" {
+        color = "#000000";
+        label = "";
+        "name_src/syntax" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#aa00ff";
+          label = "syntax";
+        ];
+        "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/block.ts" [
+          label = "block.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/syntax/comma.ts" [
+          label = "comma.ts";
+        ];
+        "src/syntax/component.ts" [
+          label = "component.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/syntax/declaration.ts" [
+          label = "declaration.ts";
+        ];
+        "src/syntax/function.ts" [
+          label = "function.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/syntax/index.ts" [
+          label = "index.ts";
+          color = "#aa00ff";
+          penwidth = 5;
+        ];
+        "src/syntax/lexer.ts" [
+          label = "lexer.ts";
+        ];
+        "src/syntax/nth.ts" [
+          label = "nth.ts";
+        ];
+        "src/syntax/parser.ts" [
+          label = "parser.ts";
+        ];
+        "src/syntax/token.ts" [
+          label = "token.ts";
+        ];
+        "src/syntax/block.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/comma.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/component.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/declaration.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/function.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/index.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/lexer.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/nth.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/parser.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/token.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/unit" {
+        color = "#000000";
+        label = "";
+        "name_src/unit" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffff";
+          label = "unit";
+        ];
+        "exit_src/unit" [
+          style = "invis";
+        ];
+        "src/unit/converter.ts" [
+          label = "converter.ts";
+        ];
+        "src/unit/index.ts" [
+          label = "index.ts";
+          color = "#00ffff";
+          penwidth = 5;
+        ];
+        "src/unit/unit.ts" [
+          label = "unit.ts";
+        ];
+        "src/unit/converter.ts" -> "exit_src/unit" [
+          style = "invis";
+        ];
+        "src/unit/index.ts" -> "exit_src/unit" [
+          style = "invis";
+        ];
+        "src/unit/unit.ts" -> "exit_src/unit" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/value" {
+        color = "#000000";
+        label = "";
+        "name_src/value" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0000ff";
+          label = "value";
+        ];
+        "exit_src/value" [
+          style = "invis";
+        ];
+        "src/value/box.ts" [
+          label = "box.ts";
+        ];
+        "src/value/index.ts" [
+          label = "index.ts";
+          color = "#0000ff";
+          penwidth = 5;
+        ];
+        "src/value/keyword.ts" [
+          label = "keyword.ts";
+        ];
+        "src/value/resolvable.ts" [
+          label = "resolvable.ts";
+        ];
+        "src/value/shadow.ts" [
+          label = "shadow.ts";
+        ];
+        "src/value/string.ts" [
+          label = "string.ts";
+        ];
+        "src/value/value.ts" [
+          label = "value.ts";
+        ];
+        subgraph "cluster_src/value/collection" {
+          color = "#000000";
+          label = "";
+          "name_src/value/collection" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ff0000";
+            label = "collection";
+          ];
+          "exit_src/value/collection" [
+            style = "invis";
+          ];
+          "src/value/collection/index.ts" [
+            label = "index.ts";
+            color = "#ff0000";
+            penwidth = 5;
+          ];
+          "src/value/collection/list.ts" [
+            label = "list.ts";
+          ];
+          "src/value/collection/tuple.ts" [
+            label = "tuple.ts";
+          ];
+          "src/value/collection/index.ts" -> "exit_src/value/collection" [
+            style = "invis";
+          ];
+          "src/value/collection/list.ts" -> "exit_src/value/collection" [
+            style = "invis";
+          ];
+          "src/value/collection/tuple.ts" -> "exit_src/value/collection" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/value/color" {
+          color = "#000000";
+          label = "";
+          "name_src/value/color" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ffaa00";
+            label = "color";
+          ];
+          "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/color.ts" [
+            label = "color.ts";
+          ];
+          "src/value/color/current.ts" [
+            label = "current.ts";
+          ];
+          "src/value/color/format.ts" [
+            label = "format.ts";
+          ];
+          "src/value/color/hex.ts" [
+            label = "hex.ts";
+          ];
+          "src/value/color/hsl.ts" [
+            label = "hsl.ts";
+          ];
+          "src/value/color/index.ts" [
+            label = "index.ts";
+            color = "#ffaa00";
+            penwidth = 5;
+          ];
+          "src/value/color/named.ts" [
+            label = "named.ts";
+          ];
+          "src/value/color/rgb.ts" [
+            label = "rgb.ts";
+          ];
+          "src/value/color/system.ts" [
+            label = "system.ts";
+          ];
+          "src/value/color/color.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/current.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/format.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/hex.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/hsl.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/index.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/named.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/rgb.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/system.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/value/image" {
+          color = "#000000";
+          label = "";
+          "name_src/value/image" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#0055ff";
+            label = "image";
+          ];
+          "exit_src/value/image" [
+            style = "invis";
+          ];
+          "src/value/image/image.ts" [
+            label = "image.ts";
+          ];
+          "src/value/image/index.ts" [
+            label = "index.ts";
+            color = "#0055ff";
+            penwidth = 5;
+          ];
+          "src/value/image/url.ts" [
+            label = "url.ts";
+          ];
+          subgraph "cluster_src/value/image/gradient" {
+            color = "#000000";
+            label = "";
+            "name_src/value/image/gradient" [
+              penwidth = 5;
+              shape = "rectangle";
+              color = "#00aaff";
+              label = "gradient";
+            ];
+            "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "src/value/image/gradient/gradient.ts" [
+              label = "gradient.ts";
+            ];
+            "src/value/image/gradient/index.ts" [
+              label = "index.ts";
+              color = "#00aaff";
+              penwidth = 5;
+            ];
+            subgraph "cluster_src/value/image/gradient/item" {
+              color = "#000000";
+              label = "";
+              "name_src/value/image/gradient/item" [
+                penwidth = 5;
+                shape = "rectangle";
+                color = "#5500ff";
+                label = "item";
+              ];
+              "exit_src/value/image/gradient/item" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/item/hint.ts" [
+                label = "hint.ts";
+              ];
+              "src/value/image/gradient/item/index.ts" [
+                label = "index.ts";
+                color = "#5500ff";
+                penwidth = 5;
+              ];
+              "src/value/image/gradient/item/item.ts" [
+                label = "item.ts";
+              ];
+              "src/value/image/gradient/item/stop.ts" [
+                label = "stop.ts";
+              ];
+              "src/value/image/gradient/item/hint.ts" -> "exit_src/value/image/gradient/item" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/item/index.ts" -> "exit_src/value/image/gradient/item" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/item/item.ts" -> "exit_src/value/image/gradient/item" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/item/stop.ts" -> "exit_src/value/image/gradient/item" [
+                style = "invis";
+              ];
+            }
+            subgraph "cluster_src/value/image/gradient/linear" {
+              color = "#000000";
+              label = "";
+              "name_src/value/image/gradient/linear" [
+                penwidth = 5;
+                shape = "rectangle";
+                color = "#ffff00";
+                label = "linear";
+              ];
+              "exit_src/value/image/gradient/linear" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/linear/corner.ts" [
+                label = "corner.ts";
+              ];
+              "src/value/image/gradient/linear/direction.ts" [
+                label = "direction.ts";
+              ];
+              "src/value/image/gradient/linear/index.ts" [
+                label = "index.ts";
+                color = "#ffff00";
+                penwidth = 5;
+              ];
+              "src/value/image/gradient/linear/linear.ts" [
+                label = "linear.ts";
+              ];
+              "src/value/image/gradient/linear/position.ts" [
+                label = "position.ts";
+              ];
+              "src/value/image/gradient/linear/side.ts" [
+                label = "side.ts";
+              ];
+              "src/value/image/gradient/linear/corner.ts" -> "exit_src/value/image/gradient/linear" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/linear/direction.ts" -> "exit_src/value/image/gradient/linear" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/linear/index.ts" -> "exit_src/value/image/gradient/linear" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/linear/linear.ts" -> "exit_src/value/image/gradient/linear" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/linear/position.ts" -> "exit_src/value/image/gradient/linear" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/linear/side.ts" -> "exit_src/value/image/gradient/linear" [
+                style = "invis";
+              ];
+            }
+            subgraph "cluster_src/value/image/gradient/radial" {
+              color = "#000000";
+              label = "";
+              "name_src/value/image/gradient/radial" [
+                penwidth = 5;
+                shape = "rectangle";
+                color = "#ff5500";
+                label = "radial";
+              ];
+              "exit_src/value/image/gradient/radial" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/radial/circle.ts" [
+                label = "circle.ts";
+              ];
+              "src/value/image/gradient/radial/ellipse.ts" [
+                label = "ellipse.ts";
+              ];
+              "src/value/image/gradient/radial/extent.ts" [
+                label = "extent.ts";
+              ];
+              "src/value/image/gradient/radial/index.ts" [
+                label = "index.ts";
+                color = "#ff5500";
+                penwidth = 5;
+              ];
+              "src/value/image/gradient/radial/radial.ts" [
+                label = "radial.ts";
+              ];
+              "src/value/image/gradient/radial/shape.ts" [
+                label = "shape.ts";
+              ];
+              "src/value/image/gradient/radial/circle.ts" -> "exit_src/value/image/gradient/radial" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/radial/ellipse.ts" -> "exit_src/value/image/gradient/radial" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/radial/extent.ts" -> "exit_src/value/image/gradient/radial" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/radial/index.ts" -> "exit_src/value/image/gradient/radial" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/radial/radial.ts" -> "exit_src/value/image/gradient/radial" [
+                style = "invis";
+              ];
+              "src/value/image/gradient/radial/shape.ts" -> "exit_src/value/image/gradient/radial" [
+                style = "invis";
+              ];
+            }
+            "src/value/image/gradient/gradient.ts" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "src/value/image/gradient/index.ts" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/item" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/item" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/item" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/item" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/linear" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/linear" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/linear" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/linear" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/linear" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/linear" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/radial" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/radial" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/radial" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/radial" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/radial" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+            "exit_src/value/image/gradient/radial" -> "exit_src/value/image/gradient" [
+              style = "invis";
+            ];
+          }
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "exit_src/value/image/gradient" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "src/value/image/image.ts" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "src/value/image/index.ts" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+          "src/value/image/url.ts" -> "exit_src/value/image" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/value/numeric" {
+          color = "#000000";
+          label = "";
+          "name_src/value/numeric" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ff00aa";
+            label = "numeric";
+          ];
+          "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/angle-percentage.ts" [
+            label = "angle-percentage.ts";
+          ];
+          "src/value/numeric/angle.ts" [
+            label = "angle.ts";
+          ];
+          "src/value/numeric/dimension.ts" [
+            label = "dimension.ts";
+          ];
+          "src/value/numeric/index.ts" [
+            label = "index.ts";
+            color = "#ff00aa";
+            penwidth = 5;
+          ];
+          "src/value/numeric/integer.ts" [
+            label = "integer.ts";
+          ];
+          "src/value/numeric/length-percentage.ts" [
+            label = "length-percentage.ts";
+          ];
+          "src/value/numeric/length.ts" [
+            label = "length.ts";
+          ];
+          "src/value/numeric/number.ts" [
+            label = "number.ts";
+          ];
+          "src/value/numeric/numeric.ts" [
+            label = "numeric.ts";
+          ];
+          "src/value/numeric/percentage.ts" [
+            label = "percentage.ts";
+          ];
+          "src/value/numeric/angle-percentage.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/angle.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/dimension.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/index.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/integer.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/length-percentage.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/length.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/number.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/numeric.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+          "src/value/numeric/percentage.ts" -> "exit_src/value/numeric" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/value/position" {
+          color = "#000000";
+          label = "";
+          "name_src/value/position" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ff00ff";
+            label = "position";
+          ];
+          "exit_src/value/position" [
+            style = "invis";
+          ];
+          "src/value/position/component.ts" [
+            label = "component.ts";
+          ];
+          "src/value/position/index.ts" [
+            label = "index.ts";
+            color = "#ff00ff";
+            penwidth = 5;
+          ];
+          "src/value/position/keywords.ts" [
+            label = "keywords.ts";
+          ];
+          "src/value/position/position.ts" [
+            label = "position.ts";
+          ];
+          "src/value/position/side.ts" [
+            label = "side.ts";
+          ];
+          "src/value/position/component.ts" -> "exit_src/value/position" [
+            style = "invis";
+          ];
+          "src/value/position/index.ts" -> "exit_src/value/position" [
+            style = "invis";
+          ];
+          "src/value/position/keywords.ts" -> "exit_src/value/position" [
+            style = "invis";
+          ];
+          "src/value/position/position.ts" -> "exit_src/value/position" [
+            style = "invis";
+          ];
+          "src/value/position/side.ts" -> "exit_src/value/position" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/value/shape" {
+          color = "#000000";
+          label = "";
+          "name_src/value/shape" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#00ffaa";
+            label = "shape";
+          ];
+          "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/basic-shape.ts" [
+            label = "basic-shape.ts";
+          ];
+          "src/value/shape/circle.ts" [
+            label = "circle.ts";
+          ];
+          "src/value/shape/corner.ts" [
+            label = "corner.ts";
+          ];
+          "src/value/shape/ellipse.ts" [
+            label = "ellipse.ts";
+          ];
+          "src/value/shape/index.ts" [
+            label = "index.ts";
+            color = "#00ffaa";
+            penwidth = 5;
+          ];
+          "src/value/shape/inset.ts" [
+            label = "inset.ts";
+          ];
+          "src/value/shape/polygon.ts" [
+            label = "polygon.ts";
+          ];
+          "src/value/shape/radius.ts" [
+            label = "radius.ts";
+          ];
+          "src/value/shape/rectangle.ts" [
+            label = "rectangle.ts";
+          ];
+          "src/value/shape/shape.ts" [
+            label = "shape.ts";
+          ];
+          "src/value/shape/basic-shape.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/circle.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/corner.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/ellipse.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/index.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/inset.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/polygon.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/radius.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/rectangle.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+          "src/value/shape/shape.ts" -> "exit_src/value/shape" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/value/transform" {
+          color = "#000000";
+          label = "";
+          "name_src/value/transform" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#aaff00";
+            label = "transform";
+          ];
+          "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/function.ts" [
+            label = "function.ts";
+          ];
+          "src/value/transform/index.ts" [
+            label = "index.ts";
+            color = "#aaff00";
+            penwidth = 5;
+          ];
+          "src/value/transform/matrix.ts" [
+            label = "matrix.ts";
+          ];
+          "src/value/transform/perspective.ts" [
+            label = "perspective.ts";
+          ];
+          "src/value/transform/rotate.ts" [
+            label = "rotate.ts";
+          ];
+          "src/value/transform/scale.ts" [
+            label = "scale.ts";
+          ];
+          "src/value/transform/skew.ts" [
+            label = "skew.ts";
+          ];
+          "src/value/transform/transform.ts" [
+            label = "transform.ts";
+          ];
+          "src/value/transform/translate.ts" [
+            label = "translate.ts";
+          ];
+          "src/value/transform/function.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/index.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/matrix.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/perspective.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/rotate.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/scale.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/skew.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/transform.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+          "src/value/transform/translate.ts" -> "exit_src/value/transform" [
+            style = "invis";
+          ];
+        }
+        "src/value/box.ts" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/collection" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/collection" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/collection" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/image" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "src/value/index.ts" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "src/value/keyword.ts" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/numeric" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/position" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/position" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/position" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/position" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/position" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "src/value/resolvable.ts" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "src/value/shadow.ts" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/shape" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "src/value/string.ts" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/transform" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "src/value/value.ts" -> "exit_src/value" [
+          style = "invis";
+        ];
+      }
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/calculation" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/unit" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/unit" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/unit" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/calculation/index.ts" -> "name_src/calculation/math-expression" [
+    style = "solid";
+    ltail = "cluster_src/calculation/index.ts";
+    lhead = "cluster_src/calculation/math-expression";
+    color = "#ff0055";
+  ];
+  "src/calculation/math-expression/expression.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/expression.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/expression.ts";
+    lhead = "cluster_src/calculation/math-expression/kind.ts";
+    color = "black";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression";
+    lhead = "cluster_src/calculation/numeric";
+    color = "#00ff55";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "solid";
+    ltail = "cluster_src/calculation";
+    lhead = "cluster_src/unit";
+    color = "#ff0055";
+  ];
+  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/function.ts";
+    lhead = "cluster_src/calculation/math-expression/expression.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/function.ts";
+    lhead = "cluster_src/calculation/math-expression/kind.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/function.ts";
+    lhead = "cluster_src/calculation/math-expression/value.ts";
+    color = "black";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "invis";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/index.ts" -> "src/calculation/math-expression/math.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/index.ts" -> "src/calculation/math-expression/math.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/index.ts";
+    lhead = "cluster_src/calculation/math-expression/math.ts";
+    color = "black";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/math.ts";
+    lhead = "cluster_src/calculation/math-expression/expression.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/function.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/math.ts";
+    lhead = "cluster_src/calculation/math-expression/function.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/math.ts";
+    lhead = "cluster_src/calculation/math-expression/kind.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/operation.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/operation.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/math.ts";
+    lhead = "cluster_src/calculation/math-expression/operation.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/math.ts";
+    lhead = "cluster_src/calculation/math-expression/value.ts";
+    color = "black";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "invis";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "solid";
+    ltail = "cluster_src/calculation";
+    lhead = "cluster_src/syntax";
+    color = "#ff0055";
+  ];
+  "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/operation.ts";
+    lhead = "cluster_src/calculation/math-expression/expression.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/operation.ts";
+    lhead = "cluster_src/calculation/math-expression/kind.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/operation.ts";
+    lhead = "cluster_src/calculation/math-expression/value.ts";
+    color = "black";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "invis";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/value.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/value.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/value.ts";
+    lhead = "cluster_src/calculation/math-expression/expression.ts";
+    color = "black";
+  ];
+  "src/calculation/math-expression/value.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/value.ts" -> "src/calculation/math-expression/kind.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/value.ts";
+    lhead = "cluster_src/calculation/math-expression/kind.ts";
+    color = "black";
+  ];
+  "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
+    style = "invis";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/angle.ts" -> "src/calculation/numeric/dimension.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/angle.ts" -> "src/calculation/numeric/dimension.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/angle.ts";
+    lhead = "cluster_src/calculation/numeric/dimension.ts";
+    color = "black";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/dimension.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/dimension.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/dimension.ts";
+    lhead = "cluster_src/calculation/numeric/numeric.ts";
+    color = "black";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/angle.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/angle.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/index.ts";
+    lhead = "cluster_src/calculation/numeric/angle.ts";
+    color = "black";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/dimension.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/dimension.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/index.ts";
+    lhead = "cluster_src/calculation/numeric/dimension.ts";
+    color = "black";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/integer.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/integer.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/index.ts";
+    lhead = "cluster_src/calculation/numeric/integer.ts";
+    color = "black";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/length.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/index.ts";
+    lhead = "cluster_src/calculation/numeric/length.ts";
+    color = "black";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/number.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/number.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/index.ts";
+    lhead = "cluster_src/calculation/numeric/number.ts";
+    color = "black";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/index.ts";
+    lhead = "cluster_src/calculation/numeric/numeric.ts";
+    color = "black";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/percentage.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/index.ts" -> "src/calculation/numeric/percentage.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/index.ts";
+    lhead = "cluster_src/calculation/numeric/percentage.ts";
+    color = "black";
+  ];
+  "src/calculation/numeric/integer.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/integer.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/integer.ts";
+    lhead = "cluster_src/calculation/numeric/numeric.ts";
+    color = "black";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/length.ts" -> "src/calculation/numeric/dimension.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/length.ts" -> "src/calculation/numeric/dimension.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/length.ts";
+    lhead = "cluster_src/calculation/numeric/dimension.ts";
+    color = "black";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/number.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/number.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/number.ts";
+    lhead = "cluster_src/calculation/numeric/numeric.ts";
+    color = "black";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/percentage.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/calculation/numeric/percentage.ts" -> "src/calculation/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/numeric/percentage.ts";
+    lhead = "cluster_src/calculation/numeric/numeric.ts";
+    color = "black";
+  ];
+  "exit_src/calculation" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/calculation" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/calculation";
+    color = "#55ff00";
+  ];
+  "src/index.ts" -> "name_src/syntax" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/syntax";
+    color = "#55ff00";
+  ];
+  "src/index.ts" -> "name_src/unit" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/unit";
+    color = "#55ff00";
+  ];
+  "src/index.ts" -> "name_src/value" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/value";
+    color = "#55ff00";
+  ];
+  "src/syntax/block.ts" -> "src/syntax/component.ts" [
+    style = "invis";
+  ];
+  "src/syntax/block.ts" -> "src/syntax/component.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/block.ts";
+    lhead = "cluster_src/syntax/component.ts";
+    color = "black";
+  ];
+  "src/syntax/block.ts" -> "src/syntax/parser.ts" [
+    style = "invis";
+  ];
+  "src/syntax/block.ts" -> "src/syntax/parser.ts" [
+    style = "dotted";
+    ltail = "cluster_src/syntax/block.ts";
+    lhead = "cluster_src/syntax/parser.ts";
+    color = "black";
+  ];
+  "src/syntax/block.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/block.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/block.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/comma.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/comma.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/comma.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/component.ts" -> "src/syntax/block.ts" [
+    style = "invis";
+  ];
+  "src/syntax/component.ts" -> "src/syntax/block.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/component.ts";
+    lhead = "cluster_src/syntax/block.ts";
+    color = "black";
+  ];
+  "src/syntax/component.ts" -> "src/syntax/function.ts" [
+    style = "invis";
+  ];
+  "src/syntax/component.ts" -> "src/syntax/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/component.ts";
+    lhead = "cluster_src/syntax/function.ts";
+    color = "black";
+  ];
+  "src/syntax/component.ts" -> "src/syntax/parser.ts" [
+    style = "invis";
+  ];
+  "src/syntax/component.ts" -> "src/syntax/parser.ts" [
+    style = "dotted";
+    ltail = "cluster_src/syntax/component.ts";
+    lhead = "cluster_src/syntax/parser.ts";
+    color = "black";
+  ];
+  "src/syntax/component.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/component.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/component.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/declaration.ts" -> "src/syntax/component.ts" [
+    style = "invis";
+  ];
+  "src/syntax/declaration.ts" -> "src/syntax/component.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/declaration.ts";
+    lhead = "cluster_src/syntax/component.ts";
+    color = "black";
+  ];
+  "src/syntax/declaration.ts" -> "src/syntax/parser.ts" [
+    style = "invis";
+  ];
+  "src/syntax/declaration.ts" -> "src/syntax/parser.ts" [
+    style = "dotted";
+    ltail = "cluster_src/syntax/declaration.ts";
+    lhead = "cluster_src/syntax/parser.ts";
+    color = "black";
+  ];
+  "src/syntax/declaration.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/declaration.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/declaration.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/function.ts" -> "src/syntax/component.ts" [
+    style = "invis";
+  ];
+  "src/syntax/function.ts" -> "src/syntax/component.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/function.ts";
+    lhead = "cluster_src/syntax/component.ts";
+    color = "black";
+  ];
+  "src/syntax/function.ts" -> "src/syntax/parser.ts" [
+    style = "invis";
+  ];
+  "src/syntax/function.ts" -> "src/syntax/parser.ts" [
+    style = "dotted";
+    ltail = "cluster_src/syntax/function.ts";
+    lhead = "cluster_src/syntax/parser.ts";
+    color = "black";
+  ];
+  "src/syntax/function.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/function.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/function.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/block.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/block.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/block.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/comma.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/comma.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/comma.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/component.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/component.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/component.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/declaration.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/declaration.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/declaration.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/function.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/function.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/lexer.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/lexer.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/lexer.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/nth.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/nth.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/nth.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/parser.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/parser.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/parser.ts";
+    color = "black";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/index.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/index.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/lexer.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/lexer.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/lexer.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/nth.ts" -> "src/syntax/parser.ts" [
+    style = "invis";
+  ];
+  "src/syntax/nth.ts" -> "src/syntax/parser.ts" [
+    style = "dotted";
+    ltail = "cluster_src/syntax/nth.ts";
+    lhead = "cluster_src/syntax/parser.ts";
+    color = "black";
+  ];
+  "src/syntax/nth.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/nth.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/nth.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/parser.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/parser.ts" -> "src/syntax/token.ts" [
+    style = "dotted";
+    ltail = "cluster_src/syntax/parser.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/token.ts" -> "src/syntax/parser.ts" [
+    style = "invis";
+  ];
+  "src/syntax/token.ts" -> "src/syntax/parser.ts" [
+    style = "dotted";
+    ltail = "cluster_src/syntax/token.ts";
+    lhead = "cluster_src/syntax/parser.ts";
+    color = "black";
+  ];
+  "src/unit/converter.ts" -> "src/unit/unit.ts" [
+    style = "invis";
+  ];
+  "src/unit/converter.ts" -> "src/unit/unit.ts" [
+    style = "solid";
+    ltail = "cluster_src/unit/converter.ts";
+    lhead = "cluster_src/unit/unit.ts";
+    color = "black";
+  ];
+  "src/unit/index.ts" -> "src/unit/converter.ts" [
+    style = "invis";
+  ];
+  "src/unit/index.ts" -> "src/unit/converter.ts" [
+    style = "solid";
+    ltail = "cluster_src/unit/index.ts";
+    lhead = "cluster_src/unit/converter.ts";
+    color = "black";
+  ];
+  "src/unit/index.ts" -> "src/unit/unit.ts" [
+    style = "invis";
+  ];
+  "src/unit/index.ts" -> "src/unit/unit.ts" [
+    style = "solid";
+    ltail = "cluster_src/unit/index.ts";
+    lhead = "cluster_src/unit/unit.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "dotted";
+    ltail = "cluster_src/value";
+    lhead = "cluster_src/syntax";
+    color = "#0000ff";
+  ];
+  "src/value/box.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "src/value/box.ts" -> "src/value/keyword.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/box.ts";
+    lhead = "cluster_src/value/keyword.ts";
+    color = "black";
+  ];
+  "src/value/collection/index.ts" -> "src/value/collection/list.ts" [
+    style = "invis";
+  ];
+  "src/value/collection/index.ts" -> "src/value/collection/list.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/collection/index.ts";
+    lhead = "cluster_src/value/collection/list.ts";
+    color = "black";
+  ];
+  "src/value/collection/index.ts" -> "src/value/collection/tuple.ts" [
+    style = "invis";
+  ];
+  "src/value/collection/index.ts" -> "src/value/collection/tuple.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/collection/index.ts";
+    lhead = "cluster_src/value/collection/tuple.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/collection/list.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/collection" -> "src/value/resolvable.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/collection";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "#ff0000";
+  ];
+  "src/value/collection/list.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/collection" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/collection";
+    lhead = "cluster_src/value/value.ts";
+    color = "#ff0000";
+  ];
+  "src/value/collection/tuple.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/collection" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/collection/tuple.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/collection" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/current.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/current.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/color.ts";
+    lhead = "cluster_src/value/color/current.ts";
+    color = "black";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/hex.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/hex.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/color.ts";
+    lhead = "cluster_src/value/color/hex.ts";
+    color = "black";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/hsl.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/hsl.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/color.ts";
+    lhead = "cluster_src/value/color/hsl.ts";
+    color = "black";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/named.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/named.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/color.ts";
+    lhead = "cluster_src/value/color/named.ts";
+    color = "black";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/rgb.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/rgb.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/color.ts";
+    lhead = "cluster_src/value/color/rgb.ts";
+    color = "black";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/system.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/system.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/color.ts";
+    lhead = "cluster_src/value/color/system.ts";
+    color = "black";
+  ];
+  "src/value/color/color.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/keyword.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color";
+    lhead = "cluster_src/value/keyword.ts";
+    color = "#ffaa00";
+  ];
+  "exit_src/value/color" -> "name_src/value/numeric" [
+    style = "solid";
+    ltail = "cluster_src/value/color";
+    lhead = "cluster_src/value/numeric";
+    color = "#ffaa00";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/color/current.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "src/value/color/format.ts" -> "src/value/color/rgb.ts" [
+    style = "invis";
+  ];
+  "src/value/color/format.ts" -> "src/value/color/rgb.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/color/format.ts";
+    lhead = "cluster_src/value/color/rgb.ts";
+    color = "black";
+  ];
+  "exit_src/value/color" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/color/format.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/resolvable.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/color";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "#ffaa00";
+  ];
+  "src/value/color/format.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color";
+    lhead = "cluster_src/value/value.ts";
+    color = "#ffaa00";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/color/hex.ts" -> "src/value/color/format.ts" [
+    style = "invis";
+  ];
+  "src/value/color/hex.ts" -> "src/value/color/format.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/hex.ts";
+    lhead = "cluster_src/value/color/format.ts";
+    color = "black";
+  ];
+  "src/value/color/hex.ts" -> "src/value/color/rgb.ts" [
+    style = "invis";
+  ];
+  "src/value/color/hex.ts" -> "src/value/color/rgb.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/hex.ts";
+    lhead = "cluster_src/value/color/rgb.ts";
+    color = "black";
+  ];
+  "exit_src/value/color" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/color/hsl.ts" -> "src/value/color/format.ts" [
+    style = "invis";
+  ];
+  "src/value/color/hsl.ts" -> "src/value/color/format.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/hsl.ts";
+    lhead = "cluster_src/value/color/format.ts";
+    color = "black";
+  ];
+  "src/value/color/hsl.ts" -> "src/value/color/rgb.ts" [
+    style = "invis";
+  ];
+  "src/value/color/hsl.ts" -> "src/value/color/rgb.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/hsl.ts";
+    lhead = "cluster_src/value/color/rgb.ts";
+    color = "black";
+  ];
+  "src/value/color/hsl.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/color.ts" [
+    style = "invis";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/color.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/index.ts";
+    lhead = "cluster_src/value/color/color.ts";
+    color = "black";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/current.ts" [
+    style = "invis";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/current.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/index.ts";
+    lhead = "cluster_src/value/color/current.ts";
+    color = "black";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/hex.ts" [
+    style = "invis";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/hex.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/index.ts";
+    lhead = "cluster_src/value/color/hex.ts";
+    color = "black";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/hsl.ts" [
+    style = "invis";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/hsl.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/index.ts";
+    lhead = "cluster_src/value/color/hsl.ts";
+    color = "black";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/named.ts" [
+    style = "invis";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/named.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/index.ts";
+    lhead = "cluster_src/value/color/named.ts";
+    color = "black";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/rgb.ts" [
+    style = "invis";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/rgb.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/index.ts";
+    lhead = "cluster_src/value/color/rgb.ts";
+    color = "black";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/system.ts" [
+    style = "invis";
+  ];
+  "src/value/color/index.ts" -> "src/value/color/system.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/index.ts";
+    lhead = "cluster_src/value/color/system.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/color/named.ts" -> "src/value/color/format.ts" [
+    style = "invis";
+  ];
+  "src/value/color/named.ts" -> "src/value/color/format.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/named.ts";
+    lhead = "cluster_src/value/color/format.ts";
+    color = "black";
+  ];
+  "src/value/color/named.ts" -> "src/value/color/rgb.ts" [
+    style = "invis";
+  ];
+  "src/value/color/named.ts" -> "src/value/color/rgb.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/named.ts";
+    lhead = "cluster_src/value/color/rgb.ts";
+    color = "black";
+  ];
+  "exit_src/value/color" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/color/rgb.ts" -> "src/value/color/format.ts" [
+    style = "invis";
+  ];
+  "src/value/color/rgb.ts" -> "src/value/color/format.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/color/rgb.ts";
+    lhead = "cluster_src/value/color/format.ts";
+    color = "black";
+  ];
+  "src/value/color/rgb.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/color/system.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/gradient.ts" -> "name_src/value/image/gradient/item" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/gradient.ts";
+    lhead = "cluster_src/value/image/gradient/item";
+    color = "#00aaff";
+  ];
+  "src/value/image/gradient/gradient.ts" -> "name_src/value/image/gradient/linear" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/gradient.ts";
+    lhead = "cluster_src/value/image/gradient/linear";
+    color = "#00aaff";
+  ];
+  "src/value/image/gradient/gradient.ts" -> "name_src/value/image/gradient/radial" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/gradient.ts";
+    lhead = "cluster_src/value/image/gradient/radial";
+    color = "#00aaff";
+  ];
+  "src/value/image/gradient/index.ts" -> "src/value/image/gradient/gradient.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/index.ts" -> "src/value/image/gradient/gradient.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/index.ts";
+    lhead = "cluster_src/value/image/gradient/gradient.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "name_src/value/numeric" [
+    style = "solid";
+    ltail = "cluster_src/value/image";
+    lhead = "cluster_src/value/numeric";
+    color = "#0055ff";
+  ];
+  "src/value/image/gradient/item/hint.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "#0055ff";
+  ];
+  "src/value/image/gradient/item/hint.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image";
+    lhead = "cluster_src/value/value.ts";
+    color = "#0055ff";
+  ];
+  "src/value/image/gradient/item/index.ts" -> "src/value/image/gradient/item/item.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/item/index.ts" -> "src/value/image/gradient/item/item.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/item/index.ts";
+    lhead = "cluster_src/value/image/gradient/item/item.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/item/item.ts" -> "src/value/image/gradient/item/hint.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/item/item.ts" -> "src/value/image/gradient/item/hint.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/item/item.ts";
+    lhead = "cluster_src/value/image/gradient/item/hint.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/item/item.ts" -> "src/value/image/gradient/item/stop.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/item/item.ts" -> "src/value/image/gradient/item/stop.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/item/item.ts";
+    lhead = "cluster_src/value/image/gradient/item/stop.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "name_src/value/color" [
+    style = "solid";
+    ltail = "cluster_src/value/image";
+    lhead = "cluster_src/value/color";
+    color = "#0055ff";
+  ];
+  "exit_src/value/image" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/item/stop.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/item/stop.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/corner.ts" -> "src/value/image/gradient/linear/position.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/corner.ts" -> "src/value/image/gradient/linear/position.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/linear/corner.ts";
+    lhead = "cluster_src/value/image/gradient/linear/position.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/linear/corner.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/corner.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/direction.ts" -> "src/value/image/gradient/linear/corner.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/direction.ts" -> "src/value/image/gradient/linear/corner.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/linear/direction.ts";
+    lhead = "cluster_src/value/image/gradient/linear/corner.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/linear/direction.ts" -> "src/value/image/gradient/linear/side.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/direction.ts" -> "src/value/image/gradient/linear/side.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/linear/direction.ts";
+    lhead = "cluster_src/value/image/gradient/linear/side.ts";
+    color = "black";
+  ];
+  "exit_src/value/image" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/index.ts" -> "src/value/image/gradient/linear/linear.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/index.ts" -> "src/value/image/gradient/linear/linear.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/linear/index.ts";
+    lhead = "cluster_src/value/image/gradient/linear/linear.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/image/gradient/linear" -> "name_src/value/image/gradient/item" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/linear";
+    lhead = "cluster_src/value/image/gradient/item";
+    color = "#ffff00";
+  ];
+  "src/value/image/gradient/linear/linear.ts" -> "src/value/image/gradient/linear/direction.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/linear.ts" -> "src/value/image/gradient/linear/direction.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/linear/linear.ts";
+    lhead = "cluster_src/value/image/gradient/linear/direction.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/linear/linear.ts" -> "src/value/image/gradient/linear/side.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/linear.ts" -> "src/value/image/gradient/linear/side.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/linear/linear.ts";
+    lhead = "cluster_src/value/image/gradient/linear/side.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/linear/linear.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/linear.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/side.ts" -> "src/value/image/gradient/linear/position.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/side.ts" -> "src/value/image/gradient/linear/position.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/linear/side.ts";
+    lhead = "cluster_src/value/image/gradient/linear/position.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/linear/side.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/linear/side.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/circle.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/keyword.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image";
+    lhead = "cluster_src/value/keyword.ts";
+    color = "#0055ff";
+  ];
+  "exit_src/value/image" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/circle.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/circle.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/ellipse.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/ellipse.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/ellipse.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/extent.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/extent.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/extent.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/index.ts" -> "src/value/image/gradient/radial/radial.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/index.ts" -> "src/value/image/gradient/radial/radial.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/radial/index.ts";
+    lhead = "cluster_src/value/image/gradient/radial/radial.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/image/gradient/radial" -> "name_src/value/image/gradient/item" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/radial";
+    lhead = "cluster_src/value/image/gradient/item";
+    color = "#ff5500";
+  ];
+  "src/value/image/gradient/radial/radial.ts" -> "src/value/image/gradient/radial/extent.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/radial.ts" -> "src/value/image/gradient/radial/extent.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/radial/radial.ts";
+    lhead = "cluster_src/value/image/gradient/radial/extent.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/radial/radial.ts" -> "src/value/image/gradient/radial/shape.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/radial.ts" -> "src/value/image/gradient/radial/shape.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/radial/radial.ts";
+    lhead = "cluster_src/value/image/gradient/radial/shape.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/radial/radial.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "name_src/value/position" [
+    style = "solid";
+    ltail = "cluster_src/value/image";
+    lhead = "cluster_src/value/position";
+    color = "#0055ff";
+  ];
+  "src/value/image/gradient/radial/radial.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/radial.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/shape.ts" -> "src/value/image/gradient/radial/circle.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/shape.ts" -> "src/value/image/gradient/radial/circle.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/radial/shape.ts";
+    lhead = "cluster_src/value/image/gradient/radial/circle.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/radial/shape.ts" -> "src/value/image/gradient/radial/ellipse.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/shape.ts" -> "src/value/image/gradient/radial/ellipse.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/radial/shape.ts";
+    lhead = "cluster_src/value/image/gradient/radial/ellipse.ts";
+    color = "black";
+  ];
+  "src/value/image/gradient/radial/shape.ts" -> "src/value/image/gradient/radial/extent.ts" [
+    style = "invis";
+  ];
+  "src/value/image/gradient/radial/shape.ts" -> "src/value/image/gradient/radial/extent.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/gradient/radial/shape.ts";
+    lhead = "cluster_src/value/image/gradient/radial/extent.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/image.ts" -> "name_src/value/image/gradient" [
+    style = "solid";
+    ltail = "cluster_src/value/image/image.ts";
+    lhead = "cluster_src/value/image/gradient";
+    color = "#0055ff";
+  ];
+  "src/value/image/image.ts" -> "src/value/image/url.ts" [
+    style = "invis";
+  ];
+  "src/value/image/image.ts" -> "src/value/image/url.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/image.ts";
+    lhead = "cluster_src/value/image/url.ts";
+    color = "black";
+  ];
+  "src/value/image/image.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/image.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/image/index.ts" -> "name_src/value/image/gradient" [
+    style = "solid";
+    ltail = "cluster_src/value/image/index.ts";
+    lhead = "cluster_src/value/image/gradient";
+    color = "#0055ff";
+  ];
+  "src/value/image/index.ts" -> "src/value/image/image.ts" [
+    style = "invis";
+  ];
+  "src/value/image/index.ts" -> "src/value/image/image.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/index.ts";
+    lhead = "cluster_src/value/image/image.ts";
+    color = "black";
+  ];
+  "src/value/image/index.ts" -> "src/value/image/url.ts" [
+    style = "invis";
+  ];
+  "src/value/image/index.ts" -> "src/value/image/url.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/image/index.ts";
+    lhead = "cluster_src/value/image/url.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/image/url.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/image/url.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/image" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/index.ts" -> "src/value/box.ts" [
+    style = "invis";
+  ];
+  "src/value/index.ts" -> "src/value/box.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/box.ts";
+    color = "black";
+  ];
+  "src/value/index.ts" -> "name_src/value/collection" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/collection";
+    color = "#0000ff";
+  ];
+  "src/value/index.ts" -> "name_src/value/color" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/color";
+    color = "#0000ff";
+  ];
+  "src/value/index.ts" -> "name_src/value/image" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/image";
+    color = "#0000ff";
+  ];
+  "src/value/index.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "src/value/index.ts" -> "src/value/keyword.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/keyword.ts";
+    color = "black";
+  ];
+  "src/value/index.ts" -> "name_src/value/numeric" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/numeric";
+    color = "#0000ff";
+  ];
+  "src/value/index.ts" -> "name_src/value/position" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/position";
+    color = "#0000ff";
+  ];
+  "src/value/index.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/index.ts" -> "src/value/resolvable.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "black";
+  ];
+  "src/value/index.ts" -> "src/value/shadow.ts" [
+    style = "invis";
+  ];
+  "src/value/index.ts" -> "src/value/shadow.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/shadow.ts";
+    color = "black";
+  ];
+  "src/value/index.ts" -> "name_src/value/shape" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/shape";
+    color = "#0000ff";
+  ];
+  "src/value/index.ts" -> "src/value/string.ts" [
+    style = "invis";
+  ];
+  "src/value/index.ts" -> "src/value/string.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/string.ts";
+    color = "black";
+  ];
+  "src/value/index.ts" -> "name_src/value/transform" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/transform";
+    color = "#0000ff";
+  ];
+  "src/value/index.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/index.ts" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/index.ts";
+    lhead = "cluster_src/value/value.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/keyword.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/keyword.ts" -> "src/value/resolvable.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/keyword.ts";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "black";
+  ];
+  "src/value/keyword.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/keyword.ts" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/keyword.ts";
+    lhead = "cluster_src/value/value.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "solid";
+    ltail = "cluster_src/value";
+    lhead = "cluster_src/calculation";
+    color = "#0000ff";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/unit" [
+    style = "solid";
+    ltail = "cluster_src/value";
+    lhead = "cluster_src/unit";
+    color = "#0000ff";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/angle.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/angle.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/angle-percentage.ts";
+    lhead = "cluster_src/value/numeric/angle.ts";
+    color = "black";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/dimension.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/dimension.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/angle-percentage.ts";
+    lhead = "cluster_src/value/numeric/dimension.ts";
+    color = "black";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/percentage.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/percentage.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/angle-percentage.ts";
+    lhead = "cluster_src/value/numeric/percentage.ts";
+    color = "black";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "#ff00aa";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle.ts" -> "src/value/numeric/dimension.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle.ts" -> "src/value/numeric/dimension.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/angle.ts";
+    lhead = "cluster_src/value/numeric/dimension.ts";
+    color = "black";
+  ];
+  "src/value/numeric/angle.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/value/numeric/dimension.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/dimension.ts" -> "src/value/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/dimension.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
+    color = "black";
+  ];
+  "src/value/numeric/dimension.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/angle-percentage.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/angle-percentage.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/angle-percentage.ts";
+    color = "black";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/angle.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/angle.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/angle.ts";
+    color = "black";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/dimension.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/dimension.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/dimension.ts";
+    color = "black";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/integer.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/integer.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/integer.ts";
+    color = "black";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/length-percentage.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/length-percentage.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/length-percentage.ts";
+    color = "black";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/length.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/length.ts";
+    color = "black";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/number.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/number.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/number.ts";
+    color = "black";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
+    color = "black";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/percentage.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/index.ts" -> "src/value/numeric/percentage.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/index.ts";
+    lhead = "cluster_src/value/numeric/percentage.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/numeric/integer.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/integer.ts" -> "src/value/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/integer.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
+    color = "black";
+  ];
+  "src/value/numeric/integer.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/numeric/dimension.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/numeric/dimension.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/length-percentage.ts";
+    lhead = "cluster_src/value/numeric/dimension.ts";
+    color = "black";
+  ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/numeric/length.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/length-percentage.ts";
+    lhead = "cluster_src/value/numeric/length.ts";
+    color = "black";
+  ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/numeric/percentage.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/numeric/percentage.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/length-percentage.ts";
+    lhead = "cluster_src/value/numeric/percentage.ts";
+    color = "black";
+  ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/unit" [
+    style = "invis";
+  ];
+  "src/value/numeric/length.ts" -> "src/value/numeric/dimension.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/length.ts" -> "src/value/numeric/dimension.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/length.ts";
+    lhead = "cluster_src/value/numeric/dimension.ts";
+    color = "black";
+  ];
+  "src/value/numeric/length.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/numeric/number.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/number.ts" -> "src/value/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/number.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
+    color = "black";
+  ];
+  "src/value/numeric/number.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "src/value/numeric/numeric.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/numeric.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric";
+    lhead = "cluster_src/value/value.ts";
+    color = "#ff00aa";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/calculation" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/angle.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/angle.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/percentage.ts";
+    lhead = "cluster_src/value/numeric/angle.ts";
+    color = "black";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/integer.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/integer.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/percentage.ts";
+    lhead = "cluster_src/value/numeric/integer.ts";
+    color = "black";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/length.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/percentage.ts";
+    lhead = "cluster_src/value/numeric/length.ts";
+    color = "black";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/number.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/number.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/percentage.ts";
+    lhead = "cluster_src/value/numeric/number.ts";
+    color = "black";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/numeric/numeric.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/percentage.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
+    color = "black";
+  ];
+  "src/value/numeric/percentage.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/numeric" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/position/component.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "src/value/keyword.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position";
+    lhead = "cluster_src/value/keyword.ts";
+    color = "#ff00ff";
+  ];
+  "exit_src/value/position" -> "name_src/value/numeric" [
+    style = "solid";
+    ltail = "cluster_src/value/position";
+    lhead = "cluster_src/value/numeric";
+    color = "#ff00ff";
+  ];
+  "src/value/position/component.ts" -> "src/value/position/keywords.ts" [
+    style = "invis";
+  ];
+  "src/value/position/component.ts" -> "src/value/position/keywords.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position/component.ts";
+    lhead = "cluster_src/value/position/keywords.ts";
+    color = "black";
+  ];
+  "src/value/position/component.ts" -> "src/value/position/side.ts" [
+    style = "invis";
+  ];
+  "src/value/position/component.ts" -> "src/value/position/side.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position/component.ts";
+    lhead = "cluster_src/value/position/side.ts";
+    color = "black";
+  ];
+  "src/value/position/index.ts" -> "src/value/position/position.ts" [
+    style = "invis";
+  ];
+  "src/value/position/index.ts" -> "src/value/position/position.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position/index.ts";
+    lhead = "cluster_src/value/position/position.ts";
+    color = "black";
+  ];
+  "src/value/position/keywords.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/position/position.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/position/position.ts" -> "src/value/position/component.ts" [
+    style = "invis";
+  ];
+  "src/value/position/position.ts" -> "src/value/position/component.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position/position.ts";
+    lhead = "cluster_src/value/position/component.ts";
+    color = "black";
+  ];
+  "src/value/position/position.ts" -> "src/value/position/keywords.ts" [
+    style = "invis";
+  ];
+  "src/value/position/position.ts" -> "src/value/position/keywords.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position/position.ts";
+    lhead = "cluster_src/value/position/keywords.ts";
+    color = "black";
+  ];
+  "src/value/position/position.ts" -> "src/value/position/side.ts" [
+    style = "invis";
+  ];
+  "src/value/position/position.ts" -> "src/value/position/side.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position/position.ts";
+    lhead = "cluster_src/value/position/side.ts";
+    color = "black";
+  ];
+  "src/value/position/position.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "src/value/resolvable.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "#ff00ff";
+  ];
+  "src/value/position/position.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position";
+    lhead = "cluster_src/value/value.ts";
+    color = "#ff00ff";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/position/side.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/position/side.ts" -> "src/value/position/keywords.ts" [
+    style = "invis";
+  ];
+  "src/value/position/side.ts" -> "src/value/position/keywords.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/position/side.ts";
+    lhead = "cluster_src/value/position/keywords.ts";
+    color = "black";
+  ];
+  "src/value/position/side.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/position/side.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/position" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/resolvable.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/resolvable.ts" -> "src/value/value.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/resolvable.ts";
+    lhead = "cluster_src/value/value.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/shadow.ts" -> "name_src/value/color" [
+    style = "solid";
+    ltail = "cluster_src/value/shadow.ts";
+    lhead = "cluster_src/value/color";
+    color = "#0000ff";
+  ];
+  "src/value/shadow.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "src/value/shadow.ts" -> "src/value/keyword.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shadow.ts";
+    lhead = "cluster_src/value/keyword.ts";
+    color = "black";
+  ];
+  "src/value/shadow.ts" -> "name_src/value/numeric" [
+    style = "solid";
+    ltail = "cluster_src/value/shadow.ts";
+    lhead = "cluster_src/value/numeric";
+    color = "#0000ff";
+  ];
+  "src/value/shadow.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/shadow.ts" -> "src/value/resolvable.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shadow.ts";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "black";
+  ];
+  "src/value/shadow.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/shadow.ts" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shadow.ts";
+    lhead = "cluster_src/value/value.ts";
+    color = "black";
+  ];
+  "src/value/shape/basic-shape.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape";
+    lhead = "cluster_src/value/value.ts";
+    color = "#00ffaa";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/shape/circle.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/keyword.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape";
+    lhead = "cluster_src/value/keyword.ts";
+    color = "#00ffaa";
+  ];
+  "exit_src/value/shape" -> "name_src/value/position" [
+    style = "solid";
+    ltail = "cluster_src/value/shape";
+    lhead = "cluster_src/value/position";
+    color = "#00ffaa";
+  ];
+  "src/value/shape/circle.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/resolvable.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "#00ffaa";
+  ];
+  "src/value/shape/circle.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/circle.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/circle.ts";
+    lhead = "cluster_src/value/shape/basic-shape.ts";
+    color = "black";
+  ];
+  "src/value/shape/circle.ts" -> "src/value/shape/radius.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/circle.ts" -> "src/value/shape/radius.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/circle.ts";
+    lhead = "cluster_src/value/shape/radius.ts";
+    color = "black";
+  ];
+  "src/value/shape/circle.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "name_src/value/numeric" [
+    style = "solid";
+    ltail = "cluster_src/value/shape";
+    lhead = "cluster_src/value/numeric";
+    color = "#00ffaa";
+  ];
+  "src/value/shape/corner.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/shape/ellipse.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "name_src/value/position" [
+    style = "invis";
+  ];
+  "src/value/shape/ellipse.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/ellipse.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/ellipse.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/ellipse.ts";
+    lhead = "cluster_src/value/shape/basic-shape.ts";
+    color = "black";
+  ];
+  "src/value/shape/ellipse.ts" -> "src/value/shape/radius.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/ellipse.ts" -> "src/value/shape/radius.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/ellipse.ts";
+    lhead = "cluster_src/value/shape/radius.ts";
+    color = "black";
+  ];
+  "src/value/shape/ellipse.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/circle.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/circle.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/index.ts";
+    lhead = "cluster_src/value/shape/circle.ts";
+    color = "black";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/ellipse.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/ellipse.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/index.ts";
+    lhead = "cluster_src/value/shape/ellipse.ts";
+    color = "black";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/inset.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/inset.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/index.ts";
+    lhead = "cluster_src/value/shape/inset.ts";
+    color = "black";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/polygon.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/polygon.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/index.ts";
+    lhead = "cluster_src/value/shape/polygon.ts";
+    color = "black";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/radius.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/radius.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/index.ts";
+    lhead = "cluster_src/value/shape/radius.ts";
+    color = "black";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/rectangle.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/rectangle.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/index.ts";
+    lhead = "cluster_src/value/shape/rectangle.ts";
+    color = "black";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/shape.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/index.ts" -> "src/value/shape/shape.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/index.ts";
+    lhead = "cluster_src/value/shape/shape.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/shape/inset.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/shape/inset.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/inset.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/inset.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/inset.ts";
+    lhead = "cluster_src/value/shape/basic-shape.ts";
+    color = "black";
+  ];
+  "src/value/shape/inset.ts" -> "src/value/shape/corner.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/inset.ts" -> "src/value/shape/corner.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/inset.ts";
+    lhead = "cluster_src/value/shape/corner.ts";
+    color = "black";
+  ];
+  "src/value/shape/inset.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/shape/polygon.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/shape/polygon.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/polygon.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/polygon.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/polygon.ts";
+    lhead = "cluster_src/value/shape/basic-shape.ts";
+    color = "black";
+  ];
+  "src/value/shape/polygon.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/shape/radius.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/shape/radius.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/radius.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/radius.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/radius.ts";
+    lhead = "cluster_src/value/shape/basic-shape.ts";
+    color = "black";
+  ];
+  "src/value/shape/radius.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/shape/rectangle.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/shape/rectangle.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/rectangle.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/rectangle.ts" -> "src/value/shape/basic-shape.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/rectangle.ts";
+    lhead = "cluster_src/value/shape/basic-shape.ts";
+    color = "black";
+  ];
+  "src/value/shape/rectangle.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/box.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/box.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape";
+    lhead = "cluster_src/value/box.ts";
+    color = "#00ffaa";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/keyword.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/circle.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/circle.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/shape.ts";
+    lhead = "cluster_src/value/shape/circle.ts";
+    color = "black";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/ellipse.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/ellipse.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/shape.ts";
+    lhead = "cluster_src/value/shape/ellipse.ts";
+    color = "black";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/inset.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/inset.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/shape.ts";
+    lhead = "cluster_src/value/shape/inset.ts";
+    color = "black";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/polygon.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/polygon.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/shape.ts";
+    lhead = "cluster_src/value/shape/polygon.ts";
+    color = "black";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/rectangle.ts" [
+    style = "invis";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/shape/rectangle.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/shape/shape.ts";
+    lhead = "cluster_src/value/shape/rectangle.ts";
+    color = "black";
+  ];
+  "src/value/shape/shape.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/shape" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/value/string.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/string.ts" -> "src/value/resolvable.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/string.ts";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "black";
+  ];
+  "src/value/string.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/string.ts" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/string.ts";
+    lhead = "cluster_src/value/value.ts";
+    color = "black";
+  ];
+  "src/value/transform/function.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/value.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform";
+    lhead = "cluster_src/value/value.ts";
+    color = "#aaff00";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/matrix.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/matrix.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/index.ts";
+    lhead = "cluster_src/value/transform/matrix.ts";
+    color = "black";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/perspective.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/perspective.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/index.ts";
+    lhead = "cluster_src/value/transform/perspective.ts";
+    color = "black";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/rotate.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/rotate.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/index.ts";
+    lhead = "cluster_src/value/transform/rotate.ts";
+    color = "black";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/scale.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/scale.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/index.ts";
+    lhead = "cluster_src/value/transform/scale.ts";
+    color = "black";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/skew.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/skew.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/index.ts";
+    lhead = "cluster_src/value/transform/skew.ts";
+    color = "black";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/transform.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/transform.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/index.ts";
+    lhead = "cluster_src/value/transform/transform.ts";
+    color = "black";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/translate.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/index.ts" -> "src/value/transform/translate.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/index.ts";
+    lhead = "cluster_src/value/transform/translate.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/collection" [
+    style = "solid";
+    ltail = "cluster_src/value/transform";
+    lhead = "cluster_src/value/collection";
+    color = "#aaff00";
+  ];
+  "exit_src/value/transform" -> "name_src/value/numeric" [
+    style = "solid";
+    ltail = "cluster_src/value/transform";
+    lhead = "cluster_src/value/numeric";
+    color = "#aaff00";
+  ];
+  "src/value/transform/matrix.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/resolvable.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "#aaff00";
+  ];
+  "src/value/transform/matrix.ts" -> "src/value/transform/function.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/matrix.ts" -> "src/value/transform/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/matrix.ts";
+    lhead = "cluster_src/value/transform/function.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/transform/perspective.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/perspective.ts" -> "src/value/transform/function.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/perspective.ts" -> "src/value/transform/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/perspective.ts";
+    lhead = "cluster_src/value/transform/function.ts";
+    color = "black";
+  ];
+  "src/value/transform/perspective.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/collection" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/transform/rotate.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/rotate.ts" -> "src/value/transform/function.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/rotate.ts" -> "src/value/transform/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/rotate.ts";
+    lhead = "cluster_src/value/transform/function.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/collection" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/transform/scale.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/scale.ts" -> "src/value/transform/function.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/scale.ts" -> "src/value/transform/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/scale.ts";
+    lhead = "cluster_src/value/transform/function.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/collection" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/transform/skew.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/skew.ts" -> "src/value/transform/function.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/skew.ts" -> "src/value/transform/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/skew.ts";
+    lhead = "cluster_src/value/transform/function.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/collection" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/matrix.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/matrix.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/transform.ts";
+    lhead = "cluster_src/value/transform/matrix.ts";
+    color = "black";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/perspective.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/perspective.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/transform.ts";
+    lhead = "cluster_src/value/transform/perspective.ts";
+    color = "black";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/rotate.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/rotate.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/transform.ts";
+    lhead = "cluster_src/value/transform/rotate.ts";
+    color = "black";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/scale.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/scale.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/transform.ts";
+    lhead = "cluster_src/value/transform/scale.ts";
+    color = "black";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/skew.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/skew.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/transform.ts";
+    lhead = "cluster_src/value/transform/skew.ts";
+    color = "black";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/translate.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/transform.ts" -> "src/value/transform/translate.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/transform.ts";
+    lhead = "cluster_src/value/transform/translate.ts";
+    color = "black";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/collection" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "name_src/value/numeric" [
+    style = "invis";
+  ];
+  "src/value/transform/translate.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/translate.ts" -> "src/value/transform/function.ts" [
+    style = "invis";
+  ];
+  "src/value/transform/translate.ts" -> "src/value/transform/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/transform/translate.ts";
+    lhead = "cluster_src/value/transform/function.ts";
+    color = "black";
+  ];
+  "src/value/transform/translate.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/transform" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "src/value/value.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "src/value/value.ts" -> "src/value/resolvable.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/value.ts";
+    lhead = "cluster_src/value/resolvable.ts";
+    color = "black";
+  ];
+}

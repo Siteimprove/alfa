@@ -1,0 +1,98 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/language.ts";
+  "src/language/data.ts";
+  "name_src/language";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#00ffff";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#00ffff";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#00ffff";
+        penwidth = 5;
+      ];
+      "src/language.ts" [
+        label = "language.ts";
+      ];
+      subgraph "cluster_src/language" {
+        color = "#000000";
+        label = "";
+        "name_src/language" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "language";
+        ];
+        "exit_src/language" [
+          style = "invis";
+        ];
+        "src/language/data.ts" [
+          label = "data.ts";
+        ];
+        "src/language/data.ts" -> "exit_src/language" [
+          style = "invis";
+        ];
+      }
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/language.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/language" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/language.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/language.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/language.ts";
+    color = "black";
+  ];
+  "src/language.ts" -> "name_src/language" [
+    style = "solid";
+    ltail = "cluster_src/language.ts";
+    lhead = "cluster_src/language";
+    color = "#00ffff";
+  ];
+}
