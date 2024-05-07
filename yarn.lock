@@ -1939,6 +1939,7 @@ __metadata:
     ts-graphviz: "npm:^1.8.1"
   bin:
     alfa-changelog: src/changeset/changelog-global.js
+    generate-dependency-graphs: src/dependency-graph/generate-graphs.js
     validate-structure: src/validation/validate-all.js
   languageName: unknown
   linkType: soft
@@ -2082,11 +2083,9 @@ __metadata:
     async: "npm:^3.2.1"
     execa: "npm:^8.0.0"
     knip: "npm:^5.6.1"
-    madge: "npm:^7.0.0"
     minimist: "npm:^1.2.6"
     package-dependency-graph: "npm:^1.14.4"
     prettier: "npm:^3.0.0"
-    ts-graphviz: "npm:^1.8.1"
     typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft

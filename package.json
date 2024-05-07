@@ -34,11 +34,9 @@
     "async": "^3.2.1",
     "execa": "^8.0.0",
     "knip": "^5.6.1",
-    "madge": "^7.0.0",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "prettier": "^3.0.0",
-    "ts-graphviz": "^1.8.1",
     "typescript": "^5.4.5"
   },
   "packageManager": "yarn@4.2.1"
