@@ -370,95 +370,118 @@ export namespace Name {
       element,
     );
 
-    return fromSteps(
-      // Step 2B: Use the `aria-labelledby` attribute, if present and allowed.
-      // https://w3c.github.io/accname/#step2B
-      () => {
-        // Chained `aria-labelledby` references, such `foo` -> `bar` -> `baz`,
-        // are not allowed. If the element is therefore being referenced
-        // already then this step produces an empty name.
-        if (state.isReferencing) {
-          return None;
-        }
+    // Step 2B: Use the `aria-labelledby` attribute, if present and allowed.
+    // https://w3c.github.io/accname/#step2B
 
-        return element
-          .attribute("aria-labelledby")
-          .flatMap((attribute) =>
-            fromReferences(attribute, element, device, state),
-          )
-          .map((name) => name.spaced(spaced));
-      },
+    let name: Option<Name> = None;
+    let step2B: Option<Name> = None;
 
-      // Step 2C: control embedded in a label, not currently handled
-      // https://github.com/Siteimprove/alfa/issues/305
+    // Chained `aria-labelledby` references, such `foo` -> `bar` -> `baz`,
+    // are not allowed. If the element is therefore being referenced
+    // already then this step produces an empty name.
+    if (!state.isReferencing) {
+      step2B = element
+        .attribute("aria-labelledby")
+        .flatMap((attribute) =>
+          fromReferences(attribute, element, device, state),
+        )
+        .map((name) => name.spaced(spaced));
+    }
 
-      // Step 2D: Use the `aria-label` attribute, if present.
-      // https://w3c.github.io/accname/#step2D
-      () => {
-        return (
-          element
-            .attribute("aria-label")
-            .flatMap((attribute) => fromLabel(attribute))
-            // As of Feb. 2024, both Chrome and Firefox add spaces when concatenating
-            // `aria-label` nodes. Accname spec hasn't resolved this point yet.
-            .map((name) => name.spaced(true))
-        );
-      },
+    name = step2B.reject((name) => name.value === "");
 
-      // Step 2E: Use native features, if present and allowed.
-      // https://w3c.github.io/accname/#step2E
-      () => {
-        // Using native features is only allowed if the role, if any, of the
-        // element is not presentational and the element has a namespace with
-        // which to look up its feature mapping, if it exists. If the role of
-        // element therefore is presentational or the element has no namespace
-        // then this step produces an empty name.
-        if (
-          role.some((role) => role.isPresentational()) ||
-          !element.namespace.isSome()
-        ) {
-          return None;
-        }
+    if (name.isSome()) {
+      return name;
+    }
 
-        return Feature.from(element.namespace.get(), element.name)
-          .flatMap((feature) => feature.name(element, device, state))
-          .map((name) => name.spaced(spaced));
-      },
+    // Step 2C: control embedded in a label, not currently handled
+    // https://github.com/Siteimprove/alfa/issues/305
 
-      // Step 2F: Use the subtree content, if referencing or allowed.
-      // https://w3c.github.io/accname/#step2F
-      () => {
-        // Using the subtree content is only allowed if the element is either
-        // being referenced or the role, if any, of the element allows it to
-        // be named by its content. If the element therefore isn't being
-        // referenced and is not allowed to be named by its content then this
-        // step produces an empty name.
-        if (
-          !state.isReferencing &&
-          !role.some((role) => role.isNamedBy("contents"))
-        ) {
-          return None;
-        }
+    // Step 2D: Use the `aria-label` attribute, if present.
+    // https://w3c.github.io/accname/#step2D
+    const step2D = element
+      .attribute("aria-label")
+      .flatMap((attribute) => fromLabel(attribute))
+      // As of Feb. 2024, both Chrome and Firefox add spaces when concatenating
+      // `aria-label` nodes. Accname spec hasn't resolved this point yet.
+      .map((name) => name.spaced(true));
 
-        return fromDescendants(element, device, state).map((name) =>
-          name.spaced(spaced),
-        );
-      },
+    name = step2D.reject((name) => name.value === "");
 
-      // Step 2H: Use the subtree content, if descending.
-      // https://w3c.github.io/accname/#step2H
-      () => {
-        // Unless we're already descending then this step produces an empty
-        // name.
-        if (!state.isDescending) {
-          return None;
-        }
+    if (name.isSome()) {
+      return name;
+    }
 
-        return fromDescendants(element, device, state).map((name) =>
-          name.spaced(spaced),
-        );
-      },
-    );
+    // Step 2E: Use native features, if present and allowed.
+    // https://w3c.github.io/accname/#step2E
+    let step2E: Option<Name> = None;
+
+    // Using native features is only allowed if the role, if any, of the
+    // element is not presentational and the element has a namespace with
+    // which to look up its feature mapping, if it exists. If the role of
+    // element therefore is presentational or the element has no namespace
+    // then this step produces an empty name.
+    if (
+      role.every((role) => !role.isPresentational()) &&
+      element.namespace.isSome()
+    ) {
+      step2E = Feature.from(element.namespace.get(), element.name)
+        .flatMap((feature) => feature.name(element, device, state))
+        .map((name) => name.spaced(spaced));
+    }
+
+    name = step2E.reject((name) => name.value === "");
+
+    if (name.isSome()) {
+      return name;
+    }
+
+    // Step 2F: Use the subtree content, if referencing or allowed.
+    // https://w3c.github.io/accname/#step2F
+    let step2F: Option<Name> = None;
+    let nameFromDescendants: Option<Name> | undefined = undefined;
+
+    // Using the subtree content is only allowed if the element is either
+    // being referenced or the role, if any, of the element allows it to
+    // be named by its content. If the element therefore isn't being
+    // referenced and is not allowed to be named by its content then this
+    // step produces an empty name.
+    if (
+      state.isReferencing ||
+      role.some((role) => role.isNamedBy("contents"))
+    ) {
+      if (nameFromDescendants === undefined) {
+        nameFromDescendants = fromDescendants(element, device, state);
+      }
+      step2F = nameFromDescendants.map((name) => name.spaced(spaced));
+    }
+
+    name = step2F.reject((name) => name.value === "");
+
+    if (name.isSome()) {
+      return name;
+    }
+
+    // Step 2H: Use the subtree content, if descending.
+    // https://w3c.github.io/accname/#step2H
+    let step2H: Option<Name> = None;
+
+    // Unless we're already descending then this step produces an empty
+    // name.
+    if (state.isDescending) {
+      if (nameFromDescendants === undefined) {
+        nameFromDescendants = fromDescendants(element, device, state);
+      }
+      step2H = nameFromDescendants.map((name) => name.spaced(spaced));
+    }
+
+    return step2H
+      .reject((name) => name.value === "")
+      .or(step2B.reject((name) => name.isEmpty()))
+      .or(step2D.reject((name) => name.isEmpty()))
+      .or(step2E.reject((name) => name.isEmpty()))
+      .or(step2F.reject((name) => name.isEmpty()))
+      .or(step2H.reject((name) => name.isEmpty()));
   }
 
   /**
@@ -593,13 +616,36 @@ export namespace Name {
   export function fromSteps(
     ...steps: Array<Thunk<Option<Name>>>
   ): Option<Name> {
-    return Array.collectFirst(steps, (step) =>
-      step().reject((name) => name.value === ""),
-    ).orElse(() =>
-      Array.collectFirst(steps, (step) =>
-        step().reject((name) => name.isEmpty()),
-      ),
-    );
+    const cache = Cache.empty<Thunk<Option<Name>>, Option<Name>>();
+
+    let result: Option<Name> = None;
+    for (let i = 0, n = steps.length; i < n; i++) {
+      const value = cache
+        .get(steps[i], steps[i])
+        .reject((name) => name.value === "");
+
+      if (value.isSome()) {
+        result = value;
+        break;
+      }
+    }
+
+    if (result.isSome()) {
+      return result;
+    }
+
+    for (let i = 0, n = steps.length; i < n; i++) {
+      const value = cache
+        .get(steps[i], steps[i])
+        .reject((name) => name.isEmpty());
+
+      if (value.isSome()) {
+        result = value;
+        break;
+      }
+    }
+
+    return result;
   }
 
   export const { hasValue } = predicate;
