@@ -1,0 +1,163 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/left.ts";
+  "src/right.ts";
+  "src/either.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/either.ts" [
+        label = "either.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/left.ts" [
+        label = "left.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/right.ts" [
+        label = "right.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/either.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/left.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/right.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/either.ts" -> "src/left.ts" [
+    style = "invis";
+  ];
+  "src/either.ts" -> "src/left.ts" [
+    style = "solid";
+    ltail = "cluster_src/either.ts";
+    lhead = "cluster_src/left.ts";
+    color = "black";
+  ];
+  "src/either.ts" -> "src/right.ts" [
+    style = "invis";
+  ];
+  "src/either.ts" -> "src/right.ts" [
+    style = "solid";
+    ltail = "cluster_src/either.ts";
+    lhead = "cluster_src/right.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/either.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/either.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/either.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/left.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/left.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/left.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/right.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/right.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/right.ts";
+    color = "black";
+  ];
+  "src/left.ts" -> "src/either.ts" [
+    style = "invis";
+  ];
+  "src/left.ts" -> "src/either.ts" [
+    style = "solid";
+    ltail = "cluster_src/left.ts";
+    lhead = "cluster_src/either.ts";
+    color = "black";
+  ];
+  "src/left.ts" -> "src/right.ts" [
+    style = "invis";
+  ];
+  "src/left.ts" -> "src/right.ts" [
+    style = "solid";
+    ltail = "cluster_src/left.ts";
+    lhead = "cluster_src/right.ts";
+    color = "black";
+  ];
+  "src/right.ts" -> "src/either.ts" [
+    style = "invis";
+  ];
+  "src/right.ts" -> "src/either.ts" [
+    style = "solid";
+    ltail = "cluster_src/right.ts";
+    lhead = "cluster_src/either.ts";
+    color = "black";
+  ];
+  "src/right.ts" -> "src/left.ts" [
+    style = "invis";
+  ];
+  "src/right.ts" -> "src/left.ts" [
+    style = "solid";
+    ltail = "cluster_src/right.ts";
+    lhead = "cluster_src/left.ts";
+    color = "black";
+  ];
+}

@@ -1,0 +1,427 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/slot.ts";
+  "src/anchored.ts";
+  "src/cell/predicate.ts";
+  "name_src/cell";
+  "src/scope.ts";
+  "src/cell/predicate/has-element.ts";
+  "name_src/cell/predicate";
+  "src/cell.ts";
+  "exit_src/cell";
+  "src/column.ts";
+  "src/row.ts";
+  "src/group.ts";
+  "src/table.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#00ff00";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#00ff00";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/anchored.ts" [
+        label = "anchored.ts";
+      ];
+      "src/cell.ts" [
+        label = "cell.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/column.ts" [
+        label = "column.ts";
+      ];
+      "src/group.ts" [
+        label = "group.ts";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#00ff00";
+        penwidth = 5;
+      ];
+      "src/row.ts" [
+        label = "row.ts";
+      ];
+      "src/scope.ts" [
+        label = "scope.ts";
+      ];
+      "src/slot.ts" [
+        label = "slot.ts";
+      ];
+      "src/table.ts" [
+        label = "table.ts";
+      ];
+      subgraph "cluster_src/cell" {
+        color = "#000000";
+        label = "";
+        "name_src/cell" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "cell";
+        ];
+        "exit_src/cell" [
+          style = "invis";
+        ];
+        "src/cell/predicate.ts" [
+          label = "predicate.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        subgraph "cluster_src/cell/predicate" {
+          color = "#000000";
+          label = "";
+          "name_src/cell/predicate" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#0000ff";
+            label = "predicate";
+          ];
+          "exit_src/cell/predicate" [
+            style = "invis";
+          ];
+          "src/cell/predicate/has-element.ts" [
+            label = "has-element.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/cell/predicate/has-element.ts" -> "exit_src/cell/predicate" [
+            style = "invis";
+          ];
+        }
+        "src/cell/predicate.ts" -> "exit_src/cell" [
+          style = "invis";
+        ];
+        "exit_src/cell/predicate" -> "exit_src/cell" [
+          style = "invis";
+        ];
+      }
+      "src/anchored.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/cell.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/cell" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/cell" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/column.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/group.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/row.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/scope.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/slot.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/table.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/anchored.ts" -> "src/slot.ts" [
+    style = "invis";
+  ];
+  "src/anchored.ts" -> "src/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/anchored.ts";
+    lhead = "cluster_src/slot.ts";
+    color = "black";
+  ];
+  "src/cell.ts" -> "src/anchored.ts" [
+    style = "invis";
+  ];
+  "src/cell.ts" -> "src/anchored.ts" [
+    style = "solid";
+    ltail = "cluster_src/cell.ts";
+    lhead = "cluster_src/anchored.ts";
+    color = "black";
+  ];
+  "src/cell.ts" -> "name_src/cell" [
+    style = "solid";
+    ltail = "cluster_src/cell.ts";
+    lhead = "cluster_src/cell";
+    color = "#00ff00";
+  ];
+  "src/cell.ts" -> "src/scope.ts" [
+    style = "invis";
+  ];
+  "src/cell.ts" -> "src/scope.ts" [
+    style = "solid";
+    ltail = "cluster_src/cell.ts";
+    lhead = "cluster_src/scope.ts";
+    color = "black";
+  ];
+  "src/cell.ts" -> "src/slot.ts" [
+    style = "invis";
+  ];
+  "src/cell.ts" -> "src/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/cell.ts";
+    lhead = "cluster_src/slot.ts";
+    color = "black";
+  ];
+  "src/cell/predicate.ts" -> "name_src/cell/predicate" [
+    style = "solid";
+    ltail = "cluster_src/cell/predicate.ts";
+    lhead = "cluster_src/cell/predicate";
+    color = "#ff0000";
+  ];
+  "src/cell/predicate/has-element.ts" -> "src/cell.ts" [
+    style = "invis";
+  ];
+  "exit_src/cell" -> "src/cell.ts" [
+    style = "solid";
+    ltail = "cluster_src/cell";
+    lhead = "cluster_src/cell.ts";
+    color = "#ff0000";
+  ];
+  "src/column.ts" -> "src/anchored.ts" [
+    style = "invis";
+  ];
+  "src/column.ts" -> "src/anchored.ts" [
+    style = "solid";
+    ltail = "cluster_src/column.ts";
+    lhead = "cluster_src/anchored.ts";
+    color = "black";
+  ];
+  "src/column.ts" -> "src/slot.ts" [
+    style = "invis";
+  ];
+  "src/column.ts" -> "src/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/column.ts";
+    lhead = "cluster_src/slot.ts";
+    color = "black";
+  ];
+  "src/group.ts" -> "src/column.ts" [
+    style = "invis";
+  ];
+  "src/group.ts" -> "src/column.ts" [
+    style = "solid";
+    ltail = "cluster_src/group.ts";
+    lhead = "cluster_src/column.ts";
+    color = "black";
+  ];
+  "src/group.ts" -> "src/row.ts" [
+    style = "invis";
+  ];
+  "src/group.ts" -> "src/row.ts" [
+    style = "solid";
+    ltail = "cluster_src/group.ts";
+    lhead = "cluster_src/row.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/anchored.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/anchored.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/anchored.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/cell.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/cell.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/cell.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/column.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/column.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/column.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/group.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/group.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/group.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/row.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/row.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/row.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/scope.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/scope.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/scope.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/slot.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/slot.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/table.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/table.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/table.ts";
+    color = "black";
+  ];
+  "src/row.ts" -> "src/anchored.ts" [
+    style = "invis";
+  ];
+  "src/row.ts" -> "src/anchored.ts" [
+    style = "solid";
+    ltail = "cluster_src/row.ts";
+    lhead = "cluster_src/anchored.ts";
+    color = "black";
+  ];
+  "src/row.ts" -> "src/slot.ts" [
+    style = "invis";
+  ];
+  "src/row.ts" -> "src/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/row.ts";
+    lhead = "cluster_src/slot.ts";
+    color = "black";
+  ];
+  "src/table.ts" -> "src/cell.ts" [
+    style = "invis";
+  ];
+  "src/table.ts" -> "src/cell.ts" [
+    style = "solid";
+    ltail = "cluster_src/table.ts";
+    lhead = "cluster_src/cell.ts";
+    color = "black";
+  ];
+  "src/table.ts" -> "src/column.ts" [
+    style = "invis";
+  ];
+  "src/table.ts" -> "src/column.ts" [
+    style = "solid";
+    ltail = "cluster_src/table.ts";
+    lhead = "cluster_src/column.ts";
+    color = "black";
+  ];
+  "src/table.ts" -> "src/group.ts" [
+    style = "invis";
+  ];
+  "src/table.ts" -> "src/group.ts" [
+    style = "solid";
+    ltail = "cluster_src/table.ts";
+    lhead = "cluster_src/group.ts";
+    color = "black";
+  ];
+  "src/table.ts" -> "src/row.ts" [
+    style = "invis";
+  ];
+  "src/table.ts" -> "src/row.ts" [
+    style = "solid";
+    ltail = "cluster_src/table.ts";
+    lhead = "cluster_src/row.ts";
+    color = "black";
+  ];
+  "src/table.ts" -> "src/scope.ts" [
+    style = "invis";
+  ];
+  "src/table.ts" -> "src/scope.ts" [
+    style = "solid";
+    ltail = "cluster_src/table.ts";
+    lhead = "cluster_src/scope.ts";
+    color = "black";
+  ];
+  "src/table.ts" -> "src/slot.ts" [
+    style = "invis";
+  ];
+  "src/table.ts" -> "src/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/table.ts";
+    lhead = "cluster_src/slot.ts";
+    color = "black";
+  ];
+}

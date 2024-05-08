@@ -1,0 +1,404 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/precedence/index.ts";
+  "name_src/precedence";
+  "src/user-agent.ts";
+  "src/ancestor-filter.ts";
+  "src/block.ts";
+  "src/rule-tree.ts";
+  "src/selector-map.ts";
+  "src/cascade.ts";
+  "src/precedence/encapsulation.ts";
+  "src/precedence/layer.ts";
+  "src/precedence/order.ts";
+  "src/precedence/origin.ts";
+  "src/precedence/precedence.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#00ffff";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#00ffff";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/ancestor-filter.ts" [
+        label = "ancestor-filter.ts";
+      ];
+      "src/block.ts" [
+        label = "block.ts";
+      ];
+      "src/cascade.ts" [
+        label = "cascade.ts";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#00ffff";
+        penwidth = 5;
+      ];
+      "src/rule-tree.ts" [
+        label = "rule-tree.ts";
+      ];
+      "src/selector-map.ts" [
+        label = "selector-map.ts";
+      ];
+      "src/user-agent.ts" [
+        label = "user-agent.ts";
+      ];
+      subgraph "cluster_src/precedence" {
+        color = "#000000";
+        label = "";
+        "name_src/precedence" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "precedence";
+        ];
+        "exit_src/precedence" [
+          style = "invis";
+        ];
+        "src/precedence/encapsulation.ts" [
+          label = "encapsulation.ts";
+        ];
+        "src/precedence/index.ts" [
+          label = "index.ts";
+          color = "#ff0000";
+          penwidth = 5;
+        ];
+        "src/precedence/layer.ts" [
+          label = "layer.ts";
+        ];
+        "src/precedence/order.ts" [
+          label = "order.ts";
+        ];
+        "src/precedence/origin.ts" [
+          label = "origin.ts";
+        ];
+        "src/precedence/precedence.ts" [
+          label = "precedence.ts";
+        ];
+        "src/precedence/encapsulation.ts" -> "exit_src/precedence" [
+          style = "invis";
+        ];
+        "src/precedence/index.ts" -> "exit_src/precedence" [
+          style = "invis";
+        ];
+        "src/precedence/layer.ts" -> "exit_src/precedence" [
+          style = "invis";
+        ];
+        "src/precedence/order.ts" -> "exit_src/precedence" [
+          style = "invis";
+        ];
+        "src/precedence/origin.ts" -> "exit_src/precedence" [
+          style = "invis";
+        ];
+        "src/precedence/precedence.ts" -> "exit_src/precedence" [
+          style = "invis";
+        ];
+      }
+      "src/ancestor-filter.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/block.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/cascade.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/precedence" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/precedence" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/precedence" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/precedence" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/precedence" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/precedence" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/rule-tree.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/selector-map.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/user-agent.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/block.ts" -> "name_src/precedence" [
+    style = "solid";
+    ltail = "cluster_src/block.ts";
+    lhead = "cluster_src/precedence";
+    color = "#00ffff";
+  ];
+  "src/block.ts" -> "src/user-agent.ts" [
+    style = "invis";
+  ];
+  "src/block.ts" -> "src/user-agent.ts" [
+    style = "solid";
+    ltail = "cluster_src/block.ts";
+    lhead = "cluster_src/user-agent.ts";
+    color = "black";
+  ];
+  "src/cascade.ts" -> "src/ancestor-filter.ts" [
+    style = "invis";
+  ];
+  "src/cascade.ts" -> "src/ancestor-filter.ts" [
+    style = "solid";
+    ltail = "cluster_src/cascade.ts";
+    lhead = "cluster_src/ancestor-filter.ts";
+    color = "black";
+  ];
+  "src/cascade.ts" -> "src/block.ts" [
+    style = "invis";
+  ];
+  "src/cascade.ts" -> "src/block.ts" [
+    style = "solid";
+    ltail = "cluster_src/cascade.ts";
+    lhead = "cluster_src/block.ts";
+    color = "black";
+  ];
+  "src/cascade.ts" -> "src/rule-tree.ts" [
+    style = "invis";
+  ];
+  "src/cascade.ts" -> "src/rule-tree.ts" [
+    style = "solid";
+    ltail = "cluster_src/cascade.ts";
+    lhead = "cluster_src/rule-tree.ts";
+    color = "black";
+  ];
+  "src/cascade.ts" -> "src/selector-map.ts" [
+    style = "invis";
+  ];
+  "src/cascade.ts" -> "src/selector-map.ts" [
+    style = "solid";
+    ltail = "cluster_src/cascade.ts";
+    lhead = "cluster_src/selector-map.ts";
+    color = "black";
+  ];
+  "src/cascade.ts" -> "src/user-agent.ts" [
+    style = "invis";
+  ];
+  "src/cascade.ts" -> "src/user-agent.ts" [
+    style = "solid";
+    ltail = "cluster_src/cascade.ts";
+    lhead = "cluster_src/user-agent.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/cascade.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/cascade.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/cascade.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/precedence" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/precedence";
+    color = "#00ffff";
+  ];
+  "src/index.ts" -> "src/rule-tree.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/rule-tree.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/rule-tree.ts";
+    color = "black";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/encapsulation.ts" [
+    style = "invis";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/encapsulation.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/index.ts";
+    lhead = "cluster_src/precedence/encapsulation.ts";
+    color = "black";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/layer.ts" [
+    style = "invis";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/layer.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/index.ts";
+    lhead = "cluster_src/precedence/layer.ts";
+    color = "black";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/order.ts" [
+    style = "invis";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/order.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/index.ts";
+    lhead = "cluster_src/precedence/order.ts";
+    color = "black";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/origin.ts" [
+    style = "invis";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/origin.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/index.ts";
+    lhead = "cluster_src/precedence/origin.ts";
+    color = "black";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/precedence.ts" [
+    style = "invis";
+  ];
+  "src/precedence/index.ts" -> "src/precedence/precedence.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/index.ts";
+    lhead = "cluster_src/precedence/precedence.ts";
+    color = "black";
+  ];
+  "src/precedence/precedence.ts" -> "src/precedence/encapsulation.ts" [
+    style = "invis";
+  ];
+  "src/precedence/precedence.ts" -> "src/precedence/encapsulation.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/precedence.ts";
+    lhead = "cluster_src/precedence/encapsulation.ts";
+    color = "black";
+  ];
+  "src/precedence/precedence.ts" -> "src/precedence/layer.ts" [
+    style = "invis";
+  ];
+  "src/precedence/precedence.ts" -> "src/precedence/layer.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/precedence.ts";
+    lhead = "cluster_src/precedence/layer.ts";
+    color = "black";
+  ];
+  "src/precedence/precedence.ts" -> "src/precedence/order.ts" [
+    style = "invis";
+  ];
+  "src/precedence/precedence.ts" -> "src/precedence/order.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/precedence.ts";
+    lhead = "cluster_src/precedence/order.ts";
+    color = "black";
+  ];
+  "src/precedence/precedence.ts" -> "src/precedence/origin.ts" [
+    style = "invis";
+  ];
+  "src/precedence/precedence.ts" -> "src/precedence/origin.ts" [
+    style = "solid";
+    ltail = "cluster_src/precedence/precedence.ts";
+    lhead = "cluster_src/precedence/origin.ts";
+    color = "black";
+  ];
+  "src/rule-tree.ts" -> "src/block.ts" [
+    style = "invis";
+  ];
+  "src/rule-tree.ts" -> "src/block.ts" [
+    style = "solid";
+    ltail = "cluster_src/rule-tree.ts";
+    lhead = "cluster_src/block.ts";
+    color = "black";
+  ];
+  "src/rule-tree.ts" -> "name_src/precedence" [
+    style = "solid";
+    ltail = "cluster_src/rule-tree.ts";
+    lhead = "cluster_src/precedence";
+    color = "#00ffff";
+  ];
+  "src/selector-map.ts" -> "src/ancestor-filter.ts" [
+    style = "invis";
+  ];
+  "src/selector-map.ts" -> "src/ancestor-filter.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector-map.ts";
+    lhead = "cluster_src/ancestor-filter.ts";
+    color = "black";
+  ];
+  "src/selector-map.ts" -> "src/block.ts" [
+    style = "invis";
+  ];
+  "src/selector-map.ts" -> "src/block.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector-map.ts";
+    lhead = "cluster_src/block.ts";
+    color = "black";
+  ];
+  "src/selector-map.ts" -> "name_src/precedence" [
+    style = "solid";
+    ltail = "cluster_src/selector-map.ts";
+    lhead = "cluster_src/precedence";
+    color = "#00ffff";
+  ];
+}

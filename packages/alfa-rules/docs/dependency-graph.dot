@@ -1,0 +1,6383 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/common/diagnostic.ts";
+  "exit_src/common/act";
+  "src/common/dom/get-colors.ts";
+  "name_src/common/dom";
+  "src/sia-r109/rule.ts";
+  "exit_src/common";
+  "name_src/sia-r109";
+  "src/sia-r14/rule.ts";
+  "name_src/sia-r14";
+  "src/sia-r16/rule.ts";
+  "name_src/sia-r16";
+  "src/sia-r55/rule.ts";
+  "name_src/sia-r55";
+  "src/sia-r56/rule.ts";
+  "name_src/sia-r56";
+  "src/sia-r61/rule.ts";
+  "name_src/sia-r61";
+  "src/sia-r62/diagnostics.ts";
+  "name_src/sia-r62";
+  "src/sia-r65/diagnostics.ts";
+  "name_src/sia-r65";
+  "src/sia-r75/rule.ts";
+  "name_src/sia-r75";
+  "src/sia-r83/rule.ts";
+  "name_src/sia-r83";
+  "src/common/act/question.ts";
+  "exit_src/common/applicability";
+  "name_src/common/act";
+  "src/common/diagnostic/contrast.ts";
+  "name_src/common/diagnostic";
+  "src/common/diagnostic/text-spacing.ts";
+  "src/common/diagnostic/with-bad-elements.ts";
+  "src/common/diagnostic/with-bounding-box.ts";
+  "src/common/diagnostic/with-name.ts";
+  "src/common/diagnostic/with-other-heading.ts";
+  "src/common/diagnostic/with-role.ts";
+  "src/common/dom/get-colors/color-error.ts";
+  "name_src/common/dom/get-colors";
+  "src/common/dom/get-colors/color.ts";
+  "src/common/dom/get-colors/get-background.ts";
+  "src/common/dom/get-colors/get-foreground.ts";
+  "src/common/dom/get-colors/get-layers.ts";
+  "src/common/dom/get-interposed-descendant.ts";
+  "exit_src/common/dom/get-colors";
+  "src/common/act/expectation.ts";
+  "exit_src/common/expectation";
+  "src/common/act/group.ts";
+  "src/common/outcome/contrast.ts";
+  "name_src/common/outcome";
+  "src/common/predicate.ts";
+  "exit_src/common/outcome";
+  "src/common/predicate/is-at-the-start.ts";
+  "name_src/common/predicate";
+  "src/common/predicate/is-large-text.ts";
+  "src/common/predicate/reference-same-resource.ts";
+  "src/sia-dr18/rule.ts";
+  "name_src/sia-dr18";
+  "src/sia-dr34/rule.ts";
+  "name_src/sia-dr34";
+  "src/sia-dr36/rule.ts";
+  "name_src/sia-dr36";
+  "src/sia-dr6/rule.ts";
+  "name_src/sia-dr6";
+  "src/sia-dr66/rule.ts";
+  "name_src/sia-dr66";
+  "src/sia-dr69/rule.ts";
+  "name_src/sia-dr69";
+  "src/sia-er87/rule.ts";
+  "name_src/sia-er87";
+  "src/sia-r82/rule.ts";
+  "name_src/sia-r82";
+  "src/common/act/diagnostic.ts";
+  "name_src/common";
+  "src/deprecated.ts";
+  "src/experimental.ts";
+  "src/rules.ts";
+  "src/tags/index.ts";
+  "name_src/tags";
+  "src/sia-r1/rule.ts";
+  "name_src/sia-r1";
+  "src/sia-r10/rule.ts";
+  "name_src/sia-r10";
+  "src/sia-r11/rule.ts";
+  "name_src/sia-r11";
+  "src/sia-r110/rule.ts";
+  "name_src/sia-r110";
+  "src/sia-r111/rule.ts";
+  "name_src/sia-r111";
+  "src/sia-r113/rule.ts";
+  "name_src/sia-r113";
+  "src/sia-r12/rule.ts";
+  "name_src/sia-r12";
+  "src/sia-r13/rule.ts";
+  "name_src/sia-r13";
+  "src/sia-r15/rule.ts";
+  "name_src/sia-r15";
+  "src/sia-r17/rule.ts";
+  "name_src/sia-r17";
+  "src/sia-r18/rule.ts";
+  "name_src/sia-r18";
+  "src/sia-r19/rule.ts";
+  "name_src/sia-r19";
+  "src/sia-r2/rule.ts";
+  "name_src/sia-r2";
+  "src/sia-r20/rule.ts";
+  "name_src/sia-r20";
+  "src/sia-r21/rule.ts";
+  "name_src/sia-r21";
+  "src/sia-r22/rule.ts";
+  "name_src/sia-r22";
+  "src/sia-r23/rule.ts";
+  "name_src/sia-r23";
+  "src/sia-r24/rule.ts";
+  "name_src/sia-r24";
+  "src/sia-r25/rule.ts";
+  "name_src/sia-r25";
+  "src/sia-r26/rule.ts";
+  "name_src/sia-r26";
+  "src/sia-r27/rule.ts";
+  "name_src/sia-r27";
+  "src/sia-r28/rule.ts";
+  "name_src/sia-r28";
+  "src/sia-r29/rule.ts";
+  "name_src/sia-r29";
+  "src/sia-r3/rule.ts";
+  "name_src/sia-r3";
+  "src/sia-r30/rule.ts";
+  "name_src/sia-r30";
+  "src/sia-r31/rule.ts";
+  "name_src/sia-r31";
+  "src/sia-r32/rule.ts";
+  "name_src/sia-r32";
+  "src/sia-r33/rule.ts";
+  "name_src/sia-r33";
+  "src/sia-r35/rule.ts";
+  "name_src/sia-r35";
+  "src/sia-r37/rule.ts";
+  "name_src/sia-r37";
+  "src/sia-r38/rule.ts";
+  "name_src/sia-r38";
+  "src/sia-r39/rule.ts";
+  "name_src/sia-r39";
+  "src/sia-r4/rule.ts";
+  "name_src/sia-r4";
+  "src/sia-r40/rule.ts";
+  "name_src/sia-r40";
+  "src/sia-r41/rule.ts";
+  "name_src/sia-r41";
+  "src/sia-r42/rule.ts";
+  "name_src/sia-r42";
+  "src/sia-r43/rule.ts";
+  "name_src/sia-r43";
+  "src/sia-r44/rule.ts";
+  "name_src/sia-r44";
+  "src/sia-r45/rule.ts";
+  "name_src/sia-r45";
+  "src/sia-r46/rule.ts";
+  "name_src/sia-r46";
+  "src/sia-r47/rule.ts";
+  "name_src/sia-r47";
+  "src/sia-r48/rule.ts";
+  "name_src/sia-r48";
+  "src/sia-r49/rule.ts";
+  "name_src/sia-r49";
+  "src/sia-r5/rule.ts";
+  "name_src/sia-r5";
+  "src/sia-r50/rule.ts";
+  "name_src/sia-r50";
+  "src/sia-r53/rule.ts";
+  "name_src/sia-r53";
+  "src/sia-r54/rule.ts";
+  "name_src/sia-r54";
+  "src/sia-r57/rule.ts";
+  "name_src/sia-r57";
+  "src/sia-r59/rule.ts";
+  "name_src/sia-r59";
+  "src/sia-r60/rule.ts";
+  "name_src/sia-r60";
+  "src/sia-r62/rule.ts";
+  "src/sia-r63/rule.ts";
+  "name_src/sia-r63";
+  "src/sia-r64/rule.ts";
+  "name_src/sia-r64";
+  "src/sia-r65/rule.ts";
+  "src/sia-r66/rule.ts";
+  "name_src/sia-r66";
+  "src/sia-r67/rule.ts";
+  "name_src/sia-r67";
+  "src/sia-r68/rule.ts";
+  "name_src/sia-r68";
+  "src/sia-r69/rule.ts";
+  "name_src/sia-r69";
+  "src/sia-r7/rule.ts";
+  "name_src/sia-r7";
+  "src/sia-r70/rule.ts";
+  "name_src/sia-r70";
+  "src/sia-r71/rule.ts";
+  "name_src/sia-r71";
+  "src/sia-r72/rule.ts";
+  "name_src/sia-r72";
+  "src/sia-r73/rule.ts";
+  "name_src/sia-r73";
+  "src/sia-r74/rule.ts";
+  "name_src/sia-r74";
+  "src/sia-r76/rule.ts";
+  "name_src/sia-r76";
+  "src/sia-r77/rule.ts";
+  "name_src/sia-r77";
+  "src/sia-r78/rule.ts";
+  "name_src/sia-r78";
+  "src/sia-r79/rule.ts";
+  "name_src/sia-r79";
+  "src/sia-r8/rule.ts";
+  "name_src/sia-r8";
+  "src/sia-r80/rule.ts";
+  "name_src/sia-r80";
+  "src/sia-r81/rule.ts";
+  "name_src/sia-r81";
+  "src/sia-r84/rule.ts";
+  "name_src/sia-r84";
+  "src/sia-r85/rule.ts";
+  "name_src/sia-r85";
+  "src/sia-r86/rule.ts";
+  "name_src/sia-r86";
+  "src/sia-r87/rule.ts";
+  "name_src/sia-r87";
+  "src/sia-r9/rule.ts";
+  "name_src/sia-r9";
+  "src/sia-r90/rule.ts";
+  "name_src/sia-r90";
+  "src/sia-r91/rule.ts";
+  "name_src/sia-r91";
+  "src/sia-r92/rule.ts";
+  "name_src/sia-r92";
+  "src/sia-r93/rule.ts";
+  "name_src/sia-r93";
+  "src/sia-r94/rule.ts";
+  "name_src/sia-r94";
+  "src/sia-r95/rule.ts";
+  "name_src/sia-r95";
+  "src/sia-r96/rule.ts";
+  "name_src/sia-r96";
+  "exit_src/sia-dr18";
+  "exit_src/sia-dr34";
+  "src/common/applicability/video.ts";
+  "src/common/expectation/video-description-track-accurate.ts";
+  "exit_src/sia-dr36";
+  "exit_src/sia-dr6";
+  "exit_src/sia-dr66";
+  "src/common/applicability/non-disabled-texts.ts";
+  "src/common/expectation/contrast.ts";
+  "exit_src/sia-dr69";
+  "exit_src/sia-er87";
+  "src/common/applicability/with-document-element.ts";
+  "exit_src/sia-r1";
+  "exit_src/sia-r10";
+  "exit_src/sia-r109";
+  "exit_src/sia-r11";
+  "exit_src/sia-r110";
+  "src/common/applicability/role-attributes.ts";
+  "exit_src/sia-r111";
+  "src/common/applicability/targets-of-pointer-events.ts";
+  "src/common/outcome/target-size.ts";
+  "src/common/predicate/has-sufficient-size.ts";
+  "src/common/predicate/is-user-agent-controlled.ts";
+  "exit_src/sia-r113";
+  "exit_src/sia-r12";
+  "exit_src/sia-r13";
+  "exit_src/sia-r14";
+  "exit_src/sia-r15";
+  "src/common/predicate/is-aria-controls-optional.ts";
+  "exit_src/sia-r16";
+  "exit_src/sia-r17";
+  "exit_src/sia-r18";
+  "exit_src/sia-r19";
+  "exit_src/sia-r2";
+  "exit_src/sia-r20";
+  "exit_src/sia-r21";
+  "exit_src/sia-r22";
+  "exit_src/sia-r23";
+  "src/common/applicability/audio.ts";
+  "src/common/expectation/media-transcript.ts";
+  "exit_src/sia-r24";
+  "exit_src/sia-r25";
+  "exit_src/sia-r26";
+  "src/common/expectation/media-text-alternative.ts";
+  "exit_src/sia-r27";
+  "src/common/act/is-passed.ts";
+  "exit_src/sia-r28";
+  "exit_src/sia-r29";
+  "exit_src/sia-r3";
+  "exit_src/sia-r30";
+  "exit_src/sia-r31";
+  "exit_src/sia-r32";
+  "exit_src/sia-r33";
+  "exit_src/sia-r35";
+  "exit_src/sia-r37";
+  "exit_src/sia-r38";
+  "exit_src/sia-r39";
+  "exit_src/sia-r4";
+  "exit_src/sia-r40";
+  "exit_src/sia-r41";
+  "exit_src/sia-r42";
+  "exit_src/sia-r43";
+  "exit_src/sia-r44";
+  "exit_src/sia-r45";
+  "exit_src/sia-r46";
+  "exit_src/sia-r47";
+  "exit_src/sia-r48";
+  "exit_src/sia-r49";
+  "exit_src/sia-r5";
+  "exit_src/sia-r50";
+  "exit_src/sia-r53";
+  "exit_src/sia-r54";
+  "exit_src/sia-r55";
+  "exit_src/sia-r56";
+  "exit_src/sia-r57";
+  "exit_src/sia-r59";
+  "exit_src/sia-r60";
+  "exit_src/sia-r61";
+  "exit_src/sia-r62";
+  "src/sia-r62/serialise.ts";
+  "exit_src/sia-r63";
+  "exit_src/sia-r64";
+  "exit_src/sia-r65";
+  "exit_src/sia-r66";
+  "exit_src/sia-r67";
+  "exit_src/sia-r68";
+  "exit_src/sia-r69";
+  "exit_src/sia-r7";
+  "exit_src/sia-r70";
+  "exit_src/sia-r71";
+  "exit_src/sia-r72";
+  "exit_src/sia-r73";
+  "exit_src/sia-r74";
+  "exit_src/sia-r75";
+  "exit_src/sia-r76";
+  "exit_src/sia-r77";
+  "exit_src/sia-r78";
+  "exit_src/sia-r79";
+  "exit_src/sia-r8";
+  "exit_src/sia-r80";
+  "exit_src/sia-r81";
+  "exit_src/sia-r82";
+  "exit_src/sia-r83";
+  "exit_src/sia-r84";
+  "exit_src/sia-r85";
+  "exit_src/sia-r86";
+  "exit_src/sia-r87";
+  "exit_src/sia-r9";
+  "src/common/expectation/get-refresh-time.ts";
+  "src/common/outcome/refresh-delay.ts";
+  "exit_src/sia-r90";
+  "src/common/applicability/text-with-inlined-important-property.ts";
+  "exit_src/sia-r91";
+  "src/common/expectation/is-wide-enough.ts";
+  "exit_src/sia-r92";
+  "exit_src/sia-r93";
+  "exit_src/sia-r94";
+  "exit_src/sia-r95";
+  "exit_src/sia-r96";
+  "src/tags/scope.ts";
+  "src/tags/stability.ts";
+  "src/tags/version.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#6bff00";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#6bff00";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/deprecated.ts" [
+        label = "deprecated.ts";
+      ];
+      "src/experimental.ts" [
+        label = "experimental.ts";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#6bff00";
+        penwidth = 5;
+      ];
+      "src/rules.ts" [
+        label = "rules.ts";
+      ];
+      subgraph "cluster_src/common" {
+        color = "#000000";
+        label = "";
+        "name_src/common" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#25ff00";
+          label = "common";
+        ];
+        "exit_src/common" [
+          style = "invis";
+        ];
+        "src/common/diagnostic.ts" [
+          label = "diagnostic.ts";
+        ];
+        "src/common/predicate.ts" [
+          label = "predicate.ts";
+        ];
+        subgraph "cluster_src/common/act" {
+          color = "#000000";
+          label = "";
+          "name_src/common/act" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#a200ff";
+            label = "act";
+          ];
+          "exit_src/common/act" [
+            style = "invis";
+          ];
+          "src/common/act/diagnostic.ts" [
+            label = "diagnostic.ts";
+          ];
+          "src/common/act/expectation.ts" [
+            label = "expectation.ts";
+          ];
+          "src/common/act/group.ts" [
+            label = "group.ts";
+          ];
+          "src/common/act/is-passed.ts" [
+            label = "is-passed.ts";
+          ];
+          "src/common/act/question.ts" [
+            label = "question.ts";
+          ];
+          "src/common/act/diagnostic.ts" -> "exit_src/common/act" [
+            style = "invis";
+          ];
+          "src/common/act/expectation.ts" -> "exit_src/common/act" [
+            style = "invis";
+          ];
+          "src/common/act/group.ts" -> "exit_src/common/act" [
+            style = "invis";
+          ];
+          "src/common/act/is-passed.ts" -> "exit_src/common/act" [
+            style = "invis";
+          ];
+          "src/common/act/question.ts" -> "exit_src/common/act" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/common/applicability" {
+          color = "#000000";
+          label = "";
+          "name_src/common/applicability" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ff0099";
+            label = "applicability";
+          ];
+          "exit_src/common/applicability" [
+            style = "invis";
+          ];
+          "src/common/applicability/audio.ts" [
+            label = "audio.ts";
+          ];
+          "src/common/applicability/non-disabled-texts.ts" [
+            label = "non-disabled-texts.ts";
+          ];
+          "src/common/applicability/role-attributes.ts" [
+            label = "role-attributes.ts";
+          ];
+          "src/common/applicability/targets-of-pointer-events.ts" [
+            label = "targets-of-pointer-events.ts";
+          ];
+          "src/common/applicability/text-with-inlined-important-property.ts" [
+            label = "text-with-inlined-important-property.ts";
+          ];
+          "src/common/applicability/video.ts" [
+            label = "video.ts";
+          ];
+          "src/common/applicability/with-document-element.ts" [
+            label = "with-document-element.ts";
+          ];
+          "src/common/applicability/audio.ts" -> "exit_src/common/applicability" [
+            style = "invis";
+          ];
+          "src/common/applicability/non-disabled-texts.ts" -> "exit_src/common/applicability" [
+            style = "invis";
+          ];
+          "src/common/applicability/role-attributes.ts" -> "exit_src/common/applicability" [
+            style = "invis";
+          ];
+          "src/common/applicability/targets-of-pointer-events.ts" -> "exit_src/common/applicability" [
+            style = "invis";
+          ];
+          "src/common/applicability/text-with-inlined-important-property.ts" -> "exit_src/common/applicability" [
+            style = "invis";
+          ];
+          "src/common/applicability/video.ts" -> "exit_src/common/applicability" [
+            style = "invis";
+          ];
+          "src/common/applicability/with-document-element.ts" -> "exit_src/common/applicability" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/common/diagnostic" {
+          color = "#000000";
+          label = "";
+          "name_src/common/diagnostic" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#0090ff";
+            label = "diagnostic";
+          ];
+          "exit_src/common/diagnostic" [
+            style = "invis";
+          ];
+          "src/common/diagnostic/contrast.ts" [
+            label = "contrast.ts";
+          ];
+          "src/common/diagnostic/text-spacing.ts" [
+            label = "text-spacing.ts";
+          ];
+          "src/common/diagnostic/with-bad-elements.ts" [
+            label = "with-bad-elements.ts";
+          ];
+          "src/common/diagnostic/with-bounding-box.ts" [
+            label = "with-bounding-box.ts";
+          ];
+          "src/common/diagnostic/with-name.ts" [
+            label = "with-name.ts";
+          ];
+          "src/common/diagnostic/with-other-heading.ts" [
+            label = "with-other-heading.ts";
+          ];
+          "src/common/diagnostic/with-role.ts" [
+            label = "with-role.ts";
+          ];
+          "src/common/diagnostic/contrast.ts" -> "exit_src/common/diagnostic" [
+            style = "invis";
+          ];
+          "src/common/diagnostic/text-spacing.ts" -> "exit_src/common/diagnostic" [
+            style = "invis";
+          ];
+          "src/common/diagnostic/with-bad-elements.ts" -> "exit_src/common/diagnostic" [
+            style = "invis";
+          ];
+          "src/common/diagnostic/with-bounding-box.ts" -> "exit_src/common/diagnostic" [
+            style = "invis";
+          ];
+          "src/common/diagnostic/with-name.ts" -> "exit_src/common/diagnostic" [
+            style = "invis";
+          ];
+          "src/common/diagnostic/with-other-heading.ts" -> "exit_src/common/diagnostic" [
+            style = "invis";
+          ];
+          "src/common/diagnostic/with-role.ts" -> "exit_src/common/diagnostic" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/common/dom" {
+          color = "#000000";
+          label = "";
+          "name_src/common/dom" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#86ff00";
+            label = "dom";
+          ];
+          "exit_src/common/dom" [
+            style = "invis";
+          ];
+          "src/common/dom/get-colors.ts" [
+            label = "get-colors.ts";
+          ];
+          "src/common/dom/get-interposed-descendant.ts" [
+            label = "get-interposed-descendant.ts";
+          ];
+          subgraph "cluster_src/common/dom/get-colors" {
+            color = "#000000";
+            label = "";
+            "name_src/common/dom/get-colors" [
+              penwidth = 5;
+              shape = "rectangle";
+              color = "#f6ff00";
+              label = "get-colors";
+            ];
+            "exit_src/common/dom/get-colors" [
+              style = "invis";
+            ];
+            "src/common/dom/get-colors/color-error.ts" [
+              label = "color-error.ts";
+            ];
+            "src/common/dom/get-colors/color.ts" [
+              label = "color.ts";
+            ];
+            "src/common/dom/get-colors/get-background.ts" [
+              label = "get-background.ts";
+            ];
+            "src/common/dom/get-colors/get-foreground.ts" [
+              label = "get-foreground.ts";
+            ];
+            "src/common/dom/get-colors/get-layers.ts" [
+              label = "get-layers.ts";
+            ];
+            "src/common/dom/get-colors/color-error.ts" -> "exit_src/common/dom/get-colors" [
+              style = "invis";
+            ];
+            "src/common/dom/get-colors/color.ts" -> "exit_src/common/dom/get-colors" [
+              style = "invis";
+            ];
+            "src/common/dom/get-colors/get-background.ts" -> "exit_src/common/dom/get-colors" [
+              style = "invis";
+            ];
+            "src/common/dom/get-colors/get-foreground.ts" -> "exit_src/common/dom/get-colors" [
+              style = "invis";
+            ];
+            "src/common/dom/get-colors/get-layers.ts" -> "exit_src/common/dom/get-colors" [
+              style = "invis";
+            ];
+          }
+          "src/common/dom/get-colors.ts" -> "exit_src/common/dom" [
+            style = "invis";
+          ];
+          "exit_src/common/dom/get-colors" -> "exit_src/common/dom" [
+            style = "invis";
+          ];
+          "exit_src/common/dom/get-colors" -> "exit_src/common/dom" [
+            style = "invis";
+          ];
+          "exit_src/common/dom/get-colors" -> "exit_src/common/dom" [
+            style = "invis";
+          ];
+          "exit_src/common/dom/get-colors" -> "exit_src/common/dom" [
+            style = "invis";
+          ];
+          "exit_src/common/dom/get-colors" -> "exit_src/common/dom" [
+            style = "invis";
+          ];
+          "src/common/dom/get-interposed-descendant.ts" -> "exit_src/common/dom" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/common/expectation" {
+          color = "#000000";
+          label = "";
+          "name_src/common/expectation" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#e8ff00";
+            label = "expectation";
+          ];
+          "exit_src/common/expectation" [
+            style = "invis";
+          ];
+          "src/common/expectation/contrast.ts" [
+            label = "contrast.ts";
+          ];
+          "src/common/expectation/get-refresh-time.ts" [
+            label = "get-refresh-time.ts";
+          ];
+          "src/common/expectation/is-wide-enough.ts" [
+            label = "is-wide-enough.ts";
+          ];
+          "src/common/expectation/media-text-alternative.ts" [
+            label = "media-text-alternative.ts";
+          ];
+          "src/common/expectation/media-transcript.ts" [
+            label = "media-transcript.ts";
+          ];
+          "src/common/expectation/video-description-track-accurate.ts" [
+            label = "video-description-track-accurate.ts";
+          ];
+          "src/common/expectation/contrast.ts" -> "exit_src/common/expectation" [
+            style = "invis";
+          ];
+          "src/common/expectation/get-refresh-time.ts" -> "exit_src/common/expectation" [
+            style = "invis";
+          ];
+          "src/common/expectation/is-wide-enough.ts" -> "exit_src/common/expectation" [
+            style = "invis";
+          ];
+          "src/common/expectation/media-text-alternative.ts" -> "exit_src/common/expectation" [
+            style = "invis";
+          ];
+          "src/common/expectation/media-transcript.ts" -> "exit_src/common/expectation" [
+            style = "invis";
+          ];
+          "src/common/expectation/video-description-track-accurate.ts" -> "exit_src/common/expectation" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/common/outcome" {
+          color = "#000000";
+          label = "";
+          "name_src/common/outcome" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#6b00ff";
+            label = "outcome";
+          ];
+          "exit_src/common/outcome" [
+            style = "invis";
+          ];
+          "src/common/outcome/contrast.ts" [
+            label = "contrast.ts";
+          ];
+          "src/common/outcome/refresh-delay.ts" [
+            label = "refresh-delay.ts";
+          ];
+          "src/common/outcome/target-size.ts" [
+            label = "target-size.ts";
+          ];
+          "src/common/outcome/contrast.ts" -> "exit_src/common/outcome" [
+            style = "invis";
+          ];
+          "src/common/outcome/refresh-delay.ts" -> "exit_src/common/outcome" [
+            style = "invis";
+          ];
+          "src/common/outcome/target-size.ts" -> "exit_src/common/outcome" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/common/predicate" {
+          color = "#000000";
+          label = "";
+          "name_src/common/predicate" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#0020ff";
+            label = "predicate";
+          ];
+          "exit_src/common/predicate" [
+            style = "invis";
+          ];
+          "src/common/predicate/has-sufficient-size.ts" [
+            label = "has-sufficient-size.ts";
+          ];
+          "src/common/predicate/is-aria-controls-optional.ts" [
+            label = "is-aria-controls-optional.ts";
+          ];
+          "src/common/predicate/is-at-the-start.ts" [
+            label = "is-at-the-start.ts";
+          ];
+          "src/common/predicate/is-large-text.ts" [
+            label = "is-large-text.ts";
+          ];
+          "src/common/predicate/is-user-agent-controlled.ts" [
+            label = "is-user-agent-controlled.ts";
+          ];
+          "src/common/predicate/reference-same-resource.ts" [
+            label = "reference-same-resource.ts";
+          ];
+          "src/common/predicate/has-sufficient-size.ts" -> "exit_src/common/predicate" [
+            style = "invis";
+          ];
+          "src/common/predicate/is-aria-controls-optional.ts" -> "exit_src/common/predicate" [
+            style = "invis";
+          ];
+          "src/common/predicate/is-at-the-start.ts" -> "exit_src/common/predicate" [
+            style = "invis";
+          ];
+          "src/common/predicate/is-large-text.ts" -> "exit_src/common/predicate" [
+            style = "invis";
+          ];
+          "src/common/predicate/is-user-agent-controlled.ts" -> "exit_src/common/predicate" [
+            style = "invis";
+          ];
+          "src/common/predicate/reference-same-resource.ts" -> "exit_src/common/predicate" [
+            style = "invis";
+          ];
+        }
+        "exit_src/common/act" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/act" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/act" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/act" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/act" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/applicability" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/applicability" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/applicability" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/applicability" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/applicability" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/applicability" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/applicability" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "src/common/diagnostic.ts" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/diagnostic" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/diagnostic" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/diagnostic" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/diagnostic" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/diagnostic" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/diagnostic" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/diagnostic" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/dom" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/dom" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/dom" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/dom" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/dom" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/dom" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/dom" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/expectation" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/expectation" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/expectation" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/expectation" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/expectation" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/expectation" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/outcome" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/outcome" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/outcome" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "src/common/predicate.ts" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/predicate" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/predicate" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/predicate" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/predicate" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/predicate" -> "exit_src/common" [
+          style = "invis";
+        ];
+        "exit_src/common/predicate" -> "exit_src/common" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-dr18" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-dr18" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff00d1";
+          label = "sia-dr18";
+        ];
+        "exit_src/sia-dr18" [
+          style = "invis";
+        ];
+        "src/sia-dr18/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-dr18/rule.ts" -> "exit_src/sia-dr18" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-dr34" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-dr34" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff006f";
+          label = "sia-dr34";
+        ];
+        "exit_src/sia-dr34" [
+          style = "invis";
+        ];
+        "src/sia-dr34/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-dr34/rule.ts" -> "exit_src/sia-dr34" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-dr36" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-dr36" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#4f00ff";
+          label = "sia-dr36";
+        ];
+        "exit_src/sia-dr36" [
+          style = "invis";
+        ];
+        "src/sia-dr36/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-dr36/rule.ts" -> "exit_src/sia-dr36" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-dr6" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-dr6" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0058ff";
+          label = "sia-dr6";
+        ];
+        "exit_src/sia-dr6" [
+          style = "invis";
+        ];
+        "src/sia-dr6/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-dr6/rule.ts" -> "exit_src/sia-dr6" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-dr66" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-dr66" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ffdf00";
+          label = "sia-dr66";
+        ];
+        "exit_src/sia-dr66" [
+          style = "invis";
+        ];
+        "src/sia-dr66/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-dr66/rule.ts" -> "exit_src/sia-dr66" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-dr69" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-dr69" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#3300ff";
+          label = "sia-dr69";
+        ];
+        "exit_src/sia-dr69" [
+          style = "invis";
+        ];
+        "src/sia-dr69/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-dr69/rule.ts" -> "exit_src/sia-dr69" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-er87" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-er87" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff90";
+          label = "sia-er87";
+        ];
+        "exit_src/sia-er87" [
+          style = "invis";
+        ];
+        "src/sia-er87/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-er87/rule.ts" -> "exit_src/sia-er87" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r1" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r1" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0013ff";
+          label = "sia-r1";
+        ];
+        "exit_src/sia-r1" [
+          style = "invis";
+        ];
+        "src/sia-r1/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r1/rule.ts" -> "exit_src/sia-r1" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r10" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r10" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff000e";
+          label = "sia-r10";
+        ];
+        "exit_src/sia-r10" [
+          style = "invis";
+        ];
+        "src/sia-r10/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r10/rule.ts" -> "exit_src/sia-r10" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r109" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r109" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00d5ff";
+          label = "sia-r109";
+        ];
+        "exit_src/sia-r109" [
+          style = "invis";
+        ];
+        "src/sia-r109/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r109/rule.ts" -> "exit_src/sia-r109" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r11" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r11" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff20";
+          label = "sia-r11";
+        ];
+        "exit_src/sia-r11" [
+          style = "invis";
+        ];
+        "src/sia-r11/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r11/rule.ts" -> "exit_src/sia-r11" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r110" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r110" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0074ff";
+          label = "sia-r110";
+        ];
+        "exit_src/sia-r110" [
+          style = "invis";
+        ];
+        "src/sia-r110/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r110/rule.ts" -> "exit_src/sia-r110" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r111" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r111" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#beff00";
+          label = "sia-r111";
+        ];
+        "exit_src/sia-r111" [
+          style = "invis";
+        ];
+        "src/sia-r111/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r111/rule.ts" -> "exit_src/sia-r111" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r113" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r113" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff58";
+          label = "sia-r113";
+        ];
+        "exit_src/sia-r113" [
+          style = "invis";
+        ];
+        "src/sia-r113/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r113/rule.ts" -> "exit_src/sia-r113" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r12" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r12" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ffc300";
+          label = "sia-r12";
+        ];
+        "exit_src/sia-r12" [
+          style = "invis";
+        ];
+        "src/sia-r12/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r12/rule.ts" -> "exit_src/sia-r12" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r13" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r13" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00e3ff";
+          label = "sia-r13";
+        ];
+        "exit_src/sia-r13" [
+          style = "invis";
+        ];
+        "src/sia-r13/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r13/rule.ts" -> "exit_src/sia-r13" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r14" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r14" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00acff";
+          label = "sia-r14";
+        ];
+        "exit_src/sia-r14" [
+          style = "invis";
+        ];
+        "src/sia-r14/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r14/rule.ts" -> "exit_src/sia-r14" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r15" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r15" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff1c00";
+          label = "sia-r15";
+        ];
+        "exit_src/sia-r15" [
+          style = "invis";
+        ];
+        "src/sia-r15/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r15/rule.ts" -> "exit_src/sia-r15" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r16" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r16" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#b000ff";
+          label = "sia-r16";
+        ];
+        "exit_src/sia-r16" [
+          style = "invis";
+        ];
+        "src/sia-r16/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r16/rule.ts" -> "exit_src/sia-r16" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r17" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r17" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#fffa00";
+          label = "sia-r17";
+        ];
+        "exit_src/sia-r17" [
+          style = "invis";
+        ];
+        "src/sia-r17/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r17/rule.ts" -> "exit_src/sia-r17" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r18" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r18" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#5d00ff";
+          label = "sia-r18";
+        ];
+        "exit_src/sia-r18" [
+          style = "invis";
+        ];
+        "src/sia-r18/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r18/rule.ts" -> "exit_src/sia-r18" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r19" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r19" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff8b00";
+          label = "sia-r19";
+        ];
+        "exit_src/sia-r19" [
+          style = "invis";
+        ];
+        "src/sia-r19/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r19/rule.ts" -> "exit_src/sia-r19" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r2" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r2" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff00b5";
+          label = "sia-r2";
+        ];
+        "exit_src/sia-r2" [
+          style = "invis";
+        ];
+        "src/sia-r2/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r2/rule.ts" -> "exit_src/sia-r2" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r20" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r20" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff7d00";
+          label = "sia-r20";
+        ];
+        "exit_src/sia-r20" [
+          style = "invis";
+        ];
+        "src/sia-r20/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r20/rule.ts" -> "exit_src/sia-r20" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r21" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r21" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#4100ff";
+          label = "sia-r21";
+        ];
+        "exit_src/sia-r21" [
+          style = "invis";
+        ];
+        "src/sia-r21/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r21/rule.ts" -> "exit_src/sia-r21" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r22" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r22" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#33ff00";
+          label = "sia-r22";
+        ];
+        "exit_src/sia-r22" [
+          style = "invis";
+        ];
+        "src/sia-r22/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r22/rule.ts" -> "exit_src/sia-r22" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r23" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r23" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff007d";
+          label = "sia-r23";
+        ];
+        "exit_src/sia-r23" [
+          style = "invis";
+        ];
+        "src/sia-r23/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r23/rule.ts" -> "exit_src/sia-r23" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r24" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r24" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#8600ff";
+          label = "sia-r24";
+        ];
+        "exit_src/sia-r24" [
+          style = "invis";
+        ];
+        "src/sia-r24/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r24/rule.ts" -> "exit_src/sia-r24" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r25" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r25" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff05";
+          label = "sia-r25";
+        ];
+        "exit_src/sia-r25" [
+          style = "invis";
+        ];
+        "src/sia-r25/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r25/rule.ts" -> "exit_src/sia-r25" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r26" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r26" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0046";
+          label = "sia-r26";
+        ];
+        "exit_src/sia-r26" [
+          style = "invis";
+        ];
+        "src/sia-r26/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r26/rule.ts" -> "exit_src/sia-r26" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r27" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r27" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00f1ff";
+          label = "sia-r27";
+        ];
+        "exit_src/sia-r27" [
+          style = "invis";
+        ];
+        "src/sia-r27/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r27/rule.ts" -> "exit_src/sia-r27" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r28" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r28" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff3c";
+          label = "sia-r28";
+        ];
+        "exit_src/sia-r28" [
+          style = "invis";
+        ];
+        "src/sia-r28/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r28/rule.ts" -> "exit_src/sia-r28" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r29" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r29" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff002a";
+          label = "sia-r29";
+        ];
+        "exit_src/sia-r29" [
+          style = "invis";
+        ];
+        "src/sia-r29/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r29/rule.ts" -> "exit_src/sia-r29" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r3" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r3" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffd5";
+          label = "sia-r3";
+        ];
+        "exit_src/sia-r3" [
+          style = "invis";
+        ];
+        "src/sia-r3/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r3/rule.ts" -> "exit_src/sia-r3" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r30" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r30" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff4a";
+          label = "sia-r30";
+        ];
+        "exit_src/sia-r30" [
+          style = "invis";
+        ];
+        "src/sia-r30/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r30/rule.ts" -> "exit_src/sia-r30" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r31" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r31" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#f600ff";
+          label = "sia-r31";
+        ];
+        "exit_src/sia-r31" [
+          style = "invis";
+        ];
+        "src/sia-r31/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r31/rule.ts" -> "exit_src/sia-r31" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r32" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r32" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ccff00";
+          label = "sia-r32";
+        ];
+        "exit_src/sia-r32" [
+          style = "invis";
+        ];
+        "src/sia-r32/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r32/rule.ts" -> "exit_src/sia-r32" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r33" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r33" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#003cff";
+          label = "sia-r33";
+        ];
+        "exit_src/sia-r33" [
+          style = "invis";
+        ];
+        "src/sia-r33/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r33/rule.ts" -> "exit_src/sia-r33" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r35" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r35" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff9e";
+          label = "sia-r35";
+        ];
+        "exit_src/sia-r35" [
+          style = "invis";
+        ];
+        "src/sia-r35/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r35/rule.ts" -> "exit_src/sia-r35" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r37" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r37" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#94ff00";
+          label = "sia-r37";
+        ];
+        "exit_src/sia-r37" [
+          style = "invis";
+        ];
+        "src/sia-r37/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r37/rule.ts" -> "exit_src/sia-r37" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r38" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r38" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0005ff";
+          label = "sia-r38";
+        ];
+        "exit_src/sia-r38" [
+          style = "invis";
+        ];
+        "src/sia-r38/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r38/rule.ts" -> "exit_src/sia-r38" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r39" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r39" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff4600";
+          label = "sia-r39";
+        ];
+        "exit_src/sia-r39" [
+          style = "invis";
+        ];
+        "src/sia-r39/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r39/rule.ts" -> "exit_src/sia-r39" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r4" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r4" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#1700ff";
+          label = "sia-r4";
+        ];
+        "exit_src/sia-r4" [
+          style = "invis";
+        ];
+        "src/sia-r4/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r4/rule.ts" -> "exit_src/sia-r4" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r40" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r40" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00c7ff";
+          label = "sia-r40";
+        ];
+        "exit_src/sia-r40" [
+          style = "invis";
+        ];
+        "src/sia-r40/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r40/rule.ts" -> "exit_src/sia-r40" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r41" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r41" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ffa700";
+          label = "sia-r41";
+        ];
+        "exit_src/sia-r41" [
+          style = "invis";
+        ];
+        "src/sia-r41/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r41/rule.ts" -> "exit_src/sia-r41" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r42" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r42" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff2e";
+          label = "sia-r42";
+        ];
+        "exit_src/sia-r42" [
+          style = "invis";
+        ];
+        "src/sia-r42/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r42/rule.ts" -> "exit_src/sia-r42" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r43" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r43" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0038";
+          label = "sia-r43";
+        ];
+        "exit_src/sia-r43" [
+          style = "invis";
+        ];
+        "src/sia-r43/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r43/rule.ts" -> "exit_src/sia-r43" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r44" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r44" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ffd100";
+          label = "sia-r44";
+        ];
+        "exit_src/sia-r44" [
+          style = "invis";
+        ];
+        "src/sia-r44/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r44/rule.ts" -> "exit_src/sia-r44" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r45" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r45" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#be00ff";
+          label = "sia-r45";
+        ];
+        "exit_src/sia-r45" [
+          style = "invis";
+        ];
+        "src/sia-r45/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r45/rule.ts" -> "exit_src/sia-r45" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r46" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r46" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "sia-r46";
+        ];
+        "exit_src/sia-r46" [
+          style = "invis";
+        ];
+        "src/sia-r46/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r46/rule.ts" -> "exit_src/sia-r46" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r47" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r47" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#009eff";
+          label = "sia-r47";
+        ];
+        "exit_src/sia-r47" [
+          style = "invis";
+        ];
+        "src/sia-r47/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r47/rule.ts" -> "exit_src/sia-r47" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r48" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r48" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#41ff00";
+          label = "sia-r48";
+        ];
+        "exit_src/sia-r48" [
+          style = "invis";
+        ];
+        "src/sia-r48/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r48/rule.ts" -> "exit_src/sia-r48" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r49" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r49" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff008b";
+          label = "sia-r49";
+        ];
+        "exit_src/sia-r49" [
+          style = "invis";
+        ];
+        "src/sia-r49/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r49/rule.ts" -> "exit_src/sia-r49" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r5" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r5" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#79ff00";
+          label = "sia-r5";
+        ];
+        "exit_src/sia-r5" [
+          style = "invis";
+        ];
+        "src/sia-r5/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r5/rule.ts" -> "exit_src/sia-r5" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r50" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r50" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff00c3";
+          label = "sia-r50";
+        ];
+        "exit_src/sia-r50" [
+          style = "invis";
+        ];
+        "src/sia-r50/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r50/rule.ts" -> "exit_src/sia-r50" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r53" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r53" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffb9";
+          label = "sia-r53";
+        ];
+        "exit_src/sia-r53" [
+          style = "invis";
+        ];
+        "src/sia-r53/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r53/rule.ts" -> "exit_src/sia-r53" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r54" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r54" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#b0ff00";
+          label = "sia-r54";
+        ];
+        "exit_src/sia-r54" [
+          style = "invis";
+        ];
+        "src/sia-r54/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r54/rule.ts" -> "exit_src/sia-r54" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r55" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r55" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0066ff";
+          label = "sia-r55";
+        ];
+        "exit_src/sia-r55" [
+          style = "invis";
+        ];
+        "src/sia-r55/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r55/rule.ts" -> "exit_src/sia-r55" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r56" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r56" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff66";
+          label = "sia-r56";
+        ];
+        "exit_src/sia-r56" [
+          style = "invis";
+        ];
+        "src/sia-r56/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r56/rule.ts" -> "exit_src/sia-r56" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r57" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r57" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff00fa";
+          label = "sia-r57";
+        ];
+        "exit_src/sia-r57" [
+          style = "invis";
+        ];
+        "src/sia-r57/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r57/rule.ts" -> "exit_src/sia-r57" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r59" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r59" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00fff1";
+          label = "sia-r59";
+        ];
+        "exit_src/sia-r59" [
+          style = "invis";
+        ];
+        "src/sia-r59/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r59/rule.ts" -> "exit_src/sia-r59" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r60" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r60" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0e00";
+          label = "sia-r60";
+        ];
+        "exit_src/sia-r60" [
+          style = "invis";
+        ];
+        "src/sia-r60/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r60/rule.ts" -> "exit_src/sia-r60" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r61" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r61" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0082ff";
+          label = "sia-r61";
+        ];
+        "exit_src/sia-r61" [
+          style = "invis";
+        ];
+        "src/sia-r61/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r61/rule.ts" -> "exit_src/sia-r61" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r62" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r62" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ffec00";
+          label = "sia-r62";
+        ];
+        "exit_src/sia-r62" [
+          style = "invis";
+        ];
+        "src/sia-r62/diagnostics.ts" [
+          label = "diagnostics.ts";
+        ];
+        "src/sia-r62/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r62/serialise.ts" [
+          label = "serialise.ts";
+        ];
+        "src/sia-r62/diagnostics.ts" -> "exit_src/sia-r62" [
+          style = "invis";
+        ];
+        "src/sia-r62/rule.ts" -> "exit_src/sia-r62" [
+          style = "invis";
+        ];
+        "src/sia-r62/serialise.ts" -> "exit_src/sia-r62" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r63" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r63" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#cc00ff";
+          label = "sia-r63";
+        ];
+        "exit_src/sia-r63" [
+          style = "invis";
+        ];
+        "src/sia-r63/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r63/rule.ts" -> "exit_src/sia-r63" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r64" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r64" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff13";
+          label = "sia-r64";
+        ];
+        "exit_src/sia-r64" [
+          style = "invis";
+        ];
+        "src/sia-r64/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r64/rule.ts" -> "exit_src/sia-r64" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r65" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r65" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff001c";
+          label = "sia-r65";
+        ];
+        "exit_src/sia-r65" [
+          style = "invis";
+        ];
+        "src/sia-r65/diagnostics.ts" [
+          label = "diagnostics.ts";
+        ];
+        "src/sia-r65/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r65/diagnostics.ts" -> "exit_src/sia-r65" [
+          style = "invis";
+        ];
+        "src/sia-r65/rule.ts" -> "exit_src/sia-r65" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r66" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r66" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00b9ff";
+          label = "sia-r66";
+        ];
+        "exit_src/sia-r66" [
+          style = "invis";
+        ];
+        "src/sia-r66/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r66/rule.ts" -> "exit_src/sia-r66" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r67" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r67" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ffb500";
+          label = "sia-r67";
+        ];
+        "exit_src/sia-r67" [
+          style = "invis";
+        ];
+        "src/sia-r67/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r67/rule.ts" -> "exit_src/sia-r67" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r68" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r68" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#9400ff";
+          label = "sia-r68";
+        ];
+        "exit_src/sia-r68" [
+          style = "invis";
+        ];
+        "src/sia-r68/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r68/rule.ts" -> "exit_src/sia-r68" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r69" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r69" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#17ff00";
+          label = "sia-r69";
+        ];
+        "exit_src/sia-r69" [
+          style = "invis";
+        ];
+        "src/sia-r69/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r69/rule.ts" -> "exit_src/sia-r69" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r7" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r7" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff6100";
+          label = "sia-r7";
+        ];
+        "exit_src/sia-r7" [
+          style = "invis";
+        ];
+        "src/sia-r7/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r7/rule.ts" -> "exit_src/sia-r7" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r70" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r70" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#5dff00";
+          label = "sia-r70";
+        ];
+        "exit_src/sia-r70" [
+          style = "invis";
+        ];
+        "src/sia-r70/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r70/rule.ts" -> "exit_src/sia-r70" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r71" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r71" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0900ff";
+          label = "sia-r71";
+        ];
+        "exit_src/sia-r71" [
+          style = "invis";
+        ];
+        "src/sia-r71/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r71/rule.ts" -> "exit_src/sia-r71" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r72" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r72" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff6f00";
+          label = "sia-r72";
+        ];
+        "exit_src/sia-r72" [
+          style = "invis";
+        ];
+        "src/sia-r72/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r72/rule.ts" -> "exit_src/sia-r72" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r73" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r73" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffe3";
+          label = "sia-r73";
+        ];
+        "exit_src/sia-r73" [
+          style = "invis";
+        ];
+        "src/sia-r73/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r73/rule.ts" -> "exit_src/sia-r73" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r74" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r74" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#002eff";
+          label = "sia-r74";
+        ];
+        "exit_src/sia-r74" [
+          style = "invis";
+        ];
+        "src/sia-r74/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r74/rule.ts" -> "exit_src/sia-r74" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r75" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r75" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff5300";
+          label = "sia-r75";
+        ];
+        "exit_src/sia-r75" [
+          style = "invis";
+        ];
+        "src/sia-r75/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r75/rule.ts" -> "exit_src/sia-r75" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r76" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r76" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffc7";
+          label = "sia-r76";
+        ];
+        "exit_src/sia-r76" [
+          style = "invis";
+        ];
+        "src/sia-r76/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r76/rule.ts" -> "exit_src/sia-r76" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r77" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r77" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff00a7";
+          label = "sia-r77";
+        ];
+        "exit_src/sia-r77" [
+          style = "invis";
+        ];
+        "src/sia-r77/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r77/rule.ts" -> "exit_src/sia-r77" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r78" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r78" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff3800";
+          label = "sia-r78";
+        ];
+        "exit_src/sia-r78" [
+          style = "invis";
+        ];
+        "src/sia-r78/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r78/rule.ts" -> "exit_src/sia-r78" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r79" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r79" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffac";
+          label = "sia-r79";
+        ];
+        "exit_src/sia-r79" [
+          style = "invis";
+        ];
+        "src/sia-r79/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r79/rule.ts" -> "exit_src/sia-r79" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r8" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r8" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#e800ff";
+          label = "sia-r8";
+        ];
+        "exit_src/sia-r8" [
+          style = "invis";
+        ];
+        "src/sia-r8/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r8/rule.ts" -> "exit_src/sia-r8" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r80" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r80" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0053";
+          label = "sia-r80";
+        ];
+        "exit_src/sia-r80" [
+          style = "invis";
+        ];
+        "src/sia-r80/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r80/rule.ts" -> "exit_src/sia-r80" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r81" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r81" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffff";
+          label = "sia-r81";
+        ];
+        "exit_src/sia-r81" [
+          style = "invis";
+        ];
+        "src/sia-r81/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r81/rule.ts" -> "exit_src/sia-r81" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r82" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r82" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#7900ff";
+          label = "sia-r82";
+        ];
+        "exit_src/sia-r82" [
+          style = "invis";
+        ];
+        "src/sia-r82/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r82/rule.ts" -> "exit_src/sia-r82" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r83" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r83" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#09ff00";
+          label = "sia-r83";
+        ];
+        "exit_src/sia-r83" [
+          style = "invis";
+        ];
+        "src/sia-r83/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r83/rule.ts" -> "exit_src/sia-r83" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r84" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r84" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#4fff00";
+          label = "sia-r84";
+        ];
+        "exit_src/sia-r84" [
+          style = "invis";
+        ];
+        "src/sia-r84/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r84/rule.ts" -> "exit_src/sia-r84" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r85" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r85" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0061";
+          label = "sia-r85";
+        ];
+        "exit_src/sia-r85" [
+          style = "invis";
+        ];
+        "src/sia-r85/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r85/rule.ts" -> "exit_src/sia-r85" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r86" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r86" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff9900";
+          label = "sia-r86";
+        ];
+        "exit_src/sia-r86" [
+          style = "invis";
+        ];
+        "src/sia-r86/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r86/rule.ts" -> "exit_src/sia-r86" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r87" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r87" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#2500ff";
+          label = "sia-r87";
+        ];
+        "exit_src/sia-r87" [
+          style = "invis";
+        ];
+        "src/sia-r87/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r87/rule.ts" -> "exit_src/sia-r87" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r9" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r9" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff82";
+          label = "sia-r9";
+        ];
+        "exit_src/sia-r9" [
+          style = "invis";
+        ];
+        "src/sia-r9/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r9/rule.ts" -> "exit_src/sia-r9" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r90" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r90" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#daff00";
+          label = "sia-r90";
+        ];
+        "exit_src/sia-r90" [
+          style = "invis";
+        ];
+        "src/sia-r90/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r90/rule.ts" -> "exit_src/sia-r90" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r91" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r91" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#004aff";
+          label = "sia-r91";
+        ];
+        "exit_src/sia-r91" [
+          style = "invis";
+        ];
+        "src/sia-r91/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r91/rule.ts" -> "exit_src/sia-r91" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r92" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r92" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff74";
+          label = "sia-r92";
+        ];
+        "exit_src/sia-r92" [
+          style = "invis";
+        ];
+        "src/sia-r92/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r92/rule.ts" -> "exit_src/sia-r92" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r93" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r93" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#da00ff";
+          label = "sia-r93";
+        ];
+        "exit_src/sia-r93" [
+          style = "invis";
+        ];
+        "src/sia-r93/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r93/rule.ts" -> "exit_src/sia-r93" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r94" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r94" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff00ec";
+          label = "sia-r94";
+        ];
+        "exit_src/sia-r94" [
+          style = "invis";
+        ];
+        "src/sia-r94/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r94/rule.ts" -> "exit_src/sia-r94" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r95" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r95" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#a2ff00";
+          label = "sia-r95";
+        ];
+        "exit_src/sia-r95" [
+          style = "invis";
+        ];
+        "src/sia-r95/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r95/rule.ts" -> "exit_src/sia-r95" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/sia-r96" {
+        color = "#000000";
+        label = "";
+        "name_src/sia-r96" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff2a00";
+          label = "sia-r96";
+        ];
+        "exit_src/sia-r96" [
+          style = "invis";
+        ];
+        "src/sia-r96/rule.ts" [
+          label = "rule.ts";
+        ];
+        "src/sia-r96/rule.ts" -> "exit_src/sia-r96" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/tags" {
+        color = "#000000";
+        label = "";
+        "name_src/tags" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff00df";
+          label = "tags";
+        ];
+        "exit_src/tags" [
+          style = "invis";
+        ];
+        "src/tags/index.ts" [
+          label = "index.ts";
+          color = "#ff00df";
+          penwidth = 5;
+        ];
+        "src/tags/scope.ts" [
+          label = "scope.ts";
+        ];
+        "src/tags/stability.ts" [
+          label = "stability.ts";
+        ];
+        "src/tags/version.ts" [
+          label = "version.ts";
+        ];
+        "src/tags/index.ts" -> "exit_src/tags" [
+          style = "invis";
+        ];
+        "src/tags/scope.ts" -> "exit_src/tags" [
+          style = "invis";
+        ];
+        "src/tags/stability.ts" -> "exit_src/tags" [
+          style = "invis";
+        ];
+        "src/tags/version.ts" -> "exit_src/tags" [
+          style = "invis";
+        ];
+      }
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/deprecated.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/experimental.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/rules.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-dr18" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-dr34" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-dr36" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-dr6" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-dr66" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-dr69" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-er87" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r1" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r10" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r109" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r11" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r110" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r111" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r113" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r12" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r13" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r14" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r15" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r16" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r17" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r18" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r19" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r2" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r20" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r21" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r22" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r23" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r24" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r25" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r26" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r27" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r28" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r29" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r3" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r30" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r31" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r32" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r33" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r35" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r37" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r38" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r39" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r4" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r40" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r41" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r42" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r43" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r44" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r45" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r46" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r47" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r48" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r49" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r5" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r50" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r53" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r54" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r55" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r56" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r57" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r59" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r60" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r61" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r62" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r62" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r62" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r63" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r64" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r65" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r65" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r66" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r67" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r68" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r69" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r7" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r70" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r71" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r72" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r73" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r74" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r75" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r76" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r77" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r78" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r79" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r8" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r80" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r81" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r82" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r83" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r84" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r85" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r86" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r87" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r9" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r90" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r91" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r92" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r93" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r94" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r95" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/sia-r96" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/tags" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/tags" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/tags" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/tags" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/common/act/diagnostic.ts" -> "src/common/diagnostic.ts" [
+    style = "invis";
+  ];
+  "exit_src/common/act" -> "src/common/diagnostic.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/act";
+    lhead = "cluster_src/common/diagnostic.ts";
+    color = "#a200ff";
+  ];
+  "exit_src/common/act" -> "name_src/common/dom" [
+    style = "solid";
+    ltail = "cluster_src/common/act";
+    lhead = "cluster_src/common/dom";
+    color = "#a200ff";
+  ];
+  "exit_src/common" -> "name_src/sia-r109" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r109";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r14" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r14";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r16" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r16";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r55" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r55";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r56" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r56";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r61" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r61";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r62" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r62";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r65" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r65";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r75" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r75";
+    color = "#25ff00";
+  ];
+  "exit_src/common" -> "name_src/sia-r83" [
+    style = "solid";
+    ltail = "cluster_src/common";
+    lhead = "cluster_src/sia-r83";
+    color = "#25ff00";
+  ];
+  "exit_src/common/applicability" -> "name_src/common/act" [
+    style = "solid";
+    ltail = "cluster_src/common/applicability";
+    lhead = "cluster_src/common/act";
+    color = "#ff0099";
+  ];
+  "exit_src/common/applicability" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
+    style = "solid";
+    ltail = "cluster_src/common/diagnostic.ts";
+    lhead = "cluster_src/common/diagnostic";
+    color = "#25ff00";
+  ];
+  "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
+    style = "invis";
+  ];
+  "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
+    style = "invis";
+  ];
+  "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
+    style = "invis";
+  ];
+  "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
+    style = "invis";
+  ];
+  "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
+    style = "invis";
+  ];
+  "src/common/diagnostic.ts" -> "name_src/common/diagnostic" [
+    style = "invis";
+  ];
+  "src/common/diagnostic/with-bounding-box.ts" -> "src/common/diagnostic/with-name.ts" [
+    style = "invis";
+  ];
+  "src/common/diagnostic/with-bounding-box.ts" -> "src/common/diagnostic/with-name.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/diagnostic/with-bounding-box.ts";
+    lhead = "cluster_src/common/diagnostic/with-name.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors.ts";
+    lhead = "cluster_src/common/dom/get-colors";
+    color = "#86ff00";
+  ];
+  "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors.ts" -> "name_src/common/dom/get-colors" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/color-error.ts" -> "src/common/dom/get-colors/color.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/color-error.ts" -> "src/common/dom/get-colors/color.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/color-error.ts";
+    lhead = "cluster_src/common/dom/get-colors/color.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-background.ts" -> "src/common/dom/get-colors/color-error.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/get-background.ts" -> "src/common/dom/get-colors/color-error.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/get-background.ts";
+    lhead = "cluster_src/common/dom/get-colors/color-error.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-background.ts" -> "src/common/dom/get-colors/color.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/get-background.ts" -> "src/common/dom/get-colors/color.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/get-background.ts";
+    lhead = "cluster_src/common/dom/get-colors/color.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-background.ts" -> "src/common/dom/get-colors/get-layers.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/get-background.ts" -> "src/common/dom/get-colors/get-layers.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/get-background.ts";
+    lhead = "cluster_src/common/dom/get-colors/get-layers.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-foreground.ts" -> "src/common/dom/get-colors/color-error.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/get-foreground.ts" -> "src/common/dom/get-colors/color-error.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/get-foreground.ts";
+    lhead = "cluster_src/common/dom/get-colors/color-error.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-foreground.ts" -> "src/common/dom/get-colors/color.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/get-foreground.ts" -> "src/common/dom/get-colors/color.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/get-foreground.ts";
+    lhead = "cluster_src/common/dom/get-colors/color.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-foreground.ts" -> "src/common/dom/get-colors/get-background.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/get-foreground.ts" -> "src/common/dom/get-colors/get-background.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/get-foreground.ts";
+    lhead = "cluster_src/common/dom/get-colors/get-background.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-layers.ts" -> "src/common/dom/get-colors/color-error.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/get-layers.ts" -> "src/common/dom/get-colors/color-error.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/get-layers.ts";
+    lhead = "cluster_src/common/dom/get-colors/color-error.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-layers.ts" -> "src/common/dom/get-colors/color.ts" [
+    style = "invis";
+  ];
+  "src/common/dom/get-colors/get-layers.ts" -> "src/common/dom/get-colors/color.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors/get-layers.ts";
+    lhead = "cluster_src/common/dom/get-colors/color.ts";
+    color = "black";
+  ];
+  "src/common/dom/get-colors/get-layers.ts" -> "src/common/dom/get-interposed-descendant.ts" [
+    style = "invis";
+  ];
+  "exit_src/common/dom/get-colors" -> "src/common/dom/get-interposed-descendant.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/dom/get-colors";
+    lhead = "cluster_src/common/dom/get-interposed-descendant.ts";
+    color = "#f6ff00";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "solid";
+    ltail = "cluster_src/common/expectation";
+    lhead = "cluster_src/common/act";
+    color = "#e8ff00";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/diagnostic" [
+    style = "solid";
+    ltail = "cluster_src/common/expectation";
+    lhead = "cluster_src/common/diagnostic";
+    color = "#e8ff00";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/dom" [
+    style = "solid";
+    ltail = "cluster_src/common/expectation";
+    lhead = "cluster_src/common/dom";
+    color = "#e8ff00";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/outcome" [
+    style = "solid";
+    ltail = "cluster_src/common/expectation";
+    lhead = "cluster_src/common/outcome";
+    color = "#e8ff00";
+  ];
+  "src/common/expectation/contrast.ts" -> "src/common/predicate.ts" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "src/common/predicate.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/expectation";
+    lhead = "cluster_src/common/predicate.ts";
+    color = "#e8ff00";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/diagnostic" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/expectation" -> "name_src/common/act" [
+    style = "invis";
+  ];
+  "exit_src/common/outcome" -> "name_src/common/diagnostic" [
+    style = "solid";
+    ltail = "cluster_src/common/outcome";
+    lhead = "cluster_src/common/diagnostic";
+    color = "#6b00ff";
+  ];
+  "src/common/outcome/target-size.ts" -> "src/common/diagnostic.ts" [
+    style = "invis";
+  ];
+  "exit_src/common/outcome" -> "src/common/diagnostic.ts" [
+    style = "solid";
+    ltail = "cluster_src/common/outcome";
+    lhead = "cluster_src/common/diagnostic.ts";
+    color = "#6b00ff";
+  ];
+  "src/common/predicate.ts" -> "name_src/common/predicate" [
+    style = "solid";
+    ltail = "cluster_src/common/predicate.ts";
+    lhead = "cluster_src/common/predicate";
+    color = "#25ff00";
+  ];
+  "src/common/predicate.ts" -> "name_src/common/predicate" [
+    style = "invis";
+  ];
+  "src/common/predicate.ts" -> "name_src/common/predicate" [
+    style = "invis";
+  ];
+  "src/deprecated.ts" -> "name_src/sia-dr18" [
+    style = "solid";
+    ltail = "cluster_src/deprecated.ts";
+    lhead = "cluster_src/sia-dr18";
+    color = "#6bff00";
+  ];
+  "src/deprecated.ts" -> "name_src/sia-dr34" [
+    style = "solid";
+    ltail = "cluster_src/deprecated.ts";
+    lhead = "cluster_src/sia-dr34";
+    color = "#6bff00";
+  ];
+  "src/deprecated.ts" -> "name_src/sia-dr36" [
+    style = "solid";
+    ltail = "cluster_src/deprecated.ts";
+    lhead = "cluster_src/sia-dr36";
+    color = "#6bff00";
+  ];
+  "src/deprecated.ts" -> "name_src/sia-dr6" [
+    style = "solid";
+    ltail = "cluster_src/deprecated.ts";
+    lhead = "cluster_src/sia-dr6";
+    color = "#6bff00";
+  ];
+  "src/deprecated.ts" -> "name_src/sia-dr66" [
+    style = "solid";
+    ltail = "cluster_src/deprecated.ts";
+    lhead = "cluster_src/sia-dr66";
+    color = "#6bff00";
+  ];
+  "src/deprecated.ts" -> "name_src/sia-dr69" [
+    style = "solid";
+    ltail = "cluster_src/deprecated.ts";
+    lhead = "cluster_src/sia-dr69";
+    color = "#6bff00";
+  ];
+  "src/experimental.ts" -> "name_src/sia-er87" [
+    style = "solid";
+    ltail = "cluster_src/experimental.ts";
+    lhead = "cluster_src/sia-er87";
+    color = "#6bff00";
+  ];
+  "src/experimental.ts" -> "name_src/sia-r109" [
+    style = "solid";
+    ltail = "cluster_src/experimental.ts";
+    lhead = "cluster_src/sia-r109";
+    color = "#6bff00";
+  ];
+  "src/experimental.ts" -> "name_src/sia-r82" [
+    style = "solid";
+    ltail = "cluster_src/experimental.ts";
+    lhead = "cluster_src/sia-r82";
+    color = "#6bff00";
+  ];
+  "src/index.ts" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/common";
+    color = "#6bff00";
+  ];
+  "src/index.ts" -> "name_src/common" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/common" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/deprecated.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/deprecated.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/deprecated.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/experimental.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/experimental.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/experimental.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/rules.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/rules.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/rules.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/tags";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r1" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r1";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r10" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r10";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r11" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r11";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r110" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r110";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r111" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r111";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r113" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r113";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r12" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r12";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r13" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r13";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r14" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r14";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r15" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r15";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r16" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r16";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r17" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r17";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r18" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r18";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r19" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r19";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r2" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r2";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r20" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r20";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r21" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r21";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r22" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r22";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r23" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r23";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r24" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r24";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r25" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r25";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r26" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r26";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r27" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r27";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r28" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r28";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r29" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r29";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r3" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r3";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r30" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r30";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r31" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r31";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r32" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r32";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r33" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r33";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r35" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r35";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r37" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r37";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r38" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r38";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r39" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r39";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r4" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r4";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r40" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r40";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r41" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r41";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r42" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r42";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r43" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r43";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r44" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r44";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r45" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r45";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r46" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r46";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r47" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r47";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r48" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r48";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r49" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r49";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r5" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r5";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r50" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r50";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r53" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r53";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r54" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r54";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r55" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r55";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r56" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r56";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r57" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r57";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r59" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r59";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r60" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r60";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r61" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r61";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r62" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r62";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r63" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r63";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r64" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r64";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r65" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r65";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r66" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r66";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r67" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r67";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r68" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r68";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r69" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r69";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r7" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r7";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r70" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r70";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r71" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r71";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r72" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r72";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r73" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r73";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r74" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r74";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r75" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r75";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r76" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r76";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r77" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r77";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r78" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r78";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r79" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r79";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r8" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r8";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r80" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r80";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r81" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r81";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r83" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r83";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r84" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r84";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r85" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r85";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r86" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r86";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r87" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r87";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r9" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r9";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r90" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r90";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r91" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r91";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r92" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r92";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r93" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r93";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r94" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r94";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r95" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r95";
+    color = "#6bff00";
+  ];
+  "src/rules.ts" -> "name_src/sia-r96" [
+    style = "solid";
+    ltail = "cluster_src/rules.ts";
+    lhead = "cluster_src/sia-r96";
+    color = "#6bff00";
+  ];
+  "exit_src/sia-dr18" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr18";
+    lhead = "cluster_src/common";
+    color = "#ff00d1";
+  ];
+  "exit_src/sia-dr18" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr18";
+    lhead = "cluster_src/tags";
+    color = "#ff00d1";
+  ];
+  "exit_src/sia-dr34" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr34";
+    lhead = "cluster_src/common";
+    color = "#ff006f";
+  ];
+  "exit_src/sia-dr34" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-dr34" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-dr34" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr34";
+    lhead = "cluster_src/tags";
+    color = "#ff006f";
+  ];
+  "exit_src/sia-dr36" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr36";
+    lhead = "cluster_src/common";
+    color = "#4f00ff";
+  ];
+  "exit_src/sia-dr36" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-dr36" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-dr36" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr36";
+    lhead = "cluster_src/tags";
+    color = "#4f00ff";
+  ];
+  "exit_src/sia-dr6" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr6";
+    lhead = "cluster_src/common";
+    color = "#0058ff";
+  ];
+  "exit_src/sia-dr6" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr6";
+    lhead = "cluster_src/tags";
+    color = "#0058ff";
+  ];
+  "exit_src/sia-dr66" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr66";
+    lhead = "cluster_src/common";
+    color = "#ffdf00";
+  ];
+  "exit_src/sia-dr66" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-dr66" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-dr66" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr66";
+    lhead = "cluster_src/tags";
+    color = "#ffdf00";
+  ];
+  "exit_src/sia-dr69" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr69";
+    lhead = "cluster_src/common";
+    color = "#3300ff";
+  ];
+  "exit_src/sia-dr69" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-dr69" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-dr69" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-dr69";
+    lhead = "cluster_src/tags";
+    color = "#3300ff";
+  ];
+  "exit_src/sia-er87" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-er87";
+    lhead = "cluster_src/common";
+    color = "#00ff90";
+  ];
+  "exit_src/sia-er87" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-er87" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-er87" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-er87" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-er87";
+    lhead = "cluster_src/tags";
+    color = "#00ff90";
+  ];
+  "exit_src/sia-r1" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r1";
+    lhead = "cluster_src/common";
+    color = "#0013ff";
+  ];
+  "exit_src/sia-r1" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r1" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r1";
+    lhead = "cluster_src/tags";
+    color = "#0013ff";
+  ];
+  "exit_src/sia-r10" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r10";
+    lhead = "cluster_src/common";
+    color = "#ff000e";
+  ];
+  "exit_src/sia-r10" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r10";
+    lhead = "cluster_src/tags";
+    color = "#ff000e";
+  ];
+  "exit_src/sia-r109" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r109";
+    lhead = "cluster_src/common";
+    color = "#00d5ff";
+  ];
+  "exit_src/sia-r109" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r109" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r109" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r109";
+    lhead = "cluster_src/tags";
+    color = "#00d5ff";
+  ];
+  "exit_src/sia-r11" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r11";
+    lhead = "cluster_src/common";
+    color = "#00ff20";
+  ];
+  "exit_src/sia-r11" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r11";
+    lhead = "cluster_src/tags";
+    color = "#00ff20";
+  ];
+  "exit_src/sia-r110" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r110";
+    lhead = "cluster_src/common";
+    color = "#0074ff";
+  ];
+  "exit_src/sia-r110" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r110" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r110";
+    lhead = "cluster_src/tags";
+    color = "#0074ff";
+  ];
+  "exit_src/sia-r111" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r111";
+    lhead = "cluster_src/common";
+    color = "#beff00";
+  ];
+  "exit_src/sia-r111" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r111" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r111" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r111" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r111" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r113" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r113";
+    lhead = "cluster_src/common";
+    color = "#00ff58";
+  ];
+  "exit_src/sia-r113" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r113" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r113" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r113" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r113" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r12" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r12";
+    lhead = "cluster_src/common";
+    color = "#ffc300";
+  ];
+  "exit_src/sia-r12" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r12";
+    lhead = "cluster_src/tags";
+    color = "#ffc300";
+  ];
+  "exit_src/sia-r13" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r13";
+    lhead = "cluster_src/common";
+    color = "#00e3ff";
+  ];
+  "exit_src/sia-r13" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r13";
+    lhead = "cluster_src/tags";
+    color = "#00e3ff";
+  ];
+  "exit_src/sia-r14" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r14";
+    lhead = "cluster_src/common";
+    color = "#00acff";
+  ];
+  "exit_src/sia-r14" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r14";
+    lhead = "cluster_src/tags";
+    color = "#00acff";
+  ];
+  "exit_src/sia-r15" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r15";
+    lhead = "cluster_src/common";
+    color = "#ff1c00";
+  ];
+  "exit_src/sia-r15" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r15" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r15" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r15" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r15" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r15";
+    lhead = "cluster_src/tags";
+    color = "#ff1c00";
+  ];
+  "exit_src/sia-r16" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r16";
+    lhead = "cluster_src/common";
+    color = "#b000ff";
+  ];
+  "exit_src/sia-r16" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r16";
+    lhead = "cluster_src/tags";
+    color = "#b000ff";
+  ];
+  "exit_src/sia-r17" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r17";
+    lhead = "cluster_src/common";
+    color = "#fffa00";
+  ];
+  "exit_src/sia-r17" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r17" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r17";
+    lhead = "cluster_src/tags";
+    color = "#fffa00";
+  ];
+  "exit_src/sia-r18" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r18";
+    lhead = "cluster_src/common";
+    color = "#5d00ff";
+  ];
+  "exit_src/sia-r18" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r18";
+    lhead = "cluster_src/tags";
+    color = "#5d00ff";
+  ];
+  "exit_src/sia-r19" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r19";
+    lhead = "cluster_src/common";
+    color = "#ff8b00";
+  ];
+  "exit_src/sia-r19" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r19" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r19";
+    lhead = "cluster_src/tags";
+    color = "#ff8b00";
+  ];
+  "exit_src/sia-r2" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r2";
+    lhead = "cluster_src/common";
+    color = "#ff00b5";
+  ];
+  "exit_src/sia-r2" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r2";
+    lhead = "cluster_src/tags";
+    color = "#ff00b5";
+  ];
+  "exit_src/sia-r20" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r20";
+    lhead = "cluster_src/common";
+    color = "#ff7d00";
+  ];
+  "exit_src/sia-r20" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r20";
+    lhead = "cluster_src/tags";
+    color = "#ff7d00";
+  ];
+  "exit_src/sia-r21" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r21";
+    lhead = "cluster_src/common";
+    color = "#4100ff";
+  ];
+  "exit_src/sia-r21" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r21" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r21";
+    lhead = "cluster_src/tags";
+    color = "#4100ff";
+  ];
+  "exit_src/sia-r22" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r22";
+    lhead = "cluster_src/common";
+    color = "#33ff00";
+  ];
+  "exit_src/sia-r22" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r22" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r22" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r22";
+    lhead = "cluster_src/tags";
+    color = "#33ff00";
+  ];
+  "exit_src/sia-r23" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r23";
+    lhead = "cluster_src/common";
+    color = "#ff007d";
+  ];
+  "exit_src/sia-r23" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r23" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r23" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r23";
+    lhead = "cluster_src/tags";
+    color = "#ff007d";
+  ];
+  "exit_src/sia-r24" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r24";
+    lhead = "cluster_src/common";
+    color = "#8600ff";
+  ];
+  "exit_src/sia-r24" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r24" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r24" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r24";
+    lhead = "cluster_src/tags";
+    color = "#8600ff";
+  ];
+  "exit_src/sia-r25" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r25";
+    lhead = "cluster_src/common";
+    color = "#00ff05";
+  ];
+  "exit_src/sia-r25" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r25" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r25" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r25";
+    lhead = "cluster_src/tags";
+    color = "#00ff05";
+  ];
+  "exit_src/sia-r26" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r26";
+    lhead = "cluster_src/common";
+    color = "#ff0046";
+  ];
+  "exit_src/sia-r26" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r26" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r26" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r26";
+    lhead = "cluster_src/tags";
+    color = "#ff0046";
+  ];
+  "exit_src/sia-r27" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r27";
+    lhead = "cluster_src/common";
+    color = "#00f1ff";
+  ];
+  "exit_src/sia-r27" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r27" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r27" -> "name_src/sia-r22" [
+    style = "solid";
+    ltail = "cluster_src/sia-r27";
+    lhead = "cluster_src/sia-r22";
+    color = "#00f1ff";
+  ];
+  "exit_src/sia-r27" -> "name_src/sia-r31" [
+    style = "solid";
+    ltail = "cluster_src/sia-r27";
+    lhead = "cluster_src/sia-r31";
+    color = "#00f1ff";
+  ];
+  "exit_src/sia-r27" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r27";
+    lhead = "cluster_src/tags";
+    color = "#00f1ff";
+  ];
+  "exit_src/sia-r28" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r28";
+    lhead = "cluster_src/common";
+    color = "#00ff3c";
+  ];
+  "exit_src/sia-r28" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r28";
+    lhead = "cluster_src/tags";
+    color = "#00ff3c";
+  ];
+  "exit_src/sia-r29" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r29";
+    lhead = "cluster_src/common";
+    color = "#ff002a";
+  ];
+  "exit_src/sia-r29" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r29" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r29" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r29";
+    lhead = "cluster_src/tags";
+    color = "#ff002a";
+  ];
+  "exit_src/sia-r3" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r3";
+    lhead = "cluster_src/common";
+    color = "#00ffd5";
+  ];
+  "exit_src/sia-r3" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r3";
+    lhead = "cluster_src/tags";
+    color = "#00ffd5";
+  ];
+  "exit_src/sia-r30" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r30";
+    lhead = "cluster_src/common";
+    color = "#00ff4a";
+  ];
+  "exit_src/sia-r30" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r30" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r30" -> "name_src/sia-r23" [
+    style = "solid";
+    ltail = "cluster_src/sia-r30";
+    lhead = "cluster_src/sia-r23";
+    color = "#00ff4a";
+  ];
+  "exit_src/sia-r30" -> "name_src/sia-r29" [
+    style = "solid";
+    ltail = "cluster_src/sia-r30";
+    lhead = "cluster_src/sia-r29";
+    color = "#00ff4a";
+  ];
+  "exit_src/sia-r30" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r30";
+    lhead = "cluster_src/tags";
+    color = "#00ff4a";
+  ];
+  "exit_src/sia-r31" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r31";
+    lhead = "cluster_src/common";
+    color = "#f600ff";
+  ];
+  "exit_src/sia-r31" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r31" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r31" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r31";
+    lhead = "cluster_src/tags";
+    color = "#f600ff";
+  ];
+  "exit_src/sia-r32" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r32";
+    lhead = "cluster_src/common";
+    color = "#ccff00";
+  ];
+  "exit_src/sia-r32" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r32" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r32" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r32";
+    lhead = "cluster_src/tags";
+    color = "#ccff00";
+  ];
+  "exit_src/sia-r33" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r33";
+    lhead = "cluster_src/common";
+    color = "#003cff";
+  ];
+  "exit_src/sia-r33" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r33" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r33" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r33";
+    lhead = "cluster_src/tags";
+    color = "#003cff";
+  ];
+  "exit_src/sia-r35" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r35";
+    lhead = "cluster_src/common";
+    color = "#00ff9e";
+  ];
+  "exit_src/sia-r35" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r35" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r35" -> "name_src/sia-r26" [
+    style = "solid";
+    ltail = "cluster_src/sia-r35";
+    lhead = "cluster_src/sia-r26";
+    color = "#00ff9e";
+  ];
+  "exit_src/sia-r35" -> "name_src/sia-r32" [
+    style = "solid";
+    ltail = "cluster_src/sia-r35";
+    lhead = "cluster_src/sia-r32";
+    color = "#00ff9e";
+  ];
+  "exit_src/sia-r35" -> "name_src/sia-r33" [
+    style = "solid";
+    ltail = "cluster_src/sia-r35";
+    lhead = "cluster_src/sia-r33";
+    color = "#00ff9e";
+  ];
+  "exit_src/sia-r35" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r35";
+    lhead = "cluster_src/tags";
+    color = "#00ff9e";
+  ];
+  "exit_src/sia-r37" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r37";
+    lhead = "cluster_src/common";
+    color = "#94ff00";
+  ];
+  "exit_src/sia-r37" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r37" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r37" -> "name_src/sia-r25" [
+    style = "solid";
+    ltail = "cluster_src/sia-r37";
+    lhead = "cluster_src/sia-r25";
+    color = "#94ff00";
+  ];
+  "exit_src/sia-r37" -> "name_src/sia-r31" [
+    style = "solid";
+    ltail = "cluster_src/sia-r37";
+    lhead = "cluster_src/sia-r31";
+    color = "#94ff00";
+  ];
+  "exit_src/sia-r37" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r37";
+    lhead = "cluster_src/tags";
+    color = "#94ff00";
+  ];
+  "exit_src/sia-r38" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r38";
+    lhead = "cluster_src/common";
+    color = "#0005ff";
+  ];
+  "exit_src/sia-r38" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r38" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r38" -> "name_src/sia-r24" [
+    style = "solid";
+    ltail = "cluster_src/sia-r38";
+    lhead = "cluster_src/sia-r24";
+    color = "#0005ff";
+  ];
+  "exit_src/sia-r38" -> "name_src/sia-r25" [
+    style = "solid";
+    ltail = "cluster_src/sia-r38";
+    lhead = "cluster_src/sia-r25";
+    color = "#0005ff";
+  ];
+  "exit_src/sia-r38" -> "name_src/sia-r31" [
+    style = "solid";
+    ltail = "cluster_src/sia-r38";
+    lhead = "cluster_src/sia-r31";
+    color = "#0005ff";
+  ];
+  "exit_src/sia-r38" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r38";
+    lhead = "cluster_src/tags";
+    color = "#0005ff";
+  ];
+  "exit_src/sia-r39" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r39";
+    lhead = "cluster_src/common";
+    color = "#ff4600";
+  ];
+  "exit_src/sia-r39" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r39" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r39" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r39";
+    lhead = "cluster_src/tags";
+    color = "#ff4600";
+  ];
+  "exit_src/sia-r4" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r4";
+    lhead = "cluster_src/common";
+    color = "#1700ff";
+  ];
+  "exit_src/sia-r4" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r4";
+    lhead = "cluster_src/tags";
+    color = "#1700ff";
+  ];
+  "exit_src/sia-r40" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r40";
+    lhead = "cluster_src/common";
+    color = "#00c7ff";
+  ];
+  "exit_src/sia-r40" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r40";
+    lhead = "cluster_src/tags";
+    color = "#00c7ff";
+  ];
+  "exit_src/sia-r41" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r41";
+    lhead = "cluster_src/common";
+    color = "#ffa700";
+  ];
+  "exit_src/sia-r41" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r41" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r41" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r41" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r41" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r41";
+    lhead = "cluster_src/tags";
+    color = "#ffa700";
+  ];
+  "exit_src/sia-r42" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r42";
+    lhead = "cluster_src/common";
+    color = "#00ff2e";
+  ];
+  "exit_src/sia-r42" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r42" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r42";
+    lhead = "cluster_src/tags";
+    color = "#00ff2e";
+  ];
+  "exit_src/sia-r43" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r43";
+    lhead = "cluster_src/common";
+    color = "#ff0038";
+  ];
+  "exit_src/sia-r43" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r43";
+    lhead = "cluster_src/tags";
+    color = "#ff0038";
+  ];
+  "exit_src/sia-r44" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r44";
+    lhead = "cluster_src/common";
+    color = "#ffd100";
+  ];
+  "exit_src/sia-r44" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r44";
+    lhead = "cluster_src/tags";
+    color = "#ffd100";
+  ];
+  "exit_src/sia-r45" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r45";
+    lhead = "cluster_src/common";
+    color = "#be00ff";
+  ];
+  "exit_src/sia-r45" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r45";
+    lhead = "cluster_src/tags";
+    color = "#be00ff";
+  ];
+  "exit_src/sia-r46" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r46";
+    lhead = "cluster_src/common";
+    color = "#ff0000";
+  ];
+  "exit_src/sia-r46" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r46";
+    lhead = "cluster_src/tags";
+    color = "#ff0000";
+  ];
+  "exit_src/sia-r47" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r47";
+    lhead = "cluster_src/common";
+    color = "#009eff";
+  ];
+  "exit_src/sia-r47" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r47";
+    lhead = "cluster_src/tags";
+    color = "#009eff";
+  ];
+  "exit_src/sia-r48" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r48";
+    lhead = "cluster_src/common";
+    color = "#41ff00";
+  ];
+  "exit_src/sia-r48" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r48" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r48";
+    lhead = "cluster_src/tags";
+    color = "#41ff00";
+  ];
+  "exit_src/sia-r49" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r49";
+    lhead = "cluster_src/common";
+    color = "#ff008b";
+  ];
+  "exit_src/sia-r49" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r49" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r49";
+    lhead = "cluster_src/tags";
+    color = "#ff008b";
+  ];
+  "exit_src/sia-r5" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r5";
+    lhead = "cluster_src/common";
+    color = "#79ff00";
+  ];
+  "exit_src/sia-r5" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r5";
+    lhead = "cluster_src/tags";
+    color = "#79ff00";
+  ];
+  "exit_src/sia-r50" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r50";
+    lhead = "cluster_src/common";
+    color = "#ff00c3";
+  ];
+  "exit_src/sia-r50" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r50" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r50" -> "name_src/sia-r48" [
+    style = "solid";
+    ltail = "cluster_src/sia-r50";
+    lhead = "cluster_src/sia-r48";
+    color = "#ff00c3";
+  ];
+  "exit_src/sia-r50" -> "name_src/sia-r49" [
+    style = "solid";
+    ltail = "cluster_src/sia-r50";
+    lhead = "cluster_src/sia-r49";
+    color = "#ff00c3";
+  ];
+  "exit_src/sia-r50" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r50";
+    lhead = "cluster_src/tags";
+    color = "#ff00c3";
+  ];
+  "exit_src/sia-r53" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r53";
+    lhead = "cluster_src/common";
+    color = "#00ffb9";
+  ];
+  "exit_src/sia-r53" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r53" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r53";
+    lhead = "cluster_src/tags";
+    color = "#00ffb9";
+  ];
+  "exit_src/sia-r54" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r54";
+    lhead = "cluster_src/common";
+    color = "#b0ff00";
+  ];
+  "exit_src/sia-r54" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r54";
+    lhead = "cluster_src/tags";
+    color = "#b0ff00";
+  ];
+  "exit_src/sia-r55" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r55";
+    lhead = "cluster_src/common";
+    color = "#0066ff";
+  ];
+  "exit_src/sia-r55" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r55" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r55" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r55" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r55";
+    lhead = "cluster_src/tags";
+    color = "#0066ff";
+  ];
+  "exit_src/sia-r56" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r56";
+    lhead = "cluster_src/common";
+    color = "#00ff66";
+  ];
+  "exit_src/sia-r56" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r56" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r56";
+    lhead = "cluster_src/tags";
+    color = "#00ff66";
+  ];
+  "exit_src/sia-r57" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r57";
+    lhead = "cluster_src/common";
+    color = "#ff00fa";
+  ];
+  "exit_src/sia-r57" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r57";
+    lhead = "cluster_src/tags";
+    color = "#ff00fa";
+  ];
+  "exit_src/sia-r59" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r59";
+    lhead = "cluster_src/common";
+    color = "#00fff1";
+  ];
+  "exit_src/sia-r59" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r59" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r59";
+    lhead = "cluster_src/tags";
+    color = "#00fff1";
+  ];
+  "exit_src/sia-r60" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r60";
+    lhead = "cluster_src/common";
+    color = "#ff0e00";
+  ];
+  "exit_src/sia-r60" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r60" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r60";
+    lhead = "cluster_src/tags";
+    color = "#ff0e00";
+  ];
+  "exit_src/sia-r61" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r61";
+    lhead = "cluster_src/common";
+    color = "#0082ff";
+  ];
+  "exit_src/sia-r61" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r61" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r61";
+    lhead = "cluster_src/tags";
+    color = "#0082ff";
+  ];
+  "exit_src/sia-r62" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r62";
+    lhead = "cluster_src/common";
+    color = "#ffec00";
+  ];
+  "src/sia-r62/diagnostics.ts" -> "src/sia-r62/serialise.ts" [
+    style = "invis";
+  ];
+  "src/sia-r62/diagnostics.ts" -> "src/sia-r62/serialise.ts" [
+    style = "solid";
+    ltail = "cluster_src/sia-r62/diagnostics.ts";
+    lhead = "cluster_src/sia-r62/serialise.ts";
+    color = "black";
+  ];
+  "exit_src/sia-r62" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r62" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r62" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r62" -> "name_src/common" [
+    style = "invis";
+  ];
+  "src/sia-r62/rule.ts" -> "src/sia-r62/diagnostics.ts" [
+    style = "invis";
+  ];
+  "src/sia-r62/rule.ts" -> "src/sia-r62/diagnostics.ts" [
+    style = "solid";
+    ltail = "cluster_src/sia-r62/rule.ts";
+    lhead = "cluster_src/sia-r62/diagnostics.ts";
+    color = "black";
+  ];
+  "exit_src/sia-r62" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r62";
+    lhead = "cluster_src/tags";
+    color = "#ffec00";
+  ];
+  "exit_src/sia-r63" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r63";
+    lhead = "cluster_src/common";
+    color = "#cc00ff";
+  ];
+  "exit_src/sia-r63" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r63";
+    lhead = "cluster_src/tags";
+    color = "#cc00ff";
+  ];
+  "exit_src/sia-r64" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r64";
+    lhead = "cluster_src/common";
+    color = "#00ff13";
+  ];
+  "exit_src/sia-r64" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r64";
+    lhead = "cluster_src/tags";
+    color = "#00ff13";
+  ];
+  "exit_src/sia-r65" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r65";
+    lhead = "cluster_src/common";
+    color = "#ff001c";
+  ];
+  "exit_src/sia-r65" -> "name_src/common" [
+    style = "invis";
+  ];
+  "src/sia-r65/rule.ts" -> "src/sia-r65/diagnostics.ts" [
+    style = "invis";
+  ];
+  "src/sia-r65/rule.ts" -> "src/sia-r65/diagnostics.ts" [
+    style = "solid";
+    ltail = "cluster_src/sia-r65/rule.ts";
+    lhead = "cluster_src/sia-r65/diagnostics.ts";
+    color = "black";
+  ];
+  "exit_src/sia-r65" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r65";
+    lhead = "cluster_src/tags";
+    color = "#ff001c";
+  ];
+  "exit_src/sia-r66" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r66";
+    lhead = "cluster_src/common";
+    color = "#00b9ff";
+  ];
+  "exit_src/sia-r66" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r66" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r66" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r66" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r66";
+    lhead = "cluster_src/tags";
+    color = "#00b9ff";
+  ];
+  "exit_src/sia-r67" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r67";
+    lhead = "cluster_src/common";
+    color = "#ffb500";
+  ];
+  "exit_src/sia-r67" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r67";
+    lhead = "cluster_src/tags";
+    color = "#ffb500";
+  ];
+  "exit_src/sia-r68" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r68";
+    lhead = "cluster_src/common";
+    color = "#9400ff";
+  ];
+  "exit_src/sia-r68" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r68" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r68";
+    lhead = "cluster_src/tags";
+    color = "#9400ff";
+  ];
+  "exit_src/sia-r69" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r69";
+    lhead = "cluster_src/common";
+    color = "#17ff00";
+  ];
+  "exit_src/sia-r69" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r69" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r69" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r69" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r69";
+    lhead = "cluster_src/tags";
+    color = "#17ff00";
+  ];
+  "exit_src/sia-r7" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r7";
+    lhead = "cluster_src/common";
+    color = "#ff6100";
+  ];
+  "exit_src/sia-r7" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r7";
+    lhead = "cluster_src/tags";
+    color = "#ff6100";
+  ];
+  "exit_src/sia-r70" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r70";
+    lhead = "cluster_src/common";
+    color = "#5dff00";
+  ];
+  "exit_src/sia-r70" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r70" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r70" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r70";
+    lhead = "cluster_src/tags";
+    color = "#5dff00";
+  ];
+  "exit_src/sia-r71" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r71";
+    lhead = "cluster_src/common";
+    color = "#0900ff";
+  ];
+  "exit_src/sia-r71" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r71";
+    lhead = "cluster_src/tags";
+    color = "#0900ff";
+  ];
+  "exit_src/sia-r72" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r72";
+    lhead = "cluster_src/common";
+    color = "#ff6f00";
+  ];
+  "exit_src/sia-r72" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r72";
+    lhead = "cluster_src/tags";
+    color = "#ff6f00";
+  ];
+  "exit_src/sia-r73" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r73";
+    lhead = "cluster_src/tags";
+    color = "#00ffe3";
+  ];
+  "exit_src/sia-r74" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r74";
+    lhead = "cluster_src/common";
+    color = "#002eff";
+  ];
+  "exit_src/sia-r74" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r74";
+    lhead = "cluster_src/tags";
+    color = "#002eff";
+  ];
+  "exit_src/sia-r75" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r75";
+    lhead = "cluster_src/common";
+    color = "#ff5300";
+  ];
+  "exit_src/sia-r75" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r75";
+    lhead = "cluster_src/tags";
+    color = "#ff5300";
+  ];
+  "exit_src/sia-r76" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r76";
+    lhead = "cluster_src/common";
+    color = "#00ffc7";
+  ];
+  "exit_src/sia-r76" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r76" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r76";
+    lhead = "cluster_src/tags";
+    color = "#00ffc7";
+  ];
+  "exit_src/sia-r77" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r77";
+    lhead = "cluster_src/common";
+    color = "#ff00a7";
+  ];
+  "exit_src/sia-r77" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r77";
+    lhead = "cluster_src/tags";
+    color = "#ff00a7";
+  ];
+  "exit_src/sia-r78" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r78";
+    lhead = "cluster_src/common";
+    color = "#ff3800";
+  ];
+  "exit_src/sia-r78" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r78" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r78";
+    lhead = "cluster_src/tags";
+    color = "#ff3800";
+  ];
+  "exit_src/sia-r79" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r79";
+    lhead = "cluster_src/common";
+    color = "#00ffac";
+  ];
+  "exit_src/sia-r79" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r79";
+    lhead = "cluster_src/tags";
+    color = "#00ffac";
+  ];
+  "exit_src/sia-r8" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r8";
+    lhead = "cluster_src/common";
+    color = "#e800ff";
+  ];
+  "exit_src/sia-r8" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r8" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r8";
+    lhead = "cluster_src/tags";
+    color = "#e800ff";
+  ];
+  "exit_src/sia-r80" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r80";
+    lhead = "cluster_src/common";
+    color = "#ff0053";
+  ];
+  "exit_src/sia-r80" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r80";
+    lhead = "cluster_src/tags";
+    color = "#ff0053";
+  ];
+  "exit_src/sia-r81" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r81";
+    lhead = "cluster_src/common";
+    color = "#00ffff";
+  ];
+  "exit_src/sia-r81" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r81" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r81" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r81" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r81" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r81";
+    lhead = "cluster_src/tags";
+    color = "#00ffff";
+  ];
+  "exit_src/sia-r82" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r82";
+    lhead = "cluster_src/common";
+    color = "#7900ff";
+  ];
+  "exit_src/sia-r82" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r82" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r82";
+    lhead = "cluster_src/tags";
+    color = "#7900ff";
+  ];
+  "exit_src/sia-r83" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r83";
+    lhead = "cluster_src/common";
+    color = "#09ff00";
+  ];
+  "exit_src/sia-r83" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r83";
+    lhead = "cluster_src/tags";
+    color = "#09ff00";
+  ];
+  "exit_src/sia-r84" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r84";
+    lhead = "cluster_src/common";
+    color = "#4fff00";
+  ];
+  "exit_src/sia-r84" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r84";
+    lhead = "cluster_src/tags";
+    color = "#4fff00";
+  ];
+  "exit_src/sia-r85" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r85";
+    lhead = "cluster_src/common";
+    color = "#ff0061";
+  ];
+  "exit_src/sia-r85" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r85";
+    lhead = "cluster_src/tags";
+    color = "#ff0061";
+  ];
+  "exit_src/sia-r86" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r86";
+    lhead = "cluster_src/common";
+    color = "#ff9900";
+  ];
+  "exit_src/sia-r86" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r86";
+    lhead = "cluster_src/tags";
+    color = "#ff9900";
+  ];
+  "exit_src/sia-r87" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r87";
+    lhead = "cluster_src/common";
+    color = "#2500ff";
+  ];
+  "exit_src/sia-r87" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r87" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r87" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r87" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r87";
+    lhead = "cluster_src/tags";
+    color = "#2500ff";
+  ];
+  "exit_src/sia-r9" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r9";
+    lhead = "cluster_src/common";
+    color = "#00ff82";
+  ];
+  "exit_src/sia-r9" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r9" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r9" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r9";
+    lhead = "cluster_src/tags";
+    color = "#00ff82";
+  ];
+  "exit_src/sia-r90" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r90";
+    lhead = "cluster_src/common";
+    color = "#daff00";
+  ];
+  "exit_src/sia-r90" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r90" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r90";
+    lhead = "cluster_src/tags";
+    color = "#daff00";
+  ];
+  "exit_src/sia-r91" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r91";
+    lhead = "cluster_src/common";
+    color = "#004aff";
+  ];
+  "exit_src/sia-r91" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r91" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r91";
+    lhead = "cluster_src/tags";
+    color = "#004aff";
+  ];
+  "exit_src/sia-r92" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r92";
+    lhead = "cluster_src/common";
+    color = "#00ff74";
+  ];
+  "exit_src/sia-r92" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r92" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r92";
+    lhead = "cluster_src/tags";
+    color = "#00ff74";
+  ];
+  "exit_src/sia-r93" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r93";
+    lhead = "cluster_src/common";
+    color = "#da00ff";
+  ];
+  "exit_src/sia-r93" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r93" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r93";
+    lhead = "cluster_src/tags";
+    color = "#da00ff";
+  ];
+  "exit_src/sia-r94" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r94";
+    lhead = "cluster_src/common";
+    color = "#ff00ec";
+  ];
+  "exit_src/sia-r94" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r94";
+    lhead = "cluster_src/tags";
+    color = "#ff00ec";
+  ];
+  "exit_src/sia-r95" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r95";
+    lhead = "cluster_src/common";
+    color = "#a2ff00";
+  ];
+  "exit_src/sia-r95" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r95" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r95";
+    lhead = "cluster_src/tags";
+    color = "#a2ff00";
+  ];
+  "exit_src/sia-r96" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/sia-r96";
+    lhead = "cluster_src/common";
+    color = "#ff2a00";
+  ];
+  "exit_src/sia-r96" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r96" -> "name_src/common" [
+    style = "invis";
+  ];
+  "exit_src/sia-r96" -> "name_src/tags" [
+    style = "solid";
+    ltail = "cluster_src/sia-r96";
+    lhead = "cluster_src/tags";
+    color = "#ff2a00";
+  ];
+  "src/tags/index.ts" -> "src/tags/scope.ts" [
+    style = "invis";
+  ];
+  "src/tags/index.ts" -> "src/tags/scope.ts" [
+    style = "solid";
+    ltail = "cluster_src/tags/index.ts";
+    lhead = "cluster_src/tags/scope.ts";
+    color = "black";
+  ];
+  "src/tags/index.ts" -> "src/tags/stability.ts" [
+    style = "invis";
+  ];
+  "src/tags/index.ts" -> "src/tags/stability.ts" [
+    style = "solid";
+    ltail = "cluster_src/tags/index.ts";
+    lhead = "cluster_src/tags/stability.ts";
+    color = "black";
+  ];
+  "src/tags/index.ts" -> "src/tags/version.ts" [
+    style = "invis";
+  ];
+  "src/tags/index.ts" -> "src/tags/version.ts" [
+    style = "solid";
+    ltail = "cluster_src/tags/index.ts";
+    lhead = "cluster_src/tags/version.ts";
+    color = "black";
+  ];
+}

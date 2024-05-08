@@ -1,0 +1,233 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/cookie.ts";
+  "src/header.ts";
+  "src/body.ts";
+  "src/cookies.ts";
+  "src/headers.ts";
+  "src/request.ts";
+  "src/response.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/body.ts" [
+        label = "body.ts";
+      ];
+      "src/cookie.ts" [
+        label = "cookie.ts";
+      ];
+      "src/cookies.ts" [
+        label = "cookies.ts";
+      ];
+      "src/header.ts" [
+        label = "header.ts";
+      ];
+      "src/headers.ts" [
+        label = "headers.ts";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/request.ts" [
+        label = "request.ts";
+      ];
+      "src/response.ts" [
+        label = "response.ts";
+      ];
+      "src/body.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/cookie.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/cookies.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/header.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/headers.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/request.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/response.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/cookies.ts" -> "src/cookie.ts" [
+    style = "invis";
+  ];
+  "src/cookies.ts" -> "src/cookie.ts" [
+    style = "solid";
+    ltail = "cluster_src/cookies.ts";
+    lhead = "cluster_src/cookie.ts";
+    color = "black";
+  ];
+  "src/headers.ts" -> "src/header.ts" [
+    style = "invis";
+  ];
+  "src/headers.ts" -> "src/header.ts" [
+    style = "solid";
+    ltail = "cluster_src/headers.ts";
+    lhead = "cluster_src/header.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/body.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/body.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/body.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/cookie.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/cookie.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/cookie.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/cookies.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/cookies.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/cookies.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/header.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/header.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/header.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/headers.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/headers.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/headers.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/request.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/request.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/request.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/response.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/response.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/response.ts";
+    color = "black";
+  ];
+  "src/request.ts" -> "src/body.ts" [
+    style = "invis";
+  ];
+  "src/request.ts" -> "src/body.ts" [
+    style = "solid";
+    ltail = "cluster_src/request.ts";
+    lhead = "cluster_src/body.ts";
+    color = "black";
+  ];
+  "src/request.ts" -> "src/headers.ts" [
+    style = "invis";
+  ];
+  "src/request.ts" -> "src/headers.ts" [
+    style = "solid";
+    ltail = "cluster_src/request.ts";
+    lhead = "cluster_src/headers.ts";
+    color = "black";
+  ];
+  "src/response.ts" -> "src/body.ts" [
+    style = "invis";
+  ];
+  "src/response.ts" -> "src/body.ts" [
+    style = "solid";
+    ltail = "cluster_src/response.ts";
+    lhead = "cluster_src/body.ts";
+    color = "black";
+  ];
+  "src/response.ts" -> "src/headers.ts" [
+    style = "invis";
+  ];
+  "src/response.ts" -> "src/headers.ts" [
+    style = "solid";
+    ltail = "cluster_src/response.ts";
+    lhead = "cluster_src/headers.ts";
+    color = "black";
+  ];
+}
