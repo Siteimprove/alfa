@@ -450,9 +450,7 @@ export namespace Name {
       state.isReferencing ||
       role.some((role) => role.isNamedBy("contents"))
     ) {
-      if (nameFromDescendants === undefined) {
-        nameFromDescendants = fromDescendants(element, device, state);
-      }
+      nameFromDescendants = fromDescendants(element, device, state);
       step2F = nameFromDescendants.map((name) => name.spaced(spaced));
     }
 
