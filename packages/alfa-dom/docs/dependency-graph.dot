@@ -1,0 +1,2475 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/index.ts";
+  "src/h.ts";
+  "src/jsx.ts";
+  "src/namespace.ts";
+  "src/node.ts";
+  "src/node/attribute.ts";
+  "name_src/node";
+  "src/node/comment.ts";
+  "src/node/document.ts";
+  "src/node/element.ts";
+  "src/node/fragment.ts";
+  "src/node/query/index.ts";
+  "src/node/shadow.ts";
+  "src/node/slot.ts";
+  "src/node/slotable.ts";
+  "src/node/text.ts";
+  "src/node/type.ts";
+  "src/style/block.ts";
+  "name_src/style";
+  "src/style/declaration.ts";
+  "src/style/rule.ts";
+  "src/style/rule/condition.ts";
+  "src/style/rule/font-face.ts";
+  "src/style/rule/grouping.ts";
+  "src/style/rule/import.ts";
+  "src/style/rule/keyframe.ts";
+  "src/style/rule/keyframes.ts";
+  "src/style/rule/layer.ts";
+  "src/style/rule/media.ts";
+  "src/style/rule/namespace.ts";
+  "src/style/rule/page.ts";
+  "src/style/rule/style.ts";
+  "src/style/rule/supports.ts";
+  "src/style/sheet.ts";
+  "src/node/predicate.ts";
+  "src/node/traversal.ts";
+  "exit_src/node";
+  "src/node/attribute/predicate.ts";
+  "name_src/node/attribute";
+  "src/node/attribute/predicate/has-name.ts";
+  "name_src/node/attribute/predicate";
+  "exit_src/node/attribute";
+  "src/node/element/input-type.ts";
+  "name_src/node/element";
+  "src/node/element/predicate.ts";
+  "exit_src/node/element";
+  "src/node/element/predicate/has-attribute.ts";
+  "name_src/node/element/predicate";
+  "src/node/element/predicate/has-box.ts";
+  "src/node/element/predicate/has-display-size.ts";
+  "src/node/element/predicate/has-id.ts";
+  "src/node/element/predicate/has-input-type.ts";
+  "src/node/element/predicate/has-name.ts";
+  "src/node/element/predicate/has-namespace.ts";
+  "src/node/element/predicate/has-tab-index.ts";
+  "src/node/element/predicate/has-unique-id.ts";
+  "src/node/element/predicate/is-actually-disabled.ts";
+  "src/node/element/predicate/is-browsing-context-container.ts";
+  "src/node/element/predicate/is-content.ts";
+  "src/node/element/predicate/is-document-element.ts";
+  "src/node/element/predicate/is-draggable.ts";
+  "src/node/element/predicate/is-editing-host.ts";
+  "src/node/element/predicate/is-fallback.ts";
+  "src/node/element/predicate/is-replaced.ts";
+  "src/node/element/predicate/is-scoped-to.ts";
+  "src/node/element/predicate/is-suggested-focusable.ts";
+  "exit_src/node/element/predicate";
+  "src/node/predicate/has-child.ts";
+  "name_src/node/predicate";
+  "src/node/predicate/has-descendant.ts";
+  "src/node/predicate/has-inclusive-descendant.ts";
+  "src/node/predicate/has-text-content.ts";
+  "src/node/predicate/is-root.ts";
+  "exit_src/node/query";
+  "src/node/query/element-descendants.ts";
+  "src/node/query/element-id-map.ts";
+  "src/node/traversal/get-nodes-between.ts";
+  "name_src/node/traversal";
+  "src/node/traversal/lowest-common-ancestor.ts";
+  "exit_src/style";
+  "exit_src/style/rule";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#00ff2e";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#00ff2e";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/h.ts" [
+        label = "h.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#00ff2e";
+        penwidth = 5;
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/jsx-runtime.ts" [
+        label = "jsx-runtime.ts";
+      ];
+      "src/jsx.ts" [
+        label = "jsx.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/namespace.ts" [
+        label = "namespace.ts";
+      ];
+      "src/native.ts" [
+        label = "native.ts";
+      ];
+      "src/node.ts" [
+        label = "node.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      subgraph "cluster_src/node" {
+        color = "#000000";
+        label = "";
+        "name_src/node" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffb9";
+          label = "node";
+        ];
+        "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/attribute.ts" [
+          label = "attribute.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/comment.ts" [
+          label = "comment.ts";
+        ];
+        "src/node/document.ts" [
+          label = "document.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/element.ts" [
+          label = "element.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/fragment.ts" [
+          label = "fragment.ts";
+        ];
+        "src/node/predicate.ts" [
+          label = "predicate.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/shadow.ts" [
+          label = "shadow.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/slot.ts" [
+          label = "slot.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/slotable.ts" [
+          label = "slotable.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/text.ts" [
+          label = "text.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/traversal.ts" [
+          label = "traversal.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/type.ts" [
+          label = "type.ts";
+        ];
+        subgraph "cluster_src/node/attribute" {
+          color = "#000000";
+          label = "";
+          "name_src/node/attribute" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ff008b";
+            label = "attribute";
+          ];
+          "exit_src/node/attribute" [
+            style = "invis";
+          ];
+          "src/node/attribute/predicate.ts" [
+            label = "predicate.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          subgraph "cluster_src/node/attribute/predicate" {
+            color = "#000000";
+            label = "";
+            "name_src/node/attribute/predicate" [
+              penwidth = 5;
+              shape = "rectangle";
+              color = "#00b9ff";
+              label = "predicate";
+            ];
+            "exit_src/node/attribute/predicate" [
+              style = "invis";
+            ];
+            "src/node/attribute/predicate/has-name.ts" [
+              label = "has-name.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/attribute/predicate/has-name.ts" -> "exit_src/node/attribute/predicate" [
+              style = "invis";
+            ];
+          }
+          "src/node/attribute/predicate.ts" -> "exit_src/node/attribute" [
+            style = "invis";
+          ];
+          "exit_src/node/attribute/predicate" -> "exit_src/node/attribute" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/node/element" {
+          color = "#000000";
+          label = "";
+          "name_src/node/element" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#5dff00";
+            label = "element";
+          ];
+          "exit_src/node/element" [
+            style = "invis";
+          ];
+          "src/node/element/input-type.ts" [
+            label = "input-type.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/node/element/predicate.ts" [
+            label = "predicate.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          subgraph "cluster_src/node/element/predicate" {
+            color = "#000000";
+            label = "";
+            "name_src/node/element/predicate" [
+              penwidth = 5;
+              shape = "rectangle";
+              color = "#ff8b00";
+              label = "predicate";
+            ];
+            "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-attribute.ts" [
+              label = "has-attribute.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-box.ts" [
+              label = "has-box.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-display-size.ts" [
+              label = "has-display-size.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-id.ts" [
+              label = "has-id.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-input-type.ts" [
+              label = "has-input-type.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-name.ts" [
+              label = "has-name.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-namespace.ts" [
+              label = "has-namespace.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-tab-index.ts" [
+              label = "has-tab-index.ts";
+              color = "#ff8b00";
+              penwidth = 5;
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-unique-id.ts" [
+              label = "has-unique-id.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-actually-disabled.ts" [
+              label = "is-actually-disabled.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-browsing-context-container.ts" [
+              label = "is-browsing-context-container.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-content.ts" [
+              label = "is-content.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-document-element.ts" [
+              label = "is-document-element.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-draggable.ts" [
+              label = "is-draggable.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-editing-host.ts" [
+              label = "is-editing-host.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-fallback.ts" [
+              label = "is-fallback.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-replaced.ts" [
+              label = "is-replaced.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-scoped-to.ts" [
+              label = "is-scoped-to.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/is-suggested-focusable.ts" [
+              label = "is-suggested-focusable.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
+            ];
+            "src/node/element/predicate/has-attribute.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-box.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-display-size.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-id.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-input-type.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-name.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-namespace.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-tab-index.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/has-unique-id.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-actually-disabled.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-browsing-context-container.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-content.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-document-element.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-draggable.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-editing-host.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-fallback.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-replaced.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-scoped-to.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+            "src/node/element/predicate/is-suggested-focusable.ts" -> "exit_src/node/element/predicate" [
+              style = "invis";
+            ];
+          }
+          "src/node/element/input-type.ts" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "src/node/element/predicate.ts" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+          "exit_src/node/element/predicate" -> "exit_src/node/element" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/node/predicate" {
+          color = "#000000";
+          label = "";
+          "name_src/node/predicate" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#002eff";
+            label = "predicate";
+          ];
+          "exit_src/node/predicate" [
+            style = "invis";
+          ];
+          "src/node/predicate/has-child.ts" [
+            label = "has-child.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/node/predicate/has-descendant.ts" [
+            label = "has-descendant.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/node/predicate/has-inclusive-descendant.ts" [
+            label = "has-inclusive-descendant.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/node/predicate/has-text-content.ts" [
+            label = "has-text-content.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/node/predicate/is-root.ts" [
+            label = "is-root.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/node/predicate/has-child.ts" -> "exit_src/node/predicate" [
+            style = "invis";
+          ];
+          "src/node/predicate/has-descendant.ts" -> "exit_src/node/predicate" [
+            style = "invis";
+          ];
+          "src/node/predicate/has-inclusive-descendant.ts" -> "exit_src/node/predicate" [
+            style = "invis";
+          ];
+          "src/node/predicate/has-text-content.ts" -> "exit_src/node/predicate" [
+            style = "invis";
+          ];
+          "src/node/predicate/is-root.ts" -> "exit_src/node/predicate" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/node/query" {
+          color = "#000000";
+          label = "";
+          "name_src/node/query" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ff0000";
+            label = "query";
+          ];
+          "exit_src/node/query" [
+            style = "invis";
+          ];
+          "src/node/query/element-descendants.ts" [
+            label = "element-descendants.ts";
+          ];
+          "src/node/query/element-id-map.ts" [
+            label = "element-id-map.ts";
+          ];
+          "src/node/query/index.ts" [
+            label = "index.ts";
+            color = "#ff0000";
+            penwidth = 5;
+          ];
+          "src/node/query/element-descendants.ts" -> "exit_src/node/query" [
+            style = "invis";
+          ];
+          "src/node/query/element-id-map.ts" -> "exit_src/node/query" [
+            style = "invis";
+          ];
+          "src/node/query/index.ts" -> "exit_src/node/query" [
+            style = "invis";
+          ];
+        }
+        subgraph "cluster_src/node/traversal" {
+          color = "#000000";
+          label = "";
+          "name_src/node/traversal" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#e8ff00";
+            label = "traversal";
+          ];
+          "exit_src/node/traversal" [
+            style = "invis";
+          ];
+          "src/node/traversal/get-nodes-between.ts" [
+            label = "get-nodes-between.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/node/traversal/lowest-common-ancestor.ts" [
+            label = "lowest-common-ancestor.ts";
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
+          ];
+          "src/node/traversal/get-nodes-between.ts" -> "exit_src/node/traversal" [
+            style = "invis";
+          ];
+          "src/node/traversal/lowest-common-ancestor.ts" -> "exit_src/node/traversal" [
+            style = "invis";
+          ];
+        }
+        "src/node/attribute.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/attribute" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/attribute" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/comment.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/document.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/element.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/element" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/fragment.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/predicate.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/predicate" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/predicate" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/predicate" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/predicate" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/predicate" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/query" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/query" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/query" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/shadow.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/slot.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/slotable.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/text.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/traversal.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/traversal" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/traversal" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/type.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/style" {
+        color = "#000000";
+        label = "";
+        "name_src/style" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#e800ff";
+          label = "style";
+        ];
+        "exit_src/style" [
+          style = "invis";
+        ];
+        "src/style/block.ts" [
+          label = "block.ts";
+        ];
+        "src/style/declaration.ts" [
+          label = "declaration.ts";
+        ];
+        "src/style/rule.ts" [
+          label = "rule.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/style/sheet.ts" [
+          label = "sheet.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        subgraph "cluster_src/style/rule" {
+          color = "#000000";
+          label = "";
+          "name_src/style/rule" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#5d00ff";
+            label = "rule";
+          ];
+          "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/condition.ts" [
+            label = "condition.ts";
+          ];
+          "src/style/rule/font-face.ts" [
+            label = "font-face.ts";
+          ];
+          "src/style/rule/grouping.ts" [
+            label = "grouping.ts";
+          ];
+          "src/style/rule/import.ts" [
+            label = "import.ts";
+          ];
+          "src/style/rule/keyframe.ts" [
+            label = "keyframe.ts";
+          ];
+          "src/style/rule/keyframes.ts" [
+            label = "keyframes.ts";
+          ];
+          "src/style/rule/layer.ts" [
+            label = "layer.ts";
+          ];
+          "src/style/rule/media.ts" [
+            label = "media.ts";
+          ];
+          "src/style/rule/namespace.ts" [
+            label = "namespace.ts";
+          ];
+          "src/style/rule/page.ts" [
+            label = "page.ts";
+          ];
+          "src/style/rule/style.ts" [
+            label = "style.ts";
+          ];
+          "src/style/rule/supports.ts" [
+            label = "supports.ts";
+          ];
+          "src/style/rule/condition.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/font-face.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/grouping.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/import.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/keyframe.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/keyframes.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/layer.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/media.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/namespace.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/page.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/style.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+          "src/style/rule/supports.ts" -> "exit_src/style/rule" [
+            style = "invis";
+          ];
+        }
+        "src/style/block.ts" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "src/style/declaration.ts" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "src/style/rule.ts" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "exit_src/style/rule" -> "exit_src/style" [
+          style = "invis";
+        ];
+        "src/style/sheet.ts" -> "exit_src/style" [
+          style = "invis";
+        ];
+      }
+      "src/h.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/jsx-runtime.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/jsx.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/namespace.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/native.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/node.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/style" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/h.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "src/h.ts" -> "src/index.ts" [
+    style = "solid";
+    ltail = "cluster_src/h.ts";
+    lhead = "cluster_src/index.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/h.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/h.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/h.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/jsx.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/jsx.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/jsx.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/namespace.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/namespace.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/namespace.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/node.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/node.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/node";
+    color = "#00ff2e";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/style";
+    color = "#00ff2e";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/jsx-runtime.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "src/jsx-runtime.ts" -> "src/index.ts" [
+    style = "solid";
+    ltail = "cluster_src/jsx-runtime.ts";
+    lhead = "cluster_src/index.ts";
+    color = "black";
+  ];
+  "src/jsx-runtime.ts" -> "src/jsx.ts" [
+    style = "invis";
+  ];
+  "src/jsx-runtime.ts" -> "src/jsx.ts" [
+    style = "solid";
+    ltail = "cluster_src/jsx-runtime.ts";
+    lhead = "cluster_src/jsx.ts";
+    color = "black";
+  ];
+  "src/jsx.ts" -> "src/h.ts" [
+    style = "invis";
+  ];
+  "src/jsx.ts" -> "src/h.ts" [
+    style = "solid";
+    ltail = "cluster_src/jsx.ts";
+    lhead = "cluster_src/h.ts";
+    color = "black";
+  ];
+  "src/jsx.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "src/jsx.ts" -> "src/index.ts" [
+    style = "solid";
+    ltail = "cluster_src/jsx.ts";
+    lhead = "cluster_src/index.ts";
+    color = "black";
+  ];
+  "src/native.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "src/native.ts" -> "src/index.ts" [
+    style = "dotted";
+    ltail = "cluster_src/native.ts";
+    lhead = "cluster_src/index.ts";
+    color = "black";
+  ];
+  "src/node.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "src/node.ts" -> "src/index.ts" [
+    style = "solid";
+    ltail = "cluster_src/node.ts";
+    lhead = "cluster_src/index.ts";
+    color = "black";
+  ];
+  "src/node.ts" -> "name_src/node" [
+    style = "solid";
+    ltail = "cluster_src/node.ts";
+    lhead = "cluster_src/node";
+    color = "#00ff2e";
+  ];
+  "src/node.ts" -> "name_src/node" [
+    style = "invis";
+  ];
+  "src/node/attribute.ts" -> "src/namespace.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/namespace.ts" [
+    style = "solid";
+    ltail = "cluster_src/node";
+    lhead = "cluster_src/namespace.ts";
+    color = "#00ffb9";
+  ];
+  "src/node/attribute.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "solid";
+    ltail = "cluster_src/node";
+    lhead = "cluster_src/node.ts";
+    color = "#00ffb9";
+  ];
+  "src/node/attribute.ts" -> "name_src/node/attribute" [
+    style = "solid";
+    ltail = "cluster_src/node/attribute.ts";
+    lhead = "cluster_src/node/attribute";
+    color = "#00ffb9";
+  ];
+  "src/node/attribute.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/attribute.ts" -> "src/node/element.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/attribute.ts";
+    lhead = "cluster_src/node/element.ts";
+    color = "black";
+  ];
+  "src/node/attribute/predicate.ts" -> "name_src/node/attribute/predicate" [
+    style = "solid";
+    ltail = "cluster_src/node/attribute/predicate.ts";
+    lhead = "cluster_src/node/attribute/predicate";
+    color = "#ff008b";
+  ];
+  "src/node/attribute/predicate/has-name.ts" -> "src/node/attribute.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/attribute" -> "src/node/attribute.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/attribute";
+    lhead = "cluster_src/node/attribute.ts";
+    color = "#ff008b";
+  ];
+  "src/node/comment.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/document.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/document.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/document.ts" -> "src/node/element.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/document.ts";
+    lhead = "cluster_src/node/element.ts";
+    color = "black";
+  ];
+  "exit_src/node" -> "name_src/style" [
+    style = "solid";
+    ltail = "cluster_src/node";
+    lhead = "cluster_src/style";
+    color = "#00ffb9";
+  ];
+  "src/node/element.ts" -> "src/namespace.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/namespace.ts" [
+    style = "invis";
+  ];
+  "src/node/element.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/element.ts" -> "src/node/attribute.ts" [
+    style = "invis";
+  ];
+  "src/node/element.ts" -> "src/node/attribute.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element.ts";
+    lhead = "cluster_src/node/attribute.ts";
+    color = "black";
+  ];
+  "src/node/element.ts" -> "src/node/document.ts" [
+    style = "invis";
+  ];
+  "src/node/element.ts" -> "src/node/document.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element.ts";
+    lhead = "cluster_src/node/document.ts";
+    color = "black";
+  ];
+  "src/node/element.ts" -> "name_src/node/element" [
+    style = "solid";
+    ltail = "cluster_src/node/element.ts";
+    lhead = "cluster_src/node/element";
+    color = "#00ffb9";
+  ];
+  "src/node/element.ts" -> "name_src/node/element" [
+    style = "invis";
+  ];
+  "src/node/element.ts" -> "src/node/shadow.ts" [
+    style = "invis";
+  ];
+  "src/node/element.ts" -> "src/node/shadow.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element.ts";
+    lhead = "cluster_src/node/shadow.ts";
+    color = "black";
+  ];
+  "src/node/element.ts" -> "src/node/slot.ts" [
+    style = "invis";
+  ];
+  "src/node/element.ts" -> "src/node/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element.ts";
+    lhead = "cluster_src/node/slot.ts";
+    color = "black";
+  ];
+  "src/node/element.ts" -> "src/node/slotable.ts" [
+    style = "invis";
+  ];
+  "src/node/element.ts" -> "src/node/slotable.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element.ts";
+    lhead = "cluster_src/node/slotable.ts";
+    color = "black";
+  ];
+  "exit_src/node" -> "name_src/style" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/node/element/input-type.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element";
+    lhead = "cluster_src/node/element.ts";
+    color = "#5dff00";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate.ts";
+    lhead = "cluster_src/node/element/predicate";
+    color = "#5dff00";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate.ts" -> "name_src/node/element/predicate" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-attribute.ts" -> "src/node/attribute.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/attribute.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element";
+    lhead = "cluster_src/node/attribute.ts";
+    color = "#5dff00";
+  ];
+  "src/node/element/predicate/has-attribute.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-box.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-display-size.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-id.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-input-type.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-input-type.ts" -> "src/node/element/input-type.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element/predicate" -> "src/node/element/input-type.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate";
+    lhead = "cluster_src/node/element/input-type.ts";
+    color = "#ff8b00";
+  ];
+  "src/node/element/predicate/has-input-type.ts" -> "src/node/element/predicate/has-name.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-input-type.ts" -> "src/node/element/predicate/has-name.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate/has-input-type.ts";
+    lhead = "cluster_src/node/element/predicate/has-name.ts";
+    color = "black";
+  ];
+  "src/node/element/predicate/has-name.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-namespace.ts" -> "src/namespace.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/namespace.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-namespace.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-tab-index.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-unique-id.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-unique-id.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-unique-id.ts" -> "src/node/element/predicate/has-id.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/has-unique-id.ts" -> "src/node/element/predicate/has-id.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate/has-unique-id.ts";
+    lhead = "cluster_src/node/element/predicate/has-id.ts";
+    color = "black";
+  ];
+  "src/node/element/predicate/is-actually-disabled.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-browsing-context-container.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-content.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-content.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-content.ts" -> "src/node/element/predicate/is-replaced.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-content.ts" -> "src/node/element/predicate/is-replaced.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate/is-content.ts";
+    lhead = "cluster_src/node/element/predicate/is-replaced.ts";
+    color = "black";
+  ];
+  "src/node/element/predicate/is-document-element.ts" -> "src/namespace.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/namespace.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-document-element.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-document-element.ts" -> "src/node/element/predicate/has-name.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-document-element.ts" -> "src/node/element/predicate/has-name.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate/is-document-element.ts";
+    lhead = "cluster_src/node/element/predicate/has-name.ts";
+    color = "black";
+  ];
+  "src/node/element/predicate/is-document-element.ts" -> "src/node/element/predicate/has-namespace.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-document-element.ts" -> "src/node/element/predicate/has-namespace.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate/is-document-element.ts";
+    lhead = "cluster_src/node/element/predicate/has-namespace.ts";
+    color = "black";
+  ];
+  "src/node/element/predicate/is-draggable.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-editing-host.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-fallback.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-fallback.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-fallback.ts" -> "src/node/element/predicate/has-name.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-fallback.ts" -> "src/node/element/predicate/has-name.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate/is-fallback.ts";
+    lhead = "cluster_src/node/element/predicate/has-name.ts";
+    color = "black";
+  ];
+  "src/node/element/predicate/is-replaced.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-replaced.ts" -> "src/node/element/predicate/has-name.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-replaced.ts" -> "src/node/element/predicate/has-name.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/element/predicate/is-replaced.ts";
+    lhead = "cluster_src/node/element/predicate/has-name.ts";
+    color = "black";
+  ];
+  "src/node/element/predicate/is-scoped-to.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/element/predicate/is-suggested-focusable.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/element" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/fragment.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/fragment.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/fragment.ts" -> "src/node/element.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/fragment.ts";
+    lhead = "cluster_src/node/element.ts";
+    color = "black";
+  ];
+  "src/node/predicate.ts" -> "name_src/node/predicate" [
+    style = "solid";
+    ltail = "cluster_src/node/predicate.ts";
+    lhead = "cluster_src/node/predicate";
+    color = "#00ffb9";
+  ];
+  "src/node/predicate.ts" -> "name_src/node/predicate" [
+    style = "invis";
+  ];
+  "src/node/predicate.ts" -> "name_src/node/predicate" [
+    style = "invis";
+  ];
+  "src/node/predicate.ts" -> "name_src/node/predicate" [
+    style = "invis";
+  ];
+  "src/node/predicate.ts" -> "name_src/node/predicate" [
+    style = "invis";
+  ];
+  "src/node/predicate/has-child.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/predicate/has-descendant.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/predicate/has-inclusive-descendant.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/predicate/has-text-content.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/predicate/is-root.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/query/element-descendants.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/query/element-descendants.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/query" -> "src/node/element.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/query";
+    lhead = "cluster_src/node/element.ts";
+    color = "#ff0000";
+  ];
+  "src/node/query/element-id-map.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/query/element-id-map.ts" -> "src/node/document.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/query" -> "src/node/document.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/query";
+    lhead = "cluster_src/node/document.ts";
+    color = "#ff0000";
+  ];
+  "src/node/query/element-id-map.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "exit_src/node/query" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/query/element-id-map.ts" -> "src/node/query/element-descendants.ts" [
+    style = "invis";
+  ];
+  "src/node/query/element-id-map.ts" -> "src/node/query/element-descendants.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/query/element-id-map.ts";
+    lhead = "cluster_src/node/query/element-descendants.ts";
+    color = "black";
+  ];
+  "src/node/query/index.ts" -> "src/node/query/element-descendants.ts" [
+    style = "invis";
+  ];
+  "src/node/query/index.ts" -> "src/node/query/element-descendants.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/query/index.ts";
+    lhead = "cluster_src/node/query/element-descendants.ts";
+    color = "black";
+  ];
+  "src/node/query/index.ts" -> "src/node/query/element-id-map.ts" [
+    style = "invis";
+  ];
+  "src/node/query/index.ts" -> "src/node/query/element-id-map.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/query/index.ts";
+    lhead = "cluster_src/node/query/element-id-map.ts";
+    color = "black";
+  ];
+  "src/node/shadow.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/shadow.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/shadow.ts" -> "src/node/element.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/shadow.ts";
+    lhead = "cluster_src/node/element.ts";
+    color = "black";
+  ];
+  "exit_src/node" -> "name_src/style" [
+    style = "invis";
+  ];
+  "src/node/slot.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/slot.ts" -> "src/node/element.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/slot.ts";
+    lhead = "cluster_src/node/element.ts";
+    color = "black";
+  ];
+  "src/node/slot.ts" -> "src/node/shadow.ts" [
+    style = "invis";
+  ];
+  "src/node/slot.ts" -> "src/node/shadow.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/slot.ts";
+    lhead = "cluster_src/node/shadow.ts";
+    color = "black";
+  ];
+  "src/node/slot.ts" -> "src/node/slotable.ts" [
+    style = "invis";
+  ];
+  "src/node/slot.ts" -> "src/node/slotable.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/slot.ts";
+    lhead = "cluster_src/node/slotable.ts";
+    color = "black";
+  ];
+  "src/node/slotable.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/slotable.ts" -> "src/node/element.ts" [
+    style = "invis";
+  ];
+  "src/node/slotable.ts" -> "src/node/element.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/slotable.ts";
+    lhead = "cluster_src/node/element.ts";
+    color = "black";
+  ];
+  "src/node/slotable.ts" -> "src/node/slot.ts" [
+    style = "invis";
+  ];
+  "src/node/slotable.ts" -> "src/node/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/slotable.ts";
+    lhead = "cluster_src/node/slot.ts";
+    color = "black";
+  ];
+  "src/node/slotable.ts" -> "src/node/text.ts" [
+    style = "invis";
+  ];
+  "src/node/slotable.ts" -> "src/node/text.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/slotable.ts";
+    lhead = "cluster_src/node/text.ts";
+    color = "black";
+  ];
+  "src/node/text.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/node/text.ts" -> "src/node/slot.ts" [
+    style = "invis";
+  ];
+  "src/node/text.ts" -> "src/node/slot.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/text.ts";
+    lhead = "cluster_src/node/slot.ts";
+    color = "black";
+  ];
+  "src/node/text.ts" -> "src/node/slotable.ts" [
+    style = "invis";
+  ];
+  "src/node/text.ts" -> "src/node/slotable.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/text.ts";
+    lhead = "cluster_src/node/slotable.ts";
+    color = "black";
+  ];
+  "src/node/traversal.ts" -> "name_src/node/traversal" [
+    style = "solid";
+    ltail = "cluster_src/node/traversal.ts";
+    lhead = "cluster_src/node/traversal";
+    color = "#00ffb9";
+  ];
+  "src/node/traversal/get-nodes-between.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/index.ts" [
+    style = "solid";
+    ltail = "cluster_src/node";
+    lhead = "cluster_src/index.ts";
+    color = "#00ffb9";
+  ];
+  "src/node/traversal/get-nodes-between.ts" -> "src/node/traversal/lowest-common-ancestor.ts" [
+    style = "invis";
+  ];
+  "src/node/traversal/get-nodes-between.ts" -> "src/node/traversal/lowest-common-ancestor.ts" [
+    style = "solid";
+    ltail = "cluster_src/node/traversal/get-nodes-between.ts";
+    lhead = "cluster_src/node/traversal/lowest-common-ancestor.ts";
+    color = "black";
+  ];
+  "src/node/traversal/lowest-common-ancestor.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "src/node/type.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/style/block.ts" -> "src/style/declaration.ts" [
+    style = "invis";
+  ];
+  "src/style/block.ts" -> "src/style/declaration.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/block.ts";
+    lhead = "cluster_src/style/declaration.ts";
+    color = "black";
+  ];
+  "exit_src/style" -> "name_src/node" [
+    style = "dotted";
+    ltail = "cluster_src/style";
+    lhead = "cluster_src/node";
+    color = "#e800ff";
+  ];
+  "src/style/declaration.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/declaration.ts" -> "src/style/rule.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/declaration.ts";
+    lhead = "cluster_src/style/rule.ts";
+    color = "black";
+  ];
+  "src/style/rule.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/style" -> "src/index.ts" [
+    style = "solid";
+    ltail = "cluster_src/style";
+    lhead = "cluster_src/index.ts";
+    color = "#e800ff";
+  ];
+  "src/style/rule.ts" -> "src/style/sheet.ts" [
+    style = "invis";
+  ];
+  "src/style/rule.ts" -> "src/style/sheet.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule.ts";
+    lhead = "cluster_src/style/sheet.ts";
+    color = "black";
+  ];
+  "src/style/rule/condition.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule";
+    lhead = "cluster_src/style/rule.ts";
+    color = "#5d00ff";
+  ];
+  "src/style/rule/condition.ts" -> "src/style/rule/grouping.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/condition.ts" -> "src/style/rule/grouping.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule/condition.ts";
+    lhead = "cluster_src/style/rule/grouping.ts";
+    color = "black";
+  ];
+  "src/style/rule/font-face.ts" -> "src/style/block.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/block.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule";
+    lhead = "cluster_src/style/block.ts";
+    color = "#5d00ff";
+  ];
+  "src/style/rule/font-face.ts" -> "src/style/declaration.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/declaration.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule";
+    lhead = "cluster_src/style/declaration.ts";
+    color = "#5d00ff";
+  ];
+  "src/style/rule/font-face.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/grouping.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/import.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/import.ts" -> "src/style/rule/condition.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/import.ts" -> "src/style/rule/condition.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule/import.ts";
+    lhead = "cluster_src/style/rule/condition.ts";
+    color = "black";
+  ];
+  "src/style/rule/import.ts" -> "src/style/sheet.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/sheet.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule";
+    lhead = "cluster_src/style/sheet.ts";
+    color = "#5d00ff";
+  ];
+  "src/style/rule/keyframe.ts" -> "src/style/block.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/block.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/keyframe.ts" -> "src/style/declaration.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/declaration.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/keyframe.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/keyframes.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/keyframes.ts" -> "src/style/rule/grouping.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/keyframes.ts" -> "src/style/rule/grouping.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule/keyframes.ts";
+    lhead = "cluster_src/style/rule/grouping.ts";
+    color = "black";
+  ];
+  "src/style/rule/layer.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/layer.ts" -> "src/style/rule/grouping.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/layer.ts" -> "src/style/rule/grouping.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule/layer.ts";
+    lhead = "cluster_src/style/rule/grouping.ts";
+    color = "black";
+  ];
+  "src/style/rule/media.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/media.ts" -> "src/style/rule/condition.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/media.ts" -> "src/style/rule/condition.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule/media.ts";
+    lhead = "cluster_src/style/rule/condition.ts";
+    color = "black";
+  ];
+  "src/style/rule/namespace.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/page.ts" -> "src/style/block.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/block.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/page.ts" -> "src/style/declaration.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/declaration.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/page.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/style.ts" -> "src/style/block.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/block.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/style.ts" -> "src/style/declaration.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/declaration.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/style.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/supports.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "exit_src/style/rule" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/supports.ts" -> "src/style/rule/condition.ts" [
+    style = "invis";
+  ];
+  "src/style/rule/supports.ts" -> "src/style/rule/condition.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/rule/supports.ts";
+    lhead = "cluster_src/style/rule/condition.ts";
+    color = "black";
+  ];
+  "src/style/sheet.ts" -> "src/style/rule.ts" [
+    style = "invis";
+  ];
+  "src/style/sheet.ts" -> "src/style/rule.ts" [
+    style = "solid";
+    ltail = "cluster_src/style/sheet.ts";
+    lhead = "cluster_src/style/rule.ts";
+    color = "black";
+  ];
+}

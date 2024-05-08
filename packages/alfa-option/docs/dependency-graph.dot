@@ -1,0 +1,191 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/maybe.ts";
+  "src/none.ts";
+  "src/option.ts";
+  "src/some.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/maybe.ts" [
+        label = "maybe.ts";
+      ];
+      "src/none.ts" [
+        label = "none.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/option.ts" [
+        label = "option.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/some.ts" [
+        label = "some.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/maybe.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/none.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/option.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/some.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/maybe.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/maybe.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/maybe.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/none.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/none.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/none.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/option.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/option.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/option.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/some.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/some.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/some.ts";
+    color = "black";
+  ];
+  "src/maybe.ts" -> "src/option.ts" [
+    style = "invis";
+  ];
+  "src/maybe.ts" -> "src/option.ts" [
+    style = "solid";
+    ltail = "cluster_src/maybe.ts";
+    lhead = "cluster_src/option.ts";
+    color = "black";
+  ];
+  "src/none.ts" -> "src/option.ts" [
+    style = "invis";
+  ];
+  "src/none.ts" -> "src/option.ts" [
+    style = "solid";
+    ltail = "cluster_src/none.ts";
+    lhead = "cluster_src/option.ts";
+    color = "black";
+  ];
+  "src/none.ts" -> "src/some.ts" [
+    style = "invis";
+  ];
+  "src/none.ts" -> "src/some.ts" [
+    style = "solid";
+    ltail = "cluster_src/none.ts";
+    lhead = "cluster_src/some.ts";
+    color = "black";
+  ];
+  "src/option.ts" -> "src/none.ts" [
+    style = "invis";
+  ];
+  "src/option.ts" -> "src/none.ts" [
+    style = "solid";
+    ltail = "cluster_src/option.ts";
+    lhead = "cluster_src/none.ts";
+    color = "black";
+  ];
+  "src/option.ts" -> "src/some.ts" [
+    style = "invis";
+  ];
+  "src/option.ts" -> "src/some.ts" [
+    style = "solid";
+    ltail = "cluster_src/option.ts";
+    lhead = "cluster_src/some.ts";
+    color = "black";
+  ];
+  "src/some.ts" -> "src/none.ts" [
+    style = "invis";
+  ];
+  "src/some.ts" -> "src/none.ts" [
+    style = "solid";
+    ltail = "cluster_src/some.ts";
+    lhead = "cluster_src/none.ts";
+    color = "black";
+  ];
+  "src/some.ts" -> "src/option.ts" [
+    style = "invis";
+  ];
+  "src/some.ts" -> "src/option.ts" [
+    style = "solid";
+    ltail = "cluster_src/some.ts";
+    lhead = "cluster_src/option.ts";
+    color = "black";
+  ];
+}

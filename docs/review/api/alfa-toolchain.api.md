@@ -11,6 +11,9 @@ import { PackageJSON } from '@changesets/types';
 // @public (undocumented)
 const changelogFunctions: ChangelogFunctions;
 
+// @public (undocumented)
+export function generateGraphs(cwd: string): Promise<void>;
+
 declare namespace globalChangelog {
     export {
 

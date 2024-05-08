@@ -1,8 +1,8 @@
 import { getPackages } from "@manypkg/get-packages";
 import * as fs from "fs";
 import * as path from "path";
-import { hasExtractorConfig } from "./has-extractor-config";
 
+import { hasExtractorConfig } from "./has-extractor-config";
 import { validateChangesets } from "./validate-changesets";
 import { validatePackageJson } from "./validate-package-json";
 import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig";

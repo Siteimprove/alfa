@@ -1,0 +1,163 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/ok.ts";
+  "src/result.ts";
+  "src/err.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/err.ts" [
+        label = "err.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/ok.ts" [
+        label = "ok.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/result.ts" [
+        label = "result.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/err.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/ok.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/result.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/err.ts" -> "src/ok.ts" [
+    style = "invis";
+  ];
+  "src/err.ts" -> "src/ok.ts" [
+    style = "solid";
+    ltail = "cluster_src/err.ts";
+    lhead = "cluster_src/ok.ts";
+    color = "black";
+  ];
+  "src/err.ts" -> "src/result.ts" [
+    style = "invis";
+  ];
+  "src/err.ts" -> "src/result.ts" [
+    style = "solid";
+    ltail = "cluster_src/err.ts";
+    lhead = "cluster_src/result.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/err.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/err.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/err.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/ok.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/ok.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/ok.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/result.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/result.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/result.ts";
+    color = "black";
+  ];
+  "src/ok.ts" -> "src/err.ts" [
+    style = "invis";
+  ];
+  "src/ok.ts" -> "src/err.ts" [
+    style = "solid";
+    ltail = "cluster_src/ok.ts";
+    lhead = "cluster_src/err.ts";
+    color = "black";
+  ];
+  "src/ok.ts" -> "src/result.ts" [
+    style = "invis";
+  ];
+  "src/ok.ts" -> "src/result.ts" [
+    style = "solid";
+    ltail = "cluster_src/ok.ts";
+    lhead = "cluster_src/result.ts";
+    color = "black";
+  ];
+  "src/result.ts" -> "src/err.ts" [
+    style = "invis";
+  ];
+  "src/result.ts" -> "src/err.ts" [
+    style = "solid";
+    ltail = "cluster_src/result.ts";
+    lhead = "cluster_src/err.ts";
+    color = "black";
+  ];
+  "src/result.ts" -> "src/ok.ts" [
+    style = "invis";
+  ];
+  "src/result.ts" -> "src/ok.ts" [
+    style = "solid";
+    ltail = "cluster_src/result.ts";
+    lhead = "cluster_src/ok.ts";
+    color = "black";
+  ];
+}

@@ -1,0 +1,474 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/cache.ts";
+  "src/oracle.ts";
+  "src/outcome.ts";
+  "src/question.ts";
+  "src/rule.ts";
+  "src/audit.ts";
+  "src/diagnostic.ts";
+  "src/interview.ts";
+  "src/requirement.ts";
+  "src/tag.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/audit.ts" [
+        label = "audit.ts";
+      ];
+      "src/cache.ts" [
+        label = "cache.ts";
+      ];
+      "src/diagnostic.ts" [
+        label = "diagnostic.ts";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/interview.ts" [
+        label = "interview.ts";
+      ];
+      "src/oracle.ts" [
+        label = "oracle.ts";
+      ];
+      "src/outcome.ts" [
+        label = "outcome.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/question.ts" [
+        label = "question.ts";
+      ];
+      "src/requirement.ts" [
+        label = "requirement.ts";
+      ];
+      "src/rule.ts" [
+        label = "rule.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/tag.ts" [
+        label = "tag.ts";
+      ];
+      "src/audit.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/cache.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/diagnostic.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/interview.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/oracle.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/outcome.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/question.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/requirement.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/rule.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/tag.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/audit.ts" -> "src/cache.ts" [
+    style = "invis";
+  ];
+  "src/audit.ts" -> "src/cache.ts" [
+    style = "solid";
+    ltail = "cluster_src/audit.ts";
+    lhead = "cluster_src/cache.ts";
+    color = "black";
+  ];
+  "src/audit.ts" -> "src/oracle.ts" [
+    style = "invis";
+  ];
+  "src/audit.ts" -> "src/oracle.ts" [
+    style = "dotted";
+    ltail = "cluster_src/audit.ts";
+    lhead = "cluster_src/oracle.ts";
+    color = "black";
+  ];
+  "src/audit.ts" -> "src/outcome.ts" [
+    style = "invis";
+  ];
+  "src/audit.ts" -> "src/outcome.ts" [
+    style = "dotted";
+    ltail = "cluster_src/audit.ts";
+    lhead = "cluster_src/outcome.ts";
+    color = "black";
+  ];
+  "src/audit.ts" -> "src/question.ts" [
+    style = "invis";
+  ];
+  "src/audit.ts" -> "src/question.ts" [
+    style = "dotted";
+    ltail = "cluster_src/audit.ts";
+    lhead = "cluster_src/question.ts";
+    color = "black";
+  ];
+  "src/audit.ts" -> "src/rule.ts" [
+    style = "invis";
+  ];
+  "src/audit.ts" -> "src/rule.ts" [
+    style = "dotted";
+    ltail = "cluster_src/audit.ts";
+    lhead = "cluster_src/rule.ts";
+    color = "black";
+  ];
+  "src/cache.ts" -> "src/outcome.ts" [
+    style = "invis";
+  ];
+  "src/cache.ts" -> "src/outcome.ts" [
+    style = "dotted";
+    ltail = "cluster_src/cache.ts";
+    lhead = "cluster_src/outcome.ts";
+    color = "black";
+  ];
+  "src/cache.ts" -> "src/question.ts" [
+    style = "invis";
+  ];
+  "src/cache.ts" -> "src/question.ts" [
+    style = "dotted";
+    ltail = "cluster_src/cache.ts";
+    lhead = "cluster_src/question.ts";
+    color = "black";
+  ];
+  "src/cache.ts" -> "src/rule.ts" [
+    style = "invis";
+  ];
+  "src/cache.ts" -> "src/rule.ts" [
+    style = "dotted";
+    ltail = "cluster_src/cache.ts";
+    lhead = "cluster_src/rule.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/audit.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/audit.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/audit.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/cache.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/cache.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/cache.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/diagnostic.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/diagnostic.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/diagnostic.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/interview.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/interview.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/interview.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/oracle.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/oracle.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/oracle.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/outcome.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/outcome.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/outcome.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/question.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/question.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/question.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/requirement.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/requirement.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/requirement.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/rule.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/rule.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/rule.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/tag.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/tag.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/tag.ts";
+    color = "black";
+  ];
+  "src/interview.ts" -> "src/diagnostic.ts" [
+    style = "invis";
+  ];
+  "src/interview.ts" -> "src/diagnostic.ts" [
+    style = "dotted";
+    ltail = "cluster_src/interview.ts";
+    lhead = "cluster_src/diagnostic.ts";
+    color = "black";
+  ];
+  "src/interview.ts" -> "src/oracle.ts" [
+    style = "invis";
+  ];
+  "src/interview.ts" -> "src/oracle.ts" [
+    style = "dotted";
+    ltail = "cluster_src/interview.ts";
+    lhead = "cluster_src/oracle.ts";
+    color = "black";
+  ];
+  "src/interview.ts" -> "src/question.ts" [
+    style = "invis";
+  ];
+  "src/interview.ts" -> "src/question.ts" [
+    style = "solid";
+    ltail = "cluster_src/interview.ts";
+    lhead = "cluster_src/question.ts";
+    color = "black";
+  ];
+  "src/interview.ts" -> "src/rule.ts" [
+    style = "invis";
+  ];
+  "src/interview.ts" -> "src/rule.ts" [
+    style = "dotted";
+    ltail = "cluster_src/interview.ts";
+    lhead = "cluster_src/rule.ts";
+    color = "black";
+  ];
+  "src/oracle.ts" -> "src/question.ts" [
+    style = "invis";
+  ];
+  "src/oracle.ts" -> "src/question.ts" [
+    style = "dotted";
+    ltail = "cluster_src/oracle.ts";
+    lhead = "cluster_src/question.ts";
+    color = "black";
+  ];
+  "src/oracle.ts" -> "src/rule.ts" [
+    style = "invis";
+  ];
+  "src/oracle.ts" -> "src/rule.ts" [
+    style = "dotted";
+    ltail = "cluster_src/oracle.ts";
+    lhead = "cluster_src/rule.ts";
+    color = "black";
+  ];
+  "src/outcome.ts" -> "src/diagnostic.ts" [
+    style = "invis";
+  ];
+  "src/outcome.ts" -> "src/diagnostic.ts" [
+    style = "solid";
+    ltail = "cluster_src/outcome.ts";
+    lhead = "cluster_src/diagnostic.ts";
+    color = "black";
+  ];
+  "src/outcome.ts" -> "src/question.ts" [
+    style = "invis";
+  ];
+  "src/outcome.ts" -> "src/question.ts" [
+    style = "dotted";
+    ltail = "cluster_src/outcome.ts";
+    lhead = "cluster_src/question.ts";
+    color = "black";
+  ];
+  "src/outcome.ts" -> "src/rule.ts" [
+    style = "invis";
+  ];
+  "src/outcome.ts" -> "src/rule.ts" [
+    style = "solid";
+    ltail = "cluster_src/outcome.ts";
+    lhead = "cluster_src/rule.ts";
+    color = "black";
+  ];
+  "src/question.ts" -> "src/diagnostic.ts" [
+    style = "invis";
+  ];
+  "src/question.ts" -> "src/diagnostic.ts" [
+    style = "solid";
+    ltail = "cluster_src/question.ts";
+    lhead = "cluster_src/diagnostic.ts";
+    color = "black";
+  ];
+  "src/rule.ts" -> "src/cache.ts" [
+    style = "invis";
+  ];
+  "src/rule.ts" -> "src/cache.ts" [
+    style = "solid";
+    ltail = "cluster_src/rule.ts";
+    lhead = "cluster_src/cache.ts";
+    color = "black";
+  ];
+  "src/rule.ts" -> "src/diagnostic.ts" [
+    style = "invis";
+  ];
+  "src/rule.ts" -> "src/diagnostic.ts" [
+    style = "solid";
+    ltail = "cluster_src/rule.ts";
+    lhead = "cluster_src/diagnostic.ts";
+    color = "black";
+  ];
+  "src/rule.ts" -> "src/interview.ts" [
+    style = "invis";
+  ];
+  "src/rule.ts" -> "src/interview.ts" [
+    style = "solid";
+    ltail = "cluster_src/rule.ts";
+    lhead = "cluster_src/interview.ts";
+    color = "black";
+  ];
+  "src/rule.ts" -> "src/oracle.ts" [
+    style = "invis";
+  ];
+  "src/rule.ts" -> "src/oracle.ts" [
+    style = "dotted";
+    ltail = "cluster_src/rule.ts";
+    lhead = "cluster_src/oracle.ts";
+    color = "black";
+  ];
+  "src/rule.ts" -> "src/outcome.ts" [
+    style = "invis";
+  ];
+  "src/rule.ts" -> "src/outcome.ts" [
+    style = "solid";
+    ltail = "cluster_src/rule.ts";
+    lhead = "cluster_src/outcome.ts";
+    color = "black";
+  ];
+  "src/rule.ts" -> "src/question.ts" [
+    style = "invis";
+  ];
+  "src/rule.ts" -> "src/question.ts" [
+    style = "dotted";
+    ltail = "cluster_src/rule.ts";
+    lhead = "cluster_src/question.ts";
+    color = "black";
+  ];
+  "src/rule.ts" -> "src/requirement.ts" [
+    style = "invis";
+  ];
+  "src/rule.ts" -> "src/requirement.ts" [
+    style = "solid";
+    ltail = "cluster_src/rule.ts";
+    lhead = "cluster_src/requirement.ts";
+    color = "black";
+  ];
+  "src/rule.ts" -> "src/tag.ts" [
+    style = "invis";
+  ];
+  "src/rule.ts" -> "src/tag.ts" [
+    style = "solid";
+    ltail = "cluster_src/rule.ts";
+    lhead = "cluster_src/tag.ts";
+    color = "black";
+  ];
+}

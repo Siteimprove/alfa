@@ -1,0 +1,625 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/expression.ts";
+  "src/matches.ts";
+  "src/types.ts";
+  "src/function.ts";
+  "src/builder.ts";
+  "src/coerce.ts";
+  "src/descriptors.ts";
+  "src/environment.ts";
+  "src/functions/index.ts";
+  "name_src/functions";
+  "src/syntax/parser.ts";
+  "name_src/syntax";
+  "src/walk.ts";
+  "src/evaluate.ts";
+  "exit_src/functions";
+  "src/functions/fn.ts";
+  "src/syntax/lexer.ts";
+  "src/syntax/token.ts";
+  "exit_src/syntax";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/builder.ts" [
+        label = "builder.ts";
+      ];
+      "src/coerce.ts" [
+        label = "coerce.ts";
+      ];
+      "src/descriptors.ts" [
+        label = "descriptors.ts";
+      ];
+      "src/environment.ts" [
+        label = "environment.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/evaluate.ts" [
+        label = "evaluate.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/expression.ts" [
+        label = "expression.ts";
+      ];
+      "src/function.ts" [
+        label = "function.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/matches.ts" [
+        label = "matches.ts";
+      ];
+      "src/types.ts" [
+        label = "types.ts";
+      ];
+      "src/walk.ts" [
+        label = "walk.ts";
+      ];
+      subgraph "cluster_src/functions" {
+        color = "#000000";
+        label = "";
+        "name_src/functions" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff00";
+          label = "functions";
+        ];
+        "exit_src/functions" [
+          style = "invis";
+        ];
+        "src/functions/fn.ts" [
+          label = "fn.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/functions/index.ts" [
+          label = "index.ts";
+          color = "#00ff00";
+          penwidth = 5;
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/functions/fn.ts" -> "exit_src/functions" [
+          style = "invis";
+        ];
+        "src/functions/index.ts" -> "exit_src/functions" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/syntax" {
+        color = "#000000";
+        label = "";
+        "name_src/syntax" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0000ff";
+          label = "syntax";
+        ];
+        "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/lexer.ts" [
+          label = "lexer.ts";
+        ];
+        "src/syntax/parser.ts" [
+          label = "parser.ts";
+        ];
+        "src/syntax/token.ts" [
+          label = "token.ts";
+        ];
+        "src/syntax/lexer.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/parser.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+        "src/syntax/token.ts" -> "exit_src/syntax" [
+          style = "invis";
+        ];
+      }
+      "src/builder.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/coerce.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/descriptors.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/environment.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/evaluate.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/expression.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/function.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/functions" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/functions" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/matches.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/types.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/walk.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/builder.ts" -> "src/expression.ts" [
+    style = "invis";
+  ];
+  "src/builder.ts" -> "src/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/builder.ts";
+    lhead = "cluster_src/expression.ts";
+    color = "black";
+  ];
+  "src/coerce.ts" -> "src/matches.ts" [
+    style = "invis";
+  ];
+  "src/coerce.ts" -> "src/matches.ts" [
+    style = "solid";
+    ltail = "cluster_src/coerce.ts";
+    lhead = "cluster_src/matches.ts";
+    color = "black";
+  ];
+  "src/coerce.ts" -> "src/types.ts" [
+    style = "invis";
+  ];
+  "src/coerce.ts" -> "src/types.ts" [
+    style = "solid";
+    ltail = "cluster_src/coerce.ts";
+    lhead = "cluster_src/types.ts";
+    color = "black";
+  ];
+  "src/environment.ts" -> "src/function.ts" [
+    style = "invis";
+  ];
+  "src/environment.ts" -> "src/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/environment.ts";
+    lhead = "cluster_src/function.ts";
+    color = "black";
+  ];
+  "src/environment.ts" -> "src/types.ts" [
+    style = "invis";
+  ];
+  "src/environment.ts" -> "src/types.ts" [
+    style = "solid";
+    ltail = "cluster_src/environment.ts";
+    lhead = "cluster_src/types.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "src/builder.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/builder.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/builder.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "src/coerce.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/coerce.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/coerce.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "src/descriptors.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/descriptors.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/descriptors.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "src/environment.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/environment.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/environment.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "src/expression.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/expression.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "src/function.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/function.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "name_src/functions" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/functions";
+    color = "#ff0000";
+  ];
+  "src/evaluate.ts" -> "src/matches.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/matches.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/matches.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "name_src/syntax" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/syntax";
+    color = "#ff0000";
+  ];
+  "src/evaluate.ts" -> "src/types.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/types.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/types.ts";
+    color = "black";
+  ];
+  "src/evaluate.ts" -> "src/walk.ts" [
+    style = "invis";
+  ];
+  "src/evaluate.ts" -> "src/walk.ts" [
+    style = "solid";
+    ltail = "cluster_src/evaluate.ts";
+    lhead = "cluster_src/walk.ts";
+    color = "black";
+  ];
+  "src/function.ts" -> "src/environment.ts" [
+    style = "invis";
+  ];
+  "src/function.ts" -> "src/environment.ts" [
+    style = "solid";
+    ltail = "cluster_src/function.ts";
+    lhead = "cluster_src/environment.ts";
+    color = "black";
+  ];
+  "src/function.ts" -> "src/evaluate.ts" [
+    style = "invis";
+  ];
+  "src/function.ts" -> "src/evaluate.ts" [
+    style = "solid";
+    ltail = "cluster_src/function.ts";
+    lhead = "cluster_src/evaluate.ts";
+    color = "black";
+  ];
+  "src/function.ts" -> "src/types.ts" [
+    style = "invis";
+  ];
+  "src/function.ts" -> "src/types.ts" [
+    style = "solid";
+    ltail = "cluster_src/function.ts";
+    lhead = "cluster_src/types.ts";
+    color = "black";
+  ];
+  "src/functions/fn.ts" -> "src/descriptors.ts" [
+    style = "invis";
+  ];
+  "exit_src/functions" -> "src/descriptors.ts" [
+    style = "solid";
+    ltail = "cluster_src/functions";
+    lhead = "cluster_src/descriptors.ts";
+    color = "#00ff00";
+  ];
+  "src/functions/fn.ts" -> "src/function.ts" [
+    style = "invis";
+  ];
+  "exit_src/functions" -> "src/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/functions";
+    lhead = "cluster_src/function.ts";
+    color = "#00ff00";
+  ];
+  "src/functions/index.ts" -> "src/function.ts" [
+    style = "invis";
+  ];
+  "exit_src/functions" -> "src/function.ts" [
+    style = "invis";
+  ];
+  "src/functions/index.ts" -> "src/functions/fn.ts" [
+    style = "invis";
+  ];
+  "src/functions/index.ts" -> "src/functions/fn.ts" [
+    style = "solid";
+    ltail = "cluster_src/functions/index.ts";
+    lhead = "cluster_src/functions/fn.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/builder.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/builder.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/builder.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/coerce.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/coerce.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/coerce.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/descriptors.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/descriptors.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/descriptors.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/environment.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/environment.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/environment.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/evaluate.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/evaluate.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/evaluate.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/expression.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/expression.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/function.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/function.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/function.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/matches.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/matches.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/matches.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/syntax" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/syntax";
+    color = "#ff0000";
+  ];
+  "src/index.ts" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/types.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/types.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/types.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/walk.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/walk.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/walk.ts";
+    color = "black";
+  ];
+  "src/matches.ts" -> "src/descriptors.ts" [
+    style = "invis";
+  ];
+  "src/matches.ts" -> "src/descriptors.ts" [
+    style = "solid";
+    ltail = "cluster_src/matches.ts";
+    lhead = "cluster_src/descriptors.ts";
+    color = "black";
+  ];
+  "src/matches.ts" -> "src/types.ts" [
+    style = "invis";
+  ];
+  "src/matches.ts" -> "src/types.ts" [
+    style = "solid";
+    ltail = "cluster_src/matches.ts";
+    lhead = "cluster_src/types.ts";
+    color = "black";
+  ];
+  "src/syntax/lexer.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/lexer.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/lexer.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/syntax/parser.ts" -> "src/expression.ts" [
+    style = "invis";
+  ];
+  "exit_src/syntax" -> "src/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax";
+    lhead = "cluster_src/expression.ts";
+    color = "#0000ff";
+  ];
+  "src/syntax/parser.ts" -> "src/syntax/lexer.ts" [
+    style = "invis";
+  ];
+  "src/syntax/parser.ts" -> "src/syntax/lexer.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/parser.ts";
+    lhead = "cluster_src/syntax/lexer.ts";
+    color = "black";
+  ];
+  "src/syntax/parser.ts" -> "src/syntax/token.ts" [
+    style = "invis";
+  ];
+  "src/syntax/parser.ts" -> "src/syntax/token.ts" [
+    style = "solid";
+    ltail = "cluster_src/syntax/parser.ts";
+    lhead = "cluster_src/syntax/token.ts";
+    color = "black";
+  ];
+  "src/types.ts" -> "src/descriptors.ts" [
+    style = "invis";
+  ];
+  "src/types.ts" -> "src/descriptors.ts" [
+    style = "solid";
+    ltail = "cluster_src/types.ts";
+    lhead = "cluster_src/descriptors.ts";
+    color = "black";
+  ];
+  "src/walk.ts" -> "src/expression.ts" [
+    style = "invis";
+  ];
+  "src/walk.ts" -> "src/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/walk.ts";
+    lhead = "cluster_src/expression.ts";
+    color = "black";
+  ];
+}

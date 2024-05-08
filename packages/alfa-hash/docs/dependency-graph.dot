@@ -1,0 +1,106 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/hashable.ts";
+  "src/hash.ts";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/hash.ts" [
+        label = "hash.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/hashable.ts" [
+        label = "hashable.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/hash.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/hashable.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/hash.ts" -> "src/hashable.ts" [
+    style = "invis";
+  ];
+  "src/hash.ts" -> "src/hashable.ts" [
+    style = "solid";
+    ltail = "cluster_src/hash.ts";
+    lhead = "cluster_src/hashable.ts";
+    color = "black";
+  ];
+  "src/hashable.ts" -> "src/hash.ts" [
+    style = "invis";
+  ];
+  "src/hashable.ts" -> "src/hash.ts" [
+    style = "solid";
+    ltail = "cluster_src/hashable.ts";
+    lhead = "cluster_src/hash.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/hash.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/hash.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/hash.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/hashable.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/hashable.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/hashable.ts";
+    color = "black";
+  ];
+}

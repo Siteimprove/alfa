@@ -7,11 +7,16 @@
   "depgraph":{
     "command": "yarn dependency-graph",
     "description": "Update dependency graph",
-    "commitMsg": "Update dependency graph"
+    "commitMsg": "Update global dependency graph"
   },
   "extract": {
     "command": "CI=false yarn extract --quiet",
     "description": "Extract packages API",
     "commitMsg": "Extract API"
+  },
+  "packages-graphs": {
+    "command": "yarn generate-dependency-graphs",
+    "description": "Update individual packages dependency graphs",
+    "commitMsg": "Update individual packages dependency graphs"
   }
 }

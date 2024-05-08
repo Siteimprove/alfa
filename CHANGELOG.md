@@ -1,5 +1,17 @@
 # Alfa changelog
 
+## [0.80.0](../../compare/v0.79.1...v0.80.0) (2024-05-01)
+
+### Changed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0800): Role computation for `<li>` elements now looks for a parent `<ul>` in the flat tree, not the DOM tree. ([#1607](https://github.com/Siteimprove/alfa/pull/1607))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0800): `Node.toJSON` now serialises the corresponding DOM node as its path in the **flat tree**, not in the DOM tree. ([#1607](https://github.com/Siteimprove/alfa/pull/1607))
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0800): `Native.fromNode` now correctly handles sheets without conditions. ([#1608](https://github.com/Siteimprove/alfa/pull/1608))
+
 ## [0.79.1](../../compare/v0.79.0...v0.79.1) (2024-04-30)
 
 ### Fixed

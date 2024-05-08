@@ -1,5 +1,11 @@
 # @siteimprove/alfa-dom
 
+## 0.80.0
+
+### Patch Changes
+
+- **Fixed:** `Native.fromNode` now correctly handles sheets without conditions. ([#1608](https://github.com/Siteimprove/alfa/pull/1608))
+
 ## 0.79.1
 
 ### Patch Changes

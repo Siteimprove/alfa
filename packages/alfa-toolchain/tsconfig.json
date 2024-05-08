@@ -9,6 +9,9 @@
     "src/changeset/build-changelog.ts",
     "src/changeset/changelog-global.ts",
     "src/changeset/changelog-individual.ts",
+    "src/dependency-graph/dependency-graph.ts",
+    "src/dependency-graph/generate-graphs.ts",
+    "src/dependency-graph/rainbow.ts",
     "src/changeset/get-changeset-details.ts",
     "src/changeset/helpers.ts",
     "src/validation/has-extractor-config.ts",
@@ -23,8 +26,10 @@
   ],
   "references": [
     { "path": "../alfa-array" },
+    { "path": "../alfa-map" },
     { "path": "../alfa-option" },
     { "path": "../alfa-result" },
+    { "path": "../alfa-set" },
     { "path": "../alfa-test" }
   ]
 }

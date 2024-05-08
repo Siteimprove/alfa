@@ -1,5 +1,7 @@
 # @siteimprove/alfa-mapper
 
+## 0.80.0
+
 ## 0.79.1
 
 ## 0.79.0
