@@ -373,7 +373,7 @@ export namespace Name {
     // Step 2B: Use the `aria-labelledby` attribute, if present and allowed.
     // https://w3c.github.io/accname/#step2B
 
-    let name: Option<Name> = None;
+    let name: Option<Name>;
     let step2B: Option<Name> = None;
 
     // Chained `aria-labelledby` references, such `foo` -> `bar` -> `baz`,
