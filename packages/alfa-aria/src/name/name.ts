@@ -614,36 +614,16 @@ export namespace Name {
   export function fromSteps(
     ...steps: Array<Thunk<Option<Name>>>
   ): Option<Name> {
+    // This local cache is there to ensure that the functions are invoked at most one time
     const cache = Cache.empty<Thunk<Option<Name>>, Option<Name>>();
 
-    let result: Option<Name> = None;
-    for (let i = 0, n = steps.length; i < n; i++) {
-      const value = cache
-        .get(steps[i], steps[i])
-        .reject((name) => name.value === "");
-
-      if (value.isSome()) {
-        result = value;
-        break;
-      }
-    }
-
-    if (result.isSome()) {
-      return result;
-    }
-
-    for (let i = 0, n = steps.length; i < n; i++) {
-      const value = cache
-        .get(steps[i], steps[i])
-        .reject((name) => name.isEmpty());
-
-      if (value.isSome()) {
-        result = value;
-        break;
-      }
-    }
-
-    return result;
+    return Array.collectFirst(steps, (step) =>
+      cache.get(step, step).reject((name) => name.value === ""),
+    ).orElse(() =>
+      Array.collectFirst(steps, (step) =>
+        cache.get(step, step).reject((name) => name.isEmpty()),
+      ),
+    );
   }
 
   export const { hasValue } = predicate;
