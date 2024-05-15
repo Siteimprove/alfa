@@ -193,12 +193,12 @@ const nameFromLabel = (element: Element, device: Device, state: State) => {
       ),
     );
 
-  const names = references.collect((element) =>
+  const names = references.collect((label) =>
     Name.fromNode(
-      element,
+      label,
       device,
-      state.reference(element, element).recurse(true).descend(false),
-    ).map((name) => [name, element] as const),
+      state.reference(element, label).recurse(true).descend(false),
+    ).map((name) => [name, label] as const),
   );
 
   const name = names
