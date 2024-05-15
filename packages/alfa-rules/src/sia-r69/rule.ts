@@ -27,7 +27,7 @@ export default Rule.Atomic.of<
       },
 
       expectations(target) {
-        return hasSufficientContrast(target, device, 2, 4.5);
+        return hasSufficientContrast(target, device, 1, 4.5);
       },
     };
   },
