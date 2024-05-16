@@ -480,6 +480,11 @@ export namespace Name {
     );
   }
 
+  const fromDescendantsCache = Cache.empty<
+    Device,
+    Cache<State, Cache<Element, Option<Name>>>
+  >();
+
   /**
    * @remarks
    * Firefox incorrectly skips aria-labelledby when descending
@@ -492,26 +497,31 @@ export namespace Name {
     device: Device,
     state: State,
   ): Option<Name> {
-    const names: Sequence<Name> = element
-      .children(Node.flatTree)
-      .filter(or(isText, isElement))
-      .collect((element) =>
-        fromNode(element, device, state.recurse(true).descend(true)),
-      );
+    return fromDescendantsCache
+      .get(device, Cache.empty)
+      .get(state, Cache.empty)
+      .get(element, () => {
+        const names: Sequence<Name> = element
+          .children(Node.flatTree)
+          .filter(or(isText, isElement))
+          .collect((element) =>
+            fromNode(element, device, state.recurse(true).descend(true)),
+          );
 
-    const name = Name.join(...names);
+        const name = Name.join(...names);
 
-    if (name.isEmpty()) {
-      return None;
-    }
+        if (name.isEmpty()) {
+          return None;
+        }
 
-    return Option.of(
-      Name.of(
-        name.value,
-        names.map((name) => Source.descendant(element, name)),
-        name.spaces,
-      ),
-    );
+        return Option.of(
+          Name.of(
+            name.value,
+            names.map((name) => Source.descendant(element, name)),
+            name.spaces,
+          ),
+        );
+      });
   }
 
   /**
@@ -593,11 +603,17 @@ export namespace Name {
   export function fromSteps(
     ...steps: Array<Thunk<Option<Name>>>
   ): Option<Name> {
-    return Array.collectFirst(steps, (step) =>
-      step().reject((name) => name.value === ""),
-    ).orElse(() =>
-      Array.collectFirst(steps, (step) =>
-        step().reject((name) => name.isEmpty()),
+    // We need to store the results, because they might be needed in the .orElse
+    // and recomputing leads to a combinatorial explosion in some cases
+    const results: Array<Option<Name>> = [];
+
+    return Array.collectFirst(steps, (step, index) => {
+      const result = step();
+      results[index] = result;
+      return result.reject((name) => name.value === "");
+    }).orElse(() =>
+      Array.collectFirst(steps, (step, index) =>
+        (results[index] ?? step()).reject((name) => name.isEmpty()),
       ),
     );
   }
