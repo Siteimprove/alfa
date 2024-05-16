@@ -46,9 +46,10 @@
     "@siteimprove/alfa-result": "workspace:^0.80.0",
     "@siteimprove/alfa-set": "workspace:^0.80.0",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
+    "@ts-graphviz/adapter": "^2.0.3",
     "madge": "^7.0.0",
     "resolve-from": "^5.0.0",
-    "ts-graphviz": "^1.8.1"
+    "ts-graphviz": "^2.0.0"
   },
   "devDependencies": {
     "@changesets/types": "^6.0.0",

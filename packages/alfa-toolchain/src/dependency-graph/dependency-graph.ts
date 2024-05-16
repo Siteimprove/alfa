@@ -7,7 +7,7 @@ import * as fs from "fs";
 import * as madge from "madge";
 import * as path from "path";
 import * as gv from "ts-graphviz";
-import * as adapter from "ts-graphviz/adapter";
+import * as adapter from "@ts-graphviz/adapter";
 
 import { Rainbow } from "./rainbow";
 
