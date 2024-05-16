@@ -612,8 +612,9 @@ export namespace Name {
       results[index] = result;
       return result.reject((name) => name.value === "");
     }).orElse(() =>
-      Array.collectFirst(steps, (step, index) => (results[index] ?? step()).reject((name) => name.isEmpty());
-      }),
+      Array.collectFirst(steps, (step, index) =>
+        (results[index] ?? step()).reject((name) => name.isEmpty()),
+      ),
     );
   }
 
