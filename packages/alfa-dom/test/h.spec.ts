@@ -10,16 +10,19 @@ import { Element } from "../src/node/element";
 import { Type } from "../src/node/type";
 
 test("h() constructs an element", (t) => {
-  t.deepEqual(h("div"), Element.of(Option.of(Namespace.HTML), None, "div"));
+  t.deepEqual(
+    h("div").toJSON(),
+    Element.of(Option.of(Namespace.HTML), None, "div").toJSON(),
+  );
 });
 
 test("h.document() constructs a document", (t) => {
   t.deepEqual(
-    h.document([h.type("html"), h("html")]),
+    h.document([h.type("html"), h("html")]).toJSON(),
     Document.of([
       Type.of("html"),
       Element.of(Option.of(Namespace.HTML), None, "html"),
-    ]),
+    ]).toJSON(),
   );
 });
 
@@ -51,12 +54,12 @@ test("h() puts the first shadow child in a shadow tree", (t) => {
 
 test("h() put elements in the correct namespace", (t) => {
   t.deepEqual(
-    h("circle"),
-    Element.of(Option.of(Namespace.SVG), None, "circle"),
+    h("circle").toJSON(),
+    Element.of(Option.of(Namespace.SVG), None, "circle").toJSON(),
   );
 
   t.deepEqual(
-    h("mfrac"),
-    Element.of(Option.of(Namespace.MathML), None, "mfrac"),
+    h("mfrac").toJSON(),
+    Element.of(Option.of(Namespace.MathML), None, "mfrac").toJSON(),
   );
 });

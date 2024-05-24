@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -50,6 +52,8 @@ export abstract class Node<
   private readonly _externalId: string | undefined;
   private readonly _extraData: any;
 
+  private readonly _uuid: string;
+
   /**
    * Whether the node is frozen.
    *
@@ -75,6 +79,8 @@ export abstract class Node<
     this._type = type;
     this._externalId = externalId;
     this._extraData = extraData;
+
+    this._uuid = crypto.randomUUID();
   }
 
   public get type(): T {
@@ -84,8 +90,13 @@ export abstract class Node<
   public get externalId(): string | undefined {
     return this._externalId;
   }
+
   public get extraData(): any {
     return this._extraData;
+  }
+
+  public get uuid(): string {
+    return this._uuid;
   }
 
   public get frozen(): boolean {
