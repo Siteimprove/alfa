@@ -1,0 +1,102 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`#evaluate() > matches snapshot 1`] = `
+[
+  {
+    "expectations": [
+      [
+        "1",
+        {
+          "type": "ok",
+          "value": {
+            "message": "Number was even",
+          },
+        },
+      ],
+    ],
+    "mode": "automatic",
+    "outcome": "passed",
+    "rule": {
+      "requirements": [],
+      "tags": [],
+      "type": "atomic",
+      "uri": "positive numbers must be even",
+    },
+    "target": {
+      "value": 0,
+    },
+  },
+  {
+    "expectations": [
+      [
+        "1",
+        {
+          "type": "ok",
+          "value": {
+            "message": "Number was even",
+          },
+        },
+      ],
+    ],
+    "mode": "automatic",
+    "outcome": "passed",
+    "rule": {
+      "requirements": [],
+      "tags": [],
+      "type": "atomic",
+      "uri": "positive numbers must be even",
+    },
+    "target": {
+      "value": 2,
+    },
+  },
+  {
+    "expectations": [
+      [
+        "1",
+        {
+          "error": {
+            "message": "Number was not even",
+          },
+          "type": "err",
+        },
+      ],
+    ],
+    "mode": "automatic",
+    "outcome": "failed",
+    "rule": {
+      "requirements": [],
+      "tags": [],
+      "type": "atomic",
+      "uri": "positive numbers must be even",
+    },
+    "target": {
+      "value": 3,
+    },
+  },
+  {
+    "expectations": [
+      [
+        "1",
+        {
+          "error": {
+            "message": "Number was not even",
+          },
+          "type": "err",
+        },
+      ],
+    ],
+    "mode": "automatic",
+    "outcome": "failed",
+    "rule": {
+      "requirements": [],
+      "tags": [],
+      "type": "atomic",
+      "uri": "positive numbers must be even",
+    },
+    "target": {
+      "value": 3.1415,
+    },
+  },
+]
+`;
