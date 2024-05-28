@@ -19,8 +19,7 @@
     "document": "api-documenter generate -i docs/data/api -o docs/api",
     "dependency-graph": "package-dependency-graph --config config/package-dependency-graph.ts --exclude-node_modules --graphviz --dot docs/dependency-graph.dot --png docs/dependency-graph.png",
     "knip": "knip --config config/knip.ts",
-    "test:vitest": "vitest",
-    "coverage:vitest": "vitest run --coverage"
+    "vi:test": "vitest"
   },
   "workspaces": [
     "packages/*"
@@ -32,7 +31,6 @@
     "@siteimprove/alfa-toolchain": "workspace:^0.80.0",
     "@types/async": "^3.2.20",
     "@types/node": "^20.5.9",
-    "@vitest/coverage-v8": "^1.6.0",
     "async": "^3.2.1",
     "execa": "^9.0.0",
     "knip": "^5.6.1",

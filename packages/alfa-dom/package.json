@@ -20,6 +20,8 @@
     "./jsx.js": "./jsx.js",
     "./jsx-runtime": "./jsx-runtime.js",
     "./jsx-runtime.js": "./jsx-runtime.js",
+    "./jsx-dev-runtime": "./jsx-runtime.js",
+    "./jsx-dev-runtime.js": "./jsx-runtime.js",
     "./native": "./native.js",
     "./native.js": "./native.js"
   },

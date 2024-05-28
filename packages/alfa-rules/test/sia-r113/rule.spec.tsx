@@ -37,7 +37,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() passes input element regardless of size", async () => {
+  it("passes input element regardless of size", async () => {
     const device = Device.standard();
 
     const target = (
@@ -59,7 +59,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() passes button with clickable area of less than 24x24 pixels and no adjacent targets", async () => {
+  it("passes button with clickable area of less than 24x24 pixels and no adjacent targets", async () => {
     const device = Device.standard();
 
     const target = (
@@ -83,7 +83,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() passes button with clickable area of less than 24x24 pixels and a diagonally adjacent undersized target", async () => {
+  it("passes button with clickable area of less than 24x24 pixels and a diagonally adjacent undersized target", async () => {
     const device = Device.standard();
 
     const target1 = (
@@ -136,7 +136,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() passes undersized button with vertically adjacent undersized button that is not displayed", async () => {
+  it("passes undersized button with vertically adjacent undersized button that is not displayed", async () => {
     const device = Device.standard();
 
     // The 24px diameter circles of the targets does not intersect with the bounding box of the other target, but the circles do intersect
@@ -185,7 +185,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() passes undersized button with vertically adjacent undersized button that is hidden", async () => {
+  it("passes undersized button with vertically adjacent undersized button that is hidden", async () => {
     const device = Device.standard();
 
     // The 24px diameter circles of the targets does not intersect with the bounding box of the other target, but the circles do intersect
@@ -234,7 +234,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() fails undersized button with vertically adjacent undersized button", async () => {
+  it("fails undersized button with vertically adjacent undersized button", async () => {
     const device = Device.standard();
 
     // The 24px diameter circles of the targets does not intersect with the bounding box of the other target, but the circles do intersect
@@ -290,7 +290,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() fails an undersized button whose 24px diameter circle intersects other targets bounding box, but not other targets circle", async () => {
+  it("fails an undersized button whose 24px diameter circle intersects other targets bounding box, but not other targets circle", async () => {
     const device = Device.standard();
 
     const target1 = (
@@ -344,7 +344,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() is inapplicable to disabled button", async () => {
+  it("is inapplicable to disabled button", async () => {
     const device = Device.standard();
 
     const target = (
@@ -364,7 +364,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() is inapplicable to button with pointer-events: none", async () => {
+  it("is inapplicable to button with pointer-events: none", async () => {
     const device = Device.standard();
 
     const target = (
@@ -388,7 +388,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() is inapplicable when there is no layout information", async () => {
+  it("is inapplicable when there is no layout information", async () => {
     const device = Device.standard();
 
     const target = (
@@ -404,7 +404,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() is inapplicable to <area> elements", async () => {
+  it("is inapplicable to <area> elements", async () => {
     const device = Device.standard();
 
     const img = <img src="foo.jpg" alt="foo" usemap="#bar" width="500" />;
@@ -426,7 +426,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() is inapplicable to button with display: none", async () => {
+  it("is inapplicable to button with display: none", async () => {
     const device = Device.standard();
 
     const target = (
@@ -445,7 +445,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() is inapplicable to button with visibility: hidden", async () => {
+  it("is inapplicable to button with visibility: hidden", async () => {
     const device = Device.standard();
 
     const target = (
@@ -464,7 +464,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() is inapplicable when link is part of text", async () => {
+  it("is inapplicable when link is part of text", async () => {
     const device = Device.standard();
 
     const target = (
@@ -487,7 +487,7 @@ describe("#evaluate()", () => {
     ]);
   });
 
-  it("evaluate() is applicable when link is not part of text", async () => {
+  it("is applicable when link is not part of text", async () => {
     const device = Device.standard();
 
     const target = (
