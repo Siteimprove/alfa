@@ -1,6 +1,5 @@
 import { h } from "@siteimprove/alfa-dom";
-
-import { assert, it } from "vitest";
+import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
@@ -11,13 +10,6 @@ import { evaluate } from "../common/evaluate";
 import { failed, inapplicable, passed } from "../common/outcome";
 
 import { TargetSize } from "../../src/common/outcome/target-size";
-
-async function test(
-  name: string,
-  assertion: (t: Chai.AssertStatic) => void | Promise<void>,
-): Promise<void> {
-  return it(name, () => assertion(assert));
-}
 
 test("evaluate() passes button with clickable area of exactly 44x44 pixels", async (t) => {
   const device = Device.standard();
