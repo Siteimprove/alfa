@@ -33,7 +33,7 @@ const { getElementIdMap, getElementDescendants } = dom.Query;
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<Node.Traversal.Flag, T>
+  extends tree.Node<Node.Traversal.Flag, tree.Node.SerializationOptions, T>
   implements Serializable<Node.JSON<T>>
 {
   protected readonly _node: dom.Node;

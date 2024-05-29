@@ -1,6 +1,12 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
+import { Future } from "@siteimprove/alfa-future";
+import { None } from "@siteimprove/alfa-option";
+import { Outcome } from "@siteimprove/alfa-act";
+
+import * as tree from "@siteimprove/alfa-tree";
+
 import R8, { Outcomes } from "../../src/sia-r8/rule";
 
 import { evaluate } from "../common/evaluate";
@@ -196,4 +202,41 @@ test("evaluate() is inapplicable for an element which is not displayed", async (
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
+});
+
+/*
+ * This is not a test of R8, but a test of the serialization options for the result to verify that it works end to end.
+ * R8 was picked more or less arbitrarily for this.
+ */
+test("toJSON() of result can be serialized in compact form", async (t) => {
+  const target = (
+    <select aria-labelledby="country">
+      <option>England</option>
+    </select>
+  );
+
+  const label = <div id="country"></div>;
+
+  const document = h.document([label, target]);
+
+  const result = await evaluate(R8, { document }, () => Future.now(None), {
+    verbosity: tree.Node.SerializationVerbosity.IdOnly,
+  });
+
+  const serializationId = (result[0] as Outcome.Failed.JSON<typeof target>)
+    .target.serializationId as string;
+
+  let expected = failed(R8, target, {
+    1: Outcomes.HasNoName("listbox"),
+  });
+
+  delete expected.target.children;
+  expected.target.serializationId = serializationId;
+
+  t.deepEqual(
+    await evaluate(R8, { document }, () => Future.now(None), {
+      verbosity: tree.Node.SerializationVerbosity.IdOnly,
+    }),
+    [expected],
+  );
 });
