@@ -307,7 +307,7 @@ export class Element<N extends string = string>
       prefix: this._prefix.getOr(null),
       name: this._name,
       attributes: [...this._attributes.values()].map((attribute) =>
-        attribute.toJSON(),
+        attribute.toJSON(options),
       ),
       style: this._style.map((style) => style.toJSON()).getOr(null),
       shadow: this._shadow.map((shadow) => shadow.toJSON(options)).getOr(null),

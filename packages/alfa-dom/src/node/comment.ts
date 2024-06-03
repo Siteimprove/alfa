@@ -54,9 +54,9 @@ export class Comment extends Node<"comment"> {
     return path;
   }
 
-  public toJSON(): Comment.JSON {
+  public toJSON(options?: Node.SerializationOptions): Comment.JSON {
     const result = {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       data: this._data,
     };
     delete result.children;

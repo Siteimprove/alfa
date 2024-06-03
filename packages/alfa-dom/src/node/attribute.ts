@@ -146,9 +146,9 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
       : None;
   }
 
-  public toJSON(): Attribute.JSON<N> {
+  public toJSON(options?: Node.SerializationOptions): Attribute.JSON<N> {
     let result = {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,

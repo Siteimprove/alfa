@@ -61,9 +61,9 @@ export class Text extends Node<"text"> implements Slotable {
     return path;
   }
 
-  public toJSON(): Text.JSON {
+  public toJSON(options?: Node.SerializationOptions): Text.JSON {
     const result = {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       data: this.data,
     };
     delete result.children;
