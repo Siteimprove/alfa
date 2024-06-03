@@ -69,8 +69,8 @@ export abstract class Node<
     children: Array<Node<F>>,
     type: T,
     externalId?: string,
-    extraData?: any,
     serializationId?: string,
+    extraData?: any,
   ) {
     this._children = (children as Array<Node<F>>).filter((child) =>
       child._attachParent(this),

@@ -49,9 +49,10 @@ export abstract class Node<T extends string = string>
     children: Array<Node>,
     type: T,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super(children, type, externalId, extraData);
+    super(children, type, externalId, serializationId, extraData);
   }
 
   /**
@@ -417,33 +418,57 @@ export namespace Node {
     Traversal.nested,
   );
 
-  export function from(json: Element.JSON, device?: Device): Element;
+  export function from(
+    json: Element.JSON,
+    options?: Node.SerializationOptions,
+  ): Element;
 
-  export function from(json: Attribute.JSON, device?: Device): Attribute;
+  export function from(
+    json: Attribute.JSON,
+    options?: Node.SerializationOptions,
+  ): Attribute;
 
-  export function from(json: Text.JSON, device?: Device): Text;
+  export function from(
+    json: Text.JSON,
+    options?: Node.SerializationOptions,
+  ): Text;
 
-  export function from(json: Comment.JSON, device?: Device): Comment;
+  export function from(
+    json: Comment.JSON,
+    options?: Node.SerializationOptions,
+  ): Comment;
 
-  export function from(json: Document.JSON, device?: Device): Document;
+  export function from(
+    json: Document.JSON,
+    options?: Node.SerializationOptions,
+  ): Document;
 
-  export function from(json: Type.JSON, device?: Device): Document;
+  export function from(
+    json: Type.JSON,
+    options?: Node.SerializationOptions,
+  ): Document;
 
-  export function from(json: Fragment.JSON, device?: Device): Fragment;
+  export function from(
+    json: Fragment.JSON,
+    options?: Node.SerializationOptions,
+  ): Fragment;
 
-  export function from(json: JSON, device?: Device): Node;
+  export function from(json: JSON, options?: Node.SerializationOptions): Node;
 
-  export function from(json: JSON, device?: Device): Node {
-    return fromNode(json, device).run();
+  export function from(json: JSON, options?: Node.SerializationOptions): Node {
+    return fromNode(json, options).run();
   }
 
   /**
    * @internal
    */
-  export function fromNode(json: JSON, device?: Device): Trampoline<Node> {
+  export function fromNode(
+    json: JSON,
+    options?: Node.SerializationOptions,
+  ): Trampoline<Node> {
     switch (json.type) {
       case "element":
-        return Element.fromElement(json as Element.JSON, device);
+        return Element.fromElement(json as Element.JSON, options);
 
       case "attribute":
         return Attribute.fromAttribute(json as Attribute.JSON);
@@ -455,13 +480,13 @@ export namespace Node {
         return Comment.fromComment(json as Comment.JSON);
 
       case "document":
-        return Document.fromDocument(json as Document.JSON, device);
+        return Document.fromDocument(json as Document.JSON, options);
 
       case "type":
         return Type.fromType(json as Type.JSON);
 
       case "fragment":
-        return Fragment.fromFragment(json as Fragment.JSON, device);
+        return Fragment.fromFragment(json as Fragment.JSON, options);
 
       default:
         throw new Error(`Unexpected node of type: ${json.type}`);

@@ -17,9 +17,16 @@ export class Document extends Node<"document"> {
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Document {
-    return new Document(Array.from(children), style, externalId, extraData);
+    return new Document(
+      Array.from(children),
+      style,
+      externalId,
+      serializationId,
+      extraData,
+    );
   }
 
   public static empty(): Document {
@@ -33,9 +40,10 @@ export class Document extends Node<"document"> {
     children: Array<Node>,
     style: Iterable<Sheet>,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super(children, "document", externalId, extraData);
+    super(children, "document", externalId, serializationId, extraData);
 
     this._style = Array.from(style);
   }
@@ -123,11 +131,18 @@ export namespace Document {
    */
   export function fromDocument(
     json: JSON,
-    device?: Device,
+    options?: Node.SerializationOptions,
   ): Trampoline<Document> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device),
-    ).map((children) => Document.of(children, json.style.map(Sheet.from)));
+      Node.fromNode(child, options),
+    ).map((children) =>
+      Document.of(
+        children,
+        json.style.map(Sheet.from),
+        json.externalId,
+        json.serializationId,
+      ),
+    );
   }
 
   /**
@@ -149,6 +164,8 @@ export namespace Document {
           Iterable.flatten(children),
           document.style,
           document.externalId,
+          document.serializationId,
+          document.extraData,
         );
       });
   }

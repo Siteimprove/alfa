@@ -43,6 +43,7 @@ export class Element<N extends string = string>
     box: Option<Rectangle> = None,
     device: Option<Device> = None,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Element<N> {
     return new Element(
@@ -55,6 +56,7 @@ export class Element<N extends string = string>
       box,
       device,
       externalId,
+      serializationId,
       extraData,
     );
   }
@@ -80,9 +82,10 @@ export class Element<N extends string = string>
     box: Option<Rectangle>,
     device: Option<Device>,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super(children, "element", externalId, extraData);
+    super(children, "element", externalId, serializationId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -408,10 +411,10 @@ export namespace Element {
    */
   export function fromElement<N extends string = string>(
     json: JSON<N>,
-    device?: Device,
+    options?: Node.SerializationOptions,
   ): Trampoline<Element<N>> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device),
+      Node.fromNode(child, options),
     ).map((children) => {
       const element = Element.of(
         Option.from(json.namespace as Namespace | null),
@@ -425,16 +428,18 @@ export namespace Element {
           ? None
           : Option.from(json.style).map(Block.from),
         Option.from(json.box).map(Rectangle.from),
-        Option.from(device),
+        Option.from(options?.device),
+        json.externalId,
+        json.serializationId,
       );
 
       if (json.shadow !== null) {
-        element._attachShadow(Shadow.fromShadow(json.shadow, device).run());
+        element._attachShadow(Shadow.fromShadow(json.shadow, options).run());
       }
 
       if (json.content !== null) {
         element._attachContent(
-          Document.fromDocument(json.content, device).run(),
+          Document.fromDocument(json.content, options).run(),
         );
       }
 
@@ -480,6 +485,8 @@ export namespace Element {
           deviceOption.flatMap((d) => element.getBoundingBox(d)),
           deviceOption,
           element.externalId,
+          element.serializationId,
+          element.extraData,
         );
 
         if (element.shadow.isSome()) {

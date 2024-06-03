@@ -114,6 +114,7 @@ test(`Node.clone() creates new instance with same value`, (t) => {
     ],
     [h.sheet([h.rule.style("p", { background: "green" })])],
     "bar",
+    crypto.randomUUID(),
     { extraStuff: "baz" },
   );
 

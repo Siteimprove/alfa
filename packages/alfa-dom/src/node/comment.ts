@@ -9,9 +9,10 @@ export class Comment extends Node<"comment"> {
   public static of(
     data: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Comment {
-    return new Comment(data, externalId, extraData);
+    return new Comment(data, externalId, serializationId, extraData);
   }
 
   public static empty(): Comment {
@@ -20,8 +21,13 @@ export class Comment extends Node<"comment"> {
 
   private readonly _data: string;
 
-  private constructor(data: string, externalId?: string, extraData?: any) {
-    super([], "comment", externalId, extraData);
+  private constructor(
+    data: string,
+    externalId?: string,
+    serializationId?: string,
+    extraData?: any,
+  ) {
+    super([], "comment", externalId, serializationId, extraData);
 
     this._data = data;
   }
@@ -79,13 +85,22 @@ export namespace Comment {
    * @internal
    */
   export function fromComment(json: JSON): Trampoline<Comment> {
-    return Trampoline.done(Comment.of(json.data));
+    return Trampoline.done(
+      Comment.of(json.data, json.externalId, json.serializationId),
+    );
   }
 
   /**
    * @internal
    */
   export function cloneComment(comment: Comment): Trampoline<Comment> {
-    return Trampoline.done(Comment.of(comment.data, comment.externalId));
+    return Trampoline.done(
+      Comment.of(
+        comment.data,
+        comment.externalId,
+        comment.serializationId,
+        comment.extraData,
+      ),
+    );
   }
 }

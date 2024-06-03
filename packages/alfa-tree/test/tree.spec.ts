@@ -10,7 +10,7 @@ class TestNode extends Node<0> {
     externalId?: string,
     serializationId?: string,
   ) {
-    super(children, "test-node", externalId, undefined, serializationId);
+    super(children, "test-node", externalId, serializationId);
   }
 }
 

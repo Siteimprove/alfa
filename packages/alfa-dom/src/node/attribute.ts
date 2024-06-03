@@ -23,9 +23,18 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     name: N,
     value: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Attribute<N> {
-    return new Attribute(namespace, prefix, name, value, externalId, extraData);
+    return new Attribute(
+      namespace,
+      prefix,
+      name,
+      value,
+      externalId,
+      serializationId,
+      extraData,
+    );
   }
 
   private readonly _namespace: Option<Namespace>;
@@ -40,9 +49,10 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     name: N,
     value: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super([], "attribute", externalId, extraData);
+    super([], "attribute", externalId, serializationId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -209,6 +219,8 @@ export namespace Attribute {
         Option.from(attribute.prefix),
         attribute.name,
         attribute.value,
+        attribute.externalId,
+        attribute.serializationId,
       ),
     );
   }
@@ -226,6 +238,8 @@ export namespace Attribute {
         attribute.name,
         attribute.value,
         attribute.externalId,
+        attribute.serializationId,
+        attribute.extraData,
       ),
     );
   }

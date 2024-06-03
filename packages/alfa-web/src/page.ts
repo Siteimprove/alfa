@@ -128,7 +128,7 @@ export namespace Page {
         Page.of(
           request,
           response,
-          Document.from(json.document, device),
+          Document.from(json.document, { device }),
           device,
         ),
       ),

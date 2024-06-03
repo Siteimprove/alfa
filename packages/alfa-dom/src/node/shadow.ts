@@ -17,6 +17,7 @@ export class Shadow extends Node<"shadow"> {
     style: Iterable<Sheet> = [],
     mode: Shadow.Mode = Shadow.Mode.Open,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Shadow {
     return new Shadow(
@@ -24,6 +25,7 @@ export class Shadow extends Node<"shadow"> {
       Array.from(style),
       mode,
       externalId,
+      serializationId,
       extraData,
     );
   }
@@ -41,9 +43,10 @@ export class Shadow extends Node<"shadow"> {
     style: Array<Sheet>,
     mode: Shadow.Mode,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super(children, "shadow", externalId, extraData);
+    super(children, "shadow", externalId, serializationId, extraData);
 
     this._mode = mode;
     this._style = style;
@@ -153,11 +156,20 @@ export namespace Shadow {
   /**
    * @internal
    */
-  export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow> {
+  export function fromShadow(
+    json: JSON,
+    options?: Node.SerializationOptions,
+  ): Trampoline<Shadow> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device),
+      Node.fromNode(child, options),
     ).map((children) =>
-      Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode),
+      Shadow.of(
+        children,
+        json.style.map(Sheet.from),
+        json.mode as Mode,
+        json.externalId,
+        json.serializationId,
+      ),
     );
   }
 
@@ -181,6 +193,8 @@ export namespace Shadow {
           shadow.style,
           shadow.mode,
           shadow.externalId,
+          shadow.extraData,
+          shadow.serializationId,
         );
       });
   }

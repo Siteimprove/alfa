@@ -9,8 +9,13 @@ import { Slotable } from "./slotable";
  * @public
  */
 export class Text extends Node<"text"> implements Slotable {
-  public static of(data: string, externalId?: string, extraData?: any): Text {
-    return new Text(data, externalId, extraData);
+  public static of(
+    data: string,
+    externalId?: string,
+    serializationId?: string,
+    extraData?: any,
+  ): Text {
+    return new Text(data, externalId, serializationId, extraData);
   }
 
   public static empty(): Text {
@@ -19,8 +24,13 @@ export class Text extends Node<"text"> implements Slotable {
 
   private readonly _data: string;
 
-  private constructor(data: string, externalId?: string, extraData?: any) {
-    super([], "text", externalId, extraData);
+  private constructor(
+    data: string,
+    externalId?: string,
+    serializationId?: string,
+    extraData?: any,
+  ) {
+    super([], "text", externalId, serializationId, extraData);
 
     this._data = data;
   }
@@ -89,13 +99,17 @@ export namespace Text {
    * @internal
    */
   export function fromText(json: JSON): Trampoline<Text> {
-    return Trampoline.done(Text.of(json.data));
+    return Trampoline.done(
+      Text.of(json.data, json.externalId, undefined, json.serializationId),
+    );
   }
 
   /**
    * @internal
    */
   export function cloneText(text: Text) {
-    return Trampoline.done(Text.of(text.data, text.externalId));
+    return Trampoline.done(
+      Text.of(text.data, text.externalId, text.extraData, text.serializationId),
+    );
   }
 }
