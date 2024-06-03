@@ -159,10 +159,10 @@ export namespace h {
   export function text(
     data: string,
     externalId?: string,
-    extraData?: any,
     serializationId?: string,
+    extraData?: any,
   ): Text {
-    return Text.of(data, externalId, extraData, serializationId);
+    return Text.of(data, externalId, serializationId, extraData);
   }
 
   export function document(
