@@ -188,8 +188,8 @@ export namespace h {
     style?: Array<Sheet>,
     mode?: Shadow.Mode,
     externalId?: string,
-    extraData?: any,
     serializationId?: string,
+    extraData?: any,
   ): Shadow {
     return Shadow.of(
       children!.map((child) =>
@@ -198,8 +198,8 @@ export namespace h {
       style,
       mode,
       externalId,
-      extraData,
       serializationId,
+      extraData,
     );
   }
 
