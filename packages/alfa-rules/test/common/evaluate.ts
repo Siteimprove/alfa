@@ -8,7 +8,7 @@ import { None } from "@siteimprove/alfa-option";
 import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
 
-import * as tree from "@siteimprove/alfa-tree";
+import * as json from "@siteimprove/alfa-json";
 
 // Creating these once allow to actually trigger caches in rules that rely on them.
 const defaultRequest = Request.of("GET", URL.example());
@@ -20,7 +20,7 @@ export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   page: Partial<Page>,
   oracle: Oracle<Page, T, Q, S> = () => Future.now(None),
-  options?: tree.Node.SerializationOptions,
+  options?: json.Serializable.Options,
 ): Future<Array<Outcome.JSON>> {
   const {
     request = defaultRequest,

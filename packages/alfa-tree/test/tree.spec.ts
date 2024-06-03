@@ -1,108 +1,110 @@
 import { test } from "@siteimprove/alfa-test";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Node } from "../src";
 
 class TestNode extends Node<0> {
-  constructor(children: Array<TestNode>, externalId?: string) {
-    super(children, "test", externalId);
+  constructor(
+    children: Array<TestNode>,
+    externalId?: string,
+    serializationId?: string,
+  ) {
+    super(children, "test-node", externalId, undefined, serializationId);
   }
 }
 
+function node(
+  children: Array<TestNode>,
+  externalId?: string,
+  serializationId?: string,
+) {
+  return new TestNode(children, externalId, serializationId);
+}
+
 test("toJSON() does not include serialization id when option is not set", async (t) => {
-  const root = new TestNode([]);
-
-  const result = root.toJSON();
-
-  t.equal(result.serializationId, undefined);
-});
-
-test("toJSON() includes serialization id when option is false", async (t) => {
-  const root = new TestNode([]);
-
-  const result = root.toJSON({ includeId: false });
-
-  t.equal(result.serializationId, undefined);
-});
-
-test("toJSON() includes serialization id when option is true", async (t) => {
-  const root = new TestNode([]);
-
-  const result = root.toJSON({ includeId: true });
-
-  t.equal(
-    result.serializationId?.length,
-    36,
-    "serializationId should be a UUID of length 36",
-  );
-});
-
-test("toJSON() serializes full tree when verbosity is not set", async (t) => {
-  const root = new TestNode([
-    new TestNode([new TestNode([])]),
-    new TestNode([]),
-  ]);
+  const root = node([node([node([], "qux")], "bar"), node([], "baz")], "foo");
 
   const result = root.toJSON();
 
   t.deepEqual(result, {
-    type: "test",
+    type: "test-node",
+    externalId: "foo",
     children: [
-      { type: "test", children: [{ type: "test", children: [] }] },
-      { type: "test", children: [] },
+      {
+        type: "test-node",
+        externalId: "bar",
+        children: [{ type: "test-node", externalId: "qux", children: [] }],
+      },
+      { type: "test-node", externalId: "baz", children: [] },
     ],
   });
 });
 
-test("toJSON() serializes full tree when verbosity is set to Full", async (t) => {
-  const root = new TestNode([
-    new TestNode([new TestNode([])]),
-    new TestNode([]),
-  ]);
-
-  const result = root.toJSON({ verbosity: Node.SerializationVerbosity.Full });
-
-  t.deepEqual(result, {
-    type: "test",
-    children: [
-      { type: "test", children: [{ type: "test", children: [] }] },
-      { type: "test", children: [] },
-    ],
-  });
-});
-
-test("toJSON() serializes ids only when verbosity is set to IdOnly", async (t) => {
-  const root = new TestNode(
-    [new TestNode([new TestNode([])]), new TestNode([])],
-    "foo",
-  );
-
-  const result = root.toJSON({ verbosity: Node.SerializationVerbosity.IdOnly });
-
-  t.equal(result.children, undefined);
-  t.equal(result.externalId, "foo");
-  t.equal(
-    result.serializationId?.length,
-    36,
-    "serializationId should be a UUID of length 36",
-  );
-});
-
-test("toJSON() serializes ids only when verbosity is set to IdOnly and ignores includeId option", async (t) => {
-  const root = new TestNode(
-    [new TestNode([new TestNode([])]), new TestNode([])],
-    "foo",
-  );
+test("toJSON() includes only serialization id and external id when verbosity is minimal", async (t) => {
+  const serializationId = crypto.randomUUID();
+  const root = node([], "foo", serializationId);
 
   const result = root.toJSON({
-    verbosity: Node.SerializationVerbosity.IdOnly,
-    includeId: false,
+    verbosity: json.Serializable.Verbosity.Minimal,
   });
 
-  t.equal(result.children, undefined);
-  t.equal(result.externalId, "foo");
-  t.equal(
-    result.serializationId?.length,
-    36,
-    "serializationId should be a UUID of length 36",
+  t.deepEqual(result, {
+    type: "test-node",
+    externalId: "foo",
+    serializationId: serializationId,
+  });
+});
+
+test("toJSON() includes serialization id, external id and children when verbosity is high", async (t) => {
+  const id1 = crypto.randomUUID();
+  const id2 = crypto.randomUUID();
+  const id3 = crypto.randomUUID();
+  const id4 = crypto.randomUUID();
+
+  const root = node(
+    [node([node([], "baz", id3)], "bar", id2), node([], "qux", id4)],
+    "foo",
+    id1,
   );
+
+  //     foo
+  //     id1
+  //    /   \
+  //   /     \
+  // bar     qux
+  // id2     id4
+  //  |
+  //  |
+  // baz
+  // id3
+
+  const result = root.toJSON({ verbosity: json.Serializable.Verbosity.High });
+
+  t.deepEqual(result, {
+    type: "test-node",
+    externalId: "foo",
+    serializationId: id1,
+    children: [
+      {
+        type: "test-node",
+        externalId: "bar",
+        serializationId: id2,
+        children: [
+          {
+            type: "test-node",
+            externalId: "baz",
+            serializationId: id3,
+            children: [],
+          },
+        ],
+      },
+      {
+        type: "test-node",
+        externalId: "qux",
+        serializationId: id4,
+        children: [],
+      },
+    ],
+  });
 });

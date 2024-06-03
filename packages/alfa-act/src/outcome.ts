@@ -27,7 +27,7 @@ export abstract class Outcome<
     Q extends Question.Metadata = {},
     S = T,
     V extends Outcome.Value = Outcome.Value,
-    O extends unknown = unknown,
+    O extends json.Serializable.Options = json.Serializable.Options,
   >
   implements
     Equatable,
@@ -115,10 +115,10 @@ export abstract class Outcome<
     hash.writeString(this._mode);
   }
 
-  public toJSON(options?: O): Outcome.JSON<V> {
+  public toJSON(options?: json.Serializable.Options): Outcome.JSON<V> {
     return {
       outcome: this._outcome,
-      rule: this._rule.toJSON(),
+      rule: this._rule.toJSON(options),
       mode: this._mode,
     };
   }
@@ -184,7 +184,7 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-    O extends unknown = unknown,
+    O extends json.Serializable.Options = json.Serializable.Options,
   > extends Outcome<I, T, Q, S, Value.Passed, O> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
@@ -364,7 +364,7 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-    O extends unknown = unknown,
+    O extends json.Serializable.Options = json.Serializable.Options,
   > extends Outcome<I, T, Q, S, Value.Failed, O> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
@@ -553,7 +553,7 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-    O extends unknown = unknown,
+    O extends json.Serializable.Options = json.Serializable.Options,
   > extends Outcome<I, T, Q, S, Value.CantTell> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,

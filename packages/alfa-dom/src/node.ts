@@ -39,7 +39,7 @@ import * as traversal from "./node/traversal";
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<Node.Traversal.Flag, tree.Node.SerializationOptions, T>
+  extends tree.Node<Node.Traversal.Flag, T>
   implements
     earl.Serializable<Node.EARL>,
     json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>,
@@ -337,7 +337,7 @@ export interface Node {
 export namespace Node {
   export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
-  export interface SerializationOptions extends tree.Node.SerializationOptions {
+  export interface SerializationOptions extends json.Serializable.Options {
     device: Device;
   }
 
