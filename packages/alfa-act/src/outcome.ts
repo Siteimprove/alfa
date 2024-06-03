@@ -115,7 +115,7 @@ export abstract class Outcome<
     hash.writeString(this._mode);
   }
 
-  public toJSON(): Outcome.JSON<V> {
+  public toJSON(options?: json.Serializable.Options): Outcome.JSON<V> {
     return {
       outcome: this._outcome,
       rule: this._rule.toJSON(),
