@@ -220,6 +220,7 @@ export namespace Native {
     }
 
     function toRule(rule: globalThis.CSSRule): Rule.JSON {
+      // In the best case, rule.constructor.name works and everything is fine.
       switch (rule.constructor.name) {
         case "CSSFontFaceRule":
           return toFontFaceRule(rule as globalThis.CSSFontFaceRule);
@@ -255,7 +256,72 @@ export namespace Native {
           return toSupportsRule(rule as globalThis.CSSSupportsRule);
       }
 
-      throw new Error(`Unsupported rule of type: ${rule.type}`);
+      // In some case (June 2024: in Firefox), rule.constructor.name returns
+      // undefined when used from an extension's content script. This is likely
+      // due to the fact that the rule has been created in the "page" world,
+      // but this code is evaluated in a content script world which does not
+      // have access to the actual constructor.
+      // However, in that case, .toString() seems to work… Since it may have been
+      // redefined along the prototype chain, we make sure to use the basic one.
+      // see https://stackoverflow.com/questions/43616128/undefined-javascript-object-constructor
+      switch (Object.prototype.toString.apply(rule)) {
+        case "[object CSSFontFaceRule]":
+          return toFontFaceRule(rule as globalThis.CSSFontFaceRule);
+        case "[object CSSImportRule]":
+          return toImportRule(rule as globalThis.CSSImportRule);
+        case "[object CSSKeyframeRule]":
+          return toKeyframeRule(rule as globalThis.CSSKeyframeRule);
+        case "[object CSSKeyframesRule]":
+          return toKeyframesRule(rule as globalThis.CSSKeyframesRule);
+        case "[object CSSLayerBlockRule]":
+          return toLayerBlockRule(rule as globalThis.CSSLayerBlockRule);
+        case "[object CSSLayerStatementRule]":
+          return toLayerStatementRule(rule as globalThis.CSSLayerStatementRule);
+        case "[object CSSMediaRule]":
+          return toMediaRule(rule as globalThis.CSSMediaRule);
+        case "[object CSSNamespaceRule]":
+          return toNamespaceRule(rule as globalThis.CSSNamespaceRule);
+        case "[object CSSPageRule]":
+          return toPageRule(rule as globalThis.CSSPageRule);
+        case "[object CSSStyleRule]":
+          return toStyleRule(rule as globalThis.CSSStyleRule);
+        case "[object CSSSupportsRule]":
+          return toSupportsRule(rule as globalThis.CSSSupportsRule);
+      }
+
+      // If everything else failed, we default to the deprecated `type`.
+      // This is clearly bad, notably because @layer rules where introduced
+      // after the deprecation and thus do not have a `type` property.
+      // But it might still save the show in some corner cases.
+      switch (rule.type) {
+        case CSSRule.FONT_FACE_RULE:
+          return toFontFaceRule(rule as globalThis.CSSFontFaceRule);
+        case CSSRule.IMPORT_RULE:
+          return toImportRule(rule as globalThis.CSSImportRule);
+        case CSSRule.KEYFRAME_RULE:
+          return toKeyframeRule(rule as globalThis.CSSKeyframeRule);
+        case CSSRule.KEYFRAMES_RULE:
+          return toKeyframesRule(rule as globalThis.CSSKeyframesRule);
+        // case "CSSLayerBlockRule":
+        //   return toLayerBlockRule(rule);
+        // case "CSSLayerStatementRule":
+        //   return toLayerStatementRule(rule);
+        case CSSRule.MEDIA_RULE:
+          return toMediaRule(rule as globalThis.CSSMediaRule);
+        case CSSRule.NAMESPACE_RULE:
+          return toNamespaceRule(rule as globalThis.CSSNamespaceRule);
+        case CSSRule.PAGE_RULE:
+          return toPageRule(rule as globalThis.CSSPageRule);
+        case CSSRule.STYLE_RULE:
+          return toStyleRule(rule as globalThis.CSSStyleRule);
+        case CSSRule.SUPPORTS_RULE:
+          return toSupportsRule(rule as globalThis.CSSSupportsRule);
+      }
+
+      // If nothing worked, just crash.
+      throw new Error(
+        `Unsupported rule of type: ${rule.constructor.name} / ${Object.prototype.toString.apply(rule)} / ${rule.type}`,
+      );
     }
 
     function toFontFaceRule(
