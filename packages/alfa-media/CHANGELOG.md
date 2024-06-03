@@ -1,5 +1,11 @@
 # @siteimprove/alfa-media
 
+## 0.81.0
+
+### Patch Changes
+
+- **Added:** Each package now contains its internal dependency graph in its `docs` directory. ([#1610](https://github.com/Siteimprove/alfa/pull/1610))
+
 ## 0.80.0
 
 ## 0.79.1

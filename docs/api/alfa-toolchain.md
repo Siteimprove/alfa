@@ -4,6 +4,12 @@
 
 ## alfa-toolchain package
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [generateGraphs(cwd)](./alfa-toolchain.generategraphs.md) |  |
+
 ## Namespaces
 
 |  Namespace | Description |
