@@ -52,8 +52,10 @@ export class Group<T extends Hashable>
     }
   }
 
-  public toJSON(): Group.JSON<T> {
-    return this._members.map((member) => json.Serializable.toJSON(member));
+  public toJSON(options?: json.Serializable.Options): Group.JSON<T> {
+    return this._members.map((member) =>
+      json.Serializable.toJSON(member, options),
+    );
   }
 
   public toEARL(): Group.EARL {

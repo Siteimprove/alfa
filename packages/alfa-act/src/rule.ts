@@ -127,7 +127,7 @@ export abstract class Rule<
     hash.writeString(this._uri);
   }
 
-  public abstract toJSON(options?: json.Serializable.Options): Rule.JSON;
+  public abstract toJSON(): Rule.JSON;
 
   public toEARL(): Rule.EARL {
     return {
