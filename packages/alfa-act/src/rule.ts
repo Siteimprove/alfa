@@ -323,9 +323,8 @@ export namespace Rule {
                 Event.endApplicability(this),
                 startApplicability,
               );
-              startExpectation = performance?.mark(
-                Event.startExpectation(this),
-              ).start;
+              startExpectation = performance?.mark(Event.startExpectation(this))
+                .start;
             })
             .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
