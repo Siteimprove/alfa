@@ -1,5 +1,4 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Selective } from "@siteimprove/alfa-selective";
 
 import { type Parser as CSSParser } from "../../../syntax";
 
