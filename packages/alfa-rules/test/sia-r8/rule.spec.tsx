@@ -1,12 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Future } from "@siteimprove/alfa-future";
-import { None } from "@siteimprove/alfa-option";
-import { Outcome } from "@siteimprove/alfa-act";
-
-import * as tree from "@siteimprove/alfa-tree";
-
 import R8, { Outcomes } from "../../src/sia-r8/rule";
 
 import { evaluate } from "../common/evaluate";
