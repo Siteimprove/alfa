@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle, AnglePercentage } from "../../../src";
+import { AnglePercentage } from "../../../src";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse";
 
@@ -99,23 +99,17 @@ test("resolve() resolves pure percentages", (t) => {
 });
 
 test("resolve() resolves percentage calculations", (t) => {
-  t.deepEqual(
-    AnglePercentage.resolve(parse("calc((12% + 9%) * 2)")).toJSON(),
-    {
-      type: "angle",
-      value: 151.2,
-      unit: "deg",
-    },
-  );
+  t.deepEqual(AnglePercentage.resolve(parse("calc((12% + 9%) * 2)")).toJSON(), {
+    type: "angle",
+    value: 151.2,
+    unit: "deg",
+  });
 });
 
 test("resolve() resolves mix of angles and percentages", (t) => {
-  t.deepEqual(
-    AnglePercentage.resolve(parse("calc(0.5turn + 10%)")).toJSON(),
-    {
-      type: "angle",
-      value: 216,
-      unit: "deg",
-    },
-  );
+  t.deepEqual(AnglePercentage.resolve(parse("calc(0.5turn + 10%)")).toJSON(), {
+    type: "angle",
+    value: 216,
+    unit: "deg",
+  });
 });

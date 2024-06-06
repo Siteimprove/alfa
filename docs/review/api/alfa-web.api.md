@@ -5,12 +5,12 @@
 ```ts
 
 import { Device } from '@siteimprove/alfa-device';
-import { Document } from '@siteimprove/alfa-dom';
+import { Document as Document_2 } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
 import { Graph } from '@siteimprove/alfa-graph';
 import * as json from '@siteimprove/alfa-json';
-import { Request } from '@siteimprove/alfa-http';
-import { Response } from '@siteimprove/alfa-http';
+import { Request as Request_2 } from '@siteimprove/alfa-http';
+import { Response as Response_2 } from '@siteimprove/alfa-http';
 import { Result } from '@siteimprove/alfa-result';
 import * as sarif from '@siteimprove/alfa-sarif';
 
@@ -19,13 +19,13 @@ export class Page implements Resource, json.Serializable<Page.JSON>, earl.Serial
     // (undocumented)
     get device(): Device;
     // (undocumented)
-    get document(): Document;
+    get document(): Document_2;
     // (undocumented)
-    static of(request: Request, response: Response, document: Document, device: Device): Page;
+    static of(request: Request_2, response: Response_2, document: Document_2, device: Device): Page;
     // (undocumented)
-    get request(): Request;
+    get request(): Request_2;
     // (undocumented)
-    get response(): Response;
+    get response(): Response_2;
     // (undocumented)
     toEARL(): Page.EARL;
     // (undocumented)
@@ -48,7 +48,7 @@ export namespace Page {
         // (undocumented)
         "@type": ["earl:TestSubject"];
         // (undocumented)
-        "dct:hasPart": [Request.EARL, Response.EARL];
+        "dct:hasPart": [Request_2.EARL, Response_2.EARL];
         // (undocumented)
         "dct:source": string;
     }
@@ -63,20 +63,20 @@ export namespace Page {
         // (undocumented)
         device: Device.JSON;
         // (undocumented)
-        document: Document.JSON;
+        document: Document_2.JSON;
         // (undocumented)
-        request: Request.JSON;
+        request: Request_2.JSON;
         // (undocumented)
-        response: Response.JSON;
+        response: Response_2.JSON;
     }
 }
 
 // @public (undocumented)
 export interface Resource {
     // (undocumented)
-    readonly request: Request;
+    readonly request: Request_2;
     // (undocumented)
-    readonly response: Response;
+    readonly response: Response_2;
 }
 
 // @public (undocumented)

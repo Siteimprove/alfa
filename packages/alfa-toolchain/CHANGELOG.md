@@ -1,5 +1,17 @@
 # @siteimprove/alfa-toolchain
 
+## 0.81.0
+
+### Minor Changes
+
+- **Added:** A new `yarn generate-graphs` command for package specific dependency graph. ([#1610](https://github.com/Siteimprove/alfa/pull/1610))
+
+  The dependency graph of each package is stored in its own directory.
+
+### Patch Changes
+
+- **Added:** Each package now contains its internal dependency graph in its `docs` directory. ([#1610](https://github.com/Siteimprove/alfa/pull/1610))
+
 ## 0.80.0
 
 ## 0.79.1
