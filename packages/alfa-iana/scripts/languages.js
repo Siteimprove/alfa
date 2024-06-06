@@ -122,7 +122,7 @@ function parseRecords(input) {
           name: field.substring(0, separator).trim(),
           value: field.substring(separator + 1).trim(),
         };
-      })
+      }),
   );
 }
 
@@ -134,7 +134,7 @@ axios.get(registry).then(({ data }) => {
 
   for (const record of records) {
     const tag = record.find(
-      (field) => field.name === "Tag" || field.name === "Subtag"
+      (field) => field.name === "Tag" || field.name === "Subtag",
     );
 
     const type = record.find((field) => field.name === "Type");
@@ -214,15 +214,17 @@ export const Languages = {
             .map((subtag) => `"${subtag.name}": ${JSON.stringify(subtag.args)}`)
             .join(",\n")}
         }
-      `
+      `,
     )
     .join(",\n")}
 } as const;
   `;
 
-  code = await prettier.format(code, {
-    parser: "typescript",
-  });
-
-  fs.writeFileSync(path.join(__dirname, "../src/language/data.ts"), code);
+  prettier
+    .format(code, {
+      parser: "typescript",
+    })
+    .then((code) =>
+      fs.writeFileSync(path.join(__dirname, "../src/language/data.ts"), code),
+    );
 });

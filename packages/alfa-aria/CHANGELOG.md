@@ -1,5 +1,13 @@
 # @siteimprove/alfa-aria
 
+## 0.81.0
+
+### Patch Changes
+
+- **Added:** Each package now contains its internal dependency graph in its `docs` directory. ([#1610](https://github.com/Siteimprove/alfa/pull/1610))
+
+- **Fixed:** Accessible name computation has been optimized ([#1611](https://github.com/Siteimprove/alfa/pull/1611))
+
 ## 0.80.0
 
 ### Minor Changes

@@ -3,7 +3,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-import { Style } from "../style";
 
 const { takeBetween, either, map, filter, delimited, option } = Parser;
 

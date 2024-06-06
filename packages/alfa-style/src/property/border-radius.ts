@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand";
 
-const { delimited, either, map, option, pair, right, takeBetween } = Parser;
+const { delimited, map, option, pair, right, takeBetween } = Parser;
 
 /**
  * @internal
