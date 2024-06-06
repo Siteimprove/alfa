@@ -1,6 +1,8 @@
 import { Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Node } from "../node";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
@@ -61,12 +63,32 @@ export class Text extends Node<"text"> implements Slotable {
     return path;
   }
 
-  public toJSON(options?: Node.SerializationOptions): Text.JSON {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Minimal;
+    },
+  ): Text.MinimalJSON;
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Low;
+    },
+  ): Text.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Text.JSON;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Text.MinimalJSON | Text.JSON {
     const result = {
       ...super.toJSON(options),
-      data: this.data,
     };
     delete result.children;
+
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    result.data = this.data;
 
     return result;
   }
@@ -87,6 +109,8 @@ export class Text extends Node<"text"> implements Slotable {
  * @public
  */
 export namespace Text {
+  export interface MinimalJSON extends Node.JSON<"text"> {}
+
   export interface JSON extends Node.JSON<"text"> {
     data: string;
   }

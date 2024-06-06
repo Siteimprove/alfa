@@ -1986,7 +1986,6 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^0.80.0"
     "@siteimprove/alfa-refinement": "workspace:^0.80.0"
     "@siteimprove/alfa-sequence": "workspace:^0.80.0"
-    "@siteimprove/alfa-test": "workspace:^0.80.0"
   languageName: unknown
   linkType: soft
 

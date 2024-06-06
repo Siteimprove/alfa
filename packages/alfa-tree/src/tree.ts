@@ -406,30 +406,28 @@ export abstract class Node<
   }
 
   public toJSON(options?: json.Serializable.Options): Node.JSON<T> {
-    if (options === undefined || options.verbosity === undefined) {
-      return {
-        type: this._type,
-        children: this._children.map((child) => child.toJSON(options)),
-        ...(this._externalId === undefined
-          ? {}
-          : { externalId: this._externalId }),
-      };
-    }
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
 
     const result: Node.JSON<T> = {
       type: this._type,
     };
 
-    if (options.verbosity >= json.Serializable.Verbosity.Minimal) {
-      if (this._externalId !== undefined) {
-        result.externalId = this._externalId;
-      }
-
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      // Only type and serializationId
       result.serializationId = this._serializationId;
+      return result;
     }
 
-    if (options.verbosity >= json.Serializable.Verbosity.High) {
-      result.children = this._children.map((child) => child.toJSON(options));
+    // If verbosity is Medium or above, include everything (except serializationId)
+    result.children = this._children.map((child) => child.toJSON(options));
+
+    if (this._externalId !== undefined) {
+      result.externalId = this._externalId;
+    }
+
+    if (verbosity >= json.Serializable.Verbosity.High) {
+      // If verbosity is High or above, include also serializationId
+      result.serializationId = this._serializationId;
     }
 
     return result;

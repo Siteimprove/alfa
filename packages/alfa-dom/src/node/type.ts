@@ -1,6 +1,8 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Node } from "../node";
 
 /**
@@ -60,14 +62,34 @@ export class Type<N extends string = string> extends Node<"type"> {
     return this._systemId;
   }
 
-  public toJSON(options?: Node.SerializationOptions): Type.JSON<N> {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Minimal;
+    },
+  ): Type.MinimalJSON;
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Low;
+    },
+  ): Type.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Type.JSON<N>;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Type.MinimalJSON | Type.JSON<N> {
     const result = {
       ...super.toJSON(options),
-      name: this._name,
-      publicId: this._publicId.getOr(null),
-      systemId: this._systemId.getOr(null),
     };
     delete result.children;
+
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    result.name = this.name;
+    result.publicId = this._publicId.getOr(null);
+    result.systemId = this._systemId.getOr(null);
 
     return result;
   }
@@ -81,6 +103,8 @@ export class Type<N extends string = string> extends Node<"type"> {
  * @public
  */
 export namespace Type {
+  export interface MinimalJSON extends Node.JSON<"type"> {}
+
   export interface JSON<N extends string = string> extends Node.JSON<"type"> {
     name: N;
     publicId: string | null;

@@ -8,6 +8,8 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Namespace } from "../namespace";
 import { Node } from "../node";
 
@@ -300,7 +302,28 @@ export class Element<N extends string = string>
     return path;
   }
 
-  public toJSON(options?: Node.SerializationOptions): Element.JSON<N> {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Minimal;
+    },
+  ): Element.MinimalJSON;
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Low;
+    },
+  ): Element.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Element.MinimalJSON | Element.JSON<N> {
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return {
+        ...super.toJSON(options),
+      };
+    }
+
     return {
       ...super.toJSON(options),
       namespace: this._namespace.getOr(null),
@@ -390,6 +413,8 @@ export class Element<N extends string = string>
  * @public
  */
 export namespace Element {
+  export interface MinimalJSON extends Node.JSON<"element"> {}
+
   export interface JSON<N extends string = string>
     extends Node.JSON<"element"> {
     namespace: string | null;

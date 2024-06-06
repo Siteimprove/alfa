@@ -4,6 +4,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Namespace } from "../namespace";
 import { Node } from "../node";
 import { Element } from "./element";
@@ -146,15 +148,36 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
       : None;
   }
 
-  public toJSON(options?: Node.SerializationOptions): Attribute.JSON<N> {
-    let result = {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Minimal;
+    },
+  ): Attribute.MinimalJSON;
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Low;
+    },
+  ): Attribute.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Attribute.JSON<N>;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Attribute.MinimalJSON | Attribute.JSON<N> {
+    const result = {
       ...super.toJSON(options),
-      namespace: this._namespace.getOr(null),
-      prefix: this._prefix.getOr(null),
-      name: this._name,
-      value: this._value,
     };
+
     delete result.children;
+
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    result.namespace = this._namespace.getOr(null);
+    result.prefix = this._prefix.getOr(null);
+    result.name = this._name;
+    result.value = this._value;
 
     return result;
   }
@@ -195,6 +218,8 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
  * @public
  */
 export namespace Attribute {
+  export interface MinimalJSON extends Node.JSON<"attribute"> {}
+
   export interface JSON<N extends string = string>
     extends Node.JSON<"attribute"> {
     namespace: string | null;

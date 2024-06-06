@@ -5,6 +5,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
@@ -77,11 +79,33 @@ export class Document extends Node<"document"> {
     return "/";
   }
 
-  public toJSON(options?: Node.SerializationOptions): Document.JSON {
-    return {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Minimal;
+    },
+  ): Document.MinimalJSON;
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Low;
+    },
+  ): Document.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Document.JSON;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Document.MinimalJSON | Document.JSON {
+    const result = {
       ...super.toJSON(options),
-      style: this._style.map((sheet) => sheet.toJSON()),
     };
+
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    result.style = this._style.map((sheet) => sheet.toJSON());
+
+    return result;
   }
 
   public toString(): string {
@@ -118,6 +142,8 @@ export class Document extends Node<"document"> {
  * @public
  */
 export namespace Document {
+  export interface MinimalJSON extends Node.JSON<"document"> {}
+
   export interface JSON extends Node.JSON<"document"> {
     style: Array<Sheet.JSON>;
   }

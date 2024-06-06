@@ -1,12 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import * as json from "@siteimprove/alfa-json";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Option } from "@siteimprove/alfa-option";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { h } from "../h";
-import { Element, Node, Shadow } from "../src";
+import { Attribute, Element, Node, Shadow } from "../src";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
@@ -303,4 +304,240 @@ test(`#toJSON() serializes box of descendant inside content`, (t) => {
     Rectangle.of(8, 8, 100, 100).toJSON(),
     Rectangle.of(16, 16, 50, 50).toJSON(),
   ]);
+});
+
+test("#toJSON() includes only serializationId when verbosity is minimal", (t) => {
+  const device = Device.standard();
+
+  const docId = crypto.randomUUID();
+  const elmId = crypto.randomUUID();
+  const attrId = crypto.randomUUID();
+
+  // We can't use JSX here because it doesn't support passing a serialization id when constructing an attribute
+  const doc = h.document(
+    [
+      h.element(
+        "div",
+        [h.attribute("id", "foo", undefined, attrId)],
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        elmId,
+      ),
+    ],
+    undefined,
+    undefined,
+    docId,
+  );
+
+  const options = {
+    device,
+    verbosity: json.Serializable.Verbosity.Minimal,
+  } as const;
+
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    serializationId: docId,
+  });
+
+  const elm = doc.children().first().getUnsafe() as Element<"div">;
+
+  t.deepEqual(elm.toJSON(options), {
+    type: "element",
+    serializationId: elmId,
+  });
+
+  const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
+
+  t.deepEqual(attr.toJSON(options), {
+    type: "attribute",
+    serializationId: attrId,
+  });
+});
+
+test("#toJSON() includes only serializationId when verbosity is low", (t) => {
+  const device = Device.standard();
+
+  const docId = crypto.randomUUID();
+  const elmId = crypto.randomUUID();
+  const attrId = crypto.randomUUID();
+
+  // We can't use JSX here because it doesn't support passing a serialization id when constructing an attribute
+  const doc = h.document(
+    [
+      h.element(
+        "div",
+        [h.attribute("id", "foo", undefined, attrId)],
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        elmId,
+      ),
+    ],
+    undefined,
+    undefined,
+    docId,
+  );
+
+  const options = {
+    device,
+    verbosity: json.Serializable.Verbosity.Low,
+  } as const;
+
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    serializationId: docId,
+  });
+
+  const elm = doc.children().first().getUnsafe() as Element<"div">;
+
+  t.deepEqual(elm.toJSON(options), {
+    type: "element",
+    serializationId: elmId,
+  });
+
+  const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
+
+  t.deepEqual(attr.toJSON(options), {
+    type: "attribute",
+    serializationId: attrId,
+  });
+});
+
+test("#toJSON() includes everything except serializationId when called without options", (t) => {
+  const doc = h.document([<div id="foo"></div>]);
+
+  t.deepEqual(doc.toJSON(), {
+    type: "document",
+    style: [],
+    children: [
+      {
+        type: "element",
+        attributes: [
+          {
+            type: "attribute",
+            name: "id",
+            namespace: null,
+            prefix: null,
+            value: "foo",
+          },
+        ],
+        box: null,
+        children: [],
+        content: null,
+        name: "div",
+        namespace: "http://www.w3.org/1999/xhtml",
+        prefix: null,
+        shadow: null,
+        style: null,
+      },
+    ],
+  });
+});
+
+test("#toJSON() includes everything except serializationId when verbosity is medium", (t) => {
+  const device = Device.standard();
+
+  const doc = h.document([<div id="foo"></div>]);
+
+  const options = {
+    device,
+    verbosity: json.Serializable.Verbosity.Medium,
+  } as const;
+
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    style: [],
+    children: [
+      {
+        type: "element",
+        attributes: [
+          {
+            type: "attribute",
+            name: "id",
+            namespace: null,
+            prefix: null,
+            value: "foo",
+          },
+        ],
+        box: null,
+        children: [],
+        content: null,
+        name: "div",
+        namespace: "http://www.w3.org/1999/xhtml",
+        prefix: null,
+        shadow: null,
+        style: null,
+      },
+    ],
+  });
+});
+
+test("#toJSON() includes everything including serializationId when verbosity is high", (t) => {
+  const device = Device.standard();
+
+  const docId = crypto.randomUUID();
+  const elmId = crypto.randomUUID();
+  const attrId = crypto.randomUUID();
+
+  // We can't use JSX here because it doesn't support passing a serialization id when constructing an attribute
+  const doc = h.document(
+    [
+      h.element(
+        "div",
+        [h.attribute("id", "foo", undefined, attrId)],
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        elmId,
+      ),
+    ],
+    undefined,
+    undefined,
+    docId,
+  );
+
+  const options = {
+    device,
+    verbosity: json.Serializable.Verbosity.High,
+  } as const;
+
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    serializationId: docId,
+    style: [],
+    children: [
+      {
+        type: "element",
+        serializationId: elmId,
+        attributes: [
+          {
+            type: "attribute",
+            serializationId: attrId,
+            name: "id",
+            namespace: null,
+            prefix: null,
+            value: "foo",
+          },
+        ],
+        box: null,
+        children: [],
+        content: null,
+        name: "div",
+        namespace: "http://www.w3.org/1999/xhtml",
+        prefix: null,
+        shadow: null,
+        style: null,
+      },
+    ],
+  });
 });

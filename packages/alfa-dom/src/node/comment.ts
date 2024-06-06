@@ -1,5 +1,7 @@
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Node } from "../node";
 
 /**
@@ -54,13 +56,32 @@ export class Comment extends Node<"comment"> {
     return path;
   }
 
-  public toJSON(options?: Node.SerializationOptions): Comment.JSON {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Minimal;
+    },
+  ): Comment.MinimalJSON;
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.Low;
+    },
+  ): Comment.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Comment.JSON;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Comment.MinimalJSON | Comment.JSON {
     const result = {
       ...super.toJSON(options),
-      data: this._data,
     };
     delete result.children;
 
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    result.data = this._data;
     return result;
   }
 
@@ -73,6 +94,8 @@ export class Comment extends Node<"comment"> {
  * @public
  */
 export namespace Comment {
+  export interface MinimalJSON extends Node.JSON<"comment"> {}
+
   export interface JSON extends Node.JSON<"comment"> {
     data: string;
   }
