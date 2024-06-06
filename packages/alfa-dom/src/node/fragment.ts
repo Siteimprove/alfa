@@ -75,10 +75,10 @@ export namespace Fragment {
    */
   export function fromFragment(
     json: JSON,
-    options?: Node.SerializationOptions,
+    device?: Device,
   ): Trampoline<Fragment> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, options),
+      Node.fromNode(child, device),
     ).map((children) => Fragment.of(children));
   }
 

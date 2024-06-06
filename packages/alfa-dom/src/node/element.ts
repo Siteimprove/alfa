@@ -436,10 +436,10 @@ export namespace Element {
    */
   export function fromElement<N extends string = string>(
     json: JSON<N>,
-    options?: Node.SerializationOptions,
+    device?: Device,
   ): Trampoline<Element<N>> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, options),
+      Node.fromNode(child, device),
     ).map((children) => {
       const element = Element.of(
         Option.from(json.namespace as Namespace | null),
@@ -453,18 +453,18 @@ export namespace Element {
           ? None
           : Option.from(json.style).map(Block.from),
         Option.from(json.box).map(Rectangle.from),
-        Option.from(options?.device),
+        Option.from(device),
         json.externalId,
         json.serializationId,
       );
 
       if (json.shadow !== null) {
-        element._attachShadow(Shadow.fromShadow(json.shadow, options).run());
+        element._attachShadow(Shadow.fromShadow(json.shadow, device).run());
       }
 
       if (json.content !== null) {
         element._attachContent(
-          Document.fromDocument(json.content, options).run(),
+          Document.fromDocument(json.content, device).run(),
         );
       }
 

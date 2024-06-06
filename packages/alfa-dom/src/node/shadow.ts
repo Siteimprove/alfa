@@ -182,12 +182,9 @@ export namespace Shadow {
   /**
    * @internal
    */
-  export function fromShadow(
-    json: JSON,
-    options?: Node.SerializationOptions,
-  ): Trampoline<Shadow> {
+  export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, options),
+      Node.fromNode(child, device),
     ).map((children) =>
       Shadow.of(
         children,
