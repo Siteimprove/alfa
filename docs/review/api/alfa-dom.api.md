@@ -51,11 +51,7 @@ export class Attribute<N extends string = string> extends Node_2<"attribute"> {
     get qualifiedName(): string;
     // (undocumented)
     toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Minimal;
-    }): Attribute.MinimalJSON;
-    // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Low;
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Attribute.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node_2.SerializationOptions): Attribute.JSON<N>;
@@ -139,11 +135,7 @@ class Comment_2 extends Node_2<"comment"> {
     static of(data: string, externalId?: string, serializationId?: string, extraData?: any): Comment_2;
     // (undocumented)
     toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Minimal;
-    }): Comment_2.MinimalJSON;
-    // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Low;
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Comment_2.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node_2.SerializationOptions): Comment_2.JSON;
@@ -256,11 +248,7 @@ class Document_2 extends Node_2<"document"> {
     get style(): Iterable_2<Sheet>;
     // (undocumented)
     toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Minimal;
-    }): Document_2.MinimalJSON;
-    // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Low;
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Document_2.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node_2.SerializationOptions): Document_2.JSON;
@@ -335,11 +323,7 @@ class Element_2<N extends string = string> extends Node_2<"element"> implements 
     tabIndex(): Option_2<number>;
     // (undocumented)
     toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Minimal;
-    }): Element_2.MinimalJSON;
-    // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Low;
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Element_2.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node_2.SerializationOptions): Element_2.JSON<N>;
@@ -1099,11 +1083,7 @@ export class Shadow extends Node_2<"shadow"> {
     get style(): Iterable_2<Sheet>;
     // (undocumented)
     toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Minimal;
-    }): Shadow.MinimalJSON;
-    // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Low;
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Shadow.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node_2.SerializationOptions): Shadow.JSON;
@@ -1285,11 +1265,7 @@ class Text_2 extends Node_2<"text"> implements Slotable {
     static of(data: string, externalId?: string, serializationId?: string, extraData?: any): Text_2;
     // (undocumented)
     toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Minimal;
-    }): Text_2.MinimalJSON;
-    // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Low;
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Text_2.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node_2.SerializationOptions): Text_2.JSON;
@@ -1330,11 +1306,7 @@ export class Type<N extends string = string> extends Node_2<"type"> {
     get systemId(): Option_2<string>;
     // (undocumented)
     toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Minimal;
-    }): Type.MinimalJSON;
-    // (undocumented)
-    toJSON(options: Node_2.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.Low;
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Type.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node_2.SerializationOptions): Type.JSON<N>;
