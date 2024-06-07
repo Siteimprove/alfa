@@ -7,7 +7,7 @@ import { Option } from "@siteimprove/alfa-option";
 import * as json from "@siteimprove/alfa-json";
 
 import { h } from "../h";
-import { Attribute, Element, Node, Shadow } from "../src";
+import { Attribute, Document, Element, Node, Shadow } from "../src";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
@@ -306,15 +306,13 @@ test(`#toJSON() serializes box of descendant inside content`, (t) => {
   ]);
 });
 
-test("#toJSON() includes only serializationId when verbosity is minimal", (t) => {
-  const device = Device.standard();
-
-  const docId = crypto.randomUUID();
-  const elmId = crypto.randomUUID();
-  const attrId = crypto.randomUUID();
-
+function docWithSerializationIds(
+  docId: string,
+  elmId: string,
+  attrId: string,
+): Document {
   // We can't use JSX here because it doesn't support passing a serialization id when constructing an attribute
-  const doc = h.document(
+  return h.document(
     [
       h.element(
         "div",
@@ -332,9 +330,17 @@ test("#toJSON() includes only serializationId when verbosity is minimal", (t) =>
     undefined,
     docId,
   );
+}
+
+test("#toJSON() includes only serializationId when verbosity is minimal", (t) => {
+  const docId = crypto.randomUUID();
+  const elmId = crypto.randomUUID();
+  const attrId = crypto.randomUUID();
+
+  const doc = docWithSerializationIds(docId, elmId, attrId);
 
   const options = {
-    device,
+    device: Device.standard(),
     verbosity: json.Serializable.Verbosity.Minimal,
   } as const;
 
@@ -359,34 +365,14 @@ test("#toJSON() includes only serializationId when verbosity is minimal", (t) =>
 });
 
 test("#toJSON() includes only serializationId when verbosity is low", (t) => {
-  const device = Device.standard();
-
   const docId = crypto.randomUUID();
   const elmId = crypto.randomUUID();
   const attrId = crypto.randomUUID();
 
-  // We can't use JSX here because it doesn't support passing a serialization id when constructing an attribute
-  const doc = h.document(
-    [
-      h.element(
-        "div",
-        [h.attribute("id", "foo", undefined, attrId)],
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        elmId,
-      ),
-    ],
-    undefined,
-    undefined,
-    docId,
-  );
+  const doc = docWithSerializationIds(docId, elmId, attrId);
 
   const options = {
-    device,
+    device: Device.standard(),
     verbosity: json.Serializable.Verbosity.Low,
   } as const;
 
@@ -480,34 +466,14 @@ test("#toJSON() includes everything except serializationId when verbosity is med
 });
 
 test("#toJSON() includes everything including serializationId when verbosity is high", (t) => {
-  const device = Device.standard();
-
   const docId = crypto.randomUUID();
   const elmId = crypto.randomUUID();
   const attrId = crypto.randomUUID();
 
-  // We can't use JSX here because it doesn't support passing a serialization id when constructing an attribute
-  const doc = h.document(
-    [
-      h.element(
-        "div",
-        [h.attribute("id", "foo", undefined, attrId)],
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        elmId,
-      ),
-    ],
-    undefined,
-    undefined,
-    docId,
-  );
+  const doc = docWithSerializationIds(docId, elmId, attrId);
 
   const options = {
-    device,
+    device: Device.standard(),
     verbosity: json.Serializable.Verbosity.High,
   } as const;
 
