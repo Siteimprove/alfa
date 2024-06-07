@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -33,14 +35,13 @@ export abstract class Node<
     F extends Flags.allFlags,
     // The type
     T extends string = string,
-    // The options for serialization
-    S extends unknown = unknown,
+    O extends json.Serializable.Options = json.Serializable.Options,
   >
   implements
     Iterable<Node<F>>,
     Equatable,
     Hashable,
-    json.Serializable<Node.JSON<T>, S>
+    json.Serializable<Node.JSON<T>, O>
 {
   protected readonly _children: Array<Node<F>>;
   protected _parent: Option<Node<F>> = None;
@@ -49,6 +50,8 @@ export abstract class Node<
   // Externally provided data.
   private readonly _externalId: string | undefined;
   private readonly _extraData: any;
+
+  private readonly _serializationId: string;
 
   /**
    * Whether the node is frozen.
@@ -67,6 +70,7 @@ export abstract class Node<
     children: Array<Node<F>>,
     type: T,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
     this._children = (children as Array<Node<F>>).filter((child) =>
@@ -75,6 +79,8 @@ export abstract class Node<
     this._type = type;
     this._externalId = externalId;
     this._extraData = extraData;
+
+    this._serializationId = serializationId ?? crypto.randomUUID();
   }
 
   public get type(): T {
@@ -84,8 +90,13 @@ export abstract class Node<
   public get externalId(): string | undefined {
     return this._externalId;
   }
+
   public get extraData(): any {
     return this._extraData;
+  }
+
+  public get serializationId(): string {
+    return this._serializationId;
   }
 
   public get frozen(): boolean {
@@ -395,14 +406,32 @@ export abstract class Node<
     hash.writeObject(this);
   }
 
-  public toJSON(options?: S): Node.JSON<T> {
-    return {
+  public toJSON(options?: O): Node.JSON<T> {
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    const result: Node.JSON<T> = {
       type: this._type,
-      children: this._children.map((child) => child.toJSON(options)),
-      ...(this._externalId === undefined
-        ? {}
-        : { externalId: this._externalId }),
     };
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      // Only type and serializationId
+      result.serializationId = this._serializationId;
+      return result;
+    }
+
+    // If verbosity is Medium or above, include everything (except serializationId)
+    result.children = this._children.map((child) => child.toJSON(options));
+
+    if (this._externalId !== undefined) {
+      result.externalId = this._externalId;
+    }
+
+    if (verbosity >= json.Serializable.Verbosity.High) {
+      // If verbosity is High or above, include also serializationId
+      result.serializationId = this._serializationId;
+    }
+
+    return result;
   }
 
   /**
@@ -429,5 +458,6 @@ export namespace Node {
     type: T;
     children?: Array<JSON>;
     externalId?: string;
+    serializationId?: string;
   }
 }

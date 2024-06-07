@@ -49,9 +49,10 @@ export abstract class Node<T extends string = string>
     children: Array<Node>,
     type: T,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super(children, type, externalId, extraData);
+    super(children, type, externalId, serializationId, extraData);
   }
 
   /**
@@ -337,7 +338,7 @@ export interface Node {
 export namespace Node {
   export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
-  export interface SerializationOptions {
+  export interface SerializationOptions extends json.Serializable.Options {
     device: Device;
   }
 

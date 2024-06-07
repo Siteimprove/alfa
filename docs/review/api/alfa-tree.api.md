@@ -4,37 +4,39 @@
 
 ```ts
 
+/// <reference lib="dom" />
+
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
-import { Option } from '@siteimprove/alfa-option';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 
 // @public
-export abstract class Node<F extends Flags.allFlags, T extends string = string, S extends unknown = unknown> implements Iterable<Node<F>>, Equatable, Hashable, json.Serializable<Node.JSON<T>, S> {
+abstract class Node_2<F extends Flags.allFlags, T extends string = string, O extends json.Serializable.Options = json.Serializable.Options> implements Iterable<Node_2<F>>, Equatable, Hashable, json.Serializable<Node_2.JSON<T>, O> {
     // (undocumented)
-    [Symbol.iterator](): Iterator<Node<F>>;
-    protected constructor(children: Array<Node<F>>, type: T, externalId?: string, extraData?: any);
+    [Symbol.iterator](): Iterator<Node_2<F>>;
+    protected constructor(children: Array<Node_2<F>>, type: T, externalId?: string, serializationId?: string, extraData?: any);
     // (undocumented)
-    ancestors(options?: Flags<F>): Sequence<Node<F>>;
+    ancestors(options?: Flags<F>): Sequence<Node_2<F>>;
     // @internal (undocumented)
-    _attachParent(parent: Node<F>): boolean;
+    _attachParent(parent: Node_2<F>): boolean;
     // (undocumented)
-    children(options?: Flags<F>): Sequence<Node<F>>;
+    children(options?: Flags<F>): Sequence<Node_2<F>>;
     // (undocumented)
-    protected readonly _children: Array<Node<F>>;
+    protected readonly _children: Array<Node_2<F>>;
     // (undocumented)
-    closest<T extends Node<F>>(refinement: Refinement<Node<F>, T>, options?: Flags<F>): Option<T>;
+    closest<T extends Node_2<F>>(refinement: Refinement<Node_2<F>, T>, options?: Flags<F>): Option_2<T>;
     // (undocumented)
-    closest(predicate: Predicate<Node<F>>, options?: Flags<F>): Option<Node<F>>;
+    closest(predicate: Predicate<Node_2<F>>, options?: Flags<F>): Option_2<Node_2<F>>;
     // (undocumented)
-    descendants(options?: Flags<F>): Sequence<Node<F>>;
+    descendants(options?: Flags<F>): Sequence<Node_2<F>>;
     // (undocumented)
-    equals(value: Node<F>): boolean;
+    equals(value: Node_2<F>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -42,9 +44,9 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string, 
     // (undocumented)
     get extraData(): any;
     // (undocumented)
-    first(options?: Flags<F>): Option<Node<F>>;
+    first(options?: Flags<F>): Option_2<Node_2<F>>;
     // (undocumented)
-    following(options?: Flags<F>): Sequence<Node<F>>;
+    following(options?: Flags<F>): Sequence<Node_2<F>>;
     freeze(): this;
     // (undocumented)
     get frozen(): boolean;
@@ -52,49 +54,51 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string, 
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    inclusiveAncestors(options?: Flags<F>): Sequence<Node<F>>;
+    inclusiveAncestors(options?: Flags<F>): Sequence<Node_2<F>>;
     // (undocumented)
-    inclusiveDescendants(options?: Flags<F>): Sequence<Node<F>>;
+    inclusiveDescendants(options?: Flags<F>): Sequence<Node_2<F>>;
     // (undocumented)
-    inclusiveSiblings(options?: Flags<F>): Sequence<Node<F>>;
+    inclusiveSiblings(options?: Flags<F>): Sequence<Node_2<F>>;
     // (undocumented)
     index(options?: Flags<F>): number;
     // (undocumented)
-    isAncestorOf(node: Node<F>, options?: Flags<F>): boolean;
+    isAncestorOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isChildOf(node: Node<F>, options?: Flags<F>): boolean;
+    isChildOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isDescendantOf(node: Node<F>, options?: Flags<F>): boolean;
+    isDescendantOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveAncestorOf(node: Node<F>, options?: Flags<F>): boolean;
+    isInclusiveAncestorOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveDescendantsOf(node: Node<F>, options?: Flags<F>): boolean;
+    isInclusiveDescendantsOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveSiblingOf(node: Node<F>, options?: Flags<F>): boolean;
+    isInclusiveSiblingOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isParentOf(node: Node<F>, options?: Flags<F>): boolean;
+    isParentOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isRootOf(node: Node<F>, options?: Flags<F>): boolean;
+    isRootOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isSiblingOf(node: Node<F>, options?: Flags<F>): boolean;
+    isSiblingOf(node: Node_2<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    last(options?: Flags<F>): Option<Node<F>>;
+    last(options?: Flags<F>): Option_2<Node_2<F>>;
     // (undocumented)
-    next(options?: Flags<F>): Option<Node<F>>;
+    next(options?: Flags<F>): Option_2<Node_2<F>>;
     // (undocumented)
-    parent(options?: Flags<F>): Option<Node<F>>;
+    parent(options?: Flags<F>): Option_2<Node_2<F>>;
     // (undocumented)
-    protected _parent: Option<Node<F>>;
+    protected _parent: Option_2<Node_2<F>>;
     // (undocumented)
-    preceding(options?: Flags<F>): Sequence<Node<F>>;
+    preceding(options?: Flags<F>): Sequence<Node_2<F>>;
     // (undocumented)
-    previous(options?: Flags<F>): Option<Node<F>>;
+    previous(options?: Flags<F>): Option_2<Node_2<F>>;
     // (undocumented)
-    root(options?: Flags<F>): Node<F>;
+    root(options?: Flags<F>): Node_2<F>;
     // (undocumented)
-    siblings(options?: Flags<F>): Sequence<Node<F>>;
+    get serializationId(): string;
     // (undocumented)
-    toJSON(options?: S): Node.JSON<T>;
+    siblings(options?: Flags<F>): Sequence<Node_2<F>>;
+    // (undocumented)
+    toJSON(options?: O): Node_2.JSON<T>;
     // (undocumented)
     get type(): T;
     // (undocumented)
@@ -102,9 +106,9 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string, 
 }
 
 // @public (undocumented)
-export namespace Node {
+namespace Node_2 {
     // (undocumented)
-    export interface JSON<T extends string = string> {
+    interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON | undefined;
         // (undocumented)
@@ -112,9 +116,12 @@ export namespace Node {
         // (undocumented)
         externalId?: string;
         // (undocumented)
+        serializationId?: string;
+        // (undocumented)
         type: T;
     }
 }
+export { Node_2 as Node }
 
 // (No @packageDocumentation comment for this package)
 

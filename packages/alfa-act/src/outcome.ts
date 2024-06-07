@@ -27,11 +27,12 @@ export abstract class Outcome<
     Q extends Question.Metadata = {},
     S = T,
     V extends Outcome.Value = Outcome.Value,
+    O extends json.Serializable.Options = json.Serializable.Options,
   >
   implements
     Equatable,
     Hashable,
-    json.Serializable<Outcome.JSON<V>>,
+    json.Serializable<Outcome.JSON<V>, O>,
     earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result>
 {
@@ -114,7 +115,7 @@ export abstract class Outcome<
     hash.writeString(this._mode);
   }
 
-  public toJSON(): Outcome.JSON<V> {
+  public toJSON(options?: O): Outcome.JSON<V> {
     return {
       outcome: this._outcome,
       rule: this._rule.toJSON(),
@@ -183,7 +184,8 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-  > extends Outcome<I, T, Q, S, Value.Passed> {
+    O extends json.Serializable.Options = json.Serializable.Options,
+  > extends Outcome<I, T, Q, S, Value.Passed, O> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -248,10 +250,10 @@ export namespace Outcome {
       }
     }
 
-    public toJSON(): Passed.JSON<T> {
+    public toJSON(options?: O): Passed.JSON<T> {
       return {
         ...super.toJSON(),
-        target: json.Serializable.toJSON(this._target),
+        target: json.Serializable.toJSON(this._target, options),
         expectations: this._expectations
           .toArray()
           .map(([id, expectation]) => [id, expectation.toJSON()]),
@@ -362,7 +364,8 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-  > extends Outcome<I, T, Q, S, Value.Failed> {
+    O extends json.Serializable.Options = json.Serializable.Options,
+  > extends Outcome<I, T, Q, S, Value.Failed, O> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -427,10 +430,10 @@ export namespace Outcome {
       }
     }
 
-    public toJSON(): Failed.JSON<T> {
+    public toJSON(options?: O): Failed.JSON<T> {
       return {
         ...super.toJSON(),
-        target: json.Serializable.toJSON(this._target),
+        target: json.Serializable.toJSON(this._target, options),
         expectations: this._expectations
           .toArray()
           .map(([id, expectation]) => [id, expectation.toJSON()]),
@@ -550,6 +553,7 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
+    O extends json.Serializable.Options = json.Serializable.Options,
   > extends Outcome<I, T, Q, S, Value.CantTell> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
@@ -604,10 +608,10 @@ export namespace Outcome {
       this._diagnostic.hash(hash);
     }
 
-    public toJSON(): CantTell.JSON<T> {
+    public toJSON(options?: O): CantTell.JSON<T> {
       return {
         ...super.toJSON(),
-        target: json.Serializable.toJSON(this._target),
+        target: json.Serializable.toJSON(this._target, options),
         diagnostic: this._diagnostic.toJSON(),
       };
     }

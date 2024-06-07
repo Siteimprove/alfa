@@ -43,6 +43,7 @@ export function h<N extends string = string>(
   box?: Rectangle,
   device: Device = Device.standard(),
   externalId?: string,
+  serializationId?: string,
   extraData?: any,
 ): Element<N> {
   return h.element(
@@ -54,6 +55,7 @@ export function h<N extends string = string>(
     box,
     device,
     externalId,
+    serializationId,
     extraData,
   );
 }
@@ -71,6 +73,7 @@ export namespace h {
     box?: Rectangle,
     device?: Device,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Element<N> {
     attributes = Array.isArray(attributes)
@@ -120,6 +123,7 @@ export namespace h {
       Option.from(box),
       Option.from(device),
       externalId,
+      serializationId,
       extraData,
     );
 
@@ -138,23 +142,34 @@ export namespace h {
     name: N,
     value: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Attribute<N> {
-    return Attribute.of(None, None, name, value, externalId, extraData);
+    return Attribute.of(
+      None,
+      None,
+      name,
+      value,
+      externalId,
+      serializationId,
+      extraData,
+    );
   }
 
   export function text(
     data: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Text {
-    return Text.of(data, externalId, extraData);
+    return Text.of(data, externalId, serializationId, extraData);
   }
 
   export function document(
     children: Array<Node | string>,
     style?: Array<Sheet>,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Document {
     return Document.of(
@@ -163,6 +178,7 @@ export namespace h {
       ),
       style,
       externalId,
+      serializationId,
       extraData,
     );
   }
@@ -172,6 +188,7 @@ export namespace h {
     style?: Array<Sheet>,
     mode?: Shadow.Mode,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Shadow {
     return Shadow.of(
@@ -181,6 +198,7 @@ export namespace h {
       style,
       mode,
       externalId,
+      serializationId,
       extraData,
     );
   }
@@ -190,6 +208,7 @@ export namespace h {
     publicId?: string,
     systemId?: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Type<N> {
     return Type.of(
@@ -197,6 +216,7 @@ export namespace h {
       Option.from(publicId),
       Option.from(systemId),
       externalId,
+      serializationId,
       extraData,
     );
   }

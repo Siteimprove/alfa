@@ -12,20 +12,17 @@ const { isFunction, isObject, isString, isNumber, isBoolean, isNull } =
  */
 export interface Serializable<
   T extends JSON = JSON,
-  OPTIONS extends unknown = unknown,
+  O extends Serializable.Options = Serializable.Options,
 > {
-  toJSON(options?: OPTIONS): T;
+  toJSON(options?: O): T;
 }
 
 /**
  * @public
  */
 export namespace Serializable {
-  export type ToJSON<T> = T extends Serializable<infer U>
-    ? U
-    : T extends JSON
-    ? T
-    : JSON;
+  export type ToJSON<T> =
+    T extends Serializable<infer U> ? U : T extends JSON ? T : JSON;
 
   export function isSerializable<T extends JSON>(
     value: unknown,
@@ -33,17 +30,20 @@ export namespace Serializable {
     return isObject(value) && isFunction(value.toJSON);
   }
 
-  export function toJSON<T extends JSON, OPTIONS extends unknown = unknown>(
-    value: Serializable<T>,
-    options?: OPTIONS,
-  ): T;
+  export function toJSON<
+    T extends JSON,
+    O extends Serializable.Options = Serializable.Options,
+  >(value: Serializable<T>, options?: O): T;
 
-  export function toJSON<T, OPTIONS extends unknown = unknown>(
-    value: T,
-    options?: OPTIONS,
-  ): ToJSON<T>;
+  export function toJSON<
+    T,
+    O extends Serializable.Options = Serializable.Options,
+  >(value: T, options?: O): ToJSON<T>;
 
-  export function toJSON(value: unknown, options?: unknown): JSON {
+  export function toJSON<O extends Serializable.Options = Serializable.Options>(
+    value: unknown,
+    options?: O,
+  ): JSON {
     if (isSerializable(value)) {
       return value.toJSON(options);
     }
@@ -74,5 +74,16 @@ export namespace Serializable {
     }
 
     return null;
+  }
+
+  export enum Verbosity {
+    Minimal = 0,
+    Low = 100,
+    Medium = 200,
+    High = 300,
+  }
+
+  export interface Options {
+    verbosity?: Verbosity;
   }
 }

@@ -1,5 +1,7 @@
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import * as json from "@siteimprove/alfa-json";
+
 import { Node } from "../node";
 
 /**
@@ -9,9 +11,10 @@ export class Comment extends Node<"comment"> {
   public static of(
     data: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Comment {
-    return new Comment(data, externalId, extraData);
+    return new Comment(data, externalId, serializationId, extraData);
   }
 
   public static empty(): Comment {
@@ -20,8 +23,13 @@ export class Comment extends Node<"comment"> {
 
   private readonly _data: string;
 
-  private constructor(data: string, externalId?: string, extraData?: any) {
-    super([], "comment", externalId, extraData);
+  private constructor(
+    data: string,
+    externalId?: string,
+    serializationId?: string,
+    extraData?: any,
+  ) {
+    super([], "comment", externalId, serializationId, extraData);
 
     this._data = data;
   }
@@ -48,13 +56,29 @@ export class Comment extends Node<"comment"> {
     return path;
   }
 
-  public toJSON(): Comment.JSON {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
+    },
+  ): Comment.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Comment.JSON;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Comment.MinimalJSON | Comment.JSON {
     const result = {
-      ...super.toJSON(),
-      data: this._data,
+      ...super.toJSON(options),
     };
     delete result.children;
 
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    result.data = this._data;
     return result;
   }
 
@@ -67,6 +91,8 @@ export class Comment extends Node<"comment"> {
  * @public
  */
 export namespace Comment {
+  export interface MinimalJSON extends Node.JSON<"comment"> {}
+
   export interface JSON extends Node.JSON<"comment"> {
     data: string;
   }
@@ -79,13 +105,22 @@ export namespace Comment {
    * @internal
    */
   export function fromComment(json: JSON): Trampoline<Comment> {
-    return Trampoline.done(Comment.of(json.data));
+    return Trampoline.done(
+      Comment.of(json.data, json.externalId, json.serializationId),
+    );
   }
 
   /**
    * @internal
    */
   export function cloneComment(comment: Comment): Trampoline<Comment> {
-    return Trampoline.done(Comment.of(comment.data, comment.externalId));
+    return Trampoline.done(
+      Comment.of(
+        comment.data,
+        comment.externalId,
+        comment.serializationId,
+        comment.extraData,
+      ),
+    );
   }
 }
