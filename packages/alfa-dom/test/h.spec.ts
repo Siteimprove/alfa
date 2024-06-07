@@ -1,7 +1,6 @@
+import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
-
-import * as json from "@siteimprove/alfa-json";
 
 import { h } from "../src/h";
 
@@ -10,7 +9,6 @@ import { Namespace } from "../src/namespace";
 import { Document } from "../src/node/document";
 import { Element } from "../src/node/element";
 import { Type } from "../src/node/type";
-import { Device } from "@siteimprove/alfa-device";
 
 test("h() constructs an element", (t) => {
   t.deepEqual(
