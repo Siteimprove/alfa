@@ -64,12 +64,9 @@ export class Type<N extends string = string> extends Node<"type"> {
 
   public toJSON(
     options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Minimal;
-    },
-  ): Type.MinimalJSON;
-  public toJSON(
-    options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Low;
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
     },
   ): Type.MinimalJSON;
   public toJSON(options?: Node.SerializationOptions): Type.JSON<N>;

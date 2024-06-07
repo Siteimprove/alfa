@@ -65,12 +65,9 @@ export class Text extends Node<"text"> implements Slotable {
 
   public toJSON(
     options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Minimal;
-    },
-  ): Text.MinimalJSON;
-  public toJSON(
-    options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Low;
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
     },
   ): Text.MinimalJSON;
   public toJSON(options?: Node.SerializationOptions): Text.JSON;

@@ -339,130 +339,81 @@ test("#toJSON() includes only serializationId when verbosity is minimal", (t) =>
 
   const doc = docWithSerializationIds(docId, elmId, attrId);
 
-  const options = {
-    device: Device.standard(),
-    verbosity: json.Serializable.Verbosity.Minimal,
-  } as const;
-
-  t.deepEqual(doc.toJSON(options), {
-    type: "document",
-    serializationId: docId,
-  });
-
-  const elm = doc.children().first().getUnsafe() as Element<"div">;
-
-  t.deepEqual(elm.toJSON(options), {
-    type: "element",
-    serializationId: elmId,
-  });
-
-  const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
-
-  t.deepEqual(attr.toJSON(options), {
-    type: "attribute",
-    serializationId: attrId,
-  });
-});
-
-test("#toJSON() includes only serializationId when verbosity is low", (t) => {
-  const docId = crypto.randomUUID();
-  const elmId = crypto.randomUUID();
-  const attrId = crypto.randomUUID();
-
-  const doc = docWithSerializationIds(docId, elmId, attrId);
-
-  const options = {
-    device: Device.standard(),
-    verbosity: json.Serializable.Verbosity.Low,
-  } as const;
-
-  t.deepEqual(doc.toJSON(options), {
-    type: "document",
-    serializationId: docId,
-  });
-
-  const elm = doc.children().first().getUnsafe() as Element<"div">;
-
-  t.deepEqual(elm.toJSON(options), {
-    type: "element",
-    serializationId: elmId,
-  });
-
-  const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
-
-  t.deepEqual(attr.toJSON(options), {
-    type: "attribute",
-    serializationId: attrId,
-  });
-});
-
-test("#toJSON() includes everything except serializationId when called without options", (t) => {
-  const doc = h.document([<div id="foo"></div>]);
-
-  t.deepEqual(doc.toJSON(), {
-    type: "document",
-    style: [],
-    children: [
-      {
-        type: "element",
-        attributes: [
-          {
-            type: "attribute",
-            name: "id",
-            namespace: null,
-            prefix: null,
-            value: "foo",
-          },
-        ],
-        box: null,
-        children: [],
-        content: null,
-        name: "div",
-        namespace: "http://www.w3.org/1999/xhtml",
-        prefix: null,
-        shadow: null,
-        style: null,
-      },
-    ],
-  });
-});
-
-test("#toJSON() includes everything except serializationId when verbosity is medium", (t) => {
   const device = Device.standard();
 
+  const verbosities = [
+    json.Serializable.Verbosity.Minimal,
+    json.Serializable.Verbosity.Low,
+  ] as const;
+
+  for (const verbosity of verbosities) {
+    const options = {
+      device,
+      verbosity,
+    } as const;
+
+    t.deepEqual(doc.toJSON(options), {
+      type: "document",
+      serializationId: docId,
+    });
+
+    const elm = doc.children().first().getUnsafe() as Element<"div">;
+
+    t.deepEqual(elm.toJSON(options), {
+      type: "element",
+      serializationId: elmId,
+    });
+
+    const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
+
+    t.deepEqual(attr.toJSON(options), {
+      type: "attribute",
+      serializationId: attrId,
+    });
+  }
+});
+
+test("#toJSON() includes everything except serializationId when options is undefined or verbosity is medium", (t) => {
   const doc = h.document([<div id="foo"></div>]);
 
-  const options = {
-    device,
-    verbosity: json.Serializable.Verbosity.Medium,
-  } as const;
+  const device = Device.standard();
 
-  t.deepEqual(doc.toJSON(options), {
-    type: "document",
-    style: [],
-    children: [
-      {
-        type: "element",
-        attributes: [
-          {
-            type: "attribute",
-            name: "id",
-            namespace: null,
-            prefix: null,
-            value: "foo",
-          },
-        ],
-        box: null,
-        children: [],
-        content: null,
-        name: "div",
-        namespace: "http://www.w3.org/1999/xhtml",
-        prefix: null,
-        shadow: null,
-        style: null,
-      },
-    ],
-  });
+  const options = [
+    undefined,
+    {
+      device,
+      verbosity: json.Serializable.Verbosity.Medium,
+    } as const,
+  ] as const;
+
+  for (const option of options) {
+    t.deepEqual(doc.toJSON(option), {
+      type: "document",
+      style: [],
+      children: [
+        {
+          type: "element",
+          attributes: [
+            {
+              type: "attribute",
+              name: "id",
+              namespace: null,
+              prefix: null,
+              value: "foo",
+            },
+          ],
+          box: null,
+          children: [],
+          content: null,
+          name: "div",
+          namespace: "http://www.w3.org/1999/xhtml",
+          prefix: null,
+          shadow: null,
+          style: null,
+        },
+      ],
+    });
+  }
 });
 
 test("#toJSON() includes everything including serializationId when verbosity is high", (t) => {

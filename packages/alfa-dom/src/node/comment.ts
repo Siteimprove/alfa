@@ -58,12 +58,9 @@ export class Comment extends Node<"comment"> {
 
   public toJSON(
     options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Minimal;
-    },
-  ): Comment.MinimalJSON;
-  public toJSON(
-    options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Low;
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
     },
   ): Comment.MinimalJSON;
   public toJSON(options?: Node.SerializationOptions): Comment.JSON;

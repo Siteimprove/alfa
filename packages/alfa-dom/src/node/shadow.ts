@@ -98,12 +98,9 @@ export class Shadow extends Node<"shadow"> {
 
   public toJSON(
     options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Minimal;
-    },
-  ): Shadow.MinimalJSON;
-  public toJSON(
-    options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Low;
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
     },
   ): Shadow.MinimalJSON;
   public toJSON(options?: Node.SerializationOptions): Shadow.JSON;

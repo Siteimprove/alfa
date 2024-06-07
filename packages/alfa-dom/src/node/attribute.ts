@@ -150,12 +150,9 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
 
   public toJSON(
     options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Minimal;
-    },
-  ): Attribute.MinimalJSON;
-  public toJSON(
-    options: Node.SerializationOptions & {
-      verbosity: json.Serializable.Verbosity.Low;
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
     },
   ): Attribute.MinimalJSON;
   public toJSON(options?: Node.SerializationOptions): Attribute.JSON<N>;
