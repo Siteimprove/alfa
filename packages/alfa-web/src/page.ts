@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Document } from "@siteimprove/alfa-dom";
+import { Document, Node } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
 import { Request, Response } from "@siteimprove/alfa-http";
 
@@ -64,11 +64,11 @@ export class Page
     return this._device;
   }
 
-  public toJSON(): Page.JSON {
+  public toJSON(options?: Node.SerializationOptions): Page.JSON {
     return {
       request: this._request.toJSON(),
       response: this._response.toJSON(),
-      document: this._document.toJSON({ device: this._device }),
+      document: this._document.toJSON(options ?? { device: this._device }),
       device: this._device.toJSON(),
     };
   }
