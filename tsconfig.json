@@ -2,7 +2,6 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "composite": true,
-    "declaration": true,
     "declarationMap": true,
     "incremental": true,
     "lib": ["es2020"],
@@ -10,7 +9,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2020",
-    "types": []
+    "types": [],
   },
   "files": [],
   "references": [{ "path": "packages" }, { "path": "scratches" }]
