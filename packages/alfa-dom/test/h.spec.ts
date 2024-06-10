@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import { h } from "../src/h";
+import { h } from "../src";
 
 import { Namespace } from "../src/namespace";
 

@@ -11,30 +11,22 @@
     "directory": "packages/alfa-dom"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "exports": {
-    ".": "./src/index.js",
-    "./h": "./h.js",
-    "./h.js": "./h.js",
-    "./jsx": "./jsx.js",
-    "./jsx.js": "./jsx.js",
-    "./jsx-runtime": "./jsx-runtime.js",
-    "./jsx-runtime.js": "./jsx-runtime.js",
-    "./native": "./native.js",
-    "./native.js": "./native.js"
+    ".": "./dist/index.js",
+    "./h": "./dist/h.js",
+    "./h.js": "./dist/h.js",
+    "./jsx": "./dist/jsx.js",
+    "./jsx.js": "./dist/jsx.js",
+    "./jsx-runtime": "./dist/jsx-runtime.js",
+    "./jsx-runtime.js": "./dist/jsx-runtime.js",
+    "./native": "./dist/native.js",
+    "./native.js": "./dist/native.js"
   },
-  "types": "src/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
-    "h.js",
-    "h.d.ts",
-    "jsx-runtime.js",
-    "jsx-runtime.d.ts",
-    "jsx.js",
-    "jsx.d.ts",
-    "native.js",
-    "native.d.ts",
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "dependencies": {
     "@siteimprove/alfa-array": "workspace:^0.81.0",

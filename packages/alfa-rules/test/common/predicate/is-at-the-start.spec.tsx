@@ -1,4 +1,4 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { isAtTheStart } from "../../../src/common/predicate/is-at-the-start";

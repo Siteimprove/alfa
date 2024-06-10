@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": [
+    "./calculation/index.ts",
+    "./calculation/math-expression/expression.ts",
+    "./calculation/math-expression/index.ts",
+    "./calculation/math-expression/kind.ts",
+    "./calculation/math-expression/function.ts",
+    "./calculation/math-expression/math.ts",
+    "./calculation/math-expression/operation.ts",
+    "./calculation/math-expression/value.ts",
+    "./calculation/numeric/angle.ts",
+    "./calculation/numeric/dimension.ts",
+    "./calculation/numeric/index.ts",
+    "./calculation/numeric/integer.ts",
+    "./calculation/numeric/length.ts",
+    "./calculation/numeric/number.ts",
+    "./calculation/numeric/numeric.ts",
+    "./calculation/numeric/percentage.ts",
+    "./index.ts",
+    "./syntax/block.ts",
+    "./syntax/comma.ts",
+    "./syntax/component.ts",
+    "./syntax/declaration.ts",
+    "./syntax/function.ts",
+    "./syntax/index.ts",
+    "./syntax/lexer.ts",
+    "./syntax/nth.ts",
+    "./syntax/parser.ts",
+    "./syntax/token.ts",
+    "./value/box.ts",
+    "./unit/converter.ts",
+    "./unit/index.ts",
+    "./unit/unit.ts",
+    "./value/collection/index.ts",
+    "./value/collection/list.ts",
+    "./value/collection/tuple.ts",
+    "./value/color/color.ts",
+    "./value/color/current.ts",
+    "./value/color/format.ts",
+    "./value/color/hex.ts",
+    "./value/color/hsl.ts",
+    "./value/color/index.ts",
+    "./value/color/named.ts",
+    "./value/color/rgb.ts",
+    "./value/color/system.ts",
+    "./value/image/gradient/gradient.ts",
+    "./value/image/gradient/index.ts",
+    "./value/image/gradient/item/hint.ts",
+    "./value/image/gradient/item/index.ts",
+    "./value/image/gradient/item/item.ts",
+    "./value/image/gradient/item/stop.ts",
+    "./value/image/gradient/linear/corner.ts",
+    "./value/image/gradient/linear/direction.ts",
+    "./value/image/gradient/linear/index.ts",
+    "./value/image/gradient/linear/linear.ts",
+    "./value/image/gradient/linear/position.ts",
+    "./value/image/gradient/linear/side.ts",
+    "./value/image/gradient/radial/circle.ts",
+    "./value/image/gradient/radial/ellipse.ts",
+    "./value/image/gradient/radial/extent.ts",
+    "./value/image/gradient/radial/index.ts",
+    "./value/image/gradient/radial/radial.ts",
+    "./value/image/gradient/radial/shape.ts",
+    "./value/image/image.ts",
+    "./value/image/index.ts",
+    "./value/image/url.ts",
+    "./value/index.ts",
+    "./value/keyword.ts",
+    "./value/numeric/angle.ts",
+    "./value/numeric/angle-percentage.ts",
+    "./value/numeric/dimension.ts",
+    "./value/numeric/index.ts",
+    "./value/numeric/integer.ts",
+    "./value/numeric/length.ts",
+    "./value/numeric/length-percentage.ts",
+    "./value/numeric/number.ts",
+    "./value/numeric/numeric.ts",
+    "./value/numeric/percentage.ts",
+    "./value/position/component.ts",
+    "./value/position/index.ts",
+    "./value/position/keywords.ts",
+    "./value/position/position.ts",
+    "./value/position/side.ts",
+    "./value/resolvable.ts",
+    "./value/shadow.ts",
+    "./value/shape/basic-shape.ts",
+    "./value/shape/circle.ts",
+    "./value/shape/corner.ts",
+    "./value/shape/ellipse.ts",
+    "./value/shape/index.ts",
+    "./value/shape/inset.ts",
+    "./value/shape/polygon.ts",
+    "./value/shape/radius.ts",
+    "./value/shape/rectangle.ts",
+    "./value/shape/shape.ts",
+    "./value/string.ts",
+    "./value/transform/function.ts",
+    "./value/transform/index.ts",
+    "./value/transform/matrix.ts",
+    "./value/transform/perspective.ts",
+    "./value/transform/rotate.ts",
+    "./value/transform/scale.ts",
+    "./value/transform/skew.ts",
+    "./value/transform/transform.ts",
+    "./value/transform/translate.ts",
+    "./value/value.ts",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ],
+  "references": [
+    { "path": "../../alfa-array" },
+    { "path": "../../alfa-comparable" },
+    { "path": "../../alfa-equatable" },
+    { "path": "../../alfa-hash" },
+    { "path": "../../alfa-iterable" },
+    { "path": "../../alfa-json" },
+    { "path": "../../alfa-mapper" },
+    { "path": "../../alfa-math" },
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-parser" },
+    { "path": "../../alfa-predicate" },
+    { "path": "../../alfa-record" },
+    { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-result" },
+    { "path": "../../alfa-selective" },
+    { "path": "../../alfa-slice" },
+{ "path": "../../alfa-thunk" }
+  ]
+}

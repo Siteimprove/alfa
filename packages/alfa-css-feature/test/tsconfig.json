@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": [
+    "./media.spec.ts",
+    "./supports.spec.ts",
+    "./user-preferences.spec.ts"
+  ],
+  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+}

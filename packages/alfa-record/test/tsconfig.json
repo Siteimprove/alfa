@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "files": [  "./record.spec.ts"],
+  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+}

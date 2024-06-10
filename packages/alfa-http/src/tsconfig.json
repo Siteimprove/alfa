@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": [
+    "./body.ts",
+    "./cookie.ts",
+    "./cookies.ts",
+    "./header.ts",
+    "./headers.ts",
+    "./index.ts",
+    "./request.ts",
+    "./response.ts",
+
+
+  ],
+  "references": [
+    { "path": "../../alfa-earl" },
+    { "path": "../../alfa-encoding" },
+    { "path": "../../alfa-equatable" },
+    { "path": "../../alfa-iterable" },
+    { "path": "../../alfa-json" },
+    { "path": "../../alfa-map" },
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-result" },
+{ "path": "../../alfa-url" }
+  ]
+}

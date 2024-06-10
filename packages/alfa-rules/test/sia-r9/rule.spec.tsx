@@ -1,4 +1,4 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 import { test } from "@siteimprove/alfa-test";
 
 import R9 from "../../src/sia-r9/rule";

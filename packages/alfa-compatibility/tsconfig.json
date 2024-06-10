@@ -1,12 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-    "src/browser.ts",
-    "src/browser/data.ts",
-    "src/feature.ts",
-    "src/feature/data.ts",
-    "src/index.ts"
-  ],
-  "references": [{ "path": "../alfa-iterable" }, { "path": "../alfa-json" }]
+  "files": [],
+  "references": [{"path": "./src" }]
 }

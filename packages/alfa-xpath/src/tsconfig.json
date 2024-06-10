@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": [
+    "./builder.ts",
+    "./coerce.ts",
+    "./descriptors.ts",
+    "./environment.ts",
+    "./evaluate.ts",
+    "./expression.ts",
+    "./function.ts",
+    "./functions/fn.ts",
+    "./functions/index.ts",
+    "./index.ts",
+    "./matches.ts",
+    "./syntax/lexer.ts",
+    "./syntax/parser.ts",
+    "./syntax/token.ts",
+    "./types.ts",
+    "./walk.ts",
+
+
+
+  ],
+  "references": [
+    { "path": "../../alfa-dom" },
+    { "path": "../../alfa-equatable" },
+    { "path": "../../alfa-json" },
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-parser" },
+    { "path": "../../alfa-predicate" },
+    { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-result" },
+    { "path": "../../alfa-slice" },
+
+  ]
+}

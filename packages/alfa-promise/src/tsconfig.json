@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": [
+    "./builtin.ts",
+    "./index.ts",
+    "./promise.ts",
+
+  ],
+  "references": [
+    { "path": "../../alfa-array" },
+    { "path": "../../alfa-callback" },
+    { "path": "../../alfa-continuation" },
+
+  ]
+}

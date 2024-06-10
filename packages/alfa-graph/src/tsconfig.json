@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": ["./graph.ts", "./index.ts", ],
+  "references": [
+    { "path": "../../alfa-equatable" },
+    { "path": "../../alfa-hash" },
+    { "path": "../../alfa-iterable" },
+    { "path": "../../alfa-json" },
+    { "path": "../../alfa-map" },
+    { "path": "../../alfa-sequence" },
+    { "path": "../../alfa-set" },
+
+  ]
+}

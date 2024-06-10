@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "@siteimprove/alfa-dom/dist"
+  },
+  "files": [
+    "./table.spec.tsx"
+  ],
+  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+}

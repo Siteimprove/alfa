@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/sarif.ts", "src/serializable.ts"],
-  "references": [{ "path": "../alfa-option" }, { "path": "../alfa-refinement" }]
+  "files": [],
+  "references": [{"path": "./src" } ]
 }

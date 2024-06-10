@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": ["./emitter.ts", "./index.ts", ],
+  "references": [
+    { "path": "../../alfa-callback" },
+    { "path": "../../alfa-continuation" },
+    { "path": "../../alfa-functor" },
+    { "path": "../../alfa-mapper" },
+
+  ]
+}

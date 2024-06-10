@@ -1,11 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/cache.ts", "src/index.ts", "test/cache.spec.ts"],
-  "references": [
-    { "path": "../alfa-iterable" },
-    { "path": "../alfa-mapper" },
-    { "path": "../alfa-option" },
-    { "path": "../alfa-test" }
-  ]
+  "files": [],
+  "references": [{"path": "./src" }, {"path": "./test"} ]
 }
