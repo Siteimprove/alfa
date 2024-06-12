@@ -23,7 +23,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export class Err<E> implements Result<never, E> {
+export class Err<E, O extends Serializable.Options = Serializable.Options> implements Result<never, E, O> {
     // (undocumented)
     [Symbol.iterator](): Generator<never, void, unknown>;
     // (undocumented)
@@ -97,7 +97,7 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     teeErr(callback: Callback<E>): Err<E>;
     // (undocumented)
-    toJSON(): Err.JSON<E>;
+    toJSON(options?: O): Err.JSON<E>;
     // (undocumented)
     toString(): string;
 }
@@ -120,7 +120,7 @@ export namespace Err {
 }
 
 // @public (undocumented)
-export class Ok<T> implements Result<T, never> {
+export class Ok<T, O extends Serializable.Options = Serializable.Options> implements Result<T, never, O> {
     // (undocumented)
     [Symbol.iterator](): Generator<T, void, unknown>;
     // (undocumented)
@@ -194,7 +194,7 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     teeErr(): Ok<T>;
     // (undocumented)
-    toJSON(): Ok.JSON<T>;
+    toJSON(options?: O): Ok.JSON<T>;
     // (undocumented)
     toString(): string;
 }
@@ -217,7 +217,7 @@ export namespace Ok {
 }
 
 // @public (undocumented)
-export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
+export interface Result<T, E = T, O extends Serializable.Options = Serializable.Options> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>, O> {
     // (undocumented)
     and<U, F>(result: Result<U, F>): Result<U, E | F>;
     // (undocumented)
@@ -293,7 +293,7 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
     // (undocumented)
     teeErr(callback: Callback<E>): Result<T, E>;
     // (undocumented)
-    toJSON(): Result.JSON<T, E>;
+    toJSON(options?: O): Result.JSON<T, E>;
 }
 
 // @public (undocumented)
