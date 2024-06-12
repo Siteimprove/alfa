@@ -1,14 +1,14 @@
 import type { Rule, Outcome, Oracle, Question } from "@siteimprove/alfa-act";
+import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Request, Response } from "@siteimprove/alfa-http";
+import { Serializable } from "@siteimprove/alfa-json";
 import { None } from "@siteimprove/alfa-option";
 import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
-
-import * as json from "@siteimprove/alfa-json";
 
 // Creating these once allow to actually trigger caches in rules that rely on them.
 const defaultRequest = Request.of("GET", URL.example());
@@ -16,11 +16,16 @@ const defaultResponse = Response.of(URL.example(), 200);
 const defaultDocument = Document.empty();
 const defaultDevice = Device.standard();
 
-export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
+export function evaluate<
+  T extends Hashable,
+  Q extends Question.Metadata,
+  S,
+  O extends Serializable.Options = Serializable.Options,
+>(
   rule: Rule<Page, T, Q, S>,
   page: Partial<Page>,
   oracle: Oracle<Page, T, Q, S> = () => Future.now(None),
-  options?: json.Serializable.Options,
+  options?: O,
 ): Future<Array<Outcome.JSON>> {
   const {
     request = defaultRequest,
@@ -31,5 +36,5 @@ export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
 
   return rule
     .evaluate(Page.of(request, response, document, device), oracle)
-    .map((outcomes) => [...outcomes].map((outcome) => outcome.toJSON(options)));
+    .map((outcomes) => Array.toJSON(Array.from(outcomes), options));
 }
