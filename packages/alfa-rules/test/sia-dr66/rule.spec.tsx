@@ -4,15 +4,15 @@ import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
 
-import R66 from "../../src/sia-dr66/rule";
-import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
-import { Contrast as Outcomes } from "../../src/common/outcome/contrast";
+import R66 from "../../dist/sia-dr66/rule";
+import { Contrast as Diagnostic } from "../../dist/common/diagnostic/contrast";
+import { Contrast as Outcomes } from "../../dist/common/outcome/contrast";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 
 import { oracle } from "../common/oracle";
-import { ColorError, ColorErrors } from "../../src/common/dom/get-colors";
+import { ColorError, ColorErrors } from "../../dist/common/dom/get-colors";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
   RGB.of(

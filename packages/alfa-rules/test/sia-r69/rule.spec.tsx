@@ -8,14 +8,14 @@ import { Keyword, Percentage, RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Style } from "@siteimprove/alfa-style";
 
-import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
-import { Contrast as Outcomes } from "../../src/common/outcome/contrast";
-import R69 from "../../src/sia-r69/rule";
+import { Contrast as Diagnostic } from "../../dist/common/diagnostic/contrast";
+import { Contrast as Outcomes } from "../../dist/common/outcome/contrast";
+import R69 from "../../dist/sia-r69/rule";
 
 import { evaluate } from "../common/evaluate";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
-import { ColorError, ColorErrors } from "../../src/common/dom/get-colors";
+import { ColorError, ColorErrors } from "../../dist/common/dom/get-colors";
 import { oracle } from "../common/oracle";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>

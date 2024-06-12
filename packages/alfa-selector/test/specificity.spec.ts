@@ -1,6 +1,6 @@
 import { RNG, test } from "@siteimprove/alfa-test";
 
-import { Specificity } from "../src/specificity";
+import { Specificity } from "../dist/specificity";
 import { parse } from "./parser";
 
 function wrapper(rng: RNG): RNG {

@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Option } from "@siteimprove/alfa-option";
 
-import R87, { Outcomes } from "../../src/sia-r87/rule";
+import R87, { Outcomes } from "../../dist/sia-r87/rule";
 
 import { evaluate } from "../common/evaluate";
 import { cantTell, passed, failed } from "../common/outcome";

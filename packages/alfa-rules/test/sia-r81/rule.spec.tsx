@@ -2,13 +2,13 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R81, { Outcomes } from "../../src/sia-r81/rule";
+import R81, { Outcomes } from "../../dist/sia-r81/rule";
 
-import { Group } from "../../src/common/act/group";
+import { Group } from "../../dist/common/act/group";
 
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
-import { WithName } from "../../src/common/diagnostic";
+import { WithName } from "../../dist/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";

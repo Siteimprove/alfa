@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R45, { Outcomes } from "../../src/sia-r45/rule";
+import R45, { Outcomes } from "../../dist/sia-r45/rule";
 
 import { evaluate } from "../common/evaluate";
 import { failed, inapplicable, passed } from "../common/outcome";

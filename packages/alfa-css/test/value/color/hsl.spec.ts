@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { HSL } from "../../../src";
+import { HSL } from "../../../dist";
 
 import { parser, parserUnsafe } from "../../common/parse";
 

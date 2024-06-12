@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Namespace } from "@siteimprove/alfa-dom";
 
-import R67, { Outcomes } from "../../src/sia-r67/rule";
+import R67, { Outcomes } from "../../dist/sia-r67/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";

@@ -11,13 +11,18 @@
     "directory": "packages/alfa-web"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./native": "./dist/native.js",
+    "./native.js": "./dist/native.js",
+    "./dist/native": "./dist/native.js",
+    "./dist/native.js": "./dist/native.js"
+  },
   "files": [
-    "native.js",
-    "native.d.ts",
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "dependencies": {
     "@siteimprove/alfa-device": "workspace:^0.81.0",

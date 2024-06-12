@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Color, Length, Lexer, Shadow } from "../../src";
+import { Color, Length, Lexer, Shadow } from "../../dist";
 
 function parse(input: string, options?: Shadow.Options) {
   return Shadow.parse(options)(Lexer.lex(input))

@@ -3,7 +3,7 @@ import { Future } from "@siteimprove/alfa-future";
 import { Hashable } from "@siteimprove/alfa-hash";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { Question } from "../../src/common/act/question";
+import { Question } from "../../dist/common/act/question";
 
 function wrapper<
   TYPE,

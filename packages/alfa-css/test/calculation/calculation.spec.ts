@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Math } from "../../src";
+import { Math } from "../../dist";
 import { parser, parserUnsafe, serializer } from "../common/parse";
 
 const parseErr = parser(Math.parse);

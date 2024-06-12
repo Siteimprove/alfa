@@ -5,7 +5,7 @@ import { Context } from "@siteimprove/alfa-selector";
 
 import { h } from "@siteimprove/alfa-dom/dist/h";
 
-import { Style } from "../src/style";
+import { Style } from "../dist/style";
 
 import { cascaded, specified } from "./common";
 

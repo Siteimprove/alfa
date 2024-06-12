@@ -3,9 +3,9 @@ import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as Outset from "../../src/property/border-image-outset";
-import * as Slice from "../../src/property/border-image-slice";
-import * as Width from "../../src/property/border-image-width";
+import * as Outset from "../../dist/property/border-image-outset";
+import * as Slice from "../../dist/property/border-image-slice";
+import * as Width from "../../dist/property/border-image-width";
 
 import { cascaded } from "../common";
 

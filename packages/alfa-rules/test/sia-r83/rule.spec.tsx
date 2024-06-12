@@ -2,7 +2,7 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R83, { Outcomes } from "../../src/sia-r83/rule";
+import R83, { Outcomes } from "../../dist/sia-r83/rule";
 
 import { Device } from "@siteimprove/alfa-device";
 import { evaluate } from "../common/evaluate";

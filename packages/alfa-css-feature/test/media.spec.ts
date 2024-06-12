@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Device, Viewport, Display } from "@siteimprove/alfa-device";
 
-import { Feature } from "../src";
+import { Feature } from "../dist";
 
 function parse(input: string) {
   return Feature.parseMediaQuery(Lexer.lex(input)).map(([, query]) => query);

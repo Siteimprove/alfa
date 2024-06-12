@@ -4,10 +4,10 @@ import { Complex, Compound, type Simple } from "@siteimprove/alfa-selector";
 
 import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
-import { RuleTree } from "../src";
+import { RuleTree } from "../dist";
 
-import { Block } from "../src/block";
-import { Layer, Origin, Precedence } from "../src/precedence";
+import { Block } from "../dist/block";
+import { Layer, Origin, Precedence } from "../dist/precedence";
 
 function fakeBlock(
   selectorText: string,

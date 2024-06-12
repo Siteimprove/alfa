@@ -1,7 +1,7 @@
 import { FNV } from "@siteimprove/alfa-fnv";
 import { test } from "@siteimprove/alfa-test";
 
-import { Rectangle } from "../src";
+import { Rectangle } from "../dist";
 
 const rect = Rectangle.of(28, 62, 54, 81);
 const reverseRect = Rectangle.of(28, 62, -54, -81);

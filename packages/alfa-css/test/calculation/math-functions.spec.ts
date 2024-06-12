@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Math } from "../../src";
-import { Length } from "../../src/calculation/numeric";
+import { Math } from "../../dist";
+import { Length } from "../../dist/calculation/numeric";
 import { parser, parserUnsafe, serializer } from "../common/parse";
 
 const parseErr = parser(Math.parse);

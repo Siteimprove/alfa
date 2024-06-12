@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Thunk } from "../src/thunk";
+import { Thunk } from "../dist/thunk";
 
 test(".map() applies a function to a thunk value", (t) => {
   const thunk: Thunk<number> = () => 1;

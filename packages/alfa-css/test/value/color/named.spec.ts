@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Named, type RGB } from "../../../src";
+import { Named, type RGB } from "../../../dist";
 
 import { parser, parserUnsafe } from "../../common/parse";
 

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { h } from "../../src";
+import { h } from "../../dist";
 
 test("#tokens() parses a space separated token list", (t) => {
   t.deepEqual([...h.attribute("foo", "foo").tokens()], ["foo"]);

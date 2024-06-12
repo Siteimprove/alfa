@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R14, { Outcomes } from "../../src/sia-r14/rule";
+import R14, { Outcomes } from "../../dist/sia-r14/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed } from "../common/outcome";

@@ -16,6 +16,8 @@
     ".": "./dist/index.js",
     "./h": "./dist/h.js",
     "./h.js": "./dist/h.js",
+    "./dist/h": "./dist/h.js",
+    "./dist/h.js": "./dist/h.js",
     "./jsx": "./dist/jsx.js",
     "./jsx.js": "./dist/jsx.js",
     "./jsx-runtime": "./dist/jsx-runtime.js",

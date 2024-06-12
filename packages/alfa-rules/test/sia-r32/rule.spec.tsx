@@ -2,7 +2,7 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R32, { Outcomes } from "../../src/sia-r32/rule";
+import R32, { Outcomes } from "../../dist/sia-r32/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";

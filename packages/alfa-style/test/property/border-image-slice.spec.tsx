@@ -3,7 +3,7 @@ import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as Slice from "../../src/property/border-image-slice";
+import * as Slice from "../../dist/property/border-image-slice";
 
 import { cascaded } from "../common";
 

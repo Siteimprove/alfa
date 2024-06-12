@@ -1,7 +1,7 @@
 import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { Contrast } from "../../src/common/diagnostic/contrast";
-import { ElementDistinguishable } from "../../src/sia-r62/diagnostics";
+import { Contrast } from "../../dist/common/diagnostic/contrast";
+import { ElementDistinguishable } from "../../dist/sia-r62/diagnostics";
 
 export function addCursor(
   style: Result<ElementDistinguishable>,

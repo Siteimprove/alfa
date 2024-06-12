@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Translate } from "../../../src";
+import { Length, Translate } from "../../../dist";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse";
 

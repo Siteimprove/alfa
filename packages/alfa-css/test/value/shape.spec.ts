@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Shape } from "../../src/value/shape/shape";
+import { Shape } from "../../dist/value/shape/shape";
 import { parser, serializer } from "../common/parse";
 
 const parseErr = parser(Shape.parse);

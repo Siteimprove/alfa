@@ -3,7 +3,7 @@ import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as Outset from "../../src/property/border-image-outset";
+import * as Outset from "../../dist/property/border-image-outset";
 import { cascaded } from "../common";
 
 function outset(

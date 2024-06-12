@@ -3,8 +3,8 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R29 from "../../src/sia-r29/rule";
-import { Outcomes } from "../../src/common/expectation/media-text-alternative";
+import R29 from "../../dist/sia-r29/rule";
+import { Outcomes } from "../../dist/common/expectation/media-text-alternative";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";

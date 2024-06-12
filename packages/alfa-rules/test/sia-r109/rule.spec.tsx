@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Language } from "@siteimprove/alfa-iana";
 
-import R109, { Outcomes } from "../../src/sia-r109/rule";
+import R109, { Outcomes } from "../../dist/sia-r109/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";

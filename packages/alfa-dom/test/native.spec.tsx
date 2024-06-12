@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 import { JSDOM } from "jsdom";
 
-import { type Document, h, Node } from "../src";
-import { Native } from "../src/native";
+import { type Document, h, Node } from "../dist";
+import { Native } from "../dist/native";
 
 /**
  * Note: This test suite uses JSDOM parser to easily build native documents.

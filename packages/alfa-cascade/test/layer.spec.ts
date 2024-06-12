@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Comparison } from "@siteimprove/alfa-comparable";
 import { test } from "@siteimprove/alfa-test";
 
-import { Layer } from "../src/precedence";
+import { Layer } from "../dist/precedence";
 
 function pair(name: string): Layer.Pair<false> {
   return {

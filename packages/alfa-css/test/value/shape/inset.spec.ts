@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Inset } from "../../../src";
+import { Inset } from "../../../dist";
 import { serializer } from "../../common/parse";
 
 const serialize = serializer(Inset.parse);
@@ -38,8 +38,7 @@ test("parse() parses an inset with evenly rounded corners", (t) => {
         { type: "length", value: 1, unit: "px" },
       ],
     },
-  },
-  );
+  });
 });
 
 test("parse() parses an inset with unevenly rounded corners", (t) => {

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Context } from "../src";
+import { Context } from "../dist";
 
 import { parse, serialize } from "./parser";
 

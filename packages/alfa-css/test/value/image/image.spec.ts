@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Image } from "../../../src";
+import { Image } from "../../../dist";
 import { serializer } from "../../common/parse";
 
 const serialize = serializer(Image.parse);

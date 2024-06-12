@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Equatable } from "../src";
+import { Equatable } from "../dist";
 
 const value = <T>(value: T) => {
   const self = {
