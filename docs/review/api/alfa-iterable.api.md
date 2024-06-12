@@ -156,7 +156,7 @@ namespace Iterable_2 {
     // (undocumented)
     function takeWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
-    function toJSON<T>(iterable: Iterable_2<T>): Array<Serializable.ToJSON<T>>;
+    function toJSON<T, O extends Serializable.Options = Serializable.Options>(iterable: Iterable_2<T>, options?: O): Array<Serializable.ToJSON<T>>;
     // (undocumented)
     function trim<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)

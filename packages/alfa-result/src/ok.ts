@@ -18,7 +18,9 @@ const { not, test } = Predicate;
 /**
  * @public
  */
-export class Ok<T> implements Result<T, never> {
+export class Ok<T, O extends Serializable.Options = Serializable.Options>
+  implements Result<T, never, O>
+{
   public static of<T>(value: T): Ok<T> {
     return new Ok(value);
   }
@@ -176,10 +178,10 @@ export class Ok<T> implements Result<T, never> {
     yield this._value;
   }
 
-  public toJSON(): Ok.JSON<T> {
+  public toJSON(options?: O): Ok.JSON<T> {
     return {
       type: "ok",
-      value: Serializable.toJSON(this._value),
+      value: Serializable.toJSON(this._value, options),
     };
   }
 

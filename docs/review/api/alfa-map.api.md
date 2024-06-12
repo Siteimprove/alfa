@@ -16,6 +16,7 @@ import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
 import { Refinement } from '@siteimprove/alfa-refinement';
+import { Serializable } from '@siteimprove/alfa-json';
 
 // Warning: (ae-internal-missing-underscore) The name "Collision" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -81,7 +82,7 @@ export class Leaf<K, V> implements Node<K, V> {
 }
 
 // @public (undocumented)
-class Map_2<K, V> implements Collection.Keyed<K, V> {
+class Map_2<K, V, O extends Serializable.Options = Serializable.Options> implements Collection.Keyed<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
     apply<U>(mapper: Map_2<K, Mapper<V, U>>): Map_2<K, U>;
@@ -160,7 +161,7 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     toArray(): Array_2<[K, V]>;
     // (undocumented)
-    toJSON(): Map_2.JSON<K, V>;
+    toJSON(options?: O): Map_2.JSON<K, V>;
     // (undocumented)
     toString(): string;
     // (undocumented)

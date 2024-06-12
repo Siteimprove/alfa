@@ -852,9 +852,10 @@ export namespace Iterable {
     return groups;
   }
 
-  export function toJSON<T>(
-    iterable: Iterable<T>,
-  ): Array<Serializable.ToJSON<T>> {
-    return [...map(iterable, (value) => Serializable.toJSON(value))];
+  export function toJSON<
+    T,
+    O extends Serializable.Options = Serializable.Options,
+  >(iterable: Iterable<T>, options?: O): Array<Serializable.ToJSON<T>> {
+    return [...map(iterable, (value) => Serializable.toJSON(value, options))];
   }
 }

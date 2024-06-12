@@ -121,7 +121,7 @@ export class Header implements Equatable, json.Serializable<Header.JSON>, earl.S
     // (undocumented)
     toEARL(): Header.EARL;
     // (undocumented)
-    toJSON(): Header.JSON;
+    toJSON(options?: json.Serializable.Options): Header.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -179,7 +179,7 @@ export class Headers implements Iterable_2<Header>, json.Serializable<Headers.JS
     // (undocumented)
     toEARL(): Headers.EARL;
     // (undocumented)
-    toJSON(): Headers.JSON;
+    toJSON(options?: json.Serializable.Options): Headers.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -219,7 +219,7 @@ export class Request implements Body, json.Serializable<Request.JSON>, earl.Seri
     // (undocumented)
     toEARL(): Request.EARL;
     // (undocumented)
-    toJSON(): Request.JSON;
+    toJSON(options?: json.Serializable.Options): Request.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -279,7 +279,7 @@ export class Response implements Body, json.Serializable<Response.JSON>, earl.Se
     // (undocumented)
     toEARL(): Response.EARL;
     // (undocumented)
-    toJSON(): Response.JSON;
+    toJSON(options?: json.Serializable.Options): Response.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)

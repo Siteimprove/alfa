@@ -57,7 +57,7 @@ export class Display implements Equatable, Hashable, Serializable {
     }
   }
 
-  public toJSON(): Display.JSON {
+  public toJSON(options?: json.Serializable.Options): Display.JSON {
     return {
       resolution: this._resolution,
       scan: this._scan,

@@ -14,9 +14,10 @@ import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
 import { Refinement } from '@siteimprove/alfa-refinement';
+import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-class Set_2<T> implements Collection.Unkeyed<T> {
+class Set_2<T, O extends Serializable.Options = Serializable.Options> implements Collection.Unkeyed<T, O> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -94,7 +95,7 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(): Set_2.JSON<T>;
+    toJSON(options?: O): Set_2.JSON<T>;
     // (undocumented)
     toString(): string;
 }

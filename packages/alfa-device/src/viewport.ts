@@ -81,7 +81,7 @@ export class Viewport implements Equatable, Hashable, Serializable {
     }
   }
 
-  public toJSON(): Viewport.JSON {
+  public toJSON(options?: json.Serializable.Options): Viewport.JSON {
     return {
       width: this._width,
       height: this._height,

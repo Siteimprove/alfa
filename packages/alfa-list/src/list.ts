@@ -21,7 +21,9 @@ const { compareComparable } = Comparable;
 /**
  * @public
  */
-export class List<T> implements Collection.Indexed<T> {
+export class List<T, O extends Serializable.Options = Serializable.Options>
+  implements Collection.Indexed<T, O>
+{
   public static of<T>(...values: Array<T>): List<T> {
     const size = values.length;
 
@@ -480,8 +482,8 @@ export class List<T> implements Collection.Indexed<T> {
     return [...this];
   }
 
-  public toJSON(): List.JSON<T> {
-    return this.toArray().map((value) => Serializable.toJSON(value));
+  public toJSON(options?: O): List.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value, options));
   }
 
   public toString(): string {

@@ -1,4 +1,3 @@
-import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -6,8 +5,11 @@ import R41, { Outcomes } from "../../src/sia-r41/rule";
 
 import { Group } from "../../src/common/act/group";
 
+import { Outcome } from "@siteimprove/alfa-act";
 import { Response } from "@siteimprove/alfa-http";
+import { Serializable } from "@siteimprove/alfa-json";
 import { URL } from "@siteimprove/alfa-url";
+
 import { WithName } from "../../src/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
@@ -170,4 +172,45 @@ test(`evaluate() can't tell if two links that have the same name references
       ),
     ),
   ]);
+});
+
+test(`toJSON() with minimal verbosity produces target with correct serialization ids`, async (t) => {
+  const accessibleName = "Foo";
+
+  const elmId1 = crypto.randomUUID();
+  const elmId2 = crypto.randomUUID();
+
+  const target = [
+    <a href="foo.html" serializationId={elmId1}>
+      {accessibleName}
+    </a>,
+    <a href="foo.html" serializationId={elmId2}>
+      {accessibleName}
+    </a>,
+  ];
+
+  const document = h.document(target);
+
+  t.deepEqual(
+    (
+      await evaluate(
+        R41,
+        { document },
+        oracle({
+          "reference-equivalent-resources": false,
+        }),
+        { verbosity: Serializable.Verbosity.Minimal },
+      )
+    ).flatMap((foo) => foo.target),
+    [
+      {
+        type: "element",
+        serializationId: elmId1,
+      },
+      {
+        type: "element",
+        serializationId: elmId2,
+      },
+    ],
+  );
 });

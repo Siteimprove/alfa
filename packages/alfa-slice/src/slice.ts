@@ -18,7 +18,9 @@ const { compareComparable } = Comparable;
 /**
  * @public
  */
-export class Slice<T> implements Collection.Indexed<T> {
+export class Slice<T, O extends Serializable.Options = Serializable.Options>
+  implements Collection.Indexed<T, O>
+{
   public static of<T>(
     array: ReadonlyArray<T>,
     start: number = 0,
@@ -473,8 +475,8 @@ export class Slice<T> implements Collection.Indexed<T> {
     return this._array.slice(this._offset, this._offset + this._length);
   }
 
-  public toJSON(): Slice.JSON<T> {
-    return this.toArray().map((value) => Serializable.toJSON(value));
+  public toJSON(options?: O): Slice.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value, options));
   }
 
   public toString(): string {
