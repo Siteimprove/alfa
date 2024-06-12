@@ -44,7 +44,7 @@ export class Header
     );
   }
 
-  public toJSON(): Header.JSON {
+  public toJSON(options?: json.Serializable.Options): Header.JSON {
     return {
       name: this._name,
       value: this._value,

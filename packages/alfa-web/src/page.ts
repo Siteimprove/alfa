@@ -66,10 +66,10 @@ export class Page
 
   public toJSON(options?: Node.SerializationOptions): Page.JSON {
     return {
-      request: this._request.toJSON(),
-      response: this._response.toJSON(),
+      request: this._request.toJSON(options),
+      response: this._response.toJSON(options),
       document: this._document.toJSON(options ?? { device: this._device }),
-      device: this._device.toJSON(),
+      device: this._device.toJSON(options),
     };
   }
 

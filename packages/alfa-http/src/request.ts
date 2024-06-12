@@ -79,11 +79,11 @@ export class Request
     return this._body;
   }
 
-  public toJSON(): Request.JSON {
+  public toJSON(options?: json.Serializable.Options): Request.JSON {
     return {
       method: this._method,
       url: this._url.toString(),
-      headers: this._headers.toJSON(),
+      headers: this._headers.toJSON(options),
       body: Decoder.decode(new Uint8Array(this._body)),
     };
   }
