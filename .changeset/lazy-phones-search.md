@@ -18,4 +18,4 @@
 "@siteimprove/alfa-web": minor
 ---
 
-**Added:** Serialization options are now accepted and propageted through `toJSON()`.
+**Added:** Serialization options are now accepted, and passed on, by `toJSON()` on these types.
