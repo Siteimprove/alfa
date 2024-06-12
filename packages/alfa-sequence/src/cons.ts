@@ -24,7 +24,9 @@ const { compareComparable } = Comparable;
 /**
  * @public
  */
-export class Cons<T> implements Sequence<T> {
+export class Cons<T, O extends Serializable.Options = Serializable.Options>
+  implements Sequence<T, O>
+{
   public static of<T>(
     head: T,
     tail: Lazy<Sequence<T>> = Lazy.force(Nil),
@@ -790,13 +792,13 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public toJSON(): Cons.JSON<T> {
+  public toJSON(options?: O): Cons.JSON<T> {
     const json: Cons.JSON<T> = [];
 
     let next: Cons<T> = this;
 
     while (true) {
-      json.push(Serializable.toJSON(next._head));
+      json.push(Serializable.toJSON(next._head, options));
 
       const tail = next._tail.force();
 

@@ -19,15 +19,17 @@ import { Some } from "./some";
 /**
  * @public
  */
-export interface Option<T>
-  extends Functor<T>,
+export interface Option<
+  T,
+  O extends Serializable.Options = Serializable.Options,
+> extends Functor<T>,
     Applicative<T>,
     Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
     Hashable,
-    Serializable<Option.JSON<T>> {
+    Serializable<Option.JSON<T>, O> {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
@@ -67,7 +69,7 @@ export interface Option<T>
   compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
   compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
   toArray(): Array<T>;
-  toJSON(): Option.JSON<T>;
+  toJSON(options?: O): Option.JSON<T>;
 }
 
 /**

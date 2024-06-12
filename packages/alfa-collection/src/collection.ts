@@ -57,10 +57,13 @@ export interface Collection<T>
  * @public
  */
 export namespace Collection {
-  export interface Keyed<K, V>
-    extends Collection<V>,
+  export interface Keyed<
+    K,
+    V,
+    O extends Serializable.Options = Serializable.Options,
+  > extends Collection<V>,
       Iterable<[K, V]>,
-      Serializable<Keyed.JSON<K, V>> {
+      Serializable<Keyed.JSON<K, V>, O> {
     isEmpty(): this is Keyed<K, never>;
     forEach(callback: Callback<V, void, [key: K]>): void;
     map<U>(mapper: Mapper<V, U, [key: K]>): Keyed<K, U>;
@@ -103,10 +106,12 @@ export namespace Collection {
     >;
   }
 
-  export interface Unkeyed<T>
-    extends Collection<T>,
+  export interface Unkeyed<
+    T,
+    O extends Serializable.Options = Serializable.Options,
+  > extends Collection<T>,
       Iterable<T>,
-      Serializable<Unkeyed.JSON<T>> {
+      Serializable<Unkeyed.JSON<T>, O> {
     isEmpty(): this is Unkeyed<never>;
     forEach(callback: Callback<T>): void;
     map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
@@ -145,11 +150,13 @@ export namespace Collection {
     export type JSON<T> = Array<Serializable.ToJSON<T>>;
   }
 
-  export interface Indexed<T>
-    extends Collection<T>,
+  export interface Indexed<
+    T,
+    O extends Serializable.Options = Serializable.Options,
+  > extends Collection<T>,
       Iterable<T>,
       Comparable<Iterable<T>>,
-      Serializable<Indexed.JSON<T>> {
+      Serializable<Indexed.JSON<T>, O> {
     isEmpty(): this is Indexed<never>;
     forEach(callback: Callback<T, void, [index: number]>): void;
     map<U>(mapper: Mapper<T, U, [index: number]>): Indexed<U>;
