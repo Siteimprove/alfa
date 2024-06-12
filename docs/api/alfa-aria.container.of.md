@@ -14,7 +14,7 @@ static of(owner: dom.Node, children?: Iterable<Node>, role?: Option<Role>): Cont
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  owner | [dom.Node](./alfa-dom.node.md) |  |
+|  owner | dom.Node |  |
 |  children | Iterable&lt;Node&gt; | _(Optional)_ |
 |  role | Option&lt;Role&gt; | _(Optional)_ |
 

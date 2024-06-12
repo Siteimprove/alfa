@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Err.JSON<E>;
+toJSON(options?: O): Err.JSON<E>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Err.JSON](./alfa-result.err.json.md)<!-- -->&lt;E&gt;

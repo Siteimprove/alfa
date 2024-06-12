@@ -1,5 +1,15 @@
 # @siteimprove/alfa-rules
 
+## 0.82.0
+
+### Minor Changes
+
+- **Added:** Serialization options are now accepted, and passed on, by `toJSON()` on these types. ([#1622](https://github.com/Siteimprove/alfa/pull/1622))
+
+- **Added:** Verbosity option has been added to JSON serialization of alfa-tree `Node` and to `Outcome` and `Group`. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
+- **Breaking:** Node 18 is no longer supported. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
 ## 0.81.0
 
 ### Patch Changes

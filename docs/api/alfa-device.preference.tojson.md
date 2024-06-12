@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Preference.JSON<N>;
+toJSON(options?: json.Serializable.Options): Preference.JSON<N>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [json.Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+
 **Returns:**
 
 [Preference.JSON](./alfa-device.preference.json.md)<!-- -->&lt;N&gt;

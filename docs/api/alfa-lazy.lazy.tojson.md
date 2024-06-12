@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Lazy.JSON<T>;
+toJSON(options?: O): Lazy.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Lazy.JSON](./alfa-lazy.lazy.json.md)<!-- -->&lt;T&gt;

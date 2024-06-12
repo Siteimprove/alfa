@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Group.JSON<T>;
+toJSON(options?: json.Serializable.Options): Group.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [json.Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+
 **Returns:**
 
 [Group.JSON](./alfa-rules.group.json.md)<!-- -->&lt;T&gt;

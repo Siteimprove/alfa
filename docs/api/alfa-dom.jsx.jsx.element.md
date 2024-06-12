@@ -9,5 +9,5 @@
 ```typescript
 type Element<N extends string = string> = dom.Element<N>;
 ```
-**References:** [dom.Element](./alfa-dom.element.md)
+**References:** [dom.Element](./alfa-dom.element_2.md)
 

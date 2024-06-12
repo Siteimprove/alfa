@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Viewport.JSON;
+toJSON(options?: json.Serializable.Options): Viewport.JSON;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [json.Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+
 **Returns:**
 
 [Viewport.JSON](./alfa-device.viewport.json.md)

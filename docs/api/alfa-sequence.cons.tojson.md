@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Cons.JSON<T>;
+toJSON(options?: O): Cons.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Cons.JSON](./alfa-sequence.cons.json.md)<!-- -->&lt;T&gt;

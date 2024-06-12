@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Failed.JSON<T>;
+toJSON(options?: O): Failed.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Failed.JSON](./alfa-act.outcome.failed.json.md)<!-- -->&lt;T&gt;

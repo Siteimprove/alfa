@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Set.JSON<T>;
+toJSON(options?: O): Set.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Set.JSON](./alfa-set.set_2.json.md)<!-- -->&lt;T&gt;

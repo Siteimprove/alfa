@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function text(data: string, externalId?: string, extraData?: any): Text;
+function text(data: string, externalId?: string, serializationId?: string, extraData?: any): Text;
 ```
 
 ## Parameters
@@ -16,6 +16,7 @@ function text(data: string, externalId?: string, extraData?: any): Text;
 |  --- | --- | --- |
 |  data | string |  |
 |  externalId | string | _(Optional)_ |
+|  serializationId | string | _(Optional)_ |
 |  extraData | any | _(Optional)_ |
 
 **Returns:**

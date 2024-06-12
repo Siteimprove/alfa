@@ -12,17 +12,17 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 |  --- | --- |
 |  [Attribute](./alfa-aria.attribute.md) |  |
 |  [Container](./alfa-aria.container.md) |  |
-|  [Element](./alfa-aria.element.md) |  |
+|  [Element\_2](./alfa-aria.element_2.md) |  |
 |  [Inert](./alfa-aria.inert.md) |  |
 |  [Name](./alfa-aria.name.md) |  |
 |  [Role](./alfa-aria.role.md) |  |
-|  [Text](./alfa-aria.text.md) |  |
+|  [Text\_2](./alfa-aria.text_2.md) |  |
 
 ## Abstract Classes
 
 |  Abstract Class | Description |
 |  --- | --- |
-|  [Node](./alfa-aria.node.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
+|  [Node\_2](./alfa-aria.node_2.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
 
 ## Functions
 
@@ -35,7 +35,7 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 
 |  Interface | Description |
 |  --- | --- |
-|  [Node](./alfa-aria.node.md) |  |
+|  [Node\_2](./alfa-aria.node_2.md) |  |
 
 ## Namespaces
 
@@ -44,12 +44,12 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 |  [Attribute](./alfa-aria.attribute.md) |  |
 |  [Container](./alfa-aria.container.md) |  |
 |  [DOM](./alfa-aria.dom.md) | Helpers and Predicates for accessibility aspects of DOM objects |
-|  [Element](./alfa-aria.element.md) |  |
+|  [Element\_2](./alfa-aria.element_2.md) |  |
 |  [Name](./alfa-aria.name.md) |  |
-|  [Node](./alfa-aria.node.md) |  |
+|  [Node\_2](./alfa-aria.node_2.md) |  |
 |  [Role](./alfa-aria.role.md) |  |
 |  [Source](./alfa-aria.source.md) |  |
-|  [Text](./alfa-aria.text.md) |  |
+|  [Text\_2](./alfa-aria.text_2.md) |  |
 
 ## Type Aliases
 

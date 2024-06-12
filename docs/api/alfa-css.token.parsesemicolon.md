@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseSemicolon: Parser<Slice<Token>, Semicolon, string, []>
+parseSemicolon: Parser<Slice<Token, Serializable.Options>, Semicolon, string, []>
 ```

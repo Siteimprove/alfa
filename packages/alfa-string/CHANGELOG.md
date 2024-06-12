@@ -1,5 +1,11 @@
 # @siteimprove/alfa-string
 
+## 0.82.0
+
+### Minor Changes
+
+- **Breaking:** Node 18 is no longer supported. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
 ## 0.81.0
 
 ### Patch Changes

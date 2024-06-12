@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Scripting.JSON;
+toJSON(options?: json.Serializable.Options): Scripting.JSON;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [json.Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+
 **Returns:**
 
 [Scripting.JSON](./alfa-device.scripting.json.md)

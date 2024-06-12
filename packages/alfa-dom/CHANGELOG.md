@@ -1,5 +1,17 @@
 # @siteimprove/alfa-dom
 
+## 0.82.0
+
+### Minor Changes
+
+- **Added:** DOM node builders like `Element.of` etc. now optionally accept `serializationId` which will be used when serializing depending on the verbosity chosen. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
+  If one is not supplied it will be randomly generated as an UUID.
+
+- **Added:** Verbosity option has been added to JSON serialization of alfa-tree `Node` and to `Outcome` and `Group`. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
+- **Breaking:** Node 18 is no longer supported. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
 ## 0.81.0
 
 ### Patch Changes
