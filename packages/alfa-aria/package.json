@@ -11,11 +11,11 @@
     "directory": "packages/alfa-aria"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "scripts": {
     "generate": "node scripts/attributes.js && node scripts/roles.js && node scripts/name-testable-statements.js"

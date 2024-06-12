@@ -11,11 +11,11 @@
     "directory": "packages/alfa-collection"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "dependencies": {
     "@siteimprove/alfa-applicative": "workspace:^0.81.0",

@@ -11,13 +11,16 @@
     "directory": "packages/alfa-device"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./native": "./dist/native.js",
+    "./native.js": "./dist/native.js"
+  },
+  "types": "dist/index.d.ts",
   "files": [
-    "native.js",
-    "native.d.ts",
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "dependencies": {
     "@siteimprove/alfa-equatable": "workspace:^0.81.0",

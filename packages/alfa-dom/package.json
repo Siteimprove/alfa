@@ -20,8 +20,12 @@
     "./jsx.js": "./dist/jsx.js",
     "./jsx-runtime": "./dist/jsx-runtime.js",
     "./jsx-runtime.js": "./dist/jsx-runtime.js",
+    "./dist/jsx-runtime": "./dist/jsx-runtime.js",
+    "./dist/jsx-runtime.js": "./dist/jsx-runtime.js",
     "./native": "./dist/native.js",
-    "./native.js": "./dist/native.js"
+    "./native.js": "./dist/native.js",
+    "./dist/native": "./dist/native.js",
+    "./dist/native.js": "./dist/native.js"
   },
   "types": "dist/index.d.ts",
   "files": [
