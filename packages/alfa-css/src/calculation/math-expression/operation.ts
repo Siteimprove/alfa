@@ -307,7 +307,7 @@ export namespace Operation {
         return operand._operands[0];
       }
 
-      return Negate.of(operand);
+      return Invert.of(operand);
     }
 
     public toString(): string {
