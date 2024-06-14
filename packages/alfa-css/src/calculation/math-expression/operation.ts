@@ -235,32 +235,32 @@ export namespace Operation {
       );
 
       if (Value.isValueExpression(fst) && Value.isValueExpression(snd)) {
-        let multipler: number | undefined;
+        let multiplier: number | undefined;
         let value!: Numeric;
 
         if (isNumber(fst.value)) {
-          multipler = fst.value.value;
+          multiplier = fst.value.value;
           value = snd.value;
         } else if (isNumber(snd.value)) {
-          multipler = snd.value.value;
+          multiplier = snd.value.value;
           value = fst.value;
         }
 
-        if (multipler !== undefined) {
+        if (multiplier !== undefined) {
           if (isNumber(value)) {
-            return Value.of(Number.of(multipler * value.value));
+            return Value.of(Number.of(multiplier * value.value));
           }
 
           if (isPercentage(value)) {
-            return Value.of(Percentage.of(multipler * value.value));
+            return Value.of(Percentage.of(multiplier * value.value));
           }
 
           if (isLength(value)) {
-            return Value.of(Length.of(multipler * value.value, value.unit));
+            return Value.of(Length.of(multiplier * value.value, value.unit));
           }
 
           if (isAngle(value)) {
-            return Value.of(Angle.of(multipler * value.value, value.unit));
+            return Value.of(Angle.of(multiplier * value.value, value.unit));
           }
         }
       }
