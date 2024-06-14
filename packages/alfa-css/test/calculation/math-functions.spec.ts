@@ -144,3 +144,34 @@ test("parse() accept mixed max if they can combine", (t) => {
     });
   }
 });
+
+test("parse() parses division of dimensions", (t) => {
+  const calculation = parse("calc(1px / 2em)");
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "calculation",
+      arguments: [
+        {
+          type: "product",
+          operands: [
+            {
+              type: "value",
+              value: { value: 1, type: "length", unit: "px" },
+            },
+            {
+              type: "invert",
+              operands: [
+                {
+                  type: "value",
+                  value: { value: 2, type: "length", unit: "em" },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  });
+});
