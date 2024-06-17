@@ -33,7 +33,7 @@ export namespace Integer {
    * Integers that are the result of a calculation.
    */
   export class Calculated
-    extends Numeric.Calculated<"number">
+    extends Numeric.Calculated<"integer">
     implements Resolvable<Canonical, never>
   {
     public static of(value: Calculation<"number">): Calculated {
@@ -41,7 +41,7 @@ export namespace Integer {
     }
 
     private constructor(value: Calculation<"number">) {
-      super(value, "number");
+      super(value, "integer");
     }
 
     /**
@@ -76,14 +76,14 @@ export namespace Integer {
    * @public
    */
   export namespace Calculated {
-    export interface JSON extends Numeric.Calculated.JSON<"number"> {}
+    export interface JSON extends Numeric.Calculated.JSON<"integer"> {}
   }
 
   /**
    * Numbers that are a fixed (not calculated) value.
    */
   export class Fixed
-    extends Numeric.Fixed<"number">
+    extends Numeric.Fixed<"integer">
     implements Resolvable<Canonical, never>
   {
     /**
@@ -100,7 +100,7 @@ export namespace Integer {
     }
 
     private constructor(value: number) {
-      super(value, "number");
+      super(value, "integer");
     }
 
     public resolve(): this {
@@ -113,6 +113,10 @@ export namespace Integer {
 
     public scale(factor: number): Fixed {
       return new Fixed(this._value * factor);
+    }
+
+    public toBase(): BaseInteger {
+      return BaseInteger.of(this._value);
     }
 
     public equals(value: unknown): value is this {
@@ -132,7 +136,7 @@ export namespace Integer {
    * @public
    */
   export namespace Fixed {
-    export interface JSON extends Numeric.Fixed.JSON<"number"> {}
+    export interface JSON extends Numeric.Fixed.JSON<"integer"> {}
   }
 
   export function isCalculated(value: unknown): value is Calculated {
