@@ -234,35 +234,10 @@ export namespace Operation {
         operand.reduce(resolver),
       );
 
+      // Both operands are fully resolved values. If one of them is a number, we
+      // can resolve the other.
       if (Value.isValueExpression(fst) && Value.isValueExpression(snd)) {
-        let multiplier: number | undefined;
-        let value!: Numeric;
-
-        if (isNumber(fst.value)) {
-          multiplier = fst.value.value;
-          value = snd.value;
-        } else if (isNumber(snd.value)) {
-          multiplier = snd.value.value;
-          value = fst.value;
-        }
-
-        if (multiplier !== undefined) {
-          if (isNumber(value)) {
-            return Value.of(Number.of(multiplier * value.value));
-          }
-
-          if (isPercentage(value)) {
-            return Value.of(Percentage.of(multiplier * value.value));
-          }
-
-          if (isLength(value)) {
-            return Value.of(Length.of(multiplier * value.value, value.unit));
-          }
-
-          if (isAngle(value)) {
-            return Value.of(Angle.of(multiplier * value.value, value.unit));
-          }
-        }
+        return Product.ofValues(fst, snd);
       }
 
       return new Product([fst, snd], this._kind);
@@ -273,6 +248,66 @@ export namespace Operation {
 
       return `${fst} * ${snd}`;
     }
+  }
+
+  export namespace Product {
+    /**
+     * @internal
+     */
+    export function ofValues(
+      fst: Value<Numeric>,
+      snd: Value<Numeric>,
+    ): Expression {
+      let multiplier: number | undefined;
+      let value!: Numeric;
+
+      if (isNumber(fst.value)) {
+        multiplier = fst.value.value;
+        value = snd.value;
+      } else if (isNumber(snd.value)) {
+        multiplier = snd.value.value;
+        value = fst.value;
+      }
+
+      if (multiplier !== undefined) {
+        if (isNumber(value)) {
+          return Value.of(Number.of(multiplier * value.value));
+        }
+
+        if (isPercentage(value)) {
+          return Value.of(Percentage.of(multiplier * value.value));
+        }
+
+        if (isLength(value)) {
+          return Value.of(Length.of(multiplier * value.value, value.unit));
+        }
+
+        if (isAngle(value)) {
+          return Value.of(Angle.of(multiplier * value.value, value.unit));
+        }
+      }
+
+      return Product.of(fst, snd).getUnsafe();
+    }
+
+    /**
+     * @internal
+     */
+    // export function ofRatio<
+    //   L extends Unit.Length = "px",
+    //   P extends Numeric = Numeric,
+    // >(
+    //   numerator: Value<Numeric>,
+    //   denominator: Invert,
+    //   resolver: Expression.Resolver<L, P>,
+    // ): Expression {
+    //   const [ratio] = denominator.operands;
+    //
+    //   // If the denominator is a dimensionless number, it should already have
+    //   // been simplified. So we assume here that the denominator has dimension.
+    //   // If it is the same dimension as the numerator, we can simplify the ratio
+    //   // to a number.
+    // }
   }
 
   export function isProductExpression(value: unknown): value is Product {

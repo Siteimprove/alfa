@@ -10,6 +10,7 @@ import {
   Token,
   type Parser as CSSParser,
 } from "../../syntax";
+import type { Unit } from "../../unit";
 
 import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
@@ -39,7 +40,7 @@ const {
 export class Math<out D extends Math.Dimension = Math.Dimension> {
   public static of(expression: Expression): Math {
     return new Math(
-      expression.reduce({
+      expression.reduce<Unit.Length>({
         length: (value) => value,
         percentage: (value) => value,
       }),
@@ -108,37 +109,47 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
    * Resolves a calculation typed as an angle, length, length-percentage or number.
    * Needs a resolver to handle relative lengths and percentages.
    */
-  public resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
+  public resolve(
+    this: Math<"angle">,
+    resolver?: Expression.GenericResolver,
+  ): Result<Angle<"deg">, string>;
 
   public resolve(
     this: Math<"angle-percentage">,
-    resolver: Expression.PercentageResolver<Angle<"deg">>,
+    resolver?: Expression.PercentageResolver<Angle<"deg">> &
+      Expression.GenericResolver,
   ): Result<Angle<"deg">, string>;
 
   public resolve(
     this: Math<"length">,
-    resolver: Expression.LengthResolver,
+    resolver: Expression.LengthResolver & Expression.GenericResolver,
   ): Result<Length<"px">, string>;
 
   public resolve(
     this: Math<"length-percentage">,
-    resolver: Expression.Resolver<"px", Length<"px">>,
+    resolver: Expression.Resolver<"px", Length<"px">> &
+      Expression.GenericResolver,
   ): Result<Length<"px">, string>;
 
-  public resolve(this: Math<"number">): Result<Number, string>;
+  public resolve(
+    this: Math<"number">,
+    resolver?: Expression.GenericResolver,
+  ): Result<Number, string>;
 
   public resolve<T extends Numeric = Percentage>(
     this: Math<"percentage">,
-    resolver?: Expression.PercentageResolver<T>,
+    resolver?: Expression.PercentageResolver<T> & Expression.GenericResolver,
     hint?: T extends Angle ? "angle" : "length",
   ): Result<T, string>;
 
   public resolve<T extends Numeric>(
     this: Math,
-    resolver?:
+    resolver?: (
       | Expression.LengthResolver
       | Expression.Resolver<"px", Length<"px">>
-      | Expression.PercentageResolver<T>,
+      | Expression.PercentageResolver<T>
+    ) &
+      Expression.GenericResolver,
     hint?: T extends Angle ? "angle" : "length",
   ): Result<Numeric, string> {
     // Since the expressions can theoretically contain arbitrarily units in them,
@@ -181,11 +192,11 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
         ? // angle are also angle-percentage, so this catches both.
           expression.toAngle()
         : this.isDimensionPercentage("length")
-        ? // length are also length-percentage, so this catches both.
-          expression.toLength()
-        : this.isNumber()
-        ? expression.toNumber()
-        : Err.of(`${this} does not resolve to a valid expression`);
+          ? // length are also length-percentage, so this catches both.
+            expression.toLength()
+          : this.isNumber()
+            ? expression.toNumber()
+            : Err.of(`${this} does not resolve to a valid expression`);
     } catch (e) {
       if (e instanceof Error) {
         return Err.of(e.message);

@@ -84,13 +84,28 @@ export namespace Expression {
   /**
    * Absolute units can be resolved automatically.
    * Relative lengths and percentages need some help.
+   */
+
+  /**
+   * Length may appear in any expression if they are cancelled out by division
+   * ("1em / 1px" is a number), so we always accept a length resolver.
    *
+   * @internal
+   */
+  export interface GenericResolver<L extends Unit.Length = "px"> {
+    length?(value: Length<Unit.Length.Relative>): Length<L>;
+  }
+
+  /**
    * @internal
    */
   export interface LengthResolver<L extends Unit.Length = "px"> {
     length(value: Length<Unit.Length.Relative>): Length<L>;
   }
 
+  /**
+   * @internal
+   */
   export interface PercentageResolver<P extends Numeric = Numeric> {
     percentage(value: Percentage): P;
   }
