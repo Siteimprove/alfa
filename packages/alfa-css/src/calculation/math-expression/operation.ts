@@ -240,6 +240,18 @@ export namespace Operation {
         return Product.ofValues(fst, snd);
       }
 
+      // One operand is a value, the other is an Invert. We might be able to
+      // reduce the fraction if the dimensions match.
+      // When the denominator is a dimensionless number, it should already have
+      // been reduced.
+      if (Value.isValueExpression(fst) && isInvertExpression(snd)) {
+        return Product.ofRatio(fst, snd, resolver);
+      }
+
+      if (isInvertExpression(fst) && Value.isValueExpression(snd)) {
+        return Product.ofRatio(snd, fst, resolver);
+      }
+
       return new Product([fst, snd], this._kind);
     }
 
@@ -291,23 +303,52 @@ export namespace Operation {
     }
 
     /**
+     * @remarks
+     * If the denominator is a dimensionless number, it should already have
+     * been simplified. So we assume here that the denominator has dimension.
+     *  If it is the same dimension as the numerator, we can simplify the ratio
+     *  to a number.
+     *
      * @internal
      */
-    // export function ofRatio<
-    //   L extends Unit.Length = "px",
-    //   P extends Numeric = Numeric,
-    // >(
-    //   numerator: Value<Numeric>,
-    //   denominator: Invert,
-    //   resolver: Expression.Resolver<L, P>,
-    // ): Expression {
-    //   const [ratio] = denominator.operands;
-    //
-    //   // If the denominator is a dimensionless number, it should already have
-    //   // been simplified. So we assume here that the denominator has dimension.
-    //   // If it is the same dimension as the numerator, we can simplify the ratio
-    //   // to a number.
-    // }
+    export function ofRatio<
+      L extends Unit.Length = "px",
+      P extends Numeric = Numeric,
+    >(
+      numerator: Value<Numeric>,
+      denominator: Invert,
+      resolver: Expression.Resolver<L, P>,
+    ): Expression {
+      const num = numerator.value;
+      const [y] = denominator.operands;
+
+      if (Value.isValueExpression(y)) {
+        const den = y.value;
+
+        if (isLength(num) && isLength(den)) {
+          // If we have a resolver that correctly handles both units, we can
+          // reduce the fraction.
+          const [numR, denR] = [num, den].map(
+            Value.lengthResolver(resolver.length),
+          );
+
+          if (numR.unit === denR.unit) {
+            return Value.of(Number.of(numR.value / denR.value));
+          }
+        }
+
+        if (isAngle(num) && isAngle(den)) {
+          // Angles can always be resolved.
+          return Value.of(
+            Number.of(
+              Value.angleResolver(num).value / Value.angleResolver(den).value,
+            ),
+          );
+        }
+      }
+
+      return Product.of(numerator, denominator).getUnsafe();
+    }
   }
 
   export function isProductExpression(value: unknown): value is Product {
