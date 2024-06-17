@@ -115,6 +115,9 @@ export namespace Integer {
       return new Fixed(this._value * factor);
     }
 
+    /**
+     * @internal
+     */
     public toBase(): BaseInteger {
       return BaseInteger.of(this._value);
     }

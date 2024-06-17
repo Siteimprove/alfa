@@ -147,6 +147,13 @@ export namespace Length {
       return this.isRelative() ? resolver.length(this) : this.withUnit("px");
     }
 
+    /**
+     * @internal
+     */
+    public toBase(): BaseLength<U> {
+      return BaseLength.of(this._value, this._unit);
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof Fixed && super.equals(value);
     }

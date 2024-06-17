@@ -98,6 +98,13 @@ export namespace Number {
       return new Fixed(this._value * factor);
     }
 
+    /**
+     * @internal
+     */
+    public toBase(): BaseNumber {
+      return BaseNumber.of(this._value);
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof Fixed && super.equals(value);
     }

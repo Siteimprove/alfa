@@ -116,6 +116,13 @@ export namespace Numeric {
       return this._value === 0;
     }
 
+    /**
+     * @internal
+     */
+    public abstract toBase(): BaseNumeric<
+      T extends `${infer U}-percentage` ? never : T
+    >;
+
     public equals(value: unknown): value is this {
       return value instanceof Fixed && value._value === this._value;
     }

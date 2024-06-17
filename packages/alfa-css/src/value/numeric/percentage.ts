@@ -170,6 +170,13 @@ export namespace Percentage {
       return new Fixed(this._value * factor);
     }
 
+    /**
+     * @internal
+     */
+    public toBase(): BasePercentage {
+      return BasePercentage.of(this._value);
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof Fixed && super.equals(value);
     }

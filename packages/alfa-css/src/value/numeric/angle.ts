@@ -123,6 +123,13 @@ export namespace Angle {
       return this.withUnit("deg");
     }
 
+    /**
+     * @internal
+     */
+    public toBase(): BaseAngle<U> {
+      return BaseAngle.of(this._value, this._unit);
+    }
+
     public equals(value: unknown): value is this {
       return value instanceof Fixed && super.equals(value);
     }
