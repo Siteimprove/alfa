@@ -69,15 +69,10 @@ export namespace LengthPercentage {
           // them from further layers, so the resolver here is only aware of
           // Length and Percentage, and we need to translate back and forth.
           .resolve({
-            length: (length) => {
-              const resolved = resolver.length(Length.Fixed.of(length));
-              return Base.Length.of(resolved.value, resolved.unit);
-            },
+            length: (length) =>
+              resolver.length(Length.Fixed.of(length)).toBase(),
             percentage: (value) =>
-              Base.Length.of(
-                resolver.percentageBase.value,
-                /* this is "px"! */ resolver.percentageBase.unit,
-              ).scale(value.value),
+              resolver.percentageBase.toBase().scale(value.value),
           })
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as a length`),
@@ -135,11 +130,12 @@ export namespace LengthPercentage {
    *
    * @remarks
    * For many style properties, the percentages are resolved depending on the
-   * dimensions of the box, which we do not always have. In this case, we cannot
-   * resolve the percentage parts, but we can still fully resolve the length parts.
-   * Calculated percentages cannot be fully resolved into a canonical length, but
-   * we can nonetheless reduce them to a pure percentage. However, mixed
-   * calculations have to stay as they are.
+   * dimensions of the box, which we do not always have. In this case, we
+   *   cannot
+   * resolve the percentage parts, but we can still fully resolve the length
+   *   parts. Calculated percentages cannot be fully resolved into a canonical
+   *   length, but we can nonetheless reduce them to a pure percentage.
+   *   However, mixed calculations have to stay as they are.
    */
   export function partiallyResolve(
     resolver: PartialResolver,

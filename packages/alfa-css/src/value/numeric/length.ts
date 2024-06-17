@@ -55,10 +55,7 @@ export namespace Length {
             // work with these, but we want to abstract them from further layers,
             // so the resolver here is only aware of Length, and we need to
             // translate back and forth.
-            length: (length) => {
-              const resolved = resolver.length(Fixed.of(length));
-              return BaseLength.of(resolved.value, resolved.unit);
-            },
+            length: (length) => resolver.length(Fixed.of(length)).toBase(),
           })
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as a length`),
