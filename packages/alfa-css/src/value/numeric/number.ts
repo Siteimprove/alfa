@@ -42,7 +42,7 @@ export namespace Number {
       super(value, "number");
     }
 
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
           .resolve()

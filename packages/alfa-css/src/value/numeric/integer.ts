@@ -50,7 +50,7 @@ export namespace Integer {
      *
      * {@link https://drafts.csswg.org/css-values/#calc-type-checking}
      */
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
           .resolve()

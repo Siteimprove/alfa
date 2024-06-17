@@ -82,10 +82,12 @@ export namespace Percentage {
 
     public resolve(): Fixed<H>;
 
-    public resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
+    public resolve<T extends Canonicals[H]>(
+      resolver: Resolver<H> & Numeric.GenericResolver,
+    ): T;
 
     public resolve<T extends Canonicals[H]>(
-      resolver?: Resolver<H>,
+      resolver?: Resolver<H> & Numeric.GenericResolver,
     ): Fixed<H> | T {
       const percentage = Fixed.of<H>(
         this._math
@@ -149,10 +151,12 @@ export namespace Percentage {
 
     public resolve(): Canonical;
 
-    public resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
+    public resolve<T extends Canonicals[H]>(
+      resolver: Resolver<H> & Numeric.GenericResolver,
+    ): T;
 
     public resolve<T extends Canonicals[H]>(
-      resolver?: Resolver<H>,
+      resolver?: Resolver<H> & Numeric.GenericResolver,
     ): Canonical | T {
       return resolver === undefined
         ? (this as Canonical)

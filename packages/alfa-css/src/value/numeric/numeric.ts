@@ -8,6 +8,7 @@ import { Numeric as BaseNumeric } from "../../calculation/numeric";
 
 import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
+import type { Length } from "./length";
 
 /**
  * @public
@@ -54,7 +55,7 @@ export namespace Numeric {
       return true;
     }
 
-    public abstract resolve(resolver?: unknown): Fixed<R>;
+    public abstract resolve(resolver?: GenericResolver): Fixed<R>;
 
     public equals(value: unknown): value is this {
       return value instanceof Calculated && value._math.equals(this._math);
@@ -157,6 +158,14 @@ export namespace Numeric {
   }
 
   export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
+
+  /**
+   * A length resolver may be needed even for non-length calculation due to
+   * division cancelling units.
+   *
+   * @internal
+   */
+  export type GenericResolver = Partial<Length.Resolver>;
 
   export function isCalculated(value: unknown): value is Calculated {
     return value instanceof Calculated;

@@ -11,6 +11,7 @@ import { Converter, Unit } from "../../unit";
 import { Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
+import type { Numeric } from "./numeric";
 
 const { either, map } = Parser;
 
@@ -46,7 +47,7 @@ export namespace Length {
       return true;
     }
 
-    public resolve(resolver: Resolver): Canonical {
+    public resolve(resolver: Resolver & Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
           .resolve({

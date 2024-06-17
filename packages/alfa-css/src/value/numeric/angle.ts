@@ -10,6 +10,7 @@ import { Converter, Unit } from "../../unit";
 import { Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
+import type { Numeric } from "./numeric";
 
 const { either, map } = Parser;
 
@@ -51,7 +52,7 @@ export namespace Angle {
       return true;
     }
 
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
           .resolve()

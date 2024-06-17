@@ -243,7 +243,9 @@ export namespace Operation {
       // One operand is a value, the other is an Invert. We might be able to
       // reduce the fraction if the dimensions match.
       // When the denominator is a dimensionless number, it should already have
-      // been reduced.
+      // been reduced, so it is not handled here.
+      // This is not very clever in trying permutations. So, it can resolve
+      // "1px * (1/2px) * 1deg" but not "1px * 1deg * (1/2px)".
       if (Value.isValueExpression(fst) && isInvertExpression(snd)) {
         return Product.ofRatio(fst, snd, resolver);
       }

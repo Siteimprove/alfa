@@ -11,6 +11,7 @@ import type { PartiallyResolvable, Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
 import { Length } from "./length";
+import type { Numeric } from "./numeric";
 import { Percentage } from "./percentage";
 
 const { either, map } = Parser;
@@ -60,7 +61,7 @@ export namespace LengthPercentage {
       return true;
     }
 
-    public resolve(resolver: Resolver): Canonical {
+    public resolve(resolver: Resolver & Numeric.GenericResolver): Canonical {
       return Length.Fixed.of(
         this._math
           // The math expression resolver is only aware of BaseLength and
@@ -118,7 +119,7 @@ export namespace LengthPercentage {
    * Fully resolves a length-percentage, when a full resolver is provided.
    */
   export function resolve(
-    resolver: Resolver,
+    resolver: Resolver & Numeric.GenericResolver,
   ): (value: LengthPercentage) => Canonical {
     return (value) =>
       // We need to break down the union to help TS find the correct overload
