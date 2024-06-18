@@ -48,22 +48,11 @@ export class Style implements Serializable<Style.JSON> {
     styleDeclarations: Iterable<[Declaration, Origin]>,
     device: Device,
     parent: Option<Style> = None,
-    debug = false,
   ): Style {
-    const show = debug ? console.log : () => {};
-    const showAll = debug ? console.dir : () => {};
-
     // declarations are read twice, once for variables and once for properties,
     // so we cannot use a read-once iterable. Main use case from `Style.from`
     // is already sending an Array, so this is inexpensive
     const declarations = Array.from(styleDeclarations);
-
-    show(`Got ${declarations.length} declarations`);
-    for (const [declaration, origin] of declarations) {
-      if (declaration.name === "font-size") {
-        showAll(declaration.toJSON());
-      }
-    }
 
     /**
      * First pass, substitute all variables by their definition
@@ -142,9 +131,6 @@ export class Style implements Serializable<Style.JSON> {
       origin: Origin,
       parsed: boolean,
     ): void {
-      const show = debug && name === "font-size" ? console.log : () => {};
-      const showAll = debug && name === "font-size" ? console.dir : () => {};
-
       // If the property has been reverted to User Agent origin,
       // discard any Author declaration.
       if (reverted.has(name) && Origin.isAuthor(origin)) {
@@ -160,16 +146,12 @@ export class Style implements Serializable<Style.JSON> {
           // Type is ensured by the overload.
           return registerParsed(name, value as Style.Declared<N>, declaration);
         } else {
-          show(`Registering ${value}`);
           for (const result of parseLonghand(
             Longhands.get(name),
             // Type is ensured by the overload.
             value as string,
             variables,
-            debug && name === "font-size",
           )) {
-            show(`Result: ${result}`);
-            showAll(result.toJSON());
             registerParsed(name, result, declaration);
           }
         }
@@ -381,7 +363,6 @@ export namespace Style {
     element: Element,
     device: Device,
     context: Context = Context.empty(),
-    debug = false,
   ): Style {
     return cache
       .get(device, Cache.empty)
@@ -442,7 +423,6 @@ export namespace Style {
             .parent(Node.flatTree)
             .filter(Element.isElement)
             .map((parent) => from(parent, device, context)),
-          debug,
         );
       });
   }
