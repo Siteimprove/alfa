@@ -6,7 +6,7 @@ import * as Base from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
+import type { Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
 import { Angle } from "./angle";
