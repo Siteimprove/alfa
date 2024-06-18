@@ -166,37 +166,18 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
         length: () => {
           throw new Error(`Missing length resolver for ${this}`);
         },
-        // If the expression is a percentage and we can't resolve percentages,
+        // If the expression is a percentage, and we can't resolve percentages,
         // we keep them as percentages.
         percentage: (p) => p,
         ...resolver,
       });
 
-      // Pure percentages can be resolved as any dimension (or stay as percentage)
-      // We need a hint, provided by the context, in order to know what type of
-      // value to convert to afterward.
-      if (this.isPercentage()) {
-        const converters = {
-          angle: "toAngle",
-          length: "toLength",
-        } as const;
-        // If no resolver was provided, percentages must stay as percentages
-        return expression[
-          resolver === undefined || hint === undefined
-            ? "toPercentage"
-            : converters[hint]
-        ]();
-      }
-
-      return this.isDimensionPercentage("angle")
-        ? // angle are also angle-percentage, so this catches both.
-          expression.toAngle()
-        : this.isDimensionPercentage("length")
-          ? // length are also length-percentage, so this catches both.
-            expression.toLength()
-          : this.isNumber()
-            ? expression.toNumber()
-            : Err.of(`${this} does not resolve to a valid expression`);
+      return expression
+        .toAngle()
+        .orElse(expression.toLength.bind(expression))
+        .orElse(expression.toNumber.bind(expression))
+        .orElse(expression.toPercentage.bind(expression))
+        .or(Err.of(`${this} does not resolve to a valid expression`));
     } catch (e) {
       if (e instanceof Error) {
         return Err.of(e.message);
