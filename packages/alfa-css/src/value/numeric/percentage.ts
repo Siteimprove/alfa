@@ -1,9 +1,14 @@
 import { Parser } from "@siteimprove/alfa-parser";
+import type { Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
+import { type Expression, Math } from "../../calculation";
 import {
+  Angle as BaseAngle,
+  Integer as BaseInteger,
+  Length as BaseLength,
+  Number as BaseNumber,
   Numeric as BaseNumeric,
   Percentage as BasePercentage,
 } from "../../calculation/numeric";
@@ -12,10 +17,10 @@ import { Token } from "../../syntax";
 
 import { PartiallyResolvable, Resolvable } from "../resolvable";
 
-import type { Angle } from "./angle";
-import type { Integer } from "./integer";
-import type { Length } from "./length";
-import type { Number } from "./number";
+import { Angle } from "./angle";
+import { Integer } from "./integer";
+import { Length } from "./length";
+import { Number } from "./number";
 import { Numeric } from "./numeric";
 
 const { either, map } = Parser;
@@ -30,15 +35,16 @@ const { either, map } = Parser;
  *
  * The Percentage type contains a type hint, H, that indicate into which type
  * this is intended to resolve. This is normally known at parse time (i.e., is
- * it a length?) This is only stored in the type and does not have any effect on
+ * it a length?) This is only stored in the type and does not have any effect
+ *   on
  * the computation.
  *
  * Calculated percentages can be partially resolved in the absence of a base,
  * they are then turned into a Fixed percentage with the same hint.
  *
- * Percentages that represent percentages (e.g., RGB components) are special kids
- * in the sense that their partial and full resolution are the same. This
- * requires resolve() to accept zero argument (no resolver) for them.
+ * Percentages that represent percentages (e.g., RGB components) are special
+ *   kids in the sense that their partial and full resolution are the same.
+ *   This requires resolve() to accept zero argument (no resolver) for them.
  *
  * @public
  */
@@ -87,28 +93,56 @@ export namespace Percentage {
     ): T;
 
     public resolve<T extends Canonicals[H]>(
-      resolver?: Resolver<H> & Numeric.GenericResolver,
+      resolver?: Partial<Resolver<H>> & Numeric.GenericResolver,
     ): Fixed<H> | T {
-      const percentage = Fixed.of<H>(
-        this._math
-          .resolve()
-          // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not fully resolve ${this} as a percentage`),
-      );
-      return resolver === undefined
-        ? percentage
-        : // since we don't know much about percentageBase, scale defaults to
-          // the abstract one on Numeric and loses its actual type which needs
-          // to be asserted again.
-          (resolver.percentageBase.scale(percentage.value) as T);
+      if (resolver === undefined) {
+        return Fixed.of<H>(
+          this._math
+            .resolve()
+            // Since the expression has been correctly typed, it should always resolve.
+            .getUnsafe(`Could not fully resolve ${this} as a percentage`),
+        );
+      }
+
+      const baseResolver: Expression.PercentageResolver &
+        Expression.GenericResolver = {
+        percentage: (value) => value,
+        ...toExpressionResolver(resolver),
+        ...Length.toExpressionResolver(resolver),
+      };
+
+      return (
+        Selective.of(
+          this._math
+            .resolve(baseResolver)
+            // Since the expression has been correctly typed, it should always resolve.
+            .getUnsafe(`Could not fully resolve ${this} as a percentage`),
+        )
+          .if(BaseAngle.isAngle, Angle.Fixed.of)
+          .if(BaseInteger.isInteger, Integer.Fixed.of)
+          .if(BaseLength.isLength, Length.Fixed.of)
+          .if(BaseNumber.isNumber, Number.Fixed.of) as Selective<BaseNumeric, T>
+      )
+        .else((value) => Fixed.of(value as BasePercentage) as Fixed<H>)
+        .get();
     }
 
-    public partiallyResolve(): PartiallyResolved<H> {
+    public partiallyResolve(
+      resolver?: Numeric.GenericResolver,
+    ): PartiallyResolved<H> {
+      const baseResolver: Expression.PercentageResolver &
+        Expression.GenericResolver = {
+        percentage: (value) => value,
+        ...Length.toExpressionResolver(resolver),
+      };
+
       return Fixed.of<H>(
         this._math
-          .resolve()
+          .resolve(baseResolver)
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not resolve ${this} as a percentage`),
+          .getUnsafe(
+            `Could not resolve ${this} as a percentage`,
+          ) as BasePercentage,
       );
     }
 
@@ -149,16 +183,18 @@ export namespace Percentage {
       super(value, "percentage");
     }
 
-    public resolve(): Canonical;
-
     public resolve<T extends Canonicals[H]>(
       resolver: Resolver<H> & Numeric.GenericResolver,
     ): T;
 
+    public resolve(
+      resolver?: Partial<Resolver<H> & Numeric.GenericResolver>,
+    ): Canonical;
+
     public resolve<T extends Canonicals[H]>(
-      resolver?: Resolver<H> & Numeric.GenericResolver,
+      resolver?: Partial<Resolver<H>> & Numeric.GenericResolver,
     ): Canonical | T {
-      return resolver === undefined
+      return resolver?.percentageBase === undefined
         ? (this as Canonical)
         : // since we don't know much about percentageBase, scale defaults to
           // the abstract one on Numeric and loses its actual type which needs
@@ -204,6 +240,32 @@ export namespace Percentage {
   export type Resolver<H extends BaseNumeric.Type> = H extends "percentage"
     ? never
     : { percentageBase: Canonicals[H] };
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver<H extends BaseNumeric.Type>(
+    resolver: Resolver<H>,
+  ): Expression.PercentageResolver;
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver(resolver: any): {};
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver<H extends BaseNumeric.Type>(
+    resolver?: Partial<Resolver<H>>,
+  ): Partial<Expression.PercentageResolver> {
+    return resolver?.percentageBase === undefined
+      ? {}
+      : {
+          percentage: (value) =>
+            resolver.percentageBase!.toBase().scale(value.value),
+        };
+  }
 
   export type PartialResolver = never;
 

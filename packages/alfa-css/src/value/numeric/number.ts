@@ -52,8 +52,8 @@ export namespace Number {
       );
     }
 
-    public partiallyResolve(): Canonical {
-      return this.resolve();
+    public partiallyResolve(resolver?: Numeric.GenericResolver): Canonical {
+      return this.resolve(resolver);
     }
 
     public equals(value: unknown): value is this {

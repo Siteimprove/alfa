@@ -182,11 +182,6 @@ export namespace Length {
   /**
    * @internal
    */
-  export function toExpressionResolver(): {};
-
-  /**
-   * @internal
-   */
   export function toExpressionResolver(
     resolver?: Partial<Resolver>,
   ): Partial<Expression.LengthResolver> {

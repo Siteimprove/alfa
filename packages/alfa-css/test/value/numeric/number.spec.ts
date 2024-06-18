@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Number } from "../../../src";
+import { Length, Number } from "../../../src";
 
 import { parser, serializer } from "../../common/parse";
 
@@ -38,4 +38,23 @@ test("resolve() returns a bare value", (t) => {
     type: "number",
     value: 42,
   });
+});
+
+test("resolve() accepts dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc((1turn / 180deg) + (8px / 1em)")
+      .getUnsafe()
+      .resolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    { type: "number", value: 2.5 },
+  );
 });
