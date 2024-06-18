@@ -63,10 +63,11 @@ export namespace Unit {
     /**
      * {@link https://drafts.csswg.org/css-values/#lengths}
      */
-    export type Canonical = "px";
+    export const Canonical = "px";
+    export type Canonical = typeof Canonical;
 
     export function isCanonical(unit: string): unit is Canonical {
-      return unit === "px";
+      return unit === Canonical;
     }
 
     /**
@@ -110,10 +111,11 @@ export namespace Unit {
     /**
      * {@link https://drafts.csswg.org/css-values/#angles}
      */
-    export type Canonical = "deg";
+    export const Canonical = "deg";
+    export type Canonical = typeof Canonical;
 
     export function isCanonical(unit: string): unit is Canonical {
-      return unit === "deg";
+      return unit === Canonical;
     }
   }
 
@@ -138,10 +140,11 @@ export namespace Unit {
     /**
      * {@link https://drafts.csswg.org/css-values/#time}
      */
-    export type Canonical = "s";
+    export const Canonical = "s";
+    export type Canonical = typeof Canonical;
 
     export function isCanonical(unit: string): unit is Canonical {
-      return unit === "s";
+      return unit === Canonical;
     }
   }
 
@@ -164,10 +167,11 @@ export namespace Unit {
     /**
      * {@link https://drafts.csswg.org/css-values/#frequency}
      */
-    export type Canonical = "hz";
+    export const Canonical = "hz";
+    export type Canonical = typeof Canonical;
 
     export function isCanonical(unit: string): unit is Canonical {
-      return unit === "hz";
+      return unit === Canonical;
     }
   }
 
@@ -190,10 +194,11 @@ export namespace Unit {
     /**
      * {@link https://drafts.csswg.org/css-values/#resolution}
      */
-    export type Canonical = "dppx";
+    export const Canonical = "dppx";
+    export type Canonical = typeof Canonical;
 
     export function isCanonical(unit: string): unit is Canonical {
-      return unit === "dppx";
+      return unit === Canonical;
     }
   }
 
