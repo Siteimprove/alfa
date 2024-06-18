@@ -3,6 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
 import { type Parser as CSSParser, Token } from "../syntax";
+import { Unit } from "../unit";
 
 import { Color } from "./color";
 import { Keyword } from "./keyword";
@@ -261,8 +262,8 @@ export namespace Shadow {
         Shadow.of(
           horizontal,
           vertical,
-          blur ?? Length.of(0, "px"),
-          spread ?? Length.of(0, "px"),
+          blur ?? Length.of(0, Unit.Length.Canonical),
+          spread ?? Length.of(0, Unit.Length.Canonical),
           color ?? Keyword.of("currentcolor"),
           isInset ?? false,
         ),

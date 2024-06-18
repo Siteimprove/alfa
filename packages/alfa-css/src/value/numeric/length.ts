@@ -26,7 +26,7 @@ export type Length<U extends Unit.Length = Unit.Length> =
  * @public
  */
 export namespace Length {
-  export type Canonical = Fixed<"px">;
+  export type Canonical = Fixed<Unit.Length.Canonical>;
 
   /**
    * Lengths that are the result of a calculation.
@@ -136,7 +136,9 @@ export namespace Length {
      * Resolve a Length into an absolute Length in pixels.
      */
     public resolve(resolver: Resolver): Canonical {
-      return this.isRelative() ? resolver.length(this) : this.withUnit("px");
+      return this.isRelative()
+        ? resolver.length(this)
+        : this.withUnit(Unit.Length.Canonical);
     }
 
     /**

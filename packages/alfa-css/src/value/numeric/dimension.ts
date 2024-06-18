@@ -5,7 +5,7 @@ import {
   Dimension as BaseDimension,
   Numeric as BaseNumeric,
 } from "../../calculation/numeric";
-import { Convertible } from "../../unit";
+import { Convertible, Unit } from "../../unit";
 
 import type { PartiallyResolvable, Resolvable } from "../resolvable";
 
@@ -80,7 +80,9 @@ export namespace Dimension {
      */
     public get canonicalUnit(): ToCanonicalUnit[T] {
       // The this.type test does not correctly narrow T, so we need to force typing.
-      return (this.type === "angle" ? "deg" : "px") as ToCanonicalUnit[T];
+      return (
+        this.type === "angle" ? Unit.Angle.Canonical : Unit.Length.Canonical
+      ) as ToCanonicalUnit[T];
     }
 
     public abstract hasUnit<V extends BaseDimension.ToUnit[T]>(
@@ -156,4 +158,7 @@ type ToBase = {
   length: "length";
   "length-percentage": "length";
 };
-type ToCanonicalUnit = { angle: "deg"; length: "px" };
+type ToCanonicalUnit = {
+  angle: Unit.Angle.Canonical;
+  length: Unit.Length.Canonical;
+};
