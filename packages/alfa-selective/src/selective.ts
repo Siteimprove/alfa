@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import type { Callback } from "@siteimprove/alfa-callback";
 import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -125,15 +126,28 @@ export class Selective<S, T = never>
   }
 
   /**
-   * Ensure that this {@link (Selective:class)} is exhaustively matched, returning
-   * its resulting value.
+   * Ensure that this {@link (Selective:class)} is exhaustively matched,
+   * returning its resulting value.
    *
    * @remarks
-   * This method should only be used for cases where {@link (Selective:class).get}
-   * is insufficient. If in doubt, assume that it isn't.
+   * This method should only be used for cases where
+   *   {@link (Selective:class).get} is insufficient. If in doubt, assume that
+   *   it isn't.
    */
   public exhaust<T>(this: Selective<never, T>): T {
     return this.get();
+  }
+
+  public tee<A extends Array<unknown> = []>(
+    left: Callback<S, void, A>,
+    right: Callback<T, void, A>,
+    ...args: A
+  ): this {
+    this._value.either(
+      (value) => left(value, ...args),
+      (value) => right(value, ...args),
+    );
+    return this;
   }
 
   public equals<S, T>(value: Selective<S, T>): boolean;
