@@ -3,8 +3,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import { Length as BaseLength } from "../../calculation/numeric";
+import { type Expression, Length as BaseLength, Math } from "../../calculation";
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 
@@ -50,13 +49,7 @@ export namespace Length {
     public resolve(resolver: Resolver & Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
-          .resolve({
-            // The math expression resolver is only aware of BaseLength and thus
-            // work with these, but we want to abstract them from further layers,
-            // so the resolver here is only aware of Length, and we need to
-            // translate back and forth.
-            length: (length) => resolver.length(Fixed.of(length)).toBase(),
-          })
+          .resolve(toExpressionResolver(resolver))
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as a length`),
       );
@@ -171,6 +164,34 @@ export namespace Length {
   // a relative length.
   export interface Resolver {
     length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+  }
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver(
+    resolver: Resolver,
+  ): Expression.LengthResolver;
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver(resolver: any): {};
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver(): {};
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver(
+    resolver?: Partial<Resolver>,
+  ): Partial<Expression.LengthResolver> {
+    return resolver?.length === undefined
+      ? {}
+      : { length: (length) => resolver.length!(Fixed.of(length)).toBase() };
   }
 
   /**

@@ -9,6 +9,7 @@ import { Integer as BaseInteger } from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 
 import type { Resolvable } from "../resolvable";
+import { Length } from "./length";
 
 import { Numeric } from "./numeric";
 
@@ -53,7 +54,7 @@ export namespace Integer {
     public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
-          .resolve()
+          .resolve(Length.toExpressionResolver(resolver))
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not fully resolve ${this} as a number`).value,
       );
