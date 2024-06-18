@@ -13,7 +13,7 @@ import type { JSON as JSON_2 } from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Option } from '@siteimprove/alfa-option';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Parser as Parser_2 } from '@siteimprove/alfa-css';
 import type { Predicate } from '@siteimprove/alfa-predicate';
