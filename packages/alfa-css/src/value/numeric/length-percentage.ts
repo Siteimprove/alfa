@@ -131,11 +131,10 @@ export namespace LengthPercentage {
    * @remarks
    * For many style properties, the percentages are resolved depending on the
    * dimensions of the box, which we do not always have. In this case, we
-   *   cannot
-   * resolve the percentage parts, but we can still fully resolve the length
-   *   parts. Calculated percentages cannot be fully resolved into a canonical
-   *   length, but we can nonetheless reduce them to a pure percentage.
-   *   However, mixed calculations have to stay as they are.
+   * cannot resolve the percentage parts, but we can still fully resolve the
+   * length parts. Calculated percentages cannot be fully resolved into a
+   * canonical length, but we can nonetheless reduce them to a pure percentage.
+   * However, mixed calculations have to stay as they are.
    */
   export function partiallyResolve(
     resolver: PartialResolver,
