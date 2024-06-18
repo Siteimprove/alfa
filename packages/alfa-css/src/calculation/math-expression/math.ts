@@ -139,7 +139,6 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
   public resolve<T extends Numeric = Percentage>(
     this: Math<"percentage">,
     resolver?: Expression.PercentageResolver<T> & Expression.GenericResolver,
-    hint?: T extends Angle ? "angle" : "length",
   ): Result<T, string>;
 
   public resolve<T extends Numeric>(
@@ -150,12 +149,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
       | Expression.PercentageResolver<T>
     ) &
       Expression.GenericResolver,
-    hint?: T extends Angle ? "angle" : "length",
   ): Result<Numeric, string> {
-    // Since the expressions can theoretically contain arbitrarily units in them,
-    // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
-    // they seem to be more restricted), we can't easily type Expression itself
-    // (other than with its Kind).
     try {
       const expression = this._expression.reduce<
         "px",
