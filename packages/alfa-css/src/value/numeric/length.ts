@@ -3,7 +3,8 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Expression, Length as BaseLength, Math } from "../../calculation";
+import { type Expression, Math } from "../../calculation";
+import { Length as BaseLength } from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 
