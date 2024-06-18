@@ -106,8 +106,8 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
 
   // Other resolvers should be added when needed.
   /**
-   * Resolves a calculation typed as an angle, length, length-percentage or number.
-   * Needs a resolver to handle relative lengths and percentages.
+   * Resolves a calculation typed as an angle, length, length-percentage or
+   * number. Needs a resolver to handle relative lengths and percentages.
    */
   public resolve(
     this: Math<"angle">,
@@ -116,20 +116,23 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
 
   public resolve(
     this: Math<"angle-percentage">,
-    resolver?: Expression.PercentageResolver<Angle<"deg">> &
+    resolver?: Expression.PercentageResolver<Angle<Unit.Angle.Canonical>> &
       Expression.GenericResolver,
-  ): Result<Angle<"deg">, string>;
+  ): Result<Angle<Unit.Angle.Canonical>, string>;
 
   public resolve(
     this: Math<"length">,
     resolver: Expression.LengthResolver & Expression.GenericResolver,
-  ): Result<Length<"px">, string>;
+  ): Result<Length<Unit.Length.Canonical>, string>;
 
   public resolve(
     this: Math<"length-percentage">,
-    resolver: Expression.Resolver<"px", Length<"px">> &
+    resolver: Expression.Resolver<
+      Unit.Length.Canonical,
+      Length<Unit.Length.Canonical>
+    > &
       Expression.GenericResolver,
-  ): Result<Length<"px">, string>;
+  ): Result<Length<Unit.Length.Canonical>, string>;
 
   public resolve(
     this: Math<"number">,
@@ -145,15 +148,21 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
     this: Math,
     resolver?: (
       | Expression.LengthResolver
-      | Expression.Resolver<"px", Length<"px">>
+      | Expression.Resolver<
+          Unit.Length.Canonical,
+          Length<Unit.Length.Canonical>
+        >
       | Expression.PercentageResolver<T>
     ) &
       Expression.GenericResolver,
   ): Result<Numeric, string> {
     try {
       const expression = this._expression.reduce<
-        "px",
-        Angle<"deg"> | Length<"px"> | Percentage | T
+        Unit.Length.Canonical,
+        | Angle<Unit.Angle.Canonical>
+        | Length<Unit.Length.Canonical>
+        | Percentage
+        | T
       >({
         // If the expression is a length, and we can't resolve relative lengths,
         // abort.
@@ -163,14 +172,15 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
         // If the expression is a percentage, and we can't resolve percentages,
         // we keep them as percentages.
         percentage: (p) => p,
+        // override default values
         ...resolver,
       });
 
       return expression
         .toAngle()
         .orElse(expression.toLength.bind(expression))
-        .orElse(expression.toNumber.bind(expression))
         .orElse(expression.toPercentage.bind(expression))
+        .orElse(expression.toNumber.bind(expression))
         .or(Err.of(`${this} does not resolve to a valid expression`));
     } catch (e) {
       if (e instanceof Error) {

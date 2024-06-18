@@ -1,6 +1,8 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
+import { Unit } from "../../unit";
+
 import {
   Angle,
   Dimension,
@@ -9,8 +11,6 @@ import {
   Numeric,
   Percentage,
 } from "../numeric";
-
-import { Unit } from "../../unit";
 
 import { Expression } from "./expression";
 import { Kind } from "./kind";
@@ -107,9 +107,10 @@ export namespace Operation {
       super("sum", operands, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const [fst, snd] = this._operands.map((operand) =>
         operand.reduce(resolver),
       );
@@ -167,9 +168,10 @@ export namespace Operation {
       super("negate", operand, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const [operand] = this._operands.map((operand) =>
         operand.reduce(resolver),
       );
@@ -227,31 +229,55 @@ export namespace Operation {
       super("product", operands, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const [fst, snd] = this._operands.map((operand) =>
         operand.reduce(resolver),
       );
 
-      // Both operands are fully resolved values. If one of them is a number, we
-      // can resolve the other.
       if (Value.isValueExpression(fst) && Value.isValueExpression(snd)) {
-        return Product.ofValues(fst, snd);
-      }
+        // Both operands are values, we can hopefully do the product.
+        if (fst.isCanonical() && snd.isCanonical()) {
+          // Both operands are fully resolved values in canonical units. We can do
+          // the product and drop the units, just remembering the dimension.
+          return Value.of(
+            Number.of(fst.value.value * snd.value.value),
+            fst.kind.multiply(snd.kind).getUnsafe(),
+          ).simplify();
+        }
 
-      // One operand is a value, the other is an Invert. We might be able to
-      // reduce the fraction if the dimensions match.
-      // When the denominator is a dimensionless number, it should already have
-      // been reduced, so it is not handled here.
-      // This is not very clever in trying permutations. So, it can resolve
-      // "1px * (1/2px) * 1deg" but not "1px * 1deg * (1/2px)".
-      if (Value.isValueExpression(fst) && isInvertExpression(snd)) {
-        return Product.ofRatio(fst, snd, resolver);
-      }
+        let multiplier: number | undefined;
+        let value!: Numeric;
 
-      if (isInvertExpression(fst) && Value.isValueExpression(snd)) {
-        return Product.ofRatio(snd, fst, resolver);
+        // If one of them is a raw number (also, no recorded dimension), we can
+        // do the product.
+        if (isNumber(fst.value) && fst.kind.is()) {
+          multiplier = fst.value.value;
+          value = snd.value;
+        } else if (isNumber(snd.value) && snd.kind.is()) {
+          multiplier = snd.value.value;
+          value = fst.value;
+        }
+
+        if (multiplier !== undefined) {
+          if (isNumber(value)) {
+            return Value.of(Number.of(multiplier * value.value));
+          }
+
+          if (isPercentage(value)) {
+            return Value.of(Percentage.of(multiplier * value.value));
+          }
+
+          if (isLength(value)) {
+            return Value.of(Length.of(multiplier * value.value, value.unit));
+          }
+
+          if (isAngle(value)) {
+            return Value.of(Angle.of(multiplier * value.value, value.unit));
+          }
+        }
       }
 
       return new Product([fst, snd], this._kind);
@@ -261,95 +287,6 @@ export namespace Operation {
       const [fst, snd] = this._operands;
 
       return `${fst} * ${snd}`;
-    }
-  }
-
-  export namespace Product {
-    /**
-     * @internal
-     */
-    export function ofValues(
-      fst: Value<Numeric>,
-      snd: Value<Numeric>,
-    ): Expression {
-      let multiplier: number | undefined;
-      let value!: Numeric;
-
-      if (isNumber(fst.value)) {
-        multiplier = fst.value.value;
-        value = snd.value;
-      } else if (isNumber(snd.value)) {
-        multiplier = snd.value.value;
-        value = fst.value;
-      }
-
-      if (multiplier !== undefined) {
-        if (isNumber(value)) {
-          return Value.of(Number.of(multiplier * value.value));
-        }
-
-        if (isPercentage(value)) {
-          return Value.of(Percentage.of(multiplier * value.value));
-        }
-
-        if (isLength(value)) {
-          return Value.of(Length.of(multiplier * value.value, value.unit));
-        }
-
-        if (isAngle(value)) {
-          return Value.of(Angle.of(multiplier * value.value, value.unit));
-        }
-      }
-
-      return Product.of(fst, snd).getUnsafe();
-    }
-
-    /**
-     * @remarks
-     * If the denominator is a dimensionless number, it should already have
-     * been simplified. So we assume here that the denominator has dimension.
-     *  If it is the same dimension as the numerator, we can simplify the ratio
-     *  to a number.
-     *
-     * @internal
-     */
-    export function ofRatio<
-      L extends Unit.Length = "px",
-      P extends Numeric = Numeric,
-    >(
-      numerator: Value<Numeric>,
-      denominator: Invert,
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
-      const num = numerator.value;
-      const [y] = denominator.operands;
-
-      if (Value.isValueExpression(y)) {
-        const den = y.value;
-
-        if (isLength(num) && isLength(den)) {
-          // If we have a resolver that correctly handles both units, we can
-          // reduce the fraction.
-          const [numR, denR] = [num, den].map(
-            Value.lengthResolver(resolver.length),
-          );
-
-          if (numR.unit === denR.unit) {
-            return Value.of(Number.of(numR.value / denR.value));
-          }
-        }
-
-        if (isAngle(num) && isAngle(den)) {
-          // Angles can always be resolved.
-          return Value.of(
-            Number.of(
-              Value.angleResolver(num).value / Value.angleResolver(den).value,
-            ),
-          );
-        }
-      }
-
-      return Product.of(numerator, denominator).getUnsafe();
     }
   }
 
@@ -366,19 +303,19 @@ export namespace Operation {
       super("invert", operand, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const [operand] = this._operands.map((operand) =>
         operand.reduce(resolver),
       );
 
-      if (Value.isValueExpression(operand)) {
+      if (Value.isValueExpression(operand) && operand.isCanonical()) {
+        // It's a value in canonical units, we can invert it.
         const { value } = operand;
 
-        if (isNumber(value)) {
-          return Value.of(Number.of(1 / value.value));
-        }
+        return Value.of(Number.of(1 / value.value), operand.kind.invert());
       }
 
       if (isInvertExpression(operand)) {

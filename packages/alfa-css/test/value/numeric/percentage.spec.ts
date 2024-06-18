@@ -56,7 +56,8 @@ test("resolve() resolves dimension divisions", (t) => {
         },
       })
       .toJSON(),
-    { type: "number", value: 25 },
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "number", value: 25.0002 },
   );
   t.deepEqual(
     parse("calc(100% * (180deg / 1turn) * (8px / 1em)")
@@ -71,7 +72,8 @@ test("resolve() resolves dimension divisions", (t) => {
         },
       })
       .toJSON(),
-    { type: "percentage", value: 0.25 },
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "percentage", value: 0.250002 },
   );
 });
 
@@ -89,6 +91,7 @@ test("partiallyResolve() resolves dimension divisions", (t) => {
         },
       })
       .toJSON(),
-    { type: "percentage", value: 0.25 },
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "percentage", value: 0.250002 },
   );
 });

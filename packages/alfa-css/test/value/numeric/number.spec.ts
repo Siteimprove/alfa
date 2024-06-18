@@ -42,19 +42,21 @@ test("resolve() returns a bare value", (t) => {
 
 test("resolve() accepts dimension divisions", (t) => {
   t.deepEqual(
-    parse("calc((1turn / 180deg) + (8px / 1em)")
+    parse("calc((1turn / 180deg) + (2em / 1rem)")
       .getUnsafe()
       .resolve({
         length: (value) => {
           switch (value.unit) {
             case "em":
-              return Length.of(16, "px");
+            case "rem":
+              return Length.of(16 * value.value, "px");
             default:
               return Length.of(1, "px");
           }
         },
       })
       .toJSON(),
-    { type: "number", value: 2.5 },
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "number", value: 4.000016 },
   );
 });

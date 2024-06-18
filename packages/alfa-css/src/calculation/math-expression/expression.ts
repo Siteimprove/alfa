@@ -38,7 +38,7 @@ export abstract class Expression<T extends string = string>
    * {@link https://drafts.csswg.org/css-values/#simplify-a-calculation-tree}
    */
   public abstract reduce<
-    L extends Unit.Length = "px",
+    L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   >(resolver: Expression.Resolver<L, P>): Expression;
 
@@ -92,14 +92,18 @@ export namespace Expression {
    *
    * @internal
    */
-  export interface GenericResolver<L extends Unit.Length = "px"> {
+  export interface GenericResolver<
+    L extends Unit.Length = Unit.Length.Canonical,
+  > {
     length?(value: Length<Unit.Length.Relative>): Length<L>;
   }
 
   /**
    * @internal
    */
-  export interface LengthResolver<L extends Unit.Length = "px"> {
+  export interface LengthResolver<
+    L extends Unit.Length = Unit.Length.Canonical,
+  > {
     length(value: Length<Unit.Length.Relative>): Length<L>;
   }
 
@@ -111,7 +115,7 @@ export namespace Expression {
   }
 
   export type Resolver<
-    L extends Unit.Length = "px",
+    L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   > = LengthResolver<L> & PercentageResolver<P>;
 }

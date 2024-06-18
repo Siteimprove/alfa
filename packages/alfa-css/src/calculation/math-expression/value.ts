@@ -1,13 +1,13 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
-
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Unit } from "../../unit";
 
+import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+
 import { Expression } from "./expression";
 import { Kind } from "./kind";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 const { isAngle } = Angle;
 const { isLength } = Length;
@@ -18,12 +18,15 @@ const { isPercentage } = Percentage;
  * @public
  */
 export class Value<N extends Numeric = Numeric> extends Expression {
-  public static of<N extends Numeric = Numeric>(value: N): Value<N> {
+  public static of<N extends Numeric = Numeric>(
+    value: N,
+    kindHint?: Kind,
+  ): Value<N> {
     const kind = Selective.of(value)
       .if(isPercentage, () => Kind.of("percentage"))
       .if(isLength, () => Kind.of("length"))
       .if(isAngle, () => Kind.of("angle"))
-      .else(() => Kind.of())
+      .else(() => kindHint ?? Kind.of())
       .get();
 
     return new Value(value, kind);
@@ -44,54 +47,62 @@ export class Value<N extends Numeric = Numeric> extends Expression {
   public reduce(
     this: Value<Angle>,
     resolver: Expression.Resolver,
-  ): Value<Angle<"deg">>;
+  ): Value<Angle<Unit.Angle.Canonical>>;
 
-  public reduce<L extends Unit.Length = "px">(
+  public reduce<L extends Unit.Length = Unit.Length.Canonical>(
     this: Value<Length>,
     resolver: Expression.Resolver<L>,
-  ): Value<Length<"px" | L>>;
+  ): Value<Length<Unit.Length.Canonical | L>>;
 
   public reduce(
     this: Value<Number>,
     resolver: Expression.Resolver,
   ): Value<Number>;
 
-  public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-    this: Value<Percentage>,
-    resolver: Expression.Resolver<L, P>,
-  ): Value<P>;
+  public reduce<
+    L extends Unit.Length = Unit.Length.Canonical,
+    P extends Numeric = Numeric,
+  >(this: Value<Percentage>, resolver: Expression.Resolver<L, P>): Value<P>;
 
-  public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-    resolver: Expression.Resolver<L, P>,
-  ): Value {
+  public reduce<
+    L extends Unit.Length = Unit.Length.Canonical,
+    P extends Numeric = Numeric,
+  >(resolver: Expression.Resolver<L, P>): Value {
+    // Percentage are special. If it resolves to a number, we must keep the
+    // number instead of carrying the kind of the percentage.
+    // That is, when 100% = 10, 50% must be converted to 5, not to 5%.
+    if (isPercentage(this._value)) {
+      return Value.of(resolver.percentage(this._value));
+    }
+
     return Value.of(
       Selective.of<Numeric>(this._value)
         .if(isLength, Value.lengthResolver(resolver.length))
         .if(isAngle, Value.angleResolver)
-        .if(isPercentage, resolver.percentage)
         .get(),
-    );
+      this._kind,
+    ).simplify();
   }
 
-  public toAngle(this: Value<Angle>): Ok<Angle>;
-
-  public toAngle(this: Value<Exclude<Numeric, Angle>>): Err<string>;
-
   public toAngle(): Result<Angle, string> {
-    if (isAngle(this.value)) {
-      return Ok.of(this.value);
+    if (isAngle(this._value)) {
+      return Ok.of(this._value);
+    }
+
+    if (this._kind.is("angle")) {
+      return Ok.of(Angle.of(this._value.value, Unit.Angle.Canonical));
     }
 
     return Err.of(`${this} is not an angle`);
   }
 
-  public toLength(this: Value<Length>): Ok<Length>;
-
-  public toLength(this: Value<Exclude<Numeric, Length>>): Err<string>;
-
   public toLength(): Result<Length, string> {
     if (isLength(this.value)) {
       return Ok.of(this.value);
+    }
+
+    if (this._kind.is("length")) {
+      return Ok.of(Length.of(this._value.value, Unit.Length.Canonical));
     }
 
     return Err.of(`${this} is not a length`);
@@ -109,16 +120,39 @@ export class Value<N extends Numeric = Numeric> extends Expression {
     return Err.of(`${this} is not a number`);
   }
 
-  public toPercentage(this: Value<Percentage>): Ok<Percentage>;
-
-  public toPercentage(this: Value<Exclude<Numeric, Percentage>>): Err<string>;
-
   public toPercentage(): Result<Percentage, string> {
     if (isPercentage(this.value)) {
       return Ok.of(this.value);
     }
 
+    if (this._kind.is("percentage")) {
+      return Ok.of(Percentage.of(this._value.value));
+    }
+
     return Err.of(`${this} is not a percentage`);
+  }
+
+  public simplify(): Value {
+    return this.toAngle()
+      .orElse(() => this.toLength())
+      .orElse(() => this.toPercentage())
+      .orElse(() => this.toNumber())
+      .map((value) => Value.of(value, this._kind))
+      .getOr(this);
+  }
+
+  public isCanonical(): boolean {
+    return (
+      Selective.of(this._value)
+        .if(isAngle, (angle) => Unit.Angle.isCanonical(angle.unit))
+        .if(isLength, (length) => Unit.Length.isCanonical(length.unit))
+        // Either a raw number or a number with a kind, which only happens when
+        // all units are canonical.
+        .if(isNumber, () => true)
+        .if(isPercentage, () => true)
+        .else(() => false)
+        .get()
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -129,6 +163,7 @@ export class Value<N extends Numeric = Numeric> extends Expression {
     return {
       type: "value",
       value: this._value.toJSON(),
+      // kind: this._kind.toJSON(),
     };
   }
 
@@ -153,17 +188,19 @@ export namespace Value {
   /**
    * @internal
    */
-  export function angleResolver(angle: Angle): Angle<"deg"> {
-    return angle.withUnit("deg");
+  export function angleResolver(angle: Angle): Angle<Unit.Angle.Canonical> {
+    return angle.withUnit(Unit.Angle.Canonical);
   }
 
   /**
    * @internal
    */
-  export function lengthResolver<U extends Unit.Length = "px">(
+  export function lengthResolver<U extends Unit.Length = Unit.Length.Canonical>(
     resolver: Mapper<Length<Unit.Length.Relative>, Length<U>>,
-  ): Mapper<Length, Length<"px"> | Length<U>> {
+  ): Mapper<Length, Length<Unit.Length.Canonical> | Length<U>> {
     return (length) =>
-      length.isRelative() ? resolver(length) : length.withUnit("px");
+      length.isRelative()
+        ? resolver(length)
+        : length.withUnit(Unit.Length.Canonical);
   }
 }
