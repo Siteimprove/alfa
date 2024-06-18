@@ -466,11 +466,7 @@ function parseLonghand<N extends Longhands.Name>(
   property: Longhands.Property[N],
   value: string,
   variables: Map<string, Value<Slice<Token>>>,
-  debug = false,
 ): Result<Style.Declared<N>, string> {
-  const show = debug ? console.log : () => {};
-  const showAll = debug ? console.dir : () => {};
-
   const substitution = Variable.substitute(Lexer.lex(value), variables);
 
   if (!substitution.isSome()) {
@@ -478,8 +474,6 @@ function parseLonghand<N extends Longhands.Name>(
   }
 
   const [tokens, substituted] = substitution.get();
-
-  showAll(tokens.toJSON());
 
   const parse = property.parse as Longhand.Parser<Style.Declared<N>>;
 
