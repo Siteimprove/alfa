@@ -329,7 +329,7 @@ export class Style implements Serializable<Style.JSON> {
     inherited<N extends Name>(name: N): Value<Style.Inherited<N>>;
     // (undocumented)
     initial<N extends Name>(name: N, source?: Option_2<Declaration>): Value<Style.Initial<N>>;
-    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option_2<Style>, debug?: boolean): Style;
+    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option_2<Style>): Style;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
@@ -352,7 +352,7 @@ export namespace Style {
     export type Computed<N extends Name> = Longhands.Computed<N>;
     // (undocumented)
     export type Declared<N extends Name> = Longhands.Declared<N>;
-    export function from(element: Element_2, device: Device, context?: Context, debug?: boolean): Style;
+    export function from(element: Element_2, device: Device, context?: Context): Style;
     // (undocumented)
     export type Inherited<N extends Name> = Longhands.Inherited<N>;
     // (undocumented)
