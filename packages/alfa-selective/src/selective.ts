@@ -131,8 +131,8 @@ export class Selective<S, T = never>
    *
    * @remarks
    * This method should only be used for cases where
-   *   {@link (Selective:class).get} is insufficient. If in doubt, assume that
-   *   it isn't.
+   * {@link (Selective:class).get} is insufficient. If in doubt, assume that
+   * it isn't.
    */
   public exhaust<T>(this: Selective<never, T>): T {
     return this.get();

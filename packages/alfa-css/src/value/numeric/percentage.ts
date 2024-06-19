@@ -1,5 +1,4 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -103,17 +102,14 @@ export namespace Percentage {
         );
       }
 
-      const baseResolver: Expression.PercentageResolver &
-        Expression.GenericResolver = {
-        percentage: (value) => value,
-        ...toExpressionResolver(resolver),
-        ...Length.toExpressionResolver(resolver),
-      };
-
       return (
         Selective.of(
           this._math
-            .resolve(baseResolver)
+            .resolve({
+              percentage: (value) => value,
+              ...toExpressionResolver(resolver),
+              ...Length.toExpressionResolver(resolver),
+            })
             // Since the expression has been correctly typed, it should always resolve.
             .getUnsafe(`Could not fully resolve ${this} as a percentage`),
         )
@@ -129,15 +125,12 @@ export namespace Percentage {
     public partiallyResolve(
       resolver?: Numeric.GenericResolver,
     ): PartiallyResolved<H> {
-      const baseResolver: Expression.PercentageResolver &
-        Expression.GenericResolver = {
-        percentage: (value) => value,
-        ...Length.toExpressionResolver(resolver),
-      };
-
       return Fixed.of<H>(
         this._math
-          .resolve(baseResolver)
+          .resolve({
+            percentage: (value) => value,
+            ...Length.toExpressionResolver(resolver),
+          })
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(
             `Could not resolve ${this} as a percentage`,
