@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle } from "../../../src";
+import { Angle, Length } from "../../../src";
 
 import { parser, serializer } from "../../common/parse";
 
@@ -50,4 +50,24 @@ test("resolve() reduces angles", (t) => {
     value: 362,
     unit: "deg",
   });
+});
+
+test("resolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100deg / 1em * 180deg / 1turn * 8px)")
+      .getUnsafe()
+      .resolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "angle", value: 25.0002, unit: "deg" },
+  );
 });

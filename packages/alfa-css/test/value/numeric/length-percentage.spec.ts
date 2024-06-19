@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, LengthPercentage } from "../../../src";
+import { Length, LengthPercentage, Number } from "../../../src";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse";
 
@@ -207,4 +207,43 @@ test("partiallyResolve() leaves mix of lengths and percentages untouched", (t) =
       },
     },
   });
+});
+
+test("resolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100% / 1em * 180deg / 1turn * 8px)")
+      .resolve({
+        percentageBase: Length.of(100, "px"),
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "length", value: 25.0002, unit: "px" },
+  );
+});
+
+test("partiallyResolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100% * (180deg / 1turn) * (8px / 1em)")
+      .partiallyResolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "percentage", value: 0.250002 },
+  );
 });

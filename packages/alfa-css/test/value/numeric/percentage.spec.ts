@@ -59,6 +59,7 @@ test("resolve() resolves dimension divisions", (t) => {
     // Due to rounding Numeric to 7 decimals, we have floating point problems.
     { type: "number", value: 25.0002 },
   );
+
   t.deepEqual(
     parse("calc(100% * (180deg / 1turn) * (8px / 1em)")
       .resolve({

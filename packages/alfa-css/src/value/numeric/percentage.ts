@@ -244,9 +244,10 @@ export namespace Percentage {
   /**
    * @internal
    */
-  export function toExpressionResolver<H extends BaseNumeric.Type>(
-    resolver: Resolver<H>,
-  ): Expression.PercentageResolver;
+  export function toExpressionResolver<
+    H extends BaseNumeric.Type,
+    B extends BaseNumeric<H>,
+  >(resolver: Resolver<H>): Expression.PercentageResolver<B>;
 
   /**
    * @internal

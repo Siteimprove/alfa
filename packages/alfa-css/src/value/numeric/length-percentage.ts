@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
+import { Expression, Math } from "../../calculation";
 import * as Base from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
@@ -63,18 +63,15 @@ export namespace LengthPercentage {
     }
 
     public resolve(resolver: Resolver & Numeric.GenericResolver): Canonical {
+      const resolve = this._math.resolve({
+        ...Length.toExpressionResolver(resolver),
+        ...Percentage.toExpressionResolver<
+          "length",
+          Base.Length<Unit.Length.Canonical>
+        >(resolver),
+      });
       return Length.Fixed.of(
-        this._math
-          // The math expression resolver is only aware of BaseLength and
-          // BasePercentage and thus work with these, but we want to abstract
-          // them from further layers, so the resolver here is only aware of
-          // Length and Percentage, and we need to translate back and forth.
-          .resolve({
-            length: (length) =>
-              resolver.length(Length.Fixed.of(length)).toBase(),
-            percentage: (value) =>
-              resolver.percentageBase.toBase().scale(value.value),
-          })
+        resolve
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as a length`),
       );

@@ -10,6 +10,7 @@ import type { Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
 import { Angle } from "./angle";
+import { Length } from "./length";
 import type { Numeric } from "./numeric";
 import { Percentage } from "./percentage";
 
@@ -91,7 +92,10 @@ export namespace AnglePercentage {
     resolver?: Numeric.GenericResolver,
   ): Canonical {
     return Percentage.isPercentage(value)
-      ? value.resolve({ percentageBase: Angle.of(360, "deg") })
+      ? value.resolve({
+          percentageBase: Angle.of(360, "deg"),
+          ...Length.toExpressionResolver(resolver),
+        })
       : value.resolve();
   }
 
