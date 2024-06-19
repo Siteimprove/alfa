@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference lib="dom" />
-
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
@@ -15,7 +13,7 @@ import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
@@ -748,7 +746,7 @@ export namespace HSL {
 // Warning: (ae-incompatible-release-tags) The symbol "Image" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
 //
 // @public (undocumented)
-class Image_2<I extends URL_2 | Gradient = URL_2 | Gradient> extends Value<"image", Value.HasCalculation<[I]>> implements Resolvable<Image_2.Canonical, Image_2.Resolver>, PartiallyResolvable<Image_2.PartiallyResolved, Image_2.PartialResolver> {
+export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image", Value.HasCalculation<[I]>> implements Resolvable<Image.Canonical, Image.Resolver>, PartiallyResolvable<Image.PartiallyResolved, Image.PartialResolver> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -756,38 +754,37 @@ class Image_2<I extends URL_2 | Gradient = URL_2 | Gradient> extends Value<"imag
     // (undocumented)
     get image(): I;
     // (undocumented)
-    static of<I extends URL_2 | Gradient>(image: I): Image_2<I>;
+    static of<I extends URL | Gradient>(image: I): Image<I>;
     // (undocumented)
-    partiallyResolve(resolver: Image_2.PartialResolver): Image_2.PartiallyResolved;
+    partiallyResolve(resolver: Image.PartialResolver): Image.PartiallyResolved;
     // (undocumented)
-    resolve(resolver: Image_2.Resolver): Image_2.Canonical;
+    resolve(resolver: Image.Resolver): Image.Canonical;
     // (undocumented)
-    toJSON(): Image_2.JSON;
+    toJSON(): Image.JSON;
     // (undocumented)
     toString(): string;
 }
 
 // @public (undocumented)
-namespace Image_2 {
+export namespace Image {
     // (undocumented)
-    type Canonical = Image_2<URL_2.Canonical | Gradient.Canonical>;
+    export type Canonical = Image<URL.Canonical | Gradient.Canonical>;
     // (undocumented)
-    function isImage<I extends URL_2 | Gradient>(value: unknown): value is Image_2<I>;
+    export function isImage<I extends URL | Gradient>(value: unknown): value is Image<I>;
     // (undocumented)
-    interface JSON extends Value.JSON<"image"> {
+    export interface JSON extends Value.JSON<"image"> {
         // (undocumented)
-        image: URL_2.JSON | Gradient.JSON;
+        image: URL.JSON | Gradient.JSON;
     }
     // (undocumented)
-    type PartiallyResolved = Image_2<URL_2.Canonical | Gradient.PartiallyResolved>;
+    export type PartiallyResolved = Image<URL.Canonical | Gradient.PartiallyResolved>;
     // (undocumented)
-    type PartialResolver = URL_2.Resolver & Gradient.PartialResolver;
+    export type PartialResolver = URL.Resolver & Gradient.PartialResolver;
     // (undocumented)
-    type Resolver = URL_2.Resolver & Gradient.Resolver;
+    export type Resolver = URL.Resolver & Gradient.Resolver;
     const // (undocumented)
-    parse: Parser<Image_2>;
+    parse: Parser<Image>;
 }
-export { Image_2 as Image }
 
 // Warning: (ae-forgotten-export) The symbol "Corner_2" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "HasCalculation" needs to be exported by the entry point index.d.ts
@@ -799,11 +796,11 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = C
     // (undocumented)
     get bottom(): O;
     // (undocumented)
-    get bottomLeft(): Option_2<C>;
+    get bottomLeft(): Option<C>;
     // (undocumented)
-    get bottomRight(): Option_2<C>;
+    get bottomRight(): Option<C>;
     // (undocumented)
-    get corners(): Option_2<readonly [C, C, C, C]>;
+    get corners(): Option<readonly [C, C, C, C]>;
     // (undocumented)
     equals(value: Inset): boolean;
     // (undocumented)
@@ -813,7 +810,7 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = C
     // (undocumented)
     get left(): O;
     // (undocumented)
-    static of<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2>(offsets: readonly [O, O, O, O], corners: Option_2<readonly [C, C, C, C]>): Inset<O, C>;
+    static of<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2>(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>): Inset<O, C>;
     // (undocumented)
     get offsets(): readonly [O, O, O, O];
     // (undocumented)
@@ -827,9 +824,9 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = C
     // (undocumented)
     get top(): O;
     // (undocumented)
-    get topLeft(): Option_2<C>;
+    get topLeft(): Option<C>;
     // (undocumented)
-    get topRight(): Option_2<C>;
+    get topRight(): Option<C>;
     // (undocumented)
     toString(): string;
 }
@@ -843,7 +840,7 @@ export namespace Inset {
     // (undocumented)
     export interface JSON<O extends Offset = Offset, C extends Corner_2 = Corner_2> extends BasicShape.JSON<"inset"> {
         // (undocumented)
-        corners: Option_2.JSON<readonly [C, C, C, C]>;
+        corners: Option.JSON<readonly [C, C, C, C]>;
         // (undocumented)
         offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
     }
@@ -1105,7 +1102,7 @@ export namespace LengthPercentage {
     export type PartiallyResolved = Canonical | Percentage.PartiallyResolved<"length"> | LengthPercentage.Calculated;
     // (undocumented)
     export type PartialResolver = Length.Resolver;
-    export function resolve(resolver: Resolver & Numeric.GenericResolver, debug?: boolean): (value: LengthPercentage) => Canonical;
+    export function resolve(resolver: Resolver & Numeric.GenericResolver): (value: LengthPercentage) => Canonical;
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length">;
     const // (undocumented)
@@ -1643,7 +1640,7 @@ export namespace Percentage {
         percentageBase: Canonicals[H];
     };
     // @internal (undocumented)
-    export function toExpressionResolver<H extends Numeric_2.Type>(resolver: Resolver<H>): Expression.PercentageResolver;
+    export function toExpressionResolver<H extends Numeric_2.Type, B extends Numeric_2<H>>(resolver: Resolver<H>): Expression.PercentageResolver<B>;
     // @internal (undocumented)
     export function toExpressionResolver(resolver: any): {};
 }
@@ -1695,11 +1692,11 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends LengthPerc
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get fill(): Option_2<F>;
+    get fill(): Option<F>;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage>(fill: Option_2<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
+    static of<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
     // (undocumented)
     partiallyResolve(resolver: Polygon.PartialResolver): Polygon.PartiallyResolved;
     // (undocumented)
@@ -1723,7 +1720,7 @@ export namespace Polygon {
     // (undocumented)
     export interface JSON<F extends Fill = Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape.JSON<"polygon"> {
         // (undocumented)
-        fill: Option_2.JSON<F>;
+        fill: Option.JSON<F>;
         // (undocumented)
         vertices: Array_2<Serializable.ToJSON<Vertex<V>>>;
     }
@@ -3298,17 +3295,17 @@ export namespace Unit {
 // Warning: (ae-incompatible-release-tags) The symbol "URL" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
-class URL_2 extends Value<"url", false> implements Resolvable<URL_2, never> {
+export class URL extends Value<"url", false> implements Resolvable<URL, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of(url: string): URL_2;
+    static of(url: string): URL;
     // (undocumented)
-    resolve(): URL_2;
+    resolve(): URL;
     // (undocumented)
-    toJSON(): URL_2.JSON;
+    toJSON(): URL.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -3316,22 +3313,21 @@ class URL_2 extends Value<"url", false> implements Resolvable<URL_2, never> {
 }
 
 // @public (undocumented)
-namespace URL_2 {
+export namespace URL {
     // (undocumented)
-    type Canonical = URL_2;
+    export type Canonical = URL;
     // (undocumented)
-    function isURL(value: unknown): value is URL_2;
+    export function isURL(value: unknown): value is URL;
     // (undocumented)
-    interface JSON extends Value.JSON<"url"> {
+    export interface JSON extends Value.JSON<"url"> {
         // (undocumented)
         url: string;
     }
     // (undocumented)
-    type Resolver = {};
+    export type Resolver = {};
     const // (undocumented)
-    parse: Parser<URL_2>;
+    parse: Parser<URL>;
 }
-export { URL_2 as URL }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Value" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 // Warning: (ae-incompatible-release-tags) The symbol "Value" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
