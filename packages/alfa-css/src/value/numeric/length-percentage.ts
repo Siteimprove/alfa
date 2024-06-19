@@ -1,9 +1,8 @@
-/// <reference lib="dom" />
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Expression, Math } from "../../calculation";
+import { Math } from "../../calculation";
 import * as Base from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
@@ -113,11 +112,8 @@ export namespace LengthPercentage {
    */
   export function resolve(
     resolver: Resolver & Numeric.GenericResolver,
-    debug = false,
   ): (value: LengthPercentage) => Canonical {
     return (value) => {
-      if (debug) console.log(`P? ${Percentage.isPercentage(value)}`);
-
       // We need to break down the union to help TS find the correct overload
       // of each component and correctly narrow the result.
       return Percentage.isPercentage(value)
