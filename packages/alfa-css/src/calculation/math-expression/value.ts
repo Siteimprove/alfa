@@ -134,9 +134,9 @@ export class Value<N extends Numeric = Numeric> extends Expression {
 
   public simplify(): Value {
     return this.toAngle()
-      .orElse(() => this.toLength())
-      .orElse(() => this.toPercentage())
-      .orElse(() => this.toNumber())
+      .orElse(this.toLength.bind(this))
+      .orElse(this.toPercentage.bind(this))
+      .orElse(this.toNumber.bind(this))
       .map((value) => Value.of(value, this._kind))
       .getOr(this);
   }
@@ -163,7 +163,6 @@ export class Value<N extends Numeric = Numeric> extends Expression {
     return {
       type: "value",
       value: this._value.toJSON(),
-      // kind: this._kind.toJSON(),
     };
   }
 

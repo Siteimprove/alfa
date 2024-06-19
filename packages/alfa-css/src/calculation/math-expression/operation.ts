@@ -262,21 +262,7 @@ export namespace Operation {
         }
 
         if (multiplier !== undefined) {
-          if (isNumber(value)) {
-            return Value.of(Number.of(multiplier * value.value));
-          }
-
-          if (isPercentage(value)) {
-            return Value.of(Percentage.of(multiplier * value.value));
-          }
-
-          if (isLength(value)) {
-            return Value.of(Length.of(multiplier * value.value, value.unit));
-          }
-
-          if (isAngle(value)) {
-            return Value.of(Angle.of(multiplier * value.value, value.unit));
-          }
+          return Value.of(value.scale(multiplier));
         }
       }
 

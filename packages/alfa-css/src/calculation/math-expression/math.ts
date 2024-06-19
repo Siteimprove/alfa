@@ -40,7 +40,7 @@ const {
 export class Math<out D extends Math.Dimension = Math.Dimension> {
   public static of(expression: Expression): Math {
     return new Math(
-      expression.reduce<Unit.Length>({
+      expression.reduce({
         length: (value) => value,
         percentage: (value) => value,
       }),
