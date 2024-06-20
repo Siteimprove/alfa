@@ -13,7 +13,6 @@ export function validateWorkspaceTsconfig({
   packageJson: PackageJSON;
 }): Array<string> {
   const name = packageJson.name;
-  console.log(`Checking ${name}`);
   const errors: Array<string> = [];
 
   const internalDependencies: Array<string> = [];
@@ -33,13 +32,21 @@ export function validateWorkspaceTsconfig({
     }
   }
 
-  const tsconfig = JSON.parse(
+  const tsconfigSrc = JSON.parse(
     fs.readFileSync(path.join(dir, "src", "tsconfig.json"), "utf-8"),
   );
-  const references = (tsconfig?.references ?? [])
+  const tsconfigTest = fs.existsSync(path.join(dir, "test", "tsconfig.json"))
+    ? JSON.parse(
+        fs.readFileSync(path.join(dir, "test", "tsconfig.json"), "utf-8"),
+      )
+    : undefined;
+  const references = (tsconfigSrc?.references ?? [])
+    .concat(tsconfigTest?.references ?? [])
     // Keep everything between last / and end of line.
     .map((ref: any) => ref?.path.replace(/.*\/(?<name>[a-z\-]*)$/, "$1") ?? "")
-    .filter((ref: any) => ref !== "") as Array<string>;
+    // "src" is referenced from the test/tsconfig.json but does not need to be
+    // a listed dependency.
+    .filter((ref: any) => ref !== "" && ref !== "src") as Array<string>;
 
   for (const dependency of internalDependencies) {
     if (!references.includes(dependency)) {
