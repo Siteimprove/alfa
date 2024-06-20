@@ -6,7 +6,6 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
-import { URL } from "@siteimprove/alfa-url";
 
 import { getInterposedDescendant } from "../get-interposed-descendant";
 
