@@ -6,6 +6,7 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
+import { URL } from "@siteimprove/alfa-url";
 
 import { getInterposedDescendant } from "../get-interposed-descendant";
 
@@ -226,9 +227,13 @@ export namespace Layer {
       // We currently have no way of extracting colors from images, so we simply
       // bail out if we encounter a background image.
       if (image.image.type === "url") {
-        errors.push(
-          ColorError.externalBackgroundImage(element, backgroundImage),
-        );
+        // If the URL is empty, it will be discarded by the browser and no image
+        // will be displayed, so we ignore it.
+        if (image.image.url !== "") {
+          errors.push(
+            ColorError.externalBackgroundImage(element, backgroundImage),
+          );
+        }
         continue;
       }
 
