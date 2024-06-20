@@ -28,9 +28,10 @@ export class Link extends PseudoClassSelector<"link"> {
       case "a":
       case "area":
       case "link":
-        return element
-          .attribute("href")
-          .some(() => !context.hasState(element, Context.State.Visited));
+        return (
+          element.attribute("href").isSome() &&
+          !context.hasState(element, Context.State.Visited)
+        );
     }
 
     return false;
