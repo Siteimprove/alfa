@@ -4,6 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [  "./branched.spec.ts"],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./branched.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

@@ -3,5 +3,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
   "files": ["./applicative.ts", "./index.ts"],
-  "references": [{ "path": "../../alfa-functor" }, { "path": "../../alfa-mapper" }]
+  "references": [
+    { "path": "../../alfa-functor" },
+    { "path": "../../alfa-mapper" }
+  ]
 }

@@ -6,8 +6,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@siteimprove/alfa-dom/dist"
   },
-  "files": [
-    "./table.spec.tsx"
-  ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./table.spec.tsx"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

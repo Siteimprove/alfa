@@ -45,5 +45,5 @@
     "./value/transform/skew.spec.ts",
     "./value/transform/translate.spec.ts"
   ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

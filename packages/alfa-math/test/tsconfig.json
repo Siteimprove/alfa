@@ -4,9 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [
-    "./matrix.spec.ts",
-    "./vector.spec.ts"
-  ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./matrix.spec.ts", "./vector.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

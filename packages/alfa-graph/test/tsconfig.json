@@ -4,6 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [  "./graph.spec.ts"],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./graph.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

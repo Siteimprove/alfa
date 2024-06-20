@@ -4,6 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [  "./cache.spec.ts"],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./cache.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

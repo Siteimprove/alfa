@@ -2,10 +2,9 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": ["./index.ts", "./trilean.ts", ],
+  "files": ["./index.ts", "./trilean.ts"],
   "references": [
     { "path": "../../alfa-iterable" },
-    { "path": "../../alfa-mapper" },
-
+    { "path": "../../alfa-mapper" }
   ]
 }

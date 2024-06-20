@@ -4,6 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [  "./trampoline.spec.ts"],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./trampoline.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

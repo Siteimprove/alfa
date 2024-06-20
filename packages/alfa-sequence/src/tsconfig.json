@@ -2,13 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": [
-    "./cons.ts",
-    "./index.ts",
-    "./nil.ts",
-    "./sequence.ts",
-
-  ],
+  "files": ["./cons.ts", "./index.ts", "./nil.ts", "./sequence.ts"],
   "references": [
     { "path": "../../alfa-array" },
     { "path": "../../alfa-callback" },
@@ -25,7 +19,6 @@
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-reducer" },
     { "path": "../../alfa-refinement" },
-    { "path": "../../alfa-set" },
-
+    { "path": "../../alfa-set" }
   ]
 }

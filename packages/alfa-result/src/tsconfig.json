@@ -2,13 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": [
-    "./err.ts",
-    "./index.ts",
-    "./ok.ts",
-    "./result.ts",
-
-  ],
+  "files": ["./err.ts", "./index.ts", "./ok.ts", "./result.ts"],
   "references": [
     { "path": "../../alfa-applicative" },
     { "path": "../../alfa-callback" },
@@ -23,6 +17,6 @@
     { "path": "../../alfa-option" },
     { "path": "../../alfa-reducer" },
     { "path": "../../alfa-refinement" },
-{ "path": "../../alfa-thunk" }
+    { "path": "../../alfa-thunk" }
   ]
 }

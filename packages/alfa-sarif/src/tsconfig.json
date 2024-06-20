@@ -3,5 +3,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
   "files": ["./index.ts", "./sarif.ts", "./serializable.ts"],
-  "references": [{ "path": "../../alfa-option" }, { "path": "../../alfa-refinement" }]
+  "references": [
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-refinement" }
+  ]
 }

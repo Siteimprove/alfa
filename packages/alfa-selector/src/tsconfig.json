@@ -66,17 +66,7 @@
     "./selector/simple/pseudo-element/slotted.ts",
     "./selector/simple/pseudo-element/spelling-error.ts",
     "./selector/simple/pseudo-element/target-text.ts",
-    "./specificity.ts",
-
-
-
-
-
-
-
-
-
-
+    "./specificity.ts"
   ],
   "references": [
     { "path": "../../alfa-array" },
@@ -95,6 +85,6 @@
     { "path": "../../alfa-refinement" },
     { "path": "../../alfa-sequence" },
     { "path": "../../alfa-slice" },
-{ "path": "../../alfa-thunk" }
+    { "path": "../../alfa-thunk" }
   ]
 }

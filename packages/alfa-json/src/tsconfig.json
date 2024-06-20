@@ -2,11 +2,6 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": [
-    "./builtin.ts",
-    "./index.ts",
-    "./json.ts",
-    "./serializable.ts"
-  ],
+  "files": ["./builtin.ts", "./index.ts", "./json.ts", "./serializable.ts"],
   "references": [{ "path": "../../alfa-refinement" }]
 }

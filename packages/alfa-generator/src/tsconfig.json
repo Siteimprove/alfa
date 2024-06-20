@@ -2,10 +2,9 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": ["./generator.ts", "./index.ts", ],
+  "files": ["./generator.ts", "./index.ts"],
   "references": [
     { "path": "../../alfa-mapper" },
-    { "path": "../../alfa-reducer" },
-
+    { "path": "../../alfa-reducer" }
   ]
 }

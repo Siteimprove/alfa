@@ -106,46 +106,7 @@
     "./value/transform/skew.ts",
     "./value/transform/transform.ts",
     "./value/transform/translate.ts",
-    "./value/value.ts",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "./value/value.ts"
   ],
   "references": [
     { "path": "../../alfa-array" },
@@ -164,6 +125,6 @@
     { "path": "../../alfa-result" },
     { "path": "../../alfa-selective" },
     { "path": "../../alfa-slice" },
-{ "path": "../../alfa-thunk" }
+    { "path": "../../alfa-thunk" }
   ]
 }

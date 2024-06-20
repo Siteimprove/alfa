@@ -3,5 +3,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
   "files": ["./continuation.ts", "./index.ts"],
-  "references": [{ "path": "../../alfa-callback" }, { "path": "../../alfa-mapper" }]
+  "references": [
+    { "path": "../../alfa-callback" },
+    { "path": "../../alfa-mapper" }
+  ]
 }

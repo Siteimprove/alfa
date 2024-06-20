@@ -26,8 +26,7 @@
     "./value/discrete.ts",
     "./value/index.ts",
     "./value/range.ts",
-    "./value/value.ts",
-
+    "./value/value.ts"
   ],
   "references": [
     { "path": "../../alfa-comparable" },
@@ -43,7 +42,6 @@
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
     { "path": "../../alfa-slice" },
-    { "path": "../../alfa-thunk" },
-
+    { "path": "../../alfa-thunk" }
   ]
 }

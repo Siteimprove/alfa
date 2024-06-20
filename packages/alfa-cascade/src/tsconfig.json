@@ -15,15 +15,7 @@
     "./precedence/precedence.ts",
     "./rule-tree.ts",
     "./selector-map.ts",
-    "./user-agent.ts",
-
-
-
-
-
-
-
-
+    "./user-agent.ts"
   ],
   "references": [
     { "path": "../../alfa-array" },
@@ -40,7 +32,6 @@
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
     { "path": "../../alfa-selective" },
-    { "path": "../../alfa-selector" },
-
+    { "path": "../../alfa-selector" }
   ]
 }

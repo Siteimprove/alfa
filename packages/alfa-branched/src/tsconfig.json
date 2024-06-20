@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": ["./branched.ts", "./index.ts", ],
+  "files": ["./branched.ts", "./index.ts"],
   "references": [
     { "path": "../../alfa-callback" },
     { "path": "../../alfa-collection" },
@@ -15,7 +15,6 @@
     { "path": "../../alfa-option" },
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-reducer" },
-    { "path": "../../alfa-refinement" },
-
+    { "path": "../../alfa-refinement" }
   ]
 }

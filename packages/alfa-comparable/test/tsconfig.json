@@ -4,8 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [
-    "./comparable.spec.ts"
-  ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./comparable.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

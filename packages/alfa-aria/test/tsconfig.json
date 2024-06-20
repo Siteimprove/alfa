@@ -15,5 +15,5 @@
     "./node.spec.tsx",
     "./role.spec.tsx"
   ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

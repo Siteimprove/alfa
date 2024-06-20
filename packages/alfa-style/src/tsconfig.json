@@ -180,57 +180,7 @@
     "./shorthands.ts",
     "./style.ts",
     "./value.ts",
-    "./variable.ts",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "./variable.ts"
   ],
   "references": [
     { "path": "../../alfa-applicative" },
@@ -258,6 +208,6 @@
     { "path": "../../alfa-selector" },
     { "path": "../../alfa-set" },
     { "path": "../../alfa-slice" },
-{ "path": "../../alfa-trilean" }
+    { "path": "../../alfa-trilean" }
   ]
 }

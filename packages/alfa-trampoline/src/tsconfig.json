@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": ["./index.ts", "./trampoline.ts", ],
+  "files": ["./index.ts", "./trampoline.ts"],
   "references": [
     { "path": "../../alfa-applicative" },
     { "path": "../../alfa-array" },
@@ -13,6 +13,6 @@
     { "path": "../../alfa-mapper" },
     { "path": "../../alfa-monad" },
     { "path": "../../alfa-reducer" },
-{ "path": "../../alfa-thunk" }
+    { "path": "../../alfa-thunk" }
   ]
 }

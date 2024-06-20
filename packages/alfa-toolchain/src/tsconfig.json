@@ -17,16 +17,13 @@
     "./validation/validate-changesets.ts",
     "./validation/validate-package-json.ts",
     "./validation/validate-workspace-tsconfig.ts",
-    "./index.ts",
-
-
+    "./index.ts"
   ],
   "references": [
     { "path": "../../alfa-array" },
     { "path": "../../alfa-map" },
     { "path": "../../alfa-option" },
     { "path": "../../alfa-result" },
-    { "path": "../../alfa-set" },
-
+    { "path": "../../alfa-set" }
   ]
 }

@@ -4,8 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [
-    "./media.spec.ts"
-  ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./media.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

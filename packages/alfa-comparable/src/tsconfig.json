@@ -6,8 +6,7 @@
     "./comparable.ts",
     "./comparer.ts",
     "./comparison.ts",
-    "./index.ts",
-
+    "./index.ts"
   ],
-  "references": [{ "path": "../../alfa-refinement" }, ]
+  "references": [{ "path": "../../alfa-refinement" }]
 }

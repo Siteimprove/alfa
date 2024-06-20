@@ -31,10 +31,7 @@
     "./supports/feature/index.ts",
     "./supports/feature/property.ts",
     "./supports/index.ts",
-    "./supports/query.ts",
-
-
-
+    "./supports/query.ts"
   ],
   "references": [
     { "path": "../../alfa-comparable" },
@@ -50,7 +47,6 @@
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
     { "path": "../../alfa-result" },
-    { "path": "../../alfa-slice" },
-
+    { "path": "../../alfa-slice" }
   ]
 }

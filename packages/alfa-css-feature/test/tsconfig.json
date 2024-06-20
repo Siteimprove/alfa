@@ -9,5 +9,5 @@
     "./supports.spec.ts",
     "./user-preferences.spec.ts"
   ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

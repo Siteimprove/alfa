@@ -117,5 +117,5 @@
     "./sia-r111/rule.spec.tsx",
     "./sia-r113/rule.spec.tsx"
   ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

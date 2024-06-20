@@ -10,9 +10,7 @@
     "./headers.ts",
     "./index.ts",
     "./request.ts",
-    "./response.ts",
-
-
+    "./response.ts"
   ],
   "references": [
     { "path": "../../alfa-earl" },
@@ -24,6 +22,6 @@
     { "path": "../../alfa-option" },
     { "path": "../../alfa-refinement" },
     { "path": "../../alfa-result" },
-{ "path": "../../alfa-url" }
+    { "path": "../../alfa-url" }
   ]
 }

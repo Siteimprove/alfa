@@ -2,10 +2,9 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": ["./index.ts", "./refinement.ts", ],
+  "files": ["./index.ts", "./refinement.ts"],
   "references": [
     { "path": "../../alfa-mapper" },
-    { "path": "../../alfa-predicate" },
-
+    { "path": "../../alfa-predicate" }
   ]
 }

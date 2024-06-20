@@ -4,9 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [
-    "./option.spec.ts",
-    "./maybe.spec.ts"
-  ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./option.spec.ts", "./maybe.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

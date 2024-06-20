@@ -155,116 +155,7 @@
     "./tags/index.ts",
     "./tags/stability.ts",
     "./tags/scope.ts",
-    "./tags/version.ts",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "./tags/version.ts"
   ],
   "references": [
     { "path": "../../alfa-act" },
@@ -305,7 +196,7 @@
     { "path": "../../alfa-string" },
     { "path": "../../alfa-style" },
     { "path": "../../alfa-table" },
-{ "path": "../../alfa-thunk" },
+    { "path": "../../alfa-thunk" },
     { "path": "../../alfa-trilean" },
     { "path": "../../alfa-url" },
     { "path": "../../alfa-wcag" },

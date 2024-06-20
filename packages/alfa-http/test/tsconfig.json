@@ -4,9 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [
-    "./request.spec.ts",
-    "./response.spec.ts"
-  ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./request.spec.ts", "./response.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

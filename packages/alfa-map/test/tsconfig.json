@@ -4,9 +4,6 @@
   "compilerOptions": {
     "outDir": "."
   },
-  "files": [
-    "./map.spec.ts",
-    "./property.spec.ts"
-  ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "files": ["./map.spec.ts", "./property.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

@@ -13,6 +13,7 @@ export function validateWorkspaceTsconfig({
   packageJson: PackageJSON;
 }): Array<string> {
   const name = packageJson.name;
+  console.log(`Checking ${name}`);
   const errors: Array<string> = [];
 
   const internalDependencies: Array<string> = [];
@@ -33,7 +34,7 @@ export function validateWorkspaceTsconfig({
   }
 
   const tsconfig = JSON.parse(
-    fs.readFileSync(path.join(dir, "tsconfig.json"), "utf-8"),
+    fs.readFileSync(path.join(dir, "src", "tsconfig.json"), "utf-8"),
   );
   const references = (tsconfig?.references ?? [])
     // Keep everything between last / and end of line.

@@ -7,9 +7,7 @@
     "./maybe.ts",
     "./none.ts",
     "./option.ts",
-    "./some.ts",
-
-
+    "./some.ts"
   ],
   "references": [
     { "path": "../../alfa-applicative" },
@@ -26,6 +24,6 @@
     { "path": "../../alfa-reducer" },
     { "path": "../../alfa-refinement" },
     { "path": "../../alfa-predicate" },
-{ "path": "../../alfa-thunk" }
+    { "path": "../../alfa-thunk" }
   ]
 }

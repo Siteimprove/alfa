@@ -13,8 +13,7 @@
     "./row.ts",
     "./scope.ts",
     "./slot.ts",
-    "./table.ts",
-
+    "./table.ts"
   ],
   "references": [
     { "path": "../../alfa-array" },
@@ -27,7 +26,6 @@
     { "path": "../../alfa-option" },
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
-    { "path": "../../alfa-sequence" },
-
+    { "path": "../../alfa-sequence" }
   ]
 }

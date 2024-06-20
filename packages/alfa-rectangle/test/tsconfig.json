@@ -1,11 +1,9 @@
 {
-    "$schema": "http://json.schemastore.org/tsconfig",
-    "extends": "../tsconfig.json",
-    "compilerOptions": {
-        "outDir": "."
-    },
-    "files": [
-                "./rectangle.spec.ts"
-    ],
-    "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "."
+  },
+  "files": ["./rectangle.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

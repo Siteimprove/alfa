@@ -16,5 +16,5 @@
     "./rule-tree.spec.ts",
     "./selector-map.spec.tsx"
   ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }
