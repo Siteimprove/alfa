@@ -1949,9 +1949,9 @@ __metadata:
     resolve-from: "npm:^5.0.0"
     ts-graphviz: "npm:^2.0.0"
   bin:
-    alfa-changelog: src/changeset/changelog-global.js
-    generate-dependency-graphs: src/dependency-graph/generate-graphs.js
-    validate-structure: src/validation/validate-all.js
+    alfa-changelog: dist/changeset/changelog-global.js
+    generate-dependency-graphs: dist/dependency-graph/generate-graphs.js
+    validate-structure: dist/validation/validate-all.js
   languageName: unknown
   linkType: soft
 
