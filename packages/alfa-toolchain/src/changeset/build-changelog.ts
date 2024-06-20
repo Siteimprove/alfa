@@ -178,12 +178,11 @@ export namespace Changelog {
           [key: string]: any;
         };
 
-      return `[${fullName}](${// Harden the access against non-existent packages or invalid
-      // package.json; this still leaks an undefined in the Changelog.
-      packageJSON?.repository?.directory}/CHANGELOG.md#${newVersion.replace(
-        /\./g,
-        "",
-      )})`;
+      return `[${fullName}](${
+        // Harden the access against non-existent packages or invalid
+        // package.json; this still leaks an undefined in the Changelog.
+        packageJSON?.repository?.directory
+      }/CHANGELOG.md#${newVersion.replace(/\./g, "")})`;
     };
   }
 
@@ -243,6 +242,9 @@ export namespace Changelog {
   }
 }
 
+/**
+ * @public
+ */
 const changelogFunctions: ChangelogFunctions = {
   getBody: Changelog.getBody,
   insertBody: Changelog.mergeBodies,
