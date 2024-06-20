@@ -226,9 +226,13 @@ export namespace Layer {
       // We currently have no way of extracting colors from images, so we simply
       // bail out if we encounter a background image.
       if (image.image.type === "url") {
-        errors.push(
-          ColorError.externalBackgroundImage(element, backgroundImage),
-        );
+        // If the URL is empty, it will be discarded by the browser and no image
+        // will be displayed, so we ignore it.
+        if (image.image.url !== "") {
+          errors.push(
+            ColorError.externalBackgroundImage(element, backgroundImage),
+          );
+        }
         continue;
       }
 
