@@ -1,8 +1,9 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-    "./time.spec.ts"
-  ],
-  "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
+  "compilerOptions": {
+    "outDir": "."
+  },
+  "files": ["./time.spec.ts"],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

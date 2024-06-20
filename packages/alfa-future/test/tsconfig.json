@@ -1,6 +1,9 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "."
+  },
   "files": [  "./future.spec.ts"],
   "references": [ { "path": "../src" }, {"path": "../../alfa-test" } ]
 }

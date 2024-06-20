@@ -1,6 +1,9 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [],
-  "references": [ { "path": "../src" } ]
+  "compilerOptions": {
+    "outDir": "."
+  },
+  "files": ["./test.spec.ts"],
+  "references": [{ "path": "../src" }]
 }
