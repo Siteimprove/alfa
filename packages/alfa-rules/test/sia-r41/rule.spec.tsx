@@ -1,13 +1,13 @@
 import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
+import { Response } from "@siteimprove/alfa-http";
+import { Serializable } from "@siteimprove/alfa-json";
 import { test } from "@siteimprove/alfa-test";
+import { URL } from "@siteimprove/alfa-url";
 
 import R41, { Outcomes } from "../../dist/sia-r41/rule";
 
-import { Group } from "../../dist/common/act/group";
-
-import { Response } from "@siteimprove/alfa-http";
-import { URL } from "@siteimprove/alfa-url";
+import { Group } from "../../dist";
 
 import { WithName } from "../../dist/common/diagnostic";
 import { evaluate } from "../common/evaluate";
