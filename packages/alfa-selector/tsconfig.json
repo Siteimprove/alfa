@@ -24,6 +24,7 @@
     "src/selector/simple/type.ts",
     "src/selector/simple/universal.ts",
     "src/selector/simple/pseudo-class/active.ts",
+    "src/selector/simple/pseudo-class/any-link.ts",
     "src/selector/simple/pseudo-class/disabled.ts",
     "src/selector/simple/pseudo-class/empty.ts",
     "src/selector/simple/pseudo-class/enabled.ts",
