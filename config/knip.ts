@@ -11,6 +11,11 @@ const config: KnipConfig = {
       ignoreDependencies: ["prettier"],
     },
     "packages/*": { entry, project },
+    "packages/alfa-cascade": {
+      entry,
+      project,
+      ignore: ["src/ancestor-filter.ts"],
+    },
     "packages/alfa-device": { entry: [...entry, "src/native.ts!"], project },
     "packages/alfa-dom": {
       entry: [

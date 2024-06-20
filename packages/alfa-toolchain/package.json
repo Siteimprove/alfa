@@ -11,23 +11,23 @@
     "directory": "packages/alfa-toolchain"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "exports": {
-    ".": "./src/index.js",
-    "./changelog": "./src/changeset/changelog-individual.js",
-    "./changelog.js": "./src/changeset/changelog-individual.js",
-    "./global-changelog": "./src/changeset/build-changelog.js",
-    "./global-changelog.js": "./src/changeset/build-changelog.js"
+    ".": "./dist/index.js",
+    "./changelog": "./dist/changeset/changelog-individual.js",
+    "./changelog.js": "./dist/changeset/changelog-individual.js",
+    "./global-changelog": "./dist/changeset/build-changelog.js",
+    "./global-changelog.js": "./dist/changeset/build-changelog.js"
   },
-  "types": "src/index.d.ts",
+  "types": "dist/index.d.ts",
   "bin": {
-    "alfa-changelog": "src/changeset/changelog-global.js",
-    "generate-dependency-graphs": "src/dependency-graph/generate-graphs.js",
-    "validate-structure": "src/validation/validate-all.js"
+    "alfa-changelog": "dist/changeset/changelog-global.js",
+    "generate-dependency-graphs": "dist/dependency-graph/generate-graphs.js",
+    "validate-structure": "dist/validation/validate-all.js"
   },
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "publishConfig": {
     "access": "public",
