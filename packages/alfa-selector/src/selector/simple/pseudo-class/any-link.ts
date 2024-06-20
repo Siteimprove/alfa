@@ -1,6 +1,5 @@
 import type { Element } from "@siteimprove/alfa-dom";
 
-import { Context } from "../../../context";
 import { isLink } from "../../../common/is-link";
 
 import { PseudoClassSelector } from "./pseudo-class";
@@ -21,10 +20,7 @@ export class AnyLink extends PseudoClassSelector<"any-link"> {
     yield this;
   }
 
-  public matches(
-    element: Element,
-    context: Context = Context.empty(),
-  ): boolean {
+  public matches(element: Element): boolean {
     return isLink(element);
   }
 
