@@ -53,7 +53,7 @@ export namespace None {
 }
 
 // @public (undocumented)
-export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>> {
+export interface Option<T, O extends Serializable.Options = Serializable.Options> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>, O> {
     // (undocumented)
     and<U>(option: Option<U>): Option<U>;
     // (undocumented)
@@ -115,7 +115,7 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     toArray(): Array<T>;
     // (undocumented)
-    toJSON(): Option.JSON<T>;
+    toJSON(options?: O): Option.JSON<T>;
 }
 
 // @public (undocumented)
@@ -143,7 +143,7 @@ export namespace Option {
 }
 
 // @public (undocumented)
-export class Some<T> implements Option<T> {
+export class Some<T, O extends Serializable.Options = Serializable.Options> implements Option<T, O> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -209,7 +209,7 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     toArray(): [T];
     // (undocumented)
-    toJSON(): Some.JSON<T>;
+    toJSON(options?: O): Some.JSON<T>;
     // (undocumented)
     toString(): string;
 }

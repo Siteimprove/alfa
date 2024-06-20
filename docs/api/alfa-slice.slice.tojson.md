@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Slice.JSON<T>;
+toJSON(options?: O): Slice.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Slice.JSON](./alfa-slice.slice.json.md)<!-- -->&lt;T&gt;

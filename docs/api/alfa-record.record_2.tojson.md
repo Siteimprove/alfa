@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Record.JSON<T>;
+toJSON(options?: O): Record.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Record.JSON](./alfa-record.record_2.json.md)<!-- -->&lt;T&gt;

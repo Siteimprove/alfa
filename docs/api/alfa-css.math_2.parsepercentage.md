@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parsePercentage: Parser<Slice<Token>, Math<"percentage">, string, []>
+parsePercentage: Parser<Slice<Token, json.Serializable.Options>, Math<"percentage">, string, []>
 ```

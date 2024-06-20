@@ -2,6 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -16,7 +17,10 @@ import { Nil } from "./nil";
 /**
  * @public
  */
-export interface Sequence<T> extends Collection.Indexed<T> {
+export interface Sequence<
+  T,
+  O extends Serializable.Options = Serializable.Options,
+> extends Collection.Indexed<T, O> {
   isEmpty(): this is Sequence<never>;
   forEach(callback: Callback<T, void, [index: number]>): void;
   map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
@@ -106,7 +110,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   ): Comparison;
   groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
-  toJSON(): Sequence.JSON<T>;
+  toJSON(options?: O): Sequence.JSON<T>;
 }
 
 /**

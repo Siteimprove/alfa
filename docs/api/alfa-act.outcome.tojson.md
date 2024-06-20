@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Outcome.JSON<V>;
+toJSON(options?: O): Outcome.JSON<V>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Outcome.JSON](./alfa-act.outcome.json.md)<!-- -->&lt;V&gt;

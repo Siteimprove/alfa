@@ -117,14 +117,14 @@ export class Device implements Equatable, Hashable, Serializable {
       .writeHashable(this._preferences);
   }
 
-  public toJSON(): Device.JSON {
+  public toJSON(options?: json.Serializable.Options): Device.JSON {
     return {
       type: this._type,
-      viewport: this._viewport.toJSON(),
-      display: this._display.toJSON(),
-      scripting: this._scripting.toJSON(),
+      viewport: this._viewport.toJSON(options),
+      display: this._display.toJSON(options),
+      scripting: this._scripting.toJSON(options),
       preferences: [...this._preferences.values()].map((preferece) =>
-        preferece.toJSON(),
+        preferece.toJSON(options),
       ),
     };
   }

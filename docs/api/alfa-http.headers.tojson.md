@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Headers.JSON;
+toJSON(options?: json.Serializable.Options): Headers.JSON;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [json.Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+
 **Returns:**
 
 [Headers.JSON](./alfa-http.headers.json.md)

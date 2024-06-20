@@ -1,5 +1,13 @@
 # @siteimprove/alfa-tree
 
+## 0.82.0
+
+### Minor Changes
+
+- **Added:** Verbosity option has been added to JSON serialization of alfa-tree `Node` and to `Outcome` and `Group`. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
+- **Breaking:** Node 18 is no longer supported. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
 ## 0.81.0
 
 ### Patch Changes

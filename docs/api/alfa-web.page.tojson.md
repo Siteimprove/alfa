@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Page.JSON;
+toJSON(options?: Node.SerializationOptions): Page.JSON;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | Node.SerializationOptions | _(Optional)_ |
+
 **Returns:**
 
 [Page.JSON](./alfa-web.page.json.md)

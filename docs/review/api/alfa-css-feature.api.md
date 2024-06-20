@@ -61,9 +61,9 @@ export namespace Feature {
     const // Warning: (ae-forgotten-export) The symbol "Media" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    parseMediaQuery: Parser<Slice<Token>, Media.List, string, []>;
+    parseMediaQuery: Parser<Slice<Token, Serializable.Options>, Media.List, string, []>;
     const // (undocumented)
-    parseSupportsQuery: Parser<Slice<Token>, Supports.Query, string, []>;
+    parseSupportsQuery: Parser<Slice<Token, Serializable.Options>, Supports.Query, string, []>;
 }
 
 // (No @packageDocumentation comment for this package)

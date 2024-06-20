@@ -11,6 +11,12 @@
 export declare namespace Serializable 
 ```
 
+## Enumerations
+
+|  Enumeration | Description |
+|  --- | --- |
+|  [Verbosity](./alfa-json.serializable.verbosity.md) |  |
+
 ## Functions
 
 |  Function | Description |
@@ -18,6 +24,12 @@ export declare namespace Serializable
 |  [isSerializable(value)](./alfa-json.serializable.isserializable.md) |  |
 |  [toJSON(value, options)](./alfa-json.serializable.tojson.md) |  |
 |  [toJSON(value, options)](./alfa-json.serializable.tojson_1.md) |  |
+
+## Interfaces
+
+|  Interface | Description |
+|  --- | --- |
+|  [Options](./alfa-json.serializable.options.md) |  |
 
 ## Type Aliases
 

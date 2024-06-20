@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-function parse<H extends BaseNumeric.Type = BaseNumeric.Type>(input: Slice<Token>): import("@siteimprove/alfa-result").Result<[Slice<Token>, Fixed<H> | Calculated<H>], string>;
+function parse<H extends BaseNumeric.Type = BaseNumeric.Type>(input: Slice<Token>): import("@siteimprove/alfa-result").Result<[Slice<Token, import("@siteimprove/alfa-json").Serializable.Options>, Fixed<H> | Calculated<H>], string, import("@siteimprove/alfa-json").Serializable.Options>;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ function parse<H extends BaseNumeric.Type = BaseNumeric.Type>(input: Slice<Token
 
 **Returns:**
 
-import("@siteimprove/alfa-result").[Result](./alfa-result.result.md)<!-- -->&lt;\[Slice&lt;Token&gt;, [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt; \| [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;\], string&gt;
+import("@siteimprove/alfa-result").[Result](./alfa-result.result.md)<!-- -->&lt;\[Slice&lt;Token, import("@siteimprove/alfa-json").[Serializable.Options](./alfa-json.serializable.options.md)<!-- -->&gt;, [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt; \| [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;\], string, import("@siteimprove/alfa-json").[Serializable.Options](./alfa-json.serializable.options.md)<!-- -->&gt;
 

@@ -20,6 +20,7 @@ import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
 import { Refinement } from '@siteimprove/alfa-refinement';
+import { Serializable } from '@siteimprove/alfa-json';
 
 // Warning: (ae-internal-missing-underscore) The name "Branch" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -85,7 +86,7 @@ export class Leaf<T> implements Node<T> {
 }
 
 // @public (undocumented)
-export class List<T> implements Collection.Indexed<T> {
+export class List<T, O extends Serializable.Options = Serializable.Options> implements Collection.Indexed<T, O> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -221,7 +222,7 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(): List.JSON<T>;
+    toJSON(options?: O): List.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

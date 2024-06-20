@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Sequence.JSON<T>;
+toJSON(options?: O): Sequence.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Sequence.JSON](./alfa-sequence.sequence.json.md)<!-- -->&lt;T&gt;

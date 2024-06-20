@@ -63,8 +63,8 @@ export class Headers
     return [...this];
   }
 
-  public toJSON(): Headers.JSON {
-    return this.toArray().map((header) => header.toJSON());
+  public toJSON(options?: json.Serializable.Options): Headers.JSON {
+    return this.toArray().map((header) => header.toJSON(options));
   }
 
   public toEARL(): Headers.EARL {

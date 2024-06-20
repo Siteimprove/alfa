@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): List.JSON<T>;
+toJSON(options?: O): List.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [List.JSON](./alfa-list.list.json.md)<!-- -->&lt;T&gt;

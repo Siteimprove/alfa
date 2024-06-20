@@ -8,6 +8,7 @@ import { Group } from "../../dist/common/act/group";
 
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
+
 import { WithName } from "../../dist/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
@@ -170,4 +171,45 @@ test(`evaluate() can't tell if two links that have the same name references
       ),
     ),
   ]);
+});
+
+test(`toJSON() with minimal verbosity produces target with correct serialization ids`, async (t) => {
+  const accessibleName = "Foo";
+
+  const elmId1 = crypto.randomUUID();
+  const elmId2 = crypto.randomUUID();
+
+  const target = [
+    <a href="foo.html" serializationId={elmId1}>
+      {accessibleName}
+    </a>,
+    <a href="foo.html" serializationId={elmId2}>
+      {accessibleName}
+    </a>,
+  ];
+
+  const document = h.document(target);
+
+  t.deepEqual(
+    (
+      await evaluate(
+        R41,
+        { document },
+        oracle({
+          "reference-equivalent-resources": false,
+        }),
+        { verbosity: Serializable.Verbosity.Minimal },
+      )
+    ).flatMap((foo) => foo.target),
+    [
+      {
+        type: "element",
+        serializationId: elmId1,
+      },
+      {
+        type: "element",
+        serializationId: elmId2,
+      },
+    ],
+  );
 });

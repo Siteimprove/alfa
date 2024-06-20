@@ -22,6 +22,7 @@ export declare namespace Attribute
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-dom.attribute.json.md) |  |
+|  [MinimalJSON](./alfa-dom.attribute.minimaljson.md) |  |
 
 ## Variables
 

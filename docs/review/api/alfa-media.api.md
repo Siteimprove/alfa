@@ -74,7 +74,7 @@ export namespace Media {
     list: typeof List.of, // (undocumented)
     isList: typeof List.isList;
     const // (undocumented)
-    parse: Parser<Slice<Token>, List, string, []>;
+    parse: Parser<Slice<Token, Serializable.Options>, List, string, []>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -9,6 +9,7 @@ import { Document as Document_2 } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
 import { Graph } from '@siteimprove/alfa-graph';
 import * as json from '@siteimprove/alfa-json';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
 import { Request as Request_2 } from '@siteimprove/alfa-http';
 import { Response as Response_2 } from '@siteimprove/alfa-http';
 import { Result } from '@siteimprove/alfa-result';
@@ -29,7 +30,7 @@ export class Page implements Resource, json.Serializable<Page.JSON>, earl.Serial
     // (undocumented)
     toEARL(): Page.EARL;
     // (undocumented)
-    toJSON(): Page.JSON;
+    toJSON(options?: Node_2.SerializationOptions): Page.JSON;
     // (undocumented)
     toSARIF(): sarif.Artifact;
 }

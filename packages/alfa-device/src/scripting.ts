@@ -38,7 +38,7 @@ export class Scripting implements Equatable, Hashable, Serializable {
     hash.writeBoolean(this._enabled);
   }
 
-  public toJSON(): Scripting.JSON {
+  public toJSON(options?: json.Serializable.Options): Scripting.JSON {
     return {
       enabled: this._enabled,
     };

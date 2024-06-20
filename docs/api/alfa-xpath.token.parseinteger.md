@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseInteger: Parser<Slice<Token>, Integer, string, []>
+parseInteger: Parser<Slice<Token, Serializable.Options>, Integer, string, []>
 ```

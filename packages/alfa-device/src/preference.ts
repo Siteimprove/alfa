@@ -47,7 +47,7 @@ export class Preference<N extends Preference.Name = Preference.Name>
     hash.writeString(this._name).writeString(this._value);
   }
 
-  public toJSON(): Preference.JSON<N> {
+  public toJSON(options?: json.Serializable.Options): Preference.JSON<N> {
     return {
       name: this._name,
       value: this._value,

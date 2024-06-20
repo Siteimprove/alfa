@@ -534,9 +534,10 @@ export namespace Array {
     return array[Symbol.iterator]();
   }
 
-  export function toJSON<T>(
-    array: ReadonlyArray<T>,
-  ): Array<Serializable.ToJSON<T>> {
-    return array.map((value) => Serializable.toJSON(value));
+  export function toJSON<
+    T,
+    O extends Serializable.Options = Serializable.Options,
+  >(array: ReadonlyArray<T>, options?: O): Array<Serializable.ToJSON<T>> {
+    return array.map((value) => Serializable.toJSON(value, options));
   }
 }

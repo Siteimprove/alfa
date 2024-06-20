@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseDecimal: Parser<Slice<Token>, Decimal, string, []>
+parseDecimal: Parser<Slice<Token, Serializable.Options>, Decimal, string, []>
 ```

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function document(children: Array<Node | string>, style?: Array<Sheet>, externalId?: string, extraData?: any): Document;
+function document(children: Array<Node | string>, style?: Array<Sheet>, externalId?: string, serializationId?: string, extraData?: any): Document;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ function document(children: Array<Node | string>, style?: Array<Sheet>, external
 |  children | Array&lt;Node \| string&gt; |  |
 |  style | Array&lt;Sheet&gt; | _(Optional)_ |
 |  externalId | string | _(Optional)_ |
+|  serializationId | string | _(Optional)_ |
 |  extraData | any | _(Optional)_ |
 
 **Returns:**
