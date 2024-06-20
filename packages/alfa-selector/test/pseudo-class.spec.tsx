@@ -303,3 +303,28 @@ test("#matches() checks if an element matches a :visited selector", (t) => {
     t.equal(selector.matches(element), false, element.toString());
   }
 });
+
+test("#matches() checks if an element matches a :any-link selector", (t) => {
+  const selector = parse(":any-link");
+
+  // These elements are links
+  for (const element of [
+    <a href="#" />,
+    <area href="#" />,
+    <link href="#" />,
+  ]) {
+    // Matches both visited and non-visited links
+    t.equal(
+      selector.matches(element, Context.visit(element)),
+      true,
+      element.toString(),
+    );
+
+    t.equal(selector.matches(element), true, element.toString());
+  }
+
+  // These elements aren't links
+  for (const element of [<a />, <p />]) {
+    t.equal(selector.matches(element), false, element.toString());
+  }
+});
