@@ -61,9 +61,19 @@ export namespace Unit {
     }
 
     /**
+     * {@link https://drafts.csswg.org/css-values/#lengths}
+     */
+    export const Canonical = "px";
+    export type Canonical = typeof Canonical;
+
+    export function isCanonical(unit: string): unit is Canonical {
+      return unit === Canonical;
+    }
+
+    /**
      * {@link https://drafts.csswg.org/css-values/#absolute-lengths}
      */
-    export type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
+    export type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | Canonical;
 
     export function isAbsolute(unit: string): unit is Absolute {
       switch (unit) {
@@ -97,10 +107,22 @@ export namespace Unit {
     return isRelativeLength(unit) || isAbsoluteLength(unit);
   }
 
+  export namespace Angle {
+    /**
+     * {@link https://drafts.csswg.org/css-values/#angles}
+     */
+    export const Canonical = "deg";
+    export type Canonical = typeof Canonical;
+
+    export function isCanonical(unit: string): unit is Canonical {
+      return unit === Canonical;
+    }
+  }
+
   /**
    * {@link https://drafts.csswg.org/css-values/#angles}
    */
-  export type Angle = "deg" | "grad" | "rad" | "turn";
+  export type Angle = Angle.Canonical | "grad" | "rad" | "turn";
 
   export function isAngle(unit: string): unit is Angle {
     switch (unit) {
@@ -114,10 +136,22 @@ export namespace Unit {
     return false;
   }
 
+  export namespace Time {
+    /**
+     * {@link https://drafts.csswg.org/css-values/#time}
+     */
+    export const Canonical = "s";
+    export type Canonical = typeof Canonical;
+
+    export function isCanonical(unit: string): unit is Canonical {
+      return unit === Canonical;
+    }
+  }
+
   /**
    * {@link https://drafts.csswg.org/css-values/#time}
    */
-  export type Time = "s" | "ms";
+  export type Time = Time.Canonical | "ms";
 
   export function isTime(unit: string): unit is Time {
     switch (unit) {
@@ -129,10 +163,22 @@ export namespace Unit {
     return false;
   }
 
+  export namespace Frequency {
+    /**
+     * {@link https://drafts.csswg.org/css-values/#frequency}
+     */
+    export const Canonical = "hz";
+    export type Canonical = typeof Canonical;
+
+    export function isCanonical(unit: string): unit is Canonical {
+      return unit === Canonical;
+    }
+  }
+
   /**
    * {@link https://drafts.csswg.org/css-values/#frequency}
    */
-  export type Frequency = "hz" | "kHz";
+  export type Frequency = Frequency.Canonical | "kHz";
 
   export function isFrequency(unit: string): unit is Frequency {
     switch (unit) {
@@ -144,10 +190,22 @@ export namespace Unit {
     return false;
   }
 
+  export namespace Resolution {
+    /**
+     * {@link https://drafts.csswg.org/css-values/#resolution}
+     */
+    export const Canonical = "dppx";
+    export type Canonical = typeof Canonical;
+
+    export function isCanonical(unit: string): unit is Canonical {
+      return unit === Canonical;
+    }
+  }
+
   /**
    * {@link https://drafts.csswg.org/css-values/#resolution}
    */
-  export type Resolution = "dpi" | "dpcm" | "dppx";
+  export type Resolution = "dpi" | "dpcm" | Resolution.Canonical;
 
   export function isResolution(unit: string): unit is Resolution {
     switch (unit) {

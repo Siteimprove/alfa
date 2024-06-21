@@ -1,9 +1,9 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
-import { Angle, Length, Number, Numeric } from "../numeric";
-
 import { Unit } from "../../unit";
+
+import { Angle, Length, Number, Numeric } from "../numeric";
 
 import { Expression } from "./expression";
 import { Kind } from "./kind";
@@ -72,9 +72,10 @@ export namespace Function {
       super("calculation", args, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const reduced = this._args[0].reduce(resolver);
 
       // If the calculation reduces to a value, no need to keep
@@ -109,9 +110,10 @@ export namespace Function {
       super("max", args, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       // We know from the guard in Max.of that all args have the same kind.
 
       const reduced = this._args.map((expr) => expr.reduce(resolver));
@@ -137,17 +139,27 @@ export namespace Function {
           values.every(
             // The unit test is theoretically not needed since reduced angle values
             // should always be in the canonical unit (no relative angles)
-            (value) => isAngle(value) && value.hasUnit("deg"),
+            (value) => isAngle(value) && value.hasUnit(Unit.Angle.Canonical),
           )
         ) {
           return Value.of(
-            Angle.of(Math.max(...values.map((value) => value.value)), "deg"),
+            Angle.of(
+              Math.max(...values.map((value) => value.value)),
+              Unit.Angle.Canonical,
+            ),
           );
         }
 
-        if (values.every((value) => isLength(value) && value.hasUnit("px"))) {
+        if (
+          values.every(
+            (value) => isLength(value) && value.hasUnit(Unit.Length.Canonical),
+          )
+        ) {
           return Value.of(
-            Length.of(Math.max(...values.map((value) => value.value)), "px"),
+            Length.of(
+              Math.max(...values.map((value) => value.value)),
+              Unit.Length.Canonical,
+            ),
           );
         }
         // reduced contains percentages or relative lengths, we just fall through

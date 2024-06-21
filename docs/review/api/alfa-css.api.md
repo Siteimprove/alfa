@@ -36,7 +36,7 @@ export namespace Angle {
         // (undocumented)
         static of(value: Math_2<"angle">): Calculated;
         // (undocumented)
-        resolve(): Canonical;
+        resolve(resolver?: Numeric.GenericResolver): Canonical;
     }
     // (undocumented)
     export namespace Calculated {
@@ -64,6 +64,8 @@ export namespace Angle {
         resolve(): Canonical;
         // (undocumented)
         scale(factor: number): Fixed<U>;
+        // @internal (undocumented)
+        toBase(): Angle_2<U>;
         // (undocumented)
         withUnit<U extends Unit.Angle>(unit: U): Fixed<U>;
     }
@@ -107,7 +109,7 @@ export namespace AnglePercentage {
         // (undocumented)
         static of(value: Math_2<"angle-percentage">): Calculated;
         // (undocumented)
-        resolve(): Canonical;
+        resolve(resolver?: Numeric.GenericResolver): Canonical;
     }
     // (undocumented)
     export namespace Calculated {
@@ -143,7 +145,7 @@ export namespace AnglePercentage {
     export function of(value: Math_2<"angle-percentage">): Calculated;
     // (undocumented)
     export function of(value: Math_2<"percentage">): Percentage.Calculated;
-    export function resolve(value: AnglePercentage): Canonical;
+    export function resolve(value: AnglePercentage, resolver?: Numeric.GenericResolver): Canonical;
     const // (undocumented)
     parse: Parser<AnglePercentage>;
 }
@@ -398,18 +400,18 @@ export namespace Declaration {
 // @public (undocumented)
 export namespace Dimension {
     // Warning: (ae-forgotten-export) The symbol "Type" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "DBase" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "DCanonicalUnit" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ToBase" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ToCanonicalUnit" needs to be exported by the entry point index.d.ts
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
-    export abstract class Calculated<T extends Type = Type, PR extends Type = T> extends Numeric.Calculated<T, DBase[T], PR> implements Resolvable<Fixed<DBase[T], DCanonicalUnit[DBase[T]]>, unknown>, PartiallyResolvable<any, any> {
+    export abstract class Calculated<T extends Type = Type, PR extends Type = T> extends Numeric.Calculated<T, ToBase[T], PR> implements Resolvable<Fixed<ToBase[T], ToCanonicalUnit[ToBase[T]]>, unknown>, PartiallyResolvable<any, any> {
         protected constructor(math: Numeric.ToMath<T>, type: T);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         hasCalculation(): this is Calculated<T, PR>;
         // (undocumented)
-        abstract resolve(resolver?: unknown): Fixed<DBase[T], DCanonicalUnit[DBase[T]]>;
+        abstract resolve(resolver?: unknown): Fixed<ToBase[T], ToCanonicalUnit[ToBase[T]]>;
     }
     // (undocumented)
     export namespace Calculated {
@@ -418,12 +420,12 @@ export namespace Dimension {
         }
     }
     // Warning: (ae-forgotten-export) The symbol "Numeric_2" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "DUnit" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "Dimension_2" needs to be exported by the entry point index.d.ts
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
-    export abstract class Fixed<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends DUnit[T] = DUnit[T]> extends Numeric.Fixed<T> implements Resolvable<Fixed<T, DCanonicalUnit[T]>, unknown>, Convertible<DUnit[T]>, Comparable<Fixed<T>> {
+    export abstract class Fixed<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends Dimension_2.ToUnit[T] = Dimension_2.ToUnit[T]> extends Numeric.Fixed<T> implements Resolvable<Fixed<T, ToCanonicalUnit[T]>, unknown>, Convertible<Dimension_2.ToUnit[T]>, Comparable<Fixed<T>> {
         protected constructor(value: number, unit: U, type: T);
         // (undocumented)
-        get canonicalUnit(): DCanonicalUnit[T];
+        get canonicalUnit(): ToCanonicalUnit[T];
         // (undocumented)
         compare(value: Fixed<T>): Comparison;
         // (undocumented)
@@ -433,9 +435,9 @@ export namespace Dimension {
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        abstract hasUnit<V extends DUnit[T]>(unit: V): this is Fixed<T, V>;
+        abstract hasUnit<V extends Dimension_2.ToUnit[T]>(unit: V): this is Fixed<T, V>;
         // (undocumented)
-        abstract resolve(resolver?: unknown): Fixed<T, DCanonicalUnit[T]>;
+        abstract resolve(resolver?: unknown): Fixed<T, ToCanonicalUnit[T]>;
         // (undocumented)
         toJSON(): Fixed.JSON<T, U>;
         // (undocumented)
@@ -445,12 +447,12 @@ export namespace Dimension {
         // (undocumented)
         protected readonly _unit: U;
         // (undocumented)
-        abstract withUnit<V extends DUnit[T]>(unit: V): Fixed<T, V>;
+        abstract withUnit<V extends Dimension_2.ToUnit[T]>(unit: V): Fixed<T, V>;
     }
     // (undocumented)
     export namespace Fixed {
         // (undocumented)
-        export interface JSON<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends DUnit[T] = DUnit[T]> extends Numeric.Fixed.JSON<T> {
+        export interface JSON<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends Dimension_2.ToUnit[T] = Dimension_2.ToUnit[T]> extends Numeric.Fixed.JSON<T> {
             // (undocumented)
             unit: U;
         }
@@ -515,6 +517,74 @@ export namespace Ellipse {
     export type Resolver = Radius.Resolver & Position.Resolver;
     const // (undocumented)
     parse: Parser<Ellipse>;
+}
+
+// @public (undocumented)
+export abstract class Expression<T extends string = string> implements Equatable, Serializable {
+    protected constructor(type: T, kind: Kind);
+    // (undocumented)
+    abstract equals(value: unknown): value is this;
+    // (undocumented)
+    get kind(): Kind;
+    // Warning: (ae-forgotten-export) The symbol "Kind" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    protected readonly _kind: Kind;
+    // (undocumented)
+    abstract reduce<L extends Unit.Length = Unit.Length.Canonical, P extends Numeric_2 = Numeric_2>(resolver: Expression.Resolver<L, P>): Expression;
+    // (undocumented)
+    toAngle(): Result<Angle_2, string>;
+    // (undocumented)
+    toJSON(): Expression.JSON<T>;
+    // Warning: (ae-forgotten-export) The symbol "Length_2" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    toLength(): Result<Length_2, string>;
+    // Warning: (ae-forgotten-export) The symbol "Number_3" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    toNumber(): Result<Number_3, string>;
+    // Warning: (ae-forgotten-export) The symbol "Percentage_2" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    toPercentage(): Result<Percentage_2, string>;
+    // (undocumented)
+    abstract toString(): string;
+    // (undocumented)
+    get type(): T;
+    // (undocumented)
+    protected readonly _type: T;
+}
+
+// @public (undocumented)
+export namespace Expression {
+    // @internal
+    export interface GenericResolver<L extends Unit.Length = Unit.Length.Canonical> {
+        // (undocumented)
+        length?(value: Length_2<Unit.Length.Relative>): Length_2<L>;
+    }
+    // (undocumented)
+    export interface JSON<T extends string = string> {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        type: T;
+    }
+    // @internal (undocumented)
+    export interface LengthResolver<L extends Unit.Length = Unit.Length.Canonical> {
+        // (undocumented)
+        length(value: Length_2<Unit.Length.Relative>): Length_2<L>;
+    }
+    // @internal (undocumented)
+    export interface PercentageResolver<P extends Numeric_2 = Numeric_2> {
+        // (undocumented)
+        percentage(value: Percentage_2): P;
+    }
+    // Warning: (ae-incompatible-release-tags) The symbol "Resolver" is marked as @public, but its signature references "Expression" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "Resolver" is marked as @public, but its signature references "Expression" which is marked as @internal
+    //
+    // (undocumented)
+    export type Resolver<L extends Unit.Length = Unit.Length.Canonical, P extends Numeric_2 = Numeric_2> = LengthResolver<L> & PercentageResolver<P>;
 }
 
 // @public (undocumented)
@@ -792,28 +862,28 @@ export type Integer = Integer.Calculated | Integer.Fixed;
 // @public (undocumented)
 export namespace Integer {
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
-    export class Calculated extends Numeric.Calculated<"number"> implements Resolvable<Canonical, never> {
+    export class Calculated extends Numeric.Calculated<"integer"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         static of(value: Math_2<"number">): Calculated;
         // (undocumented)
-        partiallyResolve(): Canonical;
+        partiallyResolve(resolver?: Numeric.GenericResolver): Canonical;
         // (undocumented)
-        resolve(): Canonical;
+        resolve(resolver?: Numeric.GenericResolver): Canonical;
         // (undocumented)
         toJSON(): Calculated.JSON;
     }
     // (undocumented)
     export namespace Calculated {
         // (undocumented)
-        export interface JSON extends Numeric.Calculated.JSON<"number"> {
+        export interface JSON extends Numeric.Calculated.JSON<"integer"> {
         }
     }
     // (undocumented)
     export type Canonical = Fixed;
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
-    export class Fixed extends Numeric.Fixed<"number"> implements Resolvable<Canonical, never> {
+    export class Fixed extends Numeric.Fixed<"integer"> implements Resolvable<Canonical, never> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -828,13 +898,15 @@ export namespace Integer {
         resolve(): this;
         // (undocumented)
         scale(factor: number): Fixed;
+        // @internal (undocumented)
+        toBase(): Integer_2;
         // (undocumented)
         toJSON(): Fixed.JSON;
     }
     // (undocumented)
     export namespace Fixed {
         // (undocumented)
-        export interface JSON extends Numeric.Fixed.JSON<"number"> {
+        export interface JSON extends Numeric.Fixed.JSON<"integer"> {
         }
     }
     // (undocumented)
@@ -903,7 +975,7 @@ export namespace Length {
         // (undocumented)
         static of(value: Math_2<"length">): Calculated;
         // (undocumented)
-        resolve(resolver: Resolver): Canonical;
+        resolve(resolver: Resolver & Numeric.GenericResolver): Canonical;
     }
     // (undocumented)
     export namespace Calculated {
@@ -912,7 +984,7 @@ export namespace Length {
         }
     }
     // (undocumented)
-    export type Canonical = Fixed<"px">;
+    export type Canonical = Fixed<Unit.Length.Canonical>;
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Fixed<U extends Unit.Length = Unit.Length> extends Dimension.Fixed<"length", U> implements Resolvable<Canonical, Resolver>, Comparable<Fixed<U>> {
         // (undocumented)
@@ -931,13 +1003,13 @@ export namespace Length {
         isViewportRelative(): this is Fixed<Unit.Length.Relative.Viewport>;
         // (undocumented)
         static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
-        // Warning: (ae-forgotten-export) The symbol "Length_2" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         static of<U extends Unit.Length>(value: Length_2<U>): Fixed<U>;
         resolve(resolver: Resolver): Canonical;
         // (undocumented)
         scale(factor: number): Fixed<U>;
+        // @internal (undocumented)
+        toBase(): Length_2<U>;
         // (undocumented)
         withUnit<U extends Unit.Length>(unit: U): Fixed<U>;
     }
@@ -967,6 +1039,10 @@ export namespace Length {
         length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
     }
     export function resolver(emBase: Canonical, remBase: Canonical, vwBase: Canonical, vhBase: Canonical): Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+    // @internal (undocumented)
+    export function toExpressionResolver(resolver: Resolver): Expression.LengthResolver;
+    // @internal (undocumented)
+    export function toExpressionResolver(resolver: any): {};
     const // (undocumented)
     parse: Parser<Length>;
 }
@@ -988,7 +1064,7 @@ export namespace LengthPercentage {
         // (undocumented)
         partiallyResolve(resolver: PartialResolver): this;
         // (undocumented)
-        resolve(resolver: Resolver): Canonical;
+        resolve(resolver: Resolver & Numeric.GenericResolver): Canonical;
     }
     // (undocumented)
     export namespace Calculated {
@@ -1026,7 +1102,7 @@ export namespace LengthPercentage {
     export type PartiallyResolved = Canonical | Percentage.PartiallyResolved<"length"> | LengthPercentage.Calculated;
     // (undocumented)
     export type PartialResolver = Length.Resolver;
-    export function resolve(resolver: Resolver): (value: LengthPercentage) => Canonical;
+    export function resolve(resolver: Resolver & Numeric.GenericResolver): (value: LengthPercentage) => Canonical;
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length">;
     const // (undocumented)
@@ -1103,27 +1179,21 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> {
     isNumber(): this is Math_2<"number">;
     // (undocumented)
     isPercentage(): this is Math_2<"percentage">;
-    // Warning: (ae-forgotten-export) The symbol "Expression" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     static of(expression: Expression): Math_2;
     // (undocumented)
     reduce(resolver: Expression.Resolver): Math_2;
-    resolve(this: Math_2<"angle">): Result<Angle_2<"deg">, string>;
+    resolve(this: Math_2<"angle">, resolver?: Expression.GenericResolver): Result<Angle_2<"deg">, string>;
     // (undocumented)
-    resolve(this: Math_2<"angle-percentage">, resolver: Expression.PercentageResolver<Angle_2<"deg">>): Result<Angle_2<"deg">, string>;
+    resolve(this: Math_2<"angle-percentage">, resolver?: Expression.PercentageResolver<Angle_2<Unit.Angle.Canonical>> & Expression.GenericResolver): Result<Angle_2<Unit.Angle.Canonical>, string>;
     // (undocumented)
-    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length_2<"px">, string>;
+    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver & Expression.GenericResolver): Result<Length_2<Unit.Length.Canonical>, string>;
     // (undocumented)
-    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>): Result<Length_2<"px">, string>;
-    // Warning: (ae-forgotten-export) The symbol "Number_3" needs to be exported by the entry point index.d.ts
-    //
+    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<Unit.Length.Canonical, Length_2<Unit.Length.Canonical>> & Expression.GenericResolver): Result<Length_2<Unit.Length.Canonical>, string>;
     // (undocumented)
-    resolve(this: Math_2<"number">): Result<Number_3, string>;
-    // Warning: (ae-forgotten-export) The symbol "Percentage_2" needs to be exported by the entry point index.d.ts
-    //
+    resolve(this: Math_2<"number">, resolver?: Expression.GenericResolver): Result<Number_3, string>;
     // (undocumented)
-    resolve<T extends Numeric_2 = Percentage_2>(this: Math_2<"percentage">, resolver?: Expression.PercentageResolver<T>, hint?: T extends Angle_2 ? "angle" : "length"): Result<T, string>;
+    resolve<T extends Numeric_2 = Percentage_2>(this: Math_2<"percentage">, resolver?: Expression.PercentageResolver<T> & Expression.GenericResolver): Result<T, string>;
     // (undocumented)
     toJSON(): Math_2.JSON;
     // (undocumented)
@@ -1134,8 +1204,6 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> {
 
 // @public (undocumented)
 namespace Math_2 {
-    // Warning: (ae-forgotten-export) The symbol "Kind" needs to be exported by the entry point index.d.ts
-    //
     // @internal (undocumented)
     type Dimension = Kind.Base | `${Numeric_2.Dimension}-percentage` | "number";
     // (undocumented)
@@ -1328,9 +1396,9 @@ namespace Number_2 {
         // (undocumented)
         static of(value: Math_2<"number">): Calculated;
         // (undocumented)
-        partiallyResolve(): Canonical;
+        partiallyResolve(resolver?: Numeric.GenericResolver): Canonical;
         // (undocumented)
-        resolve(): Canonical;
+        resolve(resolver?: Numeric.GenericResolver): Canonical;
         // (undocumented)
         toJSON(): Calculated.JSON;
     }
@@ -1354,6 +1422,8 @@ namespace Number_2 {
         resolve(): this;
         // (undocumented)
         scale(factor: number): Fixed;
+        // @internal (undocumented)
+        toBase(): Number_3;
         // (undocumented)
         toJSON(): Fixed.JSON;
     }
@@ -1405,8 +1475,10 @@ export namespace Numeric {
         //
         // (undocumented)
         protected readonly _math: ToMath<T>;
+        // Warning: (ae-incompatible-release-tags) The symbol "resolve" is marked as @public, but its signature references "Numeric" which is marked as @internal
+        //
         // (undocumented)
-        abstract resolve(resolver?: unknown): Fixed<R>;
+        abstract resolve(resolver?: GenericResolver): Fixed<R>;
         // (undocumented)
         toJSON(): Calculated.JSON<T>;
         // (undocumented)
@@ -1439,6 +1511,8 @@ export namespace Numeric {
         abstract resolve(resolver?: unknown): Fixed<R>;
         // (undocumented)
         abstract scale(factor: number): Fixed<T, R>;
+        // @internal (undocumented)
+        abstract toBase(): Numeric_2<T extends `${infer U}-percentage` ? never : T>;
         // (undocumented)
         toJSON(): Fixed.JSON<T>;
         // (undocumented)
@@ -1456,6 +1530,8 @@ export namespace Numeric {
             value: number;
         }
     }
+    // @internal
+    export type GenericResolver = Partial<Length.Resolver>;
     // (undocumented)
     export function isCalculated(value: unknown): value is Calculated;
     // (undocumented)
@@ -1496,11 +1572,11 @@ export namespace Percentage {
         // (undocumented)
         static of<H extends Numeric_2.Type = Numeric_2.Type>(value: Math_2<"percentage">): Calculated<H>;
         // (undocumented)
-        partiallyResolve(): PartiallyResolved<H>;
+        partiallyResolve(resolver?: Numeric.GenericResolver): PartiallyResolved<H>;
         // (undocumented)
         resolve(): Fixed<H>;
         // (undocumented)
-        resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
+        resolve<T extends Canonicals[H]>(resolver: Resolver<H> & Numeric.GenericResolver): T;
         // (undocumented)
         toJSON(): Calculated.JSON;
     }
@@ -1523,11 +1599,13 @@ export namespace Percentage {
         // (undocumented)
         partiallyResolve(): PartiallyResolved<H>;
         // (undocumented)
-        resolve(): Canonical;
+        resolve<T extends Canonicals[H]>(resolver: Resolver<H> & Numeric.GenericResolver): T;
         // (undocumented)
-        resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
+        resolve(resolver?: Partial<Resolver<H> & Numeric.GenericResolver>): Canonical;
         // (undocumented)
         scale(factor: number): Fixed<H>;
+        // @internal (undocumented)
+        toBase(): Percentage_2;
         // (undocumented)
         toJSON(): Fixed.JSON;
         // (undocumented)
@@ -1561,6 +1639,10 @@ export namespace Percentage {
     export type Resolver<H extends Numeric_2.Type> = H extends "percentage" ? never : {
         percentageBase: Canonicals[H];
     };
+    // @internal (undocumented)
+    export function toExpressionResolver<H extends Numeric_2.Type, B extends Numeric_2<H>>(resolver: Resolver<H>): Expression.PercentageResolver<B>;
+    // @internal (undocumented)
+    export function toExpressionResolver(resolver: any): {};
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Perspective" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -3120,14 +3202,32 @@ export type Unit = Unit.Length | Unit.Angle | Unit.Time | Unit.Frequency | Unit.
 // @public (undocumented)
 export namespace Unit {
     // (undocumented)
-    export type Angle = "deg" | "grad" | "rad" | "turn";
+    export namespace Angle {
+        const // (undocumented)
+        Canonical = "deg";
+        // (undocumented)
+        export type Canonical = typeof Canonical;
+        // (undocumented)
+        export function isCanonical(unit: string): unit is Canonical;
+    }
     const // (undocumented)
     isRelativeLength: typeof Length.isRelative, // (undocumented)
     isFontRelativeLength: typeof Length.isFontRelative, // (undocumented)
     isViewportRelativeLength: typeof Length.isViewportRelative, // (undocumented)
     isAbsoluteLength: typeof Length.isAbsolute;
     // (undocumented)
-    export type Frequency = "hz" | "kHz";
+    export type Angle = Angle.Canonical | "grad" | "rad" | "turn";
+    // (undocumented)
+    export namespace Frequency {
+        const // (undocumented)
+        Canonical = "hz";
+        // (undocumented)
+        export type Canonical = typeof Canonical;
+        // (undocumented)
+        export function isCanonical(unit: string): unit is Canonical;
+    }
+    // (undocumented)
+    export type Frequency = Frequency.Canonical | "kHz";
     // (undocumented)
     export function isAngle(unit: string): unit is Angle;
     // (undocumented)
@@ -3141,11 +3241,17 @@ export namespace Unit {
     // (undocumented)
     export namespace Length {
         // (undocumented)
-        export type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
+        export type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | Canonical;
+        // (undocumented)
+        export type Canonical = typeof Canonical;
         // (undocumented)
         export function isAbsolute(unit: string): unit is Absolute;
         // (undocumented)
+        export function isCanonical(unit: string): unit is Canonical;
+        // (undocumented)
         export function isFontRelative(unit: string): unit is Relative.Font;
+        const // (undocumented)
+        Canonical = "px";
         // (undocumented)
         export function isRelative(unit: string): unit is Relative;
         // (undocumented)
@@ -3163,9 +3269,27 @@ export namespace Unit {
     // (undocumented)
     export type Length = Length.Relative | Length.Absolute;
     // (undocumented)
-    export type Resolution = "dpi" | "dpcm" | "dppx";
+    export namespace Resolution {
+        const // (undocumented)
+        Canonical = "dppx";
+        // (undocumented)
+        export type Canonical = typeof Canonical;
+        // (undocumented)
+        export function isCanonical(unit: string): unit is Canonical;
+    }
     // (undocumented)
-    export type Time = "s" | "ms";
+    export type Resolution = "dpi" | "dpcm" | Resolution.Canonical;
+    // (undocumented)
+    export namespace Time {
+        const // (undocumented)
+        Canonical = "s";
+        // (undocumented)
+        export type Canonical = typeof Canonical;
+        // (undocumented)
+        export function isCanonical(unit: string): unit is Canonical;
+    }
+    // (undocumented)
+    export type Time = Time.Canonical | "ms";
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "URL" is marked as @public, but its signature references "Resolvable" which is marked as @internal

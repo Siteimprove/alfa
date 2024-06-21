@@ -1,5 +1,11 @@
 # @siteimprove/alfa-selective
 
+## 0.83.0
+
+### Minor Changes
+
+- **Added:** `Selective#tee` is now available. ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
 ## 0.82.0
 
 ### Minor Changes

@@ -5,6 +5,7 @@
   "files": ["./index.ts", "./selective.ts"],
   "references": [
     { "path": "../../alfa-applicative" },
+    { "path": "../../alfa-callback" },
     { "path": "../../alfa-either" },
     { "path": "../../alfa-equatable" },
     { "path": "../../alfa-functor" },

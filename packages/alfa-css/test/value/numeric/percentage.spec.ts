@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Percentage } from "../../../dist";
+import { Length, Number, Percentage } from "../../../dist";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse";
 
@@ -39,4 +39,60 @@ test("partiallyResolve() returns a bare percentage", (t) => {
     type: "percentage",
     value: 0.42,
   });
+});
+
+test("resolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100% * (180deg / 1turn) * (8px / 1em)")
+      .resolve({
+        percentageBase: Number.of(100),
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "number", value: 25.0002 },
+  );
+
+  t.deepEqual(
+    parse("calc(100% * (180deg / 1turn) * (8px / 1em)")
+      .resolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "percentage", value: 0.250002 },
+  );
+});
+
+test("partiallyResolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100% * (180deg / 1turn) * (8px / 1em)")
+      .partiallyResolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "percentage", value: 0.250002 },
+  );
 });

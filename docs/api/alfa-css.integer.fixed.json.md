@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Numeric.Fixed.JSON<"number"> 
+interface JSON extends Numeric.Fixed.JSON<"integer"> 
 ```
-**Extends:** [Numeric.Fixed.JSON](./alfa-css.numeric.fixed.json.md)<!-- -->&lt;"number"&gt;
+**Extends:** [Numeric.Fixed.JSON](./alfa-css.numeric.fixed.json.md)<!-- -->&lt;"integer"&gt;
 

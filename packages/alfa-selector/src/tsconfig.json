@@ -3,6 +3,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
   "files": [
+    "./common/is-link.ts",
     "./context.ts",
     "./index.ts",
     "./selector/combinator.ts",
@@ -20,6 +21,7 @@
     "./selector/simple/type.ts",
     "./selector/simple/universal.ts",
     "./selector/simple/pseudo-class/active.ts",
+    "./selector/simple/pseudo-class/any-link.ts",
     "./selector/simple/pseudo-class/disabled.ts",
     "./selector/simple/pseudo-class/empty.ts",
     "./selector/simple/pseudo-class/enabled.ts",

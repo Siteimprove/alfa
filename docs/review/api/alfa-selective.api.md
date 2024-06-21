@@ -5,6 +5,7 @@
 ```ts
 
 import { Applicative } from '@siteimprove/alfa-applicative';
+import type { Callback } from '@siteimprove/alfa-callback';
 import { Either } from '@siteimprove/alfa-either';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
@@ -53,6 +54,8 @@ export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Mona
     map<U>(mapper: Mapper<T, U>): Selective<S, U>;
     // (undocumented)
     static of<T>(value: T): Selective<T>;
+    // (undocumented)
+    tee<A extends Array<unknown> = []>(left: Callback<S, void, A>, right: Callback<T, void, A>, ...args: A): this;
     // (undocumented)
     toJSON(): Selective.JSON<S, T>;
     // (undocumented)

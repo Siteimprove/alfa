@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
+resolve(resolver?: Partial<Resolver<H> & Numeric.GenericResolver>): Canonical;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;H&gt; |  |
+|  resolver | Partial&lt;[Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;H&gt; &amp; Numeric.GenericResolver&gt; | _(Optional)_ |
 
 **Returns:**
 
-T
+[Canonical](./alfa-css.percentage.canonical.md)
 

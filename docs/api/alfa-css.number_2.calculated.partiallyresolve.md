@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-partiallyResolve(): Canonical;
+partiallyResolve(resolver?: Numeric.GenericResolver): Canonical;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | Numeric.GenericResolver | _(Optional)_ |
+
 **Returns:**
 
 [Canonical](./alfa-css.number_2.canonical.md)

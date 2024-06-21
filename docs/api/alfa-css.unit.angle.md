@@ -9,5 +9,7 @@
 **Signature:**
 
 ```typescript
-type Angle = "deg" | "grad" | "rad" | "turn";
+type Angle = Angle.Canonical | "grad" | "rad" | "turn";
 ```
+**References:** [Angle.Canonical](./alfa-css.unit.angle.canonical.md)
+

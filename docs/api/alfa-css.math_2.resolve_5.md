@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-resolve<T extends Numeric = Percentage>(this: Math<"percentage">, resolver?: Expression.PercentageResolver<T>, hint?: T extends Angle ? "angle" : "length"): Result<T, string>;
+resolve<T extends Numeric = Percentage>(this: Math<"percentage">, resolver?: Expression.PercentageResolver<T> & Expression.GenericResolver): Result<T, string>;
 ```
 
 ## Parameters
@@ -15,8 +15,7 @@ resolve<T extends Numeric = Percentage>(this: Math<"percentage">, resolver?: Exp
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"percentage"&gt; |  |
-|  resolver | Expression.PercentageResolver&lt;T&gt; | _(Optional)_ |
-|  hint | T extends Angle ? "angle" : "length" | _(Optional)_ |
+|  resolver | Expression.PercentageResolver&lt;T&gt; &amp; Expression.GenericResolver | _(Optional)_ |
 
 **Returns:**
 
