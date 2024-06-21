@@ -1,18 +1,30 @@
-const fs = require("fs");
-const path = require("path");
-const prettier = require("prettier");
-const data = require("@mdn/browser-compat-data");
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as prettier from "prettier";
+import data, { type BrowserName } from "@mdn/browser-compat-data";
 
-const include = ["chrome", "edge", "firefox", "ie", "opera", "safari"];
+const include: Array<BrowserName> = [
+  "chrome",
+  "edge",
+  "firefox",
+  "ie",
+  "opera",
+  "safari",
+] as const;
 
 const { keys } = Object;
 
-const browsers = [];
+interface Release {
+  version: string;
+  date: number;
+}
+
+const browsers: Array<{ key: BrowserName; releases: Array<Release> }> = [];
 
 for (const name of include) {
   const browser = data.browsers[name];
 
-  const releases = [];
+  const releases: Array<Release> = [];
 
   for (const version of keys(browser.releases)) {
     const { status, release_date } = browser.releases[version];
@@ -77,8 +89,11 @@ export const Browsers = {
 };
 `;
 
-code = await prettier.format(code, {
-  parser: "typescript",
-});
-
-fs.writeFileSync(path.join(__dirname, "..", "src", "browser", "data.ts"), code);
+prettier
+  .format(code, { parser: "typescript" })
+  .then((code) =>
+    fs.writeFileSync(
+      path.join(__dirname, "..", "src", "browser", "data.ts"),
+      code,
+    ),
+  );
