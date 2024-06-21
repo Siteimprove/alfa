@@ -1512,7 +1512,7 @@ export namespace Numeric {
         // (undocumented)
         abstract scale(factor: number): Fixed<T, R>;
         // @internal (undocumented)
-        abstract toBase(): Numeric_2<T extends `${infer U}-percentage` ? never : T>;
+        abstract toBase(): T extends Exclude<Type, `${string}-percentage`> ? Numeric_2<T> : never;
         // (undocumented)
         toJSON(): Fixed.JSON<T>;
         // (undocumented)
