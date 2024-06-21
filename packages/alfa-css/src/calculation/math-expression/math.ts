@@ -10,6 +10,7 @@ import {
   Token,
   type Parser as CSSParser,
 } from "../../syntax";
+import type { Unit } from "../../unit";
 
 import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
@@ -105,87 +106,82 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
 
   // Other resolvers should be added when needed.
   /**
-   * Resolves a calculation typed as an angle, length, length-percentage or number.
-   * Needs a resolver to handle relative lengths and percentages.
+   * Resolves a calculation typed as an angle, length, length-percentage or
+   * number. Needs a resolver to handle relative lengths and percentages.
    */
-  public resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
-
   public resolve(
-    this: Math<"angle-percentage">,
-    resolver: Expression.PercentageResolver<Angle<"deg">>,
+    this: Math<"angle">,
+    resolver?: Expression.GenericResolver,
   ): Result<Angle<"deg">, string>;
 
   public resolve(
+    this: Math<"angle-percentage">,
+    resolver?: Expression.PercentageResolver<Angle<Unit.Angle.Canonical>> &
+      Expression.GenericResolver,
+  ): Result<Angle<Unit.Angle.Canonical>, string>;
+
+  public resolve(
     this: Math<"length">,
-    resolver: Expression.LengthResolver,
-  ): Result<Length<"px">, string>;
+    resolver: Expression.LengthResolver & Expression.GenericResolver,
+  ): Result<Length<Unit.Length.Canonical>, string>;
 
   public resolve(
     this: Math<"length-percentage">,
-    resolver: Expression.Resolver<"px", Length<"px">>,
-  ): Result<Length<"px">, string>;
+    resolver: Expression.Resolver<
+      Unit.Length.Canonical,
+      Length<Unit.Length.Canonical>
+    > &
+      Expression.GenericResolver,
+  ): Result<Length<Unit.Length.Canonical>, string>;
 
-  public resolve(this: Math<"number">): Result<Number, string>;
+  public resolve(
+    this: Math<"number">,
+    resolver?: Expression.GenericResolver,
+  ): Result<Number, string>;
 
   public resolve<T extends Numeric = Percentage>(
     this: Math<"percentage">,
-    resolver?: Expression.PercentageResolver<T>,
-    hint?: T extends Angle ? "angle" : "length",
+    resolver?: Expression.PercentageResolver<T> & Expression.GenericResolver,
   ): Result<T, string>;
 
   public resolve<T extends Numeric>(
     this: Math,
-    resolver?:
+    resolver?: (
       | Expression.LengthResolver
-      | Expression.Resolver<"px", Length<"px">>
-      | Expression.PercentageResolver<T>,
-    hint?: T extends Angle ? "angle" : "length",
+      | Expression.Resolver<
+          Unit.Length.Canonical,
+          Length<Unit.Length.Canonical>
+        >
+      | Expression.PercentageResolver<T>
+    ) &
+      Expression.GenericResolver,
   ): Result<Numeric, string> {
-    // Since the expressions can theoretically contain arbitrarily units in them,
-    // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
-    // they seem to be more restricted), we can't easily type Expression itself
-    // (other than with its Kind).
     try {
       const expression = this._expression.reduce<
-        "px",
-        Angle<"deg"> | Length<"px"> | Percentage | T
+        Unit.Length.Canonical,
+        | Angle<Unit.Angle.Canonical>
+        | Length<Unit.Length.Canonical>
+        | Percentage
+        | T
       >({
         // If the expression is a length, and we can't resolve relative lengths,
         // abort.
         length: () => {
           throw new Error(`Missing length resolver for ${this}`);
         },
-        // If the expression is a percentage and we can't resolve percentages,
+        // If the expression is a percentage, and we can't resolve percentages,
         // we keep them as percentages.
         percentage: (p) => p,
+        // override default values
         ...resolver,
       });
 
-      // Pure percentages can be resolved as any dimension (or stay as percentage)
-      // We need a hint, provided by the context, in order to know what type of
-      // value to convert to afterward.
-      if (this.isPercentage()) {
-        const converters = {
-          angle: "toAngle",
-          length: "toLength",
-        } as const;
-        // If no resolver was provided, percentages must stay as percentages
-        return expression[
-          resolver === undefined || hint === undefined
-            ? "toPercentage"
-            : converters[hint]
-        ]();
-      }
-
-      return this.isDimensionPercentage("angle")
-        ? // angle are also angle-percentage, so this catches both.
-          expression.toAngle()
-        : this.isDimensionPercentage("length")
-        ? // length are also length-percentage, so this catches both.
-          expression.toLength()
-        : this.isNumber()
-        ? expression.toNumber()
-        : Err.of(`${this} does not resolve to a valid expression`);
+      return expression
+        .toAngle()
+        .orElse(expression.toLength.bind(expression))
+        .orElse(expression.toPercentage.bind(expression))
+        .orElse(expression.toNumber.bind(expression))
+        .or(Err.of(`${this} does not resolve to a valid expression`));
     } catch (e) {
       if (e instanceof Error) {
         return Err.of(e.message);

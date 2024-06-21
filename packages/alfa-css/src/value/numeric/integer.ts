@@ -9,6 +9,7 @@ import { Integer as BaseInteger } from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 
 import type { Resolvable } from "../resolvable";
+import { Length } from "./length";
 
 import { Numeric } from "./numeric";
 
@@ -33,7 +34,7 @@ export namespace Integer {
    * Integers that are the result of a calculation.
    */
   export class Calculated
-    extends Numeric.Calculated<"number">
+    extends Numeric.Calculated<"integer">
     implements Resolvable<Canonical, never>
   {
     public static of(value: Calculation<"number">): Calculated {
@@ -41,7 +42,7 @@ export namespace Integer {
     }
 
     private constructor(value: Calculation<"number">) {
-      super(value, "number");
+      super(value, "integer");
     }
 
     /**
@@ -50,17 +51,17 @@ export namespace Integer {
      *
      * {@link https://drafts.csswg.org/css-values/#calc-type-checking}
      */
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
-          .resolve()
+          .resolve(Length.toExpressionResolver(resolver))
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not fully resolve ${this} as a number`).value,
       );
     }
 
-    public partiallyResolve(): Canonical {
-      return this.resolve();
+    public partiallyResolve(resolver?: Numeric.GenericResolver): Canonical {
+      return this.resolve(resolver);
     }
 
     public equals(value: unknown): value is this {
@@ -76,14 +77,14 @@ export namespace Integer {
    * @public
    */
   export namespace Calculated {
-    export interface JSON extends Numeric.Calculated.JSON<"number"> {}
+    export interface JSON extends Numeric.Calculated.JSON<"integer"> {}
   }
 
   /**
    * Numbers that are a fixed (not calculated) value.
    */
   export class Fixed
-    extends Numeric.Fixed<"number">
+    extends Numeric.Fixed<"integer">
     implements Resolvable<Canonical, never>
   {
     /**
@@ -100,7 +101,7 @@ export namespace Integer {
     }
 
     private constructor(value: number) {
-      super(value, "number");
+      super(value, "integer");
     }
 
     public resolve(): this {
@@ -113,6 +114,13 @@ export namespace Integer {
 
     public scale(factor: number): Fixed {
       return new Fixed(this._value * factor);
+    }
+
+    /**
+     * @internal
+     */
+    public toBase(): BaseInteger {
+      return BaseInteger.of(this._value);
     }
 
     public equals(value: unknown): value is this {
@@ -132,7 +140,7 @@ export namespace Integer {
    * @public
    */
   export namespace Fixed {
-    export interface JSON extends Numeric.Fixed.JSON<"number"> {}
+    export interface JSON extends Numeric.Fixed.JSON<"integer"> {}
   }
 
   export function isCalculated(value: unknown): value is Calculated {

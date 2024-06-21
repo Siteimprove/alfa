@@ -2,6 +2,7 @@ import { Keyword, Number } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
+import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
@@ -33,7 +34,7 @@ export default Longhand.of<Specified, Computed>(
   (fontWeight, style) =>
     fontWeight.map((fontWeight) => {
       if (Number.isNumber(fontWeight)) {
-        return fontWeight.resolve();
+        return fontWeight.resolve(Resolver.length(style));
       }
 
       switch (fontWeight.value) {

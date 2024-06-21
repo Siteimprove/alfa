@@ -67,3 +67,23 @@ test("resolve() absolutize lengths", (t) => {
     },
   );
 });
+
+test("resolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100px * 180deg * 8px / 1em / 1turn)")
+      .getUnsafe()
+      .resolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "length", value: 25.0002, unit: "px" },
+  );
+});

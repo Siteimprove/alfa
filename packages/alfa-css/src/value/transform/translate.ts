@@ -5,6 +5,7 @@ import {
   Function as CSSFunction,
   type Parser as CSSParser,
 } from "../../syntax";
+import { Unit } from "../../unit";
 import { List } from "../collection";
 
 import { Length, LengthPercentage, Numeric } from "../numeric";
@@ -147,7 +148,7 @@ export namespace Translate {
     return value instanceof Translate;
   }
 
-  const _0 = Length.of(0, "px");
+  const _0 = Length.of(0, Unit.Length.Canonical);
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translate}

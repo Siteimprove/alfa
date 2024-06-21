@@ -11,6 +11,7 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
+import { Resolver } from "../resolver";
 
 const { either, filter } = Parser;
 
@@ -111,5 +112,5 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(1),
   ),
   parse,
-  (value) => value.resolve(),
+  (value, style) => value.resolve(Resolver.length(style)),
 );
