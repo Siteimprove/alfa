@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const prettier = require("prettier");
-const puppeteer = require("puppeteer");
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as prettier from "prettier";
+import * as puppeteer from "puppeteer";
 
 const specifications = [
   // We stick to 1.2 as this is the version used by ACT rules.
@@ -24,19 +24,19 @@ puppeteer.launch().then(async (browser) => {
     Object.assign(
       roles,
       await page.evaluate(() => {
-        function hash(href) {
+        function hash(href: string) {
           return href.substring(href.indexOf("#") + 1);
         }
 
         return Object.fromEntries(
           // The `.role` class grabs each individual role section.
-          // Most of the releveant data is in the table, not the text.
-          [...document.querySelectorAll(".role")]
+          // Most of the relevant data is in the table, not the text.
+          Array.from(document.querySelectorAll(".role"))
             .map((role) => {
               // This is the <h4> heading of the section
               const key = role
                 .querySelector(".role-name")
-                .getAttribute("title");
+                ?.getAttribute("title");
 
               // From here, we start looking at the various rows in the table,
               // the .role-* classes select the data cell and then we look at
@@ -48,51 +48,51 @@ puppeteer.launch().then(async (browser) => {
                 false;
 
               // Which roles does it inherit from?
-              const inherited = [
-                ...role.querySelectorAll(".role-parent code"),
-              ].map((code) => code.textContent);
+              const inherited = Array.from(
+                role.querySelectorAll(".role-parent code"),
+              ).map((code) => code.textContent);
 
               // Grabbing the list of supported/required/prohibited attributes.
-              const supported = [
-                ...role.querySelectorAll(`
+              const supported = Array.from(
+                role.querySelectorAll(`
                 .role-properties .property-reference,
                 .role-properties .state-reference
               `),
-              ]
+              )
                 // Some supported attributes are deprecated from ARIA 1.1 to 1.2
                 // Sadly they are still listed as supported, with a note, so we
                 // need to parse that note :-/
                 .filter(
                   (element) =>
-                    !element.parentElement.textContent.includes("deprecated"),
+                    !element.parentElement?.textContent?.includes("deprecated"),
                 )
-                .map((reference) => hash(reference.getAttribute("href")));
+                .map((reference) => hash(reference.getAttribute("href") ?? ""));
 
-              const required = [
-                ...role.querySelectorAll(`
+              const required = Array.from(
+                role.querySelectorAll(`
                 .role-required-properties .property-reference,
                 .role-required-properties .state-reference
               `),
-              ].map((reference) => hash(reference.getAttribute("href")));
+              ).map((reference) => hash(reference.getAttribute("href") ?? ""));
 
-              const prohibited = [
-                ...role.querySelectorAll(`
+              const prohibited = Array.from(
+                role.querySelectorAll(`
                 .role-disallowed .property-reference,
                 .role-disallowed .state-reference
               `),
-              ].map((reference) => hash(reference.getAttribute("href")));
+              ).map((reference) => hash(reference.getAttribute("href") ?? ""));
 
               // Grabbing the default value of attributes.
               const values = new Map(
-                [
-                  ...role.querySelectorAll(`
+                Array.from(
+                  role.querySelectorAll(`
                 .implicit-values .property-reference,
                 .implicit-values .state-reference
               `),
-                ].flatMap((reference) => {
-                  const href = reference.getAttribute("href");
-                  const key = hash(href);
-                  const value = reference.parentElement.querySelector(
+                ).flatMap((reference) => {
+                  const href = reference?.getAttribute("href");
+                  const key = hash(href ?? "");
+                  const value = reference.parentElement?.querySelector(
                     `[href="${href}"] + .default`,
                   );
 
@@ -100,7 +100,7 @@ puppeteer.launch().then(async (browser) => {
                     return [];
                   }
 
-                  return [[key, value.textContent]];
+                  return [[key, value?.textContent]] as const;
                 }),
               );
 
@@ -129,7 +129,7 @@ puppeteer.launch().then(async (browser) => {
               const from =
                 role
                   .querySelector(".role-namefrom")
-                  ?.textContent.trim()
+                  ?.textContent?.trim()
                   .split(/\s+/)
                   .filter((from) => from !== "n/a")
                   .sort() ?? [];
@@ -147,19 +147,21 @@ puppeteer.launch().then(async (browser) => {
 
               // What are the required context role?
               const parent = {
-                required: [
-                  ...role.querySelectorAll(".role-scope, .role-scope li"),
-                ]
-                  .map((scope) => [
-                    ...scope.querySelectorAll(":scope > .role-reference"),
-                  ])
+                required: Array.from(
+                  role.querySelectorAll(".role-scope, .role-scope li"),
+                )
+                  .map((scope) =>
+                    Array.from(
+                      scope.querySelectorAll(":scope > .role-reference"),
+                    ),
+                  )
                   .filter((references) => references.length > 0)
                   .map((references) =>
                     references.map((reference) =>
-                      hash(reference.getAttribute("href")),
+                      hash(reference.getAttribute("href") ?? ""),
                     ),
                   ),
-              };
+              } as const;
 
               // Are children presentational? What are the required owned elements?
               const children = {
@@ -167,18 +169,20 @@ puppeteer.launch().then(async (browser) => {
                   role.querySelector(".role-childpresentational")
                     ?.textContent === "True" ?? false,
 
-                required: [
-                  ...role.querySelectorAll(
+                required: Array.from(
+                  role.querySelectorAll(
                     ".role-mustcontain, .role-mustcontain li",
                   ),
-                ]
-                  .map((scope) => [
-                    ...scope.querySelectorAll(":scope > .role-reference"),
-                  ])
+                )
+                  .map((scope) =>
+                    Array.from(
+                      scope.querySelectorAll(":scope > .role-reference"),
+                    ),
+                  )
                   .filter((references) => references.length > 0)
                   .map((references) =>
                     references.map((reference) =>
-                      hash(reference.getAttribute("href")),
+                      hash(reference.getAttribute("href") ?? ""),
                     ),
                   ),
               };
@@ -193,15 +197,19 @@ puppeteer.launch().then(async (browser) => {
                   parent,
                   children,
                 },
-              ];
+              ] as const;
             })
+            .filter(
+              (value): value is [string, any] =>
+                value[0] !== null && value[0] !== undefined,
+            )
             .sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0)),
         );
       }),
     );
   }
 
-  browser.close();
+  await browser.close();
 
   let code = `
 // This file has been automatically generated based on the various WAI-ARIA
