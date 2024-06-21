@@ -9,7 +9,7 @@ Fully resolves an angle-percentage, when a full resolver is provided.
 **Signature:**
 
 ```typescript
-function resolve(value: AnglePercentage): Canonical;
+function resolve(value: AnglePercentage, resolver?: Numeric.GenericResolver): Canonical;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ function resolve(value: AnglePercentage): Canonical;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [AnglePercentage](./alfa-css.anglepercentage.md) |  |
+|  resolver | Numeric.GenericResolver | _(Optional)_ |
 
 **Returns:**
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-abstract resolve(resolver?: unknown): Fixed<T, DCanonicalUnit[T]>;
+abstract resolve(resolver?: unknown): Fixed<T, ToCanonicalUnit[T]>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ abstract resolve(resolver?: unknown): Fixed<T, DCanonicalUnit[T]>;
 
 **Returns:**
 
-[Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;T, DCanonicalUnit\[T\]&gt;
+[Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;T, ToCanonicalUnit\[T\]&gt;
 

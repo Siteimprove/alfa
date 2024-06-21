@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-abstract withUnit<V extends DUnit[T]>(unit: V): Fixed<T, V>;
+abstract withUnit<V extends BaseDimension.ToUnit[T]>(unit: V): Fixed<T, V>;
 ```
 
 ## Parameters

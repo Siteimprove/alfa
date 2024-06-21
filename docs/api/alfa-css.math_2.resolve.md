@@ -9,7 +9,7 @@ Resolves a calculation typed as an angle, length, length-percentage or number. N
 **Signature:**
 
 ```typescript
-resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
+resolve(this: Math<"angle">, resolver?: Expression.GenericResolver): Result<Angle<"deg">, string>;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"angle"&gt; |  |
+|  resolver | Expression.GenericResolver | _(Optional)_ |
 
 **Returns:**
 

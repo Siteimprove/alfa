@@ -9,5 +9,7 @@
 **Signature:**
 
 ```typescript
-type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
+type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | Canonical;
 ```
+**References:** [Canonical](./alfa-css.unit.length.canonical.md)
+

@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.83.0
+
+### Patch Changes
+
+- **Fixed:** Background images with empty URL are now ignored when computing background colors (SIA-R66, SIA-R69). ([#1627](https://github.com/Siteimprove/alfa/pull/1627))
+
 ## 0.82.0
 
 ### Minor Changes
