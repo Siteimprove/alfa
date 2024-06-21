@@ -103,13 +103,13 @@ digraph "dependency-graph-[object Object]" {
   "name_src/value/transform";
   "src/value/numeric/angle.ts";
   "src/value/numeric/dimension.ts";
+  "src/value/numeric/length.ts";
+  "src/value/numeric/numeric.ts";
   "src/value/numeric/percentage.ts";
   "exit_src/value/numeric";
-  "src/value/numeric/numeric.ts";
   "src/value/numeric/angle-percentage.ts";
   "src/value/numeric/integer.ts";
   "src/value/numeric/length-percentage.ts";
-  "src/value/numeric/length.ts";
   "src/value/numeric/number.ts";
   "exit_src/value/position";
   "src/value/position/keywords.ts";
@@ -2080,6 +2080,15 @@ digraph "dependency-graph-[object Object]" {
   "exit_src/calculation" -> "name_src/unit" [
     style = "invis";
   ];
+  "src/calculation/math-expression/index.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "invis";
+  ];
+  "src/calculation/math-expression/index.ts" -> "src/calculation/math-expression/expression.ts" [
+    style = "solid";
+    ltail = "cluster_src/calculation/math-expression/index.ts";
+    lhead = "cluster_src/calculation/math-expression/expression.ts";
+    color = "black";
+  ];
   "src/calculation/math-expression/index.ts" -> "src/calculation/math-expression/math.ts" [
     style = "invis";
   ];
@@ -2145,6 +2154,9 @@ digraph "dependency-graph-[object Object]" {
     ltail = "cluster_src/calculation";
     lhead = "cluster_src/syntax";
     color = "#ff0055";
+  ];
+  "exit_src/calculation" -> "name_src/unit" [
+    style = "invis";
   ];
   "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/expression.ts" [
     style = "invis";
@@ -3613,6 +3625,24 @@ digraph "dependency-graph-[object Object]" {
     lhead = "cluster_src/value/numeric/dimension.ts";
     color = "black";
   ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/length.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/angle-percentage.ts";
+    lhead = "cluster_src/value/numeric/length.ts";
+    color = "black";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/numeric.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/angle-percentage.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
+    color = "black";
+  ];
   "src/value/numeric/angle-percentage.ts" -> "src/value/numeric/percentage.ts" [
     style = "invis";
   ];
@@ -3650,6 +3680,24 @@ digraph "dependency-graph-[object Object]" {
     style = "solid";
     ltail = "cluster_src/value/numeric/angle.ts";
     lhead = "cluster_src/value/numeric/dimension.ts";
+    color = "black";
+  ];
+  "src/value/numeric/angle.ts" -> "src/value/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle.ts" -> "src/value/numeric/length.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/angle.ts";
+    lhead = "cluster_src/value/numeric/length.ts";
+    color = "black";
+  ];
+  "src/value/numeric/angle.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/angle.ts" -> "src/value/numeric/numeric.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/angle.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
     color = "black";
   ];
   "src/value/numeric/angle.ts" -> "src/value/resolvable.ts" [
@@ -3769,6 +3817,15 @@ digraph "dependency-graph-[object Object]" {
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
   ];
+  "src/value/numeric/integer.ts" -> "src/value/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/integer.ts" -> "src/value/numeric/length.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/integer.ts";
+    lhead = "cluster_src/value/numeric/length.ts";
+    color = "black";
+  ];
   "src/value/numeric/integer.ts" -> "src/value/numeric/numeric.ts" [
     style = "invis";
   ];
@@ -3814,6 +3871,15 @@ digraph "dependency-graph-[object Object]" {
     lhead = "cluster_src/value/numeric/length.ts";
     color = "black";
   ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/length-percentage.ts" -> "src/value/numeric/numeric.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/length-percentage.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
+    color = "black";
+  ];
   "src/value/numeric/length-percentage.ts" -> "src/value/numeric/percentage.ts" [
     style = "invis";
   ];
@@ -3850,6 +3916,15 @@ digraph "dependency-graph-[object Object]" {
     lhead = "cluster_src/value/numeric/dimension.ts";
     color = "black";
   ];
+  "src/value/numeric/length.ts" -> "src/value/numeric/numeric.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/length.ts" -> "src/value/numeric/numeric.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/length.ts";
+    lhead = "cluster_src/value/numeric/numeric.ts";
+    color = "black";
+  ];
   "src/value/numeric/length.ts" -> "src/value/resolvable.ts" [
     style = "invis";
   ];
@@ -3864,6 +3939,15 @@ digraph "dependency-graph-[object Object]" {
   ];
   "exit_src/value" -> "name_src/syntax" [
     style = "invis";
+  ];
+  "src/value/numeric/number.ts" -> "src/value/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/number.ts" -> "src/value/numeric/length.ts" [
+    style = "solid";
+    ltail = "cluster_src/value/numeric/number.ts";
+    lhead = "cluster_src/value/numeric/length.ts";
+    color = "black";
   ];
   "src/value/numeric/number.ts" -> "src/value/numeric/numeric.ts" [
     style = "invis";
@@ -3885,6 +3969,15 @@ digraph "dependency-graph-[object Object]" {
   ];
   "exit_src/value" -> "name_src/calculation" [
     style = "invis";
+  ];
+  "src/value/numeric/numeric.ts" -> "src/value/numeric/length.ts" [
+    style = "invis";
+  ];
+  "src/value/numeric/numeric.ts" -> "src/value/numeric/length.ts" [
+    style = "dotted";
+    ltail = "cluster_src/value/numeric/numeric.ts";
+    lhead = "cluster_src/value/numeric/length.ts";
+    color = "black";
   ];
   "src/value/numeric/numeric.ts" -> "src/value/resolvable.ts" [
     style = "invis";
@@ -3914,7 +4007,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/value/numeric/percentage.ts" -> "src/value/numeric/angle.ts" [
-    style = "dotted";
+    style = "solid";
     ltail = "cluster_src/value/numeric/percentage.ts";
     lhead = "cluster_src/value/numeric/angle.ts";
     color = "black";
@@ -3923,7 +4016,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/value/numeric/percentage.ts" -> "src/value/numeric/integer.ts" [
-    style = "dotted";
+    style = "solid";
     ltail = "cluster_src/value/numeric/percentage.ts";
     lhead = "cluster_src/value/numeric/integer.ts";
     color = "black";
@@ -3932,7 +4025,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/value/numeric/percentage.ts" -> "src/value/numeric/length.ts" [
-    style = "dotted";
+    style = "solid";
     ltail = "cluster_src/value/numeric/percentage.ts";
     lhead = "cluster_src/value/numeric/length.ts";
     color = "black";
@@ -3941,7 +4034,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/value/numeric/percentage.ts" -> "src/value/numeric/number.ts" [
-    style = "dotted";
+    style = "solid";
     ltail = "cluster_src/value/numeric/percentage.ts";
     lhead = "cluster_src/value/numeric/number.ts";
     color = "black";
@@ -4112,6 +4205,9 @@ digraph "dependency-graph-[object Object]" {
     color = "black";
   ];
   "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/unit" [
     style = "invis";
   ];
   "src/value/shadow.ts" -> "name_src/value/color" [
@@ -4835,6 +4931,9 @@ digraph "dependency-graph-[object Object]" {
     color = "black";
   ];
   "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+  ];
+  "exit_src/value" -> "name_src/unit" [
     style = "invis";
   ];
   "exit_src/value/transform" -> "name_src/value/collection" [

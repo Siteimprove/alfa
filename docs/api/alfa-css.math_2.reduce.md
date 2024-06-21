@@ -14,7 +14,7 @@ reduce(resolver: Expression.Resolver): Math;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | Expression.Resolver |  |
+|  resolver | [Expression.Resolver](./alfa-css.expression.resolver.md) |  |
 
 **Returns:**
 

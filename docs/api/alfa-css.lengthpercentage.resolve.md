@@ -9,14 +9,14 @@ Fully resolves a length-percentage, when a full resolver is provided.
 **Signature:**
 
 ```typescript
-function resolve(resolver: Resolver): (value: LengthPercentage) => Canonical;
+function resolve(resolver: Resolver & Numeric.GenericResolver): (value: LengthPercentage) => Canonical;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.lengthpercentage.resolver.md) |  |
+|  resolver | [Resolver](./alfa-css.lengthpercentage.resolver.md) &amp; Numeric.GenericResolver |  |
 
 **Returns:**
 

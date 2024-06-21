@@ -1,5 +1,7 @@
 # @siteimprove/alfa-sequence
 
+## 0.83.0
+
 ## 0.82.0
 
 ### Minor Changes

@@ -92,7 +92,7 @@ export namespace Length {
     ),
     map(
       Token.parseNumber((number) => number.isInteger && number.value === 0),
-      () => Length.of(0, "px"),
+      () => Length.of(0, Unit.Length.Canonical),
     ),
   );
 }

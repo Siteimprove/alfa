@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { AnglePercentage } from "../../../dist";
+import { Angle, AnglePercentage, Length } from "../../../dist";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse";
 
@@ -112,4 +112,43 @@ test("resolve() resolves mix of angles and percentages", (t) => {
     value: 216,
     unit: "deg",
   });
+});
+
+test("resolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100% / 1em * 180deg / 1turn * 8px)")
+      .resolve({
+        percentageBase: Angle.of(100, "deg"),
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "angle", value: 25.0002, unit: "deg" },
+  );
+});
+
+test("partiallyResolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100% * (180deg / 1turn) * (8px / 1em)")
+      .partiallyResolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "percentage", value: 0.250002 },
+  );
 });

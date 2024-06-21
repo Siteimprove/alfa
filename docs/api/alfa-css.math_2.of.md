@@ -14,7 +14,7 @@ static of(expression: Expression): Math;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  expression | Expression |  |
+|  expression | [Expression](./alfa-css.expression.md) |  |
 
 **Returns:**
 

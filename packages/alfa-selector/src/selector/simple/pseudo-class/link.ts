@@ -1,6 +1,7 @@
 import type { Element } from "@siteimprove/alfa-dom";
 
 import { Context } from "../../../context";
+import { isLink } from "../../../common/is-link";
 
 import { PseudoClassSelector } from "./pseudo-class";
 
@@ -24,16 +25,7 @@ export class Link extends PseudoClassSelector<"link"> {
     element: Element,
     context: Context = Context.empty(),
   ): boolean {
-    switch (element.name) {
-      case "a":
-      case "area":
-      case "link":
-        return element
-          .attribute("href")
-          .some(() => !context.hasState(element, Context.State.Visited));
-    }
-
-    return false;
+    return isLink(element) && !context.hasState(element, Context.State.Visited);
   }
 
   public toJSON(): Link.JSON {

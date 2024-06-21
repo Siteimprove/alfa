@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-partiallyResolve(): PartiallyResolved<H>;
+partiallyResolve(resolver?: Numeric.GenericResolver): PartiallyResolved<H>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | Numeric.GenericResolver | _(Optional)_ |
+
 **Returns:**
 
 [PartiallyResolved](./alfa-css.percentage.partiallyresolved.md)<!-- -->&lt;H&gt;

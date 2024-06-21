@@ -9,5 +9,7 @@
 **Signature:**
 
 ```typescript
-type Resolution = "dpi" | "dpcm" | "dppx";
+type Resolution = "dpi" | "dpcm" | Resolution.Canonical;
 ```
+**References:** [Resolution.Canonical](./alfa-css.unit.resolution.canonical.md)
+

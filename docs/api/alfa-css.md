@@ -44,6 +44,7 @@
 
 |  Abstract Class | Description |
 |  --- | --- |
+|  [Expression](./alfa-css.expression.md) | [https://drafts.csswg.org/css-values/\#calculation-tree](https://drafts.csswg.org/css-values/#calculation-tree) |
 |  [Value](./alfa-css.value.md) | Representation of a CSS Value |
 
 ## Interfaces
@@ -69,6 +70,7 @@
 |  [Declaration](./alfa-css.declaration.md) |  |
 |  [Dimension](./alfa-css.dimension.md) |  |
 |  [Ellipse](./alfa-css.ellipse.md) |  |
+|  [Expression](./alfa-css.expression.md) |  |
 |  [Function\_2](./alfa-css.function_2.md) |  |
 |  [Gradient](./alfa-css.gradient.md) |  |
 |  [Hex](./alfa-css.hex.md) |  |

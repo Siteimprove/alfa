@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Number } from "../../../dist";
+import { Length, Number } from "../../../dist";
 
 import { parser, serializer } from "../../common/parse";
 
@@ -38,4 +38,25 @@ test("resolve() returns a bare value", (t) => {
     type: "number",
     value: 42,
   });
+});
+
+test("resolve() accepts dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc((1turn / 180deg) + (2em / 1rem)")
+      .getUnsafe()
+      .resolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+            case "rem":
+              return Length.of(16 * value.value, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "number", value: 4.000016 },
+  );
 });

@@ -19,198 +19,218 @@
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_src/changeset</title>
-<polygon fill="#ffffff" stroke="#000000" points="106,-110 106,-267 587,-267 587,-110 106,-110"/>
+<polygon fill="#ffffff" stroke="#000000" points="326,-110 326,-267 807,-267 807,-110 326,-110"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_src/dependency&#45;graph</title>
-<polygon fill="#ffffff" stroke="#000000" points="828,-110 828,-326 1122,-326 1122,-110 828,-110"/>
+<polygon fill="#ffffff" stroke="#000000" points="24,-110 24,-326 318,-326 318,-110 24,-110"/>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_src/validation</title>
-<polygon fill="#ffffff" stroke="#000000" points="36,-287 36,-503 808,-503 808,-287 36,-287"/>
+<polygon fill="#ffffff" stroke="#000000" points="338,-287 338,-503 1110,-503 1110,-287 338,-287"/>
 </g>
 <!-- dependency&#45;graph&#45;[object Object] -->
 <!-- src/changeset/get&#45;changeset&#45;details.ts -->
 <g id="node2" class="node">
 <title>src/changeset/get&#45;changeset&#45;details.ts</title>
-<path fill="none" stroke="#000000" d="M266.33,-200C266.33,-200 121.67,-200 121.67,-200 117.83,-200 114,-196.17 114,-192.33 114,-192.33 114,-184.67 114,-184.67 114,-180.83 117.83,-177 121.67,-177 121.67,-177 266.33,-177 266.33,-177 270.17,-177 274,-180.83 274,-184.67 274,-184.67 274,-192.33 274,-192.33 274,-196.17 270.17,-200 266.33,-200"/>
-<text text-anchor="middle" x="194" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">get&#45;changeset&#45;details.ts</text>
+<path fill="none" stroke="#000000" d="M486.33,-200C486.33,-200 341.67,-200 341.67,-200 337.83,-200 334,-196.17 334,-192.33 334,-192.33 334,-184.67 334,-184.67 334,-180.83 337.83,-177 341.67,-177 341.67,-177 486.33,-177 486.33,-177 490.17,-177 494,-180.83 494,-184.67 494,-184.67 494,-192.33 494,-192.33 494,-196.17 490.17,-200 486.33,-200"/>
+<text text-anchor="middle" x="414" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">get&#45;changeset&#45;details.ts</text>
 </g>
 <!-- exit_src/changeset -->
 <!-- src/changeset/get&#45;changeset&#45;details.ts&#45;&gt;exit_src/changeset -->
 <!-- src/changeset/helpers.ts -->
 <g id="node3" class="node">
 <title>src/changeset/helpers.ts</title>
-<path fill="none" stroke="#000000" d="M378.83,-200C378.83,-200 319.17,-200 319.17,-200 315.33,-200 311.5,-196.17 311.5,-192.33 311.5,-192.33 311.5,-184.67 311.5,-184.67 311.5,-180.83 315.33,-177 319.17,-177 319.17,-177 378.83,-177 378.83,-177 382.67,-177 386.5,-180.83 386.5,-184.67 386.5,-184.67 386.5,-192.33 386.5,-192.33 386.5,-196.17 382.67,-200 378.83,-200"/>
-<text text-anchor="middle" x="349" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">helpers.ts</text>
+<path fill="none" stroke="#000000" d="M598.83,-200C598.83,-200 539.17,-200 539.17,-200 535.33,-200 531.5,-196.17 531.5,-192.33 531.5,-192.33 531.5,-184.67 531.5,-184.67 531.5,-180.83 535.33,-177 539.17,-177 539.17,-177 598.83,-177 598.83,-177 602.67,-177 606.5,-180.83 606.5,-184.67 606.5,-184.67 606.5,-192.33 606.5,-192.33 606.5,-196.17 602.67,-200 598.83,-200"/>
+<text text-anchor="middle" x="569" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">helpers.ts</text>
 </g>
 <!-- src/changeset/helpers.ts&#45;&gt;exit_src/changeset -->
 <!-- src/dependency&#45;graph/rainbow.ts -->
 <g id="node4" class="node">
 <title>src/dependency&#45;graph/rainbow.ts</title>
-<path fill="none" stroke="#000000" d="M956.83,-200C956.83,-200 895.17,-200 895.17,-200 891.33,-200 887.5,-196.17 887.5,-192.33 887.5,-192.33 887.5,-184.67 887.5,-184.67 887.5,-180.83 891.33,-177 895.17,-177 895.17,-177 956.83,-177 956.83,-177 960.67,-177 964.5,-180.83 964.5,-184.67 964.5,-184.67 964.5,-192.33 964.5,-192.33 964.5,-196.17 960.67,-200 956.83,-200"/>
-<text text-anchor="middle" x="926" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">rainbow.ts</text>
+<path fill="none" stroke="#000000" d="M220.83,-200C220.83,-200 159.17,-200 159.17,-200 155.33,-200 151.5,-196.17 151.5,-192.33 151.5,-192.33 151.5,-184.67 151.5,-184.67 151.5,-180.83 155.33,-177 159.17,-177 159.17,-177 220.83,-177 220.83,-177 224.67,-177 228.5,-180.83 228.5,-184.67 228.5,-184.67 228.5,-192.33 228.5,-192.33 228.5,-196.17 224.67,-200 220.83,-200"/>
+<text text-anchor="middle" x="190" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">rainbow.ts</text>
 </g>
 <!-- exit_src/dependency&#45;graph -->
 <!-- src/dependency&#45;graph/rainbow.ts&#45;&gt;exit_src/dependency&#45;graph -->
 <!-- src/dependency&#45;graph/dependency&#45;graph.ts -->
 <g id="node5" class="node">
 <title>src/dependency&#45;graph/dependency&#45;graph.ts</title>
-<path fill="none" stroke="#000000" d="M971.83,-259C971.83,-259 844.17,-259 844.17,-259 840.33,-259 836.5,-255.17 836.5,-251.33 836.5,-251.33 836.5,-243.67 836.5,-243.67 836.5,-239.83 840.33,-236 844.17,-236 844.17,-236 971.83,-236 971.83,-236 975.67,-236 979.5,-239.83 979.5,-243.67 979.5,-243.67 979.5,-251.33 979.5,-251.33 979.5,-255.17 975.67,-259 971.83,-259"/>
-<text text-anchor="middle" x="908" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">dependency&#45;graph.ts</text>
+<path fill="none" stroke="#000000" d="M253.83,-259C253.83,-259 126.17,-259 126.17,-259 122.33,-259 118.5,-255.17 118.5,-251.33 118.5,-251.33 118.5,-243.67 118.5,-243.67 118.5,-239.83 122.33,-236 126.17,-236 126.17,-236 253.83,-236 253.83,-236 257.67,-236 261.5,-239.83 261.5,-243.67 261.5,-243.67 261.5,-251.33 261.5,-251.33 261.5,-255.17 257.67,-259 253.83,-259"/>
+<text text-anchor="middle" x="190" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">dependency&#45;graph.ts</text>
 </g>
 <!-- src/dependency&#45;graph/dependency&#45;graph.ts&#45;&gt;src/dependency&#45;graph/rainbow.ts -->
 <!-- src/dependency&#45;graph/dependency&#45;graph.ts&#45;&gt;src/dependency&#45;graph/rainbow.ts -->
 <g id="edge53" class="edge">
 <title>src/dependency&#45;graph/dependency&#45;graph.ts&#45;&gt;src/dependency&#45;graph/rainbow.ts</title>
-<path fill="none" stroke="black" d="M916.8,-235.78C920.36,-228.53 923.82,-218.74 926.03,-210.02"/>
-<polygon fill="black" stroke="black" points="929.47,-210.67 928.03,-200.17 922.61,-209.27 929.47,-210.67"/>
+<path fill="none" stroke="black" d="M195.41,-235.78C196.67,-228.61 197.04,-218.95 196.53,-210.31"/>
+<polygon fill="black" stroke="black" points="199.98,-209.73 195.4,-200.17 193.03,-210.5 199.98,-209.73"/>
 </g>
 <!-- src/dependency&#45;graph/dependency&#45;graph.ts&#45;&gt;exit_src/dependency&#45;graph -->
 <!-- src/changeset/changelog&#45;global.ts -->
 <g id="node6" class="node">
 <title>src/changeset/changelog&#45;global.ts</title>
-<path fill="none" stroke="#000000" d="M499.33,-259C499.33,-259 380.67,-259 380.67,-259 376.83,-259 373,-255.17 373,-251.33 373,-251.33 373,-243.67 373,-243.67 373,-239.83 376.83,-236 380.67,-236 380.67,-236 499.33,-236 499.33,-236 503.17,-236 507,-239.83 507,-243.67 507,-243.67 507,-251.33 507,-251.33 507,-255.17 503.17,-259 499.33,-259"/>
-<text text-anchor="middle" x="440" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">changelog&#45;global.ts</text>
+<path fill="none" stroke="#000000" d="M719.33,-259C719.33,-259 600.67,-259 600.67,-259 596.83,-259 593,-255.17 593,-251.33 593,-251.33 593,-243.67 593,-243.67 593,-239.83 596.83,-236 600.67,-236 600.67,-236 719.33,-236 719.33,-236 723.17,-236 727,-239.83 727,-243.67 727,-243.67 727,-251.33 727,-251.33 727,-255.17 723.17,-259 719.33,-259"/>
+<text text-anchor="middle" x="660" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">changelog&#45;global.ts</text>
 </g>
 <!-- src/changeset/changelog&#45;global.ts&#45;&gt;src/changeset/helpers.ts -->
 <!-- src/changeset/changelog&#45;global.ts&#45;&gt;src/changeset/helpers.ts -->
 <g id="edge51" class="edge">
 <title>src/changeset/changelog&#45;global.ts&#45;&gt;src/changeset/helpers.ts</title>
-<path fill="none" stroke="black" d="M428.3,-235.78C416.08,-227.18 396.84,-214.99 380.3,-205.28"/>
-<polygon fill="black" stroke="black" points="381.85,-202.13 371.44,-200.17 378.36,-208.2 381.85,-202.13"/>
+<path fill="none" stroke="black" d="M648.3,-235.78C636.08,-227.18 616.84,-214.99 600.3,-205.28"/>
+<polygon fill="black" stroke="black" points="601.85,-202.13 591.44,-200.17 598.36,-208.2 601.85,-202.13"/>
 </g>
 <!-- src/changeset/changelog&#45;global.ts&#45;&gt;exit_src/changeset -->
 <!-- name_src/changeset -->
 <g id="node7" class="node">
 <title>name_src/changeset</title>
-<path fill="none" stroke="#8000ff" stroke-width="5" d="M346.83,-259C346.83,-259 283.17,-259 283.17,-259 279.33,-259 275.5,-255.17 275.5,-251.33 275.5,-251.33 275.5,-243.67 275.5,-243.67 275.5,-239.83 279.33,-236 283.17,-236 283.17,-236 346.83,-236 346.83,-236 350.67,-236 354.5,-239.83 354.5,-243.67 354.5,-243.67 354.5,-251.33 354.5,-251.33 354.5,-255.17 350.67,-259 346.83,-259"/>
-<text text-anchor="middle" x="315" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">changeset</text>
+<path fill="none" stroke="#8000ff" stroke-width="5" d="M566.83,-259C566.83,-259 503.17,-259 503.17,-259 499.33,-259 495.5,-255.17 495.5,-251.33 495.5,-251.33 495.5,-243.67 495.5,-243.67 495.5,-239.83 499.33,-236 503.17,-236 503.17,-236 566.83,-236 566.83,-236 570.67,-236 574.5,-239.83 574.5,-243.67 574.5,-243.67 574.5,-251.33 574.5,-251.33 574.5,-255.17 570.67,-259 566.83,-259"/>
+<text text-anchor="middle" x="535" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">changeset</text>
 </g>
 <!-- src/changeset/changelog&#45;individual.ts -->
 <g id="node8" class="node">
 <title>src/changeset/changelog&#45;individual.ts</title>
-<path fill="none" stroke="#000000" d="M551.33,-200C551.33,-200 412.67,-200 412.67,-200 408.83,-200 405,-196.17 405,-192.33 405,-192.33 405,-184.67 405,-184.67 405,-180.83 408.83,-177 412.67,-177 412.67,-177 551.33,-177 551.33,-177 555.17,-177 559,-180.83 559,-184.67 559,-184.67 559,-192.33 559,-192.33 559,-196.17 555.17,-200 551.33,-200"/>
-<text text-anchor="middle" x="482" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">changelog&#45;individual.ts</text>
+<path fill="none" stroke="#000000" d="M771.33,-200C771.33,-200 632.67,-200 632.67,-200 628.83,-200 625,-196.17 625,-192.33 625,-192.33 625,-184.67 625,-184.67 625,-180.83 628.83,-177 632.67,-177 632.67,-177 771.33,-177 771.33,-177 775.17,-177 779,-180.83 779,-184.67 779,-184.67 779,-192.33 779,-192.33 779,-196.17 775.17,-200 771.33,-200"/>
+<text text-anchor="middle" x="702" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">changelog&#45;individual.ts</text>
 </g>
 <!-- src/changeset/changelog&#45;individual.ts&#45;&gt;exit_src/changeset -->
-<!-- src/validation/index.ts -->
+<!-- src/dependency&#45;graph/generate&#45;graphs.ts -->
 <g id="node9" class="node">
+<title>src/dependency&#45;graph/generate&#45;graphs.ts</title>
+<path fill="none" stroke="#000000" d="M302.33,-318C302.33,-318 187.67,-318 187.67,-318 183.83,-318 180,-314.17 180,-310.33 180,-310.33 180,-302.67 180,-302.67 180,-298.83 183.83,-295 187.67,-295 187.67,-295 302.33,-295 302.33,-295 306.17,-295 310,-298.83 310,-302.67 310,-302.67 310,-310.33 310,-310.33 310,-314.17 306.17,-318 302.33,-318"/>
+<text text-anchor="middle" x="245" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">generate&#45;graphs.ts</text>
+</g>
+<!-- src/dependency&#45;graph/generate&#45;graphs.ts&#45;&gt;src/dependency&#45;graph/dependency&#45;graph.ts -->
+<!-- src/dependency&#45;graph/generate&#45;graphs.ts&#45;&gt;src/dependency&#45;graph/dependency&#45;graph.ts -->
+<g id="edge55" class="edge">
+<title>src/dependency&#45;graph/generate&#45;graphs.ts&#45;&gt;src/dependency&#45;graph/dependency&#45;graph.ts</title>
+<path fill="none" stroke="black" d="M240.07,-294.78C233.72,-286.74 223.22,-275.55 213.37,-266.19"/>
+<polygon fill="black" stroke="black" points="215.44,-263.34 205.7,-259.17 210.72,-268.51 215.44,-263.34"/>
+</g>
+<!-- src/dependency&#45;graph/generate&#45;graphs.ts&#45;&gt;exit_src/dependency&#45;graph -->
+<!-- name_src/dependency&#45;graph -->
+<g id="node10" class="node">
+<title>name_src/dependency&#45;graph</title>
+<path fill="none" stroke="#80ff00" stroke-width="5" d="M153.83,-318C153.83,-318 40.17,-318 40.17,-318 36.33,-318 32.5,-314.17 32.5,-310.33 32.5,-310.33 32.5,-302.67 32.5,-302.67 32.5,-298.83 36.33,-295 40.17,-295 40.17,-295 153.83,-295 153.83,-295 157.67,-295 161.5,-298.83 161.5,-302.67 161.5,-302.67 161.5,-310.33 161.5,-310.33 161.5,-314.17 157.67,-318 153.83,-318"/>
+<text text-anchor="middle" x="97" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">dependency&#45;graph</text>
+</g>
+<!-- src/validation/index.ts -->
+<g id="node11" class="node">
 <title>src/validation/index.ts</title>
-<path fill="none" stroke="#ff0000" stroke-width="5" d="M414.83,-495C414.83,-495 367.17,-495 367.17,-495 363.33,-495 359.5,-491.17 359.5,-487.33 359.5,-487.33 359.5,-479.67 359.5,-479.67 359.5,-475.83 363.33,-472 367.17,-472 367.17,-472 414.83,-472 414.83,-472 418.67,-472 422.5,-475.83 422.5,-479.67 422.5,-479.67 422.5,-487.33 422.5,-487.33 422.5,-491.17 418.67,-495 414.83,-495"/>
-<text text-anchor="middle" x="391" y="-479.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
+<path fill="none" stroke="#ff0000" stroke-width="5" d="M716.83,-495C716.83,-495 669.17,-495 669.17,-495 665.33,-495 661.5,-491.17 661.5,-487.33 661.5,-487.33 661.5,-479.67 661.5,-479.67 661.5,-475.83 665.33,-472 669.17,-472 669.17,-472 716.83,-472 716.83,-472 720.67,-472 724.5,-475.83 724.5,-479.67 724.5,-479.67 724.5,-487.33 724.5,-487.33 724.5,-491.17 720.67,-495 716.83,-495"/>
+<text text-anchor="middle" x="693" y="-479.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
 </g>
 <!-- src/validation/has&#45;extractor&#45;config.ts -->
-<g id="node11" class="node">
+<g id="node13" class="node">
 <title>src/validation/has&#45;extractor&#45;config.ts</title>
-<path fill="none" stroke="#000000" d="M186.33,-377C186.33,-377 51.67,-377 51.67,-377 47.83,-377 44,-373.17 44,-369.33 44,-369.33 44,-361.67 44,-361.67 44,-357.83 47.83,-354 51.67,-354 51.67,-354 186.33,-354 186.33,-354 190.17,-354 194,-357.83 194,-361.67 194,-361.67 194,-369.33 194,-369.33 194,-373.17 190.17,-377 186.33,-377"/>
-<text text-anchor="middle" x="119" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">has&#45;extractor&#45;config.ts</text>
+<path fill="none" stroke="#000000" d="M488.33,-377C488.33,-377 353.67,-377 353.67,-377 349.83,-377 346,-373.17 346,-369.33 346,-369.33 346,-361.67 346,-361.67 346,-357.83 349.83,-354 353.67,-354 353.67,-354 488.33,-354 488.33,-354 492.17,-354 496,-357.83 496,-361.67 496,-361.67 496,-369.33 496,-369.33 496,-373.17 492.17,-377 488.33,-377"/>
+<text text-anchor="middle" x="421" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">has&#45;extractor&#45;config.ts</text>
 </g>
 <!-- src/validation/index.ts&#45;&gt;src/validation/has&#45;extractor&#45;config.ts -->
 <!-- src/validation/index.ts&#45;&gt;src/validation/has&#45;extractor&#45;config.ts -->
-<g id="edge60" class="edge">
+<g id="edge61" class="edge">
 <title>src/validation/index.ts&#45;&gt;src/validation/has&#45;extractor&#45;config.ts</title>
-<path fill="none" stroke="black" d="M370.01,-471.79C324.24,-450.85 215.61,-404.45 157.32,-380.87"/>
-<polygon fill="black" stroke="black" points="158.31,-377.49 147.73,-377.01 155.7,-383.99 158.31,-377.49"/>
+<path fill="none" stroke="black" d="M672.01,-471.79C626.24,-450.85 517.61,-404.45 459.32,-380.87"/>
+<polygon fill="black" stroke="black" points="460.31,-377.49 449.73,-377.01 457.7,-383.99 460.31,-377.49"/>
 </g>
 <!-- src/validation/validate&#45;all.ts -->
-<g id="node12" class="node">
+<g id="node14" class="node">
 <title>src/validation/validate&#45;all.ts</title>
-<path fill="none" stroke="#000000" d="M430.83,-436C430.83,-436 351.17,-436 351.17,-436 347.33,-436 343.5,-432.17 343.5,-428.33 343.5,-428.33 343.5,-420.67 343.5,-420.67 343.5,-416.83 347.33,-413 351.17,-413 351.17,-413 430.83,-413 430.83,-413 434.67,-413 438.5,-416.83 438.5,-420.67 438.5,-420.67 438.5,-428.33 438.5,-428.33 438.5,-432.17 434.67,-436 430.83,-436"/>
-<text text-anchor="middle" x="391" y="-420.8" font-family="Arial" font-size="14.00" fill="#000000">validate&#45;all.ts</text>
+<path fill="none" stroke="#000000" d="M732.83,-436C732.83,-436 653.17,-436 653.17,-436 649.33,-436 645.5,-432.17 645.5,-428.33 645.5,-428.33 645.5,-420.67 645.5,-420.67 645.5,-416.83 649.33,-413 653.17,-413 653.17,-413 732.83,-413 732.83,-413 736.67,-413 740.5,-416.83 740.5,-420.67 740.5,-420.67 740.5,-428.33 740.5,-428.33 740.5,-432.17 736.67,-436 732.83,-436"/>
+<text text-anchor="middle" x="693" y="-420.8" font-family="Arial" font-size="14.00" fill="#000000">validate&#45;all.ts</text>
 </g>
 <!-- src/validation/index.ts&#45;&gt;src/validation/validate&#45;all.ts -->
 <!-- src/validation/index.ts&#45;&gt;src/validation/validate&#45;all.ts -->
-<g id="edge62" class="edge">
+<g id="edge63" class="edge">
 <title>src/validation/index.ts&#45;&gt;src/validation/validate&#45;all.ts</title>
-<path fill="none" stroke="black" d="M396.41,-471.78C397.67,-464.61 398.04,-454.95 397.53,-446.31"/>
-<polygon fill="black" stroke="black" points="400.98,-445.73 396.4,-436.17 394.03,-446.5 400.98,-445.73"/>
+<path fill="none" stroke="black" d="M698.41,-471.78C699.67,-464.61 700.04,-454.95 699.53,-446.31"/>
+<polygon fill="black" stroke="black" points="702.98,-445.73 698.4,-436.17 696.03,-446.5 702.98,-445.73"/>
 </g>
 <!-- src/validation/validate&#45;changesets.ts -->
-<g id="node13" class="node">
+<g id="node15" class="node">
 <title>src/validation/validate&#45;changesets.ts</title>
-<path fill="none" stroke="#000000" d="M355.83,-377C355.83,-377 220.17,-377 220.17,-377 216.33,-377 212.5,-373.17 212.5,-369.33 212.5,-369.33 212.5,-361.67 212.5,-361.67 212.5,-357.83 216.33,-354 220.17,-354 220.17,-354 355.83,-354 355.83,-354 359.67,-354 363.5,-357.83 363.5,-361.67 363.5,-361.67 363.5,-369.33 363.5,-369.33 363.5,-373.17 359.67,-377 355.83,-377"/>
-<text text-anchor="middle" x="288" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">validate&#45;changesets.ts</text>
+<path fill="none" stroke="#000000" d="M657.83,-377C657.83,-377 522.17,-377 522.17,-377 518.33,-377 514.5,-373.17 514.5,-369.33 514.5,-369.33 514.5,-361.67 514.5,-361.67 514.5,-357.83 518.33,-354 522.17,-354 522.17,-354 657.83,-354 657.83,-354 661.67,-354 665.5,-357.83 665.5,-361.67 665.5,-361.67 665.5,-369.33 665.5,-369.33 665.5,-373.17 661.67,-377 657.83,-377"/>
+<text text-anchor="middle" x="590" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">validate&#45;changesets.ts</text>
 </g>
 <!-- src/validation/index.ts&#45;&gt;src/validation/validate&#45;changesets.ts -->
 <!-- src/validation/index.ts&#45;&gt;src/validation/validate&#45;changesets.ts -->
-<g id="edge64" class="edge">
+<g id="edge65" class="edge">
 <title>src/validation/index.ts&#45;&gt;src/validation/validate&#45;changesets.ts</title>
-<path fill="none" stroke="black" d="M383.06,-471.69C372.86,-462.87 356.39,-449.67 344,-436 329.74,-420.27 316.49,-399.92 306.05,-385.31"/>
-<polygon fill="black" stroke="black" points="308.7,-383.01 299.93,-377.05 303.07,-387.17 308.7,-383.01"/>
+<path fill="none" stroke="black" d="M685.06,-471.69C674.86,-462.87 658.39,-449.67 646,-436 631.74,-420.27 618.49,-399.92 608.05,-385.31"/>
+<polygon fill="black" stroke="black" points="610.7,-383.01 601.93,-377.05 605.07,-387.17 610.7,-383.01"/>
 </g>
 <!-- src/validation/validate&#45;package&#45;json.ts -->
-<g id="node14" class="node">
+<g id="node16" class="node">
 <title>src/validation/validate&#45;package&#45;json.ts</title>
-<path fill="none" stroke="#000000" d="M556.33,-377C556.33,-377 409.67,-377 409.67,-377 405.83,-377 402,-373.17 402,-369.33 402,-369.33 402,-361.67 402,-361.67 402,-357.83 405.83,-354 409.67,-354 409.67,-354 556.33,-354 556.33,-354 560.17,-354 564,-357.83 564,-361.67 564,-361.67 564,-369.33 564,-369.33 564,-373.17 560.17,-377 556.33,-377"/>
-<text text-anchor="middle" x="483" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">validate&#45;package&#45;json.ts</text>
+<path fill="none" stroke="#000000" d="M858.33,-377C858.33,-377 711.67,-377 711.67,-377 707.83,-377 704,-373.17 704,-369.33 704,-369.33 704,-361.67 704,-361.67 704,-357.83 707.83,-354 711.67,-354 711.67,-354 858.33,-354 858.33,-354 862.17,-354 866,-357.83 866,-361.67 866,-361.67 866,-369.33 866,-369.33 866,-373.17 862.17,-377 858.33,-377"/>
+<text text-anchor="middle" x="785" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">validate&#45;package&#45;json.ts</text>
 </g>
 <!-- src/validation/index.ts&#45;&gt;src/validation/validate&#45;package&#45;json.ts -->
 <!-- src/validation/index.ts&#45;&gt;src/validation/validate&#45;package&#45;json.ts -->
-<g id="edge66" class="edge">
+<g id="edge67" class="edge">
 <title>src/validation/index.ts&#45;&gt;src/validation/validate&#45;package&#45;json.ts</title>
-<path fill="none" stroke="black" d="M414.68,-472C428.66,-463.44 445.41,-450.44 457,-436 468.86,-421.23 478.23,-401.78 482.8,-387.22"/>
-<polygon fill="black" stroke="black" points="486.28,-387.74 485.32,-377.19 479.49,-386.03 486.28,-387.74"/>
+<path fill="none" stroke="black" d="M716.68,-472C730.66,-463.44 747.41,-450.44 759,-436 770.86,-421.23 780.23,-401.78 784.8,-387.22"/>
+<polygon fill="black" stroke="black" points="788.28,-387.74 787.32,-377.19 781.49,-386.03 788.28,-387.74"/>
 </g>
 <!-- src/validation/validate&#45;workspace&#45;tsconfig.ts -->
-<g id="node15" class="node">
+<g id="node17" class="node">
 <title>src/validation/validate&#45;workspace&#45;tsconfig.ts</title>
-<path fill="none" stroke="#000000" d="M771.83,-377C771.83,-377 590.17,-377 590.17,-377 586.33,-377 582.5,-373.17 582.5,-369.33 582.5,-369.33 582.5,-361.67 582.5,-361.67 582.5,-357.83 586.33,-354 590.17,-354 590.17,-354 771.83,-354 771.83,-354 775.67,-354 779.5,-357.83 779.5,-361.67 779.5,-361.67 779.5,-369.33 779.5,-369.33 779.5,-373.17 775.67,-377 771.83,-377"/>
-<text text-anchor="middle" x="681" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">validate&#45;workspace&#45;tsconfig.ts</text>
+<path fill="none" stroke="#000000" d="M1073.83,-377C1073.83,-377 892.17,-377 892.17,-377 888.33,-377 884.5,-373.17 884.5,-369.33 884.5,-369.33 884.5,-361.67 884.5,-361.67 884.5,-357.83 888.33,-354 892.17,-354 892.17,-354 1073.83,-354 1073.83,-354 1077.67,-354 1081.5,-357.83 1081.5,-361.67 1081.5,-361.67 1081.5,-369.33 1081.5,-369.33 1081.5,-373.17 1077.67,-377 1073.83,-377"/>
+<text text-anchor="middle" x="983" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">validate&#45;workspace&#45;tsconfig.ts</text>
 </g>
 <!-- src/validation/index.ts&#45;&gt;src/validation/validate&#45;workspace&#45;tsconfig.ts -->
 <!-- src/validation/index.ts&#45;&gt;src/validation/validate&#45;workspace&#45;tsconfig.ts -->
-<g id="edge68" class="edge">
+<g id="edge69" class="edge">
 <title>src/validation/index.ts&#45;&gt;src/validation/validate&#45;workspace&#45;tsconfig.ts</title>
-<path fill="none" stroke="black" d="M421.6,-471.9C477.04,-451.06 593.06,-404.73 649.29,-381.05"/>
-<polygon fill="black" stroke="black" points="650.91,-384.16 658.75,-377.04 648.18,-377.72 650.91,-384.16"/>
+<path fill="none" stroke="black" d="M723.6,-471.9C779.04,-451.06 895.06,-404.73 951.29,-381.05"/>
+<polygon fill="black" stroke="black" points="952.91,-384.16 960.75,-377.04 950.18,-377.72 952.91,-384.16"/>
 </g>
 <!-- exit_src/validation -->
 <!-- src/validation/index.ts&#45;&gt;exit_src/validation -->
 <!-- name_src/validation -->
-<g id="node10" class="node">
+<g id="node12" class="node">
 <title>name_src/validation</title>
-<path fill="none" stroke="#ff0000" stroke-width="5" d="M110.33,-495C110.33,-495 51.67,-495 51.67,-495 47.83,-495 44,-491.17 44,-487.33 44,-487.33 44,-479.67 44,-479.67 44,-475.83 47.83,-472 51.67,-472 51.67,-472 110.33,-472 110.33,-472 114.17,-472 118,-475.83 118,-479.67 118,-479.67 118,-487.33 118,-487.33 118,-491.17 114.17,-495 110.33,-495"/>
-<text text-anchor="middle" x="81" y="-479.8" font-family="Arial" font-size="14.00" fill="#000000">validation</text>
+<path fill="none" stroke="#ff0000" stroke-width="5" d="M412.33,-495C412.33,-495 353.67,-495 353.67,-495 349.83,-495 346,-491.17 346,-487.33 346,-487.33 346,-479.67 346,-479.67 346,-475.83 349.83,-472 353.67,-472 353.67,-472 412.33,-472 412.33,-472 416.17,-472 420,-475.83 420,-479.67 420,-479.67 420,-487.33 420,-487.33 420,-491.17 416.17,-495 412.33,-495"/>
+<text text-anchor="middle" x="383" y="-479.8" font-family="Arial" font-size="14.00" fill="#000000">validation</text>
 </g>
 <!-- src/validation/has&#45;extractor&#45;config.ts&#45;&gt;exit_src/validation -->
 <!-- src/validation/validate&#45;all.ts&#45;&gt;src/validation/has&#45;extractor&#45;config.ts -->
 <!-- src/validation/validate&#45;all.ts&#45;&gt;src/validation/has&#45;extractor&#45;config.ts -->
-<g id="edge70" class="edge">
+<g id="edge71" class="edge">
 <title>src/validation/validate&#45;all.ts&#45;&gt;src/validation/has&#45;extractor&#45;config.ts</title>
-<path fill="none" stroke="black" d="M346.17,-412.98C302.21,-403.41 234.85,-389.27 184.83,-379.1"/>
-<polygon fill="black" stroke="black" points="185.25,-375.61 174.76,-377.06 183.86,-382.47 185.25,-375.61"/>
+<path fill="none" stroke="black" d="M648.17,-412.98C604.21,-403.41 536.85,-389.27 486.83,-379.1"/>
+<polygon fill="black" stroke="black" points="487.25,-375.61 476.76,-377.06 485.86,-382.47 487.25,-375.61"/>
 </g>
 <!-- src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;changesets.ts -->
 <!-- src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;changesets.ts -->
-<g id="edge72" class="edge">
+<g id="edge73" class="edge">
 <title>src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;changesets.ts</title>
-<path fill="none" stroke="black" d="M377.04,-412.78C362.75,-404.02 340.4,-391.53 321.59,-381.74"/>
-<polygon fill="black" stroke="black" points="323.18,-378.62 312.69,-377.17 319.99,-384.85 323.18,-378.62"/>
+<path fill="none" stroke="black" d="M679.04,-412.78C664.75,-404.02 642.4,-391.53 623.59,-381.74"/>
+<polygon fill="black" stroke="black" points="625.18,-378.62 614.69,-377.17 621.99,-384.85 625.18,-378.62"/>
 </g>
 <!-- src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;package&#45;json.ts -->
 <!-- src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;package&#45;json.ts -->
-<g id="edge74" class="edge">
+<g id="edge75" class="edge">
 <title>src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;package&#45;json.ts</title>
-<path fill="none" stroke="black" d="M413.72,-412.78C428.82,-404.34 448.28,-392.44 462.83,-382.82"/>
-<polygon fill="black" stroke="black" points="464.85,-385.68 471.18,-377.17 460.93,-379.88 464.85,-385.68"/>
+<path fill="none" stroke="black" d="M715.72,-412.78C730.82,-404.34 750.28,-392.44 764.83,-382.82"/>
+<polygon fill="black" stroke="black" points="766.85,-385.68 773.18,-377.17 762.93,-379.88 766.85,-385.68"/>
 </g>
 <!-- src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;workspace&#45;tsconfig.ts -->
 <!-- src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;workspace&#45;tsconfig.ts -->
-<g id="edge76" class="edge">
+<g id="edge77" class="edge">
 <title>src/validation/validate&#45;all.ts&#45;&gt;src/validation/validate&#45;workspace&#45;tsconfig.ts</title>
-<path fill="none" stroke="black" d="M438.75,-415.09C489.1,-405.61 568.34,-390.08 622.42,-379.14"/>
-<polygon fill="black" stroke="black" points="623.45,-382.5 632.55,-377.08 622.05,-375.64 623.45,-382.5"/>
+<path fill="none" stroke="black" d="M740.75,-415.09C791.1,-405.61 870.34,-390.08 924.42,-379.14"/>
+<polygon fill="black" stroke="black" points="925.45,-382.5 934.55,-377.08 924.05,-375.64 925.45,-382.5"/>
 </g>
 <!-- src/validation/validate&#45;all.ts&#45;&gt;exit_src/validation -->
 <!-- src/validation/validate&#45;changesets.ts&#45;&gt;exit_src/validation -->
 <!-- src/validation/validate&#45;package&#45;json.ts&#45;&gt;exit_src/validation -->
 <!-- src/validation/validate&#45;workspace&#45;tsconfig.ts&#45;&gt;exit_src/validation -->
 <!-- exit_src/validation&#45;&gt;name_src/changeset -->
-<g id="edge77" class="edge">
+<g id="edge78" class="edge">
 <title>exit_src/validation&#45;&gt;name_src/changeset</title>
-<path fill="none" stroke="#ff0000" d="M532,-287C461.7,-273.05 439.15,-283.74 373.94,-269.32"/>
-<polygon fill="#ff0000" stroke="#ff0000" points="374.53,-265.86 364,-267 372.94,-272.68 374.53,-265.86"/>
+<path fill="none" stroke="#ff0000" d="M752,-287C681.7,-273.05 659.15,-283.74 593.94,-269.32"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="594.53,-265.86 584,-267 592.94,-272.68 594.53,-265.86"/>
 </g>
 <!-- exit_src -->
 <!-- exit_src/validation&#45;&gt;exit_src -->
@@ -220,10 +240,10 @@
 <!-- exit_src/validation&#45;&gt;exit_src -->
 <!-- exit_src/validation&#45;&gt;exit_src -->
 <!-- name_src -->
-<g id="node17" class="node">
+<g id="node19" class="node">
 <title>name_src</title>
-<path fill="none" stroke="#00ffff" stroke-width="5" d="M633.33,-554C633.33,-554 594.67,-554 594.67,-554 590.83,-554 587,-550.17 587,-546.33 587,-546.33 587,-538.67 587,-538.67 587,-534.83 590.83,-531 594.67,-531 594.67,-531 633.33,-531 633.33,-531 637.17,-531 641,-534.83 641,-538.67 641,-538.67 641,-546.33 641,-546.33 641,-550.17 637.17,-554 633.33,-554"/>
-<text text-anchor="middle" x="614" y="-538.8" font-family="Arial" font-size="14.00" fill="#000000">src</text>
+<path fill="none" stroke="#00ffff" stroke-width="5" d="M768.33,-554C768.33,-554 729.67,-554 729.67,-554 725.83,-554 722,-550.17 722,-546.33 722,-546.33 722,-538.67 722,-538.67 722,-534.83 725.83,-531 729.67,-531 729.67,-531 768.33,-531 768.33,-531 772.17,-531 776,-534.83 776,-538.67 776,-538.67 776,-546.33 776,-546.33 776,-550.17 772.17,-554 768.33,-554"/>
+<text text-anchor="middle" x="749" y="-538.8" font-family="Arial" font-size="14.00" fill="#000000">src</text>
 </g>
 <!-- exit_src&#45;&gt;dependency&#45;graph&#45;[object Object] -->
 <!-- exit_src&#45;&gt;exit_src -->
@@ -242,23 +262,29 @@
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- src/index.ts -->
-<g id="node19" class="node">
+<g id="node21" class="node">
 <title>src/index.ts</title>
-<path fill="none" stroke="#00ffff" stroke-width="5" d="M79.83,-554C79.83,-554 32.17,-554 32.17,-554 28.33,-554 24.5,-550.17 24.5,-546.33 24.5,-546.33 24.5,-538.67 24.5,-538.67 24.5,-534.83 28.33,-531 32.17,-531 32.17,-531 79.83,-531 79.83,-531 83.67,-531 87.5,-534.83 87.5,-538.67 87.5,-538.67 87.5,-546.33 87.5,-546.33 87.5,-550.17 83.67,-554 79.83,-554"/>
-<text text-anchor="middle" x="56" y="-538.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
+<path fill="none" stroke="#00ffff" stroke-width="5" d="M350.83,-554C350.83,-554 303.17,-554 303.17,-554 299.33,-554 295.5,-550.17 295.5,-546.33 295.5,-546.33 295.5,-538.67 295.5,-538.67 295.5,-534.83 299.33,-531 303.17,-531 303.17,-531 350.83,-531 350.83,-531 354.67,-531 358.5,-534.83 358.5,-538.67 358.5,-538.67 358.5,-546.33 358.5,-546.33 358.5,-550.17 354.67,-554 350.83,-554"/>
+<text text-anchor="middle" x="327" y="-538.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
 </g>
 <!-- src/index.ts&#45;&gt;name_src/changeset -->
 <g id="edge56" class="edge">
 <title>src/index.ts&#45;&gt;name_src/changeset</title>
-<path fill="none" stroke="#00ffff" d="M39.72,-530.75C32.97,-523.39 26.41,-513.16 23,-503 12,-470.21 16,-460.08 16,-425.5 16,-425.5 16,-425.5 16,-364.5 16,-329.92 -1.51,-311.4 23,-287 57.82,-252.34 189.36,-275.45 247.11,-268.64"/>
-<polygon fill="#00ffff" stroke="#00ffff" points="247.71,-272.09 257,-267 246.56,-265.18 247.71,-272.09"/>
+<path fill="none" stroke="#00ffff" d="M323.45,-530.82C315.43,-484.83 308.5,-305.3 325,-287 345.81,-263.92 427.62,-273.2 466.92,-268.72"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="467.73,-272.13 477,-267 466.55,-265.23 467.73,-272.13"/>
 </g>
 <!-- src/index.ts&#45;&gt;name_src/changeset -->
-<!-- src/index.ts&#45;&gt;name_src/validation -->
+<!-- src/index.ts&#45;&gt;name_src/dependency&#45;graph -->
 <g id="edge58" class="edge">
+<title>src/index.ts&#45;&gt;name_src/dependency&#45;graph</title>
+<path fill="none" stroke="#00ffff" d="M316.52,-530.84C282.2,-495.92 172.52,-384.34 122.41,-333.35"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="124.69,-330.68 115.18,-326 119.7,-335.59 124.69,-330.68"/>
+</g>
+<!-- src/index.ts&#45;&gt;name_src/validation -->
+<g id="edge59" class="edge">
 <title>src/index.ts&#45;&gt;name_src/validation</title>
-<path fill="none" stroke="#00ffff" d="M60.7,-530.78C63.95,-523.37 68.37,-513.3 72.25,-504.45"/>
-<polygon fill="#00ffff" stroke="#00ffff" points="70.2,-513.13 73.32,-503 64.57,-508.97 70.2,-513.13"/>
+<path fill="none" stroke="#00ffff" d="M337.53,-530.78C343.17,-525.04 350.38,-517.7 357.39,-510.57"/>
+<polygon fill="#00ffff" stroke="#00ffff" points="360.31,-512.58 364.83,-503 355.32,-507.68 360.31,-512.58"/>
 </g>
 <!-- src/index.ts&#45;&gt;exit_src -->
 <!-- exit_src/changeset&#45;&gt;exit_src -->
@@ -267,48 +293,28 @@
 <!-- exit_src/changeset&#45;&gt;exit_src -->
 <!-- exit_src/changeset&#45;&gt;exit_src -->
 <!-- src/changeset/build&#45;changelog.ts -->
-<g id="node21" class="node">
+<g id="node23" class="node">
 <title>src/changeset/build&#45;changelog.ts</title>
-<path fill="none" stroke="#000000" d="M249.33,-259C249.33,-259 138.67,-259 138.67,-259 134.83,-259 131,-255.17 131,-251.33 131,-251.33 131,-243.67 131,-243.67 131,-239.83 134.83,-236 138.67,-236 138.67,-236 249.33,-236 249.33,-236 253.17,-236 257,-239.83 257,-243.67 257,-243.67 257,-251.33 257,-251.33 257,-255.17 253.17,-259 249.33,-259"/>
-<text text-anchor="middle" x="194" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">build&#45;changelog.ts</text>
+<path fill="none" stroke="#000000" d="M469.33,-259C469.33,-259 358.67,-259 358.67,-259 354.83,-259 351,-255.17 351,-251.33 351,-251.33 351,-243.67 351,-243.67 351,-239.83 354.83,-236 358.67,-236 358.67,-236 469.33,-236 469.33,-236 473.17,-236 477,-239.83 477,-243.67 477,-243.67 477,-251.33 477,-251.33 477,-255.17 473.17,-259 469.33,-259"/>
+<text text-anchor="middle" x="414" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">build&#45;changelog.ts</text>
 </g>
 <!-- src/changeset/build&#45;changelog.ts&#45;&gt;src/changeset/get&#45;changeset&#45;details.ts -->
 <!-- src/changeset/build&#45;changelog.ts&#45;&gt;src/changeset/get&#45;changeset&#45;details.ts -->
 <g id="edge47" class="edge">
 <title>src/changeset/build&#45;changelog.ts&#45;&gt;src/changeset/get&#45;changeset&#45;details.ts</title>
-<path fill="none" stroke="black" d="M199.41,-235.78C200.67,-228.61 201.04,-218.95 200.53,-210.31"/>
-<polygon fill="black" stroke="black" points="203.98,-209.73 199.4,-200.17 197.03,-210.5 203.98,-209.73"/>
+<path fill="none" stroke="black" d="M419.41,-235.78C420.67,-228.61 421.04,-218.95 420.53,-210.31"/>
+<polygon fill="black" stroke="black" points="423.98,-209.73 419.4,-200.17 417.03,-210.5 423.98,-209.73"/>
 </g>
 <!-- src/changeset/build&#45;changelog.ts&#45;&gt;src/changeset/helpers.ts -->
 <!-- src/changeset/build&#45;changelog.ts&#45;&gt;src/changeset/helpers.ts -->
 <g id="edge49" class="edge">
 <title>src/changeset/build&#45;changelog.ts&#45;&gt;src/changeset/helpers.ts</title>
-<path fill="none" stroke="black" d="M228.18,-235.91C254.48,-226.83 290.43,-213.68 316.34,-203.69"/>
-<polygon fill="black" stroke="black" points="317.69,-206.92 325.74,-200.03 315.15,-200.4 317.69,-206.92"/>
+<path fill="none" stroke="black" d="M448.18,-235.91C474.48,-226.83 510.43,-213.68 536.34,-203.69"/>
+<polygon fill="black" stroke="black" points="537.69,-206.92 545.74,-200.03 535.15,-200.4 537.69,-206.92"/>
 </g>
 <!-- src/changeset/build&#45;changelog.ts&#45;&gt;exit_src/changeset -->
-<!-- name_src/dependency&#45;graph -->
-<g id="node22" class="node">
-<title>name_src/dependency&#45;graph</title>
-<path fill="none" stroke="#80ff00" stroke-width="5" d="M1105.83,-318C1105.83,-318 992.17,-318 992.17,-318 988.33,-318 984.5,-314.17 984.5,-310.33 984.5,-310.33 984.5,-302.67 984.5,-302.67 984.5,-298.83 988.33,-295 992.17,-295 992.17,-295 1105.83,-295 1105.83,-295 1109.67,-295 1113.5,-298.83 1113.5,-302.67 1113.5,-302.67 1113.5,-310.33 1113.5,-310.33 1113.5,-314.17 1109.67,-318 1105.83,-318"/>
-<text text-anchor="middle" x="1049" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">dependency&#45;graph</text>
-</g>
 <!-- exit_src/dependency&#45;graph&#45;&gt;exit_src -->
 <!-- exit_src/dependency&#45;graph&#45;&gt;exit_src -->
 <!-- exit_src/dependency&#45;graph&#45;&gt;exit_src -->
-<!-- src/dependency&#45;graph/generate&#45;graphs.ts -->
-<g id="node24" class="node">
-<title>src/dependency&#45;graph/generate&#45;graphs.ts</title>
-<path fill="none" stroke="#000000" d="M958.33,-318C958.33,-318 843.67,-318 843.67,-318 839.83,-318 836,-314.17 836,-310.33 836,-310.33 836,-302.67 836,-302.67 836,-298.83 839.83,-295 843.67,-295 843.67,-295 958.33,-295 958.33,-295 962.17,-295 966,-298.83 966,-302.67 966,-302.67 966,-310.33 966,-310.33 966,-314.17 962.17,-318 958.33,-318"/>
-<text text-anchor="middle" x="901" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">generate&#45;graphs.ts</text>
-</g>
-<!-- src/dependency&#45;graph/generate&#45;graphs.ts&#45;&gt;src/dependency&#45;graph/dependency&#45;graph.ts -->
-<!-- src/dependency&#45;graph/generate&#45;graphs.ts&#45;&gt;src/dependency&#45;graph/dependency&#45;graph.ts -->
-<g id="edge55" class="edge">
-<title>src/dependency&#45;graph/generate&#45;graphs.ts&#45;&gt;src/dependency&#45;graph/dependency&#45;graph.ts</title>
-<path fill="none" stroke="black" d="M907.73,-294.78C909.86,-287.61 911.42,-277.95 911.97,-269.31"/>
-<polygon fill="black" stroke="black" points="915.47,-269.21 912.09,-259.17 908.47,-269.13 915.47,-269.21"/>
-</g>
-<!-- src/dependency&#45;graph/generate&#45;graphs.ts&#45;&gt;exit_src/dependency&#45;graph -->
 </g>
 </svg>

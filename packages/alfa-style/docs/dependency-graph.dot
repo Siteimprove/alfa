@@ -681,8 +681,6 @@ digraph "dependency-graph-[object Object]" {
         ];
         "src/property/border-image-outset.ts" [
           label = "border-image-outset.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/property/border-image-repeat.ts" [
           label = "border-image-repeat.ts";
@@ -3894,15 +3892,6 @@ digraph "dependency-graph-[object Object]" {
   "exit_src/property" -> "src/resolver.ts" [
     style = "invis";
   ];
-  "src/property/border-image-outset.ts" -> "src/style.ts" [
-    style = "invis";
-  ];
-  "exit_src/property" -> "src/style.ts" [
-    style = "solid";
-    ltail = "cluster_src/property";
-    lhead = "cluster_src/style.ts";
-    color = "#ffdb00";
-  ];
   "src/property/border-image-repeat.ts" -> "src/longhand.ts" [
     style = "invis";
   ];
@@ -3943,7 +3932,10 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/property" -> "src/style.ts" [
-    style = "invis";
+    style = "dotted";
+    ltail = "cluster_src/property";
+    lhead = "cluster_src/style.ts";
+    color = "#ffdb00";
   ];
   "src/property/border-image.ts" -> "src/property/border-image-outset.ts" [
     style = "invis";
