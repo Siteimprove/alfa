@@ -120,9 +120,9 @@ export namespace Numeric {
     /**
      * @internal
      */
-    public abstract toBase(): BaseNumeric<
-      T extends `${infer U}-percentage` ? never : T
-    >;
+    public abstract toBase(): T extends Exclude<Type, `${string}-percentage`>
+      ? BaseNumeric<T>
+      : never;
 
     public equals(value: unknown): value is this {
       return value instanceof Fixed && value._value === this._value;
