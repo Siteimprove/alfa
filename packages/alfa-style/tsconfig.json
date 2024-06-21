@@ -189,6 +189,7 @@
     "test/node/predicate/has-transparent-background.spec.tsx",
     "test/node/predicate/is-clipped.spec.tsx",
     "test/node/predicate/is-offscreen.spec.tsx",
+    "test/node/predicate/is-scrolled-behind.spec.tsx",
     "test/node/predicate/is-transparent.spec.tsx",
     "test/node/predicate/is-visible.spec.tsx",
     "test/property/background.spec.tsx",
