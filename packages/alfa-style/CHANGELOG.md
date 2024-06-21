@@ -1,5 +1,7 @@
 # @siteimprove/alfa-style
 
+## 0.83.1
+
 ## 0.83.0
 
 ### Patch Changes
