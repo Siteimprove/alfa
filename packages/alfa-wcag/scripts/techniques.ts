@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const prettier = require("prettier");
-const puppeteer = require("puppeteer");
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as prettier from "prettier";
+import * as puppeteer from "puppeteer";
 
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
@@ -10,16 +10,16 @@ puppeteer.launch().then(async (browser) => {
 
   const techniques = await page.evaluate(() =>
     Object.fromEntries(
-      [...document.querySelectorAll("ul.toc-wcag-docs li a")].map(
+      Array.from(document.querySelectorAll("ul.toc-wcag-docs li a")).map(
         (technique) => {
-          const uri = technique.href;
+          const uri = technique.getAttribute("href");
 
           const match = technique.textContent
-            .replace(/\s+/, " ")
+            ?.replace(/\s+/, " ")
             .trim()
             .match(/^(\w+\d+): (.+)/);
 
-          if (match === null) {
+          if (match === null || match === undefined) {
             return [];
           }
 
@@ -37,7 +37,7 @@ puppeteer.launch().then(async (browser) => {
     ),
   );
 
-  browser.close();
+  await browser.close();
 
   let code = `
 // This file has been automatically generated based on the WCAG specification.
