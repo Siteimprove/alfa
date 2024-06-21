@@ -32,6 +32,7 @@
     "src/node/predicate/is-clipped.ts",
     "src/node/predicate/is-offscreen.ts",
     "src/node/predicate/is-rendered.ts",
+    "src/node/predicate/is-scrolled-behind.ts",
     "src/node/predicate/is-transparent.ts",
     "src/node/predicate/is-visible.ts",
     "src/property/background.ts",
