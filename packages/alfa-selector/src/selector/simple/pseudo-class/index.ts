@@ -8,6 +8,7 @@ import { type Absolute, Simple } from "../../index";
 import { Compound } from "../../compound";
 
 import { Active } from "./active";
+import { AnyLink } from "./any-link";
 import { Disabled } from "./disabled";
 import { Empty } from "./empty";
 import { Enabled } from "./enabled";
@@ -45,6 +46,7 @@ const { or } = Refinement;
  */
 export type PseudoClass =
   | Active
+  | AnyLink
   | Disabled
   | Empty
   | Enabled
@@ -78,6 +80,7 @@ export type PseudoClass =
 export namespace PseudoClass {
   export type JSON =
     | Active.JSON
+    | AnyLink.JSON
     | Disabled.JSON
     | Empty.JSON
     | Enabled.JSON
@@ -119,6 +122,7 @@ export namespace PseudoClass {
   ): CSSParser<PseudoClass> {
     return either<Slice<Token>, PseudoClass, string>(
       Active.parse,
+      AnyLink.parse,
       Disabled.parse,
       Empty.parse,
       Enabled.parse,
