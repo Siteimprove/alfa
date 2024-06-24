@@ -14,7 +14,7 @@ parent(options?: Node.Traversal): Option<Node>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.Traversal](./alfa-dom.node_2.traversal.md) | _(Optional)_ |
+|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
 
 **Returns:**
 

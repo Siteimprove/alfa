@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-someErr(predicate: Predicate<E>): this is Err<E>;
+someErr(predicate: Predicate<E>): boolean;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ someErr(predicate: Predicate<E>): this is Err<E>;
 
 **Returns:**
 
-this is Err&lt;E&gt;
+boolean
 

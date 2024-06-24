@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-none(predicate: Predicate<T>): boolean;
+none<U extends T>(refinement: Refinement<T, U>): this is Result<Exclude<T, U>, never>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | Predicate&lt;T&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
 **Returns:**
 
-boolean
+this is Result&lt;Exclude&lt;T, U&gt;, never&gt;
 

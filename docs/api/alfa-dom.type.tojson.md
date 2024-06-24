@@ -16,7 +16,7 @@ toJSON(options: Node.SerializationOptions & {
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.SerializationOptions](./alfa-dom.node_2.serializationoptions.md) &amp; { verbosity: [json.Serializable.Verbosity.Minimal](./alfa-json.serializable.verbosity.md) \| [json.Serializable.Verbosity.Low](./alfa-json.serializable.verbosity.md)<!-- -->; } |  |
+|  options | [Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) &amp; { verbosity: [json.Serializable.Verbosity.Minimal](./alfa-json.serializable.verbosity.md) \| [json.Serializable.Verbosity.Low](./alfa-json.serializable.verbosity.md)<!-- -->; } |  |
 
 **Returns:**
 

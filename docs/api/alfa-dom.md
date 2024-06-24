@@ -10,10 +10,10 @@
 |  --- | --- |
 |  [Attribute](./alfa-dom.attribute.md) |  |
 |  [Block](./alfa-dom.block.md) |  |
-|  [Comment\_2](./alfa-dom.comment_2.md) |  |
+|  [Comment](./alfa-dom.comment.md) |  |
 |  [Declaration](./alfa-dom.declaration.md) |  |
-|  [Document\_2](./alfa-dom.document_2.md) |  |
-|  [Element\_2](./alfa-dom.element_2.md) |  |
+|  [Document](./alfa-dom.document.md) |  |
+|  [Element](./alfa-dom.element.md) |  |
 |  [FontFaceRule](./alfa-dom.fontfacerule.md) |  |
 |  [Fragment](./alfa-dom.fragment.md) |  |
 |  [ImportRule](./alfa-dom.importrule.md) |  |
@@ -26,7 +26,7 @@
 |  [Sheet](./alfa-dom.sheet.md) |  |
 |  [StyleRule](./alfa-dom.stylerule.md) |  |
 |  [SupportsRule](./alfa-dom.supportsrule.md) |  |
-|  [Text\_2](./alfa-dom.text_2.md) |  |
+|  [Text](./alfa-dom.text.md) |  |
 |  [Type](./alfa-dom.type.md) |  |
 
 ## Abstract Classes
@@ -35,7 +35,7 @@
 |  --- | --- |
 |  [ConditionRule](./alfa-dom.conditionrule.md) |  |
 |  [GroupingRule](./alfa-dom.groupingrule.md) |  |
-|  [Node\_2](./alfa-dom.node_2.md) |  |
+|  [Node](./alfa-dom.node.md) |  |
 |  [Rule](./alfa-dom.rule.md) |  |
 
 ## Enumerations
@@ -55,7 +55,7 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Node\_2](./alfa-dom.node_2.md) |  |
+|  [Node](./alfa-dom.node.md) |  |
 |  [Slot](./alfa-dom.slot.md) |  |
 |  [Slotable](./alfa-dom.slotable.md) |  |
 
@@ -65,11 +65,11 @@
 |  --- | --- |
 |  [Attribute](./alfa-dom.attribute.md) |  |
 |  [Block](./alfa-dom.block.md) |  |
-|  [Comment\_2](./alfa-dom.comment_2.md) |  |
+|  [Comment](./alfa-dom.comment.md) |  |
 |  [ConditionRule](./alfa-dom.conditionrule.md) |  |
 |  [Declaration](./alfa-dom.declaration.md) |  |
-|  [Document\_2](./alfa-dom.document_2.md) |  |
-|  [Element\_2](./alfa-dom.element_2.md) |  |
+|  [Document](./alfa-dom.document.md) |  |
+|  [Element](./alfa-dom.element.md) |  |
 |  [FontFaceRule](./alfa-dom.fontfacerule.md) |  |
 |  [Fragment](./alfa-dom.fragment.md) |  |
 |  [GroupingRule](./alfa-dom.groupingrule.md) |  |
@@ -82,7 +82,7 @@
 |  [MediaRule](./alfa-dom.mediarule.md) |  |
 |  [Namespace](./alfa-dom.namespace.md) |  |
 |  [NamespaceRule](./alfa-dom.namespacerule.md) |  |
-|  [Node\_2](./alfa-dom.node_2.md) |  |
+|  [Node](./alfa-dom.node.md) |  |
 |  [PageRule](./alfa-dom.pagerule.md) |  |
 |  [Query](./alfa-dom.query.md) |  |
 |  [Rule](./alfa-dom.rule.md) |  |
@@ -92,6 +92,6 @@
 |  [Slotable](./alfa-dom.slotable.md) |  |
 |  [StyleRule](./alfa-dom.stylerule.md) |  |
 |  [SupportsRule](./alfa-dom.supportsrule.md) |  |
-|  [Text\_2](./alfa-dom.text_2.md) |  |
+|  [Text](./alfa-dom.text.md) |  |
 |  [Type](./alfa-dom.type.md) |  |
 

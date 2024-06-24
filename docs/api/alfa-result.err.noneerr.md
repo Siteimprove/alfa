@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-noneErr(predicate: Predicate<E>): boolean;
+noneErr<F extends E>(refinement: Refinement<E, F>): this is Result<never, Exclude<E, F>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | Predicate&lt;E&gt; |  |
+|  refinement | Refinement&lt;E, F&gt; |  |
 
 **Returns:**
 
-boolean
+this is Result&lt;never, Exclude&lt;E, F&gt;&gt;
 

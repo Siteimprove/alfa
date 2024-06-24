@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-everyErr(): boolean;
+everyErr(): this is this;
 ```
 **Returns:**
 
-boolean
+this is this
 
