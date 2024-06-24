@@ -18,12 +18,10 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-applicative": "workspace:^0.83.1",
     "@siteimprove/alfa-callback": "workspace:^0.83.1",
     "@siteimprove/alfa-comparable": "workspace:^0.83.1",
     "@siteimprove/alfa-equatable": "workspace:^0.83.1",
     "@siteimprove/alfa-foldable": "workspace:^0.83.1",
-    "@siteimprove/alfa-functor": "workspace:^0.83.1",
     "@siteimprove/alfa-hash": "workspace:^0.83.1",
     "@siteimprove/alfa-json": "workspace:^0.83.1",
     "@siteimprove/alfa-mapper": "workspace:^0.83.1",

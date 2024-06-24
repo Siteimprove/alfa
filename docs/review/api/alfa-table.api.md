@@ -7,7 +7,7 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
-import { Element as Element_2 } from '@siteimprove/alfa-dom';
+import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import * as json from '@siteimprove/alfa-json';
 import { Predicate } from '@siteimprove/alfa-predicate';
@@ -35,7 +35,7 @@ export namespace Anchored {
 //
 // @public (undocumented)
 export abstract class Cell implements Anchored, Equatable, Serializable<Cell.JSON> {
-    protected constructor(element: Element_2, anchor: Slot, width: number, height: number, headers: Array_2<Slot>);
+    protected constructor(element: Element, anchor: Slot, width: number, height: number, headers: Array_2<Slot>);
     // (undocumented)
     get anchor(): Slot;
     // (undocumented)
@@ -43,9 +43,9 @@ export abstract class Cell implements Anchored, Equatable, Serializable<Cell.JSO
     // (undocumented)
     compare(anchored: Anchored): Comparison;
     // (undocumented)
-    get element(): Element_2;
+    get element(): Element;
     // (undocumented)
-    protected readonly _element: Element_2;
+    protected readonly _element: Element;
     // (undocumented)
     equals(cell: Cell): boolean;
     // (undocumented)
@@ -85,11 +85,11 @@ export namespace Cell {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        isData(): boolean;
+        isData(): this is Data;
         // (undocumented)
-        isHeader(): boolean;
+        isHeader(): this is never;
         // (undocumented)
-        static of(element: Element_2, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>): Data;
+        static of(element: Element, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>): Data;
         // (undocumented)
         toJSON(): Data.JSON;
     }
@@ -114,11 +114,11 @@ export namespace Cell {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        isData(): boolean;
+        isData(): this is never;
         // (undocumented)
-        isHeader(): boolean;
+        isHeader(): this is Header;
         // (undocumented)
-        static of(element: Element_2, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>, scope?: Scope): Header;
+        static of(element: Element, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>, scope?: Scope): Header;
         // (undocumented)
         get scope(): Scope;
         // (undocumented)
@@ -192,13 +192,13 @@ export namespace Column {
         // (undocumented)
         compare(anchored: Anchored): Comparison;
         // (undocumented)
-        get element(): Element_2;
+        get element(): Element;
         // (undocumented)
         equals(group: Group): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(element: Element_2, x: number, width: number): Group;
+        static of(element: Element, x: number, width: number): Group;
         // (undocumented)
         toJSON(): Group.JSON;
         // (undocumented)
@@ -282,7 +282,7 @@ export namespace Row {
         // (undocumented)
         compare(anchored: Anchored): Comparison;
         // (undocumented)
-        get element(): Element_2;
+        get element(): Element;
         // (undocumented)
         equals(group: this): boolean;
         // (undocumented)
@@ -290,7 +290,7 @@ export namespace Row {
         // (undocumented)
         get height(): number;
         // (undocumented)
-        static of(element: Element_2, y: number, height: number): Group;
+        static of(element: Element, y: number, height: number): Group;
         // (undocumented)
         toJSON(): Group.JSON;
         // (undocumented)
@@ -332,7 +332,7 @@ export type Scope = "row" | "row-group" | "column" | "column-group" | "auto";
 // @public (undocumented)
 export namespace Scope {
     // (undocumented)
-    export function from(element: Element_2): Scope;
+    export function from(element: Element): Scope;
 }
 
 // @public (undocumented)
@@ -373,9 +373,9 @@ export class Table implements Equatable, Serializable<Table.JSON> {
     // (undocumented)
     get cells(): Sequence<Cell>;
     // (undocumented)
-    get element(): Element_2;
+    get element(): Element;
     // (undocumented)
-    static empty(element: Element_2): Table;
+    static empty(element: Element): Table;
     // (undocumented)
     equals(table: Table): boolean;
     // (undocumented)
@@ -385,7 +385,7 @@ export class Table implements Equatable, Serializable<Table.JSON> {
     // (undocumented)
     isEmpty(): boolean;
     // (undocumented)
-    static of(element: Element_2, cells: Iterable<Cell>, groups: Iterable<Group>): Table;
+    static of(element: Element, cells: Iterable<Cell>, groups: Iterable<Group>): Table;
     // (undocumented)
     toJSON(): Table.JSON;
 }
@@ -393,7 +393,7 @@ export class Table implements Equatable, Serializable<Table.JSON> {
 // @public (undocumented)
 export namespace Table {
     // (undocumented)
-    export function from(element: Element_2): Table;
+    export function from(element: Element): Table;
     // (undocumented)
     export interface JSON {
         // (undocumented)

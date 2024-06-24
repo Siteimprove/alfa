@@ -1,9 +1,10 @@
+/// <reference types="node" />
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import R41, { Outcomes } from "../../src/sia-r41/rule";
 
-import { Group } from "../../src/common/act/group";
+import { Group } from "../../src";
 
 import { Outcome } from "@siteimprove/alfa-act";
 import { Response } from "@siteimprove/alfa-http";

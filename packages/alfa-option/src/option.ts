@@ -1,9 +1,7 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
 import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -22,9 +20,7 @@ import { Some } from "./some";
 export interface Option<
   T,
   O extends Serializable.Options = Serializable.Options,
-> extends Functor<T>,
-    Applicative<T>,
-    Monad<T>,
+> extends Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
@@ -42,9 +38,9 @@ export interface Option<
   filter(predicate: Predicate<T>): Option<T>;
   reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
   reject(predicate: Predicate<T>): Option<T>;
-  includes(value: T): this is Some<T>;
+  includes(value: T): boolean;
   some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
-  some(predicate: Predicate<T>): this is Some<T>;
+  some(predicate: Predicate<T>): boolean;
   none<U extends T>(
     refinement: Refinement<T, U>,
   ): this is Option<Exclude<T, U>>;

@@ -4,11 +4,9 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
 import { Callback } from '@siteimprove/alfa-callback';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
-import { Functor } from '@siteimprove/alfa-functor';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
@@ -37,7 +35,9 @@ export class Err<E, O extends Serializable.Options = Serializable.Options> imple
     // (undocumented)
     err(): Option<E>;
     // (undocumented)
-    every(): boolean;
+    every(): this is Err<E>;
+    // (undocumented)
+    everyErr<F extends E>(refinement: Refinement<E, F>): this is Result<never, F>;
     // (undocumented)
     everyErr(predicate: Predicate<E>): boolean;
     // (undocumented)
@@ -61,13 +61,13 @@ export class Err<E, O extends Serializable.Options = Serializable.Options> imple
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    includes(): boolean;
+    includes(): this is never;
     // (undocumented)
     includesErr(error: E): boolean;
     // (undocumented)
     isErr(): this is Err<E>;
     // (undocumented)
-    isOk(): this is Ok<never>;
+    isOk(): this is never;
     // (undocumented)
     map(): Err<E>;
     // (undocumented)
@@ -75,7 +75,9 @@ export class Err<E, O extends Serializable.Options = Serializable.Options> imple
     // (undocumented)
     mapOrElse<U>(ok: unknown, err: Mapper<E, U>): U;
     // (undocumented)
-    none(): boolean;
+    none(): this is Err<E>;
+    // (undocumented)
+    noneErr<F extends E>(refinement: Refinement<E, F>): this is Result<never, Exclude<E, F>>;
     // (undocumented)
     noneErr(predicate: Predicate<E>): boolean;
     // (undocumented)
@@ -89,7 +91,9 @@ export class Err<E, O extends Serializable.Options = Serializable.Options> imple
     // (undocumented)
     reduce<U>(reducer: unknown, accumulator: U): U;
     // (undocumented)
-    some(): boolean;
+    some(): this is never;
+    // (undocumented)
+    someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
     // (undocumented)
     someErr(predicate: Predicate<E>): boolean;
     // (undocumented)
@@ -134,9 +138,11 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options> implem
     // (undocumented)
     err(): None;
     // (undocumented)
+    every<U extends T>(refinement: Refinement<T, U>): this is Result<U, never>;
+    // (undocumented)
     every(predicate: Predicate<T>): boolean;
     // (undocumented)
-    everyErr(): boolean;
+    everyErr(): this is this;
     // (undocumented)
     flatMap<U, F>(mapper: Mapper<T, Result<U, F>>): Result<U, F>;
     // (undocumented)
@@ -160,9 +166,9 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options> implem
     // (undocumented)
     includes(value: T): boolean;
     // (undocumented)
-    includesErr(): boolean;
+    includesErr(): this is never;
     // (undocumented)
-    isErr(): this is Err<never>;
+    isErr(): this is never;
     // (undocumented)
     isOk(): this is Ok<T>;
     // (undocumented)
@@ -172,9 +178,11 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options> implem
     // (undocumented)
     mapOrElse<U>(ok: Mapper<T, U>): U;
     // (undocumented)
+    none<U extends T>(refinement: Refinement<T, U>): this is Result<Exclude<T, U>, never>;
+    // (undocumented)
     none(predicate: Predicate<T>): boolean;
     // (undocumented)
-    noneErr(): boolean;
+    noneErr(): this is this;
     // (undocumented)
     static of<T>(value: T): Ok<T>;
     // (undocumented)
@@ -186,9 +194,11 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options> implem
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
+    some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
+    // (undocumented)
     some(predicate: Predicate<T>): boolean;
     // (undocumented)
-    someErr(): boolean;
+    someErr(): this is never;
     // (undocumented)
     tee(callback: Callback<T>): Ok<T>;
     // (undocumented)
@@ -217,7 +227,7 @@ export namespace Ok {
 }
 
 // @public (undocumented)
-export interface Result<T, E = T, O extends Serializable.Options = Serializable.Options> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>, O> {
+export interface Result<T, E = T, O extends Serializable.Options = Serializable.Options> extends Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>, O> {
     // (undocumented)
     and<U, F>(result: Result<U, F>): Result<U, E | F>;
     // (undocumented)
@@ -251,9 +261,9 @@ export interface Result<T, E = T, O extends Serializable.Options = Serializable.
     // @internal
     getUnsafe(message?: string): T;
     // (undocumented)
-    includes(value: T): this is Ok<T>;
+    includes(value: T): boolean;
     // (undocumented)
-    includesErr(error: E): this is Err<E>;
+    includesErr(error: E): boolean;
     // (undocumented)
     isErr(): this is Err<E>;
     // (undocumented)
@@ -283,11 +293,11 @@ export interface Result<T, E = T, O extends Serializable.Options = Serializable.
     // (undocumented)
     some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
     // (undocumented)
-    some(predicate: Predicate<T>): this is Ok<T>;
+    some(predicate: Predicate<T>): boolean;
     // (undocumented)
     someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
     // (undocumented)
-    someErr(predicate: Predicate<E>): this is Err<E>;
+    someErr(predicate: Predicate<E>): boolean;
     // (undocumented)
     tee(callback: Callback<T>): Result<T, E>;
     // (undocumented)
