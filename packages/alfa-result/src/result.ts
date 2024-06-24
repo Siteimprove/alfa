@@ -1,8 +1,6 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
 import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -23,9 +21,7 @@ export interface Result<
   T,
   E = T,
   O extends Serializable.Options = Serializable.Options,
-> extends Functor<T>,
-    Applicative<T>,
-    Monad<T>,
+> extends Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,

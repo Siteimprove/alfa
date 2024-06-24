@@ -5,6 +5,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
@@ -30,7 +31,7 @@ export class Err<E, O extends Serializable.Options = Serializable.Options>
     this._error = error;
   }
 
-  public isOk(): this is Ok<never> {
+  public isOk(): this is never {
     return false;
   }
 
@@ -66,33 +67,49 @@ export class Err<E, O extends Serializable.Options = Serializable.Options>
     return accumulator;
   }
 
-  public includes(): boolean {
+  public includes(): this is never {
     return false;
   }
 
-  public includesErr(error: E): boolean {
+  public includesErr(error: E): this is Err<E> {
     return Equatable.equals(this._error, error);
   }
 
-  public some(): boolean {
+  public some(): this is never {
     return false;
   }
+
+  public someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
+
+  public someErr(predicate: Predicate<E>): this is Err<E>;
 
   public someErr(predicate: Predicate<E>): boolean {
     return test(predicate, this._error);
   }
 
-  public none(): boolean {
+  public none(): this is Err<E> {
     return true;
   }
+
+  public noneErr<F extends E>(
+    refinement: Refinement<E, F>,
+  ): this is Result<never, Exclude<E, F>>;
+
+  public noneErr(predicate: Predicate<E>): boolean;
 
   public noneErr(predicate: Predicate<E>): boolean {
     return test(not(predicate), this._error);
   }
 
-  public every(): boolean {
+  public every(): this is Err<E> {
     return true;
   }
+
+  public everyErr<F extends E>(
+    refinement: Refinement<E, F>,
+  ): this is Result<never, F>;
+
+  public everyErr(predicate: Predicate<E>): boolean;
 
   public everyErr(predicate: Predicate<E>): boolean {
     return test(predicate, this._error);

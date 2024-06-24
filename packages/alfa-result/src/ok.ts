@@ -6,6 +6,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
@@ -35,7 +36,7 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options>
     return true;
   }
 
-  public isErr(): this is Err<never> {
+  public isErr(): this is never {
     return false;
   }
 
@@ -67,35 +68,51 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options>
     return reducer(accumulator, this._value);
   }
 
-  public includes(value: T): boolean {
+  public includes(value: T): this is Ok<T> {
     return Equatable.equals(this._value, value);
   }
 
-  public includesErr(): boolean {
+  public includesErr(): this is never {
     return false;
   }
+
+  public some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
+
+  public some(predicate: Predicate<T>): this is Ok<T>;
 
   public some(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
   }
 
-  public someErr(): boolean {
+  public someErr(): this is never {
     return false;
   }
+
+  public none<U extends T>(
+    refinement: Refinement<T, U>,
+  ): this is Result<Exclude<T, U>, never>;
+
+  public none(predicate: Predicate<T>): boolean;
 
   public none(predicate: Predicate<T>): boolean {
     return test(not(predicate), this._value);
   }
 
-  public noneErr(): boolean {
+  public noneErr(): this is this {
     return true;
   }
+
+  public every<U extends T>(
+    refinement: Refinement<T, U>,
+  ): this is Result<U, never>;
+
+  public every(predicate: Predicate<T>): boolean;
 
   public every(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
   }
 
-  public everyErr(): boolean {
+  public everyErr(): this is this {
     return true;
   }
 
