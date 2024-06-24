@@ -158,11 +158,11 @@ export namespace Cell {
       super(element, anchor, width, height, headers);
     }
 
-    public isData(): boolean {
+    public isData(): this is Data {
       return true;
     }
 
-    public isHeader(): boolean {
+    public isHeader(): this is never {
       return false;
     }
 
@@ -236,11 +236,11 @@ export namespace Cell {
       return this._scope;
     }
 
-    public isData(): boolean {
+    public isData(): this is never {
       return false;
     }
 
-    public isHeader(): boolean {
+    public isHeader(): this is Header {
       return true;
     }
 
