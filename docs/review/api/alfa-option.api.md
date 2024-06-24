@@ -4,14 +4,12 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
 import { Callback } from '@siteimprove/alfa-callback';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Foldable } from '@siteimprove/alfa-foldable';
-import { Functor } from '@siteimprove/alfa-functor';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
@@ -53,7 +51,7 @@ export namespace None {
 }
 
 // @public (undocumented)
-export interface Option<T, O extends Serializable.Options = Serializable.Options> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>, O> {
+export interface Option<T, O extends Serializable.Options = Serializable.Options> extends Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>, O> {
     // (undocumented)
     and<U>(option: Option<U>): Option<U>;
     // (undocumented)
@@ -159,6 +157,8 @@ export class Some<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    every<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+    // (undocumented)
     every(predicate: Predicate<T>): boolean;
     // (undocumented)
     filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
@@ -181,13 +181,15 @@ export class Some<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    includes(value: T): boolean;
+    includes(value: T): this is Some<T>;
     // (undocumented)
     isNone(): this is None;
     // (undocumented)
     isSome(): this is Some<T>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Some<U>;
+    // (undocumented)
+    none<U extends T>(refinement: Refinement<T, U>): this is Some<Exclude<T, U>>;
     // (undocumented)
     none(predicate: Predicate<T>): boolean;
     // (undocumented)
@@ -203,7 +205,9 @@ export class Some<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     reject(predicate: Predicate<T>): Option<T>;
     // (undocumented)
-    some(predicate: Predicate<T>): boolean;
+    some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+    // (undocumented)
+    some(predicate: Predicate<T>): this is Some<T>;
     // (undocumented)
     tee(callback: Callback<T>): this;
     // (undocumented)
