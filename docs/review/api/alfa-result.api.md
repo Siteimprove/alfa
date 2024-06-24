@@ -63,7 +63,7 @@ export class Err<E, O extends Serializable.Options = Serializable.Options> imple
     // (undocumented)
     includes(): this is never;
     // (undocumented)
-    includesErr(error: E): this is Err<E>;
+    includesErr(error: E): boolean;
     // (undocumented)
     isErr(): this is Err<E>;
     // (undocumented)
@@ -164,7 +164,7 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options> implem
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    includes(value: T): this is Ok<T>;
+    includes(value: T): boolean;
     // (undocumented)
     includesErr(): this is never;
     // (undocumented)
@@ -261,9 +261,9 @@ export interface Result<T, E = T, O extends Serializable.Options = Serializable.
     // @internal
     getUnsafe(message?: string): T;
     // (undocumented)
-    includes(value: T): this is Ok<T>;
+    includes(value: T): boolean;
     // (undocumented)
-    includesErr(error: E): this is Err<E>;
+    includesErr(error: E): boolean;
     // (undocumented)
     isErr(): this is Err<E>;
     // (undocumented)

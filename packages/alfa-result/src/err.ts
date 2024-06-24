@@ -71,7 +71,7 @@ export class Err<E, O extends Serializable.Options = Serializable.Options>
     return false;
   }
 
-  public includesErr(error: E): this is Err<E> {
+  public includesErr(error: E): boolean {
     return Equatable.equals(this._error, error);
   }
 

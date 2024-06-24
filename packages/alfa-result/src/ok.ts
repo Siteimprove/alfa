@@ -68,7 +68,7 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options>
     return reducer(accumulator, this._value);
   }
 
-  public includes(value: T): this is Ok<T> {
+  public includes(value: T): boolean {
     return Equatable.equals(this._value, value);
   }
 

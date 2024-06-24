@@ -82,7 +82,7 @@ export class Some<T, O extends Serializable.Options = Serializable.Options>
     return this.filter(not(predicate));
   }
 
-  public includes(value: T): this is Some<T> {
+  public includes(value: T): boolean {
     return Equatable.equals(value, this._value);
   }
 

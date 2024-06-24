@@ -83,7 +83,7 @@ export interface Option<T, O extends Serializable.Options = Serializable.Options
     // @internal
     getUnsafe(message?: string): T;
     // (undocumented)
-    includes(value: T): this is Some<T>;
+    includes(value: T): boolean;
     // (undocumented)
     isNone(): this is None;
     // (undocumented)
@@ -181,7 +181,7 @@ export class Some<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    includes(value: T): this is Some<T>;
+    includes(value: T): boolean;
     // (undocumented)
     isNone(): this is None;
     // (undocumented)
