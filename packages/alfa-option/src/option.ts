@@ -1,9 +1,7 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
 import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";

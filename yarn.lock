@@ -1527,12 +1527,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-option@workspace:packages/alfa-option"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.83.1"
     "@siteimprove/alfa-callback": "workspace:^0.83.1"
     "@siteimprove/alfa-comparable": "workspace:^0.83.1"
     "@siteimprove/alfa-equatable": "workspace:^0.83.1"
     "@siteimprove/alfa-foldable": "workspace:^0.83.1"
-    "@siteimprove/alfa-functor": "workspace:^0.83.1"
     "@siteimprove/alfa-hash": "workspace:^0.83.1"
     "@siteimprove/alfa-json": "workspace:^0.83.1"
     "@siteimprove/alfa-mapper": "workspace:^0.83.1"
@@ -1640,11 +1638,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-result@workspace:packages/alfa-result"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.83.1"
     "@siteimprove/alfa-callback": "workspace:^0.83.1"
     "@siteimprove/alfa-equatable": "workspace:^0.83.1"
     "@siteimprove/alfa-foldable": "workspace:^0.83.1"
-    "@siteimprove/alfa-functor": "workspace:^0.83.1"
     "@siteimprove/alfa-hash": "workspace:^0.83.1"
     "@siteimprove/alfa-json": "workspace:^0.83.1"
     "@siteimprove/alfa-mapper": "workspace:^0.83.1"
