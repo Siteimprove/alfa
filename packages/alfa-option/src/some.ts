@@ -88,7 +88,7 @@ export class Some<T, O extends Serializable.Options = Serializable.Options>
 
   public some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
 
-  public some(predicate: Predicate<T>): this is Some<T>;
+  public some(predicate: Predicate<T>): boolean;
 
   public some(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);

@@ -81,7 +81,7 @@ export class Err<E, O extends Serializable.Options = Serializable.Options>
 
   public someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
 
-  public someErr(predicate: Predicate<E>): this is Err<E>;
+  public someErr(predicate: Predicate<E>): boolean;
 
   public someErr(predicate: Predicate<E>): boolean {
     return test(predicate, this._error);

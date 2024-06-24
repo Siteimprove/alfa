@@ -40,7 +40,7 @@ export interface Option<
   reject(predicate: Predicate<T>): Option<T>;
   includes(value: T): boolean;
   some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
-  some(predicate: Predicate<T>): this is Some<T>;
+  some(predicate: Predicate<T>): boolean;
   none<U extends T>(
     refinement: Refinement<T, U>,
   ): this is Option<Exclude<T, U>>;

@@ -39,9 +39,9 @@ export interface Result<
   includes(value: T): boolean;
   includesErr(error: E): boolean;
   some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
-  some(predicate: Predicate<T>): this is Ok<T>;
+  some(predicate: Predicate<T>): boolean;
   someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
-  someErr(predicate: Predicate<E>): this is Err<E>;
+  someErr(predicate: Predicate<E>): boolean;
   none<U extends T>(
     refinement: Refinement<T, U>,
   ): this is Result<Exclude<T, U>, E>;
