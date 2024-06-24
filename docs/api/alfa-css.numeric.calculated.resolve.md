@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-abstract resolve(resolver?: unknown): Fixed<R>;
+abstract resolve(resolver?: GenericResolver): Fixed<R>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | unknown | _(Optional)_ |
+|  resolver | GenericResolver | _(Optional)_ |
 
 **Returns:**
 

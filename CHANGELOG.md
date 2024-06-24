@@ -1,5 +1,33 @@
 # Alfa changelog
 
+## [0.83.1](../../compare/v0.83.0...v0.83.1) (2024-06-21)
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0831): A type declaration. ([#1631](https://github.com/Siteimprove/alfa/pull/1631))
+
+## [0.83.0](../../compare/v0.82.0...v0.83.0) (2024-06-21)
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0830): `Unit` now have a `Canonical` unit (e.g., `Length.Canonical`, …). ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
+- [@siteimprove/alfa-selective](packages/alfa-selective/CHANGELOG.md#0830): `Selective#tee` is now available. ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0830): The `:any-link` pseudo-class is now supported. ([#1629](https://github.com/Siteimprove/alfa/pull/1629))
+
+### Changed
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0830): Most properties now accept dimensions in calculations, when they cancel out. ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0830): Calculations containing products and divisions of dimensions are better handled. ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0830): Background images with empty URL are now ignored when computing background colors (SIA-R66, SIA-R69). ([#1627](https://github.com/Siteimprove/alfa/pull/1627))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0830): The `Integer` CSS type now has a correct `type` of `"integer"`. ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
 ## [0.82.0](../../compare/v0.81.0...v0.82.0) (2024-06-12)
 
 ### Breaking

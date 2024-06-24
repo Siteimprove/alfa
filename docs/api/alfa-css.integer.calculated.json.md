@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Numeric.Calculated.JSON<"number"> 
+interface JSON extends Numeric.Calculated.JSON<"integer"> 
 ```
-**Extends:** [Numeric.Calculated.JSON](./alfa-css.numeric.calculated.json.md)<!-- -->&lt;"number"&gt;
+**Extends:** [Numeric.Calculated.JSON](./alfa-css.numeric.calculated.json.md)<!-- -->&lt;"integer"&gt;
 

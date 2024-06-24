@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-resolve(resolver: Resolver): Canonical;
+resolve(resolver: Resolver & Numeric.GenericResolver): Canonical;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.lengthpercentage.resolver.md) |  |
+|  resolver | [Resolver](./alfa-css.lengthpercentage.resolver.md) &amp; Numeric.GenericResolver |  |
 
 **Returns:**
 

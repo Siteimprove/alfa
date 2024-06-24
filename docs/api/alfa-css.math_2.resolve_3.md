@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Result<Length<"px">, string>;
+resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<Unit.Length.Canonical, Length<Unit.Length.Canonical>> & Expression.GenericResolver): Result<Length<Unit.Length.Canonical>, string>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<"px", Len
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"length-percentage"&gt; |  |
-|  resolver | Expression.Resolver&lt;"px", Length&lt;"px"&gt;&gt; |  |
+|  resolver | [Expression.Resolver](./alfa-css.expression.resolver.md)<!-- -->&lt;[Unit.Length.Canonical](./alfa-css.unit.length.canonical.md)<!-- -->, Length&lt;[Unit.Length.Canonical](./alfa-css.unit.length.canonical.md)<!-- -->&gt;&gt; &amp; Expression.GenericResolver |  |
 
 **Returns:**
 
-Result&lt;Length&lt;"px"&gt;, string&gt;
+Result&lt;Length&lt;[Unit.Length.Canonical](./alfa-css.unit.length.canonical.md)<!-- -->&gt;, string&gt;
 

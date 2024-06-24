@@ -1,5 +1,25 @@
 # @siteimprove/alfa-css
 
+## 0.83.1
+
+### Patch Changes
+
+- **Fixed:** A type declaration. ([#1631](https://github.com/Siteimprove/alfa/pull/1631))
+
+## 0.83.0
+
+### Minor Changes
+
+- **Added:** `Unit` now have a `Canonical` unit (e.g., `Length.Canonical`, …) ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
+### Patch Changes
+
+- **Fixed:** Calculations containing products and divisions of dimensions are better handled. ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
+  Cases like `calc(100px * 180deg * 8px / 1em / 1turn)` now correctly resolve to a length with the correct conversions happening upon resolution.
+
+- **Fixed:** The `Integer` CSS type now has a correct `type` of `"integer"`. ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
 ## 0.82.0
 
 ### Minor Changes

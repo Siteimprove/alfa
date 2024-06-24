@@ -10,6 +10,8 @@ import { Converter, Unit } from "../../unit";
 import { Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
+import { Length } from "./length";
+import type { Numeric } from "./numeric";
 
 const { either, map } = Parser;
 
@@ -51,10 +53,10 @@ export namespace Angle {
       return true;
     }
 
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
-          .resolve()
+          .resolve(Length.toExpressionResolver(resolver))
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as an angle`),
       );
@@ -121,6 +123,13 @@ export namespace Angle {
 
     public resolve(): Canonical {
       return this.withUnit("deg");
+    }
+
+    /**
+     * @internal
+     */
+    public toBase(): BaseAngle<U> {
+      return BaseAngle.of(this._value, this._unit);
     }
 
     public equals(value: unknown): value is this {

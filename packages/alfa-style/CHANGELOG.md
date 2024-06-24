@@ -1,5 +1,15 @@
 # @siteimprove/alfa-style
 
+## 0.83.1
+
+## 0.83.0
+
+### Patch Changes
+
+- **Changed:** Most properties now accept dimensions in calculations, when they cancel out. ([#1625](https://github.com/Siteimprove/alfa/pull/1625))
+
+  For example, `color: rgb(calc(100% * 1px / 1em), 0, 0)` is now accepted.
+
 ## 0.82.0
 
 ### Minor Changes

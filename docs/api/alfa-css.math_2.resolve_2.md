@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-resolve(this: Math<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
+resolve(this: Math<"length">, resolver: Expression.LengthResolver & Expression.GenericResolver): Result<Length<Unit.Length.Canonical>, string>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ resolve(this: Math<"length">, resolver: Expression.LengthResolver): Result<Lengt
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"length"&gt; |  |
-|  resolver | Expression.LengthResolver |  |
+|  resolver | Expression.LengthResolver &amp; Expression.GenericResolver |  |
 
 **Returns:**
 
-Result&lt;Length&lt;"px"&gt;, string&gt;
+Result&lt;Length&lt;[Unit.Length.Canonical](./alfa-css.unit.length.canonical.md)<!-- -->&gt;, string&gt;
 

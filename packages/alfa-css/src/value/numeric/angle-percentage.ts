@@ -6,10 +6,12 @@ import * as Base from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
+import type { Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
 import { Angle } from "./angle";
+import { Length } from "./length";
+import type { Numeric } from "./numeric";
 import { Percentage } from "./percentage";
 
 const { either, map } = Parser;
@@ -49,7 +51,7 @@ export namespace AnglePercentage {
       return true;
     }
 
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Angle.Fixed.of(
         this._math
           // The math expression resolver is only aware of BasePercentage and
@@ -85,9 +87,15 @@ export namespace AnglePercentage {
   /**
    * Fully resolves an angle-percentage, when a full resolver is provided.
    */
-  export function resolve(value: AnglePercentage): Canonical {
+  export function resolve(
+    value: AnglePercentage,
+    resolver?: Numeric.GenericResolver,
+  ): Canonical {
     return Percentage.isPercentage(value)
-      ? value.resolve({ percentageBase: Angle.of(360, "deg") })
+      ? value.resolve({
+          percentageBase: Angle.of(360, "deg"),
+          ...Length.toExpressionResolver(resolver),
+        })
       : value.resolve();
   }
 

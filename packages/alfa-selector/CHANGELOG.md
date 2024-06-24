@@ -1,5 +1,13 @@
 # @siteimprove/alfa-selector
 
+## 0.83.1
+
+## 0.83.0
+
+### Minor Changes
+
+- **Added:** The `:any-link` pseudo-class is now supported. ([#1629](https://github.com/Siteimprove/alfa/pull/1629))
+
 ## 0.82.0
 
 ### Minor Changes
