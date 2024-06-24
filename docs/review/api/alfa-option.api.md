@@ -107,7 +107,7 @@ export interface Option<T, O extends Serializable.Options = Serializable.Options
     // (undocumented)
     some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
     // (undocumented)
-    some(predicate: Predicate<T>): this is Some<T>;
+    some(predicate: Predicate<T>): boolean;
     // (undocumented)
     tee(callback: Callback<T>): Option<T>;
     // (undocumented)
@@ -207,7 +207,7 @@ export class Some<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
     // (undocumented)
-    some(predicate: Predicate<T>): this is Some<T>;
+    some(predicate: Predicate<T>): boolean;
     // (undocumented)
     tee(callback: Callback<T>): this;
     // (undocumented)

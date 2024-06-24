@@ -1158,9 +1158,9 @@ export namespace List {
         values: Array<Serializable.ToJSON<V>>;
     }
     const // (undocumented)
-    parseCommaSeparated: <V extends Value<string, boolean, string, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
+    parseCommaSeparated: <V extends Value>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
     const // (undocumented)
-    parseSpaceSeparated: <V extends Value<string, boolean, string, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
+    parseSpaceSeparated: <V extends Value>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
 }
 
 // @public (undocumented)

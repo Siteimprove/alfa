@@ -6,7 +6,7 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparer } from '@siteimprove/alfa-comparable';
-import { Element as Element_2 } from '@siteimprove/alfa-dom';
+import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
@@ -14,7 +14,7 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Maybe } from '@siteimprove/alfa-option';
 import { Nth } from '@siteimprove/alfa-css';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Parser as Parser_2 } from '@siteimprove/alfa-css';
 import { Refinement } from '@siteimprove/alfa-refinement';
@@ -45,21 +45,21 @@ export class Attribute extends WithName<"attribute"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get matcher(): Option_2<Attribute.Matcher>;
+    get matcher(): Option<Attribute.Matcher>;
     // (undocumented)
-    matches(element: Element_2): boolean;
+    matches(element: Element): boolean;
     // (undocumented)
-    get modifier(): Option_2<Attribute.Modifier>;
+    get modifier(): Option<Attribute.Modifier>;
     // (undocumented)
-    get namespace(): Option_2<string>;
+    get namespace(): Option<string>;
     // (undocumented)
-    static of(namespace: Option_2<string>, name: string, value?: Option_2<string>, matcher?: Option_2<Attribute.Matcher>, modifier?: Option_2<Attribute.Modifier>): Attribute;
+    static of(namespace: Option<string>, name: string, value?: Option<string>, matcher?: Option<Attribute.Matcher>, modifier?: Option<Attribute.Modifier>): Attribute;
     // (undocumented)
     toJSON(): Attribute.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get value(): Option_2<string>;
+    get value(): Option<string>;
 }
 
 // @public (undocumented)
@@ -112,9 +112,9 @@ export class Class extends WithName<"class"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option_2<Class>;
+    protected readonly _key: Option<Class>;
     // (undocumented)
-    matches(element: Element_2): boolean;
+    matches(element: Element): boolean;
     // (undocumented)
     static of(name: string): Class;
     // (undocumented)
@@ -165,10 +165,10 @@ export class Complex extends Selector_2<"complex"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option_2<Id | Class | Type>;
+    protected readonly _key: Option<Id | Class | Type>;
     // (undocumented)
     get left(): Simple | Compound | Complex;
-    matches(element: Element_2, context?: Context): boolean;
+    matches(element: Element, context?: Context): boolean;
     // (undocumented)
     static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
     // (undocumented)
@@ -205,11 +205,11 @@ export class Compound extends Selector_2<"compound"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option_2<Id | Class | Type>;
+    protected readonly _key: Option<Id | Class | Type>;
     // (undocumented)
     get length(): number;
     // (undocumented)
-    matches(element: Element_2, context?: Context): boolean;
+    matches(element: Element, context?: Context): boolean;
     // (undocumented)
     static of(...selectors: Array_2<Simple>): Compound;
     // (undocumented)
@@ -236,45 +236,45 @@ export namespace Compound {
 // @public (undocumented)
 export class Context {
     // (undocumented)
-    active(element: Element_2): Context;
+    active(element: Element): Context;
     // (undocumented)
-    static active(element: Element_2): Context;
+    static active(element: Element): Context;
     // (undocumented)
-    addState(element: Element_2, state: Context.State): Context;
+    addState(element: Element, state: Context.State): Context;
     // (undocumented)
     static empty(): Context;
     // (undocumented)
-    focus(element: Element_2): Context;
+    focus(element: Element): Context;
     // (undocumented)
-    static focus(element: Element_2): Context;
+    static focus(element: Element): Context;
     // (undocumented)
-    getState(element: Element_2): Context.State;
+    getState(element: Element): Context.State;
     // (undocumented)
-    hasState(element: Element_2, state: Context.State): boolean;
+    hasState(element: Element, state: Context.State): boolean;
     // (undocumented)
-    hover(element: Element_2): Context;
+    hover(element: Element): Context;
     // (undocumented)
-    static hover(element: Element_2): Context;
+    static hover(element: Element): Context;
     // (undocumented)
-    isActive(element: Element_2): boolean;
+    isActive(element: Element): boolean;
     // (undocumented)
     isEmpty(): boolean;
     // (undocumented)
-    isFocused(element: Element_2): boolean;
+    isFocused(element: Element): boolean;
     // (undocumented)
-    isHovered(element: Element_2): boolean;
+    isHovered(element: Element): boolean;
     // (undocumented)
-    isVisited(element: Element_2): boolean;
+    isVisited(element: Element): boolean;
     // (undocumented)
-    static of(state: Iterable<[Element_2, Context.State]>): Context;
+    static of(state: Iterable<[Element, Context.State]>): Context;
     // (undocumented)
-    setState(element: Element_2, state: Context.State): Context;
+    setState(element: Element, state: Context.State): Context;
     // (undocumented)
-    visit(element: Element_2): Context;
+    visit(element: Element): Context;
     // (undocumented)
-    static visit(element: Element_2): Context;
+    static visit(element: Element): Context;
     // (undocumented)
-    withState(state: Context.State): Iterable<Element_2>;
+    withState(state: Context.State): Iterable<Element>;
 }
 
 // @public (undocumented)
@@ -303,9 +303,9 @@ export class Id extends WithName<"id"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option_2<Id>;
+    protected readonly _key: Option<Id>;
     // (undocumented)
-    matches(element: Element_2): boolean;
+    matches(element: Element): boolean;
     // (undocumented)
     static of(name: string): Id;
     // (undocumented)
@@ -338,7 +338,7 @@ export class List<T extends Item = Item> extends Selector_2<"list"> {
     // (undocumented)
     get length(): number;
     // (undocumented)
-    matches(element: Element_2, context?: Context): boolean;
+    matches(element: Element, context?: Context): boolean;
     // (undocumented)
     static of<T extends Item>(...selectors: Array_2<T>): List<T>;
     // (undocumented)
@@ -418,13 +418,13 @@ export namespace PseudoClass {
 // Warning: (ae-forgotten-export) The symbol "Marker" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Part" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Placeholder" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "Selection_2" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Selection" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Slotted" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "SpellingError" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "TargetText" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export type PseudoElement = After | Backdrop | Before | Cue | CueRegion | FileSelectorButton | FirstLetter | FirstLine | GrammarError | Marker | Part | Placeholder | Selection_2 | Slotted | SpellingError | TargetText;
+export type PseudoElement = After | Backdrop | Before | Cue | CueRegion | FileSelectorButton | FirstLetter | FirstLine | GrammarError | Marker | Part | Placeholder | Selection | Slotted | SpellingError | TargetText;
 
 // @public (undocumented)
 export namespace PseudoElement {
@@ -483,7 +483,7 @@ export namespace Selector {
     export type JSON = Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | List.JSON;
     const isHostSelector: Refinement<unknown, Host | HostContext, []>;
     const isShadow: Refinement<Selector, Selector, []>;
-    export function matchSlotted(selector: Selector, slotted: Element_2, context?: Context): boolean;
+    export function matchSlotted(selector: Selector, slotted: Element, context?: Context): boolean;
     const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
     //
     // (undocumented)
@@ -561,13 +561,13 @@ export class Type extends WithName<"type"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option_2<Type>;
+    protected readonly _key: Option<Type>;
     // (undocumented)
-    matches(element: Element_2): boolean;
+    matches(element: Element): boolean;
     // (undocumented)
-    get namespace(): Option_2<string>;
+    get namespace(): Option<string>;
     // (undocumented)
-    static of(namespace: Option_2<string>, name: string): Type;
+    static of(namespace: Option<string>, name: string): Type;
     // (undocumented)
     toJSON(): Type.JSON;
     // (undocumented)
@@ -598,11 +598,11 @@ export class Universal extends Selector_2<"universal"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    matches(element: Element_2): boolean;
+    matches(element: Element): boolean;
     // (undocumented)
-    get namespace(): Option_2<string>;
+    get namespace(): Option<string>;
     // (undocumented)
-    static of(namespace: Option_2<string>): Universal;
+    static of(namespace: Option<string>): Universal;
     // (undocumented)
     toJSON(): Universal.JSON;
     // (undocumented)

@@ -11,10 +11,10 @@ import { Color } from '@siteimprove/alfa-css';
 import { Context } from '@siteimprove/alfa-selector';
 import { Declaration } from '@siteimprove/alfa-dom';
 import { Device } from '@siteimprove/alfa-device';
-import { Element as Element_2 } from '@siteimprove/alfa-dom';
+import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
-import { Image as Image_2 } from '@siteimprove/alfa-css';
+import { Image } from '@siteimprove/alfa-css';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
@@ -25,10 +25,10 @@ import { List } from '@siteimprove/alfa-css';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
-import { Node as Node_2 } from '@siteimprove/alfa-dom';
+import { Node } from '@siteimprove/alfa-dom';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
 import { Numeric } from '@siteimprove/alfa-css/src/calculation/numeric';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Option } from '@siteimprove/alfa-option';
 import { Origin } from '@siteimprove/alfa-cascade';
 import { Parser } from '@siteimprove/alfa-css';
 import * as parser from '@siteimprove/alfa-parser';
@@ -44,12 +44,12 @@ import { Shape } from '@siteimprove/alfa-css';
 import { Side } from '@siteimprove/alfa-css/src/value/position/side';
 import { Slice } from '@siteimprove/alfa-slice';
 import { String as String_2 } from '@siteimprove/alfa-css';
-import { Text as Text_2 } from '@siteimprove/alfa-dom';
+import { Text } from '@siteimprove/alfa-dom';
 import { Token } from '@siteimprove/alfa-css';
 import { Transform } from '@siteimprove/alfa-css';
 import { Tuple } from '@siteimprove/alfa-css';
 import { Unit } from '@siteimprove/alfa-css';
-import { URL as URL_2 } from '@siteimprove/alfa-css';
+import { URL } from '@siteimprove/alfa-css';
 import { Value as Value_2 } from '@siteimprove/alfa-css';
 
 // Warning: (ae-internal-missing-underscore) The name "Longhand" should be prefixed with an underscore because the declaration is marked as @internal
@@ -115,7 +115,7 @@ export namespace Longhands {
         readonly "background-attachment": Longhand<List<import("./property/background-attachment").Specified.Item>, List<import("./property/background-attachment").Specified.Item>>;
         readonly "background-clip": Longhand<List<Box>, List<Box>>;
         readonly "background-color": Longhand<Color, Color.Canonical>;
-        readonly "background-image": Longhand<List<import("./property/background-image").Specified.Item>, List<Image_2.PartiallyResolved | Keyword<"none">>>;
+        readonly "background-image": Longhand<List<import("./property/background-image").Specified.Item>, List<Image.PartiallyResolved | Keyword<"none">>>;
         readonly "background-origin": Longhand<List<Box>, List<Box>>;
         readonly "background-position-x": Longhand<List<import("./property/background-position-x").Specified.Item>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Horizontal>>>;
         readonly "background-position-y": Longhand<List<import("./property/background-position-y").Specified.Item>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Vertical>>>;
@@ -139,7 +139,7 @@ export namespace Longhands {
         readonly "border-image-outset": Longhand<Specified_2, Tuple<[top: Length | Number_2, right: Length | Number_2, bottom: Length | Number_2, left: Length | Number_2]>>;
         readonly "border-image-repeat": Longhand<Specified_4, Specified_4>;
         readonly "border-image-slice": Longhand<Specified_6, Tuple<[top: Number_2.Fixed | Percentage.Canonical, right: Number_2.Fixed | Percentage.Canonical, bottom: Number_2.Fixed | Percentage.Canonical, left: Number_2.Fixed | Percentage.Canonical]> | Tuple<[top: Number_2.Fixed | Percentage.Canonical, right: Number_2.Fixed | Percentage.Canonical, bottom: Number_2.Fixed | Percentage.Canonical, left: Number_2.Fixed | Percentage.Canonical, fill: Keyword<"fill">]>>;
-        readonly "border-image-source": Longhand<Specified_7, Image_2.PartiallyResolved | Keyword<"none">>;
+        readonly "border-image-source": Longhand<Specified_7, Image.PartiallyResolved | Keyword<"none">>;
         readonly "border-image-width": Longhand<Specified_8, Tuple<[top: Number_2.Fixed | LengthPercentage | Keyword<"auto">, right: Number_2.Fixed | LengthPercentage | Keyword<"auto">, bottom: Number_2.Fixed | LengthPercentage | Keyword<"auto">, left: Number_2.Fixed | LengthPercentage | Keyword<"auto">]>>;
         readonly "border-inline-end-color": Longhand<Color, Color.Canonical>;
         readonly "border-inline-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
@@ -162,10 +162,10 @@ export namespace Longhands {
         readonly "border-top-width": Longhand<Specified, Length>;
         readonly bottom: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly "box-shadow": Longhand<Keyword<"none"> | List<Shadow<Length, Length, Length, Length, Color>>, Keyword<"none"> | List<Shadow.Canonical>>;
-        readonly "clip-path": Longhand<URL_2 | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>, URL_2 | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>>;
+        readonly "clip-path": Longhand<URL | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>, URL | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>>;
         readonly clip: Longhand<Keyword<"auto"> | Shape<Rectangle<Length | Rectangle.Auto>, Keyword<"border-box">>, Keyword<"auto"> | Shape<Rectangle<Length | Rectangle.Auto>, Keyword<"border-box">>>;
         readonly color: Longhand<Color, Color.Canonical>;
-        readonly cursor: Longhand<Tuple<[List<URL_2 | Tuple<[URL_2, Number_2, Number_2]>>, Keyword<"auto"> | Keyword<"none"> | Keyword<"default"> | Keyword<"context-menu"> | Keyword<"help"> | Keyword<"pointer"> | Keyword<"progress"> | Keyword<"wait"> | Keyword<"cell"> | Keyword<"crosshair"> | Keyword<"text"> | Keyword<"vertical-text"> | Keyword<"alias"> | Keyword<"copy"> | Keyword<"move"> | Keyword<"no-drop"> | Keyword<"not-allowed"> | Keyword<"grab"> | Keyword<"grabbing"> | Keyword<"e-resize"> | Keyword<"n-resize"> | Keyword<"ne-resize"> | Keyword<"nw-resize"> | Keyword<"s-resize"> | Keyword<"se-resize"> | Keyword<"sw-resize"> | Keyword<"w-resize"> | Keyword<"ew-resize"> | Keyword<"ns-resize"> | Keyword<"nesw-resize"> | Keyword<"nwse-resize"> | Keyword<"col-resize"> | Keyword<"row-resize"> | Keyword<"all-scroll"> | Keyword<"zoom-in"> | Keyword<"zoom-out">]>, Tuple<[List<URL_2 | Tuple<[URL_2, Number_2.Fixed, Number_2.Fixed]>>, Keyword<"auto"> | Keyword<"none"> | Keyword<"default"> | Keyword<"context-menu"> | Keyword<"help"> | Keyword<"pointer"> | Keyword<"progress"> | Keyword<"wait"> | Keyword<"cell"> | Keyword<"crosshair"> | Keyword<"text"> | Keyword<"vertical-text"> | Keyword<"alias"> | Keyword<"copy"> | Keyword<"move"> | Keyword<"no-drop"> | Keyword<"not-allowed"> | Keyword<"grab"> | Keyword<"grabbing"> | Keyword<"e-resize"> | Keyword<"n-resize"> | Keyword<"ne-resize"> | Keyword<"nw-resize"> | Keyword<"s-resize"> | Keyword<"se-resize"> | Keyword<"sw-resize"> | Keyword<"w-resize"> | Keyword<"ew-resize"> | Keyword<"ns-resize"> | Keyword<"nesw-resize"> | Keyword<"nwse-resize"> | Keyword<"col-resize"> | Keyword<"row-resize"> | Keyword<"all-scroll"> | Keyword<"zoom-in"> | Keyword<"zoom-out">]>>;
+        readonly cursor: Longhand<Tuple<[List<URL | Tuple<[URL, Number_2, Number_2]>>, Keyword<"auto"> | Keyword<"none"> | Keyword<"default"> | Keyword<"context-menu"> | Keyword<"help"> | Keyword<"pointer"> | Keyword<"progress"> | Keyword<"wait"> | Keyword<"cell"> | Keyword<"crosshair"> | Keyword<"text"> | Keyword<"vertical-text"> | Keyword<"alias"> | Keyword<"copy"> | Keyword<"move"> | Keyword<"no-drop"> | Keyword<"not-allowed"> | Keyword<"grab"> | Keyword<"grabbing"> | Keyword<"e-resize"> | Keyword<"n-resize"> | Keyword<"ne-resize"> | Keyword<"nw-resize"> | Keyword<"s-resize"> | Keyword<"se-resize"> | Keyword<"sw-resize"> | Keyword<"w-resize"> | Keyword<"ew-resize"> | Keyword<"ns-resize"> | Keyword<"nesw-resize"> | Keyword<"nwse-resize"> | Keyword<"col-resize"> | Keyword<"row-resize"> | Keyword<"all-scroll"> | Keyword<"zoom-in"> | Keyword<"zoom-out">]>, Tuple<[List<URL | Tuple<[URL, Number_2.Fixed, Number_2.Fixed]>>, Keyword<"auto"> | Keyword<"none"> | Keyword<"default"> | Keyword<"context-menu"> | Keyword<"help"> | Keyword<"pointer"> | Keyword<"progress"> | Keyword<"wait"> | Keyword<"cell"> | Keyword<"crosshair"> | Keyword<"text"> | Keyword<"vertical-text"> | Keyword<"alias"> | Keyword<"copy"> | Keyword<"move"> | Keyword<"no-drop"> | Keyword<"not-allowed"> | Keyword<"grab"> | Keyword<"grabbing"> | Keyword<"e-resize"> | Keyword<"n-resize"> | Keyword<"ne-resize"> | Keyword<"nw-resize"> | Keyword<"s-resize"> | Keyword<"se-resize"> | Keyword<"sw-resize"> | Keyword<"w-resize"> | Keyword<"ew-resize"> | Keyword<"ns-resize"> | Keyword<"nesw-resize"> | Keyword<"nwse-resize"> | Keyword<"col-resize"> | Keyword<"row-resize"> | Keyword<"all-scroll"> | Keyword<"zoom-in"> | Keyword<"zoom-out">]>>;
         readonly display: Longhand<Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">, listitem: Keyword<"list-item">]> | Tuple<[outside: Keyword<"table-row-group"> | Keyword<"table-header-group"> | Keyword<"table-footer-group"> | Keyword<"table-row"> | Keyword<"table-cell"> | Keyword<"table-column-group"> | Keyword<"table-column"> | Keyword<"table-caption"> | Keyword<"ruby-base"> | Keyword<"ruby-text"> | Keyword<"ruby-base-container"> | Keyword<"ruby-text-container">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[Keyword<"none"> | Keyword<"contents">]>, Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">, listitem: Keyword<"list-item">]> | Tuple<[outside: Keyword<"table-row-group"> | Keyword<"table-header-group"> | Keyword<"table-footer-group"> | Keyword<"table-row"> | Keyword<"table-cell"> | Keyword<"table-column-group"> | Keyword<"table-column"> | Keyword<"table-caption"> | Keyword<"ruby-base"> | Keyword<"ruby-text"> | Keyword<"ruby-base-container"> | Keyword<"ruby-text-container">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[Keyword<"none"> | Keyword<"contents">]>>;
         readonly "flex-direction": Longhand<Keyword.ToKeywords<"row" | "row-reverse" | "column" | "column-reverse">, Keyword.ToKeywords<"row" | "row-reverse" | "column" | "column-reverse">>;
         readonly "flex-wrap": Longhand<Keyword.ToKeywords<"nowrap" | "wrap" | "wrap-reverse">, Keyword.ToKeywords<"nowrap" | "wrap" | "wrap-reverse">>;
@@ -318,7 +318,7 @@ export class Style implements Serializable<Style.JSON> {
     // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    cascaded<N extends Name>(name: N): Option_2<Value<Style.Cascaded<N>>>;
+    cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
     // (undocumented)
     computed<N extends Name>(name: N): Value<Style.Computed<N>>;
     // (undocumented)
@@ -328,8 +328,8 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     inherited<N extends Name>(name: N): Value<Style.Inherited<N>>;
     // (undocumented)
-    initial<N extends Name>(name: N, source?: Option_2<Declaration>): Value<Style.Initial<N>>;
-    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option_2<Style>): Style;
+    initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
+    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option<Style>): Style;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
@@ -352,7 +352,7 @@ export namespace Style {
     export type Computed<N extends Name> = Longhands.Computed<N>;
     // (undocumented)
     export type Declared<N extends Name> = Longhands.Declared<N>;
-    export function from(element: Element_2, device: Device, context?: Context): Style;
+    export function from(element: Element, device: Device, context?: Context): Style;
     // (undocumented)
     export type Inherited<N extends Name> = Longhands.Inherited<N>;
     // (undocumented)
@@ -408,23 +408,23 @@ export class Value<T = unknown> implements Functor<T>, Applicative<T>, Monad<T>,
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option_2<Declaration>]>): Value<U>;
+    flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>): Value<U>;
     // (undocumented)
     flatten<T>(this: Value<Value<T>>): Value<T>;
     // (undocumented)
     includes(value: T): boolean;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U, [source: Option_2<Declaration>]>): Value<U>;
+    map<U>(mapper: Mapper<T, U, [source: Option<Declaration>]>): Value<U>;
     // (undocumented)
-    none(predicate: Predicate<T, [source: Option_2<Declaration>]>): boolean;
+    none(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
     // (undocumented)
-    static of<T>(value: T, source?: Option_2<Declaration>): Value<T>;
+    static of<T>(value: T, source?: Option<Declaration>): Value<T>;
     // (undocumented)
     resolve<T extends Value_2>(this: Value<T>, resolver?: Resolvable.Resolver<T>): Value<Resolvable.Resolved<T>>;
     // (undocumented)
-    some(predicate: Predicate<T, [source: Option_2<Declaration>]>): boolean;
+    some(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
     // (undocumented)
-    get source(): Option_2<Declaration>;
+    get source(): Option<Declaration>;
     // (undocumented)
     toJSON(): Value.JSON<T>;
     // (undocumented)

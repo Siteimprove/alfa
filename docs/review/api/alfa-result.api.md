@@ -95,7 +95,7 @@ export class Err<E, O extends Serializable.Options = Serializable.Options> imple
     // (undocumented)
     someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
     // (undocumented)
-    someErr(predicate: Predicate<E>): this is Err<E>;
+    someErr(predicate: Predicate<E>): boolean;
     // (undocumented)
     tee(): Err<E>;
     // (undocumented)
@@ -196,7 +196,7 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options> implem
     // (undocumented)
     some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
     // (undocumented)
-    some(predicate: Predicate<T>): this is Ok<T>;
+    some(predicate: Predicate<T>): boolean;
     // (undocumented)
     someErr(): this is never;
     // (undocumented)
@@ -293,11 +293,11 @@ export interface Result<T, E = T, O extends Serializable.Options = Serializable.
     // (undocumented)
     some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
     // (undocumented)
-    some(predicate: Predicate<T>): this is Ok<T>;
+    some(predicate: Predicate<T>): boolean;
     // (undocumented)
     someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
     // (undocumented)
-    someErr(predicate: Predicate<E>): this is Err<E>;
+    someErr(predicate: Predicate<E>): boolean;
     // (undocumented)
     tee(callback: Callback<T>): Result<T, E>;
     // (undocumented)
