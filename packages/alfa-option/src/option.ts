@@ -22,9 +22,7 @@ import { Some } from "./some";
 export interface Option<
   T,
   O extends Serializable.Options = Serializable.Options,
-> extends Functor<T>,
-    Applicative<T>,
-    Monad<T>,
+> extends Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,

@@ -82,17 +82,27 @@ export class Some<T, O extends Serializable.Options = Serializable.Options>
     return this.filter(not(predicate));
   }
 
-  public includes(value: T): boolean {
+  public includes(value: T): this is Some<T> {
     return Equatable.equals(value, this._value);
   }
 
-  public some(predicate: Predicate<T>): boolean {
+  public some(predicate: Predicate<T>): this is this {
     return test(predicate, this._value);
   }
+
+  public none<U extends T>(
+    refinement: Refinement<T, U>,
+  ): this is Some<Exclude<T, U>>;
+
+  public none(predicate: Predicate<T>): boolean;
 
   public none(predicate: Predicate<T>): boolean {
     return test(not(predicate), this._value);
   }
+
+  public every<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+
+  public every(predicate: Predicate<T>): boolean;
 
   public every(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);

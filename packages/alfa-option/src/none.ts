@@ -58,19 +58,19 @@ export const None: None = new (class None {
     return this;
   }
 
-  public includes(): boolean {
+  public includes(): this is never {
     return false;
   }
 
-  public some(): boolean {
+  public some(): this is never {
     return false;
   }
 
-  public none(): boolean {
+  public none(): this is this {
     return true;
   }
 
-  public every(): boolean {
+  public every(): this is this {
     return true;
   }
 
