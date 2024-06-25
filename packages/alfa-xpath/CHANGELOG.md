@@ -1,5 +1,7 @@
 # @siteimprove/alfa-xpath
 
+## 0.85.1
+
 ## 0.85.0
 
 ### Minor Changes
