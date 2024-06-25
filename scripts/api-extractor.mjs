@@ -19,7 +19,10 @@ function extract(root = "packages") {
     .readDirectory(root, ["tsconfig.json"], ["node_modules"])
     .map(path.dirname)
     .filter((x) => !exclude.includes(x))
-    .filter((x) => !x.endsWith("src") && !x.endsWith("test")) && !x.endsWith("scripts");
+    .filter(
+      (x) =>
+        !x.endsWith("src") && !x.endsWith("test") && !x.endsWith("scripts"),
+    );
 
   let code = 0;
 
