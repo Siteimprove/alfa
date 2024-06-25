@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-isOk(): this is Ok<never>;
+isOk(): this is never;
 ```
 **Returns:**
 
-this is Ok&lt;never&gt;
+this is never
 

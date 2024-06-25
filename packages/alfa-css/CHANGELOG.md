@@ -1,5 +1,13 @@
 # @siteimprove/alfa-css
 
+## 0.84.0
+
+## 0.83.1
+
+### Patch Changes
+
+- **Fixed:** A type declaration. ([#1631](https://github.com/Siteimprove/alfa/pull/1631))
+
 ## 0.83.0
 
 ### Minor Changes

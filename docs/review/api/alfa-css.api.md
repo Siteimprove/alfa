@@ -1158,9 +1158,9 @@ export namespace List {
         values: Array<Serializable.ToJSON<V>>;
     }
     const // (undocumented)
-    parseCommaSeparated: <V extends Value<string, boolean, string, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
+    parseCommaSeparated: <V extends Value>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
     const // (undocumented)
-    parseSpaceSeparated: <V extends Value<string, boolean, string, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
+    parseSpaceSeparated: <V extends Value>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
 }
 
 // @public (undocumented)
@@ -1512,7 +1512,7 @@ export namespace Numeric {
         // (undocumented)
         abstract scale(factor: number): Fixed<T, R>;
         // @internal (undocumented)
-        abstract toBase(): Numeric_2<T extends `${infer U}-percentage` ? never : T>;
+        abstract toBase(): T extends Exclude<Type, `${string}-percentage`> ? Numeric_2<T> : never;
         // (undocumented)
         toJSON(): Fixed.JSON<T>;
         // (undocumented)

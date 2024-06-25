@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-some(): boolean;
+some(): this is never;
 ```
 **Returns:**
 
-boolean
+this is never
 

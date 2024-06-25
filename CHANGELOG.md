@@ -1,5 +1,17 @@
 # Alfa changelog
 
+## [0.84.0](../../compare/v0.83.1...v0.84.0) (2024-06-24)
+
+### Changed
+
+- [@siteimprove/alfa-option](packages/alfa-option/CHANGELOG.md#0840), [@siteimprove/alfa-result](packages/alfa-result/CHANGELOG.md#0840), [@siteimprove/alfa-table](packages/alfa-table/CHANGELOG.md#0840): Types have been tightened a bit. ([#1634](https://github.com/Siteimprove/alfa/pull/1634))
+
+## [0.83.1](../../compare/v0.83.0...v0.83.1) (2024-06-21)
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0831): A type declaration. ([#1631](https://github.com/Siteimprove/alfa/pull/1631))
+
 ## [0.83.0](../../compare/v0.82.0...v0.83.0) (2024-06-21)
 
 ### Added

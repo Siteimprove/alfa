@@ -1,5 +1,15 @@
 # @siteimprove/alfa-table
 
+## 0.84.0
+
+### Minor Changes
+
+- **Changed:** Types have been tightened a bit. ([#1634](https://github.com/Siteimprove/alfa/pull/1634))
+
+  This was needed to update to TypeScript 5.5, due to the improved [inferrence of type predicates](https://devblogs.microsoft.com/typescript/announcing-typescript-5-5/#inferred-type-predicates)
+
+## 0.83.1
+
 ## 0.83.0
 
 ## 0.82.0

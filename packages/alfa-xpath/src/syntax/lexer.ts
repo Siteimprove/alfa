@@ -146,7 +146,9 @@ const lexNumeric: Parser<Slice<number>, Token, string> = (input) => {
   let next = input.get(0);
 
   while (next.some(isNumeric)) {
-    value = value * 10 + next.get() - 0x30;
+    // Option.some() cannot narrow type on a predicate, so we know it's a Some,
+    // but TS doesn't.
+    value = value * 10 + next.getUnsafe() - 0x30;
 
     input = input.slice(1);
     next = input.get(0);
@@ -162,7 +164,9 @@ const lexNumeric: Parser<Slice<number>, Token, string> = (input) => {
     let digits = 0;
 
     while (next.some(isNumeric)) {
-      fraction = fraction * 10 + next.get() - 0x30;
+      // Option.some() cannot narrow type on a predicate, so we know it's a Some,
+      // but TS doesn't.
+      fraction = fraction * 10 + next.getUnsafe() - 0x30;
       digits++;
 
       input = input.slice(1);
@@ -190,7 +194,9 @@ const lexNumeric: Parser<Slice<number>, Token, string> = (input) => {
     }
 
     while (next.some(isNumeric)) {
-      exponent = exponent * 10 + next.get() - 0x30;
+      // Option.some() cannot narrow type on a predicate, so we know it's a Some,
+      // but TS doesn't.
+      exponent = exponent * 10 + next.getUnsafe() - 0x30;
 
       input = input.slice(1);
       next = input.get(0);
@@ -300,7 +306,9 @@ const lexName: Parser<Slice<number>, Token> = (input) => {
   let next = input.get(0);
 
   while (next.some(isNonColonName)) {
-    value += fromCharCode(next.get());
+    // Option.some() cannot narrow type on a predicate, so we know it's a Some,
+    // but TS doesn't.
+    value += fromCharCode(next.getUnsafe());
     input = input.slice(1);
     next = input.get(0);
   }
@@ -316,7 +324,9 @@ const lexName: Parser<Slice<number>, Token> = (input) => {
       next = input.get(0);
 
       while (next.some(isNonColonName)) {
-        value += fromCharCode(next.get());
+        // Option.some() cannot narrow type on a predicate, so we know it's a Some,
+        // but TS doesn't.
+        value += fromCharCode(next.getUnsafe());
         input = input.slice(1);
         next = input.get(0);
       }

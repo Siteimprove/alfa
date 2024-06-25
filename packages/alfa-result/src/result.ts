@@ -1,8 +1,6 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
 import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -23,9 +21,7 @@ export interface Result<
   T,
   E = T,
   O extends Serializable.Options = Serializable.Options,
-> extends Functor<T>,
-    Applicative<T>,
-    Monad<T>,
+> extends Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
@@ -40,12 +36,12 @@ export interface Result<
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
-  includes(value: T): this is Ok<T>;
-  includesErr(error: E): this is Err<E>;
+  includes(value: T): boolean;
+  includesErr(error: E): boolean;
   some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
-  some(predicate: Predicate<T>): this is Ok<T>;
+  some(predicate: Predicate<T>): boolean;
   someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
-  someErr(predicate: Predicate<E>): this is Err<E>;
+  someErr(predicate: Predicate<E>): boolean;
   none<U extends T>(
     refinement: Refinement<T, U>,
   ): this is Result<Exclude<T, U>, E>;

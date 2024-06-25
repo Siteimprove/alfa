@@ -9,5 +9,5 @@
 ```typescript
 interface JSON extends Node.JSON<"fragment"> 
 ```
-**Extends:** [Node.JSON](./alfa-dom.node_2.json.md)<!-- -->&lt;"fragment"&gt;
+**Extends:** [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"fragment"&gt;
 
