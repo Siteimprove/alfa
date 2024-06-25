@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R74, { Outcomes } from "../../src/sia-r74/rule";
+import R74, { Outcomes } from "../../dist/sia-r74/rule";
 
 import { evaluate } from "../common/evaluate";
 import { failed, inapplicable, passed } from "../common/outcome";

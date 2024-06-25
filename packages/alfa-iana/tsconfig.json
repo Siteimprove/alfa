@@ -1,18 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-    "src/index.ts",
-    "src/language.ts",
-    "src/language/data.ts",
-    "test/language.spec.ts"
-  ],
-  "references": [
-    { "path": "../alfa-equatable" },
-    { "path": "../alfa-json" },
-    { "path": "../alfa-option" },
-    { "path": "../alfa-result" },
-    { "path": "../alfa-slice" },
-    { "path": "../alfa-test" }
-  ]
+  "files": [],
+  "references": [{ "path": "./src" }, { "path": "./test" }]
 }

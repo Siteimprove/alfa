@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Transformation } from "../src/transformation";
+import { Transformation } from "../dist/transformation";
 
 test("#decompose() decomposes a translation transformation", (t) => {
   t.deepEqual(Transformation.translate(10, 20, 30).decompose().getUnsafe(), {

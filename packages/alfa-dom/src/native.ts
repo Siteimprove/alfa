@@ -527,7 +527,9 @@ export namespace Native {
        * Do keep in mind that this will only work for resources that also set
        * appropriate CORS request headers.
        */
-      for (const link of documentOrShadowRoot.querySelectorAll("link")) {
+      const links = documentOrShadowRoot.querySelectorAll("link");
+      for (let i = 0; i < links.length; i++) {
+        const link = links[i];
         /**
          * Skip `<link>` elements for which the `crossorigin` attribute is already
          * set to a valid value.

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": [
+    "./browser.ts",
+    "./browser/data.ts",
+    "./feature.ts",
+    "./feature/data.ts",
+    "./index.ts"
+  ],
+  "references": [
+    { "path": "../../alfa-iterable" },
+    { "path": "../../alfa-json" }
+  ]
+}

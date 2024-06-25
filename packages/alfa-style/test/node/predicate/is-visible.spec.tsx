@@ -1,9 +1,9 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import * as predicate from "../../../src/node/predicate/is-visible";
+import * as predicate from "../../../dist/node/predicate/is-visible";
 
 const isVisible = predicate.isVisible(Device.standard());
 

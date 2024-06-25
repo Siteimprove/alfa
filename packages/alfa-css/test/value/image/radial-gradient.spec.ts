@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Gradient } from "../../../src";
+import { Gradient } from "../../../dist";
 import { parser, serializer } from "../../common/parse";
 
 const parseErr = parser(Gradient.Radial.parse);

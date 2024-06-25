@@ -1,4 +1,4 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -8,7 +8,7 @@ import { Set } from "@siteimprove/alfa-set";
 import {
   getBackground,
   getForeground,
-} from "../../../src/common/dom/get-colors";
+} from "../../../dist/common/dom/get-colors";
 
 const device = Device.standard();
 

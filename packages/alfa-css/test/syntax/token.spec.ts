@@ -1,7 +1,7 @@
 import { Slice } from "@siteimprove/alfa-slice";
 import { test } from "@siteimprove/alfa-test";
 
-import { Token } from "../../src/syntax/token";
+import { Token } from "../../dist/syntax/token";
 
 const { ident, whitespace, parseWhitespace } = Token;
 

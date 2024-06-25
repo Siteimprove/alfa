@@ -2,7 +2,7 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R65, { Outcomes } from "../../src/sia-r65/rule";
+import R65, { Outcomes } from "../../dist/sia-r65/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell } from "../common/outcome";

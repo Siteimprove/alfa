@@ -2,7 +2,7 @@ import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import R62, { Outcomes } from "../../src/sia-r62/rule";
+import R62, { Outcomes } from "../../dist/sia-r62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
 import { Defaults, makePairing } from "./common";

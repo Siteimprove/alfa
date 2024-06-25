@@ -3,7 +3,7 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R27, { Outcomes } from "../../src/sia-r27/rule";
+import R27, { Outcomes } from "../../dist/sia-r27/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";

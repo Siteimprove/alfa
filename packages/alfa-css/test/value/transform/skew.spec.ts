@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Skew } from "../../../src";
+import { Skew } from "../../../dist";
 
 import { parser, serializer } from "../../common/parse";
 

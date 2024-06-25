@@ -1,17 +1,16 @@
 /// <reference types="node" />
-import { h } from "@siteimprove/alfa-dom";
-import { test } from "@siteimprove/alfa-test";
-
-import R41, { Outcomes } from "../../src/sia-r41/rule";
-
-import { Group } from "../../src";
-
 import { Outcome } from "@siteimprove/alfa-act";
+import { h } from "@siteimprove/alfa-dom";
 import { Response } from "@siteimprove/alfa-http";
 import { Serializable } from "@siteimprove/alfa-json";
+import { test } from "@siteimprove/alfa-test";
 import { URL } from "@siteimprove/alfa-url";
 
-import { WithName } from "../../src/common/diagnostic";
+import R41, { Outcomes } from "../../dist/sia-r41/rule";
+
+import { Group } from "../../dist";
+
+import { WithName } from "../../dist/common/diagnostic";
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";

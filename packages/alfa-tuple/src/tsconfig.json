@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": ["./index.ts", "./tuple.ts"],
+  "references": [
+    { "path": "../../alfa-array" },
+    { "path": "../../alfa-callback" },
+    { "path": "../../alfa-comparable" },
+    { "path": "../../alfa-hash" },
+    { "path": "../../alfa-mapper" },
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-predicate" },
+    { "path": "../../alfa-reducer" },
+    { "path": "../../alfa-refinement" }
+  ]
+}

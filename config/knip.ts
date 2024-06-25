@@ -11,12 +11,23 @@ const config: KnipConfig = {
       ignoreDependencies: ["prettier"],
     },
     "packages/*": { entry, project },
-    "packages/alfa-device": { entry: [...entry, "native.ts!"], project },
+    "packages/alfa-cascade": {
+      entry,
+      project,
+      ignore: ["src/ancestor-filter.ts"],
+    },
+    "packages/alfa-device": { entry: [...entry, "src/native.ts!"], project },
     "packages/alfa-dom": {
-      entry: [...entry, "h.ts!", "jsx.ts!", "jsx-runtime.ts!", "native.ts!"],
+      entry: [
+        ...entry,
+        "src/h.ts!",
+        "src/jsx.ts!",
+        "src/jsx-runtime.ts!",
+        "src/native.ts!",
+      ],
       project,
     },
-    "packages/alfa-web": { entry: [...entry, "native.ts!"], project },
+    "packages/alfa-web": { entry: [...entry, "src/native.ts!"], project },
   },
   // Do not check deprecated packages since we do not want to spend time
   // updating them.

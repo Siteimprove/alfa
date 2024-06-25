@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Combinator } from "../src";
+import { Combinator } from "../dist";
 import { serialize } from "./parser";
 
 test(".parse() parses a list of simple selectors", (t) => {

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Ellipse } from "../../../src";
+import { Ellipse } from "../../../dist";
 import { serializer } from "../../common/parse";
 
 const serialize = serializer(Ellipse.parse);

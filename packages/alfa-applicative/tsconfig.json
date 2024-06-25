@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/applicative.ts", "src/index.ts"],
-  "references": [{ "path": "../alfa-functor" }, { "path": "../alfa-mapper" }]
+  "files": [],
+  "references": [{ "path": "./src" }]
 }

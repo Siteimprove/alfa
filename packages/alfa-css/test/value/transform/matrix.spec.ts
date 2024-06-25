@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Matrix } from "../../../src";
+import { Matrix } from "../../../dist";
 
 import { parser, serializer } from "../../common/parse";
 

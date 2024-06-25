@@ -1,9 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as Width from "../../src/property/border-image-width";
+import * as Width from "../../dist/property/border-image-width";
 
 import { cascaded } from "../common";
 

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Rotate } from "../../../src";
+import { Rotate } from "../../../dist";
 
 import { parser, serializer } from "../../common/parse";
 

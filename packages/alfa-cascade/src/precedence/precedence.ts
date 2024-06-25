@@ -1,5 +1,5 @@
 import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
-import { Specificity } from "@siteimprove/alfa-selector/src/specificity";
+import { Specificity } from "@siteimprove/alfa-selector";
 
 import * as json from "@siteimprove/alfa-json";
 

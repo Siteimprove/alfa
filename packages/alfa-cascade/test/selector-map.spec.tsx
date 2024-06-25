@@ -9,10 +9,10 @@ import {
 } from "@siteimprove/alfa-selector";
 import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
-import { AncestorFilter } from "../src/ancestor-filter";
+import { AncestorFilter } from "../dist/ancestor-filter";
 
-import { Layer, Origin } from "../src/precedence";
-import { SelectorMap } from "../src/selector-map";
+import { Layer, Origin } from "../dist/precedence";
+import { SelectorMap } from "../dist/selector-map";
 import { layer, ruleToBlockJSON } from "./common";
 
 const device = Device.standard();

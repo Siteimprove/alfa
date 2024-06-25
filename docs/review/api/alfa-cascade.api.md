@@ -25,7 +25,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Shadow } from '@siteimprove/alfa-dom';
 import { Sheet } from '@siteimprove/alfa-dom';
 import { Simple } from '@siteimprove/alfa-selector';
-import { Specificity } from '@siteimprove/alfa-selector/src/specificity';
+import { Specificity } from '@siteimprove/alfa-selector';
 import { StyleRule } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Branched } from "../src/branched";
+import { Branched } from "../dist/branched";
 
 const n = Branched.of(1, "foo").branch(2, "bar");
 

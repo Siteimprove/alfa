@@ -1,4 +1,4 @@
-import { Refinement } from "@siteimprove/alfa-refinement/src/refinement";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Element } from "../../element";
 import { hasName } from "./has-name";

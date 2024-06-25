@@ -3,7 +3,7 @@ import { RNG, test } from "@siteimprove/alfa-test";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
-import { Map } from "../src/map";
+import { Map } from "../dist/map";
 
 /**
  * Turning a float between 0 and 1 into a 32 bits int, and keeping only

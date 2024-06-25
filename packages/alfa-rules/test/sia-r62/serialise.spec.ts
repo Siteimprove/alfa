@@ -3,7 +3,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Declaration } from "@siteimprove/alfa-dom";
 import { Style } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
-import { Serialise } from "../../src/sia-r62/serialise";
+import { Serialise } from "../../dist/sia-r62/serialise";
 
 const { background } = Serialise;
 const device = Device.standard();

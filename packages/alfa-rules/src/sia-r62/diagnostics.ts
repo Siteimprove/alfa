@@ -13,7 +13,7 @@ import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Contrast } from "../../src/common/diagnostic/contrast";
+import { Contrast } from "../common/diagnostic/contrast";
 
 import { Serialise } from "./serialise";
 

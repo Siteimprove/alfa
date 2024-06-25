@@ -10,7 +10,7 @@ import {
   Number,
   Token,
   Value,
-} from "../../../src";
+} from "../../../dist";
 
 function parse<V extends Value>(
   str: string,

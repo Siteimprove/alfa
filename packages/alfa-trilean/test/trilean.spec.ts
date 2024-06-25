@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Trilean } from "../src";
+import { Trilean } from "../dist";
 
 const isPositive: Trilean.Predicate<number> = (x) => {
   if (x > 0) {

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Time } from "../src/time";
+import { Time } from "../dist/time";
 
 test(".of() contructs a time using the given epoch", (t) => {
   const time = Time.of(42);

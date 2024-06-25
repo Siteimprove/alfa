@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": [
+    "./ancestor-filter.ts",
+    "./block.ts",
+    "./cascade.ts",
+    "./index.ts",
+    "./precedence/encapsulation.ts",
+    "./precedence/index.ts",
+    "./precedence/layer.ts",
+    "./precedence/order.ts",
+    "./precedence/origin.ts",
+    "./precedence/precedence.ts",
+    "./rule-tree.ts",
+    "./selector-map.ts",
+    "./user-agent.ts"
+  ],
+  "references": [
+    { "path": "../../alfa-array" },
+    { "path": "../../alfa-cache" },
+    { "path": "../../alfa-comparable" },
+    { "path": "../../alfa-css" },
+    { "path": "../../alfa-css-feature" },
+    { "path": "../../alfa-device" },
+    { "path": "../../alfa-dom" },
+    { "path": "../../alfa-equatable" },
+    { "path": "../../alfa-iterable" },
+    { "path": "../../alfa-json" },
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-predicate" },
+    { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-selective" },
+    { "path": "../../alfa-selector" }
+  ]
+}

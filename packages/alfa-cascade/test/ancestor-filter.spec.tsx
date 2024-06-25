@@ -3,7 +3,7 @@ import { Assertions, test } from "@siteimprove/alfa-test";
 
 import { parse } from "@siteimprove/alfa-selector/test/parser";
 
-import { AncestorFilter, Bucket } from "../src/ancestor-filter";
+import { AncestorFilter, Bucket } from "../dist/ancestor-filter";
 
 test("Buckets behave as expected", (t) => {
   const bucket = Bucket.empty();

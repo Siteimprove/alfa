@@ -4,8 +4,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Option, None } from "@siteimprove/alfa-option";
 
-import R24 from "../../src/sia-r24/rule";
-import { Outcomes } from "../../src/common/expectation/media-transcript";
+import R24 from "../../dist/sia-r24/rule";
+import { Outcomes } from "../../dist/common/expectation/media-transcript";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";

@@ -1,8 +1,8 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 import { test } from "@siteimprove/alfa-test";
 
-import R9 from "../../src/sia-r9/rule";
-import { RefreshDelay as Outcomes } from "../../src/common/outcome/refresh-delay";
+import R9 from "../../dist/sia-r9/rule";
+import { RefreshDelay as Outcomes } from "../../dist/common/outcome/refresh-delay";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";

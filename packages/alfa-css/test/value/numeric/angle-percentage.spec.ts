@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle, AnglePercentage, Length } from "../../../src";
+import { Angle, AnglePercentage, Length } from "../../../dist";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse";
 

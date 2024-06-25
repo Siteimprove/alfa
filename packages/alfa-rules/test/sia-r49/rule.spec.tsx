@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { None, Option } from "@siteimprove/alfa-option";
 
-import R49, { Outcomes } from "../../src/sia-r49/rule";
+import R49, { Outcomes } from "../../dist/sia-r49/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";

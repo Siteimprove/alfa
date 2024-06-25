@@ -1,9 +1,9 @@
 import { Array } from "@siteimprove/alfa-array";
 import { StyleRule } from "@siteimprove/alfa-dom";
 
-import { Block } from "../../src/block";
-import { Layer } from "../../src/precedence";
-import { UserAgent } from "../../src/user-agent";
+import { Block } from "../../dist/block";
+import { Layer } from "../../dist/precedence";
+import { UserAgent } from "../../dist/user-agent";
 
 /**
  * @internal

@@ -1,8 +1,8 @@
 import { h } from "@siteimprove/alfa-dom";
 import { Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { ElementDistinguishable } from "../../src/sia-r62/diagnostics";
-import R62, { Outcomes } from "../../src/sia-r62/rule";
+import { ElementDistinguishable } from "../../dist/sia-r62/diagnostics";
+import R62, { Outcomes } from "../../dist/sia-r62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
 import { Defaults, addCursor, makePairing } from "./common";

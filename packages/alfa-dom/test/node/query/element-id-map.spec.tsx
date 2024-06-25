@@ -1,7 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "../../../h";
 
-import { Query } from "../../../src";
+import { h, Query } from "../../../dist";
 
 const { getElementIdMap } = Query;
 
