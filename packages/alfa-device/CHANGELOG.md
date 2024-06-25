@@ -1,5 +1,11 @@
 # @siteimprove/alfa-device
 
+## 0.85.1
+
+### Patch Changes
+
+- **Fixed:** Improved how `Native` is exported. ([#1635](https://github.com/Siteimprove/alfa/pull/1635))
+
 ## 0.85.0
 
 ### Minor Changes

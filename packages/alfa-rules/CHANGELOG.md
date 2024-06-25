@@ -1,5 +1,7 @@
 # @siteimprove/alfa-rules
 
+## 0.85.1
+
 ## 0.85.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.85.1](../../compare/v0.85.0...v0.85.1) (2024-06-25)
+
+### Fixed
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0851): Improved how `Native` is exported. ([#1635](https://github.com/Siteimprove/alfa/pull/1635))
+
 ## [0.85.0](../../compare/v0.84.0...v0.85.0) (2024-06-25)
 
 ### Breaking
