@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-some(predicate: Predicate<T>): this is Ok<T>;
+some(predicate: Predicate<T>): boolean;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ some(predicate: Predicate<T>): this is Ok<T>;
 
 **Returns:**
 
-this is Ok&lt;T&gt;
+boolean
 

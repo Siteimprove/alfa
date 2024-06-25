@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-isData(): boolean;
+isData(): this is never;
 ```
 **Returns:**
 
-boolean
+this is never
 

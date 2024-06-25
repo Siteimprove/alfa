@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { Response } from "@siteimprove/alfa-http";

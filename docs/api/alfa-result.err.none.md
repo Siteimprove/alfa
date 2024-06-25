@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-none(): boolean;
+none(): this is Err<E>;
 ```
 **Returns:**
 
-boolean
+this is [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

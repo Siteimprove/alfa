@@ -14,7 +14,7 @@ toJSON(options?: Node.SerializationOptions): Attribute.JSON<N>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.SerializationOptions](./alfa-dom.node_2.serializationoptions.md) | _(Optional)_ |
+|  options | [Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) | _(Optional)_ |
 
 **Returns:**
 

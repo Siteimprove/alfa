@@ -9,14 +9,14 @@
 ```typescript
 Filter_base: {
         new (expression: Expression.Filter): {
-            child(name?: string | undefined): Path;
-            parent(name?: string | undefined): Path;
-            descendant(name?: string | undefined): Path;
-            ancestor(name?: string | undefined): Path;
-            attribute(name?: string | undefined): Path;
+            child(name?: string): Path;
+            parent(name?: string): Path;
+            descendant(name?: string): Path;
+            ancestor(name?: string): Path;
+            attribute(name?: string): Path;
             readonly expression: Expression.Filter;
             equals(value: unknown): value is any;
-            toJSON(): JSON;
+            toJSON(): Builder.JSON;
             toString(): string;
         };
     }

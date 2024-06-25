@@ -9,7 +9,7 @@ import { Attribute as Attribute_2 } from '@siteimprove/alfa-dom';
 import { Context } from '@siteimprove/alfa-selector';
 import { Device } from '@siteimprove/alfa-device';
 import * as dom_2 from '@siteimprove/alfa-dom';
-import { Element as Element_3 } from '@siteimprove/alfa-dom';
+import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
 import { Hash } from '@siteimprove/alfa-hash';
@@ -18,20 +18,20 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Namespace } from '@siteimprove/alfa-dom';
-import { Node as Node_3 } from '@siteimprove/alfa-dom';
-import { Option as Option_2 } from '@siteimprove/alfa-option';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
+import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
-import { Text as Text_3 } from '@siteimprove/alfa-dom';
+import { Text as Text_2 } from '@siteimprove/alfa-dom';
 import { Thunk } from '@siteimprove/alfa-thunk';
 import * as tree from '@siteimprove/alfa-tree';
 
 // @public (undocumented)
 export class Attribute<N extends Attribute.Name = Attribute.Name> implements Equatable, Serializable {
     // (undocumented)
-    get default(): Option_2<Attribute.Default<N>>;
+    get default(): Option<Attribute.Default<N>>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -79,15 +79,15 @@ export namespace Attribute {
 }
 
 // @public (undocumented)
-export class Container extends Node_2<"container"> {
+export class Container extends Node<"container"> {
     // (undocumented)
-    clone(parent?: Option_2<Node_2>): Container;
+    clone(parent?: Option<Node>): Container;
     // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
-    static of(owner: dom_2.Node, children?: Iterable<Node_2>, role?: Option_2<Role>): Container;
+    static of(owner: dom_2.Node, children?: Iterable<Node>, role?: Option<Role>): Container;
     // (undocumented)
-    get role(): Option_2<Role>;
+    get role(): Option<Role>;
     // (undocumented)
     toJSON(): Container.JSON;
     // (undocumented)
@@ -97,7 +97,7 @@ export class Container extends Node_2<"container"> {
 // @public (undocumented)
 export namespace Container {
     // (undocumented)
-    export interface JSON extends Node_2.JSON<"container"> {
+    export interface JSON extends Node.JSON<"container"> {
         // (undocumented)
         role: Role.Name | null;
     }
@@ -118,42 +118,42 @@ export namespace DOM {
     hasRole: typeof dom.hasRole, // (undocumented)
     isIgnored: typeof dom.isIgnored, // (undocumented)
     isIncludedInTheAccessibilityTree: typeof dom.isIncludedInTheAccessibilityTree, // (undocumented)
-    isMarkedDecorative: Predicate<Element_3<string>>, // (undocumented)
+    isMarkedDecorative: Predicate<Element_2<string>>, // (undocumented)
     isPerceivableForAll: typeof dom.isPerceivableForAll, // (undocumented)
     isProgrammaticallyHidden: typeof dom.isProgrammaticallyHidden, // (undocumented)
-    isSemanticallyDisabled: Predicate<Element_3<string>>;
+    isSemanticallyDisabled: Predicate<Element_2<string>>;
 }
 
 // @public (undocumented)
-class Element_2 extends Node_2<"element"> {
+export class Element extends Node<"element"> {
     // (undocumented)
-    attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option_2<Attribute<N>>;
+    attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
     // (undocumented)
-    attribute(predicate: Predicate<Attribute>): Option_2<Attribute>;
+    attribute(predicate: Predicate<Attribute>): Option<Attribute>;
     // (undocumented)
-    attribute<N extends Attribute.Name>(predicate: N): Option_2<Attribute<N>>;
+    attribute<N extends Attribute.Name>(predicate: N): Option<Attribute<N>>;
     // (undocumented)
     get attributes(): ReadonlyArray<Attribute>;
     // (undocumented)
-    clone(): Element_2;
+    clone(): Element;
     // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
-    get name(): Option_2<Name>;
+    get name(): Option<Name>;
     // (undocumented)
-    static of(owner: dom_2.Node, role?: Option_2<Role>, name?: Option_2<Name>, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node_2>): Element_2;
+    static of(owner: dom_2.Node, role?: Option<Role>, name?: Option<Name>, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>): Element;
     // (undocumented)
-    get role(): Option_2<Role>;
+    get role(): Option<Role>;
     // (undocumented)
-    toJSON(): Element_2.JSON;
+    toJSON(): Element.JSON;
     // (undocumented)
     toString(): string;
 }
 
 // @public (undocumented)
-namespace Element_2 {
+export namespace Element {
     // (undocumented)
-    interface JSON extends Node_2.JSON<"element"> {
+    export interface JSON extends Node.JSON<"element"> {
         // (undocumented)
         attributes: Array<Attribute.JSON>;
         // (undocumented)
@@ -162,7 +162,6 @@ namespace Element_2 {
         role: Role.Name | null;
     }
 }
-export { Element_2 as Element }
 
 // Warning: (ae-internal-missing-underscore) The name "Feature" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -181,13 +180,13 @@ export class Feature {
 // @internal (undocumented)
 export namespace Feature {
     // (undocumented)
-    export type Aspect<T, A extends Array<unknown> = []> = Mapper<Element_3, T, A>;
+    export type Aspect<T, A extends Array<unknown> = []> = Mapper<Element_2, T, A>;
     // (undocumented)
     export type AttributesAspect = Aspect<Iterable_2<Attribute>>;
     // (undocumented)
-    export function from(namespace: Namespace, name: string): Option_2<Feature>;
+    export function from(namespace: Namespace, name: string): Option<Feature>;
     // (undocumented)
-    export type NameAspect = Aspect<Option_2<Name>, [Device, State]>;
+    export type NameAspect = Aspect<Option<Name>, [Device, State]>;
     // (undocumented)
     export type RoleAspect = Aspect<Iterable_2<Role>>;
     const // (undocumented)
@@ -201,7 +200,7 @@ export function hasValue(predicate: Predicate<string>): Predicate<Name>;
 export function hasValue(value: string, ...rest: Array<string>): Predicate<Name>;
 
 // @public (undocumented)
-export class Inert extends Node_2<"inert"> {
+export class Inert extends Node<"inert"> {
     // (undocumented)
     clone(): Inert;
     // (undocumented)
@@ -209,7 +208,7 @@ export class Inert extends Node_2<"inert"> {
     // (undocumented)
     static of(owner: dom_2.Node): Inert;
     // (undocumented)
-    toJSON(): Node_2.JSON<"inert">;
+    toJSON(): Node.JSON<"inert">;
     // (undocumented)
     toString(): string;
 }
@@ -233,7 +232,7 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     // (undocumented)
     get source(): ReadonlyArray<Source>;
     // (undocumented)
-    sourceNodes(): Iterable_2<Node_3>;
+    sourceNodes(): Iterable_2<Node_2>;
     spaced(spaceBefore: boolean, spaceAfter?: boolean): Name;
     // (undocumented)
     get spaces(): {
@@ -251,21 +250,21 @@ export class Name implements Equatable, Serializable<Name.JSON> {
 // @public (undocumented)
 export namespace Name {
     // (undocumented)
-    export function from(node: Element_3 | Text_3, device: Device): Option_2<Name>;
+    export function from(node: Element_2 | Text_2, device: Device): Option<Name>;
     // @internal (undocumented)
-    export function fromDescendants(element: Element_3, device: Device, state: State): Option_2<Name>;
+    export function fromDescendants(element: Element_2, device: Device, state: State): Option<Name>;
     // @internal (undocumented)
-    export function fromElement(element: Element_3, device: Device, state: State): Option_2<Name>;
+    export function fromElement(element: Element_2, device: Device, state: State): Option<Name>;
     // @internal (undocumented)
-    export function fromLabel(attribute: Attribute_2): Option_2<Name>;
+    export function fromLabel(attribute: Attribute_2): Option<Name>;
     // @internal (undocumented)
-    export function fromNode(node: Element_3 | Text_3, device: Device, state: State): Option_2<Name>;
+    export function fromNode(node: Element_2 | Text_2, device: Device, state: State): Option<Name>;
     // @internal (undocumented)
-    export function fromReferences(attribute: Attribute_2, referrer: Element_3, device: Device, state: State): Option_2<Name>;
+    export function fromReferences(attribute: Attribute_2, referrer: Element_2, device: Device, state: State): Option<Name>;
     // @internal (undocumented)
-    export function fromSteps(...steps: Array_2<Thunk<Option_2<Name>>>): Option_2<Name>;
+    export function fromSteps(...steps: Array_2<Thunk<Option<Name>>>): Option<Name>;
     // @internal (undocumented)
-    export function fromText(text: Text_3): Option_2<Name>;
+    export function fromText(text: Text_2): Option<Name>;
     // (undocumented)
     export interface JSON {
         // (undocumented)
@@ -287,107 +286,107 @@ export namespace Name {
 }
 
 // @public (undocumented)
-abstract class Node_2<T extends string = string> extends tree.Node<Node_2.Traversal.Flag, T> implements Serializable<Node_2.JSON<T>> {
-    protected constructor(owner: dom_2.Node, children: Array<Node_2>, type: T);
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements Serializable<Node.JSON<T>> {
+    protected constructor(owner: dom_2.Node, children: Array<Node>, type: T);
     // (undocumented)
-    attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option_2<Attribute<N>>;
+    attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
     // (undocumented)
-    attribute(predicate: Predicate<Attribute>): Option_2<Attribute>;
+    attribute(predicate: Predicate<Attribute>): Option<Attribute>;
     // (undocumented)
-    attribute<N extends Attribute.Name>(name: N): Option_2<Attribute<N>>;
+    attribute<N extends Attribute.Name>(name: N): Option<Attribute<N>>;
     // (undocumented)
-    children(options?: Node_2.Traversal): Sequence<Node_2>;
+    children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    abstract clone(parent?: Option_2<Node_2>): Node_2;
+    abstract clone(parent?: Option<Node>): Node;
     // (undocumented)
     abstract isIgnored(): boolean;
     // (undocumented)
-    get name(): Option_2<Name>;
+    get name(): Option<Name>;
     // (undocumented)
     get node(): dom_2.Node;
     // (undocumented)
     protected readonly _node: dom_2.Node;
     // (undocumented)
-    parent(options?: Node_2.Traversal): Option_2<Node_2>;
+    parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    get role(): Option_2<Role>;
+    get role(): Option<Role>;
     // (undocumented)
-    toJSON(): Node_2.JSON<T>;
+    toJSON(): Node.JSON<T>;
 }
 
 // @public (undocumented)
-interface Node_2 {
+export interface Node {
     // (undocumented)
-    ancestors(options?: Node_2.Traversal): Sequence<Node_2>;
+    ancestors(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    closest<T extends Node_2>(refinement: Refinement<Node_2, T>, options?: Node_2.Traversal): Option_2<T>;
+    closest<T extends Node>(refinement: Refinement<Node, T>, options?: Node.Traversal): Option<T>;
     // (undocumented)
-    closest(predicate: Predicate<Node_2>, options?: Node_2.Traversal): Option_2<Node_2>;
+    closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    descendants(options?: Node_2.Traversal): Sequence<Node_2>;
+    descendants(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    first(options?: Node_2.Traversal): Option_2<Node_2>;
+    first(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    following(options?: Node_2.Traversal): Sequence<Node_2>;
+    following(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    inclusiveAncestors(options?: Node_2.Traversal): Sequence<Node_2>;
+    inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    inclusiveDescendants(options?: Node_2.Traversal): Sequence<Node_2>;
+    inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    inclusiveSiblings(options?: Node_2.Traversal): Sequence<Node_2>;
+    inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    index(options?: Node_2.Traversal): number;
+    index(options?: Node.Traversal): number;
     // (undocumented)
-    isAncestorOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isAncestorOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    isChildOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isChildOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    isDescendantOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isDescendantOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    isInclusiveAncestorOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    isInclusiveDescendantsOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    isInclusiveSiblingOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    isParentOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isParentOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    isRootOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isRootOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    isSiblingOf(node: Node_2, options?: Node_2.Traversal): boolean;
+    isSiblingOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
-    last(options?: Node_2.Traversal): Option_2<Node_2>;
+    last(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    next(options?: Node_2.Traversal): Option_2<Node_2>;
+    next(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    preceding(options?: Node_2.Traversal): Sequence<Node_2>;
+    preceding(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    previous(options?: Node_2.Traversal): Option_2<Node_2>;
+    previous(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    root(options?: Node_2.Traversal): Node_2;
+    root(options?: Node.Traversal): Node;
     // (undocumented)
-    siblings(options?: Node_2.Traversal): Sequence<Node_2>;
+    siblings(options?: Node.Traversal): Sequence<Node>;
 }
 
 // @public (undocumented)
-namespace Node_2 {
+export namespace Node {
     // (undocumented)
-    function from(node: dom_2.Node, device: Device): Node_2;
+    export function from(node: dom_2.Node, device: Device): Node;
     // (undocumented)
-    interface JSON<T extends string = string> extends tree.Node.JSON<T> {
+    export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
         // (undocumented)
         node: string;
     }
     // (undocumented)
-    class Traversal extends Flags<Traversal.Flag> {
+    export class Traversal extends Flags<Traversal.Flag> {
         // (undocumented)
         static of(...flags: Array<Traversal.Flag>): Traversal;
     }
     const includeIgnored: Traversal;
     // (undocumented)
-    namespace Traversal {
+    export namespace Traversal {
         // (undocumented)
-        type Flag = 0 | 1;
+        export type Flag = 0 | 1;
         const // (undocumented)
         none: Flag;
         const ignored: Flag;
@@ -401,7 +400,6 @@ namespace Node_2 {
     hasName: typeof predicate_3.hasName, // (undocumented)
     hasRole: typeof predicate_3.hasRole;
 }
-export { Node_2 as Node }
 
 // @public (undocumented)
 export class Role<N extends Role.Name = Role.Name> implements Equatable, Hashable, Serializable {
@@ -413,7 +411,7 @@ export class Role<N extends Role.Name = Role.Name> implements Equatable, Hashabl
     hasPresentationalChildren(): boolean;
     hasRequiredChildren(): boolean;
     hasRequiredParent(): boolean;
-    implicitAttributeValue(name: Attribute.Name): Option_2<string>;
+    implicitAttributeValue(name: Attribute.Name): Option<string>;
     is<N extends Role.Name>(name: N): this is Role<N | Role.SubclassOf<N>>;
     isAbstract(): this is Role<Role.Abstract>;
     isAttributeProhibited(name: Attribute.Name): boolean;
@@ -446,9 +444,9 @@ export namespace Role {
         [N in Name]: Roles[N]["abstract"] extends true ? N : never;
     }[Name];
     export type Concrete = Exclude<Name, Abstract>;
-    export function from(element: Element_3): Option_2<Role>;
-    export function fromExplicit(element: Element_3): Option_2<Role>;
-    export function fromImplicit(element: Element_3): Option_2<Role>;
+    export function from(element: Element_2): Option<Role>;
+    export function fromExplicit(element: Element_2): Option<Role>;
+    export function fromImplicit(element: Element_2): Option<Role>;
     // Warning: (ae-forgotten-export) The symbol "Members_2" needs to be exported by the entry point index.d.ts
     export type Inherited<N extends Name> = N extends "roletype" | "none" ? never : Members_2<Roles[N]["inherited"]>;
     // (undocumented)
@@ -488,15 +486,15 @@ export namespace Source {
     // (undocumented)
     export class Ancestor implements Equatable, Serializable<Ancestor.JSON> {
         // (undocumented)
-        [Symbol.iterator](): Iterator<Node_3>;
+        [Symbol.iterator](): Iterator<Node_2>;
         // (undocumented)
-        get element(): Element_3;
+        get element(): Element_2;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         get name(): Name;
         // (undocumented)
-        static of(element: Element_3, name: Name): Ancestor;
+        static of(element: Element_2, name: Name): Ancestor;
         // (undocumented)
         toJSON(): Ancestor.JSON;
         // (undocumented)
@@ -517,17 +515,17 @@ export namespace Source {
         }
     }
     // (undocumented)
-    export function ancestor(element: Element_3, name: Name): Ancestor;
+    export function ancestor(element: Element_2, name: Name): Ancestor;
     // (undocumented)
     export class Data implements Equatable, Serializable<Data.JSON> {
         // (undocumented)
-        [Symbol.iterator](): Iterator<Node_3>;
+        [Symbol.iterator](): Iterator<Node_2>;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(text: Text_3): Data;
+        static of(text: Text_2): Data;
         // (undocumented)
-        get text(): Text_3;
+        get text(): Text_2;
         // (undocumented)
         toJSON(): Data.JSON;
         // (undocumented)
@@ -546,19 +544,19 @@ export namespace Source {
         }
     }
     // (undocumented)
-    export function data(text: Text_3): Data;
+    export function data(text: Text_2): Data;
     // (undocumented)
     export class Descendant implements Equatable, Serializable<Descendant.JSON> {
         // (undocumented)
-        [Symbol.iterator](): Iterator<Node_3>;
+        [Symbol.iterator](): Iterator<Node_2>;
         // (undocumented)
-        get element(): Element_3;
+        get element(): Element_2;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         get name(): Name;
         // (undocumented)
-        static of(element: Element_3, name: Name): Descendant;
+        static of(element: Element_2, name: Name): Descendant;
         // (undocumented)
         toJSON(): Descendant.JSON;
         // (undocumented)
@@ -579,13 +577,13 @@ export namespace Source {
         }
     }
     // (undocumented)
-    export function descendant(element: Element_3, name: Name): Descendant;
+    export function descendant(element: Element_2, name: Name): Descendant;
     // (undocumented)
     export type JSON = Data.JSON | Descendant.JSON | Ancestor.JSON | Label.JSON | Reference.JSON;
     // (undocumented)
     export class Label implements Equatable, Serializable<Label.JSON> {
         // (undocumented)
-        [Symbol.iterator](): Iterator<Node_3>;
+        [Symbol.iterator](): Iterator<Node_2>;
         // (undocumented)
         get attribute(): Attribute_2;
         // (undocumented)
@@ -614,7 +612,7 @@ export namespace Source {
     // (undocumented)
     export class Reference implements Equatable, Serializable<Reference.JSON> {
         // (undocumented)
-        [Symbol.iterator](): Iterator<Node_3>;
+        [Symbol.iterator](): Iterator<Node_2>;
         // (undocumented)
         get attribute(): Attribute_2;
         // (undocumented)
@@ -659,21 +657,21 @@ export class State implements Equatable, Serializable<State.JSON> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    hasVisited(element: Element_3): boolean;
+    hasVisited(element: Element_2): boolean;
     get isDescending(): boolean;
     get isRecursing(): boolean;
     get isReferencing(): boolean;
     // (undocumented)
     recurse(isRecursing: boolean): State;
     // (undocumented)
-    reference(referrer: Element_3, referred: Element_3): State;
-    get referred(): Option_2<Element_3>;
-    get referrer(): Option_2<Element_3>;
+    reference(referrer: Element_2, referred: Element_2): State;
+    get referred(): Option<Element_2>;
+    get referrer(): Option<Element_2>;
     // (undocumented)
     toJSON(): State.JSON;
     // (undocumented)
-    visit(element: Element_3): State;
-    get visited(): Iterable_2<Element_3>;
+    visit(element: Element_2): State;
+    get visited(): Iterable_2<Element_2>;
 }
 
 // @internal (undocumented)
@@ -696,29 +694,28 @@ export namespace State {
 }
 
 // @public (undocumented)
-class Text_2 extends Node_2<"text"> {
+export class Text extends Node<"text"> {
     // (undocumented)
-    clone(): Text_2;
+    clone(): Text;
     // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
-    get name(): Option_2<Name>;
+    get name(): Option<Name>;
     // (undocumented)
-    static of(owner: dom_2.Node, name: Option_2<Name>): Text_2;
+    static of(owner: dom_2.Node, name: Option<Name>): Text;
     // (undocumented)
-    toJSON(): Text_2.JSON;
+    toJSON(): Text.JSON;
     // (undocumented)
     toString(): string;
 }
 
 // @public (undocumented)
-namespace Text_2 {
+export namespace Text {
     // (undocumented)
-    interface JSON extends Node_2.JSON<"text"> {
+    export interface JSON extends Node.JSON<"text"> {
         // (undocumented)
         name: string | null;
     }
 }
-export { Text_2 as Text }
 
 ```

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-cache
 
+## 0.84.0
+
 ## 0.83.1
 
 ## 0.83.0

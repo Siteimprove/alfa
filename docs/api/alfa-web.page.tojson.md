@@ -14,7 +14,7 @@ toJSON(options?: Node.SerializationOptions): Page.JSON;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | Node.SerializationOptions | _(Optional)_ |
+|  options | [Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) | _(Optional)_ |
 
 **Returns:**
 
