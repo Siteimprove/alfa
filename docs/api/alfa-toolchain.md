@@ -18,3 +18,9 @@
 |  [individualChangelog](./alfa-toolchain.individualchangelog.md) |  |
 |  [Validation](./alfa-toolchain.validation.md) |  |
 
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [changelogFunctions](./alfa-toolchain.changelogfunctions.md) |  |
+

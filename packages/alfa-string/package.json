@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-string",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.84.0",
+  "version": "0.85.0",
   "license": "MIT",
   "description": "Utilities for manipulating strings",
   "repository": {
