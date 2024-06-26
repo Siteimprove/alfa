@@ -11,6 +11,9 @@
     "directory": "packages/alfa-toolchain"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "type": "module",
   "main": "dist/index.js",
   "exports": {
