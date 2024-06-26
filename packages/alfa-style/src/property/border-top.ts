@@ -3,12 +3,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Shorthand } from "../shorthand";
+import { Shorthand } from "../shorthand.js";
 
-import * as Color from "./border-top-color";
-import Style from "./border-top-style";
-import * as Width from "./border-top-width";
-import { Longhand } from "../longhand";
+import * as Color from "./border-top-color.js";
+import Style from "./border-top-style.js";
+import * as Width from "./border-top-width.js";
+import { Longhand } from "../longhand.js";
 
 const { map } = Parser;
 

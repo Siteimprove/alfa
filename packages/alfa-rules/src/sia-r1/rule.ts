@@ -12,10 +12,10 @@ import { String } from "@siteimprove/alfa-string";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { withDocumentElement } from "../common/applicability/with-document-element";
-import { Scope, Stability } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasName, hasNamespace } = Element;
 const { hasTextContent } = Node;

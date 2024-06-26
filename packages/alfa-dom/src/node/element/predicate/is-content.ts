@@ -1,10 +1,10 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element";
-import { Node } from "../../../node";
+import { Element } from "../../element.js";
+import { Node } from "../../../node.js";
 
-import { isReplaced } from "./is-replaced";
+import { isReplaced } from "./is-replaced.js";
 
 const { or } = Predicate;
 const { and } = Refinement;

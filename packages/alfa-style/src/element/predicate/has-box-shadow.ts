@@ -5,9 +5,9 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Style } from "../../style";
+import { Style } from "../../style.js";
 
-import { isVisibleShadow } from "./is-visible-shadow";
+import { isVisibleShadow } from "./is-visible-shadow.js";
 
 /**
  * @public

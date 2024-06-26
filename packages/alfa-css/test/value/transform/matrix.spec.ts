@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Matrix } from "../../../dist";
+import { Matrix } from "../../../dist/index.js";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, serializer } from "../../common/parse.js";
 
 const serialize = serializer(Matrix.parse);
 const parseErr = parser(Matrix.parse);

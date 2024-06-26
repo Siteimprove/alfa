@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 test("#cascaded() parses single keyword", (t) => {
   const element = <div style={{ cursor: "auto" }} />;

@@ -10,8 +10,7 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Ok } from "./ok";
-import { Result } from "./result";
+import { Result } from "./result.js";
 
 const { not, test } = Predicate;
 

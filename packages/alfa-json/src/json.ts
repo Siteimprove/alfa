@@ -1,4 +1,4 @@
-import * as builtin from "./builtin";
+import * as builtin from "./builtin.js";
 
 /**
  * @public

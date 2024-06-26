@@ -6,9 +6,9 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { hasComputedStyle } from "../../element/predicate/has-computed-style";
-import { Longhands } from "../../longhands";
-import { Style } from "../../style";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
+import { Longhands } from "../../longhands.js";
+import { Style } from "../../style.js";
 
 const { or, test } = Predicate;
 

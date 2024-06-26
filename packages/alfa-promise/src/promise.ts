@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Continuation } from "@siteimprove/alfa-continuation";
 
-import * as builtin from "./builtin";
+import * as builtin from "./builtin.js";
 
 /**
  * @remarks

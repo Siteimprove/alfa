@@ -1,10 +1,10 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element";
-import { Namespace } from "../../../namespace";
+import { Element } from "../../element.js";
+import { Namespace } from "../../../namespace.js";
 
-import { hasName } from "./has-name";
-import { hasNamespace } from "./has-namespace";
+import { hasName } from "./has-name.js";
+import { hasNamespace } from "./has-namespace.js";
 
 const { and, test } = Refinement;
 

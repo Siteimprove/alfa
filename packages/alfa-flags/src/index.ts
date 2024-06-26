@@ -1,1 +1,1 @@
-export * from "./flags";
+export * from "./flags.js";

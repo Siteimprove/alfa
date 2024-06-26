@@ -4,10 +4,10 @@ import type { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 import { Tuple } from "@siteimprove/alfa-tuple";
 
-import type { Diagnostic } from "./diagnostic";
-import type { Oracle } from "./oracle";
-import { Question } from "./question";
-import type { Rule } from "./rule";
+import type { Diagnostic } from "./diagnostic.js";
+import type { Oracle } from "./oracle.js";
+import { Question } from "./question.js";
+import type { Rule } from "./rule.js";
 
 /**
  * As `Interview` is a recursive type that models nested chains of `Question`s,

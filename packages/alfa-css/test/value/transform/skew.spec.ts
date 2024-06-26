@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Skew } from "../../../dist";
+import { Skew } from "../../../dist/index.js";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, serializer } from "../../common/parse.js";
 
 const serialize = serializer(Skew.parse);
 const parseErr = parser(Skew.parse);

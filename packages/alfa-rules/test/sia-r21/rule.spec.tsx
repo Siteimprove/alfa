@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R21, { Outcomes } from "../../dist/sia-r21/rule";
+import R21, { Outcomes } from "../../dist/sia-r21/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test("evaluates() passes an element with a single valid role", async (t) => {
   const target = h.attribute("role", "button");

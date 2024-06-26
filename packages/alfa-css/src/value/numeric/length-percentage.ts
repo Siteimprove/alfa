@@ -2,17 +2,17 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import * as Base from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Unit } from "../../unit";
+import { Math } from "../../calculation/index.js";
+import * as Base from "../../calculation/numeric/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { Unit } from "../../unit/index.js";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 
-import { Dimension } from "./dimension";
-import { Length } from "./length";
-import type { Numeric } from "./numeric";
-import { Percentage } from "./percentage";
+import { Dimension } from "./dimension.js";
+import { Length } from "./length.js";
+import type { Numeric } from "./numeric.js";
+import { Percentage } from "./percentage.js";
 
 const { either, map } = Parser;
 

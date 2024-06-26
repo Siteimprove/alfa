@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Node } from "../../node";
+import { Node } from "../../node.js";
 
 /**
  * @public

@@ -1,8 +1,8 @@
 import { Keyword } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
-import Base from "./overflow-x";
+import Base from "./overflow-x.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-y}

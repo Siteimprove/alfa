@@ -4,7 +4,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { now } from "./now";
+import { now } from "./now.js";
 
 /**
  * @public

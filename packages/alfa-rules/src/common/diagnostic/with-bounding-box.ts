@@ -5,7 +5,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { WithName } from "./with-name";
+import { WithName } from "./with-name.js";
 
 import * as json from "@siteimprove/alfa-json";
 

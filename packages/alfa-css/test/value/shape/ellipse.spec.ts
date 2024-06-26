@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Ellipse } from "../../../dist";
-import { serializer } from "../../common/parse";
+import { Ellipse } from "../../../dist/index.js";
+import { serializer } from "../../common/parse.js";
 
 const serialize = serializer(Ellipse.parse);
 

@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Rotate } from "../../../dist";
+import { Rotate } from "../../../dist/index.js";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, serializer } from "../../common/parse.js";
 
 const serialize = serializer(Rotate.parse);
 const parseErr = parser(Rotate.parse);

@@ -1,6 +1,6 @@
 import { Lexer } from "@siteimprove/alfa-css";
 
-import { Selector } from "../dist";
+import { Selector } from "../dist/index.js";
 
 /**
  * @internal

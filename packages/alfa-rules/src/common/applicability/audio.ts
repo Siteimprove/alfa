@@ -11,10 +11,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-import { Question } from "../act/question";
+import { Question } from "../act/question.js";
 
 const { isPerceivableForAll } = DOM;
 const { isElement, hasName, hasNamespace, hasAttribute } = Element;

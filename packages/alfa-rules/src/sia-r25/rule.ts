@@ -4,12 +4,12 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { video } from "../common/applicability/video";
+import { video } from "../common/applicability/video.js";
 
-import { expectation } from "../common/act/expectation";
-import { Question } from "../common/act/question";
+import { expectation } from "../common/act/expectation.js";
+import { Question } from "../common/act/question.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r25",

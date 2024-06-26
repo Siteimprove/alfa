@@ -5,8 +5,8 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
 import { Result } from "@siteimprove/alfa-result";
-import { Body } from "./body";
-import { Headers } from "./headers";
+import { Body } from "./body.js";
+import { Headers } from "./headers.js";
 
 /**
  * {@link https://fetch.spec.whatwg.org/#request-class}

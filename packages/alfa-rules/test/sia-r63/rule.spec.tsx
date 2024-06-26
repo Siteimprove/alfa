@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R63, { Outcomes } from "../../dist/sia-r63/rule";
+import R63, { Outcomes } from "../../dist/sia-r63/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test("evaluate() passes an object with a non-empty name (aria-label)", async (t) => {
   const target = <object aria-label="Some object" data="foo.jpg" />;

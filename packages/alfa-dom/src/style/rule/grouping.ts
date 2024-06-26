@@ -1,5 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Rule } from "../rule";
+import { Rule } from "../rule.js";
 
 /**
  * @public

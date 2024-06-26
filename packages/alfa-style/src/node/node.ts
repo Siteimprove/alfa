@@ -1,2 +1,2 @@
-export * from "./predicate/is-rendered";
-export * from "./predicate/is-visible";
+export * from "./predicate/is-rendered.js";
+export * from "./predicate/is-visible.js";

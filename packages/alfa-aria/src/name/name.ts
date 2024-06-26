@@ -14,14 +14,14 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Feature } from "../feature";
-import { Role } from "../role";
+import { Feature } from "../feature.js";
+import { Role } from "../role.js";
 
-import * as predicate from "./predicate";
-import { Source } from "./source";
-import { State } from "./state";
+import * as predicate from "./predicate/index.js";
+import { Source } from "./source.js";
+import { State } from "./state.js";
 
-import { isProgrammaticallyHidden } from "../dom/predicate/is-programmatically-hidden";
+import { isProgrammaticallyHidden } from "../dom/predicate/is-programmatically-hidden.js";
 
 const { isElement } = Element;
 const { isText } = Text;

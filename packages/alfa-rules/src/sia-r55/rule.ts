@@ -9,12 +9,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation";
-import { Group } from "../common/act/group";
-import { Question } from "../common/act/question";
-import { WithRole } from "../common/diagnostic/with-role";
+import { expectation } from "../common/act/expectation.js";
+import { Group } from "../common/act/group.js";
+import { Question } from "../common/act/question.js";
+import { WithRole } from "../common/diagnostic/with-role.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const {
   hasIncorrectRoleWithoutName,

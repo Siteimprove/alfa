@@ -2,7 +2,7 @@ import { Requirement } from "@siteimprove/alfa-act";
 import { Branched } from "@siteimprove/alfa-branched";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { Criteria } from "./criterion/data";
+import { Criteria } from "./criterion/data.js";
 
 /**
  * @public

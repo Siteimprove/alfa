@@ -7,13 +7,14 @@ import {
   Context,
   type Simple,
 } from "@siteimprove/alfa-selector";
-import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
-import { AncestorFilter } from "../dist/ancestor-filter";
 
-import { Layer, Origin } from "../dist/precedence";
-import { SelectorMap } from "../dist/selector-map";
-import { layer, ruleToBlockJSON } from "./common";
+import { AncestorFilter } from "../dist/ancestor-filter.js";
+import { Layer, Origin } from "../dist/index.js";
+import { SelectorMap } from "../dist/selector-map.js";
+
+import { layer, ruleToBlockJSON } from "./common/common.js";
+import { parse } from "./common/parser.js";
 
 const device = Device.standard();
 

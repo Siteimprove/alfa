@@ -4,7 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Document, h } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 
-import { Page } from "../dist/page";
+import { Page } from "../dist/page.js";
 
 test(".from() returns Err on invalid URL in request", (t) => {
   t.deepEqual(

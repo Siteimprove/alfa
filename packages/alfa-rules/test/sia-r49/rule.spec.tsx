@@ -4,11 +4,11 @@ import { test } from "@siteimprove/alfa-test";
 
 import { None, Option } from "@siteimprove/alfa-option";
 
-import R49, { Outcomes } from "../../dist/sia-r49/rule";
+import R49, { Outcomes } from "../../dist/sia-r49/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { cantTell, passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { oracle } from "../common/oracle.js";
+import { cantTell, passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluate() passes an autoplaying <video> element that lasts more than 3
       seconds, has audio, and uses native audio controls`, async (t) => {

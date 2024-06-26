@@ -35,19 +35,19 @@
 <!-- exit_src&#45;&gt;dependency&#45;graph&#45;[object Object] -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
-<!-- src/index.ts -->
+<!-- src/common.ts -->
 <g id="node5" class="node">
-<title>src/index.ts</title>
+<title>src/common.ts</title>
 <path fill="none" stroke="#ff0000" stroke-width="5" d="M114.33,-200C114.33,-200 66.67,-200 66.67,-200 62.83,-200 59,-196.17 59,-192.33 59,-192.33 59,-184.67 59,-184.67 59,-180.83 62.83,-177 66.67,-177 66.67,-177 114.33,-177 114.33,-177 118.17,-177 122,-180.83 122,-184.67 122,-184.67 122,-192.33 122,-192.33 122,-196.17 118.17,-200 114.33,-200"/>
-<text text-anchor="middle" x="90.5" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
+<text text-anchor="middle" x="90.5" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
 </g>
-<!-- src/index.ts&#45;&gt;src/functor.ts -->
-<!-- src/index.ts&#45;&gt;src/functor.ts -->
+<!-- src/common.ts&#45;&gt;src/functor.ts -->
+<!-- src/common.ts&#45;&gt;src/functor.ts -->
 <g id="edge7" class="edge">
-<title>src/index.ts&#45;&gt;src/functor.ts</title>
+<title>src/common.ts&#45;&gt;src/functor.ts</title>
 <path fill="none" stroke="black" d="M96.66,-176.78C98.42,-169.61 99.47,-159.95 99.57,-151.31"/>
 <polygon fill="black" stroke="black" points="103.06,-151.02 99.15,-141.17 96.06,-151.31 103.06,-151.02"/>
 </g>
-<!-- src/index.ts&#45;&gt;exit_src -->
+<!-- src/common.ts&#45;&gt;exit_src -->
 </g>
 </svg>

@@ -8,15 +8,15 @@ import { Keyword, Percentage, RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Style } from "@siteimprove/alfa-style";
 
-import { Contrast as Diagnostic } from "../../dist/common/diagnostic/contrast";
-import { Contrast as Outcomes } from "../../dist/common/outcome/contrast";
-import R69 from "../../dist/sia-r69/rule";
+import { Contrast as Diagnostic } from "../../dist/common/diagnostic/contrast.js";
+import { Contrast as Outcomes } from "../../dist/common/outcome/contrast.js";
+import R69 from "../../dist/sia-r69/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
 
-import { ColorError, ColorErrors } from "../../dist/common/dom/get-colors";
-import { oracle } from "../common/oracle";
+import { ColorError, ColorErrors } from "../../dist/common/dom/get-colors.js";
+import { oracle } from "../common/oracle.js";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
   RGB.of(

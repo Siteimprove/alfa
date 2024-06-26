@@ -2,7 +2,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Expression, Math } from "../../calculation";
+import { type Expression, Math } from "../../calculation/index.js";
 import {
   Angle as BaseAngle,
   Integer as BaseInteger,
@@ -10,17 +10,17 @@ import {
   Number as BaseNumber,
   Numeric as BaseNumeric,
   Percentage as BasePercentage,
-} from "../../calculation/numeric";
+} from "../../calculation/numeric/index.js";
 
-import { Token } from "../../syntax";
+import { Token } from "../../syntax/index.js";
 
-import { PartiallyResolvable, Resolvable } from "../resolvable";
+import { PartiallyResolvable, Resolvable } from "../resolvable.js";
 
-import { Angle } from "./angle";
-import { Integer } from "./integer";
-import { Length } from "./length";
-import { Number } from "./number";
-import { Numeric } from "./numeric";
+import { Angle } from "./angle.js";
+import { Integer } from "./integer.js";
+import { Length } from "./length.js";
+import { Number } from "./number.js";
+import { Numeric } from "./numeric.js";
 
 const { either, map } = Parser;
 

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R14, { Outcomes } from "../../dist/sia-r14/rule";
+import R14, { Outcomes } from "../../dist/sia-r14/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed } from "../common/outcome.js";
 
 test(`evaluate() passes a <button> element whose perceivable text content
       matches its accessible name set by aria-label`, async (t) => {

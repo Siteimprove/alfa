@@ -3,9 +3,9 @@ import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as Width from "../../dist/property/border-image-width";
+import * as Width from "../../dist/property/border-image-width.js";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 function width(
   top: number,

@@ -12,10 +12,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation";
-import { Group } from "../common/act/group";
+import { expectation } from "../common/act/expectation.js";
+import { Group } from "../common/act/group.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const {
   hasIncorrectRoleWithoutName,

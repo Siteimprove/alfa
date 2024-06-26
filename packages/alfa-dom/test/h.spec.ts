@@ -2,13 +2,13 @@ import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import { h } from "../dist";
+import { h } from "../dist/index.js";
 
-import { Namespace } from "../dist/namespace";
+import { Namespace } from "../dist/namespace.js";
 
-import { Document } from "../dist/node/document";
-import { Element } from "../dist/node/element";
-import { Type } from "../dist/node/type";
+import { Document } from "../dist/node/document.js";
+import { Element } from "../dist/node/element.js";
+import { Type } from "../dist/node/type.js";
 
 test("h() constructs an element", (t) => {
   t.deepEqual(

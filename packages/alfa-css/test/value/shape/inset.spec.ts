@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Inset } from "../../../dist";
-import { serializer } from "../../common/parse";
+import { Inset } from "../../../dist/index.js";
+import { serializer } from "../../common/parse.js";
 
 const serialize = serializer(Inset.parse);
 

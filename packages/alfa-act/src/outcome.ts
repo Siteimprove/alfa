@@ -10,9 +10,9 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
-import { Diagnostic } from "./diagnostic";
-import type { Question } from "./question";
-import { Rule } from "./rule";
+import { Diagnostic } from "./diagnostic.js";
+import type { Question } from "./question.js";
+import { Rule } from "./rule.js";
 
 /**
  * @public

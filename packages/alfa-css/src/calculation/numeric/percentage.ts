@@ -1,7 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Numeric } from "./numeric";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { Numeric } from "./numeric.js";
 
 const { map } = Parser;
 

@@ -1,12 +1,12 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../../../syntax";
+import { Token } from "../../../../syntax/index.js";
 
-import { Angle } from "../../../numeric";
+import { Angle } from "../../../numeric/index.js";
 
-import { Corner } from "./corner";
-import { Side } from "./side";
+import { Corner } from "./corner.js";
+import { Side } from "./side.js";
 
 const { either } = Parser;
 

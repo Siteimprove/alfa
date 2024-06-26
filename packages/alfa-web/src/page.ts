@@ -8,7 +8,7 @@ import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Result } from "@siteimprove/alfa-result";
-import { Resource } from "./resource";
+import { Resource } from "./resource.js";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Web_page}

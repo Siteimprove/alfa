@@ -38,7 +38,7 @@ import { Rainbow } from "./rainbow.js";
  *   the
  *   inter-directory edges ending in a known position.
  * * Each directory is assigned a random color, evenly spaced on the "rainbow
- *   spectrum". The name node, the index.ts node, and all inter-directory edges
+ *   spectrum". The name node, the common.ts node, and all inter-directory edges
  *   inherit that color, as a visual help.
  * * Type dependencies are dotted.
  * * files forming a circular true dependency are colored in red; these should

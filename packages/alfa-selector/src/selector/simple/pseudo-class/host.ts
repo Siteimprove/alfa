@@ -8,12 +8,12 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Context } from "../../../context";
-import { Specificity } from "../../../specificity";
+import { Context } from "../../../context.js";
+import { Specificity } from "../../../specificity.js";
 
-import type { Compound, Simple } from "../../index";
+import type { Compound, Simple } from "../../index.js";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { PseudoClassSelector } from "./pseudo-class.js";
 
 const { either, map, right } = Parser;
 const { parseColon } = Token;

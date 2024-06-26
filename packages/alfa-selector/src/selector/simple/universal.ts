@@ -3,11 +3,11 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { None, type Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Specificity } from "../../specificity";
+import { Specificity } from "../../specificity.js";
 
-import { Selector } from "../selector";
+import { Selector } from "../selector.js";
 
-import { parseNamespace } from "./parser";
+import { parseNamespace } from "./parser.js";
 
 const { left, map, option } = Parser;
 

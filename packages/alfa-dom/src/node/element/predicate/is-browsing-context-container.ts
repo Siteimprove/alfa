@@ -1,4 +1,4 @@
-import { Element } from "../../element";
+import { Element } from "../../element.js";
 
 /**
  * {@link https://html.spec.whatwg.org/#browsing-context-container}

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R19, { Outcomes } from "../../dist/sia-r19/rule";
+import R19, { Outcomes } from "../../dist/sia-r19/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluate() passes an aria-required attribute with a valid true value`, async (t) => {
   const target = <div role="textbox" aria-required="true"></div>;

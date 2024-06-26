@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { List } from "../dist/list";
+import { List } from "../dist/list.js";
 
 const array = (length: number) => new Array(length).fill(0).map((_, i) => i);
 

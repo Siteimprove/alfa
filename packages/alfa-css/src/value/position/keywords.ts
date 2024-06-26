@@ -1,4 +1,4 @@
-import { Keyword } from "../keyword";
+import { Keyword } from "../keyword.js";
 
 /**
  * @public

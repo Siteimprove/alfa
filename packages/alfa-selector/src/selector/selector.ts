@@ -6,13 +6,13 @@ import { Serializable } from "@siteimprove/alfa-json";
 import * as json from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import type { Context } from "../context";
-import { Specificity } from "../specificity";
+import type { Context } from "../context.js";
+import { Specificity } from "../specificity.js";
 
-import type { Complex } from "./complex";
-import type { Compound } from "./compound";
-import type { Relative } from "./relative";
-import type { Class, Id, Simple, Type } from "./simple";
+import type { Complex } from "./complex.js";
+import type { Compound } from "./compound.js";
+import type { Relative } from "./relative.js";
+import type { Class, Id, Simple, Type } from "./simple/index.js";
 
 /**
  * @internal

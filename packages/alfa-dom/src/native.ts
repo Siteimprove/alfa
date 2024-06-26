@@ -36,7 +36,7 @@ import type {
   SupportsRule,
   Text,
   Type,
-} from ".";
+} from "./index.js";
 
 /**
  * @internal

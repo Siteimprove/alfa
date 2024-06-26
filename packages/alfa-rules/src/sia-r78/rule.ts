@@ -7,10 +7,10 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
-import { WithOtherHeading } from "../common/diagnostic";
+import { Scope, Stability } from "../tags/index.js";
+import { WithOtherHeading } from "../common/diagnostic.js";
 
 import isText = Text.isText;
 

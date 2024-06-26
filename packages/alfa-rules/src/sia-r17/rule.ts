@@ -7,10 +7,10 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { WithBadElements } from "../common/diagnostic/with-bad-elements";
+import { expectation } from "../common/act/expectation.js";
+import { WithBadElements } from "../common/diagnostic/with-bad-elements.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasAttribute, isElement } = Element;
 const { equals } = Predicate;

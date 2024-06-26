@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/dist/h";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 test("#cascaded() parses `background: red`", (t) => {
   const element = <div style={{ background: `red` }} />;

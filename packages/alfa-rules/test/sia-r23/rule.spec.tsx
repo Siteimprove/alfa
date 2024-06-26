@@ -3,12 +3,12 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R23 from "../../dist/sia-r23/rule";
-import { Outcomes } from "../../dist/common/expectation/media-transcript";
+import R23 from "../../dist/sia-r23/rule.js";
+import { Outcomes } from "../../dist/common/expectation/media-transcript.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome";
-import { oracle } from "../common/oracle";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";
+import { oracle } from "../common/oracle.js";
 
 test(`evaluate() passes an audio with perceivable transcript`, async (t) => {
   const target = <audio src="foo.mp3" />;

@@ -3,7 +3,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 
-import { Cookie } from "./cookie";
+import { Cookie } from "./cookie.js";
 
 /**
  * @public

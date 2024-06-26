@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Element } from "../../element";
+import { Element } from "../../element.js";
 
 /**
  * @public

@@ -1,3 +1,3 @@
-export { Scope } from "./scope";
-export { Stability } from "./stability";
-export { Version } from "./version";
+export { Scope } from "./scope.js";
+export { Stability } from "./stability.js";
+export { Version } from "./version.js";

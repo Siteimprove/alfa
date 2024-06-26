@@ -2,11 +2,11 @@ import { Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Context } from "../../../context";
-import type { Absolute } from "../../../selector";
-import { Specificity } from "../../../specificity";
+import type { Context } from "../../../context.js";
+import type { Absolute } from "../../../selector/index.js";
+import { Specificity } from "../../../specificity.js";
 
-import { WithSelector } from "./pseudo-class";
+import { WithSelector } from "./pseudo-class.js";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#zero-matches}

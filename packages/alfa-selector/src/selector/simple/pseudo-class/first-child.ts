@@ -1,6 +1,6 @@
 import { Element } from "@siteimprove/alfa-dom";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { PseudoClassSelector } from "./pseudo-class.js";
 
 const { isElement } = Element;
 

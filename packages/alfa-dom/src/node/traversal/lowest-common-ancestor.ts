@@ -1,5 +1,6 @@
-import { Node } from "../..";
 import { None, Option } from "@siteimprove/alfa-option";
+
+import { Node } from "../../index.js";
 
 /**
  * Find the lowest common ancestor of two nodes:

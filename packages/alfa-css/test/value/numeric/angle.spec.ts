@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle, Length } from "../../../dist";
+import { Angle, Length } from "../../../dist/index.js";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, serializer } from "../../common/parse.js";
 
 const parse = parser(Angle.parse);
 const serialize = serializer(Angle.parse);

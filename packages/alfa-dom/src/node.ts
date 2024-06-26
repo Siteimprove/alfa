@@ -30,10 +30,10 @@ import {
   Slotable,
   Text,
   Type,
-} from ".";
+} from "./index.js";
 
-import * as predicate from "./node/predicate";
-import * as traversal from "./node/traversal";
+import * as predicate from "./node/predicate.js";
+import * as traversal from "./node/traversal.js";
 
 /**
  * @public

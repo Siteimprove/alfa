@@ -1,13 +1,13 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
-import { Unit } from "../../unit";
+import { Unit } from "../../unit/index.js";
 
-import { Angle, Length, Number, Numeric } from "../numeric";
+import { Angle, Length, Number, Numeric } from "../numeric/index.js";
 
-import { Expression } from "./expression";
-import { Kind } from "./kind";
-import { Value } from "./value";
+import { Expression } from "./expression.js";
+import { Kind } from "./kind.js";
+import { Value } from "./value.js";
 
 const { isAngle } = Angle;
 const { isLength } = Length;

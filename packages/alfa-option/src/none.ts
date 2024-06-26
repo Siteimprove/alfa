@@ -4,8 +4,8 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Option } from "./option";
-import { Some } from "./some";
+import { Option } from "./option.js";
+import { Some } from "./some.js";
 
 const { compareComparable } = Comparable;
 

@@ -4,9 +4,9 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Component } from "./component";
-import type { Parser as CSSParser } from "./parser";
-import { Token } from "./token";
+import { Component } from "./component.js";
+import type { Parser as CSSParser } from "./parser.js";
+import { Token } from "./token.js";
 
 const { either, pair, left, map, takeUntil } = Parser;
 

@@ -3,7 +3,7 @@ import type { Parser } from "@siteimprove/alfa-parser";
 import type { Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Lexer, type Token } from "../../dist";
+import { Lexer, type Token } from "../../dist/index.js";
 
 /**
  * @internal

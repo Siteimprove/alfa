@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R46, { Outcomes } from "../../dist/sia-r46/rule";
+import R46, { Outcomes } from "../../dist/sia-r46/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test("evaluate() passes on explicit header", async (t) => {
   const target = <th>Time</th>;

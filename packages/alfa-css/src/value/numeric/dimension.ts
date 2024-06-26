@@ -4,12 +4,12 @@ import { Hash } from "@siteimprove/alfa-hash";
 import {
   Dimension as BaseDimension,
   Numeric as BaseNumeric,
-} from "../../calculation/numeric";
-import { Convertible, Unit } from "../../unit";
+} from "../../calculation/numeric/index.js";
+import { Convertible, Unit } from "../../unit/index.js";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 
-import { Numeric } from "./numeric";
+import { Numeric } from "./numeric.js";
 
 /**
  * @public

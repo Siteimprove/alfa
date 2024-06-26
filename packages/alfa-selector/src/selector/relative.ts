@@ -1,8 +1,8 @@
-import { Combinator } from "./combinator";
-import type { Complex } from "./complex";
-import type { Compound } from "./compound";
-import { Selector } from "./selector";
-import type { Simple } from "./simple";
+import { Combinator } from "./combinator.js";
+import type { Complex } from "./complex.js";
+import type { Compound } from "./compound.js";
+import { Selector } from "./selector.js";
+import type { Simple } from "./simple/index.js";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#relative-selector}

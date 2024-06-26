@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Generator } from "../dist/generator";
+import { Generator } from "../dist/generator.js";
 
 function* f() {
   yield 1;

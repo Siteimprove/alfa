@@ -3,11 +3,11 @@ import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as Outset from "../../dist/property/border-image-outset";
-import * as Slice from "../../dist/property/border-image-slice";
-import * as Width from "../../dist/property/border-image-width";
+import * as Outset from "../../dist/property/border-image-outset.js";
+import * as Slice from "../../dist/property/border-image-slice.js";
+import * as Width from "../../dist/property/border-image-width.js";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 function fourLength(
   top: number,

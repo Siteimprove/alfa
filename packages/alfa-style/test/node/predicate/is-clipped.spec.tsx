@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, h, Text } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import * as predicate from "../../../dist/node/predicate/is-clipped";
+import * as predicate from "../../../dist/node/predicate/is-clipped.js";
 
 const device = Device.standard();
 const isClipped = predicate.isClipped(device);

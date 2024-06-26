@@ -9,11 +9,11 @@ import * as json from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Feature } from "../../feature";
+import type { Feature } from "../../feature.js";
 
-import { Value } from "./value";
+import { Value } from "./value/index.js";
 
-import { Comparison } from "./comparison";
+import { Comparison } from "./comparison.js";
 
 const { delimited, either, filter, left, map, option, pair, right, separated } =
   Parser;

@@ -2,12 +2,12 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R39, { Outcomes } from "../../dist/sia-r39/rule";
+import R39, { Outcomes } from "../../dist/sia-r39/rule.js";
 
-import { WithName } from "../../dist/common/diagnostic";
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome";
+import { WithName } from "../../dist/common/diagnostic.js";
+import { evaluate } from "../common/evaluate.js";
+import { oracle } from "../common/oracle.js";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
 
 test("evaluate() passes images whose name is descriptive", async (t) => {
   const target = <img src="Placeholder" alt="Placeholder" />;

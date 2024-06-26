@@ -2,11 +2,11 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R22, { Outcomes } from "../../dist/sia-r22/rule";
+import R22, { Outcomes } from "../../dist/sia-r22/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome";
-import { oracle } from "../common/oracle";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";
+import { oracle } from "../common/oracle.js";
 
 test(`evaluate() passes a video with captions`, async (t) => {
   const target = <video src="foo.mp4" />;

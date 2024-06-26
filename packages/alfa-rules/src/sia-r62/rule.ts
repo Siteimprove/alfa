@@ -20,16 +20,16 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Contrast } from "../common/diagnostic/contrast";
-import { contrast } from "../common/expectation/contrast";
+import { Contrast } from "../common/diagnostic/contrast.js";
+import { contrast } from "../common/expectation/contrast.js";
 
-import { getForeground } from "../common/dom/get-colors";
+import { getForeground } from "../common/dom/get-colors.js";
 
-import { Scope, Stability, Version } from "../tags";
+import { Scope, Stability, Version } from "../tags/index.js";
 
-import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
+import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics.js";
 
 const { hasRole } = DOM;
 const { isElement } = Element;
@@ -230,25 +230,25 @@ export default Rule.Atomic.of<Page, Element>({
 
               return hasDistinguishableStyle
                 ? Ok.of(
-                  ElementDistinguishable.from(
-                    link,
-                    device,
-                    target,
-                    context,
-                    properties,
-                    distinguishableContrast,
-                  ),
-                )
+                    ElementDistinguishable.from(
+                      link,
+                      device,
+                      target,
+                      context,
+                      properties,
+                      distinguishableContrast,
+                    ),
+                  )
                 : Err.of(
-                  ElementDistinguishable.from(
-                    link,
-                    device,
-                    target,
-                    context,
-                    properties,
-                    distinguishableContrast,
-                  ),
-                );
+                    ElementDistinguishable.from(
+                      link,
+                      device,
+                      target,
+                      context,
+                      properties,
+                      distinguishableContrast,
+                    ),
+                  );
             }),
           )
             .toArray()
@@ -272,8 +272,8 @@ export default Rule.Atomic.of<Page, Element>({
             // If at least one link element is good, this is enough. The sorting
             // guarantees it is first in the array.
             isDefaultDistinguishable[0].isOk() &&
-            isHoverDistinguishable[0].isOk() &&
-            isFocusDistinguishable[0].isOk(),
+              isHoverDistinguishable[0].isOk() &&
+              isFocusDistinguishable[0].isOk(),
             () =>
               Outcomes.IsDistinguishable(
                 isDefaultDistinguishable,
@@ -354,7 +354,10 @@ function hasNonLinkText(device: Device): Predicate<Element> {
         children.some(
           and(
             isText,
-            and<Text>(isVisible(device), (text) => !String.isWhitespace(text.data, false)),
+            and<Text>(
+              isVisible(device),
+              (text) => !String.isWhitespace(text.data, false),
+            ),
           ),
         )
       ) {
@@ -387,32 +390,32 @@ namespace Distinguishable {
     let predicates: Array<
       readonly [ElementDistinguishable.Property, Predicate<Element>]
     > = [
-        // Things like text decoration and backgrounds risk blending with the
-        // container element. We therefore need to check if these can be distinguished
-        // from what the container element might itself set.
-        ["background", hasDistinguishableBackground(container, device, context)],
-        ["contrast", hasDistinguishableContrast(container, device, context)],
-        ["font", hasDistinguishableFont(container, device, context)],
-        [
-          "text-decoration",
-          hasDistinguishableTextDecoration(container, device, context),
-        ],
-        [
-          "vertical-align",
-          hasDistinguishableVerticalAlign(container, device, context),
-        ],
-        // We consider the mere presence of borders, box-shadows or outlines on the element as
-        // distinguishable features. There's of course a risk of these blending with
-        // other features of the container element, such as its background, but this
-        // should hopefully not happen (too often) in practice. When it does, we
-        // risk false negatives.
-        ["border", hasBorder(device, context)],
-        [
-          "box-shadow",
-          hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
-        ],
-        ["outline", hasOutline(device, context)],
-      ];
+      // Things like text decoration and backgrounds risk blending with the
+      // container element. We therefore need to check if these can be distinguished
+      // from what the container element might itself set.
+      ["background", hasDistinguishableBackground(container, device, context)],
+      ["contrast", hasDistinguishableContrast(container, device, context)],
+      ["font", hasDistinguishableFont(container, device, context)],
+      [
+        "text-decoration",
+        hasDistinguishableTextDecoration(container, device, context),
+      ],
+      [
+        "vertical-align",
+        hasDistinguishableVerticalAlign(container, device, context),
+      ],
+      // We consider the mere presence of borders, box-shadows or outlines on the element as
+      // distinguishable features. There's of course a risk of these blending with
+      // other features of the container element, such as its background, but this
+      // should hopefully not happen (too often) in practice. When it does, we
+      // risk false negatives.
+      ["border", hasBorder(device, context)],
+      [
+        "box-shadow",
+        hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
+      ],
+      ["outline", hasOutline(device, context)],
+    ];
 
     if (context.isHovered(target)) {
       predicates = [

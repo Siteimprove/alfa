@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Network } from "../dist/network";
+import { Network } from "../dist/network.js";
 
 // foo
 // |- 1 => bar

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Trampoline } from "../dist/trampoline";
+import { Trampoline } from "../dist/trampoline.js";
 
 test("#map() applies a function to the result of a trampolined computation", (t) => {
   const n = Trampoline.delay(() => 42).map((n) => n.toString());

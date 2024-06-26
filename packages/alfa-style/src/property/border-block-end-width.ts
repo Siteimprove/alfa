@@ -1,8 +1,8 @@
-import { Longhand } from "../longhand";
-import type { Value } from "../value";
+import { Longhand } from "../longhand.js";
+import type { Value } from "../value.js";
 
-import type Style from "./border-top-style";
-import Base, { compute } from "./border-top-width";
+import type Style from "./border-top-style.js";
+import Base, { compute } from "./border-top-width.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-width}

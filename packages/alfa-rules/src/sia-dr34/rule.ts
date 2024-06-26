@@ -3,13 +3,13 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { video } from "../common/applicability/video";
+import { video } from "../common/applicability/video.js";
 
-import { videoDescriptionTrackAccurate } from "../common/expectation/video-description-track-accurate";
+import { videoDescriptionTrackAccurate } from "../common/expectation/video-description-track-accurate.js";
 
-import { Question } from "../common/act/question";
+import { Question } from "../common/act/question.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r34",

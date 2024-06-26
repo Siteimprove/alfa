@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Function, Lexer } from "../../dist/";
+import { Function, Lexer } from "../../dist/index.js";
 
 const { lex } = Lexer;
 const { consume } = Function;

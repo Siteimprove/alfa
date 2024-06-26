@@ -1,12 +1,12 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
-import { Number } from "../numeric";
+import { Number } from "../numeric/index.js";
 
-import { Format } from "./format";
-import { RGB } from "./rgb";
+import { Format } from "./format.js";
+import { RGB } from "./rgb.js";
 
 const { map } = Parser;
 

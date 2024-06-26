@@ -1,7 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 
-import { Browser } from "./browser";
-import { Features } from "./feature/data";
+import { Browser } from "./browser.js";
+import { Features } from "./feature/data.js";
 
 /**
  * @public

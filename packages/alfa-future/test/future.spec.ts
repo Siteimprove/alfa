@@ -2,7 +2,7 @@
 
 import { test } from "@siteimprove/alfa-test";
 
-import { Future } from "../dist/future";
+import { Future } from "../dist/future.js";
 
 function wait(delay: number): Future<void> {
   return Future.defer((callback) => setTimeout(callback, delay));

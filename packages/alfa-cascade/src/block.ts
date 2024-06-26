@@ -23,8 +23,8 @@ import {
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Layer, Origin, Precedence } from "./precedence";
-import { UserAgent } from "./user-agent";
+import { Layer, Origin, Precedence } from "./precedence/index.js";
+import { UserAgent } from "./user-agent.js";
 
 /**
  * While resolving cascade, a Block is a style rule that has been expanded with

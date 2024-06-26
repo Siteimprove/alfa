@@ -3,13 +3,13 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import R111 from "../../dist/sia-r111/rule";
+import R111 from "../../dist/sia-r111/rule.js";
 
-import { evaluate } from "../common/evaluate";
+import { evaluate } from "../common/evaluate.js";
 
-import { failed, inapplicable, passed } from "../common/outcome";
+import { failed, inapplicable, passed } from "../common/outcome.js";
 
-import { TargetSize } from "../../dist/common/outcome/target-size";
+import { TargetSize } from "../../dist/common/outcome/target-size.js";
 
 test("evaluate() passes button with clickable area of exactly 44x44 pixels", async (t) => {
   const device = Device.standard();

@@ -2,15 +2,19 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Comma, Function, type Parser as CSSParser } from "../../../../syntax";
-import { PartiallyResolvable, Resolvable } from "../../../resolvable";
+import {
+  Comma,
+  Function,
+  type Parser as CSSParser,
+} from "../../../../syntax/index.js";
+import { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
 
-import { Value } from "../../../value";
+import { Value } from "../../../value.js";
 
-import { Item } from "../item";
+import { Item } from "../item/index.js";
 
-import { Direction } from "./direction";
-import { Side } from "./side";
+import { Direction } from "./direction.js";
+import { Side } from "./side.js";
 
 const { map, pair, option, left } = Parser;
 

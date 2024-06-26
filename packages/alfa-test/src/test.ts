@@ -2,9 +2,9 @@
 
 import * as assert from "assert";
 
-import { format } from "./format";
-import { Controller, defaultController, RNG, seedableRNG } from "./rng";
-import { Assertions } from "./types";
+import { format } from "./format.js";
+import { Controller, defaultController, RNG, seedableRNG } from "./rng.js";
+import { Assertions } from "./types.js";
 
 /**
  * @internal

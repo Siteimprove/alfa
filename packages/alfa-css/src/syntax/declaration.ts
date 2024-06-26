@@ -7,9 +7,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Component } from "./component";
-import type { Parser as CSSParser } from "./parser";
-import { Token } from "./token";
+import { Component } from "./component.js";
+import type { Parser as CSSParser } from "./parser.js";
+import { Token } from "./token.js";
 
 const { not } = Predicate;
 const { option, delimited, left, zeroOrMore, map, pair, flatMap } = Parser;

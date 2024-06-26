@@ -7,9 +7,9 @@ import { String } from "@siteimprove/alfa-string";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasAttribute, isDocumentElement } = Element;
 const { not } = Predicate;

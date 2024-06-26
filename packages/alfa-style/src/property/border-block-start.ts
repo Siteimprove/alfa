@@ -1,8 +1,8 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Shorthand } from "../shorthand";
+import { Shorthand } from "../shorthand.js";
 
-import { parse } from "./border-top";
+import { parse } from "./border-top.js";
 
 const { map } = Parser;
 

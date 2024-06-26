@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Response } from "../dist/response";
+import { Response } from "../dist/response.js";
 
 test(".from() returns Err on invalid URL", (t) => {
   t.deepEqual(

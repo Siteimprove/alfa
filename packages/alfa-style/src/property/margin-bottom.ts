@@ -1,6 +1,6 @@
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
-import Base from "./margin-top";
+import Base from "./margin-top.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/margin-bottom}

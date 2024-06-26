@@ -4,7 +4,7 @@ import * as assert from "assert";
 import chalk from "chalk";
 import * as path from "path";
 
-import { stack } from "./stack";
+import { stack } from "./stack.js";
 
 /**
  * @internal

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R20, { Outcomes } from "../../dist/sia-r20/rule";
+import R20, { Outcomes } from "../../dist/sia-r20/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluate() passes an article with a valid aria-atomic attribute`, async (t) => {
   const target = (

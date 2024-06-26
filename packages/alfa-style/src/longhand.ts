@@ -4,8 +4,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as parser from "@siteimprove/alfa-parser";
 
-import type { Style } from "./style";
-import type { Value } from "./value";
+import type { Style } from "./style.js";
+import type { Value } from "./value.js";
 
 const { left, either, end } = parser.Parser;
 

@@ -1,7 +1,7 @@
 import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import { h, Comment, Node } from "../dist";
+import { h, Comment, Node } from "../dist/index.js";
 
 const targets = [<span />, h.text("hello"), Comment.of("world")];
 const shadow = h.shadow(targets);

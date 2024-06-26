@@ -3,12 +3,16 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Function, type Parser as CSSParser, Token } from "../../syntax";
-import { Keyword } from "../keyword";
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax/index.js";
+import { Keyword } from "../keyword.js";
 
-import { Number, Percentage } from "../numeric";
+import { Number, Percentage } from "../numeric/index.js";
 
-import { Format } from "./format";
+import { Format } from "./format.js";
 
 const { pair, map, either, option, right, take, delimited } = Parser;
 
@@ -17,8 +21,8 @@ const { pair, map, either, option, right, take, delimited } = Parser;
 type ToCanonical<T extends Number | Percentage<"percentage">> = T extends Number
   ? Number.Canonical
   : T extends Percentage
-  ? Percentage.Canonical
-  : Number.Canonical | Percentage.Canonical;
+    ? Percentage.Canonical
+    : Number.Canonical | Percentage.Canonical;
 
 /**
  * @public

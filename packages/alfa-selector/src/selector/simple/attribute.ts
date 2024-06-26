@@ -6,11 +6,11 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Specificity } from "../../specificity";
+import { Specificity } from "../../specificity.js";
 
-import { WithName } from "../selector";
+import { WithName } from "../selector.js";
 
-import { parseName } from "./parser";
+import { parseName } from "./parser.js";
 
 const { delimited, either, left, map, option, pair } = Parser;
 const { and, equals, property } = Predicate;
