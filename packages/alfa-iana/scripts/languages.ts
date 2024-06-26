@@ -1,30 +1,27 @@
-const fs = require("fs");
-const path = require("path");
-const prettier = require("prettier");
-const axios = require("axios");
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as prettier from "prettier";
+import axios from "axios";
 
 const registry = "https://www.iana.org/assignments/language-subtag-registry";
 
-/**
- * @typedef {{ name: string, value: string }} Field
- */
+type Field = { name: string; value: string };
 
-/**
- * @typedef {Array<Field>} Record
- */
+type Record = Array<Field>;
 
-/**
- * @typedef {object} Subtag
- * @property {string} type
- * @property {string} name
- * @property {Record<string, string | null>} args
- */
+type Args = {
+  scope?: string | null;
+  prefix?: string | null;
+  prefixes?: Array<string>;
+};
 
-/**
- * @param {Subtag} subtag
- * @return {string | null}
- */
-function getType(subtag) {
+interface Subtag {
+  type: string;
+  name: string;
+  args: Args;
+}
+
+function getType(subtag: Subtag): string | null {
   switch (subtag.type) {
     case "language":
       return "primary";
@@ -39,17 +36,11 @@ function getType(subtag) {
   return null;
 }
 
-/**
- * @param {string} from
- * @param {string} to
- * @return {Array<string>}
- */
-function range(from, to) {
+function range(from: string, to: string): Array<string> {
   const start = from.charCodeAt(0);
   const end = to.charCodeAt(0);
 
-  /** @type {Array<string>} */
-  const result = [];
+  const result: Array<string> = [];
 
   for (let i = start; i <= end; i++) {
     result.push(String.fromCharCode(i));
@@ -58,41 +49,22 @@ function range(from, to) {
   return result;
 }
 
-/**
- * @param {string} input
- * @return {string}
- */
-function rest(input) {
+function rest(input: string): string {
   return input.substring(1, input.length);
 }
 
-/**
- * @template T
- * @param {Array<T>} target
- * @param {Array<T>} input
- * @return {Array<T>}
- */
-function concat(target, input) {
+function concat<T>(target: Array<T>, input: Array<T>): Array<T> {
   return target.concat(input);
 }
 
-/**
- * @param {string} query
- * @return {Array<string>}
- */
-function expand(query) {
+function expand(query: string): Array<string> {
   const [from, to] = query.split("..");
 
   if (!from || !to || from.length !== to.length) {
     return [query];
   }
 
-  /**
-   * @param {string} from
-   * @param {string} to
-   * @return {Array<string>}
-   */
-  function generate(from, to) {
+  function generate(from: string, to: string): Array<string> {
     if (from.length === 0 && to.length === 0) {
       return [""];
     }
@@ -107,11 +79,7 @@ function expand(query) {
   return generate(from, to).sort();
 }
 
-/**
- * @param {string} input
- * @return {Array<Record>}
- */
-function parseRecords(input) {
+function parseRecords(input: string): Array<Record> {
   return input.split(/\n+%%\n+/).map((record) =>
     record
       .replace(/\n\s+/g, " ")
@@ -129,8 +97,7 @@ function parseRecords(input) {
 axios.get(registry).then(({ data }) => {
   const records = parseRecords(data);
 
-  /** @type {Array<Subtag>} */
-  const subtags = [];
+  const subtags: Array<Subtag> = [];
 
   for (const record of records) {
     const tag = record.find(
@@ -147,8 +114,7 @@ axios.get(registry).then(({ data }) => {
     const scope = record.find((field) => field.name === "Scope");
 
     for (const name of expand(tag.value)) {
-      /** @type {Record<string, string | null>} */
-      const args = {};
+      const args: Args = {};
 
       switch (type.value) {
         case "language":
@@ -163,8 +129,7 @@ axios.get(registry).then(({ data }) => {
           args.prefixes = prefixes.map((prefix) => prefix.value);
       }
 
-      /** @type {Subtag} */
-      const subtag = {
+      const subtag: Subtag = {
         type: type.value,
         name: name.toLowerCase(),
         args,
@@ -176,21 +141,23 @@ axios.get(registry).then(({ data }) => {
     }
   }
 
-  /** @type {Map<string, Array<Subtag>>} */
-  const groups = subtags.reduce((groups, subtag) => {
-    const group = getType(subtag);
+  const groups: Map<string, Array<Subtag>> = subtags.reduce(
+    (groups, subtag) => {
+      const group = getType(subtag);
 
-    let subtags = groups.get(group);
+      let subtags = groups.get(group);
 
-    if (subtags === undefined) {
-      subtags = [];
-      groups.set(group, subtags);
-    }
+      if (subtags === undefined) {
+        subtags = [];
+        groups.set(group, subtags);
+      }
 
-    subtags.push(subtag);
+      subtags.push(subtag);
 
-    return groups;
-  }, new Map());
+      return groups;
+    },
+    new Map(),
+  );
 
   let code = `
 // This file has been automatically generated based on the IANA Language Subtag

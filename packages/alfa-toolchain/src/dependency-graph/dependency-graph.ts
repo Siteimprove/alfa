@@ -3,9 +3,9 @@ import { Map } from "@siteimprove/alfa-map";
 import { Set } from "@siteimprove/alfa-set";
 
 import type { Package } from "@manypkg/get-packages";
-import * as fs from "fs";
+import * as fs from "node:fs";
 import * as madge from "madge";
-import * as path from "path";
+import * as path from "node:path";
 import * as gv from "ts-graphviz";
 import * as adapter from "@ts-graphviz/adapter";
 

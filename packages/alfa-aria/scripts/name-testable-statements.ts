@@ -1,9 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const prettier = require("prettier");
-const puppeteer = require("puppeteer");
+/// <reference lib="dom" />
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as prettier from "prettier";
+import * as puppeteer from "puppeteer";
 
-function testExceptions(testId) {
+function testExceptions(testId: string) {
   switch (testId) {
     case "Name_test_case_547":
     case "Name_test_case_549":
@@ -125,9 +126,11 @@ async function main() {
   await page.goto(url);
 
   const statements = await page.evaluate(() => {
-    const list = [
-      ...document.getElementById("mw-content-text").querySelectorAll("h3, pre"),
-    ];
+    const list: Array<HTMLElement> = Array.from(
+      document
+        ?.getElementById("mw-content-text")
+        ?.querySelectorAll("h3, pre") ?? [],
+    );
 
     const statements = [];
 
@@ -137,29 +140,37 @@ async function main() {
 
       const title = heading.innerText;
       const kind = title.includes("Name") ? "name" : "description";
-      const testId = heading.querySelector("span").getAttribute("id");
+      const testId = heading.querySelector("span")?.getAttribute("id");
 
       const statement = pre.innerText;
       const [_, code, targetId, result] = statement.match(
         // if given [code] then the accessible [name|description] of the element
         // with id of "[targetId]" is "[result]"
         /if given\n([^]*)\nthen the accessible.*"(.*)".*"(.*)"/m,
-      );
+      ) ?? [null, null, null, null];
 
-      statements.push({
-        title,
-        kind,
-        testId,
-        code,
-        targetId,
-        result,
-      });
+      if (
+        code !== null &&
+        targetId !== null &&
+        result !== null &&
+        testId !== null &&
+        testId !== undefined
+      ) {
+        statements.push({
+          title,
+          kind,
+          testId,
+          code,
+          targetId,
+          result,
+        });
+      }
     }
 
     return statements;
   });
 
-  browser.close();
+  await browser.close();
 
   let code =
     warning +
@@ -184,7 +195,21 @@ async function main() {
   );
 }
 
-function printNameTestCase({ title, kind, testId, code, targetId, result }) {
+function printNameTestCase({
+  title,
+  kind,
+  testId,
+  code,
+  targetId,
+  result,
+}: {
+  title: string;
+  kind: string;
+  testId: string;
+  code: string;
+  targetId: string;
+  result: string;
+}) {
   const exception = testExceptions(testId);
 
   // <style> elements are poorly handled by our JSX :-/
@@ -231,25 +256,25 @@ test("${title}", (t) => {
 }
 // Some input elements are written as <input …> with no (self-)closing tag,
 // turning them into self-closing tags.
-function fixMissingClosingTag(code) {
+function fixMissingClosingTag(code: string) {
   // <input [content]> => <input [content]/>
   return code.replace(/<input ([^/>]*[^/])>/gm, "<input $1/>");
 }
 
 // style attribute does not accept string in JSX, turning them into objects.
-function styleStringToStyleObjectString(str) {
+function styleStringToStyleObjectString(str: string) {
   return `{{ ${str
     // find all declaration (';' separated blocks)
-    .replace(/([^;]*)/gm, (_, declaration) =>
+    .replace(/([^;]*)/gm, (_, declaration: string) =>
       declaration.replace(
         // break declaration in "name: value" format
         /(.*):(.*)/gm,
-        (_, property, value) =>
+        (_, property: string, value: string) =>
           `${property
             .trim()
             // turn the kebab-case property name into a camelCase one by
             // replacing "-x" match to "X"
-            .replace(/-(.)/gm, (_, p1) =>
+            .replace(/-(.)/gm, (_, p1: string) =>
               p1.toUpperCase(),
             )}: "${value.trim()}"`,
       ),
@@ -257,7 +282,7 @@ function styleStringToStyleObjectString(str) {
     .replace(/;/g, ", ")} }}`;
 }
 
-function fixStyleAttribute(code) {
+function fixStyleAttribute(code: string) {
   // style="[style in kebab-case]" => style={{[style in camelCase]}}
   return code.replace(
     /style="([^"]*)"/gm,
@@ -275,16 +300,16 @@ function fixStyleAttribute(code) {
 // </span>
 // that get turned into <span>(QED)</span> by JSX, thus losing the spacing.
 // We solve that by adding spaces in curly brackets to force preservation.
-function fixSingleLineString(code) {
+function fixSingleLineString(code: string) {
   return code.replace(/\(QED\)/gm, '{" (QED) "}');
 }
 
-function fixcode(code) {
+function fixcode(code: string) {
   return fixStyleAttribute(fixMissingClosingTag(fixSingleLineString(code)));
 }
 
 // Some test cases just have broken code :-/
-function fixCodeException(id, code) {
+function fixCodeException(id: string, code: string) {
   switch (id) {
     case "Name_test_case_610":
       return code.replace(/<[/]label>/m, "</div>");
@@ -302,7 +327,7 @@ function fixCodeException(id, code) {
 // style sheet :-/
 // Fortunately the <style> elements are not too complex
 // This is still bad…
-function styleElementToStyleSheet(style) {
+function styleElementToStyleSheet(style: string) {
   return style.replace(
     // [selector] {[declaration]}
     // (actually, there can be several declarations…)

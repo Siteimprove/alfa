@@ -4,8 +4,8 @@ import getChangeSets from "@changesets/read";
 import type { NewChangesetWithCommit } from "@changesets/types";
 import { getPackages } from "@manypkg/get-packages";
 
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import { type ChangelogFunctions, getConfigOption, Error } from "./helpers";
 

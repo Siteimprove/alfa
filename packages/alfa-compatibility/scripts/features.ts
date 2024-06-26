@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const prettier = require("prettier");
-const data = require("@mdn/browser-compat-data");
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as prettier from "prettier";
+import data, { type Identifier } from "@mdn/browser-compat-data";
 
 // This contains the list of features to generate definitions for from the MDN
 // browser compatibility data. To add more features, add an entry to the JSON
@@ -18,24 +18,18 @@ const include = [
 const { isArray } = Array;
 const { keys } = Object;
 
-/**
- * @typedef {object} Feature
- * @prop {string} key
- * @prop {Array<Support>} support
- */
+interface Feature {
+  key: string;
+  support: Array<Support>;
+}
 
-/**
- * @typedef {object} Support
- * @prop {string} browser
- * @prop {string | boolean} added
- * @prop {string | boolean} removed
- */
+interface Support {
+  browser: string;
+  added: string | boolean;
+  removed: string | boolean;
+}
 
-/**
- * @param {string} key
- * @return {import("@mdn/browser-compat-data/types").Identifier}
- */
-const get = (key) => {
+const get = (key: string): Identifier => {
   const [entry, ...keys] = key.split(".");
 
   switch (entry) {
@@ -54,26 +48,18 @@ const get = (key) => {
   throw new Error(`Unknown API "${entry}"`);
 };
 
-/**
- * @param {string | boolean | null | undefined} version
- * @return {string | boolean}
- */
-const version = (version) =>
+const version = (
+  version: string | boolean | null | undefined,
+): string | boolean =>
   typeof version === "string"
     ? `"${version}"`
     : version === undefined || version === null
       ? false
       : version;
 
-/**
- * @type {Array<Feature>}
- */
-const features = [];
+const features: Array<Feature> = [];
 
-/**
- * @param {string} key
- */
-function parse(key) {
+function parse(key: string) {
   const feature = get(key);
   const compatibility = feature.__compat;
 
@@ -81,10 +67,7 @@ function parse(key) {
     return;
   }
 
-  /**
-   * @type {Array<Support>}
-   */
-  const support = [];
+  const support: Array<Support> = [];
 
   for (const browser of keys(compatibility.support)) {
     switch (browser) {
@@ -194,8 +177,11 @@ export const Features = {
 };
 `;
 
-code = await prettier.format(code, {
-  parser: "typescript",
-});
-
-fs.writeFileSync(path.join(__dirname, "..", "src", "feature", "data.ts"), code);
+prettier
+  .format(code, { parser: "typescript" })
+  .then((code) =>
+    fs.writeFileSync(
+      path.join(__dirname, "..", "src", "feature", "data.ts"),
+      code,
+    ),
+  );

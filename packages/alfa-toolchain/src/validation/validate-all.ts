@@ -1,6 +1,6 @@
 import { getPackages } from "@manypkg/get-packages";
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import { hasExtractorConfig } from "./has-extractor-config";
 import { validateChangesets } from "./validate-changesets";
