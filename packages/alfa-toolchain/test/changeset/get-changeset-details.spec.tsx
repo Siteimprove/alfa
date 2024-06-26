@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Changeset } from "../../dist/changeset/get-changeset-details";
+import { Changeset } from "../../dist/changeset/get-changeset-details.js";
 
 test("getDetails() accepts a valid changeset with details", (t) => {
   for (const kind of Changeset.kinds) {

@@ -11,6 +11,7 @@
     "directory": "packages/alfa-toolchain"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
+  "type": "module",
   "main": "dist/index.js",
   "exports": {
     ".": "./dist/index.js",
