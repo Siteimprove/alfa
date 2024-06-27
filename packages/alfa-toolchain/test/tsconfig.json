@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": ".",
+    "lib": ["dom"],
+    "types": ["node"]
+  },
+  "files": [
+    "./changeset/build-changelog.spec.tsx",
+    "./changeset/get-changeset-details.spec.tsx"
+  ],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
+}

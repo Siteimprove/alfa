@@ -12,11 +12,11 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { WithBadElements } from "../common/diagnostic/with-bad-elements";
+import { expectation } from "../common/act/expectation.js";
+import { WithBadElements } from "../common/diagnostic/with-bad-elements.js";
 
-import { withDocumentElement } from "../common/applicability/with-document-element";
-import { Scope, Stability } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasName, hasNamespace } = Element;
 const { and } = Predicate;

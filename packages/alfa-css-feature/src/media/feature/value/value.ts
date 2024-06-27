@@ -5,9 +5,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
-import * as boundValue from "./bound";
-import * as discreteValue from "./discrete";
-import * as rangeValue from "./range";
+import * as boundValue from "./bound.js";
+import * as discreteValue from "./discrete.js";
+import * as rangeValue from "./range.js";
 
 /**
  * @public

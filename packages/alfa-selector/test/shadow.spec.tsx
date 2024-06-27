@@ -1,12 +1,12 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { Compound, Context } from "../src";
-import type { Host } from "../src/selector/simple/pseudo-class/host";
-import type { HostContext } from "../src/selector/simple/pseudo-class/host-context";
+import { Compound, Context } from "../dist/index.js";
+import type { Host } from "../dist/selector/simple/pseudo-class/host.js";
+import type { HostContext } from "../dist/selector/simple/pseudo-class/host-context.js";
 
-import { Slotted } from "../src/selector/simple/pseudo-element/slotted";
+import { Slotted } from "../dist/selector/simple/pseudo-element/slotted.js";
 
-import { parse } from "./parser";
+import { parse } from "./parser.js";
 
 test("#matches() never matches a :host or :host-context selector", (t) => {
   for (const target of [<p />, <div class="foo" />]) {

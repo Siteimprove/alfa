@@ -3,9 +3,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "../../../src";
+import { Style } from "../../../dist/style.js";
 
-import { isScrolledBehind } from "../../../src/node/predicate/is-scrolled-behind";
+import { isScrolledBehind } from "../../../dist/node/predicate/is-scrolled-behind.js";
 
 const keywords = ["visible", "hidden", "clip", "scroll", "auto"] as const;
 

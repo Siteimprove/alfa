@@ -1,4 +1,4 @@
-import { Contrast as Diagnostic } from "../diagnostic/contrast";
+import { Contrast as Diagnostic } from "../diagnostic/contrast.js";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
 export namespace Contrast {

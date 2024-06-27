@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 for (const vertical of ["top", "bottom"] as const) {
   for (const horizontal of ["left", "right"] as const) {

@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Math, Position } from "../../src";
-import { parserUnsafe, serializer } from "../common/parse";
+import { Length, Math, Position } from "../../dist/index.js";
+import { parserUnsafe, serializer } from "../common/parse.js";
 
 const parse = parserUnsafe(Position.parse());
 const serialize = serializer(Position.parse());
@@ -444,15 +444,14 @@ test(".resolve() fully resolves positions", (t) => {
 test(".partiallyResolve() partially resolves positions", (t) => {
   const actual = parse(
     "left calc(1em + 1px) top calc(20% + 10%)",
-  )
-    .partiallyResolve({
-      length: Length.resolver(
-        Length.of(16, "px"),
-        Length.of(0, "px"),
-        Length.of(0, "px"),
-        Length.of(0, "px"),
-      ),
-    });
+  ).partiallyResolve({
+    length: Length.resolver(
+      Length.of(16, "px"),
+      Length.of(0, "px"),
+      Length.of(0, "px"),
+      Length.of(0, "px"),
+    ),
+  });
 
   t.deepEqual(actual.toJSON(), {
     type: "position",
@@ -466,6 +465,5 @@ test(".partiallyResolve() partially resolves positions", (t) => {
       side: { type: "keyword", value: "top" },
       offset: { type: "percentage", value: 0.3 },
     },
-  },
-  );
+  });
 });

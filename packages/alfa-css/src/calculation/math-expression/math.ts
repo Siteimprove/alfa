@@ -9,16 +9,22 @@ import {
   Function as CSSFunction,
   Token,
   type Parser as CSSParser,
-} from "../../syntax";
-import type { Unit } from "../../unit";
+} from "../../syntax/index.js";
+import type { Unit } from "../../unit/index.js";
 
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+import {
+  Angle,
+  Length,
+  Number,
+  Numeric,
+  Percentage,
+} from "../numeric/index.js";
 
-import { Expression } from "./expression";
-import { Function } from "./function";
-import { Kind } from "./kind";
-import { Operation } from "./operation";
-import { Value } from "./value";
+import { Expression } from "./expression.js";
+import { Function } from "./function.js";
+import { Kind } from "./kind.js";
+import { Operation } from "./operation.js";
+import { Value } from "./value.js";
 
 const {
   delimited,

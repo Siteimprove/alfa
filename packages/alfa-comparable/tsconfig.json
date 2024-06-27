@@ -1,12 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-    "src/comparable.ts",
-    "src/comparer.ts",
-    "src/comparison.ts",
-    "src/index.ts",
-    "test/comparable.spec.ts"
-  ],
-  "references": [{ "path": "../alfa-refinement" }, { "path": "../alfa-test" }]
+  "files": [],
+  "references": [{ "path": "./src" }, { "path": "./test" }]
 }

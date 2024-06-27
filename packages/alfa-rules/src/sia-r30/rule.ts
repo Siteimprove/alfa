@@ -5,13 +5,13 @@ import { Trilean } from "@siteimprove/alfa-trilean";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { isPassed } from "../common/act/is-passed";
-import { Question } from "../common/act/question";
+import { expectation } from "../common/act/expectation.js";
+import { isPassed } from "../common/act/is-passed.js";
+import { Question } from "../common/act/question.js";
 
-import R23 from "../sia-r23/rule";
-import R29 from "../sia-r29/rule";
-import { Scope, Stability } from "../tags";
+import R23 from "../sia-r23/rule.js";
+import R29 from "../sia-r29/rule.js";
+import { Scope, Stability } from "../tags/index.js";
 
 export default Rule.Composite.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r30",

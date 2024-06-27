@@ -1,6 +1,6 @@
 import { Element, Node } from "@siteimprove/alfa-dom";
 
-import { Expression } from "./expression";
+import { Expression } from "./expression.js";
 
 /**
  * @internal

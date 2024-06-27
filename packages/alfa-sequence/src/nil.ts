@@ -6,8 +6,8 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
-import { Sequence } from "./sequence";
-import { Cons } from "./cons";
+import { Sequence } from "./sequence.js";
+import { Cons } from "./cons.js";
 
 /**
  * @public

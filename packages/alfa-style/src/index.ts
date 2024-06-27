@@ -1,9 +1,9 @@
-export * from "./resolver";
-export * from "./value";
+export * from "./resolver.js";
+export * from "./value.js";
 
-export * from "./longhand";
-export * from "./longhands";
-export * from "./shorthand";
-export * from "./shorthands";
+export * from "./longhand.js";
+export * from "./longhands.js";
+export * from "./shorthand.js";
+export * from "./shorthands.js";
 
-export * from "./style";
+export * from "./style.js";

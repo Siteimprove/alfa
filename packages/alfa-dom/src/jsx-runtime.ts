@@ -1,6 +1,6 @@
-import { jsx as _jsx } from "./jsx";
+import { jsx as _jsx } from "./jsx.js";
 
-import { Element } from ".";
+import { Element } from "./index.js";
 
 export import JSX = _jsx.JSX;
 

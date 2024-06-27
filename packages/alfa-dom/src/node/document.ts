@@ -7,9 +7,9 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node";
-import { Sheet } from "../style/sheet";
-import { Element } from "./element";
+import { Node } from "../node.js";
+import { Sheet } from "../style/sheet.js";
+import { Element } from "./element.js";
 
 /**
  * @public

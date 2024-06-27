@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-some(predicate: Predicate<T>): boolean;
+some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | Predicate&lt;T&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
 **Returns:**
 
-boolean
+this is [Ok](./alfa-result.ok.md)<!-- -->&lt;U&gt;
 

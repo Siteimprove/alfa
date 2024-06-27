@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": ["./earl.ts", "./index.ts", "./serializable.ts"],
+  "references": [
+    { "path": "../../alfa-json-ld" },
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-refinement" }
+  ]
+}

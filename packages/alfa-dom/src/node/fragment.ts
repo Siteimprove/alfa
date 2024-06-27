@@ -3,8 +3,8 @@ import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Node } from "../node";
-import { Element } from "./element";
+import { Node } from "../node.js";
+import { Element } from "./element.js";
 
 /**
  * @public

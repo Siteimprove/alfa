@@ -10,10 +10,10 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "../../index";
-import { Specificity } from "../../../specificity";
+import type { Absolute } from "../../index.js";
+import { Specificity } from "../../../specificity.js";
 
-import { WithName } from "../../selector";
+import { WithName } from "../../selector.js";
 
 const { delimited, end, left, map, option, pair, right } = Parser;
 const { parseColon, parseIdent, parseWhitespace } = Token;

@@ -3,11 +3,11 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { video } from "../common/applicability/video";
-import { videoTranscript } from "../common/expectation/media-transcript";
-import { Question } from "../common/act/question";
+import { video } from "../common/applicability/video.js";
+import { videoTranscript } from "../common/expectation/media-transcript.js";
+import { Question } from "../common/act/question.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r24",

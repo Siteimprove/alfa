@@ -2,6 +2,7 @@ import ts from "typescript";
 
 import { system } from "./system.mjs";
 import { flags } from "./flags.mjs";
+
 const verboseStatusReporter = ts.createBuilderStatusReporter;
 
 /**
@@ -16,8 +17,8 @@ export const status = {
   build: flags.verbose
     ? verboseStatusReporter(system, flags.pretty)
     : flags.quiet
-    ? quietStatusReporter
-    : minimalStatusReporter(system, flags.pretty),
+      ? quietStatusReporter
+      : minimalStatusReporter(system, flags.pretty),
 
   /**
    * @type {ts.DiagnosticReporter}
@@ -43,7 +44,16 @@ function minimalStatusReporter(system, _) {
     const frame = frames[frameIndex % frames.length];
 
     const packageName = !first
-      ? diag.messageText.match(/.*(?:\/|')(.*)\/tsconfig\.json/)?.[1] ?? ""
+      ? diag.messageText
+          // Find tsconfig.json path in "Building 'path/to/alfa/packages/alfa-foo/tsconfig.json'..."
+          .split("'")[1]
+          // Find path segments
+          ?.split("/")
+          // Find package name
+          ?.find((name) => name.startsWith("alfa-")) ??
+        // If none (e.g., scratches), output directory of tsconfig.json
+        diag.messageText.match(/.*(?:\/|')(.*)\/tsconfig\.json/)?.[1] ??
+        ""
       : "";
 
     system.write(frame + ` building ${packageName}`);

@@ -1,7 +1,7 @@
 import type { Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 
-import { WithIndex } from "./pseudo-class";
+import { WithIndex } from "./pseudo-class.js";
 
 const { hasName, isElement } = Element;
 

@@ -4,7 +4,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Style } from "../../style";
+import { Style } from "../../style.js";
 
 const sides = ["top", "right", "bottom", "left"] as const;
 

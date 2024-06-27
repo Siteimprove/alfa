@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Translate } from "../../../src";
+import { Length, Translate } from "../../../dist/index.js";
 
-import { parser, parserUnsafe, serializer } from "../../common/parse";
+import { parser, parserUnsafe, serializer } from "../../common/parse.js";
 
 const serialize = serializer(Translate.parse);
 const parseErr = parser(Translate.parse);

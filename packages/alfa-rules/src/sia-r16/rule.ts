@@ -12,9 +12,9 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
-import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional";
+import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace } = Element;

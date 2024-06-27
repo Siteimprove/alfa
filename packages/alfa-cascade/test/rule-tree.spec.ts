@@ -2,12 +2,12 @@ import { h } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 import { Complex, Compound, type Simple } from "@siteimprove/alfa-selector";
 
-import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
-import { RuleTree } from "../src";
 
-import { Block } from "../src/block";
-import { Layer, Origin, Precedence } from "../src/precedence";
+import { Layer, Origin, Precedence, RuleTree } from "../dist/index.js";
+import { Block } from "../dist/block.js";
+
+import { parse } from "./common/parser.js";
 
 function fakeBlock(
   selectorText: string,

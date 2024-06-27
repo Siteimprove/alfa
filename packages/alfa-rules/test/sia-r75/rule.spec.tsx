@@ -2,10 +2,10 @@ import { Declaration, h, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R75, { Outcomes } from "../../src/sia-r75/rule";
+import R75, { Outcomes } from "../../dist/sia-r75/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { failed, inapplicable, passed } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { failed, inapplicable, passed } from "../common/outcome.js";
 
 const fontSize = (value: string) => Declaration.of("font-size", value);
 const makeTarget = (

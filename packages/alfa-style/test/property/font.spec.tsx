@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 test("#cascaded() parses `font: 16px sans-serif`", (t) => {
   const element = <div style={{ font: "16px sans-serif" }} />;

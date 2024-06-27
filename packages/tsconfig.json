@@ -45,7 +45,6 @@
     { "path": "alfa-map" },
     { "path": "alfa-mapper" },
     { "path": "alfa-math" },
-    { "path": "alfa-media" },
     { "path": "alfa-monad" },
     { "path": "alfa-network" },
     { "path": "alfa-option" },

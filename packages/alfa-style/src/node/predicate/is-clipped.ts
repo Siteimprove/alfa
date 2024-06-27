@@ -7,11 +7,11 @@ import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Longhands } from "../../longhands";
-import { Style } from "../../style";
+import { Longhands } from "../../longhands.js";
+import { Style } from "../../style.js";
 
-import { hasComputedStyle } from "../../element/predicate/has-computed-style";
-import { hasPositioningParent } from "../../element/predicate/has-positioning-parent";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
+import { hasPositioningParent } from "../../element/predicate/has-positioning-parent.js";
 
 const { abs } = Math;
 const { isElement, hasBox } = Element;

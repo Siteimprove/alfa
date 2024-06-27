@@ -1,1 +1,1 @@
-export * from "./functor";
+export * from "./functor.js";

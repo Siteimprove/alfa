@@ -2,13 +2,17 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Function, type Parser as CSSParser, Token } from "../../syntax";
-import { Keyword } from "../keyword";
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax/index.js";
+import { Keyword } from "../keyword.js";
 
-import { Angle, Number, Percentage } from "../numeric";
+import { Angle, Number, Percentage } from "../numeric/index.js";
 
-import { Format } from "./format";
-import { RGB } from "./rgb";
+import { Format } from "./format.js";
+import { RGB } from "./rgb.js";
 
 const { pair, map, either, option, right, take, delimited } = Parser;
 
@@ -18,10 +22,10 @@ type ToCanonical<T extends Angle | Number | Percentage<"percentage">> =
   T extends Angle
     ? Angle.Canonical
     : T extends Number
-    ? Number.Canonical
-    : T extends Percentage
-    ? Percentage.Canonical
-    : Angle.Canonical | Number.Canonical | Percentage.Canonical;
+      ? Number.Canonical
+      : T extends Percentage
+        ? Percentage.Canonical
+        : Angle.Canonical | Number.Canonical | Percentage.Canonical;
 
 /**
  * @public

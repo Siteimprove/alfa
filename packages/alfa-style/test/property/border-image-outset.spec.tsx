@@ -1,10 +1,10 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as Outset from "../../src/property/border-image-outset";
-import { cascaded } from "../common";
+import * as Outset from "../../dist/property/border-image-outset.js";
+import { cascaded } from "../common.js";
 
 function outset(
   top: number,

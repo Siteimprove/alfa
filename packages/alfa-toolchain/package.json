@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-toolchain",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.83.1",
+  "version": "0.85.1",
   "license": "MIT",
   "description": "Toolchain for developing Alfa and related projects",
   "repository": {
@@ -11,23 +11,27 @@
     "directory": "packages/alfa-toolchain"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "exports": {
-    ".": "./src/index.js",
-    "./changelog": "./src/changeset/changelog-individual.js",
-    "./changelog.js": "./src/changeset/changelog-individual.js",
-    "./global-changelog": "./src/changeset/build-changelog.js",
-    "./global-changelog.js": "./src/changeset/build-changelog.js"
+  "engines": {
+    "node": ">=20.0.0"
   },
-  "types": "src/index.d.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./changelog": "./dist/changeset/changelog-individual.js",
+    "./changelog.js": "./dist/changeset/changelog-individual.js",
+    "./global-changelog": "./dist/changeset/build-changelog.js",
+    "./global-changelog.js": "./dist/changeset/build-changelog.js"
+  },
+  "types": "dist/index.d.ts",
   "bin": {
-    "alfa-changelog": "src/changeset/changelog-global.js",
-    "generate-dependency-graphs": "src/dependency-graph/generate-graphs.js",
-    "validate-structure": "src/validation/validate-all.js"
+    "alfa-changelog": "dist/changeset/changelog-global.js",
+    "generate-dependency-graphs": "dist/dependency-graph/generate-graphs.js",
+    "validate-structure": "dist/validation/validate-all.js"
   },
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "publishConfig": {
     "access": "public",
@@ -40,11 +44,11 @@
     "@changesets/git": "^3.0.0",
     "@changesets/read": "^0.6.0",
     "@manypkg/get-packages": "=1.1.3",
-    "@siteimprove/alfa-array": "workspace:^0.83.1",
-    "@siteimprove/alfa-map": "workspace:^0.83.1",
-    "@siteimprove/alfa-option": "workspace:^0.83.1",
-    "@siteimprove/alfa-result": "workspace:^0.83.1",
-    "@siteimprove/alfa-set": "workspace:^0.83.1",
+    "@siteimprove/alfa-array": "workspace:^0.85.1",
+    "@siteimprove/alfa-map": "workspace:^0.85.1",
+    "@siteimprove/alfa-option": "workspace:^0.85.1",
+    "@siteimprove/alfa-result": "workspace:^0.85.1",
+    "@siteimprove/alfa-set": "workspace:^0.85.1",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@ts-graphviz/adapter": "^2.0.3",
     "madge": "^7.0.0",
@@ -53,7 +57,7 @@
   },
   "devDependencies": {
     "@changesets/types": "^6.0.0",
-    "@siteimprove/alfa-test": "workspace:^0.83.1",
+    "@siteimprove/alfa-test": "workspace:^0.85.1",
     "@types/madge": "^5.0.3"
   }
 }

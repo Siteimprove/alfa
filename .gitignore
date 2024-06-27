@@ -7,5 +7,4 @@ node_modules
 **/*.d.ts
 **/*.map
 
-!**/scripts/**/*.js
 !**/types/**/*.d.ts

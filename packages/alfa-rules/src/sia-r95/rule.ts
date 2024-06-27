@@ -3,15 +3,15 @@ import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { WithBadElements } from "../common/diagnostic/with-bad-elements";
+import { expectation } from "../common/act/expectation.js";
+import { WithBadElements } from "../common/diagnostic/with-bad-elements.js";
 
-import { Scope, Stability, Version } from "../tags";
+import { Scope, Stability, Version } from "../tags/index.js";
 
 const { hasName, hasNamespace, hasTabIndex } = Element;
 const { and, test } = Predicate;

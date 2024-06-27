@@ -2,14 +2,14 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import { Number as BaseNumber } from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Math } from "../../calculation/index.js";
+import { Number as BaseNumber } from "../../calculation/numeric/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
-import type { Resolvable } from "../resolvable";
-import { Length } from "./length";
+import type { Resolvable } from "../resolvable.js";
+import { Length } from "./length.js";
 
-import { Numeric } from "./numeric";
+import { Numeric } from "./numeric.js";
 
 const { either, map } = Parser;
 

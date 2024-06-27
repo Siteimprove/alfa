@@ -3,8 +3,8 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Absolute, Selector } from "../../../selector";
-import { PseudoElementSelector } from "./pseudo-element";
+import { Absolute, Selector } from "../../../selector/index.js";
+import { PseudoElementSelector } from "./pseudo-element.js";
 
 const { either, map, right, take } = Parser;
 

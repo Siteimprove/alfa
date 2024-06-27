@@ -1,19 +1,19 @@
-import { h } from "@siteimprove/alfa-dom";
-import { test } from "@siteimprove/alfa-test";
-
-import R41, { Outcomes } from "../../src/sia-r41/rule";
-
-import { Group } from "../../src/common/act/group";
-
+/// <reference types="node" />
 import { Outcome } from "@siteimprove/alfa-act";
+import { h } from "@siteimprove/alfa-dom";
 import { Response } from "@siteimprove/alfa-http";
 import { Serializable } from "@siteimprove/alfa-json";
+import { test } from "@siteimprove/alfa-test";
 import { URL } from "@siteimprove/alfa-url";
 
-import { WithName } from "../../src/common/diagnostic";
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome";
+import R41, { Outcomes } from "../../dist/sia-r41/rule.js";
+
+import { Group } from "../../dist/index.js";
+
+import { WithName } from "../../dist/common/diagnostic.js";
+import { evaluate } from "../common/evaluate.js";
+import { oracle } from "../common/oracle.js";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource`, async (t) => {

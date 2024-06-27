@@ -10,9 +10,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Cell, Table } from "@siteimprove/alfa-table";
 
-import { Attribute } from "./attribute";
-import { Name, Source, State } from "./name";
-import { Role } from "./role";
+import { Attribute } from "./attribute.js";
+import { Name, Source, State } from "./name/index.js";
+import { Role } from "./role.js";
 
 const {
   hasAttribute,

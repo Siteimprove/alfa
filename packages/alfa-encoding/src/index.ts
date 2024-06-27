@@ -1,2 +1,2 @@
-export * from "./decoder";
-export * from "./encoder";
+export * from "./decoder.js";
+export * from "./encoder.js";

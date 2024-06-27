@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-isErr(): this is Err<never>;
+isErr(): this is never;
 ```
 **Returns:**
 
-this is Err&lt;never&gt;
+this is never
 

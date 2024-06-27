@@ -4,11 +4,17 @@ import { Err, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Unit } from "../../unit";
+import { Unit } from "../../unit/index.js";
 
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+import {
+  Angle,
+  Length,
+  Number,
+  Numeric,
+  Percentage,
+} from "../numeric/index.js";
 
-import { Kind } from "./kind";
+import { Kind } from "./kind.js";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#calculation-tree}

@@ -4,7 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, h, Namespace, Text } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 
-import { Name } from "../src";
+import { Name } from "../dist/index.js";
 
 const device = Device.standard();
 const no = { before: false, after: false };

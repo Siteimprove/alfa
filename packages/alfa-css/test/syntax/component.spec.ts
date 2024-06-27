@@ -1,7 +1,7 @@
 import { Slice } from "@siteimprove/alfa-slice";
 import { test } from "@siteimprove/alfa-test";
 
-import { Component, Lexer, Token } from "../../src/";
+import { Component, Lexer, Token } from "../../dist/index.js";
 
 const { lex } = Lexer;
 const { consume, parse } = Component;

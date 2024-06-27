@@ -2,8 +2,8 @@ import { Keyword, Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Device, Preference } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { Media } from "./media";
-import { Value } from "./value";
+import { Media } from "./media.js";
+import { Value } from "./value/index.js";
 
 export namespace Discrete {
   interface Discrete<N extends string, K extends string> {

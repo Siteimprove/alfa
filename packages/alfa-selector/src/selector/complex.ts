@@ -7,17 +7,17 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Context } from "../context";
-import type { Absolute } from "../selector";
-import { Specificity } from "../specificity";
+import { Context } from "../context.js";
+import type { Absolute } from "./index.js";
+import { Specificity } from "../specificity.js";
 
-import { Combinator } from "./combinator";
-import { Compound } from "./compound";
-import { Selector } from "./selector";
-import type { Class, Id, Simple, Type } from "./simple";
-import { Host } from "./simple/pseudo-class/host";
-import { HostContext } from "./simple/pseudo-class/host-context";
-import { Slotted } from "./simple/pseudo-element/slotted";
+import { Combinator } from "./combinator.js";
+import { Compound } from "./compound.js";
+import { Selector } from "./selector.js";
+import type { Class, Id, Simple, Type } from "./simple/index.js";
+import { Host } from "./simple/pseudo-class/host.js";
+import { HostContext } from "./simple/pseudo-class/host-context.js";
+import { Slotted } from "./simple/pseudo-element/slotted.js";
 
 const { isElement } = Element;
 const { map, pair, zeroOrMore } = Parser;

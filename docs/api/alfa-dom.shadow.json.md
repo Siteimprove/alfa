@@ -9,7 +9,7 @@
 ```typescript
 interface JSON extends Node.JSON 
 ```
-**Extends:** [Node.JSON](./alfa-dom.node_2.json.md)
+**Extends:** [Node.JSON](./alfa-dom.node.json.md)
 
 ## Properties
 

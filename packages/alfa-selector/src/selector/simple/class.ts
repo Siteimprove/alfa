@@ -4,9 +4,9 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Specificity } from "../../specificity";
+import { Specificity } from "../../specificity.js";
 
-import { WithName } from "../selector";
+import { WithName } from "../selector.js";
 
 const { map, right } = Parser;
 

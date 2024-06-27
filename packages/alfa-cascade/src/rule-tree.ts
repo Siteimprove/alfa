@@ -5,8 +5,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Block } from "./block";
-import { Precedence } from "./precedence";
+import { Block } from "./block.js";
+import { Precedence } from "./precedence/index.js";
 
 /**
  * The rule tree is a data structure used for storing the rules that match each

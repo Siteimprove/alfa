@@ -1,10 +1,10 @@
 import { Real } from "@siteimprove/alfa-math";
 
-import { Number, Percentage } from "../numeric";
-import type { Resolvable } from "../resolvable";
-import { Value } from "../value";
+import { Number, Percentage } from "../numeric/index.js";
+import type { Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
-import type { RGB } from "./rgb";
+import type { RGB } from "./rgb.js";
 
 /**
  * @remarks

@@ -7,10 +7,10 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
-import { getInterposedDescendant } from "../get-interposed-descendant";
+import { getInterposedDescendant } from "../get-interposed-descendant.js";
 
-import { Color } from "./color";
-import { ColorError, ColorErrors } from "./color-error";
+import { Color } from "./color.js";
+import { ColorError, ColorErrors } from "./color-error.js";
 
 const { isElement } = Element;
 const { hasTransparentBackground, isPositioned } = Style;

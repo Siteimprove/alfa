@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-encoding",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.83.1",
+  "version": "0.85.1",
   "license": "MIT",
   "description": "Implementations of performant UTF-8 string encoders and decoders",
   "repository": {
@@ -11,11 +11,15 @@
     "directory": "packages/alfa-encoding"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "publishConfig": {
     "access": "public",

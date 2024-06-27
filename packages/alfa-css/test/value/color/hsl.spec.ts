@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { HSL } from "../../../src";
+import { HSL } from "../../../dist/index.js";
 
-import { parser, parserUnsafe } from "../../common/parse";
+import { parser, parserUnsafe } from "../../common/parse.js";
 
 const parse = parserUnsafe(HSL.parse);
 const parseErr = parser(HSL.parse);

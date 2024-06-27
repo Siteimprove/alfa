@@ -65,33 +65,33 @@
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
-<!-- src/index.ts -->
+<!-- src/common.ts -->
 <g id="node7" class="node">
-<title>src/index.ts</title>
+<title>src/common.ts</title>
 <path fill="none" stroke="#ff0000" stroke-width="5" d="M134.83,-259C134.83,-259 87.17,-259 87.17,-259 83.33,-259 79.5,-255.17 79.5,-251.33 79.5,-251.33 79.5,-243.67 79.5,-243.67 79.5,-239.83 83.33,-236 87.17,-236 87.17,-236 134.83,-236 134.83,-236 138.67,-236 142.5,-239.83 142.5,-243.67 142.5,-243.67 142.5,-251.33 142.5,-251.33 142.5,-255.17 138.67,-259 134.83,-259"/>
-<text text-anchor="middle" x="111" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
+<text text-anchor="middle" x="111" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
 </g>
-<!-- src/index.ts&#45;&gt;src/matrix.ts -->
-<!-- src/index.ts&#45;&gt;src/matrix.ts -->
+<!-- src/common.ts&#45;&gt;src/matrix.ts -->
+<!-- src/common.ts&#45;&gt;src/matrix.ts -->
 <g id="edge11" class="edge">
-<title>src/index.ts&#45;&gt;src/matrix.ts</title>
+<title>src/common.ts&#45;&gt;src/matrix.ts</title>
 <path fill="none" stroke="black" d="M106.44,-235.78C100.38,-227.74 90.27,-216.55 80.75,-207.19"/>
 <polygon fill="black" stroke="black" points="83,-204.5 73.33,-200.17 78.19,-209.59 83,-204.5"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/real.ts -->
-<!-- src/index.ts&#45;&gt;src/real.ts -->
+<!-- src/common.ts&#45;&gt;src/real.ts -->
+<!-- src/common.ts&#45;&gt;src/real.ts -->
 <g id="edge13" class="edge">
-<title>src/index.ts&#45;&gt;src/real.ts</title>
+<title>src/common.ts&#45;&gt;src/real.ts</title>
 <path fill="none" stroke="black" d="M115.11,-235.79C118.16,-216.63 118.57,-176.15 116.33,-151.34"/>
 <polygon fill="black" stroke="black" points="119.77,-150.69 115.11,-141.18 112.82,-151.52 119.77,-150.69"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/vector.ts -->
-<!-- src/index.ts&#45;&gt;src/vector.ts -->
+<!-- src/common.ts&#45;&gt;src/vector.ts -->
+<!-- src/common.ts&#45;&gt;src/vector.ts -->
 <g id="edge15" class="edge">
-<title>src/index.ts&#45;&gt;src/vector.ts</title>
+<title>src/common.ts&#45;&gt;src/vector.ts</title>
 <path fill="none" stroke="black" d="M126.38,-235.78C135,-227.98 145.33,-217.21 153.14,-208.03"/>
 <polygon fill="black" stroke="black" points="155.92,-210.15 159.48,-200.17 150.48,-205.76 155.92,-210.15"/>
 </g>
-<!-- src/index.ts&#45;&gt;exit_src -->
+<!-- src/common.ts&#45;&gt;exit_src -->
 </g>
 </svg>

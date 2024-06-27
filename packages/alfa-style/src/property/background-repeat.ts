@@ -2,9 +2,9 @@ import { Keyword, List, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Shorthand } from "../shorthand";
+import { Shorthand } from "../shorthand.js";
 
-import * as X from "./background-repeat-x";
+import * as X from "./background-repeat-x.js";
 /**
  * background-repeat-x and background-repeat-y are identical.
  * We mimic the needed bits here to avoid confusion in the main parser.

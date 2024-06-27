@@ -1,9 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import { Style } from "../../src/style";
+import { Style } from "../../dist/style.js";
 
 const device = Device.standard();
 

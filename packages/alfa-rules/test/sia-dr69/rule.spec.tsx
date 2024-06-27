@@ -4,15 +4,15 @@ import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
 
-import R69 from "../../src/sia-dr69/rule";
-import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
-import { Contrast as Outcomes } from "../../src/common/outcome/contrast";
+import R69 from "../../dist/sia-dr69/rule.js";
+import { Contrast as Diagnostic } from "../../dist/common/diagnostic/contrast.js";
+import { Contrast as Outcomes } from "../../dist/common/outcome/contrast.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, cantTell, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, cantTell, inapplicable } from "../common/outcome.js";
 
-import { oracle } from "../common/oracle";
-import { ColorError, ColorErrors } from "../../src/common/dom/get-colors";
+import { oracle } from "../common/oracle.js";
+import { ColorError, ColorErrors } from "../../dist/common/dom/get-colors.js";
 import { Style } from "@siteimprove/alfa-style";
 import { Device } from "@siteimprove/alfa-device";
 

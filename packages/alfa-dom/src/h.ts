@@ -27,7 +27,7 @@ import {
   SupportsRule,
   Text,
   Type,
-} from ".";
+} from "./index.js";
 
 const { entries } = Object;
 const { nor } = Predicate;

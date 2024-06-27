@@ -1,9 +1,9 @@
 import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
-import { Specificity } from "../../../specificity";
+import { Specificity } from "../../../specificity.js";
 
-import { WithName } from "../../selector";
+import { WithName } from "../../selector.js";
 
 const { map, right, take, takeBetween } = Parser;
 const { parseColon, parseIdent } = Token;

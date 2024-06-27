@@ -3,25 +3,25 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "../../selector";
+import type { Absolute } from "../index.js";
 
 // Import the various simple selectors for use in that file.
-import { Attribute } from "./attribute";
-import { Class } from "./class";
-import { Id } from "./id";
-import { PseudoClass } from "./pseudo-class";
-import { PseudoElement } from "./pseudo-element/index";
-import { Type } from "./type";
-import { Universal } from "./universal";
+import { Attribute } from "./attribute.js";
+import { Class } from "./class.js";
+import { Id } from "./id.js";
+import { PseudoClass } from "./pseudo-class/index.js";
+import { PseudoElement } from "./pseudo-element/index.js";
+import { Type } from "./type.js";
+import { Universal } from "./universal.js";
 
 // Re-export the various selectors for use by others
-export * from "./attribute";
-export * from "./class";
-export * from "./id";
-export * from "./pseudo-class";
-export * from "./pseudo-element";
-export * from "./type";
-export * from "./universal";
+export * from "./attribute.js";
+export * from "./class.js";
+export * from "./id.js";
+export * from "./pseudo-class/index.js";
+export * from "./pseudo-element/index.js";
+export * from "./type.js";
+export * from "./universal.js";
 
 const { either } = Parser;
 

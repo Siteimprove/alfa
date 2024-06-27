@@ -15,7 +15,7 @@ interface JSON
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [device](./alfa-web.page.json.device.md) |  | [Device.JSON](./alfa-device.device.json.md) |  |
-|  [document](./alfa-web.page.json.document.md) |  | Document.JSON |  |
+|  [document](./alfa-web.page.json.document.md) |  | [Document.JSON](./alfa-dom.document.json.md) |  |
 |  [request](./alfa-web.page.json.request.md) |  | [Request.JSON](./alfa-http.request.json.md) |  |
 |  [response](./alfa-web.page.json.response.md) |  | [Response.JSON](./alfa-http.response.json.md) |  |
 

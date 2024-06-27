@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-everyErr(predicate: Predicate<E>): boolean;
+everyErr<F extends E>(refinement: Refinement<E, F>): this is Result<never, F>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | Predicate&lt;E&gt; |  |
+|  refinement | Refinement&lt;E, F&gt; |  |
 
 **Returns:**
 
-boolean
+this is Result&lt;never, F&gt;
 

@@ -4,12 +4,12 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Option, None } from "@siteimprove/alfa-option";
 
-import R33 from "../../src/sia-r33/rule";
-import { Outcomes } from "../../src/common/expectation/media-transcript";
+import R33 from "../../dist/sia-r33/rule.js";
+import { Outcomes } from "../../dist/common/expectation/media-transcript.js";
 
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { oracle } from "../common/oracle.js";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";
 
 test(`evaluate() passes when non-streaming video-only elements have all visual information available in a transcript`, async (t) => {
   const target = <video src="foo.mp4" type="video/mp4" />;

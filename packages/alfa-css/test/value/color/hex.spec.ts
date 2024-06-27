@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Hex, type RGB } from "../../../src";
+import { Hex, type RGB } from "../../../dist/index.js";
 
-import { parserUnsafe } from "../../common/parse";
+import { parserUnsafe } from "../../common/parse.js";
 
 const parse = parserUnsafe(Hex.parse);
 

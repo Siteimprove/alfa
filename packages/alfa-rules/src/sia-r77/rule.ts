@@ -8,9 +8,9 @@ import { Cell, Table } from "@siteimprove/alfa-table";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { hasName, hasNamespace } = Element;

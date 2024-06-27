@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
-import { Unit } from "../../unit";
+import { Unit } from "../../unit/index.js";
 
 import {
   Angle,
@@ -10,11 +10,11 @@ import {
   Number,
   Numeric,
   Percentage,
-} from "../numeric";
+} from "../numeric/index.js";
 
-import { Expression } from "./expression";
-import { Kind } from "./kind";
-import { Value } from "./value";
+import { Expression } from "./expression.js";
+import { Kind } from "./kind.js";
+import { Value } from "./value.js";
 
 const { isAngle } = Angle;
 const { isDimension } = Dimension;

@@ -2,10 +2,10 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasValue, Name } from "../../name";
-import { Node } from "../../node";
+import { hasValue, Name } from "../../name/index.js";
+import { Node } from "../../node.js";
 
-import { hasName } from "../../node/predicate";
+import { hasName } from "../../node/predicate.js";
 
 const { test } = Predicate;
 

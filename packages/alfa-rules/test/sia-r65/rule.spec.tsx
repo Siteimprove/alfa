@@ -2,11 +2,11 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R65, { Outcomes } from "../../src/sia-r65/rule";
+import R65, { Outcomes } from "../../dist/sia-r65/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, cantTell } from "../common/outcome";
-import { oracle } from "../common/oracle";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, cantTell } from "../common/outcome.js";
+import { oracle } from "../common/oracle.js";
 import { Map } from "@siteimprove/alfa-map";
 
 const noMatches = Map.empty<string, number>();

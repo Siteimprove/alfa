@@ -1,10 +1,10 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Shorthand } from "../shorthand";
+import { Shorthand } from "../shorthand.js";
 
-import X from "./overflow-x";
-import Y from "./overflow-y";
+import X from "./overflow-x.js";
+import Y from "./overflow-y.js";
 
 const { map, option, pair, delimited } = Parser;
 

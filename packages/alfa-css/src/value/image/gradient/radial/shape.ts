@@ -2,11 +2,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../../../syntax";
+import { Token } from "../../../../syntax/index.js";
 
-import { Circle } from "./circle";
-import { Ellipse } from "./ellipse";
-import { Extent } from "./extent";
+import { Circle } from "./circle.js";
+import { Ellipse } from "./ellipse.js";
+import { Extent } from "./extent.js";
 
 const { either } = Parser;
 

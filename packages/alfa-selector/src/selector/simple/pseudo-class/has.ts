@@ -1,9 +1,9 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "../../../selector";
+import type { Absolute } from "../../index.js";
 
-import { WithSelector } from "./pseudo-class";
+import { WithSelector } from "./pseudo-class.js";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#has-pseudo}

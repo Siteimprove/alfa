@@ -1,6 +1,6 @@
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
-import Base from "./background-repeat-x";
+import Base from "./background-repeat-x.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat}

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R12, { Outcomes } from "../../src/sia-r12/rule";
+import R12, { Outcomes } from "../../dist/sia-r12/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluates() passes a <button> with accessible name given by content`, async (t) => {
   const target = <button>My button</button>;

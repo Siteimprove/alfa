@@ -1,4 +1,4 @@
-import { PseudoElementSelector } from "./pseudo-element";
+import { PseudoElementSelector } from "./pseudo-element.js";
 
 /**
  * {@link https://drafts.csswg.org/css-pseudo/#selectordef-before}

@@ -8,7 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Parser as CSSParser } from "./parser";
+import type { Parser as CSSParser } from "./parser.js";
 
 const { map, oneOrMore, parseIf } = Parser;
 const { fromCharCode } = String;

@@ -14,7 +14,7 @@ static of(owner: dom.Node): Inert;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  owner | dom.Node |  |
+|  owner | [dom.Node](./alfa-dom.node.md) |  |
 
 **Returns:**
 

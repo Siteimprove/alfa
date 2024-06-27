@@ -3,20 +3,20 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhands } from "../longhands";
-import { Shorthand } from "../shorthand";
+import { Longhands } from "../longhands.js";
+import { Shorthand } from "../shorthand.js";
 
-import * as Attachment from "./background-attachment";
-import * as Clip from "./background-clip";
-import * as Color from "./background-color";
-import * as Image from "./background-image";
-import * as Origin from "./background-origin";
-import * as Position from "./background-position";
-import * as PositionX from "./background-position-x";
-import * as PositionY from "./background-position-y";
-import * as Repeat from "./background-repeat";
-import * as RepeatX from "./background-repeat-x";
-import * as Size from "./background-size";
+import * as Attachment from "./background-attachment.js";
+import * as Clip from "./background-clip.js";
+import * as Color from "./background-color.js";
+import * as Image from "./background-image.js";
+import * as Origin from "./background-origin.js";
+import * as Position from "./background-position.js";
+import * as PositionX from "./background-position-x.js";
+import * as PositionY from "./background-position-y.js";
+import * as Repeat from "./background-repeat.js";
+import * as RepeatX from "./background-repeat-x.js";
+import * as Size from "./background-size.js";
 
 /**
  * background-repeat-x and background-repeat-y are identical.

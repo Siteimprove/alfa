@@ -3,9 +3,9 @@
 import { Request, Response } from "@siteimprove/alfa-http";
 
 import * as device from "@siteimprove/alfa-device/native";
-import * as dom from "@siteimprove/alfa-dom/native";
+import * as dom from "@siteimprove/alfa-dom/dist/native";
 
-import { Page } from ".";
+import { Page } from "./index.js";
 
 /**
  * @internal

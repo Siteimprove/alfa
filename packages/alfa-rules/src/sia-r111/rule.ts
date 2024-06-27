@@ -3,16 +3,16 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { applicableTargetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
+import { applicableTargetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events.js";
 
-import { WithName } from "../common/diagnostic";
+import { WithName } from "../common/diagnostic.js";
 
-import { TargetSize } from "../common/outcome/target-size";
+import { TargetSize } from "../common/outcome/target-size.js";
 
-import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
-import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
+import { hasSufficientSize } from "../common/predicate/has-sufficient-size.js";
+import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled.js";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",

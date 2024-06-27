@@ -1,6 +1,6 @@
 import { Requirement } from "@siteimprove/alfa-act";
 
-import { Techniques } from "./technique/data";
+import { Techniques } from "./technique/data.js";
 
 /**
  * @public

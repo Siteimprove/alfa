@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lazy } from "../src/lazy";
+import { Lazy } from "../dist/lazy.js";
 
 const lazy = Lazy.of(() => 42);
 

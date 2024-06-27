@@ -1,5 +1,25 @@
 # @siteimprove/alfa-option
 
+## 0.85.1
+
+## 0.85.0
+
+### Minor Changes
+
+- **Breaking:** The .js files are now built in the `dist` folder rather than in `src`. ([#1628](https://github.com/Siteimprove/alfa/pull/1628))
+
+  ⚠️ This is the first of a series of changes on the internal structure and build process of distributed packages. It is probably better to not use this version and wait until more of these internal changes have been done to jump directly to the final result. We are internally releasing these changes for validation purpose only.
+
+  This should not impact consummers, the `package.json` files should be set correctly to consume these files.
+
+## 0.84.0
+
+### Minor Changes
+
+- **Changed:** Types have been tightened a bit. ([#1634](https://github.com/Siteimprove/alfa/pull/1634))
+
+  This was needed to update to TypeScript 5.5, due to the improved [inferrence of type predicates](https://devblogs.microsoft.com/typescript/announcing-typescript-5-5/#inferred-type-predicates)
+
 ## 0.83.1
 
 ## 0.83.0

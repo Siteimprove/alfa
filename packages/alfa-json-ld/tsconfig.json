@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/json-ld.ts"],
-  "references": [{ "path": "../alfa-json" }]
+  "files": [],
+  "references": [{ "path": "./src" }]
 }

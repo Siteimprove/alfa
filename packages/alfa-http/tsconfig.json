@@ -1,29 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-    "src/body.ts",
-    "src/cookie.ts",
-    "src/cookies.ts",
-    "src/header.ts",
-    "src/headers.ts",
-    "src/index.ts",
-    "src/request.ts",
-    "src/response.ts",
-    "test/request.spec.ts",
-    "test/response.spec.ts"
-  ],
-  "references": [
-    { "path": "../alfa-earl" },
-    { "path": "../alfa-encoding" },
-    { "path": "../alfa-equatable" },
-    { "path": "../alfa-iterable" },
-    { "path": "../alfa-json" },
-    { "path": "../alfa-map" },
-    { "path": "../alfa-option" },
-    { "path": "../alfa-refinement" },
-    { "path": "../alfa-result" },
-    { "path": "../alfa-test" },
-    { "path": "../alfa-url" }
-  ]
+  "files": [],
+  "references": [{ "path": "./src" }, { "path": "./test" }]
 }

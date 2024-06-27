@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R47, { Outcomes } from "../../src/sia-r47/rule";
+import R47, { Outcomes } from "../../dist/sia-r47/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test("evaluate() passes meta-viewport elements who let users zoom", async (t) => {
   const target = <meta name="viewport" content="user-scalable=yes" />;

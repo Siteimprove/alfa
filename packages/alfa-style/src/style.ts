@@ -20,16 +20,16 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import * as element from "./element/element";
+import * as element from "./element/element.js";
 
-import { Longhand } from "./longhand";
-import { Longhands } from "./longhands";
-import * as node from "./node/node";
-import { Shorthand } from "./shorthand";
-import { Shorthands } from "./shorthands";
+import { Longhand } from "./longhand.js";
+import { Longhands } from "./longhands.js";
+import * as node from "./node/node.js";
+import { Shorthand } from "./shorthand.js";
+import { Shorthands } from "./shorthands.js";
 
-import { Value } from "./value";
-import { Variable } from "./variable";
+import { Value } from "./value.js";
+import { Variable } from "./variable.js";
 
 type Name = Longhands.Name;
 

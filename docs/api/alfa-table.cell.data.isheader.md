@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-isHeader(): boolean;
+isHeader(): this is never;
 ```
 **Returns:**
 
-boolean
+this is never
 

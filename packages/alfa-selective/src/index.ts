@@ -1,1 +1,1 @@
-export * from "./selective";
+export * from "./selective.js";

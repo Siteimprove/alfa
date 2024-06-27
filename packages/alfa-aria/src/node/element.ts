@@ -6,10 +6,10 @@ import { String } from "@siteimprove/alfa-string";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { Attribute } from "../attribute";
-import { Name } from "../name";
-import { Node } from "../node";
-import { Role } from "../role";
+import { Attribute } from "../attribute.js";
+import { Name } from "../name/index.js";
+import { Node } from "../node.js";
+import { Role } from "../role.js";
 
 /**
  * @public

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R4, { Outcomes } from "../../src/sia-r4/rule";
+import R4, { Outcomes } from "../../dist/sia-r4/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluate() passes an html element with lang attribute which has a
      non-empty ("") value`, async (t) => {

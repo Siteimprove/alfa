@@ -6,11 +6,11 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Namespace } from "../namespace";
-import { Node } from "../node";
-import { Element } from "./element";
+import { Namespace } from "../namespace.js";
+import { Node } from "../node.js";
+import { Element } from "./element.js";
 
-import * as predicate from "./attribute/predicate";
+import * as predicate from "./attribute/predicate.js";
 
 const { isEmpty } = Iterable;
 const { equals, not } = Predicate;

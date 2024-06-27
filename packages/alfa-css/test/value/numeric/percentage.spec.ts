@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Number, Percentage } from "../../../src";
+import { Length, Number, Percentage } from "../../../dist/index.js";
 
-import { parser, parserUnsafe, serializer } from "../../common/parse";
+import { parser, parserUnsafe, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Percentage.parse);
 const parse = parserUnsafe(Percentage.parse);

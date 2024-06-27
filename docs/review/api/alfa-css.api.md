@@ -7,20 +7,30 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
+import { Component as Component_3 } from '../position/component.js';
+import { Corner as Corner_3 } from './corner.js';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Keywords as Keywords_2 } from '../position/keywords.js';
+import { LengthPercentage as LengthPercentage_2 } from '../index.js';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
+import { Parser as Parser_3 } from '../../index.js';
+import { Parser as Parser_4 } from '../../syntax/parser.js';
+import { Position as Position_3 } from '../index.js';
 import { Predicate } from '@siteimprove/alfa-predicate';
+import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
 import { Thunk } from '@siteimprove/alfa-thunk';
+import { Token as Token_2 } from '../../syntax/token.js';
+import { Unit as Unit_2 } from '../../index.js';
 
 // @public (undocumented)
 export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
@@ -1158,9 +1168,9 @@ export namespace List {
         values: Array<Serializable.ToJSON<V>>;
     }
     const // (undocumented)
-    parseCommaSeparated: <V extends Value<string, boolean, string, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
+    parseCommaSeparated: <V extends Value>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
     const // (undocumented)
-    parseSpaceSeparated: <V extends Value<string, boolean, string, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
+    parseSpaceSeparated: <V extends Value>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
 }
 
 // @public (undocumented)
@@ -1300,7 +1310,7 @@ export namespace Matrix {
     ]
     ];
     const // (undocumented)
-    parse: Parser_2<Slice<Token, Serializable>, Matrix, string, []>;
+    parse: Parser_2<Slice<Token_2, Serializable>, Matrix, string, []>;
 }
 
 // @public (undocumented)
@@ -1679,7 +1689,7 @@ export namespace Perspective {
     // (undocumented)
     export type Resolver = Length.Resolver;
     const // (undocumented)
-    parse: Parser_2<Slice<Token, Serializable>, Perspective<Length<import("../..").Unit.Length>>, string, []>;
+    parse: Parser_2<Slice<Token_2, Serializable>, Perspective<Length<Unit_2.Length>>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Polygon" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2063,7 +2073,7 @@ export namespace Scale {
         y: Number_2.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser_2<Slice<Token, Serializable>, Scale, string, []>;
+    parse: Parser_2<Slice<Token_2, Serializable>, Scale, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Shadow" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2175,11 +2185,8 @@ export namespace Shape {
         export type PartialResolver = Circle.PartialResolver & Ellipse.PartialResolver & Inset.PartialResolver & Polygon.PartialResolver & Rectangle.Resolver;
         // (undocumented)
         export type Resolver = Circle.Resolver & Ellipse.Resolver & Inset.Resolver & Polygon.Resolver & Rectangle.Resolver;
-        const // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
-        // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
-        //
-        // @internal (undocumented)
-        parse: Parser_2<Slice<Token, Serializable>, Circle<Radius<LengthPercentage | import("./radius").Radius.Side>, Position<import("../position/keywords").Keywords.Horizontal, import("../position/keywords").Keywords.Vertical, Component_2<import("../position/keywords").Keywords.Horizontal>, Component_2<import("../position/keywords").Keywords.Vertical>>> | Ellipse<Radius<LengthPercentage | import("./radius").Radius.Side>, Position<import("../position/keywords").Keywords.Horizontal, import("../position/keywords").Keywords.Vertical, Component_2<import("../position/keywords").Keywords.Horizontal>, Component_2<import("../position/keywords").Keywords.Vertical>>> | Inset<Inset.Offset, Corner_2> | Polygon<Polygon.Fill, LengthPercentage>, string, []>;
+        const // @internal (undocumented)
+        parse: Parser_2<Slice<Token, Serializable>, Circle<Radius_3<LengthPercentage_2 | Radius_3.Side>, Position_3<Keywords_2.Horizontal, Keywords_2.Vertical, Component_3<Keywords_2.Horizontal>, Component_3<Keywords_2.Vertical>>> | Ellipse<Radius_3<LengthPercentage_2 | Radius_3.Side>, Position_3<Keywords_2.Horizontal, Keywords_2.Vertical, Component_3<Keywords_2.Horizontal>, Component_3<Keywords_2.Vertical>>> | Inset<Inset.Offset, Corner_3> | Polygon<Polygon.Fill, LengthPercentage_2>, string, []>;
     }
     // (undocumented)
     export type Canonical = Shape<Basic.Canonical, Box.Geometry>;
@@ -2236,7 +2243,7 @@ export namespace Skew {
         y: Angle.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser_2<Slice<Token, Serializable>, Skew, string, []>;
+    parse: Parser_2<Slice<Token_2, Serializable>, Skew, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "String" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -3087,7 +3094,7 @@ export namespace Transform {
     const // @internal (undocumented)
     parse: Parser_2<Slice<Token, Serializable>, Transform, string, []>;
     const // (undocumented)
-    parseList: Parser<List<Transform>>;
+    parseList: Parser_4<List<Transform>>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Translate" is marked as @public, but its signature references "Resolvable" which is marked as @internal

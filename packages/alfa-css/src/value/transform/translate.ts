@@ -4,15 +4,15 @@ import { Parser } from "@siteimprove/alfa-parser";
 import {
   Function as CSSFunction,
   type Parser as CSSParser,
-} from "../../syntax";
-import { Unit } from "../../unit";
-import { List } from "../collection";
+} from "../../syntax/index.js";
+import { Unit } from "../../unit/index.js";
+import { List } from "../collection/index.js";
 
-import { Length, LengthPercentage, Numeric } from "../numeric";
-import { PartiallyResolvable, Resolvable } from "../resolvable";
-import { Value } from "../value";
+import { Length, LengthPercentage, Numeric } from "../numeric/index.js";
+import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
-import { Function } from "./function";
+import { Function } from "./function.js";
 
 const { map, either, parseIf } = Parser;
 

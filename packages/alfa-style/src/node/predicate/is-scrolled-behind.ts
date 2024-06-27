@@ -4,8 +4,11 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 
-import { hasComputedStyle, hasPositioningParent } from "../../element/element";
-import { Longhands } from "../..";
+import {
+  hasComputedStyle,
+  hasPositioningParent,
+} from "../../element/element.js";
+import { Longhands } from "../../longhands.js";
 
 const { isElement, hasBox } = Element;
 const { and, or, not } = Predicate;

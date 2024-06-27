@@ -3,11 +3,11 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R50, { Outcomes } from "../../src/sia-r50/rule";
+import R50, { Outcomes } from "../../dist/sia-r50/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { oracle } from "../common/oracle.js";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
 
 test(`evaluate() passes when R48 passes`, async (t) => {
   const target = <video autoplay src="foo.mp4" />;

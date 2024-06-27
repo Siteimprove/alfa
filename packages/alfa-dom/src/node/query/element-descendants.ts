@@ -1,7 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Node } from "../../node";
-import { Element } from "../element";
+import { Node } from "../../node.js";
+import { Element } from "../element.js";
 
 const _elementDescendantsCache = Cache.empty<Node, Array<Sequence<Element>>>();
 

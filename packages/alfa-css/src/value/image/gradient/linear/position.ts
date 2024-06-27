@@ -1,6 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Token } from "../../../../syntax";
+import { Token } from "../../../../syntax/index.js";
 
 const { map, either } = Parser;
 

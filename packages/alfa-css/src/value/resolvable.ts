@@ -1,4 +1,4 @@
-import type { Value } from "./value";
+import type { Value } from "./value.js";
 
 /**
  * @internal

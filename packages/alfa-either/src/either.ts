@@ -10,8 +10,8 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
-import { Left } from "./left";
-import { Right } from "./right";
+import { Left } from "./left.js";
+import { Right } from "./right.js";
 
 /**
  * @public

@@ -6,7 +6,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { hasComputedStyle } from "../../element/predicate/has-computed-style";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
 
 const { isElement } = Element;
 const { isText } = Text;

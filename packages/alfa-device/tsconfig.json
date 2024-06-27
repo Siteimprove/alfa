@@ -1,21 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": [
-    "native.ts",
-    "src/device.ts",
-    "src/display.ts",
-    "src/index.ts",
-    "src/native.ts",
-    "src/preference.ts",
-    "src/scripting.ts",
-    "src/viewport.ts"
-  ],
-  "references": [
-    { "path": "../alfa-equatable" },
-    { "path": "../alfa-hash" },
-    { "path": "../alfa-iterable" },
-    { "path": "../alfa-json" },
-    { "path": "../alfa-map" }
-  ]
+  "files": [],
+  "references": [{ "path": "./src" }]
 }

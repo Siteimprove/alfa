@@ -1,10 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/index.ts", "src/trilean.ts", "test/trilean.spec.ts"],
-  "references": [
-    { "path": "../alfa-iterable" },
-    { "path": "../alfa-mapper" },
-    { "path": "../alfa-test" }
-  ]
+  "files": [],
+  "references": [{ "path": "./src" }, { "path": "./test" }]
 }

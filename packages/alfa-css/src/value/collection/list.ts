@@ -4,10 +4,10 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
-import { Value } from "../value";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
 const { delimited, option, map, separatedList } = Parser;
 

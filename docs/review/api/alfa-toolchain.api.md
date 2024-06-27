@@ -5,11 +5,19 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import type { ChangelogFunctions } from '@changesets/types';
+import type { ChangelogFunctions as ChangelogFunctions_2 } from '@changesets/types';
+import { Config } from '@changesets/types';
+import { NewChangesetWithCommit } from '@changesets/types';
 import { PackageJSON } from '@changesets/types';
+import { Packages } from '@manypkg/get-packages';
+
+// Warning: (ae-forgotten-export) The symbol "ChangelogFunctions" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const changelogFunctions: ChangelogFunctions;
 
 // @public (undocumented)
-const changelogFunctions: ChangelogFunctions;
+const changelogFunctions_2: ChangelogFunctions_2;
 
 // @public (undocumented)
 export function generateGraphs(cwd: string): Promise<void>;
@@ -26,7 +34,7 @@ function hasExtractorConfig(name: string, dir: string): Array<string>;
 
 declare namespace individualChangelog {
     export {
-        changelogFunctions as default
+        changelogFunctions_2 as default
     }
 }
 export { individualChangelog }
@@ -37,13 +45,13 @@ function validate(cwd: string): Promise<void>;
 // @public
 function validateChangesets(cwd: string, forbidMajor?: boolean): Promise<Array_2<string>>;
 
-// Warning: (ae-forgotten-export) The symbol "Config" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Config_2" needs to be exported by the entry point index.d.ts
 //
 // @public
 function validatePackageJson({ dir, packageJson, }: {
     dir: string;
     packageJson: JSON_2;
-}, config: Config): Array<string>;
+}, config: Config_2): Array<string>;
 
 // @public (undocumented)
 function validateWorkspaceTsconfig({ dir, packageJson, }: {

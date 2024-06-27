@@ -6,7 +6,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Languages } from "./language/data";
+import { Languages } from "./language/data.js";
 
 /**
  * @public

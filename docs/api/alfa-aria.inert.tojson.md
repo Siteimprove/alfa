@@ -11,5 +11,5 @@ toJSON(): Node.JSON<"inert">;
 ```
 **Returns:**
 
-[Node.JSON](./alfa-aria.node_2.json.md)<!-- -->&lt;"inert"&gt;
+[Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"inert"&gt;
 

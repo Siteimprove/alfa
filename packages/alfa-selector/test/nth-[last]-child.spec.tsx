@@ -1,5 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
-import { parse, serialize } from "./parser";
+import { parse, serialize } from "./parser.js";
 
 test(".parse() parses an :nth-[last]-child selector", (t) => {
   for (const name of ["nth-child", "nth-last-child"] as const) {

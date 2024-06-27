@@ -1,7 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Attribute } from "../../attribute";
-import { Element } from "../../element";
+import { Attribute } from "../../attribute.js";
+import { Element } from "../../element.js";
 
 const { property } = Predicate;
 

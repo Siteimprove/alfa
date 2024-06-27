@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Combinator } from "../src";
-import { serialize } from "./parser";
+import { Combinator } from "../dist/index.js";
+import { serialize } from "./parser.js";
 
 test(".parse() parses a list of simple selectors", (t) => {
   t.deepEqual(serialize(".foo, .bar, .baz"), {

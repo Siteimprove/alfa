@@ -6,8 +6,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule";
-import { ConditionRule } from "./condition";
+import { Rule } from "../rule.js";
+import { ConditionRule } from "./condition.js";
 
 /**
  * @public

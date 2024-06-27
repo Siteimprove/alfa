@@ -2,12 +2,18 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 
-import { Unit } from "../../unit";
+import { Unit } from "../../unit/index.js";
 
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+import {
+  Angle,
+  Length,
+  Number,
+  Numeric,
+  Percentage,
+} from "../numeric/index.js";
 
-import { Expression } from "./expression";
-import { Kind } from "./kind";
+import { Expression } from "./expression.js";
+import { Kind } from "./kind.js";
 
 const { isAngle } = Angle;
 const { isLength } = Length;

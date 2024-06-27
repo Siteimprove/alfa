@@ -1,1 +1,1 @@
-export * from "./traversal/get-nodes-between";
+export * from "./traversal/get-nodes-between.js";

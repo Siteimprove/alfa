@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R11, { Outcomes } from "../../src/sia-r11/rule";
+import R11, { Outcomes } from "../../dist/sia-r11/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluate() passes a link with a name given by content`, async (t) => {
   const target = <a href="#">Foo</a>;

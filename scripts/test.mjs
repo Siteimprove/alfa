@@ -1,6 +1,6 @@
 import async from "async";
 import { execaNode } from "execa";
-import os from "os";
+import os from "node:os";
 
 import { builder } from "./common/builder.mjs";
 import { flags } from "./common/flags.mjs";

@@ -1,5 +1,5 @@
-import { Rule } from "../rule";
-import { GroupingRule } from "./grouping";
+import { Rule } from "../rule.js";
+import { GroupingRule } from "./grouping.js";
 
 /**
  * @public

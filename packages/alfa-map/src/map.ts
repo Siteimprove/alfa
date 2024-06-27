@@ -11,7 +11,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Empty, Node } from "./node";
+import { Empty, Node } from "./node.js";
 
 const { not } = Predicate;
 

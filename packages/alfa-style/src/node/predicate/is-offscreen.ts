@@ -6,9 +6,12 @@ import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Context } from "@siteimprove/alfa-selector";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
-import { hasComputedStyle, hasPositioningParent } from "../../element/element";
+import {
+  hasComputedStyle,
+  hasPositioningParent,
+} from "../../element/element.js";
 
-import { Style } from "../../style";
+import { Style } from "../../style.js";
 
 const { hasBox, isElement } = Element;
 const { abs } = Math;

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R79, { Outcomes } from "../../src/sia-r79/rule";
+import R79, { Outcomes } from "../../dist/sia-r79/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluate() passes a visible <pre> element which is part of a <figure>`, async (t) => {
   const target = <pre aria-hidden="true">¯\_(ツ)_/¯</pre>;

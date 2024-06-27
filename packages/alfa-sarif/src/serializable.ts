@@ -1,7 +1,7 @@
 import { Option, Some, None } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { SARIF } from "./sarif";
+import { SARIF } from "./sarif.js";
 
 const { isFunction, isObject } = Refinement;
 

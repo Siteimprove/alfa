@@ -10,8 +10,8 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Option } from "./option";
-import { None } from "./none";
+import { Option } from "./option.js";
+import { None } from "./none.js";
 
 const { not, test } = Predicate;
 const { compareComparable } = Comparable;
@@ -86,13 +86,27 @@ export class Some<T, O extends Serializable.Options = Serializable.Options>
     return Equatable.equals(value, this._value);
   }
 
+  public some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+
+  public some(predicate: Predicate<T>): boolean;
+
   public some(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
   }
 
+  public none<U extends T>(
+    refinement: Refinement<T, U>,
+  ): this is Some<Exclude<T, U>>;
+
+  public none(predicate: Predicate<T>): boolean;
+
   public none(predicate: Predicate<T>): boolean {
     return test(not(predicate), this._value);
   }
+
+  public every<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+
+  public every(predicate: Predicate<T>): boolean;
 
   public every(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
