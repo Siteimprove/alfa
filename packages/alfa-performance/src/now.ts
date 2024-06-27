@@ -2,8 +2,7 @@
 
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-declare const require: (module: string) => any;
-const perfHooks = require("perf_hooks");
+import perfHooks from "node:perf_hooks";
 
 export let now: Thunk<number>;
 
@@ -12,7 +11,8 @@ export let now: Thunk<number>;
  * Eta-contracting breaks in node 19.0.0 and above. This may be linked to the
  * upgrade to V8 10.7.
  *
- * Date.now actually works without the eta-expansion, keeping it for consistency.
+ * Date.now actually works without the eta-expansion, keeping it for
+ * consistency.
  */
 if (typeof performance !== "undefined") {
   now = () => performance.now();

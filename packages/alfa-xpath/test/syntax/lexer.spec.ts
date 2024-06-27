@@ -1,4 +1,4 @@
-import { Assertions, test } from "@siteimprove/alfa-test";
+import { type Assertions, test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../dist/syntax/lexer.js";
 import { Token } from "../../dist/syntax/token.js";

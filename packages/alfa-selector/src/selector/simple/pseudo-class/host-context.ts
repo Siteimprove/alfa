@@ -1,4 +1,4 @@
-import { Parser as CSSParser } from "@siteimprove/alfa-css";
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Thunk } from "@siteimprove/alfa-thunk";
 

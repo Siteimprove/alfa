@@ -7,7 +7,7 @@ import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
 import { Keyword } from "../keyword.js";
 import { Length } from "../numeric/index.js";
-import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";
 
 import * as component from "./component.js";

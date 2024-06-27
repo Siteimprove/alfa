@@ -1,4 +1,4 @@
-import { FunctionMap, registerFunction } from "../function.js";
+import { type FunctionMap, registerFunction } from "../function.js";
 
 import { fn } from "./fn.js";
 

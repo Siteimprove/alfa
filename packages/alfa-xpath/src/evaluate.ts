@@ -10,12 +10,12 @@ import {
 import { Builder } from "./builder.js";
 import { coerceItems } from "./coerce.js";
 import * as d from "./descriptors.js";
-import { Environment, Focus, withFocus } from "./environment.js";
+import { type Environment, type Focus, withFocus } from "./environment.js";
 import { lookupFunction } from "./function.js";
 import { functions } from "./functions/index.js";
 import { matches } from "./matches.js";
 import { Expression } from "./expression.js";
-import { Item, Type, Value } from "./types.js";
+import type { Item, Type, Value } from "./types.js";
 import { walk } from "./walk.js";
 import { Parser } from "./syntax/parser.js";
 

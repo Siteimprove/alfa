@@ -1,7 +1,7 @@
 import { Option, Some, None } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { EARL } from "./earl.js";
+import type { EARL } from "./earl.js";
 
 const { isFunction, isObject } = Refinement;
 

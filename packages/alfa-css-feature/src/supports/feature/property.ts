@@ -5,7 +5,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Feature } from "../../feature.js";
+import type { Feature } from "../../feature.js";
 
 const { delimited, map, option, separated } = Parser;
 

@@ -1,4 +1,4 @@
-import { Keyword, Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Keyword, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Device, Preference } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 

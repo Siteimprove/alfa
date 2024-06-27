@@ -1,4 +1,4 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 /**

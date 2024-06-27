@@ -1,8 +1,8 @@
 import { Bits } from "@siteimprove/alfa-bits";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Functor } from "@siteimprove/alfa-functor";
+import type { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
 const { bit, take, skip } = Bits;

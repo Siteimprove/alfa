@@ -9,7 +9,7 @@ import { Unit } from "../../unit/index.js";
 import { List } from "../collection/index.js";
 
 import { Length, LengthPercentage, Numeric } from "../numeric/index.js";
-import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";
 
 import { Function } from "./function.js";

@@ -1,4 +1,4 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 

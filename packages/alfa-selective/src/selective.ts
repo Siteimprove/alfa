@@ -1,12 +1,12 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
+import type { Applicative } from "@siteimprove/alfa-applicative";
 import type { Callback } from "@siteimprove/alfa-callback";
 import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Functor } from "@siteimprove/alfa-functor";
+import type { Functor } from "@siteimprove/alfa-functor";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Monad } from "@siteimprove/alfa-monad";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Monad } from "@siteimprove/alfa-monad";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 

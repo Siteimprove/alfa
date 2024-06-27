@@ -1,5 +1,5 @@
 import { Length, LengthPercentage, Unit } from "@siteimprove/alfa-css";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 
 import { Style } from "./style.js";
 

@@ -1,6 +1,6 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option, None } from "@siteimprove/alfa-option";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 
 /**
  * @public

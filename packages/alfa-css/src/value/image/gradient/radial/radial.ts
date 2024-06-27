@@ -12,7 +12,7 @@ import {
 
 import { Keyword } from "../../../keyword.js";
 import { Position } from "../../../position/index.js";
-import { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
 import { Value } from "../../../value.js";
 
 import { Item } from "../item/index.js";

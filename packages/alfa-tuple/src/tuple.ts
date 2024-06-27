@@ -1,8 +1,8 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
-import { Comparer } from "@siteimprove/alfa-comparable";
+import type { Comparer } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
@@ -235,9 +235,8 @@ export namespace Tuple {
     return Array.get(tuple, index) as Option<Get<T, I>>;
   }
 
-  export type Has<T extends Tuple, I extends number> = Get<T, I> extends never
-    ? false
-    : true;
+  export type Has<T extends Tuple, I extends number> =
+    Get<T, I> extends never ? false : true;
 
   export function has<T extends Tuple, I extends number>(
     tuple: T,
@@ -279,18 +278,14 @@ export namespace Tuple {
     Empty
   >;
 
-  type InsertInner<
-    T extends Tuple,
-    I extends number,
-    V,
-    S extends Tuple,
-  > = I extends Size<T>
-    ? Append<T, V>
-    : T extends readonly [infer H, ...infer R]
-    ? I extends Size<S>
-      ? [V, H, ...R]
-      : [H, ...InsertInner<R, I, V, Append<S, H>>]
-    : T;
+  type InsertInner<T extends Tuple, I extends number, V, S extends Tuple> =
+    I extends Size<T>
+      ? Append<T, V>
+      : T extends readonly [infer H, ...infer R]
+        ? I extends Size<S>
+          ? [V, H, ...R]
+          : [H, ...InsertInner<R, I, V, Append<S, H>>]
+        : T;
 
   export function insert<T extends Tuple, I extends number, V>(
     tuple: T,

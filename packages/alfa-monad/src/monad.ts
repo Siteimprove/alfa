@@ -1,6 +1,6 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
-import { Functor } from "@siteimprove/alfa-functor";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Applicative } from "@siteimprove/alfa-applicative";
+import type { Functor } from "@siteimprove/alfa-functor";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 
 /**
  * @public

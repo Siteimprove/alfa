@@ -1,7 +1,7 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Length, Number } from "@siteimprove/alfa-css";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 

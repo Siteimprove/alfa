@@ -5,7 +5,7 @@ import { Function as CSSFunction } from "../../syntax/index.js";
 
 import { List } from "../collection/index.js";
 import { Number } from "../numeric/index.js";
-import { Resolvable } from "../resolvable.js";
+import type { Resolvable } from "../resolvable.js";
 
 import { Function } from "./function.js";
 

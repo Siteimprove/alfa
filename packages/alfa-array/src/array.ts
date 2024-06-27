@@ -1,11 +1,15 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Clone } from "@siteimprove/alfa-clone";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import {
+  Comparable,
+  type Comparer,
+  Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";

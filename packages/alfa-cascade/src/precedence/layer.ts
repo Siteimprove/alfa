@@ -1,5 +1,9 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import {
+  Comparable,
+  type Comparer,
+  Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 

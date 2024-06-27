@@ -1,6 +1,10 @@
 import { Callback } from "@siteimprove/alfa-callback";
-import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import type { Collection } from "@siteimprove/alfa-collection";
+import {
+  Comparable,
+  type Comparer,
+  Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";

@@ -14,7 +14,7 @@ import {
 
 import { Token } from "../../syntax/index.js";
 
-import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 
 import { Angle } from "./angle.js";
 import { Integer } from "./integer.js";

@@ -1,4 +1,4 @@
-import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Parser } from "@siteimprove/alfa-parser";
 

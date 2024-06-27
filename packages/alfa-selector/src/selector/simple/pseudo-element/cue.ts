@@ -7,7 +7,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Absolute, Selector } from "../../../selector/index.js";
+import { type Absolute, Selector } from "../../../selector/index.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
 

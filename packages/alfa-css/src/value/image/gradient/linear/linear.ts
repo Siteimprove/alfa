@@ -7,7 +7,7 @@ import {
   Function,
   type Parser as CSSParser,
 } from "../../../../syntax/index.js";
-import { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
 
 import { Value } from "../../../value.js";
 

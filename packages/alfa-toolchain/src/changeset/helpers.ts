@@ -1,5 +1,5 @@
-import { Config, NewChangesetWithCommit } from "@changesets/types";
-import { Packages } from "@manypkg/get-packages";
+import type { Config, NewChangesetWithCommit } from "@changesets/types";
+import type { Packages } from "@manypkg/get-packages";
 import { Result } from "@siteimprove/alfa-result";
 
 /**

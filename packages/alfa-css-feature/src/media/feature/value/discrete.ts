@@ -1,7 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import type { Value } from "./value.js";

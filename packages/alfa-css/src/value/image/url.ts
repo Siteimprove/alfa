@@ -6,7 +6,7 @@ import {
   type Parser as CSSParser,
   Token,
 } from "../../syntax/index.js";
-import { Resolvable } from "../resolvable.js";
+import type { Resolvable } from "../resolvable.js";
 
 import { Value } from "../value.js";
 

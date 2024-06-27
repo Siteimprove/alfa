@@ -5,7 +5,7 @@ import {
   Dimension as BaseDimension,
   Numeric as BaseNumeric,
 } from "../../calculation/numeric/index.js";
-import { Convertible, Unit } from "../../unit/index.js";
+import { type Convertible, Unit } from "../../unit/index.js";
 
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 

@@ -12,6 +12,7 @@
     "strict": true,
     "types": [],
     "verbatimModuleSyntax": true,
+    "ignoreDeprecations": "5.0",
     "importsNotUsedAsValues": "error"
   },
   "files": [],

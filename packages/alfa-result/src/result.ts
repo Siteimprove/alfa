@@ -1,10 +1,10 @@
 import { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
+import type { Foldable } from "@siteimprove/alfa-foldable";
 import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Monad } from "@siteimprove/alfa-monad";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Monad } from "@siteimprove/alfa-monad";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";

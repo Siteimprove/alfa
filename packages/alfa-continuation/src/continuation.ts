@@ -1,5 +1,5 @@
 import { Callback } from "@siteimprove/alfa-callback";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 
 /**
  * @public

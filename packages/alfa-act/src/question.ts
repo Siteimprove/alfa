@@ -1,8 +1,8 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
-import { Functor } from "@siteimprove/alfa-functor";
+import type { Applicative } from "@siteimprove/alfa-applicative";
+import type { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Monad } from "@siteimprove/alfa-monad";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Monad } from "@siteimprove/alfa-monad";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";

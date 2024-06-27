@@ -1,5 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
+import type { Foldable } from "@siteimprove/alfa-foldable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";

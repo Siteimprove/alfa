@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Either, Left, Right } from "@siteimprove/alfa-either";
-import { Equatable } from "@siteimprove/alfa-equatable";
+import { type Either, Left, Right } from "@siteimprove/alfa-either";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -155,7 +155,7 @@ export abstract class Rule<
  * @public
  */
 export namespace Rule {
-  import Applicable = Outcome.Applicable;
+  const { Applicable } = Outcome;
 
   export interface JSON {
     [key: string]: json.JSON;

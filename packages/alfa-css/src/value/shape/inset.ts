@@ -12,7 +12,7 @@ import {
 
 import { Keyword } from "../keyword.js";
 import { LengthPercentage } from "../numeric/index.js";
-import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";
 
 import { BasicShape } from "./basic-shape.js";
