@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
@@ -9,18 +8,18 @@ import { hasComputedStyle, hasPositioningParent } from "../../element/element";
 import { Longhands } from "../..";
 
 const { isElement, hasBox } = Element;
-const { and, or, not, tee } = Predicate;
+const { and, or, not } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Node, boolean>>();
 
 /**
  * Checks if content is not visible due to being scrolled behind a parent scroll container
- * https://developer.mozilla.org/en-US/docs/Glossary/Scroll_container
+ * {@link https://developer.mozilla.org/en-US/docs/Glossary/Scroll_container}
  *
  * @remarks
  * Usually content that can be scrolled into view is considered visible,
  * but in some instances we also want to regard such content as invisible.
- * To check for this stricter form of visibility, use (the negation of) this predicate
+ * To check for this, use (the negation of) this predicate
  * in conjunction with isVisible like in the following example.
  *
  * @example
