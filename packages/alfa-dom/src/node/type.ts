@@ -3,7 +3,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Node } from "../node";
+import { Node } from "../node.js";
 
 /**
  * @public

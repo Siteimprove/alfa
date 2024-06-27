@@ -20,6 +20,10 @@
     "dependency-graph": "package-dependency-graph --config config/package-dependency-graph.ts --exclude-node_modules --graphviz --dot docs/dependency-graph.dot --png docs/dependency-graph.png",
     "knip": "knip --config config/knip.ts"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],

@@ -1,8 +1,8 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser } from "../syntax";
+import { type Parser as CSSParser } from "../syntax/index.js";
 
-import { Keyword } from "./keyword";
+import { Keyword } from "./keyword.js";
 
 const { either } = Parser;
 

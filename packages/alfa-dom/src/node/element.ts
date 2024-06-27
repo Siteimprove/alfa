@@ -10,20 +10,20 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Namespace } from "../namespace";
-import { Node } from "../node";
+import { Namespace } from "../namespace.js";
+import { Node } from "../node.js";
 
-import { Block } from "../style/block";
-import { Declaration } from "../style/declaration";
+import { Block } from "../style/block.js";
+import { Declaration } from "../style/declaration.js";
 
-import { Attribute } from "./attribute";
-import { Document } from "./document";
-import { Shadow } from "./shadow";
-import { Slot } from "./slot";
-import { Slotable } from "./slotable";
+import { Attribute } from "./attribute.js";
+import { Document } from "./document.js";
+import { Shadow } from "./shadow.js";
+import { Slot } from "./slot.js";
+import { Slotable } from "./slotable.js";
 
-import * as helpers from "./element/input-type";
-import * as predicate from "./element/predicate";
+import * as helpers from "./element/input-type.js";
+import * as predicate from "./element/predicate.js";
 
 const { isEmpty } = Iterable;
 const { not } = Predicate;

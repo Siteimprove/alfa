@@ -5,7 +5,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Declaration } from "./declaration";
+import { Declaration } from "./declaration.js";
 
 /**
  * @public

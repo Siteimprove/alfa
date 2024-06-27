@@ -11,8 +11,8 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import { None } from "./none";
-import { Some } from "./some";
+import { None } from "./none.js";
+import { Some } from "./some.js";
 
 /**
  * @public

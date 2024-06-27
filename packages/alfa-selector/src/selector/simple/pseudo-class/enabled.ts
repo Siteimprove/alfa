@@ -1,7 +1,7 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Context } from "../../../context";
-import { PseudoClassSelector } from "./pseudo-class";
+import { Context } from "../../../context.js";
+import { PseudoClassSelector } from "./pseudo-class.js";
 
 const { hasName } = Element;
 const { and, not, test } = Predicate;

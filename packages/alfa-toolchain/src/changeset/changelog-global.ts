@@ -7,7 +7,7 @@ import { getPackages } from "@manypkg/get-packages";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-import { type ChangelogFunctions, getConfigOption, Error } from "./helpers";
+import { type ChangelogFunctions, getConfigOption, Error } from "./helpers.js";
 
 import resolveFrom = require("resolve-from");
 

@@ -3,8 +3,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 const { either } = Parser;
 

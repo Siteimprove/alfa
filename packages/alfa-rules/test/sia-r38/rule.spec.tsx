@@ -4,11 +4,11 @@ import { test } from "@siteimprove/alfa-test";
 
 import { None } from "@siteimprove/alfa-option";
 
-import R38, { Outcomes } from "../../dist/sia-r38/rule";
+import R38, { Outcomes } from "../../dist/sia-r38/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { passed, cantTell } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { oracle } from "../common/oracle.js";
+import { passed, cantTell } from "../common/outcome.js";
 
 test("evaluate() passes when some atomic rules are passing", async (t) => {
   const target = (

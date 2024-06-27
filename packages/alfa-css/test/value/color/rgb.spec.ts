@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { RGB } from "../../../dist";
+import { RGB } from "../../../dist/index.js";
 
-import { parser, parserUnsafe } from "../../common/parse";
+import { parser, parserUnsafe } from "../../common/parse.js";
 
 const parse = parserUnsafe(RGB.parse);
 const parseErr = parser(RGB.parse);

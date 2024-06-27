@@ -1,6 +1,6 @@
-import { Environment } from "./environment";
-import { evaluate } from "./evaluate";
-import { Item, TypeFor, Value } from "./types";
+import { Environment } from "./environment.js";
+import { evaluate } from "./evaluate.js";
+import { Item, TypeFor, Value } from "./types.js";
 
 /**
  * @internal

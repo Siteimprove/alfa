@@ -2,13 +2,13 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R55, { Outcomes, WithRoleAndName } from "../../dist/sia-r55/rule";
+import R55, { Outcomes, WithRoleAndName } from "../../dist/sia-r55/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { passed, failed, inapplicable, cantTell } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { oracle } from "../common/oracle.js";
+import { passed, failed, inapplicable, cantTell } from "../common/outcome.js";
 
-import { Group } from "../../dist/common/act/group";
+import { Group } from "../../dist/common/act/group.js";
 
 test("evaluate() cannot tell when same landmarks have same names", async (t) => {
   const aside1 = <aside aria-label="More information" id="author" />;

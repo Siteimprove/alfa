@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Query } from "../../../dist";
+import { Query } from "../../../dist/index.js";
 
 const { getElementDescendants } = Query;
 

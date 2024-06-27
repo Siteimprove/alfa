@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R77, { Outcomes } from "../../dist/sia-r77/rule";
+import R77, { Outcomes } from "../../dist/sia-r77/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test("evaluate() passes a <table> element where its data cells are assigned to one header cell", async (t) => {
   const target1 = <td>8-17</td>;

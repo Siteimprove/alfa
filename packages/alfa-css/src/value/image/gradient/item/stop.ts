@@ -2,12 +2,12 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Parser as CSSParser, Token } from "../../../../syntax";
+import { Parser as CSSParser, Token } from "../../../../syntax/index.js";
 
-import { Color } from "../../../color";
-import { LengthPercentage } from "../../../numeric";
-import { PartiallyResolvable, Resolvable } from "../../../resolvable";
-import { Value } from "../../../value";
+import { Color } from "../../../color/index.js";
+import { LengthPercentage } from "../../../numeric/index.js";
+import { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
+import { Value } from "../../../value.js";
 
 const { either, pair, map, left, right } = Parser;
 

@@ -1,1 +1,1 @@
-export * from "./equatable";
+export * from "./equatable.js";

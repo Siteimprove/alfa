@@ -10,9 +10,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasDisplaySize, hasInputType } = Element;

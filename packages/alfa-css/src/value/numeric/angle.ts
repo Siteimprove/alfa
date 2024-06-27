@@ -2,16 +2,16 @@ import { Comparable } from "@siteimprove/alfa-comparable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import { Angle as BaseAngle } from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Converter, Unit } from "../../unit";
+import { Math } from "../../calculation/index.js";
+import { Angle as BaseAngle } from "../../calculation/numeric/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { Converter, Unit } from "../../unit/index.js";
 
-import { Resolvable } from "../resolvable";
+import { Resolvable } from "../resolvable.js";
 
-import { Dimension } from "./dimension";
-import { Length } from "./length";
-import type { Numeric } from "./numeric";
+import { Dimension } from "./dimension.js";
+import { Length } from "./length.js";
+import type { Numeric } from "./numeric.js";
 
 const { either, map } = Parser;
 

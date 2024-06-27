@@ -2,11 +2,11 @@ import { Length } from "@siteimprove/alfa-css";
 import { h, Namespace } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R93 from "../../dist/sia-r93/rule";
-import { Outcomes } from "../../dist/common/expectation/is-wide-enough";
+import R93 from "../../dist/sia-r93/rule.js";
+import { Outcomes } from "../../dist/common/expectation/is-wide-enough.js";
 
-import { evaluate } from "../common/evaluate";
-import { failed, inapplicable, passed } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { failed, inapplicable, passed } from "../common/outcome.js";
 
 test("evaluate() passes on large enough value", async (t) => {
   const declaration = h.declaration("line-height", "1.5em", true);

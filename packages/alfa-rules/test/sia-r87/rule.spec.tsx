@@ -4,11 +4,11 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Option } from "@siteimprove/alfa-option";
 
-import R87, { Outcomes } from "../../dist/sia-r87/rule";
+import R87, { Outcomes } from "../../dist/sia-r87/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { cantTell, passed, failed } from "../common/outcome";
-import { oracle } from "../common/oracle";
+import { evaluate } from "../common/evaluate.js";
+import { cantTell, passed, failed } from "../common/outcome.js";
+import { oracle } from "../common/oracle.js";
 
 test(`evaluate() passes a document whose first tabbable link references an
       element with a role of main`, async (t) => {

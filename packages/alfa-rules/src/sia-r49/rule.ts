@@ -8,10 +8,10 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { Question } from "../common/act/question";
+import { expectation } from "../common/act/expectation.js";
+import { Question } from "../common/act/question.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasNonEmptyAccessibleName, isPerceivableForAll } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;

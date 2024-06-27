@@ -1,7 +1,7 @@
 import { Specificity } from "@siteimprove/alfa-selector";
 import { test } from "@siteimprove/alfa-test";
 
-import { Layer, Origin, Precedence } from "../dist/precedence";
+import { Layer, Origin, Precedence } from "../dist/index.js";
 
 // The name and importance do not matter at this point, only the order.
 const lowLayer = Layer.of("foo", false).withOrder(1);

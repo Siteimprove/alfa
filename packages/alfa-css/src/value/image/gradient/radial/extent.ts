@@ -2,11 +2,11 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import { Parser as CSSParser, Token } from "../../../../syntax";
+import { Parser as CSSParser, Token } from "../../../../syntax/index.js";
 
-import { Keyword } from "../../../keyword";
-import { Resolvable } from "../../../resolvable";
-import { Value } from "../../../value";
+import { Keyword } from "../../../keyword.js";
+import { Resolvable } from "../../../resolvable.js";
+import { Value } from "../../../value.js";
 
 const { map } = Parser;
 

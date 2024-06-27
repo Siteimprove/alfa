@@ -1,1 +1,1 @@
-export * from "./fnv";
+export * from "./fnv.js";

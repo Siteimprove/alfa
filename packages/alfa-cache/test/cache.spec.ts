@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { None, Some } from "@siteimprove/alfa-option";
-import { Cache } from "../dist/cache";
+import { Cache } from "../dist/cache.js";
 
 const foo = {};
 const bar = {};

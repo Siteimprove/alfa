@@ -10,12 +10,12 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Cell } from "./cell";
-import { Column } from "./column";
-import { Row } from "./row";
-import { Group } from "./group";
-import { Slot } from "./slot";
-import { Scope } from "./scope";
+import { Cell } from "./cell.js";
+import { Column } from "./column.js";
+import { Row } from "./row.js";
+import { Group } from "./group.js";
+import { Slot } from "./slot.js";
+import { Scope } from "./scope.js";
 
 const { isNaN } = Number;
 const { clamp } = Real;

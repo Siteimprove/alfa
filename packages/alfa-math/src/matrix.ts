@@ -1,4 +1,4 @@
-import { Real } from "./real";
+import { Real } from "./real.js";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Matrix_(mathematics)}

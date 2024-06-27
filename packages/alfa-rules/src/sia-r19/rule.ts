@@ -15,10 +15,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/expectation";
-import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional";
+import { expectation } from "../common/act/expectation.js";
+import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasNamespace } = Element;
 const { isEmpty } = Iterable;

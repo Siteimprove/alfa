@@ -1,6 +1,6 @@
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
-import Base from "./border-top-style";
+import Base from "./border-top-style.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-end-style}

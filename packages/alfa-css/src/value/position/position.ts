@@ -3,16 +3,16 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
-import { Keyword } from "../keyword";
-import { Length } from "../numeric";
-import { PartiallyResolvable, Resolvable } from "../resolvable";
-import { Value } from "../value";
+import { Keyword } from "../keyword.js";
+import { Length } from "../numeric/index.js";
+import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
-import * as component from "./component";
-import * as keywords from "./keywords";
-import * as side from "./side";
+import * as component from "./component.js";
+import * as keywords from "./keywords.js";
+import * as side from "./side.js";
 
 const { map, either, pair, right } = Parser;
 

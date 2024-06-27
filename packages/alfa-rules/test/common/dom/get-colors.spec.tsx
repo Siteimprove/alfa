@@ -8,7 +8,7 @@ import { Set } from "@siteimprove/alfa-set";
 import {
   getBackground,
   getForeground,
-} from "../../../dist/common/dom/get-colors";
+} from "../../../dist/common/dom/get-colors.js";
 
 const device = Device.standard();
 

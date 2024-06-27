@@ -3,15 +3,15 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Expression, Math } from "../../calculation";
-import { Length as BaseLength } from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Converter, Unit } from "../../unit";
+import { type Expression, Math } from "../../calculation/index.js";
+import { Length as BaseLength } from "../../calculation/numeric/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import { Converter, Unit } from "../../unit/index.js";
 
-import { Resolvable } from "../resolvable";
+import { Resolvable } from "../resolvable.js";
 
-import { Dimension } from "./dimension";
-import type { Numeric } from "./numeric";
+import { Dimension } from "./dimension.js";
+import type { Numeric } from "./numeric.js";
 
 const { either, map } = Parser;
 

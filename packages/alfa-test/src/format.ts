@@ -1,10 +1,10 @@
 /// <reference types="node" />
 
 import * as assert from "assert";
-import * as chalk from "chalk";
+import chalk from "chalk";
 import * as path from "path";
 
-import { stack } from "./stack";
+import { stack } from "./stack.js";
 
 /**
  * @internal

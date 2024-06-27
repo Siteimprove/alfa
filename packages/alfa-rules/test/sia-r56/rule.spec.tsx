@@ -1,12 +1,12 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R56, { Outcomes } from "../../dist/sia-r56/rule";
+import R56, { Outcomes } from "../../dist/sia-r56/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
-import { Group } from "../../dist/common/act/group";
+import { Group } from "../../dist/common/act/group.js";
 
 test("evaluate() passes when same landmarks have different names", async (t) => {
   const author = <aside aria-label="About the author" id="author" />;

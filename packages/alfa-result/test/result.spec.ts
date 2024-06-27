@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Err } from "../dist/err";
-import { Ok } from "../dist/ok";
-import { Result } from "../dist/result";
+import { Err } from "../dist/err.js";
+import { Ok } from "../dist/ok.js";
+import { Result } from "../dist/result.js";
 
 const n: Result<number, string> = Ok.of(1);
 const err: Result<number, string> = Err.of("error");

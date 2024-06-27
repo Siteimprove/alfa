@@ -1,3 +1,3 @@
-export * from "./matrix";
-export * from "./real";
-export * from "./vector";
+export * from "./matrix.js";
+export * from "./real.js";
+export * from "./vector.js";

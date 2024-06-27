@@ -1,1 +1,1 @@
-export * from "./foldable";
+export * from "./foldable.js";

@@ -4,7 +4,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { PartiallyResolvable, Resolvable } from "./resolvable";
+import type { PartiallyResolvable, Resolvable } from "./resolvable.js";
 
 /**
  * Representation of a CSS Value
@@ -90,11 +90,8 @@ export namespace Value {
   /**
    * @internal
    */
-  export type HasCalculation<V extends Array<Value>> = V extends Array<
-    Value<string, false>
-  >
-    ? false
-    : true;
+  export type HasCalculation<V extends Array<Value>> =
+    V extends Array<Value<string, false>> ? false : true;
 
   /**
    * @internal

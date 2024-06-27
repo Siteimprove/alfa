@@ -6,8 +6,8 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/expectation";
-import { Scope, Stability } from "../tags";
+import { expectation } from "../common/act/expectation.js";
+import { Scope, Stability } from "../tags/index.js";
 
 const { getElementDescendants } = Query;
 

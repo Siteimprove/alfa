@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Number } from "../../../dist";
+import { Length, Number } from "../../../dist/index.js";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, serializer } from "../../common/parse.js";
 
 const parse = parser(Number.parse);
 const serialize = serializer(Number.parse);

@@ -2,11 +2,11 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R83, { Outcomes } from "../../dist/sia-r83/rule";
+import R83, { Outcomes } from "../../dist/sia-r83/rule.js";
 
 import { Device } from "@siteimprove/alfa-device";
-import { evaluate } from "../common/evaluate";
-import { failed, inapplicable, passed } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { failed, inapplicable, passed } from "../common/outcome.js";
 
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
   const target = h.text("Hello world");

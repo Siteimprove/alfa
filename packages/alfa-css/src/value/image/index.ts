@@ -1,3 +1,3 @@
-export * from "./gradient";
-export * from "./image";
-export * from "./url";
+export * from "./gradient/index.js";
+export * from "./image.js";
+export * from "./url.js";

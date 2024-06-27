@@ -7,8 +7,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Either } from "./either";
-import { Right } from "./right";
+import { Either } from "./either.js";
+import { Right } from "./right.js";
 
 /**
  * @public

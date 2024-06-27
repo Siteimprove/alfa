@@ -5,7 +5,7 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Context } from "@siteimprove/alfa-selector";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Style } from "../../style";
+import { Style } from "../../style.js";
 
 const { isReplaced, isElement } = Element;
 

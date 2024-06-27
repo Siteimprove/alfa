@@ -1,1 +1,1 @@
-export * from "./trilean";
+export * from "./trilean.js";

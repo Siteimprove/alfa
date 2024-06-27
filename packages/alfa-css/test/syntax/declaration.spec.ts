@@ -1,7 +1,7 @@
 import { Assertions, test } from "@siteimprove/alfa-test";
 
-import { Lexer } from "../../dist/syntax/lexer";
-import { Declaration } from "../../dist/syntax/declaration";
+import { Lexer } from "../../dist/syntax/lexer.js";
+import { Declaration } from "../../dist/syntax/declaration.js";
 
 function consume(t: Assertions, input: string, expected: Declaration.JSON) {
   t.deepEqual(

@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, LengthPercentage, Tuple } from "../../../dist";
+import { Length, LengthPercentage, Tuple } from "../../../dist/index.js";
 
-import { parserUnsafe } from "../../common/parse";
+import { parserUnsafe } from "../../common/parse.js";
 
 const parse = parserUnsafe(LengthPercentage.parse);
 

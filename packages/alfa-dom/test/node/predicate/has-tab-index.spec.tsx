@@ -1,5 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
-import { hasTabIndex } from "../../../dist/node/element/predicate/has-tab-index";
+import { hasTabIndex } from "../../../dist/node/element/predicate/has-tab-index.js";
 
 const button = <button>lorem</button>;
 const span = <span tabindex="1">ipsum</span>;

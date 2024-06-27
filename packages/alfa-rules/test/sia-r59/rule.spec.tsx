@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R59, { Outcomes } from "../../dist/sia-r59/rule";
+import R59, { Outcomes } from "../../dist/sia-r59/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { failed, inapplicable, passed } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { failed, inapplicable, passed } from "../common/outcome.js";
 
 test("evaluate() passes a document with implicit heading", async (t) => {
   const document = h.document([

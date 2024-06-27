@@ -4,4 +4,4 @@
  *
  * @packageDocumentation
  */
-export * from "./applicative";
+export * from "./applicative.js";

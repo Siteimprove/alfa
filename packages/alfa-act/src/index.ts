@@ -5,13 +5,13 @@
  * @packageDocumentation
  */
 
-export * from "./audit";
-export * from "./cache";
-export * from "./diagnostic";
-export * from "./interview";
-export * from "./oracle";
-export * from "./outcome";
-export * from "./question";
-export * from "./requirement";
-export * from "./rule";
-export * from "./tag";
+export * from "./audit.js";
+export * from "./cache.js";
+export * from "./diagnostic.js";
+export * from "./interview.js";
+export * from "./oracle.js";
+export * from "./outcome.js";
+export * from "./question.js";
+export * from "./requirement.js";
+export * from "./rule.js";
+export * from "./tag.js";

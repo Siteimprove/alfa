@@ -3,8 +3,8 @@ import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import { Style } from "../../dist/style";
-import { cascaded } from "../common";
+import { Style } from "../../dist/style.js";
+import { cascaded } from "../common.js";
 
 const device = Device.standard();
 

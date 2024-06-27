@@ -8,7 +8,7 @@ import { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-import { Color } from "./color";
+import { Color } from "./color.js";
 
 // Extended diagnostic for getColor
 

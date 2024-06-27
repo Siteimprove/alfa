@@ -7,8 +7,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { Scope, Stability } from "../tags";
+import { expectation } from "../common/act/expectation.js";
+import { Scope, Stability } from "../tags/index.js";
 
 const { equals } = Predicate;
 const { hasAttribute, hasName, isElement } = Element;

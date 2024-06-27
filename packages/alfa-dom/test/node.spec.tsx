@@ -6,8 +6,8 @@ import { Option } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { h } from "../dist";
-import { Attribute, Document, Element, Node, Shadow } from "../dist";
+import { h } from "../dist/index.js";
+import { Attribute, Document, Element, Node, Shadow } from "../dist/index.js";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;

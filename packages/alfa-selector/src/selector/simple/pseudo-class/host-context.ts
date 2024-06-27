@@ -2,11 +2,11 @@ import { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Context } from "../../../context";
-import { Specificity } from "../../../specificity";
-import type { Compound, Simple } from "../../index";
+import { Context } from "../../../context.js";
+import { Specificity } from "../../../specificity.js";
+import type { Compound, Simple } from "../../index.js";
 
-import { WithSelector } from "./pseudo-class";
+import { WithSelector } from "./pseudo-class.js";
 
 /**
  * {@link https://drafts.csswg.org/css-scoping-1/#selectordef-host-context}

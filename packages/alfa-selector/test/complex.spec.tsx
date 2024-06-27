@@ -1,8 +1,8 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { Combinator } from "../dist";
-import { parse, serialize } from "./parser";
+import { Combinator } from "../dist/index.js";
+import { parse, serialize } from "./parser.js";
 
 test(".parse() parses a single descendant selector", (t) => {
   t.deepEqual(serialize("div .foo"), {

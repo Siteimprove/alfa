@@ -6,7 +6,7 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Sheet } from "./sheet";
+import { Sheet } from "./sheet.js";
 
 import {
   FontFaceRule,
@@ -19,7 +19,7 @@ import {
   PageRule,
   StyleRule,
   SupportsRule,
-} from "..";
+} from "../index.js";
 
 /**
  * @public

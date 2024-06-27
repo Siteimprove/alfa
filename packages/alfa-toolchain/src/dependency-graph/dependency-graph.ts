@@ -4,12 +4,12 @@ import { Set } from "@siteimprove/alfa-set";
 
 import type { Package } from "@manypkg/get-packages";
 import * as fs from "node:fs";
-import * as madge from "madge";
+import madge from "madge";
 import * as path from "node:path";
 import * as gv from "ts-graphviz";
 import * as adapter from "@ts-graphviz/adapter";
 
-import { Rainbow } from "./rainbow";
+import { Rainbow } from "./rainbow.js";
 
 /**
  * Build the dependency graph of a module.
@@ -38,7 +38,7 @@ import { Rainbow } from "./rainbow";
  *   the
  *   inter-directory edges ending in a known position.
  * * Each directory is assigned a random color, evenly spaced on the "rainbow
- *   spectrum". The name node, the index.ts node, and all inter-directory edges
+ *   spectrum". The name node, the common.ts node, and all inter-directory edges
  *   inherit that color, as a visual help.
  * * Type dependencies are dotted.
  * * files forming a circular true dependency are colored in red; these should

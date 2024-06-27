@@ -1,5 +1,5 @@
-import * as elementDescendants from "./element-descendants";
-import * as elementIdMap from "./element-id-map";
+import * as elementDescendants from "./element-descendants.js";
+import * as elementIdMap from "./element-id-map.js";
 
 /**
  * @public

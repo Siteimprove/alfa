@@ -1,7 +1,7 @@
 import { Keyword, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
 const { delimited, map, option, takeBetween } = Parser;
 

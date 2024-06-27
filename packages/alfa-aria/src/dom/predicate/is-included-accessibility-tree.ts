@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Node as ariaNode } from "../..";
+import { Node as ariaNode } from "../../index.js";
 
 /**
  * Check if a node is included in the accessibility tree.

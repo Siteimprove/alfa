@@ -1,6 +1,6 @@
-import { Element } from "./element";
-import { Shadow } from "./shadow";
-import { Slotable } from "./slotable";
+import { Element } from "./element.js";
+import { Shadow } from "./shadow.js";
+import { Slotable } from "./slotable.js";
 
 /**
  * @public

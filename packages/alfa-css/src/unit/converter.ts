@@ -1,4 +1,4 @@
-import { Unit } from "./unit";
+import { Unit } from "./unit.js";
 
 const { PI } = Math;
 

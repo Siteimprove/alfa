@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
 
-import { Node } from "../dist";
+import { Node } from "../dist/index.js";
 
 const device = Device.standard();
 

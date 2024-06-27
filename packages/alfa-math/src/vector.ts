@@ -1,4 +1,4 @@
-import { Real } from "./real";
+import { Real } from "./real.js";
 
 const { sqrt } = Math;
 

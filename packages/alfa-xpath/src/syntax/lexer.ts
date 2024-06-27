@@ -4,7 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "./token";
+import { Token } from "./token.js";
 
 const { pow } = Math;
 const { fromCharCode } = String;

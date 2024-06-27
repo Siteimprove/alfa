@@ -4,7 +4,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import type { Value } from "./value";
+import type { Value } from "./value.js";
 
 /**
  * A non-numerical value, e.g., orientation.

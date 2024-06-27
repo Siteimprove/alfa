@@ -2,8 +2,8 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasAccessibleName } from "./has-accessible-name";
-import { hasValue } from "../../name/predicate/has-value";
+import { hasAccessibleName } from "./has-accessible-name.js";
+import { hasValue } from "../../name/predicate/has-value.js";
 
 /**
  * @public

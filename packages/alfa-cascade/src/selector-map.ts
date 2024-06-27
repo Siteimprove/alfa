@@ -27,9 +27,9 @@ import {
 
 import * as json from "@siteimprove/alfa-json";
 
-import { AncestorFilter } from "./ancestor-filter";
-import { Block } from "./block";
-import { Layer, type Order } from "./precedence";
+import { AncestorFilter } from "./ancestor-filter.js";
+import { Block } from "./block.js";
+import { Layer, type Order } from "./precedence/index.js";
 
 const { equals, property } = Predicate;
 const { and } = Refinement;

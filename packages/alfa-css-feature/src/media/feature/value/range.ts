@@ -7,9 +7,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Bound } from "./bound";
-import { Discrete } from "./discrete";
-import type { Value } from "./value";
+import { Bound } from "./bound.js";
+import { Discrete } from "./discrete.js";
+import type { Value } from "./value.js";
 
 /**
  * A range, with an optional minimum and maximum bound, both of which may be

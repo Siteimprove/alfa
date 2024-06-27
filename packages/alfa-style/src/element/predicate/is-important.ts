@@ -2,9 +2,9 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import type { Longhands } from "../../longhands";
+import type { Longhands } from "../../longhands.js";
 
-import { hasComputedStyle } from "./has-computed-style";
+import { hasComputedStyle } from "./has-computed-style.js";
 
 /**
  * @public

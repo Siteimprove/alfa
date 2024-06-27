@@ -3,12 +3,12 @@ import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import R31 from "../../dist/sia-r31/rule";
-import { Outcomes } from "../../dist/common/expectation/media-text-alternative";
+import R31 from "../../dist/sia-r31/rule.js";
+import { Outcomes } from "../../dist/common/expectation/media-text-alternative.js";
 
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { cantTell, failed, inapplicable, passed } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { oracle } from "../common/oracle.js";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome.js";
 
 test(`evaluate() passes a video that is labelled as alternative for text`, async (t) => {
   const target = <video src="foo.mp4" />;

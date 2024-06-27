@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R3, { Outcomes } from "../../dist/sia-r3/rule";
+import R3, { Outcomes } from "../../dist/sia-r3/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test("evaluate() passes a single id attribute.", async (t) => {
   const target = <div id="my-div">This is my first element</div>;

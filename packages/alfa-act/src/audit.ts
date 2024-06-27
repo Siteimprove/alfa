@@ -5,11 +5,11 @@ import { List } from "@siteimprove/alfa-list";
 import { None } from "@siteimprove/alfa-option";
 import type { Performance } from "@siteimprove/alfa-performance";
 
-import { Cache } from "./cache";
-import type { Oracle } from "./oracle";
-import type { Outcome } from "./outcome";
-import type { Question } from "./question";
-import type { Rule } from "./rule";
+import { Cache } from "./cache.js";
+import type { Oracle } from "./oracle.js";
+import type { Outcome } from "./outcome.js";
+import type { Question } from "./question.js";
+import type { Rule } from "./rule.js";
 
 /**
  * @public

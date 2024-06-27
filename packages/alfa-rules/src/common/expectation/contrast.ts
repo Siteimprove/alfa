@@ -6,13 +6,13 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
 
-import { expectation } from "../act/expectation";
-import { Group } from "../act/group";
-import { Question } from "../act/question";
-import { Contrast as Diagnostic } from "../diagnostic/contrast";
-import { ColorError, getBackground, getForeground } from "../dom/get-colors";
-import { Contrast as Outcomes } from "../outcome/contrast";
-import { isLargeText } from "../predicate";
+import { expectation } from "../act/expectation.js";
+import { Group } from "../act/group.js";
+import { Question } from "../act/question.js";
+import { Contrast as Diagnostic } from "../diagnostic/contrast.js";
+import { ColorError, getBackground, getForeground } from "../dom/get-colors.js";
+import { Contrast as Outcomes } from "../outcome/contrast.js";
+import { isLargeText } from "../predicate.js";
 
 const { isElement } = Element;
 const { flatMap, map, takeWhile } = Iterable;

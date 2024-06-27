@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasComputedStyle } from "./has-computed-style";
+import { hasComputedStyle } from "./has-computed-style.js";
 
 const { equals } = Predicate;
 

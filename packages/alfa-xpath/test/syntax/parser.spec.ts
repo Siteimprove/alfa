@@ -1,7 +1,7 @@
 import { Assertions, test } from "@siteimprove/alfa-test";
 
-import { Expression } from "../../dist/expression";
-import { Parser } from "../../dist/syntax/parser";
+import { Expression } from "../../dist/expression.js";
+import { Parser } from "../../dist/syntax/parser.js";
 
 function parse(t: Assertions, input: string, expected: Expression.JSON) {
   t.deepEqual(Parser.parse(input).getUnsafe().toJSON(), expected, input);

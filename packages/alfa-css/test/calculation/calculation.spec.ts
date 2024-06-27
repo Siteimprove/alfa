@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Math } from "../../dist";
-import { parser, parserUnsafe, serializer } from "../common/parse";
+import { Math } from "../../dist/index.js";
+import { parser, parserUnsafe, serializer } from "../common/parse.js";
 
 const parseErr = parser(Math.parse);
 const parse = parserUnsafe(Math.parse);

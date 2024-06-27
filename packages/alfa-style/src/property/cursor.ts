@@ -8,8 +8,8 @@ import {
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 const { left, map, option, pair, right, separated, zeroOrMore } = Parser;
 const { parseComma, parseWhitespace } = Token;

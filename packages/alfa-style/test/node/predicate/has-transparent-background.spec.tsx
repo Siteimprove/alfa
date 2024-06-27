@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import { hasTransparentBackground } from "../../../dist/element/predicate/has-transparent-background";
+import { hasTransparentBackground } from "../../../dist/element/predicate/has-transparent-background.js";
 
 const device = Device.standard();
 

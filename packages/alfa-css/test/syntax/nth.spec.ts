@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer } from "../../dist/syntax/lexer";
-import { Nth } from "../../dist/syntax/nth";
+import { Lexer } from "../../dist/syntax/lexer.js";
+import { Nth } from "../../dist/syntax/nth.js";
 
 function parse(input: string) {
   return Nth.parse(Lexer.lex(input)).map(([, nth]) => nth.toJSON());

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 test(`#cascaded() parses \`font-variant: oldstyle-nums ruby
      historical-ligatures diagonal-fractions ordinal contextual slashed-zero\``, (t) => {

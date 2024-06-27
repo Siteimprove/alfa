@@ -3,12 +3,12 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Real } from "@siteimprove/alfa-math";
 
-import { Math } from "../../calculation";
-import { Numeric as BaseNumeric } from "../../calculation/numeric";
+import { Math } from "../../calculation/index.js";
+import { Numeric as BaseNumeric } from "../../calculation/numeric/index.js";
 
-import type { Resolvable } from "../resolvable";
-import { Value } from "../value";
-import type { Length } from "./length";
+import type { Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
+import type { Length } from "./length.js";
 
 /**
  * @public

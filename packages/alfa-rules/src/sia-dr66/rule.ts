@@ -3,12 +3,12 @@ import { Text } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { Question } from "../common/act/question";
-import { nonDisabledTexts } from "../common/applicability/non-disabled-texts";
+import { Question } from "../common/act/question.js";
+import { nonDisabledTexts } from "../common/applicability/non-disabled-texts.js";
 
-import { hasSufficientContrastDeprecated } from "../common/expectation/contrast";
+import { hasSufficientContrastDeprecated } from "../common/expectation/contrast.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 /**
  * @deprecated Use SIA-R66 version 2 instead

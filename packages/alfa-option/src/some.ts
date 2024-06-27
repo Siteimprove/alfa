@@ -10,8 +10,8 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Option } from "./option";
-import { None } from "./none";
+import { Option } from "./option.js";
+import { None } from "./none.js";
 
 const { not, test } = Predicate;
 const { compareComparable } = Comparable;

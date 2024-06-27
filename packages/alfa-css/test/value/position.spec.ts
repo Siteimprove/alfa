@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Math, Position } from "../../dist";
-import { parserUnsafe, serializer } from "../common/parse";
+import { Length, Math, Position } from "../../dist/index.js";
+import { parserUnsafe, serializer } from "../common/parse.js";
 
 const parse = parserUnsafe(Position.parse());
 const serialize = serializer(Position.parse());

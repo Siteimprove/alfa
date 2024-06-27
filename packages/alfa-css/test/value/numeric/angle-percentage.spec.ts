@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle, AnglePercentage, Length } from "../../../dist";
+import { Angle, AnglePercentage, Length } from "../../../dist/index.js";
 
-import { parser, parserUnsafe, serializer } from "../../common/parse";
+import { parser, parserUnsafe, serializer } from "../../common/parse.js";
 
 const parseErr = parser(AnglePercentage.parse);
 const parse = parserUnsafe(AnglePercentage.parse);

@@ -4,14 +4,14 @@ import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
 // We need to rename Math to avoid collision with the global namespace.
-import { Math as Calculation } from "../../calculation";
-import { Integer as BaseInteger } from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Math as Calculation } from "../../calculation/index.js";
+import { Integer as BaseInteger } from "../../calculation/numeric/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
-import type { Resolvable } from "../resolvable";
-import { Length } from "./length";
+import type { Resolvable } from "../resolvable.js";
+import { Length } from "./length.js";
 
-import { Numeric } from "./numeric";
+import { Numeric } from "./numeric.js";
 
 const { either, map } = Parser;
 

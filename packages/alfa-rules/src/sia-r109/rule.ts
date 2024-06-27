@@ -7,11 +7,11 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { Question } from "../common/act/question";
+import { expectation } from "../common/act/expectation.js";
+import { Question } from "../common/act/question.js";
 
-import { Scope, Stability } from "../tags";
-import { withDocumentElement } from "../common/applicability/with-document-element";
+import { Scope, Stability } from "../tags/index.js";
+import { withDocumentElement } from "../common/applicability/with-document-element.js";
 
 const { hasAttribute } = Element;
 

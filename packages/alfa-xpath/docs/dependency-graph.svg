@@ -166,25 +166,25 @@
 <polygon fill="black" stroke="black" points="705.19,-289.29 714.25,-294.78 710.59,-284.84 705.19,-289.29"/>
 </g>
 <!-- src/environment.ts&#45;&gt;exit_src -->
-<!-- src/functions/index.ts -->
+<!-- src/functions/common.ts -->
 <g id="node10" class="node">
-<title>src/functions/index.ts</title>
+<title>src/functions/common.ts</title>
 <path fill="#ff6c60" stroke="#00ff00" stroke-width="5" d="M801.83,-495C801.83,-495 754.17,-495 754.17,-495 750.33,-495 746.5,-491.17 746.5,-487.33 746.5,-487.33 746.5,-479.67 746.5,-479.67 746.5,-475.83 750.33,-472 754.17,-472 754.17,-472 801.83,-472 801.83,-472 805.67,-472 809.5,-475.83 809.5,-479.67 809.5,-479.67 809.5,-487.33 809.5,-487.33 809.5,-491.17 805.67,-495 801.83,-495"/>
-<text text-anchor="middle" x="778" y="-479.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
+<text text-anchor="middle" x="778" y="-479.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
 </g>
-<!-- src/functions/index.ts&#45;&gt;src/function.ts -->
+<!-- src/functions/common.ts&#45;&gt;src/function.ts -->
 <!-- exit_src/functions -->
-<!-- src/functions/index.ts&#45;&gt;exit_src/functions -->
+<!-- src/functions/common.ts&#45;&gt;exit_src/functions -->
 <!-- src/functions/fn.ts -->
 <g id="node17" class="node">
 <title>src/functions/fn.ts</title>
 <path fill="#ff6c60" stroke="#000000" d="M751.33,-436C751.33,-436 712.67,-436 712.67,-436 708.83,-436 705,-432.17 705,-428.33 705,-428.33 705,-420.67 705,-420.67 705,-416.83 708.83,-413 712.67,-413 712.67,-413 751.33,-413 751.33,-413 755.17,-413 759,-416.83 759,-420.67 759,-420.67 759,-428.33 759,-428.33 759,-432.17 755.17,-436 751.33,-436"/>
 <text text-anchor="middle" x="732" y="-420.8" font-family="Arial" font-size="14.00" fill="#000000">fn.ts</text>
 </g>
-<!-- src/functions/index.ts&#45;&gt;src/functions/fn.ts -->
-<!-- src/functions/index.ts&#45;&gt;src/functions/fn.ts -->
+<!-- src/functions/common.ts&#45;&gt;src/functions/fn.ts -->
+<!-- src/functions/common.ts&#45;&gt;src/functions/fn.ts -->
 <g id="edge82" class="edge">
-<title>src/functions/index.ts&#45;&gt;src/functions/fn.ts</title>
+<title>src/functions/common.ts&#45;&gt;src/functions/fn.ts</title>
 <path fill="none" stroke="black" d="M774.76,-471.78C769.78,-463.9 761.29,-452.99 753.08,-443.75"/>
 <polygon fill="black" stroke="black" points="755.39,-441.1 746.02,-436.17 750.27,-445.88 755.39,-441.1"/>
 </g>
@@ -384,90 +384,90 @@
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
-<!-- src/index.ts -->
+<!-- src/common.ts -->
 <g id="node23" class="node">
-<title>src/index.ts</title>
+<title>src/common.ts</title>
 <path fill="none" stroke="#ff0000" stroke-width="5" d="M414.83,-436C414.83,-436 367.17,-436 367.17,-436 363.33,-436 359.5,-432.17 359.5,-428.33 359.5,-428.33 359.5,-420.67 359.5,-420.67 359.5,-416.83 363.33,-413 367.17,-413 367.17,-413 414.83,-413 414.83,-413 418.67,-413 422.5,-416.83 422.5,-420.67 422.5,-420.67 422.5,-428.33 422.5,-428.33 422.5,-432.17 418.67,-436 414.83,-436"/>
-<text text-anchor="middle" x="391" y="-420.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
+<text text-anchor="middle" x="391" y="-420.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
 </g>
-<!-- src/index.ts&#45;&gt;src/expression.ts -->
-<!-- src/index.ts&#45;&gt;src/expression.ts -->
+<!-- src/common.ts&#45;&gt;src/expression.ts -->
+<!-- src/common.ts&#45;&gt;src/expression.ts -->
 <g id="edge94" class="edge">
-<title>src/index.ts&#45;&gt;src/expression.ts</title>
+<title>src/common.ts&#45;&gt;src/expression.ts</title>
 <path fill="none" stroke="black" d="M359.47,-415.04C319.39,-403.26 252.5,-377.3 224,-326 191.76,-267.99 229.23,-187.06 246.21,-150.19"/>
 <polygon fill="black" stroke="black" points="249.42,-151.57 250.38,-141.02 243.05,-148.68 249.42,-151.57"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/matches.ts -->
-<!-- src/index.ts&#45;&gt;src/matches.ts -->
+<!-- src/common.ts&#45;&gt;src/matches.ts -->
+<!-- src/common.ts&#45;&gt;src/matches.ts -->
 <g id="edge98" class="edge">
-<title>src/index.ts&#45;&gt;src/matches.ts</title>
+<title>src/common.ts&#45;&gt;src/matches.ts</title>
 <path fill="none" stroke="black" d="M398.17,-412.82C412.12,-384.31 439.74,-306.11 449.44,-268.81"/>
 <polygon fill="black" stroke="black" points="452.85,-269.58 451.75,-259.04 446.04,-267.96 452.85,-269.58"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/types.ts -->
-<!-- src/index.ts&#45;&gt;src/types.ts -->
+<!-- src/common.ts&#45;&gt;src/types.ts -->
+<!-- src/common.ts&#45;&gt;src/types.ts -->
 <g id="edge103" class="edge">
-<title>src/index.ts&#45;&gt;src/types.ts</title>
+<title>src/common.ts&#45;&gt;src/types.ts</title>
 <path fill="none" stroke="black" d="M422.52,-424.02C462.52,-423.3 530.24,-416.26 568,-377 589.76,-354.37 581.11,-267.13 577,-236 575.84,-227.25 573.91,-217.7 571.4,-209.55"/>
 <polygon fill="black" stroke="black" points="574.66,-208.29 567.91,-200.13 568.1,-210.72 574.66,-208.29"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/function.ts -->
-<!-- src/index.ts&#45;&gt;src/function.ts -->
+<!-- src/common.ts&#45;&gt;src/function.ts -->
+<!-- src/common.ts&#45;&gt;src/function.ts -->
 <g id="edge96" class="edge">
-<title>src/index.ts&#45;&gt;src/function.ts</title>
+<title>src/common.ts&#45;&gt;src/function.ts</title>
 <path fill="none" stroke="black" d="M422.76,-422.24C466.4,-419.3 545.37,-409.5 603,-377 619.7,-367.58 617.1,-356.72 633,-346 642.49,-339.6 666.43,-329.91 686.76,-321.86"/>
 <polygon fill="black" stroke="black" points="688.06,-325.1 696.07,-318.17 685.48,-318.59 688.06,-325.1"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/builder.ts -->
-<!-- src/index.ts&#45;&gt;src/builder.ts -->
+<!-- src/common.ts&#45;&gt;src/builder.ts -->
+<!-- src/common.ts&#45;&gt;src/builder.ts -->
 <g id="edge84" class="edge">
-<title>src/index.ts&#45;&gt;src/builder.ts</title>
+<title>src/common.ts&#45;&gt;src/builder.ts</title>
 <path fill="none" stroke="black" d="M390.04,-412.79C383.89,-393.29 364.53,-351.69 350.46,-327.02"/>
 <polygon fill="black" stroke="black" points="353.31,-324.97 345.17,-318.18 347.3,-328.56 353.31,-324.97"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/coerce.ts -->
-<!-- src/index.ts&#45;&gt;src/coerce.ts -->
+<!-- src/common.ts&#45;&gt;src/coerce.ts -->
+<!-- src/common.ts&#45;&gt;src/coerce.ts -->
 <g id="edge86" class="edge">
-<title>src/index.ts&#45;&gt;src/coerce.ts</title>
+<title>src/common.ts&#45;&gt;src/coerce.ts</title>
 <path fill="none" stroke="black" d="M408.77,-412.7C419.5,-403.46 432.45,-389.67 443,-377 456.63,-360.63 471.07,-341.14 479.74,-326.98"/>
 <polygon fill="black" stroke="black" points="482.87,-328.55 484.75,-318.12 476.78,-325.1 482.87,-328.55"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/descriptors.ts -->
-<!-- src/index.ts&#45;&gt;src/descriptors.ts -->
+<!-- src/common.ts&#45;&gt;src/descriptors.ts -->
+<!-- src/common.ts&#45;&gt;src/descriptors.ts -->
 <g id="edge88" class="edge">
-<title>src/index.ts&#45;&gt;src/descriptors.ts</title>
+<title>src/common.ts&#45;&gt;src/descriptors.ts</title>
 <path fill="none" stroke="black" d="M393.46,-412.81C394.06,-383.3 385.18,-298.72 411,-236 425.95,-199.69 458.83,-167.36 478.97,-148.34"/>
 <polygon fill="black" stroke="black" points="481.6,-150.67 486.49,-141.26 476.81,-145.57 481.6,-150.67"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/environment.ts -->
-<!-- src/index.ts&#45;&gt;src/environment.ts -->
+<!-- src/common.ts&#45;&gt;src/environment.ts -->
+<!-- src/common.ts&#45;&gt;src/environment.ts -->
 <g id="edge90" class="edge">
-<title>src/index.ts&#45;&gt;src/environment.ts</title>
+<title>src/common.ts&#45;&gt;src/environment.ts</title>
 <path fill="none" stroke="black" d="M422.67,-422.76C463.69,-420.49 534.96,-411.54 583,-377 596.31,-367.43 590.28,-356.34 603,-346 622.21,-330.38 638.64,-344.58 655,-326 668.74,-310.39 672.9,-286.44 672.18,-269.3"/>
 <polygon fill="black" stroke="black" points="675.63,-268.72 671.05,-259.17 668.68,-269.5 675.63,-268.72"/>
 </g>
-<!-- src/index.ts&#45;&gt;name_src/syntax -->
+<!-- src/common.ts&#45;&gt;name_src/syntax -->
 <g id="edge99" class="edge">
-<title>src/index.ts&#45;&gt;name_src/syntax</title>
+<title>src/common.ts&#45;&gt;name_src/syntax</title>
 <path fill="none" stroke="#ff0000" d="M359.19,-420.24C316.41,-414.27 241.7,-400.03 182,-377 150.52,-364.86 117.07,-346.49 94.82,-331.68"/>
 <polygon fill="#ff0000" stroke="#ff0000" points="96.8,-328.8 86.58,-326 92.82,-334.56 96.8,-328.8"/>
 </g>
-<!-- src/index.ts&#45;&gt;name_src/syntax -->
-<!-- src/index.ts&#45;&gt;name_src/syntax -->
-<!-- src/index.ts&#45;&gt;src/walk.ts -->
-<!-- src/index.ts&#45;&gt;src/walk.ts -->
+<!-- src/common.ts&#45;&gt;name_src/syntax -->
+<!-- src/common.ts&#45;&gt;name_src/syntax -->
+<!-- src/common.ts&#45;&gt;src/walk.ts -->
+<!-- src/common.ts&#45;&gt;src/walk.ts -->
 <g id="edge105" class="edge">
-<title>src/index.ts&#45;&gt;src/walk.ts</title>
+<title>src/common.ts&#45;&gt;src/walk.ts</title>
 <path fill="none" stroke="black" d="M382.38,-412.79C361.56,-392.6 309.64,-348.72 278.12,-324.46"/>
 <polygon fill="black" stroke="black" points="279.9,-321.42 269.81,-318.18 275.68,-327 279.9,-321.42"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/evaluate.ts -->
-<!-- src/index.ts&#45;&gt;src/evaluate.ts -->
+<!-- src/common.ts&#45;&gt;src/evaluate.ts -->
+<!-- src/common.ts&#45;&gt;src/evaluate.ts -->
 <g id="edge92" class="edge">
-<title>src/index.ts&#45;&gt;src/evaluate.ts</title>
+<title>src/common.ts&#45;&gt;src/evaluate.ts</title>
 <path fill="none" stroke="black" d="M418.31,-412.91C437.99,-404.15 464.21,-391.6 483.47,-381.76"/>
 <polygon fill="black" stroke="black" points="485.31,-384.74 492.58,-377.03 482.09,-378.53 485.31,-384.74"/>
 </g>
-<!-- src/index.ts&#45;&gt;exit_src -->
+<!-- src/common.ts&#45;&gt;exit_src -->
 </g>
 </svg>

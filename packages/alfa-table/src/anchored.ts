@@ -1,6 +1,6 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
-import { Slot } from "./slot";
+import { Slot } from "./slot.js";
 
 /**
  * @internal

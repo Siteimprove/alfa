@@ -2,8 +2,8 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasExplicitRole } from "./has-explicit-role";
-import { hasAccessibleName } from "./has-accessible-name";
+import { hasExplicitRole } from "./has-explicit-role.js";
+import { hasAccessibleName } from "./has-accessible-name.js";
 
 const { hasName, isScopedTo } = Element;
 const { and, not, or } = Predicate;

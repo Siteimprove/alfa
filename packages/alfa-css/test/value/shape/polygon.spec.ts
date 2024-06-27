@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Polygon } from "../../../dist";
-import { parser, serializer } from "../../common/parse";
+import { Polygon } from "../../../dist/index.js";
+import { parser, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Polygon.parse);
 const serialize = serializer(Polygon.parse);

@@ -10,8 +10,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 const { either, filter } = Parser;
 

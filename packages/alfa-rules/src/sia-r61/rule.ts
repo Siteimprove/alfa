@@ -6,10 +6,10 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
-import { withDocumentElement } from "../common/applicability/with-document-element";
+import { Scope, Stability } from "../tags/index.js";
+import { withDocumentElement } from "../common/applicability/with-document-element.js";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement } = Element;

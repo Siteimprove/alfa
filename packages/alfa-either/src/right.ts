@@ -8,8 +8,8 @@ import { Reducer } from "@siteimprove/alfa-reducer";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Either } from "./either";
-import { Left } from "./left";
+import { Either } from "./either.js";
+import { Left } from "./left.js";
 
 /**
  * @public

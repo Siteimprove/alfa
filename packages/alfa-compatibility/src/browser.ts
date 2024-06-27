@@ -1,11 +1,11 @@
-import * as browserslist from "browserslist";
+import browserslist from "browserslist";
 
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Browsers } from "./browser/data";
+import { Browsers } from "./browser/data.js";
 
 /**
  * @public

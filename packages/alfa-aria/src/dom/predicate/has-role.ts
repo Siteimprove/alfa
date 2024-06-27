@@ -2,10 +2,10 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Node } from "../../node";
-import type { Role } from "../../role";
+import { Node } from "../../node.js";
+import type { Role } from "../../role.js";
 
-import { hasName } from "../../role/predicate/has-name";
+import { hasName } from "../../role/predicate/has-name.js";
 
 /**
  * @public

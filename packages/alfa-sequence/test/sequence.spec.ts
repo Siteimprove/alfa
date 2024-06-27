@@ -4,7 +4,7 @@ import { Comparable } from "@siteimprove/alfa-comparable";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Lazy } from "@siteimprove/alfa-lazy";
 
-import { Sequence } from "../dist/sequence";
+import { Sequence } from "../dist/sequence.js";
 
 const array = (length: number) => new Array(length).fill(0).map((_, i) => i);
 

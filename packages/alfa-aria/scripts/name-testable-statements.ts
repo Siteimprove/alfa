@@ -358,7 +358,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Declaration, Document, Element, h } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Name } from "../dist";
+import { Name } from "../dist/index.js";
 
 const { and } = Refinement;
 const { hasId, isElement } = Element;

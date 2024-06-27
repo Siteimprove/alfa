@@ -1,7 +1,7 @@
 import { Length, LengthPercentage, Unit } from "@siteimprove/alfa-css";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
-import { Style } from "./style";
+import { Style } from "./style.js";
 
 /**
  * Resolvers are functions that resolve values to their canonical, computed

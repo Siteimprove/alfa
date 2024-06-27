@@ -3,9 +3,9 @@ import { h } from "@siteimprove/alfa-dom/dist/h";
 
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as Slice from "../../dist/property/border-image-slice";
+import * as Slice from "../../dist/property/border-image-slice.js";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 function slice(
   top: number,

@@ -1,6 +1,6 @@
 import { getPackages } from "@manypkg/get-packages";
 
-import { DependencyGraph } from "./dependency-graph";
+import { DependencyGraph } from "./dependency-graph.js";
 
 const targetPath = process.argv[2] ?? ".";
 

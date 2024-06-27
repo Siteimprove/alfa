@@ -18,14 +18,14 @@ import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
-import { Cache } from "./cache";
-import { Diagnostic } from "./diagnostic";
-import { Interview } from "./interview";
-import type { Oracle } from "./oracle";
-import { Outcome } from "./outcome";
-import type { Question } from "./question";
-import { Requirement } from "./requirement";
-import { Tag } from "./tag";
+import { Cache } from "./cache.js";
+import { Diagnostic } from "./diagnostic.js";
+import { Interview } from "./interview.js";
+import type { Oracle } from "./oracle.js";
+import { Outcome } from "./outcome.js";
+import type { Question } from "./question.js";
+import { Requirement } from "./requirement.js";
+import { Tag } from "./tag.js";
 
 const { flatten, reduce } = Iterable;
 
@@ -323,8 +323,9 @@ export namespace Rule {
                 Event.endApplicability(this),
                 startApplicability,
               );
-              startExpectation = performance?.mark(Event.startExpectation(this))
-                .start;
+              startExpectation = performance?.mark(
+                Event.startExpectation(this),
+              ).start;
             })
             .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {

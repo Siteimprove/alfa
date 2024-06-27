@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Refinement } from "../dist/refinement";
+import { Refinement } from "../dist/refinement.js";
 
 test(".test() evaluates a refinement on a value", (t) => {
   const r: Refinement<string, "foo"> = (value): value is "foo" =>

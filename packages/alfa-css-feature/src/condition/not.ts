@@ -4,9 +4,9 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Feature } from "../feature";
+import type { Feature } from "../feature.js";
 
-import type { Condition } from "./condition";
+import type { Condition } from "./condition.js";
 
 const { delimited, map, option, right } = Parser;
 

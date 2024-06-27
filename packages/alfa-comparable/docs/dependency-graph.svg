@@ -72,33 +72,33 @@
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
-<!-- src/index.ts -->
+<!-- src/common.ts -->
 <g id="node7" class="node">
-<title>src/index.ts</title>
+<title>src/common.ts</title>
 <path fill="none" stroke="#ff0000" stroke-width="5" d="M134.33,-318C134.33,-318 86.67,-318 86.67,-318 82.83,-318 79,-314.17 79,-310.33 79,-310.33 79,-302.67 79,-302.67 79,-298.83 82.83,-295 86.67,-295 86.67,-295 134.33,-295 134.33,-295 138.17,-295 142,-298.83 142,-302.67 142,-302.67 142,-310.33 142,-310.33 142,-314.17 138.17,-318 134.33,-318"/>
-<text text-anchor="middle" x="110.5" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
+<text text-anchor="middle" x="110.5" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
 </g>
-<!-- src/index.ts&#45;&gt;src/comparer.ts -->
-<!-- src/index.ts&#45;&gt;src/comparer.ts -->
+<!-- src/common.ts&#45;&gt;src/comparer.ts -->
+<!-- src/common.ts&#45;&gt;src/comparer.ts -->
 <g id="edge19" class="edge">
-<title>src/index.ts&#45;&gt;src/comparer.ts</title>
+<title>src/common.ts&#45;&gt;src/comparer.ts</title>
 <path fill="none" stroke="black" d="M133.89,-295C146.45,-286.7 160.22,-274.04 166.5,-259 173.67,-241.82 164.27,-222.02 153.05,-207.95"/>
 <polygon fill="black" stroke="black" points="155.61,-205.56 146.35,-200.4 150.37,-210.2 155.61,-205.56"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/comparison.ts -->
-<!-- src/index.ts&#45;&gt;src/comparison.ts -->
+<!-- src/common.ts&#45;&gt;src/comparison.ts -->
+<!-- src/common.ts&#45;&gt;src/comparison.ts -->
 <g id="edge21" class="edge">
-<title>src/index.ts&#45;&gt;src/comparison.ts</title>
+<title>src/common.ts&#45;&gt;src/comparison.ts</title>
 <path fill="none" stroke="black" d="M134.11,-294.83C147.38,-286.36 162.78,-273.56 172.5,-259 187.88,-235.97 188,-227.32 192.5,-200 194.16,-189.91 197.21,-186.07 192.5,-177 185.58,-163.66 172.87,-153.33 159.78,-145.84"/>
 <polygon fill="black" stroke="black" points="161.21,-142.63 150.72,-141.1 157.96,-148.84 161.21,-142.63"/>
 </g>
-<!-- src/index.ts&#45;&gt;src/comparable.ts -->
-<!-- src/index.ts&#45;&gt;src/comparable.ts -->
+<!-- src/common.ts&#45;&gt;src/comparable.ts -->
+<!-- src/common.ts&#45;&gt;src/comparable.ts -->
 <g id="edge17" class="edge">
-<title>src/index.ts&#45;&gt;src/comparable.ts</title>
+<title>src/common.ts&#45;&gt;src/comparable.ts</title>
 <path fill="none" stroke="black" d="M113.47,-294.78C113.08,-287.45 111.17,-277.52 108.61,-268.74"/>
 <polygon fill="black" stroke="black" points="111.88,-267.5 105.34,-259.17 105.26,-269.77 111.88,-267.5"/>
 </g>
-<!-- src/index.ts&#45;&gt;exit_src -->
+<!-- src/common.ts&#45;&gt;exit_src -->
 </g>
 </svg>

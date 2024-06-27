@@ -1,4 +1,4 @@
-import { test } from "../dist/test";
+import { test } from "../dist/test.js";
 
 test("Can test a failing block", async (t) => {
   let failed = false;

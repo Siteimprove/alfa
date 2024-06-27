@@ -1,3 +1,3 @@
-export * from "./context";
-export * from "./selector";
-export * from "./specificity";
+export * from "./context.js";
+export * from "./selector/index.js";
+export * from "./specificity.js";

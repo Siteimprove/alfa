@@ -2,10 +2,10 @@ import { getPackages } from "@manypkg/get-packages";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-import { hasExtractorConfig } from "./has-extractor-config";
-import { validateChangesets } from "./validate-changesets";
-import { validatePackageJson } from "./validate-package-json";
-import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig";
+import { hasExtractorConfig } from "./has-extractor-config.js";
+import { validateChangesets } from "./validate-changesets.js";
+import { validatePackageJson } from "./validate-package-json.js";
+import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig.js";
 
 const targetPath = process.argv[2] ?? ".";
 

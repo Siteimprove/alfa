@@ -11,8 +11,8 @@ import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Err } from "./err";
-import { Result } from "./result";
+import { Err } from "./err.js";
+import { Result } from "./result.js";
 
 const { not, test } = Predicate;
 

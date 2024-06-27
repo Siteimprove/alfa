@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Graph } from "../dist/graph";
+import { Graph } from "../dist/graph.js";
 
 // foo
 // |- bar

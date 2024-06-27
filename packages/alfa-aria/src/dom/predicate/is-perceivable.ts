@@ -3,7 +3,7 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 
-import { isIncludedInTheAccessibilityTree } from "./is-included-accessibility-tree";
+import { isIncludedInTheAccessibilityTree } from "./is-included-accessibility-tree.js";
 
 const { and } = Predicate;
 const { isVisible } = Style;

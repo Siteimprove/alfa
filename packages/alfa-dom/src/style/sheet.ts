@@ -4,7 +4,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Rule } from "./rule";
+import { Rule } from "./rule.js";
 
 /**
  * @public
