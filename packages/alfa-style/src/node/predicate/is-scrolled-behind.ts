@@ -2,101 +2,141 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 
-import { getPositioningParent, hasComputedStyle } from "../../element/element";
+import { hasComputedStyle, hasPositioningParent } from "../../element/element";
+import { Longhands } from "../..";
 
-const { isElement } = Element;
-const { and } = Predicate;
+const { isElement, hasBox } = Element;
+const { and, or, not } = Predicate;
 
-const overflowVisibleX = (device: Device) =>
-  hasComputedStyle(
-    "overflow-x",
-    (overflow) => overflow.value === "visible",
-    device,
-  );
+const cache = Cache.empty<Device, Cache<Node, boolean>>();
 
-const overflowVisibleY = (device: Device) =>
-  hasComputedStyle(
-    "overflow-y",
-    (overflow) => overflow.value === "visible",
-    device,
-  );
-
-const overflowClipX = (device: Device) =>
-  hasComputedStyle(
-    "overflow-x",
-    (overflow) => overflow.value === "clip",
-    device,
-  );
-
-const overflowClipY = (device: Device) =>
-  hasComputedStyle(
-    "overflow-y",
-    (overflow) => overflow.value === "clip",
-    device,
-  );
-
+/**
+ * Checks if content is not visible due to being scrolled behind a parent scroll container
+ * https://developer.mozilla.org/en-US/docs/Glossary/Scroll_container
+ *
+ * @public
+ */
 export function isScrolledBehind(device: Device): Predicate<Node> {
   return function isScrolledBehind(node): boolean {
     return cache.get(device, Cache.empty).get(node, () => {
       if (isElement(node)) {
-        // Is element and scrolled behind?
-        const container = getPositioningParent(node, device);
-
-        if (!container.isSome()) {
-          // There is no container to be scrolled behind in
-          return false;
-        }
-
-        const renderedOutside = and(
-          overflowVisibleX(device),
-          overflowVisibleY(device),
-        );
-        if (renderedOutside(container.get())) {
-          // Content is always visible
-          return false;
-        }
-
-        // If we don't have layout, we cannot know if content is scrolled behind or not.
-        // We assume it is not scrolled behind.
-        const elementBox = node.getBoundingBox(device);
-        const containerBox = container.get().getBoundingBox(device);
-        if (!elementBox.isSome() || !containerBox.isSome()) {
-          return false;
-        }
-
-        const renderedToTheRight = and(
-          overflowVisibleX(device),
-          overflowClipY(device),
-        );
-        if (renderedToTheRight(container.get())) {
-          // Content is visible unless it is completely below container
-          return containerBox.get().bottom < elementBox.get().top;
-        }
-
-        const renderedBelow = and(
-          overflowClipX(device),
-          overflowVisibleY(device),
-        );
-        if (renderedBelow(container.get())) {
-          // Content is visible unless it is completely to the right of the container
-          return containerBox.get().right < elementBox.get().left;
-        }
-
-        if (!containerBox.get().intersects(elementBox.get())) {
-          // The content is not inside the container, i.e. it's scrolled behind
-          return true;
-        }
-
-        // The element is not scrolled behind the parent container,
-        // but it might be scrolled behind an ancestor container.
-        return isScrolledBehind(container.get());
+        return hasBox(
+          (elementBox) =>
+            hasPositioningParent(
+              device,
+              or(
+                // The parent, or one of it's ancestors, is scroll container for the element,
+                isScrollContainerFor(elementBox, device),
+                // or the parent itself is scrolled behind
+                isScrolledBehind,
+              ),
+            )(node),
+          device,
+        )(node);
       } else {
-        // Not an element, check the parent
+        // Not an element, check the parent.
         return node.parent(Node.fullTree).some(isScrolledBehind);
       }
     });
   };
 }
 
-const cache = Cache.empty<Device, Cache<Node, boolean>>();
+const isScrollOrAuto = (
+  overflow:
+    | Longhands.Specified<"overflow-x">
+    | Longhands.Specified<"overflow-y">,
+): boolean => overflow.value === "scroll" || overflow.value === "auto";
+
+const isHidden = (
+  overflow:
+    | Longhands.Specified<"overflow-x">
+    | Longhands.Specified<"overflow-y">,
+): boolean => overflow.value === "hidden";
+
+function isScrollContainerFor(
+  elementBox: Rectangle,
+  device: Device,
+): Predicate<Element> {
+  return function isScrollContainerFor(ancestor): boolean {
+    return and(
+      // Element is in the scroll port, so it's not completely scrolled behind
+      not(hasBox((ancestorBox) => ancestorBox.intersects(elementBox), device)),
+      or(
+        // Element intersects the rectangle to the right stretching to infinity
+        //
+        //    +-------+-------- - -
+        //    |       |  *
+        //    |       |
+        //    +-------+-------- - -
+        //
+        and(
+          hasBox(
+            (ancestorBox) =>
+              Rectangle.of(
+                ancestorBox.top,
+                ancestorBox.right,
+                Infinity,
+                ancestorBox.height,
+              ).intersects(elementBox),
+            device,
+          ),
+          hasComputedStyle("overflow-x", isScrollOrAuto, device),
+          hasComputedStyle("overflow-y", or(isScrollOrAuto, isHidden), device),
+        ),
+        // Element intersects the rectangle below stretching to infinity
+        //
+        //    +-------+
+        //    |       |
+        //    |       |
+        //    +-------+
+        //    |   *   |
+        //    |       |
+        //    .       .
+        //    .       .
+        and(
+          hasBox(
+            (ancestorBox) =>
+              Rectangle.of(
+                ancestorBox.bottom,
+                ancestorBox.left,
+                ancestorBox.width,
+                Infinity,
+              ).intersects(elementBox),
+            device,
+          ),
+          hasComputedStyle("overflow-x", or(isScrollOrAuto, isHidden), device),
+          hasComputedStyle("overflow-y", isScrollOrAuto, device),
+        ),
+        // Element intersects the rectangle to the right and below stretching to infinity
+        //
+        //    +-------+
+        //    |       |
+        //    |       |
+        //    +-------+-------- - -
+        //            |
+        //            |   *
+        //            .
+        //            .
+        and(
+          hasBox(
+            (ancestorBox) =>
+              Rectangle.of(
+                ancestorBox.bottom,
+                ancestorBox.right,
+                Infinity,
+                Infinity,
+              ).intersects(elementBox),
+            device,
+          ),
+          hasComputedStyle("overflow-x", isScrollOrAuto, device),
+          hasComputedStyle("overflow-y", isScrollOrAuto, device),
+        ),
+        // Element is not scrolled behind this container,
+        // but it might be scrolled behind one of the containers ancestors.
+        hasPositioningParent(device, isScrollContainerFor),
+      ),
+    )(ancestor);
+  };
+}
