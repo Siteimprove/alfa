@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
@@ -8,7 +9,7 @@ import { hasComputedStyle, hasPositioningParent } from "../../element/element";
 import { Longhands } from "../..";
 
 const { isElement, hasBox } = Element;
-const { and, or, not } = Predicate;
+const { and, or, not, tee } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Node, boolean>>();
 
@@ -69,83 +70,95 @@ function isScrollContainerFor(
   device: Device,
 ): Predicate<Element> {
   return function isScrollContainerFor(ancestor): boolean {
-    return and(
-      // Element is in the scroll port, so it's not completely scrolled behind
-      not(hasBox((ancestorBox) => ancestorBox.intersects(elementBox), device)),
-      or(
-        // Element intersects the rectangle to the right stretching to infinity
-        //
-        //    +-------+-------- - -
-        //    |       |  *
-        //    |       |
-        //    +-------+-------- - -
-        //
-        and(
-          hasBox(
-            (ancestorBox) =>
-              Rectangle.of(
-                ancestorBox.right,
-                ancestorBox.top,
-                Infinity,
-                ancestorBox.height,
-              ).intersects(elementBox),
-            device,
-          ),
-          hasComputedStyle("overflow-x", isScrollOrAuto, device),
-          hasComputedStyle("overflow-y", or(isScrollOrAuto, isHidden), device),
+    return or(
+      and(
+        // Element is in the scroll port, so it's not completely scrolled behind
+        not(
+          hasBox((ancestorBox) => ancestorBox.intersects(elementBox), device),
         ),
-        // Element intersects the rectangle below stretching to infinity
-        //
-        //    +-------+
-        //    |       |
-        //    |       |
-        //    +-------+
-        //    |   *   |
-        //    |       |
-        //    .       .
-        //    .       .
-        and(
-          hasBox(
-            (ancestorBox) =>
-              Rectangle.of(
-                ancestorBox.left,
-                ancestorBox.bottom,
-                ancestorBox.width,
-                Infinity,
-              ).intersects(elementBox),
-            device,
+        or(
+          // Element intersects the rectangle to the right stretching to infinity
+          //
+          //    +-------+-------- - -
+          //    |       |  *
+          //    |       |
+          //    +-------+-------- - -
+          //
+          and(
+            hasBox(
+              (ancestorBox) =>
+                Rectangle.of(
+                  ancestorBox.right,
+                  ancestorBox.top,
+                  Infinity,
+                  ancestorBox.height,
+                ).intersects(elementBox),
+              device,
+            ),
+            hasComputedStyle("overflow-x", isScrollOrAuto, device),
+            hasComputedStyle(
+              "overflow-y",
+              or(isScrollOrAuto, isHidden),
+              device,
+            ),
           ),
-          hasComputedStyle("overflow-x", or(isScrollOrAuto, isHidden), device),
-          hasComputedStyle("overflow-y", isScrollOrAuto, device),
-        ),
-        // Element intersects the rectangle to the right and below stretching to infinity
-        //
-        //    +-------+
-        //    |       |
-        //    |       |
-        //    +-------+-------- - -
-        //            |
-        //            |   *
-        //            .
-        //            .
-        and(
-          hasBox(
-            (ancestorBox) =>
-              Rectangle.of(
-                ancestorBox.right,
-                ancestorBox.bottom,
-                Infinity,
-                Infinity,
-              ).intersects(elementBox),
-            device,
+          // Element intersects the rectangle below stretching to infinity
+          //
+          //    +-------+
+          //    |       |
+          //    |       |
+          //    +-------+
+          //    |   *   |
+          //    |       |
+          //    .       .
+          //    .       .
+          and(
+            hasBox(
+              (ancestorBox) =>
+                Rectangle.of(
+                  ancestorBox.left,
+                  ancestorBox.bottom,
+                  ancestorBox.width,
+                  Infinity,
+                ).intersects(elementBox),
+              device,
+            ),
+            hasComputedStyle(
+              "overflow-x",
+              or(isScrollOrAuto, isHidden),
+              device,
+            ),
+            hasComputedStyle("overflow-y", isScrollOrAuto, device),
           ),
-          hasComputedStyle("overflow-x", isScrollOrAuto, device),
-          hasComputedStyle("overflow-y", isScrollOrAuto, device),
+          // Element intersects the rectangle to the right and below stretching to infinity
+          //
+          //    +-------+
+          //    |       |
+          //    |       |
+          //    +-------+-------- - -
+          //            |
+          //            |   *
+          //            .
+          //            .
+          and(
+            hasBox(
+              (ancestorBox) =>
+                Rectangle.of(
+                  ancestorBox.right,
+                  ancestorBox.bottom,
+                  Infinity,
+                  Infinity,
+                ).intersects(elementBox),
+              device,
+            ),
+            hasComputedStyle("overflow-x", isScrollOrAuto, device),
+            hasComputedStyle("overflow-y", isScrollOrAuto, device),
+          ),
         ),
-        // Element is not scrolled behind this container,
-        // but it might be scrolled behind one of the containers ancestors.
-        hasPositioningParent(device, isScrollContainerFor),
       ),
+      // Element is not scrolled behind this container,
+      // but it might be scrolled behind one of the containers ancestors.
+      hasPositioningParent(device, isScrollContainerFor),
     )(ancestor);
   };
 }

@@ -2,38 +2,10 @@ import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "../../../src";
 
 import { isScrolledBehind } from "../../../src/node/predicate/is-scrolled-behind";
-import { Style } from "../../../src";
-import { Context } from "@siteimprove/alfa-selector";
-
-// TODO: 3. Element is not scrolled behind its parent and the parent is not scrolled behind,
-//          but the element is scrolled behind the outer ancestor
-//
-//    +----------+
-//    |          |
-//    |  +-------| - - - -+
-//    |  |       |        .
-//    |  |       |  +---+ .
-//    |  |       |  |   | .
-//    |  |       |  +---+ .
-//    |  +-------| - - - -+
-//    |__________|
-//    |<|##____|>|
-//
-// TODO: 4. Element is not scrolled behind its parent, but the parent is scrolled behind
-//
-//    +----------+
-//    |          |
-//    |          | +- - - - -+
-//    |          | .         .
-//    |          | .   +---+ .
-//    |          | .   |   | .
-//    |          | .   +---+ .
-//    |          | +- - - - -+
-//    |__________|
-//    |<|##____|>|
-//
 
 const keywords = ["visible", "hidden", "clip", "scroll", "auto"] as const;
 
@@ -290,6 +262,151 @@ test(`isScrolledBehind() cannot correctly if text content of the scroll containe
   // a bounding box and no parent element other than the scroll container itself,
   // our implementation is not able to detect that it's scrolled behind.
   t.equal(isScrolledBehind(device)(text), false);
+});
+
+test(`isScrolledBehind() is true when element is not scrolled behind its parent,
+      but the parent is scrolled behind`, (t) => {
+  //
+  //    +----------+
+  //    |          |
+  //    |          | +- - - - -+
+  //    |          | .         .
+  //    |          | .   +---+ .
+  //    |          | .   |   | .
+  //    |          | .   +---+ .
+  //    |          | +- - - - -+
+  //    |__________|
+  //    |<|##____|>|
+  //
+
+  const device = Device.standard();
+  const button = (
+    <button
+      box={{
+        device,
+        x: 230,
+        y: 122,
+        width: 50,
+        height: 20,
+      }}
+    >
+      foo
+    </button>
+  );
+  const outer = (
+    <div
+      class="outer"
+      box={{ device, x: 108, y: 100, width: 102, height: 102 }}
+    >
+      <div
+        class="inner"
+        box={{ device, x: 229, y: 121, width: 62, height: 62 }}
+      >
+        {button}
+      </div>
+    </div>
+  );
+
+  h.document(
+    [outer],
+    [
+      h.sheet([
+        h.rule.style("div.outer", {
+          overflow: "auto",
+          margin: "100px 100px",
+          width: "100px",
+          height: "100px",
+        }),
+        h.rule.style("div.inner", {
+          position: "relative",
+          top: "20px",
+          left: "120px",
+          width: "60px",
+          height: "60px",
+        }),
+        h.rule.style("button", {
+          width: "50px",
+          height: "20px",
+        }),
+      ]),
+    ],
+  );
+
+  t.equal(isScrolledBehind(device)(button), true);
+});
+
+test(`isScrolledBehind() is true when element is not scrolled behind its parent,
+      and the parent is not scrolled behind, but the element is scrolled behind
+      the outer ancestor`, (t) => {
+  //
+  //    +----------+
+  //    |          |
+  //    |  +-------| - - - -+
+  //    |  |       |        .
+  //    |  |       |  +---+ .
+  //    |  |       |  |   | .
+  //    |  |       |  +---+ .
+  //    |  +-------| - - - -+
+  //    |__________|
+  //    |<|##____|>|
+  //
+
+  const device = Device.standard();
+  const button = (
+    <button
+      box={{
+        device,
+        x: 240,
+        y: 122,
+        width: 50,
+        height: 20,
+      }}
+    >
+      foo
+    </button>
+  );
+  const outer = (
+    <div
+      class="outer"
+      box={{ device, x: 108, y: 100, width: 102, height: 102 }}
+    >
+      <div
+        class="inner"
+        box={{ device, x: 169, y: 121, width: 122, height: 62 }}
+      >
+        {button}
+      </div>
+    </div>
+  );
+
+  h.document(
+    [outer],
+    [
+      h.sheet([
+        h.rule.style("div.outer", {
+          overflow: "auto",
+          margin: "100px 100px",
+          width: "100px",
+          height: "100px",
+        }),
+        h.rule.style("div.inner", {
+          position: "relative",
+          top: "20px",
+          left: "60px",
+          width: "120px",
+          height: "60px",
+        }),
+        h.rule.style("button", {
+          position: "relative",
+          left: "70px",
+          width: "50px",
+          height: "20px",
+        }),
+      ]),
+    ],
+  );
+
+  t.equal(isScrolledBehind(device)(button), true);
 });
 
 test(`isScrolledBehind() cannot correctly detect if element without layout is scrolled behind`, (t) => {
