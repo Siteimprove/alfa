@@ -4,12 +4,9 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 
 import { isScrolledBehind } from "../../../src/node/predicate/is-scrolled-behind";
-import { hasComputedStyle } from "../../../src/element/element";
 import { Style } from "../../../src";
 import { Context } from "@siteimprove/alfa-selector";
 
-// TODO: 1. Positions
-// TODO: 2. Text
 // TODO: 3. Element is not scrolled behind its parent and the parent is not scrolled behind,
 //          but the element is scrolled behind the outer ancestor
 //
@@ -165,6 +162,134 @@ overflowY=${computedOverflowY} (computed=${computedOverflowY})`,
       }
     }
   }
+});
+
+test(`isScrolledBehind() returns true for text scrolled behind`, (t) => {
+  const device = Device.standard();
+  const text = h.text("foo");
+  const button = (
+    <button
+      box={{
+        device,
+        x: 234,
+        y: 141,
+        width: 50,
+        height: 20,
+      }}
+    >
+      {text}
+    </button>
+  );
+  const div = (
+    <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
+      {button}
+    </div>
+  );
+
+  h.document(
+    [div],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "scroll",
+          margin: "100px 100px",
+          width: "100px",
+          height: "100px",
+        }),
+        h.rule.style("button", {
+          position: "relative",
+          width: "50px",
+          height: "20px",
+          top: "40px",
+          left: "125px",
+        }),
+      ]),
+    ],
+  );
+
+  t.equal(isScrolledBehind(device)(text), true);
+});
+
+test(`isScrolledBehind() returns false for text in scroll port`, (t) => {
+  const device = Device.standard();
+  const text = h.text("foo");
+  const button = (
+    <button
+      box={{
+        device,
+        x: 134,
+        y: 141,
+        width: 50,
+        height: 20,
+      }}
+    >
+      {text}
+    </button>
+  );
+  const div = (
+    <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
+      {button}
+    </div>
+  );
+
+  h.document(
+    [div],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "scroll",
+          margin: "100px 100px",
+          width: "100px",
+          height: "100px",
+        }),
+        h.rule.style("button", {
+          position: "relative",
+          width: "50px",
+          height: "20px",
+          top: "40px",
+          left: "125px",
+        }),
+      ]),
+    ],
+  );
+
+  t.equal(isScrolledBehind(device)(text), false);
+});
+
+test(`isScrolledBehind() cannot correctly if text content of the scroll container is scrolled behind`, (t) => {
+  const device = Device.standard();
+  const text = h.text("foo");
+  const div = (
+    <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      {text}
+    </div>
+  );
+
+  h.document(
+    [div],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "scroll",
+          margin: "100px 100px",
+          width: "100px",
+          height: "100px",
+        }),
+      ]),
+    ],
+  );
+
+  // The text is pushed below the scroll port by the <br />s, but since it doesn't have
+  // a bounding box and no parent element other than the scroll container itself,
+  // our implementation is not able to detect that it's scrolled behind.
+  t.equal(isScrolledBehind(device)(text), false);
 });
 
 test(`isScrolledBehind() cannot correctly detect if element without layout is scrolled behind`, (t) => {
