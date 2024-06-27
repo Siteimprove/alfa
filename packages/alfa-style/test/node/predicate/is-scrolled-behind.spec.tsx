@@ -228,7 +228,7 @@ test(`isScrolledBehind() returns false for text in scroll port`, (t) => {
   t.equal(isScrolledBehind(device)(text), false);
 });
 
-test(`isScrolledBehind() cannot correctly if text content of the scroll container is scrolled behind`, (t) => {
+test(`isScrolledBehind() cannot correctly detect if text content of the scroll container is scrolled behind`, (t) => {
   const device = Device.standard();
   const text = h.text("foo");
   const div = (
