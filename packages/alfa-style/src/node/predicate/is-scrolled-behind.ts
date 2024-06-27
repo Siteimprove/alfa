@@ -16,6 +16,15 @@ const cache = Cache.empty<Device, Cache<Node, boolean>>();
  * Checks if content is not visible due to being scrolled behind a parent scroll container
  * https://developer.mozilla.org/en-US/docs/Glossary/Scroll_container
  *
+ * @remarks
+ * Usually content that can be scrolled into view is considered visible,
+ * but in some instances we also want to regard such content as invisible.
+ * To check for this stricter form of visibility, use (the negation of) this predicate
+ * in conjunction with isVisible like in the following example.
+ *
+ * @example
+ * const isStrictlyVisible = and(isVisible, not(isScrolledBehind));
+ *
  * @public
  */
 export function isScrolledBehind(device: Device): Predicate<Node> {
@@ -75,8 +84,8 @@ function isScrollContainerFor(
           hasBox(
             (ancestorBox) =>
               Rectangle.of(
-                ancestorBox.top,
                 ancestorBox.right,
+                ancestorBox.top,
                 Infinity,
                 ancestorBox.height,
               ).intersects(elementBox),
@@ -99,8 +108,8 @@ function isScrollContainerFor(
           hasBox(
             (ancestorBox) =>
               Rectangle.of(
-                ancestorBox.bottom,
                 ancestorBox.left,
+                ancestorBox.bottom,
                 ancestorBox.width,
                 Infinity,
               ).intersects(elementBox),
@@ -123,8 +132,8 @@ function isScrollContainerFor(
           hasBox(
             (ancestorBox) =>
               Rectangle.of(
-                ancestorBox.bottom,
                 ancestorBox.right,
+                ancestorBox.bottom,
                 Infinity,
                 Infinity,
               ).intersects(elementBox),

@@ -4,160 +4,168 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 
 import { isScrolledBehind } from "../../../src/node/predicate/is-scrolled-behind";
+import { hasComputedStyle } from "../../../src/element/element";
+import { Style } from "../../../src";
+import { Context } from "@siteimprove/alfa-selector";
 
-const overflowKeywords = [
-  "visible",
-  "hidden",
-  "clip",
-  "scroll",
-  "auto",
-] as const;
+// TODO: 1. Positions
+// TODO: 2. Text
+// TODO: 3. Element is not scrolled behind its parent and the parent is not scrolled behind,
+//          but the element is scrolled behind the outer ancestor
+//
+//    +----------+
+//    |          |
+//    |  +-------| - - - -+
+//    |  |       |        .
+//    |  |       |  +---+ .
+//    |  |       |  |   | .
+//    |  |       |  +---+ .
+//    |  +-------| - - - -+
+//    |__________|
+//    |<|##____|>|
+//
+// TODO: 4. Element is not scrolled behind its parent, but the parent is scrolled behind
+//
+//    +----------+
+//    |          |
+//    |          | +- - - - -+
+//    |          | .         .
+//    |          | .   +---+ .
+//    |          | .   |   | .
+//    |          | .   +---+ .
+//    |          | +- - - - -+
+//    |__________|
+//    |<|##____|>|
+//
+
+const keywords = ["visible", "hidden", "clip", "scroll", "auto"] as const;
+
+enum OffsetX {
+  Left = -100,
+  Center = 0,
+  Right = 100,
+}
+
+enum OffsetY {
+  Top = -100,
+  Center = 0,
+  Bottom = 100,
+}
+
+type Keyword = (typeof keywords)[number];
 
 function expectation(
-  testCase: "right" | "below" | "inside",
-  overflowX: (typeof overflowKeywords)[number],
-  overflowY: (typeof overflowKeywords)[number],
+  offsetX: OffsetX,
+  offsetY: OffsetY,
+  computedOverflowX: Keyword,
+  computedOverflowY: Keyword,
 ) {
-  switch (testCase) {
-    case "right":
-      return !(
-        overflowX === "visible" &&
-        (overflowY === "visible" || overflowY === "clip")
-      );
-    case "below":
-      return !(
-        overflowY === "visible" &&
-        (overflowX === "visible" || overflowX === "clip")
-      );
-    case "inside":
-      return false;
+  switch (offsetX) {
+    case OffsetX.Center:
+      switch (offsetY) {
+        case OffsetY.Bottom:
+          return (
+            ["auto", "scroll", "hidden"].includes(computedOverflowX) &&
+            ["auto", "scroll"].includes(computedOverflowY)
+          );
+      }
+      break;
+    case OffsetX.Right:
+      switch (offsetY) {
+        case OffsetY.Center:
+          return (
+            ["auto", "scroll"].includes(computedOverflowX) &&
+            ["auto", "scroll", "hidden"].includes(computedOverflowY)
+          );
+        case OffsetY.Bottom:
+          return (
+            ["auto", "scroll"].includes(computedOverflowX) &&
+            ["auto", "scroll"].includes(computedOverflowY)
+          );
+      }
+      break;
   }
+
+  return false;
 }
 
-// testCase: right
-for (const overflowX of overflowKeywords) {
-  for (const overflowY of overflowKeywords) {
-    const exp = expectation("right", overflowX, overflowY);
+test(`isScrolledBehind() combinatorial test`, (t) => {
+  const device = Device.standard();
+  const context = Context.empty();
 
-    test(`isScrolledBehind() is ${exp} for element positioned to the right of container
-          with overflow: ${overflowX} ${overflowY}`, (t) => {
-      const device = Device.standard();
-      const button = (
-        <button box={{ device, x: 114, y: 9, width: 50, height: 20 }}>
-          foo
-        </button>
-      );
-      const div = (
-        <div box={{ device, x: 8, y: 8, width: 102, height: 102 }}>
-          {button}
-        </div>
-      );
+  for (const offsetX of [-100, 0, 100]) {
+    for (const offsetY of [-100, 0, 100]) {
+      for (const overflowX of keywords) {
+        for (const overflowY of keywords) {
+          const button = (
+            <button
+              box={{
+                device,
+                x: 134 + offsetX,
+                y: 141 + offsetY,
+                width: 50,
+                height: 20,
+              }}
+            >
+              foo
+            </button>
+          );
+          const div = (
+            <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
+              {button}
+            </div>
+          );
 
-      h.document(
-        [div],
-        [
-          h.sheet([
-            h.rule.style("div", {
-              overflow: `${overflowX} ${overflowY}`,
-              width: "100px",
-              height: "100px",
-            }),
-            h.rule.style("button", {
-              position: "relative",
-              left: "105px",
-              width: "50px",
-              height: "20px",
-            }),
-          ]),
-        ],
-      );
+          h.document(
+            [div],
+            [
+              h.sheet([
+                h.rule.style("div", {
+                  overflowX,
+                  overflowY,
+                  margin: "100px 100px",
+                  width: "100px",
+                  height: "100px",
+                }),
+                h.rule.style("button", {
+                  position: "relative",
+                  width: "50px",
+                  height: "20px",
+                  top: `${40 + offsetY}px`,
+                  left: `${25 + offsetX}px`,
+                }),
+              ]),
+            ],
+          );
 
-      t.equal(isScrolledBehind(device)(button), exp);
-    });
+          const computedOverflowX = Style.from(div, device, context).computed(
+            "overflow-x",
+          ).value.value;
+          const computedOverflowY = Style.from(div, device, context).computed(
+            "overflow-y",
+          ).value.value;
+
+          const expn = expectation(
+            offsetX,
+            offsetY,
+            computedOverflowX,
+            computedOverflowY,
+          );
+
+          t.equal(
+            isScrolledBehind(device)(button),
+            expn,
+            `Expected isScrolledBehind() to return ${expn} for
+offsetX=${offsetX},
+offsetY=${offsetY},
+overflowX=${overflowX} (computed=${computedOverflowX}),
+overflowY=${computedOverflowY} (computed=${computedOverflowY})`,
+          );
+        }
+      }
+    }
   }
-}
-
-// testCase: below
-for (const overflowX of overflowKeywords) {
-  for (const overflowY of overflowKeywords) {
-    const exp = expectation("below", overflowX, overflowY);
-
-    test(`isScrolledBehind() is ${exp} for element positioned below container
-          with overflow: ${overflowX} ${overflowY}`, (t) => {
-      const device = Device.standard();
-      const button = (
-        <button box={{ device, x: 9, y: 114, width: 50, height: 20 }}>
-          foo
-        </button>
-      );
-      const div = (
-        <div box={{ device, x: 8, y: 8, width: 102, height: 102 }}>
-          {button}
-        </div>
-      );
-
-      h.document(
-        [div],
-        [
-          h.sheet([
-            h.rule.style("div", {
-              overflow: `${overflowX} ${overflowY}`,
-              width: "100px",
-              height: "100px",
-            }),
-            h.rule.style("button", {
-              position: "relative",
-              top: "105px",
-              width: "50px",
-              height: "20px",
-            }),
-          ]),
-        ],
-      );
-
-      t.equal(isScrolledBehind(device)(button), exp);
-    });
-  }
-}
-
-// testCase: inside
-for (const overflowX of overflowKeywords) {
-  for (const overflowY of overflowKeywords) {
-    const exp = expectation("inside", overflowX, overflowY);
-
-    test(`isScrolledBehind() is ${exp} for element inside container
-          with overflow: ${overflowX} ${overflowY}`, (t) => {
-      const device = Device.standard();
-      const button = (
-        <button box={{ device, x: 9, y: 9, width: 50, height: 20 }}>foo</button>
-      );
-      const div = (
-        <div box={{ device, x: 8, y: 8, width: 102, height: 102 }}>
-          {button}
-        </div>
-      );
-
-      h.document(
-        [div],
-        [
-          h.sheet([
-            h.rule.style("div", {
-              overflow: `${overflowX} ${overflowY}`,
-              width: "100px",
-              height: "100px",
-            }),
-            h.rule.style("button", {
-              width: "50px",
-              height: "20px",
-            }),
-          ]),
-        ],
-      );
-
-      t.equal(isScrolledBehind(device)(button), exp);
-    });
-  }
-}
+});
 
 test(`isScrolledBehind() cannot correctly detect if element without layout is scrolled behind`, (t) => {
   const device = Device.standard();
@@ -170,20 +178,22 @@ test(`isScrolledBehind() cannot correctly detect if element without layout is sc
       h.sheet([
         h.rule.style("div", {
           overflow: "scroll",
+          margin: "100px 100px",
           width: "100px",
           height: "100px",
         }),
         h.rule.style("button", {
           position: "relative",
-          top: "105px",
           width: "50px",
           height: "20px",
+          top: "40px",
+          left: "calc(25px + 100px)",
         }),
       ]),
     ],
   );
 
-  // The button is actually scrolled behind since it is below the container which has overflow: scroll,
-  // but without layout, the function defaults to returning `false`
+  // The button is actually scrolled behind to the right of the container,
+  // but without layout the function always returns `false`
   t.equal(isScrolledBehind(device)(button), false);
 });
