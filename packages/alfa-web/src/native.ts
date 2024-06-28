@@ -3,7 +3,7 @@
 import { Request, Response } from "@siteimprove/alfa-http";
 
 import * as device from "@siteimprove/alfa-device/native";
-import * as dom from "@siteimprove/alfa-dom/dist/native";
+import * as dom from "@siteimprove/alfa-dom/native";
 
 import type { Page } from "./index.js";
 

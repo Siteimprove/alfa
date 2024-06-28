@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { h } from "@siteimprove/alfa-dom/dist/h";
+import { h } from "@siteimprove/alfa-dom/h";
 
 import { Style } from "../dist/style.js";
 
