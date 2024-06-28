@@ -1,5 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Map } from "@siteimprove/alfa-map";
 
 /**

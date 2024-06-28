@@ -1,6 +1,7 @@
-import { Keyword, Token } from "@siteimprove/alfa-css";
+import type { Token } from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import * as parser from "@siteimprove/alfa-parser";
 

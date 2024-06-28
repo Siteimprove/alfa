@@ -1,5 +1,5 @@
 import type { Environment } from "./environment.js";
-import { evaluate } from "./evaluate.js";
+import type { evaluate } from "./evaluate.js";
 import type { Item, TypeFor, Value } from "./types.js";
 
 /**

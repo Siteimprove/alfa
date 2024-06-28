@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Selective } from "../dist/selective.js";
 

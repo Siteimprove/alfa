@@ -1,13 +1,14 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
+import type { Callback } from "@siteimprove/alfa-callback";
 import type { Collection } from "@siteimprove/alfa-collection";
+import type {
+  Comparison} from "@siteimprove/alfa-comparable";
 import {
   Comparable,
-  type Comparer,
-  Comparison,
+  type Comparer
 } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
@@ -15,8 +16,8 @@ import { Map } from "@siteimprove/alfa-map";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
 import { Sequence } from "./sequence.js";

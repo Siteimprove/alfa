@@ -1,16 +1,17 @@
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
-import {
+import type { Device } from "@siteimprove/alfa-device";
+import type {
   Attribute,
-  Document,
+  Document} from "@siteimprove/alfa-dom";
+import {
   Element,
   Namespace,
   Node,
   Query,
 } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import type { Sequence } from "@siteimprove/alfa-sequence";
 
 const { isProgrammaticallyHidden } = DOM;
 const { hasAttribute, hasNamespace } = Element;

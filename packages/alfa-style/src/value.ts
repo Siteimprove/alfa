@@ -1,15 +1,16 @@
 import type { Applicative } from "@siteimprove/alfa-applicative";
 import type { Resolvable, Value as CSSValue } from "@siteimprove/alfa-css";
-import { Declaration } from "@siteimprove/alfa-dom";
+import type { Declaration } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import type { Monad } from "@siteimprove/alfa-monad";
-import { Option, None } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Option} from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * @public

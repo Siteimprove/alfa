@@ -1,6 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { Compound, Context } from "../dist/index.js";
+import type { Compound} from "../dist/index.js";
+import { Context } from "../dist/index.js";
 import type { Host } from "../dist/selector/simple/pseudo-class/host.js";
 import type { HostContext } from "../dist/selector/simple/pseudo-class/host-context.js";
 

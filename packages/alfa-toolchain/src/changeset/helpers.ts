@@ -1,6 +1,6 @@
 import type { Config, NewChangesetWithCommit } from "@changesets/types";
 import type { Packages } from "@manypkg/get-packages";
-import { Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
 
 /**
  * Exit codes

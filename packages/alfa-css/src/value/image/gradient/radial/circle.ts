@@ -1,4 +1,4 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Err, Result } from "@siteimprove/alfa-result";
 
 import { type Parser as CSSParser, Token } from "../../../../syntax/index.js";

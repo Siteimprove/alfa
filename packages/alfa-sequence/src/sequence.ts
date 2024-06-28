@@ -1,19 +1,20 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
+import type { Callback } from "@siteimprove/alfa-callback";
 import type { Collection } from "@siteimprove/alfa-collection";
-import {
+import type {
   Comparable,
-  type Comparer,
-  Comparison,
+  Comparison} from "@siteimprove/alfa-comparable";
+import {
+  type Comparer
 } from "@siteimprove/alfa-comparable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
-import { Map } from "@siteimprove/alfa-map";
+import type { Map } from "@siteimprove/alfa-map";
 import type { Mapper } from "@siteimprove/alfa-mapper";
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Option } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Cons } from "./cons.js";
 import { Nil } from "./nil.js";

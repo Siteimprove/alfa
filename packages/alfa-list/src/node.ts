@@ -1,7 +1,7 @@
 import { Bits } from "@siteimprove/alfa-bits";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Functor } from "@siteimprove/alfa-functor";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 

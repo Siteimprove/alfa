@@ -1,15 +1,16 @@
-import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Parser } from "@siteimprove/alfa-parser";
+import type { Slice } from "@siteimprove/alfa-slice";
 import { test } from "@siteimprove/alfa-test";
 
+import type {
+  Token,
+  Value} from "../../../dist/index.js";
 import {
   Length,
   LengthPercentage,
   Lexer,
   List,
-  Number,
-  Token,
-  Value,
+  Number
 } from "../../../dist/index.js";
 
 function parse<V extends Value>(

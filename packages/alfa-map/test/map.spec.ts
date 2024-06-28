@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 
 import { Map } from "../dist/map.js";
 

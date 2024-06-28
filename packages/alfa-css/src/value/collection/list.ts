@@ -1,6 +1,6 @@
-import { Hash } from "@siteimprove/alfa-hash";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Iterable } from "@siteimprove/alfa-iterable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 

@@ -1,4 +1,4 @@
-import { Element } from "../element.js";
+import type { Element } from "../element.js";
 
 /**
  * {@link https://html.spec.whatwg.org/#attr-input-type}

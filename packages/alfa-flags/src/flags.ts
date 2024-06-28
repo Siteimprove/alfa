@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Equatable } from "@siteimprove/alfa-equatable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * Class for modelling set of boolean flags.

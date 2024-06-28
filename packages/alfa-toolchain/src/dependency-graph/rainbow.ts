@@ -27,7 +27,7 @@ export namespace Rainbow {
    * Return a set of n colors evenly spaced along the rainbow spectrum.
    */
   export function rainbow(n: number): Array<Color.RGB_RGBA> {
-    let result: Array<Color.RGB_RGBA> = [];
+    const result: Array<Color.RGB_RGBA> = [];
 
     for (let i = 0; i < n; i++) {
       result.push(rainbowStop(i / n));

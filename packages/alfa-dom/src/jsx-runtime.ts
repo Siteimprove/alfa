@@ -1,6 +1,6 @@
 import { jsx as _jsx } from "./jsx.js";
 
-import { Element } from "./index.js";
+import type { Element } from "./index.js";
 
 export namespace JSX {
   export type Element = _jsx.JSX.Element;

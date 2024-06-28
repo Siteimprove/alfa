@@ -1,6 +1,6 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Graph } from "@siteimprove/alfa-graph";
-import { Hashable, Hash } from "@siteimprove/alfa-hash";
+import type { Hashable, Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
@@ -69,7 +69,7 @@ export class Network<N, E>
   }
 
   public delete(node: N): Network<N, E> {
-    let nodes = this._nodes;
+    const nodes = this._nodes;
 
     if (!nodes.has(node)) {
       return this;

@@ -1,9 +1,9 @@
-import * as act from "@siteimprove/alfa-act";
+import type * as act from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
-import { Hashable } from "@siteimprove/alfa-hash";
+import type { Hashable } from "@siteimprove/alfa-hash";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { Question } from "../../dist/common/act/question.js";
+import type { Question } from "../../dist/common/act/question.js";
 
 function wrapper<
   TYPE,

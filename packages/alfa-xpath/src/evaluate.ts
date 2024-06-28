@@ -14,7 +14,7 @@ import { type Environment, type Focus, withFocus } from "./environment.js";
 import { lookupFunction } from "./function.js";
 import { functions } from "./functions/index.js";
 import { matches } from "./matches.js";
-import { Expression } from "./expression.js";
+import type { Expression } from "./expression.js";
 import type { Item, Type, Value } from "./types.js";
 import { walk } from "./walk.js";
 import { Parser } from "./syntax/parser.js";

@@ -1,4 +1,4 @@
-import { Rule } from "../rule.js";
+import type { Rule } from "../rule.js";
 import { GroupingRule } from "./grouping.js";
 
 /**

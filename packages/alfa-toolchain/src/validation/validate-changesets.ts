@@ -2,7 +2,8 @@ import getChangeSets from "@changesets/read";
 import type { NewChangeset } from "@changesets/types";
 import { Array } from "@siteimprove/alfa-array";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Err, Result } from "@siteimprove/alfa-result";
+import type { Err} from "@siteimprove/alfa-result";
+import { Result } from "@siteimprove/alfa-result";
 
 import { Changeset } from "../changeset/get-changeset-details.js";
 

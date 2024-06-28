@@ -1,14 +1,16 @@
 import type { Mapper } from "@siteimprove/alfa-mapper";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 
 import { Unit } from "../../unit/index.js";
 
+import type {
+  Numeric} from "../numeric/index.js";
 import {
   Angle,
   Length,
   Number,
-  Numeric,
   Percentage,
 } from "../numeric/index.js";
 

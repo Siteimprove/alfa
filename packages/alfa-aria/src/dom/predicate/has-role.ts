@@ -1,6 +1,6 @@
-import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element } from "@siteimprove/alfa-dom";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Node } from "../../node.js";
 import type { Role } from "../../role.js";

@@ -1,9 +1,9 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Map } from "@siteimprove/alfa-map";
 
-import { Node } from "../../node.js";
+import type { Node } from "../../node.js";
 import { Document } from "../document.js";
-import { Element } from "../element.js";
+import type { Element } from "../element.js";
 
 import { getElementDescendants } from "./element-descendants.js";
 

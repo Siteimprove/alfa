@@ -1,4 +1,4 @@
-import { Reducer } from "@siteimprove/alfa-reducer";
+import type { Reducer } from "@siteimprove/alfa-reducer";
 
 /**
  * @public

@@ -1,13 +1,13 @@
 import type { Applicative } from "@siteimprove/alfa-applicative";
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Continuation } from "@siteimprove/alfa-continuation";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Continuation } from "@siteimprove/alfa-continuation";
 import type { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import type { Monad } from "@siteimprove/alfa-monad";
-import { Thenable } from "@siteimprove/alfa-thenable";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thenable } from "@siteimprove/alfa-thenable";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 /**
  * {@link http://blog.higher-order.com/assets/trampolines.pdf}

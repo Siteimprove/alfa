@@ -5,7 +5,7 @@ import { Document } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { None } from "@siteimprove/alfa-option";
 import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";

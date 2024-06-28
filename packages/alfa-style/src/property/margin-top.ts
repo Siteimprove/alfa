@@ -1,6 +1,7 @@
-import { Keyword, Length, Percentage, Token } from "@siteimprove/alfa-css";
+import type { Token } from "@siteimprove/alfa-css";
+import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";

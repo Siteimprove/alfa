@@ -1,9 +1,9 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
 
 import { Header } from "./header.js";
 

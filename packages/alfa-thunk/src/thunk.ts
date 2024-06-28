@@ -1,5 +1,5 @@
 import type { Mapper } from "@siteimprove/alfa-mapper";
-import { Reducer } from "@siteimprove/alfa-reducer";
+import type { Reducer } from "@siteimprove/alfa-reducer";
 
 /**
  * @public

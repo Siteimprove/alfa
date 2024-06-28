@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import perfHooks from "node:perf_hooks";
 

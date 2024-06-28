@@ -1,14 +1,14 @@
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Length, Number } from "@siteimprove/alfa-css";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Bound } from "./bound.js";
-import { Discrete } from "./discrete.js";
+import type { Bound } from "./bound.js";
+import type { Discrete } from "./discrete.js";
 import type { Value } from "./value.js";
 
 /**

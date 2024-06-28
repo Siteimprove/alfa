@@ -1,9 +1,9 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Text } from "@siteimprove/alfa-dom";
+import type { Text } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { Question } from "../common/act/question.js";
+import type { Question } from "../common/act/question.js";
 import { nonDisabledTexts } from "../common/applicability/non-disabled-texts.js";
 
 import { hasSufficientContrastDeprecated } from "../common/expectation/contrast.js";

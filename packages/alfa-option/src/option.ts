@@ -1,19 +1,20 @@
-import { Callback } from "@siteimprove/alfa-callback";
-import {
+import type { Callback } from "@siteimprove/alfa-callback";
+import type {
   Comparable,
-  type Comparer,
-  Comparison,
+  Comparison} from "@siteimprove/alfa-comparable";
+import {
+  type Comparer
 } from "@siteimprove/alfa-comparable";
-import { Equatable } from "@siteimprove/alfa-equatable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Foldable } from "@siteimprove/alfa-foldable";
-import { Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Hashable } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import type { Monad } from "@siteimprove/alfa-monad";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { None } from "./none.js";
 import { Some } from "./some.js";

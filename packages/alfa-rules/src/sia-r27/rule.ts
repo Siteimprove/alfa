@@ -1,13 +1,13 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Trilean } from "@siteimprove/alfa-trilean";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
 import { isPassed } from "../common/act/is-passed.js";
-import { Question } from "../common/act/question.js";
+import type { Question } from "../common/act/question.js";
 
 import R22 from "../sia-r22/rule.js";
 import R31 from "../sia-r31/rule.js";

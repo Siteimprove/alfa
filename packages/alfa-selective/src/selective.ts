@@ -1,14 +1,15 @@
 import type { Applicative } from "@siteimprove/alfa-applicative";
 import type { Callback } from "@siteimprove/alfa-callback";
-import { Either, Left, Right } from "@siteimprove/alfa-either";
-import { Equatable } from "@siteimprove/alfa-equatable";
+import type { Either} from "@siteimprove/alfa-either";
+import { Left, Right } from "@siteimprove/alfa-either";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Functor } from "@siteimprove/alfa-functor";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import type { Monad } from "@siteimprove/alfa-monad";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
 /**
  * {@link https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf}

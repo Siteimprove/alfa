@@ -1,6 +1,6 @@
 import { Encoder } from "@siteimprove/alfa-encoding";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { JSON } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { JSON } from "@siteimprove/alfa-json";
 
 import { Hashable } from "./hashable.js";
 

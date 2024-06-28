@@ -1,13 +1,15 @@
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
+import type {
+  Document} from "@siteimprove/alfa-dom";
 import {
-  Document,
   Element,
   Namespace,
   Node,
   Text,
 } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Longhands, Style } from "@siteimprove/alfa-style";
+import type { Longhands} from "@siteimprove/alfa-style";
+import { Style } from "@siteimprove/alfa-style";
 
 const { hasNamespace, isElement } = Element;
 const { and } = Refinement;

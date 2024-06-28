@@ -1,7 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Element } from "../../element.js";
+import type { Element } from "../../element.js";
 
 const { equals } = Predicate;
 

@@ -1,9 +1,9 @@
 import type { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * A bound, either inclusive or exclusive.

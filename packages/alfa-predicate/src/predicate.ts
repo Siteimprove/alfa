@@ -1,4 +1,4 @@
-import { Callback } from "@siteimprove/alfa-callback";
+import type { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 

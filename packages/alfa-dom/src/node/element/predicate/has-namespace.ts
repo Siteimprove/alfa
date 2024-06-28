@@ -1,7 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Namespace } from "../../../namespace.js";
-import { Element } from "../../element.js";
+import type { Namespace } from "../../../namespace.js";
+import type { Element } from "../../element.js";
 
 const { equals } = Predicate;
 

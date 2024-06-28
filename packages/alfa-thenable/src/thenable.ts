@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Continuation } from "@siteimprove/alfa-continuation";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Continuation } from "@siteimprove/alfa-continuation";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Refinement } from "@siteimprove/alfa-refinement";
 

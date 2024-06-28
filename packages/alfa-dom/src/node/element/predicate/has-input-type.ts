@@ -1,7 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element.js";
+import type { Element } from "../../element.js";
 import { type InputType, inputType } from "../input-type.js";
 import { hasName } from "./has-name.js";
 

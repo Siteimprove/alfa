@@ -1,18 +1,19 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { type Expression, Math } from "../../calculation/index.js";
+import type {
+  Numeric as BaseNumeric} from "../../calculation/numeric/index.js";
 import {
   Angle as BaseAngle,
   Integer as BaseInteger,
   Length as BaseLength,
   Number as BaseNumber,
-  Numeric as BaseNumeric,
   Percentage as BasePercentage,
 } from "../../calculation/numeric/index.js";
 
-import { Token } from "../../syntax/index.js";
+import type { Token } from "../../syntax/index.js";
 
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 

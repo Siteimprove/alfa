@@ -1,9 +1,9 @@
 import { Token, Keyword } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand.js";
+import type { Longhand } from "../longhand.js";
 import { Shorthand } from "../shorthand.js";
 
 import LineHeight from "./line-height.js";

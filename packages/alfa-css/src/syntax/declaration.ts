@@ -1,11 +1,11 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import { Component } from "./component.js";
 import type { Parser as CSSParser } from "./parser.js";
@@ -156,7 +156,7 @@ export namespace Declaration {
       input = input.slice(1);
     }
 
-    let next = input.get(0);
+    const next = input.get(0);
 
     if (next.none(Token.isIdent)) {
       return Err.of("Expected an ident");

@@ -1,14 +1,15 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { DOM, Node, Role } from "@siteimprove/alfa-aria";
+import type { Role } from "@siteimprove/alfa-aria";
+import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { String } from "@siteimprove/alfa-string";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 

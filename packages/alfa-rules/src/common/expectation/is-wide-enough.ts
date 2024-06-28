@@ -1,6 +1,6 @@
-import { Length } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import { Declaration, Element } from "@siteimprove/alfa-dom";
+import type { Length } from "@siteimprove/alfa-css";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Declaration, Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 

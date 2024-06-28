@@ -1,13 +1,13 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Length, LengthPercentage, Numeric } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
+import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Longhands } from "../../longhands.js";
+import type { Longhands } from "../../longhands.js";
 import { Style } from "../../style.js";
 
 import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";

@@ -1,6 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Rectangle } from "../../../dist/index.js";
+import type { Length} from "../../../dist/index.js";
+import { Rectangle } from "../../../dist/index.js";
 import { parser, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Rectangle.parse);
