@@ -11,9 +11,7 @@
     "sourceMap": true,
     "strict": true,
     "types": [],
-    "verbatimModuleSyntax": true,
-    "ignoreDeprecations": "5.0",
-    "importsNotUsedAsValues": "error"
+    "verbatimModuleSyntax": true
   },
   "files": [],
   "references": [{ "path": "packages" }, { "path": "scratches" }]
