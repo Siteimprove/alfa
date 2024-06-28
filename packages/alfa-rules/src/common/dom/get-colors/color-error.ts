@@ -1,6 +1,6 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -29,7 +29,8 @@ interface ErrorName {
  */
 export class ColorErrors<
   out T extends keyof ErrorName = keyof ErrorName,
-> extends Diagnostic {
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(message: string): Diagnostic;
 
   public static of<T extends keyof ErrorName = keyof ErrorName>(
@@ -75,8 +76,11 @@ export class ColorErrors<
     this._errors.forEach((error) => error.hash(hash));
   }
 
-  public toJSON(): ColorErrors.JSON<T> {
-    return { ...super.toJSON(), errors: Array.toJSON(this._errors) };
+  public toJSON(options?: O): ColorErrors.JSON<T> {
+    return {
+      ...super.toJSON(options),
+      errors: Array.toJSON(this._errors, options),
+    };
   }
 }
 
@@ -128,7 +132,8 @@ export namespace ColorErrors {
 export abstract class ColorError<
   out T extends keyof ErrorName = keyof ErrorName,
   out K extends ErrorName[T] = ErrorName[T],
-> extends Diagnostic {
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   protected readonly _element: Element;
   protected readonly _type: T;
   protected readonly _kind: K;
@@ -173,10 +178,10 @@ export abstract class ColorError<
     hash.writeString(this._type);
   }
 
-  public toJSON(): ColorError.JSON<T, K> {
+  public toJSON(options?: O): ColorError.JSON<T, K> {
     return {
-      ...super.toJSON(),
-      element: this._element.toJSON(),
+      ...super.toJSON(options),
+      element: this._element.toJSON(options),
       type: this._type,
       kind: this._kind,
     };

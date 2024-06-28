@@ -1,5 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
@@ -9,7 +9,9 @@ import { WithName } from "./with-name.js";
 
 import * as json from "@siteimprove/alfa-json";
 
-export class WithBoundingBox extends WithName {
+export class WithBoundingBox<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends WithName<O> {
   public static of(message: string): Diagnostic;
 
   public static of(message: string, name: string): WithName;
@@ -126,12 +128,12 @@ export class WithBoundingBox extends WithName {
     this._tooCloseNeighbors.hash(hash);
   }
 
-  public toJSON(): WithBoundingBox.JSON {
+  public toJSON(options?: O): WithBoundingBox.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       box: this._box.toJSON(),
       condition: this._condition.toJSON(),
-      tooCloseNeighbors: this._tooCloseNeighbors.toJSON(),
+      tooCloseNeighbors: this._tooCloseNeighbors.toJSON(options),
     };
   }
 }

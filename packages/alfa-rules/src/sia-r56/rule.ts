@@ -1,7 +1,12 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
-import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Namespace,
+  Query,
+  Node as DomNode,
+} from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
@@ -95,7 +100,12 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class SameNames extends Diagnostic implements Iterable<List<Element>> {
+export class SameNames<
+    O extends DomNode.SerializationOptions = DomNode.SerializationOptions,
+  >
+  extends Diagnostic<O>
+  implements Iterable<List<Element>>
+{
   public static of(
     message: string,
     role: Role.Name = "none",
@@ -144,11 +154,11 @@ export class SameNames extends Diagnostic implements Iterable<List<Element>> {
     this._errors.forEach((element) => element.hash(hash));
   }
 
-  public toJSON(): SameNames.JSON {
+  public toJSON(options?: O): SameNames.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       role: this._role,
-      errors: Array.toJSON(this._errors),
+      errors: Array.toJSON(this._errors, options),
     };
   }
 }

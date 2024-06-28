@@ -1,11 +1,14 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import { Node } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Map } from "@siteimprove/alfa-map";
 
 /**
  * @public
  */
-export class MatchingClasses extends Diagnostic {
+export class MatchingClasses<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(
     message: string,
     matchingTargets: Map<string, number> = Map.empty(),
@@ -53,11 +56,11 @@ export class MatchingClasses extends Diagnostic {
     this._matchingNonTargets.hash(hash);
   }
 
-  public toJSON(): MatchingClasses.JSON {
+  public toJSON(options?: O): MatchingClasses.JSON {
     return {
-      ...super.toJSON(),
-      matchingTargets: this._matchingTargets.toJSON(),
-      matchingNonTargets: this._matchingNonTargets.toJSON(),
+      ...super.toJSON(options),
+      matchingTargets: this._matchingTargets.toJSON(options),
+      matchingNonTargets: this._matchingNonTargets.toJSON(options),
     };
   }
 }

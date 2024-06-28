@@ -20,6 +20,8 @@ import { Rule } from "./rule.js";
  * T: type of the rule's test target
  * Q: questions' metadata type
  * S: possible types of questions' subject.
+ * V: type of outcome value
+ * O: type of serialization options
  */
 export abstract class Outcome<
     I,
@@ -252,11 +254,11 @@ export namespace Outcome {
 
     public toJSON(options?: O): Passed.JSON<T> {
       return {
-        ...super.toJSON(),
+        ...super.toJSON(options),
         target: json.Serializable.toJSON(this._target, options),
         expectations: this._expectations
           .toArray()
-          .map(([id, expectation]) => [id, expectation.toJSON()]),
+          .map(([id, expectation]) => [id, expectation.toJSON(options)]),
       };
     }
 
@@ -432,11 +434,11 @@ export namespace Outcome {
 
     public toJSON(options?: O): Failed.JSON<T> {
       return {
-        ...super.toJSON(),
+        ...super.toJSON(options),
         target: json.Serializable.toJSON(this._target, options),
         expectations: this._expectations
           .toArray()
-          .map(([id, expectation]) => [id, expectation.toJSON()]),
+          .map(([id, expectation]) => [id, expectation.toJSON(options)]),
       };
     }
 
@@ -610,9 +612,9 @@ export namespace Outcome {
 
     public toJSON(options?: O): CantTell.JSON<T> {
       return {
-        ...super.toJSON(),
+        ...super.toJSON(options),
         target: json.Serializable.toJSON(this._target, options),
-        diagnostic: this._diagnostic.toJSON(),
+        diagnostic: this._diagnostic.toJSON(options),
       };
     }
 
@@ -739,7 +741,8 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-  > extends Outcome<I, T, Q, S, Value.Inapplicable> {
+    O extends json.Serializable.Options = json.Serializable.Options,
+  > extends Outcome<I, T, Q, S, Value.Inapplicable, O> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       mode: Mode,
@@ -761,8 +764,8 @@ export namespace Outcome {
       return super.equals(value) && value instanceof Inapplicable;
     }
 
-    public toJSON(): Inapplicable.JSON {
-      return super.toJSON();
+    public toJSON(options?: O): Inapplicable.JSON {
+      return super.toJSON(options);
     }
 
     public toEARL(): Inapplicable.EARL {

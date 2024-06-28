@@ -1,7 +1,7 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -183,7 +183,9 @@ export namespace ElementDistinguishable {
 /**
  * @public
  */
-export class DistinguishingStyles extends Diagnostic {
+export class DistinguishingStyles<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(
     message: string,
     defaultStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty(),
@@ -239,9 +241,9 @@ export class DistinguishingStyles extends Diagnostic {
     );
   }
 
-  public toJSON(): DistinguishingStyles.JSON {
+  public toJSON(options?: O): DistinguishingStyles.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       defaultStyle: this._defaultStyles.toJSON(),
       hoverStyle: this._hoverStyles.toJSON(),
       focusStyle: this._focusStyles.toJSON(),

@@ -566,7 +566,9 @@ function usesFontRelativeMediaRule<F extends Feature.Media.Feature>(
 /**
  * @public
  */
-export class ClippingAncestors extends Diagnostic {
+export class ClippingAncestors<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(
     message: string,
     horizontal: Option<Element> = None,
@@ -615,11 +617,11 @@ export class ClippingAncestors extends Diagnostic {
     this._horizontal.hash(hash);
   }
 
-  public toJSON(): ClippingAncestors.JSON {
+  public toJSON(options?: O): ClippingAncestors.JSON {
     return {
-      ...super.toJSON(),
-      horizontal: this._horizontal.toJSON(),
-      vertical: this._vertical.toJSON(),
+      ...super.toJSON(options),
+      horizontal: this._horizontal.toJSON(options),
+      vertical: this._vertical.toJSON(options),
     };
   }
 }

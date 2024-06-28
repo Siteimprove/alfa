@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Language } from "@siteimprove/alfa-iana";
 import { Option } from "@siteimprove/alfa-option";
@@ -102,7 +102,9 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class Languages extends Diagnostic {
+export class Languages<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(
     message: string,
     programmatic: Language = Language.of(Language.Primary.of("en")),
@@ -151,9 +153,9 @@ export class Languages extends Diagnostic {
     this._natural.forEach((lang) => hash.writeString(lang.primary.name));
   }
 
-  public toJSON(): Languages.JSON {
+  public toJSON(options?: O): Languages.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       programmatic: this._programmatic.toJSON(),
       natural: this._natural.toJSON(),
     };

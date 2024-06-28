@@ -1,13 +1,15 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
 import { Node } from "@siteimprove/alfa-aria";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node as DomNode } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 
 /**
  * @public
  */
-export class WithName extends Diagnostic {
+export class WithName<
+  O extends DomNode.SerializationOptions = DomNode.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(message: string): Diagnostic;
 
   public static of(message: string, name: string): Diagnostic;
@@ -29,9 +31,9 @@ export class WithName extends Diagnostic {
     return this._name;
   }
 
-  public toJSON(): WithName.JSON {
+  public toJSON(options?: O): WithName.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       name: this._name,
     };
   }

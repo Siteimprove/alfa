@@ -113,7 +113,9 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class WithDeclaration extends Diagnostic {
+export class WithDeclaration<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(message: string, declaration: Option<Declaration> = None) {
     return new WithDeclaration(message, declaration);
   }
@@ -141,10 +143,10 @@ export class WithDeclaration extends Diagnostic {
     );
   }
 
-  toJSON(): WithDeclaration.JSON {
+  toJSON(options?: O): WithDeclaration.JSON {
     return {
-      ...super.toJSON(),
-      declaration: this._declaration.toJSON(),
+      ...super.toJSON(options),
+      declaration: this._declaration.toJSON(options),
     };
   }
 }

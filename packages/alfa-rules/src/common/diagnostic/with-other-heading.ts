@@ -1,5 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 
@@ -11,7 +11,9 @@ export type HeadingPosition = "previous" | "next";
 /**
  * @public
  */
-export class WithOtherHeading extends Diagnostic {
+export class WithOtherHeading<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(message: string): Diagnostic;
 
   public static of(
@@ -101,10 +103,10 @@ export class WithOtherHeading extends Diagnostic {
     this._otherHeading.hash(hash);
   }
 
-  public toJSON(): WithOtherHeading.JSON {
+  public toJSON(options?: O): WithOtherHeading.JSON {
     return {
-      ...super.toJSON(),
-      otherHeading: this._otherHeading.toJSON(),
+      ...super.toJSON(options),
+      otherHeading: this._otherHeading.toJSON(options),
       currentHeadingLevel: this._currentLevel,
       otherHeadingLevel: this._otherLevel,
       otherPosition: this._otherPosition,

@@ -1,13 +1,18 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
 /**
  * @public
  */
-export class WithBadElements extends Diagnostic implements Iterable<Element> {
+export class WithBadElements<
+    O extends Node.SerializationOptions = Node.SerializationOptions,
+  >
+  extends Diagnostic<O>
+  implements Iterable<Element>
+{
   public static of(
     message: string,
     errors: Iterable<Element> = [],
@@ -47,9 +52,9 @@ export class WithBadElements extends Diagnostic implements Iterable<Element> {
     yield* this._errors;
   }
 
-  public toJSON(): WithBadElements.JSON {
+  public toJSON(options?: O): WithBadElements.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       errors: this._errors.map((element) => element.path()),
     };
   }

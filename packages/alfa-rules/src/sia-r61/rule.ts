@@ -80,7 +80,9 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class WithFirstHeading extends Diagnostic {
+export class WithFirstHeading<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(message: string): Diagnostic;
 
   public static of(
@@ -135,10 +137,10 @@ export class WithFirstHeading extends Diagnostic {
     this._firstHeading.hash(hash);
   }
 
-  public toJSON(): WithFirstHeading.JSON {
+  public toJSON(options?: O): WithFirstHeading.JSON {
     return {
-      ...super.toJSON(),
-      firstHeading: this._firstHeading.toJSON(),
+      ...super.toJSON(options),
+      firstHeading: this._firstHeading.toJSON(options),
       firstHeadingLevel: this._level,
     };
   }
