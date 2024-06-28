@@ -1,10 +1,11 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM, Role } from "@siteimprove/alfa-aria";
+import type { Role } from "@siteimprove/alfa-aria";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
 import { WithRole } from "../common/diagnostic/with-role.js";

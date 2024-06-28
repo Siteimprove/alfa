@@ -708,7 +708,7 @@ digraph "dependency-graph-[object Object]" {
     color = "black";
   ];
   "src/media/feature/discrete.ts" -> "name_src/media/feature/value" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/media/feature/discrete.ts";
     lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
@@ -732,7 +732,7 @@ digraph "dependency-graph-[object Object]" {
     color = "black";
   ];
   "src/media/feature/height.ts" -> "name_src/media/feature/value" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/media/feature/height.ts";
     lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
@@ -816,7 +816,7 @@ digraph "dependency-graph-[object Object]" {
     color = "black";
   ];
   "src/media/feature/scripting.ts" -> "name_src/media/feature/value" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/media/feature/scripting.ts";
     lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
@@ -843,7 +843,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/media/feature/value/range.ts" -> "src/media/feature/value/bound.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/media/feature/value/range.ts";
     lhead = "cluster_src/media/feature/value/bound.ts";
     color = "black";
@@ -852,7 +852,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/media/feature/value/range.ts" -> "src/media/feature/value/discrete.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/media/feature/value/range.ts";
     lhead = "cluster_src/media/feature/value/discrete.ts";
     color = "black";
@@ -912,7 +912,7 @@ digraph "dependency-graph-[object Object]" {
     color = "black";
   ];
   "src/media/feature/width.ts" -> "name_src/media/feature/value" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/media/feature/width.ts";
     lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
@@ -1032,7 +1032,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/supports" -> "src/feature.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/supports";
     lhead = "cluster_src/feature.ts";
     color = "#ff0000";

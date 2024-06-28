@@ -5,7 +5,7 @@
 ```ts
 
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
 export type Trilean = boolean | undefined;

@@ -1,4 +1,4 @@
-import { Array } from "@siteimprove/alfa-array";
+import type { Array } from "@siteimprove/alfa-array";
 import { Component, Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import type { Declaration } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";

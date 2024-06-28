@@ -1,5 +1,5 @@
-import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";

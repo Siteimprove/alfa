@@ -1,6 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Node } from "@siteimprove/alfa-dom";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";

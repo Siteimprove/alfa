@@ -198,7 +198,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/request.ts" -> "src/body.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/request.ts";
     lhead = "cluster_src/body.ts";
     color = "black";
@@ -216,7 +216,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/response.ts" -> "src/body.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/response.ts";
     lhead = "cluster_src/body.ts";
     color = "black";

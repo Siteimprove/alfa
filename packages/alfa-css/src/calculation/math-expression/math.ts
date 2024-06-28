@@ -1,9 +1,9 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import {
   Function as CSSFunction,
@@ -12,17 +12,18 @@ import {
 } from "../../syntax/index.js";
 import type { Unit } from "../../unit/index.js";
 
+import type {
+  Numeric} from "../numeric/index.js";
 import {
   Angle,
   Length,
   Number,
-  Numeric,
   Percentage,
 } from "../numeric/index.js";
 
-import { Expression } from "./expression.js";
+import type { Expression } from "./expression.js";
 import { Function } from "./function.js";
-import { Kind } from "./kind.js";
+import type { Kind } from "./kind.js";
 import { Operation } from "./operation.js";
 import { Value } from "./value.js";
 

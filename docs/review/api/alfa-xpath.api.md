@@ -4,15 +4,15 @@
 
 ```ts
 
-import * as dom from '@siteimprove/alfa-dom';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import * as json from '@siteimprove/alfa-json';
+import type * as dom from '@siteimprove/alfa-dom';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type * as json from '@siteimprove/alfa-json';
 import { Node } from '@siteimprove/alfa-dom';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
-import { Predicate } from '@siteimprove/alfa-predicate';
-import { Serializable } from '@siteimprove/alfa-json';
-import { Slice } from '@siteimprove/alfa-slice';
+import type { Predicate } from '@siteimprove/alfa-predicate';
+import type { Serializable } from '@siteimprove/alfa-json';
+import type { Slice } from '@siteimprove/alfa-slice';
 
 // @public (undocumented)
 export function axis(axis: Expression.Axis.Type, name?: string): Builder.Axis;

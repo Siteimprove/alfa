@@ -264,8 +264,6 @@ digraph "dependency-graph-[object Object]" {
           ];
           "src/node/element/input-type.ts" [
             label = "input-type.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/node/element/predicate.ts" [
             label = "predicate.ts";
@@ -286,45 +284,29 @@ digraph "dependency-graph-[object Object]" {
             ];
             "src/node/element/predicate/has-attribute.ts" [
               label = "has-attribute.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/has-box.ts" [
               label = "has-box.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/has-display-size.ts" [
               label = "has-display-size.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/has-id.ts" [
               label = "has-id.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/has-input-type.ts" [
               label = "has-input-type.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/has-name.ts" [
               label = "has-name.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/has-namespace.ts" [
               label = "has-namespace.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/has-tab-index.ts" [
               label = "has-tab-index.ts";
               color = "#ff8b00";
               penwidth = 5;
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/has-unique-id.ts" [
               label = "has-unique-id.ts";
@@ -338,8 +320,6 @@ digraph "dependency-graph-[object Object]" {
             ];
             "src/node/element/predicate/is-browsing-context-container.ts" [
               label = "is-browsing-context-container.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/is-content.ts" [
               label = "is-content.ts";
@@ -353,13 +333,9 @@ digraph "dependency-graph-[object Object]" {
             ];
             "src/node/element/predicate/is-draggable.ts" [
               label = "is-draggable.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/is-editing-host.ts" [
               label = "is-editing-host.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/is-fallback.ts" [
               label = "is-fallback.ts";
@@ -368,8 +344,6 @@ digraph "dependency-graph-[object Object]" {
             ];
             "src/node/element/predicate/is-replaced.ts" [
               label = "is-replaced.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/node/element/predicate/is-scoped-to.ts" [
               label = "is-scoped-to.ts";
@@ -537,8 +511,6 @@ digraph "dependency-graph-[object Object]" {
           ];
           "src/node/predicate/is-root.ts" [
             label = "is-root.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/node/predicate/has-child.ts" -> "exit_src/node/predicate" [
             style = "invis";
@@ -1465,7 +1437,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/jsx-runtime.ts" -> "src/index.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/jsx-runtime.ts";
     lhead = "cluster_src/index.ts";
     color = "black";
@@ -1492,7 +1464,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/jsx.ts" -> "src/index.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/jsx.ts";
     lhead = "cluster_src/index.ts";
     color = "black";
@@ -1552,7 +1524,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/node/attribute.ts" -> "src/node/element.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/node/attribute.ts";
     lhead = "cluster_src/node/element.ts";
     color = "black";
@@ -1675,7 +1647,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/node/element" -> "src/node/element.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/node/element";
     lhead = "cluster_src/node/element.ts";
     color = "#5dff00";
@@ -1744,7 +1716,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/node/element" -> "src/node/attribute.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/node/element";
     lhead = "cluster_src/node/attribute.ts";
     color = "#5dff00";
@@ -2179,7 +2151,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/node/text.ts" -> "src/node/slot.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/node/text.ts";
     lhead = "cluster_src/node/slot.ts";
     color = "black";
@@ -2248,7 +2220,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/style/declaration.ts" -> "src/style/rule.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/style/declaration.ts";
     lhead = "cluster_src/style/rule.ts";
     color = "black";
@@ -2266,7 +2238,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/style/rule.ts" -> "src/style/sheet.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/style/rule.ts";
     lhead = "cluster_src/style/sheet.ts";
     color = "black";
@@ -2275,7 +2247,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/style/rule" -> "src/style/rule.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/style/rule";
     lhead = "cluster_src/style/rule.ts";
     color = "#5d00ff";
@@ -2302,7 +2274,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/style/rule" -> "src/style/declaration.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/style/rule";
     lhead = "cluster_src/style/declaration.ts";
     color = "#5d00ff";

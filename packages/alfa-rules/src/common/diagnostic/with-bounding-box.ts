@@ -1,13 +1,13 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { WithName } from "./with-name.js";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 export class WithBoundingBox extends WithName {
   public static of(message: string): Diagnostic;

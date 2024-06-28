@@ -1,13 +1,13 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
 import { Keyword } from "../keyword.js";
-import { Length } from "../numeric/index.js";
-import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { Length } from "../numeric/index.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";
 
 import * as component from "./component.js";

@@ -1,7 +1,8 @@
-import { Keyword, List, Token, Value } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
+import type { Value } from "@siteimprove/alfa-css";
+import { Keyword, List, Token } from "@siteimprove/alfa-css";
+import type { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Shorthand } from "../shorthand.js";
 
@@ -10,7 +11,7 @@ import * as EastAsian from "./font-variant-east-asian.js";
 import * as Ligatures from "./font-variant-ligatures.js";
 
 import * as Numeric from "./font-variant-numeric.js";
-import { Longhand } from "../longhand.js";
+import type { Longhand } from "../longhand.js";
 
 const parse: Parser<
   Slice<Token>,

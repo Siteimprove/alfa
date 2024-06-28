@@ -1,33 +1,35 @@
-import { Array } from "@siteimprove/alfa-array";
+import type { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
-import { Device } from "@siteimprove/alfa-device";
-import {
+import type { Device } from "@siteimprove/alfa-device";
+import type {
   Element,
+  Rule,
+  Sheet} from "@siteimprove/alfa-dom";
+import {
   ImportRule,
   Layer as LayerRules,
   MediaRule,
-  Rule,
-  Sheet,
   StyleRule,
   SupportsRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Maybe, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
+import type {
+  Context} from "@siteimprove/alfa-selector";
 import {
   Combinator,
   Complex,
-  Context,
   Selector,
 } from "@siteimprove/alfa-selector";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { AncestorFilter } from "./ancestor-filter.js";
+import type { AncestorFilter } from "./ancestor-filter.js";
 import { Block } from "./block.js";
 import { Layer, type Order } from "./precedence/index.js";
 

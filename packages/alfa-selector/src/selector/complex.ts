@@ -2,10 +2,10 @@ import { Cache } from "@siteimprove/alfa-cache";
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../context.js";
 import type { Absolute } from "./index.js";

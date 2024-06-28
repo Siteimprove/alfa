@@ -41,18 +41,12 @@ digraph "dependency-graph-[object Object]" {
       ];
       "src/none.ts" [
         label = "none.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/option.ts" [
         label = "option.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/some.ts" [
         label = "some.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/index.ts" -> "exit_src" [
         style = "invis";
@@ -138,7 +132,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/none.ts" -> "src/option.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/none.ts";
     lhead = "cluster_src/option.ts";
     color = "black";
@@ -147,7 +141,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/none.ts" -> "src/some.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/none.ts";
     lhead = "cluster_src/some.ts";
     color = "black";
@@ -183,7 +177,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/some.ts" -> "src/option.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/some.ts";
     lhead = "cluster_src/option.ts";
     color = "black";

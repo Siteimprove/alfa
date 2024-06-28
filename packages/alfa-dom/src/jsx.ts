@@ -1,10 +1,10 @@
 import { h } from "./h.js";
 
-import { Element, Node } from "./index.js";
+import type { Element, Node } from "./index.js";
 
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
-import * as dom from "./index.js";
+import type * as dom from "./index.js";
 
 const { entries } = Object;
 

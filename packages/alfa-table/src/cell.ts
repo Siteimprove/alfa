@@ -1,16 +1,16 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Comparison } from "@siteimprove/alfa-comparable";
-import { Equatable } from "@siteimprove/alfa-equatable";
+import type { Comparison } from "@siteimprove/alfa-comparable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Element, Text } from "@siteimprove/alfa-dom";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import { Anchored } from "./anchored.js";
-import { Slot } from "./slot.js";
-import { Scope } from "./scope.js";
+import type { Slot } from "./slot.js";
+import type { Scope } from "./scope.js";
 
 import * as predicate from "./cell/predicate.js";
 

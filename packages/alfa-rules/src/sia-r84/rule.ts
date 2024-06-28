@@ -1,12 +1,12 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
 

@@ -5,7 +5,7 @@ import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * @internal

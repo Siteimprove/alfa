@@ -42,7 +42,7 @@ async function main(cwd: string) {
   };
 
   const changesetPath = path.join(cwd, ".changeset");
-  let changelogPath = resolveFrom(changesetPath, global);
+  const changelogPath = resolveFrom(changesetPath, global);
 
   let possibleChangelogFunc = require(changelogPath);
   if (possibleChangelogFunc.default) {

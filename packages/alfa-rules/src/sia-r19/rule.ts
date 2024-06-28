@@ -1,7 +1,8 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
+import type {
+  Attribute} from "@siteimprove/alfa-dom";
 import {
-  Attribute,
   Element,
   Namespace,
   Node,
@@ -11,7 +12,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 

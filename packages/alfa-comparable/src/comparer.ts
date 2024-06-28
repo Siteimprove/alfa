@@ -1,4 +1,4 @@
-import { Comparison } from "./comparison.js";
+import type { Comparison } from "./comparison.js";
 
 /**
  * @public

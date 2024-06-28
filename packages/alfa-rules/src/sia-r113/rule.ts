@@ -1,11 +1,11 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Document, Element } from "@siteimprove/alfa-dom";
+import type { Iterable } from "@siteimprove/alfa-iterable";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
 

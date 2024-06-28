@@ -1,9 +1,9 @@
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import { Block } from "./block.js";
 import { Precedence } from "./precedence/index.js";

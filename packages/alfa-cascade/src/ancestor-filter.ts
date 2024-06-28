@@ -1,18 +1,19 @@
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type {
+  Selector} from "@siteimprove/alfa-selector";
 import {
   Class,
   Combinator,
   Complex,
   Compound,
   Id,
-  Selector,
   type Simple,
   Type,
 } from "@siteimprove/alfa-selector";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * The ancestor filter is a data structure used for optimising selector matching

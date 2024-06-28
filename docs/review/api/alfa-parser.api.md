@@ -5,11 +5,11 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Callback } from '@siteimprove/alfa-callback';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
-import { Refinement } from '@siteimprove/alfa-refinement';
+import type { Refinement } from '@siteimprove/alfa-refinement';
 import { Result } from '@siteimprove/alfa-result';
 
 // @public (undocumented)

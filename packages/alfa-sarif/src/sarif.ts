@@ -1,4 +1,10 @@
-export { Artifact, Location, Log, ReportingDescriptor, Result } from "sarif";
+export type {
+  Artifact,
+  Location,
+  Log,
+  ReportingDescriptor,
+  Result,
+} from "sarif";
 
 import type * as sarif from "sarif";
 

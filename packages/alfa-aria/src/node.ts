@@ -1,12 +1,12 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Graph } from "@siteimprove/alfa-graph";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";

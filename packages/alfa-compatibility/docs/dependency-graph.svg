@@ -100,27 +100,27 @@
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
-<!-- src/common.ts -->
+<!-- src/index.ts -->
 <g id="node10" class="node">
-<title>src/common.ts</title>
+<title>src/index.ts</title>
 <path fill="none" stroke="#00ff00" stroke-width="5" d="M260.83,-377C260.83,-377 213.17,-377 213.17,-377 209.33,-377 205.5,-373.17 205.5,-369.33 205.5,-369.33 205.5,-361.67 205.5,-361.67 205.5,-357.83 209.33,-354 213.17,-354 213.17,-354 260.83,-354 260.83,-354 264.67,-354 268.5,-357.83 268.5,-361.67 268.5,-361.67 268.5,-369.33 268.5,-369.33 268.5,-373.17 264.67,-377 260.83,-377"/>
-<text text-anchor="middle" x="237" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
+<text text-anchor="middle" x="237" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
 </g>
-<!-- src/common.ts&#45;&gt;src/browser.ts -->
-<!-- src/common.ts&#45;&gt;src/browser.ts -->
+<!-- src/index.ts&#45;&gt;src/browser.ts -->
+<!-- src/index.ts&#45;&gt;src/browser.ts -->
 <g id="edge19" class="edge">
-<title>src/common.ts&#45;&gt;src/browser.ts</title>
+<title>src/index.ts&#45;&gt;src/browser.ts</title>
 <path fill="none" stroke="black" d="M230.24,-353.9C221.56,-345.38 208.23,-332.47 201,-318 193.43,-302.84 190.84,-283.72 188.62,-269.37"/>
 <polygon fill="black" stroke="black" points="192.06,-268.73 186.91,-259.47 185.16,-269.92 192.06,-268.73"/>
 </g>
-<!-- src/common.ts&#45;&gt;src/feature.ts -->
-<!-- src/common.ts&#45;&gt;src/feature.ts -->
+<!-- src/index.ts&#45;&gt;src/feature.ts -->
+<!-- src/index.ts&#45;&gt;src/feature.ts -->
 <g id="edge21" class="edge">
-<title>src/common.ts&#45;&gt;src/feature.ts</title>
+<title>src/index.ts&#45;&gt;src/feature.ts</title>
 <path fill="none" stroke="black" d="M242.41,-353.78C243.67,-346.61 244.04,-336.95 243.53,-328.31"/>
 <polygon fill="black" stroke="black" points="246.98,-327.73 242.4,-318.17 240.03,-328.5 246.98,-327.73"/>
 </g>
-<!-- src/common.ts&#45;&gt;exit_src -->
+<!-- src/index.ts&#45;&gt;exit_src -->
 <!-- exit_src/browser&#45;&gt;exit_src -->
 <!-- exit_src/feature&#45;&gt;exit_src -->
 </g>

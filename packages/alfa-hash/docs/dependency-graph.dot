@@ -31,13 +31,9 @@ digraph "dependency-graph-[object Object]" {
       ];
       "src/hash.ts" [
         label = "hash.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/hashable.ts" [
         label = "hashable.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/index.ts" [
         label = "index.ts";
@@ -80,7 +76,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/hashable.ts" -> "src/hash.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/hashable.ts";
     lhead = "cluster_src/hash.ts";
     color = "black";

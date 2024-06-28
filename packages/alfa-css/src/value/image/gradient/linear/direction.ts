@@ -1,7 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../../../syntax/index.js";
+import type { Token } from "../../../../syntax/index.js";
 
 import { Angle } from "../../../numeric/index.js";
 

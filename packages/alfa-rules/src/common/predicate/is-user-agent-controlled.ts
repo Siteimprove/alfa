@@ -1,5 +1,5 @@
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Element } from "@siteimprove/alfa-dom";
 
 /**
  * {@link https://github.com/Siteimprove/sanshikan/blob/main/terms/user-agent-controlled.md}

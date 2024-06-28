@@ -1,4 +1,4 @@
-import { Unit } from "../../unit/index.js";
+import type { Unit } from "../../unit/index.js";
 
 import { Numeric } from "./numeric.js";
 

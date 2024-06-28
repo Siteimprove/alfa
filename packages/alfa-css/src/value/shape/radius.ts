@@ -1,4 +1,4 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -6,7 +6,7 @@ import type { Parser as CSSParser } from "../../syntax/index.js";
 
 import { Keyword } from "../keyword.js";
 import { LengthPercentage } from "../numeric/index.js";
-import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";
 
 import { BasicShape } from "./basic-shape.js";

@@ -59,8 +59,6 @@ digraph "dependency-graph-[object Object]" {
       ];
       "src/outcome.ts" [
         label = "outcome.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/question.ts" [
         label = "question.ts";
@@ -70,8 +68,6 @@ digraph "dependency-graph-[object Object]" {
       ];
       "src/rule.ts" [
         label = "rule.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/tag.ts" [
         label = "tag.ts";
@@ -385,7 +381,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/outcome.ts" -> "src/rule.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/outcome.ts";
     lhead = "cluster_src/rule.ts";
     color = "black";
@@ -412,7 +408,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/rule.ts" -> "src/diagnostic.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/rule.ts";
     lhead = "cluster_src/diagnostic.ts";
     color = "black";

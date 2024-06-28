@@ -1,12 +1,12 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import type { Parser as CSSParser } from "./parser.js";
 

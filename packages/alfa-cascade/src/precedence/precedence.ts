@@ -1,7 +1,7 @@
 import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
 import { Specificity } from "@siteimprove/alfa-selector";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import { Encapsulation } from "./encapsulation.js";
 import { Layer } from "./layer.js";

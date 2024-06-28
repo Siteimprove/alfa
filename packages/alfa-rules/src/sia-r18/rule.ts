@@ -1,12 +1,13 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
-import { Attribute, Element, Node, Query } from "@siteimprove/alfa-dom";
+import type { Attribute} from "@siteimprove/alfa-dom";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 

@@ -1,9 +1,9 @@
 import { Keyword } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Context } from "@siteimprove/alfa-selector";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Context } from "@siteimprove/alfa-selector";
 
 import { Style } from "../../style.js";
 

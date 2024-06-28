@@ -1,7 +1,7 @@
 import { Callback } from "@siteimprove/alfa-callback";
-import { Continuation } from "@siteimprove/alfa-continuation";
-import { Functor } from "@siteimprove/alfa-functor";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Continuation } from "@siteimprove/alfa-continuation";
+import type { Functor } from "@siteimprove/alfa-functor";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 
 /**
  * @public

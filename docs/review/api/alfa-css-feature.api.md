@@ -6,13 +6,13 @@
 
 import { Device } from '@siteimprove/alfa-device';
 import type { Equatable } from '@siteimprove/alfa-equatable';
-import { Functor } from '@siteimprove/alfa-functor';
+import type { Functor } from '@siteimprove/alfa-functor';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
+import type * as json from '@siteimprove/alfa-json';
 import type { JSON as JSON_2 } from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Media } from './media/feature/media.js';
 import { Media as Media_3 } from './feature/media.js';
 import { Option } from '@siteimprove/alfa-option';

@@ -1,8 +1,8 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../../../syntax/index.js";
+import type { Token } from "../../../../syntax/index.js";
 
 import { Circle } from "./circle.js";
 import { Ellipse } from "./ellipse.js";

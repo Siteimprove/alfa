@@ -1,6 +1,6 @@
-import { Parser as CSSParser } from "@siteimprove/alfa-css";
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";

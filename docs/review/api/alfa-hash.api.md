@@ -4,8 +4,8 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { JSON as JSON_2 } from '@siteimprove/alfa-json';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { JSON as JSON_2 } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export abstract class Hash implements Equatable, Hashable {

@@ -1,14 +1,14 @@
-import { Callback } from "@siteimprove/alfa-callback";
+import type { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Either } from "./either.js";
-import { Right } from "./right.js";
+import type { Either } from "./either.js";
+import type { Right } from "./right.js";
 
 /**
  * @public

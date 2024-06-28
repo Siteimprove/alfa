@@ -159,7 +159,7 @@ axios.get(registry).then(({ data }) => {
     new Map(),
   );
 
-  let code = `
+  const code = `
 // This file has been automatically generated based on the IANA Language Subtag
 // Registry. Do therefore not modify it directly! If you wish to make changes,
 // do so in \`scripts/languages.js\` and run \`yarn generate\` to rebuild this file.

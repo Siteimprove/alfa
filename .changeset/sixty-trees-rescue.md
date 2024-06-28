@@ -79,4 +79,4 @@
 "@siteimprove/alfa-xpath": minor
 ---
 
-**Breaking:** TS resolution has beenchanged to `Node16`, target to `es2022`.
+**Breaking:** TS resolution has been changed to `Node16`, target to `es2022`.

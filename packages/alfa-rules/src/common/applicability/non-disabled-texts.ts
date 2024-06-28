@@ -1,14 +1,15 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
+import type {
+  Document} from "@siteimprove/alfa-dom";
 import {
-  Document,
   Element,
   Namespace,
   Node,
   Text,
 } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import type { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";

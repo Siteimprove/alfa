@@ -1,16 +1,20 @@
-import { Callback } from "@siteimprove/alfa-callback";
-import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
+import type { Callback } from "@siteimprove/alfa-callback";
+import {
+  Comparable,
+  type Comparer,
+  Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Option } from "./option.js";
+import type { Option } from "./option.js";
 import { None } from "./none.js";
 
 const { not, test } = Predicate;

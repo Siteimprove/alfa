@@ -1,7 +1,8 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { RGB } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import type { RGB } from "@siteimprove/alfa-css";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Text } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";

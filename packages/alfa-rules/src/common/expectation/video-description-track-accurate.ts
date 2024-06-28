@@ -1,5 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
 import { expectation } from "../act/expectation.js";

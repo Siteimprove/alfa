@@ -1,7 +1,7 @@
 import { Record } from "@siteimprove/alfa-record";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import * as act from "@siteimprove/alfa-act";
+import type * as act from "@siteimprove/alfa-act";
 
 export * from "./tags/index.js";
 import * as experimentalRules from "./experimental.js";

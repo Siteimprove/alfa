@@ -57,21 +57,15 @@ digraph "dependency-graph-[object Object]" {
       ];
       "src/environment.ts" [
         label = "environment.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/evaluate.ts" [
         label = "evaluate.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/expression.ts" [
         label = "expression.ts";
       ];
       "src/function.ts" [
         label = "function.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/index.ts" [
         label = "index.ts";
@@ -101,15 +95,11 @@ digraph "dependency-graph-[object Object]" {
         ];
         "src/functions/fn.ts" [
           label = "fn.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/functions/index.ts" [
           label = "index.ts";
           color = "#00ff00";
           penwidth = 5;
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/functions/fn.ts" -> "exit_src/functions" [
           style = "invis";
@@ -272,7 +262,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/coerce.ts" -> "src/types.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/coerce.ts";
     lhead = "cluster_src/types.ts";
     color = "black";
@@ -281,7 +271,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/environment.ts" -> "src/function.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/environment.ts";
     lhead = "cluster_src/function.ts";
     color = "black";
@@ -290,7 +280,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/environment.ts" -> "src/types.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/environment.ts";
     lhead = "cluster_src/types.ts";
     color = "black";
@@ -335,7 +325,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/evaluate.ts" -> "src/expression.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/evaluate.ts";
     lhead = "cluster_src/expression.ts";
     color = "black";
@@ -374,7 +364,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/evaluate.ts" -> "src/types.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/evaluate.ts";
     lhead = "cluster_src/types.ts";
     color = "black";
@@ -392,7 +382,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/function.ts" -> "src/environment.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/function.ts";
     lhead = "cluster_src/environment.ts";
     color = "black";
@@ -401,7 +391,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/function.ts" -> "src/evaluate.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/function.ts";
     lhead = "cluster_src/evaluate.ts";
     color = "black";
@@ -410,7 +400,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/function.ts" -> "src/types.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/function.ts";
     lhead = "cluster_src/types.ts";
     color = "black";
@@ -428,7 +418,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/functions" -> "src/function.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/functions";
     lhead = "cluster_src/function.ts";
     color = "#00ff00";
@@ -563,7 +553,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/matches.ts" -> "src/types.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/matches.ts";
     lhead = "cluster_src/types.ts";
     color = "black";
@@ -608,7 +598,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/types.ts" -> "src/descriptors.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/types.ts";
     lhead = "cluster_src/descriptors.ts";
     color = "black";
@@ -617,7 +607,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/walk.ts" -> "src/expression.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/walk.ts";
     lhead = "cluster_src/expression.ts";
     color = "black";

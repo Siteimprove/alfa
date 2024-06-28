@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";

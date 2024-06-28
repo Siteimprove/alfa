@@ -1,4 +1,4 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
@@ -8,7 +8,7 @@ import { Unit } from "../unit/index.js";
 import { Color } from "./color/index.js";
 import { Keyword } from "./keyword.js";
 import { Length } from "./numeric/index.js";
-import { Resolvable } from "./resolvable.js";
+import type { Resolvable } from "./resolvable.js";
 import { Value } from "./value.js";
 
 const { parseIf, separatedList } = Parser;

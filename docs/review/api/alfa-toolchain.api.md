@@ -6,10 +6,10 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import type { ChangelogFunctions as ChangelogFunctions_2 } from '@changesets/types';
-import { Config } from '@changesets/types';
-import { NewChangesetWithCommit } from '@changesets/types';
-import { PackageJSON } from '@changesets/types';
-import { Packages } from '@manypkg/get-packages';
+import type { Config } from '@changesets/types';
+import type { NewChangesetWithCommit } from '@changesets/types';
+import type { PackageJSON } from '@changesets/types';
+import type { Packages } from '@manypkg/get-packages';
 
 // Warning: (ae-forgotten-export) The symbol "ChangelogFunctions" needs to be exported by the entry point index.d.ts
 //

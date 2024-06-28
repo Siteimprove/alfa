@@ -95,7 +95,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/comparer.ts" -> "src/comparison.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/comparer.ts";
     lhead = "cluster_src/comparison.ts";
     color = "black";

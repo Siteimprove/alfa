@@ -1,8 +1,8 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video.js";
 

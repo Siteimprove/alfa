@@ -1,7 +1,8 @@
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Node, Text, Query } from "@siteimprove/alfa-dom";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Document} from "@siteimprove/alfa-dom";
+import { Element, Node, Text, Query } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";

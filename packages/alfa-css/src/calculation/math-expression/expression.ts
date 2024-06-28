@@ -1,12 +1,13 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Err, Result } from "@siteimprove/alfa-result";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Result } from "@siteimprove/alfa-result";
+import { Err } from "@siteimprove/alfa-result";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Unit } from "../../unit/index.js";
+import type { Unit } from "../../unit/index.js";
 
-import {
+import type {
   Angle,
   Length,
   Number,
@@ -14,7 +15,7 @@ import {
   Percentage,
 } from "../numeric/index.js";
 
-import { Kind } from "./kind.js";
+import type { Kind } from "./kind.js";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#calculation-tree}
