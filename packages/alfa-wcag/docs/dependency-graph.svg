@@ -108,34 +108,34 @@
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
-<!-- src/common.ts -->
+<!-- src/index.ts -->
 <g id="node11" class="node">
-<title>src/common.ts</title>
+<title>src/index.ts</title>
 <path fill="none" stroke="#00ff00" stroke-width="5" d="M239.83,-377C239.83,-377 192.17,-377 192.17,-377 188.33,-377 184.5,-373.17 184.5,-369.33 184.5,-369.33 184.5,-361.67 184.5,-361.67 184.5,-357.83 188.33,-354 192.17,-354 192.17,-354 239.83,-354 239.83,-354 243.67,-354 247.5,-357.83 247.5,-361.67 247.5,-361.67 247.5,-369.33 247.5,-369.33 247.5,-373.17 243.67,-377 239.83,-377"/>
-<text text-anchor="middle" x="216" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
+<text text-anchor="middle" x="216" y="-361.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
 </g>
-<!-- src/common.ts&#45;&gt;src/criterion.ts -->
-<!-- src/common.ts&#45;&gt;src/criterion.ts -->
+<!-- src/index.ts&#45;&gt;src/criterion.ts -->
+<!-- src/index.ts&#45;&gt;src/criterion.ts -->
 <g id="edge22" class="edge">
-<title>src/common.ts&#45;&gt;src/criterion.ts</title>
+<title>src/index.ts&#45;&gt;src/criterion.ts</title>
 <path fill="none" stroke="black" d="M199.81,-353.97C186.72,-346.25 169.59,-334.28 161,-318 153.18,-303.17 153.25,-283.98 153.52,-269.52"/>
 <polygon fill="black" stroke="black" points="157.03,-269.15 153.63,-259.11 150.03,-269.08 157.03,-269.15"/>
 </g>
-<!-- src/common.ts&#45;&gt;src/conformance.ts -->
-<!-- src/common.ts&#45;&gt;src/conformance.ts -->
+<!-- src/index.ts&#45;&gt;src/conformance.ts -->
+<!-- src/index.ts&#45;&gt;src/conformance.ts -->
 <g id="edge20" class="edge">
-<title>src/common.ts&#45;&gt;src/conformance.ts</title>
+<title>src/index.ts&#45;&gt;src/conformance.ts</title>
 <path fill="none" stroke="black" d="M221.41,-353.78C222.67,-346.61 223.04,-336.95 222.53,-328.31"/>
 <polygon fill="black" stroke="black" points="225.98,-327.73 221.4,-318.17 219.03,-328.5 225.98,-327.73"/>
 </g>
-<!-- src/common.ts&#45;&gt;src/technique.ts -->
-<!-- src/common.ts&#45;&gt;src/technique.ts -->
+<!-- src/index.ts&#45;&gt;src/technique.ts -->
+<!-- src/index.ts&#45;&gt;src/technique.ts -->
 <g id="edge24" class="edge">
-<title>src/common.ts&#45;&gt;src/technique.ts</title>
+<title>src/index.ts&#45;&gt;src/technique.ts</title>
 <path fill="none" stroke="black" d="M246.3,-353.97C261.89,-346.12 279.35,-333.99 289,-318 297.83,-303.36 299.99,-283.9 298.65,-269.3"/>
 <polygon fill="black" stroke="black" points="302.07,-268.54 297,-259.24 295.17,-269.67 302.07,-268.54"/>
 </g>
-<!-- src/common.ts&#45;&gt;exit_src -->
+<!-- src/index.ts&#45;&gt;exit_src -->
 <!-- exit_src/criterion&#45;&gt;exit_src -->
 <!-- exit_src/technique&#45;&gt;exit_src -->
 </g>

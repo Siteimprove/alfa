@@ -11,77 +11,70 @@
 <polygon fill="#ffffff" stroke="transparent" points="-21.6,21.6 -21.6,-363.6 260.1,-363.6 260.1,21.6 -21.6,21.6"/>
 <g id="clust1" class="cluster">
 <title>cluster_src</title>
-<polygon fill="#ffffff" stroke="#000000" points="54.5,-43 54.5,-334 230.5,-334 230.5,-43 54.5,-43"/>
+<polygon fill="#ffffff" stroke="#000000" points="62.5,-43 62.5,-334 230.5,-334 230.5,-43 62.5,-43"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_src</title>
-<polygon fill="#ffffff" stroke="#000000" points="62.5,-51 62.5,-326 222.5,-326 222.5,-51 62.5,-51"/>
+<polygon fill="#ffffff" stroke="#000000" points="70.5,-51 70.5,-326 222.5,-326 222.5,-51 70.5,-51"/>
 </g>
 <!-- dependency&#45;graph&#45;[object Object] -->
-<!-- src/ok.ts -->
-<g id="node2" class="node">
-<title>src/ok.ts</title>
-<path fill="#ff6c60" stroke="#000000" d="M116.83,-259C116.83,-259 78.17,-259 78.17,-259 74.33,-259 70.5,-255.17 70.5,-251.33 70.5,-251.33 70.5,-243.67 70.5,-243.67 70.5,-239.83 74.33,-236 78.17,-236 78.17,-236 116.83,-236 116.83,-236 120.67,-236 124.5,-239.83 124.5,-243.67 124.5,-243.67 124.5,-251.33 124.5,-251.33 124.5,-255.17 120.67,-259 116.83,-259"/>
-<text text-anchor="middle" x="97.5" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">ok.ts</text>
-</g>
 <!-- src/result.ts -->
-<g id="node3" class="node">
+<g id="node2" class="node">
 <title>src/result.ts</title>
-<path fill="#ff6c60" stroke="#000000" d="M166.83,-200C166.83,-200 118.17,-200 118.17,-200 114.33,-200 110.5,-196.17 110.5,-192.33 110.5,-192.33 110.5,-184.67 110.5,-184.67 110.5,-180.83 114.33,-177 118.17,-177 118.17,-177 166.83,-177 166.83,-177 170.67,-177 174.5,-180.83 174.5,-184.67 174.5,-184.67 174.5,-192.33 174.5,-192.33 174.5,-196.17 170.67,-200 166.83,-200"/>
-<text text-anchor="middle" x="142.5" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">result.ts</text>
-</g>
-<!-- src/ok.ts&#45;&gt;src/result.ts -->
-<!-- src/ok.ts&#45;&gt;src/result.ts -->
-<g id="edge23" class="edge">
-<title>src/ok.ts&#45;&gt;src/result.ts</title>
-<path fill="none" stroke="black" d="M100.55,-235.78C105.39,-227.9 113.69,-216.99 121.75,-207.75"/>
-<polygon fill="black" stroke="black" points="124.51,-209.92 128.67,-200.17 119.34,-205.19 124.51,-209.92"/>
+<path fill="none" stroke="#000000" d="M134.83,-259C134.83,-259 86.17,-259 86.17,-259 82.33,-259 78.5,-255.17 78.5,-251.33 78.5,-251.33 78.5,-243.67 78.5,-243.67 78.5,-239.83 82.33,-236 86.17,-236 86.17,-236 134.83,-236 134.83,-236 138.67,-236 142.5,-239.83 142.5,-243.67 142.5,-243.67 142.5,-251.33 142.5,-251.33 142.5,-255.17 138.67,-259 134.83,-259"/>
+<text text-anchor="middle" x="110.5" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">result.ts</text>
 </g>
 <!-- src/err.ts -->
-<g id="node4" class="node">
+<g id="node3" class="node">
 <title>src/err.ts</title>
-<path fill="#ff6c60" stroke="#000000" d="M136.83,-141C136.83,-141 98.17,-141 98.17,-141 94.33,-141 90.5,-137.17 90.5,-133.33 90.5,-133.33 90.5,-125.67 90.5,-125.67 90.5,-121.83 94.33,-118 98.17,-118 98.17,-118 136.83,-118 136.83,-118 140.67,-118 144.5,-121.83 144.5,-125.67 144.5,-125.67 144.5,-133.33 144.5,-133.33 144.5,-137.17 140.67,-141 136.83,-141"/>
-<text text-anchor="middle" x="117.5" y="-125.8" font-family="Arial" font-size="14.00" fill="#000000">err.ts</text>
+<path fill="none" stroke="#000000" d="M144.83,-141C144.83,-141 106.17,-141 106.17,-141 102.33,-141 98.5,-137.17 98.5,-133.33 98.5,-133.33 98.5,-125.67 98.5,-125.67 98.5,-121.83 102.33,-118 106.17,-118 106.17,-118 144.83,-118 144.83,-118 148.67,-118 152.5,-121.83 152.5,-125.67 152.5,-125.67 152.5,-133.33 152.5,-133.33 152.5,-137.17 148.67,-141 144.83,-141"/>
+<text text-anchor="middle" x="125.5" y="-125.8" font-family="Arial" font-size="14.00" fill="#000000">err.ts</text>
 </g>
-<!-- src/ok.ts&#45;&gt;src/err.ts -->
-<!-- src/ok.ts&#45;&gt;src/err.ts -->
-<g id="edge21" class="edge">
-<title>src/ok.ts&#45;&gt;src/err.ts</title>
-<path fill="none" stroke="black" d="M116.02,-235.55C124.06,-221.76 124.48,-197.4 128.5,-177 130.18,-168.46 133.06,-159.35 134.21,-151.47"/>
-<polygon fill="black" stroke="black" points="137.71,-151.41 134.38,-141.35 130.72,-151.29 137.71,-151.41"/>
+<!-- src/result.ts&#45;&gt;src/err.ts -->
+<!-- src/result.ts&#45;&gt;src/err.ts -->
+<g id="edge23" class="edge">
+<title>src/result.ts&#45;&gt;src/err.ts</title>
+<path fill="none" stroke="black" d="M127.95,-235.57C134.7,-221.81 133.08,-197.47 136.5,-177 137.94,-168.42 140.77,-159.29 141.95,-151.42"/>
+<polygon fill="black" stroke="black" points="145.45,-151.4 142.2,-141.32 138.45,-151.23 145.45,-151.4"/>
+</g>
+<!-- src/ok.ts -->
+<g id="node4" class="node">
+<title>src/ok.ts</title>
+<path fill="none" stroke="#000000" d="M164.83,-200C164.83,-200 126.17,-200 126.17,-200 122.33,-200 118.5,-196.17 118.5,-192.33 118.5,-192.33 118.5,-184.67 118.5,-184.67 118.5,-180.83 122.33,-177 126.17,-177 126.17,-177 164.83,-177 164.83,-177 168.67,-177 172.5,-180.83 172.5,-184.67 172.5,-184.67 172.5,-192.33 172.5,-192.33 172.5,-196.17 168.67,-200 164.83,-200"/>
+<text text-anchor="middle" x="145.5" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">ok.ts</text>
+</g>
+<!-- src/result.ts&#45;&gt;src/ok.ts -->
+<!-- src/result.ts&#45;&gt;src/ok.ts -->
+<g id="edge25" class="edge">
+<title>src/result.ts&#45;&gt;src/ok.ts</title>
+<path fill="none" stroke="black" d="M133.32,-235.78C141.58,-228.53 148.69,-218.74 152.43,-210.02"/>
+<polygon fill="black" stroke="black" points="155.86,-210.74 155.16,-200.17 149.11,-208.88 155.86,-210.74"/>
 </g>
 <!-- exit_src -->
-<!-- src/ok.ts&#45;&gt;exit_src -->
-<!-- src/result.ts&#45;&gt;src/ok.ts -->
-<!-- src/result.ts&#45;&gt;src/ok.ts -->
-<g id="edge27" class="edge">
-<title>src/result.ts&#45;&gt;src/ok.ts</title>
-<path fill="none" stroke="black" d="M150.28,-200.17C148.15,-208.36 139.95,-219.83 129.84,-229.31"/>
-<polygon fill="black" stroke="black" points="127.56,-226.64 122.2,-235.78 132.09,-231.98 127.56,-226.64"/>
-</g>
-<!-- src/result.ts&#45;&gt;src/err.ts -->
-<!-- src/result.ts&#45;&gt;src/err.ts -->
-<g id="edge25" class="edge">
-<title>src/result.ts&#45;&gt;src/err.ts</title>
-<path fill="none" stroke="black" d="M154.03,-176.78C154.72,-168.98 150.95,-158.21 144.73,-149.03"/>
-<polygon fill="black" stroke="black" points="147.4,-146.76 138.39,-141.17 141.95,-151.15 147.4,-146.76"/>
-</g>
 <!-- src/result.ts&#45;&gt;exit_src -->
-<!-- src/err.ts&#45;&gt;src/ok.ts -->
-<!-- src/err.ts&#45;&gt;src/ok.ts -->
+<!-- src/err.ts&#45;&gt;src/result.ts -->
+<!-- src/err.ts&#45;&gt;src/result.ts -->
 <g id="edge11" class="edge">
-<title>src/err.ts&#45;&gt;src/ok.ts</title>
-<path fill="none" stroke="black" d="M120,-141.35C118.04,-150.63 112.97,-164.44 110.5,-177 107.33,-193.09 106.4,-211.66 104.88,-225.55"/>
-<polygon fill="black" stroke="black" points="101.4,-225.16 103.48,-235.55 108.33,-226.13 101.4,-225.16"/>
-</g>
-<!-- src/err.ts&#45;&gt;src/result.ts -->
-<!-- src/err.ts&#45;&gt;src/result.ts -->
-<g id="edge13" class="edge">
 <title>src/err.ts&#45;&gt;src/result.ts</title>
-<path fill="none" stroke="black" d="M127.58,-141.17C132.08,-148.49 136.8,-158.42 140.09,-167.21"/>
-<polygon fill="black" stroke="black" points="136.79,-168.35 143.21,-176.78 143.44,-166.19 136.79,-168.35"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M127.82,-141.32C125.74,-150.58 120.61,-164.37 118.5,-177 115.83,-192.99 116.23,-211.35 115.92,-225.17"/>
+<polygon fill="black" stroke="black" points="112.41,-225.41 115.41,-235.57 119.4,-225.76 112.41,-225.41"/>
 </g>
 <!-- src/err.ts&#45;&gt;exit_src -->
+<!-- src/ok.ts&#45;&gt;src/result.ts -->
+<!-- src/ok.ts&#45;&gt;src/result.ts -->
+<g id="edge21" class="edge">
+<title>src/ok.ts&#45;&gt;src/result.ts</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M144.35,-200.17C140.97,-207.88 134.78,-218.5 128.48,-227.63"/>
+<polygon fill="black" stroke="black" points="125.6,-225.65 122.49,-235.78 131.24,-229.79 125.6,-225.65"/>
+</g>
+<!-- src/ok.ts&#45;&gt;src/err.ts -->
+<!-- src/ok.ts&#45;&gt;src/err.ts -->
+<g id="edge19" class="edge">
+<title>src/ok.ts&#45;&gt;src/err.ts</title>
+<path fill="none" stroke="black" d="M147.15,-176.78C145.85,-169.37 142.67,-159.3 138.97,-150.45"/>
+<polygon fill="black" stroke="black" points="142.05,-148.76 134.65,-141.17 135.7,-151.72 142.05,-148.76"/>
+</g>
+<!-- src/ok.ts&#45;&gt;exit_src -->
 <!-- name_src -->
 <g id="node5" class="node">
 <title>name_src</title>
@@ -93,33 +86,33 @@
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
-<!-- src/common.ts -->
+<!-- src/index.ts -->
 <g id="node7" class="node">
-<title>src/common.ts</title>
+<title>src/index.ts</title>
 <path fill="none" stroke="#ff0000" stroke-width="5" d="M134.33,-318C134.33,-318 86.67,-318 86.67,-318 82.83,-318 79,-314.17 79,-310.33 79,-310.33 79,-302.67 79,-302.67 79,-298.83 82.83,-295 86.67,-295 86.67,-295 134.33,-295 134.33,-295 138.17,-295 142,-298.83 142,-302.67 142,-302.67 142,-310.33 142,-310.33 142,-314.17 138.17,-318 134.33,-318"/>
-<text text-anchor="middle" x="110.5" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
+<text text-anchor="middle" x="110.5" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
 </g>
-<!-- src/common.ts&#45;&gt;src/ok.ts -->
-<!-- src/common.ts&#45;&gt;src/ok.ts -->
+<!-- src/index.ts&#45;&gt;src/result.ts -->
+<!-- src/index.ts&#45;&gt;src/result.ts -->
 <g id="edge17" class="edge">
-<title>src/common.ts&#45;&gt;src/ok.ts</title>
-<path fill="none" stroke="black" d="M113.47,-294.78C113.08,-287.45 111.17,-277.52 108.61,-268.74"/>
-<polygon fill="black" stroke="black" points="111.88,-267.5 105.34,-259.17 105.26,-269.77 111.88,-267.5"/>
+<title>src/index.ts&#45;&gt;src/result.ts</title>
+<path fill="none" stroke="black" d="M115.91,-294.78C117.17,-287.61 117.54,-277.95 117.03,-269.31"/>
+<polygon fill="black" stroke="black" points="120.48,-268.73 115.9,-259.17 113.53,-269.5 120.48,-268.73"/>
 </g>
-<!-- src/common.ts&#45;&gt;src/result.ts -->
-<!-- src/common.ts&#45;&gt;src/result.ts -->
-<g id="edge19" class="edge">
-<title>src/common.ts&#45;&gt;src/result.ts</title>
-<path fill="none" stroke="black" d="M124.24,-294.84C131.36,-285.67 138.58,-271.93 142.5,-259 147.34,-243.01 149.58,-224.18 149.22,-210.16"/>
-<polygon fill="black" stroke="black" points="152.7,-209.76 148.38,-200.09 145.73,-210.34 152.7,-209.76"/>
+<!-- src/index.ts&#45;&gt;src/err.ts -->
+<!-- src/index.ts&#45;&gt;src/err.ts -->
+<g id="edge13" class="edge">
+<title>src/index.ts&#45;&gt;src/err.ts</title>
+<path fill="none" stroke="black" d="M131.25,-294.84C143.22,-286.1 157.2,-272.94 166.5,-259 182.22,-235.45 185.07,-227.78 190.5,-200 192.46,-189.97 194.84,-186.25 190.5,-177 184.55,-164.33 173.27,-153.92 161.65,-146.18"/>
+<polygon fill="black" stroke="black" points="163.15,-143 152.78,-140.8 159.51,-148.98 163.15,-143"/>
 </g>
-<!-- src/common.ts&#45;&gt;src/err.ts -->
-<!-- src/common.ts&#45;&gt;src/err.ts -->
+<!-- src/index.ts&#45;&gt;src/ok.ts -->
+<!-- src/index.ts&#45;&gt;src/ok.ts -->
 <g id="edge15" class="edge">
-<title>src/common.ts&#45;&gt;src/err.ts</title>
-<path fill="none" stroke="black" d="M127,-294.73C147.56,-276.91 180.22,-239.33 192.5,-200 195.55,-190.24 197.21,-186.07 192.5,-177 184.54,-161.65 168.92,-150.29 153.86,-142.65"/>
-<polygon fill="black" stroke="black" points="155.18,-139.4 144.64,-138.36 152.23,-145.75 155.18,-139.4"/>
+<title>src/index.ts&#45;&gt;src/ok.ts</title>
+<path fill="none" stroke="black" d="M131.43,-294.91C142.73,-286.4 155.02,-273.5 160.5,-259 166.49,-243.14 164.14,-223.84 159.3,-209.6"/>
+<polygon fill="black" stroke="black" points="162.48,-208.15 155.42,-200.26 156.02,-210.83 162.48,-208.15"/>
 </g>
-<!-- src/common.ts&#45;&gt;exit_src -->
+<!-- src/index.ts&#45;&gt;exit_src -->
 </g>
 </svg>

@@ -7,8 +7,9 @@ digraph "dependency-graph-[object Object]" {
   "src/changeset/helpers.ts";
   "src/dependency-graph/rainbow.ts";
   "src/dependency-graph/dependency-graph.ts";
-  "src/changeset/changelog-global.ts";
+  "src/changeset/build-changelog.ts";
   "name_src/changeset";
+  "src/changeset/changelog-global.ts";
   "src/changeset/changelog-individual.ts";
   "src/dependency-graph/generate-graphs.ts";
   "name_src/dependency-graph";
@@ -319,6 +320,9 @@ digraph "dependency-graph-[object Object]" {
     ltail = "cluster_src/index.ts";
     lhead = "cluster_src/changeset";
     color = "#00ffff";
+  ];
+  "src/index.ts" -> "name_src/changeset" [
+    style = "invis";
   ];
   "src/index.ts" -> "name_src/changeset" [
     style = "invis";
