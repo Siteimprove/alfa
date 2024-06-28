@@ -146,7 +146,7 @@ export class WithDeclaration<
   toJSON(options?: O): WithDeclaration.JSON {
     return {
       ...super.toJSON(options),
-      declaration: this._declaration.toJSON(options),
+      declaration: this._declaration.toJSON(),
     };
   }
 }
