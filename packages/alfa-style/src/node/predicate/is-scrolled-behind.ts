@@ -57,14 +57,14 @@ export function isScrolledBehind(device: Device): Predicate<Node> {
 
 const isScrollOrAuto = (
   overflow:
-    | Longhands.Specified<"overflow-x">
-    | Longhands.Specified<"overflow-y">,
+    | Longhands.Computed<"overflow-x">
+    | Longhands.Computed<"overflow-y">,
 ): boolean => overflow.value === "scroll" || overflow.value === "auto";
 
 const isHidden = (
   overflow:
-    | Longhands.Specified<"overflow-x">
-    | Longhands.Specified<"overflow-y">,
+    | Longhands.Computed<"overflow-x">
+    | Longhands.Computed<"overflow-y">,
 ): boolean => overflow.value === "hidden";
 
 function isScrollContainerFor(
