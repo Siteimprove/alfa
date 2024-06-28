@@ -33,23 +33,17 @@ function expectation(
     case OffsetX.Center:
       switch (offsetY) {
         case OffsetY.Bottom:
-          return (
-            ["auto", "scroll", "hidden"].includes(computedOverflowX) &&
-            ["auto", "scroll"].includes(computedOverflowY)
-          );
+          return computedOverflowY === "auto" || computedOverflowY === "scroll";
       }
       break;
     case OffsetX.Right:
       switch (offsetY) {
         case OffsetY.Center:
-          return (
-            ["auto", "scroll"].includes(computedOverflowX) &&
-            ["auto", "scroll", "hidden"].includes(computedOverflowY)
-          );
+          return computedOverflowX === "auto" || computedOverflowX === "scroll";
         case OffsetY.Bottom:
           return (
-            ["auto", "scroll"].includes(computedOverflowX) &&
-            ["auto", "scroll"].includes(computedOverflowY)
+            (computedOverflowX === "auto" || computedOverflowX === "scroll") &&
+            (computedOverflowY === "auto" || computedOverflowY === "scroll")
           );
       }
       break;

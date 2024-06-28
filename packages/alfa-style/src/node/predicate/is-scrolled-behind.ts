@@ -56,15 +56,11 @@ export function isScrolledBehind(device: Device): Predicate<Node> {
 }
 
 const isScrollOrAuto = (
-  overflow:
-    | Longhands.Computed<"overflow-x">
-    | Longhands.Computed<"overflow-y">,
+  overflow: Longhands.Computed<"overflow-x"> | Longhands.Computed<"overflow-y">,
 ): boolean => overflow.value === "scroll" || overflow.value === "auto";
 
 const isHidden = (
-  overflow:
-    | Longhands.Computed<"overflow-x">
-    | Longhands.Computed<"overflow-y">,
+  overflow: Longhands.Computed<"overflow-x"> | Longhands.Computed<"overflow-y">,
 ): boolean => overflow.value === "hidden";
 
 function isScrollContainerFor(
@@ -98,11 +94,6 @@ function isScrollContainerFor(
               device,
             ),
             hasComputedStyle("overflow-x", isScrollOrAuto, device),
-            hasComputedStyle(
-              "overflow-y",
-              or(isScrollOrAuto, isHidden),
-              device,
-            ),
           ),
           // Element intersects the rectangle below stretching to infinity
           //
@@ -123,11 +114,6 @@ function isScrollContainerFor(
                   ancestorBox.width,
                   Infinity,
                 ).intersects(elementBox),
-              device,
-            ),
-            hasComputedStyle(
-              "overflow-x",
-              or(isScrollOrAuto, isHidden),
               device,
             ),
             hasComputedStyle("overflow-y", isScrollOrAuto, device),
