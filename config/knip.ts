@@ -14,6 +14,8 @@ const config: KnipConfig = {
     "packages/alfa-cascade": {
       entry,
       project,
+      // For some reason, knip doesn't detect that Bucket is used in the test
+      // file and needs to be exported for that.
       ignore: ["src/ancestor-filter.ts"],
     },
     "packages/alfa-device": { entry: [...entry, "src/native.ts!"], project },
