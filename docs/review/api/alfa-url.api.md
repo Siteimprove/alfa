@@ -4,15 +4,15 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
+import type * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
 import { Result } from '@siteimprove/alfa-result';
 import { Sequence } from '@siteimprove/alfa-sequence';
-import { Serializable } from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class URL implements Equatable, Hashable, Serializable<URL.JSON> {

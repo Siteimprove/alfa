@@ -7,25 +7,25 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Attribute as Attribute_2 } from '@siteimprove/alfa-dom';
 import { Context } from '@siteimprove/alfa-selector';
-import { Device } from '@siteimprove/alfa-device';
+import type { Device } from '@siteimprove/alfa-device';
 import * as dom_2 from '@siteimprove/alfa-dom';
 import { Element as Element_2 } from '@siteimprove/alfa-dom';
-import { Equatable } from '@siteimprove/alfa-equatable';
+import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type * as json from '@siteimprove/alfa-json';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Namespace } from '@siteimprove/alfa-dom';
 import { Node as Node_2 } from '@siteimprove/alfa-dom';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
-import { Refinement } from '@siteimprove/alfa-refinement';
+import type { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
-import { Serializable } from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 import { Text as Text_2 } from '@siteimprove/alfa-dom';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 import * as tree from '@siteimprove/alfa-tree';
 
 // @public (undocumented)

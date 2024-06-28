@@ -6,29 +6,29 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
-import { Comparison } from '@siteimprove/alfa-comparable';
+import type { Comparison } from '@siteimprove/alfa-comparable';
 import { Component as Component_3 } from '../position/component.js';
 import { Corner as Corner_3 } from './corner.js';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
+import type * as json from '@siteimprove/alfa-json';
 import { Keywords as Keywords_2 } from '../position/keywords.js';
 import { LengthPercentage as LengthPercentage_2 } from '../index.js';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Parser as Parser_3 } from '../../index.js';
 import { Parser as Parser_4 } from '../../syntax/parser.js';
 import { Position as Position_3 } from '../index.js';
-import { Predicate } from '@siteimprove/alfa-predicate';
+import type { Predicate } from '@siteimprove/alfa-predicate';
 import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token as Token_2 } from '../../syntax/token.js';
 import { Unit as Unit_2 } from '../../index.js';
 

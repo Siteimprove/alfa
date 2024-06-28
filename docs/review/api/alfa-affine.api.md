@@ -4,10 +4,10 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
+import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Matrix } from '@siteimprove/alfa-math';
 import { Option } from '@siteimprove/alfa-option';
-import { Serializable } from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 import { Vector } from '@siteimprove/alfa-math';
 
 // @public (undocumented)

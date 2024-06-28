@@ -6,8 +6,8 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Device } from '@siteimprove/alfa-device';
-import * as earl from '@siteimprove/alfa-earl';
-import { Equatable } from '@siteimprove/alfa-equatable';
+import type * as earl from '@siteimprove/alfa-earl';
+import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Feature } from '@siteimprove/alfa-css-feature';
 import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
@@ -16,10 +16,10 @@ import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-rectangle';
-import { Refinement } from '@siteimprove/alfa-refinement';
-import * as sarif from '@siteimprove/alfa-sarif';
+import type { Refinement } from '@siteimprove/alfa-refinement';
+import type * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
-import { Serializable } from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 import * as tree from '@siteimprove/alfa-tree';
 

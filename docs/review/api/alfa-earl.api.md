@@ -4,8 +4,8 @@
 
 ```ts
 
-import { Document } from '@siteimprove/alfa-json-ld';
-import { Option } from '@siteimprove/alfa-option';
+import type { Document } from '@siteimprove/alfa-json-ld';
+import type { Option } from '@siteimprove/alfa-option';
 import { Some } from '@siteimprove/alfa-option';
 
 // @public (undocumented)

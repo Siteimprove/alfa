@@ -4,15 +4,15 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
-import { Callback } from '@siteimprove/alfa-callback';
-import { Continuation } from '@siteimprove/alfa-continuation';
-import { Functor } from '@siteimprove/alfa-functor';
+import type { Applicative } from '@siteimprove/alfa-applicative';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Continuation } from '@siteimprove/alfa-continuation';
+import type { Functor } from '@siteimprove/alfa-functor';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import { Mapper } from '@siteimprove/alfa-mapper';
-import { Monad } from '@siteimprove/alfa-monad';
-import { Thenable } from '@siteimprove/alfa-thenable';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Mapper } from '@siteimprove/alfa-mapper';
+import type { Monad } from '@siteimprove/alfa-monad';
+import type { Thenable } from '@siteimprove/alfa-thenable';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
 export abstract class Future<T> implements Functor<T>, Applicative<T>, Monad<T>, Thenable<T>, AsyncIterable<T> {

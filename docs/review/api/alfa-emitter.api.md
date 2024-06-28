@@ -5,8 +5,8 @@
 ```ts
 
 import { Callback } from '@siteimprove/alfa-callback';
-import { Functor } from '@siteimprove/alfa-functor';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Functor } from '@siteimprove/alfa-functor';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
 export class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> {

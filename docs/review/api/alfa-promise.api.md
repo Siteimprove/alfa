@@ -5,8 +5,8 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Callback } from '@siteimprove/alfa-callback';
-import { Continuation } from '@siteimprove/alfa-continuation';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Continuation } from '@siteimprove/alfa-continuation';
 
 // @public (undocumented)
 type Promise_2<T> = globalThis.Promise<T>;

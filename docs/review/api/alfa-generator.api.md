@@ -4,8 +4,8 @@
 
 ```ts
 
-import { Mapper } from '@siteimprove/alfa-mapper';
-import { Reducer } from '@siteimprove/alfa-reducer';
+import type { Mapper } from '@siteimprove/alfa-mapper';
+import type { Reducer } from '@siteimprove/alfa-reducer';
 
 // @public (undocumented)
 type Generator_2<T, R = void, N = undefined> = globalThis.Generator<T, R, N>;
