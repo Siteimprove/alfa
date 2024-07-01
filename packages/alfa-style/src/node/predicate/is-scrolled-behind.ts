@@ -20,6 +20,12 @@ const cache = Cache.empty<Device, Cache<Node, boolean>>();
  * {@link https://developer.mozilla.org/en-US/docs/Glossary/Scroll_container}
  *
  * @remarks
+ * This predicate is currently not able to detect if content is scrolled behind to the left
+ * or above after the scroll position has changed. This is because we would have to differentiate
+ * between content that is to the left or above when the scroll position is in its default position
+ * and therefore cannot be scrolled into view, and content that is to the left or above after scrolling
+ * and could be scrolled back into view.
+ *
  * Usually content that can be scrolled into view is considered visible,
  * but in some instances we also want to regard such content as invisible.
  * To check for this, use (the negation of) this predicate
