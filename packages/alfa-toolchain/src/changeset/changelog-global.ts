@@ -44,7 +44,7 @@ async function main(cwd: string) {
   const changesetPath = path.join(cwd, ".changeset");
   const changelogPath = resolveFrom(changesetPath, global);
 
-  let possibleChangelogFunc = require(changelogPath);
+  let possibleChangelogFunc = await import(changelogPath);
   if (possibleChangelogFunc.default) {
     possibleChangelogFunc = possibleChangelogFunc.default;
   }
