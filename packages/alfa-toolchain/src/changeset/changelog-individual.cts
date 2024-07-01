@@ -13,8 +13,8 @@ const changelog = require("@svitejs/changesets-changelog-github-compact");
  * @public
  */
 const changelogFunctions: ChangelogFunctions = {
+  ...changelog.default,
   getDependencyReleaseLine: async () => "",
-  getReleaseLine: changelog.getReleaseLine,
 };
 
 /**
