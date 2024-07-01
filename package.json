@@ -36,7 +36,7 @@
     "@types/node": "^20.5.9",
     "async": "^3.2.1",
     "execa": "^9.0.0",
-    "knip": "^5.6.1",
+    "knip": "^5.23.1",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "prettier": "^3.0.0",

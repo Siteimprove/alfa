@@ -1,4 +1,4 @@
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 
 /**
  * @internal

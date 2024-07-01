@@ -1,7 +1,7 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import { Longhand } from "../longhand.js";
+import type { Longhand } from "../longhand.js";
 import { Shorthand } from "../shorthand.js";
 
 import Color from "./text-decoration-color.js";

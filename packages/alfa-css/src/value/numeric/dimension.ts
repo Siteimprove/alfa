@@ -1,11 +1,12 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
+import type { Hash } from "@siteimprove/alfa-hash";
 
-import {
+import type {
   Dimension as BaseDimension,
   Numeric as BaseNumeric,
 } from "../../calculation/numeric/index.js";
-import { Convertible, Unit } from "../../unit/index.js";
+import { type Convertible, Unit } from "../../unit/index.js";
 
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 

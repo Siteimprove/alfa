@@ -1,11 +1,11 @@
 import { Decoder, Encoder } from "@siteimprove/alfa-encoding";
 import { URL } from "@siteimprove/alfa-url";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Result } from "@siteimprove/alfa-result";
-import { Body } from "./body.js";
+import type { Result } from "@siteimprove/alfa-result";
+import type { Body } from "./body.js";
 import { Headers } from "./headers.js";
 
 /**

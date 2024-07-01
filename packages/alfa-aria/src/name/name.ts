@@ -1,18 +1,19 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
-import { Attribute, Element, Node, Query, Text } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Attribute} from "@siteimprove/alfa-dom";
+import { Element, Node, Query, Text } from "@siteimprove/alfa-dom";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Iterable } from "@siteimprove/alfa-iterable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import { Feature } from "../feature.js";
 import { Role } from "../role.js";

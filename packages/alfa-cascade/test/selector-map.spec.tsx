@@ -1,9 +1,10 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
-import {
+import type {
   Complex,
-  Compound,
+  Compound} from "@siteimprove/alfa-selector";
+import {
   Context,
   type Simple,
 } from "@siteimprove/alfa-selector";

@@ -1,7 +1,7 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Option } from "@siteimprove/alfa-option";
+import type { Element } from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Option } from "@siteimprove/alfa-option";
 
 /**
  * @public

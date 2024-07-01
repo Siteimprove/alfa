@@ -4,19 +4,19 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
-import { Callback } from '@siteimprove/alfa-callback';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Foldable } from '@siteimprove/alfa-foldable';
-import { Functor } from '@siteimprove/alfa-functor';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
-import * as json from '@siteimprove/alfa-json';
-import { Mapper } from '@siteimprove/alfa-mapper';
-import { Monad } from '@siteimprove/alfa-monad';
+import type { Applicative } from '@siteimprove/alfa-applicative';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Foldable } from '@siteimprove/alfa-foldable';
+import type { Functor } from '@siteimprove/alfa-functor';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
+import type * as json from '@siteimprove/alfa-json';
+import type { Mapper } from '@siteimprove/alfa-mapper';
+import type { Monad } from '@siteimprove/alfa-monad';
 import { None } from '@siteimprove/alfa-option';
 import { Option } from '@siteimprove/alfa-option';
-import { Reducer } from '@siteimprove/alfa-reducer';
+import type { Reducer } from '@siteimprove/alfa-reducer';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)

@@ -1,4 +1,4 @@
-import { PackageJSON } from "@changesets/types";
+import type { PackageJSON } from "@changesets/types";
 import * as path from "path";
 
 /**

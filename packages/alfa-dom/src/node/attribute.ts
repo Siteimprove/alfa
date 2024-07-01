@@ -8,7 +8,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Namespace } from "../namespace.js";
 import { Node } from "../node.js";
-import { Element } from "./element.js";
+import type { Element } from "./element.js";
 
 import * as predicate from "./attribute/predicate.js";
 

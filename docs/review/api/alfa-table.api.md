@@ -5,15 +5,15 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Comparable } from '@siteimprove/alfa-comparable';
+import type { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
 import { Element } from '@siteimprove/alfa-dom';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import * as json from '@siteimprove/alfa-json';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type * as json from '@siteimprove/alfa-json';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
-import { Serializable } from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 
 // Warning: (ae-internal-missing-underscore) The name "Anchored" should be prefixed with an underscore because the declaration is marked as @internal
 //

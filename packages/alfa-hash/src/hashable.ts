@@ -1,6 +1,6 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Hash } from "./hash.js";
+import type { Hash } from "./hash.js";
 
 const { isFunction, isObject } = Refinement;
 

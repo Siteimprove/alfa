@@ -4,10 +4,10 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
+import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Graph } from '@siteimprove/alfa-graph';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Sequence } from '@siteimprove/alfa-sequence';

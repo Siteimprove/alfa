@@ -1,12 +1,13 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 // We need to rename Math to avoid collision with the global namespace.
 import { Math as Calculation } from "../../calculation/index.js";
 import { Integer as BaseInteger } from "../../calculation/numeric/index.js";
-import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import type { Token } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.js";
 
 import type { Resolvable } from "../resolvable.js";
 import { Length } from "./length.js";

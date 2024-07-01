@@ -1,4 +1,4 @@
-import { Longhand } from "./longhand.js";
+import type { Longhand } from "./longhand.js";
 
 import BackgroundAttachment from "./property/background-attachment.js";
 import BackgroundClip from "./property/background-clip.js";

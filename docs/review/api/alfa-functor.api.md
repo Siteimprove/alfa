@@ -4,7 +4,7 @@
 
 ```ts
 
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
 export interface Functor<T> {

@@ -1,5 +1,5 @@
 import { Length } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 
 /**
  * Resolvers are functions that resolve values to their canonical, computed

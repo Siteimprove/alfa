@@ -1,6 +1,6 @@
-import { RNG, test } from "@siteimprove/alfa-test";
+import { type RNG, test } from "@siteimprove/alfa-test";
 
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
 import { Map } from "../dist/map.js";

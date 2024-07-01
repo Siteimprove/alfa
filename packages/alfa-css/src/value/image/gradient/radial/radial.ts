@@ -1,4 +1,4 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -12,7 +12,7 @@ import {
 
 import { Keyword } from "../../../keyword.js";
 import { Position } from "../../../position/index.js";
-import { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
 import { Value } from "../../../value.js";
 
 import { Item } from "../item/index.js";

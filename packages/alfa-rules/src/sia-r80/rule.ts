@@ -1,14 +1,15 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Length } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import { Element, Node, Query } from "@siteimprove/alfa-dom";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element} from "@siteimprove/alfa-dom";
+import { Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
 

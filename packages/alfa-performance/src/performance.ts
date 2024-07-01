@@ -1,8 +1,8 @@
-import { Callback } from "@siteimprove/alfa-callback";
+import type { Callback } from "@siteimprove/alfa-callback";
 import { Emitter } from "@siteimprove/alfa-emitter";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import { now } from "./now.js";
 

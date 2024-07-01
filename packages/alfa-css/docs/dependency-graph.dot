@@ -2030,19 +2030,19 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/calculation/math-expression/expression.ts" -> "src/calculation/math-expression/kind.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/calculation/math-expression/expression.ts";
     lhead = "cluster_src/calculation/math-expression/kind.ts";
     color = "black";
   ];
   "exit_src/calculation/math-expression" -> "name_src/calculation/numeric" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/calculation/math-expression";
     lhead = "cluster_src/calculation/numeric";
     color = "#00ff55";
   ];
   "exit_src/calculation" -> "name_src/unit" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/calculation";
     lhead = "cluster_src/unit";
     color = "#ff0055";
@@ -2060,7 +2060,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/calculation/math-expression/function.ts" -> "src/calculation/math-expression/kind.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/calculation/math-expression/function.ts";
     lhead = "cluster_src/calculation/math-expression/kind.ts";
     color = "black";
@@ -2105,7 +2105,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/expression.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/calculation/math-expression/math.ts";
     lhead = "cluster_src/calculation/math-expression/expression.ts";
     color = "black";
@@ -2123,7 +2123,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/calculation/math-expression/math.ts" -> "src/calculation/math-expression/kind.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/calculation/math-expression/math.ts";
     lhead = "cluster_src/calculation/math-expression/kind.ts";
     color = "black";
@@ -2171,7 +2171,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/calculation/math-expression/operation.ts" -> "src/calculation/math-expression/kind.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/calculation/math-expression/operation.ts";
     lhead = "cluster_src/calculation/math-expression/kind.ts";
     color = "black";
@@ -2636,7 +2636,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/unit/converter.ts" -> "src/unit/unit.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/unit/converter.ts";
     lhead = "cluster_src/unit/unit.ts";
     color = "black";
@@ -2792,7 +2792,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#ffaa00";
   ];
   "exit_src/value/color" -> "name_src/value/numeric" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/value/color";
     lhead = "cluster_src/value/numeric";
     color = "#ffaa00";
@@ -3050,7 +3050,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/value/image" -> "src/value/resolvable.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/value/image";
     lhead = "cluster_src/value/resolvable.ts";
     color = "#0055ff";
@@ -3602,7 +3602,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/value" -> "name_src/unit" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/value";
     lhead = "cluster_src/unit";
     color = "#0000ff";
@@ -4076,7 +4076,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/value/position/component.ts" -> "src/value/position/keywords.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/value/position/component.ts";
     lhead = "cluster_src/value/position/keywords.ts";
     color = "black";
@@ -4148,7 +4148,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/value/position" -> "src/value/resolvable.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/value/position";
     lhead = "cluster_src/value/resolvable.ts";
     color = "#ff00ff";
@@ -4235,7 +4235,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/value/shadow.ts" -> "src/value/resolvable.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/value/shadow.ts";
     lhead = "cluster_src/value/resolvable.ts";
     color = "black";
@@ -4280,7 +4280,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/value/shape" -> "src/value/resolvable.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/value/shape";
     lhead = "cluster_src/value/resolvable.ts";
     color = "#00ffaa";
@@ -4754,7 +4754,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/value/transform" -> "src/value/resolvable.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/value/transform";
     lhead = "cluster_src/value/resolvable.ts";
     color = "#aaff00";

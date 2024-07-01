@@ -45,8 +45,6 @@ digraph "dependency-graph-[object Object]" {
       ];
       "src/cell.ts" [
         label = "cell.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/column.ts" [
         label = "column.ts";
@@ -85,8 +83,6 @@ digraph "dependency-graph-[object Object]" {
         ];
         "src/cell/predicate.ts" [
           label = "predicate.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         subgraph "cluster_src/cell/predicate" {
           color = "#000000";
@@ -102,8 +98,6 @@ digraph "dependency-graph-[object Object]" {
           ];
           "src/cell/predicate/has-element.ts" [
             label = "has-element.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/cell/predicate/has-element.ts" -> "exit_src/cell/predicate" [
             style = "invis";
@@ -191,7 +185,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/anchored.ts" -> "src/slot.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/anchored.ts";
     lhead = "cluster_src/slot.ts";
     color = "black";
@@ -215,7 +209,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/cell.ts" -> "src/scope.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/cell.ts";
     lhead = "cluster_src/scope.ts";
     color = "black";
@@ -224,7 +218,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/cell.ts" -> "src/slot.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/cell.ts";
     lhead = "cluster_src/slot.ts";
     color = "black";
@@ -239,7 +233,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/cell" -> "src/cell.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/cell";
     lhead = "cluster_src/cell.ts";
     color = "#ff0000";
@@ -392,7 +386,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/table.ts" -> "src/group.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/table.ts";
     lhead = "cluster_src/group.ts";
     color = "black";

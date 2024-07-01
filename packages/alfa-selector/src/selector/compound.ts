@@ -1,12 +1,13 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Token } from "@siteimprove/alfa-css";
-import { Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
+import type { Token } from "@siteimprove/alfa-css";
+import type { Element } from "@siteimprove/alfa-dom";
+import type { Iterable } from "@siteimprove/alfa-iterable";
+import type { Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Context } from "../context.js";
+import type { Context } from "../context.js";
 import { Specificity } from "../specificity.js";
 import type { Absolute } from "./index.js";
 

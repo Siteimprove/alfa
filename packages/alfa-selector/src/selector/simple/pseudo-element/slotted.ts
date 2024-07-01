@@ -3,7 +3,7 @@ import {
   type Parser as CSSParser,
   Token,
 } from "@siteimprove/alfa-css";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";

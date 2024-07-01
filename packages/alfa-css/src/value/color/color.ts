@@ -1,10 +1,10 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax/index.js";
+import type { Token } from "../../syntax/index.js";
 
 import { Keyword } from "../keyword.js";
-import { Angle, Number, Percentage } from "../numeric/index.js";
+import type { Angle, Number, Percentage } from "../numeric/index.js";
 
 import { Current } from "./current.js";
 import { Hex } from "./hex.js";

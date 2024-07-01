@@ -3,8 +3,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand.js";
 
-import * as X from "./background-position-x.js";
-import * as Y from "./background-position-y.js";
+import type * as X from "./background-position-x.js";
+import type * as Y from "./background-position-y.js";
 
 const { map } = Parser;
 

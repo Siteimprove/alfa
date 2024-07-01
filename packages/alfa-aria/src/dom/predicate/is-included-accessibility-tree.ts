@@ -1,6 +1,6 @@
-import { Device } from "@siteimprove/alfa-device";
-import { Node } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Node } from "@siteimprove/alfa-dom";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Node as ariaNode } from "../../index.js";
 

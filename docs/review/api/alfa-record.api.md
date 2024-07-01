@@ -4,12 +4,12 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Foldable } from '@siteimprove/alfa-foldable';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Foldable } from '@siteimprove/alfa-foldable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import { Option } from '@siteimprove/alfa-option';
-import { Predicate } from '@siteimprove/alfa-predicate';
-import { Reducer } from '@siteimprove/alfa-reducer';
+import type { Option } from '@siteimprove/alfa-option';
+import type { Predicate } from '@siteimprove/alfa-predicate';
+import type { Reducer } from '@siteimprove/alfa-reducer';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)

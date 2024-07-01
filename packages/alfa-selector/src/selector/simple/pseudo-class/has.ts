@@ -1,5 +1,5 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute } from "../../index.js";
 

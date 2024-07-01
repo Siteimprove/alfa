@@ -1,9 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/dist/h";
+import { h } from "@siteimprove/alfa-dom/h";
 
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 
-import * as Slice from "../../dist/property/border-image-slice.js";
+import type * as Slice from "../../dist/property/border-image-slice.js";
 
 import { cascaded } from "../common.js";
 

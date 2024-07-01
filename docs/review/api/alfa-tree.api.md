@@ -4,13 +4,13 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Flags } from '@siteimprove/alfa-flags';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Flags } from '@siteimprove/alfa-flags';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
-import { Predicate } from '@siteimprove/alfa-predicate';
+import type { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 

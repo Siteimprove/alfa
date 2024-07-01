@@ -1,9 +1,9 @@
-import { Comparison } from "@siteimprove/alfa-comparable";
-import { Element } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Comparison } from "@siteimprove/alfa-comparable";
+import type { Element } from "@siteimprove/alfa-dom";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 import { Anchored } from "./anchored.js";
 import { Slot } from "./slot.js";

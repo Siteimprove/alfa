@@ -4,15 +4,15 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
-import { Callback } from '@siteimprove/alfa-callback';
-import { Foldable } from '@siteimprove/alfa-foldable';
-import { Functor } from '@siteimprove/alfa-functor';
+import type { Applicative } from '@siteimprove/alfa-applicative';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Foldable } from '@siteimprove/alfa-foldable';
+import type { Functor } from '@siteimprove/alfa-functor';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import { Mapper } from '@siteimprove/alfa-mapper';
-import { Monad } from '@siteimprove/alfa-monad';
-import { Reducer } from '@siteimprove/alfa-reducer';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Mapper } from '@siteimprove/alfa-mapper';
+import type { Monad } from '@siteimprove/alfa-monad';
+import type { Reducer } from '@siteimprove/alfa-reducer';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
 export abstract class Trampoline<T> implements Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable_2<T> {

@@ -225,13 +225,9 @@ digraph "dependency-graph-[object Object]" {
       ];
       "src/longhands.ts" [
         label = "longhands.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/resolver.ts" [
         label = "resolver.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
       ];
       "src/shorthand.ts" [
         label = "shorthand.ts";
@@ -583,8 +579,6 @@ digraph "dependency-graph-[object Object]" {
         ];
         "src/property/background-image.ts" [
           label = "background-image.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/property/background-origin.ts" [
           label = "background-origin.ts";
@@ -2810,7 +2804,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/longhands.ts" -> "src/longhand.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/longhands.ts";
     lhead = "cluster_src/longhand.ts";
     color = "black";
@@ -3286,6 +3280,15 @@ digraph "dependency-graph-[object Object]" {
   "exit_src/property" -> "src/longhand.ts" [
     style = "invis";
   ];
+  "src/property/background-color.ts" -> "src/resolver.ts" [
+    style = "invis";
+  ];
+  "exit_src/property" -> "src/resolver.ts" [
+    style = "solid";
+    ltail = "cluster_src/property";
+    lhead = "cluster_src/resolver.ts";
+    color = "#ffdb00";
+  ];
   "src/property/background-image.ts" -> "src/longhand.ts" [
     style = "invis";
   ];
@@ -3296,10 +3299,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/property" -> "src/resolver.ts" [
-    style = "solid";
-    ltail = "cluster_src/property";
-    lhead = "cluster_src/resolver.ts";
-    color = "#ffdb00";
+    style = "invis";
   ];
   "src/property/background-origin.ts" -> "src/longhand.ts" [
     style = "invis";
@@ -3335,7 +3335,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/property/background-position.ts" -> "src/property/background-position-x.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/property/background-position.ts";
     lhead = "cluster_src/property/background-position-x.ts";
     color = "black";
@@ -3344,7 +3344,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/property/background-position.ts" -> "src/property/background-position-y.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/property/background-position.ts";
     lhead = "cluster_src/property/background-position-y.ts";
     color = "black";
@@ -3904,6 +3904,12 @@ digraph "dependency-graph-[object Object]" {
   "exit_src/property" -> "src/longhand.ts" [
     style = "invis";
   ];
+  "src/property/border-image-slice.ts" -> "src/resolver.ts" [
+    style = "invis";
+  ];
+  "exit_src/property" -> "src/resolver.ts" [
+    style = "invis";
+  ];
   "src/property/border-image-source.ts" -> "src/longhand.ts" [
     style = "invis";
   ];
@@ -4405,6 +4411,12 @@ digraph "dependency-graph-[object Object]" {
   "exit_src/property" -> "src/longhand.ts" [
     style = "invis";
   ];
+  "src/property/border-top-color.ts" -> "src/resolver.ts" [
+    style = "invis";
+  ];
+  "exit_src/property" -> "src/resolver.ts" [
+    style = "invis";
+  ];
   "src/property/border-top-left-radius.ts" -> "src/longhand.ts" [
     style = "invis";
   ];
@@ -4600,10 +4612,22 @@ digraph "dependency-graph-[object Object]" {
   "exit_src/property" -> "src/longhand.ts" [
     style = "invis";
   ];
+  "src/property/color.ts" -> "src/resolver.ts" [
+    style = "invis";
+  ];
+  "exit_src/property" -> "src/resolver.ts" [
+    style = "invis";
+  ];
   "src/property/cursor.ts" -> "src/longhand.ts" [
     style = "invis";
   ];
   "exit_src/property" -> "src/longhand.ts" [
+    style = "invis";
+  ];
+  "src/property/cursor.ts" -> "src/resolver.ts" [
+    style = "invis";
+  ];
+  "exit_src/property" -> "src/resolver.ts" [
     style = "invis";
   ];
   "src/property/display.ts" -> "src/longhand.ts" [
@@ -4814,6 +4838,12 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/property" -> "src/longhand.ts" [
+    style = "invis";
+  ];
+  "src/property/font-weight.ts" -> "src/resolver.ts" [
+    style = "invis";
+  ];
+  "exit_src/property" -> "src/resolver.ts" [
     style = "invis";
   ];
   "src/property/font.ts" -> "src/longhand.ts" [
@@ -5158,6 +5188,12 @@ digraph "dependency-graph-[object Object]" {
   "exit_src/property" -> "src/longhand.ts" [
     style = "invis";
   ];
+  "src/property/outline-color.ts" -> "src/resolver.ts" [
+    style = "invis";
+  ];
+  "exit_src/property" -> "src/resolver.ts" [
+    style = "invis";
+  ];
   "src/property/outline-offset.ts" -> "src/longhand.ts" [
     style = "invis";
   ];
@@ -5321,6 +5357,12 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/property" -> "src/longhand.ts" [
+    style = "invis";
+  ];
+  "src/property/text-decoration-color.ts" -> "src/resolver.ts" [
+    style = "invis";
+  ];
+  "exit_src/property" -> "src/resolver.ts" [
     style = "invis";
   ];
   "src/property/text-decoration-line.ts" -> "src/longhand.ts" [
@@ -5525,7 +5567,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/resolver.ts" -> "src/style.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/resolver.ts";
     lhead = "cluster_src/style.ts";
     color = "black";
@@ -5543,7 +5585,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/shorthand.ts" -> "src/longhands.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/shorthand.ts";
     lhead = "cluster_src/longhands.ts";
     color = "black";
@@ -5675,7 +5717,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/style.ts" -> "src/longhand.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/style.ts";
     lhead = "cluster_src/longhand.ts";
     color = "black";
@@ -5699,7 +5741,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/style.ts" -> "src/shorthand.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/style.ts";
     lhead = "cluster_src/shorthand.ts";
     color = "black";

@@ -7,11 +7,11 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparer } from '@siteimprove/alfa-comparable';
 import { Element } from '@siteimprove/alfa-dom';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
-import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
+import type { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
+import type * as json from '@siteimprove/alfa-json';
 import { Maybe } from '@siteimprove/alfa-option';
 import { Nth } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
@@ -20,7 +20,7 @@ import { Parser as Parser_2 } from '@siteimprove/alfa-css';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token } from '@siteimprove/alfa-css';
 
 // Warning: (ae-internal-missing-underscore) The name "Absolute" should be prefixed with an underscore because the declaration is marked as @internal

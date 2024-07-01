@@ -1,4 +1,4 @@
-import { Document } from "@siteimprove/alfa-json-ld";
+import type { Document } from "@siteimprove/alfa-json-ld";
 
 /**
  * @public

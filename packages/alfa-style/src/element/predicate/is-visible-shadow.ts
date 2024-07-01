@@ -1,4 +1,5 @@
-import { Color, Shadow } from "@siteimprove/alfa-css";
+import type { Shadow } from "@siteimprove/alfa-css";
+import { Color } from "@siteimprove/alfa-css";
 
 /**
  * @public

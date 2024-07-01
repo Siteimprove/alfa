@@ -1,9 +1,9 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Length } from "@siteimprove/alfa-css";
-import { Declaration, Element } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Longhands, Style } from "@siteimprove/alfa-style";
+import type { Length } from "@siteimprove/alfa-css";
+import type { Declaration, Element } from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Longhands, Style } from "@siteimprove/alfa-style";
 
 /**
  * @public

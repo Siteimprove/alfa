@@ -1,7 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { textWithInlinedImportantProperty } from "../common/applicability/text-with-inlined-important-property.js";
 import { isWideEnough } from "../common/expectation/is-wide-enough.js";

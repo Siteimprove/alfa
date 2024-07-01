@@ -1,6 +1,6 @@
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
+import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
 import { WithBoundingBox } from "../diagnostic.js";

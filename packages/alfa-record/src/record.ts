@@ -1,13 +1,14 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Foldable } from "@siteimprove/alfa-foldable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
+import type { Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Reducer } from "@siteimprove/alfa-reducer";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * @public

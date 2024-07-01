@@ -1,4 +1,4 @@
-import { JSON } from "@siteimprove/alfa-json";
+import type { JSON } from "@siteimprove/alfa-json";
 
 /**
  * {@link https://www.w3.org/TR/json-ld/#dfn-keyword}

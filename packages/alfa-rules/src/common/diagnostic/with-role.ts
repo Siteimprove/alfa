@@ -1,8 +1,9 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Node, Role } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Role } from "@siteimprove/alfa-aria";
+import { Node } from "@siteimprove/alfa-aria";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element } from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
 
 /**
  * @public

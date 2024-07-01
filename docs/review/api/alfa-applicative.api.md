@@ -4,8 +4,8 @@
 
 ```ts
 
-import { Functor } from '@siteimprove/alfa-functor';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Functor } from '@siteimprove/alfa-functor';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
 export interface Applicative<T> extends Functor<T> {

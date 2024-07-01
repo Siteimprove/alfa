@@ -1,5 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";

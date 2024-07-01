@@ -4,8 +4,8 @@
 
 ```ts
 
-import { Callback } from '@siteimprove/alfa-callback';
-import * as json from '@siteimprove/alfa-json';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type * as json from '@siteimprove/alfa-json';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)

@@ -1,15 +1,15 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Collection } from "@siteimprove/alfa-collection";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Collection } from "@siteimprove/alfa-collection";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Option } from "@siteimprove/alfa-option";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 

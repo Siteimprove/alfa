@@ -7,7 +7,8 @@ import { Option } from "@siteimprove/alfa-option";
 import * as json from "@siteimprove/alfa-json";
 
 import { h } from "../dist/index.js";
-import { Attribute, Document, Element, Node, Shadow } from "../dist/index.js";
+import type { Attribute, Document, Element, Shadow } from "../dist/index.js";
+import { Node } from "../dist/index.js";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
@@ -195,7 +196,7 @@ test(`#toJSON() serializes boxes of all descendants when device is passed in`, (
       return;
     }
 
-    for (let child of node.children) {
+    for (const child of node.children) {
       visit(child);
     }
   }
@@ -236,14 +237,14 @@ test(`#toJSON() serializes box of descendant inside shadow DOM`, (t) => {
     if (Option.from(node.shadow).isSome()) {
       const shadow = node.shadow as Shadow.JSON;
       if (shadow.children !== undefined) {
-        for (let child of shadow.children) {
+        for (const child of shadow.children) {
           visit(child);
         }
       }
     }
 
     if (node.children !== undefined) {
-      for (let child of node.children) {
+      for (const child of node.children) {
         visit(child);
       }
     }
@@ -285,14 +286,14 @@ test(`#toJSON() serializes box of descendant inside content`, (t) => {
     if (Option.from(node.content).isSome()) {
       const content = node.content as Node.JSON;
       if (content.children !== undefined) {
-        for (let child of content.children) {
+        for (const child of content.children) {
           visit(child);
         }
       }
     }
 
     if (node.children !== undefined) {
-      for (let child of node.children) {
+      for (const child of node.children) {
         visit(child);
       }
     }

@@ -1,19 +1,20 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
 
 import { Unit } from "../../unit/index.js";
 
+import type {
+  Numeric} from "../numeric/index.js";
 import {
   Angle,
   Dimension,
   Length,
   Number,
-  Numeric,
   Percentage,
 } from "../numeric/index.js";
 
 import { Expression } from "./expression.js";
-import { Kind } from "./kind.js";
+import type { Kind } from "./kind.js";
 import { Value } from "./value.js";
 
 const { isAngle } = Angle;

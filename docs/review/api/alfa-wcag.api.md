@@ -6,7 +6,7 @@
 
 import { Branched } from '@siteimprove/alfa-branched';
 import { Option } from '@siteimprove/alfa-option';
-import { Refinement } from '@siteimprove/alfa-refinement';
+import type { Refinement } from '@siteimprove/alfa-refinement';
 import { Requirement } from '@siteimprove/alfa-act';
 
 // @public

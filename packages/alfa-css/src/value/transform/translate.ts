@@ -1,4 +1,4 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import {
@@ -9,7 +9,7 @@ import { Unit } from "../../unit/index.js";
 import { List } from "../collection/index.js";
 
 import { Length, LengthPercentage, Numeric } from "../numeric/index.js";
-import { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";
 
 import { Function } from "./function.js";
