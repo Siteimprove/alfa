@@ -43,7 +43,6 @@
 "@siteimprove/alfa-map": minor
 "@siteimprove/alfa-mapper": minor
 "@siteimprove/alfa-math": minor
-"@siteimprove/alfa-media": minor
 "@siteimprove/alfa-monad": minor
 "@siteimprove/alfa-network": minor
 "@siteimprove/alfa-option": minor
