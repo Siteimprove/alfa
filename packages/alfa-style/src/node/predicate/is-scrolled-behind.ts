@@ -65,10 +65,6 @@ const isScrollOrAuto = (
   overflow: Longhands.Computed<"overflow-x"> | Longhands.Computed<"overflow-y">,
 ): boolean => overflow.value === "scroll" || overflow.value === "auto";
 
-const isHidden = (
-  overflow: Longhands.Computed<"overflow-x"> | Longhands.Computed<"overflow-y">,
-): boolean => overflow.value === "hidden";
-
 function isScrollContainerFor(
   elementBox: Rectangle,
   device: Device,
