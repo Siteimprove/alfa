@@ -4,8 +4,8 @@ import {
   type Parser as CSSParser,
   Token,
 } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import * as json from "@siteimprove/alfa-json";
+import type { Device } from "@siteimprove/alfa-device";
+import type * as json from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 

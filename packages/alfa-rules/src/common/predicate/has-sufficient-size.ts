@@ -1,6 +1,6 @@
-import { Device } from "@siteimprove/alfa-device";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Element } from "@siteimprove/alfa-dom";
 
 /**
  * @remarks

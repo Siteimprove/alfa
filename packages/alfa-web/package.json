@@ -20,9 +20,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./native": "./dist/native.js",
-    "./native.js": "./dist/native.js",
-    "./dist/native": "./dist/native.js",
-    "./dist/native.js": "./dist/native.js"
+    "./native.js": "./dist/native.js"
   },
   "files": [
     "dist/**/*.js",

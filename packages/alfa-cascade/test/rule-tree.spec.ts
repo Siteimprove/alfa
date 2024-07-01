@@ -1,10 +1,12 @@
 import { h } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
-import { Complex, Compound, type Simple } from "@siteimprove/alfa-selector";
+import type { Complex, Compound} from "@siteimprove/alfa-selector";
+import { type Simple } from "@siteimprove/alfa-selector";
 
 import { test } from "@siteimprove/alfa-test";
 
-import { Layer, Origin, Precedence, RuleTree } from "../dist/index.js";
+import type { Precedence} from "../dist/index.js";
+import { Layer, Origin, RuleTree } from "../dist/index.js";
 import { Block } from "../dist/block.js";
 
 import { parse } from "./common/parser.js";

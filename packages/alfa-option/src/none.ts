@@ -1,11 +1,11 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Option } from "./option.js";
-import { Some } from "./some.js";
+import type { Option } from "./option.js";
+import type { Some } from "./some.js";
 
 const { compareComparable } = Comparable;
 

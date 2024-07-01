@@ -1,11 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/dist/h";
+import { h } from "@siteimprove/alfa-dom/h";
 
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 
-import * as Outset from "../../dist/property/border-image-outset.js";
-import * as Slice from "../../dist/property/border-image-slice.js";
-import * as Width from "../../dist/property/border-image-width.js";
+import type * as Outset from "../../dist/property/border-image-outset.js";
+import type * as Slice from "../../dist/property/border-image-slice.js";
+import type * as Width from "../../dist/property/border-image-width.js";
 
 import { cascaded } from "../common.js";
 

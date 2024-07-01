@@ -4,11 +4,11 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
-import * as json from '@siteimprove/alfa-json';
-import { Serializable } from '@siteimprove/alfa-json';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
+import type * as json from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class Rectangle implements Equatable, Hashable, Serializable<Rectangle.JSON> {

@@ -1,12 +1,12 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { RGB } from "@siteimprove/alfa-css";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
-
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import * as json from "@siteimprove/alfa-json";
-import { Node } from "@siteimprove/alfa-dom";
+import type { RGB } from "@siteimprove/alfa-css";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Node } from "@siteimprove/alfa-dom";
+import type { Comparable } from "@siteimprove/alfa-comparable";
+import { Comparison } from "@siteimprove/alfa-comparable";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type * as json from "@siteimprove/alfa-json";
 
 type Name = ["container", "link"] | ["foreground", "background"];
 type FirstColor<N extends Name> = N[0];

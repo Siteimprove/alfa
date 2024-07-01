@@ -3918,7 +3918,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/common/dom/get-colors/color-error.ts" -> "src/common/dom/get-colors/color.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/common/dom/get-colors/color-error.ts";
     lhead = "cluster_src/common/dom/get-colors/color.ts";
     color = "black";
@@ -3936,7 +3936,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/common/dom/get-colors/get-background.ts" -> "src/common/dom/get-colors/color.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/common/dom/get-colors/get-background.ts";
     lhead = "cluster_src/common/dom/get-colors/color.ts";
     color = "black";
@@ -4746,7 +4746,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#ff00d1";
   ];
   "exit_src/sia-dr34" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-dr34";
     lhead = "cluster_src/common";
     color = "#ff006f";
@@ -4764,7 +4764,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#ff006f";
   ];
   "exit_src/sia-dr36" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-dr36";
     lhead = "cluster_src/common";
     color = "#4f00ff";
@@ -4794,7 +4794,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#0058ff";
   ];
   "exit_src/sia-dr66" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-dr66";
     lhead = "cluster_src/common";
     color = "#ffdf00";
@@ -4812,7 +4812,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#ffdf00";
   ];
   "exit_src/sia-dr69" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-dr69";
     lhead = "cluster_src/common";
     color = "#3300ff";
@@ -5136,7 +5136,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#33ff00";
   ];
   "exit_src/sia-r23" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r23";
     lhead = "cluster_src/common";
     color = "#ff007d";
@@ -5154,7 +5154,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#ff007d";
   ];
   "exit_src/sia-r24" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r24";
     lhead = "cluster_src/common";
     color = "#8600ff";
@@ -5190,7 +5190,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#00ff05";
   ];
   "exit_src/sia-r26" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r26";
     lhead = "cluster_src/common";
     color = "#ff0046";
@@ -5250,7 +5250,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#00ff3c";
   ];
   "exit_src/sia-r29" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r29";
     lhead = "cluster_src/common";
     color = "#ff002a";
@@ -5310,7 +5310,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#00ff4a";
   ];
   "exit_src/sia-r31" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r31";
     lhead = "cluster_src/common";
     color = "#f600ff";
@@ -5346,7 +5346,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#ccff00";
   ];
   "exit_src/sia-r33" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r33";
     lhead = "cluster_src/common";
     color = "#003cff";
@@ -5799,7 +5799,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#0082ff";
   ];
   "exit_src/sia-r62" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r62";
     lhead = "cluster_src/common";
     color = "#ffec00";
@@ -5889,7 +5889,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#ff001c";
   ];
   "exit_src/sia-r66" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r66";
     lhead = "cluster_src/common";
     color = "#00b9ff";
@@ -5937,7 +5937,7 @@ digraph "dependency-graph-[object Object]" {
     color = "#9400ff";
   ];
   "exit_src/sia-r69" -> "name_src/common" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/sia-r69";
     lhead = "cluster_src/common";
     color = "#17ff00";

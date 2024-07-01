@@ -2,7 +2,10 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
+import type { Rectangle } from "@siteimprove/alfa-rectangle";
+import type {
+  Node,
+  Rule} from "./index.js";
 import {
   Attribute,
   Block,
@@ -18,9 +21,7 @@ import {
   MediaRule,
   Namespace,
   NamespaceRule,
-  Node,
   PageRule,
-  Rule,
   Shadow,
   Sheet,
   StyleRule,

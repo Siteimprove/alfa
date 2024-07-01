@@ -7,7 +7,7 @@
 import { Artifact } from 'sarif';
 import { Location } from 'sarif';
 import { Log } from 'sarif';
-import { Option } from '@siteimprove/alfa-option';
+import type { Option } from '@siteimprove/alfa-option';
 import { ReportingDescriptor } from 'sarif';
 import { Result } from 'sarif';
 import type * as sarif from 'sarif';

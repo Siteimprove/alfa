@@ -1,14 +1,15 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Node } from "@siteimprove/alfa-aria";
-import { Element, Node as DomNode } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import type { Element } from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
+import type { Option } from "@siteimprove/alfa-option";
 
 /**
  * @public
  */
 export class WithName<
-  O extends DomNode.SerializationOptions = DomNode.SerializationOptions,
+  O extends dom.Node.SerializationOptions = dom.Node.SerializationOptions,
 > extends Diagnostic<O> {
   public static of(message: string): Diagnostic;
 

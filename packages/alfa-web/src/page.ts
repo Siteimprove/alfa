@@ -1,14 +1,15 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Node } from "@siteimprove/alfa-dom";
+import type { Node } from "@siteimprove/alfa-dom";
+import { Document } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
 import { Request, Response } from "@siteimprove/alfa-http";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
-import * as sarif from "@siteimprove/alfa-sarif";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
+import type * as sarif from "@siteimprove/alfa-sarif";
 
-import { Result } from "@siteimprove/alfa-result";
-import { Resource } from "./resource.js";
+import type { Result } from "@siteimprove/alfa-result";
+import type { Resource } from "./resource.js";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Web_page}

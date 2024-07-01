@@ -1,5 +1,5 @@
 import type { Simple } from "@siteimprove/alfa-selector";
-import { Assertions, test } from "@siteimprove/alfa-test";
+import { type Assertions, test } from "@siteimprove/alfa-test";
 
 import { AncestorFilter, Bucket } from "../dist/ancestor-filter.js";
 

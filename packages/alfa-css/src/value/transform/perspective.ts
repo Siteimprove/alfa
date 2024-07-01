@@ -1,10 +1,10 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Function as CSSFunction } from "../../syntax/index.js";
 
 import { Length } from "../numeric/index.js";
-import { Resolvable } from "../resolvable.js";
+import type { Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";
 
 import { Function } from "./function.js";

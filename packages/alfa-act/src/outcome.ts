@@ -1,9 +1,10 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
-import { Err, Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
+import { Err } from "@siteimprove/alfa-result";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
 import * as earl from "@siteimprove/alfa-earl";
@@ -12,7 +13,7 @@ import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Diagnostic } from "./diagnostic.js";
 import type { Question } from "./question.js";
-import { Rule } from "./rule.js";
+import type { Rule } from "./rule.js";
 
 /**
  * @public

@@ -1,11 +1,12 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Document, Node } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Language } from "@siteimprove/alfa-iana";
 import { Option } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
 import { Question } from "../common/act/question.js";

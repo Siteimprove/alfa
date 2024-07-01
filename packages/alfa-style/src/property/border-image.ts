@@ -3,7 +3,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 
-import * as slice from "@siteimprove/alfa-slice";
+import type * as slice from "@siteimprove/alfa-slice";
 
 import { Shorthand } from "../shorthand.js";
 

@@ -3,7 +3,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Element } from "../../element.js";
-import { Node } from "../../../node.js";
+import type { Node } from "../../../node.js";
 
 import { hasId } from "./has-id.js";
 

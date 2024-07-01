@@ -1,7 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Element, h, Namespace, Text } from "@siteimprove/alfa-dom";
+import type { Element, Text } from "@siteimprove/alfa-dom";
+import { h, Namespace } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 
 import { Name } from "../dist/index.js";

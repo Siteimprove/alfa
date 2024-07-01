@@ -1,7 +1,8 @@
-import { List, Token, Tuple } from "@siteimprove/alfa-css";
+import type { Tuple } from "@siteimprove/alfa-css";
+import { List, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhands } from "../longhands.js";
 import { Shorthand } from "../shorthand.js";
@@ -222,15 +223,15 @@ export default Shorthand.of(
   ],
   map(parseList, (layers) => {
     let color: Color.Specified | undefined;
-    let image: Array<Image.Specified.Item> = [];
-    let positionX: Array<PositionX.Specified.Item> = [];
-    let positionY: Array<PositionY.Specified.Item> = [];
-    let size: Array<Size.Specified.Item> = [];
-    let repeatX: Array<RepeatX.Specified.Item> = [];
-    let repeatY: Array<RepeatY.Specified.Item> = [];
-    let attachment: Array<Attachment.Specified.Item> = [];
-    let origin: Array<Origin.Specified.Item> = [];
-    let clip: Array<Clip.Specified.Item> = [];
+    const image: Array<Image.Specified.Item> = [];
+    const positionX: Array<PositionX.Specified.Item> = [];
+    const positionY: Array<PositionY.Specified.Item> = [];
+    const size: Array<Size.Specified.Item> = [];
+    const repeatX: Array<RepeatX.Specified.Item> = [];
+    const repeatY: Array<RepeatY.Specified.Item> = [];
+    const attachment: Array<Attachment.Specified.Item> = [];
+    const origin: Array<Origin.Specified.Item> = [];
+    const clip: Array<Clip.Specified.Item> = [];
 
     for (const layer of layers) {
       color = layer[0];

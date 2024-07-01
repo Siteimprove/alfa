@@ -4,7 +4,7 @@
   "compilerOptions": {
     "outDir": ".",
     "jsx": "react-jsx",
-    "jsxImportSource": "@siteimprove/alfa-dom/dist"
+    "jsxImportSource": "@siteimprove/alfa-dom"
   },
   "files": [
     "./ancestor-filter.spec.tsx",

@@ -4,7 +4,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Absolute, Compound, Simple } from "../../../selector/index.js";
+import { type Absolute, Compound, Simple } from "../../../selector/index.js";
 import { After } from "./after.js";
 import { Backdrop } from "./backdrop.js";
 import { Before } from "./before.js";

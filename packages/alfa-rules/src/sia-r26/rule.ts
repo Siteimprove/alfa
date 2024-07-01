@@ -1,12 +1,12 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
-import { Page } from "@siteimprove/alfa-web";
+import type { Element } from "@siteimprove/alfa-dom";
+import type { Page } from "@siteimprove/alfa-web";
 
 import { video } from "../common/applicability/video.js";
 
 import { videoTextAlternative } from "../common/expectation/media-text-alternative.js";
 
-import { Question } from "../common/act/question.js";
+import type { Question } from "../common/act/question.js";
 
 import { Scope, Stability } from "../tags/index.js";
 

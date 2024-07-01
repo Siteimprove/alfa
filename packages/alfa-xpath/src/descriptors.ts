@@ -1,4 +1,4 @@
-import * as dom from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
 
 /**
  * @internal

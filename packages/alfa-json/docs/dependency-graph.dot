@@ -104,7 +104,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/serializable.ts" -> "src/json.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/serializable.ts";
     lhead = "cluster_src/json.ts";
     color = "black";

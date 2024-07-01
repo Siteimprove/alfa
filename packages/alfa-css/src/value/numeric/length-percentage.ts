@@ -1,11 +1,12 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation/index.js";
 import * as Base from "../../calculation/numeric/index.js";
-import { type Parser as CSSParser, Token } from "../../syntax/index.js";
-import { Unit } from "../../unit/index.js";
+import type { Token } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.js";
+import type { Unit } from "../../unit/index.js";
 
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 

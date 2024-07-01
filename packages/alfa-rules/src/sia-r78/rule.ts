@@ -1,12 +1,13 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
-import { None, Option, Some } from "@siteimprove/alfa-option";
+import type { Option} from "@siteimprove/alfa-option";
+import { None, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
-import { Page } from "@siteimprove/alfa-web";
+import type { Sequence } from "@siteimprove/alfa-sequence";
+import type { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation.js";
 
 import { Scope, Stability } from "../tags/index.js";

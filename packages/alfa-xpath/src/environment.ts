@@ -1,5 +1,5 @@
-import { FunctionMap } from "./function.js";
-import { Item } from "./types.js";
+import type { FunctionMap } from "./function.js";
+import type { Item } from "./types.js";
 
 /**
  * @internal

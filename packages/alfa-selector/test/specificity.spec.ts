@@ -1,4 +1,4 @@
-import { RNG, test } from "@siteimprove/alfa-test";
+import { type RNG, test } from "@siteimprove/alfa-test";
 
 import { Specificity } from "../dist/specificity.js";
 import { parse } from "./parser.js";

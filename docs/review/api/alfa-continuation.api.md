@@ -4,8 +4,8 @@
 
 ```ts
 
-import { Callback } from '@siteimprove/alfa-callback';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
 export type Continuation<T, R = void, A extends Array<unknown> = []> = Callback<Callback<T, R>, R, A>;

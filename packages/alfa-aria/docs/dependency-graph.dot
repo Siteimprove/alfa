@@ -321,15 +321,11 @@ digraph "dependency-graph-[object Object]" {
           ];
           "src/name/predicate/has-value.ts" [
             label = "has-value.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/name/predicate/index.ts" [
             label = "index.ts";
             color = "#00ff66";
             penwidth = 5;
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/name/predicate/has-value.ts" -> "exit_src/name/predicate" [
             style = "invis";
@@ -386,8 +382,6 @@ digraph "dependency-graph-[object Object]" {
         ];
         "src/node/predicate.ts" [
           label = "predicate.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/node/text.ts" [
           label = "text.ts";
@@ -411,8 +405,6 @@ digraph "dependency-graph-[object Object]" {
           ];
           "src/node/predicate/has-name.ts" [
             label = "has-name.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/node/predicate/has-role.ts" [
             label = "has-role.ts";
@@ -469,8 +461,6 @@ digraph "dependency-graph-[object Object]" {
         ];
         "src/role/predicate.ts" [
           label = "predicate.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         subgraph "cluster_src/role/predicate" {
           color = "#000000";
@@ -486,8 +476,6 @@ digraph "dependency-graph-[object Object]" {
           ];
           "src/role/predicate/has-name.ts" [
             label = "has-name.ts";
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/role/predicate/has-name.ts" -> "exit_src/role/predicate" [
             style = "invis";
@@ -746,7 +734,7 @@ digraph "dependency-graph-[object Object]" {
     color = "black";
   ];
   "src/attribute.ts" -> "name_src/role" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/attribute.ts";
     lhead = "cluster_src/role";
     color = "#ff0000";
@@ -1097,7 +1085,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/name/predicate" -> "src/name/name.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/name/predicate";
     lhead = "cluster_src/name/name.ts";
     color = "#00ff66";
@@ -1181,7 +1169,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/node" -> "src/role.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/node";
     lhead = "cluster_src/role.ts";
     color = "#ccff00";
@@ -1190,13 +1178,13 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/node" -> "src/attribute.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/node";
     lhead = "cluster_src/attribute.ts";
     color = "#ccff00";
   ];
   "exit_src/node" -> "name_src/name" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/node";
     lhead = "cluster_src/name";
     color = "#ccff00";
@@ -1283,7 +1271,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/role.ts" -> "src/attribute.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/role.ts";
     lhead = "cluster_src/attribute.ts";
     color = "black";
@@ -1316,7 +1304,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "exit_src/role" -> "src/role.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/role";
     lhead = "cluster_src/role.ts";
     color = "#3300ff";

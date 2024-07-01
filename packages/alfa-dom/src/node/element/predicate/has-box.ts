@@ -1,7 +1,7 @@
-import { Device } from "@siteimprove/alfa-device";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Rectangle } from "@siteimprove/alfa-rectangle";
-import { Element } from "../../element.js";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Rectangle } from "@siteimprove/alfa-rectangle";
+import type { Element } from "../../element.js";
 
 /**
  * @public

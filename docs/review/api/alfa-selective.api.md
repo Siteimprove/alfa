@@ -4,18 +4,18 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
+import type { Applicative } from '@siteimprove/alfa-applicative';
 import type { Callback } from '@siteimprove/alfa-callback';
-import { Either } from '@siteimprove/alfa-either';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Functor } from '@siteimprove/alfa-functor';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
-import { Mapper } from '@siteimprove/alfa-mapper';
-import { Monad } from '@siteimprove/alfa-monad';
-import { Predicate } from '@siteimprove/alfa-predicate';
-import { Refinement } from '@siteimprove/alfa-refinement';
-import { Serializable } from '@siteimprove/alfa-json';
+import type { Either } from '@siteimprove/alfa-either';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Functor } from '@siteimprove/alfa-functor';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
+import type { Mapper } from '@siteimprove/alfa-mapper';
+import type { Monad } from '@siteimprove/alfa-monad';
+import type { Predicate } from '@siteimprove/alfa-predicate';
+import type { Refinement } from '@siteimprove/alfa-refinement';
+import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<S | T>, Equatable, Hashable, Serializable<Selective.JSON<S, T>> {

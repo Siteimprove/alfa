@@ -1,6 +1,6 @@
 import { type Color as CSSColor, Percentage, RGB } from "@siteimprove/alfa-css";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Style } from "@siteimprove/alfa-style";
+import type { Style } from "@siteimprove/alfa-style";
 
 /**
  * @public

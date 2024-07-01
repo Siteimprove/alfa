@@ -1,6 +1,7 @@
 import { Keyword, Numeric } from "@siteimprove/alfa-css";
 import { String } from "@siteimprove/alfa-string";
-import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
+import type { Shorthands, Style } from "@siteimprove/alfa-style";
+import { Longhands } from "@siteimprove/alfa-style";
 
 type Name = Longhands.Name | Shorthands.Name;
 

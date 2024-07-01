@@ -22,11 +22,11 @@
 <polygon fill="#ffffff" stroke="#000000" points="36,-110 36,-326 446,-326 446,-110 36,-110"/>
 </g>
 <!-- dependency&#45;graph&#45;[object Object] -->
-<!-- src/precedence/common.ts -->
+<!-- src/precedence/index.ts -->
 <g id="node2" class="node">
-<title>src/precedence/common.ts</title>
+<title>src/precedence/index.ts</title>
 <path fill="none" stroke="#ff0000" stroke-width="5" d="M382.83,-318C382.83,-318 335.17,-318 335.17,-318 331.33,-318 327.5,-314.17 327.5,-310.33 327.5,-310.33 327.5,-302.67 327.5,-302.67 327.5,-298.83 331.33,-295 335.17,-295 335.17,-295 382.83,-295 382.83,-295 386.67,-295 390.5,-298.83 390.5,-302.67 390.5,-302.67 390.5,-310.33 390.5,-310.33 390.5,-314.17 386.67,-318 382.83,-318"/>
-<text text-anchor="middle" x="359" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
+<text text-anchor="middle" x="359" y="-302.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
 </g>
 <!-- src/precedence/encapsulation.ts -->
 <g id="node10" class="node">
@@ -34,10 +34,10 @@
 <path fill="none" stroke="#000000" d="M150.33,-200C150.33,-200 51.67,-200 51.67,-200 47.83,-200 44,-196.17 44,-192.33 44,-192.33 44,-184.67 44,-184.67 44,-180.83 47.83,-177 51.67,-177 51.67,-177 150.33,-177 150.33,-177 154.17,-177 158,-180.83 158,-184.67 158,-184.67 158,-192.33 158,-192.33 158,-196.17 154.17,-200 150.33,-200"/>
 <text text-anchor="middle" x="101" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">encapsulation.ts</text>
 </g>
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/encapsulation.ts -->
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/encapsulation.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/encapsulation.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/encapsulation.ts -->
 <g id="edge53" class="edge">
-<title>src/precedence/common.ts&#45;&gt;src/precedence/encapsulation.ts</title>
+<title>src/precedence/index.ts&#45;&gt;src/precedence/encapsulation.ts</title>
 <path fill="none" stroke="black" d="M328.78,-294.97C294.32,-284.3 240.68,-268.1 221,-259 188.42,-243.95 153.82,-221.04 129.97,-205.68"/>
 <polygon fill="black" stroke="black" points="131.69,-202.63 121.38,-200.2 127.92,-208.53 131.69,-202.63"/>
 </g>
@@ -47,10 +47,10 @@
 <path fill="none" stroke="#000000" d="M227.83,-200C227.83,-200 184.17,-200 184.17,-200 180.33,-200 176.5,-196.17 176.5,-192.33 176.5,-192.33 176.5,-184.67 176.5,-184.67 176.5,-180.83 180.33,-177 184.17,-177 184.17,-177 227.83,-177 227.83,-177 231.67,-177 235.5,-180.83 235.5,-184.67 235.5,-184.67 235.5,-192.33 235.5,-192.33 235.5,-196.17 231.67,-200 227.83,-200"/>
 <text text-anchor="middle" x="206" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">layer.ts</text>
 </g>
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/layer.ts -->
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/layer.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/layer.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/layer.ts -->
 <g id="edge55" class="edge">
-<title>src/precedence/common.ts&#45;&gt;src/precedence/layer.ts</title>
+<title>src/precedence/index.ts&#45;&gt;src/precedence/layer.ts</title>
 <path fill="none" stroke="black" d="M331.5,-294.91C298.12,-283.5 245.94,-266.03 239,-259 225.96,-245.78 219.99,-225.15 215.62,-209.8"/>
 <polygon fill="black" stroke="black" points="218.96,-208.77 212.78,-200.17 212.25,-210.75 218.96,-208.77"/>
 </g>
@@ -60,10 +60,10 @@
 <path fill="none" stroke="#000000" d="M328.33,-200C328.33,-200 281.67,-200 281.67,-200 277.83,-200 274,-196.17 274,-192.33 274,-192.33 274,-184.67 274,-184.67 274,-180.83 277.83,-177 281.67,-177 281.67,-177 328.33,-177 328.33,-177 332.17,-177 336,-180.83 336,-184.67 336,-184.67 336,-192.33 336,-192.33 336,-196.17 332.17,-200 328.33,-200"/>
 <text text-anchor="middle" x="305" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">order.ts</text>
 </g>
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/order.ts -->
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/order.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/order.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/order.ts -->
 <g id="edge57" class="edge">
-<title>src/precedence/common.ts&#45;&gt;src/precedence/order.ts</title>
+<title>src/precedence/index.ts&#45;&gt;src/precedence/order.ts</title>
 <path fill="none" stroke="black" d="M365.6,-294.55C368.53,-280.34 367.23,-255.1 358,-236 352.61,-224.86 343.58,-214.61 334.36,-206.58"/>
 <polygon fill="black" stroke="black" points="336.29,-203.65 326.29,-200.14 331.92,-209.12 336.29,-203.65"/>
 </g>
@@ -73,10 +73,10 @@
 <path fill="none" stroke="#000000" d="M410.33,-200C410.33,-200 361.67,-200 361.67,-200 357.83,-200 354,-196.17 354,-192.33 354,-192.33 354,-184.67 354,-184.67 354,-180.83 357.83,-177 361.67,-177 361.67,-177 410.33,-177 410.33,-177 414.17,-177 418,-180.83 418,-184.67 418,-184.67 418,-192.33 418,-192.33 418,-196.17 414.17,-200 410.33,-200"/>
 <text text-anchor="middle" x="386" y="-184.8" font-family="Arial" font-size="14.00" fill="#000000">origin.ts</text>
 </g>
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/origin.ts -->
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/origin.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/origin.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/origin.ts -->
 <g id="edge59" class="edge">
-<title>src/precedence/common.ts&#45;&gt;src/precedence/origin.ts</title>
+<title>src/precedence/index.ts&#45;&gt;src/precedence/origin.ts</title>
 <path fill="none" stroke="black" d="M365.6,-294.79C373.12,-275.63 382.94,-235.15 386.47,-210.34"/>
 <polygon fill="black" stroke="black" points="389.98,-210.51 387.62,-200.18 383.02,-209.72 389.98,-210.51"/>
 </g>
@@ -86,15 +86,15 @@
 <path fill="none" stroke="#000000" d="M331.83,-259C331.83,-259 246.17,-259 246.17,-259 242.33,-259 238.5,-255.17 238.5,-251.33 238.5,-251.33 238.5,-243.67 238.5,-243.67 238.5,-239.83 242.33,-236 246.17,-236 246.17,-236 331.83,-236 331.83,-236 335.67,-236 339.5,-239.83 339.5,-243.67 339.5,-243.67 339.5,-251.33 339.5,-251.33 339.5,-255.17 335.67,-259 331.83,-259"/>
 <text text-anchor="middle" x="289" y="-243.8" font-family="Arial" font-size="14.00" fill="#000000">precedence.ts</text>
 </g>
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/precedence.ts -->
-<!-- src/precedence/common.ts&#45;&gt;src/precedence/precedence.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/precedence.ts -->
+<!-- src/precedence/index.ts&#45;&gt;src/precedence/precedence.ts -->
 <g id="edge61" class="edge">
-<title>src/precedence/common.ts&#45;&gt;src/precedence/precedence.ts</title>
+<title>src/precedence/index.ts&#45;&gt;src/precedence/precedence.ts</title>
 <path fill="none" stroke="black" d="M351.24,-294.78C342.53,-286.5 328.54,-274.89 315.93,-265.36"/>
 <polygon fill="black" stroke="black" points="317.64,-262.28 307.51,-259.17 313.5,-267.92 317.64,-262.28"/>
 </g>
 <!-- exit_src/precedence -->
-<!-- src/precedence/common.ts&#45;&gt;exit_src/precedence -->
+<!-- src/precedence/index.ts&#45;&gt;exit_src/precedence -->
 <!-- name_src/precedence -->
 <g id="node3" class="node">
 <title>name_src/precedence</title>
@@ -172,7 +172,7 @@
 <!-- src/selector&#45;map.ts&#45;&gt;src/ancestor&#45;filter.ts -->
 <g id="edge74" class="edge">
 <title>src/selector&#45;map.ts&#45;&gt;src/ancestor&#45;filter.ts</title>
-<path fill="none" stroke="black" d="M574,-353.78C582.27,-346.06 592.1,-335.43 599.56,-326.31"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M574,-353.78C582.27,-346.06 592.1,-335.43 599.56,-326.31"/>
 <polygon fill="black" stroke="black" points="602.5,-328.22 605.85,-318.17 596.97,-323.94 602.5,-328.22"/>
 </g>
 <!-- src/selector&#45;map.ts&#45;&gt;src/block.ts -->
@@ -278,33 +278,33 @@
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
 <!-- exit_src&#45;&gt;exit_src -->
-<!-- src/common.ts -->
+<!-- src/index.ts -->
 <g id="node17" class="node">
-<title>src/common.ts</title>
+<title>src/index.ts</title>
 <path fill="none" stroke="#00ffff" stroke-width="5" d="M533.83,-495C533.83,-495 486.17,-495 486.17,-495 482.33,-495 478.5,-491.17 478.5,-487.33 478.5,-487.33 478.5,-479.67 478.5,-479.67 478.5,-475.83 482.33,-472 486.17,-472 486.17,-472 533.83,-472 533.83,-472 537.67,-472 541.5,-475.83 541.5,-479.67 541.5,-479.67 541.5,-487.33 541.5,-487.33 541.5,-491.17 537.67,-495 533.83,-495"/>
-<text text-anchor="middle" x="510" y="-479.8" font-family="Arial" font-size="14.00" fill="#000000">common.ts</text>
+<text text-anchor="middle" x="510" y="-479.8" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
 </g>
-<!-- src/common.ts&#45;&gt;name_src/precedence -->
+<!-- src/index.ts&#45;&gt;name_src/precedence -->
 <g id="edge49" class="edge">
-<title>src/common.ts&#45;&gt;name_src/precedence</title>
+<title>src/index.ts&#45;&gt;name_src/precedence</title>
 <path fill="none" stroke="#00ffff" d="M495.1,-471.82C456.76,-444.32 353.9,-370.54 300,-331.89"/>
 <polygon fill="#00ffff" stroke="#00ffff" points="301.96,-328.98 291.79,-326 297.88,-334.67 301.96,-328.98"/>
 </g>
-<!-- src/common.ts&#45;&gt;src/rule&#45;tree.ts -->
-<!-- src/common.ts&#45;&gt;src/rule&#45;tree.ts -->
+<!-- src/index.ts&#45;&gt;src/rule&#45;tree.ts -->
+<!-- src/index.ts&#45;&gt;src/rule&#45;tree.ts -->
 <g id="edge51" class="edge">
-<title>src/common.ts&#45;&gt;src/rule&#45;tree.ts</title>
+<title>src/index.ts&#45;&gt;src/rule&#45;tree.ts</title>
 <path fill="none" stroke="black" d="M506.27,-471.79C494.93,-452.03 464.16,-409.58 443.69,-385.04"/>
 <polygon fill="black" stroke="black" points="446.11,-382.48 436.93,-377.18 440.8,-387.04 446.11,-382.48"/>
 </g>
-<!-- src/common.ts&#45;&gt;src/cascade.ts -->
-<!-- src/common.ts&#45;&gt;src/cascade.ts -->
+<!-- src/index.ts&#45;&gt;src/cascade.ts -->
+<!-- src/index.ts&#45;&gt;src/cascade.ts -->
 <g id="edge48" class="edge">
-<title>src/common.ts&#45;&gt;src/cascade.ts</title>
+<title>src/index.ts&#45;&gt;src/cascade.ts</title>
 <path fill="none" stroke="black" d="M524.63,-471.78C532.62,-464.06 542.08,-453.43 549.22,-444.31"/>
 <polygon fill="black" stroke="black" points="552.1,-446.3 555.23,-436.17 546.47,-442.14 552.1,-446.3"/>
 </g>
-<!-- src/common.ts&#45;&gt;exit_src -->
+<!-- src/index.ts&#45;&gt;exit_src -->
 <!-- exit_src/precedence&#45;&gt;exit_src -->
 <!-- exit_src/precedence&#45;&gt;exit_src -->
 <!-- exit_src/precedence&#45;&gt;exit_src -->

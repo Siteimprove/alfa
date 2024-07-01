@@ -85,7 +85,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/serializable.ts" -> "src/sarif.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/serializable.ts";
     lhead = "cluster_src/sarif.ts";
     color = "black";

@@ -1,4 +1,5 @@
-import { Declaration, h, Node } from "@siteimprove/alfa-dom";
+import type { Node } from "@siteimprove/alfa-dom";
+import { Declaration, h } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 

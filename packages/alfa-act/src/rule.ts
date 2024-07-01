@@ -1,25 +1,26 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Either, Left, Right } from "@siteimprove/alfa-either";
-import { Equatable } from "@siteimprove/alfa-equatable";
+import { type Either, Left, Right } from "@siteimprove/alfa-either";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
-import { Maybe, None, Option } from "@siteimprove/alfa-option";
-import { Performance } from "@siteimprove/alfa-performance";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Option } from "@siteimprove/alfa-option";
+import { Maybe, None } from "@siteimprove/alfa-option";
+import type { Performance } from "@siteimprove/alfa-performance";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
-import { Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Tuple } from "@siteimprove/alfa-tuple";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
-import * as sarif from "@siteimprove/alfa-sarif";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
+import type * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache.js";
-import { Diagnostic } from "./diagnostic.js";
+import type { Diagnostic } from "./diagnostic.js";
 import { Interview } from "./interview.js";
 import type { Oracle } from "./oracle.js";
 import { Outcome } from "./outcome.js";
@@ -155,7 +156,7 @@ export abstract class Rule<
  * @public
  */
 export namespace Rule {
-  import Applicable = Outcome.Applicable;
+  const { Applicable } = Outcome;
 
   export interface JSON {
     [key: string]: json.JSON;

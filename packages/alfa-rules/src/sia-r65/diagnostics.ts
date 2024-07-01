@@ -1,6 +1,6 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Node } from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Map } from "@siteimprove/alfa-map";
 
 /**

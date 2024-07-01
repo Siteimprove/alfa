@@ -1,5 +1,6 @@
 import type { Diagnostic, Interview, Question } from "@siteimprove/alfa-act";
-import { Maybe, None } from "@siteimprove/alfa-option";
+import type { Maybe} from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import type { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import type { Trilean } from "@siteimprove/alfa-trilean";

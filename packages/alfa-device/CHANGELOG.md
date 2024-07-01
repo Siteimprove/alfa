@@ -14,7 +14,7 @@
 
   ⚠️ This is the first of a series of changes on the internal structure and build process of distributed packages. It is probably better to not use this version and wait until more of these internal changes have been done to jump directly to the final result. We are internally releasing these changes for validation purpose only.
 
-  This should not impact consummers, the `package.json` files should be set correctly to consume these files.
+  This should not impact consumers, the `package.json` files should be set correctly to consume these files.
 
 ## 0.84.0
 

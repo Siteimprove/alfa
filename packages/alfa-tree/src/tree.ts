@@ -1,10 +1,10 @@
 /// <reference lib="dom" />
 
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Flags } from "@siteimprove/alfa-flags";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Flags } from "@siteimprove/alfa-flags";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Lazy } from "@siteimprove/alfa-lazy";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";

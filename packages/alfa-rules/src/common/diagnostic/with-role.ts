@@ -1,14 +1,16 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Node, Role } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
-import { Element, Node as DomNode } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Role } from "@siteimprove/alfa-aria";
+import { Node } from "@siteimprove/alfa-aria";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element } from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
 
 /**
  * @public
  */
 export class WithRole<
-  O extends DomNode.SerializationOptions = DomNode.SerializationOptions,
+  O extends dom.Node.SerializationOptions = dom.Node.SerializationOptions,
 > extends Diagnostic<O> {
   public static of(message: string): Diagnostic;
 

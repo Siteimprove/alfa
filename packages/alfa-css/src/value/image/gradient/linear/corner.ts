@@ -1,9 +1,9 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { type Parser as CSSParser, Token } from "../../../../syntax/index.js";
 
-import { Resolvable } from "../../../resolvable.js";
+import type { Resolvable } from "../../../resolvable.js";
 import { Value } from "../../../value.js";
 
 import { Position } from "./position.js";
