@@ -5,7 +5,7 @@
     "lib": ["es2022", "dom"],
     "types": ["node"],
     "jsx": "react-jsx",
-    "jsxImportSource": "@siteimprove/alfa-dom/dist"
+    "jsxImportSource": "@siteimprove/alfa-dom"
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "references": [{ "path": "../packages" }]

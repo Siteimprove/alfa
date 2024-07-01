@@ -3,7 +3,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "@siteimprove/alfa-dom/dist",
+    "jsxImportSource": "@siteimprove/alfa-dom",
     "outDir": "."
   },
   "files": [
