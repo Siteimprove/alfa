@@ -79,3 +79,5 @@
 ---
 
 **Breaking:** Alfa is now distributed as ESM rather than CJS modules; projects using it must be ESM or use dynamic `import()`.
+
+⚠️ This is the last of a series of changes on the internal structure and build process of distributed packages that was started with v0.85.0.
