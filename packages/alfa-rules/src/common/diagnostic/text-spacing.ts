@@ -1,6 +1,6 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import type { Length } from "@siteimprove/alfa-css";
-import type { Declaration, Element } from "@siteimprove/alfa-dom";
+import type { Declaration, Element, Node } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 import type { Serializable } from "@siteimprove/alfa-json";
 import type { Longhands, Style } from "@siteimprove/alfa-style";
@@ -8,7 +8,10 @@ import type { Longhands, Style } from "@siteimprove/alfa-style";
 /**
  * @public
  */
-export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
+export class TextSpacing<
+  N extends Longhands.Name,
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(message: string): Diagnostic;
 
   public static of<N extends Longhands.Name>(
@@ -130,17 +133,16 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
     hash.writeNumber(this._value.value);
   }
 
-  public toJSON(): TextSpacing.JSON<N> {
-    const value1 = this._value.toJSON();
+  public toJSON(options?: O): TextSpacing.JSON<N> {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       property: this._property,
-      value: value1,
+      value: this._value.toJSON(),
       "font-size": this._fontSize.toJSON(),
       ratio: this._ratio,
       threshold: this._threshold,
       declaration: this._declaration.toJSON(),
-      owner: this._owner.toJSON(),
+      owner: this._owner.toJSON(options),
     };
   }
 }

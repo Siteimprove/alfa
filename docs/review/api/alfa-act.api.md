@@ -46,7 +46,7 @@ export class Cache {
 }
 
 // @public (undocumented)
-export class Diagnostic implements Equatable, Hashable, Serializable<Diagnostic.JSON> {
+export class Diagnostic<O extends json.Serializable.Options = json.Serializable.Options> implements Equatable, Hashable, Serializable<Diagnostic.JSON, O> {
     protected constructor(message: string);
     // (undocumented)
     equals(value: Diagnostic): boolean;
@@ -61,7 +61,7 @@ export class Diagnostic implements Equatable, Hashable, Serializable<Diagnostic.
     // (undocumented)
     static of(message: string): Diagnostic;
     // (undocumented)
-    toJSON(): Diagnostic.JSON;
+    toJSON(options?: O): Diagnostic.JSON;
 }
 
 // @public (undocumented)
@@ -76,7 +76,7 @@ export namespace Diagnostic {
         message: string;
     }
     const // (undocumented)
-    empty: Diagnostic;
+    empty: Diagnostic<Serializable.Options>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
@@ -271,7 +271,7 @@ export namespace Outcome {
     // Warning: (ae-incompatible-release-tags) The symbol "Inapplicable" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
-    export class Inapplicable<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Inapplicable> {
+    export class Inapplicable<I, T extends Hashable, Q extends Question.Metadata = {}, S = T, O extends json.Serializable.Options = json.Serializable.Options> extends Outcome<I, T, Q, S, Value.Inapplicable, O> {
         // (undocumented)
         equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Inapplicable<I, T, Q, S>): boolean;
         // (undocumented)
@@ -281,7 +281,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): Inapplicable.EARL;
         // (undocumented)
-        toJSON(): Inapplicable.JSON;
+        toJSON(options?: O): Inapplicable.JSON;
         // (undocumented)
         toSARIF(): sarif.Result;
     }

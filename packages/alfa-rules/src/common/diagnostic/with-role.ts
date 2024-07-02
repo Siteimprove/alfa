@@ -3,12 +3,15 @@ import type { Role } from "@siteimprove/alfa-aria";
 import { Node } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Element } from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 
 /**
  * @public
  */
-export class WithRole extends Diagnostic {
+export class WithRole<
+  O extends dom.Node.SerializationOptions = dom.Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(message: string): Diagnostic;
 
   public static of(message: string, role: Role.Name): WithRole;
@@ -47,9 +50,9 @@ export class WithRole extends Diagnostic {
     hash.writeString(this._role);
   }
 
-  public toJSON(): WithRole.JSON {
+  public toJSON(options?: O): WithRole.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       role: this._role,
     };
   }

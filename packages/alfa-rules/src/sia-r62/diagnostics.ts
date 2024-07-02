@@ -1,7 +1,7 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import type { Device } from "@siteimprove/alfa-device";
-import type { Element } from "@siteimprove/alfa-dom";
+import type { Element, Node } from "@siteimprove/alfa-dom";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -9,7 +9,7 @@ import { Map } from "@siteimprove/alfa-map";
 import type { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import type { Longhands, Shorthands} from "@siteimprove/alfa-style";
+import type { Longhands, Shorthands } from "@siteimprove/alfa-style";
 import { Style } from "@siteimprove/alfa-style";
 
 import type * as json from "@siteimprove/alfa-json";
@@ -184,7 +184,9 @@ export namespace ElementDistinguishable {
 /**
  * @public
  */
-export class DistinguishingStyles extends Diagnostic {
+export class DistinguishingStyles<
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of(
     message: string,
     defaultStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty(),
@@ -240,9 +242,9 @@ export class DistinguishingStyles extends Diagnostic {
     );
   }
 
-  public toJSON(): DistinguishingStyles.JSON {
+  public toJSON(options?: O): DistinguishingStyles.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       defaultStyle: this._defaultStyles.toJSON(),
       hoverStyle: this._hoverStyles.toJSON(),
       focusStyle: this._focusStyles.toJSON(),

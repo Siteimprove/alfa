@@ -2,8 +2,8 @@ import { Diagnostic } from "@siteimprove/alfa-act";
 import type { RGB } from "@siteimprove/alfa-css";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Serializable } from "@siteimprove/alfa-json";
-
-import type { Comparable} from "@siteimprove/alfa-comparable";
+import type { Node } from "@siteimprove/alfa-dom";
+import type { Comparable } from "@siteimprove/alfa-comparable";
 import { Comparison } from "@siteimprove/alfa-comparable";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import type * as json from "@siteimprove/alfa-json";
@@ -15,7 +15,10 @@ type SecondColor<N extends Name> = N[1];
 /**
  * @public
  */
-export class Contrast<N extends Name = Name> extends Diagnostic {
+export class Contrast<
+  N extends Name = Name,
+  O extends Node.SerializationOptions = Node.SerializationOptions,
+> extends Diagnostic<O> {
   public static of<N extends Name = Name>(
     message: string,
     threshold: number = 4.5,
@@ -66,9 +69,9 @@ export class Contrast<N extends Name = Name> extends Diagnostic {
     // We don't hash the pairings as it may take too long.
   }
 
-  public toJSON(): Contrast.JSON<N> {
+  public toJSON(options?: O): Contrast.JSON<N> {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       threshold: this._threshold,
       pairings: this._pairings.map((pairing) => pairing.toJSON()),
     };
