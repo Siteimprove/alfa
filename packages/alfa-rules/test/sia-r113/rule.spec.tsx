@@ -493,3 +493,148 @@ test("evaluate() is applicable when link is not part of text", async (t) => {
     }),
   ]);
 });
+
+test("evaluate() is applicable when button is not clipped by parent due to overflow: visible", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <button
+      box={{
+        device,
+        x: 134,
+        y: 241,
+        width: 50,
+        height: 20,
+      }}
+    >
+      foo
+    </button>
+  );
+  const div = (
+    <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
+      {target}
+    </div>
+  );
+
+  const document = h.document(
+    [div],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "visible",
+          margin: "100px 100px",
+          width: "100px",
+          height: "100px",
+        }),
+        h.rule.style("button", {
+          position: "relative",
+          width: "50px",
+          height: "20px",
+          top: "140px",
+          left: "25px",
+        }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, target, {
+      1: TargetSize.HasSufficientSpacing(
+        "foo",
+        target.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
+test("evaluate() is inapplicable when button is clipped by parent", async (t) => {
+  const device = Device.standard();
+
+  const button = (
+    <button
+      box={{
+        device,
+        x: 134,
+        y: 241,
+        width: 50,
+        height: 20,
+      }}
+    >
+      foo
+    </button>
+  );
+  const div = (
+    <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
+      {button}
+    </div>
+  );
+
+  const document = h.document(
+    [div],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "hidden",
+          margin: "100px 100px",
+          width: "100px",
+          height: "100px",
+        }),
+        h.rule.style("button", {
+          position: "relative",
+          width: "50px",
+          height: "20px",
+          top: "140px",
+          left: "25px",
+        }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
+});
+
+test("evaluate() is inapplicable when button is scrolled behind parent", async (t) => {
+  const device = Device.standard();
+
+  const button = (
+    <button
+      box={{
+        device,
+        x: 134,
+        y: 241,
+        width: 50,
+        height: 20,
+      }}
+    >
+      foo
+    </button>
+  );
+  const div = (
+    <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
+      {button}
+    </div>
+  );
+
+  const document = h.document(
+    [div],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          overflow: "auto",
+          margin: "100px 100px",
+          width: "100px",
+          height: "100px",
+        }),
+        h.rule.style("button", {
+          position: "relative",
+          width: "50px",
+          height: "20px",
+          top: "40px",
+          left: "calc(25px + 100px)",
+        }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R113, { document, device }), [inapplicable(R113)]);
+});

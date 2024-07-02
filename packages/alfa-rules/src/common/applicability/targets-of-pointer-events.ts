@@ -9,7 +9,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 const { hasRole } = DOM;
-const { hasComputedStyle, isFocusable, isVisible } = Style;
+const { hasComputedStyle, isFocusable, isVisible, isScrolledBehind } = Style;
 
 const { and, not } = Predicate;
 
@@ -110,6 +110,7 @@ function isTarget(device: Device): Predicate<Element> {
     ),
     isFocusable(device),
     isVisible(device),
+    not(isScrolledBehind(device)),
     hasRole(device, (role) => role.isWidget()),
     hasBoundingBox(device),
   );
