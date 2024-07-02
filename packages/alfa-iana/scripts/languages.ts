@@ -192,6 +192,9 @@ export const Languages = {
       parser: "typescript",
     })
     .then((code) =>
-      fs.writeFileSync(path.join(__dirname, "../src/language/data.ts"), code),
+      fs.writeFileSync(
+        path.join(import.meta.dirname, "../src/language/data.ts"),
+        code,
+      ),
     );
 });
