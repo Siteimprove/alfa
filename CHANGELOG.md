@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.86.1](../../compare/v0.86.0...v0.86.1) (2024-07-02)
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0861), [@siteimprove/alfa-compatibility](packages/alfa-compatibility/CHANGELOG.md#0861), [@siteimprove/alfa-iana](packages/alfa-iana/CHANGELOG.md#0861), [@siteimprove/alfa-wcag](packages/alfa-wcag/CHANGELOG.md#0861): Fix usages of `__dirname`. ([#1644](https://github.com/Siteimprove/alfa/pull/1644))
+
 ## [0.86.0](../../compare/v0.85.1...v0.86.0) (2024-07-01)
 
 ### Breaking

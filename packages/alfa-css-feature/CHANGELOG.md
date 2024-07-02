@@ -1,5 +1,7 @@
 # @siteimprove/alfa-css-feature
 
+## 0.86.1
+
 ## 0.86.0
 
 ### Minor Changes

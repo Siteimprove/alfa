@@ -1,5 +1,11 @@
 # @siteimprove/alfa-compatibility
 
+## 0.86.1
+
+### Patch Changes
+
+- **Fixed:** Fix usages of `__dirname` ([#1644](https://github.com/Siteimprove/alfa/pull/1644))
+
 ## 0.86.0
 
 ### Minor Changes

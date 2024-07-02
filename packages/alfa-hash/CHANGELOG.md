@@ -1,5 +1,7 @@
 # @siteimprove/alfa-hash
 
+## 0.86.1
+
 ## 0.86.0
 
 ### Minor Changes
