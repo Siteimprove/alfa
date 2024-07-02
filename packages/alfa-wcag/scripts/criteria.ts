@@ -111,7 +111,7 @@ export const Criteria = ${JSON.stringify(criteria, null, 2)} as const;
   });
 
   fs.writeFileSync(
-    path.join(__dirname, "..", "src", "criterion", "data.ts"),
+    path.join(import.meta.dirname, "..", "src", "criterion", "data.ts"),
     code,
   );
 });

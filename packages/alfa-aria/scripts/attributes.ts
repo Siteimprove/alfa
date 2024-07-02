@@ -81,7 +81,7 @@ export const Attributes = ${JSON.stringify(attributes, null, 2)} as const;
   });
 
   fs.writeFileSync(
-    path.join(__dirname, "..", "src", "attribute", "data.ts"),
+    path.join(import.meta.dirname, "..", "src", "attribute", "data.ts"),
     code,
   );
 });

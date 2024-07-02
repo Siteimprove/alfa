@@ -93,7 +93,7 @@ prettier
   .format(code, { parser: "typescript" })
   .then((code) =>
     fs.writeFileSync(
-      path.join(__dirname, "..", "src", "browser", "data.ts"),
+      path.join(import.meta.dirname, "..", "src", "browser", "data.ts"),
       code,
     ),
   );
