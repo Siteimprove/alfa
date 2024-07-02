@@ -46,7 +46,7 @@ const rule = "R68";
 const file = "./my-page.json";
 
 // De-serialize page
-const page = Page.from(JSON.parse(fs.readFileSync(file, "utf-8")));
+const page = Page.from(JSON.parse(fs.readFileSync(file, "utf-8"))).getUnsafe();
 
 main();
 
