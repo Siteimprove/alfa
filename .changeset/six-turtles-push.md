@@ -2,4 +2,4 @@
 "@siteimprove/alfa-toolchain": patch
 ---
 
-**Fixed:** An incorrect `export` path has been fixed.
+**Fixed:** The `changelog` export is now correctly exported. 
