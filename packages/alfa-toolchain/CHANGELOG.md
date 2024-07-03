@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.86.2
+
+### Patch Changes
+
+- **Fixed:** The `changelog` export is now correctly exported. ([#1645](https://github.com/Siteimprove/alfa/pull/1645))
+
 ## 0.86.1
 
 ## 0.86.0

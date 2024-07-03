@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.86.2](../../compare/v0.86.1...v0.86.2) (2024-07-03)
+
+### Fixed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0862): The `changelog` export is now correctly exported. ([#1645](https://github.com/Siteimprove/alfa/pull/1645))
+
 ## [0.86.1](../../compare/v0.86.0...v0.86.1) (2024-07-02)
 
 ### Fixed
