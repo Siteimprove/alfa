@@ -18,9 +18,8 @@
   "main": "dist/index.js",
   "exports": {
     ".": "./dist/index.js",
-    "./changelog": "./dist/changeset/changelog-individual.cjs",
-    "./changelog.cjs": "./dist/changeset/changelog-individual.cjs",
-    "./changelog.js": "./dist/changeset/changelog-individual.cjs",
+    "./changelog": "./dist/changeset/changelog-individual.js",
+    "./changelog.js": "./dist/changeset/changelog-individual.js",
     "./global-changelog": "./dist/changeset/build-changelog.js",
     "./global-changelog.js": "./dist/changeset/build-changelog.js"
   },
