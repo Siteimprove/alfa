@@ -31,7 +31,9 @@
     "validate-structure": "dist/validation/validate-all.js"
   },
   "files": [
+    "dist/**/*.cjs",
     "dist/**/*.js",
+    "dist/**/*.d.cts",
     "dist/**/*.d.ts"
   ],
   "publishConfig": {
