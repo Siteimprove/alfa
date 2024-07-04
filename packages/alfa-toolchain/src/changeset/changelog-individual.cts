@@ -7,17 +7,17 @@
  * there is no need to add changelog entries for (internal) dependency bumps.
  */
 import type { ChangelogFunctions } from "@changesets/types";
-import changelog from "@svitejs/changesets-changelog-github-compact";
+const changelog = require("@svitejs/changesets-changelog-github-compact");
 
 /**
  * @public
  */
 const changelogFunctions: ChangelogFunctions = {
+  ...changelog.default,
   getDependencyReleaseLine: async () => "",
-  getReleaseLine: changelog.getReleaseLine,
 };
 
 /**
  * @public
  */
-export default changelogFunctions;
+module.exports = changelogFunctions;

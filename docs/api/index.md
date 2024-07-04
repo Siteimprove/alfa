@@ -50,7 +50,6 @@
 |  [@siteimprove/alfa-map](./alfa-map.md) |  |
 |  [@siteimprove/alfa-mapper](./alfa-mapper.md) |  |
 |  [@siteimprove/alfa-math](./alfa-math.md) |  |
-|  [@siteimprove/alfa-media](./alfa-media.md) |  |
 |  [@siteimprove/alfa-monad](./alfa-monad.md) |  |
 |  [@siteimprove/alfa-network](./alfa-network.md) |  |
 |  [@siteimprove/alfa-option](./alfa-option.md) |  |

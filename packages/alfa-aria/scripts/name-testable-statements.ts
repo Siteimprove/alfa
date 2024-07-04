@@ -190,7 +190,12 @@ async function main() {
   });
 
   fs.writeFileSync(
-    path.join(__dirname, "..", "test", "name-testable-statements.spec.tsx"),
+    path.join(
+      import.meta.dirname,
+      "..",
+      "test",
+      "name-testable-statements.spec.tsx",
+    ),
     code,
   );
 }

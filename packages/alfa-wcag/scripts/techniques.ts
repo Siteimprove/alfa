@@ -60,7 +60,7 @@ export const Techniques = ${JSON.stringify(techniques, null, 2)} as const;
   });
 
   fs.writeFileSync(
-    path.join(__dirname, "..", "src", "technique", "data.ts"),
+    path.join(import.meta.dirname, "..", "src", "technique", "data.ts"),
     code,
   );
 });

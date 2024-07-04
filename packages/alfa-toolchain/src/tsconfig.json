@@ -5,7 +5,7 @@
   "files": [
     "./changeset/build-changelog.ts",
     "./changeset/changelog-global.ts",
-    "./changeset/changelog-individual.ts",
+    "./changeset/changelog-individual.cts",
     "./dependency-graph/dependency-graph.ts",
     "./dependency-graph/generate-graphs.ts",
     "./dependency-graph/rainbow.ts",

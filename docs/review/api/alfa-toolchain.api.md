@@ -5,7 +5,6 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import type { ChangelogFunctions as ChangelogFunctions_2 } from '@changesets/types';
 import type { Config } from '@changesets/types';
 import type { NewChangesetWithCommit } from '@changesets/types';
 import type { PackageJSON } from '@changesets/types';
@@ -15,9 +14,6 @@ import type { Packages } from '@manypkg/get-packages';
 //
 // @public (undocumented)
 export const changelogFunctions: ChangelogFunctions;
-
-// @public (undocumented)
-const changelogFunctions_2: ChangelogFunctions_2;
 
 // @public (undocumented)
 export function generateGraphs(cwd: string): Promise<void>;
@@ -34,7 +30,7 @@ function hasExtractorConfig(name: string, dir: string): Array<string>;
 
 declare namespace individualChangelog {
     export {
-        changelogFunctions_2 as default
+
     }
 }
 export { individualChangelog }

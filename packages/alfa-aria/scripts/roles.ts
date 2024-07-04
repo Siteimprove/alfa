@@ -232,5 +232,8 @@ export const Roles = ${JSON.stringify(roles, null, 2)} as const;
     parser: "typescript",
   });
 
-  fs.writeFileSync(path.join(__dirname, "..", "src", "role", "data.ts"), code);
+  fs.writeFileSync(
+    path.join(import.meta.dirname, "..", "src", "role", "data.ts"),
+    code,
+  );
 });

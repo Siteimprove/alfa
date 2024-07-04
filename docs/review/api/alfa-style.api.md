@@ -410,7 +410,8 @@ export namespace Style {
     //
     // (undocumented)
     isRendered: typeof node.isRendered, // (undocumented)
-    isVisible: typeof node.isVisible;
+    isVisible: typeof node.isVisible, // (undocumented)
+    isScrolledBehind: typeof node.isScrolledBehind;
 }
 
 // @public (undocumented)
