@@ -1,10 +1,6 @@
 import type { Callback } from "@siteimprove/alfa-callback";
-import type {
-  Comparable,
-  Comparison} from "@siteimprove/alfa-comparable";
-import {
-  type Comparer
-} from "@siteimprove/alfa-comparable";
+import type { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { type Comparer } from "@siteimprove/alfa-comparable";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Foldable } from "@siteimprove/alfa-foldable";
 import type { Hashable } from "@siteimprove/alfa-hash";
@@ -22,15 +18,13 @@ import { Some } from "./some.js";
 /**
  * @public
  */
-export interface Option<
-  T,
-  O extends Serializable.Options = Serializable.Options,
-> extends Monad<T>,
+export interface Option<T>
+  extends Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
     Hashable,
-    Serializable<Option.JSON<T>, O> {
+    Serializable<Option.JSON<T>> {
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
@@ -70,7 +64,7 @@ export interface Option<
   compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
   compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
   toArray(): Array<T>;
-  toJSON(options?: O): Option.JSON<T>;
+  toJSON(options?: Serializable.Options): Option.JSON<T>;
 }
 
 /**

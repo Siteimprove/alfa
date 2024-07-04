@@ -15,10 +15,7 @@ type SecondColor<N extends Name> = N[1];
 /**
  * @public
  */
-export class Contrast<
-  N extends Name = Name,
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class Contrast<N extends Name = Name> extends Diagnostic {
   public static of<N extends Name = Name>(
     message: string,
     threshold: number = 4.5,
@@ -69,7 +66,7 @@ export class Contrast<
     // We don't hash the pairings as it may take too long.
   }
 
-  public toJSON(options?: O): Contrast.JSON<N> {
+  public toJSON(options?: Node.SerializationOptions): Contrast.JSON<N> {
     return {
       ...super.toJSON(options),
       threshold: this._threshold,

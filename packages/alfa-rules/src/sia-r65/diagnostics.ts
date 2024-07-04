@@ -6,9 +6,7 @@ import { Map } from "@siteimprove/alfa-map";
 /**
  * @public
  */
-export class MatchingClasses<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class MatchingClasses extends Diagnostic {
   public static of(
     message: string,
     matchingTargets: Map<string, number> = Map.empty(),
@@ -56,7 +54,7 @@ export class MatchingClasses<
     this._matchingNonTargets.hash(hash);
   }
 
-  public toJSON(options?: O): MatchingClasses.JSON {
+  public toJSON(options?: Node.SerializationOptions): MatchingClasses.JSON {
     return {
       ...super.toJSON(options),
       matchingTargets: this._matchingTargets.toJSON(options),

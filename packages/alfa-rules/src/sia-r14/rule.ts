@@ -177,9 +177,7 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class LabelAndName<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class LabelAndName extends Diagnostic {
   public static of(
     message: string,
     textContent: string = "",
@@ -224,7 +222,7 @@ export class LabelAndName<
     hash.writeString(this._textContent);
   }
 
-  public toJSON(options?: O): LabelAndName.JSON {
+  public toJSON(options?: Node.SerializationOptions): LabelAndName.JSON {
     return {
       ...super.toJSON(options),
       textContent: this._textContent,

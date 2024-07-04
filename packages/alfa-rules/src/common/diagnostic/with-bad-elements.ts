@@ -7,12 +7,7 @@ import type { Iterable } from "@siteimprove/alfa-iterable";
 /**
  * @public
  */
-export class WithBadElements<
-    O extends Node.SerializationOptions = Node.SerializationOptions,
-  >
-  extends Diagnostic<O>
-  implements Iterable<Element>
-{
+export class WithBadElements extends Diagnostic implements Iterable<Element> {
   public static of(
     message: string,
     errors: Iterable<Element> = [],
@@ -52,7 +47,7 @@ export class WithBadElements<
     yield* this._errors;
   }
 
-  public toJSON(options?: O): WithBadElements.JSON {
+  public toJSON(options?: Node.SerializationOptions): WithBadElements.JSON {
     return {
       ...super.toJSON(options),
       errors: this._errors.map((element) => element.path()),

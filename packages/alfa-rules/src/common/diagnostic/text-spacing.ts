@@ -8,10 +8,7 @@ import type { Longhands, Style } from "@siteimprove/alfa-style";
 /**
  * @public
  */
-export class TextSpacing<
-  N extends Longhands.Name,
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
   public static of(message: string): Diagnostic;
 
   public static of<N extends Longhands.Name>(
@@ -133,7 +130,7 @@ export class TextSpacing<
     hash.writeNumber(this._value.value);
   }
 
-  public toJSON(options?: O): TextSpacing.JSON<N> {
+  public toJSON(options?: Node.SerializationOptions): TextSpacing.JSON<N> {
     return {
       ...super.toJSON(options),
       property: this._property,

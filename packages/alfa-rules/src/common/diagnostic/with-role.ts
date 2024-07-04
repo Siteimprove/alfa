@@ -9,9 +9,7 @@ import type { Hash } from "@siteimprove/alfa-hash";
 /**
  * @public
  */
-export class WithRole<
-  O extends dom.Node.SerializationOptions = dom.Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class WithRole extends Diagnostic {
   public static of(message: string): Diagnostic;
 
   public static of(message: string, role: Role.Name): WithRole;
@@ -50,7 +48,7 @@ export class WithRole<
     hash.writeString(this._role);
   }
 
-  public toJSON(options?: O): WithRole.JSON {
+  public toJSON(options?: dom.Node.SerializationOptions): WithRole.JSON {
     return {
       ...super.toJSON(options),
       role: this._role,

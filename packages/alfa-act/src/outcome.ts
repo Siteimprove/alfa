@@ -30,12 +30,11 @@ export abstract class Outcome<
     Q extends Question.Metadata = {},
     S = T,
     V extends Outcome.Value = Outcome.Value,
-    O extends json.Serializable.Options = json.Serializable.Options,
   >
   implements
     Equatable,
     Hashable,
-    json.Serializable<Outcome.JSON<V>, O>,
+    json.Serializable<Outcome.JSON<V>>,
     earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result>
 {
@@ -118,7 +117,7 @@ export abstract class Outcome<
     hash.writeString(this._mode);
   }
 
-  public toJSON(options?: O): Outcome.JSON<V> {
+  public toJSON(options?: json.Serializable.Options): Outcome.JSON<V> {
     return {
       outcome: this._outcome,
       rule: this._rule.toJSON(),
@@ -187,8 +186,7 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-    O extends json.Serializable.Options = json.Serializable.Options,
-  > extends Outcome<I, T, Q, S, Value.Passed, O> {
+  > extends Outcome<I, T, Q, S, Value.Passed> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -253,7 +251,7 @@ export namespace Outcome {
       }
     }
 
-    public toJSON(options?: O): Passed.JSON<T> {
+    public toJSON(options?: json.Serializable.Options): Passed.JSON<T> {
       return {
         ...super.toJSON(options),
         target: json.Serializable.toJSON(this._target, options),
@@ -367,8 +365,7 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-    O extends json.Serializable.Options = json.Serializable.Options,
-  > extends Outcome<I, T, Q, S, Value.Failed, O> {
+  > extends Outcome<I, T, Q, S, Value.Failed> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -433,7 +430,7 @@ export namespace Outcome {
       }
     }
 
-    public toJSON(options?: O): Failed.JSON<T> {
+    public toJSON(options?: json.Serializable.Options): Failed.JSON<T> {
       return {
         ...super.toJSON(options),
         target: json.Serializable.toJSON(this._target, options),
@@ -556,7 +553,6 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-    O extends json.Serializable.Options = json.Serializable.Options,
   > extends Outcome<I, T, Q, S, Value.CantTell> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
@@ -611,7 +607,7 @@ export namespace Outcome {
       this._diagnostic.hash(hash);
     }
 
-    public toJSON(options?: O): CantTell.JSON<T> {
+    public toJSON(options?: json.Serializable.Options): CantTell.JSON<T> {
       return {
         ...super.toJSON(options),
         target: json.Serializable.toJSON(this._target, options),
@@ -742,8 +738,7 @@ export namespace Outcome {
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
-    O extends json.Serializable.Options = json.Serializable.Options,
-  > extends Outcome<I, T, Q, S, Value.Inapplicable, O> {
+  > extends Outcome<I, T, Q, S, Value.Inapplicable> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       mode: Mode,
@@ -765,7 +760,7 @@ export namespace Outcome {
       return super.equals(value) && value instanceof Inapplicable;
     }
 
-    public toJSON(options?: O): Inapplicable.JSON {
+    public toJSON(options?: json.Serializable.Options): Inapplicable.JSON {
       return super.toJSON(options);
     }
 

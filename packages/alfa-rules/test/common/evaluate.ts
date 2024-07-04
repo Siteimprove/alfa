@@ -16,16 +16,11 @@ const defaultResponse = Response.of(URL.example(), 200);
 const defaultDocument = Document.empty();
 const defaultDevice = Device.standard();
 
-export function evaluate<
-  T extends Hashable,
-  Q extends Question.Metadata,
-  S,
-  O extends Serializable.Options = Serializable.Options,
->(
+export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   page: Partial<Page>,
   oracle: Oracle<Page, T, Q, S> = () => Future.now(None),
-  options?: O,
+  options?: Serializable.Options,
 ): Future<Array<Outcome.JSON>> {
   const {
     request = defaultRequest,

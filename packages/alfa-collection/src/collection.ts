@@ -1,12 +1,8 @@
 import type { Applicative } from "@siteimprove/alfa-applicative";
 import type { Array } from "@siteimprove/alfa-array";
 import type { Callback } from "@siteimprove/alfa-callback";
-import type {
-  Comparable,
-  Comparison} from "@siteimprove/alfa-comparable";
-import {
-  type Comparer
-} from "@siteimprove/alfa-comparable";
+import type { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { type Comparer } from "@siteimprove/alfa-comparable";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Foldable } from "@siteimprove/alfa-foldable";
 import type { Functor } from "@siteimprove/alfa-functor";
@@ -62,13 +58,10 @@ export interface Collection<T>
  * @public
  */
 export namespace Collection {
-  export interface Keyed<
-    K,
-    V,
-    O extends Serializable.Options = Serializable.Options,
-  > extends Collection<V>,
+  export interface Keyed<K, V>
+    extends Collection<V>,
       Iterable<[K, V]>,
-      Serializable<Keyed.JSON<K, V>, O> {
+      Serializable<Keyed.JSON<K, V>> {
     isEmpty(): this is Keyed<K, never>;
     forEach(callback: Callback<V, void, [key: K]>): void;
     map<U>(mapper: Mapper<V, U, [key: K]>): Keyed<K, U>;
@@ -111,12 +104,10 @@ export namespace Collection {
     >;
   }
 
-  export interface Unkeyed<
-    T,
-    O extends Serializable.Options = Serializable.Options,
-  > extends Collection<T>,
+  export interface Unkeyed<T>
+    extends Collection<T>,
       Iterable<T>,
-      Serializable<Unkeyed.JSON<T>, O> {
+      Serializable<Unkeyed.JSON<T>> {
     isEmpty(): this is Unkeyed<never>;
     forEach(callback: Callback<T>): void;
     map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
@@ -155,13 +146,11 @@ export namespace Collection {
     export type JSON<T> = Array<Serializable.ToJSON<T>>;
   }
 
-  export interface Indexed<
-    T,
-    O extends Serializable.Options = Serializable.Options,
-  > extends Collection<T>,
+  export interface Indexed<T>
+    extends Collection<T>,
       Iterable<T>,
       Comparable<Iterable<T>>,
-      Serializable<Indexed.JSON<T>, O> {
+      Serializable<Indexed.JSON<T>> {
     isEmpty(): this is Indexed<never>;
     forEach(callback: Callback<T, void, [index: number]>): void;
     map<U>(mapper: Mapper<T, U, [index: number]>): Indexed<U>;

@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
-import type { Document} from "@siteimprove/alfa-dom";
+import type { Document } from "@siteimprove/alfa-dom";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -81,9 +81,7 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class WithFirstHeading<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class WithFirstHeading extends Diagnostic {
   public static of(message: string): Diagnostic;
 
   public static of(
@@ -138,7 +136,7 @@ export class WithFirstHeading<
     this._firstHeading.hash(hash);
   }
 
-  public toJSON(options?: O): WithFirstHeading.JSON {
+  public toJSON(options?: Node.SerializationOptions): WithFirstHeading.JSON {
     return {
       ...super.toJSON(options),
       firstHeading: this._firstHeading.toJSON(options),

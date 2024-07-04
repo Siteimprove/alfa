@@ -35,13 +35,12 @@ export abstract class Node<
     F extends Flags.allFlags,
     // The type
     T extends string = string,
-    O extends json.Serializable.Options = json.Serializable.Options,
   >
   implements
     Iterable<Node<F>>,
     Equatable,
     Hashable,
-    json.Serializable<Node.JSON<T>, O>
+    json.Serializable<Node.JSON<T>>
 {
   protected readonly _children: Array<Node<F>>;
   protected _parent: Option<Node<F>> = None;
@@ -406,7 +405,7 @@ export abstract class Node<
     hash.writeObject(this);
   }
 
-  public toJSON(options?: O): Node.JSON<T> {
+  public toJSON(options?: json.Serializable.Options): Node.JSON<T> {
     const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
 
     const result: Node.JSON<T> = {

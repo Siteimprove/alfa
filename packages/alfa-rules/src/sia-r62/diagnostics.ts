@@ -184,9 +184,7 @@ export namespace ElementDistinguishable {
 /**
  * @public
  */
-export class DistinguishingStyles<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class DistinguishingStyles extends Diagnostic {
   public static of(
     message: string,
     defaultStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty(),
@@ -242,7 +240,9 @@ export class DistinguishingStyles<
     );
   }
 
-  public toJSON(options?: O): DistinguishingStyles.JSON {
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): DistinguishingStyles.JSON {
     return {
       ...super.toJSON(options),
       defaultStyle: this._defaultStyles.toJSON(),

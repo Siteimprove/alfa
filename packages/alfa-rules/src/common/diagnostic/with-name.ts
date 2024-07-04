@@ -8,9 +8,7 @@ import type { Option } from "@siteimprove/alfa-option";
 /**
  * @public
  */
-export class WithName<
-  O extends dom.Node.SerializationOptions = dom.Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class WithName extends Diagnostic {
   public static of(message: string): Diagnostic;
 
   public static of(message: string, name: string): Diagnostic;
@@ -32,7 +30,7 @@ export class WithName<
     return this._name;
   }
 
-  public toJSON(options?: O): WithName.JSON {
+  public toJSON(options?: dom.Node.SerializationOptions): WithName.JSON {
     return {
       ...super.toJSON(options),
       name: this._name,

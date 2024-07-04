@@ -19,9 +19,7 @@ const { not } = Predicate;
 /**
  * @public
  */
-export class Map<K, V, O extends Serializable.Options = Serializable.Options>
-  implements Collection.Keyed<K, V>
-{
+export class Map<K, V> implements Collection.Keyed<K, V> {
   public static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V> {
     return entries.reduce(
       (map, [key, value]) => map.set(key, value),
@@ -294,7 +292,7 @@ export class Map<K, V, O extends Serializable.Options = Serializable.Options>
     return [...this];
   }
 
-  public toJSON(options?: O): Map.JSON<K, V> {
+  public toJSON(options?: Serializable.Options): Map.JSON<K, V> {
     return this.toArray().map(([key, value]) => [
       Serializable.toJSON(key, options),
       Serializable.toJSON(value, options),

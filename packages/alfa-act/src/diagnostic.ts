@@ -8,10 +8,8 @@ import type * as json from "@siteimprove/alfa-json";
 /**
  * @public
  */
-export class Diagnostic<
-    O extends json.Serializable.Options = json.Serializable.Options,
-  >
-  implements Equatable, Hashable, Serializable<Diagnostic.JSON, O>
+export class Diagnostic
+  implements Equatable, Hashable, Serializable<Diagnostic.JSON>
 {
   public static of(message: string): Diagnostic {
     return new Diagnostic(String.normalize(message, false));
@@ -39,7 +37,7 @@ export class Diagnostic<
     hash.writeString(this._message);
   }
 
-  public toJSON(options?: O): Diagnostic.JSON {
+  public toJSON(options?: Serializable.Options): Diagnostic.JSON {
     return {
       message: this._message,
     };

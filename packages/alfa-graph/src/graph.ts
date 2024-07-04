@@ -9,12 +9,12 @@ import { Set } from "@siteimprove/alfa-set";
 /**
  * @public
  */
-export class Graph<T, O extends Serializable.Options = Serializable.Options>
+export class Graph<T>
   implements
     Iterable<[T, Iterable<T>]>,
     Equatable,
     Hashable,
-    Serializable<Graph.JSON<T>, O>
+    Serializable<Graph.JSON<T>>
 {
   public static of<T>(nodes: Map<T, Set<T>>): Graph<T> {
     return new Graph(nodes);
@@ -214,7 +214,7 @@ export class Graph<T, O extends Serializable.Options = Serializable.Options>
     return [...this].map(([node, neighbors]) => [node, [...neighbors]]);
   }
 
-  public toJSON(options?: O): Graph.JSON<T> {
+  public toJSON(options?: Serializable.Options): Graph.JSON<T> {
     return this.toArray().map(([node, neighbors]) => [
       Serializable.toJSON(node, options),
       neighbors.map((node) => Serializable.toJSON(node, options)),

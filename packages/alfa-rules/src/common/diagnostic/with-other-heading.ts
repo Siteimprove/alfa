@@ -11,9 +11,7 @@ export type HeadingPosition = "previous" | "next";
 /**
  * @public
  */
-export class WithOtherHeading<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class WithOtherHeading extends Diagnostic {
   public static of(message: string): Diagnostic;
 
   public static of(
@@ -103,7 +101,7 @@ export class WithOtherHeading<
     this._otherHeading.hash(hash);
   }
 
-  public toJSON(options?: O): WithOtherHeading.JSON {
+  public toJSON(options?: Node.SerializationOptions): WithOtherHeading.JSON {
     return {
       ...super.toJSON(options),
       otherHeading: this._otherHeading.toJSON(options),

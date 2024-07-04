@@ -23,9 +23,7 @@ const { compareComparable } = Comparable;
 /**
  * @public
  */
-export class Some<T, O extends Serializable.Options = Serializable.Options>
-  implements Option<T, O>
-{
+export class Some<T> implements Option<T> {
   public static of<T>(value: T): Some<T> {
     return new Some(value);
   }
@@ -188,7 +186,7 @@ export class Some<T, O extends Serializable.Options = Serializable.Options>
     return [this._value];
   }
 
-  public toJSON(options?: O): Some.JSON<T> {
+  public toJSON(options?: Serializable.Options): Some.JSON<T> {
     return {
       type: "some",
       value: Serializable.toJSON(this._value, options),

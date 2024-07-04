@@ -9,9 +9,7 @@ import { WithName } from "./with-name.js";
 
 import type * as json from "@siteimprove/alfa-json";
 
-export class WithBoundingBox<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends WithName<O> {
+export class WithBoundingBox extends WithName {
   public static of(message: string): Diagnostic;
 
   public static of(message: string, name: string): WithName;
@@ -128,7 +126,7 @@ export class WithBoundingBox<
     this._tooCloseNeighbors.hash(hash);
   }
 
-  public toJSON(options?: O): WithBoundingBox.JSON {
+  public toJSON(options?: Node.SerializationOptions): WithBoundingBox.JSON {
     return {
       ...super.toJSON(options),
       box: this._box.toJSON(),

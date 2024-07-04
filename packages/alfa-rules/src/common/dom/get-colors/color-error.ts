@@ -29,8 +29,7 @@ interface ErrorName {
  */
 export class ColorErrors<
   out T extends keyof ErrorName = keyof ErrorName,
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+> extends Diagnostic {
   public static of(message: string): Diagnostic;
 
   public static of<T extends keyof ErrorName = keyof ErrorName>(
@@ -76,7 +75,7 @@ export class ColorErrors<
     this._errors.forEach((error) => error.hash(hash));
   }
 
-  public toJSON(options?: O): ColorErrors.JSON<T> {
+  public toJSON(options?: Node.SerializationOptions): ColorErrors.JSON<T> {
     return {
       ...super.toJSON(options),
       errors: Array.toJSON(this._errors, options),
@@ -132,8 +131,7 @@ export namespace ColorErrors {
 export abstract class ColorError<
   out T extends keyof ErrorName = keyof ErrorName,
   out K extends ErrorName[T] = ErrorName[T],
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+> extends Diagnostic {
   protected readonly _element: Element;
   protected readonly _type: T;
   protected readonly _kind: K;
@@ -178,7 +176,7 @@ export abstract class ColorError<
     hash.writeString(this._type);
   }
 
-  public toJSON(options?: O): ColorError.JSON<T, K> {
+  public toJSON(options?: Node.SerializationOptions): ColorError.JSON<T, K> {
     return {
       ...super.toJSON(options),
       element: this._element.toJSON(options),

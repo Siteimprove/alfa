@@ -17,9 +17,7 @@ const { not, test } = Predicate;
 /**
  * @public
  */
-export class Err<E, O extends Serializable.Options = Serializable.Options>
-  implements Result<never, E, O>
-{
+export class Err<E> implements Result<never, E> {
   public static of<E>(error: E): Err<E> {
     return new Err(error);
   }
@@ -191,7 +189,7 @@ export class Err<E, O extends Serializable.Options = Serializable.Options>
 
   public *[Symbol.iterator]() {}
 
-  public toJSON(options?: O): Err.JSON<E> {
+  public toJSON(options?: Serializable.Options): Err.JSON<E> {
     return {
       type: "err",
       error: Serializable.toJSON(this._error, options),

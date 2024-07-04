@@ -17,16 +17,13 @@ import { Ok } from "./ok.js";
 /**
  * @public
  */
-export interface Result<
-  T,
-  E = T,
-  O extends Serializable.Options = Serializable.Options,
-> extends Monad<T>,
+export interface Result<T, E = T>
+  extends Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
     Hashable,
-    Serializable<Result.JSON<T, E>, O> {
+    Serializable<Result.JSON<T, E>> {
   isOk(): this is Ok<T>;
   isErr(): this is Err<E>;
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
@@ -82,7 +79,7 @@ export interface Result<
   err(): Option<E>;
   tee(callback: Callback<T>): Result<T, E>;
   teeErr(callback: Callback<E>): Result<T, E>;
-  toJSON(options?: O): Result.JSON<T, E>;
+  toJSON(options?: Serializable.Options): Result.JSON<T, E>;
 }
 
 /**

@@ -103,9 +103,7 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class Languages<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class Languages extends Diagnostic {
   public static of(
     message: string,
     programmatic: Language = Language.of(Language.Primary.of("en")),
@@ -154,7 +152,7 @@ export class Languages<
     this._natural.forEach((lang) => hash.writeString(lang.primary.name));
   }
 
-  public toJSON(options?: O): Languages.JSON {
+  public toJSON(options?: Node.SerializationOptions): Languages.JSON {
     return {
       ...super.toJSON(options),
       programmatic: this._programmatic.toJSON(),

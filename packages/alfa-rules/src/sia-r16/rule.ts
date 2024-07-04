@@ -94,9 +94,7 @@ function hasRequiredValues(
 /**
  * @public
  */
-export class RoleAndRequiredAttributes<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class RoleAndRequiredAttributes extends Diagnostic {
   public static of(message: string): Diagnostic;
 
   public static of(
@@ -172,7 +170,9 @@ export class RoleAndRequiredAttributes<
     this._missingAttributes.forEach((attr) => hash.writeString(attr));
   }
 
-  public toJSON(options?: O): RoleAndRequiredAttributes.JSON {
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): RoleAndRequiredAttributes.JSON {
     return {
       ...super.toJSON(options),
       role: this._role,

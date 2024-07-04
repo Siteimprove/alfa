@@ -11,7 +11,6 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Err } from "./err.js";
 import type { Result } from "./result.js";
 
 const { not, test } = Predicate;
@@ -19,9 +18,7 @@ const { not, test } = Predicate;
 /**
  * @public
  */
-export class Ok<T, O extends Serializable.Options = Serializable.Options>
-  implements Result<T, never, O>
-{
+export class Ok<T> implements Result<T, never> {
   public static of<T>(value: T): Ok<T> {
     return new Ok(value);
   }
@@ -195,7 +192,7 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options>
     yield this._value;
   }
 
-  public toJSON(options?: O): Ok.JSON<T> {
+  public toJSON(options?: Serializable.Options): Ok.JSON<T> {
     return {
       type: "ok",
       value: Serializable.toJSON(this._value, options),

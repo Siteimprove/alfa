@@ -1,12 +1,8 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Callback } from "@siteimprove/alfa-callback";
 import type { Collection } from "@siteimprove/alfa-collection";
-import type {
-  Comparison} from "@siteimprove/alfa-comparable";
-import {
-  Comparable,
-  type Comparer
-} from "@siteimprove/alfa-comparable";
+import type { Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -23,9 +19,7 @@ const { compareComparable } = Comparable;
 /**
  * @public
  */
-export class Slice<T, O extends Serializable.Options = Serializable.Options>
-  implements Collection.Indexed<T, O>
-{
+export class Slice<T> implements Collection.Indexed<T> {
   public static of<T>(
     array: ReadonlyArray<T>,
     start: number = 0,
@@ -480,7 +474,7 @@ export class Slice<T, O extends Serializable.Options = Serializable.Options>
     return this._array.slice(this._offset, this._offset + this._length);
   }
 
-  public toJSON(options?: O): Slice.JSON<T> {
+  public toJSON(options?: Serializable.Options): Slice.JSON<T> {
     return this.toArray().map((value) => Serializable.toJSON(value, options));
   }
 

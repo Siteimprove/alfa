@@ -96,12 +96,7 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class SameNames<
-    O extends dom.Node.SerializationOptions = dom.Node.SerializationOptions,
-  >
-  extends Diagnostic<O>
-  implements Iterable<List<Element>>
-{
+export class SameNames extends Diagnostic implements Iterable<List<Element>> {
   public static of(
     message: string,
     role: Role.Name = "none",
@@ -150,7 +145,7 @@ export class SameNames<
     this._errors.forEach((element) => element.hash(hash));
   }
 
-  public toJSON(options?: O): SameNames.JSON {
+  public toJSON(options?: dom.Node.SerializationOptions): SameNames.JSON {
     return {
       ...super.toJSON(options),
       role: this._role,

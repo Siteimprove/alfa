@@ -1,14 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
-import type {
-  Declaration} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-  Text,
-} from "@siteimprove/alfa-dom";
+import type { Declaration } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
 import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -115,9 +108,7 @@ export namespace Outcomes {
 /**
  * @public
  */
-export class WithDeclaration<
-  O extends Node.SerializationOptions = Node.SerializationOptions,
-> extends Diagnostic<O> {
+export class WithDeclaration extends Diagnostic {
   public static of(message: string, declaration: Option<Declaration> = None) {
     return new WithDeclaration(message, declaration);
   }
@@ -145,7 +136,7 @@ export class WithDeclaration<
     );
   }
 
-  toJSON(options?: O): WithDeclaration.JSON {
+  toJSON(options?: Node.SerializationOptions): WithDeclaration.JSON {
     return {
       ...super.toJSON(options),
       declaration: this._declaration.toJSON(),
