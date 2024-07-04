@@ -170,7 +170,7 @@ export namespace Native {
       return {
         type: "document",
         children: await mapAsync(document.childNodes, toNode),
-        style: map(document.styleSheets, toSheet),
+        style: getStyleSheets(document),
       };
     }
 
@@ -194,8 +194,23 @@ export namespace Native {
         type: "shadow",
         mode: shadow.mode,
         children: await mapAsync(shadow.childNodes, toNode),
-        style: map(shadow.styleSheets, toSheet),
+        style: getStyleSheets(shadow),
       };
+    }
+
+    /**
+     * @privateRemarks
+     * Adopted stylesheets are assumed to be ordered after document stylesheets.
+     *
+     * {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/adoptedStyleSheets}
+     */
+    function getStyleSheets(
+      docOrShadow: globalThis.Document | globalThis.ShadowRoot,
+    ): Array<Sheet.JSON> {
+      return [
+        ...map(docOrShadow.styleSheets, toSheet),
+        ...map(docOrShadow.adoptedStyleSheets, toSheet),
+      ];
     }
 
     function toSheet(sheet: globalThis.CSSStyleSheet): Sheet.JSON {

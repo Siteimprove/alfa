@@ -27,11 +27,22 @@ import { Native } from "@siteimprove/alfa-dom/native.js";
  * { x:0, y:0, width:0, height:0 }.
  */
 
+/**
+ * Note: JSDOM is not currently able to pass constructed stylesheets to a shadow root.
+ * See https://github.com/jsdom/jsdom/issues/3645.
+ *
+ * It does support passing them to the document when script execution is enabled, so there is a test for that.
+ */
+
 async function makeJSON(
   html: string,
   options?: Native.Options,
 ): Promise<Document.JSON> {
   const { document } = new JSDOM(html).window;
+
+  // JSDOM only adds the adoptedStyleSheets property when script execution is turned on
+  // and since we don't want that by default for security reasons, we just add it ourselfes in this case.
+  document.adoptedStyleSheets = [];
 
   return Node.from(await Native.fromNode(document!, options)).toJSON();
 }
@@ -177,5 +188,36 @@ test("Native.fromNode() handles variables in shorthands", async (t) => {
         ],
       )
       .toJSON(),
+  );
+});
+
+test("Native.fromNode() handles constructed stylesheets passed to document.adoptedStyleSheets", async (t) => {
+  const dom = new JSDOM(
+    `
+<p>This will be styled using a constructed stylesheet.</p>
+
+<script>
+  const sheet = new CSSStyleSheet();
+  sheet.insertRule("p { color: green; }");
+
+  document.adoptedStyleSheets = [sheet];
+</script>
+`,
+    { runScripts: "dangerously" }, // This is safe because we control the code in the script above. DO NOT use it with code that is not under our control e.g. passed in through a function parameter.
+  );
+
+  const doc = Node.from(await Native.fromNode(dom.window.document));
+
+  t.deepEqual(
+    [...doc.style].map((sheet) => sheet.toJSON()),
+    [
+      h
+        .sheet([
+          h.rule.style("p", {
+            color: "green",
+          }),
+        ])
+        .toJSON(),
+    ],
   );
 });
