@@ -13,7 +13,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export class Lazy<T, O extends Serializable.Options = Serializable.Options> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>, O> {
+export class Lazy<T> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -37,7 +37,7 @@ export class Lazy<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     static of<T>(thunk: Thunk<T>): Lazy<T>;
     // (undocumented)
-    toJSON(options?: O): Lazy.JSON<T>;
+    toJSON(options?: Serializable.Options): Lazy.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

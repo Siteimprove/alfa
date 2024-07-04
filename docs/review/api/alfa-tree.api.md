@@ -15,7 +15,7 @@ import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 
 // @public
-export abstract class Node<F extends Flags.allFlags, T extends string = string, O extends json.Serializable.Options = json.Serializable.Options> implements Iterable<Node<F>>, Equatable, Hashable, json.Serializable<Node.JSON<T>, O> {
+export abstract class Node<F extends Flags.allFlags, T extends string = string> implements Iterable<Node<F>>, Equatable, Hashable, json.Serializable<Node.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Node<F>>;
     protected constructor(children: Array<Node<F>>, type: T, externalId?: string, serializationId?: string, extraData?: any);
@@ -96,7 +96,7 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string, 
     // (undocumented)
     siblings(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
-    toJSON(options?: O): Node.JSON<T>;
+    toJSON(options?: json.Serializable.Options): Node.JSON<T>;
     // (undocumented)
     get type(): T;
     // (undocumented)

@@ -20,7 +20,7 @@ import type { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export class Slice<T, O extends Serializable.Options = Serializable.Options> implements Collection.Indexed<T, O> {
+export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -158,7 +158,7 @@ export class Slice<T, O extends Serializable.Options = Serializable.Options> imp
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(options?: O): Slice.JSON<T>;
+    toJSON(options?: Serializable.Options): Slice.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

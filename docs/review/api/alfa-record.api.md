@@ -13,7 +13,7 @@ import type { Reducer } from '@siteimprove/alfa-reducer';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-class Record_2<T, O extends Serializable.Options = Serializable.Options> implements Foldable<Record_2.Value<T>>, Iterable_2<Record_2.Entry<T>>, Equatable, Serializable<Record_2.JSON<T>, O> {
+class Record_2<T> implements Foldable<Record_2.Value<T>>, Iterable_2<Record_2.Entry<T>>, Equatable, Serializable<Record_2.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Record_2.Entry<T>>;
     // (undocumented)
@@ -41,7 +41,7 @@ class Record_2<T, O extends Serializable.Options = Serializable.Options> impleme
     // (undocumented)
     toArray(): Array<Record_2.Entry<T>>;
     // (undocumented)
-    toJSON(options?: O): Record_2.JSON<T>;
+    toJSON(options?: Serializable.Options): Record_2.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

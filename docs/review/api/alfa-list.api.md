@@ -86,7 +86,7 @@ export class Leaf<T> implements Node<T> {
 }
 
 // @public (undocumented)
-export class List<T, O extends Serializable.Options = Serializable.Options> implements Collection.Indexed<T, O> {
+export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -222,7 +222,7 @@ export class List<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(options?: O): List.JSON<T>;
+    toJSON(options?: Serializable.Options): List.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

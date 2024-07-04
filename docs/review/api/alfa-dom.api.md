@@ -770,7 +770,7 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>, sarif.Serializable<sarif.Location> {
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T, externalId?: string, serializationId?: string, extraData?: any);
     // (undocumented)
     equals(value: Node): boolean;
@@ -915,7 +915,7 @@ export namespace Node {
     // (undocumented)
     export interface SerializationOptions extends json.Serializable.Options {
         // (undocumented)
-        device: Device;
+        device?: Device;
     }
     // (undocumented)
     export class Traversal extends Flags<Traversal.Flag> {
