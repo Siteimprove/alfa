@@ -460,7 +460,7 @@ export namespace Style {
     isVisibleShadow,
   } = element;
 
-  export const { isRendered, isVisible } = node;
+  export const { isRendered, isVisible, isScrolledBehind } = node;
 }
 
 function parseLonghand<N extends Longhands.Name>(
