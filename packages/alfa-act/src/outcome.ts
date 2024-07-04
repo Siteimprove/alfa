@@ -22,7 +22,6 @@ import type { Rule } from "./rule.js";
  * Q: questions' metadata type
  * S: possible types of questions' subject.
  * V: type of outcome value
- * O: type of serialization options
  */
 export abstract class Outcome<
     I,
