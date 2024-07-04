@@ -21,7 +21,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
-export class Err<E, O extends Serializable.Options = Serializable.Options> implements Result<never, E, O> {
+export class Err<E> implements Result<never, E> {
     // (undocumented)
     [Symbol.iterator](): Generator<never, void, unknown>;
     // (undocumented)
@@ -101,7 +101,7 @@ export class Err<E, O extends Serializable.Options = Serializable.Options> imple
     // (undocumented)
     teeErr(callback: Callback<E>): Err<E>;
     // (undocumented)
-    toJSON(options?: O): Err.JSON<E>;
+    toJSON(options?: Serializable.Options): Err.JSON<E>;
     // (undocumented)
     toString(): string;
 }
@@ -124,7 +124,7 @@ export namespace Err {
 }
 
 // @public (undocumented)
-export class Ok<T, O extends Serializable.Options = Serializable.Options> implements Result<T, never, O> {
+export class Ok<T> implements Result<T, never> {
     // (undocumented)
     [Symbol.iterator](): Generator<T, void, unknown>;
     // (undocumented)
@@ -204,7 +204,7 @@ export class Ok<T, O extends Serializable.Options = Serializable.Options> implem
     // (undocumented)
     teeErr(): Ok<T>;
     // (undocumented)
-    toJSON(options?: O): Ok.JSON<T>;
+    toJSON(options?: Serializable.Options): Ok.JSON<T>;
     // (undocumented)
     toString(): string;
 }
@@ -227,7 +227,7 @@ export namespace Ok {
 }
 
 // @public (undocumented)
-export interface Result<T, E = T, O extends Serializable.Options = Serializable.Options> extends Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>, O> {
+export interface Result<T, E = T> extends Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Result.JSON<T, E>> {
     // (undocumented)
     and<U, F>(result: Result<U, F>): Result<U, E | F>;
     // (undocumented)
@@ -303,7 +303,7 @@ export interface Result<T, E = T, O extends Serializable.Options = Serializable.
     // (undocumented)
     teeErr(callback: Callback<E>): Result<T, E>;
     // (undocumented)
-    toJSON(options?: O): Result.JSON<T, E>;
+    toJSON(options?: Serializable.Options): Result.JSON<T, E>;
 }
 
 // @public (undocumented)

@@ -76,7 +76,7 @@ export interface Collection<T> extends Functor<T>, Applicative<T>, Monad<T>, Fol
 // @public (undocumented)
 export namespace Collection {
     // (undocumented)
-    export interface Indexed<T, O extends Serializable.Options = Serializable.Options> extends Collection<T>, Iterable_2<T>, Comparable<Iterable_2<T>>, Serializable<Indexed.JSON<T>, O> {
+    export interface Indexed<T> extends Collection<T>, Iterable_2<T>, Comparable<Iterable_2<T>>, Serializable<Indexed.JSON<T>> {
         // (undocumented)
         append(value: T): Indexed<T>;
         // (undocumented)
@@ -206,7 +206,7 @@ export namespace Collection {
         export type JSON<T> = Array_2<Serializable.ToJSON<T>>;
     }
     // (undocumented)
-    export interface Keyed<K, V, O extends Serializable.Options = Serializable.Options> extends Collection<V>, Iterable_2<[K, V]>, Serializable<Keyed.JSON<K, V>, O> {
+    export interface Keyed<K, V> extends Collection<V>, Iterable_2<[K, V]>, Serializable<Keyed.JSON<K, V>> {
         // (undocumented)
         apply<U>(mapper: Keyed<K, Mapper<V, U>>): Keyed<K, U>;
         // (undocumented)
@@ -275,7 +275,7 @@ export namespace Collection {
         ]>;
     }
     // (undocumented)
-    export interface Unkeyed<T, O extends Serializable.Options = Serializable.Options> extends Collection<T>, Iterable_2<T>, Serializable<Unkeyed.JSON<T>, O> {
+    export interface Unkeyed<T> extends Collection<T>, Iterable_2<T>, Serializable<Unkeyed.JSON<T>> {
         // (undocumented)
         add(value: T): Unkeyed<T>;
         // (undocumented)

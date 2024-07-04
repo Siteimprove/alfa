@@ -24,9 +24,9 @@ namespace JSON_2 {
 export { JSON_2 as JSON }
 
 // @public (undocumented)
-export interface Serializable<T extends JSON_2 = JSON_2, O extends Serializable.Options = Serializable.Options> {
+export interface Serializable<T extends JSON_2 = JSON_2> {
     // (undocumented)
-    toJSON(options?: O): T;
+    toJSON(options?: Serializable.Options): T;
 }
 
 // @public (undocumented)
@@ -41,9 +41,9 @@ export namespace Serializable {
     // (undocumented)
     export type ToJSON<T> = T extends Serializable<infer U> ? U : T extends JSON_2 ? T : JSON_2;
     // (undocumented)
-    export function toJSON<T extends JSON_2, O extends Serializable.Options = Serializable.Options>(value: Serializable<T>, options?: O): T;
+    export function toJSON<T extends JSON_2>(value: Serializable<T>, options?: Serializable.Options): T;
     // (undocumented)
-    export function toJSON<T, O extends Serializable.Options = Serializable.Options>(value: T, options?: O): ToJSON<T>;
+    export function toJSON<T>(value: T, options?: Serializable.Options): ToJSON<T>;
     // (undocumented)
     export enum Verbosity {
         // (undocumented)

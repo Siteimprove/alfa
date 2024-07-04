@@ -23,7 +23,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Set as Set_2 } from '@siteimprove/alfa-set';
 
 // @public (undocumented)
-export class Cons<T, O extends Serializable.Options = Serializable.Options> implements Sequence<T, O> {
+export class Cons<T> implements Sequence<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -169,7 +169,7 @@ export class Cons<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(options?: O): Cons.JSON<T>;
+    toJSON(options?: Serializable.Options): Cons.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -206,7 +206,7 @@ export namespace Nil {
 }
 
 // @public (undocumented)
-export interface Sequence<T, O extends Serializable.Options = Serializable.Options> extends Collection.Indexed<T, O> {
+export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     append(value: T): Sequence<T>;
     // (undocumented)
@@ -328,7 +328,7 @@ export interface Sequence<T, O extends Serializable.Options = Serializable.Optio
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(options?: O): Sequence.JSON<T>;
+    toJSON(options?: Serializable.Options): Sequence.JSON<T>;
     // (undocumented)
     trim(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)

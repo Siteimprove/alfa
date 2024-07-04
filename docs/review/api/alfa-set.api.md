@@ -17,7 +17,7 @@ import type { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-class Set_2<T, O extends Serializable.Options = Serializable.Options> implements Collection.Unkeyed<T, O> {
+class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -95,7 +95,7 @@ class Set_2<T, O extends Serializable.Options = Serializable.Options> implements
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(options?: O): Set_2.JSON<T>;
+    toJSON(options?: Serializable.Options): Set_2.JSON<T>;
     // (undocumented)
     toString(): string;
 }

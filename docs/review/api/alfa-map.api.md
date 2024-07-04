@@ -82,7 +82,7 @@ export class Leaf<K, V> implements Node<K, V> {
 }
 
 // @public (undocumented)
-class Map_2<K, V, O extends Serializable.Options = Serializable.Options> implements Collection.Keyed<K, V> {
+class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
     apply<U>(mapper: Map_2<K, Mapper<V, U>>): Map_2<K, U>;
@@ -161,7 +161,7 @@ class Map_2<K, V, O extends Serializable.Options = Serializable.Options> impleme
     // (undocumented)
     toArray(): Array_2<[K, V]>;
     // (undocumented)
-    toJSON(options?: O): Map_2.JSON<K, V>;
+    toJSON(options?: Serializable.Options): Map_2.JSON<K, V>;
     // (undocumented)
     toString(): string;
     // (undocumented)

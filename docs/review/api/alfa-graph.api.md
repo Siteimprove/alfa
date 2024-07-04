@@ -14,7 +14,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Set as Set_2 } from '@siteimprove/alfa-set';
 
 // @public (undocumented)
-export class Graph<T, O extends Serializable.Options = Serializable.Options> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Hashable, Serializable<Graph.JSON<T>, O> {
+export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Hashable, Serializable<Graph.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[T, Iterable_2<T>]>;
     // (undocumented)
@@ -58,7 +58,7 @@ export class Graph<T, O extends Serializable.Options = Serializable.Options> imp
     // (undocumented)
     toArray(): Array<[T, Array<T>]>;
     // (undocumented)
-    toJSON(options?: O): Graph.JSON<T>;
+    toJSON(options?: Serializable.Options): Graph.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)
