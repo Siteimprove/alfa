@@ -1,8 +1,7 @@
 import type { Applicative } from "@siteimprove/alfa-applicative";
 import type { Array } from "@siteimprove/alfa-array";
 import type { Callback } from "@siteimprove/alfa-callback";
-import type { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { type Comparer } from "@siteimprove/alfa-comparable";
+import type { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Foldable } from "@siteimprove/alfa-foldable";
 import type { Functor } from "@siteimprove/alfa-functor";
