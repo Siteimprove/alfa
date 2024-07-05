@@ -9,7 +9,7 @@ import type { Callback } from '@siteimprove/alfa-callback';
 import type { Collection } from '@siteimprove/alfa-collection';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
-import type { Comparison } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
 import type { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type { Mapper } from '@siteimprove/alfa-mapper';

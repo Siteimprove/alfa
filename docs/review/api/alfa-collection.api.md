@@ -8,7 +8,7 @@ import type { Applicative } from '@siteimprove/alfa-applicative';
 import type { Array as Array_2 } from '@siteimprove/alfa-array';
 import type { Callback } from '@siteimprove/alfa-callback';
 import type { Comparable } from '@siteimprove/alfa-comparable';
-import { Comparer } from '@siteimprove/alfa-comparable';
+import type { Comparer } from '@siteimprove/alfa-comparable';
 import type { Comparison } from '@siteimprove/alfa-comparable';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import type { Foldable } from '@siteimprove/alfa-foldable';
