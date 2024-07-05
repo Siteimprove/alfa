@@ -22,7 +22,6 @@ import type { RGB } from '@siteimprove/alfa-css';
 import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
-import { Serializable } from '@siteimprove/alfa-json';
 import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
@@ -118,7 +117,7 @@ export namespace Flattened {
 }
 
 // @public
-const FlattenedRules: Sequence<Flattened.Rule, Serializable.Options>;
+const FlattenedRules: Sequence<Flattened.Rule>;
 export default FlattenedRules;
 
 // @public (undocumented)
@@ -340,7 +339,7 @@ export namespace Question {
 export type Rules = typeof Rules;
 
 // @public
-export const Rules: Record_2<typeof rules, Serializable.Options>;
+export const Rules: Record_2<typeof rules>;
 
 // @public (undocumented)
 export class Scope<S extends string = string> extends Tag<"scope"> {

@@ -170,9 +170,11 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     this._missingAttributes.forEach((attr) => hash.writeString(attr));
   }
 
-  public toJSON(): RoleAndRequiredAttributes.JSON {
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): RoleAndRequiredAttributes.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       role: this._role,
       attributes: {
         required: Array.copy(this._requiredAttributes),

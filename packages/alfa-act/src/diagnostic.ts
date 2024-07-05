@@ -37,7 +37,7 @@ export class Diagnostic
     hash.writeString(this._message);
   }
 
-  public toJSON(): Diagnostic.JSON {
+  public toJSON(options?: Serializable.Options): Diagnostic.JSON {
     return {
       message: this._message,
     };

@@ -10,14 +10,14 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 /**
  * @public
  */
-export class Lazy<T, O extends Serializable.Options = Serializable.Options>
+export class Lazy<T>
   implements
     Functor<T>,
     Applicative<T>,
     Monad<T>,
     Iterable<T>,
     Equatable,
-    Serializable<Lazy.JSON<T>, O>
+    Serializable<Lazy.JSON<T>>
 {
   public static of<T>(thunk: Thunk<T>): Lazy<T> {
     return new Lazy(Trampoline.delay(thunk));
@@ -95,7 +95,7 @@ export class Lazy<T, O extends Serializable.Options = Serializable.Options>
     return () => this.force();
   }
 
-  public toJSON(options?: O): Lazy.JSON<T> {
+  public toJSON(options?: Serializable.Options): Lazy.JSON<T> {
     return Serializable.toJSON(this.force(), options);
   }
 

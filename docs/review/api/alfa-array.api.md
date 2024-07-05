@@ -134,7 +134,7 @@ namespace Array_2 {
     // (undocumented)
     function subtract<T>(array: ReadonlyArray<T>, ...iterables: Array_2<Iterable_2<T>>): Array_2<T>;
     // (undocumented)
-    function toJSON<T, O extends Serializable.Options = Serializable.Options>(array: ReadonlyArray<T>, options?: O): Array_2<Serializable.ToJSON<T>>;
+    function toJSON<T>(array: ReadonlyArray<T>, options?: Serializable.Options): Array_2<Serializable.ToJSON<T>>;
     // (undocumented)
     function zip<T, U = T>(array: ReadonlyArray<T>, iterable: Iterable_2<U>): Array_2<[T, U]>;
 }

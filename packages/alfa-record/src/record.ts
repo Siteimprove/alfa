@@ -13,12 +13,12 @@ import type * as json from "@siteimprove/alfa-json";
 /**
  * @public
  */
-export class Record<T, O extends Serializable.Options = Serializable.Options>
+export class Record<T>
   implements
     Foldable<Record.Value<T>>,
     Iterable<Record.Entry<T>>,
     Equatable,
-    Serializable<Record.JSON<T>, O>
+    Serializable<Record.JSON<T>>
 {
   public static of<T>(properties: T): Record<T> {
     const keys = Object.keys(properties ?? {}).sort() as Array<Record.Key<T>>;
@@ -126,7 +126,7 @@ export class Record<T, O extends Serializable.Options = Serializable.Options>
     return [...this];
   }
 
-  public toJSON(options?: O): Record.JSON<T> {
+  public toJSON(options?: Serializable.Options): Record.JSON<T> {
     const json: { [key: string]: json.JSON } = {};
 
     for (const [key, value] of this) {

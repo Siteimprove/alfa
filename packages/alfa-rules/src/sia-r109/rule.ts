@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import type { Document} from "@siteimprove/alfa-dom";
+import type { Document, Node } from "@siteimprove/alfa-dom";
 import { Element } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Language } from "@siteimprove/alfa-iana";
@@ -152,9 +152,9 @@ export class Languages extends Diagnostic {
     this._natural.forEach((lang) => hash.writeString(lang.primary.name));
   }
 
-  public toJSON(): Languages.JSON {
+  public toJSON(options?: Node.SerializationOptions): Languages.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       programmatic: this._programmatic.toJSON(),
       natural: this._natural.toJSON(),
     };

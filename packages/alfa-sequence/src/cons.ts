@@ -1,12 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Callback } from "@siteimprove/alfa-callback";
 import type { Collection } from "@siteimprove/alfa-collection";
-import type {
-  Comparison} from "@siteimprove/alfa-comparable";
-import {
-  Comparable,
-  type Comparer
-} from "@siteimprove/alfa-comparable";
+import { Comparable, type Comparer, type Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -29,9 +24,7 @@ const { compareComparable } = Comparable;
 /**
  * @public
  */
-export class Cons<T, O extends Serializable.Options = Serializable.Options>
-  implements Sequence<T, O>
-{
+export class Cons<T> implements Sequence<T> {
   public static of<T>(
     head: T,
     tail: Lazy<Sequence<T>> = Lazy.force(Nil),
@@ -797,7 +790,7 @@ export class Cons<T, O extends Serializable.Options = Serializable.Options>
     }
   }
 
-  public toJSON(options?: O): Cons.JSON<T> {
+  public toJSON(options?: Serializable.Options): Cons.JSON<T> {
     const json: Cons.JSON<T> = [];
 
     let next: Cons<T> = this;

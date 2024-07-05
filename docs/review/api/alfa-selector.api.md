@@ -100,7 +100,7 @@ export namespace Attribute {
         CaseSensitive = "s"
     }
     const // @internal (undocumented)
-    parse: Parser<Slice<Token, Serializable.Options>, Attribute, string, []>;
+    parse: Parser<Slice<Token>, Attribute, string, []>;
 }
 
 // @public (undocumented)
@@ -131,7 +131,7 @@ export namespace Class {
     export interface JSON extends WithName.JSON<"class"> {
     }
     const // @internal (undocumented)
-    parse: Parser<Slice<Token, Serializable.Options>, Class, string, []>;
+    parse: Parser<Slice<Token>, Class, string, []>;
 }
 
 // @public (undocumented)
@@ -193,7 +193,7 @@ export namespace Complex {
         right: Simple.JSON | Compound.JSON;
     }
     const // @internal (undocumented)
-    parseComplex: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token, Serializable.Options>, Simple | Compound | Complex, string, []>;
+    parseComplex: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Simple | Compound | Complex, string, []>;
 }
 
 // @public (undocumented)
@@ -230,7 +230,7 @@ export namespace Compound {
         selectors: Array_2<Simple.JSON>;
     }
     const // @internal (undocumented)
-    parseCompound: (parseSelector: () => Parser<Slice<Token>, Absolute, string>) => Parser<Slice<Token, Serializable.Options>, Simple | Compound, string, []>;
+    parseCompound: (parseSelector: () => Parser<Slice<Token>, Absolute, string>) => Parser<Slice<Token>, Simple | Compound, string, []>;
 }
 
 // @public (undocumented)
@@ -322,7 +322,7 @@ export namespace Id {
     export interface JSON extends WithName.JSON<"id"> {
     }
     const // @internal (undocumented)
-    parse: Parser<Slice<Token, Serializable.Options>, Id, string, []>;
+    parse: Parser<Slice<Token>, Id, string, []>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Item" needs to be exported by the entry point index.d.ts
@@ -357,7 +357,7 @@ export namespace List {
         selectors: Array_2<Serializable.ToJSON<T>>;
     }
     const // @internal (undocumented)
-    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token, Serializable.Options>, List<Simple | Compound | Complex>, string, []>;
+    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, List<Simple | Compound | Complex>, string, []>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Active" needs to be exported by the entry point index.d.ts
@@ -500,7 +500,7 @@ export namespace Simple {
     // (undocumented)
     export type JSON = Type.JSON | Universal.JSON | Attribute.JSON | Class.JSON | Id.JSON | PseudoClass.JSON | PseudoElement.JSON;
     const // @internal (undocumented)
-    parse: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token, Serializable.Options>, Simple, string, []>;
+    parse: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Simple, string, []>;
 }
 
 // @public (undocumented)
@@ -584,7 +584,7 @@ export namespace Type {
         namespace: string | null;
     }
     const // @internal (undocumented)
-    parse: Parser<Slice<Token, Serializable.Options>, Type, string, []>;
+    parse: Parser<Slice<Token>, Type, string, []>;
 }
 
 // @public (undocumented)
@@ -619,7 +619,7 @@ export namespace Universal {
         namespace: string | null;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token, Serializable.Options>, Universal, string, []>;
+    parse: Parser<Slice<Token>, Universal, string, []>;
 }
 
 // (No @packageDocumentation comment for this package)

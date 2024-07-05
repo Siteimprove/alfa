@@ -1,14 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
-import type {
-  Declaration} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-  Text,
-} from "@siteimprove/alfa-dom";
+import type { Declaration } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
 import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -143,9 +136,9 @@ export class WithDeclaration extends Diagnostic {
     );
   }
 
-  toJSON(): WithDeclaration.JSON {
+  toJSON(options?: Node.SerializationOptions): WithDeclaration.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       declaration: this._declaration.toJSON(),
     };
   }

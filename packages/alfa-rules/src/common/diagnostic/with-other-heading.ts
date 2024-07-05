@@ -1,5 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import type { Element } from "@siteimprove/alfa-dom";
+import type { Element, Node } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 import type { Option } from "@siteimprove/alfa-option";
 
@@ -101,10 +101,10 @@ export class WithOtherHeading extends Diagnostic {
     this._otherHeading.hash(hash);
   }
 
-  public toJSON(): WithOtherHeading.JSON {
+  public toJSON(options?: Node.SerializationOptions): WithOtherHeading.JSON {
     return {
-      ...super.toJSON(),
-      otherHeading: this._otherHeading.toJSON(),
+      ...super.toJSON(options),
+      otherHeading: this._otherHeading.toJSON(options),
       currentHeadingLevel: this._currentLevel,
       otherHeadingLevel: this._otherLevel,
       otherPosition: this._otherPosition,

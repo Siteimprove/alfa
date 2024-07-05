@@ -5,8 +5,7 @@ import { Cascade } from "@siteimprove/alfa-cascade";
 import { Length } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Device } from "@siteimprove/alfa-device";
-import type {
-  Rule as CSSRule} from "@siteimprove/alfa-dom";
+import type { Rule as CSSRule } from "@siteimprove/alfa-dom";
 import {
   Document,
   Element,
@@ -617,11 +616,11 @@ export class ClippingAncestors extends Diagnostic {
     this._horizontal.hash(hash);
   }
 
-  public toJSON(): ClippingAncestors.JSON {
+  public toJSON(options?: Node.SerializationOptions): ClippingAncestors.JSON {
     return {
-      ...super.toJSON(),
-      horizontal: this._horizontal.toJSON(),
-      vertical: this._vertical.toJSON(),
+      ...super.toJSON(options),
+      horizontal: this._horizontal.toJSON(options),
+      vertical: this._vertical.toJSON(options),
     };
   }
 }

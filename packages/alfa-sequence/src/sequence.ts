@@ -3,9 +3,8 @@ import type { Callback } from "@siteimprove/alfa-callback";
 import type { Collection } from "@siteimprove/alfa-collection";
 import type {
   Comparable,
-  Comparison} from "@siteimprove/alfa-comparable";
-import {
-  type Comparer
+  Comparer,
+  Comparison,
 } from "@siteimprove/alfa-comparable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
@@ -22,10 +21,7 @@ import { Nil } from "./nil.js";
 /**
  * @public
  */
-export interface Sequence<
-  T,
-  O extends Serializable.Options = Serializable.Options,
-> extends Collection.Indexed<T, O> {
+export interface Sequence<T> extends Collection.Indexed<T> {
   isEmpty(): this is Sequence<never>;
   forEach(callback: Callback<T, void, [index: number]>): void;
   map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
@@ -115,7 +111,7 @@ export interface Sequence<
   ): Comparison;
   groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
-  toJSON(options?: O): Sequence.JSON<T>;
+  toJSON(options?: Serializable.Options): Sequence.JSON<T>;
 }
 
 /**

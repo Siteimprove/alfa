@@ -1,5 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import type { Element } from "@siteimprove/alfa-dom";
+import type { Element, Node } from "@siteimprove/alfa-dom";
 import { Either } from "@siteimprove/alfa-either";
 import type { Hash } from "@siteimprove/alfa-hash";
 import type { Rectangle } from "@siteimprove/alfa-rectangle";
@@ -126,12 +126,12 @@ export class WithBoundingBox extends WithName {
     this._tooCloseNeighbors.hash(hash);
   }
 
-  public toJSON(): WithBoundingBox.JSON {
+  public toJSON(options?: Node.SerializationOptions): WithBoundingBox.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       box: this._box.toJSON(),
       condition: this._condition.toJSON(),
-      tooCloseNeighbors: this._tooCloseNeighbors.toJSON(),
+      tooCloseNeighbors: this._tooCloseNeighbors.toJSON(options),
     };
   }
 }

@@ -42,7 +42,7 @@ export abstract class Node<T extends string = string>
   extends tree.Node<Node.Traversal.Flag, T>
   implements
     earl.Serializable<Node.EARL>,
-    json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>,
+    json.Serializable<tree.Node.JSON<T>>,
     sarif.Serializable<sarif.Location>
 {
   protected constructor(
@@ -339,7 +339,7 @@ export namespace Node {
   export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
   export interface SerializationOptions extends json.Serializable.Options {
-    device: Device;
+    device?: Device;
   }
 
   export interface EARL extends earl.EARL {

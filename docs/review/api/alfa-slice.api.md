@@ -9,7 +9,7 @@ import type { Callback } from '@siteimprove/alfa-callback';
 import type { Collection } from '@siteimprove/alfa-collection';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
-import type { Comparison } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
 import type { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type { Mapper } from '@siteimprove/alfa-mapper';
@@ -20,7 +20,7 @@ import type { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
-export class Slice<T, O extends Serializable.Options = Serializable.Options> implements Collection.Indexed<T, O> {
+export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -158,7 +158,7 @@ export class Slice<T, O extends Serializable.Options = Serializable.Options> imp
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(options?: O): Slice.JSON<T>;
+    toJSON(options?: Serializable.Options): Slice.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

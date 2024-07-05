@@ -9,7 +9,7 @@ import type { Callback } from '@siteimprove/alfa-callback';
 import type { Collection } from '@siteimprove/alfa-collection';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
-import type { Comparison } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import type { Functor } from '@siteimprove/alfa-functor';
 import type { Hash } from '@siteimprove/alfa-hash';
@@ -86,7 +86,7 @@ export class Leaf<T> implements Node<T> {
 }
 
 // @public (undocumented)
-export class List<T, O extends Serializable.Options = Serializable.Options> implements Collection.Indexed<T, O> {
+export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -222,7 +222,7 @@ export class List<T, O extends Serializable.Options = Serializable.Options> impl
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(options?: O): List.JSON<T>;
+    toJSON(options?: Serializable.Options): List.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

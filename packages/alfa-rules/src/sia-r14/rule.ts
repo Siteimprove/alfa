@@ -222,9 +222,9 @@ export class LabelAndName extends Diagnostic {
     hash.writeString(this._textContent);
   }
 
-  public toJSON(): LabelAndName.JSON {
+  public toJSON(options?: Node.SerializationOptions): LabelAndName.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       textContent: this._textContent,
       name: this._name,
     };

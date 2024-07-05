@@ -952,7 +952,7 @@ export namespace Token {
         }
     }
     const // (undocumented)
-    parseInteger: Parser_2<Slice<Token, Serializable.Options>, Integer, string, []>;
+    parseInteger: Parser_2<Slice<Token>, Integer, string, []>;
     // (undocumented)
     export class Decimal implements Equatable, Serializable<Decimal.JSON> {
         // (undocumented)
@@ -996,7 +996,7 @@ export namespace Token {
         get value(): number;
     }
     const // (undocumented)
-    parseDecimal: Parser_2<Slice<Token, Serializable.Options>, Decimal, string, []>;
+    parseDecimal: Parser_2<Slice<Token>, Decimal, string, []>;
     // (undocumented)
     export namespace Double {
         // (undocumented)
@@ -1037,7 +1037,7 @@ export namespace Token {
         }
     }
     const // (undocumented)
-    parseDouble: Parser_2<Slice<Token, Serializable.Options>, Double, string, []>;
+    parseDouble: Parser_2<Slice<Token>, Double, string, []>;
     // (undocumented)
     export function isCharacter(value: unknown): value is Character;
     // (undocumented)
@@ -1045,7 +1045,7 @@ export namespace Token {
     // (undocumented)
     export function isDecimal(value: unknown): value is Decimal;
     const // (undocumented)
-    parseString: Parser_2<Slice<Token, Serializable.Options>, String, string, []>;
+    parseString: Parser_2<Slice<Token>, String, string, []>;
     // (undocumented)
     export function isDouble(value: unknown): value is Double;
     // (undocumented)
@@ -1053,7 +1053,7 @@ export namespace Token {
     // (undocumented)
     export function isName(value: unknown): value is Name;
     const // (undocumented)
-    parseComment: Parser_2<Slice<Token, Serializable.Options>, Comment, string, []>;
+    parseComment: Parser_2<Slice<Token>, Comment, string, []>;
     // (undocumented)
     export function isString(value: unknown): value is String;
     // (undocumented)
@@ -1076,7 +1076,7 @@ export namespace Token {
         get value(): string;
     }
     const // (undocumented)
-    parseName: (query?: string | Predicate<Name>) => Parser_2<Slice<Token, Serializable.Options>, Name, string, []>;
+    parseName: (query?: string | Predicate<Name>) => Parser_2<Slice<Token>, Name, string, []>;
     // (undocumented)
     export namespace Name {
         // (undocumented)
@@ -1119,7 +1119,7 @@ export namespace Token {
         }
     }
     const // (undocumented)
-    parseCharacter: (query?: string | Predicate<Character>) => Parser_2<Slice<Token, Serializable.Options>, Character, string, []>;
+    parseCharacter: (query?: string | Predicate<Character>) => Parser_2<Slice<Token>, Character, string, []>;
 }
 
 // @public (undocumented)

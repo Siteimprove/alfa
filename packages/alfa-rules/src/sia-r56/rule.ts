@@ -145,11 +145,11 @@ export class SameNames extends Diagnostic implements Iterable<List<Element>> {
     this._errors.forEach((element) => element.hash(hash));
   }
 
-  public toJSON(): SameNames.JSON {
+  public toJSON(options?: dom.Node.SerializationOptions): SameNames.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       role: this._role,
-      errors: Array.toJSON(this._errors),
+      errors: Array.toJSON(this._errors, options),
     };
   }
 }

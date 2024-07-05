@@ -1,6 +1,6 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
-import type { Element } from "@siteimprove/alfa-dom";
+import type { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -75,8 +75,11 @@ export class ColorErrors<
     this._errors.forEach((error) => error.hash(hash));
   }
 
-  public toJSON(): ColorErrors.JSON<T> {
-    return { ...super.toJSON(), errors: Array.toJSON(this._errors) };
+  public toJSON(options?: Node.SerializationOptions): ColorErrors.JSON<T> {
+    return {
+      ...super.toJSON(options),
+      errors: Array.toJSON(this._errors, options),
+    };
   }
 }
 
@@ -173,10 +176,10 @@ export abstract class ColorError<
     hash.writeString(this._type);
   }
 
-  public toJSON(): ColorError.JSON<T, K> {
+  public toJSON(options?: Node.SerializationOptions): ColorError.JSON<T, K> {
     return {
-      ...super.toJSON(),
-      element: this._element.toJSON(),
+      ...super.toJSON(options),
+      element: this._element.toJSON(options),
       type: this._type,
       kind: this._kind,
     };

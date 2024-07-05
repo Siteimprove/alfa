@@ -1,4 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import type { Node } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Map } from "@siteimprove/alfa-map";
 
@@ -53,11 +54,11 @@ export class MatchingClasses extends Diagnostic {
     this._matchingNonTargets.hash(hash);
   }
 
-  public toJSON(): MatchingClasses.JSON {
+  public toJSON(options?: Node.SerializationOptions): MatchingClasses.JSON {
     return {
-      ...super.toJSON(),
-      matchingTargets: this._matchingTargets.toJSON(),
-      matchingNonTargets: this._matchingNonTargets.toJSON(),
+      ...super.toJSON(options),
+      matchingTargets: this._matchingTargets.toJSON(options),
+      matchingNonTargets: this._matchingNonTargets.toJSON(options),
     };
   }
 }

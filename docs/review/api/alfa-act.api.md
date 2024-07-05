@@ -61,7 +61,7 @@ export class Diagnostic implements Equatable, Hashable, Serializable<Diagnostic.
     // (undocumented)
     static of(message: string): Diagnostic;
     // (undocumented)
-    toJSON(): Diagnostic.JSON;
+    toJSON(options?: Serializable.Options): Diagnostic.JSON;
 }
 
 // @public (undocumented)
@@ -99,7 +99,7 @@ export type Oracle<INPUT, TARGET extends Hashable, QUESTION extends Question.Met
 }[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION][1]>>;
 
 // @public
-export abstract class Outcome<I, T extends Hashable, Q extends Question.Metadata = {}, S = T, V extends Outcome.Value = Outcome.Value, O extends json.Serializable.Options = json.Serializable.Options> implements Equatable, Hashable, json.Serializable<Outcome.JSON<V>, O>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
+export abstract class Outcome<I, T extends Hashable, Q extends Question.Metadata = {}, S = T, V extends Outcome.Value = Outcome.Value> implements Equatable, Hashable, json.Serializable<Outcome.JSON<V>>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
     protected constructor(outcome: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
     // (undocumented)
     equals<I, T extends Hashable, Q extends Question.Metadata, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
@@ -122,7 +122,7 @@ export abstract class Outcome<I, T extends Hashable, Q extends Question.Metadata
     // (undocumented)
     toEARL(): Outcome.EARL;
     // (undocumented)
-    toJSON(options?: O): Outcome.JSON<V>;
+    toJSON(options?: json.Serializable.Options): Outcome.JSON<V>;
     // (undocumented)
     abstract toSARIF(): sarif.Result;
 }
@@ -141,7 +141,7 @@ export namespace Outcome {
     // Warning: (ae-incompatible-release-tags) The symbol "CantTell" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
-    export class CantTell<I, T extends Hashable, Q extends Question.Metadata = {}, S = T, O extends json.Serializable.Options = json.Serializable.Options> extends Outcome<I, T, Q, S, Value.CantTell> {
+    export class CantTell<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.CantTell> {
         // (undocumented)
         get diagnostic(): Diagnostic;
         // (undocumented)
@@ -157,7 +157,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): CantTell.EARL;
         // (undocumented)
-        toJSON(options?: O): CantTell.JSON<T>;
+        toJSON(options?: json.Serializable.Options): CantTell.JSON<T>;
         // (undocumented)
         toSARIF(): sarif.Result;
     }
@@ -204,7 +204,7 @@ export namespace Outcome {
     // Warning: (ae-incompatible-release-tags) The symbol "Failed" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
-    export class Failed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T, O extends json.Serializable.Options = json.Serializable.Options> extends Outcome<I, T, Q, S, Value.Failed, O> {
+    export class Failed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Failed> {
         // (undocumented)
         equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Failed<I, T, Q, S>): boolean;
         // (undocumented)
@@ -224,7 +224,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): Failed.EARL;
         // (undocumented)
-        toJSON(options?: O): Failed.JSON<T>;
+        toJSON(options?: json.Serializable.Options): Failed.JSON<T>;
         // (undocumented)
         toSARIF(): sarif.Result;
     }
@@ -281,7 +281,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): Inapplicable.EARL;
         // (undocumented)
-        toJSON(): Inapplicable.JSON;
+        toJSON(options?: json.Serializable.Options): Inapplicable.JSON;
         // (undocumented)
         toSARIF(): sarif.Result;
     }
@@ -337,7 +337,7 @@ export namespace Outcome {
     // Warning: (ae-incompatible-release-tags) The symbol "Passed" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
-    export class Passed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T, O extends json.Serializable.Options = json.Serializable.Options> extends Outcome<I, T, Q, S, Value.Passed, O> {
+    export class Passed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Passed> {
         // (undocumented)
         equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Passed<I, T, Q, S>): boolean;
         // (undocumented)
@@ -357,7 +357,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): Passed.EARL;
         // (undocumented)
-        toJSON(options?: O): Passed.JSON<T>;
+        toJSON(options?: json.Serializable.Options): Passed.JSON<T>;
         // (undocumented)
         toSARIF(): sarif.Result;
     }

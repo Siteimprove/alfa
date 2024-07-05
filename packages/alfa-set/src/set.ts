@@ -16,9 +16,7 @@ const { not } = Predicate;
 /**
  * @public
  */
-export class Set<T, O extends Serializable.Options = Serializable.Options>
-  implements Collection.Unkeyed<T, O>
-{
+export class Set<T> implements Collection.Unkeyed<T> {
   public static of<T>(...values: Array<T>): Set<T> {
     return values.reduce((set, value) => set.add(value), Set.empty<T>());
   }
@@ -225,7 +223,7 @@ export class Set<T, O extends Serializable.Options = Serializable.Options>
     return [...this];
   }
 
-  public toJSON(options?: O): Set.JSON<T> {
+  public toJSON(options?: Serializable.Options): Set.JSON<T> {
     return this.toArray().map((value) => Serializable.toJSON(value, options));
   }
 

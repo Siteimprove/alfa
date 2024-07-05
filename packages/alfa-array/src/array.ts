@@ -538,10 +538,10 @@ export namespace Array {
     return array[Symbol.iterator]();
   }
 
-  export function toJSON<
-    T,
-    O extends Serializable.Options = Serializable.Options,
-  >(array: ReadonlyArray<T>, options?: O): Array<Serializable.ToJSON<T>> {
+  export function toJSON<T>(
+    array: ReadonlyArray<T>,
+    options?: Serializable.Options,
+  ): Array<Serializable.ToJSON<T>> {
     return array.map((value) => Serializable.toJSON(value, options));
   }
 }
