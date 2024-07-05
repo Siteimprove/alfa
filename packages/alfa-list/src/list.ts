@@ -1,8 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Callback } from "@siteimprove/alfa-callback";
 import type { Collection } from "@siteimprove/alfa-collection";
-import type { Comparison } from "@siteimprove/alfa-comparable";
-import { Comparable, type Comparer } from "@siteimprove/alfa-comparable";
+import { Comparable, type Comparer, type Comparison } from "@siteimprove/alfa-comparable";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
