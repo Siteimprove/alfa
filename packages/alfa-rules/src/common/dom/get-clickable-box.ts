@@ -15,7 +15,7 @@ const cache = Cache.empty<Device, Cache<Element, Option<Rectangle>>>();
  * @remarks
  * This function assumes that the element can receive pointer events, i.e. is clickable.
  * If called on an element that is not clickable, the function will still return the
- * bounding rectangle the area that would be clickable if the element was clickable.
+ * the area that would be clickable if the element was could receive pointer events.
  *
  * @internal
  */
