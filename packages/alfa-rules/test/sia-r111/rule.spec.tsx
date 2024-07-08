@@ -57,6 +57,31 @@ test("evaluate() passes input element regardless of size", async (t) => {
   ]);
 });
 
+test("evaluate() passes undersized link with rightsized image descendant", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <a href="/" box={{ device, x: 544, y: 8, width: 0, height: 0 }}>
+      <img
+        style={{ float: "left" }}
+        box={{ device, x: 8, y: 8, width: 536, height: 354 }}
+        src="foo"
+      />
+    </a>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R111, { document, device }), [
+    passed(R111, target, {
+      1: TargetSize.HasSufficientSize(
+        "",
+        target.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
 test("evaluate() fails button with clickable area of less than 44x44 pixels", async (t) => {
   const device = Device.standard();
 
