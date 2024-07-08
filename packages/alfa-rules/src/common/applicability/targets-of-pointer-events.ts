@@ -1,12 +1,14 @@
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
-import type { Document} from "@siteimprove/alfa-dom";
+import type { Document } from "@siteimprove/alfa-dom";
 import { Element, Node, Text, Query } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
+
+import { getClickableBox } from "../dom/get-clickable-box.js";
 
 const { hasRole } = DOM;
 const { hasComputedStyle, isFocusable, isVisible, isScrolledBehind } = Style;
@@ -112,12 +114,12 @@ function isTarget(device: Device): Predicate<Element> {
     isVisible(device),
     not(isScrolledBehind(device)),
     hasRole(device, (role) => role.isWidget()),
-    hasBoundingBox(device),
+    hasClickableBox(device),
   );
 }
 
-function hasBoundingBox(device: Device): Predicate<Element> {
-  return (element) => element.getBoundingBox(device).isSome();
+function hasClickableBox(device: Device): Predicate<Element> {
+  return (element) => getClickableBox(device, element).isSome();
 }
 
 const nonTargetTextCache = Cache.empty<Device, Cache<Element, boolean>>();

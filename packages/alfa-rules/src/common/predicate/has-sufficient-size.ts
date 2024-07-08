@@ -1,28 +1,22 @@
 import type { Device } from "@siteimprove/alfa-device";
 import type { Predicate } from "@siteimprove/alfa-predicate";
-import { Element } from "@siteimprove/alfa-dom";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Element } from "@siteimprove/alfa-dom";
 
-const { and } = Refinement;
-const { hasInclusiveDescendant, isElement } = Element;
+import { getClickableBox } from "../dom/get-clickable-box.js";
 
 /**
  * @remarks
- * This predicate tests that the bounding box of an element or one of it's element descendants
+ * This predicate tests that the clickable box of an element or one of it's element descendants
  * has width and height larger than a given value.
  *
- * Defaults to true if called on an element without bounding box to avoid false positives.
+ * Defaults to true if called on an element without clickable box to avoid false positives.
  */
 export function hasSufficientSize(
   size: number,
   device: Device,
 ): Predicate<Element> {
-  return hasInclusiveDescendant((desc) =>
-    and(isElement, (element) =>
-      element
-        .getBoundingBox(device)
-        .map((box) => box.width >= size && box.height >= size)
-        .getOr(true),
-    )(desc),
-  );
+  return (element) =>
+    getClickableBox(device, element)
+      .map((box) => box.width >= size && box.height >= size)
+      .getOr(true);
 }
