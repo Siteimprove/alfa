@@ -6,8 +6,7 @@ import { getClickableBox } from "../dom/get-clickable-box.js";
 
 /**
  * @remarks
- * This predicate tests that the clickable box of an element or one of it's element descendants
- * has width and height larger than a given value.
+ * This predicate tests that the clickable box of an element has width and height larger than a given value.
  *
  * Defaults to true if called on an element without clickable box to avoid false positives.
  */
