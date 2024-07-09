@@ -1,10 +1,10 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { type Element, Query } from "@siteimprove/alfa-dom";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { None, Option } from "@siteimprove/alfa-option";
 
-const { isElement } = Element;
+const { getInclusiveElementDescendants } = Query;
 
 const cache = Cache.empty<Device, Cache<Element, Option<Rectangle>>>();
 
@@ -25,10 +25,9 @@ export function getClickableBox(
 ): Option<Rectangle> {
   return cache.get(device, Cache.empty).get(element, () => {
     let boxes: Array<Rectangle> = [];
-    for (let box of element
-      .inclusiveDescendants(Node.flatTree)
-      .filter(isElement)
-      .map((element) => element.getBoundingBox(device))) {
+    for (let box of getInclusiveElementDescendants(element).map((element) =>
+      element.getBoundingBox(device),
+    )) {
       if (!box.isSome()) {
         return None;
       }
