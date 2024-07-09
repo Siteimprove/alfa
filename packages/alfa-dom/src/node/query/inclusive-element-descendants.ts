@@ -12,12 +12,5 @@ export function getInclusiveElementDescendants(
   node: Element,
   options: Node.Traversal = Node.Traversal.empty,
 ): Sequence<Element> {
-  const optionsMap = cache.get(node, () => []);
-  if (optionsMap[options.value] === undefined) {
-    optionsMap[options.value] = node
-      .inclusiveDescendants(options)
-      .filter(Element.isElement);
-  }
-
-  return optionsMap[options.value];
+return getElementDescendants(node, options).prepend(node)
 }
