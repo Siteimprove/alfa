@@ -102,7 +102,7 @@ function* findElementsWithInsufficientSpacingToTarget(
       ),
     );
 
-  // TODO: This needs to be optimized, we should be able to use some spatial data structure like a quadtree to reduce the number of comparisons
+  // TODO: We could avoid unnecessary comparisons by using a quad tree or similar
   for (const candidate of allTargetsOfPointerEvents(document, device)) {
     if (target !== candidate) {
       // Existence of a clickable box should be guaranteed by implementation of allTargetsOfPointerEvents

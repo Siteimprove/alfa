@@ -2,13 +2,11 @@ import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 
 import R113 from "../../dist/sia-r113/rule.js";
-
 import { evaluate } from "../common/evaluate.js";
-
 import { failed, inapplicable, passed } from "../common/outcome.js";
-
 import { TargetSize } from "../../dist/common/outcome/target-size.js";
 
 test("evaluate() passes button with clickable area of exactly 24x24 pixels", async (t) => {
@@ -337,6 +335,48 @@ test("evaluate() fails an undersized button whose 24px diameter circle intersect
       1: TargetSize.HasSufficientSpacing(
         "World",
         target2.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
+test("evaluate() fails an undersized button next to an image inside a link", async (t) => {
+  const device = Device.standard();
+
+  const neighbor = (
+    <a href="/" box={{ device, x: 8, y: 348, width: 536, height: 17 }}>
+      <img src="foo" box={{ device, x: 8, y: 8, width: 536, height: 354 }} />
+    </a>
+  );
+
+  const target = (
+    <button box={{ device, x: 544, y: 8, width: 20, height: 20 }}>x</button>
+  );
+
+  const document = h.document(
+    [neighbor, target],
+    [
+      h.sheet([
+        h.rule.style("button", {
+          position: "absolute",
+          width: "20px",
+          height: "20px",
+          top: "8px",
+          left: "544px",
+        }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, neighbor, {
+      1: TargetSize.HasSufficientSize("", Rectangle.of(8, 8, 536, 357)),
+    }),
+    failed(R113, target, {
+      1: TargetSize.HasInsufficientSizeAndSpacing(
+        "x",
+        Rectangle.of(544, 8, 20, 20),
+        [neighbor],
       ),
     }),
   ]);
