@@ -987,6 +987,10 @@ export namespace Query {
     //
     // (undocumented)
     getElementIdMap: typeof elementIdMap.getElementIdMap;
+    const // Warning: (ae-forgotten-export) The symbol "inclusiveElementDescendants" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getInclusiveElementDescendants: typeof inclusiveElementDescendants.getInclusiveElementDescendants;
 }
 
 // @public (undocumented)

@@ -23,6 +23,7 @@
     "./common/diagnostic/with-other-heading.ts",
     "./common/diagnostic/with-role.ts",
     "./common/diagnostic.ts",
+    "./common/dom/get-clickable-box.ts",
     "./common/dom/get-colors.ts",
     "./common/dom/get-colors/color.ts",
     "./common/dom/get-colors/color-error.ts",
