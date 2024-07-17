@@ -6,13 +6,14 @@
 
 import { Device } from '@siteimprove/alfa-device';
 import { Document } from '@siteimprove/alfa-dom';
-import * as earl from '@siteimprove/alfa-earl';
-import { Graph } from '@siteimprove/alfa-graph';
-import * as json from '@siteimprove/alfa-json';
+import type * as earl from '@siteimprove/alfa-earl';
+import type { Graph } from '@siteimprove/alfa-graph';
+import type * as json from '@siteimprove/alfa-json';
+import type { Node } from '@siteimprove/alfa-dom';
 import { Request } from '@siteimprove/alfa-http';
 import { Response } from '@siteimprove/alfa-http';
-import { Result } from '@siteimprove/alfa-result';
-import * as sarif from '@siteimprove/alfa-sarif';
+import type { Result } from '@siteimprove/alfa-result';
+import type * as sarif from '@siteimprove/alfa-sarif';
 
 // @public (undocumented)
 export class Page implements Resource, json.Serializable<Page.JSON>, earl.Serializable<Page.EARL>, sarif.Serializable<sarif.Artifact> {
@@ -29,7 +30,7 @@ export class Page implements Resource, json.Serializable<Page.JSON>, earl.Serial
     // (undocumented)
     toEARL(): Page.EARL;
     // (undocumented)
-    toJSON(): Page.JSON;
+    toJSON(options?: Node.SerializationOptions): Page.JSON;
     // (undocumented)
     toSARIF(): sarif.Artifact;
 }

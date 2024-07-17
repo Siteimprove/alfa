@@ -1,21 +1,22 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
-import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element, Node } from "@siteimprove/alfa-dom";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
+import type { Longhands, Shorthands } from "@siteimprove/alfa-style";
+import { Style } from "@siteimprove/alfa-style";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Contrast } from "../../src/common/diagnostic/contrast";
+import type { Contrast } from "../common/diagnostic/contrast.js";
 
-import { Serialise } from "./serialise";
+import { Serialise } from "./serialise.js";
 
 type Name = Longhands.Name | Shorthands.Name;
 
@@ -239,9 +240,11 @@ export class DistinguishingStyles extends Diagnostic {
     );
   }
 
-  public toJSON(): DistinguishingStyles.JSON {
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): DistinguishingStyles.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       defaultStyle: this._defaultStyles.toJSON(),
       hoverStyle: this._hoverStyles.toJSON(),
       focusStyle: this._focusStyles.toJSON(),

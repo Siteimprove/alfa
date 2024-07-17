@@ -1,9 +1,10 @@
-import { Interview } from "@siteimprove/alfa-act";
+import type { Interview } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
+import type {
+  Document} from "@siteimprove/alfa-dom";
 import {
-  Document,
   Element,
   Namespace,
   Node,
@@ -11,10 +12,10 @@ import {
 } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
+import type { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-import { Question } from "../act/question";
+import { Question } from "../act/question.js";
 
 const { isPerceivableForAll } = DOM;
 const { isElement, hasName, hasNamespace, hasAttribute } = Element;

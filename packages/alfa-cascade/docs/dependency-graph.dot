@@ -381,7 +381,7 @@ digraph "dependency-graph-[object Object]" {
     style = "invis";
   ];
   "src/selector-map.ts" -> "src/ancestor-filter.ts" [
-    style = "solid";
+    style = "dotted";
     ltail = "cluster_src/selector-map.ts";
     lhead = "cluster_src/ancestor-filter.ts";
     color = "black";

@@ -1,5 +1,5 @@
-import { decimal, double, element, integer } from "./descriptors";
-import { Item } from "./types";
+import { decimal, double, element, integer } from "./descriptors.js";
+import type { Item } from "./types.js";
 
 /**
  * @internal

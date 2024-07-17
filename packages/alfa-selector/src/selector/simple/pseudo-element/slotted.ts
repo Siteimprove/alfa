@@ -3,17 +3,17 @@ import {
   type Parser as CSSParser,
   Token,
 } from "@siteimprove/alfa-css";
-import { Element, type Slotable } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
-import { Context } from "../../../context";
-import { Specificity } from "../../../specificity";
+import { Context } from "../../../context.js";
+import { Specificity } from "../../../specificity.js";
 
-import type { Compound } from "../../compound";
-import type { Simple } from "../../simple";
+import type { Compound } from "../../compound.js";
+import type { Simple } from "../../simple/index.js";
 
-import { PseudoElementSelector } from "./pseudo-element";
+import { PseudoElementSelector } from "./pseudo-element.js";
 
 const { map, right, take } = Parser;
 

@@ -1,10 +1,14 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Function, type Parser as CSSParser, Token } from "../../syntax";
-import { Resolvable } from "../resolvable";
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax/index.js";
+import type { Resolvable } from "../resolvable.js";
 
-import { Value } from "../value";
+import { Value } from "../value.js";
 
 const { map, either } = Parser;
 

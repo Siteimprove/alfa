@@ -5,8 +5,8 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import * as json from '@siteimprove/alfa-json';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type * as json from '@siteimprove/alfa-json';
 
 // @public
 export class Flags<F extends Flags.allFlags = Flags.allFlags> implements Equatable, json.Serializable<Flags.JSON> {

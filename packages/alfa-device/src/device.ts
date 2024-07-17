@@ -1,15 +1,15 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Display } from "./display";
-import { Preference } from "./preference";
-import { Scripting } from "./scripting";
-import { Viewport } from "./viewport";
+import { Display } from "./display.js";
+import { Preference } from "./preference.js";
+import { Scripting } from "./scripting.js";
+import { Viewport } from "./viewport.js";
 
 /**
  * @public
@@ -117,14 +117,14 @@ export class Device implements Equatable, Hashable, Serializable {
       .writeHashable(this._preferences);
   }
 
-  public toJSON(): Device.JSON {
+  public toJSON(options?: json.Serializable.Options): Device.JSON {
     return {
       type: this._type,
-      viewport: this._viewport.toJSON(),
-      display: this._display.toJSON(),
-      scripting: this._scripting.toJSON(),
+      viewport: this._viewport.toJSON(options),
+      display: this._display.toJSON(options),
+      scripting: this._scripting.toJSON(options),
       preferences: [...this._preferences.values()].map((preferece) =>
-        preferece.toJSON(),
+        preferece.toJSON(options),
       ),
     };
   }

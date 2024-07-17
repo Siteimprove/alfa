@@ -5,10 +5,11 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Declaration, Document, Element, h } from "@siteimprove/alfa-dom";
+import type { Document} from "@siteimprove/alfa-dom";
+import { Declaration, Element, h } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Name } from "../src";
+import { Name } from "../dist/index.js";
 
 const { and } = Refinement;
 const { hasId, isElement } = Element;

@@ -1,16 +1,18 @@
+import type {
+  Value} from "@siteimprove/alfa-css";
 import {
   Keyword,
   Number,
   Percentage,
   Token,
-  Tuple,
-  Value,
+  Tuple
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 const { either, filter } = Parser;
 
@@ -111,5 +113,5 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(1),
   ),
   parse,
-  (value) => value.resolve(),
+  (value, style) => value.resolve(Resolver.length(style)),
 );

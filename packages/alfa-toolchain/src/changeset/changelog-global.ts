@@ -4,10 +4,10 @@ import getChangeSets from "@changesets/read";
 import type { NewChangesetWithCommit } from "@changesets/types";
 import { getPackages } from "@manypkg/get-packages";
 
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
-import { type ChangelogFunctions, getConfigOption, Error } from "./helpers";
+import { type ChangelogFunctions, getConfigOption, Error } from "./helpers.js";
 
 import resolveFrom = require("resolve-from");
 
@@ -42,9 +42,9 @@ async function main(cwd: string) {
   };
 
   const changesetPath = path.join(cwd, ".changeset");
-  let changelogPath = resolveFrom(changesetPath, global);
+  const changelogPath = resolveFrom(changesetPath, global);
 
-  let possibleChangelogFunc = require(changelogPath);
+  let possibleChangelogFunc = await import(changelogPath);
   if (possibleChangelogFunc.default) {
     possibleChangelogFunc = possibleChangelogFunc.default;
   }

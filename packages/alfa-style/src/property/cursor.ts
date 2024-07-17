@@ -8,7 +8,8 @@ import {
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 const { left, map, option, pair, right, separated, zeroOrMore } = Parser;
 const { parseComma, parseWhitespace } = Token;
@@ -128,6 +129,6 @@ const parse = map(
 export default Longhand.of<Specified, Computed>(
   Tuple.of(List.of([], ","), Keyword.of("auto")),
   parse,
-  (value) => value.resolve(),
+  (value, style) => value.resolve(Resolver.length(style)),
   { inherits: true },
 );

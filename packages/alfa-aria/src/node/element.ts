@@ -1,15 +1,16 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import { String } from "@siteimprove/alfa-string";
 
-import * as dom from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
 
-import { Attribute } from "../attribute";
-import { Name } from "../name";
-import { Node } from "../node";
-import { Role } from "../role";
+import type { Attribute } from "../attribute.js";
+import type { Name } from "../name/index.js";
+import { Node } from "../node.js";
+import type { Role } from "../role.js";
 
 /**
  * @public

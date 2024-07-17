@@ -1,12 +1,12 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../../../syntax";
+import { type Parser as CSSParser, Token } from "../../../../syntax/index.js";
 
-import { Resolvable } from "../../../resolvable";
-import { Value } from "../../../value";
+import type { Resolvable } from "../../../resolvable.js";
+import { Value } from "../../../value.js";
 
-import { Position } from "./position";
+import { Position } from "./position.js";
 
 const { map, either, pair, option, right } = Parser;
 

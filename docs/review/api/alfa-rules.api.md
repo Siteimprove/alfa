@@ -6,19 +6,19 @@
 
 import * as act from '@siteimprove/alfa-act';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Attribute } from '@siteimprove/alfa-dom';
-import { Document } from '@siteimprove/alfa-dom';
+import type { Attribute } from '@siteimprove/alfa-dom';
+import type { Document } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
 import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
 import { Node } from '@siteimprove/alfa-dom';
-import { Option } from '@siteimprove/alfa-option';
-import { Page } from '@siteimprove/alfa-web';
+import type { Option } from '@siteimprove/alfa-option';
+import type { Page } from '@siteimprove/alfa-web';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
-import { RGB } from '@siteimprove/alfa-css';
+import type { RGB } from '@siteimprove/alfa-css';
 import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
@@ -135,7 +135,7 @@ export class Group<T extends Hashable> implements Iterable<T>, Equatable, Hashab
     // (undocumented)
     toEARL(): Group.EARL;
     // (undocumented)
-    toJSON(): Group.JSON<T>;
+    toJSON(options?: json.Serializable.Options): Group.JSON<T>;
     // (undocumented)
     toSARIF(): sarif.Location;
 }

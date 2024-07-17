@@ -1,9 +1,11 @@
 import type { Rule, Outcome, Oracle, Question } from "@siteimprove/alfa-act";
+import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Request, Response } from "@siteimprove/alfa-http";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { None } from "@siteimprove/alfa-option";
 import { URL } from "@siteimprove/alfa-url";
 import { Page } from "@siteimprove/alfa-web";
@@ -18,6 +20,7 @@ export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   page: Partial<Page>,
   oracle: Oracle<Page, T, Q, S> = () => Future.now(None),
+  options?: Serializable.Options,
 ): Future<Array<Outcome.JSON>> {
   const {
     request = defaultRequest,
@@ -28,5 +31,5 @@ export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
 
   return rule
     .evaluate(Page.of(request, response, document, device), oracle)
-    .map((outcomes) => [...outcomes].map((outcome) => outcome.toJSON()));
+    .map((outcomes) => Array.toJSON(Array.from(outcomes), options));
 }

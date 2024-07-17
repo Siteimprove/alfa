@@ -5,11 +5,12 @@ import {
 } from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Absolute, Selector } from "../../../selector";
+import type { Selector } from "../../../selector/index.js";
+import { type Absolute } from "../../../selector/index.js";
 
-import { PseudoElementSelector } from "./pseudo-element";
+import { PseudoElementSelector } from "./pseudo-element.js";
 
 const { either, map, right, take } = Parser;
 

@@ -1,1 +1,1 @@
-export * from "./thunk";
+export * from "./thunk.js";

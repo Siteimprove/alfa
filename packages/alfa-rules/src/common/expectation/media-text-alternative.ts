@@ -1,14 +1,14 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
-import { Element, Node } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element, Node } from "@siteimprove/alfa-dom";
+import type { Option } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
-import * as act from "@siteimprove/alfa-act";
+import type * as act from "@siteimprove/alfa-act";
 
-import { expectation } from "../act/expectation";
-import { Question } from "../act/question";
+import { expectation } from "../act/expectation.js";
+import { Question } from "../act/question.js";
 
 const { isPerceivableForAll } = DOM;
 

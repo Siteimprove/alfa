@@ -1,10 +1,11 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 
-import * as dom from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
 
-import { Node } from "../node";
-import { Role } from "../role";
+import { Node } from "../node.js";
+import type { Role } from "../role.js";
 
 /**
  * @remarks

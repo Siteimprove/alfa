@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Perspective } from "../../../src";
+import { Length, Perspective } from "../../../dist/index.js";
 
-import { parserUnsafe, serializer } from "../../common/parse";
+import { parserUnsafe, serializer } from "../../common/parse.js";
 
 const serialize = serializer(Perspective.parse);
 

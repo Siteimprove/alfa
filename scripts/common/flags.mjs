@@ -1,4 +1,4 @@
-import * as path from "path";
+import * as path from "node:path";
 import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2), {

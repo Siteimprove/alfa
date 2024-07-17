@@ -1,18 +1,18 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasAccessibleName, hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasNamespace, hasName, isElement } = Element;
@@ -222,9 +222,9 @@ export class LabelAndName extends Diagnostic {
     hash.writeString(this._textContent);
   }
 
-  public toJSON(): LabelAndName.JSON {
+  public toJSON(options?: Node.SerializationOptions): LabelAndName.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       textContent: this._textContent,
       name: this._name,
     };

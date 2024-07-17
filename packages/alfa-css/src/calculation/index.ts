@@ -1,1 +1,1 @@
-export * from "./math-expression";
+export * from "./math-expression/index.js";

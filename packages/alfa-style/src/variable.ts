@@ -1,4 +1,4 @@
-import { Array } from "@siteimprove/alfa-array";
+import type { Array } from "@siteimprove/alfa-array";
 import { Component, Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import type { Declaration } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -8,7 +8,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Value } from "./value";
+import { Value } from "./value.js";
 
 const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 

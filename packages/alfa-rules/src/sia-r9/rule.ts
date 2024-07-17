@@ -2,14 +2,14 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
-import { getRefreshTime } from "../common/expectation/get-refresh-time";
-import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay";
+import { getRefreshTime } from "../common/expectation/get-refresh-time.js";
+import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay.js";
 
 const { hasAttribute, hasName, hasNamespace } = Element;
 const { and } = Predicate;

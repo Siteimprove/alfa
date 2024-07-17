@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Predicate } from "../src/predicate";
+import { Predicate } from "../dist/predicate.js";
 
 test(".test() evaluates a predicate on a value", (t) => {
   const p: Predicate<string> = (value) => value === "foo";

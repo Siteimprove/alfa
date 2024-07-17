@@ -1,14 +1,16 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import { Number as BaseNumber } from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Math } from "../../calculation/index.js";
+import { Number as BaseNumber } from "../../calculation/numeric/index.js";
+import type { Token } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.js";
 
-import type { Resolvable } from "../resolvable";
+import type { Resolvable } from "../resolvable.js";
+import { Length } from "./length.js";
 
-import { Numeric } from "./numeric";
+import { Numeric } from "./numeric.js";
 
 const { either, map } = Parser;
 
@@ -42,17 +44,17 @@ export namespace Number {
       super(value, "number");
     }
 
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
-          .resolve()
+          .resolve(Length.toExpressionResolver(resolver))
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not fully resolve ${this} as a number`),
       );
     }
 
-    public partiallyResolve(): Canonical {
-      return this.resolve();
+    public partiallyResolve(resolver?: Numeric.GenericResolver): Canonical {
+      return this.resolve(resolver);
     }
 
     public equals(value: unknown): value is this {
@@ -96,6 +98,13 @@ export namespace Number {
 
     public scale(factor: number): Fixed {
       return new Fixed(this._value * factor);
+    }
+
+    /**
+     * @internal
+     */
+    public toBase(): BaseNumber {
+      return BaseNumber.of(this._value);
     }
 
     public equals(value: unknown): value is this {

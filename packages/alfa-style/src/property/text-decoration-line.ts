@@ -2,7 +2,7 @@ import { Keyword, List, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
 const { either } = Parser;
 

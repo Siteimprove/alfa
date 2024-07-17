@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle, device?: Device, externalId?: string, extraData?: any): Element<N>;
+function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle, device?: Device, externalId?: string, serializationId?: string, extraData?: any): Element<N>;
 ```
 
 ## Parameters
@@ -22,6 +22,7 @@ function element<N extends string = string>(name: N, attributes?: Array<Attribut
 |  box | Rectangle | _(Optional)_ |
 |  device | Device | _(Optional)_ |
 |  externalId | string | _(Optional)_ |
+|  serializationId | string | _(Optional)_ |
 |  extraData | any | _(Optional)_ |
 
 **Returns:**

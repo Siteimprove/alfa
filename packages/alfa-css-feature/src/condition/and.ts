@@ -1,12 +1,12 @@
-import { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
+import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import type { Device } from "@siteimprove/alfa-device";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import type { Feature } from "../feature";
+import type { Feature } from "../feature.js";
 
-import type { Condition } from "./condition";
+import type { Condition } from "./condition.js";
 
 const { delimited, option, right } = Parser;
 

@@ -3,20 +3,20 @@ import {
   type Comparer,
   Comparison,
 } from "@siteimprove/alfa-comparable";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
+import type { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
-import * as sarif from "@siteimprove/alfa-sarif";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
+import type * as sarif from "@siteimprove/alfa-sarif";
 import * as tree from "@siteimprove/alfa-tree";
 
 import {
@@ -30,10 +30,10 @@ import {
   Slotable,
   Text,
   Type,
-} from ".";
+} from "./index.js";
 
-import * as predicate from "./node/predicate";
-import * as traversal from "./node/traversal";
+import * as predicate from "./node/predicate.js";
+import * as traversal from "./node/traversal.js";
 
 /**
  * @public
@@ -42,16 +42,17 @@ export abstract class Node<T extends string = string>
   extends tree.Node<Node.Traversal.Flag, T>
   implements
     earl.Serializable<Node.EARL>,
-    json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>,
+    json.Serializable<tree.Node.JSON<T>>,
     sarif.Serializable<sarif.Location>
 {
   protected constructor(
     children: Array<Node>,
     type: T,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super(children, type, externalId, extraData);
+    super(children, type, externalId, serializationId, extraData);
   }
 
   /**
@@ -337,8 +338,8 @@ export interface Node {
 export namespace Node {
   export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
-  export interface SerializationOptions {
-    device: Device;
+  export interface SerializationOptions extends json.Serializable.Options {
+    device?: Device;
   }
 
   export interface EARL extends earl.EARL {

@@ -1,11 +1,11 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
-import { Option } from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Header } from "./header";
+import { Header } from "./header.js";
 
 /**
  * @public
@@ -63,8 +63,8 @@ export class Headers
     return [...this];
   }
 
-  public toJSON(): Headers.JSON {
-    return this.toArray().map((header) => header.toJSON());
+  public toJSON(options?: json.Serializable.Options): Headers.JSON {
+    return this.toArray().map((header) => header.toJSON(options));
   }
 
   public toEARL(): Headers.EARL {

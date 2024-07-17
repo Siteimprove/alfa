@@ -6,8 +6,8 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Device } from '@siteimprove/alfa-device';
-import * as earl from '@siteimprove/alfa-earl';
-import { Equatable } from '@siteimprove/alfa-equatable';
+import type * as earl from '@siteimprove/alfa-earl';
+import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Feature } from '@siteimprove/alfa-css-feature';
 import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
@@ -16,10 +16,10 @@ import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-rectangle';
-import { Refinement } from '@siteimprove/alfa-refinement';
-import * as sarif from '@siteimprove/alfa-sarif';
+import type { Refinement } from '@siteimprove/alfa-refinement';
+import type * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
-import { Serializable } from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 import * as tree from '@siteimprove/alfa-tree';
 
@@ -42,7 +42,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string, externalId?: string, extraData?: any): Attribute<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string, externalId?: string, serializationId?: string, extraData?: any): Attribute<N>;
     // (undocumented)
     get owner(): Option<Element>;
     // (undocumented)
@@ -50,7 +50,11 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     // (undocumented)
     get qualifiedName(): string;
     // (undocumented)
-    toJSON(): Attribute.JSON<N>;
+    toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
+    }): Attribute.MinimalJSON;
+    // (undocumented)
+    toJSON(options?: Node.SerializationOptions): Attribute.JSON<N>;
     // (undocumented)
     tokens(separator?: string | RegExp): Sequence<string>;
     // (undocumented)
@@ -79,6 +83,9 @@ export namespace Attribute {
         prefix: string | null;
         // (undocumented)
         value: string;
+    }
+    // (undocumented)
+    export interface MinimalJSON extends Node.JSON<"attribute"> {
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
@@ -125,9 +132,13 @@ export class Comment extends Node<"comment"> {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(data: string, externalId?: string, extraData?: any): Comment;
+    static of(data: string, externalId?: string, serializationId?: string, extraData?: any): Comment;
     // (undocumented)
-    toJSON(): Comment.JSON;
+    toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
+    }): Comment.MinimalJSON;
+    // (undocumented)
+    toJSON(options?: Node.SerializationOptions): Comment.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -144,6 +155,9 @@ export namespace Comment {
     export interface JSON extends Node.JSON<"comment"> {
         // (undocumented)
         data: string;
+    }
+    // (undocumented)
+    export interface MinimalJSON extends Node.JSON<"comment"> {
     }
 }
 
@@ -226,11 +240,15 @@ export class Document extends Node<"document"> {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, externalId?: string, extraData?: any): Document;
+    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, externalId?: string, serializationId?: string, extraData?: any): Document;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     get style(): Iterable_2<Sheet>;
+    // (undocumented)
+    toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
+    }): Document.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node.SerializationOptions): Document.JSON;
     // (undocumented)
@@ -249,6 +267,9 @@ export namespace Document {
     export interface JSON extends Node.JSON<"document"> {
         // (undocumented)
         style: Array_2<Sheet.JSON>;
+    }
+    // (undocumented)
+    export interface MinimalJSON extends Node.JSON<"document"> {
     }
 }
 
@@ -287,7 +308,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, extraData?: any): Element<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, serializationId?: string, extraData?: any): Element<N>;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
@@ -298,6 +319,10 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     get style(): Option<Block>;
     // (undocumented)
     tabIndex(): Option<number>;
+    // (undocumented)
+    toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
+    }): Element.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
     // (undocumented)
@@ -330,6 +355,9 @@ export namespace Element {
         shadow: Shadow.JSON | null;
         // (undocumented)
         style: Block.JSON | string | null;
+    }
+    // (undocumented)
+    export interface MinimalJSON extends Node.JSON<"element"> {
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
@@ -393,7 +421,7 @@ export class Fragment extends Node<"fragment"> {
     // @internal (undocumented)
     protected _internalPath(): string;
     // (undocumented)
-    static of(children: Iterable_2<Node>, externalId?: string, extraData?: any): Fragment;
+    static of(children: Iterable_2<Node>, externalId?: string, serializationId?: string, extraData?: any): Fragment;
     // (undocumented)
     toString(): string;
 }
@@ -436,20 +464,20 @@ export namespace GroupingRule {
 }
 
 // @public (undocumented)
-export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, box?: Rectangle, device?: Device, externalId?: string, extraData?: any): Element<N>;
+export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, box?: Rectangle, device?: Device, externalId?: string, serializationId?: string, extraData?: any): Element<N>;
 
 // @public (undocumented)
 export namespace h {
     // (undocumented)
-    export function attribute<N extends string = string>(name: N, value: string, externalId?: string, extraData?: any): Attribute<N>;
+    export function attribute<N extends string = string>(name: N, value: string, externalId?: string, serializationId?: string, extraData?: any): Attribute<N>;
     // (undocumented)
     export function block(declarations: Array<Declaration> | Record<string, string>): Block;
     // (undocumented)
     export function declaration(name: string, value: string, important?: boolean): Declaration;
     // (undocumented)
-    export function document(children: Array<Node | string>, style?: Array<Sheet>, externalId?: string, extraData?: any): Document;
+    export function document(children: Array<Node | string>, style?: Array<Sheet>, externalId?: string, serializationId?: string, extraData?: any): Document;
     // (undocumented)
-    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle, device?: Device, externalId?: string, extraData?: any): Element<N>;
+    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle, device?: Device, externalId?: string, serializationId?: string, extraData?: any): Element<N>;
     // (undocumented)
     export function fragment(children: Array<Node | string>, externalId?: string, extraData?: any): Fragment;
     // (undocumented)
@@ -478,13 +506,13 @@ export namespace h {
         export function supports(condition: string, rules: Array<Rule>): SupportsRule;
     }
     // (undocumented)
-    export function shadow(children: Array<Node | string>, style?: Array<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
+    export function shadow(children: Array<Node | string>, style?: Array<Sheet>, mode?: Shadow.Mode, externalId?: string, serializationId?: string, extraData?: any): Shadow;
     // (undocumented)
     export function sheet(rules: Array<Rule>, disabled?: boolean, condition?: string): Sheet;
     // (undocumented)
-    export function text(data: string, externalId?: string, extraData?: any): Text;
+    export function text(data: string, externalId?: string, serializationId?: string, extraData?: any): Text;
     // (undocumented)
-    export function type<N extends string = string>(name: N, publicId?: string, systemId?: string, externalId?: string, extraData?: any): Type<N>;
+    export function type<N extends string = string>(name: N, publicId?: string, systemId?: string, externalId?: string, serializationId?: string, extraData?: any): Type<N>;
 }
 
 // @public (undocumented)
@@ -742,8 +770,8 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>, sarif.Serializable<sarif.Location> {
-    protected constructor(children: Array<Node>, type: T, externalId?: string, extraData?: any);
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
+    protected constructor(children: Array<Node>, type: T, externalId?: string, serializationId?: string, extraData?: any);
     // (undocumented)
     equals(value: Node): boolean;
     // (undocumented)
@@ -885,9 +913,9 @@ export namespace Node {
     export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
     }
     // (undocumented)
-    export interface SerializationOptions {
+    export interface SerializationOptions extends json.Serializable.Options {
         // (undocumented)
-        device: Device;
+        device?: Device;
     }
     // (undocumented)
     export class Traversal extends Flags<Traversal.Flag> {
@@ -959,6 +987,10 @@ export namespace Query {
     //
     // (undocumented)
     getElementIdMap: typeof elementIdMap.getElementIdMap;
+    const // Warning: (ae-forgotten-export) The symbol "inclusiveElementDescendants" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getInclusiveElementDescendants: typeof inclusiveElementDescendants.getInclusiveElementDescendants;
 }
 
 // @public (undocumented)
@@ -1044,11 +1076,15 @@ export class Shadow extends Node<"shadow"> {
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
-    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, mode?: Shadow.Mode, externalId?: string, extraData?: any): Shadow;
+    static of(children: Iterable_2<Node>, style?: Iterable_2<Sheet>, mode?: Shadow.Mode, externalId?: string, serializationId?: string, extraData?: any): Shadow;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     get style(): Iterable_2<Sheet>;
+    // (undocumented)
+    toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
+    }): Shadow.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node.SerializationOptions): Shadow.JSON;
     // (undocumented)
@@ -1071,6 +1107,9 @@ export namespace Shadow {
         style: Array<Sheet.JSON>;
         // (undocumented)
         type: "shadow";
+    }
+    // (undocumented)
+    export interface MinimalJSON extends Node.JSON {
     }
     // (undocumented)
     export enum Mode {
@@ -1223,9 +1262,13 @@ export class Text extends Node<"text"> implements Slotable {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(data: string, externalId?: string, extraData?: any): Text;
+    static of(data: string, externalId?: string, serializationId?: string, extraData?: any): Text;
     // (undocumented)
-    toJSON(): Text.JSON;
+    toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
+    }): Text.MinimalJSON;
+    // (undocumented)
+    toJSON(options?: Node.SerializationOptions): Text.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -1243,6 +1286,9 @@ export namespace Text {
         // (undocumented)
         data: string;
     }
+    // (undocumented)
+    export interface MinimalJSON extends Node.JSON<"text"> {
+    }
 }
 
 // @public (undocumented)
@@ -1252,11 +1298,15 @@ export class Type<N extends string = string> extends Node<"type"> {
     // (undocumented)
     get name(): N;
     // (undocumented)
-    static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>, externalId?: string, extraData?: any): Type<N>;
+    static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>, externalId?: string, serializationId?: string, extraData?: any): Type<N>;
     // (undocumented)
     get publicId(): Option<string>;
     // (undocumented)
     get systemId(): Option<string>;
+    // (undocumented)
+    toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
+    }): Type.MinimalJSON;
     // (undocumented)
     toJSON(options?: Node.SerializationOptions): Type.JSON<N>;
     // (undocumented)
@@ -1279,6 +1329,9 @@ export namespace Type {
         publicId: string | null;
         // (undocumented)
         systemId: string | null;
+    }
+    // (undocumented)
+    export interface MinimalJSON extends Node.JSON<"type"> {
     }
 }
 

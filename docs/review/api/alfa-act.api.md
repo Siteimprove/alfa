@@ -4,25 +4,25 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
+import type { Applicative } from '@siteimprove/alfa-applicative';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import * as earl from '@siteimprove/alfa-earl';
 import { Either } from '@siteimprove/alfa-either';
 import { Equatable } from '@siteimprove/alfa-equatable';
-import { Functor } from '@siteimprove/alfa-functor';
+import type { Functor } from '@siteimprove/alfa-functor';
 import { Future } from '@siteimprove/alfa-future';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Maybe } from '@siteimprove/alfa-option';
-import { Monad } from '@siteimprove/alfa-monad';
+import type { Monad } from '@siteimprove/alfa-monad';
 import { Option } from '@siteimprove/alfa-option';
-import { Performance } from '@siteimprove/alfa-performance';
-import { Predicate } from '@siteimprove/alfa-predicate';
+import type { Performance } from '@siteimprove/alfa-performance';
+import type { Predicate } from '@siteimprove/alfa-predicate';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
-import { Result } from '@siteimprove/alfa-result';
+import type { Result } from '@siteimprove/alfa-result';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -61,7 +61,7 @@ export class Diagnostic implements Equatable, Hashable, Serializable<Diagnostic.
     // (undocumented)
     static of(message: string): Diagnostic;
     // (undocumented)
-    toJSON(): Diagnostic.JSON;
+    toJSON(options?: Serializable.Options): Diagnostic.JSON;
 }
 
 // @public (undocumented)
@@ -122,7 +122,7 @@ export abstract class Outcome<I, T extends Hashable, Q extends Question.Metadata
     // (undocumented)
     toEARL(): Outcome.EARL;
     // (undocumented)
-    toJSON(): Outcome.JSON<V>;
+    toJSON(options?: json.Serializable.Options): Outcome.JSON<V>;
     // (undocumented)
     abstract toSARIF(): sarif.Result;
 }
@@ -157,7 +157,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): CantTell.EARL;
         // (undocumented)
-        toJSON(): CantTell.JSON<T>;
+        toJSON(options?: json.Serializable.Options): CantTell.JSON<T>;
         // (undocumented)
         toSARIF(): sarif.Result;
     }
@@ -224,7 +224,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): Failed.EARL;
         // (undocumented)
-        toJSON(): Failed.JSON<T>;
+        toJSON(options?: json.Serializable.Options): Failed.JSON<T>;
         // (undocumented)
         toSARIF(): sarif.Result;
     }
@@ -281,7 +281,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): Inapplicable.EARL;
         // (undocumented)
-        toJSON(): Inapplicable.JSON;
+        toJSON(options?: json.Serializable.Options): Inapplicable.JSON;
         // (undocumented)
         toSARIF(): sarif.Result;
     }
@@ -357,7 +357,7 @@ export namespace Outcome {
         // (undocumented)
         toEARL(): Passed.EARL;
         // (undocumented)
-        toJSON(): Passed.JSON<T>;
+        toJSON(options?: json.Serializable.Options): Passed.JSON<T>;
         // (undocumented)
         toSARIF(): sarif.Result;
     }

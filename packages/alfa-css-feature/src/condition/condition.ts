@@ -1,13 +1,13 @@
 import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Feature } from "../feature";
+import type { Feature } from "../feature.js";
 
-import { And } from "./and";
-import { Not } from "./not";
-import { Or } from "./or";
+import { And } from "./and.js";
+import { Not } from "./not.js";
+import { Or } from "./or.js";
 
 const { delimited, either, map, oneOrMore, option, pair, zeroOrMore } = Parser;
 

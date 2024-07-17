@@ -1,4 +1,4 @@
-import { Element } from "../../element";
+import type { Element } from "../../element.js";
 
 /**
  * {@link https://html.spec.whatwg.org/#dom-draggable}

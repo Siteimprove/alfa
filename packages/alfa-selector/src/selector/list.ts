@@ -1,21 +1,21 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Comma, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Context } from "../context";
-import { Specificity } from "../specificity";
+import type { Context } from "../context.js";
+import { Specificity } from "../specificity.js";
 
-import type { Absolute } from "./index";
+import type { Absolute } from "./index.js";
 
-import { Complex } from "./complex";
-import type { Compound } from "./compound";
-import type { Relative } from "./relative";
-import { Selector } from "./selector";
-import type { Simple } from "./simple";
+import { Complex } from "./complex.js";
+import type { Compound } from "./compound.js";
+import type { Relative } from "./relative.js";
+import { Selector } from "./selector.js";
+import type { Simple } from "./simple/index.js";
 
 const { map, separatedList } = Parser;
 

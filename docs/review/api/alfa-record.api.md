@@ -4,12 +4,12 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Foldable } from '@siteimprove/alfa-foldable';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Foldable } from '@siteimprove/alfa-foldable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import { Option } from '@siteimprove/alfa-option';
-import { Predicate } from '@siteimprove/alfa-predicate';
-import { Reducer } from '@siteimprove/alfa-reducer';
+import type { Option } from '@siteimprove/alfa-option';
+import type { Predicate } from '@siteimprove/alfa-predicate';
+import type { Reducer } from '@siteimprove/alfa-reducer';
 import { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
@@ -41,7 +41,7 @@ class Record_2<T> implements Foldable<Record_2.Value<T>>, Iterable_2<Record_2.En
     // (undocumented)
     toArray(): Array<Record_2.Entry<T>>;
     // (undocumented)
-    toJSON(): Record_2.JSON<T>;
+    toJSON(options?: Serializable.Options): Record_2.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

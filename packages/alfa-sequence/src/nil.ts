@@ -1,13 +1,18 @@
-import { Callback } from "@siteimprove/alfa-callback";
-import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Collection } from "@siteimprove/alfa-collection";
+import type {
+  Comparison} from "@siteimprove/alfa-comparable";
+import {
+  Comparable,
+  type Comparer
+} from "@siteimprove/alfa-comparable";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { None } from "@siteimprove/alfa-option";
 
-import { Sequence } from "./sequence";
-import { Cons } from "./cons";
+import { Sequence } from "./sequence.js";
+import { Cons } from "./cons.js";
 
 /**
  * @public

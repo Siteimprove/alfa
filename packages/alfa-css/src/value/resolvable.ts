@@ -1,4 +1,4 @@
-import type { Value } from "./value";
+import type { Value } from "./value.js";
 
 /**
  * @internal
@@ -14,9 +14,8 @@ export namespace Resolvable {
   /**
    * The actual type a value resolves to.
    */
-  export type Resolved<V extends Value> = V extends Resolvable<infer U, unknown>
-    ? U
-    : never;
+  export type Resolved<V extends Value> =
+    V extends Resolvable<infer U, unknown> ? U : never;
 
   /**
    * The type of a partially resolved value (usually with percentages left
@@ -58,8 +57,8 @@ export namespace Resolvable {
     V extends Resolvable<Value<string, false>, never>
       ? never
       : V extends Resolvable<Value<string, false>, infer R>
-      ? R
-      : never
+        ? R
+        : never
   >;
 
   /**
@@ -71,8 +70,8 @@ export namespace Resolvable {
     V extends PartiallyResolvable<Value<string, false>, never>
       ? never
       : V extends PartiallyResolvable<Value<string, false>, infer R>
-      ? R
-      : never
+        ? R
+        : never
   >;
 }
 

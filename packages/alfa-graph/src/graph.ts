@@ -1,5 +1,5 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hashable, Hash } from "@siteimprove/alfa-hash";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Hashable, Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
@@ -61,7 +61,7 @@ export class Graph<T>
   }
 
   public delete(node: T): Graph<T> {
-    let nodes = this._nodes;
+    const nodes = this._nodes;
 
     if (!nodes.has(node)) {
       return this;
@@ -214,10 +214,10 @@ export class Graph<T>
     return [...this].map(([node, neighbors]) => [node, [...neighbors]]);
   }
 
-  public toJSON(): Graph.JSON<T> {
+  public toJSON(options?: Serializable.Options): Graph.JSON<T> {
     return this.toArray().map(([node, neighbors]) => [
-      Serializable.toJSON(node),
-      neighbors.map((node) => Serializable.toJSON(node)),
+      Serializable.toJSON(node, options),
+      neighbors.map((node) => Serializable.toJSON(node, options)),
     ]);
   }
 

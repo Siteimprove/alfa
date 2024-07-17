@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R6, { Outcomes } from "../../src/sia-dr6/rule";
+import R6, { Outcomes } from "../../dist/sia-dr6/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 const html = (lang: string, xml: string) =>
   h.element("html", [h.attribute("lang", lang), h.attribute("xml:lang", xml)]);

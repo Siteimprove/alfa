@@ -1,11 +1,11 @@
 import { Declaration as CSSDeclaration, Lexer } from "@siteimprove/alfa-css";
-import { Equatable } from "@siteimprove/alfa-equatable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Declaration } from "./declaration";
+import { Declaration } from "./declaration.js";
 
 /**
  * @public

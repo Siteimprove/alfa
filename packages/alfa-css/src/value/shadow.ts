@@ -1,14 +1,15 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import { type Parser as CSSParser, Token } from "../syntax";
+import { type Parser as CSSParser, Token } from "../syntax/index.js";
+import { Unit } from "../unit/index.js";
 
-import { Color } from "./color";
-import { Keyword } from "./keyword";
-import { Length } from "./numeric";
-import { Resolvable } from "./resolvable";
-import { Value } from "./value";
+import { Color } from "./color/index.js";
+import { Keyword } from "./keyword.js";
+import { Length } from "./numeric/index.js";
+import type { Resolvable } from "./resolvable.js";
+import { Value } from "./value.js";
 
 const { parseIf, separatedList } = Parser;
 
@@ -261,8 +262,8 @@ export namespace Shadow {
         Shadow.of(
           horizontal,
           vertical,
-          blur ?? Length.of(0, "px"),
-          spread ?? Length.of(0, "px"),
+          blur ?? Length.of(0, Unit.Length.Canonical),
+          spread ?? Length.of(0, Unit.Length.Canonical),
           color ?? Keyword.of("currentcolor"),
           isInset ?? false,
         ),

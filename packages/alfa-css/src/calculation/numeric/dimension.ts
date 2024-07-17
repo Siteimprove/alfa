@@ -1,6 +1,6 @@
-import { Unit } from "../../unit";
+import type { Unit } from "../../unit/index.js";
 
-import { Numeric } from "./numeric";
+import { Numeric } from "./numeric.js";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#dimensions}
@@ -10,7 +10,7 @@ import { Numeric } from "./numeric";
 export abstract class Dimension<
   T extends Numeric.Dimension = Numeric.Dimension,
   // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-  U extends ToDimension<T> = ToDimension<T>,
+  U extends Dimension.ToUnit[T] = Dimension.ToUnit[T],
 > extends Numeric<T> {
   protected readonly _unit: U;
 
@@ -23,11 +23,15 @@ export abstract class Dimension<
     return this._unit;
   }
 
-  public hasUnit<V extends ToDimension<T>>(unit: V): this is Dimension<T, V> {
-    return (this._unit as ToDimension<T>) === unit;
+  public hasUnit<V extends Dimension.ToUnit[T]>(
+    unit: V,
+  ): this is Dimension<T, V> {
+    return (this._unit as Dimension.ToUnit[T]) === unit;
   }
 
-  public abstract withUnit<V extends ToDimension<T>>(unit: V): Dimension<T, V>;
+  public abstract withUnit<V extends Dimension.ToUnit[T]>(
+    unit: V,
+  ): Dimension<T, V>;
 
   public equals(value: unknown): value is this {
     return (
@@ -48,7 +52,7 @@ export abstract class Dimension<
 export namespace Dimension {
   export interface JSON<
     T extends Numeric.Dimension = Numeric.Dimension,
-    U extends ToDimension<T> = ToDimension<T>,
+    U extends ToUnit[T] = ToUnit[T],
   > extends Numeric.JSON<T> {
     unit: U;
   }
@@ -56,18 +60,15 @@ export namespace Dimension {
   export function isDimension(value: unknown): value is Dimension {
     return value instanceof Dimension;
   }
-}
 
-/**
- * Helper type to infer Unit sub-type based on its string representation.
- *
- * @remarks
- * This could probably be factored in within Unit themselves, which would need
- * to rearrange how Unit are built (i.e. not keep them as union of strings).
- */
-type ToDimension<T extends Numeric.Dimension> = T extends "angle"
-  ? Unit.Angle
-  : T extends "length"
-  ? Unit.Length
-  : // We currently do not really support other dimensions
-    never;
+  /**
+   * Helper type to infer Unit sub-type based on its string representation.
+   *
+   * @remarks
+   * This could probably be factored in within Unit themselves, which would need
+   * to rearrange how Unit are built (i.e. not keep them as union of strings).
+   *
+   * @internal
+   */
+  export type ToUnit = { angle: Unit.Angle; length: Unit.Length };
+}

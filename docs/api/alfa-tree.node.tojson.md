@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-toJSON(options?: S): Node.JSON<T>;
+toJSON(options?: O): Node.JSON<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | S | _(Optional)_ |
+|  options | O | _(Optional)_ |
 
 **Returns:**
 

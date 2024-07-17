@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R5, { Outcomes } from "../../src/sia-r5/rule";
+import R5, { Outcomes } from "../../dist/sia-r5/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluate() passes a lang attribute with valid primary tag`, async (t) => {
   const html = <html lang="en"></html>;

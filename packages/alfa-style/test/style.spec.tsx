@@ -5,9 +5,9 @@ import { Context } from "@siteimprove/alfa-selector";
 
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Style } from "../src/style";
+import { Style } from "../dist/style.js";
 
-import { cascaded, specified } from "./common";
+import { cascaded, specified } from "./common.js";
 
 const device = Device.standard();
 

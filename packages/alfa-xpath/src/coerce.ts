@@ -1,5 +1,5 @@
-import { matches } from "./matches";
-import { Item, Type, Value } from "./types";
+import { matches } from "./matches.js";
+import type { Item, Type, Value } from "./types.js";
 
 /**
  * @internal

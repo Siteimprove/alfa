@@ -1,8 +1,8 @@
-import { Graph } from "@siteimprove/alfa-graph";
+import type { Graph } from "@siteimprove/alfa-graph";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Resource } from "./resource";
+import type { Resource } from "./resource.js";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Web_site}

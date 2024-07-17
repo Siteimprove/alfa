@@ -7,13 +7,13 @@ import type {
 } from "@changesets/types";
 import type { Package, Packages } from "@manypkg/get-packages";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { Changeset } from "./get-changeset-details";
+import { Changeset } from "./get-changeset-details.js";
 import {
   type ChangelogFunctions,
   Error,
   getConfigOption,
   getOrDie,
-} from "./helpers";
+} from "./helpers.js";
 
 const NON_UNIQUE_VERSION = Error.freeFrom + 1;
 const INVALID_CHANGESETS = Error.freeFrom + 2;
@@ -178,12 +178,11 @@ export namespace Changelog {
           [key: string]: any;
         };
 
-      return `[${fullName}](${// Harden the access against non-existent packages or invalid
-      // package.json; this still leaks an undefined in the Changelog.
-      packageJSON?.repository?.directory}/CHANGELOG.md#${newVersion.replace(
-        /\./g,
-        "",
-      )})`;
+      return `[${fullName}](${
+        // Harden the access against non-existent packages or invalid
+        // package.json; this still leaks an undefined in the Changelog.
+        packageJSON?.repository?.directory
+      }/CHANGELOG.md#${newVersion.replace(/\./g, "")})`;
     };
   }
 
@@ -243,6 +242,9 @@ export namespace Changelog {
   }
 }
 
+/**
+ * @public
+ */
 const changelogFunctions: ChangelogFunctions = {
   getBody: Changelog.getBody,
   insertBody: Changelog.mergeBodies,

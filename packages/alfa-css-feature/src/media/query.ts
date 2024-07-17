@@ -1,16 +1,16 @@
 import { Token } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Condition } from "../condition";
-import type { Feature } from "../feature";
+import { Condition } from "../condition/index.js";
+import type { Feature } from "../feature.js";
 
-import { Media } from "./feature";
-import { Modifier } from "./modifier";
-import { Type } from "./type";
+import { Media } from "./feature/index.js";
+import { Modifier } from "./modifier.js";
+import { Type } from "./type.js";
 
 const { delimited, either, end, left, map, option, pair, right } = Parser;
 

@@ -1,12 +1,12 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Component } from "./component";
-import type { Parser as CSSParser } from "./parser";
-import { Token } from "./token";
+import { Component } from "./component.js";
+import type { Parser as CSSParser } from "./parser.js";
+import { Token } from "./token.js";
 
 const { either, pair, left, map, takeUntil } = Parser;
 

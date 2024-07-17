@@ -4,9 +4,9 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Sequence } from '@siteimprove/alfa-sequence';
@@ -58,7 +58,7 @@ export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Hash
     // (undocumented)
     toArray(): Array<[T, Array<T>]>;
     // (undocumented)
-    toJSON(): Graph.JSON<T>;
+    toJSON(options?: Serializable.Options): Graph.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

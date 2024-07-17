@@ -1,10 +1,10 @@
-import { h } from "./h";
+import { h } from "./h.js";
 
-import { Element, Node } from ".";
+import type { Element, Node } from "./index.js";
 
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
-import * as dom from ".";
+import type * as dom from "./index.js";
 
 const { entries } = Object;
 
@@ -21,6 +21,7 @@ export function jsx<N extends string = string>(
   let box: Rectangle | undefined = undefined;
   let device: Device | undefined = undefined;
   let externalId: string | undefined = undefined;
+  let serializationId: string | undefined = undefined;
 
   for (const [name, value] of entries(properties ?? {})) {
     if (value === null || value === undefined) {
@@ -49,6 +50,12 @@ export function jsx<N extends string = string>(
         }
         continue;
 
+      case "serializationId":
+        if (typeof value === "string") {
+          serializationId = value;
+        }
+        continue;
+
       default:
         attributes[name] = value === true ? value : `${value}`;
     }
@@ -62,6 +69,7 @@ export function jsx<N extends string = string>(
     box,
     device,
     externalId,
+    serializationId,
   );
 }
 

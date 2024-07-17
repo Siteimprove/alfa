@@ -1,5 +1,5 @@
 import { type RNG, test } from "@siteimprove/alfa-test";
-import { Comparable, Comparison } from "../src";
+import { Comparable, Comparison } from "../dist/index.js";
 
 function wrapper(rng: RNG): RNG<[number, number]> {
   return () => [Math.round(rng() * 1000), Math.round(rng() * 1000)];

@@ -1,12 +1,13 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Node, Query } from "@siteimprove/alfa-dom";
+import type { Element} from "@siteimprove/alfa-dom";
+import { Node, Query } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { isIncludedInTheAccessibilityTree, isMarkedDecorative } = DOM;
 const { getElementDescendants } = Query;

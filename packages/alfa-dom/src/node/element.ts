@@ -1,5 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -8,20 +8,22 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Namespace } from "../namespace";
-import { Node } from "../node";
+import * as json from "@siteimprove/alfa-json";
 
-import { Block } from "../style/block";
-import { Declaration } from "../style/declaration";
+import type { Namespace } from "../namespace.js";
+import { Node } from "../node.js";
 
-import { Attribute } from "./attribute";
-import { Document } from "./document";
-import { Shadow } from "./shadow";
-import { Slot } from "./slot";
-import { Slotable } from "./slotable";
+import { Block } from "../style/block.js";
+import { Declaration } from "../style/declaration.js";
 
-import * as helpers from "./element/input-type";
-import * as predicate from "./element/predicate";
+import { Attribute } from "./attribute.js";
+import { Document } from "./document.js";
+import { Shadow } from "./shadow.js";
+import { Slot } from "./slot.js";
+import { Slotable } from "./slotable.js";
+
+import * as helpers from "./element/input-type.js";
+import * as predicate from "./element/predicate.js";
 
 const { isEmpty } = Iterable;
 const { not } = Predicate;
@@ -43,6 +45,7 @@ export class Element<N extends string = string>
     box: Option<Rectangle> = None,
     device: Option<Device> = None,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Element<N> {
     return new Element(
@@ -55,6 +58,7 @@ export class Element<N extends string = string>
       box,
       device,
       externalId,
+      serializationId,
       extraData,
     );
   }
@@ -80,9 +84,10 @@ export class Element<N extends string = string>
     box: Option<Rectangle>,
     device: Option<Device>,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super(children, "element", externalId, extraData);
+    super(children, "element", externalId, serializationId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -297,14 +302,32 @@ export class Element<N extends string = string>
     return path;
   }
 
-  public toJSON(options?: Node.SerializationOptions): Element.JSON<N> {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
+    },
+  ): Element.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Element.MinimalJSON | Element.JSON<N> {
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return {
+        ...super.toJSON(options),
+      };
+    }
+
     return {
       ...super.toJSON(options),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
       attributes: [...this._attributes.values()].map((attribute) =>
-        attribute.toJSON(),
+        attribute.toJSON(options),
       ),
       style: this._style.map((style) => style.toJSON()).getOr(null),
       shadow: this._shadow.map((shadow) => shadow.toJSON(options)).getOr(null),
@@ -387,6 +410,8 @@ export class Element<N extends string = string>
  * @public
  */
 export namespace Element {
+  export interface MinimalJSON extends Node.JSON<"element"> {}
+
   export interface JSON<N extends string = string>
     extends Node.JSON<"element"> {
     namespace: string | null;
@@ -426,6 +451,8 @@ export namespace Element {
           : Option.from(json.style).map(Block.from),
         Option.from(json.box).map(Rectangle.from),
         Option.from(device),
+        json.externalId,
+        json.serializationId,
       );
 
       if (json.shadow !== null) {
@@ -480,6 +507,8 @@ export namespace Element {
           deviceOption.flatMap((d) => element.getBoundingBox(d)),
           deviceOption,
           element.externalId,
+          element.serializationId,
+          element.extraData,
         );
 
         if (element.shadow.isSome()) {

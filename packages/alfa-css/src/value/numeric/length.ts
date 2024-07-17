@@ -1,16 +1,18 @@
-import { Comparable } from "@siteimprove/alfa-comparable";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Comparable } from "@siteimprove/alfa-comparable";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import { Length as BaseLength } from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Converter, Unit } from "../../unit";
+import { type Expression, Math } from "../../calculation/index.js";
+import { Length as BaseLength } from "../../calculation/numeric/index.js";
+import type { Token } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.js";
+import { Converter, Unit } from "../../unit/index.js";
 
-import { Resolvable } from "../resolvable";
+import type { Resolvable } from "../resolvable.js";
 
-import { Dimension } from "./dimension";
+import { Dimension } from "./dimension.js";
+import type { Numeric } from "./numeric.js";
 
 const { either, map } = Parser;
 
@@ -25,7 +27,7 @@ export type Length<U extends Unit.Length = Unit.Length> =
  * @public
  */
 export namespace Length {
-  export type Canonical = Fixed<"px">;
+  export type Canonical = Fixed<Unit.Length.Canonical>;
 
   /**
    * Lengths that are the result of a calculation.
@@ -46,19 +48,10 @@ export namespace Length {
       return true;
     }
 
-    public resolve(resolver: Resolver): Canonical {
+    public resolve(resolver: Resolver & Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
-          .resolve({
-            // The math expression resolver is only aware of BaseLength and thus
-            // work with these, but we want to abstract them from further layers,
-            // so the resolver here is only aware of Length, and we need to
-            // translate back and forth.
-            length: (length) => {
-              const resolved = resolver.length(Fixed.of(length));
-              return BaseLength.of(resolved.value, resolved.unit);
-            },
-          })
+          .resolve(toExpressionResolver(resolver))
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as a length`),
       );
@@ -144,7 +137,16 @@ export namespace Length {
      * Resolve a Length into an absolute Length in pixels.
      */
     public resolve(resolver: Resolver): Canonical {
-      return this.isRelative() ? resolver.length(this) : this.withUnit("px");
+      return this.isRelative()
+        ? resolver.length(this)
+        : this.withUnit(Unit.Length.Canonical);
+    }
+
+    /**
+     * @internal
+     */
+    public toBase(): BaseLength<U> {
+      return BaseLength.of(this._value, this._unit);
     }
 
     public equals(value: unknown): value is this {
@@ -166,6 +168,29 @@ export namespace Length {
   // a relative length.
   export interface Resolver {
     length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+  }
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver(
+    resolver: Resolver,
+  ): Expression.LengthResolver;
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver(resolver: any): {};
+
+  /**
+   * @internal
+   */
+  export function toExpressionResolver(
+    resolver?: Partial<Resolver>,
+  ): Partial<Expression.LengthResolver> {
+    return resolver?.length === undefined
+      ? {}
+      : { length: (length) => resolver.length!(Fixed.of(length)).toBase() };
   }
 
   /**

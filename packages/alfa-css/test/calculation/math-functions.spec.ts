@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Math } from "../../src";
-import { Length } from "../../src/calculation/numeric";
-import { parser, parserUnsafe, serializer } from "../common/parse";
+import { Math } from "../../dist/index.js";
+import { Length } from "../../dist/calculation/numeric/index.js";
+import { parser, parserUnsafe, serializer } from "../common/parse.js";
 
 const parseErr = parser(Math.parse);
 const parse = parserUnsafe(Math.parse);
@@ -143,4 +143,54 @@ test("parse() accept mixed max if they can combine", (t) => {
       },
     });
   }
+});
+
+test("parse() parses division of dimensions", (t) => {
+  const calculation = parse("calc(2em / 1rem)");
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "calculation",
+      arguments: [
+        {
+          type: "product",
+          operands: [
+            {
+              type: "value",
+              value: { value: 2, type: "length", unit: "em" },
+            },
+            {
+              type: "invert",
+              operands: [
+                {
+                  type: "value",
+                  value: { value: 1, type: "length", unit: "rem" },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  const reduced = calculation.reduce({
+    length: (length) => {
+      switch (length.unit) {
+        case "em":
+          return Length.of(length.value * 16, "px");
+        case "rem":
+          return Length.of(length.value * 32, "px");
+        default:
+          return Length.of(0, "px");
+      }
+    },
+    percentage: (percent) => Length.of(percent.value * 16, "px"),
+  });
+
+  t.deepEqual(reduced.toJSON(), {
+    type: "math expression",
+    expression: { type: "value", value: { value: 1, type: "number" } },
+  });
 });

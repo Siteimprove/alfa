@@ -1,22 +1,23 @@
-import { List, Token, Tuple } from "@siteimprove/alfa-css";
+import type { Tuple } from "@siteimprove/alfa-css";
+import { List, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhands } from "../longhands";
-import { Shorthand } from "../shorthand";
+import { Longhands } from "../longhands.js";
+import { Shorthand } from "../shorthand.js";
 
-import * as Attachment from "./background-attachment";
-import * as Clip from "./background-clip";
-import * as Color from "./background-color";
-import * as Image from "./background-image";
-import * as Origin from "./background-origin";
-import * as Position from "./background-position";
-import * as PositionX from "./background-position-x";
-import * as PositionY from "./background-position-y";
-import * as Repeat from "./background-repeat";
-import * as RepeatX from "./background-repeat-x";
-import * as Size from "./background-size";
+import * as Attachment from "./background-attachment.js";
+import * as Clip from "./background-clip.js";
+import * as Color from "./background-color.js";
+import * as Image from "./background-image.js";
+import * as Origin from "./background-origin.js";
+import * as Position from "./background-position.js";
+import * as PositionX from "./background-position-x.js";
+import * as PositionY from "./background-position-y.js";
+import * as Repeat from "./background-repeat.js";
+import * as RepeatX from "./background-repeat-x.js";
+import * as Size from "./background-size.js";
 
 /**
  * background-repeat-x and background-repeat-y are identical.
@@ -222,15 +223,15 @@ export default Shorthand.of(
   ],
   map(parseList, (layers) => {
     let color: Color.Specified | undefined;
-    let image: Array<Image.Specified.Item> = [];
-    let positionX: Array<PositionX.Specified.Item> = [];
-    let positionY: Array<PositionY.Specified.Item> = [];
-    let size: Array<Size.Specified.Item> = [];
-    let repeatX: Array<RepeatX.Specified.Item> = [];
-    let repeatY: Array<RepeatY.Specified.Item> = [];
-    let attachment: Array<Attachment.Specified.Item> = [];
-    let origin: Array<Origin.Specified.Item> = [];
-    let clip: Array<Clip.Specified.Item> = [];
+    const image: Array<Image.Specified.Item> = [];
+    const positionX: Array<PositionX.Specified.Item> = [];
+    const positionY: Array<PositionY.Specified.Item> = [];
+    const size: Array<Size.Specified.Item> = [];
+    const repeatX: Array<RepeatX.Specified.Item> = [];
+    const repeatY: Array<RepeatY.Specified.Item> = [];
+    const attachment: Array<Attachment.Specified.Item> = [];
+    const origin: Array<Origin.Specified.Item> = [];
+    const clip: Array<Clip.Specified.Item> = [];
 
     for (const layer of layers) {
       color = layer[0];

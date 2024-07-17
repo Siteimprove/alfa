@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-resolve(this: Math<"angle-percentage">, resolver: Expression.PercentageResolver<Angle<"deg">>): Result<Angle<"deg">, string>;
+resolve(this: Math<"angle-percentage">, resolver?: Expression.PercentageResolver<Angle<Unit.Angle.Canonical>> & Expression.GenericResolver): Result<Angle<Unit.Angle.Canonical>, string>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ resolve(this: Math<"angle-percentage">, resolver: Expression.PercentageResolver<
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"angle-percentage"&gt; |  |
-|  resolver | Expression.PercentageResolver&lt;Angle&lt;"deg"&gt;&gt; |  |
+|  resolver | Expression.PercentageResolver&lt;Angle&lt;[Unit.Angle.Canonical](./alfa-css.unit.angle.canonical.md)<!-- -->&gt;&gt; &amp; Expression.GenericResolver | _(Optional)_ |
 
 **Returns:**
 
-Result&lt;Angle&lt;"deg"&gt;, string&gt;
+Result&lt;Angle&lt;[Unit.Angle.Canonical](./alfa-css.unit.angle.canonical.md)<!-- -->&gt;, string&gt;
 

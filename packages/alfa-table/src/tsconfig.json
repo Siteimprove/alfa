@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": [
+    "./anchored.ts",
+    "./cell.ts",
+    "./cell/predicate.ts",
+    "./cell/predicate/has-element.ts",
+    "./column.ts",
+    "./group.ts",
+    "./index.ts",
+    "./row.ts",
+    "./scope.ts",
+    "./slot.ts",
+    "./table.ts"
+  ],
+  "references": [
+    { "path": "../../alfa-array" },
+    { "path": "../../alfa-cache" },
+    { "path": "../../alfa-comparable" },
+    { "path": "../../alfa-dom" },
+    { "path": "../../alfa-equatable" },
+    { "path": "../../alfa-json" },
+    { "path": "../../alfa-math" },
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-predicate" },
+    { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-sequence" }
+  ]
+}

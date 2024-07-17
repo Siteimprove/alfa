@@ -1,9 +1,9 @@
-import { Option } from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 
-import * as dom from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
 
-import { Name } from "../name";
-import { Node } from "../node";
+import type { Name } from "../name/index.js";
+import { Node } from "../node.js";
 
 /**
  * @public

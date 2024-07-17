@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type Canonical = Fixed<"px">;
+type Canonical = Fixed<Unit.Length.Canonical>;
 ```
-**References:** [Fixed](./alfa-css.length.fixed.md)
+**References:** [Fixed](./alfa-css.length.fixed.md)<!-- -->, [Unit.Length.Canonical](./alfa-css.unit.length.canonical.md)
 

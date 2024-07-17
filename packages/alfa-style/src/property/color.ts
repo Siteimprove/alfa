@@ -1,6 +1,7 @@
 import { Color } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 type Specified = Color;
 
@@ -13,7 +14,7 @@ type Computed = Color.Canonical;
 export default Longhand.of<Specified, Computed>(
   Color.system("canvastext"),
   Color.parse,
-  (value) => value.resolve(),
+  (value, style) => value.resolve(Resolver.length(style)),
   {
     inherits: true,
   },

@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": ["./index.ts", "./monad.ts"],
+  "references": [
+    { "path": "../../alfa-applicative" },
+    { "path": "../../alfa-functor" },
+    { "path": "../../alfa-mapper" }
+  ]
+}

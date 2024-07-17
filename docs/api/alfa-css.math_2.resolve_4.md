@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-resolve(this: Math<"number">): Result<Number, string>;
+resolve(this: Math<"number">, resolver?: Expression.GenericResolver): Result<Number, string>;
 ```
 
 ## Parameters
@@ -15,6 +15,7 @@ resolve(this: Math<"number">): Result<Number, string>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"number"&gt; |  |
+|  resolver | Expression.GenericResolver | _(Optional)_ |
 
 **Returns:**
 

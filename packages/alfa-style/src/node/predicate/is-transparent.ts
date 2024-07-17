@@ -1,12 +1,12 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { hasComputedStyle } from "../../element/predicate/has-computed-style";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
 
 const { isElement } = Element;
 const { isText } = Text;

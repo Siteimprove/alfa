@@ -5,20 +5,21 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Callback } from '@siteimprove/alfa-callback';
-import { Collection } from '@siteimprove/alfa-collection';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Collection } from '@siteimprove/alfa-collection';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
-import { Hash } from '@siteimprove/alfa-hash';
+import type { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import { Lazy } from '@siteimprove/alfa-lazy';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
-import { Reducer } from '@siteimprove/alfa-reducer';
-import { Refinement } from '@siteimprove/alfa-refinement';
+import type { Reducer } from '@siteimprove/alfa-reducer';
+import type { Refinement } from '@siteimprove/alfa-refinement';
+import { Serializable } from '@siteimprove/alfa-json';
 import { Set as Set_2 } from '@siteimprove/alfa-set';
 
 // @public (undocumented)
@@ -168,7 +169,7 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(): Cons.JSON<T>;
+    toJSON(options?: Serializable.Options): Cons.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -327,7 +328,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
-    toJSON(): Sequence.JSON<T>;
+    toJSON(options?: Serializable.Options): Sequence.JSON<T>;
     // (undocumented)
     trim(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)

@@ -1,14 +1,19 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Comma, Function, type Parser as CSSParser, Token } from "../../syntax";
+import {
+  Comma,
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax/index.js";
 
-import { Keyword } from "../keyword";
-import { Length } from "../numeric";
-import { Resolvable } from "../resolvable";
-import { Value } from "../value";
+import { Keyword } from "../keyword.js";
+import { Length } from "../numeric/index.js";
+import type { Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
-import { BasicShape } from "./basic-shape";
+import { BasicShape } from "./basic-shape.js";
 
 const { either, map, option, separatedList } = Parser;
 

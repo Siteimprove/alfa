@@ -1,4 +1,4 @@
-import { PseudoElementSelector } from "./pseudo-element";
+import { PseudoElementSelector } from "./pseudo-element.js";
 
 /**
  * {@link https://fullscreen.spec.whatwg.org/#::backdrop-pseudo-element}

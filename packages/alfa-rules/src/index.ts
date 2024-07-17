@@ -1,18 +1,18 @@
 import { Record } from "@siteimprove/alfa-record";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import * as act from "@siteimprove/alfa-act";
+import type * as act from "@siteimprove/alfa-act";
 
-export * from "./tags";
-import * as experimentalRules from "./experimental";
+export * from "./tags/index.js";
+import * as experimentalRules from "./experimental.js";
 export { experimentalRules };
 
-import * as deprecatedRules from "./deprecated";
+import * as deprecatedRules from "./deprecated.js";
 export { deprecatedRules };
 
-import * as rules from "./rules";
+import * as rules from "./rules.js";
 
-import type { Question } from "./common/act/question";
+import type { Question } from "./common/act/question.js";
 
 /**
  * @public
@@ -108,6 +108,6 @@ const FlattenedRules = Sequence.from<Flattened.Rule>(Rules.values());
 
 export default FlattenedRules;
 
-export * from "./common/act/diagnostic";
-export * from "./common/act/group";
-export * from "./common/act/question";
+export * from "./common/act/diagnostic.js";
+export * from "./common/act/group.js";
+export * from "./common/act/question.js";

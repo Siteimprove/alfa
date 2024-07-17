@@ -1,14 +1,14 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
-import { Attribute } from "@siteimprove/alfa-dom";
+import type { Attribute } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { roleAttributes } from "../common/applicability/role-attributes";
+import { expectation } from "../common/act/expectation.js";
+import { roleAttributes } from "../common/applicability/role-attributes.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r110",

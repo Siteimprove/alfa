@@ -1,6 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
 const base = Longhand.fromKeywords(
   { inherits: false },

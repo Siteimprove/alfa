@@ -3,33 +3,34 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, Origin } from "@siteimprove/alfa-cascade";
 import { Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
+import type {
+  Declaration} from "@siteimprove/alfa-dom";
 import {
-  Declaration,
   Document,
   Element,
   Node,
   Shadow,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import * as json from "@siteimprove/alfa-json";
-import { Serializable } from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import * as element from "./element/element";
+import * as element from "./element/element.js";
 
-import { Longhand } from "./longhand";
-import { Longhands } from "./longhands";
-import * as node from "./node/node";
-import { Shorthand } from "./shorthand";
-import { Shorthands } from "./shorthands";
+import type { Longhand } from "./longhand.js";
+import { Longhands } from "./longhands.js";
+import * as node from "./node/node.js";
+import type { Shorthand } from "./shorthand.js";
+import { Shorthands } from "./shorthands.js";
 
-import { Value } from "./value";
-import { Variable } from "./variable";
+import { Value } from "./value.js";
+import { Variable } from "./variable.js";
 
 type Name = Longhands.Name;
 
@@ -459,7 +460,7 @@ export namespace Style {
     isVisibleShadow,
   } = element;
 
-  export const { isRendered, isVisible } = node;
+  export const { isRendered, isVisible, isScrolledBehind } = node;
 }
 
 function parseLonghand<N extends Longhands.Name>(

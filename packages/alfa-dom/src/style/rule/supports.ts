@@ -4,10 +4,10 @@ import type { Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule";
-import { ConditionRule } from "./condition";
-import { Device } from "@siteimprove/alfa-device";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Rule } from "../rule.js";
+import { ConditionRule } from "./condition.js";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 
 /**
  * @public

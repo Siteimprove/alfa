@@ -1,13 +1,14 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Attribute, Node, Query } from "@siteimprove/alfa-dom";
+import type { Attribute} from "@siteimprove/alfa-dom";
+import { Node, Query } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/expectation";
-import { Scope, Stability } from "../tags";
+import { expectation } from "../common/act/expectation.js";
+import { Scope, Stability } from "../tags/index.js";
 
 const { getElementDescendants } = Query;
 

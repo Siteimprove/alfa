@@ -4,15 +4,15 @@
 
 ```ts
 
-import * as dom from '@siteimprove/alfa-dom';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import * as json from '@siteimprove/alfa-json';
+import type * as dom from '@siteimprove/alfa-dom';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type * as json from '@siteimprove/alfa-json';
 import { Node } from '@siteimprove/alfa-dom';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
-import { Predicate } from '@siteimprove/alfa-predicate';
-import { Serializable } from '@siteimprove/alfa-json';
-import { Slice } from '@siteimprove/alfa-slice';
+import type { Predicate } from '@siteimprove/alfa-predicate';
+import type { Serializable } from '@siteimprove/alfa-json';
+import type { Slice } from '@siteimprove/alfa-slice';
 
 // @public (undocumented)
 export function axis(axis: Expression.Axis.Type, name?: string): Builder.Axis;
@@ -61,14 +61,14 @@ export namespace Builder {
     const // (undocumented)
     ContextItem_base: {
         new (expression: Expression.ContextItem): {
-            child(name?: string | undefined): Path;
-            parent(name?: string | undefined): Path;
-            descendant(name?: string | undefined): Path;
-            ancestor(name?: string | undefined): Path;
-            attribute(name?: string | undefined): Path;
+            child(name?: string): Path;
+            parent(name?: string): Path;
+            descendant(name?: string): Path;
+            ancestor(name?: string): Path;
+            attribute(name?: string): Path;
             readonly expression: Expression.ContextItem;
             equals(value: unknown): value is any;
-            toJSON(): JSON;
+            toJSON(): Builder.JSON;
             toString(): string;
         };
     };
@@ -80,14 +80,14 @@ export namespace Builder {
     const // (undocumented)
     Filter_base: {
         new (expression: Expression.Filter): {
-            child(name?: string | undefined): Path;
-            parent(name?: string | undefined): Path;
-            descendant(name?: string | undefined): Path;
-            ancestor(name?: string | undefined): Path;
-            attribute(name?: string | undefined): Path;
+            child(name?: string): Path;
+            parent(name?: string): Path;
+            descendant(name?: string): Path;
+            ancestor(name?: string): Path;
+            attribute(name?: string): Path;
             readonly expression: Expression.Filter;
             equals(value: unknown): value is any;
-            toJSON(): JSON;
+            toJSON(): Builder.JSON;
             toString(): string;
         };
     };
@@ -99,14 +99,14 @@ export namespace Builder {
     const // (undocumented)
     Axis_base: {
         new (expression: Expression.Axis): {
-            child(name?: string | undefined): Path;
-            parent(name?: string | undefined): Path;
-            descendant(name?: string | undefined): Path;
-            ancestor(name?: string | undefined): Path;
-            attribute(name?: string | undefined): Path;
+            child(name?: string): Path;
+            parent(name?: string): Path;
+            descendant(name?: string): Path;
+            ancestor(name?: string): Path;
+            attribute(name?: string): Path;
             readonly expression: Expression.Axis;
             equals(value: unknown): value is any;
-            toJSON(): JSON;
+            toJSON(): Builder.JSON;
             toString(): string;
         };
     };
@@ -120,14 +120,14 @@ export namespace Builder {
     const // (undocumented)
     Path_base: {
         new (expression: Expression.Path): {
-            child(name?: string | undefined): Path;
-            parent(name?: string | undefined): Path;
-            descendant(name?: string | undefined): Path;
-            ancestor(name?: string | undefined): Path;
-            attribute(name?: string | undefined): Path;
+            child(name?: string): Path;
+            parent(name?: string): Path;
+            descendant(name?: string): Path;
+            ancestor(name?: string): Path;
+            attribute(name?: string): Path;
             readonly expression: Expression.Path;
             equals(value: unknown): value is any;
-            toJSON(): JSON;
+            toJSON(): Builder.JSON;
             toString(): string;
         };
     };

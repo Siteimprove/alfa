@@ -7,8 +7,9 @@
 **Signature:**
 
 ```typescript
-interface SerializationOptions 
+interface SerializationOptions extends json.Serializable.Options 
 ```
+**Extends:** [json.Serializable.Options](./alfa-json.serializable.options.md)
 
 ## Properties
 

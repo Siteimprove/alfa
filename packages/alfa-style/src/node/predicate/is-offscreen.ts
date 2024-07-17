@@ -1,14 +1,17 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Context } from "@siteimprove/alfa-selector";
-import { Trilean } from "@siteimprove/alfa-trilean";
+import type { Trilean } from "@siteimprove/alfa-trilean";
 
-import { hasComputedStyle, hasPositioningParent } from "../../element/element";
+import {
+  hasComputedStyle,
+  hasPositioningParent,
+} from "../../element/element.js";
 
-import { Style } from "../../style";
+import { Style } from "../../style.js";
 
 const { hasBox, isElement } = Element;
 const { abs } = Math;

@@ -3,8 +3,8 @@
   "description": "Use Alfa's renovate preset",
   "packageRules": [
     {
-      "description": "get-packages must be kept at the same version as in @changesets/cli; chalk update needs some fix in alfa-test",
-      "matchPackageNames": ["@manypkg/get-packages", "chalk"],
+      "description": "get-packages must be kept at the same version as in @changesets/cli",
+      "matchPackageNames": ["@manypkg/get-packages"],
       "enabled": false
     }
   ],

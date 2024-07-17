@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Map.JSON<K, V>;
+toJSON(options?: O): Map.JSON<K, V>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Map.JSON](./alfa-map.map_2.json.md)<!-- -->&lt;K, V&gt;

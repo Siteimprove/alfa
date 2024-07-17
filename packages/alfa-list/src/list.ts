@@ -1,19 +1,19 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Collection } from "@siteimprove/alfa-collection";
+import { Comparable, type Comparer, type Comparison } from "@siteimprove/alfa-comparable";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
-import { Branch, Empty, Leaf, Node } from "./node";
+import { Branch, Empty, Leaf, Node } from "./node.js";
 
 const { not } = Predicate;
 const { compareComparable } = Comparable;
@@ -480,8 +480,8 @@ export class List<T> implements Collection.Indexed<T> {
     return [...this];
   }
 
-  public toJSON(): List.JSON<T> {
-    return this.toArray().map((value) => Serializable.toJSON(value));
+  public toJSON(options?: Serializable.Options): List.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value, options));
   }
 
   public toString(): string {

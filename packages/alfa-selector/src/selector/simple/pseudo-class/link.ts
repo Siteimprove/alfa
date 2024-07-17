@@ -1,8 +1,9 @@
 import type { Element } from "@siteimprove/alfa-dom";
 
-import { Context } from "../../../context";
+import { Context } from "../../../context.js";
+import { isLink } from "../../../common/is-link.js";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { PseudoClassSelector } from "./pseudo-class.js";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#link-pseudo}
@@ -24,16 +25,7 @@ export class Link extends PseudoClassSelector<"link"> {
     element: Element,
     context: Context = Context.empty(),
   ): boolean {
-    switch (element.name) {
-      case "a":
-      case "area":
-      case "link":
-        return element
-          .attribute("href")
-          .some(() => !context.hasState(element, Context.State.Visited));
-    }
-
-    return false;
+    return isLink(element) && !context.hasState(element, Context.State.Visited);
   }
 
   public toJSON(): Link.JSON {

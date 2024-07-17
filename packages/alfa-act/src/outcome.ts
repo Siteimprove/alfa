@@ -1,18 +1,19 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option } from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
-import { Err, Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
+import { Err } from "@siteimprove/alfa-result";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
-import { Diagnostic } from "./diagnostic";
-import type { Question } from "./question";
-import { Rule } from "./rule";
+import { Diagnostic } from "./diagnostic.js";
+import type { Question } from "./question.js";
+import type { Rule } from "./rule.js";
 
 /**
  * @public
@@ -20,6 +21,7 @@ import { Rule } from "./rule";
  * T: type of the rule's test target
  * Q: questions' metadata type
  * S: possible types of questions' subject.
+ * V: type of outcome value
  */
 export abstract class Outcome<
     I,
@@ -114,7 +116,7 @@ export abstract class Outcome<
     hash.writeString(this._mode);
   }
 
-  public toJSON(): Outcome.JSON<V> {
+  public toJSON(options?: json.Serializable.Options): Outcome.JSON<V> {
     return {
       outcome: this._outcome,
       rule: this._rule.toJSON(),
@@ -248,13 +250,13 @@ export namespace Outcome {
       }
     }
 
-    public toJSON(): Passed.JSON<T> {
+    public toJSON(options?: json.Serializable.Options): Passed.JSON<T> {
       return {
-        ...super.toJSON(),
-        target: json.Serializable.toJSON(this._target),
+        ...super.toJSON(options),
+        target: json.Serializable.toJSON(this._target, options),
         expectations: this._expectations
           .toArray()
-          .map(([id, expectation]) => [id, expectation.toJSON()]),
+          .map(([id, expectation]) => [id, expectation.toJSON(options)]),
       };
     }
 
@@ -427,13 +429,13 @@ export namespace Outcome {
       }
     }
 
-    public toJSON(): Failed.JSON<T> {
+    public toJSON(options?: json.Serializable.Options): Failed.JSON<T> {
       return {
-        ...super.toJSON(),
-        target: json.Serializable.toJSON(this._target),
+        ...super.toJSON(options),
+        target: json.Serializable.toJSON(this._target, options),
         expectations: this._expectations
           .toArray()
-          .map(([id, expectation]) => [id, expectation.toJSON()]),
+          .map(([id, expectation]) => [id, expectation.toJSON(options)]),
       };
     }
 
@@ -604,11 +606,11 @@ export namespace Outcome {
       this._diagnostic.hash(hash);
     }
 
-    public toJSON(): CantTell.JSON<T> {
+    public toJSON(options?: json.Serializable.Options): CantTell.JSON<T> {
       return {
-        ...super.toJSON(),
-        target: json.Serializable.toJSON(this._target),
-        diagnostic: this._diagnostic.toJSON(),
+        ...super.toJSON(options),
+        target: json.Serializable.toJSON(this._target, options),
+        diagnostic: this._diagnostic.toJSON(options),
       };
     }
 
@@ -757,8 +759,8 @@ export namespace Outcome {
       return super.equals(value) && value instanceof Inapplicable;
     }
 
-    public toJSON(): Inapplicable.JSON {
-      return super.toJSON();
+    public toJSON(options?: json.Serializable.Options): Inapplicable.JSON {
+      return super.toJSON(options);
     }
 
     public toEARL(): Inapplicable.EARL {

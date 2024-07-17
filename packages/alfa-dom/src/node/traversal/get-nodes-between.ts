@@ -1,8 +1,8 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Node } from "../..";
+import { Node } from "../../index.js";
 
-import { lowestCommonAncestor } from "./lowest-common-ancestor";
+import { lowestCommonAncestor } from "./lowest-common-ancestor.js";
 
 const { equals, or } = Predicate;
 

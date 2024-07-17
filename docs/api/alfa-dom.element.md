@@ -22,6 +22,7 @@ export declare namespace Element
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-dom.element.json.md) |  |
+|  [MinimalJSON](./alfa-dom.element.minimaljson.md) |  |
 
 ## Variables
 

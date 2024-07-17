@@ -1,16 +1,19 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import * as Base from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Unit } from "../../unit";
+import { Math } from "../../calculation/index.js";
+import * as Base from "../../calculation/numeric/index.js";
+import type { Token } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.js";
+import type { Unit } from "../../unit/index.js";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
+import type { Resolvable } from "../resolvable.js";
 
-import { Dimension } from "./dimension";
-import { Angle } from "./angle";
-import { Percentage } from "./percentage";
+import { Dimension } from "./dimension.js";
+import { Angle } from "./angle.js";
+import { Length } from "./length.js";
+import type { Numeric } from "./numeric.js";
+import { Percentage } from "./percentage.js";
 
 const { either, map } = Parser;
 
@@ -49,7 +52,7 @@ export namespace AnglePercentage {
       return true;
     }
 
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Angle.Fixed.of(
         this._math
           // The math expression resolver is only aware of BasePercentage and
@@ -85,9 +88,15 @@ export namespace AnglePercentage {
   /**
    * Fully resolves an angle-percentage, when a full resolver is provided.
    */
-  export function resolve(value: AnglePercentage): Canonical {
+  export function resolve(
+    value: AnglePercentage,
+    resolver?: Numeric.GenericResolver,
+  ): Canonical {
     return Percentage.isPercentage(value)
-      ? value.resolve({ percentageBase: Angle.of(360, "deg") })
+      ? value.resolve({
+          percentageBase: Angle.of(360, "deg"),
+          ...Length.toExpressionResolver(resolver),
+        })
       : value.resolve();
   }
 

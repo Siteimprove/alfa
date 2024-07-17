@@ -1,8 +1,8 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * {@link https://drafts.csswg.org/mediaqueries-5/#mf-scripting}
@@ -38,7 +38,7 @@ export class Scripting implements Equatable, Hashable, Serializable {
     hash.writeBoolean(this._enabled);
   }
 
-  public toJSON(): Scripting.JSON {
+  public toJSON(options?: json.Serializable.Options): Scripting.JSON {
     return {
       enabled: this._enabled,
     };

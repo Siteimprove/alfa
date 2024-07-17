@@ -1,12 +1,12 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { textWithInlinedImportantProperty } from "../common/applicability/text-with-inlined-important-property";
-import { isWideEnough } from "../common/expectation/is-wide-enough";
+import { textWithInlinedImportantProperty } from "../common/applicability/text-with-inlined-important-property.js";
+import { isWideEnough } from "../common/expectation/is-wide-enough.js";
 
-import { Scope, Stability, Version } from "../tags";
+import { Scope, Stability, Version } from "../tags/index.js";
 
 const property = "letter-spacing";
 const threshold = 0.12;

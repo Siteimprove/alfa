@@ -1,7 +1,7 @@
-import { RNG, test } from "@siteimprove/alfa-test";
+import { type RNG, test } from "@siteimprove/alfa-test";
 
-import { Specificity } from "../src/specificity";
-import { parse } from "./parser";
+import { Specificity } from "../dist/specificity.js";
+import { parse } from "./parser.js";
 
 function wrapper(rng: RNG): RNG {
   // The max value for specificity components is 1024. Picking a "weird"

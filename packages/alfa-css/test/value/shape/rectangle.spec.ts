@@ -1,7 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Rectangle } from "../../../src";
-import { parser, serializer } from "../../common/parse";
+import type { Length} from "../../../dist/index.js";
+import { Rectangle } from "../../../dist/index.js";
+import { parser, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Rectangle.parse);
 const serialize = serializer(Rectangle.parse);
@@ -40,13 +41,11 @@ test(".parse() parses space separated rectangles", (t) => {
 test(".parse() fails if there are more or less than 4 values", (t) => {
   t.deepEqual(parseErr("rect(1px 1px 1px").isErr(), true);
 
-  t.deepEqual(parseErr("rect(1px 1px 1px 1px 1px").isErr(), true,
-  );
+  t.deepEqual(parseErr("rect(1px 1px 1px 1px 1px").isErr(), true);
 });
 
 test(".parse() fails when mixing comma and space separators", (t) => {
-  t.deepEqual(parseErr("rect(1px 1px, 1px 1px").isErr(), true,
-  );
+  t.deepEqual(parseErr("rect(1px 1px, 1px 1px").isErr(), true);
 });
 
 test(".parse() accepts calculated lengths", (t) => {

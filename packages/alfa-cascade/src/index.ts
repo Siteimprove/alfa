@@ -1,3 +1,3 @@
-export * from "./cascade";
-export * from "./precedence";
-export * from "./rule-tree";
+export * from "./cascade.js";
+export * from "./precedence/index.js";
+export * from "./rule-tree.js";

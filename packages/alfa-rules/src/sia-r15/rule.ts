@@ -6,18 +6,18 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { String } from "@siteimprove/alfa-string";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation";
-import { Group } from "../common/act/group";
-import { Question } from "../common/act/question";
+import { expectation } from "../common/act/expectation.js";
+import { Group } from "../common/act/group.js";
+import { Question } from "../common/act/question.js";
 
-import { referenceSameResource } from "../common/predicate";
-import { Scope, Stability } from "../tags";
+import { referenceSameResource } from "../common/predicate.js";
+import { Scope, Stability } from "../tags/index.js";
 
-import { WithName } from "../common/diagnostic";
+import { WithName } from "../common/diagnostic.js";
 
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasName, hasNamespace } = Element;
@@ -41,7 +41,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             ),
           )
           .groupBy((iframe) =>
-            Node.from(iframe, device).name.map((name) => String.normalize(name.value)),
+            Node.from(iframe, device).name.map((name) =>
+              String.normalize(name.value),
+            ),
           )
           .filter((elements) => elements.size > 1)
           .map(Group.of)

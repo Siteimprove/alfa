@@ -1,12 +1,16 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
+import type { Hash } from "@siteimprove/alfa-hash";
 
-import { Numeric as BaseNumeric } from "../../calculation/numeric";
-import { Convertible, Unit } from "../../unit";
+import type {
+  Dimension as BaseDimension,
+  Numeric as BaseNumeric,
+} from "../../calculation/numeric/index.js";
+import { type Convertible, Unit } from "../../unit/index.js";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 
-import { Numeric } from "./numeric";
+import { Numeric } from "./numeric.js";
 
 /**
  * @public
@@ -16,9 +20,9 @@ export namespace Dimension {
    * Dimensions that are the result of a calculation.
    */
   export abstract class Calculated<T extends Type = Type, PR extends Type = T>
-    extends Numeric.Calculated<T, DBase[T], PR>
+    extends Numeric.Calculated<T, ToBase[T], PR>
     implements
-      Resolvable<Fixed<DBase[T], DCanonicalUnit[DBase[T]]>, unknown>,
+      Resolvable<Fixed<ToBase[T], ToCanonicalUnit[ToBase[T]]>, unknown>,
       PartiallyResolvable<any, any>
   {
     protected constructor(math: Numeric.ToMath<T>, type: T) {
@@ -31,7 +35,7 @@ export namespace Dimension {
 
     public abstract resolve(
       resolver?: unknown,
-    ): Fixed<DBase[T], DCanonicalUnit[DBase[T]]>;
+    ): Fixed<ToBase[T], ToCanonicalUnit[ToBase[T]]>;
 
     public equals(value: unknown): value is this {
       return value instanceof Calculated && super.equals(value);
@@ -49,12 +53,12 @@ export namespace Dimension {
   export abstract class Fixed<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
       // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-      U extends DUnit[T] = DUnit[T],
+      U extends BaseDimension.ToUnit[T] = BaseDimension.ToUnit[T],
     >
     extends Numeric.Fixed<T>
     implements
-      Resolvable<Fixed<T, DCanonicalUnit[T]>, unknown>,
-      Convertible<DUnit[T]>,
+      Resolvable<Fixed<T, ToCanonicalUnit[T]>, unknown>,
+      Convertible<BaseDimension.ToUnit[T]>,
       Comparable<Fixed<T>>
   {
     protected readonly _unit: U;
@@ -75,16 +79,22 @@ export namespace Dimension {
     /**
      * {@link https://drafts.csswg.org/css-values/#canonical-unit}
      */
-    public get canonicalUnit(): DCanonicalUnit[T] {
+    public get canonicalUnit(): ToCanonicalUnit[T] {
       // The this.type test does not correctly narrow T, so we need to force typing.
-      return (this.type === "angle" ? "deg" : "px") as DCanonicalUnit[T];
+      return (
+        this.type === "angle" ? Unit.Angle.Canonical : Unit.Length.Canonical
+      ) as ToCanonicalUnit[T];
     }
 
-    public abstract hasUnit<V extends DUnit[T]>(unit: V): this is Fixed<T, V>;
+    public abstract hasUnit<V extends BaseDimension.ToUnit[T]>(
+      unit: V,
+    ): this is Fixed<T, V>;
 
-    public abstract withUnit<V extends DUnit[T]>(unit: V): Fixed<T, V>;
+    public abstract withUnit<V extends BaseDimension.ToUnit[T]>(
+      unit: V,
+    ): Fixed<T, V>;
 
-    public abstract resolve(resolver?: unknown): Fixed<T, DCanonicalUnit[T]>;
+    public abstract resolve(resolver?: unknown): Fixed<T, ToCanonicalUnit[T]>;
 
     public equals(value: unknown): value is this {
       return (
@@ -118,7 +128,7 @@ export namespace Dimension {
   export namespace Fixed {
     export interface JSON<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
-      U extends DUnit[T] = DUnit[T],
+      U extends BaseDimension.ToUnit[T] = BaseDimension.ToUnit[T],
     > extends Numeric.Fixed.JSON<T> {
       unit: U;
     }
@@ -143,11 +153,13 @@ type Type = BaseNumeric.Dimension | `${BaseNumeric.Dimension}-percentage`;
  * Helper types to turn a dimension or dimension-percentage type into its
  * components:
  */
-type DBase = {
+type ToBase = {
   angle: "angle";
   "angle-percentage": "angle";
   length: "length";
   "length-percentage": "length";
 };
-type DUnit = { angle: Unit.Angle; length: Unit.Length };
-type DCanonicalUnit = { angle: "deg"; length: "px" };
+type ToCanonicalUnit = {
+  angle: Unit.Angle.Canonical;
+  length: Unit.Length.Canonical;
+};

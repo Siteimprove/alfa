@@ -4,24 +4,22 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
-import { Callback } from '@siteimprove/alfa-callback';
+import type { Callback } from '@siteimprove/alfa-callback';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Foldable } from '@siteimprove/alfa-foldable';
-import { Functor } from '@siteimprove/alfa-functor';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
-import * as json from '@siteimprove/alfa-json';
-import { Mapper } from '@siteimprove/alfa-mapper';
-import { Monad } from '@siteimprove/alfa-monad';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Foldable } from '@siteimprove/alfa-foldable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
+import type * as json from '@siteimprove/alfa-json';
+import type { Mapper } from '@siteimprove/alfa-mapper';
+import type { Monad } from '@siteimprove/alfa-monad';
 import { Predicate } from '@siteimprove/alfa-predicate';
-import { Reducer } from '@siteimprove/alfa-reducer';
-import { Refinement } from '@siteimprove/alfa-refinement';
+import type { Reducer } from '@siteimprove/alfa-reducer';
+import type { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 
 // Warning: (ae-internal-missing-underscore) The name "Maybe" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -53,7 +51,7 @@ export namespace None {
 }
 
 // @public (undocumented)
-export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>> {
+export interface Option<T> extends Monad<T>, Foldable<T>, Iterable<T>, Equatable, Hashable, Serializable<Option.JSON<T>> {
     // (undocumented)
     and<U>(option: Option<U>): Option<U>;
     // (undocumented)
@@ -85,7 +83,7 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // @internal
     getUnsafe(message?: string): T;
     // (undocumented)
-    includes(value: T): this is Some<T>;
+    includes(value: T): boolean;
     // (undocumented)
     isNone(): this is None;
     // (undocumented)
@@ -109,13 +107,13 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
     // (undocumented)
-    some(predicate: Predicate<T>): this is Some<T>;
+    some(predicate: Predicate<T>): boolean;
     // (undocumented)
     tee(callback: Callback<T>): Option<T>;
     // (undocumented)
     toArray(): Array<T>;
     // (undocumented)
-    toJSON(): Option.JSON<T>;
+    toJSON(options?: Serializable.Options): Option.JSON<T>;
 }
 
 // @public (undocumented)
@@ -159,6 +157,8 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    every<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+    // (undocumented)
     every(predicate: Predicate<T>): boolean;
     // (undocumented)
     filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
@@ -189,6 +189,8 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): Some<U>;
     // (undocumented)
+    none<U extends T>(refinement: Refinement<T, U>): this is Some<Exclude<T, U>>;
+    // (undocumented)
     none(predicate: Predicate<T>): boolean;
     // (undocumented)
     static of<T>(value: T): Some<T>;
@@ -203,13 +205,15 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     reject(predicate: Predicate<T>): Option<T>;
     // (undocumented)
+    some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+    // (undocumented)
     some(predicate: Predicate<T>): boolean;
     // (undocumented)
     tee(callback: Callback<T>): this;
     // (undocumented)
     toArray(): [T];
     // (undocumented)
-    toJSON(): Some.JSON<T>;
+    toJSON(options?: Serializable.Options): Some.JSON<T>;
     // (undocumented)
     toString(): string;
 }

@@ -1,10 +1,15 @@
-import { Function, Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Absolute, Selector } from "../../../selector";
-import { PseudoElementSelector } from "./pseudo-element";
+import type { Selector } from "../../../selector/index.js";
+import { type Absolute } from "../../../selector/index.js";
+import { PseudoElementSelector } from "./pseudo-element.js";
 
 const { either, map, right, take } = Parser;
 

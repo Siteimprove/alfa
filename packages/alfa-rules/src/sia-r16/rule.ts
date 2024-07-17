@@ -1,20 +1,22 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { DOM, Role } from "@siteimprove/alfa-aria";
+import type { Role } from "@siteimprove/alfa-aria";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
-import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional";
+import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace } = Element;
@@ -168,9 +170,11 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     this._missingAttributes.forEach((attr) => hash.writeString(attr));
   }
 
-  public toJSON(): RoleAndRequiredAttributes.JSON {
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): RoleAndRequiredAttributes.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       role: this._role,
       attributes: {
         required: Array.copy(this._requiredAttributes),

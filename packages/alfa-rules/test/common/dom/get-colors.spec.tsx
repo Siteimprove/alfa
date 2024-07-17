@@ -8,7 +8,7 @@ import { Set } from "@siteimprove/alfa-set";
 import {
   getBackground,
   getForeground,
-} from "../../../src/common/dom/get-colors";
+} from "../../../dist/common/dom/get-colors.js";
 
 const device = Device.standard();
 
@@ -838,4 +838,23 @@ test("getBackgroundColor() gives up in case of  non-ignored interposed elements"
       alpha: { type: "percentage", value: 1 },
     },
   );
+});
+
+test("getBackgroundColor() ignores external background image with invalid URL", (t) => {
+  const target = <div>Hello</div>;
+
+  h.document(
+    [target],
+    [h.sheet([h.rule.style("div", { backgroundImage: "url()" })])],
+  );
+
+  // We get the default white background
+  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 1 },
+    green: { type: "percentage", value: 1 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "percentage", value: 1 },
+  });
 });

@@ -1,19 +1,21 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
-import {
+import type {
   Complex,
-  Compound,
+  Compound} from "@siteimprove/alfa-selector";
+import {
   Context,
   type Simple,
 } from "@siteimprove/alfa-selector";
-import { parse } from "@siteimprove/alfa-selector/test/parser";
 import { test } from "@siteimprove/alfa-test";
-import { AncestorFilter } from "../src/ancestor-filter";
 
-import { Layer, Origin } from "../src/precedence";
-import { SelectorMap } from "../src/selector-map";
-import { layer, ruleToBlockJSON } from "./common";
+import { AncestorFilter } from "../dist/ancestor-filter.js";
+import { Layer, Origin } from "../dist/index.js";
+import { SelectorMap } from "../dist/selector-map.js";
+
+import { layer, ruleToBlockJSON } from "./common/common.js";
+import { parse } from "./common/parser.js";
 
 const device = Device.standard();
 

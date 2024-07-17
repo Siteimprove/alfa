@@ -5,9 +5,9 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Callback } from '@siteimprove/alfa-callback';
-import { Continuation } from '@siteimprove/alfa-continuation';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Continuation } from '@siteimprove/alfa-continuation';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 
 // @public (undocumented)
 export interface Thenable<T, E = unknown> {

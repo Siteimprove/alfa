@@ -1,17 +1,19 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import * as Base from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Unit } from "../../unit";
+import { Math } from "../../calculation/index.js";
+import * as Base from "../../calculation/numeric/index.js";
+import type { Token } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.js";
+import type { Unit } from "../../unit/index.js";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 
-import { Dimension } from "./dimension";
-import { Length } from "./length";
-import { Percentage } from "./percentage";
+import { Dimension } from "./dimension.js";
+import { Length } from "./length.js";
+import type { Numeric } from "./numeric.js";
+import { Percentage } from "./percentage.js";
 
 const { either, map } = Parser;
 
@@ -60,24 +62,16 @@ export namespace LengthPercentage {
       return true;
     }
 
-    public resolve(resolver: Resolver): Canonical {
+    public resolve(resolver: Resolver & Numeric.GenericResolver): Canonical {
+      const resolve = this._math.resolve({
+        ...Length.toExpressionResolver(resolver),
+        ...Percentage.toExpressionResolver<
+          "length",
+          Base.Length<Unit.Length.Canonical>
+        >(resolver),
+      });
       return Length.Fixed.of(
-        this._math
-          // The math expression resolver is only aware of BaseLength and
-          // BasePercentage and thus work with these, but we want to abstract
-          // them from further layers, so the resolver here is only aware of
-          // Length and Percentage, and we need to translate back and forth.
-          .resolve({
-            length: (length) => {
-              const resolved = resolver.length(Length.Fixed.of(length));
-              return Base.Length.of(resolved.value, resolved.unit);
-            },
-            percentage: (value) =>
-              Base.Length.of(
-                resolver.percentageBase.value,
-                /* this is "px"! */ resolver.percentageBase.unit,
-              ).scale(value.value),
-          })
+        resolve
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as a length`),
       );
@@ -118,14 +112,15 @@ export namespace LengthPercentage {
    * Fully resolves a length-percentage, when a full resolver is provided.
    */
   export function resolve(
-    resolver: Resolver,
+    resolver: Resolver & Numeric.GenericResolver,
   ): (value: LengthPercentage) => Canonical {
-    return (value) =>
+    return (value) => {
       // We need to break down the union to help TS find the correct overload
       // of each component and correctly narrow the result.
-      Percentage.isPercentage(value)
+      return Percentage.isPercentage(value)
         ? value.resolve(resolver)
         : value.resolve(resolver);
+    };
   }
 
   /**
@@ -134,11 +129,11 @@ export namespace LengthPercentage {
    *
    * @remarks
    * For many style properties, the percentages are resolved depending on the
-   * dimensions of the box, which we do not always have. In this case, we cannot
-   * resolve the percentage parts, but we can still fully resolve the length parts.
-   * Calculated percentages cannot be fully resolved into a canonical length, but
-   * we can nonetheless reduce them to a pure percentage. However, mixed
-   * calculations have to stay as they are.
+   * dimensions of the box, which we do not always have. In this case, we
+   * cannot resolve the percentage parts, but we can still fully resolve the
+   * length parts. Calculated percentages cannot be fully resolved into a
+   * canonical length, but we can nonetheless reduce them to a pure percentage.
+   * However, mixed calculations have to stay as they are.
    */
   export function partiallyResolve(
     resolver: PartialResolver,

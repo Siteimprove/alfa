@@ -1,8 +1,8 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
-import { Element } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import type { Element, Node } from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Iterable } from "@siteimprove/alfa-iterable";
 
 /**
  * @public
@@ -47,9 +47,9 @@ export class WithBadElements extends Diagnostic implements Iterable<Element> {
     yield* this._errors;
   }
 
-  public toJSON(): WithBadElements.JSON {
+  public toJSON(options?: Node.SerializationOptions): WithBadElements.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       errors: this._errors.map((element) => element.path()),
     };
   }

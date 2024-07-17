@@ -14,7 +14,7 @@
  * simple solution for now.
  */
 
-import type { Device, Preference } from ".";
+import type { Device, Preference } from "./index.js";
 
 /**
  * @internal

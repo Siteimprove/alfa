@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): CantTell.JSON<T>;
+toJSON(options?: O): CantTell.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [CantTell.JSON](./alfa-act.outcome.canttell.json.md)<!-- -->&lt;T&gt;

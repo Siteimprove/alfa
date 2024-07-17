@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-predicate",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.80.0",
+  "version": "0.86.2",
   "license": "MIT",
   "description": "Functionality for working with first-order predicate logic",
   "repository": {
@@ -11,19 +11,23 @@
     "directory": "packages/alfa-predicate"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-callback": "workspace:^0.80.0",
-    "@siteimprove/alfa-equatable": "workspace:^0.80.0",
-    "@siteimprove/alfa-mapper": "workspace:^0.80.0"
+    "@siteimprove/alfa-callback": "workspace:^0.86.2",
+    "@siteimprove/alfa-equatable": "workspace:^0.86.2",
+    "@siteimprove/alfa-mapper": "workspace:^0.86.2"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.80.0"
+    "@siteimprove/alfa-test": "workspace:^0.86.2"
   },
   "publishConfig": {
     "access": "public",

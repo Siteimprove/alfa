@@ -1,16 +1,16 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Collection } from "@siteimprove/alfa-collection";
+import { Comparable, type Comparer, type Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
 const { not } = Predicate;
 const { compareComparable } = Comparable;
@@ -473,8 +473,8 @@ export class Slice<T> implements Collection.Indexed<T> {
     return this._array.slice(this._offset, this._offset + this._length);
   }
 
-  public toJSON(): Slice.JSON<T> {
-    return this.toArray().map((value) => Serializable.toJSON(value));
+  public toJSON(options?: Serializable.Options): Slice.JSON<T> {
+    return this.toArray().map((value) => Serializable.toJSON(value, options));
   }
 
   public toString(): string {

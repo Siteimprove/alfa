@@ -1,9 +1,9 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Comma, Parser as CSSParser } from "../../../../syntax";
+import { Comma, type Parser as CSSParser } from "../../../../syntax/index.js";
 
-import { Hint } from "./hint";
-import { Stop } from "./stop";
+import { Hint } from "./hint.js";
+import { Stop } from "./stop.js";
 
 const { pair, map, option, left, right, separatedList } = Parser;
 

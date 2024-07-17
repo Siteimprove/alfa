@@ -1,9 +1,10 @@
 import { Angle, Keyword, Number, Rotate, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
 const { either, left, map, mapResult, option, pair, separatedList } = Parser;
 

@@ -4,38 +4,39 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { type Absolute, Simple } from "../../index";
-import { Compound } from "../../compound";
+import { type Absolute, Simple } from "../../index.js";
+import { Compound } from "../../compound.js";
 
-import { Active } from "./active";
-import { Disabled } from "./disabled";
-import { Empty } from "./empty";
-import { Enabled } from "./enabled";
-import { FirstChild } from "./first-child";
-import { FirstOfType } from "./first-of-type";
-import { Focus } from "./focus";
-import { FocusVisible } from "./focus-visible";
-import { FocusWithin } from "./focus-within";
-import { Has } from "./has";
-import { Host } from "./host";
-import { HostContext } from "./host-context";
-import { Hover } from "./hover";
-import { Is } from "./is";
-import { LastChild } from "./last-child";
-import { LastOfType } from "./last-of-type";
-import { Link } from "./link";
-import { Not } from "./not";
-import { NthChild } from "./nth-child";
-import { NthLastChild } from "./nth-last-child";
-import { NthLastOfType } from "./nth-last-of-type";
-import { NthOfType } from "./nth-of-type";
-import { OnlyChild } from "./only-child";
-import { OnlyOfType } from "./only-of-type";
-import { Root } from "./root";
-import { Visited } from "./visited";
-import { Where } from "./where";
+import { Active } from "./active.js";
+import { AnyLink } from "./any-link.js";
+import { Disabled } from "./disabled.js";
+import { Empty } from "./empty.js";
+import { Enabled } from "./enabled.js";
+import { FirstChild } from "./first-child.js";
+import { FirstOfType } from "./first-of-type.js";
+import { Focus } from "./focus.js";
+import { FocusVisible } from "./focus-visible.js";
+import { FocusWithin } from "./focus-within.js";
+import { Has } from "./has.js";
+import { Host } from "./host.js";
+import { HostContext } from "./host-context.js";
+import { Hover } from "./hover.js";
+import { Is } from "./is.js";
+import { LastChild } from "./last-child.js";
+import { LastOfType } from "./last-of-type.js";
+import { Link } from "./link.js";
+import { Not } from "./not.js";
+import { NthChild } from "./nth-child.js";
+import { NthLastChild } from "./nth-last-child.js";
+import { NthLastOfType } from "./nth-last-of-type.js";
+import { NthOfType } from "./nth-of-type.js";
+import { OnlyChild } from "./only-child.js";
+import { OnlyOfType } from "./only-of-type.js";
+import { Root } from "./root.js";
+import { Visited } from "./visited.js";
+import { Where } from "./where.js";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { PseudoClassSelector } from "./pseudo-class.js";
 
 const { either, filter } = Parser;
 const { or } = Refinement;
@@ -45,6 +46,7 @@ const { or } = Refinement;
  */
 export type PseudoClass =
   | Active
+  | AnyLink
   | Disabled
   | Empty
   | Enabled
@@ -78,6 +80,7 @@ export type PseudoClass =
 export namespace PseudoClass {
   export type JSON =
     | Active.JSON
+    | AnyLink.JSON
     | Disabled.JSON
     | Empty.JSON
     | Enabled.JSON
@@ -119,6 +122,7 @@ export namespace PseudoClass {
   ): CSSParser<PseudoClass> {
     return either<Slice<Token>, PseudoClass, string>(
       Active.parse,
+      AnyLink.parse,
       Disabled.parse,
       Empty.parse,
       Enabled.parse,

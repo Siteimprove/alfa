@@ -376,7 +376,7 @@
 <!-- src/media/feature/discrete.ts&#45;&gt;name_src/media/feature/value -->
 <g id="edge140" class="edge">
 <title>src/media/feature/discrete.ts&#45;&gt;name_src/media/feature/value</title>
-<path fill="none" stroke="#4900ff" d="M217.17,-589.78C224.59,-583.74 234.19,-575.92 243.38,-568.44"/>
+<path fill="none" stroke="#4900ff" stroke-dasharray="1,5" d="M217.17,-589.78C224.59,-583.74 234.19,-575.92 243.38,-568.44"/>
 <polygon fill="#4900ff" stroke="#4900ff" points="245.74,-571.03 251.28,-562 241.32,-565.6 245.74,-571.03"/>
 </g>
 <!-- src/media/feature/discrete.ts&#45;&gt;exit_src/media/feature -->
@@ -396,7 +396,7 @@
 <!-- src/media/feature/height.ts&#45;&gt;name_src/media/feature/value -->
 <g id="edge145" class="edge">
 <title>src/media/feature/height.ts&#45;&gt;name_src/media/feature/value</title>
-<path fill="none" stroke="#4900ff" d="M371.37,-589.93C356.99,-583.44 338.01,-574.78 320.19,-566.37"/>
+<path fill="none" stroke="#4900ff" stroke-dasharray="1,5" d="M371.37,-589.93C356.99,-583.44 338.01,-574.78 320.19,-566.37"/>
 <polygon fill="#4900ff" stroke="#4900ff" points="321.53,-563.13 311,-562 318.53,-569.45 321.53,-563.13"/>
 </g>
 <!-- src/media/feature/height.ts&#45;&gt;src/media/feature/resolver.ts -->
@@ -423,7 +423,7 @@
 <!-- src/media/feature/scripting.ts&#45;&gt;name_src/media/feature/value -->
 <g id="edge163" class="edge">
 <title>src/media/feature/scripting.ts&#45;&gt;name_src/media/feature/value</title>
-<path fill="none" stroke="#4900ff" d="M296.73,-589.78C293.06,-582.29 288.04,-572.09 283.66,-563.16"/>
+<path fill="none" stroke="#4900ff" stroke-dasharray="1,5" d="M296.73,-589.78C293.06,-582.29 288.04,-572.09 283.66,-563.16"/>
 <polygon fill="#4900ff" stroke="#4900ff" points="292.19,-565.64 282.24,-562 287.75,-571.05 292.19,-565.64"/>
 </g>
 <!-- src/media/feature/scripting.ts&#45;&gt;exit_src/media/feature -->
@@ -443,7 +443,7 @@
 <!-- src/media/feature/width.ts&#45;&gt;name_src/media/feature/value -->
 <g id="edge184" class="edge">
 <title>src/media/feature/width.ts&#45;&gt;name_src/media/feature/value</title>
-<path fill="none" stroke="#4900ff" d="M446.59,-592.13C443.69,-591.39 440.79,-590.67 438,-590 385.22,-577.26 367.61,-580.77 320.49,-565.25"/>
+<path fill="none" stroke="#4900ff" stroke-dasharray="1,5" d="M446.59,-592.13C443.69,-591.39 440.79,-590.67 438,-590 385.22,-577.26 367.61,-580.77 320.49,-565.25"/>
 <polygon fill="#4900ff" stroke="#4900ff" points="321.59,-561.93 311,-562 319.33,-568.55 321.59,-561.93"/>
 </g>
 <!-- src/media/feature/width.ts&#45;&gt;src/media/feature/resolver.ts -->
@@ -548,14 +548,14 @@
 <!-- src/media/feature/value/range.ts&#45;&gt;src/media/feature/value/bound.ts -->
 <g id="edge169" class="edge">
 <title>src/media/feature/value/range.ts&#45;&gt;src/media/feature/value/bound.ts</title>
-<path fill="none" stroke="black" d="M343.19,-412.78C351.68,-404.98 361.82,-394.21 369.46,-385.03"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M343.19,-412.78C351.68,-404.98 361.82,-394.21 369.46,-385.03"/>
 <polygon fill="black" stroke="black" points="372.22,-387.19 375.67,-377.17 366.72,-382.85 372.22,-387.19"/>
 </g>
 <!-- src/media/feature/value/range.ts&#45;&gt;src/media/feature/value/discrete.ts -->
 <!-- src/media/feature/value/range.ts&#45;&gt;src/media/feature/value/discrete.ts -->
 <g id="edge171" class="edge">
 <title>src/media/feature/value/range.ts&#45;&gt;src/media/feature/value/discrete.ts</title>
-<path fill="none" stroke="black" d="M322.31,-412.78C315.33,-404.66 303.9,-393.33 293.3,-383.92"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M322.31,-412.78C315.33,-404.66 303.9,-393.33 293.3,-383.92"/>
 <polygon fill="black" stroke="black" points="295.32,-381.03 285.45,-377.17 290.76,-386.34 295.32,-381.03"/>
 </g>
 <!-- src/media/feature/value/range.ts&#45;&gt;exit_src/media/feature/value -->
@@ -647,7 +647,7 @@
 <!-- exit_src/supports&#45;&gt;src/feature.ts -->
 <g id="edge212" class="edge">
 <title>exit_src/supports&#45;&gt;src/feature.ts</title>
-<path fill="none" stroke="#ff0000" d="M1081.98,-405C1090.93,-382.63 1108,-343.49 1108,-307.5 1108,-307.5 1108,-307.5 1108,-246.5 1108,-210.03 1109.18,-192.16 1081,-169 1048.31,-142.14 930.57,-134.02 863.81,-131.56"/>
+<path fill="none" stroke="#ff0000" stroke-dasharray="1,5" d="M1081.98,-405C1090.93,-382.63 1108,-343.49 1108,-307.5 1108,-307.5 1108,-307.5 1108,-246.5 1108,-210.03 1109.18,-192.16 1081,-169 1048.31,-142.14 930.57,-134.02 863.81,-131.56"/>
 <polygon fill="#ff0000" stroke="#ff0000" points="863.66,-128.06 853.55,-131.21 863.43,-135.05 863.66,-128.06"/>
 </g>
 <!-- exit_src/supports&#45;&gt;src/feature.ts -->

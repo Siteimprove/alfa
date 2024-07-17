@@ -5,17 +5,18 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Callback } from '@siteimprove/alfa-callback';
-import { Collection } from '@siteimprove/alfa-collection';
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Collection } from '@siteimprove/alfa-collection';
 import { Equatable } from '@siteimprove/alfa-equatable';
-import { Functor } from '@siteimprove/alfa-functor';
-import { Hash } from '@siteimprove/alfa-hash';
+import type { Functor } from '@siteimprove/alfa-functor';
+import type { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
-import { Reducer } from '@siteimprove/alfa-reducer';
-import { Refinement } from '@siteimprove/alfa-refinement';
+import type { Reducer } from '@siteimprove/alfa-reducer';
+import type { Refinement } from '@siteimprove/alfa-refinement';
+import { Serializable } from '@siteimprove/alfa-json';
 
 // Warning: (ae-internal-missing-underscore) The name "Collision" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -160,7 +161,7 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     toArray(): Array_2<[K, V]>;
     // (undocumented)
-    toJSON(): Map_2.JSON<K, V>;
+    toJSON(options?: Serializable.Options): Map_2.JSON<K, V>;
     // (undocumented)
     toString(): string;
     // (undocumented)

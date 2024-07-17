@@ -3,9 +3,10 @@ node_modules
 **/*.log
 **/*.tsbuildinfo
 
+**/*.cjs
 **/*.js
+**/*.d.cts
 **/*.d.ts
 **/*.map
 
-!**/scripts/**/*.js
 !**/types/**/*.d.ts

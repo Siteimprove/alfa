@@ -1,3 +1,3 @@
-export * from "./conformance";
-export * from "./criterion";
-export * from "./technique";
+export * from "./conformance.js";
+export * from "./criterion.js";
+export * from "./technique.js";

@@ -7,16 +7,16 @@
 **Signature:**
 
 ```typescript
-someErr(predicate: Predicate<E>): boolean;
+someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | Predicate&lt;E&gt; |  |
+|  refinement | Refinement&lt;E, F&gt; |  |
 
 **Returns:**
 
-boolean
+this is [Err](./alfa-result.err.md)<!-- -->&lt;F&gt;
 

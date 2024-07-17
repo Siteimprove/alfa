@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Graph.JSON<T>;
+toJSON(options?: O): Graph.JSON<T>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Graph.JSON](./alfa-graph.graph.json.md)<!-- -->&lt;T&gt;

@@ -78,7 +78,7 @@
 <!-- src/request.ts&#45;&gt;src/body.ts -->
 <g id="edge37" class="edge">
 <title>src/request.ts&#45;&gt;src/body.ts</title>
-<path fill="none" stroke="black" d="M240.34,-235.78C255.01,-227.42 273.83,-215.66 288,-206.09"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M240.34,-235.78C255.01,-227.42 273.83,-215.66 288,-206.09"/>
 <polygon fill="black" stroke="black" points="290.32,-208.74 296.55,-200.17 286.34,-202.99 290.32,-208.74"/>
 </g>
 <!-- src/request.ts&#45;&gt;src/headers.ts -->
@@ -99,7 +99,7 @@
 <!-- src/response.ts&#45;&gt;src/body.ts -->
 <g id="edge41" class="edge">
 <title>src/response.ts&#45;&gt;src/body.ts</title>
-<path fill="none" stroke="black" d="M320.72,-235.78C320.85,-228.53 319.66,-218.74 317.75,-210.02"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M320.72,-235.78C320.85,-228.53 319.66,-218.74 317.75,-210.02"/>
 <polygon fill="black" stroke="black" points="321.08,-208.91 315.09,-200.17 314.32,-210.74 321.08,-208.91"/>
 </g>
 <!-- src/response.ts&#45;&gt;src/headers.ts -->

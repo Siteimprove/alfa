@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-parseCommaSeparated: <V extends Value<string, boolean, string, string>>(parseValue: CSSParser<V>, lower?: number, upper?: number) => CSSParser<List<V>>
+parseCommaSeparated: <V extends Value>(parseValue: CSSParser<V>, lower?: number, upper?: number) => CSSParser<List<V>>
 ```
 
 ## Parameters

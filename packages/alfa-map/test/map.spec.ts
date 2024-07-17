@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 
-import { Map } from "../src/map";
+import { Map } from "../dist/map.js";
 
 const map = Map.of(["foo", 1], ["bar", 2], ["baz", 3], ["qux", 4]);
 

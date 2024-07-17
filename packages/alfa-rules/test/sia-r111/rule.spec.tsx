@@ -2,14 +2,12 @@ import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 
-import R111 from "../../src/sia-r111/rule";
-
-import { evaluate } from "../common/evaluate";
-
-import { failed, inapplicable, passed } from "../common/outcome";
-
-import { TargetSize } from "../../src/common/outcome/target-size";
+import R111 from "../../dist/sia-r111/rule.js";
+import { evaluate } from "../common/evaluate.js";
+import { failed, inapplicable, passed } from "../common/outcome.js";
+import { TargetSize } from "../../dist/common/outcome/target-size.js";
 
 test("evaluate() passes button with clickable area of exactly 44x44 pixels", async (t) => {
   const device = Device.standard();
@@ -53,6 +51,24 @@ test("evaluate() passes input element regardless of size", async (t) => {
         "",
         target.getBoundingBox(device).getUnsafe(),
       ),
+    }),
+  ]);
+});
+
+test("evaluate() passes undersized link with rightsized image descendant", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <a href="/" box={{ device, x: 8, y: 348, width: 536, height: 17 }}>
+      <img box={{ device, x: 8, y: 8, width: 536, height: 354 }} src="foo" />
+    </a>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R111, { document, device }), [
+    passed(R111, target, {
+      1: TargetSize.HasSufficientSize("", Rectangle.of(8, 8, 536, 357)),
     }),
   ]);
 });

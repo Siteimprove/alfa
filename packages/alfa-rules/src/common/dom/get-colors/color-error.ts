@@ -1,14 +1,14 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Style } from "@siteimprove/alfa-style";
+import type { Style } from "@siteimprove/alfa-style";
 
-import { Color } from "./color";
+import type { Color } from "./color.js";
 
 // Extended diagnostic for getColor
 
@@ -75,8 +75,11 @@ export class ColorErrors<
     this._errors.forEach((error) => error.hash(hash));
   }
 
-  public toJSON(): ColorErrors.JSON<T> {
-    return { ...super.toJSON(), errors: Array.toJSON(this._errors) };
+  public toJSON(options?: Node.SerializationOptions): ColorErrors.JSON<T> {
+    return {
+      ...super.toJSON(options),
+      errors: Array.toJSON(this._errors, options),
+    };
   }
 }
 
@@ -173,10 +176,10 @@ export abstract class ColorError<
     hash.writeString(this._type);
   }
 
-  public toJSON(): ColorError.JSON<T, K> {
+  public toJSON(options?: Node.SerializationOptions): ColorError.JSON<T, K> {
     return {
-      ...super.toJSON(),
-      element: this._element.toJSON(),
+      ...super.toJSON(options),
+      element: this._element.toJSON(options),
       type: this._type,
       kind: this._kind,
     };

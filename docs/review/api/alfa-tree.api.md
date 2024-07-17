@@ -4,21 +4,21 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Flags } from '@siteimprove/alfa-flags';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Flags } from '@siteimprove/alfa-flags';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
-import { Predicate } from '@siteimprove/alfa-predicate';
+import type { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 
 // @public
-export abstract class Node<F extends Flags.allFlags, T extends string = string, S extends unknown = unknown> implements Iterable<Node<F>>, Equatable, Hashable, json.Serializable<Node.JSON<T>, S> {
+export abstract class Node<F extends Flags.allFlags, T extends string = string> implements Iterable<Node<F>>, Equatable, Hashable, json.Serializable<Node.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Node<F>>;
-    protected constructor(children: Array<Node<F>>, type: T, externalId?: string, extraData?: any);
+    protected constructor(children: Array<Node<F>>, type: T, externalId?: string, serializationId?: string, extraData?: any);
     // (undocumented)
     ancestors(options?: Flags<F>): Sequence<Node<F>>;
     // @internal (undocumented)
@@ -92,9 +92,11 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string, 
     // (undocumented)
     root(options?: Flags<F>): Node<F>;
     // (undocumented)
+    get serializationId(): string;
+    // (undocumented)
     siblings(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
-    toJSON(options?: S): Node.JSON<T>;
+    toJSON(options?: json.Serializable.Options): Node.JSON<T>;
     // (undocumented)
     get type(): T;
     // (undocumented)
@@ -111,6 +113,8 @@ export namespace Node {
         children?: Array<JSON>;
         // (undocumented)
         externalId?: string;
+        // (undocumented)
+        serializationId?: string;
         // (undocumented)
         type: T;
     }

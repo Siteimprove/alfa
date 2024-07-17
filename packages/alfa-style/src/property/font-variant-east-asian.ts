@@ -1,9 +1,9 @@
 import { Keyword, List, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
 const { either } = Parser;
 

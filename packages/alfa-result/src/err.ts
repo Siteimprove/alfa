@@ -1,16 +1,16 @@
-import { Callback } from "@siteimprove/alfa-callback";
+import type { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Refinement } from "@siteimprove/alfa-refinement";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Ok } from "./ok";
-import { Result } from "./result";
+import type { Result } from "./result.js";
 
 const { not, test } = Predicate;
 
@@ -28,7 +28,7 @@ export class Err<E> implements Result<never, E> {
     this._error = error;
   }
 
-  public isOk(): this is Ok<never> {
+  public isOk(): this is never {
     return false;
   }
 
@@ -64,7 +64,7 @@ export class Err<E> implements Result<never, E> {
     return accumulator;
   }
 
-  public includes(): boolean {
+  public includes(): this is never {
     return false;
   }
 
@@ -72,25 +72,41 @@ export class Err<E> implements Result<never, E> {
     return Equatable.equals(this._error, error);
   }
 
-  public some(): boolean {
+  public some(): this is never {
     return false;
   }
+
+  public someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
+
+  public someErr(predicate: Predicate<E>): boolean;
 
   public someErr(predicate: Predicate<E>): boolean {
     return test(predicate, this._error);
   }
 
-  public none(): boolean {
+  public none(): this is Err<E> {
     return true;
   }
+
+  public noneErr<F extends E>(
+    refinement: Refinement<E, F>,
+  ): this is Result<never, Exclude<E, F>>;
+
+  public noneErr(predicate: Predicate<E>): boolean;
 
   public noneErr(predicate: Predicate<E>): boolean {
     return test(not(predicate), this._error);
   }
 
-  public every(): boolean {
+  public every(): this is Err<E> {
     return true;
   }
+
+  public everyErr<F extends E>(
+    refinement: Refinement<E, F>,
+  ): this is Result<never, F>;
+
+  public everyErr(predicate: Predicate<E>): boolean;
 
   public everyErr(predicate: Predicate<E>): boolean {
     return test(predicate, this._error);
@@ -173,10 +189,10 @@ export class Err<E> implements Result<never, E> {
 
   public *[Symbol.iterator]() {}
 
-  public toJSON(): Err.JSON<E> {
+  public toJSON(options?: Serializable.Options): Err.JSON<E> {
     return {
       type: "err",
-      error: Serializable.toJSON(this._error),
+      error: Serializable.toJSON(this._error, options),
     };
   }
 

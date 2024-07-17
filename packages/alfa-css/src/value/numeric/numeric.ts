@@ -1,13 +1,15 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Comparison } from "@siteimprove/alfa-comparable";
+import { Comparable } from "@siteimprove/alfa-comparable";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Real } from "@siteimprove/alfa-math";
 
-import { Math } from "../../calculation";
-import { Numeric as BaseNumeric } from "../../calculation/numeric";
+import type { Math } from "../../calculation/index.js";
+import { Numeric as BaseNumeric } from "../../calculation/numeric/index.js";
 
-import type { Resolvable } from "../resolvable";
-import { Value } from "../value";
+import type { Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
+import type { Length } from "./length.js";
 
 /**
  * @public
@@ -54,7 +56,7 @@ export namespace Numeric {
       return true;
     }
 
-    public abstract resolve(resolver?: unknown): Fixed<R>;
+    public abstract resolve(resolver?: GenericResolver): Fixed<R>;
 
     public equals(value: unknown): value is this {
       return value instanceof Calculated && value._math.equals(this._math);
@@ -116,6 +118,13 @@ export namespace Numeric {
       return this._value === 0;
     }
 
+    /**
+     * @internal
+     */
+    public abstract toBase(): T extends Exclude<Type, `${string}-percentage`>
+      ? BaseNumeric<T>
+      : never;
+
     public equals(value: unknown): value is this {
       return value instanceof Fixed && value._value === this._value;
     }
@@ -150,6 +159,14 @@ export namespace Numeric {
   }
 
   export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
+
+  /**
+   * A length resolver may be needed even for non-length calculation due to
+   * division cancelling units.
+   *
+   * @internal
+   */
+  export type GenericResolver = Partial<Length.Resolver>;
 
   export function isCalculated(value: unknown): value is Calculated {
     return value instanceof Calculated;

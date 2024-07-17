@@ -1,6 +1,7 @@
 import { Color, Percentage } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 /**
  * @internal
@@ -29,5 +30,5 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(0),
   ),
   parse,
-  (value) => value.resolve(),
+  (value, style) => value.resolve(Resolver.length(style)),
 );

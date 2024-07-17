@@ -1,10 +1,10 @@
 import { Color, Numeric } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Context } from "@siteimprove/alfa-selector";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element } from "@siteimprove/alfa-dom";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Context } from "@siteimprove/alfa-selector";
 
-import { Style } from "../../style";
+import { Style } from "../../style.js";
 
 /**
  * @public

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R43, { Outcomes } from "../../src/sia-r43/rule";
+import R43, { Outcomes } from "../../dist/sia-r43/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test("evaluates() passes SVG with img role and a name", async (t) => {
   const target = (

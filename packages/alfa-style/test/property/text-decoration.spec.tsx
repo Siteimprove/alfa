@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 test("#cascaded() parses `text-decoration: underline`", (t) => {
   const element = <div style={{ textDecoration: "underline" }} />;

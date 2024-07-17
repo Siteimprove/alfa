@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
-import { Assertions, test } from "@siteimprove/alfa-test";
+import { type Assertions, test } from "@siteimprove/alfa-test";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 function parse(
   t: Assertions,

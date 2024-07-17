@@ -7,11 +7,11 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparer } from '@siteimprove/alfa-comparable';
 import { Element } from '@siteimprove/alfa-dom';
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
-import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
+import type { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
+import type * as json from '@siteimprove/alfa-json';
 import { Maybe } from '@siteimprove/alfa-option';
 import { Nth } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
@@ -20,7 +20,7 @@ import { Parser as Parser_2 } from '@siteimprove/alfa-css';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token } from '@siteimprove/alfa-css';
 
 // Warning: (ae-internal-missing-underscore) The name "Absolute" should be prefixed with an underscore because the declaration is marked as @internal
@@ -361,6 +361,7 @@ export namespace List {
 }
 
 // Warning: (ae-forgotten-export) The symbol "Active" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "AnyLink" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Disabled" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Empty" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Enabled" needs to be exported by the entry point index.d.ts
@@ -389,14 +390,14 @@ export namespace List {
 // Warning: (ae-forgotten-export) The symbol "Where" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export type PseudoClass = Active | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | HostContext | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
+export type PseudoClass = Active | AnyLink | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | HostContext | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
 
 // @public (undocumented)
 export namespace PseudoClass {
     // (undocumented)
     export function isPseudoClass(value: unknown): value is PseudoClass;
     // (undocumented)
-    export type JSON = Active.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | HostContext.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
+    export type JSON = Active.JSON | AnyLink.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | HostContext.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
     const // (undocumented)
     isHost: typeof Host.isHost;
     // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal

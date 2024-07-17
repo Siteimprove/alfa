@@ -1,6 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,18 +9,18 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { String } from "@siteimprove/alfa-string";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation";
-import { Group } from "../common/act/group";
-import { Question } from "../common/act/question";
+import { expectation } from "../common/act/expectation.js";
+import { Group } from "../common/act/group.js";
+import { Question } from "../common/act/question.js";
 
-import { referenceSameResource } from "../common/predicate";
+import { referenceSameResource } from "../common/predicate.js";
 
-import { WithName } from "../common/diagnostic";
-import { Scope, Stability } from "../tags";
+import { WithName } from "../common/diagnostic.js";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;

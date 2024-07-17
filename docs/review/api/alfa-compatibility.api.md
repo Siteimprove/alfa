@@ -5,8 +5,8 @@
 ```ts
 
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
-import { Serializable } from '@siteimprove/alfa-json';
+import type * as json from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export type Browser<N extends Browser.Name = Browser.Name, V extends Browser.Version<N> = Browser.Version<N>> = Browser.Release<N, V>;

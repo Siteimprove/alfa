@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 
-import { FNV } from "../src";
+import { FNV } from "../dist/index.js";
 
 const fnv = (hasher: (hash: Hash) => Hash): number =>
   hasher(FNV.empty()).finish();

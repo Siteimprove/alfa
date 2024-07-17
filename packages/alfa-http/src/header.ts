@@ -1,7 +1,7 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * @public
@@ -44,7 +44,7 @@ export class Header
     );
   }
 
-  public toJSON(): Header.JSON {
+  public toJSON(options?: json.Serializable.Options): Header.JSON {
     return {
       name: this._name,
       value: this._value,

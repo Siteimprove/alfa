@@ -1,6 +1,7 @@
-import { Device } from "@siteimprove/alfa-device";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Text } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Style } from "@siteimprove/alfa-style";
 
 const { isElement } = Element;

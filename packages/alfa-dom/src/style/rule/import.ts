@@ -1,13 +1,13 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Rule } from "../rule";
-import { Sheet } from "../sheet";
-import { ConditionRule } from "./condition";
+import { Rule } from "../rule.js";
+import { Sheet } from "../sheet.js";
+import { ConditionRule } from "./condition.js";
 
 const { and } = Predicate;
 

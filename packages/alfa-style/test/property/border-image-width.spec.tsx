@@ -1,11 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 
-import * as Width from "../../src/property/border-image-width";
+import type * as Width from "../../dist/property/border-image-width.js";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 function width(
   top: number,

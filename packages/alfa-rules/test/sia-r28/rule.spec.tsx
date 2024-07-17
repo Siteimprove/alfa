@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R28, { Outcomes } from "../../src/sia-r28/rule";
+import R28, { Outcomes } from "../../dist/sia-r28/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test(`evaluate() passes an <input> element with \`image\` type and with an accessible name through the \`alt\` attribute`, async (t) => {
   const target = <input type="image" alt="Submit" />;

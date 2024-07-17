@@ -1,10 +1,10 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import type { PartiallyResolvable, Resolvable } from "./resolvable";
+import type { PartiallyResolvable, Resolvable } from "./resolvable.js";
 
 /**
  * Representation of a CSS Value
@@ -90,11 +90,8 @@ export namespace Value {
   /**
    * @internal
    */
-  export type HasCalculation<V extends Array<Value>> = V extends Array<
-    Value<string, false>
-  >
-    ? false
-    : true;
+  export type HasCalculation<V extends Array<Value>> =
+    V extends Array<Value<string, false>> ? false : true;
 
   /**
    * @internal

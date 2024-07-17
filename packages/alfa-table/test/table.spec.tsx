@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Table } from "../src/table";
+import { Table } from "../dist/table.js";
 
 test(`.from() constructs a table from a simple 2x2 <table> element with direct
       child <tr> elements`, (t) => {

@@ -28,4 +28,5 @@ export declare namespace Shadow
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-dom.shadow.json.md) |  |
+|  [MinimalJSON](./alfa-dom.shadow.minimaljson.md) |  |
 

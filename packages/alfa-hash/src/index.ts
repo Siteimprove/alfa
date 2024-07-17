@@ -1,2 +1,2 @@
-export * from "./hash";
-export * from "./hashable";
+export * from "./hash.js";
+export * from "./hashable.js";

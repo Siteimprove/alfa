@@ -5,12 +5,13 @@
     "declaration": true,
     "declarationMap": true,
     "incremental": true,
-    "lib": ["es2020"],
-    "module": "commonjs",
+    "lib": ["es2022"],
+    "module": "Node16",
+    "target": "es2022",
     "sourceMap": true,
     "strict": true,
-    "target": "es2020",
-    "types": []
+    "types": [],
+    "verbatimModuleSyntax": true
   },
   "files": [],
   "references": [{ "path": "packages" }, { "path": "scratches" }]

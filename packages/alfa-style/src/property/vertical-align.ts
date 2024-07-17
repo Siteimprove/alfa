@@ -2,11 +2,11 @@ import { Keyword, LengthPercentage, Number } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 
-import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
-import type { Computed as FontSize } from "./font-size";
-import type { Computed as LineHeight } from "./line-height";
+import type { Computed as FontSize } from "./font-size.js";
+import type { Computed as LineHeight } from "./line-height.js";
 
 const { either } = Parser;
 

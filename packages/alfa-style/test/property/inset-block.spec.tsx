@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { cascaded } from "../common";
+import { cascaded } from "../common.js";
 
 test("#cascaded() parses `inset-block: 1px 2px", (t) => {
   const element = <div style={{ insetBlock: "1px 2px" }} />;

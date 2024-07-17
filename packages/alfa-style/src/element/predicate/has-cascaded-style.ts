@@ -1,12 +1,13 @@
-import { Device } from "@siteimprove/alfa-device";
-import { Declaration, Element, Node, Text } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Context } from "@siteimprove/alfa-selector";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Declaration, Text } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
+import type { Option } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Context } from "@siteimprove/alfa-selector";
 
-import type { Longhands } from "../../longhands";
+import type { Longhands } from "../../longhands.js";
 
-import { Style } from "../../style";
+import { Style } from "../../style.js";
 
 const { isElement } = Element;
 

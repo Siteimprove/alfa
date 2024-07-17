@@ -1,17 +1,18 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Document, Element } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Document, Node } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Language } from "@siteimprove/alfa-iana";
 import { Option } from "@siteimprove/alfa-option";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { Question } from "../common/act/question";
+import { expectation } from "../common/act/expectation.js";
+import { Question } from "../common/act/question.js";
 
-import { Scope, Stability } from "../tags";
-import { withDocumentElement } from "../common/applicability/with-document-element";
+import { Scope, Stability } from "../tags/index.js";
+import { withDocumentElement } from "../common/applicability/with-document-element.js";
 
 const { hasAttribute } = Element;
 
@@ -151,9 +152,9 @@ export class Languages extends Diagnostic {
     this._natural.forEach((lang) => hash.writeString(lang.primary.name));
   }
 
-  public toJSON(): Languages.JSON {
+  public toJSON(options?: Node.SerializationOptions): Languages.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       programmatic: this._programmatic.toJSON(),
       natural: this._natural.toJSON(),
     };

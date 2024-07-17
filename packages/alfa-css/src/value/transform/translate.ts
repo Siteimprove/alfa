@@ -1,17 +1,18 @@
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import {
   Function as CSSFunction,
   type Parser as CSSParser,
-} from "../../syntax";
-import { List } from "../collection";
+} from "../../syntax/index.js";
+import { Unit } from "../../unit/index.js";
+import { List } from "../collection/index.js";
 
-import { Length, LengthPercentage, Numeric } from "../numeric";
-import { PartiallyResolvable, Resolvable } from "../resolvable";
-import { Value } from "../value";
+import { Length, LengthPercentage, Numeric } from "../numeric/index.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
-import { Function } from "./function";
+import { Function } from "./function.js";
 
 const { map, either, parseIf } = Parser;
 
@@ -147,7 +148,7 @@ export namespace Translate {
     return value instanceof Translate;
   }
 
-  const _0 = Length.of(0, "px");
+  const _0 = Length.of(0, Unit.Length.Canonical);
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translate}

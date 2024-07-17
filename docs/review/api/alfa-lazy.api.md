@@ -4,13 +4,13 @@
 
 ```ts
 
-import { Applicative } from '@siteimprove/alfa-applicative';
+import type { Applicative } from '@siteimprove/alfa-applicative';
 import { Equatable } from '@siteimprove/alfa-equatable';
-import { Functor } from '@siteimprove/alfa-functor';
-import { Mapper } from '@siteimprove/alfa-mapper';
-import { Monad } from '@siteimprove/alfa-monad';
+import type { Functor } from '@siteimprove/alfa-functor';
+import type { Mapper } from '@siteimprove/alfa-mapper';
+import type { Monad } from '@siteimprove/alfa-monad';
 import { Serializable } from '@siteimprove/alfa-json';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
 export class Lazy<T> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>> {
@@ -37,7 +37,7 @@ export class Lazy<T> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T
     // (undocumented)
     static of<T>(thunk: Thunk<T>): Lazy<T>;
     // (undocumented)
-    toJSON(): Lazy.JSON<T>;
+    toJSON(options?: Serializable.Options): Lazy.JSON<T>;
     // (undocumented)
     toString(): string;
     // (undocumented)

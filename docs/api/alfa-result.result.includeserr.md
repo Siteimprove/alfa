@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-includesErr(error: E): this is Err<E>;
+includesErr(error: E): boolean;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ includesErr(error: E): this is Err<E>;
 
 **Returns:**
 
-this is Err&lt;E&gt;
+boolean
 

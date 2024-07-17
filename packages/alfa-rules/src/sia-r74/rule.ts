@@ -1,17 +1,18 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Length } from "@siteimprove/alfa-css";
-import { Element, Node, Query } from "@siteimprove/alfa-dom";
+import type { Element} from "@siteimprove/alfa-dom";
+import { Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasRole } = DOM;
 const { and, not } = Predicate;
@@ -47,10 +48,10 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             // Keyword, percentage, number
             !Length.isLength(fontSize) ||
-            // Calculated length
-            fontSize.hasCalculation() ||
-            // Fixed length in relative units
-            fontSize.isRelative(),
+              // Calculated length
+              fontSize.hasCalculation() ||
+              // Fixed length in relative units
+              fontSize.isRelative(),
             () => Outcomes.HasRelativeUnit,
             () => Outcomes.HasAbsoluteUnit,
           ),

@@ -1,10 +1,10 @@
 import { Shape, Keyword, Rectangle } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand";
-import { Value } from "../value";
+import { Longhand } from "../longhand.js";
+import { Value } from "../value.js";
 
-import type Position from "./position";
+import type Position from "./position.js";
 
 const { either, map } = Parser;
 

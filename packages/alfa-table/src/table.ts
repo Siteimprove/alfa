@@ -1,21 +1,21 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Element } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Real } from "@siteimprove/alfa-math";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Cell } from "./cell";
-import { Column } from "./column";
-import { Row } from "./row";
-import { Group } from "./group";
-import { Slot } from "./slot";
-import { Scope } from "./scope";
+import { Cell } from "./cell.js";
+import { Column } from "./column.js";
+import { Row } from "./row.js";
+import type { Group } from "./group.js";
+import { Slot } from "./slot.js";
+import { Scope } from "./scope.js";
 
 const { isNaN } = Number;
 const { clamp } = Real;
@@ -519,7 +519,7 @@ export namespace Table {
         }
 
         // 8
-        let colspan = integerValue(
+        const colspan = integerValue(
           current.get(),
           "colspan",
           1 /* lower */,

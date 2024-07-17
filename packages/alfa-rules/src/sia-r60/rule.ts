@@ -1,17 +1,18 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM, Role, Node as ariaNode } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
+import type { Role} from "@siteimprove/alfa-aria";
+import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { WithRole } from "../common/diagnostic/with-role";
-import { Scope, Stability } from "../tags";
+import { expectation } from "../common/act/expectation.js";
+import { WithRole } from "../common/diagnostic/with-role.js";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;

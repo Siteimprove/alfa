@@ -1,19 +1,19 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Numeric } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { hasComputedStyle } from "../../element/predicate/has-computed-style";
-import { isPositioned } from "../../element/predicate/is-positioned";
-import { hasSameForegroundAsBackground } from "./has-same-foreground-as-background";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style.js";
+import { isPositioned } from "../../element/predicate/is-positioned.js";
+import { hasSameForegroundAsBackground } from "./has-same-foreground-as-background.js";
 
-import { isClipped } from "./is-clipped";
-import { isOffscreen } from "./is-offscreen";
-import { isRendered } from "./is-rendered";
-import { isTransparent } from "./is-transparent";
+import { isClipped } from "./is-clipped.js";
+import { isOffscreen } from "./is-offscreen.js";
+import { isRendered } from "./is-rendered.js";
+import { isTransparent } from "./is-transparent.js";
 
 const { hasName, isElement, isReplaced } = Element;
 const { nor, not, test } = Predicate;

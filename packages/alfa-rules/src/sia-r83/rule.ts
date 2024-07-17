@@ -1,19 +1,20 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
+import type { RuleTree } from "@siteimprove/alfa-cascade";
+import { Cascade } from "@siteimprove/alfa-cascade";
 import { Length } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Rule as CSSRule } from "@siteimprove/alfa-dom";
 import {
   Document,
   Element,
   MediaRule,
   Namespace,
   Node,
-  Rule as CSSRule,
   Text,
 } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -23,11 +24,11 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { isHeight, isWidth } = Feature.Media.Feature;
 const { Discrete, Range } = Feature.Media.Value;
@@ -615,11 +616,11 @@ export class ClippingAncestors extends Diagnostic {
     this._horizontal.hash(hash);
   }
 
-  public toJSON(): ClippingAncestors.JSON {
+  public toJSON(options?: Node.SerializationOptions): ClippingAncestors.JSON {
     return {
-      ...super.toJSON(),
-      horizontal: this._horizontal.toJSON(),
-      vertical: this._vertical.toJSON(),
+      ...super.toJSON(options),
+      horizontal: this._horizontal.toJSON(options),
+      vertical: this._vertical.toJSON(options),
     };
   }
 }

@@ -24,9 +24,9 @@ namespace JSON_2 {
 export { JSON_2 as JSON }
 
 // @public (undocumented)
-export interface Serializable<T extends JSON_2 = JSON_2, OPTIONS extends unknown = unknown> {
+export interface Serializable<T extends JSON_2 = JSON_2> {
     // (undocumented)
-    toJSON(options?: OPTIONS): T;
+    toJSON(options?: Serializable.Options): T;
 }
 
 // @public (undocumented)
@@ -34,11 +34,27 @@ export namespace Serializable {
     // (undocumented)
     export function isSerializable<T extends JSON_2>(value: unknown): value is Serializable<T>;
     // (undocumented)
+    export interface Options {
+        // (undocumented)
+        verbosity?: Verbosity;
+    }
+    // (undocumented)
     export type ToJSON<T> = T extends Serializable<infer U> ? U : T extends JSON_2 ? T : JSON_2;
     // (undocumented)
-    export function toJSON<T extends JSON_2, OPTIONS extends unknown = unknown>(value: Serializable<T>, options?: OPTIONS): T;
+    export function toJSON<T extends JSON_2>(value: Serializable<T>, options?: Serializable.Options): T;
     // (undocumented)
-    export function toJSON<T, OPTIONS extends unknown = unknown>(value: T, options?: OPTIONS): ToJSON<T>;
+    export function toJSON<T>(value: T, options?: Serializable.Options): ToJSON<T>;
+    // (undocumented)
+    export enum Verbosity {
+        // (undocumented)
+        High = 300,
+        // (undocumented)
+        Low = 100,
+        // (undocumented)
+        Medium = 200,
+        // (undocumented)
+        Minimal = 0
+    }
 }
 
 // (No @packageDocumentation comment for this package)

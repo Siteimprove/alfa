@@ -1,7 +1,8 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
+import type {
+  Attribute} from "@siteimprove/alfa-dom";
 import {
-  Attribute,
   Element,
   Namespace,
   Node,
@@ -11,14 +12,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/expectation";
-import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional";
+import { expectation } from "../common/act/expectation.js";
+import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.js";
 
-import { Scope, Stability } from "../tags";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasNamespace } = Element;
 const { isEmpty } = Iterable;

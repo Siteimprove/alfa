@@ -1,6 +1,6 @@
 import { Keyword, List } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
 type Specified = List<Specified.Item>;
 

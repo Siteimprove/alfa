@@ -4,11 +4,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import { Namespace } from "../namespace";
-import { Node } from "../node";
-import { Element } from "./element";
+import * as json from "@siteimprove/alfa-json";
 
-import * as predicate from "./attribute/predicate";
+import { Namespace } from "../namespace.js";
+import { Node } from "../node.js";
+import type { Element } from "./element.js";
+
+import * as predicate from "./attribute/predicate.js";
 
 const { isEmpty } = Iterable;
 const { equals, not } = Predicate;
@@ -23,9 +25,18 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     name: N,
     value: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Attribute<N> {
-    return new Attribute(namespace, prefix, name, value, externalId, extraData);
+    return new Attribute(
+      namespace,
+      prefix,
+      name,
+      value,
+      externalId,
+      serializationId,
+      extraData,
+    );
   }
 
   private readonly _namespace: Option<Namespace>;
@@ -40,9 +51,10 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     name: N,
     value: string,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super([], "attribute", externalId, extraData);
+    super([], "attribute", externalId, serializationId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -136,15 +148,33 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
       : None;
   }
 
-  public toJSON(): Attribute.JSON<N> {
-    let result = {
-      ...super.toJSON(),
-      namespace: this._namespace.getOr(null),
-      prefix: this._prefix.getOr(null),
-      name: this._name,
-      value: this._value,
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
+    },
+  ): Attribute.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Attribute.JSON<N>;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Attribute.MinimalJSON | Attribute.JSON<N> {
+    const result = {
+      ...super.toJSON(options),
     };
+
     delete result.children;
+
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    result.namespace = this._namespace.getOr(null);
+    result.prefix = this._prefix.getOr(null);
+    result.name = this._name;
+    result.value = this._value;
 
     return result;
   }
@@ -185,6 +215,8 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
  * @public
  */
 export namespace Attribute {
+  export interface MinimalJSON extends Node.JSON<"attribute"> {}
+
   export interface JSON<N extends string = string>
     extends Node.JSON<"attribute"> {
     namespace: string | null;
@@ -209,6 +241,8 @@ export namespace Attribute {
         Option.from(attribute.prefix),
         attribute.name,
         attribute.value,
+        attribute.externalId,
+        attribute.serializationId,
       ),
     );
   }
@@ -226,6 +260,8 @@ export namespace Attribute {
         attribute.name,
         attribute.value,
         attribute.externalId,
+        attribute.serializationId,
+        attribute.extraData,
       ),
     );
   }

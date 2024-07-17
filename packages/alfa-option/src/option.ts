@@ -1,28 +1,25 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
-import { Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Monad } from "@siteimprove/alfa-monad";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { type Comparer } from "@siteimprove/alfa-comparable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Foldable } from "@siteimprove/alfa-foldable";
+import type { Hashable } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Monad } from "@siteimprove/alfa-monad";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { None } from "./none";
-import { Some } from "./some";
+import { None } from "./none.js";
+import { Some } from "./some.js";
 
 /**
  * @public
  */
 export interface Option<T>
-  extends Functor<T>,
-    Applicative<T>,
-    Monad<T>,
+  extends Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
@@ -40,9 +37,9 @@ export interface Option<T>
   filter(predicate: Predicate<T>): Option<T>;
   reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
   reject(predicate: Predicate<T>): Option<T>;
-  includes(value: T): this is Some<T>;
+  includes(value: T): boolean;
   some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
-  some(predicate: Predicate<T>): this is Some<T>;
+  some(predicate: Predicate<T>): boolean;
   none<U extends T>(
     refinement: Refinement<T, U>,
   ): this is Option<Exclude<T, U>>;
@@ -67,7 +64,7 @@ export interface Option<T>
   compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
   compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
   toArray(): Array<T>;
-  toJSON(): Option.JSON<T>;
+  toJSON(options?: Serializable.Options): Option.JSON<T>;
 }
 
 /**

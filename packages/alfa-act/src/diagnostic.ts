@@ -1,9 +1,9 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Hash, Hashable } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { String } from "@siteimprove/alfa-string";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * @public
@@ -37,7 +37,7 @@ export class Diagnostic
     hash.writeString(this._message);
   }
 
-  public toJSON(): Diagnostic.JSON {
+  public toJSON(options?: Serializable.Options): Diagnostic.JSON {
     return {
       message: this._message,
     };

@@ -1,7 +1,7 @@
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Criterion } from "./criterion";
+import { Criterion } from "./criterion.js";
 
 /**
  * This namespace defines types and functions for working with conformance-

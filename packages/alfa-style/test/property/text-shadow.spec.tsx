@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { cascaded } from "../common";
-import { Style } from "../../src";
+import { cascaded } from "../common.js";
+import { Style } from "../../dist/index.js";
 import { Device } from "@siteimprove/alfa-device";
 
 test(`.cascaded() parses \`text-shadow: 1px 1px 2px black;\``, (t) => {

@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R61, { Outcomes } from "../../src/sia-r61/rule";
+import R61, { Outcomes } from "../../dist/sia-r61/rule.js";
 
-import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { evaluate } from "../common/evaluate.js";
+import { passed, failed, inapplicable } from "../common/outcome.js";
 
 test("evaluate() passes when the document starts with an explicit level 1 heading", async (t) => {
   const heading = (

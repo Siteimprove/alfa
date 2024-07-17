@@ -2,9 +2,9 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { type Element, Node } from "@siteimprove/alfa-dom";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { Context } from "../../../context";
+import { Context } from "../../../context.js";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { PseudoClassSelector } from "./pseudo-class.js";
 
 const { State } = Context;
 

@@ -1,8 +1,8 @@
 import type { Element } from "@siteimprove/alfa-dom";
 
-import { Context } from "../../../context";
+import { Context } from "../../../context.js";
 
-import { PseudoClassSelector } from "./pseudo-class";
+import { PseudoClassSelector } from "./pseudo-class.js";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#focus-pseudo}

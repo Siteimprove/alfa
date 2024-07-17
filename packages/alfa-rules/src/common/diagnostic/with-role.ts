@@ -1,8 +1,10 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Node, Role } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Role } from "@siteimprove/alfa-aria";
+import { Node } from "@siteimprove/alfa-aria";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Element } from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
 
 /**
  * @public
@@ -46,9 +48,9 @@ export class WithRole extends Diagnostic {
     hash.writeString(this._role);
   }
 
-  public toJSON(): WithRole.JSON {
+  public toJSON(options?: dom.Node.SerializationOptions): WithRole.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       role: this._role,
     };
   }

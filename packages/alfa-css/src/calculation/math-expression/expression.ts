@@ -1,14 +1,21 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Err, Result } from "@siteimprove/alfa-result";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Result } from "@siteimprove/alfa-result";
+import { Err } from "@siteimprove/alfa-result";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Unit } from "../../unit";
+import type { Unit } from "../../unit/index.js";
 
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+import type {
+  Angle,
+  Length,
+  Number,
+  Numeric,
+  Percentage,
+} from "../numeric/index.js";
 
-import { Kind } from "./kind";
+import type { Kind } from "./kind.js";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#calculation-tree}
@@ -38,7 +45,7 @@ export abstract class Expression<T extends string = string>
    * {@link https://drafts.csswg.org/css-values/#simplify-a-calculation-tree}
    */
   public abstract reduce<
-    L extends Unit.Length = "px",
+    L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   >(resolver: Expression.Resolver<L, P>): Expression;
 
@@ -84,19 +91,38 @@ export namespace Expression {
   /**
    * Absolute units can be resolved automatically.
    * Relative lengths and percentages need some help.
+   */
+
+  /**
+   * Length may appear in any expression if they are cancelled out by division
+   * ("1em / 1px" is a number), so we always accept a length resolver.
    *
    * @internal
    */
-  export interface LengthResolver<L extends Unit.Length = "px"> {
+  export interface GenericResolver<
+    L extends Unit.Length = Unit.Length.Canonical,
+  > {
+    length?(value: Length<Unit.Length.Relative>): Length<L>;
+  }
+
+  /**
+   * @internal
+   */
+  export interface LengthResolver<
+    L extends Unit.Length = Unit.Length.Canonical,
+  > {
     length(value: Length<Unit.Length.Relative>): Length<L>;
   }
 
+  /**
+   * @internal
+   */
   export interface PercentageResolver<P extends Numeric = Numeric> {
     percentage(value: Percentage): P;
   }
 
   export type Resolver<
-    L extends Unit.Length = "px",
+    L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
   > = LengthResolver<L> & PercentageResolver<P>;
 }

@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-tree",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.80.0",
+  "version": "0.86.2",
   "license": "MIT",
   "description": "Functionality for modelling n-ary trees",
   "repository": {
@@ -11,22 +11,26 @@
     "directory": "packages/alfa-tree"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "workspace:^0.80.0",
-    "@siteimprove/alfa-flags": "workspace:^0.80.0",
-    "@siteimprove/alfa-hash": "workspace:^0.80.0",
-    "@siteimprove/alfa-json": "workspace:^0.80.0",
-    "@siteimprove/alfa-lazy": "workspace:^0.80.0",
-    "@siteimprove/alfa-option": "workspace:^0.80.0",
-    "@siteimprove/alfa-predicate": "workspace:^0.80.0",
-    "@siteimprove/alfa-refinement": "workspace:^0.80.0",
-    "@siteimprove/alfa-sequence": "workspace:^0.80.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.86.2",
+    "@siteimprove/alfa-flags": "workspace:^0.86.2",
+    "@siteimprove/alfa-hash": "workspace:^0.86.2",
+    "@siteimprove/alfa-json": "workspace:^0.86.2",
+    "@siteimprove/alfa-lazy": "workspace:^0.86.2",
+    "@siteimprove/alfa-option": "workspace:^0.86.2",
+    "@siteimprove/alfa-predicate": "workspace:^0.86.2",
+    "@siteimprove/alfa-refinement": "workspace:^0.86.2",
+    "@siteimprove/alfa-sequence": "workspace:^0.86.2"
   },
   "publishConfig": {
     "access": "public",

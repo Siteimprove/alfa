@@ -1,7 +1,7 @@
 import { Keyword, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
 const { either } = Parser;
 

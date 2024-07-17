@@ -8,9 +8,9 @@ import {
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 
-import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
-import type { Style } from "../style";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
+import type { Style } from "../style.js";
 
 const { takeBetween, either, map, filter, delimited, option } = Parser;
 

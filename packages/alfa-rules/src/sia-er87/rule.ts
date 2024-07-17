@@ -1,23 +1,24 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Document, Element, Node, Query } from "@siteimprove/alfa-dom";
+import type { Document} from "@siteimprove/alfa-dom";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
-import { Question } from "../common/act/question";
+import { expectation } from "../common/act/expectation.js";
+import { Question } from "../common/act/question.js";
 
-import { isAtTheStart } from "../common/predicate";
+import { isAtTheStart } from "../common/predicate.js";
 
-import { withDocumentElement } from "../common/applicability/with-document-element";
-import { Scope, Stability, Version } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { Scope, Stability, Version } from "../tags/index.js";
 
 const { hasRole, isIgnored } = DOM;
 const { hasName, isElement } = Element;

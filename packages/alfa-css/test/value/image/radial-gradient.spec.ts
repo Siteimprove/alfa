@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Gradient } from "../../../src";
-import { parser, serializer } from "../../common/parse";
+import { Gradient } from "../../../dist/index.js";
+import { parser, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Gradient.Radial.parse);
 const serialize = serializer(Gradient.Radial.parse);

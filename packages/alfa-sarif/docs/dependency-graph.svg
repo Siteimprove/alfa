@@ -36,7 +36,7 @@
 <!-- src/serializable.ts&#45;&gt;src/sarif.ts -->
 <g id="edge13" class="edge">
 <title>src/serializable.ts&#45;&gt;src/sarif.ts</title>
-<path fill="none" stroke="black" d="M125.2,-176.78C120.96,-168.98 113.53,-158.21 106.2,-149.03"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M125.2,-176.78C120.96,-168.98 113.53,-158.21 106.2,-149.03"/>
 <polygon fill="black" stroke="black" points="108.7,-146.57 99.58,-141.17 103.34,-151.08 108.7,-146.57"/>
 </g>
 <!-- src/serializable.ts&#45;&gt;exit_src -->

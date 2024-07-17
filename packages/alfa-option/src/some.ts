@@ -1,17 +1,21 @@
-import { Callback } from "@siteimprove/alfa-callback";
-import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
+import type { Callback } from "@siteimprove/alfa-callback";
+import {
+  Comparable,
+  type Comparer,
+  Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Option } from "./option";
-import { None } from "./none";
+import type { Option } from "./option.js";
+import { None } from "./none.js";
 
 const { not, test } = Predicate;
 const { compareComparable } = Comparable;
@@ -84,13 +88,27 @@ export class Some<T> implements Option<T> {
     return Equatable.equals(value, this._value);
   }
 
+  public some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+
+  public some(predicate: Predicate<T>): boolean;
+
   public some(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
   }
 
+  public none<U extends T>(
+    refinement: Refinement<T, U>,
+  ): this is Some<Exclude<T, U>>;
+
+  public none(predicate: Predicate<T>): boolean;
+
   public none(predicate: Predicate<T>): boolean {
     return test(not(predicate), this._value);
   }
+
+  public every<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
+
+  public every(predicate: Predicate<T>): boolean;
 
   public every(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
@@ -168,10 +186,10 @@ export class Some<T> implements Option<T> {
     return [this._value];
   }
 
-  public toJSON(): Some.JSON<T> {
+  public toJSON(options?: Serializable.Options): Some.JSON<T> {
     return {
       type: "some",
-      value: Serializable.toJSON(this._value),
+      value: Serializable.toJSON(this._value, options),
     };
   }
 

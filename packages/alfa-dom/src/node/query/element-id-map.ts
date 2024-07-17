@@ -1,11 +1,11 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Map } from "@siteimprove/alfa-map";
 
-import { Node } from "../../node";
-import { Document } from "../document";
-import { Element } from "../element";
+import type { Node } from "../../node.js";
+import { Document } from "../document.js";
+import type { Element } from "../element.js";
 
-import { getElementDescendants } from "./element-descendants";
+import { getElementDescendants } from "./element-descendants.js";
 
 const elementMapCache = Cache.empty<Document, Map<string, Element>>();
 

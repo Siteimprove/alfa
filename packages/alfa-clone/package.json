@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-clone",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.80.0",
+  "version": "0.86.2",
   "license": "MIT",
   "description": "Types for modelling clonable structures",
   "repository": {
@@ -11,11 +11,15 @@
     "directory": "packages/alfa-clone"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "publishConfig": {
     "access": "public",

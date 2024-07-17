@@ -49,7 +49,7 @@
 <!-- src/serializable.ts&#45;&gt;src/json.ts -->
 <g id="edge17" class="edge">
 <title>src/serializable.ts&#45;&gt;src/json.ts</title>
-<path fill="none" stroke="black" d="M144.14,-235.78C140.62,-228.06 134.23,-217.43 127.77,-208.31"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M144.14,-235.78C140.62,-228.06 134.23,-217.43 127.77,-208.31"/>
 <polygon fill="black" stroke="black" points="130.46,-206.06 121.64,-200.17 124.86,-210.27 130.46,-206.06"/>
 </g>
 <!-- src/serializable.ts&#45;&gt;exit_src -->

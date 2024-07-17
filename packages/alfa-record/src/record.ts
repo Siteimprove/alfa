@@ -1,13 +1,14 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Foldable } from "@siteimprove/alfa-foldable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
+import type { Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Reducer } from "@siteimprove/alfa-reducer";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
 /**
  * @public
@@ -125,11 +126,11 @@ export class Record<T>
     return [...this];
   }
 
-  public toJSON(): Record.JSON<T> {
+  public toJSON(options?: Serializable.Options): Record.JSON<T> {
     const json: { [key: string]: json.JSON } = {};
 
     for (const [key, value] of this) {
-      json[key] = Serializable.toJSON(value);
+      json[key] = Serializable.toJSON(value, options);
     }
 
     return json as Record.JSON<T>;

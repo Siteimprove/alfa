@@ -9,5 +9,7 @@
 **Signature:**
 
 ```typescript
-type Time = "s" | "ms";
+type Time = Time.Canonical | "ms";
 ```
+**References:** [Time.Canonical](./alfa-css.unit.time.canonical.md)
+

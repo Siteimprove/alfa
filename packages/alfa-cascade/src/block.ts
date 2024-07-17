@@ -1,12 +1,13 @@
 import { Array } from "@siteimprove/alfa-array";
 import { type Comparer } from "@siteimprove/alfa-comparable";
 import { Lexer } from "@siteimprove/alfa-css";
-import {
+import type {
   Declaration,
-  Element,
-  h,
   Rule,
-  StyleRule,
+  StyleRule} from "@siteimprove/alfa-dom";
+import {
+  Element,
+  h
 } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -21,10 +22,10 @@ import {
   Universal,
 } from "@siteimprove/alfa-selector";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Layer, Origin, Precedence } from "./precedence";
-import { UserAgent } from "./user-agent";
+import { Layer, Origin, Precedence } from "./precedence/index.js";
+import { UserAgent } from "./user-agent.js";
 
 /**
  * While resolving cascade, a Block is a style rule that has been expanded with
@@ -228,7 +229,7 @@ export namespace Block {
     // and we need to reflect that in the layers.
     layer: { normal: Layer; important: Layer },
   ): [Array<Block<Source>>, number] {
-    let blocks: Array<Block<Source>> = [];
+    const blocks: Array<Block<Source>> = [];
 
     for (const [_, selectors] of Selector.parse(Lexer.lex(rule.selector))) {
       // The selector was parsed successfully, so blocks will be created, and we need to update order.

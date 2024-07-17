@@ -1,4 +1,4 @@
-import * as path from "path";
+import * as path from "node:path";
 
 import { Extractor, ExtractorConfig } from "@microsoft/api-extractor";
 import { system } from "./common/system.mjs";
@@ -18,7 +18,11 @@ function extract(root = "packages") {
   const projects = system
     .readDirectory(root, ["tsconfig.json"], ["node_modules"])
     .map(path.dirname)
-    .filter((x) => !exclude.includes(x));
+    .filter((x) => !exclude.includes(x))
+    .filter(
+      (x) =>
+        !x.endsWith("src") && !x.endsWith("test") && !x.endsWith("scripts"),
+    );
 
   let code = 0;
 

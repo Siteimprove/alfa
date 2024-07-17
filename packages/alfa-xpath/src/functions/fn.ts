@@ -1,7 +1,7 @@
-import { Node } from "@siteimprove/alfa-dom";
+import type { Node } from "@siteimprove/alfa-dom";
 
-import { node } from "../descriptors";
-import { Function } from "../function";
+import { node } from "../descriptors.js";
+import type { Function } from "../function.js";
 
 /**
  * @internal

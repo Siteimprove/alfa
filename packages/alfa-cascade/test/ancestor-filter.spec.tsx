@@ -1,9 +1,9 @@
 import type { Simple } from "@siteimprove/alfa-selector";
-import { Assertions, test } from "@siteimprove/alfa-test";
+import { type Assertions, test } from "@siteimprove/alfa-test";
 
-import { parse } from "@siteimprove/alfa-selector/test/parser";
+import { AncestorFilter, Bucket } from "../dist/ancestor-filter.js";
 
-import { AncestorFilter, Bucket } from "../src/ancestor-filter";
+import { parse } from "./common/parser.js";
 
 test("Buckets behave as expected", (t) => {
   const bucket = Bucket.empty();

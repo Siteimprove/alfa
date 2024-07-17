@@ -1,7 +1,7 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Role } from "../../role";
+import type { Role } from "../../role.js";
 
 const { equals } = Predicate;
 

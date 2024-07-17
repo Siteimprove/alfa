@@ -1,12 +1,14 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
-
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Node } from "../node";
-import { Sheet } from "../style/sheet";
-import { Element } from "./element";
+
+import * as json from "@siteimprove/alfa-json";
+
+import { Node } from "../node.js";
+import { Sheet } from "../style/sheet.js";
+import { Element } from "./element.js";
 
 /**
  * @public
@@ -17,6 +19,7 @@ export class Shadow extends Node<"shadow"> {
     style: Iterable<Sheet> = [],
     mode: Shadow.Mode = Shadow.Mode.Open,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ): Shadow {
     return new Shadow(
@@ -24,6 +27,7 @@ export class Shadow extends Node<"shadow"> {
       Array.from(style),
       mode,
       externalId,
+      serializationId,
       extraData,
     );
   }
@@ -41,9 +45,10 @@ export class Shadow extends Node<"shadow"> {
     style: Array<Sheet>,
     mode: Shadow.Mode,
     externalId?: string,
+    serializationId?: string,
     extraData?: any,
   ) {
-    super(children, "shadow", externalId, extraData);
+    super(children, "shadow", externalId, serializationId, extraData);
 
     this._mode = mode;
     this._style = style;
@@ -91,12 +96,31 @@ export class Shadow extends Node<"shadow"> {
     return "/";
   }
 
-  public toJSON(options?: Node.SerializationOptions): Shadow.JSON {
-    return {
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity:
+        | json.Serializable.Verbosity.Minimal
+        | json.Serializable.Verbosity.Low;
+    },
+  ): Shadow.MinimalJSON;
+  public toJSON(options?: Node.SerializationOptions): Shadow.JSON;
+  public toJSON(
+    options?: Node.SerializationOptions,
+  ): Shadow.MinimalJSON | Shadow.JSON {
+    const result = {
       ...super.toJSON(options),
-      mode: this._mode,
-      style: this._style.map((sheet) => sheet.toJSON()),
     };
+
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+
+    if (verbosity < json.Serializable.Verbosity.Medium) {
+      return result;
+    }
+
+    result.mode = this._mode;
+    result.style = this._style.map((sheet) => sheet.toJSON());
+
+    return result;
   }
 
   public toString(): string {
@@ -140,6 +164,8 @@ export namespace Shadow {
     Closed = "closed",
   }
 
+  export interface MinimalJSON extends Node.JSON {}
+
   export interface JSON extends Node.JSON {
     type: "shadow";
     mode: string;
@@ -157,7 +183,13 @@ export namespace Shadow {
     return Trampoline.traverse(json.children ?? [], (child) =>
       Node.fromNode(child, device),
     ).map((children) =>
-      Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode),
+      Shadow.of(
+        children,
+        json.style.map(Sheet.from),
+        json.mode as Mode,
+        json.externalId,
+        json.serializationId,
+      ),
     );
   }
 
@@ -181,6 +213,8 @@ export namespace Shadow {
           shadow.style,
           shadow.mode,
           shadow.externalId,
+          shadow.extraData,
+          shadow.serializationId,
         );
       });
   }

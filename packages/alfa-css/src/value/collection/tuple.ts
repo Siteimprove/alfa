@@ -1,8 +1,8 @@
-import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
 
-import type { PartiallyResolvable, Resolvable } from "../resolvable";
-import { Value } from "../value";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
 /**
  * @public
@@ -122,15 +122,11 @@ export namespace Tuple {
    *
    * @internal
    */
-  export type Resolver<T extends Array<Value>> = T extends Array<
-    infer V extends Value
-  >
-    ? Resolvable.Resolver<V>
-    : never;
+  export type Resolver<T extends Array<Value>> =
+    T extends Array<infer V extends Value> ? Resolvable.Resolver<V> : never;
 
-  export type PartialResolver<T extends Array<Value>> = T extends Array<
-    infer V extends Value
-  >
-    ? Resolvable.PartialResolver<V>
-    : never;
+  export type PartialResolver<T extends Array<Value>> =
+    T extends Array<infer V extends Value>
+      ? Resolvable.PartialResolver<V>
+      : never;
 }

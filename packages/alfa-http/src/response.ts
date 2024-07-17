@@ -1,12 +1,12 @@
 import { Decoder, Encoder } from "@siteimprove/alfa-encoding";
 import { URL } from "@siteimprove/alfa-url";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Result } from "@siteimprove/alfa-result";
-import { Body } from "./body";
-import { Headers } from "./headers";
+import type { Result } from "@siteimprove/alfa-result";
+import type { Body } from "./body.js";
+import { Headers } from "./headers.js";
 
 /**
  * {@link https://fetch.spec.whatwg.org/#response-class}
@@ -79,11 +79,11 @@ export class Response
     return this._body;
   }
 
-  public toJSON(): Response.JSON {
+  public toJSON(options?: json.Serializable.Options): Response.JSON {
     return {
       url: this._url.toString(),
       status: this._status,
-      headers: this._headers.toJSON(),
+      headers: this._headers.toJSON(options),
       body: Decoder.decode(new Uint8Array(this._body)),
     };
   }

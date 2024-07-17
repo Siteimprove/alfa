@@ -1,14 +1,15 @@
 import { Device } from "@siteimprove/alfa-device";
+import type { Node } from "@siteimprove/alfa-dom";
 import { Document } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
 import { Request, Response } from "@siteimprove/alfa-http";
 
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
-import * as sarif from "@siteimprove/alfa-sarif";
+import type * as earl from "@siteimprove/alfa-earl";
+import type * as json from "@siteimprove/alfa-json";
+import type * as sarif from "@siteimprove/alfa-sarif";
 
-import { Result } from "@siteimprove/alfa-result";
-import { Resource } from "./resource";
+import type { Result } from "@siteimprove/alfa-result";
+import type { Resource } from "./resource.js";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Web_page}
@@ -64,12 +65,12 @@ export class Page
     return this._device;
   }
 
-  public toJSON(): Page.JSON {
+  public toJSON(options?: Node.SerializationOptions): Page.JSON {
     return {
-      request: this._request.toJSON(),
-      response: this._response.toJSON(),
-      document: this._document.toJSON({ device: this._device }),
-      device: this._device.toJSON(),
+      request: this._request.toJSON(options),
+      response: this._response.toJSON(options),
+      document: this._document.toJSON(options ?? { device: this._device }),
+      device: this._device.toJSON(options),
     };
   }
 

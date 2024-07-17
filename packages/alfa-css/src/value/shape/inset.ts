@@ -1,18 +1,22 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Option } from "@siteimprove/alfa-option";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Function, type Parser as CSSParser, Token } from "../../syntax";
+import {
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax/index.js";
 
-import { Keyword } from "../keyword";
-import { LengthPercentage } from "../numeric";
-import { PartiallyResolvable, Resolvable } from "../resolvable";
-import { Value } from "../value";
+import { Keyword } from "../keyword.js";
+import { LengthPercentage } from "../numeric/index.js";
+import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
-import { BasicShape } from "./basic-shape";
-import { Corner } from "./corner";
+import { BasicShape } from "./basic-shape.js";
+import { Corner } from "./corner.js";
 
 const { delimited, filter, map, option, pair, right, separatedList } = Parser;
 const { parseDelim, parseWhitespace } = Token;

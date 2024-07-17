@@ -1,11 +1,11 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Option } from "./option";
-import { Some } from "./some";
+import type { Option } from "./option.js";
+import type { Some } from "./some.js";
 
 const { compareComparable } = Comparable;
 
@@ -58,19 +58,19 @@ export const None: None = new (class None {
     return this;
   }
 
-  public includes(): boolean {
+  public includes(): this is never {
     return false;
   }
 
-  public some(): boolean {
+  public some(): this is never {
     return false;
   }
 
-  public none(): boolean {
+  public none(): this is this {
     return true;
   }
 
-  public every(): boolean {
+  public every(): this is this {
     return true;
   }
 

@@ -4,13 +4,13 @@
 
 ```ts
 
-import * as earl from '@siteimprove/alfa-earl';
-import { Equatable } from '@siteimprove/alfa-equatable';
+import type * as earl from '@siteimprove/alfa-earl';
+import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
-import { Option } from '@siteimprove/alfa-option';
-import { Result } from '@siteimprove/alfa-result';
-import { Serializable } from '@siteimprove/alfa-json';
+import type * as json from '@siteimprove/alfa-json';
+import type { Option } from '@siteimprove/alfa-option';
+import type { Result } from '@siteimprove/alfa-result';
+import type { Serializable } from '@siteimprove/alfa-json';
 import { URL } from '@siteimprove/alfa-url';
 
 // @public (undocumented)
@@ -121,7 +121,7 @@ export class Header implements Equatable, json.Serializable<Header.JSON>, earl.S
     // (undocumented)
     toEARL(): Header.EARL;
     // (undocumented)
-    toJSON(): Header.JSON;
+    toJSON(options?: json.Serializable.Options): Header.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -179,7 +179,7 @@ export class Headers implements Iterable_2<Header>, json.Serializable<Headers.JS
     // (undocumented)
     toEARL(): Headers.EARL;
     // (undocumented)
-    toJSON(): Headers.JSON;
+    toJSON(options?: json.Serializable.Options): Headers.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -219,7 +219,7 @@ export class Request implements Body, json.Serializable<Request.JSON>, earl.Seri
     // (undocumented)
     toEARL(): Request.EARL;
     // (undocumented)
-    toJSON(): Request.JSON;
+    toJSON(options?: json.Serializable.Options): Request.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -279,7 +279,7 @@ export class Response implements Body, json.Serializable<Response.JSON>, earl.Se
     // (undocumented)
     toEARL(): Response.EARL;
     // (undocumented)
-    toJSON(): Response.JSON;
+    toJSON(options?: json.Serializable.Options): Response.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)

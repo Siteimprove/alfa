@@ -1,8 +1,11 @@
-import { jsx as _jsx } from "./jsx";
+import { jsx as _jsx } from "./jsx.js";
 
-import { Element } from ".";
+import type { Element } from "./index.js";
 
-export import JSX = _jsx.JSX;
+export namespace JSX {
+  export type Element = _jsx.JSX.Element;
+  export interface IntrinsicElements extends _jsx.JSX.IntrinsicElements {}
+}
 
 /**
  * @public

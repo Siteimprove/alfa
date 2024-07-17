@@ -1,28 +1,24 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
-import { Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Monad } from "@siteimprove/alfa-monad";
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Foldable } from "@siteimprove/alfa-foldable";
+import type { Hashable } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Monad } from "@siteimprove/alfa-monad";
+import type { Option } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { Err } from "./err";
-import { Ok } from "./ok";
+import { Err } from "./err.js";
+import { Ok } from "./ok.js";
 
 /**
  * @public
  */
 export interface Result<T, E = T>
-  extends Functor<T>,
-    Applicative<T>,
-    Monad<T>,
+  extends Monad<T>,
     Foldable<T>,
     Iterable<T>,
     Equatable,
@@ -37,12 +33,12 @@ export interface Result<T, E = T>
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
   reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
-  includes(value: T): this is Ok<T>;
-  includesErr(error: E): this is Err<E>;
+  includes(value: T): boolean;
+  includesErr(error: E): boolean;
   some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
-  some(predicate: Predicate<T>): this is Ok<T>;
+  some(predicate: Predicate<T>): boolean;
   someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
-  someErr(predicate: Predicate<E>): this is Err<E>;
+  someErr(predicate: Predicate<E>): boolean;
   none<U extends T>(
     refinement: Refinement<T, U>,
   ): this is Result<Exclude<T, U>, E>;
@@ -83,7 +79,7 @@ export interface Result<T, E = T>
   err(): Option<E>;
   tee(callback: Callback<T>): Result<T, E>;
   teeErr(callback: Callback<E>): Result<T, E>;
-  toJSON(): Result.JSON<T, E>;
+  toJSON(options?: Serializable.Options): Result.JSON<T, E>;
 }
 
 /**

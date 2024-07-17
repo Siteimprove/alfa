@@ -1,4 +1,4 @@
-import { Longhand } from "../longhand";
+import { Longhand } from "../longhand.js";
 
 /**
  * {@link https://drafts.csswg.org/css-fonts/#font-style-prop}

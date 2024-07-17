@@ -34,7 +34,7 @@
 <!-- src/comparer.ts&#45;&gt;src/comparison.ts -->
 <g id="edge15" class="edge">
 <title>src/comparer.ts&#45;&gt;src/comparison.ts</title>
-<path fill="none" stroke="black" d="M133.47,-176.78C133.08,-169.45 131.17,-159.52 128.61,-150.74"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M133.47,-176.78C133.08,-169.45 131.17,-159.52 128.61,-150.74"/>
 <polygon fill="black" stroke="black" points="131.88,-149.5 125.34,-141.17 125.26,-151.77 131.88,-149.5"/>
 </g>
 <!-- exit_src -->

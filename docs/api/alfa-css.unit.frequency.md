@@ -9,5 +9,7 @@
 **Signature:**
 
 ```typescript
-type Frequency = "hz" | "kHz";
+type Frequency = Frequency.Canonical | "kHz";
 ```
+**References:** [Frequency.Canonical](./alfa-css.unit.frequency.canonical.md)
+

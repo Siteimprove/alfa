@@ -4,15 +4,15 @@
 
 ```ts
 
-import { Callback } from '@siteimprove/alfa-callback';
+import type { Callback } from '@siteimprove/alfa-callback';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Mapper } from '@siteimprove/alfa-mapper';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
-import { Reducer } from '@siteimprove/alfa-reducer';
+import type { Reducer } from '@siteimprove/alfa-reducer';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 
@@ -156,7 +156,7 @@ namespace Iterable_2 {
     // (undocumented)
     function takeWhile<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)
-    function toJSON<T>(iterable: Iterable_2<T>): Array<Serializable.ToJSON<T>>;
+    function toJSON<T>(iterable: Iterable_2<T>, options?: Serializable.Options): Array<Serializable.ToJSON<T>>;
     // (undocumented)
     function trim<T>(iterable: Iterable_2<T>, predicate: Predicate<T, [index: number]>): Iterable_2<T>;
     // (undocumented)

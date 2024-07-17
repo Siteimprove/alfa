@@ -1,18 +1,19 @@
 import type { Element } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Iterable } from "@siteimprove/alfa-iterable";
+import type { Serializable } from "@siteimprove/alfa-json";
 
-import * as json from "@siteimprove/alfa-json";
-import { None, Option } from "@siteimprove/alfa-option";
+import type * as json from "@siteimprove/alfa-json";
+import type { Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 
-import type { Context } from "../context";
-import { Specificity } from "../specificity";
+import type { Context } from "../context.js";
+import type { Specificity } from "../specificity.js";
 
-import type { Complex } from "./complex";
-import type { Compound } from "./compound";
-import type { Relative } from "./relative";
-import type { Class, Id, Simple, Type } from "./simple";
+import type { Complex } from "./complex.js";
+import type { Compound } from "./compound.js";
+import type { Relative } from "./relative.js";
+import type { Class, Id, Simple, Type } from "./simple/index.js";
 
 /**
  * @internal

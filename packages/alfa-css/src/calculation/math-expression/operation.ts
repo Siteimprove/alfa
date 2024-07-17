@@ -1,20 +1,21 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
 
+import { Unit } from "../../unit/index.js";
+
+import type {
+  Numeric} from "../numeric/index.js";
 import {
   Angle,
   Dimension,
   Length,
   Number,
-  Numeric,
   Percentage,
-} from "../numeric";
+} from "../numeric/index.js";
 
-import { Unit } from "../../unit";
-
-import { Expression } from "./expression";
-import { Kind } from "./kind";
-import { Value } from "./value";
+import { Expression } from "./expression.js";
+import type { Kind } from "./kind.js";
+import { Value } from "./value.js";
 
 const { isAngle } = Angle;
 const { isDimension } = Dimension;
@@ -107,9 +108,10 @@ export namespace Operation {
       super("sum", operands, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const [fst, snd] = this._operands.map((operand) =>
         operand.reduce(resolver),
       );
@@ -167,9 +169,10 @@ export namespace Operation {
       super("negate", operand, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const [operand] = this._operands.map((operand) =>
         operand.reduce(resolver),
       );
@@ -227,41 +230,40 @@ export namespace Operation {
       super("product", operands, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const [fst, snd] = this._operands.map((operand) =>
         operand.reduce(resolver),
       );
 
       if (Value.isValueExpression(fst) && Value.isValueExpression(snd)) {
-        let multipler: number | undefined;
+        // Both operands are values, we can hopefully do the product.
+        if (fst.isCanonical() && snd.isCanonical()) {
+          // Both operands are fully resolved values in canonical units. We can do
+          // the product and drop the units, just remembering the dimension.
+          return Value.of(
+            Number.of(fst.value.value * snd.value.value),
+            fst.kind.multiply(snd.kind).getUnsafe(),
+          ).simplify();
+        }
+
+        let multiplier: number | undefined;
         let value!: Numeric;
 
-        if (isNumber(fst.value)) {
-          multipler = fst.value.value;
+        // If one of them is a raw number (also, no recorded dimension), we can
+        // do the product.
+        if (isNumber(fst.value) && fst.kind.is()) {
+          multiplier = fst.value.value;
           value = snd.value;
-        } else if (isNumber(snd.value)) {
-          multipler = snd.value.value;
+        } else if (isNumber(snd.value) && snd.kind.is()) {
+          multiplier = snd.value.value;
           value = fst.value;
         }
 
-        if (multipler !== undefined) {
-          if (isNumber(value)) {
-            return Value.of(Number.of(multipler * value.value));
-          }
-
-          if (isPercentage(value)) {
-            return Value.of(Percentage.of(multipler * value.value));
-          }
-
-          if (isLength(value)) {
-            return Value.of(Length.of(multipler * value.value, value.unit));
-          }
-
-          if (isAngle(value)) {
-            return Value.of(Angle.of(multipler * value.value, value.unit));
-          }
+        if (multiplier !== undefined) {
+          return Value.of(value.scale(multiplier));
         }
       }
 
@@ -288,26 +290,26 @@ export namespace Operation {
       super("invert", operand, kind);
     }
 
-    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>,
-    ): Expression {
+    public reduce<
+      L extends Unit.Length = Unit.Length.Canonical,
+      P extends Numeric = Numeric,
+    >(resolver: Expression.Resolver<L, P>): Expression {
       const [operand] = this._operands.map((operand) =>
         operand.reduce(resolver),
       );
 
-      if (Value.isValueExpression(operand)) {
+      if (Value.isValueExpression(operand) && operand.isCanonical()) {
+        // It's a value in canonical units, we can invert it.
         const { value } = operand;
 
-        if (isNumber(value)) {
-          return Value.of(Number.of(1 / value.value));
-        }
+        return Value.of(Number.of(1 / value.value), operand.kind.invert());
       }
 
       if (isInvertExpression(operand)) {
         return operand._operands[0];
       }
 
-      return Negate.of(operand);
+      return Invert.of(operand);
     }
 
     public toString(): string {

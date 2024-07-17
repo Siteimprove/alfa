@@ -1,7 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
 import { test } from "@siteimprove/alfa-test";
 
-import * as predicate from "../../../src/node/predicate/is-offscreen";
+import * as predicate from "../../../dist/node/predicate/is-offscreen.js";
 
 const device = Device.standard();
 const isOffscreen = predicate.isOffscreen(device);

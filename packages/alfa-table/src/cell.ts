@@ -1,18 +1,18 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Comparison } from "@siteimprove/alfa-comparable";
-import { Equatable } from "@siteimprove/alfa-equatable";
+import type { Comparison } from "@siteimprove/alfa-comparable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Element, Text } from "@siteimprove/alfa-dom";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Anchored } from "./anchored";
-import { Slot } from "./slot";
-import { Scope } from "./scope";
+import { Anchored } from "./anchored.js";
+import type { Slot } from "./slot.js";
+import type { Scope } from "./scope.js";
 
-import * as predicate from "./cell/predicate";
+import * as predicate from "./cell/predicate.js";
 
 const { and, or } = Refinement;
 const { isElement } = Element;
@@ -158,11 +158,11 @@ export namespace Cell {
       super(element, anchor, width, height, headers);
     }
 
-    public isData(): boolean {
+    public isData(): this is Data {
       return true;
     }
 
-    public isHeader(): boolean {
+    public isHeader(): this is never {
       return false;
     }
 
@@ -236,11 +236,11 @@ export namespace Cell {
       return this._scope;
     }
 
-    public isData(): boolean {
+    public isData(): this is never {
       return false;
     }
 
-    public isHeader(): boolean {
+    public isHeader(): this is Header {
       return true;
     }
 

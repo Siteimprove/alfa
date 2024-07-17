@@ -1,49 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "@siteimprove/alfa-dom"
-  },
-  "files": [
-    "src/ancestor-filter.ts",
-    "src/block.ts",
-    "src/cascade.ts",
-    "src/index.ts",
-    "src/precedence/encapsulation.ts",
-    "src/precedence/index.ts",
-    "src/precedence/layer.ts",
-    "src/precedence/order.ts",
-    "src/precedence/origin.ts",
-    "src/precedence/precedence.ts",
-    "src/rule-tree.ts",
-    "src/selector-map.ts",
-    "src/user-agent.ts",
-    "test/ancestor-filter.spec.tsx",
-    "test/block.spec.tsx",
-    "test/cascade.spec.tsx",
-    "test/common/index.ts",
-    "test/layer.spec.ts",
-    "test/precedence.spec.ts",
-    "test/rule-tree.spec.ts",
-    "test/selector-map.spec.tsx"
-  ],
-  "references": [
-    { "path": "../alfa-array" },
-    { "path": "../alfa-cache" },
-    { "path": "../alfa-comparable" },
-    { "path": "../alfa-css" },
-    { "path": "../alfa-css-feature" },
-    { "path": "../alfa-device" },
-    { "path": "../alfa-dom" },
-    { "path": "../alfa-equatable" },
-    { "path": "../alfa-iterable" },
-    { "path": "../alfa-json" },
-    { "path": "../alfa-option" },
-    { "path": "../alfa-predicate" },
-    { "path": "../alfa-refinement" },
-    { "path": "../alfa-selective" },
-    { "path": "../alfa-selector" },
-    { "path": "../alfa-test" }
-  ]
+  "files": [],
+  "references": [{ "path": "./src" }, { "path": "./test" }]
 }

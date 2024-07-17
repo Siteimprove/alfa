@@ -1,22 +1,22 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Collection } from "@siteimprove/alfa-collection";
+import { Comparable, type Comparer, type Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Set } from "@siteimprove/alfa-set";
 
-import { Sequence } from "./sequence";
-import { Nil } from "./nil";
+import { Sequence } from "./sequence.js";
+import { Nil } from "./nil.js";
 
 const { not, equals } = Predicate;
 const { compareComparable } = Comparable;
@@ -790,13 +790,13 @@ export class Cons<T> implements Sequence<T> {
     }
   }
 
-  public toJSON(): Cons.JSON<T> {
+  public toJSON(options?: Serializable.Options): Cons.JSON<T> {
     const json: Cons.JSON<T> = [];
 
     let next: Cons<T> = this;
 
     while (true) {
-      json.push(Serializable.toJSON(next._head));
+      json.push(Serializable.toJSON(next._head, options));
 
       const tail = next._tail.force();
 

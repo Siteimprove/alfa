@@ -4,9 +4,3 @@
 
 ## individualChangelog namespace
 
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [default](./alfa-toolchain.individualchangelog.default.md) |  |
-

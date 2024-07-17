@@ -1,7 +1,7 @@
-import { Refinement } from "@siteimprove/alfa-refinement/src/refinement";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Element } from "../../element";
-import { hasName } from "./has-name";
+import type { Element } from "../../element.js";
+import { hasName } from "./has-name.js";
 
 const { test } = Refinement;
 

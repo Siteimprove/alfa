@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { serialize } from "./parser";
+import { serialize } from "./parser.js";
 
 test(".parse() parses a compound selector", (t) => {
   t.deepEqual(serialize("#foo.bar"), {

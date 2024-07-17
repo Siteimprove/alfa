@@ -1,5 +1,61 @@
 # @siteimprove/alfa-dom
 
+## 0.86.2
+
+## 0.86.1
+
+## 0.86.0
+
+### Minor Changes
+
+- **Breaking:** TS resolution has been changed to `Node16`, target to `es2022`. ([#1636](https://github.com/Siteimprove/alfa/pull/1636))
+
+- **Breaking:** Alfa is now distributed as ESM rather than CJS modules; projects using it must be ESM or use dynamic `import()`. ([#1636](https://github.com/Siteimprove/alfa/pull/1636))
+
+  ⚠️ This is the last of a series of changes on the internal structure and build process of distributed packages that was started with v0.85.0.
+
+## 0.85.1
+
+## 0.85.0
+
+### Minor Changes
+
+- **Breaking:** The .js files are now built in the `dist` folder rather than in `src`. ([#1628](https://github.com/Siteimprove/alfa/pull/1628))
+
+  ⚠️ This is the first of a series of changes on the internal structure and build process of distributed packages. It is probably better to not use this version and wait until more of these internal changes have been done to jump directly to the final result. We are internally releasing these changes for validation purpose only.
+
+  This should not impact consumers, the `package.json` files should be set correctly to consume these files.
+
+## 0.84.0
+
+## 0.83.1
+
+## 0.83.0
+
+## 0.82.0
+
+### Minor Changes
+
+- **Added:** DOM node builders like `Element.of` etc. now optionally accept `serializationId` which will be used when serializing depending on the verbosity chosen. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
+  If one is not supplied it will be randomly generated as an UUID.
+
+- **Added:** Verbosity option has been added to JSON serialization of alfa-tree `Node` and to `Outcome` and `Group`. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
+- **Breaking:** Node 18 is no longer supported. ([#1618](https://github.com/Siteimprove/alfa/pull/1618))
+
+## 0.81.0
+
+### Patch Changes
+
+- **Added:** Each package now contains its internal dependency graph in its `docs` directory. ([#1610](https://github.com/Siteimprove/alfa/pull/1610))
+
+- **Fixed:** `Native.fromWindow` now behaves better in case when injected in content scripts. ([#1619](https://github.com/Siteimprove/alfa/pull/1619))
+
+  Some browsers make content scripts live in different worlds than the actual page. This causes `.constructor.name` to fail when run from the content script on object created in the page (typically, all DOM objects), in turn crashing the CSS rule type detection.
+
+  This introduces a heuristic to catch this case and fall back on other solutions.
+
 ## 0.80.0
 
 ### Patch Changes

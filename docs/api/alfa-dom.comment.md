@@ -22,4 +22,5 @@ export declare namespace Comment
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-dom.comment.json.md) |  |
+|  [MinimalJSON](./alfa-dom.comment.minimaljson.md) |  |
 

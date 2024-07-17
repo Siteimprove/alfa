@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle, AnglePercentage } from "../../../src";
+import { Angle, AnglePercentage, Length } from "../../../dist/index.js";
 
-import { parser, parserUnsafe, serializer } from "../../common/parse";
+import { parser, parserUnsafe, serializer } from "../../common/parse.js";
 
 const parseErr = parser(AnglePercentage.parse);
 const parse = parserUnsafe(AnglePercentage.parse);
@@ -99,23 +99,56 @@ test("resolve() resolves pure percentages", (t) => {
 });
 
 test("resolve() resolves percentage calculations", (t) => {
-  t.deepEqual(
-    AnglePercentage.resolve(parse("calc((12% + 9%) * 2)")).toJSON(),
-    {
-      type: "angle",
-      value: 151.2,
-      unit: "deg",
-    },
-  );
+  t.deepEqual(AnglePercentage.resolve(parse("calc((12% + 9%) * 2)")).toJSON(), {
+    type: "angle",
+    value: 151.2,
+    unit: "deg",
+  });
 });
 
 test("resolve() resolves mix of angles and percentages", (t) => {
+  t.deepEqual(AnglePercentage.resolve(parse("calc(0.5turn + 10%)")).toJSON(), {
+    type: "angle",
+    value: 216,
+    unit: "deg",
+  });
+});
+
+test("resolve() resolves dimension divisions", (t) => {
   t.deepEqual(
-    AnglePercentage.resolve(parse("calc(0.5turn + 10%)")).toJSON(),
-    {
-      type: "angle",
-      value: 216,
-      unit: "deg",
-    },
+    parse("calc(100% / 1em * 180deg / 1turn * 8px)")
+      .resolve({
+        percentageBase: Angle.of(100, "deg"),
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "angle", value: 25.0002, unit: "deg" },
+  );
+});
+
+test("partiallyResolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100% * (180deg / 1turn) * (8px / 1em)")
+      .partiallyResolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "percentage", value: 0.250002 },
   );
 });

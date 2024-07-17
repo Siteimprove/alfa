@@ -1,12 +1,12 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import type { Element } from "../node/element";
+import type { Element } from "../node/element.js";
 
-import { Rule } from "./rule";
+import type { Rule } from "./rule.js";
 
 /**
  * @public

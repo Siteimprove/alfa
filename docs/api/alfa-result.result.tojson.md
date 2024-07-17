@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Result.JSON<T, E>;
+toJSON(options?: O): Result.JSON<T, E>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | O | _(Optional)_ |
+
 **Returns:**
 
 [Result.JSON](./alfa-result.result.json.md)<!-- -->&lt;T, E&gt;

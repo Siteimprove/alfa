@@ -4,12 +4,12 @@
 
 ```ts
 
-import { Equatable } from '@siteimprove/alfa-equatable';
-import { Hash } from '@siteimprove/alfa-hash';
-import { Hashable } from '@siteimprove/alfa-hash';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
-import { Serializable } from '@siteimprove/alfa-json';
+import type * as json from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class Device implements Equatable, Hashable, Serializable {
@@ -28,7 +28,7 @@ export class Device implements Equatable, Hashable, Serializable {
     // (undocumented)
     get scripting(): Scripting;
     // (undocumented)
-    toJSON(): Device.JSON;
+    toJSON(options?: json.Serializable.Options): Device.JSON;
     // (undocumented)
     get type(): Device.Type;
     // (undocumented)
@@ -80,7 +80,7 @@ export class Display implements Equatable, Hashable, Serializable {
     // (undocumented)
     get scan(): Display.Scan;
     // (undocumented)
-    toJSON(): Display.JSON;
+    toJSON(options?: json.Serializable.Options): Display.JSON;
 }
 
 // @public (undocumented)
@@ -118,7 +118,7 @@ export class Preference<N extends Preference.Name = Preference.Name> implements 
     // (undocumented)
     static of<N extends Preference.Name>(name: N, value: Preference.Value<N>): Preference<N>;
     // (undocumented)
-    toJSON(): Preference.JSON<N>;
+    toJSON(options?: json.Serializable.Options): Preference.JSON<N>;
     // (undocumented)
     get value(): Preference.Value<N>;
 }
@@ -167,7 +167,7 @@ export class Scripting implements Equatable, Hashable, Serializable {
     // (undocumented)
     static of(enabled: boolean): Scripting;
     // (undocumented)
-    toJSON(): Scripting.JSON;
+    toJSON(options?: json.Serializable.Options): Scripting.JSON;
 }
 
 // @public (undocumented)
@@ -202,7 +202,7 @@ export class Viewport implements Equatable, Hashable, Serializable {
     // (undocumented)
     get orientation(): Viewport.Orientation;
     // (undocumented)
-    toJSON(): Viewport.JSON;
+    toJSON(options?: json.Serializable.Options): Viewport.JSON;
     // (undocumented)
     get width(): number;
 }

@@ -34,7 +34,7 @@
 <!-- src/page.ts&#45;&gt;src/resource.ts -->
 <g id="edge21" class="edge">
 <title>src/page.ts&#45;&gt;src/resource.ts</title>
-<path fill="none" stroke="black" d="M157.51,-176.78C151.92,-168.82 142.54,-157.77 133.59,-148.47"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M157.51,-176.78C151.92,-168.82 142.54,-157.77 133.59,-148.47"/>
 <polygon fill="black" stroke="black" points="135.82,-145.75 126.27,-141.17 130.88,-150.71 135.82,-145.75"/>
 </g>
 <!-- exit_src -->
@@ -50,7 +50,7 @@
 <!-- src/site.ts&#45;&gt;src/resource.ts -->
 <g id="edge23" class="edge">
 <title>src/site.ts&#45;&gt;src/resource.ts</title>
-<path fill="none" stroke="black" d="M79.56,-176.78C87.07,-169.14 95.87,-158.65 102.5,-149.6"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M79.56,-176.78C87.07,-169.14 95.87,-158.65 102.5,-149.6"/>
 <polygon fill="black" stroke="black" points="105.51,-151.4 108.29,-141.17 99.74,-147.43 105.51,-151.4"/>
 </g>
 <!-- src/site.ts&#45;&gt;exit_src -->
@@ -104,7 +104,7 @@
 <!-- src/native.ts&#45;&gt;src/index.ts -->
 <g id="edge19" class="edge">
 <title>src/native.ts&#45;&gt;src/index.ts</title>
-<path fill="none" stroke="black" d="M120.91,-294.78C122.17,-287.61 122.54,-277.95 122.03,-269.31"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M120.91,-294.78C122.17,-287.61 122.54,-277.95 122.03,-269.31"/>
 <polygon fill="black" stroke="black" points="125.48,-268.73 120.9,-259.17 118.53,-269.5 125.48,-268.73"/>
 </g>
 <!-- src/native.ts&#45;&gt;exit_src -->

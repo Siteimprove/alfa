@@ -1,2 +1,2 @@
-export * from "./browser";
-export * from "./feature";
+export * from "./browser.js";
+export * from "./feature.js";

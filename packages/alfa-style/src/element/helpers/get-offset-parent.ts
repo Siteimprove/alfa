@@ -1,10 +1,11 @@
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
-import { Option, None } from "@siteimprove/alfa-option";
+import type { Option} from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isPositioned } from "../predicate/is-positioned";
-import { isRendered } from "../../node/predicate/is-rendered";
+import { isPositioned } from "../predicate/is-positioned.js";
+import { isRendered } from "../../node/predicate/is-rendered.js";
 
 const { hasName, isElement } = Element;
 const { isRoot } = Node;

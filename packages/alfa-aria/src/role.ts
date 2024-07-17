@@ -1,23 +1,23 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Element } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hashable, Hash } from "@siteimprove/alfa-hash";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Hashable, Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Attribute } from "./attribute";
-import { Feature } from "./feature";
+import type { Attribute } from "./attribute.js";
+import { Feature } from "./feature.js";
 
-import { Roles } from "./role/data";
+import { Roles } from "./role/data.js";
 
-import * as predicate from "./role/predicate";
+import * as predicate from "./role/predicate.js";
 
 const { and, not, nor } = Predicate;
 

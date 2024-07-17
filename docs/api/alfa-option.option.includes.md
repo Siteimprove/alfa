@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-includes(value: T): this is Some<T>;
+includes(value: T): boolean;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ includes(value: T): this is Some<T>;
 
 **Returns:**
 
-this is Some&lt;T&gt;
+boolean
 

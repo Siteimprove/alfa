@@ -1,7 +1,8 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
+import type {
+  Document} from "@siteimprove/alfa-dom";
 import {
-  Document,
   Element,
   Namespace,
   Node,
@@ -9,12 +10,12 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
 
-import { withDocumentElement } from "../common/applicability/with-document-element";
-import { Scope, Stability } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { Scope, Stability } from "../tags/index.js";
 
 const { hasRole } = DOM;
 const { hasNamespace } = Element;

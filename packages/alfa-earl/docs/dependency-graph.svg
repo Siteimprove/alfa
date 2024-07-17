@@ -36,7 +36,7 @@
 <!-- src/serializable.ts&#45;&gt;src/earl.ts -->
 <g id="edge13" class="edge">
 <title>src/serializable.ts&#45;&gt;src/earl.ts</title>
-<path fill="none" stroke="black" d="M125.01,-176.78C120.59,-168.9 112.86,-157.99 105.29,-148.75"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M125.01,-176.78C120.59,-168.9 112.86,-157.99 105.29,-148.75"/>
 <polygon fill="black" stroke="black" points="107.95,-146.47 98.77,-141.17 102.64,-151.03 107.95,-146.47"/>
 </g>
 <!-- src/serializable.ts&#45;&gt;exit_src -->

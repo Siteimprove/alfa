@@ -1,11 +1,11 @@
-import { Length } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import { Declaration, Element } from "@siteimprove/alfa-dom";
+import type { Length } from "@siteimprove/alfa-css";
+import type { Device } from "@siteimprove/alfa-device";
+import type { Declaration, Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 
-import { expectation } from "../act/expectation";
-import { TextSpacing } from "../diagnostic/text-spacing";
+import { expectation } from "../act/expectation.js";
+import { TextSpacing } from "../diagnostic/text-spacing.js";
 
 type Name = "letter-spacing" | "line-height" | "word-spacing";
 type Computed =

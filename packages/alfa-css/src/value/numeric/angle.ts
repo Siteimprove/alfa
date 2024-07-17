@@ -1,15 +1,19 @@
-import { Comparable } from "@siteimprove/alfa-comparable";
+import type { Comparable } from "@siteimprove/alfa-comparable";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Math } from "../../calculation";
-import { Angle as BaseAngle } from "../../calculation/numeric";
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Converter, Unit } from "../../unit";
+import { Math } from "../../calculation/index.js";
+import { Angle as BaseAngle } from "../../calculation/numeric/index.js";
+import type { Token } from "../../syntax/index.js";
+import { type Parser as CSSParser } from "../../syntax/index.js";
+import type { Unit } from "../../unit/index.js";
+import { Converter } from "../../unit/index.js";
 
-import { Resolvable } from "../resolvable";
+import type { Resolvable } from "../resolvable.js";
 
-import { Dimension } from "./dimension";
+import { Dimension } from "./dimension.js";
+import { Length } from "./length.js";
+import type { Numeric } from "./numeric.js";
 
 const { either, map } = Parser;
 
@@ -51,10 +55,10 @@ export namespace Angle {
       return true;
     }
 
-    public resolve(): Canonical {
+    public resolve(resolver?: Numeric.GenericResolver): Canonical {
       return Fixed.of(
         this._math
-          .resolve()
+          .resolve(Length.toExpressionResolver(resolver))
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as an angle`),
       );
@@ -121,6 +125,13 @@ export namespace Angle {
 
     public resolve(): Canonical {
       return this.withUnit("deg");
+    }
+
+    /**
+     * @internal
+     */
+    public toBase(): BaseAngle<U> {
+      return BaseAngle.of(this._value, this._unit);
     }
 
     public equals(value: unknown): value is this {

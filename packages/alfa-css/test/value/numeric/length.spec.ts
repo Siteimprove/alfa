@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length } from "../../../src";
+import { Length } from "../../../dist/index.js";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, serializer } from "../../common/parse.js";
 
 const parse = parser(Length.parse);
 const serialize = serializer(Length.parse);
@@ -65,5 +65,25 @@ test("resolve() absolutize lengths", (t) => {
       value: 18,
       unit: "px",
     },
+  );
+});
+
+test("resolve() resolves dimension divisions", (t) => {
+  t.deepEqual(
+    parse("calc(100px * 180deg * 8px / 1em / 1turn)")
+      .getUnsafe()
+      .resolve({
+        length: (value) => {
+          switch (value.unit) {
+            case "em":
+              return Length.of(16, "px");
+            default:
+              return Length.of(1, "px");
+          }
+        },
+      })
+      .toJSON(),
+    // Due to rounding Numeric to 7 decimals, we have floating point problems.
+    { type: "length", value: 25.0002, unit: "px" },
   );
 });

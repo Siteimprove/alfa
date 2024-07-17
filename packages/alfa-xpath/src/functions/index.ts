@@ -1,6 +1,6 @@
-import { FunctionMap, registerFunction } from "../function";
+import { type FunctionMap, registerFunction } from "../function.js";
 
-import { fn } from "./fn";
+import { fn } from "./fn.js";
 
 const { keys } = Object;
 

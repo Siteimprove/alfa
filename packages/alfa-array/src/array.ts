@@ -1,17 +1,21 @@
-import { Callback } from "@siteimprove/alfa-callback";
+import type { Callback } from "@siteimprove/alfa-callback";
 import { Clone } from "@siteimprove/alfa-clone";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import {
+  Comparable,
+  type Comparer,
+  Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import * as builtin from "./builtin";
+import * as builtin from "./builtin.js";
 
 const { not } = Predicate;
 const { compareComparable } = Comparable;
@@ -536,7 +540,8 @@ export namespace Array {
 
   export function toJSON<T>(
     array: ReadonlyArray<T>,
+    options?: Serializable.Options,
   ): Array<Serializable.ToJSON<T>> {
-    return array.map((value) => Serializable.toJSON(value));
+    return array.map((value) => Serializable.toJSON(value, options));
   }
 }

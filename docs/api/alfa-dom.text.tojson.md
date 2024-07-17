@@ -7,9 +7,18 @@
 **Signature:**
 
 ```typescript
-toJSON(): Text.JSON;
+toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
+    }): Text.MinimalJSON;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) &amp; { verbosity: [json.Serializable.Verbosity.Minimal](./alfa-json.serializable.verbosity.md) \| [json.Serializable.Verbosity.Low](./alfa-json.serializable.verbosity.md)<!-- -->; } |  |
+
 **Returns:**
 
-[Text.JSON](./alfa-dom.text.json.md)
+[Text.MinimalJSON](./alfa-dom.text.minimaljson.md)
 

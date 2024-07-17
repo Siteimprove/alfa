@@ -4,7 +4,7 @@
 
 ```ts
 
-import { JSON as JSON_2 } from '@siteimprove/alfa-json';
+import type { JSON as JSON_2 } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export interface Context extends JSON_2.Object {

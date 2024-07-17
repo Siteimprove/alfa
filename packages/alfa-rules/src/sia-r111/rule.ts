@@ -1,18 +1,18 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import type { Element } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
+import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation";
+import { expectation } from "../common/act/expectation.js";
+import { applicableTargetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events.js";
+import { getClickableBox } from "../common/dom/get-clickable-box.js";
 
-import { applicableTargetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events";
+import { WithName } from "../common/diagnostic.js";
 
-import { WithName } from "../common/diagnostic";
+import { TargetSize } from "../common/outcome/target-size.js";
 
-import { TargetSize } from "../common/outcome/target-size";
-
-import { hasSufficientSize } from "../common/predicate/has-sufficient-size";
-import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled";
+import { hasSufficientSize } from "../common/predicate/has-sufficient-size.js";
+import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled.js";
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r111",
@@ -24,8 +24,8 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Existence of a bounding box is guaranteed by applicability
-        const box = target.getBoundingBox(device).getUnsafe();
+        // Existence of a clickable box is guaranteed by applicability
+        const box = getClickableBox(device, target).getUnsafe();
         const name = WithName.getName(target, device).getOr("");
         return {
           1: expectation(

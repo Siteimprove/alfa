@@ -77,7 +77,7 @@
 <!-- src/test.ts&#45;&gt;src/types.ts -->
 <g id="edge31" class="edge">
 <title>src/test.ts&#45;&gt;src/types.ts</title>
-<path fill="none" stroke="black" d="M193.21,-235.78C206.87,-227.5 224.25,-215.89 237.37,-206.36"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M193.21,-235.78C206.87,-227.5 224.25,-215.89 237.37,-206.36"/>
 <polygon fill="black" stroke="black" points="239.75,-208.96 245.67,-200.17 235.57,-203.34 239.75,-208.96"/>
 </g>
 <!-- src/test.ts&#45;&gt;exit_src -->

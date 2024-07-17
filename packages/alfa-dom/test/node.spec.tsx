@@ -1,12 +1,14 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import * as json from "@siteimprove/alfa-json";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Option } from "@siteimprove/alfa-option";
 
-import { h } from "../h";
-import { Element, Node, Shadow } from "../src";
+import * as json from "@siteimprove/alfa-json";
+
+import { h } from "../dist/index.js";
+import type { Attribute, Document, Element, Shadow } from "../dist/index.js";
+import { Node } from "../dist/index.js";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
   const a = <button />;
@@ -114,6 +116,7 @@ test(`Node.clone() creates new instance with same value`, (t) => {
     ],
     [h.sheet([h.rule.style("p", { background: "green" })])],
     "bar",
+    crypto.randomUUID(),
     { extraStuff: "baz" },
   );
 
@@ -193,7 +196,7 @@ test(`#toJSON() serializes boxes of all descendants when device is passed in`, (
       return;
     }
 
-    for (let child of node.children) {
+    for (const child of node.children) {
       visit(child);
     }
   }
@@ -234,14 +237,14 @@ test(`#toJSON() serializes box of descendant inside shadow DOM`, (t) => {
     if (Option.from(node.shadow).isSome()) {
       const shadow = node.shadow as Shadow.JSON;
       if (shadow.children !== undefined) {
-        for (let child of shadow.children) {
+        for (const child of shadow.children) {
           visit(child);
         }
       }
     }
 
     if (node.children !== undefined) {
-      for (let child of node.children) {
+      for (const child of node.children) {
         visit(child);
       }
     }
@@ -283,14 +286,14 @@ test(`#toJSON() serializes box of descendant inside content`, (t) => {
     if (Option.from(node.content).isSome()) {
       const content = node.content as Node.JSON;
       if (content.children !== undefined) {
-        for (let child of content.children) {
+        for (const child of content.children) {
           visit(child);
         }
       }
     }
 
     if (node.children !== undefined) {
-      for (let child of node.children) {
+      for (const child of node.children) {
         visit(child);
       }
     }
@@ -302,4 +305,157 @@ test(`#toJSON() serializes box of descendant inside content`, (t) => {
     Rectangle.of(8, 8, 100, 100).toJSON(),
     Rectangle.of(16, 16, 50, 50).toJSON(),
   ]);
+});
+
+function docWithSerializationIds(
+  docId: string,
+  elmId: string,
+  attrId: string,
+): Document {
+  // We can't use JSX here because it doesn't support passing a serialization id when constructing an attribute
+  return h.document(
+    [
+      h.element(
+        "div",
+        [h.attribute("id", "foo", undefined, attrId)],
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        elmId,
+      ),
+    ],
+    undefined,
+    undefined,
+    docId,
+  );
+}
+
+test("#toJSON() includes only serializationId when verbosity is minimal", (t) => {
+  const docId = crypto.randomUUID();
+  const elmId = crypto.randomUUID();
+  const attrId = crypto.randomUUID();
+
+  const doc = docWithSerializationIds(docId, elmId, attrId);
+
+  const device = Device.standard();
+
+  const verbosities = [
+    json.Serializable.Verbosity.Minimal,
+    json.Serializable.Verbosity.Low,
+  ] as const;
+
+  for (const verbosity of verbosities) {
+    const options = {
+      device,
+      verbosity,
+    } as const;
+
+    t.deepEqual(doc.toJSON(options), {
+      type: "document",
+      serializationId: docId,
+    });
+
+    const elm = doc.children().first().getUnsafe() as Element<"div">;
+
+    t.deepEqual(elm.toJSON(options), {
+      type: "element",
+      serializationId: elmId,
+    });
+
+    const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
+
+    t.deepEqual(attr.toJSON(options), {
+      type: "attribute",
+      serializationId: attrId,
+    });
+  }
+});
+
+test("#toJSON() includes everything except serializationId when options is undefined or verbosity is medium", (t) => {
+  const doc = h.document([<div id="foo"></div>]);
+
+  const device = Device.standard();
+
+  const options = [
+    undefined,
+    {
+      device,
+      verbosity: json.Serializable.Verbosity.Medium,
+    } as const,
+  ] as const;
+
+  for (const option of options) {
+    t.deepEqual(doc.toJSON(option), {
+      type: "document",
+      style: [],
+      children: [
+        {
+          type: "element",
+          attributes: [
+            {
+              type: "attribute",
+              name: "id",
+              namespace: null,
+              prefix: null,
+              value: "foo",
+            },
+          ],
+          box: null,
+          children: [],
+          content: null,
+          name: "div",
+          namespace: "http://www.w3.org/1999/xhtml",
+          prefix: null,
+          shadow: null,
+          style: null,
+        },
+      ],
+    });
+  }
+});
+
+test("#toJSON() includes everything including serializationId when verbosity is high", (t) => {
+  const docId = crypto.randomUUID();
+  const elmId = crypto.randomUUID();
+  const attrId = crypto.randomUUID();
+
+  const doc = docWithSerializationIds(docId, elmId, attrId);
+
+  const options = {
+    device: Device.standard(),
+    verbosity: json.Serializable.Verbosity.High,
+  } as const;
+
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    serializationId: docId,
+    style: [],
+    children: [
+      {
+        type: "element",
+        serializationId: elmId,
+        attributes: [
+          {
+            type: "attribute",
+            serializationId: attrId,
+            name: "id",
+            namespace: null,
+            prefix: null,
+            value: "foo",
+          },
+        ],
+        box: null,
+        children: [],
+        content: null,
+        name: "div",
+        namespace: "http://www.w3.org/1999/xhtml",
+        prefix: null,
+        shadow: null,
+        style: null,
+      },
+    ],
+  });
 });

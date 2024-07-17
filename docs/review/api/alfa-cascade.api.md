@@ -11,22 +11,22 @@ import { Comparison } from '@siteimprove/alfa-comparable';
 import { Complex } from '@siteimprove/alfa-selector';
 import { Compound } from '@siteimprove/alfa-selector';
 import { Context } from '@siteimprove/alfa-selector';
-import { Declaration } from '@siteimprove/alfa-dom';
-import { Device } from '@siteimprove/alfa-device';
-import { Document } from '@siteimprove/alfa-dom';
+import type { Declaration } from '@siteimprove/alfa-dom';
+import type { Device } from '@siteimprove/alfa-device';
+import type { Document } from '@siteimprove/alfa-dom';
 import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
-import * as json from '@siteimprove/alfa-json';
+import type * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
-import { Rule } from '@siteimprove/alfa-dom';
-import { Selector } from '@siteimprove/alfa-selector';
+import type { Rule } from '@siteimprove/alfa-dom';
+import type { Selector } from '@siteimprove/alfa-selector';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Shadow } from '@siteimprove/alfa-dom';
-import { Sheet } from '@siteimprove/alfa-dom';
+import type { Sheet } from '@siteimprove/alfa-dom';
 import { Simple } from '@siteimprove/alfa-selector';
-import { Specificity } from '@siteimprove/alfa-selector/src/specificity';
-import { StyleRule } from '@siteimprove/alfa-dom';
+import { Specificity } from '@siteimprove/alfa-selector';
+import type { StyleRule } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
 export class Cascade implements Serializable {

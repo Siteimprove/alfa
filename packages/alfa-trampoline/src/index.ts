@@ -1,1 +1,1 @@
-export * from "./trampoline";
+export * from "./trampoline.js";

@@ -1,17 +1,22 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Collection } from "@siteimprove/alfa-collection";
+import type {
+  Comparable,
+  Comparer,
+  Comparison,
+} from "@siteimprove/alfa-comparable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
-import { Map } from "@siteimprove/alfa-map";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Map } from "@siteimprove/alfa-map";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Option } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
-import { Cons } from "./cons";
-import { Nil } from "./nil";
+import { Cons } from "./cons.js";
+import { Nil } from "./nil.js";
 
 /**
  * @public
@@ -106,7 +111,7 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   ): Comparison;
   groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;
-  toJSON(): Sequence.JSON<T>;
+  toJSON(options?: Serializable.Options): Sequence.JSON<T>;
 }
 
 /**

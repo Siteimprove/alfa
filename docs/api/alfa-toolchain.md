@@ -4,6 +4,12 @@
 
 ## alfa-toolchain package
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [generateGraphs(cwd)](./alfa-toolchain.generategraphs.md) |  |
+
 ## Namespaces
 
 |  Namespace | Description |
@@ -11,4 +17,10 @@
 |  [globalChangelog](./alfa-toolchain.globalchangelog.md) |  |
 |  [individualChangelog](./alfa-toolchain.individualchangelog.md) |  |
 |  [Validation](./alfa-toolchain.validation.md) |  |
+
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [changelogFunctions](./alfa-toolchain.changelogfunctions.md) |  |
 

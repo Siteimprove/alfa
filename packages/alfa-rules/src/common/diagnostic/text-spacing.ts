@@ -1,9 +1,9 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Length } from "@siteimprove/alfa-css";
-import { Declaration, Element } from "@siteimprove/alfa-dom";
-import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Longhands, Style } from "@siteimprove/alfa-style";
+import type { Length } from "@siteimprove/alfa-css";
+import type { Declaration, Element, Node } from "@siteimprove/alfa-dom";
+import type { Hash } from "@siteimprove/alfa-hash";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Longhands, Style } from "@siteimprove/alfa-style";
 
 /**
  * @public
@@ -130,17 +130,16 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
     hash.writeNumber(this._value.value);
   }
 
-  public toJSON(): TextSpacing.JSON<N> {
-    const value1 = this._value.toJSON();
+  public toJSON(options?: Node.SerializationOptions): TextSpacing.JSON<N> {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       property: this._property,
-      value: value1,
+      value: this._value.toJSON(),
       "font-size": this._fontSize.toJSON(),
       ratio: this._ratio,
       threshold: this._threshold,
       declaration: this._declaration.toJSON(),
-      owner: this._owner.toJSON(),
+      owner: this._owner.toJSON(options),
     };
   }
 }

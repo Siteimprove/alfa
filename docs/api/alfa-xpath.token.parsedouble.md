@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseDouble: Parser<Slice<Token>, Double, string, []>
+parseDouble: Parser<Slice<Token, Serializable.Options>, Double, string, []>
 ```

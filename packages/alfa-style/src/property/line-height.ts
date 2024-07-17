@@ -7,10 +7,10 @@ import {
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
-import type { Computed as FontSize } from "./font-size";
+import type { Computed as FontSize } from "./font-size.js";
 import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;

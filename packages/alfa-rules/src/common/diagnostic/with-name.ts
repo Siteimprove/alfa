@@ -1,8 +1,9 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Device } from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Node } from "@siteimprove/alfa-aria";
-import { Element } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import type { Element } from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
+import type { Option } from "@siteimprove/alfa-option";
 
 /**
  * @public
@@ -29,9 +30,9 @@ export class WithName extends Diagnostic {
     return this._name;
   }
 
-  public toJSON(): WithName.JSON {
+  public toJSON(options?: dom.Node.SerializationOptions): WithName.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       name: this._name,
     };
   }

@@ -1,17 +1,17 @@
-import { Callback } from "@siteimprove/alfa-callback";
+import type { Callback } from "@siteimprove/alfa-callback";
 import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import type { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Thunk } from "@siteimprove/alfa-thunk";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import * as json from "@siteimprove/alfa-json";
+import type * as json from "@siteimprove/alfa-json";
 
-import { Err } from "./err";
-import { Result } from "./result";
+import type { Result } from "./result.js";
 
 const { not, test } = Predicate;
 
@@ -33,7 +33,7 @@ export class Ok<T> implements Result<T, never> {
     return true;
   }
 
-  public isErr(): this is Err<never> {
+  public isErr(): this is never {
     return false;
   }
 
@@ -69,31 +69,47 @@ export class Ok<T> implements Result<T, never> {
     return Equatable.equals(this._value, value);
   }
 
-  public includesErr(): boolean {
+  public includesErr(): this is never {
     return false;
   }
+
+  public some<U extends T>(refinement: Refinement<T, U>): this is Ok<U>;
+
+  public some(predicate: Predicate<T>): boolean;
 
   public some(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
   }
 
-  public someErr(): boolean {
+  public someErr(): this is never {
     return false;
   }
+
+  public none<U extends T>(
+    refinement: Refinement<T, U>,
+  ): this is Result<Exclude<T, U>, never>;
+
+  public none(predicate: Predicate<T>): boolean;
 
   public none(predicate: Predicate<T>): boolean {
     return test(not(predicate), this._value);
   }
 
-  public noneErr(): boolean {
+  public noneErr(): this is this {
     return true;
   }
+
+  public every<U extends T>(
+    refinement: Refinement<T, U>,
+  ): this is Result<U, never>;
+
+  public every(predicate: Predicate<T>): boolean;
 
   public every(predicate: Predicate<T>): boolean {
     return test(predicate, this._value);
   }
 
-  public everyErr(): boolean {
+  public everyErr(): this is this {
     return true;
   }
 
@@ -176,10 +192,10 @@ export class Ok<T> implements Result<T, never> {
     yield this._value;
   }
 
-  public toJSON(): Ok.JSON<T> {
+  public toJSON(options?: Serializable.Options): Ok.JSON<T> {
     return {
       type: "ok",
-      value: Serializable.toJSON(this._value),
+      value: Serializable.toJSON(this._value, options),
     };
   }
 

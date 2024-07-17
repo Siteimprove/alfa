@@ -22,4 +22,5 @@ export declare namespace Text
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-dom.text.json.md) |  |
+|  [MinimalJSON](./alfa-dom.text.minimaljson.md) |  |
 

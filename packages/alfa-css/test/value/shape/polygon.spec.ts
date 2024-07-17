@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Polygon } from "../../../src";
-import { parser, serializer } from "../../common/parse";
+import { Polygon } from "../../../dist/index.js";
+import { parser, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Polygon.parse);
 const serialize = serializer(Polygon.parse);
@@ -56,8 +56,7 @@ test(".parse() parses a polygon with a fill rule", (t) => {
 });
 
 test(".parse() fails when there is an odd number of coordinates", (t) => {
-  t.deepEqual(parseErr("polygon(1px 0px 1px 1px 0px)").isErr(), true,
-  );
+  t.deepEqual(parseErr("polygon(1px 0px 1px 1px 0px)").isErr(), true);
 });
 
 test(".parse() accepts calculated vertices", (t) => {

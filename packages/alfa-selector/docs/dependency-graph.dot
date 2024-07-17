@@ -31,7 +31,10 @@ digraph "dependency-graph-[object Object]" {
   "src/selector/simple/type.ts";
   "src/selector/simple/universal.ts";
   "src/selector/simple/pseudo-class/pseudo-class.ts";
+  "src/common/is-link.ts";
+  "name_src/common";
   "src/selector/simple/pseudo-class/active.ts";
+  "src/selector/simple/pseudo-class/any-link.ts";
   "src/selector/simple/pseudo-class/disabled.ts";
   "src/selector/simple/pseudo-class/empty.ts";
   "src/selector/simple/pseudo-class/enabled.ts";
@@ -79,7 +82,7 @@ digraph "dependency-graph-[object Object]" {
     "name_src" [
       penwidth = 5;
       shape = "rectangle";
-      color = "#ccff00";
+      color = "#ffff00";
       label = "src";
     ];
     "exit_src" [
@@ -91,7 +94,7 @@ digraph "dependency-graph-[object Object]" {
       "name_src" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#ccff00";
+        color = "#ffff00";
         label = "src";
       ];
       "exit_src" [
@@ -102,19 +105,38 @@ digraph "dependency-graph-[object Object]" {
       ];
       "src/index.ts" [
         label = "index.ts";
-        color = "#ccff00";
+        color = "#ffff00";
         penwidth = 5;
       ];
       "src/specificity.ts" [
         label = "specificity.ts";
       ];
+      subgraph "cluster_src/common" {
+        color = "#000000";
+        label = "";
+        "name_src/common" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff00";
+          label = "common";
+        ];
+        "exit_src/common" [
+          style = "invis";
+        ];
+        "src/common/is-link.ts" [
+          label = "is-link.ts";
+        ];
+        "src/common/is-link.ts" -> "exit_src/common" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/selector" {
         color = "#000000";
         label = "";
         "name_src/selector" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#cc00ff";
+          color = "#ff00ff";
           label = "selector";
         ];
         "exit_src/selector" [
@@ -135,7 +157,7 @@ digraph "dependency-graph-[object Object]" {
         ];
         "src/selector/index.ts" [
           label = "index.ts";
-          color = "#cc00ff";
+          color = "#ff00ff";
           penwidth = 5;
           fillcolor = "#ff6c60";
           style = "rounded,filled";
@@ -192,7 +214,7 @@ digraph "dependency-graph-[object Object]" {
             "name_src/selector/simple/pseudo-class" [
               penwidth = 5;
               shape = "rectangle";
-              color = "#0066ff";
+              color = "#0000ff";
               label = "pseudo-class";
             ];
             "exit_src/selector/simple/pseudo-class" [
@@ -200,6 +222,9 @@ digraph "dependency-graph-[object Object]" {
             ];
             "src/selector/simple/pseudo-class/active.ts" [
               label = "active.ts";
+            ];
+            "src/selector/simple/pseudo-class/any-link.ts" [
+              label = "any-link.ts";
             ];
             "src/selector/simple/pseudo-class/disabled.ts" [
               label = "disabled.ts";
@@ -239,7 +264,7 @@ digraph "dependency-graph-[object Object]" {
             ];
             "src/selector/simple/pseudo-class/index.ts" [
               label = "index.ts";
-              color = "#0066ff";
+              color = "#0000ff";
               penwidth = 5;
               fillcolor = "#ff6c60";
               style = "rounded,filled";
@@ -294,6 +319,9 @@ digraph "dependency-graph-[object Object]" {
               label = "where.ts";
             ];
             "src/selector/simple/pseudo-class/active.ts" -> "exit_src/selector/simple/pseudo-class" [
+              style = "invis";
+            ];
+            "src/selector/simple/pseudo-class/any-link.ts" -> "exit_src/selector/simple/pseudo-class" [
               style = "invis";
             ];
             "src/selector/simple/pseudo-class/disabled.ts" -> "exit_src/selector/simple/pseudo-class" [
@@ -387,7 +415,7 @@ digraph "dependency-graph-[object Object]" {
             "name_src/selector/simple/pseudo-element" [
               penwidth = 5;
               shape = "rectangle";
-              color = "#00ff66";
+              color = "#00ffff";
               label = "pseudo-element";
             ];
             "exit_src/selector/simple/pseudo-element" [
@@ -404,13 +432,9 @@ digraph "dependency-graph-[object Object]" {
             ];
             "src/selector/simple/pseudo-element/cue-region.ts" [
               label = "cue-region.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/selector/simple/pseudo-element/cue.ts" [
               label = "cue.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/selector/simple/pseudo-element/file-selector-button.ts" [
               label = "file-selector-button.ts";
@@ -426,7 +450,7 @@ digraph "dependency-graph-[object Object]" {
             ];
             "src/selector/simple/pseudo-element/index.ts" [
               label = "index.ts";
-              color = "#00ff66";
+              color = "#00ffff";
               penwidth = 5;
               fillcolor = "#ff6c60";
               style = "rounded,filled";
@@ -523,6 +547,9 @@ digraph "dependency-graph-[object Object]" {
             style = "invis";
           ];
           "src/selector/simple/parser.ts" -> "exit_src/selector/simple" [
+            style = "invis";
+          ];
+          "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
             style = "invis";
           ];
           "exit_src/selector/simple/pseudo-class" -> "exit_src/selector/simple" [
@@ -856,11 +883,20 @@ digraph "dependency-graph-[object Object]" {
         "exit_src/selector/simple" -> "exit_src/selector" [
           style = "invis";
         ];
+        "exit_src/selector/simple" -> "exit_src/selector" [
+          style = "invis";
+        ];
       }
+      "exit_src/common" -> "exit_src" [
+        style = "invis";
+      ];
       "src/context.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/selector" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/selector" -> "exit_src" [
@@ -1242,6 +1278,12 @@ digraph "dependency-graph-[object Object]" {
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
   }
   "exit_src" -> "dependency-graph-[object Object]" [
     style = "invis";
@@ -1259,7 +1301,7 @@ digraph "dependency-graph-[object Object]" {
     style = "solid";
     ltail = "cluster_src/index.ts";
     lhead = "cluster_src/selector";
-    color = "#ccff00";
+    color = "#ffff00";
   ];
   "src/index.ts" -> "src/specificity.ts" [
     style = "invis";
@@ -1277,7 +1319,7 @@ digraph "dependency-graph-[object Object]" {
     style = "solid";
     ltail = "cluster_src/selector";
     lhead = "cluster_src/context.ts";
-    color = "#cc00ff";
+    color = "#ff00ff";
   ];
   "src/selector/complex.ts" -> "src/selector/combinator.ts" [
     style = "invis";
@@ -1319,7 +1361,7 @@ digraph "dependency-graph-[object Object]" {
     style = "dotted";
     ltail = "cluster_src/selector/complex.ts";
     lhead = "cluster_src/selector/simple";
-    color = "#cc00ff";
+    color = "#ff00ff";
   ];
   "src/selector/complex.ts" -> "name_src/selector/simple" [
     style = "invis";
@@ -1337,7 +1379,7 @@ digraph "dependency-graph-[object Object]" {
     style = "solid";
     ltail = "cluster_src/selector";
     lhead = "cluster_src/specificity.ts";
-    color = "#cc00ff";
+    color = "#ff00ff";
   ];
   "src/selector/compound.ts" -> "src/context.ts" [
     style = "invis";
@@ -1367,7 +1409,7 @@ digraph "dependency-graph-[object Object]" {
     style = "solid";
     ltail = "cluster_src/selector/compound.ts";
     lhead = "cluster_src/selector/simple";
-    color = "#cc00ff";
+    color = "#ff00ff";
   ];
   "src/selector/compound.ts" -> "src/specificity.ts" [
     style = "invis";
@@ -1430,7 +1472,7 @@ digraph "dependency-graph-[object Object]" {
     style = "solid";
     ltail = "cluster_src/selector/index.ts";
     lhead = "cluster_src/selector/simple";
-    color = "#cc00ff";
+    color = "#ff00ff";
   ];
   "src/selector/index.ts" -> "name_src/selector/simple" [
     style = "invis";
@@ -1496,7 +1538,7 @@ digraph "dependency-graph-[object Object]" {
     style = "dotted";
     ltail = "cluster_src/selector/list.ts";
     lhead = "cluster_src/selector/simple";
-    color = "#cc00ff";
+    color = "#ff00ff";
   ];
   "src/selector/list.ts" -> "src/specificity.ts" [
     style = "invis";
@@ -1544,7 +1586,7 @@ digraph "dependency-graph-[object Object]" {
     style = "dotted";
     ltail = "cluster_src/selector/relative.ts";
     lhead = "cluster_src/selector/simple";
-    color = "#cc00ff";
+    color = "#ff00ff";
   ];
   "src/selector/selector.ts" -> "src/context.ts" [
     style = "invis";
@@ -1583,7 +1625,7 @@ digraph "dependency-graph-[object Object]" {
     style = "dotted";
     ltail = "cluster_src/selector/selector.ts";
     lhead = "cluster_src/selector/simple";
-    color = "#cc00ff";
+    color = "#ff00ff";
   ];
   "src/selector/selector.ts" -> "src/specificity.ts" [
     style = "invis";
@@ -1717,6 +1759,21 @@ digraph "dependency-graph-[object Object]" {
   "src/selector/simple/pseudo-class/active.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
     style = "solid";
     ltail = "cluster_src/selector/simple/pseudo-class/active.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
+    color = "black";
+  ];
+  "exit_src/selector" -> "name_src/common" [
+    style = "solid";
+    ltail = "cluster_src/selector";
+    lhead = "cluster_src/common";
+    color = "#ff00ff";
+  ];
+  "src/selector/simple/pseudo-class/any-link.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/any-link.ts" -> "src/selector/simple/pseudo-class/pseudo-class.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/any-link.ts";
     lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
     color = "black";
   ];
@@ -1928,6 +1985,15 @@ digraph "dependency-graph-[object Object]" {
     style = "solid";
     ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
     lhead = "cluster_src/selector/simple/pseudo-class/active.ts";
+    color = "black";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/any-link.ts" [
+    style = "invis";
+  ];
+  "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/any-link.ts" [
+    style = "solid";
+    ltail = "cluster_src/selector/simple/pseudo-class/index.ts";
+    lhead = "cluster_src/selector/simple/pseudo-class/any-link.ts";
     color = "black";
   ];
   "src/selector/simple/pseudo-class/index.ts" -> "src/selector/simple/pseudo-class/disabled.ts" [
@@ -2212,6 +2278,9 @@ digraph "dependency-graph-[object Object]" {
     lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
     color = "black";
   ];
+  "exit_src/selector" -> "name_src/common" [
+    style = "invis";
+  ];
   "src/selector/simple/pseudo-class/link.ts" -> "src/context.ts" [
     style = "invis";
   ];
@@ -2352,6 +2421,9 @@ digraph "dependency-graph-[object Object]" {
     ltail = "cluster_src/selector/simple/pseudo-class/root.ts";
     lhead = "cluster_src/selector/simple/pseudo-class/pseudo-class.ts";
     color = "black";
+  ];
+  "exit_src/selector" -> "name_src/common" [
+    style = "invis";
   ];
   "src/selector/simple/pseudo-class/visited.ts" -> "src/context.ts" [
     style = "invis";
@@ -2714,7 +2786,7 @@ digraph "dependency-graph-[object Object]" {
     style = "dotted";
     ltail = "cluster_src/selector/simple/pseudo-element";
     lhead = "cluster_src/selector/simple/index.ts";
-    color = "#00ff66";
+    color = "#00ffff";
   ];
   "src/selector/simple/pseudo-element/slotted.ts" -> "src/selector/simple/pseudo-element/pseudo-element.ts" [
     style = "invis";

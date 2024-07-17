@@ -1,19 +1,19 @@
-import { Applicative } from "@siteimprove/alfa-applicative";
-import { Array } from "@siteimprove/alfa-array";
-import { Callback } from "@siteimprove/alfa-callback";
-import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Foldable } from "@siteimprove/alfa-foldable";
-import { Functor } from "@siteimprove/alfa-functor";
-import { Hashable } from "@siteimprove/alfa-hash";
-import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Monad } from "@siteimprove/alfa-monad";
-import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Reducer } from "@siteimprove/alfa-reducer";
-import { Refinement } from "@siteimprove/alfa-refinement";
+import type { Applicative } from "@siteimprove/alfa-applicative";
+import type { Array } from "@siteimprove/alfa-array";
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Foldable } from "@siteimprove/alfa-foldable";
+import type { Functor } from "@siteimprove/alfa-functor";
+import type { Hashable } from "@siteimprove/alfa-hash";
+import type { Iterable } from "@siteimprove/alfa-iterable";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Monad } from "@siteimprove/alfa-monad";
+import type { Option } from "@siteimprove/alfa-option";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Reducer } from "@siteimprove/alfa-reducer";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
 /**
  * @public

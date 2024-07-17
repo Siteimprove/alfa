@@ -1,13 +1,13 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Serializable } from "@siteimprove/alfa-json";
+import type { Equatable } from "@siteimprove/alfa-equatable";
+import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Block } from "./block";
-import { Function } from "./function";
-import type { Parser as CSSParser } from "./parser";
-import { Token } from "./token";
+import { Block } from "./block.js";
+import { Function } from "./function.js";
+import type { Parser as CSSParser } from "./parser.js";
+import { Token } from "./token.js";
 
 const { delimited, option, either, map } = Parser;
 

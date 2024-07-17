@@ -1,16 +1,16 @@
 import { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
-import * as dom from "@siteimprove/alfa-dom";
+import type * as dom from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Specificity } from "../../specificity";
+import { Specificity } from "../../specificity.js";
 
-import { WithName } from "../selector";
+import { WithName } from "../selector.js";
 
-import { parseName } from "./parser";
+import { parseName } from "./parser.js";
 
 const { delimited, either, left, map, option, pair } = Parser;
 const { and, equals, property } = Predicate;
