@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.87.1
+
+### Patch Changes
+
+- **Changed:** Trying a new release flow ([#1653](https://github.com/Siteimprove/alfa/pull/1653))
+
 ## 0.87.0
 
 ## 0.86.2

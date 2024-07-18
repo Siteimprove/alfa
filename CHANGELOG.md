@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.87.1](../../compare/v0.87.0...v0.87.1) (2024-07-18)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0871): Trying a new release flow. ([#1653](https://github.com/Siteimprove/alfa/pull/1653))
+
 ## [0.87.0](../../compare/v0.86.2...v0.87.0) (2024-07-18)
 
 ### Breaking

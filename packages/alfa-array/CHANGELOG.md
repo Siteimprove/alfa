@@ -1,5 +1,7 @@
 # @siteimprove/alfa-array
 
+## 0.87.1
+
 ## 0.87.0
 
 ### Minor Changes

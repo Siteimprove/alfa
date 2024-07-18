@@ -1,5 +1,7 @@
 # @siteimprove/alfa-trampoline
 
+## 0.87.1
+
 ## 0.87.0
 
 ## 0.86.2
