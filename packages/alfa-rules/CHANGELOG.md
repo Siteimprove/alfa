@@ -1,5 +1,19 @@
 # @siteimprove/alfa-rules
 
+## 0.87.0
+
+### Minor Changes
+
+- **Fixed:** The rules R111 and R113 are now inapplicable to targets not visible due to scrolling. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+- **Breaking:** Optional serialization type parameters have been removed. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+### Patch Changes
+
+- **Fixed:** Serialization options are now propagated in `.toJSON()` for all classes extending `Diagnostic`. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+- **Fixed:** R111 and R113 now computes the clickable area of a target more accurately which should reduce both number of false positives and false negatives. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
 ## 0.86.2
 
 ## 0.86.1

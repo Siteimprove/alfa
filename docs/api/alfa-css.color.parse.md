@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-parse: Parser<Slice<Token, import("@siteimprove/alfa-json").Serializable.Options>, Color, string, []>
+parse: Parser<Slice<Token>, Color, string, []>
 ```

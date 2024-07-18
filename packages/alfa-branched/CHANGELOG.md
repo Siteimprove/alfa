@@ -1,5 +1,7 @@
 # @siteimprove/alfa-branched
 
+## 0.87.0
+
 ## 0.86.2
 
 ## 0.86.1

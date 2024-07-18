@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function toJSON<T, O extends Serializable.Options = Serializable.Options>(array: ReadonlyArray<T>, options?: O): Array<Serializable.ToJSON<T>>;
+function toJSON<T>(array: ReadonlyArray<T>, options?: Serializable.Options): Array<Serializable.ToJSON<T>>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function toJSON<T, O extends Serializable.Options = Serializable.Options>(array:
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  options | O | _(Optional)_ |
+|  options | [Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
 
 **Returns:**
 

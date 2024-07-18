@@ -17,4 +17,5 @@ export declare namespace Query
 |  --- | --- |
 |  [getElementDescendants](./alfa-dom.query.getelementdescendants.md) |  |
 |  [getElementIdMap](./alfa-dom.query.getelementidmap.md) |  |
+|  [getInclusiveElementDescendants](./alfa-dom.query.getinclusiveelementdescendants.md) |  |
 

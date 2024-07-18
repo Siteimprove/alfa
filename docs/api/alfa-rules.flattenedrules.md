@@ -9,5 +9,5 @@ A list of all available rules joined under a single type. The type of each rule 
 **Signature:**
 
 ```typescript
-FlattenedRules: Sequence<Flattened.Rule, import("@siteimprove/alfa-json").Serializable.Options>
+FlattenedRules: Sequence<Flattened.Rule>
 ```

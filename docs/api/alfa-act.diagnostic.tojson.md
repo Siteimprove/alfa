@@ -7,8 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Diagnostic.JSON;
+toJSON(options?: Serializable.Options): Diagnostic.JSON;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+
 **Returns:**
 
 [Diagnostic.JSON](./alfa-act.diagnostic.json.md)

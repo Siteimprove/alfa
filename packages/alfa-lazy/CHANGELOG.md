@@ -1,5 +1,11 @@
 # @siteimprove/alfa-lazy
 
+## 0.87.0
+
+### Minor Changes
+
+- **Breaking:** Optional serialization type parameters have been removed. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
 ## 0.86.2
 
 ## 0.86.1

@@ -1,5 +1,13 @@
 # @siteimprove/alfa-style
 
+## 0.87.0
+
+### Minor Changes
+
+- **Added:** Predicate `isScrolledBehind` for checking if a node is scrolled behind an ancestor has been added. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+- **Breaking:** Optional serialization type parameters have been removed. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
 ## 0.86.2
 
 ## 0.86.1

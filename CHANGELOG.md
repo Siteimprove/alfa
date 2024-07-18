@@ -1,5 +1,27 @@
 # Alfa changelog
 
+## [0.87.0](../../compare/v0.86.2...v0.87.0) (2024-07-18)
+
+### Breaking
+
+- [@siteimprove/alfa-collection](packages/alfa-collection/CHANGELOG.md#0870), [@siteimprove/alfa-iterable](packages/alfa-iterable/CHANGELOG.md#0870), [@siteimprove/alfa-sequence](packages/alfa-sequence/CHANGELOG.md#0870), [@siteimprove/alfa-option](packages/alfa-option/CHANGELOG.md#0870), [@siteimprove/alfa-record](packages/alfa-record/CHANGELOG.md#0870), [@siteimprove/alfa-result](packages/alfa-result/CHANGELOG.md#0870), [@siteimprove/alfa-array](packages/alfa-array/CHANGELOG.md#0870), [@siteimprove/alfa-graph](packages/alfa-graph/CHANGELOG.md#0870), [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0870), [@siteimprove/alfa-slice](packages/alfa-slice/CHANGELOG.md#0870), [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0870), [@siteimprove/alfa-json](packages/alfa-json/CHANGELOG.md#0870), [@siteimprove/alfa-lazy](packages/alfa-lazy/CHANGELOG.md#0870), [@siteimprove/alfa-list](packages/alfa-list/CHANGELOG.md#0870), [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#0870), [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#0870), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0870), [@siteimprove/alfa-map](packages/alfa-map/CHANGELOG.md#0870), [@siteimprove/alfa-set](packages/alfa-set/CHANGELOG.md#0870): Optional serialization type parameters have been removed. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0870): Predicate `isScrolledBehind` for checking if a node is scrolled behind an ancestor has been added. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0870): A new function `getInclusiveElementDescendants` was added to the `Query` namespace. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0870): `Element` serialised with high verbosity now include the serialisation ID of their assigned slot, if any. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0870): The rules R111 and R113 are now inapplicable to targets not visible due to scrolling. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0870), [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#0870): Serialization options are now propagated in `.toJSON()` for all classes extending `Diagnostic`. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0870): R111 and R113 now computes the clickable area of a target more accurately which should reduce both number of false positives and false negatives. ([#1651](https://github.com/Siteimprove/alfa/pull/1651))
+
 ## [0.86.2](../../compare/v0.86.1...v0.86.2) (2024-07-03)
 
 ### Fixed

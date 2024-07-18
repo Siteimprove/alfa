@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-toJSON(options?: O): Slice.JSON<T>;
+toJSON(options?: Serializable.Options): Slice.JSON<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | O | _(Optional)_ |
+|  options | [Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
 
 **Returns:**
 

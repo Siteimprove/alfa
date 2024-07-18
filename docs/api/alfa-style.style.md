@@ -43,6 +43,7 @@ export declare namespace Style
 |  [isInert](./alfa-style.style.isinert.md) |  |
 |  [isPositioned](./alfa-style.style.ispositioned.md) |  |
 |  [isRendered](./alfa-style.style.isrendered.md) |  |
+|  [isScrolledBehind](./alfa-style.style.isscrolledbehind.md) |  |
 |  [isTabbable](./alfa-style.style.istabbable.md) |  |
 |  [isVisible](./alfa-style.style.isvisible.md) |  |
 |  [isVisibleShadow](./alfa-style.style.isvisibleshadow.md) |  |

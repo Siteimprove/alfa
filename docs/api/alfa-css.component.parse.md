@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-parse: Parser<Slice<Token, Serializable.Options>, Component, string, []>
+parse: Parser<Slice<Token>, Component, string, []>
 ```
