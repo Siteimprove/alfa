@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-toJSON(options?: Serializable.Options): Map.JSON<K, V>;
+toJSON(options?: O): Map.JSON<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+|  options | O | _(Optional)_ |
 
 **Returns:**
 

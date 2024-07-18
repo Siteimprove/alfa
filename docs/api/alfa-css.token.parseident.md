@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseIdent(query?: string | Predicate<Ident>): Parser<Slice<Token>, Ident, string, []>;
+function parseIdent(query?: string | Predicate<Ident>): Parser<Slice<Token, Serializable.Options>, Ident, string, []>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function parseIdent(query?: string | Predicate<Ident>): Parser<Slice<Token>, Ide
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Ident](./alfa-css.token.ident.md)<!-- -->, string, \[\]&gt;
+Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->, [Serializable.Options](./alfa-json.serializable.options.md)<!-- -->&gt;, [Ident](./alfa-css.token.ident.md)<!-- -->, string, \[\]&gt;
 

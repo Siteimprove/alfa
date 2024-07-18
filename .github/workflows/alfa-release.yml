@@ -140,12 +140,13 @@ jobs:
           # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
           VERSION: v${{ steps.new.outputs.version }}
 
-      - name: Make npm release (Github Package Registry)
+      - name: Make npm release
         run: >
-          npm publish 
-          --tolerate-republish 
-          --provenance
-          --ws          
+          yarn workspaces foreach
+          --all
+          --no-private
+          --topological-dev
+          npm publish --tolerate-republish
 
       - name: Make Github release
         run: >

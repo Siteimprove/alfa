@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-toJSON(options?: Serializable.Options): Err.JSON<E>;
+toJSON(options?: O): Err.JSON<E>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+|  options | O | _(Optional)_ |
 
 **Returns:**
 

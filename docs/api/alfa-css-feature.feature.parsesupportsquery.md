@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseSupportsQuery: import("@siteimprove/alfa-parser").Parser<import("@siteimprove/alfa-slice").Slice<import("@siteimprove/alfa-css").Token>, Supports.Query, string, []>
+parseSupportsQuery: import("@siteimprove/alfa-parser").Parser<import("@siteimprove/alfa-slice").Slice<import("@siteimprove/alfa-css").Token, import("@siteimprove/alfa-json").Serializable.Options>, Supports.Query, string, []>
 ```

@@ -7,15 +7,8 @@
 **Signature:**
 
 ```typescript
-toJSON(options?: json.Serializable.Options): Inapplicable.JSON;
+toJSON(): Inapplicable.JSON;
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  options | [json.Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
-
 **Returns:**
 
 [Inapplicable.JSON](./alfa-act.outcome.inapplicable.json.md)

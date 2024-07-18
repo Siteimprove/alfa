@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseOpenSquareBracket: Parser<Slice<Token>, OpenSquareBracket, string, []>
+parseOpenSquareBracket: Parser<Slice<Token, Serializable.Options>, OpenSquareBracket, string, []>
 ```

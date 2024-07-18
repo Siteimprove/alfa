@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseString(predicate?: Predicate<String>): Parser<Slice<Token>, String, string, []>;
+function parseString(predicate?: Predicate<String>): Parser<Slice<Token, Serializable.Options>, String, string, []>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function parseString(predicate?: Predicate<String>): Parser<Slice<Token>, String
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [String](./alfa-css.token.string.md)<!-- -->, string, \[\]&gt;
+Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->, [Serializable.Options](./alfa-json.serializable.options.md)<!-- -->&gt;, [String](./alfa-css.token.string.md)<!-- -->, string, \[\]&gt;
 

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseDimension(predicate?: Predicate<Dimension>): Parser<Slice<Token>, Dimension, string, []>;
+function parseDimension(predicate?: Predicate<Dimension>): Parser<Slice<Token, Serializable.Options>, Dimension, string, []>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function parseDimension(predicate?: Predicate<Dimension>): Parser<Slice<Token>, 
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Dimension](./alfa-css.token.dimension.md)<!-- -->, string, \[\]&gt;
+Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->, [Serializable.Options](./alfa-json.serializable.options.md)<!-- -->&gt;, [Dimension](./alfa-css.token.dimension.md)<!-- -->, string, \[\]&gt;
 
