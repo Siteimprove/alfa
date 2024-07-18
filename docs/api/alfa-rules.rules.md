@@ -9,5 +9,5 @@ An immutable record of individual rules. The type of each individual rule is pre
 **Signature:**
 
 ```typescript
-Rules: Record<typeof rules, import("@siteimprove/alfa-json").Serializable.Options>
+Rules: Record<typeof rules>
 ```

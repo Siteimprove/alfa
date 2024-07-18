@@ -9,5 +9,5 @@
 **Signature:**
 
 ```typescript
-parse: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax/token.js").Token, import("@siteimprove/alfa-json").Serializable.Options>, Perspective<Length<import("../../index.js").Unit.Length>>, string, []>
+parse: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax/token.js").Token>, Perspective<Length<import("../../index.js").Unit.Length>>, string, []>
 ```

@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseNumber: Parser<Slice<Token, json.Serializable.Options>, Math<"number">, string, []>
+parseNumber: Parser<Slice<Token>, Math<"number">, string, []>
 ```

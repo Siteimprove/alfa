@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parsePercentage(predicate?: Predicate<Percentage>): Parser<Slice<Token, Serializable.Options>, Percentage, string, []>;
+function parsePercentage(predicate?: Predicate<Percentage>): Parser<Slice<Token>, Percentage, string, []>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function parsePercentage(predicate?: Predicate<Percentage>): Parser<Slice<Token,
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->, [Serializable.Options](./alfa-json.serializable.options.md)<!-- -->&gt;, [Percentage](./alfa-css.token.percentage.md)<!-- -->, string, \[\]&gt;
+Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Percentage](./alfa-css.token.percentage.md)<!-- -->, string, \[\]&gt;
 

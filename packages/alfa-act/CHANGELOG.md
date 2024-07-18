@@ -1,5 +1,15 @@
 # @siteimprove/alfa-act
 
+## 0.87.0
+
+### Minor Changes
+
+- **Breaking:** Optional serialization type parameters have been removed. ([#1638](https://github.com/Siteimprove/alfa/pull/1638))
+
+### Patch Changes
+
+- **Fixed:** Serialization options are now propagated in `.toJSON()` for all classes extending `Diagnostic`. ([#1638](https://github.com/Siteimprove/alfa/pull/1638))
+
 ## 0.86.2
 
 ## 0.86.1

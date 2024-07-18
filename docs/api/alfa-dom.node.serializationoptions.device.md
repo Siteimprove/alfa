@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-device: Device;
+device?: Device;
 ```

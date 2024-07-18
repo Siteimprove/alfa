@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseOpenComment: Parser<Slice<Token, Serializable.Options>, OpenComment, string, []>
+parseOpenComment: Parser<Slice<Token>, OpenComment, string, []>
 ```

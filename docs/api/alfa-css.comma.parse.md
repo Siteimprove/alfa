@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-parse: Parser<import("@siteimprove/alfa-slice").Slice<Token, import("@siteimprove/alfa-json").Serializable.Options>, Token.Comma, string, []>
+parse: Parser<import("@siteimprove/alfa-slice").Slice<Token>, Token.Comma, string, []>
 ```
 
 ## Remarks

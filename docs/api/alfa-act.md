@@ -19,7 +19,7 @@ This package provides functionality for implementing rules specified in the [ACT
 
 |  Abstract Class | Description |
 |  --- | --- |
-|  [Outcome](./alfa-act.outcome.md) | I: type of Input for the associated rule T: type of the rule's test target Q: questions' metadata type S: possible types of questions' subject. |
+|  [Outcome](./alfa-act.outcome.md) | I: type of Input for the associated rule T: type of the rule's test target Q: questions' metadata type S: possible types of questions' subject. V: type of outcome value |
 |  [Requirement](./alfa-act.requirement.md) |  |
 |  [Rule](./alfa-act.rule.md) | \* I: type of Input for the rule \* T: type of the test targets \* Q: questions' metadata type \* S: possible types of questions' subject. |
 |  [Tag](./alfa-act.tag.md) |  |
