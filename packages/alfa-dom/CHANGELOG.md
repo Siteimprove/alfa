@@ -1,17 +1,5 @@
 # @siteimprove/alfa-dom
 
-## 0.87.0
-
-### Minor Changes
-
-- **Added:** A new function `getInclusiveElementDescendants` was added to the `Query` namespace. ([#1648](https://github.com/Siteimprove/alfa/pull/1648))
-
-- **Breaking:** Optional serialization type parameters have been removed. ([#1638](https://github.com/Siteimprove/alfa/pull/1638))
-
-- **Added:** `Element` serialised with high verbosity now include the serialisation ID of their assigned slot, if any. ([#1650](https://github.com/Siteimprove/alfa/pull/1650))
-
-  This help de-serialise the shadow trees for tools that do not want to re-compute slot assignement.
-
 ## 0.86.2
 
 ## 0.86.1

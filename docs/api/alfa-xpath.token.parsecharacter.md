@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-parseCharacter: (query?: string | Predicate<Character>) => Parser<Slice<Token>, Character, string, []>
+parseCharacter: (query?: string | Predicate<Character>) => Parser<Slice<Token, Serializable.Options>, Character, string, []>
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ parseCharacter: (query?: string | Predicate<Character>) => Parser<Slice<Token>, 
 
 **Returns:**
 
-Parser&lt;Slice&lt;[Token](./alfa-xpath.token.md)<!-- -->&gt;, [Character](./alfa-xpath.token.character.md)<!-- -->, string, \[\]&gt;
+Parser&lt;Slice&lt;[Token](./alfa-xpath.token.md)<!-- -->, [Serializable.Options](./alfa-json.serializable.options.md)<!-- -->&gt;, [Character](./alfa-xpath.token.character.md)<!-- -->, string, \[\]&gt;
 

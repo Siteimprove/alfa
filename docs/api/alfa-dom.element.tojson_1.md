@@ -7,20 +7,16 @@
 **Signature:**
 
 ```typescript
-toJSON(options: Node.SerializationOptions & {
-        verbosity: json.Serializable.Verbosity.High;
-    }): Element.JSON & {
-        assignedSlot: Element.MinimalJSON | null;
-    };
+toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) &amp; { verbosity: [json.Serializable.Verbosity.High](./alfa-json.serializable.verbosity.md)<!-- -->; } |  |
+|  options | [Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) | _(Optional)_ |
 
 **Returns:**
 
-[Element.JSON](./alfa-dom.element.json.md) &amp; { assignedSlot: [Element.MinimalJSON](./alfa-dom.element.minimaljson.md) \| null; }
+[Element.JSON](./alfa-dom.element.json.md)<!-- -->&lt;N&gt;
 

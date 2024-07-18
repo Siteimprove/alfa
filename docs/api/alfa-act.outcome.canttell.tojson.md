@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-toJSON(options?: json.Serializable.Options): CantTell.JSON<T>;
+toJSON(options?: O): CantTell.JSON<T>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [json.Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+|  options | O | _(Optional)_ |
 
 **Returns:**
 

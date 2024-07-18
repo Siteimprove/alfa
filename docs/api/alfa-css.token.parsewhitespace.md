@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseWhitespace: Parser<Slice<Token>, Whitespace, string, []>
+parseWhitespace: Parser<Slice<Token, Serializable.Options>, Whitespace, string, []>
 ```

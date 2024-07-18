@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-parseAngle: Parser<Slice<Token>, Math<"angle">, string, []>
+parseAngle: Parser<Slice<Token, json.Serializable.Options>, Math<"angle">, string, []>
 ```

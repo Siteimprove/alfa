@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function toJSON<T>(value: T, options?: Serializable.Options): ToJSON<T>;
+function toJSON<T, O extends Serializable.Options = Serializable.Options>(value: T, options?: O): ToJSON<T>;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ function toJSON<T>(value: T, options?: Serializable.Options): ToJSON<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-|  options | [Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+|  options | O | _(Optional)_ |
 
 **Returns:**
 
