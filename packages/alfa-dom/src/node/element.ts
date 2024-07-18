@@ -309,20 +309,43 @@ export class Element<N extends string = string>
         | json.Serializable.Verbosity.Low;
     },
   ): Element.MinimalJSON;
+
+  public toJSON(
+    options: Node.SerializationOptions & {
+      verbosity: json.Serializable.Verbosity.High;
+    },
+  ): Element.JSON & { assignedSlot: Element.MinimalJSON | null };
+
   public toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
+
   public toJSON(
     options?: Node.SerializationOptions,
-  ): Element.MinimalJSON | Element.JSON<N> {
+  ):
+    | Element.MinimalJSON
+    | Element.JSON<N>
+    | (Element.JSON & { assignedSlot: Element.MinimalJSON | null }) {
     const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
 
+    const result:
+      | Element.MinimalJSON
+      | Element.JSON<N>
+      | (Element.JSON & { assignedSlot: Element.MinimalJSON | null }) =
+      super.toJSON(options);
+
     if (verbosity < json.Serializable.Verbosity.Medium) {
-      return {
-        ...super.toJSON(options),
-      };
+      return result;
+    }
+
+    if (verbosity >= json.Serializable.Verbosity.High) {
+      result.assignedSlot = this.assignedSlot()
+        .map((slot) =>
+          slot.toJSON({ verbosity: json.Serializable.Verbosity.Minimal }),
+        )
+        .getOr(null);
     }
 
     return {
-      ...super.toJSON(options),
+      ...result,
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,

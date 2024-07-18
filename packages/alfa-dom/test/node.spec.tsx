@@ -417,7 +417,7 @@ test("#toJSON() includes everything except serializationId when options is undef
   }
 });
 
-test("#toJSON() includes everything including serializationId when verbosity is high", (t) => {
+test("#toJSON() includes everything including serializationId and assigned slot when verbosity is high", (t) => {
   const docId = crypto.randomUUID();
   const elmId = crypto.randomUUID();
   const attrId = crypto.randomUUID();
@@ -437,6 +437,7 @@ test("#toJSON() includes everything including serializationId when verbosity is 
       {
         type: "element",
         serializationId: elmId,
+        assignedSlot: null,
         attributes: [
           {
             type: "attribute",
@@ -457,5 +458,91 @@ test("#toJSON() includes everything including serializationId when verbosity is 
         style: null,
       },
     ],
+  });
+});
+
+test("#toJSON() includes serializationId of assigned slots when verbosity is high", (t) => {
+  const a = <span serializationId="a"></span>;
+  const b = <span serializationId="b"></span>;
+
+  const div = (
+    <div serializationId="div">
+      {h.shadow(
+        [<slot serializationId="slot" />, b],
+        undefined,
+        undefined,
+        undefined,
+        "shadow",
+      )}
+      {a}
+    </div>
+  );
+
+  t.deepEqual(div.toJSON({ verbosity: json.Serializable.Verbosity.High }), {
+    type: "element",
+    children: [
+      {
+        type: "element",
+        children: [],
+        serializationId: "a",
+        assignedSlot: {
+          type: "element",
+          serializationId: "slot",
+        },
+        namespace: "http://www.w3.org/1999/xhtml",
+        prefix: null,
+        name: "span",
+        attributes: [],
+        style: null,
+        shadow: null,
+        content: null,
+        box: null,
+      },
+    ],
+    serializationId: "div",
+    assignedSlot: null,
+    namespace: "http://www.w3.org/1999/xhtml",
+    prefix: null,
+    name: "div",
+    attributes: [],
+    style: null,
+    shadow: {
+      type: "shadow",
+      children: [
+        {
+          type: "element",
+          children: [],
+          serializationId: "slot",
+          assignedSlot: null,
+          namespace: "http://www.w3.org/1999/xhtml",
+          prefix: null,
+          name: "slot",
+          attributes: [],
+          style: null,
+          shadow: null,
+          content: null,
+          box: null,
+        },
+        {
+          type: "element",
+          children: [],
+          serializationId: "b",
+          assignedSlot: null,
+          namespace: "http://www.w3.org/1999/xhtml",
+          prefix: null,
+          name: "span",
+          attributes: [],
+          style: null,
+          shadow: null,
+          content: null,
+          box: null,
+        },
+      ],
+      serializationId: "shadow",
+      mode: "open",
+      style: [],
+    },
+    content: null,
+    box: null,
   });
 });

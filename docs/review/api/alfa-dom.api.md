@@ -324,6 +324,12 @@ export class Element<N extends string = string> extends Node<"element"> implemen
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
     }): Element.MinimalJSON;
     // (undocumented)
+    toJSON(options: Node.SerializationOptions & {
+        verbosity: json.Serializable.Verbosity.High;
+    }): Element.JSON & {
+        assignedSlot: Element.MinimalJSON | null;
+    };
+    // (undocumented)
     toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
     // (undocumented)
     toString(): string;
