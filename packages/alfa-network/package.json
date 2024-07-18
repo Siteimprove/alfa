@@ -7,7 +7,7 @@
   "description": "An implementation of an immutable, directed graph that allows for multiple, unique edges",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "https://github.com/siteimprove/alfa.git",
     "directory": "packages/alfa-network"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
