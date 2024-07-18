@@ -461,7 +461,7 @@ test("#toJSON() includes everything including serializationId and assigned slot 
   });
 });
 
-test("#toJSON()", (t) => {
+test("#toJSON() includes serializationId of assigned slots when verbosity is high", (t) => {
   const a = <span serializationId="a"></span>;
   const b = <span serializationId="b"></span>;
 
