@@ -7,7 +7,7 @@
   "description": "Functionality for working with numbers and mathematical structures, such as vectors and matrices",
   "repository": {
     "type": "git",
-    "url": "https://github.com/siteimprove/alfa.git",
+    "url": "git+https://github.com/siteimprove/alfa.git",
     "directory": "packages/alfa-math"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
