@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.87.2
+
+### Patch Changes
+
+- **Changed:** Reverted changes to publish process ([#1654](https://github.com/Siteimprove/alfa/pull/1654))
+
 ## 0.87.1
 
 ### Patch Changes

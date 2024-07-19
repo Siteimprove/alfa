@@ -1,5 +1,7 @@
 # @siteimprove/alfa-table
 
+## 0.87.2
+
 ## 0.87.1
 
 ## 0.87.0

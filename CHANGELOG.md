@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.87.2](../../compare/v0.87.1...v0.87.2) (2024-07-19)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0872): Reverted changes to publish process. ([#1654](https://github.com/Siteimprove/alfa/pull/1654))
+
 ## [0.87.1](../../compare/v0.87.0...v0.87.1) (2024-07-18)
 
 ### Changed
