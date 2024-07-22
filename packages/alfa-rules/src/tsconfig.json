@@ -156,7 +156,8 @@
     "./tags/index.ts",
     "./tags/stability.ts",
     "./tags/scope.ts",
-    "./tags/version.ts"
+    "./tags/version.ts",
+    "./version.ts"
   ],
   "references": [
     { "path": "../../alfa-act" },

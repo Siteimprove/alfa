@@ -22,8 +22,7 @@
     "dist/**/*.d.ts"
   ],
   "scripts": {
-    "postversion": "yarn rules:generate",
-    "rules:generate": "echo 'hello' >> foo.txt"
+    "alfa-postversion": "./get-version.sh > src/version.ts"
   },
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^0.87.3",
