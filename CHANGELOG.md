@@ -1,5 +1,15 @@
 # Alfa changelog
 
+## [0.87.3](../../compare/v0.87.2...v0.87.3) (2024-07-22)
+
+### Changed
+
+- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md#0873): Improved handling of default options in `Page#.toJSON()`. ([#1655](https://github.com/Siteimprove/alfa/pull/1655))
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0873): Workaround for when adopted style sheets are missing has been added. ([#1656](https://github.com/Siteimprove/alfa/pull/1656))
+
 ## [0.87.2](../../compare/v0.87.1...v0.87.2) (2024-07-19)
 
 ### Changed

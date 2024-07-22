@@ -1,5 +1,11 @@
 # @siteimprove/alfa-web
 
+## 0.87.3
+
+### Patch Changes
+
+- **Changed:** Improved handling of default options in `Page#.toJSON()`. ([#1655](https://github.com/Siteimprove/alfa/pull/1655))
+
 ## 0.87.2
 
 ## 0.87.1

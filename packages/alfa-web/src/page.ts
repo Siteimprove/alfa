@@ -69,7 +69,10 @@ export class Page
     return {
       request: this._request.toJSON(options),
       response: this._response.toJSON(options),
-      document: this._document.toJSON(options ?? { device: this._device }),
+      document: this._document.toJSON({
+        device: this._device,
+        ...(options ?? {}),
+      }),
       device: this._device.toJSON(options),
     };
   }
