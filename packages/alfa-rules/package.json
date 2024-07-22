@@ -22,7 +22,7 @@
     "dist/**/*.d.ts"
   ],
   "scripts": {
-    "alfa-postversion": "./get-version.sh > src/version.ts"
+    "alfa-postversion": "./get-version.sh > src/version.ts && git add src/version.ts"
   },
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^0.87.3",
