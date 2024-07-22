@@ -40,10 +40,6 @@ async function makeJSON(
 ): Promise<Document.JSON> {
   const { document } = new JSDOM(html).window;
 
-  // JSDOM only adds the adoptedStyleSheets property when script execution is turned on
-  // and since we don't want that by default for security reasons, we just add it ourselfes in this case.
-  document.adoptedStyleSheets = [];
-
   return Node.from(await Native.fromNode(document!, options)).toJSON();
 }
 
