@@ -22,6 +22,7 @@
     "dist/**/*.d.ts"
   ],
   "scripts": {
+    "postversion": "yarn rules:generate",
     "rules:generate": "echo 'hello' >> foo.txt"
   },
   "dependencies": {
