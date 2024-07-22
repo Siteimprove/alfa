@@ -140,22 +140,35 @@ jobs:
           # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
           VERSION: v${{ steps.new.outputs.version }}
 
-#      - name: Set token for npm publication (Github package registry)
-#        run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
-#      - name: Make npm release (Github Package Registry)
+      - name: Pack packages
+        # We use yarn for preparing the packs, but npm for actually uploading them and publishing them.
+        # This is because npm poorly handles the "workspace:" protocol which yarn supports.
+        # On the other hand, npm is more flexible in its options for overwriting config file,
+        # and can generate provenance statements.
+        # Note: yarn npm publish is a separate command, not a call to npm…
+        run: yarn workspaces foreach --all --no-private --topological-dev pack
+
+      - name: Set token for npm publication (Github package registry)
+        run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
+      - name: Make npm release (Github Packages Registry)
+        run: >
+          npm publish
+          packages/alfa-*/package.tgz
+          --tolerate-republish
+          --provenance
+          --tag latest
+
+#      - name: Make npm release (npm Packages Registry)
+#        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
 #        run: >
 #          npm publish
+#          packages/alfa-*/package.tgz
 #          --tolerate-republish
 #          --provenance
-#          --ws
-
-      - name: Make npm release
-        run: >
-          yarn workspaces foreach
-          --all
-          --no-private
-          --topological-dev
-          npm publish --tolerate-republish
+#          --@siteimprove:registry="https://registry.npmjs.org/"
+#          --tag latest
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Make Github release
         run: >
