@@ -21,6 +21,9 @@
     "dist/**/*.js",
     "dist/**/*.d.ts"
   ],
+  "scripts": {
+    "rules:generate": "echo 'hello' >> foo.txt"
+  },
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^0.87.3",
     "@siteimprove/alfa-affine": "workspace:^0.87.3",
