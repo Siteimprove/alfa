@@ -14,6 +14,12 @@ import * as rules from "./rules.js";
 
 import type { Question } from "./common/act/question.js";
 
+import version from "./version.js";
+/**
+ * @public
+ */
+export const alfaVersion = version;
+
 /**
  * @public
  */
