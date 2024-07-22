@@ -149,6 +149,11 @@ jobs:
 #          --provenance
 #          --ws
 
+# to test again
+# yarn workspace foreach --all --no-private --topological-dev pack
+# npm publish packages/alfa-*/package.tgz --tolerate-republish --provenance --@siteimprove:registry="https://registry.npmjs.org/" --tag latest
+# env: NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Make npm release
         run: >
           yarn workspaces foreach
