@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # This script relies on npm package.json variables and thus must be called
-# through npm, yarn or the like to correctly set it.
+# through npm, yarn or the like to correctly set them.
 
 set -eux
 
