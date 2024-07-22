@@ -25,6 +25,9 @@ import { Sequence } from '@siteimprove/alfa-sequence';
 import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
+// @public (undocumented)
+export const alfaVersion = "0.87.3";
+
 // @public
 const _default: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
 
