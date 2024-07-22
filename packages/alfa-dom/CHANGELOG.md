@@ -1,5 +1,11 @@
 # @siteimprove/alfa-dom
 
+## 0.87.3
+
+### Patch Changes
+
+- **Fixed:** Workaround for when adopted style sheets are missing has been added. ([#1656](https://github.com/Siteimprove/alfa/pull/1656))
+
 ## 0.87.2
 
 ## 0.87.1
