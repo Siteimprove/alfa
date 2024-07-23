@@ -1,5 +1,7 @@
 # @siteimprove/alfa-rules
 
+## 0.87.6
+
 ## 0.87.5
 
 ## 0.87.4

@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.87.6](../../compare/v0.87.5...v0.87.6) (2024-07-23)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0876): Ignore - testing.
+
 ## [0.87.5](../../compare/v0.87.4...v0.87.5) (2024-07-23)
 
 ### Changed
