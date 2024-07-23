@@ -157,9 +157,7 @@ jobs:
 
       - name: DEBUG - show package content
         run: |
-          cp packages/alfa-result/package.tgz /tmp
-          tar -xvzf /tmp/package.tgz
-          cat /tmp/package/package.json
+          zcat packages/alfa-result/package.tgz
 
       - name: Set token for npm publication (Github package registry)
         run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
