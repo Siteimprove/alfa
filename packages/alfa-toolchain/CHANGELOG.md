@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.87.5
+
+### Patch Changes
+
+- **Changed:** Fixed the final publish command. ([`c5dfe5e322dc0df659a0864fa8c35a4002eb599e`](https://github.com/Siteimprove/alfa/commit/c5dfe5e322dc0df659a0864fa8c35a4002eb599e))
+
 ## 0.87.4
 
 ### Patch Changes
