@@ -168,6 +168,7 @@ jobs:
 
 #      - name: Make npm release (npm Packages Registry)
 #        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
+#        if: inputs.npm-publish
 #        run: >
 #          npm publish
 #          packages/alfa-*/package.tgz
