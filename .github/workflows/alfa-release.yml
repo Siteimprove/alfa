@@ -155,6 +155,12 @@ jobs:
         # and can generate provenance statements.
         run: yarn workspaces foreach --all --no-private --topological-dev pack
 
+      - name: DEBUG - show package content
+        run: |
+          cp packages/alfa-result/package.tgz /tmp
+          tar -xvzf /tmp/package.tgz
+          cat /tmp/package/package.json
+
       - name: Set token for npm publication (Github package registry)
         run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
       - name: Make npm release (Github Packages Registry)
