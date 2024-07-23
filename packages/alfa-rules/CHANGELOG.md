@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.87.4
+
+### Patch Changes
+
+- **Added:** The Alfa version is now directly available as `import { alfaVersion } from "@siteimprove/alfa-rules";` ([#1658](https://github.com/Siteimprove/alfa/pull/1658))
+
 ## 0.87.3
 
 ## 0.87.2

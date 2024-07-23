@@ -1,5 +1,7 @@
 # @siteimprove/alfa-dom
 
+## 0.87.4
+
 ## 0.87.3
 
 ### Patch Changes

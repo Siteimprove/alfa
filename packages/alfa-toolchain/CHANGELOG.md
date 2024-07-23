@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.87.4
+
+### Patch Changes
+
+- **Changed:** Trying a different publication process, adding provenance statements. ([#1659](https://github.com/Siteimprove/alfa/pull/1659))
+
 ## 0.87.3
 
 ## 0.87.2

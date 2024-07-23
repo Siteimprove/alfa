@@ -1,5 +1,7 @@
 # @siteimprove/alfa-future
 
+## 0.87.4
+
 ## 0.87.3
 
 ## 0.87.2

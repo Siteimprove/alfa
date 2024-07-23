@@ -1,5 +1,7 @@
 # @siteimprove/alfa-thunk
 
+## 0.87.4
+
 ## 0.87.3
 
 ## 0.87.2

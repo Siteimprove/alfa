@@ -1,5 +1,15 @@
 # Alfa changelog
 
+## [0.87.4](../../compare/v0.87.3...v0.87.4) (2024-07-23)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0874): The Alfa version is now directly available as `import { alfaVersion } from "@siteimprove/alfa-rules";`. ([#1658](https://github.com/Siteimprove/alfa/pull/1658))
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0874): Trying a different publication process, adding provenance statements. ([#1659](https://github.com/Siteimprove/alfa/pull/1659))
+
 ## [0.87.3](../../compare/v0.87.2...v0.87.3) (2024-07-22)
 
 ### Changed
