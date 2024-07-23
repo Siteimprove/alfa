@@ -21,10 +21,16 @@
     "dist/**/*.js",
     "dist/**/*.d.ts"
   ],
+  "//": [
+    "For scripts:",
+    "We need to update the version number after creating a new one.",
+    "We also need to update the documentation, which includes the version number; updating the documentation from a CI tool requires CI=false to allow changes.",
+    "Finally we need to stage the changed files that will be commited later in the release process."
+  ],
   "scripts": {
-    "comment": "We need to update the version number after creating a new one. We also need to update the documentation, which includes the version number; updating the documentation from a CI tool requires CI=false to allow changes. Finally we need to stage the changed files that will be commited later in the release process.",
     "alfa-postversion": "./get-version.sh > src/version.ts && yarn self-extract && git add src/version.ts ../../docs/review/api/alfa-rules.api.md",
-    "self-extract": "CI=false yarn run --top-level extract packages/alfa-rules"
+    "self-extract": "CI=false yarn run --top-level extract packages/alfa-rules",
+    "packages/alfa-rules": "echo workaround https://github.com/webpro-nl/knip/issues/739"
   },
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^0.87.5",
