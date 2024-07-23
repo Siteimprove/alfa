@@ -1,5 +1,7 @@
 # @siteimprove/alfa-flags
 
+## 0.87.7
+
 ## 0.87.6
 
 ## 0.87.5

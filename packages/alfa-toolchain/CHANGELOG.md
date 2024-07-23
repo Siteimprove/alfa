@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.87.7
+
+### Patch Changes
+
+- **Changed:** Ignore - Debug. ([`363e5ae4ac00a4511ad06ff09d453141efb061c0`](https://github.com/Siteimprove/alfa/commit/363e5ae4ac00a4511ad06ff09d453141efb061c0))
+
 ## 0.87.6
 
 ### Patch Changes
