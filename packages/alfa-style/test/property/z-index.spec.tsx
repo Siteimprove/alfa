@@ -28,7 +28,7 @@ test("#computed parses positive integer with sign", (t) => {
   });
 });
 
-test("#computed parses positive negative integer", (t) => {
+test("#computed parses negative integer", (t) => {
   const element = <div style={{ zIndex: "-1" }} />;
 
   const style = Style.from(element, device);
