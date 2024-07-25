@@ -25,6 +25,12 @@ name: Create a new release (generic workflow)
 # This workflow is likely to fail on any repository that does not have the same structure.
 # Use at your own judgement call.
 
+# The github.token of workflows calling this needs
+# permissions:
+#  contents: write   <- update the repo with new changelog, …
+#  packages: write   <- actually publish the packages.
+#  id-token: write   <- generate provenance statements.
+
 on:
   workflow_call:
     inputs:
