@@ -25,6 +25,12 @@ name: Create a new release (generic workflow)
 # This workflow is likely to fail on any repository that does not have the same structure.
 # Use at your own judgement call.
 
+# The github.token of workflows calling this needs
+# permissions:
+#  contents: write   <- update the repo with new changelog, …
+#  packages: write   <- actually publish the packages.
+#  id-token: write   <- generate provenance statements, only for public packages.
+
 on:
   workflow_call:
     inputs:
@@ -39,6 +45,11 @@ on:
       generate-documentation:
         required: false
         type: boolean
+        default: false
+      public:
+        required: false
+        type: boolean
+        default: true # Most Alfa repos are public.
     secrets:
       # A PAT for the user who will commit. Need to have the repo:write permission.
       token:
@@ -153,32 +164,45 @@ jobs:
         # This is because npm poorly handles the "workspace:" protocol which yarn supports.
         # On the other hand, npm is more flexible in its options for overwriting config file,
         # and can generate provenance statements.
-        run: yarn workspaces foreach --all --no-private --topological-dev pack
-
-      - name: DEBUG - show package content
+        #
+        # It seems that in some cases npm builds its metadata from the package.json file, and not from the
+        # tarball, and thus adds wrong dependencies to "workspace:…" versions that do not exist.
+        # Packing in a separate directory forces npm to use the tarball for metadata.
+        #
+        # This was witnessed with npm 10.7.0 in the CI/CD pipeline, but could not be reproduced
+        # locally with the same npm version. npm may change its behaviour, in which case we
+        # could switch do simply use npm for pack+publish, i.e. do
+        # yarn workspaces foreach <options> exec npm publish <options>
+        # Alternatively, if yarn let us overwrite @siteimprove:registry in the CLI, and generate provenance
+        # statements, we could use yarn for the whole process:
+        # yarn workspaces foreach <options> run npm publish <options>
         run: |
-          zcat packages/alfa-result/package.tgz
+          mkdir ${{ github.workspace }}/artifacts
+          yarn workspaces foreach --all --no-private --topological-dev pack --out ${{ github.workspace }}/artifacts/%s-%v.tgz
 
       - name: Set token for npm publication (Github package registry)
         run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
-      - name: Make npm release (Github Packages Registry)
-        # We need to use "exec npm publish", not "run npm publish" since the later calls
-        # "yarn npm publish" which is a command of its own, while the former actually calls npm.
+      - name: Make npm release (Github Packages Registry / public)
+        if: inputs.public
         run: >
-          yarn workspaces foreach --all --no-private --topological-dev 
-          exec npm publish package.tgz --tolerate-republish --provenance --tag latest
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --provenance --tag latest;
+          done
+      - name: Make npm release (Github Packages Registry / private)
+        if: ${{ ! inputs.public }}
+        run: >
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --tag latest;
+          done
           
 
 #      - name: Make npm release (npm Packages Registry)
 #        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
 #        if: inputs.npm-publish
 #        run: >
-#          npm publish
-#          packages/alfa-*/package.tgz
-#          --tolerate-republish
-#          --provenance
-#          --@siteimprove:registry="https://registry.npmjs.org/"
-#          --tag latest
+#          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+#            npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
+#          done
 #        env:
 #          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

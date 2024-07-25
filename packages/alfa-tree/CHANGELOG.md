@@ -1,5 +1,19 @@
 # @siteimprove/alfa-tree
 
+## 0.88.0
+
+### Minor Changes
+
+- **Fixed:** The publish flow was updated to a new version. ([`a2f19cf9a6c7c72b8bf085597e4f1a95ac3e4eb2`](https://github.com/Siteimprove/alfa/commit/a2f19cf9a6c7c72b8bf085597e4f1a95ac3e4eb2))
+
+  Some 0.87.\* versions were generating uninstallable package. This should be fixed now.
+
+## 0.87.12
+
+## 0.87.11
+
+## 0.87.10
+
 ## 0.87.7
 
 ## 0.87.6

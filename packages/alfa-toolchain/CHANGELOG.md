@@ -1,5 +1,31 @@
 # @siteimprove/alfa-toolchain
 
+## 0.88.0
+
+### Minor Changes
+
+- **Fixed:** The publish flow was updated to a new version. ([`a2f19cf9a6c7c72b8bf085597e4f1a95ac3e4eb2`](https://github.com/Siteimprove/alfa/commit/a2f19cf9a6c7c72b8bf085597e4f1a95ac3e4eb2))
+
+  Some 0.87.\* versions were generating uninstallable package. This should be fixed now.
+
+## 0.87.12
+
+### Patch Changes
+
+- **Fixed:** Fixed location of artifacts. ([`15fbbd14a4c48239ce3fb5c6622ce9040603f517`](https://github.com/Siteimprove/alfa/commit/15fbbd14a4c48239ce3fb5c6622ce9040603f517))
+
+## 0.87.11
+
+### Patch Changes
+
+- **Changed:** Fixed some typo in the publication workflow ([`a40c6844fc18c2a4be56d9f0c59bca844254af55`](https://github.com/Siteimprove/alfa/commit/a40c6844fc18c2a4be56d9f0c59bca844254af55))
+
+## 0.87.10
+
+### Patch Changes
+
+- **Changed:** Trying another publish flow. Again. ([`3f71ede37c32121013a1268b476e290048152ccd`](https://github.com/Siteimprove/alfa/commit/3f71ede37c32121013a1268b476e290048152ccd))
+
 ## 0.87.7
 
 ### Patch Changes
