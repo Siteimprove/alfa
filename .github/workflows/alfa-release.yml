@@ -157,8 +157,8 @@ jobs:
         # tarball, and thus adds wrong dependencies to "workspace:…" versions that do not exist.
         # Packing in a separate directory forces npm to use the tarball for metadata.
         run: |
-          mkdir artifacts
-          yarn workspaces foreach --all --no-private --topological-dev pack -o ../../artifacts/%s-%v.tgz
+          mkdir ${{ github.workspace }}/artifacts
+          yarn workspaces foreach --all --no-private --topological-dev pack -o ${{ github.workspace }}/artifacts/%s-%v.tgz
 
       - name: DEBUG - show package content
         run: |
@@ -167,10 +167,8 @@ jobs:
       - name: Set token for npm publication (Github package registry)
         run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
       - name: Make npm release (Github Packages Registry)
-        # We need to use "exec npm publish", not "run npm publish" since the later calls
-        # "yarn npm publish" which is a command of its own, while the former actually calls npm.
         run: >
-          for package in artifacts/alfa-*.tgz; do
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
             npm publish ${package} --tolerate-republish --provenance --tag latest;
           done
           
