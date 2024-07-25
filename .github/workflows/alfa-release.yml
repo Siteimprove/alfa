@@ -158,11 +158,7 @@ jobs:
         # Packing in a separate directory forces npm to use the tarball for metadata.
         run: |
           mkdir ${{ github.workspace }}/artifacts
-          yarn workspaces foreach --all --no-private --topological-dev pack -o ${{ github.workspace }}/artifacts/%s-%v.tgz
-
-      - name: DEBUG - show package content
-        run: |
-          zcat artifacts/*alfa-toolchain*.tgz
+          yarn workspaces foreach --all --no-private --topological-dev pack --out ${{ github.workspace }}/artifacts/%s-%v.tgz
 
       - name: Set token for npm publication (Github package registry)
         run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
