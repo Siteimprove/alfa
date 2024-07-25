@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.87.12](../../compare/v0.87.11...v0.87.12) (2024-07-25)
+
+### Fixed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#08712): Fixed location of artifacts.
+
 ## [0.87.11](../../compare/v0.87.10...v0.87.11) (2024-07-25)
 
 ### Changed

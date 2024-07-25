@@ -1,5 +1,7 @@
 # @siteimprove/alfa-record
 
+## 0.87.12
+
 ## 0.87.11
 
 ## 0.87.10

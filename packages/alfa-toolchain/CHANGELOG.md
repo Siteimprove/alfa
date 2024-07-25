@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.87.12
+
+### Patch Changes
+
+- **Fixed:** Fixed location of artifacts. ([`15fbbd14a4c48239ce3fb5c6622ce9040603f517`](https://github.com/Siteimprove/alfa/commit/15fbbd14a4c48239ce3fb5c6622ce9040603f517))
+
 ## 0.87.11
 
 ### Patch Changes
