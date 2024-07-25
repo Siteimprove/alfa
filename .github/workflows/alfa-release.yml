@@ -153,13 +153,16 @@ jobs:
         # This is because npm poorly handles the "workspace:" protocol which yarn supports.
         # On the other hand, npm is more flexible in its options for overwriting config file,
         # and can generate provenance statements.
+        # It seems that in some cases npm builds its metadata from the package.json file, and not from the
+        # tarball, and thus adds wrong dependencies to "workspace:…" versions that do not exist.
+        # Packing in a separate directory forces npm to use the tarball for metadata.
         run: |
           mkdir artifacts
           yarn workspaces foreach --all --no-private --topological-dev pack -o ../../artifacts/%s-%v.tgz
 
       - name: DEBUG - show package content
         run: |
-          zcat artifacts/alfa-result-*.tgz
+          zcat artifacts/*alfa-toolchain*.tgz
 
       - name: Set token for npm publication (Github package registry)
         run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
