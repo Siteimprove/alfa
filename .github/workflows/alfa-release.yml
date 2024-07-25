@@ -29,7 +29,7 @@ name: Create a new release (generic workflow)
 # permissions:
 #  contents: write   <- update the repo with new changelog, …
 #  packages: write   <- actually publish the packages.
-#  id-token: write   <- generate provenance statements.
+#  id-token: write   <- generate provenance statements, only for public packages.
 
 on:
   workflow_call:
@@ -45,6 +45,11 @@ on:
       generate-documentation:
         required: false
         type: boolean
+        default: false
+      public:
+        required: false
+        type: boolean
+        default: true # Most Alfa repos are public.
     secrets:
       # A PAT for the user who will commit. Need to have the repo:write permission.
       token:
@@ -177,10 +182,17 @@ jobs:
 
       - name: Set token for npm publication (Github package registry)
         run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
-      - name: Make npm release (Github Packages Registry)
+      - name: Make npm release (Github Packages Registry / public)
+        if: inputs.public
         run: >
           for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
             npm publish ${package} --tolerate-republish --provenance --tag latest;
+          done
+      - name: Make npm release (Github Packages Registry / private)
+        if: ${{ ! inputs.public }}
+        run: >
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --tag latest;
           done
           
 
