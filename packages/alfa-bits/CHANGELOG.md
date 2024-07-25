@@ -1,5 +1,7 @@
 # @siteimprove/alfa-bits
 
+## 0.87.10
+
 ## 0.87.7
 
 ## 0.87.6

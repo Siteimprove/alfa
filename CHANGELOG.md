@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.87.10](../../compare/v0.87.9...v0.87.10) (2024-07-25)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#08710): Trying another publish flow. Again.
+
 ## [0.87.7](../../compare/v0.87.6...v0.87.7) (2024-07-23)
 
 ### Changed

@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.87.10
+
+### Patch Changes
+
+- **Changed:** Trying another publish flow. Again. ([`3f71ede37c32121013a1268b476e290048152ccd`](https://github.com/Siteimprove/alfa/commit/3f71ede37c32121013a1268b476e290048152ccd))
+
 ## 0.87.7
 
 ### Patch Changes
