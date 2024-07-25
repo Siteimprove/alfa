@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-bits",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.87.12",
+  "version": "0.88.0",
   "license": "MIT",
   "description": "Functionality for doing bit manipulation of 32-bit numbers",
   "repository": {
