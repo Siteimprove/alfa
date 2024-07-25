@@ -238,7 +238,7 @@ export namespace Longhands {
         readonly "white-space": Longhand<Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">, Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">>;
         readonly width: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly "word-spacing": Longhand<Length | Keyword<"normal">, Length>;
-        readonly "z-index": Longhand<Integer | Keyword<"auto">, Integer | Keyword<"auto">>;
+        readonly "z-index": Longhand<Integer | Keyword<"auto">, Integer.Fixed | Keyword<"auto">>;
     };
     // (undocumented)
     export type Property = typeof longHands;
