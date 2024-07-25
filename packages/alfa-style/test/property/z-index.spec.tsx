@@ -159,3 +159,25 @@ test("#computed resolves to initial value `auto`", (t) => {
     source: null,
   });
 });
+
+test("#computed resolves integer expressed as calculated value", (t) => {
+  const element = <div style={{ zIndex: "calc(4 / 2)" }} />;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("z-index").toJSON(), {
+    value: { type: "integer", value: 2 },
+    source: h.declaration("z-index", "calc(4 / 2)").toJSON(),
+  });
+});
+
+test("#computed resolves calculated value with rounding", (t) => {
+  const element = <div style={{ zIndex: "calc(4 / 3)" }} />;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("z-index").toJSON(), {
+    value: { type: "integer", value: 1 },
+    source: h.declaration("z-index", "calc(4 / 3)").toJSON(),
+  });
+});

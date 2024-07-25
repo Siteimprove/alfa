@@ -7,10 +7,18 @@ const { either } = Parser;
 
 const parse = either(Keyword.parse("auto"), Integer.parse);
 
+type Specified = Keyword<"auto"> | Integer;
+type Computed = Keyword<"auto"> | Integer.Canonical;
+
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/z-index}
  * @internal
  */
-export default Longhand.of(Keyword.of("auto"), parse, (value) => value, {
-  inherits: false,
-});
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("auto"),
+  parse,
+  (value) => value.map((zIndex) => zIndex.resolve()),
+  {
+    inherits: false,
+  },
+);
