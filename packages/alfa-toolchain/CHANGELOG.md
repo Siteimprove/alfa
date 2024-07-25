@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.87.11
+
+### Patch Changes
+
+- **Changed:** Fixed some typo in the publication workflow ([`a40c6844fc18c2a4be56d9f0c59bca844254af55`](https://github.com/Siteimprove/alfa/commit/a40c6844fc18c2a4be56d9f0c59bca844254af55))
+
 ## 0.87.10
 
 ### Patch Changes

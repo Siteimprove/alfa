@@ -1,5 +1,7 @@
 # @siteimprove/alfa-functor
 
+## 0.87.11
+
 ## 0.87.10
 
 ## 0.87.7

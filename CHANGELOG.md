@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.87.11](../../compare/v0.87.10...v0.87.11) (2024-07-25)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#08711): Fixed some typo in the publication workflow.
+
 ## [0.87.10](../../compare/v0.87.9...v0.87.10) (2024-07-25)
 
 ### Changed
