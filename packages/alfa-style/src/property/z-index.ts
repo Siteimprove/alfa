@@ -18,7 +18,5 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
   (value) => value.map((zIndex) => zIndex.resolve()),
-  {
-    inherits: false,
-  },
+  { inherits: false },
 );
