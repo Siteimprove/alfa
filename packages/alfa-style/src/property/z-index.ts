@@ -2,6 +2,7 @@ import { Integer, Keyword } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 const { either } = Parser;
 
@@ -17,6 +18,7 @@ type Computed = Keyword<"auto"> | Integer.Canonical;
 export default Longhand.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
-  (value) => value.map((zIndex) => zIndex.resolve()),
+  (value, style) =>
+    value.map((zIndex) => zIndex.resolve(Resolver.length(style))),
   { inherits: false },
 );
