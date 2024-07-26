@@ -38,7 +38,12 @@
   ],
   "publishConfig": {
     "access": "public",
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/",
+    "executableFiles": [
+      "dist/changeset/changelog-global.js",
+      "dist/dependency-graph/generate-graphs.js",
+      "dist/validation/validate-all.js"
+    ]
   },
   "dependencies": {
     "@changesets/assemble-release-plan": "^6.0.0",
