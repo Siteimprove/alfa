@@ -181,3 +181,14 @@ test("#computed resolves calculated value with rounding", (t) => {
     source: h.declaration("z-index", "calc(4 / 3)").toJSON(),
   });
 });
+
+test("#computed does not parse units", (t) => {
+  const element = <div style={{ zIndex: "1px" }} />;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("z-index").toJSON(), {
+    value: { type: "keyword", value: "auto" },
+    source: null,
+  });
+});
