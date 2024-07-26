@@ -109,6 +109,7 @@ import Visibility from "./property/visibility.js";
 import WhiteSpace from "./property/white-space.js";
 import Width from "./property/width.js";
 import WordSpacing from "./property/word-spacing.js";
+import ZIndex from "./property/z-index.js";
 
 /**
  * @public
@@ -285,6 +286,7 @@ export namespace Longhands {
     "white-space": WhiteSpace,
     width: Width,
     "word-spacing": WordSpacing,
+    "z-index": ZIndex,
   } as const;
 
   export function isName(name: string): name is Name {
