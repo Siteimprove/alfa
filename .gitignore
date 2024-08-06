@@ -10,3 +10,16 @@ node_modules
 **/*.map
 
 !**/types/**/*.d.ts
+
+# yarn ignores
+# https://next.yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+# Prevent yarn releases to be ignored by earlier filter
+!.yarn/releases/*.cjs
+!.yarn/sdks
+!.yarn/versions
+
