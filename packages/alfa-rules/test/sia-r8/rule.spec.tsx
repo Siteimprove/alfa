@@ -197,3 +197,16 @@ test("evaluate() is inapplicable for an element which is not displayed", async (
 
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
 });
+
+test("evaluate() fails a password input element without accessible name", async (t) => {
+  const target = <input type="password"/>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [
+    failed(R8, target, {
+      1: Outcomes.HasNoName("textbox"),
+    }),
+  ]);
+});
+
