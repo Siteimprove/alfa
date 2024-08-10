@@ -14,8 +14,8 @@ import { WithRole } from "../common/diagnostic.js";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
-const { hasNamespace } = Element;
-const { and } = Predicate;
+const { hasInputType, hasName, hasNamespace } = Element;
+const { and, or } = Predicate;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -28,19 +28,22 @@ export default Rule.Atomic.of<Page, Element>({
         return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasNamespace(Namespace.HTML),
-            hasRole(
-              device,
-              "checkbox",
-              "combobox",
-              "listbox",
-              "menuitemcheckbox",
-              "menuitemradio",
-              "radio",
-              "searchbox",
-              "slider",
-              "spinbutton",
-              "switch",
-              "textbox",
+            or(
+              hasRole(
+                device,
+                "checkbox",
+                "combobox",
+                "listbox",
+                "menuitemcheckbox",
+                "menuitemradio",
+                "radio",
+                "searchbox",
+                "slider",
+                "spinbutton",
+                "switch",
+                "textbox",
+              ), 
+              and(hasName("input"), hasInputType("password")), 
             ),
             isIncludedInTheAccessibilityTree(device),
           ),
