@@ -206,7 +206,7 @@ test(`evaluate() fails an input element with type=password which is disabled
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName("generic"),
+      1: Outcomes.InputPasswordElementHasNoName(),
     }),
   ]);
 });
@@ -225,7 +225,7 @@ test("evaluate() passes an input element with type=password and implicit label",
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("generic"),
+      1: Outcomes.InputPasswordElementHasName(),
     }),
   ]);
 });
@@ -237,7 +237,7 @@ test("evaluate() passes an input element with type=password and aria-label", asy
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("generic"),
+      1: Outcomes.InputPasswordElementHasName(),
     }),
   ]);
 });
@@ -251,7 +251,7 @@ test("evaluate() passes an input element with type=password and explicit label",
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("generic"),
+      1: Outcomes.InputPasswordElementHasName(),
     }),
   ]);
 });
@@ -265,7 +265,7 @@ test("evaluate() passes an input element with type=password and aria-labelledby"
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("generic"),
+      1: Outcomes.InputPasswordElementHasName(),
     }),
   ]);
 });
@@ -277,7 +277,7 @@ test("evaluate() passes an input element with type=password and placeholder attr
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("generic"),
+      1: Outcomes.InputPasswordElementHasName(),
     }),
   ]);
 });
@@ -289,7 +289,7 @@ test("evaluate() fails an input element with type=password and empty aria-label"
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName("generic"),
+      1: Outcomes.InputPasswordElementHasNoName(),
     }),
   ]);
 });
@@ -304,7 +304,7 @@ test(`evaluate() fails an input element with type=password and aria-labelledby p
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName("generic"),
+      1: Outcomes.InputPasswordElementHasNoName(),
     }),
   ]);
 });

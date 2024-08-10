@@ -1,6 +1,6 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Role } from "@siteimprove/alfa-aria";
-import { DOM } from "@siteimprove/alfa-aria";
+import { DOM, Node as AlfaAriaNode } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -51,14 +51,25 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const role = WithRole.getRoleName(target, device);
-        return {
-          1: expectation(
-            hasNonEmptyAccessibleName(device)(target),
-            () => Outcomes.HasName(role),
-            () => Outcomes.HasNoName(role),
-          ),
-        };
+        const role = AlfaAriaNode.from(target, device).role;
+        if(role.isSome()) {
+          const roleName = role.get().name;
+          return {
+            1: expectation(
+              hasNonEmptyAccessibleName(device)(target),
+              () => Outcomes.HasName(roleName),
+              () => Outcomes.HasNoName(roleName),
+            ),
+          };
+        } else {
+          return {
+            1: expectation(
+              hasNonEmptyAccessibleName(device)(target),
+              () => Outcomes.InputPasswordElementHasName(),
+              () => Outcomes.InputPasswordElementHasNoName(),
+            ),
+          };
+        }
       },
     };
   },
@@ -74,5 +85,13 @@ export namespace Outcomes {
   export const HasNoName = (role: Role.Name) =>
     Err.of(
       WithRole.of(`The form field does not have an accessible name`, role),
+    );
+
+  export const InputPasswordElementHasName = () =>
+    Ok.of(Diagnostic.of(`The password form field has an accessible name`));
+
+  export const InputPasswordElementHasNoName = () =>
+    Err.of(
+      Diagnostic.of(`The password form field does not have an accessible name`),
     );
 }
