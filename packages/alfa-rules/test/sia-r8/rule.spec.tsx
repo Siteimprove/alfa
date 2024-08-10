@@ -198,15 +198,131 @@ test("evaluate() is inapplicable for an element which is not displayed", async (
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
 });
 
-test("evaluate() fails a password input element without accessible name", async (t) => {
-  const target = <input type="password"/>;
+test(`evaluate() fails an input element with type=password which is disabled 
+    and without accessible name`, async (t) => {
+  const target = <input type="password" disabled/>;
 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName("textbox"),
+      1: Outcomes.HasNoName("generic"),
     }),
   ]);
 });
 
+test("evaluate() passes an input element with type=password and implicit label", async (t) => {
+  const target = <input  type="password"/>;
+
+  const label = (
+    <label>
+      first name
+      {target}
+    </label>
+  );
+
+  const document = h.document([label]);
+
+  t.deepEqual(await evaluate(R8, { document }), [
+    passed(R8, target, {
+      1: Outcomes.HasName("generic"),
+    }),
+  ]);
+});
+
+test("evaluate() passes an input element with type=password and aria-label", async (t) => {
+  const target = <input type="password" aria-label="last name" disabled />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [
+    passed(R8, target, {
+      1: Outcomes.HasName("generic"),
+    }),
+  ]);
+});
+
+test("evaluate() passes an input element with type=password and explicit label", async (t) => {
+  const target = <input type="password" id="country" />;
+
+  const label = <label for="country">Country</label>;
+
+  const document = h.document([label, target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [
+    passed(R8, target, {
+      1: Outcomes.HasName("generic"),
+    }),
+  ]);
+});
+
+test("evaluate() passes an input element with type=password and aria-labelledby", async (t) => {
+  const target = <input type="password" aria-labelledby="country" />;
+
+  const label = <div id="country">Country</div>;
+
+  const document = h.document([label, target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [
+    passed(R8, target, {
+      1: Outcomes.HasName("generic"),
+    }),
+  ]);
+});
+
+test("evaluate() passes an input element with type=password and placeholder attribute", async (t) => {
+  const target = <input type="password" placeholder="Your search query" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [
+    passed(R8, target, {
+      1: Outcomes.HasName("generic"),
+    }),
+  ]);
+});
+
+test("evaluate() fails an input element with type=password and empty aria-label", async (t) => {
+  const target = <input type="password" aria-label=" " />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [
+    failed(R8, target, {
+      1: Outcomes.HasNoName("generic"),
+    }),
+  ]);
+});
+
+test(`evaluate() fails an input element with type=password and aria-labelledby pointing to an
+     empty element`, async (t) => {
+  const target = <input type="password" aria-labelledby="country" />;
+
+  const label = <div id="country"></div>;
+
+  const document = h.document([label, target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [
+    failed(R8, target, {
+      1: Outcomes.HasNoName("generic"),
+    }),
+  ]);
+});
+
+test(`evaluate() is inapplicable for an input element with type=password 
+    and aria-hidden`, async (t) => {
+  const target = <input type="password" aria-hidden="true" aria-label="firstname" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
+});
+
+test(`evaluate() is inapplicable for an element with type=password and which 
+    is not displayed`, async (t) => {
+  const target = <input type="password" aria-label="firstname" style={{ display: "none" }} />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
+});
