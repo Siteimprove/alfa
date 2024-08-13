@@ -20,7 +20,7 @@ test("evaluate() passes an input element with implicit label", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("textbox"),
+      1: Outcomes.FormFieldWithAriaRoleHasName("textbox"),
     }),
   ]);
 });
@@ -32,7 +32,7 @@ test("evaluate() passes an input element with aria-label", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("textbox"),
+      1: Outcomes.FormFieldWithAriaRoleHasName("textbox"),
     }),
   ]);
 });
@@ -53,7 +53,7 @@ test("evaluate() passes a select element with explicit label", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("listbox"),
+      1: Outcomes.FormFieldWithAriaRoleHasName("listbox"),
     }),
   ]);
 });
@@ -67,7 +67,7 @@ test("evaluate() passes a textarea element with aria-labelledby", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("textbox"),
+      1: Outcomes.FormFieldWithAriaRoleHasName("textbox"),
     }),
   ]);
 });
@@ -81,7 +81,7 @@ test("evaluate() passes a input element with placeholder attribute", async (t) =
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName("textbox"),
+      1: Outcomes.FormFieldWithAriaRoleHasName("textbox"),
     }),
   ]);
 });
@@ -100,7 +100,7 @@ test(`evaluate() passes a div element with explicit combobox role and an
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName(role),
+      1: Outcomes.FormFieldWithAriaRoleHasName(role),
     }),
   ]);
 });
@@ -112,7 +112,7 @@ test("evaluate() fails a input element without accessible name", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName("textbox"),
+      1: Outcomes.FormFieldWithAriaRoleHasNoName("textbox"),
     }),
   ]);
 });
@@ -124,7 +124,7 @@ test("evaluate() fails a input element with empty aria-label", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName("textbox"),
+      1: Outcomes.FormFieldWithAriaRoleHasNoName("textbox"),
     }),
   ]);
 });
@@ -143,7 +143,7 @@ test(`evaluate() fails a select element with aria-labelledby pointing to an
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName("listbox"),
+      1: Outcomes.FormFieldWithAriaRoleHasNoName("listbox"),
     }),
   ]);
 });
@@ -163,7 +163,7 @@ test("evaluate() fails a textbox with no accessible name", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName(role),
+      1: Outcomes.FormFieldWithAriaRoleHasNoName(role),
     }),
   ]);
 });
@@ -206,7 +206,7 @@ test(`evaluate() fails an input element with type=password which is disabled
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.InputPasswordElementHasNoName(),
+      1: Outcomes.InputElementWithNoAriaRoleHasNoName("password"),
     }),
   ]);
 });
@@ -225,7 +225,7 @@ test("evaluate() passes an input element with type=password and implicit label",
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.InputPasswordElementHasName(),
+      1: Outcomes.InputElementWithNoAriaRoleHasName("password"),
     }),
   ]);
 });
@@ -237,7 +237,7 @@ test("evaluate() passes an input element with type=password and aria-label", asy
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.InputPasswordElementHasName(),
+      1: Outcomes.InputElementWithNoAriaRoleHasName("password"),
     }),
   ]);
 });
@@ -251,7 +251,7 @@ test("evaluate() passes an input element with type=password and explicit label",
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.InputPasswordElementHasName(),
+      1: Outcomes.InputElementWithNoAriaRoleHasName("password"),
     }),
   ]);
 });
@@ -265,7 +265,7 @@ test("evaluate() passes an input element with type=password and aria-labelledby"
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.InputPasswordElementHasName(),
+      1: Outcomes.InputElementWithNoAriaRoleHasName("password"),
     }),
   ]);
 });
@@ -277,7 +277,7 @@ test("evaluate() passes an input element with type=password and placeholder attr
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.InputPasswordElementHasName(),
+      1: Outcomes.InputElementWithNoAriaRoleHasName("password"),
     }),
   ]);
 });
@@ -289,7 +289,7 @@ test("evaluate() fails an input element with type=password and empty aria-label"
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.InputPasswordElementHasNoName(),
+      1: Outcomes.InputElementWithNoAriaRoleHasNoName("password"),
     }),
   ]);
 });
@@ -304,7 +304,7 @@ test(`evaluate() fails an input element with type=password and aria-labelledby p
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.InputPasswordElementHasNoName(),
+      1: Outcomes.InputElementWithNoAriaRoleHasNoName("password"),
     }),
   ]);
 });
@@ -325,4 +325,31 @@ test(`evaluate() is inapplicable for an element with type=password and which
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R8, { document }), [inapplicable(R8)]);
+});
+
+test(`evaluate() fails for input elements with various types which give it no ARIA 
+    role and which have no accessible name`, async (t) => {
+  const targets = [<input type="color"/>, <input type="date"/>, <input type="datetime-local"/>, 
+    <input type="file"/>, <input type="month"/>, <input type="time"/>, 
+    <input type="week"/>];
+  const document = h.document(targets)
+  t.deepEqual(await evaluate(R8, { document }), 
+    targets.map(target => failed(R8, target, { 
+      1: Outcomes.InputElementWithNoAriaRoleHasNoName(target.attribute("type")
+        .map(attr => attr.value).getOr("")) })), 
+  );
+});
+
+test(`evaluate() passes for input elements with various types which give it no ARIA 
+    role and which have an aria-label`, async (t) => {
+  const targets = [<input type="color" aria-label="x"/>, <input type="date" aria-label="x"/>, 
+    <input type="datetime-local" aria-label="x"/>, <input type="file" aria-label="x"/>, 
+    <input type="month" aria-label="x"/>, <input type="time" aria-label="x"/>, 
+    <input type="week" aria-label="x"/>];
+  const document = h.document(targets)
+  t.deepEqual(await evaluate(R8, { document }), 
+    targets.map(target => passed(R8, target, { 
+      1: Outcomes.InputElementWithNoAriaRoleHasName(target.attribute("type")
+        .map(attr => attr.value).getOr("")) })), 
+  );
 });

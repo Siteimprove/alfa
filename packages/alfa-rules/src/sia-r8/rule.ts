@@ -43,7 +43,9 @@ export default Rule.Atomic.of<Page, Element>({
                 "switch",
                 "textbox",
               ), 
-              and(hasName("input"), hasInputType("password")), 
+              and(hasName("input"), or(hasInputType("password"), hasInputType("color"), 
+                hasInputType("date"), hasInputType("datetime-local"), hasInputType("file"), 
+                hasInputType("month"), hasInputType("time"), hasInputType("week"))),
             ),
             isIncludedInTheAccessibilityTree(device),
           ),
@@ -57,16 +59,17 @@ export default Rule.Atomic.of<Page, Element>({
           return {
             1: expectation(
               hasNonEmptyAccessibleName(device)(target),
-              () => Outcomes.HasName(roleName),
-              () => Outcomes.HasNoName(roleName),
+              () => Outcomes.FormFieldWithAriaRoleHasName(roleName),
+              () => Outcomes.FormFieldWithAriaRoleHasNoName(roleName),
             ),
           };
         } else {
+          const type = target.attribute("type").map(attr => attr.value).getOr("");
           return {
             1: expectation(
               hasNonEmptyAccessibleName(device)(target),
-              () => Outcomes.InputPasswordElementHasName(),
-              () => Outcomes.InputPasswordElementHasNoName(),
+              () => Outcomes.InputElementWithNoAriaRoleHasName(type),
+              () => Outcomes.InputElementWithNoAriaRoleHasNoName(type),
             ),
           };
         }
@@ -79,19 +82,17 @@ export default Rule.Atomic.of<Page, Element>({
  * @public
  */
 export namespace Outcomes {
-  export const HasName = (role: Role.Name) =>
+  export const FormFieldWithAriaRoleHasName = (role: Role.Name) =>
     Ok.of(WithRole.of(`The form field has an accessible name`, role));
 
-  export const HasNoName = (role: Role.Name) =>
+  export const FormFieldWithAriaRoleHasNoName = (role: Role.Name) =>
     Err.of(
       WithRole.of(`The form field does not have an accessible name`, role),
     );
 
-  export const InputPasswordElementHasName = () =>
-    Ok.of(Diagnostic.of(`The password form field has an accessible name`));
+  export const InputElementWithNoAriaRoleHasName = (typeAttribValue: string) =>
+    Ok.of(Diagnostic.of(`The type="${typeAttribValue}" form field has an accessible name`));
 
-  export const InputPasswordElementHasNoName = () =>
-    Err.of(
-      Diagnostic.of(`The password form field does not have an accessible name`),
-    );
+  export const InputElementWithNoAriaRoleHasNoName = (typeAttribValue: string) =>
+    Err.of(Diagnostic.of(`The type="${typeAttribValue}" form field does not have an accessible name`));
 }
