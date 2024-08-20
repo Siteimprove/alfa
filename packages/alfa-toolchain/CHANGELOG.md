@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.89.0
+
+### Patch Changes
+
+- **Fixed:** Mark callable scripts as executable. ([#1661](https://github.com/Siteimprove/alfa/pull/1661))
+
 ## 0.88.0
 
 ### Minor Changes

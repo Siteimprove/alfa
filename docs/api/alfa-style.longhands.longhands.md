@@ -117,5 +117,6 @@ longHands: {
         readonly "white-space": Longhand<import("@siteimprove/alfa-css").Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">, import("@siteimprove/alfa-css").Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">>;
         readonly width: Longhand<import("@siteimprove/alfa-css").LengthPercentage | import("@siteimprove/alfa-css").Keyword<"auto">, import("@siteimprove/alfa-css").LengthPercentage.PartiallyResolved | import("@siteimprove/alfa-css").Keyword<"auto">>;
         readonly "word-spacing": Longhand<import("@siteimprove/alfa-css").Length | import("@siteimprove/alfa-css").Keyword<"normal">, import("@siteimprove/alfa-css").Length.Canonical>;
+        readonly "z-index": Longhand<import("@siteimprove/alfa-css").Integer | import("@siteimprove/alfa-css").Keyword<"auto">, import("@siteimprove/alfa-css").Integer.Fixed | import("@siteimprove/alfa-css").Keyword<"auto">>;
     }
 ```

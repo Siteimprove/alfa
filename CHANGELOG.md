@@ -1,5 +1,19 @@
 # Alfa changelog
 
+## [0.89.0](../../compare/v0.88.0...v0.89.0) (2024-08-20)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0890): The serialization of diagnostic `WithBadElements` has been changed to include the serialized elements and not just the xpath. ([#1669](https://github.com/Siteimprove/alfa/pull/1669))
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0890): Style property `z-index` has been added. ([#1660](https://github.com/Siteimprove/alfa/pull/1660))
+
+### Fixed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0890): Mark callable scripts as executable. ([#1661](https://github.com/Siteimprove/alfa/pull/1661))
+
 ## [0.88.0](../../compare/v0.87.12...v0.88.0) (2024-07-25)
 
 ### Fixed

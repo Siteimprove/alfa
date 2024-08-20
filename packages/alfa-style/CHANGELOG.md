@@ -1,5 +1,11 @@
 # @siteimprove/alfa-style
 
+## 0.89.0
+
+### Minor Changes
+
+- **Added:** Style property `z-index` has been added. ([#1660](https://github.com/Siteimprove/alfa/pull/1660))
+
 ## 0.88.0
 
 ### Minor Changes

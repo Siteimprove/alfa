@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.89.0
+
+### Minor Changes
+
+- **Breaking:** The serialization of diagnostic `WithBadElements` has been changed to include the serialized elements and not just the xpath. ([#1669](https://github.com/Siteimprove/alfa/pull/1669))
+
 ## 0.88.0
 
 ### Minor Changes
