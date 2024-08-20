@@ -1,10 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
+import { Device } from "@siteimprove/alfa-device";
+
 import * as json from "@siteimprove/alfa-json";
 
 import { WithBadElements } from "../../../dist/common/diagnostic/with-bad-elements.js";
-import { Device } from "@siteimprove/alfa-device";
 
 test("toJSON() calls toJSON() on error elements", (t) => {
   const element = <div>Foo</div>;
