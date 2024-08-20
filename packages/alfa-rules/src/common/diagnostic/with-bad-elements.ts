@@ -50,7 +50,7 @@ export class WithBadElements extends Diagnostic implements Iterable<Element> {
   public toJSON(options?: Node.SerializationOptions): WithBadElements.JSON {
     return {
       ...super.toJSON(options),
-      errors: this._errors.map((element) => element.path()),
+      errors: Array.toJSON(this._errors, options),
     };
   }
 }
@@ -60,7 +60,7 @@ export class WithBadElements extends Diagnostic implements Iterable<Element> {
  */
 export namespace WithBadElements {
   export interface JSON extends Diagnostic.JSON {
-    errors: Array<string>;
+    errors: Array<Element.JSON>;
   }
 
   export function isWithBadElements(
