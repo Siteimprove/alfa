@@ -59,7 +59,7 @@
     "@siteimprove/alfa-set": "workspace:^0.89.0",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@ts-graphviz/adapter": "^2.0.3",
-    "madge": "^7.0.0",
+    "madge": "^8.0.0",
     "resolve-from": "^5.0.0",
     "ts-graphviz": "^2.0.0"
   },
