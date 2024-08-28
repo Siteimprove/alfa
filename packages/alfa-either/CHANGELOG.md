@@ -1,5 +1,11 @@
 # @siteimprove/alfa-either
 
+## 0.89.1
+
+### Patch Changes
+
+- **Added:** Trying to publish Alfa packages on the npm registry ([#1673](https://github.com/Siteimprove/alfa/pull/1673))
+
 ## 0.89.0
 
 ## 0.88.0
