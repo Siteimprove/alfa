@@ -7,7 +7,7 @@
   "description": "An implementation of optional values, which are values that may or may not be present",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-option"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

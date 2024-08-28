@@ -7,7 +7,7 @@
   "description": "Functionality for working with time",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-time"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

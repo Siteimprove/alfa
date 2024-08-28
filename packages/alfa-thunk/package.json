@@ -7,7 +7,7 @@
   "description": "Functionality for working with thunks, which are computations that are delayed until needed",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-thunk"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

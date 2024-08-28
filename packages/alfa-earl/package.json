@@ -7,7 +7,7 @@
   "description": "Types for modelling EARL serializable structures",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-earl"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

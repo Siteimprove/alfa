@@ -7,7 +7,7 @@
   "description": "Functionality for working with thenables, which are promise-like structures that can be awaited",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-thenable"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

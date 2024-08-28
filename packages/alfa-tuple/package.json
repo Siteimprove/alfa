@@ -7,7 +7,7 @@
   "description": "Functionality for working with heterogeneous arrays, also called tuples",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-tuple"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

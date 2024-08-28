@@ -7,7 +7,7 @@
   "description": "Types for modelling structures that can be folded over",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-foldable"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

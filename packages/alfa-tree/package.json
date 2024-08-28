@@ -7,7 +7,7 @@
   "description": "Functionality for modelling n-ary trees",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-tree"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

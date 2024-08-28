@@ -7,7 +7,7 @@
   "description": "Functionality for working with ARIA and the accessibility tree",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-aria"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

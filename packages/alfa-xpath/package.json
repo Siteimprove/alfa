@@ -7,7 +7,7 @@
   "description": "An implementation of a subset of the XPath query language",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-xpath"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
