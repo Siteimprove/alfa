@@ -5,7 +5,7 @@
   "validate-package-json": {
     "organisation": "@siteimprove",
     "homepage": "https://alfa.siteimprove.com",
-    "repo": "git+https://github.com/siteimprove/alfa.git",
+    "repo": "github:Siteimprove/alfa",
     "bugs": "https://github.com/siteimprove/alfa/issues",
     "noExternalDeps": true,
     "allowedExternalDeps": {
