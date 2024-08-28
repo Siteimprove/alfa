@@ -59,7 +59,7 @@ on:
       token:
         required: true
       # Token for NPM publication, must be set up if inputs.npm-publish is true.
-      npm_token:
+      npm-token:
         required: false
 
 defaults:
@@ -205,7 +205,7 @@ jobs:
 
       - name: Set token for npm publication (npm registry)
         if: inputs.npm-publish
-        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.npm_token }}
+        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.npm-token }}
       - name: Make npm release (npm Packages Registry)
         # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
         if: inputs.npm-publish
