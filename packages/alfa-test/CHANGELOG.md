@@ -1,5 +1,11 @@
 # @siteimprove/alfa-test
 
+## 0.89.3
+
+### Patch Changes
+
+- **Fixed:** Dummy release to test workflow ([`a3090826646a63d07a394a794aed54515fcac95f`](https://github.com/Siteimprove/alfa/commit/a3090826646a63d07a394a794aed54515fcac95f))
+
 ## 0.89.2
 
 ### Patch Changes

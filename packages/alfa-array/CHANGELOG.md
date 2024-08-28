@@ -1,5 +1,7 @@
 # @siteimprove/alfa-array
 
+## 0.89.3
+
 ## 0.89.2
 
 ### Patch Changes

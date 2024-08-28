@@ -1,5 +1,7 @@
 # @siteimprove/alfa-map
 
+## 0.89.3
+
 ## 0.89.2
 
 ### Patch Changes

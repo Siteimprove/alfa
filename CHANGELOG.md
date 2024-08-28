@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.89.3](../../compare/v0.89.2...v0.89.3) (2024-08-28)
+
+### Fixed
+
+- [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md#0893): Dummy release to test workflow.
+
 ## [0.89.2](../../compare/v0.89.1...v0.89.2) (2024-08-28)
 
 ### Changed
