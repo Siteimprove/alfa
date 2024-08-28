@@ -1,5 +1,11 @@
 # @siteimprove/alfa-reducer
 
+## 0.89.2
+
+### Patch Changes
+
+- **Changed:** Trying to fix a problem in generating provenance statements ([#1674](https://github.com/Siteimprove/alfa/pull/1674))
+
 ## 0.89.1
 
 ### Patch Changes
