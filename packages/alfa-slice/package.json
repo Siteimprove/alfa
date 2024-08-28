@@ -7,7 +7,7 @@
   "description": "An implementation of an immutable slice structure, which provides an efficient view over an array",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-slice"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

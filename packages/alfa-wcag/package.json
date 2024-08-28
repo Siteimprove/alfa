@@ -7,7 +7,7 @@
   "description": "Types for working with WCAG-related information in a structured manner",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-wcag"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

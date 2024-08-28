@@ -7,7 +7,7 @@
   "description": "Types for modelling structures with equivalence relations",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-equatable"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

@@ -7,7 +7,7 @@
   "description": "Types for modelling functions that can be passed around and called back with a value once available",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-callback"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

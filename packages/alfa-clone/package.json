@@ -7,7 +7,7 @@
   "description": "Types for modelling clonable structures",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-clone"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

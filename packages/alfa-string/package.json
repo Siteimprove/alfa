@@ -7,7 +7,7 @@
   "description": "Utilities for manipulating strings",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-string"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

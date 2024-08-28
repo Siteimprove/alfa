@@ -7,7 +7,7 @@
   "description": "Types for modelling web resources, such as individual web pages and entire web sites",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-web"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

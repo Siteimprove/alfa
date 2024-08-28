@@ -7,7 +7,7 @@
   "description": "An implementation of the CSS style system capable of resolving and computing style information for DOM nodes",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-style"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

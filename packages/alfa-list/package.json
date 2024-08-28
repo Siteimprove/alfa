@@ -7,7 +7,7 @@
   "description": "An implementation of an immutable list structure, based on a bit-partitioned vector trie",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-list"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

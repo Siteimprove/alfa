@@ -7,7 +7,7 @@
   "description": "An implementation of futures, which are a lazy version of promises for dealing with possibly asynchronous control flow",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-future"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

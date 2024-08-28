@@ -7,7 +7,7 @@
   "description": "Types for modelling tagged unions for cases where the member types cannot otherwise be distinguished",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-either"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

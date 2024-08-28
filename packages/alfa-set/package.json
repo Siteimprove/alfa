@@ -7,7 +7,7 @@
   "description": "An implementation of an immutable set structure, based on a hash array mapped trie",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-set"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

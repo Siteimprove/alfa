@@ -7,7 +7,7 @@
   "description": "Functionality for working with immutable URLs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-url"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

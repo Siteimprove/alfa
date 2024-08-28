@@ -7,7 +7,7 @@
   "description": "Types for modelling comparable, totally ordered structures",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-comparable"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
