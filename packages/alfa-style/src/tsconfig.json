@@ -147,6 +147,7 @@
     "./property/margin-top.ts",
     "./property/min-height.ts",
     "./property/min-width.ts",
+    "./property/mix-blend-mode.ts",
     "./property/opacity.ts",
     "./property/outline.ts",
     "./property/outline-color.ts",

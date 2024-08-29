@@ -83,6 +83,7 @@ import MarginRight from "./property/margin-right.js";
 import MarginTop from "./property/margin-top.js";
 import MinHeight from "./property/min-height.js";
 import MinWidth from "./property/min-width.js";
+import MixBlendMode from "./property/mix-blend-mode.js";
 import Opacity from "./property/opacity.js";
 import OutlineColor from "./property/outline-color.js";
 import OutlineOffset from "./property/outline-offset.js";
@@ -261,6 +262,7 @@ export namespace Longhands {
     "margin-top": MarginTop,
     "min-height": MinHeight,
     "min-width": MinWidth,
+    "mix-blend-mode": MixBlendMode,
     opacity: Opacity,
     "outline-color": OutlineColor,
     "outline-offset": OutlineOffset,
