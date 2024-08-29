@@ -40,6 +40,7 @@
     "./property/border-image-width.spec.tsx",
     "./property/box-shadow.spec.tsx",
     "./property/clip.spec.tsx",
+    "./property/container-type.spec.tsx",
     "./property/cursor.spec.tsx",
     "./property/display.spec.tsx",
     "./property/font.spec.tsx",

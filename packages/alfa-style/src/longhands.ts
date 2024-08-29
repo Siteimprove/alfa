@@ -53,6 +53,7 @@ import BoxShadow from "./property/box-shadow.js";
 import Clip from "./property/clip.js";
 import ClipPath from "./property/clip-path.js";
 import Color from "./property/color.js";
+import ContainerType from "./property/container-type.js";
 import Cursor from "./property/cursor.js";
 import Display from "./property/display.js";
 import FlexDirection from "./property/flex-direction.js";
@@ -230,6 +231,7 @@ export namespace Longhands {
     "clip-path": ClipPath,
     clip: Clip,
     color: Color,
+    "container-type": ContainerType,
     cursor: Cursor,
     display: Display,
     "flex-direction": FlexDirection,

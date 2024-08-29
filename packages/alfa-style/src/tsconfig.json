@@ -110,6 +110,7 @@
     "./property/clip.ts",
     "./property/clip-path.ts",
     "./property/color.ts",
+    "./property/container-type.ts",
     "./property/cursor.ts",
     "./property/display.ts",
     "./property/flex-direction.ts",
