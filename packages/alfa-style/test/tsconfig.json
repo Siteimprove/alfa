@@ -48,6 +48,7 @@
     "./property/font-size.spec.tsx",
     "./property/font-variant.spec.tsx",
     "./property/inset-block.spec.tsx",
+    "./property/isolation.spec.tsx",
     "./property/line-height.spec.tsx",
     "./property/margin.spec.tsx",
     "./property/mix-blend-mode.spec.tsx",

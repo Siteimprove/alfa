@@ -74,6 +74,7 @@ import InsetBlockEnd from "./property/inset-block-end.js";
 import InsetBlockStart from "./property/inset-block-start.js";
 import InsetInlineEnd from "./property/inset-inline-end.js";
 import InsetInlineStart from "./property/inset-inline-start.js";
+import Isolation from "./property/isolation.js";
 import Left from "./property/left.js";
 import LetterSpacing from "./property/letter-spacing.js";
 import LineHeight from "./property/line-height.js";
@@ -253,6 +254,7 @@ export namespace Longhands {
     "inset-block-start": InsetBlockStart,
     "inset-inline-end": InsetInlineEnd,
     "inset-inline-start": InsetInlineStart,
+    isolation: Isolation,
     left: Left,
     "letter-spacing": LetterSpacing,
     "line-height": LineHeight,

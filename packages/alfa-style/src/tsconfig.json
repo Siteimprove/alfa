@@ -137,6 +137,7 @@
     "./property/inset-inline.ts",
     "./property/inset-inline-end.ts",
     "./property/inset-inline-start.ts",
+    "./property/isolation.ts",
     "./property/left.ts",
     "./property/letter-spacing.ts",
     "./property/line-height.ts",
