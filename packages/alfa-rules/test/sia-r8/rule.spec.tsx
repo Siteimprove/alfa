@@ -231,7 +231,7 @@ test("evaluate() passes an input element with type=password and implicit label",
 });
 
 test("evaluate() passes an input element with type=password and aria-label", async (t) => {
-  const target = <input type="password" aria-label="last name" disabled />;
+  const target = <input type="password" aria-label="password" disabled />;
 
   const document = h.document([target]);
 
