@@ -320,7 +320,7 @@ test(`evaluate() is inapplicable for an input element with type=password
 
 test(`evaluate() is inapplicable for an element with type=password and which 
     is not displayed`, async (t) => {
-  const target = <input type="password" aria-label="firstname" style={{ display: "none" }} />;
+  const target = <input type="password" aria-label="password" style={{ display: "none" }} />;
 
   const document = h.document([target]);
 
