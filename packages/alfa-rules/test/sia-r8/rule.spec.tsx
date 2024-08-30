@@ -243,9 +243,9 @@ test("evaluate() passes an input element with type=password and aria-label", asy
 });
 
 test("evaluate() passes an input element with type=password and explicit label", async (t) => {
-  const target = <input type="password" id="country" />;
+  const target = <input type="password" id="pwd" />;
 
-  const label = <label for="country">Country</label>;
+  const label = <label for="pwd">Password</label>;
 
   const document = h.document([label, target]);
 
