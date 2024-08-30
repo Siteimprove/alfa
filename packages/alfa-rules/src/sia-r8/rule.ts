@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Role } from "@siteimprove/alfa-aria";
-import { DOM, Node as AlfaAriaNode } from "@siteimprove/alfa-aria";
+import * as aria from "@siteimprove/alfa-aria"
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -12,8 +12,7 @@ import { expectation } from "../common/act/expectation.js";
 import { Scope, Stability } from "../tags/index.js";
 import { WithRole } from "../common/diagnostic.js";
 
-const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
-  DOM;
+const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } = aria.DOM;
 const { hasInputType, hasName, hasNamespace } = Element;
 const { and, or } = Predicate;
 const { getElementDescendants } = Query;
@@ -51,7 +50,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const role = AlfaAriaNode.from(target, device).role;
+        const role = aria.Node.from(target, device).role;
         if(role.isSome()) {
           const roleName = role.get().name;
           return {
