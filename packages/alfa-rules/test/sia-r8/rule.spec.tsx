@@ -1,4 +1,4 @@
-import { h } from "@siteimprove/alfa-dom";
+import { h, Element } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import R8, { Outcomes } from "../../dist/sia-r8/rule.js";
@@ -331,22 +331,18 @@ test(`evaluate() fails for input elements with various types which give it no AR
     role and which have no accessible name`, async (t) => {
   for (const type of ["color", "date", "datetime-local", "file", "month", "time", "week"]) {
     const target = <input type={type}/>;
-    const document = h.document([target])
+    const document = h.document([target]);
     t.deepEqual(await evaluate(R8, { document }), 
-      [failed(R8, target, {1: Outcomes.InputElementWithNoAriaRoleHasNoName(type)})]);
+      [failed(R8, target, {1: Outcomes.InputElementWithNoAriaRoleHasNoName(type as Element.InputType)})]);
   }
 });
 
 test(`evaluate() passes for input elements with various types which give it no ARIA 
     role and which have an aria-label`, async (t) => {
-  const targets = [<input type="color" aria-label="x"/>, <input type="date" aria-label="x"/>, 
-    <input type="datetime-local" aria-label="x"/>, <input type="file" aria-label="x"/>, 
-    <input type="month" aria-label="x"/>, <input type="time" aria-label="x"/>, 
-    <input type="week" aria-label="x"/>];
-  const document = h.document(targets)
-  t.deepEqual(await evaluate(R8, { document }), 
-    targets.map(target => passed(R8, target, { 
-      1: Outcomes.InputElementWithNoAriaRoleHasName(target.attribute("type")
-        .map(attr => attr.value).getOr("")) })), 
-  );
+  for (const type of ["color", "date", "datetime-local", "file", "month", "time", "week"]) {
+    const target = <input type={type} aria-label="x"/>;
+    const document = h.document([target]);
+    t.deepEqual(await evaluate(R8, { document }), 
+      [passed(R8, target, {1: Outcomes.InputElementWithNoAriaRoleHasName(type as Element.InputType)})]);
+  }
 });

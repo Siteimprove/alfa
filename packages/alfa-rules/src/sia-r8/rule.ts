@@ -61,12 +61,13 @@ export default Rule.Atomic.of<Page, Element>({
             ),
           };
         } else {
-          const type = target.attribute("type").map(attr => attr.value).getOr("");
+          const typeAttr = target.attribute("type").map(attr => attr.value).getOr("");
+          const inputType = typeAttr as Element.InputType;
           return {
             1: expectation(
               hasNonEmptyAccessibleName(device)(target),
-              () => Outcomes.InputElementWithNoAriaRoleHasName(type),
-              () => Outcomes.InputElementWithNoAriaRoleHasNoName(type),
+              () => Outcomes.InputElementWithNoAriaRoleHasName(inputType),
+              () => Outcomes.InputElementWithNoAriaRoleHasNoName(inputType),
             ),
           };
         }
@@ -87,9 +88,9 @@ export namespace Outcomes {
       WithRole.of(`The form field does not have an accessible name`, role),
     );
 
-  export const InputElementWithNoAriaRoleHasName = (typeAttribValue: string) =>
+  export const InputElementWithNoAriaRoleHasName = (typeAttribValue: Element.InputType) =>
     Ok.of(Diagnostic.of(`The type="${typeAttribValue}" form field has an accessible name`));
 
-  export const InputElementWithNoAriaRoleHasNoName = (typeAttribValue: string) =>
+  export const InputElementWithNoAriaRoleHasNoName = (typeAttribValue: Element.InputType) =>
     Err.of(Diagnostic.of(`The type="${typeAttribValue}" form field does not have an accessible name`));
 }
