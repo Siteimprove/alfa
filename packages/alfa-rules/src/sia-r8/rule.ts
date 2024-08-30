@@ -13,7 +13,7 @@ import { Scope, Stability } from "../tags/index.js";
 import { WithRole } from "../common/diagnostic.js";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } = aria.DOM;
-const { hasInputType, hasName, hasNamespace } = Element;
+const { hasInputType, hasNamespace } = Element;
 const { and, or } = Predicate;
 const { getElementDescendants } = Query;
 
