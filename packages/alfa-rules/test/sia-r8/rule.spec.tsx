@@ -311,7 +311,7 @@ test(`evaluate() fails an input element with type=password and aria-labelledby p
 
 test(`evaluate() is inapplicable for an input element with type=password 
     and aria-hidden`, async (t) => {
-  const target = <input type="password" aria-hidden="true" aria-label="firstname" />;
+  const target = <input type="password" aria-hidden="true" aria-label="password" />;
 
   const document = h.document([target]);
 
