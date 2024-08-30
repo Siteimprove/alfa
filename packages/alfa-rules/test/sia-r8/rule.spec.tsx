@@ -216,7 +216,7 @@ test("evaluate() passes an input element with type=password and implicit label",
 
   const label = (
     <label>
-      first name
+      password
       {target}
     </label>
   );
