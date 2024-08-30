@@ -271,7 +271,7 @@ test("evaluate() passes an input element with type=password and aria-labelledby"
 });
 
 test("evaluate() passes an input element with type=password and placeholder attribute", async (t) => {
-  const target = <input type="password" placeholder="Your search query" />;
+  const target = <input type="password" placeholder="Enter your password" />;
 
   const document = h.document([target]);
 
