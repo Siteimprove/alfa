@@ -1,6 +1,6 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import type { Role } from "@siteimprove/alfa-aria";
-import * as aria from "@siteimprove/alfa-aria"
+import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -12,9 +12,10 @@ import { expectation } from "../common/act/expectation.js";
 import { Scope, Stability } from "../tags/index.js";
 import { WithRole } from "../common/diagnostic.js";
 
-const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } = aria.DOM;
-const { hasInputType, hasNamespace } = Element;
-const { and, or } = Predicate;
+const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
+  DOM;
+const { hasNamespace } = Element;
+const { and } = Predicate;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -27,22 +28,19 @@ export default Rule.Atomic.of<Page, Element>({
         return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasNamespace(Namespace.HTML),
-            or(
-              hasRole(
-                device,
-                "checkbox",
-                "combobox",
-                "listbox",
-                "menuitemcheckbox",
-                "menuitemradio",
-                "radio",
-                "searchbox",
-                "slider",
-                "spinbutton",
-                "switch",
-                "textbox",
-              ), 
-              hasInputType("password", "color", "date", "datetime-local", "file", "month", "time", "week"),
+            hasRole(
+              device,
+              "checkbox",
+              "combobox",
+              "listbox",
+              "menuitemcheckbox",
+              "menuitemradio",
+              "radio",
+              "searchbox",
+              "slider",
+              "spinbutton",
+              "switch",
+              "textbox",
             ),
             isIncludedInTheAccessibilityTree(device),
           ),
@@ -50,27 +48,14 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const role = aria.Node.from(target, device).role;
-        if(role.isSome()) {
-          const roleName = role.get().name;
-          return {
-            1: expectation(
-              hasNonEmptyAccessibleName(device)(target),
-              () => Outcomes.FormFieldWithAriaRoleHasName(roleName),
-              () => Outcomes.FormFieldWithAriaRoleHasNoName(roleName),
-            ),
-          };
-        } else {
-          const typeAttr = target.attribute("type").map(attr => attr.value).getOr("");
-          const inputType = typeAttr as Element.InputType;
-          return {
-            1: expectation(
-              hasNonEmptyAccessibleName(device)(target),
-              () => Outcomes.InputElementWithNoAriaRoleHasName(inputType),
-              () => Outcomes.InputElementWithNoAriaRoleHasNoName(inputType),
-            ),
-          };
-        }
+        const role = WithRole.getRoleName(target, device);
+        return {
+          1: expectation(
+            hasNonEmptyAccessibleName(device)(target),
+            () => Outcomes.HasName(role),
+            () => Outcomes.HasNoName(role),
+          ),
+        };
       },
     };
   },
@@ -80,17 +65,11 @@ export default Rule.Atomic.of<Page, Element>({
  * @public
  */
 export namespace Outcomes {
-  export const FormFieldWithAriaRoleHasName = (role: Role.Name) =>
+  export const HasName = (role: Role.Name) =>
     Ok.of(WithRole.of(`The form field has an accessible name`, role));
 
-  export const FormFieldWithAriaRoleHasNoName = (role: Role.Name) =>
+  export const HasNoName = (role: Role.Name) =>
     Err.of(
       WithRole.of(`The form field does not have an accessible name`, role),
     );
-
-  export const InputElementWithNoAriaRoleHasName = (typeAttribValue: Element.InputType) =>
-    Ok.of(Diagnostic.of(`The type="${typeAttribValue}" form field has an accessible name`));
-
-  export const InputElementWithNoAriaRoleHasNoName = (typeAttribValue: Element.InputType) =>
-    Err.of(Diagnostic.of(`The type="${typeAttribValue}" form field does not have an accessible name`));
 }
