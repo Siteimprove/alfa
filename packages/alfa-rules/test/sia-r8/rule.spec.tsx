@@ -333,11 +333,8 @@ test(`evaluate() fails for input elements with various types which give it no AR
     const target = <input type="{type}"/>;
     const document = h.document([target])
     t.deepEqual(await evaluate(R8, { document }), 
-      failed(R8, target, { 
-        1: Outcomes.InputElementWithNoAriaRoleHasNoName(target.attribute("type")
-          .map(attr => attr.value).getOr("")) }), 
-      );
-    }
+      [failed(R8, target, {1: Outcomes.InputElementWithNoAriaRoleHasNoName(type)})]);
+  }
 });
 
 test(`evaluate() passes for input elements with various types which give it no ARIA 
