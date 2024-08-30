@@ -330,7 +330,7 @@ test(`evaluate() is inapplicable for an element with type=password and which
 test(`evaluate() fails for input elements with various types which give it no ARIA 
     role and which have no accessible name`, async (t) => {
   for (const type of ["color", "date", "datetime-local", "file", "month", "time", "week"]) {
-    const target = <input type="{type}"/>;
+    const target = <input type={type}/>;
     const document = h.document([target])
     t.deepEqual(await evaluate(R8, { document }), 
       [failed(R8, target, {1: Outcomes.InputElementWithNoAriaRoleHasNoName(type)})]);
