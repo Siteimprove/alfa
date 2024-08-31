@@ -327,9 +327,11 @@ test(`evaluate() is inapplicable for an element with type=password and which
   t.deepEqual(await evaluate(ER8, { document }), [inapplicable(ER8)]);
 });
 
+const supportedInputTypesOtherThanPassword = ["color", "date", "datetime-local", "file", "month", "time", "week"];
+
 test(`evaluate() fails for input elements with various types which give it no ARIA 
     role and which have no accessible name`, async (t) => {
-  for (const type of ["color", "date", "datetime-local", "file", "month", "time", "week"]) {
+  for (const type of supportedInputTypesOtherThanPassword) {
     const target = <input type={type}/>;
     const document = h.document([target]);
     t.deepEqual(await evaluate(ER8, { document }), 
@@ -339,7 +341,7 @@ test(`evaluate() fails for input elements with various types which give it no AR
 
 test(`evaluate() passes for input elements with various types which give it no ARIA 
     role and which have an aria-label`, async (t) => {
-  for (const type of ["color", "date", "datetime-local", "file", "month", "time", "week"]) {
+  for (const type of supportedInputTypesOtherThanPassword) {
     const target = <input type={type} aria-label="x"/>;
     const document = h.document([target]);
     t.deepEqual(await evaluate(ER8, { document }), 
