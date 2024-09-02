@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.90.0
+
+### Minor Changes
+
+- **Changed:** Remove npmjs publication for now ([#1677](https://github.com/Siteimprove/alfa/pull/1677))
+
 ## 0.89.3
 
 ## 0.89.2

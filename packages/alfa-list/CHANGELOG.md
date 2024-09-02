@@ -1,5 +1,7 @@
 # @siteimprove/alfa-list
 
+## 0.90.0
+
 ## 0.89.3
 
 ## 0.89.2

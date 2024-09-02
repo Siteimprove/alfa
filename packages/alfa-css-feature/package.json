@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-css-feature",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.89.5",
+  "version": "0.90.0",
   "license": "MIT",
   "description": "Functionality for working with CSS feature queries (media, user-preference, and supports).",
   "repository": {
@@ -22,23 +22,23 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-comparable": "workspace:^0.89.5",
-    "@siteimprove/alfa-css": "workspace:^0.89.5",
-    "@siteimprove/alfa-device": "workspace:^0.89.5",
-    "@siteimprove/alfa-equatable": "workspace:^0.89.5",
-    "@siteimprove/alfa-functor": "workspace:^0.89.5",
-    "@siteimprove/alfa-iterable": "workspace:^0.89.5",
-    "@siteimprove/alfa-json": "workspace:^0.89.5",
-    "@siteimprove/alfa-mapper": "workspace:^0.89.5",
-    "@siteimprove/alfa-option": "workspace:^0.89.5",
-    "@siteimprove/alfa-parser": "workspace:^0.89.5",
-    "@siteimprove/alfa-predicate": "workspace:^0.89.5",
-    "@siteimprove/alfa-refinement": "workspace:^0.89.5",
-    "@siteimprove/alfa-result": "workspace:^0.89.5",
-    "@siteimprove/alfa-slice": "workspace:^0.89.5"
+    "@siteimprove/alfa-comparable": "workspace:^0.90.0",
+    "@siteimprove/alfa-css": "workspace:^0.90.0",
+    "@siteimprove/alfa-device": "workspace:^0.90.0",
+    "@siteimprove/alfa-equatable": "workspace:^0.90.0",
+    "@siteimprove/alfa-functor": "workspace:^0.90.0",
+    "@siteimprove/alfa-iterable": "workspace:^0.90.0",
+    "@siteimprove/alfa-json": "workspace:^0.90.0",
+    "@siteimprove/alfa-mapper": "workspace:^0.90.0",
+    "@siteimprove/alfa-option": "workspace:^0.90.0",
+    "@siteimprove/alfa-parser": "workspace:^0.90.0",
+    "@siteimprove/alfa-predicate": "workspace:^0.90.0",
+    "@siteimprove/alfa-refinement": "workspace:^0.90.0",
+    "@siteimprove/alfa-result": "workspace:^0.90.0",
+    "@siteimprove/alfa-slice": "workspace:^0.90.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.89.5"
+    "@siteimprove/alfa-test": "workspace:^0.90.0"
   },
   "publishConfig": {
     "access": "public",

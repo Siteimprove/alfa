@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.90.0](../../compare/v0.89.5...v0.90.0) (2024-09-02)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0900): Remove npmjs publication for now. ([#1677](https://github.com/Siteimprove/alfa/pull/1677))
+
 ## [0.89.3](../../compare/v0.89.2...v0.89.3) (2024-08-28)
 
 ### Fixed
