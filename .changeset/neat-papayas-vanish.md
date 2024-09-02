@@ -1,5 +1,5 @@
 ---
-"@siteimprove/alfa-dom": minor
+"@siteimprove/alfa-dom": patch
 ---
 
 **Added:** `Navive.fromNode` can now be called with no argument, in which case it will default to `window.document`.

@@ -78,7 +78,7 @@ export namespace Native {
   ): Promise<Node.JSON>;
 
   export async function fromNode(
-    node: globalThis.Node = window.document,
+    node: globalThis.Node = globalThis.window.document,
     options?: Options,
   ): Promise<Node.JSON> {
     const { withCrossOrigin = false } = options ?? {};
