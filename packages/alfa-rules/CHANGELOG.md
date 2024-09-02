@@ -1,5 +1,25 @@
 # @siteimprove/alfa-rules
 
+## 0.89.3
+
+## 0.89.2
+
+### Patch Changes
+
+- **Changed:** Trying to fix a problem in generating provenance statements ([#1674](https://github.com/Siteimprove/alfa/pull/1674))
+
+## 0.89.1
+
+### Patch Changes
+
+- **Added:** Trying to publish Alfa packages on the npm registry ([#1673](https://github.com/Siteimprove/alfa/pull/1673))
+
+## 0.89.0
+
+### Minor Changes
+
+- **Breaking:** The serialization of diagnostic `WithBadElements` has been changed to include the serialized elements and not just the xpath. ([#1669](https://github.com/Siteimprove/alfa/pull/1669))
+
 ## 0.88.0
 
 ### Minor Changes

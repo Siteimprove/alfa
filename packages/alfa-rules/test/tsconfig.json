@@ -12,6 +12,7 @@
     "./common/outcome.ts",
     "./common/dom/get-colors.spec.tsx",
     "./common/predicate/is-at-the-start.spec.tsx",
+    "./common/diagnostic/with-bad-elements.spec.tsx",
     "./sia-dr6/rule.spec.tsx",
     "./sia-dr18/rule.spec.tsx",
     "./sia-dr34/rule.spec.tsx",

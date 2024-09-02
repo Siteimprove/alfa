@@ -19,5 +19,7 @@ jobs:
       user-name: siteimprove-builduser
       user-email: 8577410+siteimprove-builduser@users.noreply.github.com
       generate-documentation: true
+      npm-publish: true
     secrets:
       token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+      npm-token: ${{ secrets.TMP_NPM_TOKEN }}

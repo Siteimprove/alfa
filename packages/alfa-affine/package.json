@@ -2,12 +2,12 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-affine",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.88.0",
+  "version": "0.89.5",
   "license": "MIT",
   "description": "Functionality for working with affine transformations",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-affine"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
@@ -22,13 +22,13 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "workspace:^0.88.0",
-    "@siteimprove/alfa-json": "workspace:^0.88.0",
-    "@siteimprove/alfa-math": "workspace:^0.88.0",
-    "@siteimprove/alfa-option": "workspace:^0.88.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.89.5",
+    "@siteimprove/alfa-json": "workspace:^0.89.5",
+    "@siteimprove/alfa-math": "workspace:^0.89.5",
+    "@siteimprove/alfa-option": "workspace:^0.89.5"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.88.0"
+    "@siteimprove/alfa-test": "workspace:^0.89.5"
   },
   "publishConfig": {
     "access": "public",

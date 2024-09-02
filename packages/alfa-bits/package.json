@@ -2,12 +2,12 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-bits",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.88.0",
+  "version": "0.89.5",
   "license": "MIT",
   "description": "Functionality for doing bit manipulation of 32-bit numbers",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-bits"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",

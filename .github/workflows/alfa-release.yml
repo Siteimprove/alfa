@@ -50,10 +50,17 @@ on:
         required: false
         type: boolean
         default: true # Most Alfa repos are public.
+      npm-publish:
+        required: false
+        type: boolean
+        default: false
     secrets:
       # A PAT for the user who will commit. Need to have the repo:write permission.
       token:
         required: true
+      # Token for NPM publication, must be set up if inputs.npm-publish is true.
+      npm-token:
+        required: false
 
 defaults:
   run:
@@ -196,15 +203,16 @@ jobs:
           done
           
 
-#      - name: Make npm release (npm Packages Registry)
-#        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
-#        if: inputs.npm-publish
-#        run: >
-#          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
-#            npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
-#          done
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Set token for npm publication (npm registry)
+        if: inputs.npm-publish
+        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.npm-token }}
+      - name: Make npm release (npm Packages Registry)
+        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
+        if: inputs.npm-publish
+        run: >
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
+          done
 
       - name: Make Github release
         run: >

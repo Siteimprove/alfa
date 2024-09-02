@@ -2,12 +2,12 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-clone",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.88.0",
+  "version": "0.89.5",
   "license": "MIT",
   "description": "Types for modelling clonable structures",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/siteimprove/alfa.git",
+    "url": "github:Siteimprove/alfa",
     "directory": "packages/alfa-clone"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
