@@ -1,5 +1,15 @@
 # @siteimprove/alfa-dom
 
+## 0.90.1
+
+### Patch Changes
+
+- **Added:** `Navive.fromNode` can now be called with no argument, in which case it will default to `window.document`. ([#1678](https://github.com/Siteimprove/alfa/pull/1678))
+
+  It is not possible to provide options this way.
+
+  This is useful in settings where the serialisation must be injected into another context (e.g. headless browser), to avoid specifically fetching the document or using a bundler to inject `() => Native.fromNode(window.document)` to read it from inside the other context.
+
 ## 0.90.0
 
 ## 0.89.3

@@ -1,5 +1,13 @@
 # @siteimprove/alfa-device
 
+## 0.90.1
+
+### Patch Changes
+
+- **Added:** `Native.fromWindow` can now be called with no argument and will default to `globalThis.window`. ([#1678](https://github.com/Siteimprove/alfa/pull/1678))
+
+  This is useful in injection contexts where grabbing the window beforehand to inject it is tricky, and bundling a function that wraps `() => Native.fromWindow(window)` to properly serialise it is inconvenient.
+
 ## 0.90.0
 
 ## 0.89.3
