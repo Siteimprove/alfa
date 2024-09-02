@@ -31,38 +31,41 @@ export const alfaVersion = "0.88.0";
 // @public
 const _default: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
 
+// @public @deprecated (undocumented)
+const _default_10: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+
 // @public
 const _default_2: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array_2<Node<string>>>;
 
 // @public
 const _default_3: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
-// @public @deprecated (undocumented)
+// @public (undocumented)
 const _default_4: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public @deprecated (undocumented)
-const _default_5: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
+const _default_5: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
-// @public (undocumented)
-const _default_6: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+// @public @deprecated (undocumented)
+const _default_6: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 // @public (undocumented)
 const _default_7: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public @deprecated (undocumented)
-const _default_8: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+// @public (undocumented)
+const _default_8: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public @deprecated (undocumented)
 const _default_9: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 declare namespace deprecatedRules {
     export {
-        _default_4 as DR6,
-        _default_5 as DR18,
-        _default_6 as DR34,
-        _default_7 as DR36,
-        _default_8 as DR66,
-        _default_9 as DR69
+        _default_5 as DR6,
+        _default_6 as DR18,
+        _default_7 as DR34,
+        _default_8 as DR36,
+        _default_9 as DR66,
+        _default_10 as DR69
     }
 }
 export { deprecatedRules }
@@ -95,7 +98,8 @@ declare namespace experimentalRules {
     export {
         _default as ER87,
         _default_2 as R82,
-        _default_3 as R109
+        _default_3 as R109,
+        _default_4 as ER8
     }
 }
 export { experimentalRules }
