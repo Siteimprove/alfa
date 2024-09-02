@@ -20,25 +20,29 @@ import type { Device, Preference } from "./index.js";
  * @internal
  */
 export namespace Native {
-  export function fromWindow(window: globalThis.Window): Device.JSON {
+  export function fromWindow(
+    myWindow: globalThis.Window = window,
+  ): Device.JSON {
     return toDevice();
 
     function toDevice(): Device.JSON {
       const {
         documentElement: { clientWidth, clientHeight },
-      } = window.document;
+      } = myWindow.document;
 
       return {
         type: "screen",
         viewport: {
           width: clientWidth,
           height: clientHeight,
-          orientation: window.matchMedia("(orientation: landscape)").matches
+          orientation: myWindow.matchMedia("(orientation: landscape)").matches
             ? "landscape"
             : "portrait",
         },
-        display: { resolution: window.devicePixelRatio, scan: "progressive" },
-        scripting: { enabled: !window.matchMedia("(scripting: none)").matches },
+        display: { resolution: myWindow.devicePixelRatio, scan: "progressive" },
+        scripting: {
+          enabled: !myWindow.matchMedia("(scripting: none)").matches,
+        },
         preferences: [...toPreferences()],
       };
     }
@@ -62,7 +66,7 @@ export namespace Native {
       // It seems we need to manually query each preference individually.
       for (const name of Object.keys(preferences) as Array<Preference.Name>) {
         for (const value of preferences[name]) {
-          if (window.matchMedia(`(${name}: ${value})`).matches) {
+          if (myWindow.matchMedia(`(${name}: ${value})`).matches) {
             yield { name, value };
           }
         }

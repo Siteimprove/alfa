@@ -63,7 +63,7 @@ export namespace Native {
   ): Promise<Comment.JSON>;
 
   export async function fromNode(
-    node: globalThis.Document,
+    node?: globalThis.Document,
     options?: Options,
   ): Promise<Document.JSON>;
 
@@ -78,7 +78,7 @@ export namespace Native {
   ): Promise<Node.JSON>;
 
   export async function fromNode(
-    node: globalThis.Node,
+    node: globalThis.Node = globalThis.window.document,
     options?: Options,
   ): Promise<Node.JSON> {
     const { withCrossOrigin = false } = options ?? {};

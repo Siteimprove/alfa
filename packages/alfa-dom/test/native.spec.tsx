@@ -63,6 +63,30 @@ test("Native.fromNode() builds a simple document", async (t) => {
   );
 });
 
+test("Native.fromNode() uses global document if none is provided", async (t) => {
+  const html = "<div id='hello' class='foo'>Hello</div>";
+  // JSDOM DOMWindow is indeed not really compatible with globalThis.window but
+  // for the part we use here, it is sufficient.
+  globalThis.window = new JSDOM(html).window as any;
+  const actual = Node.from(await Native.fromNode()).toJSON();
+
+  t.deepEqual(
+    actual,
+    h
+      .document([
+        <html>
+          <head></head>
+          <body>
+            <div id="hello" class="foo">
+              Hello
+            </div>
+          </body>
+        </html>,
+      ])
+      .toJSON(),
+  );
+});
+
 test("Native.fromNode() builds a document with element's style", async (t) => {
   const actual = await makeJSON("<div style='color: red'>Hello</div>");
 
