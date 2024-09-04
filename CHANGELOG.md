@@ -1,5 +1,19 @@
 # Alfa changelog
 
+## [0.90.1](../../compare/v0.90.0...v0.90.1) (2024-09-02)
+
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0901): `Navive.fromNode` can now be called with no argument, in which case it will default to `window.document`. ([#1678](https://github.com/Siteimprove/alfa/pull/1678))
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0901): `Native.fromWindow` can now be called with no argument and will default to `globalThis.window`. ([#1678](https://github.com/Siteimprove/alfa/pull/1678))
+
+## [0.90.0](../../compare/v0.89.5...v0.90.0) (2024-09-02)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0900): Remove npmjs publication for now. ([#1677](https://github.com/Siteimprove/alfa/pull/1677))
+
 ## [0.89.3](../../compare/v0.89.2...v0.89.3) (2024-08-28)
 
 ### Fixed
