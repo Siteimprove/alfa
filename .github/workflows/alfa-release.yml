@@ -188,31 +188,37 @@ jobs:
           yarn workspaces foreach --all --no-private --topological-dev pack --out ${{ github.workspace }}/artifacts/%s-%v.tgz
 
       - name: Set token for npm publication (Github package registry)
-        run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
+        run: npm config set //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
       - name: Make npm release (Github Packages Registry / public)
         if: inputs.public
         run: >
           for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
             npm publish ${package} --tolerate-republish --provenance --tag latest;
           done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Make npm release (Github Packages Registry / private)
         if: ${{ ! inputs.public }}
         run: >
           for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
             npm publish ${package} --tolerate-republish --tag latest;
           done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
 
-#      - name: Set token for npm publication (npm registry)
-#        if: inputs.npm-publish
-#        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.npm-token }}
-#      - name: Make npm release (npm Packages Registry)
-#        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
-#        if: inputs.npm-publish
-#        run: >
-#          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
-#            npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
-#          done
+      - name: Set token for npm publication (npm registry)
+        if: inputs.npm-publish
+        run: npm config set //registry.npmjs.org/:_authToken=${NPMJS_TOKEJN}
+      - name: Make npm release (npm Packages Registry)
+        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
+        if: inputs.npm-publish
+        run: >
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
+          done
+        env:
+          NPMJS_TOKEN: ${{ secrets.npm-token }}
 
       - name: Make Github release
         run: >
