@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.91.2](../../compare/v0.91.1...v0.91.2) (2024-09-10)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0912): Fixing token injection.
+
 ## [0.91.1](../../compare/v0.91.0...v0.91.1) (2024-09-10)
 
 ### Changed

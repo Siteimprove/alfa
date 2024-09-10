@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-rectangle",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.91.1",
+  "version": "0.91.2",
   "license": "MIT",
   "description": "Package for working with rectangles",
   "repository": {
@@ -22,13 +22,13 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "workspace:^0.91.1",
-    "@siteimprove/alfa-hash": "workspace:^0.91.1",
-    "@siteimprove/alfa-json": "workspace:^0.91.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.91.2",
+    "@siteimprove/alfa-hash": "workspace:^0.91.2",
+    "@siteimprove/alfa-json": "workspace:^0.91.2"
   },
   "devDependencies": {
-    "@siteimprove/alfa-fnv": "workspace:^0.91.1",
-    "@siteimprove/alfa-test": "workspace:^0.91.1"
+    "@siteimprove/alfa-fnv": "workspace:^0.91.2",
+    "@siteimprove/alfa-test": "workspace:^0.91.2"
   },
   "publishConfig": {
     "access": "public",

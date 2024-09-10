@@ -1,5 +1,7 @@
 # @siteimprove/alfa-xpath
 
+## 0.91.2
+
 ## 0.91.1
 
 ## 0.91.0

@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.91.2
+
+### Patch Changes
+
+- **Changed:** Fixing token injection ([`41bce73bcbcf39c8d2afd3d127e949f7143bbb99`](https://github.com/Siteimprove/alfa/commit/41bce73bcbcf39c8d2afd3d127e949f7143bbb99))
+
 ## 0.91.1
 
 ### Patch Changes
