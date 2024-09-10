@@ -1,5 +1,11 @@
 # @siteimprove/alfa-selector
 
+## 0.91.0
+
+### Minor Changes
+
+- **Changed:** Dummy minor version to experiment with publish flow, use the previous or next minor version instead. ([`2a62d8a43e294ee56c18315c8fad29fbdc18c0df`](https://github.com/Siteimprove/alfa/commit/2a62d8a43e294ee56c18315c8fad29fbdc18c0df))
+
 ## 0.90.1
 
 ## 0.90.0
