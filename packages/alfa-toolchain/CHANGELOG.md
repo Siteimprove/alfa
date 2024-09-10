@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.91.1
+
+### Patch Changes
+
+- **Changed:** Trying npmjs publish. ([#1680](https://github.com/Siteimprove/alfa/pull/1680))
+
 ## 0.91.0
 
 ### Minor Changes

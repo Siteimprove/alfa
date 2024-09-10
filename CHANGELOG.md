@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.91.1](../../compare/v0.91.0...v0.91.1) (2024-09-10)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0911): Trying npmjs publish. ([#1680](https://github.com/Siteimprove/alfa/pull/1680))
+
 ## [0.91.0](../../compare/v0.90.1...v0.91.0) (2024-09-10)
 
 ### Changed

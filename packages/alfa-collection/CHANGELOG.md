@@ -1,5 +1,7 @@
 # @siteimprove/alfa-collection
 
+## 0.91.1
+
 ## 0.91.0
 
 ### Minor Changes
