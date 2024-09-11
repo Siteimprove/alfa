@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-functor",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.91.2",
+  "version": "0.92.0",
   "license": "MIT",
   "description": "Types for modelling functors, which are structures that can be mapped over",
   "repository": {
@@ -22,7 +22,7 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-mapper": "workspace:^0.91.2"
+    "@siteimprove/alfa-mapper": "workspace:^0.92.0"
   },
   "publishConfig": {
     "access": "public",

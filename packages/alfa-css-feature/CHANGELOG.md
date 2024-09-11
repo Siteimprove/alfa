@@ -1,5 +1,11 @@
 # @siteimprove/alfa-css-feature
 
+## 0.92.0
+
+### Minor Changes
+
+- **Changed:** Alfa packages are now (also) published on the npmjs registry. ([`5b924adf304b6f809f4c8b9d5a2f4a8950d5b10b`](https://github.com/Siteimprove/alfa/commit/5b924adf304b6f809f4c8b9d5a2f4a8950d5b10b))
+
 ## 0.91.2
 
 ## 0.91.1
