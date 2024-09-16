@@ -20,7 +20,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r8",
   requirements: [Criterion.of("4.1.2")],
-  tags: [Scope.Component, Stability.Stable, Version.of(2)],
+  tags: [Scope.Component, Stability.Experimental, Version.of(2)],
   evaluate({ device, document }) {
     return {
       applicability() {
