@@ -61,8 +61,8 @@ export default Rule.Atomic.of<Page, Element>({
             ),
           };
         } else {
-          const typeAttr = target.attribute("type").map(attr => attr.value).getOr("");
-          const inputType = typeAttr as Element.InputType;
+          // We know the type attribute has a correct value because of the applicability.
+          const typeAttr = target.attribute("type").map(attr => attr.value).getUnsafe(`R8v2 found an element with no role nor 'type' attribute: ${target.path()}`) as Element.InputType;
           return {
             1: expectation(
               hasNonEmptyAccessibleName(device)(target),
