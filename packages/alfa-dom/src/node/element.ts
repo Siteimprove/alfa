@@ -607,4 +607,6 @@ export namespace Element {
   } = predicate;
 
   export const { inputType } = helpers;
+
+  export type InputType = helpers.InputType;
 }
