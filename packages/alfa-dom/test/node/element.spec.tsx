@@ -101,3 +101,100 @@ test("#displaySize() returns the size attribute for a non-multiple <select>", (t
 test("#displaySize() returns 4 for a multiple <select> without a size attribute", (t) => {
   t.equal(((<select multiple />) as Element<"select">).displaySize(), 4);
 });
+
+test("#optionsList() returns the list of <option> children for a simple <select> element", (t) => {
+  const options = [
+    <option>one</option>,
+    <option>two</option>,
+    <option>three</option>,
+  ] as Array<Element<"option">>;
+  const select = h.element("select", [], options);
+
+  t.deepEqual(
+    select.optionsList().toJSON(),
+    options.map((elt) => elt.toJSON()),
+  );
+});
+
+test("#optionsList() returns the list of <option> grandchildren for a <select> element with <optgroup> children", (t) => {
+  const options = [<option>one</option>, <option>two</option>] as Array<
+    Element<"option">
+  >;
+  const option = (<option>three</option>) as Element<"option">;
+  const select = h.element(
+    "select",
+    [],
+    [<optgroup>{options}</optgroup>, <optgroup>{option}</optgroup>],
+  );
+
+  t.deepEqual(
+    select.optionsList().toJSON(),
+    [...options, option].map((elt) => elt.toJSON()),
+  );
+});
+
+test("#optionsList() mixes children and grandchildren when allowed", (t) => {
+  const one = (<option>one</option>) as Element<"option">;
+  const twoThree = [<option>two</option>, <option>three</option>] as Array<
+    Element<"option">
+  >;
+  const four = (<option>four</option>) as Element<"option">;
+  const five = (<option>five</option>) as Element<"option">;
+  const sixSeven = [<option>six</option>, <option>seven</option>] as Array<
+    Element<"option">
+  >;
+  const select = h.element(
+    "select",
+    [],
+    [
+      one,
+      <optgroup>{twoThree}</optgroup>,
+      four,
+      five,
+      <optgroup>{sixSeven}</optgroup>,
+    ],
+  );
+
+  t.deepEqual(
+    select.optionsList().toJSON(),
+    [one, ...twoThree, four, five, ...sixSeven].map((elt) => elt.toJSON()),
+  );
+});
+
+test("#optionsList() skips over non-direct children or grandchildren", (t) => {
+  const one = (<option>one</option>) as Element<"option">;
+  const twoThree = [<option>two</option>, <option>three</option>] as Array<
+    Element<"option">
+  >;
+  const four = (<option>four</option>) as Element<"option">;
+  const five = (<option>five</option>) as Element<"option">;
+  const sixSeven = [
+    <option>six</option>,
+    <div>
+      <option>seven</option>
+    </div>,
+  ] as Array<Element<"option">>;
+  const select = h.element(
+    "select",
+    [],
+    [
+      // skipped as non-direct <option> child
+      <div>one</div>,
+      // skipped as non-direct <optgroup> child
+      <div>
+        <optgroup>{twoThree}</optgroup>
+      </div>,
+      // kept
+      four,
+      // kept
+      five,
+      // six is kept, seven is skipped as non-direct child of an <optgroup>
+      <optgroup>{sixSeven}</optgroup>,
+    ],
+  );
+
+  t.deepEqual(
+    select.optionsList().toJSON(),
+    [four, five, sixSeven[0]].map((elt) => elt.toJSON()),
+  );
+});

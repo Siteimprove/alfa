@@ -320,10 +320,10 @@ export class Element<N extends string = string>
    * {@link https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-size}
    *
    * @remarks
-   * The size IDL attribute should have a value of 0, not 1 or 4, when the content
-   * attribute is undefined. This is for historical reasons. In our case, this is
-   * not affecting the results and it is easier to treat it as the actual displayed
-   * size.
+   * The size IDL attribute should have a value of 0, not 1 or 4, when the
+   *   content attribute is undefined. This is for historical reasons. In our
+   *   case, this is not affecting the results and it is easier to treat it as
+   *   the actual displayed size.
    * {@link https://html.spec.whatwg.org/multipage/form-elements.html#dom-select-size}
    */
   public displaySize(this: Element<"select">): number {
@@ -340,6 +340,38 @@ export class Element<N extends string = string>
     }
 
     return this._displaySize;
+  }
+
+  private _optionsList: Sequence<Element<"option">> | undefined;
+
+  /**
+   * {@link https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-option-list}
+   */
+  public optionsList(this: Element<"select">): Sequence<Element<"option">> {
+    if (this._optionsList === undefined) {
+      this._optionsList = this.children()
+        .filter(Element.isElement)
+        .flatMap((child) => {
+          switch (child.name) {
+            case "option":
+              return Sequence.from([child as Element<"option">]);
+
+            case "optgroup":
+              return child
+                .children()
+                .filter(Element.isElement)
+                .filter(
+                  (grandchild): grandchild is Element<"option"> =>
+                    grandchild.name === "option",
+                );
+
+            default:
+              return Sequence.empty();
+          }
+        });
+    }
+
+    return this._optionsList;
   }
 
   /*
