@@ -15,14 +15,7 @@ import type { State } from "./name/index.js";
 import { Name, Source } from "./name/index.js";
 import { Role } from "./role.js";
 
-const {
-  hasAttribute,
-  hasInputType,
-  hasName,
-  inputType,
-  isElement,
-  isScopedTo,
-} = Element;
+const { hasAttribute, hasInputType, hasName, isElement, isScopedTo } = Element;
 const { or, test } = Predicate;
 const { and } = Refinement;
 const { getElementDescendants } = Query;
@@ -390,7 +383,7 @@ const Features: Features = {
 
     input: html(
       (element): Role.Name | None => {
-        switch (inputType(element as Element<"input">)) {
+        switch ((element as Element<"input">).inputType()) {
           case "button":
           case "image":
           case "reset":

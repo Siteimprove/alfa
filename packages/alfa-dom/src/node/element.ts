@@ -268,38 +268,43 @@ export class Element<N extends string = string>
     return None;
   }
 
+  private _inputType: helpers.InputType | undefined;
+
   /**
-   *
+   * {@link https://html.spec.whatwg.org/#attr-input-type}
    */
   public inputType(this: Element<"input">): helpers.InputType {
-    return this.attribute("type")
-      .flatMap((attribute) =>
-        attribute.enumerate(
-          "hidden",
-          "search",
-          "tel",
-          "url",
-          "email",
-          "password",
-          "date",
-          "month",
-          "week",
-          "time",
-          "datetime-local",
-          "number",
-          "range",
-          "color",
-          "checkbox",
-          "radio",
-          "file",
-          "submit",
-          "image",
-          "reset",
-          "button",
-          "text",
-        ),
-      )
-      .getOr("text");
+    if (this._inputType === undefined) {
+      this._inputType = this.attribute("type")
+        .flatMap((attribute) =>
+          attribute.enumerate(
+            "hidden",
+            "search",
+            "tel",
+            "url",
+            "email",
+            "password",
+            "date",
+            "month",
+            "week",
+            "time",
+            "datetime-local",
+            "number",
+            "range",
+            "color",
+            "checkbox",
+            "radio",
+            "file",
+            "submit",
+            "image",
+            "reset",
+            "button",
+            "text",
+          ),
+        )
+        .getOr("text");
+    }
+    return this._inputType;
   }
 
   /**
@@ -605,8 +610,6 @@ export namespace Element {
     isSuggestedFocusable,
     isReplaced,
   } = predicate;
-
-  export const { inputType } = helpers;
 
   export type InputType = helpers.InputType;
 }

@@ -2,7 +2,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import type { Element } from "../../element.js";
-import { type InputType, inputType } from "../input-type.js";
+import { type InputType } from "../input-type.js";
 import { hasName } from "./has-name.js";
 
 const { equals, test } = Predicate;
@@ -36,6 +36,6 @@ export function hasInputType(
   }
 
   return and(hasName("input"), (element) =>
-    test(predicate, inputType(element)),
+    test(predicate, element.inputType()),
   );
 }
