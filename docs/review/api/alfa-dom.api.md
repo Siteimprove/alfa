@@ -342,6 +342,8 @@ export namespace Element {
     // @internal (undocumented)
     export function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
     // (undocumented)
+    export type InputType = helpers.InputType;
+    // (undocumented)
     export function isElement(value: unknown): value is Element;
     // (undocumented)
     export interface JSON<N extends string = string> extends Node.JSON<"element"> {
@@ -361,9 +363,6 @@ export namespace Element {
         shadow: Shadow.JSON | null;
         // (undocumented)
         style: Block.JSON | string | null;
-    }
-    // (undocumented)
-    export interface MinimalJSON extends Node.JSON<"element"> {
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
@@ -391,6 +390,9 @@ export namespace Element {
     //
     // (undocumented)
     inputType: typeof helpers.inputType;
+    // (undocumented)
+    export interface MinimalJSON extends Node.JSON<"element"> {
+    }
 }
 
 // @public (undocumented)

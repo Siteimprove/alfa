@@ -19,6 +19,7 @@
     "./sia-dr36/rule.spec.tsx",
     "./sia-dr66/rule.spec.tsx",
     "./sia-dr69/rule.spec.tsx",
+    "./sia-er8/rule.spec.tsx",
     "./sia-er87/rule.spec.tsx",
     "./sia-r1/rule.spec.tsx",
     "./sia-r2/rule.spec.tsx",
