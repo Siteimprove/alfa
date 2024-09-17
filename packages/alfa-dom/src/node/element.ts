@@ -269,6 +269,40 @@ export class Element<N extends string = string>
   }
 
   /**
+   *
+   */
+  public inputType(this: Element<"input">): helpers.InputType {
+    return this.attribute("type")
+      .flatMap((attribute) =>
+        attribute.enumerate(
+          "hidden",
+          "search",
+          "tel",
+          "url",
+          "email",
+          "password",
+          "date",
+          "month",
+          "week",
+          "time",
+          "datetime-local",
+          "number",
+          "range",
+          "color",
+          "checkbox",
+          "radio",
+          "file",
+          "submit",
+          "image",
+          "reset",
+          "button",
+          "text",
+        ),
+      )
+      .getOr("text");
+  }
+
+  /**
    * {@link https://dom.spec.whatwg.org/#dom-slotable-assignedslot}
    */
   public assignedSlot(): Option<Slot> {
