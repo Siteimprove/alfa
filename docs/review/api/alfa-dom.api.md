@@ -296,9 +296,15 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get content(): Option<Document>;
     // (undocumented)
+    displaySize(this: Element<"select">): number;
+    // (undocumented)
     getBoundingBox(device: Device): Option<Rectangle>;
     // (undocumented)
     get id(): Option<string>;
+    // Warning: (ae-forgotten-export) The symbol "helpers" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    inputType(this: Element<"input">): helpers.InputType;
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
@@ -309,6 +315,8 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     get namespace(): Option<Namespace>;
     // (undocumented)
     static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, serializationId?: string, extraData?: any): Element<N>;
+    // (undocumented)
+    optionsList(this: Element<"select">): Sequence<Element<"option">>;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
@@ -386,10 +394,6 @@ export namespace Element {
     isScopedTo: typeof predicate_3.isScopedTo, // (undocumented)
     isSuggestedFocusable: typeof predicate_3.isSuggestedFocusable, // (undocumented)
     isReplaced: typeof predicate_3.isReplaced;
-    const // Warning: (ae-forgotten-export) The symbol "helpers" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    inputType: typeof helpers.inputType;
     // (undocumented)
     export interface MinimalJSON extends Node.JSON<"element"> {
     }
