@@ -28,20 +28,20 @@ import { Text } from '@siteimprove/alfa-dom';
 // @public (undocumented)
 export const alfaVersion = "0.89.3";
 
-// @public
-const _default: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
+// @public (undocumented)
+const _default: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public @deprecated (undocumented)
 const _default_10: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 // @public
-const _default_2: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array_2<Node<string>>>;
+const _default_2: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
 
 // @public
-const _default_3: Rule.Atomic<Page, Document, Question.Metadata, Document>;
+const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array_2<Node<string>>>;
 
-// @public (undocumented)
-const _default_4: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+// @public
+const _default_4: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
 // @public @deprecated (undocumented)
 const _default_5: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
@@ -96,10 +96,10 @@ export namespace Diagnostic {
 
 declare namespace experimentalRules {
     export {
-        _default as ER87,
-        _default_2 as R82,
-        _default_3 as R109,
-        _default_4 as ER8
+        _default as ER8,
+        _default_2 as ER87,
+        _default_3 as R82,
+        _default_4 as R109
     }
 }
 export { experimentalRules }
