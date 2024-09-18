@@ -1,9 +1,10 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
-import type { Attribute} from "@siteimprove/alfa-dom";
+import type { Attribute } from "@siteimprove/alfa-dom";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Selective } from "@siteimprove/alfa-selective";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Technique } from "@siteimprove/alfa-wcag";
@@ -16,7 +17,7 @@ import { expectation } from "../common/act/expectation.js";
 import { Scope, Stability, Version } from "../tags/index.js";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
-const { hasDisplaySize, hasInputType } = Element;
+const { hasDisplaySize, hasInputType, hasName } = Element;
 const { test, property } = Predicate;
 const { getElementDescendants } = Query;
 
@@ -76,16 +77,25 @@ function allowedForInputType(
 ): Predicate<Element> {
   return hasInputType((inputType) => {
     switch (inputType) {
+      // https://www.w3.org/TR/html-aria/#el-input-color
       case "color":
         return attributeName === "aria-disabled";
+      // https://www.w3.org/TR/html-aria/#el-input-date
       case "date":
+      // https://www.w3.org/TR/html-aria/#el-input-datetime-local
       case "datetime-local":
+      // https://www.w3.org/TR/html-aria/#el-input-email
       case "email":
+      // https://www.w3.org/TR/html-aria/#el-input-month
       case "month":
+      // https://www.w3.org/TR/html-aria/#el-input-password
       case "password":
+      // https://www.w3.org/TR/html-aria/#el-input-time
       case "time":
+      // https://www.w3.org/TR/html-aria/#el-input-week
       case "week":
         return Role.of("textbox").isAttributeSupported(attributeName);
+      // https://www.w3.org/TR/html-aria/#el-input-file
       case "file":
         return (
           attributeName === "aria-disabled" ||
@@ -100,26 +110,22 @@ function allowedForInputType(
 
 function ariaHtmlAllowed(target: Attribute): boolean {
   const attributeName = target.name as aria.Attribute.Name;
-  for (const element of target.owner) {
-    switch (element.name) {
-      case "body":
-        return Role.of("document").isAttributeSupported(attributeName);
-
-      case "input":
-        return allowedForInputType(attributeName)(element);
-
-      case "select":
-        return (
-          (hasDisplaySize((size: Number) => size !== 1)(element) &&
-            Role.of("combobox").isAttributeSupported(attributeName)) ||
-          Role.of("menu").isAttributeSupported(attributeName)
-        );
-
-      case "video":
-        return Role.of("application").isAttributeSupported(attributeName);
-    }
-  }
-  return false;
+  return target.owner
+    .map((element) =>
+      Selective.of(element)
+        .if(hasName("input"), allowedForInputType(attributeName))
+        // https://www.w3.org/TR/html-aria/#el-select
+        .if(
+          hasName("select"),
+          (select) =>
+            (hasDisplaySize((size: Number) => size !== 1)(select) &&
+              Role.of("combobox").isAttributeSupported(attributeName)) ||
+            Role.of("menu").isAttributeSupported(attributeName),
+        )
+        .else(() => false)
+        .get(),
+    )
+    .getOr(false);
 }
 
 /**

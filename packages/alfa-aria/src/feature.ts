@@ -648,6 +648,10 @@ const Features: Features = {
     select: html(
       // mono-line <select> are mapped to combobox by HTML AAM, but their child
       // <option> are still mapped to option, which are out of their context role.
+      // See https://www.w3.org/TR/html-aam-1.0/#el-select-combobox
+      // UAs seem to interpose a listbox, sometimes through UA shadow DOM.
+      // This is actually a good behaviour as the combobox is supposed to control
+      // a listbox containing the options.
       // We cheat and always map <select> to listbox
       "listbox",
       // (element) =>

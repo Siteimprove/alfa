@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
-import type { Attribute} from "@siteimprove/alfa-dom";
+import type { Attribute } from "@siteimprove/alfa-dom";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -84,7 +84,9 @@ function ariaHtmlAllowed(target: Attribute): boolean {
 
       case "select":
         return (
-          (hasDisplaySize((size: Number) => size !== 1)(element) &&
+          (hasDisplaySize((size: Number) => size !== 1)(
+            element as Element<"select">,
+          ) &&
             Role.of("combobox").isAttributeSupported(attributeName)) ||
           Role.of("menu").isAttributeSupported(attributeName)
         );
