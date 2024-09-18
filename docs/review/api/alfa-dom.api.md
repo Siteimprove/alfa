@@ -296,7 +296,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get content(): Option<Document>;
     // (undocumented)
-    displaySize(this: Element<"select">): number;
+    protected _displaySize: number | undefined;
     // (undocumented)
     getBoundingBox(device: Device): Option<Rectangle>;
     // (undocumented)
@@ -304,7 +304,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // Warning: (ae-forgotten-export) The symbol "helpers" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    inputType(this: Element<"input">): helpers.InputType;
+    protected _inputType: helpers.InputType | undefined;
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
@@ -316,7 +316,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, serializationId?: string, extraData?: any): Element<N>;
     // (undocumented)
-    optionsList(this: Element<"select">): Sequence<Element<"option">>;
+    protected _optionsList: Sequence<Element<"option">> | undefined;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
