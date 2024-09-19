@@ -162,7 +162,6 @@ test("#optionsList() mixes children and grandchildren when allowed", (t) => {
 });
 
 test("#optionsList() skips over non-direct children or grandchildren", (t) => {
-  const one = (<option>one</option>) as Element<"option">;
   const twoThree = [<option>two</option>, <option>three</option>] as Array<
     Element<"option">
   >;
