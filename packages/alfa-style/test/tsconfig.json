@@ -11,6 +11,7 @@
     "./node/predicate/has-transparent-background.spec.tsx",
     "./node/predicate/is-clipped.spec.tsx",
     "./node/predicate/is-offscreen.spec.tsx",
+    "./node/predicate/is-option-shown.spec.tsx",
     "./node/predicate/is-scrolled-behind.spec.tsx",
     "./node/predicate/is-transparent.spec.tsx",
     "./node/predicate/is-visible.spec.tsx",
