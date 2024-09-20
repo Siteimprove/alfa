@@ -3,7 +3,6 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { isOptionShown } from "../../../dist/node/predicate/is-option-shown.js";
 
 import * as predicate from "../../../dist/node/predicate/is-visible.js";
 
@@ -23,7 +22,7 @@ test(`isVisible() returns false when an element is hidden using the \`hidden\`
   // is applied.
   h.document([element]);
 
-  t.equal(isVisible(element), false);
+  t(!isVisible(element));
 });
 
 test(`isVisible() returns false when a text element is child of a video element`, (t) => {
@@ -32,7 +31,7 @@ test(`isVisible() returns false when a text element is child of a video element`
 
   h.document([element]);
 
-  t.equal(isVisible(text), false);
+  t(!isVisible(text));
 });
 
 test(`isVisible() returns false when a track element is a child of video`, (t) => {
@@ -43,7 +42,7 @@ test(`isVisible() returns false when a track element is a child of video`, (t) =
 
   // While <track> elements are not fallback, they are nonetheless invisible
 
-  t.equal(isVisible(track), false);
+  t(!isVisible(track));
 });
 
 test(`isVisible() returns false when a div element is child of an iframe element`, (t) => {
@@ -52,7 +51,7 @@ test(`isVisible() returns false when a div element is child of an iframe element
   const element = <iframe srcdoc="Hello">{div}</iframe>;
   h.document([element]);
 
-  t.equal(isVisible(div), false);
+  t(!isVisible(div));
 });
 
 test(`isVisible() returns false when an element or text is hidden using the
@@ -60,14 +59,14 @@ test(`isVisible() returns false when an element or text is hidden using the
   const text = h.text("Hello World");
   const element = <div style={{ visibility: "hidden" }}>{text}</div>;
 
-  t.equal(isVisible(element), false);
-  t.equal(isVisible(text), false);
+  t(!isVisible(element));
+  t(!isVisible(text));
 });
 
 test("isVisible() returns false on empty elements", (t) => {
   const element = <div />;
 
-  t.equal(isVisible(element), false);
+  t(!isVisible(element));
 });
 
 test("isVisible() returns false when no child is visible", (t) => {
@@ -82,7 +81,7 @@ test("isVisible() returns false when no child is visible", (t) => {
   // is applied.
   h.document([element]);
 
-  t.equal(isVisible(element), false);
+  t(!isVisible(element));
 });
 
 test("isVisible() returns true when at least one child is visible", (t) => {
@@ -96,25 +95,25 @@ test("isVisible() returns true when at least one child is visible", (t) => {
   // is applied.
   h.document([element]);
 
-  t.equal(isVisible(element), true);
+  t(isVisible(element));
 });
 
 test("isVisible() returns true for replaced elements with no child", (t) => {
   const element = <img src="foo.jpg" />;
 
-  t.equal(isVisible(element), true);
+  t(isVisible(element));
 });
 
 test("isVisible() returns false for a text node with no data", (t) => {
   const text = h.text("");
 
-  t.equal(isVisible(text), false);
+  t(!isVisible(text));
 });
 
 test("isVisible() returns false for a text node with only whitespace", (t) => {
   const text = h.text(" ");
 
-  t.equal(isVisible(text), false);
+  t(!isVisible(text));
 });
 
 test("isVisible() returns false for a text node with a transparent color", (t) => {
@@ -130,8 +129,8 @@ test("isVisible() returns false for a text node with a transparent color", (t) =
     </div>
   );
 
-  t.equal(isVisible(text), false);
-  t.equal(isVisible(div), false);
+  t(!isVisible(text));
+  t(!isVisible(div));
 });
 
 test("isVisible() returns false for a text node with a font size of 0", (t) => {
@@ -147,8 +146,8 @@ test("isVisible() returns false for a text node with a font size of 0", (t) => {
     </div>
   );
 
-  t.equal(isVisible(text), false);
-  t.equal(isVisible(div), false);
+  t(!isVisible(text));
+  t(!isVisible(div));
 });
 
 test("isVisible() returns true for a text node with a font size of 1px", (t) => {
@@ -164,14 +163,14 @@ test("isVisible() returns true for a text node with a font size of 1px", (t) => 
     </div>
   );
 
-  t.equal(isVisible(text), true);
-  t.equal(isVisible(div), true);
+  t(isVisible(text));
+  t(isVisible(div));
 });
 
 test("isVisible() returns true for textarea with no child", (t) => {
   const element = <textarea />;
 
-  t.equal(isVisible(element), true);
+  t(isVisible(element));
 });
 
 test(`isVisible() returns false for an absolutely positioned element clipped by
@@ -182,7 +181,7 @@ test(`isVisible() returns false for an absolutely positioned element clipped by
     </div>
   );
 
-  t.equal(isVisible(element), false);
+  t(!isVisible(element));
 });
 
 test(`isVisible() returns false for a text node with a parent element with
@@ -191,8 +190,8 @@ test(`isVisible() returns false for a text node with a parent element with
 
   const element = <div style={{ opacity: "0" }}>{text}</div>;
 
-  t.equal(isVisible(text), false);
-  t.equal(isVisible(element), false);
+  t(!isVisible(text));
+  t(!isVisible(element));
 });
 
 test("isVisible() return true for an empty element with set dimensions", (t) => {
@@ -211,7 +210,7 @@ test("isVisible() return true for an empty element with set dimensions", (t) => 
     ],
   );
 
-  t.equal(isVisible(element), true);
+  t(isVisible(element));
 });
 
 test("isVisible() returns false for an empty element whose set dimensions are 0", (t) => {
@@ -230,7 +229,7 @@ test("isVisible() returns false for an empty element whose set dimensions are 0"
     ],
   );
 
-  t.equal(isVisible(element), false);
+  t(!isVisible(element));
 });
 
 test("isVisible() returns true for an empty absolutely positioned element stretched within its offset parent", (t) => {
@@ -252,7 +251,7 @@ test("isVisible() returns true for an empty absolutely positioned element stretc
     ],
   );
 
-  t.equal(isVisible(element), true);
+  t(isVisible(element));
 });
 
 test("isVisible() returns true for an element stretched horizontally and dimensioned vertically", (t) => {
@@ -273,7 +272,7 @@ test("isVisible() returns true for an element stretched horizontally and dimensi
     ],
   );
 
-  t.equal(isVisible(element), true);
+  t(isVisible(element));
 });
 
 test(`isVisible() returns false for text with the same color as their background`, (t) => {
@@ -293,7 +292,7 @@ test(`isVisible() returns false for text with the same color as their background
     ],
   );
 
-  t.equal(isVisible(text), false);
+  t(!isVisible(text));
 });
 
 test(`isVisible() returns true for text with the same color as their background but with other property set`, (t) => {
@@ -313,7 +312,7 @@ test(`isVisible() returns true for text with the same color as their background 
     ],
   );
 
-  t.equal(isVisible(text), true);
+  t(isVisible(text));
 });
 
 test(`isVisible() consider that images' concrete dimensions are the specified ones`, (t) => {
@@ -326,8 +325,8 @@ test(`isVisible() consider that images' concrete dimensions are the specified on
 
   h.document([img, div]);
 
-  t.equal(isVisible(img), false);
-  t.equal(isVisible(div), true);
+  t(!isVisible(img));
+  t(isVisible(div));
 });
 
 test("isVisible() returns false for `<option>` that are not shown", (t) => {
