@@ -1,7 +1,9 @@
+import { Element } from "@siteimprove/alfa-dom";
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
+import { isOptionShown } from "../../../dist/node/predicate/is-option-shown.js";
 
 import * as predicate from "../../../dist/node/predicate/is-visible.js";
 
@@ -34,7 +36,7 @@ test(`isVisible() returns false when a text element is child of a video element`
 });
 
 test(`isVisible() returns false when a track element is a child of video`, (t) => {
-  const track = <track kind="description" />;
+  const track = <track kind="descriptions" />;
   const element = <video src="foo.mp4">{track}</video>;
 
   h.document([element]);
@@ -326,4 +328,25 @@ test(`isVisible() consider that images' concrete dimensions are the specified on
 
   t.equal(isVisible(img), false);
   t.equal(isVisible(div), true);
+});
+
+test("isVisible() returns false for `<option>` that are not shown", (t) => {
+  for (let size = 2; size < 6; size++) {
+    const options = [
+      <option>one</option>,
+      <option>two</option>,
+      <option>three</option>,
+      <option>four</option>,
+      <option>five</option>,
+    ] as Array<Element<"option">>;
+
+    const select = <select size={`${size}`}>{options}</select>;
+
+    for (let i = 0; i < size; i++) {
+      t(isVisible(options[i]));
+    }
+    for (let i = size; i < 5; i++) {
+      t(!isVisible(options[i]));
+    }
+  }
 });

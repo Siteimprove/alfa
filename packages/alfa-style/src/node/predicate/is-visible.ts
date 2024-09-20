@@ -12,6 +12,7 @@ import { hasSameForegroundAsBackground } from "./has-same-foreground-as-backgrou
 
 import { isClipped } from "./is-clipped.js";
 import { isOffscreen } from "./is-offscreen.js";
+import { isOptionShown } from "./is-option-shown.js";
 import { isRendered } from "./is-rendered.js";
 import { isTransparent } from "./is-transparent.js";
 
@@ -87,6 +88,9 @@ function isInvisible(
                     .every(isInvisible(device, context)),
               ),
             ),
+            // `<option>` elements have weird visibility rules depending on their
+            // `<select>` parent.
+            and(isElement, and(hasName("option"), not(isOptionShown(device)))),
           ),
           node,
         ),
