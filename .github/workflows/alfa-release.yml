@@ -203,16 +203,16 @@ jobs:
           done
           
 
-#      - name: Set token for npm publication (npm registry)
-#        if: inputs.npm-publish
-#        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.npm-token }}
-#      - name: Make npm release (npm Packages Registry)
-#        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
-#        if: inputs.npm-publish
-#        run: >
-#          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
-#            npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
-#          done
+      - name: Set token for npm publication (npm registry)
+        if: inputs.npm-publish
+        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.npm-token }}
+      - name: Make npm release (npm Packages Registry)
+        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
+        if: inputs.npm-publish
+        run: >
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
+          done
 
       - name: Make Github release
         run: >

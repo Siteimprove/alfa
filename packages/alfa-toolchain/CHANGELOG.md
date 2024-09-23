@@ -1,5 +1,29 @@
 # @siteimprove/alfa-toolchain
 
+## 0.92.0
+
+### Minor Changes
+
+- **Changed:** Alfa packages are now (also) published on the npmjs registry. ([`5b924adf304b6f809f4c8b9d5a2f4a8950d5b10b`](https://github.com/Siteimprove/alfa/commit/5b924adf304b6f809f4c8b9d5a2f4a8950d5b10b))
+
+## 0.91.2
+
+### Patch Changes
+
+- **Changed:** Fixing token injection ([`41bce73bcbcf39c8d2afd3d127e949f7143bbb99`](https://github.com/Siteimprove/alfa/commit/41bce73bcbcf39c8d2afd3d127e949f7143bbb99))
+
+## 0.91.1
+
+### Patch Changes
+
+- **Changed:** Trying npmjs publish. ([#1680](https://github.com/Siteimprove/alfa/pull/1680))
+
+## 0.91.0
+
+### Minor Changes
+
+- **Changed:** Dummy minor version to experiment with publish flow, use the previous or next minor version instead. ([`2a62d8a43e294ee56c18315c8fad29fbdc18c0df`](https://github.com/Siteimprove/alfa/commit/2a62d8a43e294ee56c18315c8fad29fbdc18c0df))
+
 ## 0.90.1
 
 ## 0.90.0
