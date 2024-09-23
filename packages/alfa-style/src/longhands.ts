@@ -53,6 +53,7 @@ import BoxShadow from "./property/box-shadow.js";
 import Clip from "./property/clip.js";
 import ClipPath from "./property/clip-path.js";
 import Color from "./property/color.js";
+import ContainerType from "./property/container-type.js";
 import Cursor from "./property/cursor.js";
 import Display from "./property/display.js";
 import FlexDirection from "./property/flex-direction.js";
@@ -73,6 +74,7 @@ import InsetBlockEnd from "./property/inset-block-end.js";
 import InsetBlockStart from "./property/inset-block-start.js";
 import InsetInlineEnd from "./property/inset-inline-end.js";
 import InsetInlineStart from "./property/inset-inline-start.js";
+import Isolation from "./property/isolation.js";
 import Left from "./property/left.js";
 import LetterSpacing from "./property/letter-spacing.js";
 import LineHeight from "./property/line-height.js";
@@ -82,6 +84,7 @@ import MarginRight from "./property/margin-right.js";
 import MarginTop from "./property/margin-top.js";
 import MinHeight from "./property/min-height.js";
 import MinWidth from "./property/min-width.js";
+import MixBlendMode from "./property/mix-blend-mode.js";
 import Opacity from "./property/opacity.js";
 import OutlineColor from "./property/outline-color.js";
 import OutlineOffset from "./property/outline-offset.js";
@@ -230,6 +233,7 @@ export namespace Longhands {
     "clip-path": ClipPath,
     clip: Clip,
     color: Color,
+    "container-type": ContainerType,
     cursor: Cursor,
     display: Display,
     "flex-direction": FlexDirection,
@@ -250,6 +254,7 @@ export namespace Longhands {
     "inset-block-start": InsetBlockStart,
     "inset-inline-end": InsetInlineEnd,
     "inset-inline-start": InsetInlineStart,
+    isolation: Isolation,
     left: Left,
     "letter-spacing": LetterSpacing,
     "line-height": LineHeight,
@@ -259,6 +264,7 @@ export namespace Longhands {
     "margin-top": MarginTop,
     "min-height": MinHeight,
     "min-width": MinWidth,
+    "mix-blend-mode": MixBlendMode,
     opacity: Opacity,
     "outline-color": OutlineColor,
     "outline-offset": OutlineOffset,
