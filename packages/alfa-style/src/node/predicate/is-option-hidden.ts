@@ -8,10 +8,10 @@ const { hasName, isElement } = Element;
 const { and } = Refinement;
 
 /**
- * Check whether an `<option>` is shown in its `<select>`.
+ * Check whether an `<option>` is hidden in its `<select>`.
  *
  * @privateRemarks
- * There is no official rule for which `<option>` is shown inside a `<select>`,
+ * There is no official rule for which `<option>` is hidden inside a `<select>`,
  * and it gets tricky depending on the display size. This might be OS and UA
  * dependent.
  * From experiments on Chrome (quickly confirmed on Firefox) on Windows 11:
@@ -27,7 +27,7 @@ const { and } = Refinement;
  *
  * What is somewhat better, is that the boundingClientRect seem to be correctly
  * set. That is, in the first case above the `<option>` have a client rect of
- * { x:0, y:0, width:0, height:0 }, while in the second case they have a non-0
+ * `{ x:0, y:0, width:0, height:0 }`, while in the second case they have a non-0
  * one. The hidden `<option>` still have a non-0 client rect which is clipped
  * by the `<select>` client rect. So we can rely on that when layout information
  * is available.
@@ -37,8 +37,8 @@ const { and } = Refinement;
  *
  * @internal
  */
-export function isOptionShown(device: Device): Predicate<Element<"option">> {
-  return function isShown(option): boolean {
+export function isOptionHidden(device: Device): Predicate<Element<"option">> {
+  return function isHidden(option): boolean {
     const parent = namedParent(option, "select").orElse(() =>
       namedParent(option, "optgroup").flatMap(namedParent("select")),
     );
@@ -49,16 +49,16 @@ export function isOptionShown(device: Device): Predicate<Element<"option">> {
         select.getBoundingBox(device).isSome()
       ) {
         // If we have both bounding boxes, we rely on `isClipped` to detect
-        // whether the option is visible, so this considers it as shown.
-        return true;
+        // whether the option is visible, so this considers it as not hidden.
+        return false;
       }
 
       const displaySize = select.displaySize();
       const multiple = select.attribute("multiple").isSome();
 
       if (!multiple && displaySize === 1) {
-        // First case above, no `<option>` is shown.
-        return false;
+        // First case above, all `<option>` are hidden.
+        return true;
       }
 
       const options = select.optionsList();
@@ -89,19 +89,19 @@ export function isOptionShown(device: Device): Predicate<Element<"option">> {
       if (firstSelectedIndex === -1 || firstSelectedIndex < displaySize) {
         // If no option is pre-selected;
         // or the first selected option is amongst the first d options;
-        // then the first d options are shown
-        return optionIndex < displaySize;
+        // then the first d options are shown, the rest are hidden.
+        return optionIndex >= displaySize;
       } else {
         // the d options before (including) the first selected are shown.
         return (
-          firstSelectedIndex - displaySize < optionIndex &&
-          optionIndex <= firstSelectedIndex
+          firstSelectedIndex - displaySize >= optionIndex ||
+          optionIndex > firstSelectedIndex
         );
       }
     }
 
     // If there is no `<select>` controlling it, the `<option>` is shown.
-    return true;
+    return false;
   };
 }
 

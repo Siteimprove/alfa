@@ -28,7 +28,7 @@
     "./node/predicate/has-same-foreground-as-background.ts",
     "./node/predicate/is-clipped.ts",
     "./node/predicate/is-offscreen.ts",
-    "./node/predicate/is-option-shown.ts",
+    "./node/predicate/is-option-hidden.ts",
     "./node/predicate/is-scrolled-behind.ts",
     "./node/predicate/is-rendered.ts",
     "./node/predicate/is-transparent.ts",
