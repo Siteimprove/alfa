@@ -339,7 +339,7 @@ test("isVisible() returns false for `<option>` that are not shown, and their con
       <option>five</option>,
     ] as Array<Element<"option">>;
 
-    const select = <select size={`${size}`}>{options}</select>;
+    <select size={`${size}`}>{options}</select>;
 
     for (let i = 0; i < size; i++) {
       for (const node of options[i].inclusiveDescendants()) t(isVisible(node));
