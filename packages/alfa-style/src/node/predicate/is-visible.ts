@@ -88,9 +88,11 @@ function isInvisible(
                     .every(isInvisible(device, context)),
               ),
             ),
-            // `<option>` elements have weird visibility rules depending on their
-            // `<select>` parent.
-            and(isElement, and(hasName("option"), isOptionHidden(device))),
+            // `<option>` elements (and their content) have weird visibility
+            // rules depending on their `<select>` parent.
+            // (only text is allowed as children of `<option>`, this also works
+            // on ill-formed DOM trees where the text is buried deeper)
+            isOptionHidden(device),
           ),
           node,
         ),

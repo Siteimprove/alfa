@@ -329,7 +329,7 @@ test(`isVisible() consider that images' concrete dimensions are the specified on
   t(isVisible(div));
 });
 
-test("isVisible() returns false for `<option>` that are not shown", (t) => {
+test("isVisible() returns false for `<option>` that are not shown, and their content", (t) => {
   for (let size = 2; size < 6; size++) {
     const options = [
       <option>one</option>,
@@ -342,10 +342,10 @@ test("isVisible() returns false for `<option>` that are not shown", (t) => {
     const select = <select size={`${size}`}>{options}</select>;
 
     for (let i = 0; i < size; i++) {
-      t(isVisible(options[i]));
+      for (const node of options[i].inclusiveDescendants()) t(isVisible(node));
     }
     for (let i = size; i < 5; i++) {
-      t(!isVisible(options[i]));
+      for (const node of options[i].inclusiveDescendants()) t(!isVisible(node));
     }
   }
 });
