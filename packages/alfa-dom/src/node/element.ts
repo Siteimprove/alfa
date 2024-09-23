@@ -268,6 +268,22 @@ export class Element<N extends string = string>
     return None;
   }
 
+  /*
+   * This collects caches for methods that are specific to some kind of elements.
+   * The actual methods are declared in element/augment.ts to de-clutter this
+   * class. However, we need to declare the variables here as they would
+   * otherwise be public which exposes too much. And they must be `protected`
+   * to be accessible by the augments.
+   */
+
+  protected _inputType: helpers.InputType | undefined;
+  protected _displaySize: number | undefined;
+  protected _optionsList: Sequence<Element<"option">> | undefined;
+
+  /*
+   * End of caches for methods specific to some kind of elements.
+   */
+
   /**
    * {@link https://dom.spec.whatwg.org/#dom-slotable-assignedslot}
    */
@@ -571,8 +587,6 @@ export namespace Element {
     isSuggestedFocusable,
     isReplaced,
   } = predicate;
-
-  export const { inputType } = helpers;
 
   export type InputType = helpers.InputType;
 }

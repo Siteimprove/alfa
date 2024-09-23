@@ -29,6 +29,7 @@ export * from "./node/attribute.js";
 export * from "./node/comment.js";
 export * from "./node/document.js";
 export * from "./node/element.js";
+import "./node/element/augment.js";
 export * from "./node/fragment.js";
 export * from "./node/shadow.js";
 export * from "./node/text.js";

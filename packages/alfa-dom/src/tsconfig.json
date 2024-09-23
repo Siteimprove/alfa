@@ -16,6 +16,7 @@
     "./node/comment.ts",
     "./node/document.ts",
     "./node/element.ts",
+    "./node/element/augment.ts",
     "./node/element/input-type.ts",
     "./node/element/predicate.ts",
     "./node/element/predicate/has-attribute.ts",

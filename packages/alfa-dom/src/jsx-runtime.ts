@@ -3,7 +3,7 @@ import { jsx as _jsx } from "./jsx.js";
 import type { Element } from "./index.js";
 
 export namespace JSX {
-  export type Element = _jsx.JSX.Element;
+  export type Element<N extends string = string> = _jsx.JSX.Element<N>;
   export interface IntrinsicElements extends _jsx.JSX.IntrinsicElements {}
 }
 
