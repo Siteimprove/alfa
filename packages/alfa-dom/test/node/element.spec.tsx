@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { test } from "@siteimprove/alfa-test";
 
 import { type Element, h } from "../../dist/index.js";
@@ -81,13 +82,16 @@ test("#inputType() returns the explicit type of an <input> element", (t) => {
   }
 });
 
-test("#inputType() returns None for an <input> element without a type attribute", (t) => {
+test("#inputType() returns 'text' for an <input> element without a type attribute", (t) => {
   t.equal(((<input />) as Element<"input">).inputType(), "text");
 });
 
-test("#inputType() returns None for an <input> element with an invalid type attribute", (t) => {
+test("#inputType() returns 'text' for an <input> element with an invalid type attribute", (t) => {
   // We cannot use JSX to create an <input> element with an invalid type attribute
-  t.equal(h.element("input", [h.attribute("type", "foo")]).inputType(), "text");
+  t.equal(
+    h.element("input", [h.attribute("type", "invalid")]).inputType(),
+    "text",
+  );
 });
 
 test("#displaySize() returns 1 for non-multiple <select> without a size attribute", (t) => {
@@ -102,6 +106,13 @@ test("#displaySize() returns 4 for a multiple <select> without a size attribute"
   t.equal(((<select multiple />) as Element<"select">).displaySize(), 4);
 });
 
+test("#displaySize() returns the size attribute for a multiple <select>", (t) => {
+  t.equal(
+    ((<select mulitple size="42" />) as Element<"select">).displaySize(),
+    42,
+  );
+});
+
 test("#optionsList() returns the list of <option> children for a simple <select> element", (t) => {
   const options = [
     <option>one</option>,
@@ -110,10 +121,7 @@ test("#optionsList() returns the list of <option> children for a simple <select>
   ] as Array<Element<"option">>;
   const select = h.element("select", [], options);
 
-  t.deepEqual(
-    select.optionsList().toJSON(),
-    options.map((elt) => elt.toJSON()),
-  );
+  t.deepEqual(select.optionsList().toJSON(), Array.toJSON(options));
 });
 
 test("#optionsList() returns the list of <option> grandchildren for a <select> element with <optgroup> children", (t) => {
@@ -129,7 +137,7 @@ test("#optionsList() returns the list of <option> grandchildren for a <select> e
 
   t.deepEqual(
     select.optionsList().toJSON(),
-    [...options, option].map((elt) => elt.toJSON()),
+    Array.toJSON([...options, option]),
   );
 });
 
@@ -157,11 +165,12 @@ test("#optionsList() mixes children and grandchildren when allowed", (t) => {
 
   t.deepEqual(
     select.optionsList().toJSON(),
-    [one, ...twoThree, four, five, ...sixSeven].map((elt) => elt.toJSON()),
+    Array.toJSON([one, ...twoThree, four, five, ...sixSeven]),
   );
 });
 
 test("#optionsList() skips over non-direct children or grandchildren", (t) => {
+  const one = (<option>one</option>) as Element<"option">;
   const twoThree = [<option>two</option>, <option>three</option>] as Array<
     Element<"option">
   >;
@@ -173,12 +182,13 @@ test("#optionsList() skips over non-direct children or grandchildren", (t) => {
       <option>seven</option>
     </div>,
   ] as Array<Element<"option">>;
+
   const select = h.element(
     "select",
     [],
     [
       // skipped as non-direct <option> child
-      <div>one</div>,
+      <div>{one}</div>,
       // skipped as non-direct <optgroup> child
       <div>
         <optgroup>{twoThree}</optgroup>
@@ -194,6 +204,6 @@ test("#optionsList() skips over non-direct children or grandchildren", (t) => {
 
   t.deepEqual(
     select.optionsList().toJSON(),
-    [four, five, sixSeven[0]].map((elt) => elt.toJSON()),
+    Array.toJSON([four, five, sixSeven[0]]),
   );
 });

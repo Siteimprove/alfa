@@ -23,9 +23,9 @@ declare module "../element.js" {
      *
      * @remarks
      * The size IDL attribute should have a value of 0, not 1 or 4, when the
-     *   content attribute is undefined. This is for historical reasons. In our
-     *   case, this is not affecting the results and it is easier to treat it as
-     *   the actual displayed size.
+     * size content attribute is undefined. This is for historical reasons. In
+     * our case, this is not affecting the results, and it is easier to treat it
+     * as the actual displayed size.
      * {@link https://html.spec.whatwg.org/multipage/form-elements.html#dom-select-size}
      */
     displaySize(this: Element<"select">): number;
@@ -103,6 +103,8 @@ Element.prototype.optionsList = function (
               .children()
               .filter(Element.isElement)
               .filter(
+                // We cannot really use `Element.hasName` here as it would
+                // create a circular dependency.
                 (grandchild): grandchild is Element<"option"> =>
                   grandchild.name === "option",
               );
