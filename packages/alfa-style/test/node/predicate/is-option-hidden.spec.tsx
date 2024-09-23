@@ -17,9 +17,8 @@ test("isOptionHidden() returns false when bounding boxes exist", (t) => {
   const option = (
     <option box={{ device, x: 0, y: 0, width: 0, height: 0 }} />
   ) as Element<"option">;
-  const select = (
-    <select box={{ device, x: 0, y: 0, width: 0, height: 0 }}>{option}</select>
-  );
+
+  <select box={{ device, x: 0, y: 0, width: 0, height: 0 }}>{option}</select>;
 
   t(!isOptionHidden(device)(option));
 });
@@ -30,7 +29,7 @@ test("isOptionHidden() returns true for `<option>` in a single line `<select>`",
     <option>two</option>,
     <option>three</option>,
   ] as Array<Element<"option">>;
-  const select = <select>{options}</select>;
+  <select>{options}</select>;
 
   for (const option of options) {
     t(isOptionHidden(device)(option));
@@ -43,7 +42,7 @@ test("isOptionHidden() returns true for `<option>` in a single line `<select>` w
     <option selected>two</option>,
     <option>three</option>,
   ] as Array<Element<"option">>;
-  const select = <select>{options}</select>;
+  <select>{options}</select>;
 
   for (const option of options) {
     t(isOptionHidden(device)(option));
@@ -60,8 +59,7 @@ test("isOptionHidden() returns false for the first d `<option>` in a multi-line 
       <option>four</option>,
       <option>five</option>,
     ] as Array<Element<"option">>;
-
-    const select = <select size={`${size}`}>{options}</select>;
+    <select size={`${size}`}>{options}</select>;
 
     for (let i = 0; i < size; i++) {
       t(!isOptionHidden(device)(options[i]));
@@ -83,11 +81,9 @@ test("isOptionHidden() returns false for the first d `<option>` multiple `<selec
       <option>five</option>,
     ] as Array<Element<"option">>;
 
-    const select = (
-      <select size={`${size}`} multiple>
-        {options}
-      </select>
-    );
+    <select size={`${size}`} multiple>
+      {options}
+    </select>;
 
     for (let i = 0; i < size; i++) {
       t(!isOptionHidden(device)(options[i]));
@@ -106,7 +102,7 @@ test("isOptionHidden() returns false for the first d `<option>` multiple `<selec
     <option>five</option>,
   ] as Array<Element<"option">>;
 
-  const select = <select multiple>{options}</select>;
+  <select multiple>{options}</select>;
 
   for (let i = 0; i < 4; i++) {
     t(!isOptionHidden(device)(options[i]));
@@ -129,7 +125,7 @@ test("isOptionHidden() returns false for the d `<option>` preceding the selected
       <option>six</option>, // 5
     ] as Array<Element<"option">>;
 
-    const select = <select size={`${size}`}>{options}</select>;
+    <select size={`${size}`}>{options}</select>;
 
     for (let i = 0; i < 6; i++) {
       if (i <= selectedIndex - size) {
@@ -172,11 +168,9 @@ test("isOptionHidden() returns false for the d `<option>` preceding the first se
       <option>six</option>, // 5
     ] as Array<Element<"option">>;
 
-    const select = (
-      <select multiple size={`${size}`}>
-        {options}
-      </select>
-    );
+    <select multiple size={`${size}`}>
+      {options}
+    </select>;
 
     for (let i = 0; i < 6; i++) {
       if (i <= selectedIndex - size) {
