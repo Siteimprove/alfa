@@ -26,7 +26,7 @@ export class Checked extends PseudoClassSelector<"checked"> {
    * @privateRemarks
    * Checkedness and selectedness can change during the lifecycle of an element,
    * but we do not have access to that. We rely on the content attributes being
-   * correctly set in the snapshot wo test.
+   * correctly set in the snapshot we test.
    */
   public matches = or(
     and(hasInputType("checkbox", "radio"), hasAttribute("checked")),
