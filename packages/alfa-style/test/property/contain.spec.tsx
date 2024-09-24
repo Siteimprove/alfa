@@ -4,9 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../dist/style.js";
-import type { Keyword } from "@siteimprove/alfa-css";
 import { Array } from "@siteimprove/alfa-array";
-import { Comparison } from "@siteimprove/alfa-comparable";
 
 const device = Device.standard();
 
@@ -30,24 +28,6 @@ function permutations<T>(items: Array<T>, k: number): Array<Array<T>> {
   }
 
   return result;
-}
-
-/**
- * When parsing, the kewords are returned in an arbitrary but deterministic order depending on the implementation.
- * This function sorts the expected keywords to match the implementation.
- * If the implementation changes, update this function accordingly to fix broken tests.
- */
-function sortKeywords(keywords: Array<Keyword.JSON>) {
-  const order = ["size", "inline-size", "layout", "style", "paint"];
-  return Array.sortWith(keywords, (kw1, kw2) => {
-    const a = order.indexOf(kw1.value);
-    const b = order.indexOf(kw2.value);
-    return a < b
-      ? Comparison.Less
-      : a === b
-        ? Comparison.Equal
-        : Comparison.Greater;
-  });
 }
 
 test("initial value is `none`", (t) => {
