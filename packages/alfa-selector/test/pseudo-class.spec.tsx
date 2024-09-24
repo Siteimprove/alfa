@@ -328,3 +328,24 @@ test("#matches() checks if an element matches a :any-link selector", (t) => {
     t.equal(selector.matches(element), false, element.toString());
   }
 });
+
+test("#matches() checks if an element matches a :checked selector", (t) => {
+  const selector = parse(":checked");
+
+  for (const element of [
+    <input type="checkbox" checked />,
+    <input type="radio" checked />,
+    <option selected />,
+  ]) {
+    t.equal(selector.matches(element), true, element.toString());
+  }
+
+  for (const element of [
+    <input type="checkbox" />,
+    <input type="radio" />,
+    <input />,
+    <option />,
+  ]) {
+    t.equal(!selector.matches(element), false, element.toString());
+  }
+});
