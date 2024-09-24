@@ -22,6 +22,7 @@
     "./selector/simple/universal.ts",
     "./selector/simple/pseudo-class/active.ts",
     "./selector/simple/pseudo-class/any-link.ts",
+    "./selector/simple/pseudo-class/checked.ts",
     "./selector/simple/pseudo-class/disabled.ts",
     "./selector/simple/pseudo-class/empty.ts",
     "./selector/simple/pseudo-class/enabled.ts",
