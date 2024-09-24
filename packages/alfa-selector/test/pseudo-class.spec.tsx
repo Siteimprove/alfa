@@ -346,6 +346,6 @@ test("#matches() checks if an element matches a :checked selector", (t) => {
     <input />,
     <option />,
   ]) {
-    t.equal(!selector.matches(element), false, element.toString());
+    t.equal(selector.matches(element), false, element.toString());
   }
 });

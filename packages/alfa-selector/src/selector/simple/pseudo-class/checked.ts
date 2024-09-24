@@ -1,8 +1,10 @@
-import type { Element } from "@siteimprove/alfa-dom";
-
-import { Context } from "../../../context.js";
+import { Element } from "@siteimprove/alfa-dom";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
+
+const { hasAttribute, hasInputType, hasName } = Element;
+const { and, or } = Refinement;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#checked}
@@ -20,12 +22,15 @@ export class Checked extends PseudoClassSelector<"checked"> {
     yield this;
   }
 
-  public matches(
-    element: Element,
-    context: Context = Context.empty(),
-  ): boolean {
-    return context.isActive(element);
-  }
+  public matches = or(
+    and(
+      hasName("input"),
+      hasInputType("checkbox", "radio"),
+      hasAttribute("checked"),
+    ),
+
+    and(hasName("option"), hasAttribute("selected")),
+  );
 
   public toJSON(): Checked.JSON {
     return super.toJSON();
