@@ -61,8 +61,8 @@ test("#matches() checks if an element matches a :first-child selector", (t) => {
     {b}
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
+  t(selector.matches(a));
+  t(!selector.matches(b));
 });
 
 test("#matches() checks if an element matches a :last-child selector", (t) => {
@@ -77,8 +77,8 @@ test("#matches() checks if an element matches a :last-child selector", (t) => {
     Hello
   </div>;
 
-  t.equal(selector.matches(a), false);
-  t.equal(selector.matches(b), true);
+  t(!selector.matches(a));
+  t(selector.matches(b));
 });
 
 test("#matches() checks if an element matches an :only-child selector", (t) => {
@@ -98,8 +98,8 @@ test("#matches() checks if an element matches an :only-child selector", (t) => {
     Hello
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
+  t(selector.matches(a));
+  t(!selector.matches(b));
 });
 
 test("#matches() checks if an element matches an :nth-of-type selector", (t) => {
@@ -120,10 +120,10 @@ test("#matches() checks if an element matches an :nth-of-type selector", (t) => 
     {d}
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
-  t.equal(selector.matches(c), true);
-  t.equal(selector.matches(d), false);
+  t(selector.matches(a));
+  t(!selector.matches(b));
+  t(selector.matches(c));
+  t(!selector.matches(d));
 });
 
 test("#matches() checks if an element matches an :nth-last-of-type selector", (t) => {
@@ -144,10 +144,10 @@ test("#matches() checks if an element matches an :nth-last-of-type selector", (t
     <span />
   </div>;
 
-  t.equal(selector.matches(a), false);
-  t.equal(selector.matches(b), true);
-  t.equal(selector.matches(c), false);
-  t.equal(selector.matches(d), true);
+  t(!selector.matches(a));
+  t(selector.matches(b));
+  t(!selector.matches(c));
+  t(selector.matches(d));
 });
 
 test("#matches() checks if an element matches a :first-of-type selector", (t) => {
@@ -163,8 +163,8 @@ test("#matches() checks if an element matches a :first-of-type selector", (t) =>
     {b}
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
+  t(selector.matches(a));
+  t(!selector.matches(b));
 });
 
 test("#matches() checks if an element matches a :last-of-type selector", (t) => {
@@ -180,8 +180,8 @@ test("#matches() checks if an element matches a :last-of-type selector", (t) => 
     <div />
   </div>;
 
-  t.equal(selector.matches(a), false);
-  t.equal(selector.matches(b), true);
+  t(!selector.matches(a));
+  t(selector.matches(b));
 });
 
 test("#matches() checks if an element matches a :only-of-type selector", (t) => {
@@ -203,8 +203,8 @@ test("#matches() checks if an element matches a :only-of-type selector", (t) => 
     <div />
   </div>;
 
-  t.equal(selector.matches(a), true);
-  t.equal(selector.matches(b), false);
+  t(selector.matches(a));
+  t(!selector.matches(b));
 });
 
 test("#matches() checks if an element matches a :hover selector", (t) => {
@@ -212,8 +212,8 @@ test("#matches() checks if an element matches a :hover selector", (t) => {
 
   const p = <p />;
 
-  t.equal(selector.matches(p), false);
-  t.equal(selector.matches(p, Context.hover(p)), true);
+  t(!selector.matches(p));
+  t(selector.matches(p, Context.hover(p)));
 });
 
 test("#matches() checks if an element matches a :hover selector when its descendant is hovered", (t) => {
@@ -222,7 +222,7 @@ test("#matches() checks if an element matches a :hover selector when its descend
   const target = <span> Hello </span>;
   const p = <div> {target} </div>;
 
-  t.equal(selector.matches(p, Context.hover(target)), true);
+  t(selector.matches(p, Context.hover(target)));
 });
 
 test("#matches() checks if an element matches an :active selector", (t) => {
@@ -230,8 +230,8 @@ test("#matches() checks if an element matches an :active selector", (t) => {
 
   const p = <p />;
 
-  t.equal(selector.matches(p), false);
-  t.equal(selector.matches(p, Context.active(p)), true);
+  t(!selector.matches(p));
+  t(selector.matches(p, Context.active(p)));
 });
 
 test("#matches() checks if an element matches a :focus selector", (t) => {
@@ -239,8 +239,8 @@ test("#matches() checks if an element matches a :focus selector", (t) => {
 
   const p = <p />;
 
-  t.equal(selector.matches(p), false);
-  t.equal(selector.matches(p, Context.focus(p)), true);
+  t(!selector.matches(p));
+  t(selector.matches(p, Context.focus(p)));
 });
 
 test("#matches() checks if an element matches a :focus-within selector", (t) => {
@@ -249,9 +249,9 @@ test("#matches() checks if an element matches a :focus-within selector", (t) => 
   const button = <button />;
   const p = <p>{button}</p>;
 
-  t.equal(selector.matches(p), false);
-  t.equal(selector.matches(p, Context.focus(p)), true);
-  t.equal(selector.matches(p, Context.focus(button)), true);
+  t(!selector.matches(p));
+  t(selector.matches(p, Context.focus(p)));
+  t(selector.matches(p, Context.focus(button)));
 });
 
 test("#matches() checks if an element matches a :link selector", (t) => {
@@ -325,6 +325,27 @@ test("#matches() checks if an element matches a :any-link selector", (t) => {
 
   // These elements aren't links
   for (const element of [<a />, <p />]) {
+    t.equal(selector.matches(element), false, element.toString());
+  }
+});
+
+test("#matches() checks if an element matches a :checked selector", (t) => {
+  const selector = parse(":checked");
+
+  for (const element of [
+    <input type="checkbox" checked />,
+    <input type="radio" checked />,
+    <option selected />,
+  ]) {
+    t.equal(selector.matches(element), true, element.toString());
+  }
+
+  for (const element of [
+    <input type="checkbox" />,
+    <input type="radio" />,
+    <input />,
+    <option />,
+  ]) {
     t.equal(selector.matches(element), false, element.toString());
   }
 });

@@ -9,6 +9,7 @@ import { Compound } from "../../compound.js";
 
 import { Active } from "./active.js";
 import { AnyLink } from "./any-link.js";
+import { Checked } from "./checked.js";
 import { Disabled } from "./disabled.js";
 import { Empty } from "./empty.js";
 import { Enabled } from "./enabled.js";
@@ -47,6 +48,7 @@ const { or } = Refinement;
 export type PseudoClass =
   | Active
   | AnyLink
+  | Checked
   | Disabled
   | Empty
   | Enabled
@@ -81,6 +83,7 @@ export namespace PseudoClass {
   export type JSON =
     | Active.JSON
     | AnyLink.JSON
+    | Checked.JSON
     | Disabled.JSON
     | Empty.JSON
     | Enabled.JSON
@@ -123,6 +126,7 @@ export namespace PseudoClass {
     return either<Slice<Token>, PseudoClass, string>(
       Active.parse,
       AnyLink.parse,
+      Checked.parse,
       Disabled.parse,
       Empty.parse,
       Enabled.parse,

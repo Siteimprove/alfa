@@ -17,6 +17,7 @@ import { Nth } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Parser as Parser_2 } from '@siteimprove/alfa-css';
+import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
@@ -362,6 +363,7 @@ export namespace List {
 
 // Warning: (ae-forgotten-export) The symbol "Active" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "AnyLink" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Checked" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Disabled" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Empty" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Enabled" needs to be exported by the entry point index.d.ts
@@ -390,14 +392,14 @@ export namespace List {
 // Warning: (ae-forgotten-export) The symbol "Where" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export type PseudoClass = Active | AnyLink | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | HostContext | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
+export type PseudoClass = Active | AnyLink | Checked | Disabled | Empty | Enabled | FirstChild | FirstOfType | Focus | FocusVisible | FocusWithin | Has | Host | HostContext | Hover | Is | LastChild | LastOfType | Link | Not | NthChild | NthLastChild | NthLastOfType | NthOfType | OnlyChild | OnlyOfType | Root | Visited | Where;
 
 // @public (undocumented)
 export namespace PseudoClass {
     // (undocumented)
     export function isPseudoClass(value: unknown): value is PseudoClass;
     // (undocumented)
-    export type JSON = Active.JSON | AnyLink.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | HostContext.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
+    export type JSON = Active.JSON | AnyLink.JSON | Checked.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | HostContext.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
     const // (undocumented)
     isHost: typeof Host.isHost;
     // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
