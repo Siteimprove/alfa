@@ -74,7 +74,6 @@ export default Rule.Atomic.of<Page, Text>({
                 or(
                   hasAttribute("aria-hidden", equals("true")),
                   not(hasNamespace(Namespace.HTML)),
-                  and(hasName("select"), hasDisplaySize(1)),
                 ),
               ),
               node,
@@ -132,37 +131,9 @@ export default Rule.Atomic.of<Page, Text>({
               // this is not likely and just ignore it. This would only create
               // false negatives.
               horizontallyClippedBy.every(
-                hasBox(
-                  (clippingBox) =>
-                    target
-                      .parent()
-                      .filter(isElement)
-                      .some(
-                        hasBox(
-                          (targetBox) =>
-                            clippingBox.width >= 2 * targetBox.width,
-                          device,
-                        ),
-                      ),
-                  device,
-                ),
+                isTwiceAsBig(parent, device, "width"),
               ) &&
-              verticallyClippedBy.every(
-                hasBox(
-                  (clippingBox) =>
-                    target
-                      .parent()
-                      .filter(isElement)
-                      .some(
-                        hasBox(
-                          (targetBox) =>
-                            clippingBox.height >= 2 * targetBox.height,
-                          device,
-                        ),
-                      ),
-                  device,
-                ),
-              )
+              verticallyClippedBy.every(isTwiceAsBig(parent, device, "height"))
                 ? Outcomes.IsContainer(
                     horizontallyClippedBy,
                     verticallyClippedBy,
@@ -178,6 +149,23 @@ export default Rule.Atomic.of<Page, Text>({
     };
   },
 });
+
+function isTwiceAsBig(
+  target: Option<Element>,
+  device: Device,
+  dimension: "width" | "height",
+): Predicate<Element> {
+  return hasBox(
+    (clippingBox) =>
+      target.some(
+        hasBox(
+          (targetBox) => clippingBox[dimension] >= 2 * targetBox[dimension],
+          device,
+        ),
+      ),
+    device,
+  );
+}
 
 const verticallyClippingCache = Cache.empty<
   Device,
@@ -527,7 +515,8 @@ function usesMediaRule(
  *
  * @remarks
  * We currently do not support calculated media queries. But this is lost in the
- * typing of Media.Feature. Here, we simply consider them as "good" (font relative).
+ * typing of Media.Feature. Here, we simply consider them as "good" (font
+ * relative).
  */
 function isFontRelativeMediaRule<F extends Feature.Media.Feature>(
   refinement: Refinement<Feature.Media.Feature, F>,
