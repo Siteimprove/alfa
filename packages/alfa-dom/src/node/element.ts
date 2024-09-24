@@ -22,7 +22,7 @@ import { Shadow } from "./shadow.js";
 import { Slot } from "./slot.js";
 import { Slotable } from "./slotable.js";
 
-import * as helpers from "./element/input-type.js";
+import type * as helpers from "./element/input-type.js";
 import * as predicate from "./element/predicate.js";
 
 const { isEmpty } = Iterable;
