@@ -215,8 +215,8 @@ export namespace ContainFlags {
     return Result.of([
       input,
       ContainFlags.of(
-        size !== undefined && size.value === "size",
-        size !== undefined && size.value === "inline-size",
+        size?.value === "size",
+        size?.value === "inline-size",
         layout !== undefined,
         style !== undefined,
         paint !== undefined,
