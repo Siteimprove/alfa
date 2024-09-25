@@ -56,6 +56,7 @@
     "./property/opacity.spec.tsx",
     "./property/outline.spec.tsx",
     "./property/rotate.spec.tsx",
+    "./property/scale.spec.tsx",
     "./property/text-decoration.spec.tsx",
     "./property/text-indent.spec.tsx",
     "./property/text-shadow.spec.tsx",

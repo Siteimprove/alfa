@@ -96,6 +96,7 @@ import PointerEvents from "./property/pointer-events.js";
 import Position from "./property/position.js";
 import Right from "./property/right.js";
 import Rotate from "./property/rotate.js";
+import Scale from "./property/scale.js";
 import TextAlign from "./property/text-align.js";
 import TextDecorationColor from "./property/text-decoration-color.js";
 import TextDecorationLine from "./property/text-decoration-line.js";
@@ -276,6 +277,7 @@ export namespace Longhands {
     position: Position,
     right: Right,
     rotate: Rotate,
+    scale: Scale,
     "text-align": TextAlign,
     "text-decoration-color": TextDecorationColor,
     "text-decoration-line": TextDecorationLine,

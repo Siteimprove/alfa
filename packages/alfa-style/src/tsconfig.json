@@ -163,6 +163,7 @@
     "./property/position.ts",
     "./property/right.ts",
     "./property/rotate.ts",
+    "./property/scale.ts",
     "./property/text-align.ts",
     "./property/text-decoration.ts",
     "./property/text-decoration-color.ts",

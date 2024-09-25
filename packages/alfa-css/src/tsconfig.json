@@ -85,6 +85,7 @@
     "./value/position/position.ts",
     "./value/position/side.ts",
     "./value/resolvable.ts",
+    "./value/scale-property.ts",
     "./value/shadow.ts",
     "./value/shape/basic-shape.ts",
     "./value/shape/circle.ts",

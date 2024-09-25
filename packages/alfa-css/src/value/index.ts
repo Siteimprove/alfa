@@ -6,6 +6,7 @@ export * from "./keyword.js";
 export * from "./numeric/index.js";
 export * from "./position/index.js";
 export * from "./resolvable.js";
+export * from "./scale-property.js";
 export * from "./shadow.js";
 export * from "./shape/index.js";
 export * from "./string.js";
