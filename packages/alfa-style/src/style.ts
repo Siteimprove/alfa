@@ -314,11 +314,15 @@ export class Style implements Serializable<Style.JSON> {
    * In our case, we do not resolve further (e.g., `width: auto`).
    * However, we filter out properties that do not apply to certain elements.
    */
-  // public used<N extends Name>(name: N): Option<Value<Style.Computed<N>>> {
-  //   const use = Longhands.get(name).use;
-  //
-  //   return use(this.computed(name), this);
-  // }
+  public used<N extends Name>(name: N): Option<Value<Style.Computed<N>>> {
+    const use = Longhands.get(name).use;
+
+    // Here also, TS is struggling with links between properties of the same
+    // Longhand, and need a bit of help.
+    return use(this.computed(name) as any, this) as Option<
+      Value<Style.Computed<N>>
+    >;
+  }
 
   public initial<N extends Name>(
     name: N,
