@@ -2037,8 +2037,8 @@ export namespace Rotate {
 
 // Warning: (ae-incompatible-release-tags) The symbol "Scale" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
-// @public (undocumented)
-export class Scale extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, never> {
+// @public
+export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, Y extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, Z extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">> extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2046,17 +2046,23 @@ export class Scale extends Function_3<"scale", false> implements Resolvable<Scal
     // (undocumented)
     get kind(): "scale";
     // (undocumented)
-    static of(x: Number_2, y: Number_2): Scale;
+    static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical, Z extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y, z?: Z): Scale<X, Y, Z>;
+    // Warning: (ae-forgotten-export) The symbol "ToCanonical_3" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    resolve(): Scale;
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z?: Z): Scale<ToCanonical_3<X>, ToCanonical_3<Y>, ToCanonical_3<Z>>;
+    // (undocumented)
+    resolve(): Scale.Canonical;
     // (undocumented)
     toJSON(): Scale.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get x(): Number_2.Canonical;
+    get x(): X;
     // (undocumented)
-    get y(): Number_2.Canonical;
+    get y(): Y;
+    // (undocumented)
+    get z(): Z | undefined;
 }
 
 // @public (undocumented)
@@ -2068,12 +2074,16 @@ export namespace Scale {
     // (undocumented)
     export interface JSON extends Function_3.JSON<"scale"> {
         // (undocumented)
-        x: Number_2.Fixed.JSON;
+        x: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
-        y: Number_2.Fixed.JSON;
+        y: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        // (undocumented)
+        z: Number_2.Fixed.JSON | Percentage.Fixed.JSON | null;
     }
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Scale, string, []>;
+    parse: Parser_2<Slice<Token_2>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
+    const // (undocumented)
+    parseProp: Parser_2<Slice<Token_2>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Shadow" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -3147,6 +3157,8 @@ export namespace Translate {
     export type Resolver = LengthPercentage.Resolver;
     const // (undocumented)
     parse: Parser<Translate>;
+    const // (undocumented)
+    parseProp: Parser_2<Slice<Token_2>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Tuple" is marked as @public, but its signature references "Resolvable" which is marked as @internal
