@@ -104,67 +104,73 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        const parent = target.parent(Node.fullTree).filter(isElement);
+        return target
+          .parent(Node.fullTree)
+          .filter(isElement)
+          .map((parent) => {
+            const horizontallyClippedBy = horizontallyClipper(device)(parent);
 
-        const horizontallyClippedBy = parent.flatMap(
-          horizontallyClipper(device),
-        );
+            const verticallyClippedBy =
+              verticalClippingAncestor(device)(parent);
 
-        const verticallyClippedBy = parent.flatMap(
-          verticalClippingAncestor(device),
-        );
+            const isBig = isTwiceAsBig(parent, device);
 
-        return {
-          1: expectation(
-            horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
-            () =>
-              // If the clipping ancestor happens to be twice as big as the text
-              // (parent), clipping only occurs after 200% zoom, which is OK.
-              // We do not really care where is the text inside the clipping
-              // ancestor, and simply assume that if it's big enough it will have
-              // room to grow. This is not always true as the text may be pushed
-              // to the far side already and ends up being clipped anyway.
-              // This would only create false negatives, so this is OK.
+            return {
+              1: expectation(
+                horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
+                () =>
+                  // If the clipping ancestor happens to be twice as big as the text
+                  // (parent), clipping only occurs after 200% zoom, which is OK.
+                  // We do not really care where is the text inside the clipping
+                  // ancestor, and simply assume that if it's big enough it will have
+                  // room to grow. This is not always true as the text may be pushed
+                  // to the far side already and ends up being clipped anyway.
+                  // This would only create false negatives, so this is OK.
 
-              // There may be another further ancestor that is actually small and
-              // clips both the text and the found clipping ancestors. We assume
-              // this is not likely and just ignore it. This would only create
-              // false negatives.
-              horizontallyClippedBy.every(
-                isTwiceAsBig(parent, device, "width"),
-              ) &&
-              verticallyClippedBy.every(isTwiceAsBig(parent, device, "height"))
-                ? Outcomes.IsContainer(
-                    horizontallyClippedBy,
-                    verticallyClippedBy,
-                  )
-                : Outcomes.ClipsText(
-                    horizontallyClippedBy,
-                    verticallyClippedBy,
+                  // There may be another further ancestor that is actually small and
+                  // clips both the text and the found clipping ancestors. We assume
+                  // this is not likely and just ignore it. This would only create
+                  // false negatives.
+                  expectation(
+                    horizontallyClippedBy.every(isBig("width")) &&
+                      verticallyClippedBy.every(isBig("height")),
+                    () =>
+                      Outcomes.IsContainer(
+                        horizontallyClippedBy,
+                        verticallyClippedBy,
+                      ),
+                    () =>
+                      Outcomes.ClipsText(
+                        horizontallyClippedBy,
+                        verticallyClippedBy,
+                      ),
                   ),
-            () => Outcomes.WrapsText,
-          ),
-        };
+                () => Outcomes.WrapsText,
+              ),
+            };
+          })
+          .getOr({ 1: Outcomes.WrapsText });
       },
     };
   },
 });
 
 function isTwiceAsBig(
-  target: Option<Element>,
+  target: Element,
   device: Device,
-  dimension: "width" | "height",
-): Predicate<Element> {
-  return hasBox(
-    (clippingBox) =>
-      target.some(
-        hasBox(
-          (targetBox) => clippingBox[dimension] >= 2 * targetBox[dimension],
-          device,
+): (dimension: "width" | "height") => Predicate<Element> {
+  return (dimension) =>
+    hasBox(
+      (clippingBox) =>
+        test(
+          hasBox(
+            (targetBox) => clippingBox[dimension] >= 2 * targetBox[dimension],
+            device,
+          ),
+          target,
         ),
-      ),
-    device,
-  );
+      device,
+    );
 }
 
 const verticallyClippingCache = Cache.empty<
@@ -204,13 +210,16 @@ function verticalClippingAncestor(
         hasFixedHeight(device)(element) &&
         overflow(element, device, "y") === Overflow.Clip
       ) {
+        // The element has both fixed height and clips vertically.
         return Option.of(element);
       }
 
       if (overflow(element, device, "y") === Overflow.Handle) {
+        // The element handles the vertical overflow, no need to look further.
         return None;
       }
 
+      // Recurse into the positioning ancestors
       return getPositioningParent(element, device).flatMap(clippingAncestor);
     });
   };
