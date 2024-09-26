@@ -207,4 +207,15 @@ export namespace Scale {
     parseScale3dFunc,
     parseScaleZFunc,
   );
+
+  /**
+   * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/scale}
+   */
+  export const parseProp = map(
+    List.parseSpaceSeparated(either(Number.parse, Percentage.parse), 1, 3),
+    (list) => {
+      const [x, y, z] = list.values;
+      return Scale.of(x, y ?? x, z);
+    },
+  );
 }
