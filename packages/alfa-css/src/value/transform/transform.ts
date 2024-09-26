@@ -110,7 +110,7 @@ export namespace Transform {
     Matrix.parse,
     Perspective.parse,
     Rotate.parse,
-    Scale.parseFunc,
+    Scale.parse,
     Skew.parse,
     Translate.parse,
   );
