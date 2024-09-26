@@ -31,6 +31,7 @@
     "./syntax/parser.ts",
     "./syntax/token.ts",
     "./value/box.ts",
+    "./value/contain.ts",
     "./unit/converter.ts",
     "./unit/index.ts",
     "./unit/unit.ts",

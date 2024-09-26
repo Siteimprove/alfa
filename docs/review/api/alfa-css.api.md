@@ -334,6 +334,64 @@ export namespace Component {
     parse: Parser_2<Slice<Token>, Component, string, []>;
 }
 
+// @public (undocumented)
+export type Contain = Keyword<"none"> | Keyword<"strict"> | Keyword<"content"> | ContainFlags;
+
+// @public (undocumented)
+export namespace Contain {
+    const // (undocumented)
+    parse: Parser<Contain>;
+}
+
+// Warning: (ae-incompatible-release-tags) The symbol "ContainFlags" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
+// @public (undocumented)
+export class ContainFlags extends Value<"contain-flags", false> implements Resolvable<ContainFlags, never> {
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get inlineSize(): boolean;
+    // (undocumented)
+    get layout(): boolean;
+    // (undocumented)
+    static of(size: boolean, inlineSize: boolean, layout: boolean, style: boolean, paint: boolean): ContainFlags;
+    // (undocumented)
+    get paint(): boolean;
+    // (undocumented)
+    resolve(): ContainFlags;
+    // (undocumented)
+    get size(): boolean;
+    // (undocumented)
+    get style(): boolean;
+    // (undocumented)
+    toJSON(): ContainFlags.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace ContainFlags {
+    // (undocumented)
+    export function isContainFlags(value: unknown): value is ContainFlags;
+    // (undocumented)
+    export interface JSON extends Value.JSON<"contain-flags"> {
+        // (undocumented)
+        inlineSize: boolean;
+        // (undocumented)
+        layout: boolean;
+        // (undocumented)
+        paint: boolean;
+        // (undocumented)
+        size: boolean;
+        // (undocumented)
+        style: boolean;
+    }
+    const // (undocumented)
+    parse: Parser<ContainFlags>;
+}
+
 // @public
 export type Converter<U extends string> = (value: number, from: U, to: U) => number;
 
