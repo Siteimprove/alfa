@@ -1,6 +1,7 @@
 import type { Token } from "@siteimprove/alfa-css";
 import { Keyword } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
+import { Option } from "@siteimprove/alfa-option";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import * as parser from "@siteimprove/alfa-parser";
@@ -23,11 +24,11 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     initial: COMPUTED,
     parse: parser.Parser<Slice<Token>, SPECIFIED, string>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
-    options: Longhand.Options = {
-      inherits: false,
-    },
+    options: Partial<Longhand.Options<COMPUTED>> = {},
   ): Longhand<SPECIFIED, COMPUTED> {
-    return new Longhand(initial, parse, compute, options);
+    const { inherits = false, use = Option.of } = options;
+
+    return new Longhand(initial, parse, compute, inherits, use);
   }
 
   public static extend<SPECIFIED, COMPUTED>(
@@ -36,7 +37,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
       initial?: COMPUTED;
       parse?: parser.Parser<Slice<Token>, SPECIFIED, string>;
       compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
-      options?: Longhand.Options;
+      options?: Partial<Longhand.Options<COMPUTED>>;
     } = {},
   ): Longhand<SPECIFIED, COMPUTED> {
     const {
@@ -46,10 +47,13 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
       options = {},
     } = overrides;
 
-    return new Longhand(initial, parse, compute, {
-      ...property._options,
-      ...options,
-    });
+    return new Longhand(
+      initial,
+      parse,
+      compute,
+      options?.inherits ?? property._inherits,
+      options?.use ?? property._use,
+    );
   }
 
   private readonly _initial: COMPUTED;
@@ -60,13 +64,19 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     Value<COMPUTED>,
     [style: Style]
   >;
-  private readonly _options: Longhand.Options;
+  private readonly _inherits: boolean;
+  private readonly _use: Mapper<
+    Value<COMPUTED>,
+    Option<Value<COMPUTED>>,
+    [style: Style]
+  >;
 
   private constructor(
     initial: COMPUTED,
     parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
-    options: Longhand.Options,
+    inherits: boolean,
+    use: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>,
   ) {
     this._initial = initial;
     this._parseBase = parseBase;
@@ -75,7 +85,8 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
       end(() => "Expected end of input"),
     );
     this._compute = compute;
-    this._options = options;
+    this._inherits = inherits;
+    this._use = use;
   }
 
   get initial(): COMPUTED {
@@ -100,8 +111,12 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     return this._compute;
   }
 
-  get options(): Longhand.Options {
-    return this._options;
+  get inherits(): boolean {
+    return this._inherits;
+  }
+
+  get use(): Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]> {
+    return this._use;
   }
 }
 
@@ -109,8 +124,13 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
  * @internal
  */
 export namespace Longhand {
-  export interface Options {
+  export interface Options<COMPUTED> {
     readonly inherits: boolean;
+    readonly use: Mapper<
+      Value<COMPUTED>,
+      Option<Value<COMPUTED>>,
+      [style: Style]
+    >;
   }
 
   export type Parser<SPECIFIED> = parser.Parser<
@@ -140,17 +160,16 @@ export namespace Longhand {
   export type Parsed<T> =
     T extends Longhand<
       infer S,
-      // Computed is only used in a covariant position in Longhand (as output of
-      // compute). Therefore, it does not need to be inferred exactly.
-      // C extends C' => Longhand<S, C> extends Longhand<S, C'>
-      // Especially, Longhand<S, C> extends Longhand<S, unknown> for all C.
-      unknown
+      // Computed is used both in a covariant (output of compute) and
+      // contravariant (input of use) position in Longhand. Therefore,
+      // it needs to be exactly inferred for the subtyping to exist.
+      infer _
     >
       ? S
       : never;
 
   /**
-   * Extracts the computed type a property.
+   * Extracts the computed type of a property.
    *
    * @remarks
    * This is a convenience type for building shorthands.
@@ -163,8 +182,8 @@ export namespace Longhand {
     T extends Longhand<
       // Specified is used both in a covariant (output of the parser) and
       // contravariant (input of compute) position in Longhand. Therefore,
-      // it needs to be exactly inferred for the subtyping to exist.
-      infer S,
+      //       // it needs to be exactly inferred for the subtyping to exist.
+      infer _,
       infer C
     >
       ? C
@@ -192,7 +211,7 @@ export namespace Longhand {
    * @internal
    */
   export function fromKeywords<K extends string>(
-    options: Options,
+    options: Partial<Options<Keyword.ToKeywords<K>>>,
     initial: K,
     ...other: Array<K>
   ): Longhand<Keyword.ToKeywords<K>> {

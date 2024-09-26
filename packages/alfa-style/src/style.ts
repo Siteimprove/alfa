@@ -3,14 +3,8 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, Origin } from "@siteimprove/alfa-cascade";
 import { Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import type {
-  Declaration} from "@siteimprove/alfa-dom";
-import {
-  Document,
-  Element,
-  Node,
-  Shadow,
-} from "@siteimprove/alfa-dom";
+import type { Declaration } from "@siteimprove/alfa-dom";
+import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type * as json from "@siteimprove/alfa-json";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -196,8 +190,10 @@ export class Style implements Serializable<Style.JSON> {
   private readonly _variables: Map<string, Value<Slice<Token>>>;
   private readonly _properties: Map<Name, Value>;
 
-  // We cache computed properties but not specified properties as these are
-  // inexpensive to resolve from cascaded and computed properties.
+  // We cache computed values but not specified values, as these are
+  // inexpensive to resolve from cascaded and computed values;
+  // nor used values, as in our case they are inexpensive to resolve
+  // from computed values.
   private _computed = Map.empty<Name, Value>();
 
   private constructor(
@@ -237,9 +233,7 @@ export class Style implements Serializable<Style.JSON> {
   }
 
   public specified<N extends Name>(name: N): Value<Style.Specified<N>> {
-    const {
-      options: { inherits },
-    } = Longhands.get(name);
+    const { inherits } = Longhands.get(name);
 
     return this.cascaded(name)
       .map((cascaded) => {
@@ -312,6 +306,19 @@ export class Style implements Serializable<Style.JSON> {
       >
     );
   }
+
+  /**
+   * {@link https://www.w3.org/TR/css-cascade/#used}
+   *
+   * @remarks
+   * In our case, we do not resolve further (e.g., `width: auto`).
+   * However, we filter out properties that do not apply to certain elements.
+   */
+  // public used<N extends Name>(name: N): Option<Value<Style.Computed<N>>> {
+  //   const use = Longhands.get(name).use;
+  //
+  //   return use(this.computed(name), this);
+  // }
 
   public initial<N extends Name>(
     name: N,
