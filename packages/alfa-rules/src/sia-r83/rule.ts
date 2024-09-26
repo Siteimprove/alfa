@@ -205,6 +205,9 @@ function isTwiceAsBig(
 
 namespace ClippingAncestor {
   export const vertical = clipper("height", localVerticalOverflow);
+  // This is eta-expanded to avoid premature evaluation of the localHorizontalOverflow function.
+  export const foo = (device: Device, element: Element) =>
+    clipper("width", localHorizontalOverflow())(device, element);
 
   const predicates = { height: isHeight, width: isWidth };
   const caches = {
@@ -288,6 +291,17 @@ namespace ClippingAncestor {
     let inSameBlock = true;
 
     return (device, element) => {
+      const style = Style.from(element, device);
+
+      const whiteSpace = style.computed("white-space").value.value;
+      if (whiteSpace !== "nowrap" && whiteSpace !== "pre") {
+        // Whitespace causes wrapping, the element doesn't overflow its text.
+        // Note that if individual atomic components (words, or nested elements
+        // with nowrap) are too long, overflow will still occur. But we can't
+        // really detect that.
+        return Overflow.Handle;
+      }
+
       const horizontalOverflow = overflow(element, device, "x");
       switch (horizontalOverflow) {
         case Overflow.Clip:
