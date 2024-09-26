@@ -4,28 +4,61 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Function as CSSFunction } from "../../syntax/index.js";
 
 import { List } from "../collection/index.js";
-import { Number } from "../numeric/index.js";
+import { Number, Percentage } from "../numeric/index.js";
 import type { Resolvable } from "../resolvable.js";
 
 import { Function } from "./function.js";
 
 const { map, either } = Parser;
 
+// We cannot easily use Resolvable.Resolved because Percentage may resolve to
+// anything depending on the base, here we want to keep them as percentages.
+type ToCanonical<T extends Number | Percentage<"percentage">> = T extends Number
+  ? Number.Canonical
+  : T extends Percentage
+    ? Percentage.Canonical
+    : Number.Canonical | Percentage.Canonical;
+
 /**
+ * Class representing either a scale() function value of the transform property or the value of the scale property.
+ *
  * @public
  */
-export class Scale
+export class Scale<
+    X extends Number.Canonical | Percentage.Canonical =
+      | Number.Canonical
+      | Percentage.Fixed<"percentage">,
+    Y extends Number.Canonical | Percentage.Canonical =
+      | Number.Canonical
+      | Percentage.Fixed<"percentage">,
+  >
   extends Function<"scale", false>
   implements Resolvable<Scale.Canonical, never>
 {
-  public static of(x: Number, y: Number): Scale {
-    return new Scale(x.resolve(), y.resolve());
+  public static of<
+    X extends Number.Canonical | Percentage.Canonical,
+    Y extends Percentage.Canonical,
+  >(x: X, y: Y): Scale<X, Y>;
+
+  public static of<
+    X extends Number | Percentage<"percentage">,
+    Y extends Number | Percentage<"percentage">,
+  >(x: X, y: Y): Scale<ToCanonical<X>, ToCanonical<Y>>;
+
+  public static of<
+    X extends Number | Percentage<"percentage">,
+    Y extends Number | Percentage<"percentage">,
+  >(x: X, y: Y) {
+    return new Scale(
+      x.resolve() as ToCanonical<X>,
+      y.resolve() as ToCanonical<Y>,
+    );
   }
 
-  private readonly _x: Number.Canonical;
-  private readonly _y: Number.Canonical;
+  private readonly _x: X;
+  private readonly _y: Y;
 
-  private constructor(x: Number.Canonical, y: Number.Canonical) {
+  private constructor(x: X, y: Y) {
     super("scale", false);
     this._x = x;
     this._y = y;
@@ -35,15 +68,15 @@ export class Scale
     return "scale";
   }
 
-  public get x(): Number.Canonical {
+  public get x(): X {
     return this._x;
   }
 
-  public get y(): Number.Canonical {
+  public get y(): Y {
     return this._y;
   }
 
-  public resolve(): Scale {
+  public resolve(): Scale.Canonical {
     return this;
   }
 
@@ -89,9 +122,10 @@ export class Scale
  */
 export namespace Scale {
   export type Canonical = Scale;
+
   export interface JSON extends Function.JSON<"scale"> {
-    x: Number.Fixed.JSON;
-    y: Number.Fixed.JSON;
+    x: Number.Fixed.JSON | Percentage.Fixed.JSON;
+    y: Number.Fixed.JSON | Percentage.Fixed.JSON;
   }
 
   export function isScale(value: unknown): value is Scale {
@@ -104,7 +138,10 @@ export namespace Scale {
   const parseScale = map(
     CSSFunction.parse(
       "scale",
-      map(List.parseCommaSeparated(Number.parse, 1, 2), (list) => list.values),
+      map(
+        List.parseCommaSeparated(either(Number.parse, Percentage.parse), 1, 2),
+        (list) => list.values,
+      ),
     ),
     ([_, [x, y]]) => Scale.of(x, y ?? x),
   );
@@ -112,15 +149,17 @@ export namespace Scale {
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scalex}
    */
-  const parseScaleX = map(CSSFunction.parse("scaleX", Number.parse), ([_, x]) =>
-    Scale.of(x, Number.of(1)),
+  const parseScaleX = map(
+    CSSFunction.parse("scaleX", either(Number.parse, Percentage.parse)),
+    ([_, x]) => Scale.of(x, Number.of(1)),
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scaley}
    */
-  const parseScaleY = map(CSSFunction.parse("scaleY", Number.parse), ([_, y]) =>
-    Scale.of(Number.of(1), y),
+  const parseScaleY = map(
+    CSSFunction.parse("scaleY", either(Number.parse, Percentage.parse)),
+    ([_, y]) => Scale.of(Number.of(1), y),
   );
 
   export const parse = either(parseScale, parseScaleX, parseScaleY);

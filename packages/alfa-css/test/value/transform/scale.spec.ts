@@ -75,3 +75,25 @@ test("parse() parses scaleY function", (t) => {
 
   t.deepEqual(actual, { type: "transform", kind: "scale", x: _1, y: _2 });
 });
+
+test("parse() accepts percentages", (t) => {
+  const actual = serialize("scale(150%, 50%)");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "scale",
+    x: { type: "percentage", value: 1.5 },
+    y: { type: "percentage", value: 0.5 },
+  });
+});
+
+test("parse() accepts a mix of numbers and percentages", (t) => {
+  const actual = serialize("scale(1.5, 50%)");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "scale",
+    x: { type: "number", value: 1.5 },
+    y: { type: "percentage", value: 0.5 },
+  });
+});
