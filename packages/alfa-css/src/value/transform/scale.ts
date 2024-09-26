@@ -200,7 +200,7 @@ export namespace Scale {
     ([_, z]) => Scale.of(Number.of(1), Number.of(1), z),
   );
 
-  export const parseFunc = either(
+  export const parse = either(
     parseScaleFunc,
     parseScaleXFunc,
     parseScaleYFunc,
