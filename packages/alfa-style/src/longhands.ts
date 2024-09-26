@@ -108,6 +108,7 @@ import TextShadow from "./property/text-shadow.js";
 import TextTransform from "./property/text-transform.js";
 import Top from "./property/top.js";
 import Transform from "./property/transform.js";
+import Translate from "./property/translate.js";
 import VerticalAlign from "./property/vertical-align.js";
 import Visibility from "./property/visibility.js";
 import WhiteSpace from "./property/white-space.js";
@@ -289,6 +290,7 @@ export namespace Longhands {
     "text-transform": TextTransform,
     top: Top,
     transform: Transform,
+    translate: Translate,
     "vertical-align": VerticalAlign,
     visibility: Visibility,
     "white-space": WhiteSpace,

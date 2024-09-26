@@ -176,6 +176,7 @@
     "./property/text-shadow.ts",
     "./property/top.ts",
     "./property/transform.ts",
+    "./property/translate.ts",
     "./property/vertical-align.ts",
     "./property/visibility.ts",
     "./property/white-space.ts",
