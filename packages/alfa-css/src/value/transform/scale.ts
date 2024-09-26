@@ -20,7 +20,8 @@ type ToCanonical<T extends Number | Percentage<"percentage">> = T extends Number
     : Number.Canonical | Percentage.Canonical;
 
 /**
- * Class representing either a scale() function value of the transform property or the value of the scale property.
+ * Class representing a transformation that resizes an element in either 2D or 3D space.
+ * Is parsed from either a scale() or scale3d() transform function or a value of the scale property.
  *
  * @public
  */
@@ -31,37 +32,42 @@ export class Scale<
     Y extends Number.Canonical | Percentage.Canonical =
       | Number.Canonical
       | Percentage.Fixed<"percentage">,
+    Z extends Number.Canonical | Percentage.Canonical =
+      | Number.Canonical
+      | Percentage.Fixed<"percentage">,
   >
   extends Function<"scale", false>
   implements Resolvable<Scale.Canonical, never>
 {
   public static of<
     X extends Number.Canonical | Percentage.Canonical,
-    Y extends Percentage.Canonical,
-  >(x: X, y: Y): Scale<X, Y>;
+    Y extends Number.Canonical | Percentage.Canonical,
+    Z extends Number.Canonical | Percentage.Canonical,
+  >(x: X, y: Y, z?: Z): Scale<X, Y, Z>;
 
   public static of<
     X extends Number | Percentage<"percentage">,
     Y extends Number | Percentage<"percentage">,
-  >(x: X, y: Y): Scale<ToCanonical<X>, ToCanonical<Y>>;
+    Z extends Number | Percentage<"percentage">,
+  >(x: X, y: Y, z?: Z): Scale<ToCanonical<X>, ToCanonical<Y>, ToCanonical<Z>>;
 
   public static of<
     X extends Number | Percentage<"percentage">,
     Y extends Number | Percentage<"percentage">,
-  >(x: X, y: Y) {
-    return new Scale(
-      x.resolve() as ToCanonical<X>,
-      y.resolve() as ToCanonical<Y>,
-    );
+    Z extends Number | Percentage<"percentage">,
+  >(x: X, y: Y, z?: Z) {
+    return new Scale(x.resolve(), y.resolve(), z?.resolve());
   }
 
   private readonly _x: X;
   private readonly _y: Y;
+  private readonly _z?: Z;
 
-  private constructor(x: X, y: Y) {
+  private constructor(x: X, y: Y, z?: Z) {
     super("scale", false);
     this._x = x;
     this._y = y;
+    this._z = z;
   }
 
   public get kind(): "scale" {
@@ -74,6 +80,10 @@ export class Scale<
 
   public get y(): Y {
     return this._y;
+  }
+
+  public get z(): Z | undefined {
+    return this._z;
   }
 
   public resolve(): Scale.Canonical {
@@ -97,10 +107,15 @@ export class Scale<
       ...super.toJSON(),
       x: this._x.toJSON(),
       y: this._y.toJSON(),
+      z: this._z !== undefined ? this._z.toJSON() : null,
     };
   }
 
   public toString(): string {
+    if (this._z !== undefined) {
+      return `scale3d(${this._x}, ${this._y}, ${this._z})`;
+    }
+
     if (this._x.value === this._y.value) {
       return `scale(${this._x})`;
     }
@@ -126,6 +141,7 @@ export namespace Scale {
   export interface JSON extends Function.JSON<"scale"> {
     x: Number.Fixed.JSON | Percentage.Fixed.JSON;
     y: Number.Fixed.JSON | Percentage.Fixed.JSON;
+    z: Number.Fixed.JSON | Percentage.Fixed.JSON | null;
   }
 
   export function isScale(value: unknown): value is Scale {
@@ -135,7 +151,7 @@ export namespace Scale {
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scale}
    */
-  const parseScale = map(
+  const parseScaleFunc = map(
     CSSFunction.parse(
       "scale",
       map(
@@ -147,9 +163,23 @@ export namespace Scale {
   );
 
   /**
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-scale3d}
+   */
+  const parseScale3dFunc = map(
+    CSSFunction.parse(
+      "scale3d",
+      map(
+        List.parseCommaSeparated(either(Number.parse, Percentage.parse), 3, 3),
+        (list) => list.values,
+      ),
+    ),
+    ([_, [x, y, z]]) => Scale.of(x, y, z),
+  );
+
+  /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scalex}
    */
-  const parseScaleX = map(
+  const parseScaleXFunc = map(
     CSSFunction.parse("scaleX", either(Number.parse, Percentage.parse)),
     ([_, x]) => Scale.of(x, Number.of(1)),
   );
@@ -157,10 +187,24 @@ export namespace Scale {
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scaley}
    */
-  const parseScaleY = map(
+  const parseScaleYFunc = map(
     CSSFunction.parse("scaleY", either(Number.parse, Percentage.parse)),
     ([_, y]) => Scale.of(Number.of(1), y),
   );
 
-  export const parse = either(parseScale, parseScaleX, parseScaleY);
+  /**
+   * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-scalez}
+   */
+  const parseScaleZFunc = map(
+    CSSFunction.parse("scaleZ", either(Number.parse, Percentage.parse)),
+    ([_, z]) => Scale.of(Number.of(1), Number.of(1), z),
+  );
+
+  export const parseFunc = either(
+    parseScaleFunc,
+    parseScaleXFunc,
+    parseScaleYFunc,
+    parseScale3dFunc,
+    parseScaleZFunc,
+  );
 }
