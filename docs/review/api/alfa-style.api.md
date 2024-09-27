@@ -80,30 +80,37 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
         initial?: COMPUTED;
         parse?: parser.Parser<Slice<Token>, SPECIFIED, string>;
         compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
-        options?: Longhand.Options;
+        inherits?: boolean;
+        use?: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>;
     }): Longhand<SPECIFIED, COMPUTED>;
+    // (undocumented)
+    get inherits(): boolean;
     // (undocumented)
     get initial(): COMPUTED;
     // (undocumented)
-    static of<SPECIFIED, COMPUTED>(initial: COMPUTED, parse: parser.Parser<Slice<Token>, SPECIFIED, string>, compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>, options?: Longhand.Options): Longhand<SPECIFIED, COMPUTED>;
-    // (undocumented)
-    get options(): Longhand.Options;
+    static of<SPECIFIED, COMPUTED>(initial: COMPUTED, parse: parser.Parser<Slice<Token>, SPECIFIED, string>, compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>, options?: Partial<Longhand.Options<COMPUTED>>): Longhand<SPECIFIED, COMPUTED>;
     // (undocumented)
     get parse(): Longhand.Parser<SPECIFIED>;
     get parseBase(): parser.Parser<Slice<Token>, SPECIFIED, string>;
+    // (undocumented)
+    get use(): Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>;
 }
 
 // @internal (undocumented)
 export namespace Longhand {
-    export type Computed<T> = T extends Longhand<infer S, infer C> ? C : never;
+    export type Computed<T> = T extends Longhand<infer _, infer C> ? C : never;
     export type Default = Keyword<"initial"> | Keyword<"inherit"> | Keyword<"revert"> | Keyword<"unset">;
-    export function fromKeywords<K extends string>(options: Options, initial: K, ...other: Array<K>): Longhand<Keyword.ToKeywords<K>>;
+    export function fromKeywords<K extends string>(options: Partial<Options<Keyword.ToKeywords<K>>>, initial: K, ...other: Array<K>): Longhand<Keyword.ToKeywords<K>>;
     // (undocumented)
-    export interface Options {
+    export interface Options<COMPUTED> {
         // (undocumented)
         readonly inherits: boolean;
+        // (undocumented)
+        readonly use: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [
+        style: Style
+        ]>;
     }
-    export type Parsed<T> = T extends Longhand<infer S, unknown> ? S : never;
+    export type Parsed<T> = T extends Longhand<infer S, infer _> ? S : never;
     const // (undocumented)
     parseDefaults: Parser<Keyword.ToKeywords<"initial" | "inherit" | "revert" | "unset">>;
     // (undocumented)
@@ -361,6 +368,8 @@ export class Style implements Serializable<Style.JSON> {
     specified<N extends Name>(name: N): Value<Style.Specified<N>>;
     // (undocumented)
     toJSON(): Style.JSON;
+    // (undocumented)
+    used<N extends Name>(name: N): Option<Value<Style.Computed<N>>>;
     // (undocumented)
     get variables(): Map_2<string, Value<Slice<Token>>>;
 }
