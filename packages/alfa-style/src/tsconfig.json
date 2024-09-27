@@ -114,6 +114,7 @@
     "./property/clip.ts",
     "./property/clip-path.ts",
     "./property/color.ts",
+    "./property/contain.ts",
     "./property/container-type.ts",
     "./property/cursor.ts",
     "./property/display.ts",

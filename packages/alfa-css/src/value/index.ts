@@ -1,4 +1,5 @@
 export * from "./box.js";
+export * from "./contain.js";
 export * from "./collection/index.js";
 export * from "./color/index.js";
 export * from "./image/index.js";
