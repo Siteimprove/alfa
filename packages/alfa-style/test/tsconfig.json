@@ -58,6 +58,7 @@
     "./property/rotate.spec.tsx",
     "./property/text-decoration.spec.tsx",
     "./property/text-indent.spec.tsx",
+    "./property/text-overflow.spec.tsx",
     "./property/text-shadow.spec.tsx",
     "./property/top.spec.tsx",
     "./property/z-index.spec.tsx",

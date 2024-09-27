@@ -33,6 +33,7 @@
     "./node/predicate/is-rendered.ts",
     "./node/predicate/is-transparent.ts",
     "./node/predicate/is-visible.ts",
+    "./predicate/is-block-container.ts",
     "./property/background.ts",
     "./property/background-attachment.ts",
     "./property/background-clip.ts",
