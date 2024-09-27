@@ -1,6 +1,8 @@
 import type { Style } from "../style.js";
 
 /**
+ * {@link https://drafts.csswg.org/css2/#block-boxes}
+ *
  * @internal
  */
 export function isBlockContainer(style: Style): boolean {

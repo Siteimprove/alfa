@@ -55,6 +55,7 @@
     "./property/mix-blend-mode.spec.tsx",
     "./property/opacity.spec.tsx",
     "./property/outline.spec.tsx",
+    "./property/overflow.spec.tsx",
     "./property/rotate.spec.tsx",
     "./property/text-decoration.spec.tsx",
     "./property/text-indent.spec.tsx",

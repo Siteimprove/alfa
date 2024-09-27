@@ -1,5 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
+
 import { used } from "../common.js";
 
 test(".used() returns the computed value for a block element", (t) => {
@@ -7,8 +8,7 @@ test(".used() returns the computed value for a block element", (t) => {
     const target = <div style={{ textOverflow: value }}></div>;
     h.document([target]);
 
-    const actual = used(target, "text-overflow");
-    t.deepEqual(actual, {
+    t.deepEqual(used(target, "text-overflow"), {
       type: "some",
       value: {
         value: { type: "keyword", value },
@@ -23,7 +23,6 @@ test(".used() returns None for a line element", (t) => {
     const target = <span style={{ textOverflow: value }}></span>;
     h.document([target]);
 
-    const actual = used(target, "text-overflow");
-    t.deepEqual(actual, { type: "none" });
+    t.deepEqual(used(target, "text-overflow"), { type: "none" });
   }
 });

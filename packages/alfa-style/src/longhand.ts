@@ -37,23 +37,19 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
       initial?: COMPUTED;
       parse?: parser.Parser<Slice<Token>, SPECIFIED, string>;
       compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
-      options?: Partial<Longhand.Options<COMPUTED>>;
+      inherits?: boolean;
+      use?: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>;
     } = {},
   ): Longhand<SPECIFIED, COMPUTED> {
     const {
       initial = property._initial,
       parse = property._parseBase,
       compute = property._compute,
-      options = {},
+      inherits = property._inherits,
+      use = property._use,
     } = overrides;
 
-    return new Longhand(
-      initial,
-      parse,
-      compute,
-      options?.inherits ?? property._inherits,
-      options?.use ?? property._use,
-    );
+    return new Longhand(initial, parse, compute, inherits, use);
   }
 
   private readonly _initial: COMPUTED;
