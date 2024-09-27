@@ -10,7 +10,7 @@ For this guide we want to create a parser that parses the content of the HTML at
 
 ## Defining the grammar
 
-We refer to the rules defined in the specification as the grammar or the syntax of the `autocomplete` attribute. It must contain a space separated list of tokens in a specific order, some of which may be optional and some may be required depending on the precense of some preceding token. For example the following is an invalid use of the attribute
+We refer to the rules defined in the specification as the grammar or the syntax of the `autocomplete` attribute. It must contain a space separated list of tokens in a specific order, some of which may be optional and some may be required depending on the presence of some preceding token. For example the following is an invalid use of the attribute
 ```HTML
 <input autocomplete="section-blue billing home" />
 ```
