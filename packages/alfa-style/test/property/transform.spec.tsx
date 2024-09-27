@@ -26,7 +26,6 @@ test("#computed parses transform: scale(2)", (t) => {
             type: "number",
             value: 2,
           },
-          z: null,
         },
       ],
       separator: " ",

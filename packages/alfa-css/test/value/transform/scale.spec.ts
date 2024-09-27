@@ -19,7 +19,6 @@ test("parse() parses scale function with two arguments", (t) => {
     kind: "scale",
     x: _1,
     y: _2,
-    z: null,
   });
 });
 
@@ -31,11 +30,10 @@ test("parse() parses scale function with one argument", (t) => {
     kind: "scale",
     x: _2,
     y: _2,
-    z: null,
   });
 });
 
-test("parse() expects exactly one or two arguments for scale", (t) => {
+test("parses expect exactly one or two arguments for scale", (t) => {
   for (const input of ["scale()", "scale(1, 2, 3)"]) {
     const actual = parseErr(input);
 
@@ -51,11 +49,10 @@ test("parse() parses scaleX function", (t) => {
     kind: "scale",
     x: _2,
     y: _1,
-    z: null,
   });
 });
 
-test("parse() expects exactly one argument for scaleX", (t) => {
+test("parses expect exactly one argument for scaleX", (t) => {
   for (const input of ["scaleX()", "scaleX(1, 2)"]) {
     const actual = parseErr(input);
 
@@ -71,7 +68,6 @@ test("parse() parses scaleY function", (t) => {
     kind: "scale",
     x: _1,
     y: _2,
-    z: null,
   });
 });
 
@@ -91,7 +87,6 @@ test("parse() accepts calculations in a scale function", (t) => {
     kind: "scale",
     x: _1,
     y: _2,
-    z: null,
   });
 });
 
@@ -103,7 +98,6 @@ test("parse() parses scaleX function", (t) => {
     kind: "scale",
     x: _2,
     y: _1,
-    z: null,
   });
 });
 
@@ -115,7 +109,6 @@ test("parse() parses scaleY function", (t) => {
     kind: "scale",
     x: _1,
     y: _2,
-    z: null,
   });
 });
 
@@ -127,7 +120,6 @@ test("parse() accepts percentages scale", (t) => {
     kind: "scale",
     x: { type: "percentage", value: 1.5 },
     y: { type: "percentage", value: 0.5 },
-    z: null,
   });
 });
 
@@ -139,7 +131,6 @@ test("parse() accepts a mix of numbers and percentages in scale", (t) => {
     kind: "scale",
     x: { type: "number", value: 1.5 },
     y: { type: "percentage", value: 0.5 },
-    z: null,
   });
 });
 
@@ -251,7 +242,6 @@ test("parseProp() parses two values", (t) => {
     kind: "scale",
     x: _1,
     y: _2,
-    z: null,
   });
 });
 
@@ -263,7 +253,6 @@ test("parseProp() parses one value", (t) => {
     kind: "scale",
     x: _2,
     y: _2,
-    z: null,
   });
 });
 

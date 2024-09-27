@@ -2104,15 +2104,25 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     // (undocumented)
     get kind(): "scale";
     // (undocumented)
-    static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical, Z extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y, z?: Z): Scale<X, Y, Z>;
+    static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y): Scale<X, Y, never>;
     // Warning: (ae-forgotten-export) The symbol "ToCanonical_3" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z?: Z): Scale<ToCanonical_3<X>, ToCanonical_3<Y>, ToCanonical_3<Z>>;
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">>(x: X, y: Y): Scale<ToCanonical_3<X>, ToCanonical_3<Y>>;
+    // (undocumented)
+    static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical, Z extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y, z: Z): Scale<X, Y, Z>;
+    // (undocumented)
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z: Z): Scale<ToCanonical_3<X>, ToCanonical_3<Y>, ToCanonical_3<Z>>;
     // (undocumented)
     resolve(): Scale.Canonical;
     // (undocumented)
-    toJSON(): Scale.JSON;
+    toJSON(): {
+        z?: Number_2.Fixed.JSON | Percentage.Fixed.JSON | undefined;
+        x: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        y: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        kind: "scale";
+        type: "transform";
+    };
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -2120,7 +2130,7 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     // (undocumented)
     get y(): Y;
     // (undocumented)
-    get z(): Z | undefined;
+    get z(): Option<Z>;
 }
 
 // @public (undocumented)
@@ -2136,7 +2146,7 @@ export namespace Scale {
         // (undocumented)
         y: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
-        z: Number_2.Fixed.JSON | Percentage.Fixed.JSON | null;
+        z: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
     }
     const // (undocumented)
     parse: Parser_2<Slice<Token_2>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;

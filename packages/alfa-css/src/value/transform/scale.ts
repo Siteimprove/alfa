@@ -1,4 +1,5 @@
 import type { Hash } from "@siteimprove/alfa-hash";
+import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Function as CSSFunction } from "../../syntax/index.js";
@@ -42,14 +43,24 @@ export class Scale<
   public static of<
     X extends Number.Canonical | Percentage.Canonical,
     Y extends Number.Canonical | Percentage.Canonical,
+  >(x: X, y: Y): Scale<X, Y, never>;
+
+  public static of<
+    X extends Number | Percentage<"percentage">,
+    Y extends Number | Percentage<"percentage">,
+  >(x: X, y: Y): Scale<ToCanonical<X>, ToCanonical<Y>>;
+
+  public static of<
+    X extends Number.Canonical | Percentage.Canonical,
+    Y extends Number.Canonical | Percentage.Canonical,
     Z extends Number.Canonical | Percentage.Canonical,
-  >(x: X, y: Y, z?: Z): Scale<X, Y, Z>;
+  >(x: X, y: Y, z: Z): Scale<X, Y, Z>;
 
   public static of<
     X extends Number | Percentage<"percentage">,
     Y extends Number | Percentage<"percentage">,
     Z extends Number | Percentage<"percentage">,
-  >(x: X, y: Y, z?: Z): Scale<ToCanonical<X>, ToCanonical<Y>, ToCanonical<Z>>;
+  >(x: X, y: Y, z: Z): Scale<ToCanonical<X>, ToCanonical<Y>, ToCanonical<Z>>;
 
   public static of<
     X extends Number | Percentage<"percentage">,
@@ -61,13 +72,13 @@ export class Scale<
 
   private readonly _x: X;
   private readonly _y: Y;
-  private readonly _z?: Z;
+  private readonly _z: Option<Z>;
 
   private constructor(x: X, y: Y, z?: Z) {
     super("scale", false);
     this._x = x;
     this._y = y;
-    this._z = z;
+    this._z = Option.from(z);
   }
 
   public get kind(): "scale" {
@@ -82,7 +93,7 @@ export class Scale<
     return this._y;
   }
 
-  public get z(): Z | undefined {
+  public get z(): Option<Z> {
     return this._z;
   }
 
@@ -94,25 +105,26 @@ export class Scale<
     return (
       value instanceof Scale &&
       value._x.equals(this._x) &&
-      value._y.equals(this._y)
+      value._y.equals(this._y) &&
+      value._z.equals(this._z)
     );
   }
 
   public hash(hash: Hash): void {
-    hash.writeHashable(this._x).writeHashable(this._y);
+    hash.writeHashable(this._x).writeHashable(this._y).writeHashable(this._z);
   }
 
-  public toJSON(): Scale.JSON {
+  public toJSON() {
     return {
       ...super.toJSON(),
       x: this._x.toJSON(),
       y: this._y.toJSON(),
-      z: this._z !== undefined ? this._z.toJSON() : null,
+      ...(this._z.isSome() ? { z: this._z.get().toJSON() } : {}),
     };
   }
 
   public toString(): string {
-    if (this._z !== undefined) {
+    if (this._z.isSome()) {
       return `scale3d(${this._x}, ${this._y}, ${this._z})`;
     }
 
@@ -141,7 +153,7 @@ export namespace Scale {
   export interface JSON extends Function.JSON<"scale"> {
     x: Number.Fixed.JSON | Percentage.Fixed.JSON;
     y: Number.Fixed.JSON | Percentage.Fixed.JSON;
-    z: Number.Fixed.JSON | Percentage.Fixed.JSON | null;
+    z: Number.Fixed.JSON | Percentage.Fixed.JSON;
   }
 
   export function isScale(value: unknown): value is Scale {

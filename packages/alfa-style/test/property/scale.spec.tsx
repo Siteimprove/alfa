@@ -26,7 +26,7 @@ test("property is not inherited", (t) => {
 
   h.document(
     [<div class="container">{element}</div>],
-    [h.sheet([h.rule.style(".container", [h.declaration("scale", "2")])])],
+    [h.sheet([h.rule.style(".container", { scale: "2" })])],
   );
   const style = Style.from(element, device);
 
@@ -69,7 +69,6 @@ test("#computed() parses a single number", (t) => {
         type: "number",
         value: 2,
       },
-      z: null,
     },
     source: decl.toJSON(),
   });
@@ -93,7 +92,6 @@ test("#computed() parses two values", (t) => {
         type: "number",
         value: 0.5,
       },
-      z: null,
     },
     source: decl.toJSON(),
   });
