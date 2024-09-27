@@ -178,7 +178,7 @@ export namespace Longhand {
     T extends Longhand<
       // Specified is used both in a covariant (output of the parser) and
       // contravariant (input of compute) position in Longhand. Therefore,
-      //       // it needs to be exactly inferred for the subtyping to exist.
+      // it needs to be exactly inferred for the subtyping to exist.
       infer _,
       infer C
     >

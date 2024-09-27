@@ -1,6 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
 import type { Element } from "@siteimprove/alfa-dom";
-import { Option } from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 import { Context } from "@siteimprove/alfa-selector";
 
 import { type Longhands, Style, type Value } from "../dist/index.js";
