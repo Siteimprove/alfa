@@ -215,4 +215,30 @@ export namespace Translate {
     parseTranslateZ,
     parseTranslate3d,
   );
+
+  const parseTranslateProp = map(
+    List.parseSpaceSeparated(LengthPercentage.parse, 1, 2),
+    (list) => {
+      const [x, y] = list.values;
+      return Translate.of(x, y ?? _0, _0);
+    },
+  );
+
+  const parseTranslate3dProp = map(
+    parseIf(
+      (values: ReadonlyArray<LengthPercentage>) => Length.isLength(values[2]),
+      map(
+        List.parseSpaceSeparated(LengthPercentage.parse, 3, 3),
+        (list) => list.values,
+      ),
+      () => "The z component of translate3d must be a length",
+    ),
+    // The type of z is ensured by parseIf.
+    ([x, y, z]) => Translate.of(x, y, z as Length),
+  );
+
+  /**
+   * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/translate}
+   */
+  export const parseProp = either(parseTranslate3dProp, parseTranslateProp);
 }
