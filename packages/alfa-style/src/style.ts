@@ -228,10 +228,16 @@ export class Style implements Serializable<Style.JSON> {
     return this._parent.map((parent) => parent.root()).getOr(this);
   }
 
+  /**
+   * {@link https://www.w3.org/TR/css-cascade/#cascaded}
+   */
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>> {
     return this._properties.get(name) as Option<Value<Style.Cascaded<N>>>;
   }
 
+  /**
+   * {@link https://www.w3.org/TR/css-cascade/#specified}
+   */
   public specified<N extends Name>(name: N): Value<Style.Specified<N>> {
     const { inherits } = Longhands.get(name);
 
@@ -268,6 +274,9 @@ export class Style implements Serializable<Style.JSON> {
       );
   }
 
+  /**
+   * {@link https://www.w3.org/TR/css-cascade/#computed}
+   */
   public computed<N extends Name>(name: N): Value<Style.Computed<N>> {
     if (this === Style._empty) {
       return this.initial(name);
