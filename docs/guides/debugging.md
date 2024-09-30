@@ -26,7 +26,7 @@ $ yarn alfa scrape -o my-page.json https://example.com
 >
 > however, the resulting file is monolithic and usually not easy to investigate, plus it can be a bit hard to follow the flow of a specific rule.
 
-The JSON file resulting from the scrape (or retrieved from SI systems) contains the toplevel properties `request` (the HTTP request that was used to grab the page), `response` (the response sent by the service), `device` (the device used for the crawl) and `document` (the full document, in Alfa's serialized format, and that can be de-serialized by Alfa).
+The JSON file resulting from the scrape (or retrieved from Siteimprove systems) contains the toplevel properties `request` (the HTTP request that was used to grab the page), `response` (the response sent by the service), `device` (the device used for the crawl) and `document` (the full document, in Alfa's serialized format, and that can be de-serialized by Alfa).
 
 When scraping live pages directly, especially when comparing with results produced earlier, be wary that the live page may have changed between both scrapings. So differences in results may also come from differences in the actual content that is checked.
 
@@ -36,10 +36,10 @@ Once you have a page, you can load it into Alfa and re-run the audit. The usual 
 
 ```typescript
 import { Outcome } from "@siteimprove/alfa-act";
-import { Array } from "@siteimprove/alfa-array";
 import { Rules } from "@siteimprove/alfa-rules";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
-import * as fs from "fs";
+import * as fs from "node:fs";
 
 // Select rule and page
 const rule = "R68";
@@ -52,18 +52,18 @@ main();
 
 async function main() {
   // Run the rule and sort results.
-  const result = Array.from(await Rules.get(rule).getUnsafe().evaluate(page));
+  const result = Sequence.from(await Rules.get(rule).getUnsafe().evaluate(page));
   const cantTell = result.filter(Outcome.isCantTell);
   const passed = result.filter(Outcome.isPassed);
   const failed = result.filter(Outcome.isFailed);
 
   // Output some basic information
   console.log(
-    `cantTell: ${cantTell.length}, passed: ${passed.length}, failed: ${failed.length}`
+    `cantTell: ${cantTell.size}, passed: ${passed.size}, failed: ${failed.size}`
   );
 
   // Uncomment next line to list all failed results. Warning! This may be very long…
-  // console.dir(failed);
+  // console.dir(failed.toJSON());
 }
 ```
 
