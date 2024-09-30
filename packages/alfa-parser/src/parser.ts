@@ -402,6 +402,7 @@ export namespace Parser {
 
   /**
    * {@link https://drafts.csswg.org/css-values-4/#comb-any}
+   * Turns [Parser<A>, Parser<B>, Parser<C>] into Parser<A || B || C>
    *
    * @Remarks
    * This parser never fails and will return an array of `undefined` if none
@@ -414,7 +415,7 @@ export namespace Parser {
     A extends Array<unknown> = [],
   >(
     separator: Parser<I, any, E, A>,
-    ...parsers: ToParsers<I, Maybe<T>, E, A>
+    ...parsers: ToParsers<I, T, E, A>
   ): Parser<I, Maybe<T>, E, A> {
     const size = parsers.length;
 
@@ -432,10 +433,10 @@ export namespace Parser {
         }
 
         // Next, test all parsers until a match is found.
-        parserLoop: for (let i = 0; i < parsers.length; i++) {
+        for (let i = 0; i < size; i++) {
           // If this parser already succeeded, move on to the next one
           if (result[i] !== undefined) {
-            // This continues the parserLoop, not the mainLoop.
+            // This continues the parsers loop, not the main loop.
             continue;
           }
 
@@ -462,6 +463,11 @@ export namespace Parser {
     };
   }
 
+  /**
+   * Turns [A, B, C] into [Parser<A>, Parser<B>, Parser<C>]
+   *
+   * @internal
+   */
   type ToParsers<
     I,
     T extends Array<unknown>,
@@ -471,6 +477,11 @@ export namespace Parser {
     ? [Parser<I, Head, E, A>, ...ToParsers<I, Tail, E, A>]
     : [];
 
+  /**
+   * Turns [A, B, C] into [A | undefined, B | undefined, C | undefined]
+   *
+   * @internal
+   */
   type Maybe<T extends Array<unknown>> = T extends [infer Head, ...infer Tail]
     ? [Head | undefined, ...Maybe<Tail>]
     : [];

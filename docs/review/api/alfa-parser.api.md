@@ -43,7 +43,6 @@ export namespace Parser {
     export function map<I, T, U, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, U>): Parser<I, U, E, A>;
     // (undocumented)
     export function mapResult<I, T, U, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, Result<U, E>>): Parser<I, U, E, A>;
-    // (undocumented)
     export type Maybe<T extends Array_2<unknown>> = T extends [infer Head, ...infer Tail] ? [Head | undefined, ...Maybe<Tail>] : [];
     // (undocumented)
     export function oneOrMore<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, [T, ...Array_2<T>], E, A>;
@@ -83,7 +82,6 @@ export namespace Parser {
     export function teeErr<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, callback: Callback<E, void, A>): Parser<I, T, E, A>;
     // (undocumented)
     export function toParser<I, T, A extends Array_2<unknown> = []>(infallible: Parser.Infallible<I, T, A>): Parser<I, T, never, A>;
-    // (undocumented)
     export type ToParsers<I, T extends Array_2<unknown>, E, A extends Array_2<unknown> = []> = T extends [infer Head, ...infer Tail] ? [Parser<I, Head, E, A>, ...ToParsers<I, Tail, E, A>] : [];
     // (undocumented)
     export function zeroOrMore<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Array_2<T>, E, A>;
