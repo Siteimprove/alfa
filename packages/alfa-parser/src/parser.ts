@@ -402,11 +402,19 @@ export namespace Parser {
 
   /**
    * {@link https://drafts.csswg.org/css-values-4/#comb-any}
-   * Turns [Parser<A>, Parser<B>, Parser<C>] into Parser<A || B || C>
+   * Turns `[Parser<A>, Parser<B>, Parser<C>]` into `Parser<A || B || C>`
    *
    * @Remarks
    * This parser never fails and will return an array of `undefined` if none
-   * of the ind individual parsers succeed.
+   * of the individual parsers succeed. It is nonetheless easier to not define
+   * it as Infallible since call sites usually expect Parser and combinators.
+   *
+   * Be careful that no early parser can accept a prefix of what a later one
+   * accepts. Otherwise, the early parser will incorrectly consume the tokens
+   * of the later one.
+   * That is, `doubleBar(parseFoo, parseFoobar)` will happily consume the "foo"
+   * in "foobar" and thus incorrectly "fail" on "foobar foo" (`parseFoo` consumes
+   * the "foo" in foobar" leaving "bar foo" that cannot be parsed further).
    */
   export function doubleBar<
     I,
@@ -464,7 +472,7 @@ export namespace Parser {
   }
 
   /**
-   * Turns [A, B, C] into [Parser<A>, Parser<B>, Parser<C>]
+   * Turns `[A, B, C]` into `[Parser<A>, Parser<B>, Parser<C>]`
    *
    * @internal
    */
@@ -478,7 +486,7 @@ export namespace Parser {
     : [];
 
   /**
-   * Turns [A, B, C] into [A | undefined, B | undefined, C | undefined]
+   * Turns `[A, B, C]` into `[A | undefined, B | undefined, C | undefined]`
    *
    * @internal
    */
