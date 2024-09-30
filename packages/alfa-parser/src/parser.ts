@@ -400,6 +400,81 @@ export namespace Parser {
       );
   }
 
+  /**
+   * {@link https://drafts.csswg.org/css-values-4/#comb-any}
+   *
+   * @Remarks
+   * This parser never fails and will return an array of `undefined` if none
+   * of the ind individual parsers succeed.
+   */
+  export function doubleBar<
+    I,
+    T extends Array<unknown>,
+    E,
+    A extends Array<unknown> = [],
+  >(
+    separator: Parser<I, any, E, A>,
+    ...parsers: ToParsers<I, Maybe<T>, E, A>
+  ): Parser<I, Maybe<T>, E, A> {
+    const size = parsers.length;
+
+    return (input, ...args) => {
+      const result: Maybe<T> = globalThis
+        .Array(size)
+        .map(() => undefined) as Maybe<T>;
+
+      // The main loop goes through the input, testing all parsers until one
+      // matches and looping back immediately to parse the next token.
+      mainLoop: while (true) {
+        // First, skip leading separators
+        for (const [remainder] of separator(input, ...args)) {
+          input = remainder;
+        }
+
+        // Next, test all parsers until a match is found.
+        parserLoop: for (let i = 0; i < parsers.length; i++) {
+          // If this parser already succeeded, move on to the next one
+          if (result[i] !== undefined) {
+            // This continues the parserLoop, not the mainLoop.
+            continue;
+          }
+
+          // Try the parser
+          const parsed = parsers[i](input, ...args);
+          if (parsed.isOk()) {
+            [input, result[i]] = parsed.get();
+
+            // Once a parser succeeds, we want to restart the main loop, so we
+            // can again test all parsers in order. We could keep going with
+            // the remaining parsers, but then we might need to also test the
+            // previous ones, …
+            // This is just cleaner logic.
+            continue mainLoop;
+          }
+        }
+
+        // If no parser succeeds (or they all already produced a value), we're
+        // done with the input and can finally escape the main loop.
+        break;
+      }
+
+      return Result.of([input, result]);
+    };
+  }
+
+  type ToParsers<
+    I,
+    T extends Array<unknown>,
+    E,
+    A extends Array<unknown> = [],
+  > = T extends [infer Head, ...infer Tail]
+    ? [Parser<I, Head, E, A>, ...ToParsers<I, Tail, E, A>]
+    : [];
+
+  type Maybe<T extends Array<unknown>> = T extends [infer Head, ...infer Tail]
+    ? [Head | undefined, ...Maybe<Tail>]
+    : [];
+
   export function end<I extends Iterable<unknown>, E>(
     ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>,
   ): Parser<I, void, E> {

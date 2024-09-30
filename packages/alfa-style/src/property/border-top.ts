@@ -1,77 +1,29 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
+import type { Longhand } from "../longhand.js";
 
 import { Shorthand } from "../shorthand.js";
 
 import * as Color from "./border-top-color.js";
 import Style from "./border-top-style.js";
 import * as Width from "./border-top-width.js";
-import type { Longhand } from "../longhand.js";
 
-const { map } = Parser;
+const { doubleBar, map } = Parser;
 
-export const parse: Parser<
-  Slice<Token>,
-  [
-    Color.Specified | Keyword<"initial">,
-    Longhand.Parsed<typeof Style> | Keyword<"initial">,
-    Width.Specified | Keyword<"initial">,
-  ],
-  string
-> = (input) => {
-  let color: Color.Specified | undefined;
-  let style: Longhand.Parsed<typeof Style> | undefined;
-  let width: Width.Specified | undefined;
-
-  while (true) {
-    for (const [remainder] of Token.parseWhitespace(input)) {
-      input = remainder;
-    }
-
-    // <color>
-    if (color === undefined) {
-      const result = Color.parse(input);
-
-      if (result.isOk()) {
-        [input, color] = result.get();
-        continue;
-      }
-    }
-
-    // <style>
-    if (style === undefined) {
-      const result = Style.parseBase(input);
-
-      if (result.isOk()) {
-        [input, style] = result.get();
-        continue;
-      }
-    }
-
-    // <width>
-    if (width === undefined) {
-      const result = Width.parse(input);
-
-      if (result.isOk()) {
-        [input, width] = result.get();
-        continue;
-      }
-    }
-
-    break;
-  }
-
-  return Result.of([
-    input,
+export const parse = map(
+  doubleBar<
+    Slice<Token>,
+    [Color.Specified, Longhand.Parsed<typeof Style>, Width.Specified],
+    string
+  >(Token.parseWhitespace, Color.parse, Style.parseBase, Width.parse),
+  ([color, style, width]) =>
     [
       color ?? Keyword.of("initial"),
       style ?? Keyword.of("initial"),
       width ?? Keyword.of("initial"),
-    ],
-  ]);
-};
+    ] as const,
+);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-top}

@@ -7,7 +7,7 @@ function parse(
   t: Assertions,
   value: string,
   side: "top" | "right" | "bottom" | "left",
-  color: string,
+  color: "red", // the only one used in the tests :-/
   style?: "dotted", // the only one used in the tests :-/
   width?: number,
 ): void {
@@ -36,16 +36,17 @@ function parse(
   });
 
   t.deepEqual(cascaded(element, `${shorthand}-width` as const), {
-    value: width
-      ? {
-          type: "length",
-          value: width,
-          unit: "px",
-        }
-      : {
-          type: "keyword",
-          value: "initial",
-        },
+    value:
+      width !== undefined
+        ? {
+            type: "length",
+            value: width,
+            unit: "px",
+          }
+        : {
+            type: "keyword",
+            value: "initial",
+          },
     source: declaration.toJSON(),
   });
 }
@@ -59,6 +60,10 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
 
   test(`#cascaded() parses \`${shorthand}: red dotted\``, (t) => {
     parse(t, "red dotted", side, "red", "dotted");
+  });
+
+  test(`#cascaded() parses \`${shorthand}: 1px red\``, (t) => {
+    parse(t, "1px red", side, "red", undefined, 1);
   });
 
   test(`#cascaded() parses \`${shorthand}: 2px dotted red\``, (t) => {
