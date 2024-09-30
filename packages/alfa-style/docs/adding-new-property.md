@@ -37,7 +37,9 @@ Some examples:
 * [`font-size`](../src/property/font-size.ts), a property mixing keywords and `Length`, and where keywords end up computing as `Length` values.
 * [`border-top`](../src/property/border-top.ts), a relatively simple shorthand property that needs to be split into its longhands. Shorthands usually allow random ordering and optional presence, something for which we do not have a parser combinator yet.
 
-Note that most of the properties use the monadic `Selective` type, which more or less mimic the complex pattern matching of functional languages. Regular `if … then … else` statements work too (but tend to be more verbose). Also prefer using the `.isFoo` type guards as much as possible (versus, e.g. `instanceof` or testing the `#type` getter). The type guards will correctly narrow types and are agnostic to implementation details.
+Note that most of the properties use the monadic `Selective` type, which more or less mimic the complex pattern matching of functional languages. Regular `if … then … else` statements work too (but tend to be more verbose). `Selective` tend to generate hard-to-read type error in case of problems. It is often easier to start with an `if … then … else` and refactor later as a `Selective` after writing the tests. 
+
+Prefer using the `.isFoo` type guards as much as possible (versus, e.g. `instanceof` or testing the `#type` getter). The type guards will correctly narrow types and are agnostic to implementation details.
 
 ## Testing the property
 
