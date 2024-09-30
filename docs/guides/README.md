@@ -22,17 +22,16 @@ List of Alfa repositories, both public and private, and some of their particular
 
 * [Alfa](https://github.com/Siteimprove/alfa) (this repository): The main repository for Alfa code.
 
-* [Alfa integrations](https://github.com/Siteimprove/alfa-integrations) (public): Contains integrations of Alfa with various frameworks, including a Command Line Interface.
-  * This is effectively not actively developed and not used much internally, apart from the CLI.
+* [Alfa integrations](https://github.com/Siteimprove/alfa-integrations) (public): Contains integrations of Alfa with various frameworks, including a Command Line Interface and the Accessibility Code Checker API.
+  * The CLI, `alfa-test-utils`, and integrations with browsers automations are actively maintained. The other integrations are more dormant.
   * The packages are published still associated with the Alfa repository for historical reasons.
-  * Alfa core packages are auto-updated by Renovate.
-  * Has very few tests overall.
-  * Non-Alfa packages are not auto-updated (except for security updates), notably due to the low amount of tests decreasing confidence in CI results.
-  * Note: Cypress has problem with ES2020, we don't want to lower target to ES2019 as it would degrade performances. We need to figure out a way to solve this.
+  * Alfa core packages are auto-updated by Renovate. Other dependencies of actively maintained packages also are.
+  * Other packages are not auto-updated (except for security updates), notably due to the low amount of tests decreasing confidence in CI results.
+  * Has very few tests overall, especially in the non actively maintained packages.
 
 * [Alfa examples](https://github.com/Siteimprove/alfa-examples) (public): Curated list of examples of Alfa usage.
-  * Currently no automatic update of Alfa (or other) packages.
-  * Note: Cypress has problem with ES2020, we don't want to lower target to ES2019 as it would degrade performances. We need to figure out a way to solve this.
+  * Contains both "unit" examples of integrations, more end-to-end examples of integrations with Siteimprove Accessibility Code Checker, and some advanced usages of Alfa.
+  * Alfa packages, and the ones needed for actively maintained integration, are automatically updated by Renovate.
   
 * [Alfa ACT-R](https://github.com/Siteimprove/alfa-act-r) (public): Acceptance testing of Alfa rules against the ACT Rules test cases.
   * This mostly contains only tests and fixtures to run them…
@@ -54,8 +53,7 @@ List of Alfa repositories, both public and private, and some of their particular
   * Only markdown (for the rules) and a bit of JSON (for the metadata). No actual code.
   * Metadata is published and used in Siteimprove platform and web extension.
 
-* [Alfa Hub](https://github.com/Siteimprove/alfa-hub) (private): Build a static website to show Sanshikan's rules.
-  * Includes Sanshikan as a submodule. Could be changed to packages…
+* [Alfa Hub](https://github.com/Siteimprove/alfa-hub) (private): Build a static website to show Sanshikan's rules; plus documentation for the Accessibility Code Checker.
   * Build a static website inside a Docker container.
   * The site is published at [alfa.siteimprove.com](https://alfa.siteimprove.com/), it is publicly available and serves as technical documentation for our rules.
   * Mostly ReactJS, plus processing of the markdown files.
