@@ -1,34 +1,19 @@
-/// <reference types="node" />
+import { assert, it } from "vitest";
 
-import * as assert from "assert";
+import type { Assertions } from "./types.js";
 
-import { format } from "./format.js";
 import {
   type Controller,
   defaultController,
   type RNG,
   seedableRNG,
 } from "./rng.js";
-import type { Assertions } from "./types.js";
 
 /**
  * @internal
  */
 export interface Notifier {
   error(message: string): void;
-}
-
-const defaultNotifier: Notifier = {
-  error: (message) => {
-    process.stderr.write(`${message}\n`);
-    process.exit(1);
-  },
-};
-
-// This is not super robust, but sufficient in our use case.
-// Take care before using it elsewhere.
-function isNotifier(value: unknown): value is Notifier {
-  return typeof value === "object" && value !== null && "error" in value;
 }
 
 /**
@@ -68,9 +53,6 @@ export async function test<T = number>(
   notifierOrController?: Notifier | Partial<Controller<T>>,
   controller?: Partial<Controller<T>>,
 ): Promise<void> {
-  const notifier: Notifier = isNotifier(notifierOrController)
-    ? notifierOrController
-    : defaultNotifier;
   // If the controlled is not overwritten, then T should be number.
   const fullController = {
     ...defaultController,
@@ -85,19 +67,15 @@ export async function test<T = number>(
   const seed = fullController.seed ?? Math.random();
   const rng = seedableRNG(seed);
 
-  try {
+  return it(name, async () => {
     for (let i = 0; i < fullController.iterations; i++) {
       await assertion(
-        "strict" in assert ? assert.strict : assert,
+        assert,
         // eta-expansion ensures that the wrapper is evaluated on each call of
         // the rng, not just once per iteration.
         () => fullController.wrapper(rng, i)(),
         seed,
       );
     }
-  } catch (err) {
-    const error = err as Error;
-
-    notifier.error(`${format(name, error)}\n`);
-  }
+  });
 }

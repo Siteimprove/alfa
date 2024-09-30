@@ -24,6 +24,8 @@
     "./jsx.js": "./dist/jsx.js",
     "./jsx-runtime": "./dist/jsx-runtime.js",
     "./jsx-runtime.js": "./dist/jsx-runtime.js",
+    "./jsx-dev-runtime": "./dist/jsx-runtime.js",
+    "./jsx-dev-runtime.js": "./dist/jsx-runtime.js",
     "./native": "./dist/native.js",
     "./native.js": "./dist/native.js"
   },

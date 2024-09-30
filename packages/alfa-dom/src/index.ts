@@ -37,5 +37,5 @@ export * from "./node/type.js";
 
 export * from "./node/query/index.js";
 
-export * from "./h.js";
+export { h } from "./h.js";
 export * from "./jsx.js";
