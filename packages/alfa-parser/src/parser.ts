@@ -473,8 +473,6 @@ export namespace Parser {
 
   /**
    * Turns `[A, B, C]` into `[Parser<A>, Parser<B>, Parser<C>]`
-   *
-   * @internal
    */
   type ToParsers<
     I,
@@ -487,8 +485,6 @@ export namespace Parser {
 
   /**
    * Turns `[A, B, C]` into `[A | undefined, B | undefined, C | undefined]`
-   *
-   * @internal
    */
   type Maybe<T extends Array<unknown>> = T extends [infer Head, ...infer Tail]
     ? [Head | undefined, ...Maybe<Tail>]
