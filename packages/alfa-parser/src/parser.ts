@@ -414,7 +414,7 @@ export namespace Parser {
    * of the later one.
    * That is, `doubleBar(parseFoo, parseFoobar)` will happily consume the "foo"
    * in "foobar" and thus incorrectly "fail" on "foobar foo" (`parseFoo` consumes
-   * the "foo" in foobar" leaving "bar foo" that cannot be parsed further).
+   * the "foo" in "foobar" leaving "bar foo" that cannot be parsed further).
    */
   export function doubleBar<
     I,
