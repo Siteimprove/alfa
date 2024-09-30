@@ -35,7 +35,7 @@ Some examples:
 * [`text-shadow`](../src/property/text-shadow.ts), a property whose value is simply delegated to the `alfa-css` package as it makes sense to wrap the components together.
 * [`height`](../src/property/height.ts), a property where the percentage cannot be fully resolved at compute time and thus needs a partial resolution.
 * [`font-size`](../src/property/font-size.ts), a property mixing keywords and `Length`, and where keywords end up computing as `Length` values.
-* [`border-top`](../src/property/border-top.ts), a relatively simple shorthand property that needs to be split into its longhands. Shorthands usually allow random ordering and optional presence, something for which we do not have a parser combinator yet.
+* [`border-top`](../src/property/border-top.ts), a relatively simple shorthand property that needs to be split into its longhands.
 
 Note that most of the properties use the monadic `Selective` type, which more or less mimic the complex pattern matching of functional languages. Regular `if … then … else` statements work too (but tend to be more verbose). `Selective` tend to generate hard-to-read type error in case of problems. It is often easier to start with an `if … then … else` and refactor later as a `Selective` after writing the tests. 
 
