@@ -13,7 +13,7 @@
   "scripts": {
     "build": "node --max-old-space-size=8192 scripts/build.mjs --pretty",
     "clean": "node scripts/clean.mjs --pretty",
-    "test": "node scripts/test.mjs --pretty",
+    "test": "yarn build && vitest --config ./config/vitest.config.ts",
     "watch": "node scripts/watch.mjs --pretty",
     "extract": "node scripts/api-extractor.mjs --pretty",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
@@ -40,7 +40,8 @@
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "prettier": "^3.0.0",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.2",
+    "vitest": "^2.1.1"
   },
   "packageManager": "yarn@4.5.0"
 }

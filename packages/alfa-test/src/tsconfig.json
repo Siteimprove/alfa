@@ -2,12 +2,5 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": [
-    "./format.ts",
-    "./index.ts",
-    "./rng.ts",
-    "./stack.ts",
-    "./test.ts",
-    "./types.ts"
-  ]
+  "files": ["./index.ts", "./rng.ts", "./stack.ts", "./test.ts", "./types.ts"]
 }
