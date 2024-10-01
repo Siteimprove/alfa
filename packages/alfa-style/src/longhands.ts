@@ -53,6 +53,7 @@ import BoxShadow from "./property/box-shadow.js";
 import Clip from "./property/clip.js";
 import ClipPath from "./property/clip-path.js";
 import Color from "./property/color.js";
+import Contain from "./property/contain.js";
 import ContainerType from "./property/container-type.js";
 import Cursor from "./property/cursor.js";
 import Display from "./property/display.js";
@@ -96,6 +97,7 @@ import PointerEvents from "./property/pointer-events.js";
 import Position from "./property/position.js";
 import Right from "./property/right.js";
 import Rotate from "./property/rotate.js";
+import Scale from "./property/scale.js";
 import TextAlign from "./property/text-align.js";
 import TextDecorationColor from "./property/text-decoration-color.js";
 import TextDecorationLine from "./property/text-decoration-line.js";
@@ -107,6 +109,7 @@ import TextShadow from "./property/text-shadow.js";
 import TextTransform from "./property/text-transform.js";
 import Top from "./property/top.js";
 import Transform from "./property/transform.js";
+import Translate from "./property/translate.js";
 import VerticalAlign from "./property/vertical-align.js";
 import Visibility from "./property/visibility.js";
 import WhiteSpace from "./property/white-space.js";
@@ -233,6 +236,7 @@ export namespace Longhands {
     "clip-path": ClipPath,
     clip: Clip,
     color: Color,
+    contain: Contain,
     "container-type": ContainerType,
     cursor: Cursor,
     display: Display,
@@ -276,6 +280,7 @@ export namespace Longhands {
     position: Position,
     right: Right,
     rotate: Rotate,
+    scale: Scale,
     "text-align": TextAlign,
     "text-decoration-color": TextDecorationColor,
     "text-decoration-line": TextDecorationLine,
@@ -287,6 +292,7 @@ export namespace Longhands {
     "text-transform": TextTransform,
     top: Top,
     transform: Transform,
+    translate: Translate,
     "vertical-align": VerticalAlign,
     visibility: Visibility,
     "white-space": WhiteSpace,

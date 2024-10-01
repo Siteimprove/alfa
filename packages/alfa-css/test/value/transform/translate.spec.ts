@@ -6,6 +6,8 @@ import { parser, parserUnsafe, serializer } from "../../common/parse.js";
 
 const serialize = serializer(Translate.parse);
 const parseErr = parser(Translate.parse);
+const serializeProp = serializer(Translate.parseProp);
+const parseErrProp = parser(Translate.parseProp);
 
 const _0 = { type: "length", unit: "px", value: 0 } as const;
 
@@ -388,4 +390,80 @@ test("resolve() resolves a Translate", (t) => {
     y: { type: "length", unit: "px", value: 17 },
     z: { type: "length", unit: "px", value: 32 },
   });
+});
+
+test("parseProp() parses two lengths", (t) => {
+  const actual = serializeProp("1px 2em");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: { type: "length", unit: "px", value: 1 },
+    y: { type: "length", unit: "em", value: 2 },
+    z: _0,
+  });
+});
+
+test("parseProp() parses two percentages", (t) => {
+  const actual = serializeProp("10% 20%");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: { type: "percentage", value: 0.1 },
+    y: { type: "percentage", value: 0.2 },
+    z: _0,
+  });
+});
+
+test("parseProp() parses one length", (t) => {
+  const actual = serializeProp("1px");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: { type: "length", unit: "px", value: 1 },
+    y: _0,
+    z: _0,
+  });
+});
+
+test("parseProp() parses one percentage", (t) => {
+  const actual = serializeProp("10%");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: { type: "percentage", value: 0.1 },
+    y: _0,
+    z: _0,
+  });
+});
+
+test("parseProp() accept mixed length and percentages", (t) => {
+  for (const input of ["1px 2%", "2% 1px"]) {
+    const actual = parseErrProp(input);
+
+    t(actual.isOk());
+  }
+});
+
+test("parseProp() parses three lengths", (t) => {
+  const actual = serializeProp("2px 1em 1px");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: { type: "length", unit: "px", value: 2 },
+    y: { type: "length", unit: "em", value: 1 },
+    z: { type: "length", unit: "px", value: 1 },
+  });
+});
+
+test("parseProp() accepts percentages in x and y components", (t) => {
+  for (const input of ["1% 1px 1px", "1% 1% 1px", "1px 1% 1px"]) {
+    const actual = parseErrProp(input);
+
+    t(actual.isOk());
+  }
 });
