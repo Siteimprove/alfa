@@ -119,6 +119,8 @@ export interface Option<T> extends Monad<T>, Foldable<T>, Iterable<T>, Equatable
 // @public (undocumented)
 export namespace Option {
     // (undocumented)
+    export function conditional<T>(value: T, predicate: Predicate<T>): Option<T>;
+    // (undocumented)
     export function empty<T>(): None;
     // (undocumented)
     export function from<T>(value: T | null | undefined): Option<NonNullable<T>>;

@@ -108,4 +108,8 @@ export namespace Option {
   export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
     return value === null || value === undefined ? None : Some.of(value!);
   }
+
+  export function conditional<T>(value: T, predicate: Predicate<T>): Option<T> {
+    return predicate(value) ? Some.of(value) : None;
+  }
 }
