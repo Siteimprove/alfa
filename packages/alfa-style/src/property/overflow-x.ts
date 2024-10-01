@@ -1,5 +1,5 @@
 import { Keyword } from "@siteimprove/alfa-css";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Longhand } from "../longhand.js";
@@ -40,5 +40,5 @@ export default Longhand.extend(base, {
 
       return x.value === "visible" ? Keyword.of("auto") : Keyword.of("hidden");
     }),
-  use: (value, style) => (isContainer(style) ? Option.of(value) : None),
+  use: (value, style) => Option.conditional(value, () => isContainer(style)),
 });

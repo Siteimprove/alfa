@@ -1,4 +1,4 @@
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 
 import { Longhand } from "../longhand.js";
 import { isBlockContainer } from "../predicate/is-block-container.js";
@@ -10,7 +10,8 @@ import { isBlockContainer } from "../predicate/is-block-container.js";
 export default Longhand.fromKeywords(
   {
     inherits: false,
-    use: (value, style) => (isBlockContainer(style) ? Option.of(value) : None),
+    use: (value, style) =>
+      Option.conditional(value, () => isBlockContainer(style)),
   },
   "clip",
   "ellipsis",
