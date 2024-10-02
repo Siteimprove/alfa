@@ -16,6 +16,7 @@ import { Set } from "@siteimprove/alfa-set";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import * as element from "./element/element.js";
+import * as predicates from "./predicate/index.js";
 
 import type { Longhand } from "./longhand.js";
 import { Longhands } from "./longhands.js";
@@ -472,6 +473,7 @@ export namespace Style {
     hasSpecifiedStyle,
     hasTextDecoration,
     hasTransparentBackground,
+    hasUsedStyle,
     isFocusable,
     isImportant,
     isInert,
@@ -481,6 +483,9 @@ export namespace Style {
   } = element;
 
   export const { isRendered, isVisible, isScrolledBehind } = node;
+
+  export const { isBlockContainer, isFlexContainer, isGridContainer } =
+    predicates;
 }
 
 function parseLonghand<N extends Longhands.Name>(
