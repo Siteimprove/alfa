@@ -363,7 +363,9 @@ export class Style implements Serializable<Style.JSON> {
     inherited<N extends Name>(name: N): Value<Style.Inherited<N>>;
     // (undocumented)
     initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
-    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option<Style>): Style;
+    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option<Style>, owner?: Option<Element>): Style;
+    // (undocumented)
+    get owner(): Option<Element>;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
