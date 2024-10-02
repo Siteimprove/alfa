@@ -16,6 +16,7 @@ const theSheet = () =>
     h.rule.style(".scroll", { overflow: "scroll" }),
     h.rule.style(".ellipsis", { textOverflow: "ellipsis" }),
     h.rule.style(".nowrap", { whiteSpace: "nowrap" }),
+    h.rule.style(".wrap", { whiteSpace: "normal" }),
   ]);
 
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
@@ -280,10 +281,7 @@ test(`evaluates() checks wrapping of text nodes individually`, async (t) => {
     </div>
   );
 
-  const document = h.document(
-    [<body>{clipping}</body>],
-    [theSheet(), h.sheet([h.rule.style(".wrap", { whiteSpace: "normal" })])],
-  );
+  const document = h.document([<body>{clipping}</body>], [theSheet()]);
 
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target1, { 1: Outcomes.ClipsText(Option.of(clipping), None) }),
@@ -686,9 +684,9 @@ test(`evaluates() fails a text node when ellipsis is not set on the first block 
 // });
 
 test(`evaluates() fails a text node when clipping happens without ellipsis on the first block ancestor`, async (t) => {
-  // `white-space: nowrap` prevents the wrap. The inner div clips its overflow,
-  // thus nothing escapes it. The scroll bar on the top level `<div>` never
-  // comes into play.
+  // `white-space: nowrap` prevents the wrap inside the `<span>`.
+  // The inner div clips its overflow, thus nothing escapes it.
+  // The scroll bar on the top level `<div>` never comes into play.
   const target = h.text("Hello world");
   const clipping = (
     <div class="clip">

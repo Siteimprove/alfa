@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { RuleTree } from "@siteimprove/alfa-cascade";
@@ -22,6 +23,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
@@ -35,16 +37,15 @@ const { Discrete, Range } = Feature.Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const {
-  hasAttribute,
-  hasBox,
-  hasDisplaySize,
-  hasName,
-  hasNamespace,
-  isElement,
-} = Element;
+const { hasAttribute, hasBox, hasName, hasNamespace, isElement } = Element;
 const { isText } = Text;
-const { getPositioningParent, hasCascadedStyle, isVisible } = Style;
+const {
+  getPositioningParent,
+  hasCascadedStyle,
+  hasComputedStyle,
+  hasUsedStyle,
+  isVisible,
+} = Style;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
@@ -104,13 +105,16 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
+        const debug = target.data.includes("debug");
+
         return target
           .parent(Node.fullTree)
           .filter(isElement)
           .map((parent) => {
-            const horizontallyClippedBy = ClippingAncestor.horizontal(
+            const horizontallyClippedBy = ClippingAncestor.foo(
               device,
               parent,
+              debug,
             );
 
             const verticallyClippedBy = ClippingAncestor.vertical(
@@ -161,9 +165,9 @@ export default Rule.Atomic.of<Page, Text>({
 });
 
 enum Overflow {
-  Clip, // The element clips its overflow.
-  Handle, // The element definitely handles its overflow.
-  Overflow, // The element overflows into its parent.
+  Clip = "Clip", // The element clips its overflow.
+  Handle = "Handle", // The element definitely handles its overflow.
+  Overflow = "Overflow", // The element overflows into its parent.
 }
 
 function overflow(
@@ -206,8 +210,11 @@ function isTwiceAsBig(
 namespace ClippingAncestor {
   export const vertical = clipper("height", localVerticalOverflow);
   // This is eta-expanded to avoid premature evaluation of the localHorizontalOverflow function.
-  export const foo = (device: Device, element: Element) =>
-    clipper("width", localHorizontalOverflow())(device, element);
+  export const foo = (
+    device: Device,
+    element: Element,
+    debug: boolean = false,
+  ) => clipper("width", localHorizontalOverflow(debug))(device, element);
 
   const predicates = { height: isHeight, width: isWidth };
   const caches = {
@@ -284,36 +291,127 @@ namespace ClippingAncestor {
    * that run has escaped its block container or not. `text-overflow` only takes
    * effect on the first ancestor block container.
    */
-  function localHorizontalOverflow(): (
-    device: Device,
-    element: Element,
-  ) => Overflow {
+  function localHorizontalOverflow(
+    debug = false,
+  ): (device: Device, element: Element) => Overflow {
+    const show = debug ?? false ? console.log : () => {};
+    const showAll = debug ?? false ? console.dir : () => {};
+    // While we are in the same block as the text:
+    // * text can break at soft wrap points (whitespace).
+    // * text-overflow can handle the overflow.
     let inSameBlock = true;
 
     return (device, element) => {
+      show(`Testing: ${element.toString()} - same block: ${inSameBlock}`);
       const style = Style.from(element, device);
 
-      const whiteSpace = style.computed("white-space").value.value;
-      if (whiteSpace !== "nowrap" && whiteSpace !== "pre") {
+      if (
+        inSameBlock &&
+        hasComputedStyle(
+          "white-space",
+          (value) => !value.is("nowrap", "pre"),
+          device,
+        )(element) &&
+        hasSoftWrapPoints(device)(element)
+      ) {
+        show("Wrapping!");
         // Whitespace causes wrapping, the element doesn't overflow its text.
         // Note that if individual atomic components (words, or nested elements
         // with nowrap) are too long, overflow will still occur. But we can't
-        // really detect that.
+        // easily detect that.
         return Overflow.Handle;
       }
 
+      const flexWrap = style.used("flex-wrap");
+      showAll(flexWrap.toJSON());
+      if (
+        hasUsedStyle(
+          "flex-wrap",
+          (value) => !value.is("nowrap"),
+          device,
+        )(element)
+      ) {
+        // The element is a wrapping flex container, children will wrap
+        // It may still overflow if individual children are too big, but we
+        // assume this won't happen; this only creates false negatives.
+        return Overflow.Handle;
+      }
+
+      const textOverflow = style.used("text-overflow");
       const horizontalOverflow = overflow(element, device, "x");
+      showAll(textOverflow.toJSON());
+      show(horizontalOverflow);
+      let result: Overflow;
       switch (horizontalOverflow) {
         case Overflow.Clip:
-          return inSameBlock ? Overflow.Clip : Overflow.Overflow;
-        case Overflow.Handle:
-          inSameBlock = false;
-          return Overflow.Handle;
-        case Overflow.Overflow:
-          inSameBlock = false;
-          return Overflow.Overflow;
+          // We should check here whether the element's size is constrained
+          // horizontally or not. We assume all elements are because the pages
+          // usually don't scroll infinitely in the horizontal dimension.
+          // This mostly gives us the wrong clipper.
+          result =
+            inSameBlock &&
+            textOverflow.some(({ value }) => value.is("ellipsis"))
+              ? // If we are still in the same block, `text-overflow` can handle it
+                // This is were inline elements will not have a `text-overflow` and
+                // return `Clip` even if their width is not constrained!
+                Overflow.Handle
+              : Overflow.Clip;
+
+          show(`Clip - result: ${result}`);
+
+          break;
+        default:
+          result = horizontalOverflow;
       }
+
+      if (Style.isBlockContainer(style)) {
+        // Are we exiting the block?
+        inSameBlock = false;
+      }
+
+      return result;
     };
+  }
+
+  const _softWrapPointsCache = Cache.empty<Device, Cache<Node, boolean>>();
+  function hasSoftWrapPoints(device: Device): Predicate<Node> {
+    return (node) =>
+      _softWrapPointsCache.get(device, Cache.empty).get(node, () => {
+        if (isText(node)) {
+          // This is not fully correct, depending on languages
+          // See https://drafts.csswg.org/css-text/#line-breaking
+          return String.hasWhitespace(node.data);
+        }
+
+        if (isElement(node)) {
+          // If the element itself refuses to wrap, it cancels the soft wrap
+          // points of its children.
+          if (
+            hasComputedStyle(
+              "white-space",
+              (value) => value.is("nowrap", "pre"),
+              device,
+            )(node)
+          ) {
+            return false;
+          }
+
+          // If the element has only one child, that child must have wrap points.
+          // Otherwise, we assume that soft wrap points exist in-between children.
+          // This is not fully correct since inter-element spaces is needed for
+          // that, e.g. we incorrectly consider that
+          // `<div><span>he</span><span>llo</span></div>` has wrap points between
+          // the `<span>`.
+          // This is OK-ish because Alfa does explicit the inter-elements space.
+          const children = node.children(Node.fullTree);
+          return (
+            children.size > 1 ||
+            children.first().some(hasSoftWrapPoints(device))
+          );
+        }
+
+        return false;
+      });
   }
 
   /**
