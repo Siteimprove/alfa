@@ -307,18 +307,21 @@ namespace ClippingAncestor {
 
       if (
         inSameBlock &&
-        hasComputedStyle(
-          "white-space",
-          (value) => !value.is("nowrap", "pre"),
-          device,
-        )(element) &&
-        hasSoftWrapPoints(device)(element)
+        test(
+          and(
+            hasComputedStyle(
+              "white-space",
+              (value) => !value.is("nowrap", "pre"),
+              device,
+            ),
+            hasSoftWrapPoints(device),
+          ),
+          element,
+        )
       ) {
         show("Wrapping!");
-        // Whitespace causes wrapping, the element doesn't overflow its text.
-        // Note that if individual atomic components (words, or nested elements
-        // with nowrap) are too long, overflow will still occur. But we can't
-        // easily detect that.
+        // The element both allows wrapping and has soft wrap points for it to
+        // actually occur.
         return Overflow.Handle;
       }
 
@@ -341,27 +344,26 @@ namespace ClippingAncestor {
       const horizontalOverflow = overflow(element, device, "x");
       showAll(textOverflow.toJSON());
       show(horizontalOverflow);
-      let result: Overflow;
-      switch (horizontalOverflow) {
-        case Overflow.Clip:
-          // We should check here whether the element's size is constrained
-          // horizontally or not. We assume all elements are because the pages
-          // usually don't scroll infinitely in the horizontal dimension.
-          // This mostly gives us the wrong clipper.
-          result =
-            inSameBlock &&
-            textOverflow.some(({ value }) => value.is("ellipsis"))
-              ? // If we are still in the same block, `text-overflow` can handle it
-                // This is were inline elements will not have a `text-overflow` and
-                // return `Clip` even if their width is not constrained!
-                Overflow.Handle
-              : Overflow.Clip;
+      let result = horizontalOverflow;
+      if (horizontalOverflow === Overflow.Clip) {
+        // We should check here whether the element's size is constrained
+        // horizontally or not. We assume all elements are because the pages
+        // usually don't scroll infinitely in the horizontal dimension.
+        // This mostly gives us the wrong clipper.
+        result =
+          inSameBlock &&
+          hasUsedStyle(
+            "text-overflow",
+            (value) => value.is("ellipsis"),
+            device,
+          )(element)
+            ? // If we are still in the same block, `text-overflow` can handle it
+              // This is where inline elements will not have a `text-overflow` and
+              // return `Clip` even if their width is not constrained!
+              Overflow.Handle
+            : Overflow.Clip;
 
-          show(`Clip - result: ${result}`);
-
-          break;
-        default:
-          result = horizontalOverflow;
+        show(`Clip - result: ${result}`);
       }
 
       if (Style.isBlockContainer(style)) {
@@ -445,135 +447,6 @@ namespace ClippingAncestor {
       device,
     );
   }
-
-  /**
-   * Checks if an element ultimately clips its horizontal overflow:
-   * * all elements are assumed to have fixed width because the page cannot
-   * extend infinitely in the horizontal dimension;
-   * * first we look at the element itself and how it handles the text overflow
-   * of its children text nodes;
-   * * if text overflows its parent, it does so as content, so we look for an
-   *   ancestor that either handles it (scroll bar) or clips it.
-   */
-  export function horizontal(
-    device: Device,
-    element: Element,
-  ): Option<Element> {
-    function clipper(element: Element): Option<Element> {
-      if (hasFontRelativeValue(device, "width")(element)) {
-        // The element grows with its text.
-        return None;
-      }
-
-      if (test(Media.usesFontRelativeMediaRule(device, isWidth), element)) {
-        // The element uses a (font relative) media rule, and we can't guess
-        // what the page would like upon resizing and triggering a different
-        // media query, so we just accept it as good enough
-        return None;
-      }
-
-      switch (horizontalTextOverflow(element, device)) {
-        case Overflow.Clip:
-          return Option.of(element);
-        case Overflow.Handle:
-          return None;
-        case Overflow.Overflow:
-          return getPositioningParent(element, device).flatMap(
-            horizontallyClippingAncestor(device),
-          );
-      }
-    }
-
-    return clipper(element);
-  }
-
-  const _horizontallyClippingCache = Cache.empty<
-    Device,
-    Cache<Element, Option<Element>>
-  >();
-
-  /**
-   * Checks whether the first offset ancestor that doesn't overflow is
-   * clipping.
-   *
-   * When encountering an ancestor which is a wrapping flex container, we assume
-   * that this ancestor is correctly wrapping all its children and that no
-   * individual child overflows enough to overflow the parent (when alone on a
-   * line). This is not fully correct (since an individual child might overflow
-   * enough that it would overflow the flex-wrapping ancestor even if alone on a
-   * line); but this seems to be a frequent use case.
-   */
-  function horizontallyClippingAncestor(
-    device: Device,
-  ): (element: Element) => Option<Element> {
-    return function clippingAncestor(element: Element): Option<Element> {
-      return _horizontallyClippingCache
-        .get(device, Cache.empty)
-        .get(element, () => {
-          if (hasFontRelativeValue(device, "width")(element)) {
-            // The element grows with its content.
-            // The content might still be clipped by an ancestor, but we
-            // assume this denotes a small component inside a large container
-            // with enough room for the component to grow to 200% or more
-            // before being clipped.
-            return None;
-          }
-
-          if (test(Media.usesFontRelativeMediaRule(device, isWidth), element)) {
-            // The element uses a (font relative) media rule, and we can't
-            // guess what the page would like upon resizing and triggering a
-            // different media query, so we just accept it as good enough
-            return None;
-          }
-
-          if (isWrappingFlexContainer(device)(element)) {
-            // The element handles overflow by wrapping its flex descendants
-            return None;
-          }
-          switch (overflow(element, device, "x")) {
-            case Overflow.Clip:
-              return Option.of(element);
-            case Overflow.Handle:
-              return None;
-            case Overflow.Overflow:
-              return getPositioningParent(element, device).flatMap(
-                clippingAncestor,
-              );
-          }
-        });
-    };
-  }
-}
-
-/**
- * Checks how an element handle its text overflow (overflow of its children
- * text nodes).
- */
-function horizontalTextOverflow(element: Element, device: Device): Overflow {
-  const style = Style.from(element, device);
-
-  const { value: whitespace } = style.computed("white-space");
-
-  if (whitespace.value !== "nowrap" && whitespace.value !== "pre") {
-    // Whitespace causes wrapping, the element doesn't overflow its text.
-    return Overflow.Handle;
-  }
-  // If whitespace does not cause wrapping, we need to check if a text
-  // overflow occurs and could cause the text to clip.
-  switch (overflow(element, device, "x")) {
-    case Overflow.Overflow:
-      // The text always overflow into the parent, parent needs to handle an
-      // horizontal content overflow
-      return Overflow.Overflow;
-    case Overflow.Handle:
-      // The element handles its text overflow with a scroll bar
-      return Overflow.Handle;
-    case Overflow.Clip:
-      // The element clip its overflow, but maybe `text-overflow` handles it.
-      const { value: overflow } = style.computed("text-overflow");
-      // We assume that anything other than `clip` handles the overflow.
-      return overflow.value === "clip" ? Overflow.Clip : Overflow.Handle;
-  }
 }
 
 /**
@@ -610,22 +483,6 @@ function hasFontRelativeValue(
   );
 }
 
-function isWrappingFlexContainer(device: Device): Predicate<Element> {
-  return (element) => {
-    const style = Style.from(element, device);
-    const {
-      value: { values: display },
-    } = style.computed("display");
-
-    if (display[1]?.value === "flex") {
-      // The element is a flex container
-      const { value: flexWrap } = style.computed("flex-wrap");
-      return flexWrap.value !== "nowrap";
-    }
-
-    return false;
-  };
-}
 /*
  * We accept any property depending on a media query as handling the overflow,
  * not just the concerned properties (height, width, …) This is because the mere
