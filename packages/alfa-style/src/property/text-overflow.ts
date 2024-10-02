@@ -1,7 +1,7 @@
 import { Option } from "@siteimprove/alfa-option";
 
 import { Longhand } from "../longhand.js";
-import { isBlockContainer } from "../predicate/is-block-container.js";
+import { isBlockContainer } from "../predicate/index.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow}

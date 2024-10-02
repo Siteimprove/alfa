@@ -1,6 +1,6 @@
 import { Option } from "@siteimprove/alfa-option";
 import { Longhand } from "../longhand.js";
-import { isFlexContainer } from "../predicate/is-flex-container.js";
+import { isFlexContainer } from "../predicate/index.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap}

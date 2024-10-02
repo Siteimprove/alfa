@@ -3,9 +3,11 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Longhand } from "../longhand.js";
-import { isBlockContainer } from "../predicate/is-block-container.js";
-import { isFlexContainer } from "../predicate/is-flex-container.js";
-import { isGridContainer } from "../predicate/is-grid-container.js";
+import {
+  isBlockContainer,
+  isFlexContainer,
+  isGridContainer,
+} from "../predicate/index.js";
 
 const { or } = Predicate;
 
