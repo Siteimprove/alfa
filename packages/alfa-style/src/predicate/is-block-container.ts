@@ -20,8 +20,8 @@ export function isBlockContainer(style: Style): boolean {
 
   return (
     // block
-    outside.value === "block" ||
+    outside.is("block") ||
     // inline-block
-    (outside.value === "inline" && inside?.value === "flow-root")
+    (outside.is("inline") && (inside?.is("flow-root") ?? false))
   );
 }

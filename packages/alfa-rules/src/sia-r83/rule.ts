@@ -118,7 +118,7 @@ export default Rule.Atomic.of<Page, Text>({
               parent,
             );
 
-            const isBig = isTwiceAsBig(parent, device);
+            const hasBig = isTwiceAsBig(parent, device);
 
             return {
               1: expectation(
@@ -137,8 +137,8 @@ export default Rule.Atomic.of<Page, Text>({
                   // this is not likely and just ignore it. This would only create
                   // false negatives.
                   expectation(
-                    horizontallyClippedBy.every(isBig("width")) &&
-                      verticallyClippedBy.every(isBig("height")),
+                    horizontallyClippedBy.every(hasBig("width")) &&
+                      verticallyClippedBy.every(hasBig("height")),
                     () =>
                       Outcomes.IsContainer(
                         horizontallyClippedBy,
