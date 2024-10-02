@@ -38,6 +38,10 @@ export class Keyword<T extends string = string>
     return this;
   }
 
+  public is(...values: Array<string>): boolean {
+    return values.includes(this._value);
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Keyword && value._value === this._value;
   }
