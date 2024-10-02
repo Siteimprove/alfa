@@ -308,7 +308,23 @@ function displayTable(value: Specified): Computed {
  * {@link https://html.spec.whatwg.org/multipage/rendering.html#button-layout}
  */
 function buttonLayout(value: Specified): Computed {
-  return value.values[0].value === "inline"
-    ? Tuple.of(Keyword.of("inline"), Keyword.of("flow-root"))
-    : value;
+  const [outside, inside] = value.values;
+
+  if (inside?.is("flex", "grid")) {
+    // flex, inline-flex, grid, inline-grid
+    return value;
+  }
+
+  if (outside.is("contents", "none")) {
+    // contents, none
+    return value;
+  }
+
+  if (outside.is("inline")) {
+    // inline
+    return Tuple.of(Keyword.of("inline"), Keyword.of("flow-root"));
+  }
+
+  // default
+  return Tuple.of(Keyword.of("block"), Keyword.of("flow-root"));
 }
