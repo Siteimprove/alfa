@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { RuleTree } from "@siteimprove/alfa-cascade";
@@ -105,16 +104,13 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        const debug = target.data.includes("debug");
-
         return target
           .parent(Node.fullTree)
           .filter(isElement)
           .map((parent) => {
-            const horizontallyClippedBy = ClippingAncestor.foo(
+            const horizontallyClippedBy = ClippingAncestor.horizontal(
               device,
               parent,
-              debug,
             );
 
             const verticallyClippedBy = ClippingAncestor.vertical(
@@ -210,11 +206,8 @@ function isTwiceAsBig(
 namespace ClippingAncestor {
   export const vertical = clipper("height", localVerticalOverflow);
   // This is eta-expanded to avoid premature evaluation of the localHorizontalOverflow function.
-  export const foo = (
-    device: Device,
-    element: Element,
-    debug: boolean = false,
-  ) => clipper("width", localHorizontalOverflow(debug))(device, element);
+  export const horizontal = (device: Device, element: Element) =>
+    clipper("width", localHorizontalOverflow())(device, element);
 
   const predicates = { height: isHeight, width: isWidth };
   const caches = {
@@ -291,18 +284,16 @@ namespace ClippingAncestor {
    * that run has escaped its block container or not. `text-overflow` only takes
    * effect on the first ancestor block container.
    */
-  function localHorizontalOverflow(
-    debug = false,
-  ): (device: Device, element: Element) => Overflow {
-    const show = debug ?? false ? console.log : () => {};
-    const showAll = debug ?? false ? console.dir : () => {};
+  function localHorizontalOverflow(): (
+    device: Device,
+    element: Element,
+  ) => Overflow {
     // While we are in the same block as the text:
     // * text can break at soft wrap points (whitespace).
     // * text-overflow can handle the overflow.
     let inSameBlock = true;
 
     return (device, element) => {
-      show(`Testing: ${element.toString()} - same block: ${inSameBlock}`);
       const style = Style.from(element, device);
 
       if (
@@ -319,14 +310,11 @@ namespace ClippingAncestor {
           element,
         )
       ) {
-        show("Wrapping!");
         // The element both allows wrapping and has soft wrap points for it to
         // actually occur.
         return Overflow.Handle;
       }
 
-      const flexWrap = style.used("flex-wrap");
-      showAll(flexWrap.toJSON());
       if (
         hasUsedStyle(
           "flex-wrap",
@@ -340,10 +328,7 @@ namespace ClippingAncestor {
         return Overflow.Handle;
       }
 
-      const textOverflow = style.used("text-overflow");
       const horizontalOverflow = overflow(element, device, "x");
-      showAll(textOverflow.toJSON());
-      show(horizontalOverflow);
       let result = horizontalOverflow;
       if (horizontalOverflow === Overflow.Clip) {
         // We should check here whether the element's size is constrained
@@ -362,8 +347,6 @@ namespace ClippingAncestor {
               // return `Clip` even if their width is not constrained!
               Overflow.Handle
             : Overflow.Clip;
-
-        show(`Clip - result: ${result}`);
       }
 
       if (Style.isBlockContainer(style)) {
