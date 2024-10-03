@@ -9,6 +9,7 @@ export * from "./predicate/has-positioning-parent.js";
 export * from "./predicate/has-specified-style.js";
 export * from "./predicate/has-text-decoration.js";
 export * from "./predicate/has-transparent-background.js";
+export * from "./predicate/has-used-style.js";
 export * from "./predicate/is-focusable.js";
 export * from "./predicate/is-important.js";
 export * from "./predicate/is-inert.js";

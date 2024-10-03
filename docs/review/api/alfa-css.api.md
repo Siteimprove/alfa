@@ -1002,6 +1002,8 @@ export class Keyword<T extends string = string> extends Value<"keyword", false> 
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
+    is(...values: Array<string>): boolean;
+    // (undocumented)
     static of<T extends string>(value: T): Keyword<T>;
     // (undocumented)
     resolve(): Keyword<T>;

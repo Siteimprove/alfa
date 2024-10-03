@@ -363,7 +363,9 @@ export class Style implements Serializable<Style.JSON> {
     inherited<N extends Name>(name: N): Value<Style.Inherited<N>>;
     // (undocumented)
     initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
-    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option<Style>): Style;
+    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option<Style>, owner?: Option<Element>): Style;
+    // (undocumented)
+    get owner(): Option<Element>;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
@@ -420,6 +422,7 @@ export namespace Style {
     hasSpecifiedStyle: typeof element.hasSpecifiedStyle, // (undocumented)
     hasTextDecoration: typeof element.hasTextDecoration, // (undocumented)
     hasTransparentBackground: typeof element.hasTransparentBackground, // (undocumented)
+    hasUsedStyle: typeof element.hasUsedStyle, // (undocumented)
     isFocusable: typeof element.isFocusable, // (undocumented)
     isImportant: typeof element.isImportant, // (undocumented)
     isInert: typeof element.isInert, // (undocumented)
@@ -432,6 +435,12 @@ export namespace Style {
     isRendered: typeof node.isRendered, // (undocumented)
     isVisible: typeof node.isVisible, // (undocumented)
     isScrolledBehind: typeof node.isScrolledBehind;
+    const // Warning: (ae-forgotten-export) The symbol "predicates" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isBlockContainer: typeof predicates.isBlockContainer, // (undocumented)
+    isFlexContainer: typeof predicates.isFlexContainer, // (undocumented)
+    isGridContainer: typeof predicates.isGridContainer;
 }
 
 // @public (undocumented)

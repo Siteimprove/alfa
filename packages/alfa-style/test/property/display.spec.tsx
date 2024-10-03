@@ -207,3 +207,22 @@ test("#cascaded() parses `display: ruby-text`", (t) => {
     ],
   });
 });
+
+test("#computed assigns `inline-block` to inline `<button>` elements", (t) => {
+  const element = <button style={{ display: "inline" }} />;
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("display").toJSON().value, {
+    type: "tuple",
+    values: [
+      {
+        type: "keyword",
+        value: "inline",
+      },
+      {
+        type: "keyword",
+        value: "flow-root",
+      },
+    ],
+  });
+});
