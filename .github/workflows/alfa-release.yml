@@ -100,7 +100,7 @@ jobs:
       - name: Install Playwright browsers if needed
         # https://playwright.dev/docs/ci-intro
         # This is very dirty hacks! We should let callers opt-in for extra setup instead.
-        run: >
+        run: |
           [[ ! -d packages/alfa-playwright ]] || yarn workspace @siteimprove/alfa-playwright playwright install
           yarn playwright install || true
 
