@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-get x(): Number.Canonical;
+get x(): X;
 ```

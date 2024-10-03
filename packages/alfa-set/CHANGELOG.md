@@ -1,5 +1,7 @@
 # @siteimprove/alfa-set
 
+## 0.93.0
+
 ## 0.92.0
 
 ### Minor Changes

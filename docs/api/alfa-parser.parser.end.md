@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E>;
+export function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E>;
 ```
 
 ## Parameters

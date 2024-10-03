@@ -1,5 +1,33 @@
 # @siteimprove/alfa-style
 
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** Support for CSS properties `scale` and `translate` was added. ([#1688](https://github.com/Siteimprove/alfa/pull/1688))
+
+- **Added:** A `Style.hasUsedStyle` predicate builder is now available. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- **Added:** Style properties `container-type`, `mix-blend-mode` and `isolation` are now supported. ([#1675](https://github.com/Siteimprove/alfa/pull/1675))
+
+- **Added:** Style property `contain` is now supported. ([#1679](https://github.com/Siteimprove/alfa/pull/1679))
+
+- **Fixed:** `flex-wrap` now has a used value of `None` on elements that are not flex containers. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- **Added:** `Style` objects now have an optional `owner` pointing to the element whose style it is. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- **Added:** Basic support for used values is now available. ([#1689](https://github.com/Siteimprove/alfa/pull/1689))
+
+  This mostly supports no values for elements where the property does not apply.
+
+### Patch Changes
+
+- **Fixed:** `<option>` elements that are hidden by their `<select>` are now correctly considered as invisible. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+- **Fixed:** `overflow` and `text-overflow` now have no used value on elements where they don't apply. ([#1689](https://github.com/Siteimprove/alfa/pull/1689))
+
+- **Fixed:** The computed value of `display` for `<button>` elements now correctly handles button layout. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
 ## 0.92.0
 
 ### Minor Changes

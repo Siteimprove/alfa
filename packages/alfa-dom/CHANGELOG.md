@@ -1,5 +1,21 @@
 # @siteimprove/alfa-dom
 
+## 0.93.0
+
+### Minor Changes
+
+- **Breaking:** `Element.hasDisplaySize()` now builds a `Predicate<Element<"select">>` instead of a `Predicate<Element>`. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+  That is, it can only be applied to elements that have been typed as `<select>` elements, where it makes sense. If the type of element cannot be narrowed in TypeScript (e.g. because it is the result of a direct test on `Element#name`), a type assertion is needed; in general, using the `Element.hasName` refinement is recommended over testing `Element#name`.
+
+- **Added:** A method `Element<"select">#displaySize()` is now available. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+- **Breaking:** The helper `Element.inputType(element)` has been replaced by a method `element.inputType()`. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+  It can still only be called if `element` has been typed as `Element<"input">`, i.e. is an `<input>` HTML element.
+
+- **Added:** An `Element<"select">#optionsList()` helper is now available. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
 ## 0.92.0
 
 ### Minor Changes

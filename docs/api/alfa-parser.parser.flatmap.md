@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function flatMap<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, Parser<I, U, E, A>>): Parser<I, U, E, A>;
+export function flatMap<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, Parser<I, U, E, A>>): Parser<I, U, E, A>;
 ```
 
 ## Parameters

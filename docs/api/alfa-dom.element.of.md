@@ -28,5 +28,5 @@ static of<N extends string = string>(namespace: Option<Namespace>, prefix: Optio
 
 **Returns:**
 
-[Element](./alfa-dom.element.md)<!-- -->&lt;N&gt;
+Element&lt;N&gt;
 

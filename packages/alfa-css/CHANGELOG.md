@@ -1,5 +1,17 @@
 # @siteimprove/alfa-css
 
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** Support for CSS properties `scale` and `translate` was added. ([#1688](https://github.com/Siteimprove/alfa/pull/1688))
+
+- **Added:** Style property `contain` is now supported. ([#1679](https://github.com/Siteimprove/alfa/pull/1679))
+
+- **Added:** A `Keyword#is` predicate is now available. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- **Added:** Transform functions `scale3d()` and `scaleZ()` have been added and the scale transformation functions now accept percentages. ([#1688](https://github.com/Siteimprove/alfa/pull/1688))
+
 ## 0.92.0
 
 ### Minor Changes

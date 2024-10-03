@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function take<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, count: number): Parser<I, Array<T>, E, A>;
+export function take<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, count: number): Parser<I, Array<T>, E, A>;
 ```
 
 ## Parameters

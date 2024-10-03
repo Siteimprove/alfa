@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function either<I, T, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, T, E, A>, ...rest: Array<Parser<I, T, E, A>>): Parser<I, T, E, A>;
+export function either<I, T, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, T, E, A>, ...rest: Array<Parser<I, T, E, A>>): Parser<I, T, E, A>;
 ```
 
 ## Parameters

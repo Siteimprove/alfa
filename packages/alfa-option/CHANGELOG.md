@@ -1,5 +1,11 @@
 # @siteimprove/alfa-option
 
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** An `Option.conditional` builder is now available, returning `None` if the predicate is false. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
 ## 0.92.0
 
 ### Minor Changes

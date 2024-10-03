@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-x: Number.Fixed.JSON;
+x: Number.Fixed.JSON | Percentage.Fixed.JSON;
 ```

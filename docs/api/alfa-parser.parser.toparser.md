@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function toParser<I, T, A extends Array<unknown> = []>(infallible: Parser.Infallible<I, T, A>): Parser<I, T, never, A>;
+export function toParser<I, T, A extends Array<unknown> = []>(infallible: Parser.Infallible<I, T, A>): Parser<I, T, never, A>;
 ```
 
 ## Parameters

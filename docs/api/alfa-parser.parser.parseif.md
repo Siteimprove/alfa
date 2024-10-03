@@ -9,7 +9,7 @@ Parse if the result satisfies the predicate or refinement.
 **Signature:**
 
 ```typescript
-function parseIf<I, T, E, U extends T = T, A extends Array<unknown> = []>(refinement: Refinement<T, U>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
+export function parseIf<I, T, E, U extends T = T, A extends Array<unknown> = []>(refinement: Refinement<T, U>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
 ```
 
 ## Parameters

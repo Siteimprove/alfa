@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function oneOrMore<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, [T, ...Array<T>], E, A>;
+export function oneOrMore<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, [T, ...Array<T>], E, A>;
 ```
 
 ## Parameters

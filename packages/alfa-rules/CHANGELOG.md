@@ -1,5 +1,15 @@
 # @siteimprove/alfa-rules
 
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** Experimental rule SIA-ER8. It adds support for `type="password"` and more. ([#1667](https://github.com/Siteimprove/alfa/pull/1667))
+
+### Patch Changes
+
+- **Fixed:** SIA-R83 is now better at handling `white-space` and `text-overflow`. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
 ## 0.92.0
 
 ### Minor Changes

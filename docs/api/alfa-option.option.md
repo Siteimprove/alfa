@@ -15,6 +15,7 @@ export declare namespace Option
 
 |  Function | Description |
 |  --- | --- |
+|  [conditional(value, predicate)](./alfa-option.option.conditional.md) |  |
 |  [empty()](./alfa-option.option.empty.md) |  |
 |  [from(value)](./alfa-option.option.from.md) |  |
 |  [isNone(value)](./alfa-option.option.isnone.md) |  |

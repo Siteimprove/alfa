@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-resolve(): Scale;
+resolve(): Scale.Canonical;
 ```
 **Returns:**
 
-[Scale](./alfa-css.scale.md)
+[Scale.Canonical](./alfa-css.scale.canonical.md)
 

@@ -1,5 +1,11 @@
 # @siteimprove/alfa-string
 
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** A `String.hasWhitespace` predicate is now available. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
 ## 0.92.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @siteimprove/alfa-selector
 
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** The `:checked` pseudo-class is now supported. ([#1684](https://github.com/Siteimprove/alfa/pull/1684))
+
 ## 0.92.0
 
 ### Minor Changes

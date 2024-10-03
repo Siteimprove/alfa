@@ -11,6 +11,7 @@
 |  [Block](./alfa-css.block.md) | [https://drafts.csswg.org/css-syntax/\#simple-block](https://drafts.csswg.org/css-syntax/#simple-block) |
 |  [Circle](./alfa-css.circle.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-circle](https://drafts.csswg.org/css-shapes/#funcdef-circle) |
 |  [Component](./alfa-css.component.md) | [https://drafts.csswg.org/css-syntax/\#component-value](https://drafts.csswg.org/css-syntax/#component-value) |
+|  [ContainFlags](./alfa-css.containflags.md) |  |
 |  [Declaration](./alfa-css.declaration.md) | [https://drafts.csswg.org/css-syntax/\#declaration](https://drafts.csswg.org/css-syntax/#declaration) |
 |  [Ellipse](./alfa-css.ellipse.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-ellipse](https://drafts.csswg.org/css-shapes/#funcdef-ellipse) |
 |  [Function\_2](./alfa-css.function_2.md) | [https://drafts.csswg.org/css-syntax/\#function](https://drafts.csswg.org/css-syntax/#function) |
@@ -31,7 +32,7 @@
 |  [Rectangle](./alfa-css.rectangle.md) | [https://drafts.fxtf.org/css-masking/\#funcdef-clip-rect](https://drafts.fxtf.org/css-masking/#funcdef-clip-rect) |
 |  [RGB](./alfa-css.rgb.md) |  |
 |  [Rotate](./alfa-css.rotate.md) |  |
-|  [Scale](./alfa-css.scale.md) |  |
+|  [Scale](./alfa-css.scale.md) | Class representing a transformation that resizes an element in either 2D or 3D space. Is parsed from either a scale() or scale3d() transform function or a value of the scale property. |
 |  [Shadow](./alfa-css.shadow.md) |  |
 |  [Shape](./alfa-css.shape.md) |  |
 |  [Skew](./alfa-css.skew.md) |  |
@@ -65,6 +66,8 @@
 |  [Color](./alfa-css.color.md) |  |
 |  [Comma](./alfa-css.comma.md) |  |
 |  [Component](./alfa-css.component.md) |  |
+|  [Contain](./alfa-css.contain.md) |  |
+|  [ContainFlags](./alfa-css.containflags.md) |  |
 |  [Converter](./alfa-css.converter.md) |  |
 |  [Current](./alfa-css.current.md) |  |
 |  [Declaration](./alfa-css.declaration.md) |  |
@@ -119,6 +122,7 @@
 |  [AnglePercentage](./alfa-css.anglepercentage.md) |  |
 |  [Box](./alfa-css.box.md) | [https://drafts.csswg.org/css-backgrounds/\#typedef-box](https://drafts.csswg.org/css-backgrounds/#typedef-box) |
 |  [Color](./alfa-css.color.md) |  |
+|  [Contain](./alfa-css.contain.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/contain\#formal\_syntax](https://developer.mozilla.org/en-US/docs/Web/CSS/contain#formal_syntax) |
 |  [Converter](./alfa-css.converter.md) | Converters are functions that convert an input value from one unit within a set of units to another unit within the same set of units. |
 |  [Current](./alfa-css.current.md) | [https://drafts.csswg.org/css-color/\#currentcolor-color](https://drafts.csswg.org/css-color/#currentcolor-color) |
 |  [Gradient](./alfa-css.gradient.md) | [https://drafts.csswg.org/css-images/\#gradients](https://drafts.csswg.org/css-images/#gradients) |

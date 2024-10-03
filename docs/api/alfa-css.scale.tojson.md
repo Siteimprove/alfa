@@ -7,9 +7,15 @@
 **Signature:**
 
 ```typescript
-toJSON(): Scale.JSON;
+toJSON(): {
+        z?: Number.Fixed.JSON | Percentage.Fixed.JSON | undefined;
+        x: Number.Fixed.JSON | Percentage.Fixed.JSON;
+        y: Number.Fixed.JSON | Percentage.Fixed.JSON;
+        kind: "scale";
+        type: "transform";
+    };
 ```
 **Returns:**
 
-[Scale.JSON](./alfa-css.scale.json.md)
+{ z?: [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) \| undefined; x: [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)<!-- -->; y: [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)<!-- -->; kind: "scale"; type: "transform"; }
 
