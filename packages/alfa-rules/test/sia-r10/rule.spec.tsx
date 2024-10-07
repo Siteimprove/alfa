@@ -71,6 +71,19 @@ test("evaluate() passes autocomplete attribute with `section-blue shipping home 
   ]);
 });
 
+test("evaluate() passes autocomplete attribute with `section-red shipping postal-code`", async (t) => {
+  const element = <input autocomplete="section-red shipping postal-code" />;
+  const target = element.attribute("autocomplete").getUnsafe();
+
+  const document = h.document([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [
+    passed(R10, target, {
+      1: Outcomes.HasValidValue,
+    }),
+  ]);
+});
+
 test("evaluate() fails an autocomplete attribute with a non-existing term", async (t) => {
   const element = <input autocomplete="invalid" />;
   const target = element.attribute("autocomplete").getUnsafe();
