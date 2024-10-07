@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.93.1](../../compare/v0.93.0...v0.93.1) (2024-10-07)
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0931): Mono-line `<select>` are again correctly considered as visible. ([#1696](https://github.com/Siteimprove/alfa/pull/1696))
+
 ## [0.93.0](../../compare/v0.92.0...v0.93.0) (2024-10-03)
 
 ### Breaking

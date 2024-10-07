@@ -1,5 +1,7 @@
 # @siteimprove/alfa-earl
 
+## 0.93.1
+
 ## 0.93.0
 
 ## 0.92.0
