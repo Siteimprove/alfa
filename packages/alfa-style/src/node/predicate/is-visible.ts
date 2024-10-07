@@ -102,8 +102,14 @@ function isInvisible(
 /**
  * Elements that are *not* "replaced elements" but are nonetheless visible when
  * empty
+ *
+ * @remarks
+ * * `<textarea>` always draw a box to input the text and thus are always visible
+ *   even though they have no children.
+ * * Single line `<select>` do not show their children `<option>` but nonetheless
+ *   show the text of the selected (or first) option, and thus are visible.
  */
-const isVisibleWhenEmpty = hasName("textarea");
+const isVisibleWhenEmpty = hasName("textarea", "select");
 
 /**
  * Does the element have set dimensions?
