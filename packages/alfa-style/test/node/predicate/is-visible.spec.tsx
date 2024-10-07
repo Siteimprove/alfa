@@ -349,3 +349,17 @@ test("isVisible() returns false for `<option>` that are not shown, and their con
     }
   }
 });
+
+test("isVisible() returns true for single line `<select>`", (t) => {
+  const options = [<option>one</option>, <option>two</option>];
+
+  const select = <select>{options}</select>;
+
+  for (const node of options) {
+    // None of the `<option>` is visible, due to being a single line `<select>`
+    t(!isVisible(node));
+  }
+
+  // The `<select>` is nonetheless visible, showing the value of the first `<option>`.
+  t(isVisible(select));
+});
