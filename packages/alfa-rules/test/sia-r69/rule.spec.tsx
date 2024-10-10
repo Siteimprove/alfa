@@ -932,3 +932,26 @@ test("evaluate() can tell when interposed descendant overlaps offset parent, but
     }),
   ]);
 });
+
+test("evaluate() is inapplicable to `aria-disabled` `<a>` elements without `href`", async (t) => {
+  const document = h.document([<a aria-disabled="true">X</a>]);
+
+  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+});
+
+test("evaluate() is applicable to  `<a>` elements without `href`", async (t) => {
+  const target = h.text("X");
+  const document = h.document([<a>{target}</a>]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(21, 4.5, [
+        Diagnostic.Pairing.of(
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 1)],
+          21,
+        ),
+      ]),
+    }),
+  ]);
+});
