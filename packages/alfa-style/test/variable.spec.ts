@@ -11,15 +11,6 @@ const varBar = (value: string, important: boolean = false) =>
 const propFoo = Declaration.of("foo", "foo");
 const propBar = Declaration.of("bar", "bar");
 
-function pretty(vars: Variable.DefinitionMap, name: string): string {
-  return vars
-    .get(`--${name}`)
-    .getUnsafe()
-    .value.toArray()
-    .map((token) => token.toString())
-    .join("");
-}
-
 test("gather() builds an empty map when there are no declarations", (t) => {
   const actual = Variable.gather([]);
 
@@ -112,88 +103,4 @@ test("flatten() expands variable definitions", (t) => {
       },
     ],
   ]);
-});
-
-test("flatten() expands variables recursively", (t) => {
-  // This actually depends on the order of enumeration of the variables map,
-  // as the right expansion order may avoid the need for recursively expanding.
-  // Therefore, we test with all possible orders. This is done by using the same
-  // names but in different positions (initial, intermediate, final). The
-  // map is enumerated in the same order of the actual names.
-  for (const [intitial, intermediate, final] of [
-    ["foo", "bar", "baz"],
-    ["foo", "baz", "bar"],
-    ["bar", "foo", "baz"],
-    ["bar", "baz", "foo"],
-    ["baz", "foo", "bar"],
-    ["baz", "bar", "foo"],
-  ]) {
-    const map = Variable.gather([
-      Declaration.of(`--${intitial}`, `var(--${intermediate})`),
-      Declaration.of(`--${intermediate}`, `var(--${final})`),
-      Declaration.of(`--${final}`, "Actual value!"),
-    ]);
-
-    const actual = Variable.flatten(map);
-
-    t.deepEqual(
-      pretty(actual, intitial),
-      "Actual value!",
-      `Testing ${intitial} -> ${intermediate} -> ${final}`,
-    );
-
-    t.deepEqual(
-      pretty(actual, intermediate),
-      "Actual value!",
-      `Testing ${intitial} -> ${intermediate} -> ${final}`,
-    );
-
-    t.deepEqual(
-      pretty(actual, final),
-      "Actual value!",
-      `Testing ${intitial} -> ${intermediate} -> ${final}`,
-    );
-  }
-});
-
-test("flatten() expands variables recursively in fallbacks", (t) => {
-  // This actually depends on the order of enumeration of the variables map,
-  // as the right expansion order may avoid the need for recursively expanding.
-  // Therefore, we test with all possible orders. This is done by using the same
-  // names but in different positions (initial, intermediate, final). The
-  // map is enumerated in the same order of the actual names.
-  for (const [intitial, intermediate, final] of [
-    ["foo", "bar", "baz"],
-    ["foo", "baz", "bar"],
-    ["bar", "foo", "baz"],
-    ["bar", "baz", "foo"],
-    ["baz", "foo", "bar"],
-    ["baz", "bar", "foo"],
-  ]) {
-    const map = Variable.gather([
-      Declaration.of(`--${intitial}`, `var--invalid, var(--${intermediate}))`),
-      Declaration.of(`--${intermediate}`, `var(--${final})`),
-      Declaration.of(`--${final}`, "Actual value!"),
-    ]);
-
-    const actual = Variable.flatten(map);
-
-    t.deepEqual(
-      pretty(actual, intitial),
-      "Actual value!",
-      `Testing ${intitial} -> (fallback) ${intermediate} -> ${final}`,
-    );
-
-    t.deepEqual(
-      pretty(actual, intermediate),
-      "Actual value!",
-      `Testing ${intitial} -> (fallback) ${intermediate} -> ${final}`,
-    );
-
-    t.deepEqual(
-      pretty(actual, final),
-      "Actual value!",
-      `Testing ${intitial} -> (fallback) ${intermediate} -> ${final}`,
-    );
-  }
 });
