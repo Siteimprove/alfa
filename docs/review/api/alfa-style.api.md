@@ -11,7 +11,7 @@ import { Color } from '@siteimprove/alfa-css';
 import { Computed } from './property/line-height.js';
 import { Contain } from '@siteimprove/alfa-css';
 import { Context } from '@siteimprove/alfa-selector';
-import type { Declaration } from '@siteimprove/alfa-dom';
+import { Declaration } from '@siteimprove/alfa-dom';
 import { Device } from '@siteimprove/alfa-device';
 import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
