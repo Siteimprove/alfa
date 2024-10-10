@@ -62,7 +62,7 @@ export namespace Variable {
    */
   export function flatten(variables: DefinitionMap) {
     for (const [name, variable] of variables) {
-      const substitution = substitute(variable.value, variables, undefined);
+      const substitution = substitute(variable.value, variables);
 
       // If the replaced value is valid, use the replaced value as the new value of the variable.
       if (substitution.isSome()) {
@@ -119,8 +119,7 @@ export namespace Variable {
         // https://drafts.csswg.org/css-variables/#invalid-variables
         .or(fallback)
         // Substitute any additional cascading variables within the
-        // result. This substitution happens in the current
-        // style's context.
+        // result. This substitution happens in the current style's context.
         .flatMap((tokens) => substitute(tokens, variables, visited.add(name)))
         .map(([tokens]) => tokens)
     );
