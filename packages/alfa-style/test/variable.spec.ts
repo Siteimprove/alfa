@@ -171,7 +171,7 @@ test("flatten() expands variables recursively in fallbacks", (t) => {
     ["baz", "bar", "foo"],
   ]) {
     const map = Variable.gather([
-      Declaration.of(`--${intitial}`, `var(--invalid, var(--${intermediate}))`),
+      Declaration.of(`--${intitial}`, `var--invalid, var(--${intermediate}))`),
       Declaration.of(`--${intermediate}`, `var(--${final})`),
       Declaration.of(`--${final}`, "Actual value!"),
     ]);

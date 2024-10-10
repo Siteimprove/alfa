@@ -3,13 +3,8 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, Origin } from "@siteimprove/alfa-cascade";
 import { Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  type Declaration,
-  Document,
-  Element,
-  Node,
-  Shadow,
-} from "@siteimprove/alfa-dom";
+import type { Declaration } from "@siteimprove/alfa-dom";
+import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type * as json from "@siteimprove/alfa-json";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -21,11 +16,11 @@ import { Set } from "@siteimprove/alfa-set";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import * as element from "./element/element.js";
+import * as predicates from "./predicate/index.js";
 
 import type { Longhand } from "./longhand.js";
 import { Longhands } from "./longhands.js";
 import * as node from "./node/node.js";
-import * as predicates from "./predicate/index.js";
 import type { Shorthand } from "./shorthand.js";
 import { Shorthands } from "./shorthands.js";
 
