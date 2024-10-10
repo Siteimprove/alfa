@@ -20,8 +20,10 @@ const { delimited, left, map, option, pair, right, takeUntil } = Parser;
 export namespace Variable {
   /**
    * mapping each variable name to its declared value.
+   *
+   * @internal
    */
-  type DefinitionMap = Map<string, Value<Slice<Token>>>;
+  export type DefinitionMap = Map<string, Value<Slice<Token>>>;
 
   /**
    * Gather variables that are declared on the declarations.
@@ -115,16 +117,11 @@ export namespace Variable {
         // If the value of the variable is invalid, as indicated by it being
         // `None`, we instead use the fallback value, if available.
         // https://drafts.csswg.org/css-variables/#invalid-variables
-        .orElse(() =>
-          fallback
-            // Substitute any additional cascading variables within the fallback
-            // value. This substitution happens in the current style's context.
-            .flatMap((tokens) =>
-              substitute(tokens, variables, visited.add(name)).map(
-                ([tokens]) => tokens,
-              ),
-            ),
-        )
+        .or(fallback)
+        // Substitute any additional cascading variables within the
+        // result. This substitution happens in the current style's context.
+        .flatMap((tokens) => substitute(tokens, variables, visited.add(name)))
+        .map(([tokens]) => tokens)
     );
   }
 
