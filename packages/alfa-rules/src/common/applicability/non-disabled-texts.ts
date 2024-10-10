@@ -1,14 +1,8 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
-import type {
-  Document} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Text,
-} from "@siteimprove/alfa-dom";
+import type { Document } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -17,7 +11,7 @@ import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
 const { hasRole, isSemanticallyDisabled } = DOM;
-const { hasNamespace, isElement } = Element;
+const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { or, not } = Predicate;
 const { and, test } = Refinement;
 const { isVisible } = Style;
@@ -92,8 +86,16 @@ function* visit(
 }
 
 function isDisabledGroupOrWidget(device: Device): Predicate<Element> {
-  return and(
-    hasRole(device, (role) => role.isWidget() || role.is("group")),
-    isSemanticallyDisabled,
+  return or(
+    and(
+      hasRole(device, (role) => role.isWidget() || role.is("group")),
+      isSemanticallyDisabled,
+    ),
+    // see https://github.com/act-rules/act-rules.github.io/issues/2215
+    and(
+      hasName("a", "area"),
+      not(hasAttribute("href")),
+      hasAttribute("aria-disabled", (value) => value === "true"),
+    ),
   );
 }
