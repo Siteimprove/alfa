@@ -460,15 +460,15 @@ namespace ClippingAncestor {
   ): Predicate<Element> {
     return hasCascadedStyle(
       dimension,
-      (height, source) =>
+      (value, source) =>
         // not a length => "auto", i.e not fixed.
-        Length.isLength(height) &&
+        Length.isLength(value) &&
         // We bail out on calculated dimensions
-        !height.hasCalculation() &&
+        !value.hasCalculation() &&
         // 0 is a special case making the content invisible anyway.
-        height.value > 0 &&
+        value.value > 0 &&
         // Font relative dimension is good
-        !height.isFontRelative() &&
+        !value.isFontRelative() &&
         // No source means the style is set via the `style` attribute
         source.some((declaration) => declaration.parent.isSome()),
       device,
