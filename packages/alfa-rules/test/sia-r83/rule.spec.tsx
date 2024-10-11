@@ -17,6 +17,8 @@ const theSheet = () =>
     h.rule.style(".wrap", { whiteSpace: "normal" }),
   ]);
 
+const device = Device.standard();
+
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
   const target = h.text("Hello world");
 
@@ -428,8 +430,6 @@ test(`evaluate() passes a text node with fixed height and another property
 test(`evaluates() passes a text node horizontally overflowing its small
       parent and not clipped by its wide grand-parent`, async (t) => {
   const target = h.text("Hello world");
-  const device = Device.standard();
-
   const clipping = (
     <div
       class="clip nowrap"
@@ -1080,5 +1080,28 @@ test(`evaluates() fails a very long text node without spaces`, async (t) => {
 
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target, { 1: Outcomes.ClipsText(Option.of(clipping), None) }),
+  ]);
+});
+
+test(`evaluates() passes a long text node without spaces which is not horizontally constrained`, async (t) => {
+  // While the div clips the text, it is also not constrained and can grow as
+  // big as the page itself, thus growing with the text.
+  const target = h.text("Supercalifragilisticexpialidocious");
+  const top = (
+    <button
+      class="clip nowrap"
+      box={{ device, x: 0, y: 0, width: 200, height: 40 }}
+    >
+      {target}
+    </button>
+  );
+
+  const document = h.document(
+    [<body box={{ device, x: 0, y: 0, width: 400, height: 40 }}>{top}</body>],
+    [theSheet()],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
   ]);
 });
