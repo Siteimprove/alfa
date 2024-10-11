@@ -240,6 +240,21 @@ test(`evaluates() passes a clipping element with font-relative width`, async (t)
   ]);
 });
 
+test("evaluates() ignores overflow on non-block elements", async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <body>
+        <span class="clip nowrap">{target}</span>
+      </body>,
+    ],
+    [theSheet(), h.sheet([h.rule.style("span", { width: "10px" })])],
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
+});
+
 test(`evaluate() passes a relatively positioned node with a handling static parent`, async (t) => {
   const target = h.text("Hello World");
 
@@ -407,16 +422,14 @@ test(`evaluate() passes a text node with fixed height and another property
   const document = h.document(
     [
       <body>
-        <div>
-          <span>{target}</span>
-        </div>
+        <div>{target}</div>
       </body>,
     ],
     [
       h.sheet([
-        h.rule.style("span", { height: "10px", overflow: "hidden" }),
+        h.rule.style("div", { height: "10px", overflow: "hidden" }),
         h.rule.media("(min-height: 10em)", [
-          h.rule.style("span", { color: "red" }),
+          h.rule.style("div", { color: "red" }),
         ]),
       ]),
     ],
@@ -918,13 +931,9 @@ test(`evaluates() fails a text node when clipping happens on a distant block anc
 
   const document = h.document([<body>{clipping}</body>], [theSheet()]);
 
-  // TODO wrong clipper, likely due to testing overflow on computed value, not used.
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target, {
-      1: Outcomes.ClipsText(
-        Option.of(<span class="clip">7 Hello World</span>),
-        None,
-      ),
+      1: Outcomes.ClipsText(Option.of(clipping), None),
     }),
   ]);
 });

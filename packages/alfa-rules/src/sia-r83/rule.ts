@@ -171,18 +171,21 @@ function overflow(
   device: Device,
   dimension: "x" | "y",
 ): Overflow {
-  switch (
-    Style.from(element, device).computed(`overflow-${dimension}`).value.value
-  ) {
-    case "clip":
-    case "hidden":
-      return Overflow.Clip;
-    case "scroll":
-    case "auto":
-      return Overflow.Handle;
-    case "visible":
-      return Overflow.Overflow;
-  }
+  return Style.from(element, device)
+    .used(`overflow-${dimension}`)
+    .map((overflow) => {
+      switch (overflow.value.value) {
+        case "clip":
+        case "hidden":
+          return Overflow.Clip;
+        case "scroll":
+        case "auto":
+          return Overflow.Handle;
+        case "visible":
+          return Overflow.Overflow;
+      }
+    })
+    .getOr(Overflow.Overflow);
 }
 
 function isTwiceAsBig(
