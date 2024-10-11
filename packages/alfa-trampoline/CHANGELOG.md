@@ -1,5 +1,7 @@
 # @siteimprove/alfa-trampoline
 
+## 0.93.2
+
 ## 0.93.1
 
 ## 0.93.0

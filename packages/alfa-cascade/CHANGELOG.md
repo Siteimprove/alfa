@@ -1,5 +1,11 @@
 # @siteimprove/alfa-cascade
 
+## 0.93.2
+
+### Patch Changes
+
+- **Fixed:** The User-Agent style shet now sets `<select>` elements to `display: inline-block`, matching rendering recommendations. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
 ## 0.93.1
 
 ## 0.93.0

@@ -1,5 +1,13 @@
 # @siteimprove/alfa-style
 
+## 0.93.2
+
+### Patch Changes
+
+- **Fixed:** Resolution of chained CSS variables has been improved. ([#1697](https://github.com/Siteimprove/alfa/pull/1697))
+
+  In some cases of chained CSS variables, substitutions did not happen all the way through, resulting in partially resolved variables; this has been fixed.
+
 ## 0.93.1
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @siteimprove/alfa-rules
 
+## 0.93.2
+
+### Patch Changes
+
+- **Fixed:** SIA-R66 and SIA-R69 ar now inapplicable to text in `aria-disabled` `<a>` elements without `href`. ([#1698](https://github.com/Siteimprove/alfa/pull/1698))
+
+  See https://github.com/act-rules/act-rules.github.io/issues/2215
+
+- **Fixed:** SIA-R83 is better at detecting clipping elements that actually have room to grow. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+- **Fixed:** SIA-R83 now correctly considers the used value of `overflow` rather than the computed one. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
 ## 0.93.1
 
 ## 0.93.0

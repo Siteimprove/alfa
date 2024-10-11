@@ -1,5 +1,19 @@
 # Alfa changelog
 
+## [0.93.2](../../compare/v0.93.1...v0.93.2) (2024-10-11)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0932): SIA-R66 and SIA-R69 ar now inapplicable to text in `aria-disabled` `<a>` elements without `href`. ([#1698](https://github.com/Siteimprove/alfa/pull/1698))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0932): SIA-R83 is better at detecting clipping elements that actually have room to grow. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0932): SIA-R83 now correctly considers the used value of `overflow` rather than the computed one. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0932): The User-Agent style shet now sets `<select>` elements to `display: inline-block`, matching rendering recommendations. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0932): Resolution of chained CSS variables has been improved. ([#1697](https://github.com/Siteimprove/alfa/pull/1697))
+
 ## [0.93.1](../../compare/v0.93.0...v0.93.1) (2024-10-07)
 
 ### Fixed
