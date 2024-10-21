@@ -27,6 +27,7 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-cache": "workspace:^",
     "@siteimprove/alfa-device": "workspace:^0.93.2",
     "@siteimprove/alfa-dom": "workspace:^0.93.2",
     "@siteimprove/alfa-earl": "workspace:^0.93.2",
