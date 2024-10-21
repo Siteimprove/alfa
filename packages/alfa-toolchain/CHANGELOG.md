@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.93.4
+
+### Patch Changes
+
+- **Changed:** Dummy release ([`bc0ac853f75507654642b326e042a08601a2026c`](https://github.com/Siteimprove/alfa/commit/bc0ac853f75507654642b326e042a08601a2026c))
+
 ## 0.93.3
 
 ## 0.93.2

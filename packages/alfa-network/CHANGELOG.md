@@ -1,5 +1,7 @@
 # @siteimprove/alfa-network
 
+## 0.93.4
+
 ## 0.93.3
 
 ## 0.93.2
