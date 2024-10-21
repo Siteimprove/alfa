@@ -10,6 +10,7 @@
     "./site.ts"
   ],
   "references": [
+    { "path": "../../alfa-cache" },
     { "path": "../../alfa-device" },
     { "path": "../../alfa-dom" },
     { "path": "../../alfa-earl" },
