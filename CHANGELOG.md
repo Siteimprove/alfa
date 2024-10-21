@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.93.3](../../compare/v0.93.2...v0.93.3) (2024-10-21)
+
+### Changed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0933), [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md#0933): `Node.from` and `Page.from` are now cached. ([#1703](https://github.com/Siteimprove/alfa/pull/1703))
+
 ## [0.93.2](../../compare/v0.93.1...v0.93.2) (2024-10-11)
 
 ### Fixed

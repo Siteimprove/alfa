@@ -1,5 +1,7 @@
 # @siteimprove/alfa-emitter
 
+## 0.93.3
+
 ## 0.93.2
 
 ## 0.93.1

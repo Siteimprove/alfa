@@ -1,5 +1,13 @@
 # @siteimprove/alfa-dom
 
+## 0.93.3
+
+### Patch Changes
+
+- **Changed:** `Node.from` and `Page.from` are now cached. ([#1703](https://github.com/Siteimprove/alfa/pull/1703))
+
+  This makes multiple de-serialisation inexpensive as long as the JSON object is not discarded, thus simplifying logic for callers.
+
 ## 0.93.2
 
 ## 0.93.1
