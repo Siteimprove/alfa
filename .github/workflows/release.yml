@@ -22,4 +22,4 @@ jobs:
       npm-publish: true
     secrets:
       token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
-      npm-token: ${{ secrets.TMP_NPM_TOKEN }}
+      npm-token: ${{ secrets.NPM_TOKEN }}
