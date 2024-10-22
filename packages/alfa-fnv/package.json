@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-fnv",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.93.6",
+  "version": "0.93.7",
   "license": "MIT",
   "description": "An implementation of the Fowler–Noll–Vo non-cryptographic hash function",
   "repository": {
@@ -22,10 +22,10 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-hash": "workspace:^0.93.6"
+    "@siteimprove/alfa-hash": "workspace:^0.93.7"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.93.6"
+    "@siteimprove/alfa-test": "workspace:^0.93.7"
   },
   "publishConfig": {
     "access": "public",

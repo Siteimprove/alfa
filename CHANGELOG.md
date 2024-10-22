@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.93.7](../../compare/v0.93.6...v0.93.7) (2024-10-22)
+
+### Changed
+
+- [@siteimprove/alfa-performance](packages/alfa-performance/CHANGELOG.md#0937): `Performance.now()` does not try to use `node:perf_hooks` anymore. ([#1704](https://github.com/Siteimprove/alfa/pull/1704))
+
 ## [0.93.6](../../compare/v0.93.5...v0.93.6) (2024-10-22)
 
 ### Changed

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-tree
 
+## 0.93.7
+
 ## 0.93.6
 
 ## 0.93.5
