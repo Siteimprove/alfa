@@ -1,5 +1,7 @@
 # @siteimprove/alfa-selector
 
+## 0.93.8
+
 ## 0.93.7
 
 ## 0.93.6

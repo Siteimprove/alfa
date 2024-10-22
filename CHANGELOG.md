@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.93.8](../../compare/v0.93.7...v0.93.8) (2024-10-22)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0938): Dummy release.
+
 ## [0.93.7](../../compare/v0.93.6...v0.93.7) (2024-10-22)
 
 ### Changed

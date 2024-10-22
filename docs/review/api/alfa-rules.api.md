@@ -26,7 +26,7 @@ import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
-export const alfaVersion = "0.93.7";
+export const alfaVersion = "0.93.8";
 
 // @public (undocumented)
 const _default: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
