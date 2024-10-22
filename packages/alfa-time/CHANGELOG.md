@@ -1,5 +1,7 @@
 # @siteimprove/alfa-time
 
+## 0.93.6
+
 ## 0.93.5
 
 ## 0.93.4
