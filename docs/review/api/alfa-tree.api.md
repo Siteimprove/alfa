@@ -94,7 +94,7 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string> 
     // (undocumented)
     root(options?: Flags<F>): Node<F>;
     // @deprecated (undocumented)
-    get serializationIdId(): string | undefined;
+    get serializationId(): string | undefined;
     // (undocumented)
     siblings(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
@@ -117,6 +117,8 @@ export namespace Node {
         externalId?: string;
         // (undocumented)
         internalId?: string;
+        // (undocumented)
+        serializationId?: string;
         // (undocumented)
         type: T;
     }
