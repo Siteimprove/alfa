@@ -19,7 +19,7 @@ export class Shadow extends Node<"shadow"> {
     style: Iterable<Sheet> = [],
     mode: Shadow.Mode = Shadow.Mode.Open,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ): Shadow {
     return new Shadow(
@@ -27,7 +27,7 @@ export class Shadow extends Node<"shadow"> {
       Array.from(style),
       mode,
       externalId,
-      serializationId,
+      internalId,
       extraData,
     );
   }
@@ -45,10 +45,10 @@ export class Shadow extends Node<"shadow"> {
     style: Array<Sheet>,
     mode: Shadow.Mode,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super(children, "shadow", externalId, serializationId, extraData);
+    super(children, "shadow", externalId, internalId, extraData);
 
     this._mode = mode;
     this._style = style;
@@ -188,7 +188,7 @@ export namespace Shadow {
         json.style.map(Sheet.from),
         json.mode as Mode,
         json.externalId,
-        json.serializationId,
+        json.internalId,
       ),
     );
   }
@@ -214,7 +214,7 @@ export namespace Shadow {
           shadow.mode,
           shadow.externalId,
           shadow.extraData,
-          shadow.serializationId,
+          shadow.internalId,
         );
       });
   }

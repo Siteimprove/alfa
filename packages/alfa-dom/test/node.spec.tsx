@@ -307,7 +307,7 @@ test(`#toJSON() serializes box of descendant inside content`, (t) => {
   ]);
 });
 
-function docWithSerializationIds(
+function docWithinternalIds(
   docId: string,
   elmId: string,
   attrId: string,
@@ -333,12 +333,12 @@ function docWithSerializationIds(
   );
 }
 
-test("#toJSON() includes only serializationId when verbosity is minimal", (t) => {
+test("#toJSON() includes only internalId when verbosity is minimal", (t) => {
   const docId = crypto.randomUUID();
   const elmId = crypto.randomUUID();
   const attrId = crypto.randomUUID();
 
-  const doc = docWithSerializationIds(docId, elmId, attrId);
+  const doc = docWithinternalIds(docId, elmId, attrId);
 
   const device = Device.standard();
 
@@ -355,26 +355,26 @@ test("#toJSON() includes only serializationId when verbosity is minimal", (t) =>
 
     t.deepEqual(doc.toJSON(options), {
       type: "document",
-      serializationId: docId,
+      internalId: docId,
     });
 
     const elm = doc.children().first().getUnsafe() as Element<"div">;
 
     t.deepEqual(elm.toJSON(options), {
       type: "element",
-      serializationId: elmId,
+      internalId: elmId,
     });
 
     const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
 
     t.deepEqual(attr.toJSON(options), {
       type: "attribute",
-      serializationId: attrId,
+      internalId: attrId,
     });
   }
 });
 
-test("#toJSON() includes everything except serializationId when options is undefined or verbosity is medium", (t) => {
+test("#toJSON() includes everything except internalId when options is undefined or verbosity is medium", (t) => {
   const doc = h.document([<div id="foo"></div>]);
 
   const device = Device.standard();
@@ -417,12 +417,12 @@ test("#toJSON() includes everything except serializationId when options is undef
   }
 });
 
-test("#toJSON() includes everything including serializationId and assigned slot when verbosity is high", (t) => {
+test("#toJSON() includes everything including internalId and assigned slot when verbosity is high", (t) => {
   const docId = crypto.randomUUID();
   const elmId = crypto.randomUUID();
   const attrId = crypto.randomUUID();
 
-  const doc = docWithSerializationIds(docId, elmId, attrId);
+  const doc = docWithinternalIds(docId, elmId, attrId);
 
   const options = {
     device: Device.standard(),
@@ -431,17 +431,17 @@ test("#toJSON() includes everything including serializationId and assigned slot 
 
   t.deepEqual(doc.toJSON(options), {
     type: "document",
-    serializationId: docId,
+    internalId: docId,
     style: [],
     children: [
       {
         type: "element",
-        serializationId: elmId,
+        internalId: elmId,
         assignedSlot: null,
         attributes: [
           {
             type: "attribute",
-            serializationId: attrId,
+            internalId: attrId,
             name: "id",
             namespace: null,
             prefix: null,
@@ -461,14 +461,14 @@ test("#toJSON() includes everything including serializationId and assigned slot 
   });
 });
 
-test("#toJSON() includes serializationId of assigned slots when verbosity is high", (t) => {
-  const a = <span serializationId="a"></span>;
-  const b = <span serializationId="b"></span>;
+test("#toJSON() includes internalId of assigned slots when verbosity is high", (t) => {
+  const a = <span internalId="a"></span>;
+  const b = <span internalId="b"></span>;
 
   const div = (
-    <div serializationId="div">
+    <div internalId="div">
       {h.shadow(
-        [<slot serializationId="slot" />, b],
+        [<slot internalId="slot" />, b],
         undefined,
         undefined,
         undefined,
@@ -484,10 +484,10 @@ test("#toJSON() includes serializationId of assigned slots when verbosity is hig
       {
         type: "element",
         children: [],
-        serializationId: "a",
+        internalId: "a",
         assignedSlot: {
           type: "element",
-          serializationId: "slot",
+          internalId: "slot",
         },
         namespace: "http://www.w3.org/1999/xhtml",
         prefix: null,
@@ -499,7 +499,7 @@ test("#toJSON() includes serializationId of assigned slots when verbosity is hig
         box: null,
       },
     ],
-    serializationId: "div",
+    internalId: "div",
     assignedSlot: null,
     namespace: "http://www.w3.org/1999/xhtml",
     prefix: null,
@@ -512,7 +512,7 @@ test("#toJSON() includes serializationId of assigned slots when verbosity is hig
         {
           type: "element",
           children: [],
-          serializationId: "slot",
+          internalId: "slot",
           assignedSlot: null,
           namespace: "http://www.w3.org/1999/xhtml",
           prefix: null,
@@ -526,7 +526,7 @@ test("#toJSON() includes serializationId of assigned slots when verbosity is hig
         {
           type: "element",
           children: [],
-          serializationId: "b",
+          internalId: "b",
           assignedSlot: null,
           namespace: "http://www.w3.org/1999/xhtml",
           prefix: null,
@@ -538,7 +538,7 @@ test("#toJSON() includes serializationId of assigned slots when verbosity is hig
           box: null,
         },
       ],
-      serializationId: "shadow",
+      internalId: "shadow",
       mode: "open",
       style: [],
     },

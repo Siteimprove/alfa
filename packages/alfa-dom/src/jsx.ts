@@ -21,7 +21,7 @@ export function jsx<N extends string = string>(
   let box: Rectangle | undefined = undefined;
   let device: Device | undefined = undefined;
   let externalId: string | undefined = undefined;
-  let serializationId: string | undefined = undefined;
+  let internalId: string | undefined = undefined;
 
   for (const [name, value] of entries(properties ?? {})) {
     if (value === null || value === undefined) {
@@ -50,9 +50,9 @@ export function jsx<N extends string = string>(
         }
         continue;
 
-      case "serializationId":
+      case "internalId":
         if (typeof value === "string") {
-          serializationId = value;
+          internalId = value;
         }
         continue;
 
@@ -69,7 +69,7 @@ export function jsx<N extends string = string>(
     box,
     device,
     externalId,
-    serializationId,
+    internalId,
   );
 }
 

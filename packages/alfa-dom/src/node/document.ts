@@ -19,14 +19,14 @@ export class Document extends Node<"document"> {
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ): Document {
     return new Document(
       Array.from(children),
       style,
       externalId,
-      serializationId,
+      internalId,
       extraData,
     );
   }
@@ -42,10 +42,10 @@ export class Document extends Node<"document"> {
     children: Array<Node>,
     style: Iterable<Sheet>,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super(children, "document", externalId, serializationId, extraData);
+    super(children, "document", externalId, internalId, extraData);
 
     this._style = Array.from(style);
   }
@@ -163,7 +163,7 @@ export namespace Document {
         children,
         json.style.map(Sheet.from),
         json.externalId,
-        json.serializationId,
+        json.internalId,
       ),
     );
   }
@@ -187,7 +187,7 @@ export namespace Document {
           Iterable.flatten(children),
           document.style,
           document.externalId,
-          document.serializationId,
+          document.internalId,
           document.extraData,
         );
       });

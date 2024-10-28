@@ -14,7 +14,7 @@ export class Type<N extends string = string> extends Node<"type"> {
     publicId: Option<string> = None,
     systemId: Option<string> = None,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ): Type<N> {
     return new Type(
@@ -22,7 +22,7 @@ export class Type<N extends string = string> extends Node<"type"> {
       publicId,
       systemId,
       externalId,
-      serializationId,
+      internalId,
       extraData,
     );
   }
@@ -40,10 +40,10 @@ export class Type<N extends string = string> extends Node<"type"> {
     publicId: Option<string>,
     systemId: Option<string>,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super([], "type", externalId, serializationId, extraData);
+    super([], "type", externalId, internalId, extraData);
 
     this._name = name;
     this._publicId = publicId;
@@ -124,7 +124,7 @@ export namespace Type {
         Option.from(json.publicId),
         Option.from(json.systemId),
         json.externalId,
-        json.serializationId,
+        json.internalId,
       ),
     );
   }
@@ -141,7 +141,7 @@ export namespace Type {
         type.publicId,
         type.systemId,
         type.externalId,
-        type.serializationId,
+        type.internalId,
       ),
     );
   }

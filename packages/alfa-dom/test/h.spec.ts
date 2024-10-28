@@ -65,8 +65,8 @@ test("h() put elements in the correct namespace", (t) => {
   );
 });
 
-test("h() accepts a serializationId which is set on the Element", (t) => {
-  const serializationId = crypto.randomUUID();
+test("h() accepts a internalId which is set on the Element", (t) => {
+  const internalId = crypto.randomUUID();
   const elm = h(
     "div",
     undefined,
@@ -75,18 +75,18 @@ test("h() accepts a serializationId which is set on the Element", (t) => {
     undefined,
     Device.standard(),
     undefined,
-    serializationId,
+    internalId,
   );
 
-  t.equal(elm.serializationId, serializationId);
+  t.equal(elm.internalId, internalId);
 });
 
-test("h() creates serializationId when it is not provided", (t) => {
+test("h() creates internalId when it is not provided", (t) => {
   const elm = h("div");
 
   t.equal(
-    elm.serializationId.length,
+    elm.internalId.length,
     36,
-    "serializationId should be a UUID of length 36",
+    "internalId should be a UUID of length 36",
   );
 });

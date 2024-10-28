@@ -13,13 +13,13 @@ export class Fragment extends Node<"fragment"> {
   public static of(
     children: Iterable<Node>,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ): Fragment {
     return new Fragment(
       Array.from(children),
       externalId,
-      serializationId,
+      internalId,
       extraData,
     );
   }
@@ -31,10 +31,10 @@ export class Fragment extends Node<"fragment"> {
   private constructor(
     children: Array<Node>,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super(children, "fragment", externalId, serializationId, extraData);
+    super(children, "fragment", externalId, internalId, extraData);
   }
 
   /**

@@ -50,10 +50,10 @@ export abstract class Node<T extends string = string>
     children: Array<Node>,
     type: T,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super(children, type, externalId, serializationId, extraData);
+    super(children, type, externalId, internalId, extraData);
   }
 
   /**

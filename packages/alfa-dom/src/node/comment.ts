@@ -11,10 +11,10 @@ export class Comment extends Node<"comment"> {
   public static of(
     data: string,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ): Comment {
-    return new Comment(data, externalId, serializationId, extraData);
+    return new Comment(data, externalId, internalId, extraData);
   }
 
   public static empty(): Comment {
@@ -26,10 +26,10 @@ export class Comment extends Node<"comment"> {
   private constructor(
     data: string,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super([], "comment", externalId, serializationId, extraData);
+    super([], "comment", externalId, internalId, extraData);
 
     this._data = data;
   }
@@ -106,7 +106,7 @@ export namespace Comment {
    */
   export function fromComment(json: JSON): Trampoline<Comment> {
     return Trampoline.done(
-      Comment.of(json.data, json.externalId, json.serializationId),
+      Comment.of(json.data, json.externalId, json.internalId),
     );
   }
 
@@ -118,7 +118,7 @@ export namespace Comment {
       Comment.of(
         comment.data,
         comment.externalId,
-        comment.serializationId,
+        comment.internalId,
         comment.extraData,
       ),
     );

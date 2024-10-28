@@ -14,10 +14,10 @@ export class Text extends Node<"text"> implements Slotable {
   public static of(
     data: string,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ): Text {
-    return new Text(data, externalId, serializationId, extraData);
+    return new Text(data, externalId, internalId, extraData);
   }
 
   public static empty(): Text {
@@ -29,10 +29,10 @@ export class Text extends Node<"text"> implements Slotable {
   private constructor(
     data: string,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super([], "text", externalId, serializationId, extraData);
+    super([], "text", externalId, internalId, extraData);
 
     this._data = data;
   }
@@ -121,7 +121,7 @@ export namespace Text {
    */
   export function fromText(json: JSON): Trampoline<Text> {
     return Trampoline.done(
-      Text.of(json.data, json.externalId, undefined, json.serializationId),
+      Text.of(json.data, json.externalId, undefined, json.internalId),
     );
   }
 
@@ -130,7 +130,7 @@ export namespace Text {
    */
   export function cloneText(text: Text) {
     return Trampoline.done(
-      Text.of(text.data, text.externalId, text.extraData, text.serializationId),
+      Text.of(text.data, text.externalId, text.extraData, text.internalId),
     );
   }
 }
