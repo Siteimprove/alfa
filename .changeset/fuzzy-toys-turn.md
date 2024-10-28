@@ -6,4 +6,4 @@
 
 **Breaking:** `#serializationId` has been replaced with `#internalId`.
 
-The old `#serializationId` is now deprecated and acts as an alias to `#internalId`.
+The old `#serializationId` is now deprecated and acts as an alias to `#internalId`. It will be removed in a future version.
