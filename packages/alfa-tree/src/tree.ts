@@ -101,7 +101,7 @@ export abstract class Node<
   /**
    * @deprecated Aliases to {@link Node#internalId}.
    */
-  public get serializationIdId(): string | undefined {
+  public get serializationId(): string | undefined {
     return this.internalId;
   }
 
@@ -435,6 +435,7 @@ export abstract class Node<
     if (verbosity >= json.Serializable.Verbosity.High) {
       // If verbosity is High or above, include also internalId
       result.internalId = this._internalId;
+      result.serializationId = this.serializationId;
     }
 
     return result;
@@ -465,5 +466,6 @@ export namespace Node {
     children?: Array<JSON>;
     externalId?: string;
     internalId?: string;
+    serializationId?: string;
   }
 }
