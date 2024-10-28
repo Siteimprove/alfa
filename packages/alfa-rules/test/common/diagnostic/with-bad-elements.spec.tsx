@@ -44,6 +44,7 @@ test("toJSON() calls toJSON() on error elements and respects serialization optio
         {
           type: "element",
           internalId,
+          serializationId: internalId,
         },
       ],
     },

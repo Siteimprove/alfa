@@ -422,6 +422,7 @@ export abstract class Node<
     if (verbosity < json.Serializable.Verbosity.Medium) {
       // Only type and internalId
       result.internalId = this._internalId;
+      result.serializationId = this.serializationId;
       return result;
     }
 

@@ -206,10 +206,12 @@ test(`toJSON() with minimal verbosity produces target with correct serialization
       {
         type: "element",
         internalId: elmId1,
+        serializationId: elmId1,
       },
       {
         type: "element",
         internalId: elmId2,
+        serializationId: elmId2,
       },
     ],
   );

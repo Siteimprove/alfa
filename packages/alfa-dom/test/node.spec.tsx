@@ -356,6 +356,7 @@ test("#toJSON() includes only internalId when verbosity is minimal", (t) => {
     t.deepEqual(doc.toJSON(options), {
       type: "document",
       internalId: docId,
+      serializationId: docId,
     });
 
     const elm = doc.children().first().getUnsafe() as Element<"div">;
@@ -363,6 +364,7 @@ test("#toJSON() includes only internalId when verbosity is minimal", (t) => {
     t.deepEqual(elm.toJSON(options), {
       type: "element",
       internalId: elmId,
+      serializationId: elmId,
     });
 
     const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
@@ -370,6 +372,7 @@ test("#toJSON() includes only internalId when verbosity is minimal", (t) => {
     t.deepEqual(attr.toJSON(options), {
       type: "attribute",
       internalId: attrId,
+      serializationId: attrId,
     });
   }
 });
@@ -432,16 +435,19 @@ test("#toJSON() includes everything including internalId and assigned slot when 
   t.deepEqual(doc.toJSON(options), {
     type: "document",
     internalId: docId,
+    serializationId: docId,
     style: [],
     children: [
       {
         type: "element",
         internalId: elmId,
+        serializationId: elmId,
         assignedSlot: null,
         attributes: [
           {
             type: "attribute",
             internalId: attrId,
+            serializationId: attrId,
             name: "id",
             namespace: null,
             prefix: null,
@@ -485,9 +491,11 @@ test("#toJSON() includes internalId of assigned slots when verbosity is high", (
         type: "element",
         children: [],
         internalId: "a",
+        serializationId: "a",
         assignedSlot: {
           type: "element",
           internalId: "slot",
+          serializationId: "slot",
         },
         namespace: "http://www.w3.org/1999/xhtml",
         prefix: null,
@@ -500,6 +508,7 @@ test("#toJSON() includes internalId of assigned slots when verbosity is high", (
       },
     ],
     internalId: "div",
+    serializationId: "div",
     assignedSlot: null,
     namespace: "http://www.w3.org/1999/xhtml",
     prefix: null,
@@ -513,6 +522,7 @@ test("#toJSON() includes internalId of assigned slots when verbosity is high", (
           type: "element",
           children: [],
           internalId: "slot",
+          serializationId: "slot",
           assignedSlot: null,
           namespace: "http://www.w3.org/1999/xhtml",
           prefix: null,
@@ -527,6 +537,7 @@ test("#toJSON() includes internalId of assigned slots when verbosity is high", (
           type: "element",
           children: [],
           internalId: "b",
+          serializationId: "b",
           assignedSlot: null,
           namespace: "http://www.w3.org/1999/xhtml",
           prefix: null,
@@ -539,6 +550,7 @@ test("#toJSON() includes internalId of assigned slots when verbosity is high", (
         },
       ],
       internalId: "shadow",
+      serializationId: "shadow",
       mode: "open",
       style: [],
     },
