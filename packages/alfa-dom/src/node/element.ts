@@ -45,7 +45,7 @@ export class Element<N extends string = string>
     box: Option<Rectangle> = None,
     device: Option<Device> = None,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ): Element<N> {
     return new Element(
@@ -58,7 +58,7 @@ export class Element<N extends string = string>
       box,
       device,
       externalId,
-      serializationId,
+      internalId,
       extraData,
     );
   }
@@ -84,10 +84,10 @@ export class Element<N extends string = string>
     box: Option<Rectangle>,
     device: Option<Device>,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super(children, "element", externalId, serializationId, extraData);
+    super(children, "element", externalId, internalId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -491,7 +491,7 @@ export namespace Element {
         Option.from(json.box).map(Rectangle.from),
         Option.from(device),
         json.externalId,
-        json.serializationId,
+        json.internalId,
       );
 
       if (json.shadow !== null) {
@@ -546,7 +546,7 @@ export namespace Element {
           deviceOption.flatMap((d) => element.getBoundingBox(d)),
           deviceOption,
           element.externalId,
-          element.serializationId,
+          element.internalId,
           element.extraData,
         );
 

@@ -18,7 +18,7 @@ import { Sequence } from '@siteimprove/alfa-sequence';
 export abstract class Node<F extends Flags.allFlags, T extends string = string> implements Iterable<Node<F>>, Equatable, Hashable, json.Serializable<Node.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Node<F>>;
-    protected constructor(children: Array<Node<F>>, type: T, externalId?: string, serializationId?: string, extraData?: any);
+    protected constructor(children: Array<Node<F>>, type: T, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     ancestors(options?: Flags<F>): Sequence<Node<F>>;
     // @internal (undocumented)
@@ -60,6 +60,8 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string> 
     // (undocumented)
     index(options?: Flags<F>): number;
     // (undocumented)
+    get internalId(): string;
+    // (undocumented)
     isAncestorOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
     isChildOf(node: Node<F>, options?: Flags<F>): boolean;
@@ -91,8 +93,8 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string> 
     previous(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
     root(options?: Flags<F>): Node<F>;
-    // (undocumented)
-    get serializationId(): string;
+    // @deprecated (undocumented)
+    get serializationId(): string | undefined;
     // (undocumented)
     siblings(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
@@ -113,6 +115,8 @@ export namespace Node {
         children?: Array<JSON>;
         // (undocumented)
         externalId?: string;
+        // (undocumented)
+        internalId?: string;
         // (undocumented)
         serializationId?: string;
         // (undocumented)
