@@ -165,6 +165,7 @@
     "./property/overflow.ts",
     "./property/overflow-x.ts",
     "./property/overflow-y.ts",
+    "./property/perspective.ts",
     "./property/pointer-events.ts",
     "./property/position.ts",
     "./property/right.ts",
