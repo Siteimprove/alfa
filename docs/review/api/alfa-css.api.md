@@ -22,7 +22,7 @@ import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Parser as Parser_3 } from '../../index.js';
 import { Parser as Parser_4 } from '../../syntax/parser.js';
 import { Position as Position_3 } from '../index.js';
-import type { Predicate } from '@siteimprove/alfa-predicate';
+import { Predicate } from '@siteimprove/alfa-predicate';
 import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
@@ -420,6 +420,39 @@ export type Current = Keyword<"currentcolor">;
 export namespace Current {
     const // (undocumented)
     parse: Parser<Current>;
+}
+
+// Warning: (ae-incompatible-release-tags) The symbol "CustomIdent" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
+// @public (undocumented)
+export class CustomIdent extends Value<"custom-ident", false> implements Resolvable<CustomIdent, never> {
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(value: string): CustomIdent;
+    // (undocumented)
+    resolve(): CustomIdent;
+    // (undocumented)
+    toJSON(): CustomIdent.JSON;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    get value(): string;
+}
+
+// @public (undocumented)
+export namespace CustomIdent {
+    // (undocumented)
+    export function isCustomIdent(value: unknown): value is CustomIdent;
+    // (undocumented)
+    export interface JSON extends Value.JSON<"custom-ident"> {
+        // (undocumented)
+        value: string;
+    }
+    // (undocumented)
+    export function parse(predicate?: Predicate<CustomIdent>): Parser<CustomIdent>;
 }
 
 // @public (undocumented)
