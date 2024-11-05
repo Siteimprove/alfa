@@ -7,8 +7,6 @@ import { Style } from "../../dist/style.js";
 
 const device = Device.standard();
 
-const _0 = { type: "length", unit: "px", value: 0 } as const;
-
 test("initial value is `none`", (t) => {
   const element = <div>Hello</div>;
 
