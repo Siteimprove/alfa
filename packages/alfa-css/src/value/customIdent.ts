@@ -1,11 +1,10 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { type Parser as CSSParser, Token } from "../syntax/index.js";
-
 import type { Resolvable } from "./resolvable.js";
 import { Value } from "./value.js";
-import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { map, parseIf } = Parser;
 const { and } = Predicate;
