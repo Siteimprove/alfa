@@ -33,7 +33,7 @@
     "@microsoft/api-extractor": "^7.29.5",
     "@siteimprove/alfa-toolchain": "workspace:^0.93.8",
     "@types/async": "^3.2.20",
-    "@types/node": "^20.5.9",
+    "@types/node": "^22.0.0",
     "async": "^3.2.1",
     "execa": "^9.0.0",
     "knip": "^5.23.1",
