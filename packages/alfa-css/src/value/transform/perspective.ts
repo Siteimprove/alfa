@@ -75,7 +75,7 @@ export namespace Perspective {
     return value instanceof Perspective;
   }
 
-  const parseLength = filter(
+  const parseDepth = filter(
     Length.parse,
     // {@link https://drafts.csswg.org/css-values/#calc-range}
     (length) => length.hasCalculation() || length.value >= 0,
@@ -86,12 +86,12 @@ export namespace Perspective {
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-perspective}
    */
   export const parse = map(
-    CSSFunction.parse("perspective", parseLength),
+    CSSFunction.parse("perspective", parseDepth),
     ([_, depth]) => Perspective.of(depth),
   );
 
   /**
    * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/perspective}
    */
-  export const parseProp = map(parseLength, (depth) => Perspective.of(depth));
+  export const parseProp = map(parseDepth, Perspective.of);
 }
