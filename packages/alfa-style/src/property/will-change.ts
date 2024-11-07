@@ -28,7 +28,7 @@ const illegalCustomIdents = [
 const animatableFeature: CSSParser<
   Keyword<"scroll-position"> | Keyword<"contents"> | CustomIdent
 > = either(
-  either(Keyword.parse("scroll-position"), Keyword.parse("contents")),
+  Keyword.parse("scroll-position", "contents"),
   CustomIdent.parse(
     (customIdent) => !illegalCustomIdents.includes(customIdent.value),
   ),
