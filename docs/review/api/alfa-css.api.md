@@ -422,35 +422,23 @@ export namespace Current {
     parse: Parser<Current>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "Ident" needs to be exported by the entry point index.d.ts
 // Warning: (ae-incompatible-release-tags) The symbol "CustomIdent" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
-export class CustomIdent extends Value<"custom-ident", false> implements Resolvable<CustomIdent, never> {
+export class CustomIdent extends Ident<"custom-ident"> implements Resolvable<CustomIdent, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
     static of(value: string): CustomIdent;
     // (undocumented)
-    resolve(): CustomIdent;
-    // (undocumented)
-    toJSON(): CustomIdent.JSON;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get value(): string;
+    toJSON(): Ident.JSON<"custom-ident">;
 }
 
 // @public (undocumented)
 export namespace CustomIdent {
     // (undocumented)
     export function isCustomIdent(value: unknown): value is CustomIdent;
-    // (undocumented)
-    export interface JSON extends Value.JSON<"custom-ident"> {
-        // (undocumented)
-        value: string;
-    }
     // (undocumented)
     export function parse(predicate?: Predicate<CustomIdent>): Parser<CustomIdent>;
 }
@@ -1029,23 +1017,13 @@ export namespace Integer {
 // Warning: (ae-incompatible-release-tags) The symbol "Keyword" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
-export class Keyword<T extends string = string> extends Value<"keyword", false> implements Resolvable<Keyword<T>, never> {
+export class Keyword<T extends string = string> extends Ident<"keyword", T> implements Resolvable<Keyword<T>, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    is(...values: Array<string>): boolean;
-    // (undocumented)
     static of<T extends string>(value: T): Keyword<T>;
     // (undocumented)
-    resolve(): Keyword<T>;
-    // (undocumented)
     toJSON(): Keyword.JSON<T>;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get value(): T;
 }
 
 // @public (undocumented)
@@ -1053,9 +1031,7 @@ export namespace Keyword {
     // (undocumented)
     export function isKeyword(value: unknown): value is Keyword;
     // (undocumented)
-    export interface JSON<T extends string = string> extends Value.JSON<"keyword"> {
-        // (undocumented)
-        value: T;
+    export interface JSON<T extends string = string> extends Ident.JSON<"keyword", T> {
     }
     // (undocumented)
     export function parse<T extends string>(...keywords: Array<T>): Parser<ToKeywords<T>>;
