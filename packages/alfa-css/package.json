@@ -38,6 +38,7 @@
     "@siteimprove/alfa-result": "workspace:^0.93.8",
     "@siteimprove/alfa-selective": "workspace:^0.93.8",
     "@siteimprove/alfa-slice": "workspace:^0.93.8",
+    "@siteimprove/alfa-string": "workspace:^0.93.8",
     "@siteimprove/alfa-thunk": "workspace:^0.93.8"
   },
   "devDependencies": {
