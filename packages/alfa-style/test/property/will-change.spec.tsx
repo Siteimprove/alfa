@@ -80,7 +80,8 @@ test("#computed does not parse illegal custom identifiers including case permuta
   }
 });
 
-test("#computed does not parse illegal custom identifiers including case permutations", (t) => {
+test("#computed does not parse a valid custom ident followed by an invalid custom ident", (t) => {
+  // TODO: For some reason `source` is not `null` for these keywords.
   for (let kw of [
     "initial",
     "unset",
@@ -99,9 +100,7 @@ test("#computed does not parse illegal custom identifiers including case permuta
       source: h.declaration("will-change", kw).toJSON(),
     });
   }
-});
 
-test("#computed does not parse a valid custom ident followed by an invalid custom ident", (t) => {
   for (let kw of [
     "initial",
     "unset",
