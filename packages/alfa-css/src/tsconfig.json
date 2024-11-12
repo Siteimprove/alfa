@@ -33,6 +33,7 @@
     "./value/box.ts",
     "./value/contain.ts",
     "./value/custom-ident.ts",
+    "./value/ident.ts",
     "./unit/converter.ts",
     "./unit/index.ts",
     "./unit/unit.ts",

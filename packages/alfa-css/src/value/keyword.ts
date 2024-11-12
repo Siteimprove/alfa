@@ -1,11 +1,10 @@
-import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { type Parser as CSSParser, Token } from "../syntax/index.js";
 
 import type { Resolvable } from "./resolvable.js";
-import { Value } from "./value.js";
+import { Ident } from "./ident.js";
 
 const { map } = Parser;
 const { equals } = Predicate;
@@ -16,49 +15,25 @@ const { equals } = Predicate;
  * @public
  */
 export class Keyword<T extends string = string>
-  extends Value<"keyword", false>
+  extends Ident<"keyword", T>
   implements Resolvable<Keyword<T>, never>
 {
   public static of<T extends string>(value: T): Keyword<T> {
     return new Keyword(value);
   }
 
-  private readonly _value: T;
-
   private constructor(value: T) {
-    super("keyword", false);
-    this._value = value;
-  }
-
-  public get value(): T {
-    return this._value;
-  }
-
-  public resolve(): Keyword<T> {
-    return this;
-  }
-
-  public is(...values: Array<string>): boolean {
-    return values.includes(this._value);
+    super("keyword", value);
   }
 
   public equals(value: unknown): value is this {
-    return value instanceof Keyword && value._value === this._value;
-  }
-
-  public hash(hash: Hash): void {
-    hash.writeString(this._value);
+    return value instanceof Keyword && super.equals(value);
   }
 
   public toJSON(): Keyword.JSON<T> {
     return {
       ...super.toJSON(),
-      value: this._value,
     };
-  }
-
-  public toString(): string {
-    return this._value;
   }
 }
 
@@ -67,9 +42,7 @@ export class Keyword<T extends string = string>
  */
 export namespace Keyword {
   export interface JSON<T extends string = string>
-    extends Value.JSON<"keyword"> {
-    value: T;
-  }
+    extends Ident.JSON<"keyword", T> {}
 
   export function isKeyword(value: unknown): value is Keyword {
     return value instanceof Keyword;

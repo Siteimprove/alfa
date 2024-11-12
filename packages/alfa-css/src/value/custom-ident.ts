@@ -1,10 +1,10 @@
-import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { type Parser as CSSParser, Token } from "../syntax/index.js";
+
 import type { Resolvable } from "./resolvable.js";
-import { Value } from "./value.js";
+import { Ident } from "./ident.js";
 
 const { map, parseIf } = Parser;
 const { and } = Predicate;
@@ -15,45 +15,25 @@ const { and } = Predicate;
  * @public
  */
 export class CustomIdent
-  extends Value<"custom-ident", false>
+  extends Ident<"custom-ident">
   implements Resolvable<CustomIdent, never>
 {
   public static of(value: string): CustomIdent {
     return new CustomIdent(value);
   }
 
-  private readonly _value: string;
-
   private constructor(value: string) {
-    super("custom-ident", false);
-    this._value = value;
-  }
-
-  public get value(): string {
-    return this._value;
-  }
-
-  public resolve(): CustomIdent {
-    return this;
+    super("custom-ident", value);
   }
 
   public equals(value: unknown): value is this {
-    return value instanceof CustomIdent && value._value === this._value;
+    return value instanceof CustomIdent && super.equals(value);
   }
 
-  public hash(hash: Hash): void {
-    hash.writeString(this._value);
-  }
-
-  public toJSON(): CustomIdent.JSON {
+  public toJSON(): Ident.JSON<"custom-ident"> {
     return {
       ...super.toJSON(),
-      value: this._value,
     };
-  }
-
-  public toString(): string {
-    return this._value;
   }
 }
 
@@ -61,10 +41,6 @@ export class CustomIdent
  * @public
  */
 export namespace CustomIdent {
-  export interface JSON extends Value.JSON<"custom-ident"> {
-    value: string;
-  }
-
   export function isCustomIdent(value: unknown): value is CustomIdent {
     return value instanceof CustomIdent;
   }
