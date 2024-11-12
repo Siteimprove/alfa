@@ -21,3 +21,13 @@ export function getElementDescendants(
 
   return optionsMap[options.value];
 }
+
+/**
+ * @public
+ */
+export function getInclusiveElementDescendants(
+  node: Element,
+  options: Node.Traversal = Node.Traversal.empty,
+): Sequence<Element> {
+  return getElementDescendants(node, options).prepend(node);
+}
