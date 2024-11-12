@@ -5,7 +5,7 @@ import type { Node } from "../../node.js";
 import { Document } from "../document.js";
 import type { Element } from "../element.js";
 
-import { getElementDescendants } from "./element-descendants.js";
+import { getElementDescendants } from "./descendants.js";
 
 const elementMapCache = Cache.empty<Document, Map<string, Element>>();
 

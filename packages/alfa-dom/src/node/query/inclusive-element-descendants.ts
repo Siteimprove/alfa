@@ -2,7 +2,7 @@ import type { Sequence } from "@siteimprove/alfa-sequence";
 import { Node } from "../../node.js";
 import type { Element } from "../element.js";
 
-import { getElementDescendants } from "./element-descendants.js";
+import { getElementDescendants } from "./descendants.js";
 
 /**
  * @public
