@@ -37,6 +37,7 @@ import { Origin } from '@siteimprove/alfa-cascade';
 import { Parser } from '@siteimprove/alfa-css';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
+import { Perspective } from '@siteimprove/alfa-css';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-css';
 import type { Resolvable } from '@siteimprove/alfa-css';
@@ -233,6 +234,7 @@ export namespace Longhands {
         readonly "outline-width": Longhand<Length | Keyword<"thin"> | Keyword<"medium"> | Keyword<"thick">, Length>;
         readonly "overflow-x": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
         readonly "overflow-y": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
+        readonly perspective: Longhand<Keyword<"none"> | Perspective<Length>, Keyword<"none"> | Perspective<Length>>;
         readonly "pointer-events": Longhand<Keyword.ToKeywords<"none" | "auto">, Keyword.ToKeywords<"none" | "auto">>;
         readonly position: Longhand<Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">, Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">>;
         readonly right: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
@@ -589,28 +591,28 @@ export namespace Value {
 // src/longhands.ts:277:7 - (ae-incompatible-release-tags) The symbol ""outline-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:278:7 - (ae-incompatible-release-tags) The symbol ""overflow-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:279:7 - (ae-incompatible-release-tags) The symbol ""overflow-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:280:7 - (ae-incompatible-release-tags) The symbol ""pointer-events"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:281:7 - (ae-incompatible-release-tags) The symbol "position" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:282:7 - (ae-incompatible-release-tags) The symbol "right" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:283:7 - (ae-incompatible-release-tags) The symbol "rotate" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:284:7 - (ae-incompatible-release-tags) The symbol "scale" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:285:7 - (ae-incompatible-release-tags) The symbol ""text-align"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:286:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:287:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-line"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:288:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:289:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-thickness"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:290:7 - (ae-incompatible-release-tags) The symbol ""text-indent"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:291:7 - (ae-incompatible-release-tags) The symbol ""text-overflow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:292:7 - (ae-incompatible-release-tags) The symbol ""text-shadow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:293:7 - (ae-incompatible-release-tags) The symbol ""text-transform"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:294:7 - (ae-incompatible-release-tags) The symbol "top" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:295:7 - (ae-incompatible-release-tags) The symbol "transform" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:296:7 - (ae-incompatible-release-tags) The symbol "translate" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:297:7 - (ae-incompatible-release-tags) The symbol ""vertical-align"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:298:7 - (ae-incompatible-release-tags) The symbol "visibility" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:299:7 - (ae-incompatible-release-tags) The symbol ""white-space"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:300:7 - (ae-incompatible-release-tags) The symbol "width" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:301:7 - (ae-incompatible-release-tags) The symbol ""will-change"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:280:7 - (ae-incompatible-release-tags) The symbol "perspective" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:281:7 - (ae-incompatible-release-tags) The symbol ""pointer-events"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:282:7 - (ae-incompatible-release-tags) The symbol "position" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:283:7 - (ae-incompatible-release-tags) The symbol "right" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:284:7 - (ae-incompatible-release-tags) The symbol "rotate" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:285:7 - (ae-incompatible-release-tags) The symbol "scale" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:286:7 - (ae-incompatible-release-tags) The symbol ""text-align"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:287:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:288:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-line"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:289:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:290:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-thickness"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:291:7 - (ae-incompatible-release-tags) The symbol ""text-indent"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:292:7 - (ae-incompatible-release-tags) The symbol ""text-overflow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:293:7 - (ae-incompatible-release-tags) The symbol ""text-shadow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:294:7 - (ae-incompatible-release-tags) The symbol ""text-transform"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:295:7 - (ae-incompatible-release-tags) The symbol "top" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:296:7 - (ae-incompatible-release-tags) The symbol "transform" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:297:7 - (ae-incompatible-release-tags) The symbol "translate" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:298:7 - (ae-incompatible-release-tags) The symbol ""vertical-align"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:299:7 - (ae-incompatible-release-tags) The symbol "visibility" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:300:7 - (ae-incompatible-release-tags) The symbol ""white-space"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:301:7 - (ae-incompatible-release-tags) The symbol "width" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:302:7 - (ae-incompatible-release-tags) The symbol ""word-spacing"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:303:7 - (ae-incompatible-release-tags) The symbol ""z-index"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/shorthands.ts:47:14 - (ae-incompatible-release-tags) The symbol "background" is marked as @public, but its signature references "Shorthand" which is marked as @internal

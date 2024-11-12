@@ -57,6 +57,7 @@
     "./property/opacity.spec.tsx",
     "./property/outline.spec.tsx",
     "./property/overflow.spec.tsx",
+    "./property/perspective.spec.tsx",
     "./property/rotate.spec.tsx",
     "./property/scale.spec.tsx",
     "./property/text-decoration.spec.tsx",

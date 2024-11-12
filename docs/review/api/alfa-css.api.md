@@ -1783,6 +1783,8 @@ export namespace Perspective {
     export type Resolver = Length.Resolver;
     const // (undocumented)
     parse: Parser_2<Slice<Token_2>, Perspective<Length<Unit_2.Length>>, string, []>;
+    const // (undocumented)
+    parseProp: Parser_2<Slice<Token_2>, Perspective<Length<Unit_2.Length>>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Polygon" is marked as @public, but its signature references "Resolvable" which is marked as @internal
