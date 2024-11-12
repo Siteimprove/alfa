@@ -69,11 +69,18 @@ export namespace CustomIdent {
     return value instanceof CustomIdent;
   }
 
+  const illegalCustomIdents = ["initial", "inherit", "unset", "default"];
+
   export function parse(
     predicate: Predicate<CustomIdent> = () => true,
   ): CSSParser<CustomIdent> {
     return parseIf(
-      and(isCustomIdent, predicate),
+      and(
+        isCustomIdent,
+        (customIdent) =>
+          !illegalCustomIdents.includes(customIdent.value.toLowerCase()),
+        predicate,
+      ),
       map(Token.parseIdent(), (ident) => CustomIdent.of(ident.value)),
       () => "Invalid custom-ident",
     );

@@ -16,9 +16,6 @@ type Specified =
 type Computed = Specified;
 
 const illegalCustomIdents = [
-  "unset",
-  "initial",
-  "inherit",
   "will-change",
   "auto",
   "scroll-position",

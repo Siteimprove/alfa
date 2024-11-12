@@ -64,16 +64,63 @@ test("#computed parses one keyword followed by custom identifiers", (t) => {
   }
 });
 
-test("#computed does not parse illegal custom identifiers", (t) => {
-  const element = <div style={{ willChange: "will-change" }} />;
+test("#computed does not parse illegal custom identifiers including case permutations", (t) => {
+  for (let kw of ["inherit", "default", "will-change"]) {
+    const element = <div style={{ willChange: kw }} />;
 
-  const style = Style.from(element, device);
+    const style = Style.from(element, device);
 
-  t.deepEqual(style.computed("will-change").toJSON(), {
-    value: {
-      type: "keyword",
-      value: "auto",
-    },
-    source: null,
-  });
+    t.deepEqual(style.computed("will-change").toJSON(), {
+      value: {
+        type: "keyword",
+        value: "auto",
+      },
+      source: null,
+    });
+  }
+});
+
+test("#computed does not parse illegal custom identifiers including case permutations", (t) => {
+  for (let kw of [
+    "initial",
+    "unset",
+    "Unset",
+    "INITIAL", // Testing one case permutation should be good enough
+  ]) {
+    const element = <div style={{ willChange: kw }} />;
+
+    const style = Style.from(element, device);
+
+    t.deepEqual(style.computed("will-change").toJSON(), {
+      value: {
+        type: "keyword",
+        value: "auto",
+      },
+      source: h.declaration("will-change", kw).toJSON(),
+    });
+  }
+});
+
+test("#computed does not parse a valid custom ident followed by an invalid custom ident", (t) => {
+  for (let kw of [
+    "initial",
+    "unset",
+    "Unset",
+    "inherit",
+    "default",
+    "INITIAL", // Testing one case permutation should be good enough
+    "will-change",
+  ]) {
+    const element = <div style={{ willChange: `scroll-position, ${kw}` }} />;
+
+    const style = Style.from(element, device);
+
+    t.deepEqual(style.computed("will-change").toJSON(), {
+      value: {
+        type: "keyword",
+        value: "auto",
+      },
+      source: null,
+    });
+  }
 });
