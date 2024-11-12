@@ -31,6 +31,12 @@ export namespace String {
     return flatten(toLowerCase ? input.toLowerCase() : input).trim();
   }
 
+  export function toLowerCase<T extends string = string>(
+    input: T,
+  ): Lowercase<T> {
+    return input.toLowerCase() as Lowercase<T>;
+  }
+
   /**
    * Checks whether the input contains only whitespace
    */
