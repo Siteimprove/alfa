@@ -422,7 +422,6 @@ export namespace Current {
     parse: Parser<Current>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Ident" needs to be exported by the entry point index.d.ts
 // Warning: (ae-incompatible-release-tags) The symbol "CustomIdent" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
@@ -827,6 +826,40 @@ export namespace HSL {
     }
     const // (undocumented)
     parse: Parser<HSL>;
+}
+
+// Warning: (ae-incompatible-release-tags) The symbol "Ident" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
+// @public (undocumented)
+export abstract class Ident<T extends string = string, U extends string = string> extends Value<T, false> implements Resolvable<Ident, never> {
+    protected constructor(type: T, value: U);
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    is(...values: Array<string>): boolean;
+    // (undocumented)
+    resolve(): Ident<T, U>;
+    // (undocumented)
+    toJSON(): Ident.JSON<T, U>;
+    // (undocumented)
+    toString(): U;
+    // (undocumented)
+    get value(): U;
+    // (undocumented)
+    protected readonly _value: U;
+}
+
+// @public (undocumented)
+export namespace Ident {
+    // (undocumented)
+    export function isIdent(value: unknown): value is Ident;
+    // (undocumented)
+    export interface JSON<T extends string = string, U extends string = string> extends Value.JSON<T> {
+        // (undocumented)
+        value: U;
+    }
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Image" is marked as @public, but its signature references "Resolvable" which is marked as @internal
