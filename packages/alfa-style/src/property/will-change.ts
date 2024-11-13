@@ -26,9 +26,7 @@ const animatableFeature: CSSParser<
   Keyword<"scroll-position"> | Keyword<"contents"> | CustomIdent
 > = either(
   Keyword.parse("scroll-position", "contents"),
-  CustomIdent.parse(
-    (customIdent) => !illegalCustomIdents.includes(customIdent.value),
-  ),
+  CustomIdent.parse((ident) => !illegalCustomIdents.includes(ident)),
 );
 
 const parse = either(

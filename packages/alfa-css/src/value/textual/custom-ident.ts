@@ -1,5 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { String } from "@siteimprove/alfa-string";
 
 import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
@@ -42,17 +43,15 @@ export namespace CustomIdent {
   const illegalCustomIdents = ["initial", "inherit", "unset", "default"];
 
   export function parse(
-    predicate: Predicate<CustomIdent> = () => true,
+    predicate: Predicate<string> = () => true,
   ): CSSParser<CustomIdent> {
-    return parseIf(
-      and(
-        isCustomIdent,
-        (customIdent) =>
-          !illegalCustomIdents.includes(customIdent.value.toLowerCase()),
-        predicate,
+    return map(
+      Token.parseIdent(
+        (ident) =>
+          !illegalCustomIdents.includes(String.toLowerCase(ident.value)) &&
+          predicate(ident.value),
       ),
-      map(Token.parseIdent(), (ident) => CustomIdent.of(ident.value)),
-      () => "Invalid custom-ident",
+      (ident) => CustomIdent.of(ident.value),
     );
   }
 }

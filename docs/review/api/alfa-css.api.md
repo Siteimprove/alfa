@@ -437,7 +437,7 @@ export namespace CustomIdent {
     // (undocumented)
     export function isCustomIdent(value: unknown): value is CustomIdent;
     // (undocumented)
-    export function parse(predicate?: Predicate<CustomIdent>): Parser<CustomIdent>;
+    export function parse(predicate?: Predicate<string>): Parser<CustomIdent>;
 }
 
 // @public (undocumented)
