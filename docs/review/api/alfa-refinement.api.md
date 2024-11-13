@@ -4,6 +4,7 @@
 
 ```ts
 
+import type { Callback } from '@siteimprove/alfa-callback';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Predicate } from '@siteimprove/alfa-predicate';
 
@@ -71,6 +72,8 @@ export namespace Refinement {
     equals: Equals;
     // (undocumented)
     export function isString(value: unknown): value is string;
+    const // (undocumented)
+    tee: Tee;
     // (undocumented)
     export function isSymbol(value: unknown): value is symbol;
     // (undocumented)
@@ -114,6 +117,13 @@ export namespace Refinement {
         <T, U extends T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Refinement<T, U, A>): Refinement<T, U | T, A>;
         // (undocumented)
         <T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
+    }
+    // (undocumented)
+    export interface Tee {
+        // (undocumented)
+        <T, U extends T, A extends Array<unknown> = []>(refinement: Refinement<T, U, A>, callback: Callback<T, void, [result: boolean, ...args: A]>): Refinement<T, U, A>;
+        // (undocumented)
+        <T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, callback: Callback<T, void, [result: boolean, ...args: A]>): Predicate<T, A>;
     }
     // (undocumented)
     export interface Test {
