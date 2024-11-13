@@ -44,5 +44,4 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
   (value) => value,
-  { inherits: false },
 );
