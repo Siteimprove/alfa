@@ -38,6 +38,7 @@ const parse = either(
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/will-change}
+ *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
