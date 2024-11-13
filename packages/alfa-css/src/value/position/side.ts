@@ -3,7 +3,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
-import type { Keyword } from "../keyword.js";
+import type { Keyword } from "../textual/keyword.js";
 import { LengthPercentage } from "../numeric/index.js";
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";

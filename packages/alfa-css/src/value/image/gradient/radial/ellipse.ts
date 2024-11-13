@@ -4,7 +4,7 @@ import { Err, Result } from "@siteimprove/alfa-result";
 
 import { type Parser as CSSParser, Token } from "../../../../syntax/index.js";
 
-import { Keyword } from "../../../keyword.js";
+import { Keyword } from "../../../textual/keyword.js";
 import { LengthPercentage } from "../../../numeric/index.js";
 import type { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
 import { Value } from "../../../value.js";

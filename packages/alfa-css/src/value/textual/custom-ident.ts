@@ -1,9 +1,9 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { type Parser as CSSParser, Token } from "../syntax/index.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
-import type { Resolvable } from "./resolvable.js";
+import type { Resolvable } from "../resolvable.js";
 import { Ident } from "./ident.js";
 
 const { map, parseIf } = Parser;

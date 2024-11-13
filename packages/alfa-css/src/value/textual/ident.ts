@@ -1,7 +1,7 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 
-import type { Resolvable } from "./resolvable.js";
-import { Value } from "./value.js";
+import type { Resolvable } from "../resolvable.js";
+import { Value } from "../value.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/ident}
