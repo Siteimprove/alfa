@@ -7,7 +7,7 @@ import { Style } from "../../dist/index.js";
 const device = Device.standard();
 
 test("#computed parses keywords", (t) => {
-  for (let kw of ["scroll-position", "contents"] as const) {
+  for (const kw of ["scroll-position", "contents"] as const) {
     const element = <div style={{ willChange: kw }} />;
 
     const style = Style.from(element, device);
@@ -43,7 +43,7 @@ test("#computed parses custom identifiers", (t) => {
 });
 
 test("#computed parses one keyword followed by custom identifiers", (t) => {
-  for (let kw of ["scroll-position", "contents"] as const) {
+  for (const kw of ["scroll-position", "contents"] as const) {
     const value = `${kw}, transform, opacity`;
     const element = <div style={{ willChange: value }} />;
 
@@ -65,7 +65,7 @@ test("#computed parses one keyword followed by custom identifiers", (t) => {
 });
 
 test("#computed does not parse illegal custom identifiers including case permutations", (t) => {
-  for (let kw of ["inherit", "default", "will-change"]) {
+  for (const kw of ["inherit", "default", "will-change"]) {
     const element = <div style={{ willChange: kw }} />;
 
     const style = Style.from(element, device);
@@ -82,7 +82,7 @@ test("#computed does not parse illegal custom identifiers including case permuta
 
 test("#computed does not parse a valid custom ident followed by an invalid custom ident", (t) => {
   // TODO: For some reason `source` is not `null` for these keywords.
-  for (let kw of [
+  for (const kw of [
     "initial",
     "unset",
     "Unset",
@@ -101,7 +101,7 @@ test("#computed does not parse a valid custom ident followed by an invalid custo
     });
   }
 
-  for (let kw of [
+  for (const kw of [
     "initial",
     "unset",
     "Unset",
