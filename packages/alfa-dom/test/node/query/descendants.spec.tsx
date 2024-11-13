@@ -13,7 +13,7 @@ test(".getElementDescendants() returns descendants non-inclusively", (t) => {
   t.deepEqual(getElementDescendants(bar).toArray(), [foo]);
 });
 
-test(".getDescendants caches call made with the exact same predicate", (t) => {
+test(".getDescendants caches calls made with the exact same node and predicate", (t) => {
   const target = (
     <p>
       <span aria-label="hello">Hello </span>
@@ -25,7 +25,8 @@ test(".getDescendants caches call made with the exact same predicate", (t) => {
   const predicate1 = tee(Element.isElement, () => cacheMiss++);
   const predicate2 = tee(Element.isElement, () => cacheMiss++);
 
-  // We force the evaluation of the sequences via `.toArray()`.
+  // We force the evaluation of the sequences via `.toArray()` to trigger the
+  // correct number of tests of the predicate on cache miss.
   // Note that the query only checks the strict descendants, not the target itself.
 
   getDescendants(predicate1)(target).toArray(); // first call, miss
