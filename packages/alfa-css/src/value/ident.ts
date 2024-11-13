@@ -4,6 +4,8 @@ import type { Resolvable } from "./resolvable.js";
 import { Value } from "./value.js";
 
 /**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/ident}
+ *
  * @public
  */
 export abstract class Ident<

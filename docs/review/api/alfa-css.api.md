@@ -431,8 +431,6 @@ export class CustomIdent extends Ident<"custom-ident"> implements Resolvable<Cus
     equals(value: unknown): value is this;
     // (undocumented)
     static of(value: string): CustomIdent;
-    // (undocumented)
-    toJSON(): Ident.JSON<"custom-ident">;
 }
 
 // @public (undocumented)
@@ -1022,8 +1020,6 @@ export class Keyword<T extends string = string> extends Ident<"keyword", T> impl
     equals(value: unknown): value is this;
     // (undocumented)
     static of<T extends string>(value: T): Keyword<T>;
-    // (undocumented)
-    toJSON(): Keyword.JSON<T>;
 }
 
 // @public (undocumented)

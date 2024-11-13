@@ -29,12 +29,6 @@ export class CustomIdent
   public equals(value: unknown): value is this {
     return value instanceof CustomIdent && super.equals(value);
   }
-
-  public toJSON(): Ident.JSON<"custom-ident"> {
-    return {
-      ...super.toJSON(),
-    };
-  }
 }
 
 /**

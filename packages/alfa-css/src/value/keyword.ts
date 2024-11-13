@@ -30,12 +30,6 @@ export class Keyword<T extends string = string>
   public equals(value: unknown): value is this {
     return value instanceof Keyword && super.equals(value);
   }
-
-  public toJSON(): Keyword.JSON<T> {
-    return {
-      ...super.toJSON(),
-    };
-  }
 }
 
 /**
