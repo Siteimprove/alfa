@@ -7,12 +7,14 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Device } from '@siteimprove/alfa-device';
 import type * as earl from '@siteimprove/alfa-earl';
+import { Element as Element_2 } from '../element.js';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Feature } from '@siteimprove/alfa-css-feature';
 import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
+import { Node as Node_2 } from '../../node.js';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-rectangle';
@@ -991,18 +993,18 @@ export namespace PageRule {
 
 // @public (undocumented)
 export namespace Query {
-    const // Warning: (ae-forgotten-export) The symbol "elementDescendants" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "descendants" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    getElementDescendants: typeof elementDescendants.getElementDescendants;
+    getDescendants: typeof descendants.getDescendants;
+    const // (undocumented)
+    getElementDescendants: (node: Node_2, options?: Node_2.Traversal) => Sequence<Element_2<string>>;
     const // Warning: (ae-forgotten-export) The symbol "elementIdMap" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     getElementIdMap: typeof elementIdMap.getElementIdMap;
-    const // Warning: (ae-forgotten-export) The symbol "inclusiveElementDescendants" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    getInclusiveElementDescendants: typeof inclusiveElementDescendants.getInclusiveElementDescendants;
+    const // (undocumented)
+    getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants;
 }
 
 // @public (undocumented)

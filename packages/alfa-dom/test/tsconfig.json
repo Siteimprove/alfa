@@ -16,7 +16,7 @@
     "./node/predicate/has-tab-index.spec.tsx",
     "./node/traversal/get-nodes-between.spec.tsx",
     "./node/traversal/lowest-common-ancestor.spec.tsx",
-    "./node/query/element-descendants.spec.tsx",
+    "./node/query/descendants.spec.tsx",
     "./node/query/element-id-map.spec.tsx",
     "./style.spec.ts",
     "./traversal.spec.tsx"
