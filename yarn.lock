@@ -1399,6 +1399,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-refinement@workspace:packages/alfa-refinement"
   dependencies:
+    "@siteimprove/alfa-callback": "workspace:^0.93.8"
     "@siteimprove/alfa-mapper": "workspace:^0.93.8"
     "@siteimprove/alfa-predicate": "workspace:^0.93.8"
     "@siteimprove/alfa-test": "workspace:^0.93.8"
