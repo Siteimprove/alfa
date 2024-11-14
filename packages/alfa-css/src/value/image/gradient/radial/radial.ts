@@ -10,7 +10,7 @@ import {
   Token,
 } from "../../../../syntax/index.js";
 
-import { Keyword } from "../../../keyword.js";
+import { Keyword } from "../../../textual/keyword.js";
 import { Position } from "../../../position/index.js";
 import type { PartiallyResolvable, Resolvable } from "../../../resolvable.js";
 import { Value } from "../../../value.js";

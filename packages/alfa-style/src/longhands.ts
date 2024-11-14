@@ -115,6 +115,7 @@ import VerticalAlign from "./property/vertical-align.js";
 import Visibility from "./property/visibility.js";
 import WhiteSpace from "./property/white-space.js";
 import Width from "./property/width.js";
+import WillChange from "./property/will-change.js";
 import WordSpacing from "./property/word-spacing.js";
 import ZIndex from "./property/z-index.js";
 
@@ -299,6 +300,7 @@ export namespace Longhands {
     visibility: Visibility,
     "white-space": WhiteSpace,
     width: Width,
+    "will-change": WillChange,
     "word-spacing": WordSpacing,
     "z-index": ZIndex,
   } as const;

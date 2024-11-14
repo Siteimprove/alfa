@@ -22,7 +22,7 @@ import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Parser as Parser_3 } from '../../index.js';
 import { Parser as Parser_4 } from '../../syntax/parser.js';
 import { Position as Position_3 } from '../index.js';
-import type { Predicate } from '@siteimprove/alfa-predicate';
+import { Predicate } from '@siteimprove/alfa-predicate';
 import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
@@ -422,6 +422,24 @@ export namespace Current {
     parse: Parser<Current>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "CustomIdent" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
+// @public (undocumented)
+export class CustomIdent extends Ident<"custom-ident"> implements Resolvable<CustomIdent, never> {
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    static of(value: string): CustomIdent;
+}
+
+// @public (undocumented)
+export namespace CustomIdent {
+    // (undocumented)
+    export function isCustomIdent(value: unknown): value is CustomIdent;
+    // (undocumented)
+    export function parse(predicate?: Predicate<string>): Parser<CustomIdent>;
+}
+
 // @public (undocumented)
 export class Declaration implements Iterable<Token>, Equatable, Serializable {
     // (undocumented)
@@ -810,6 +828,40 @@ export namespace HSL {
     parse: Parser<HSL>;
 }
 
+// Warning: (ae-incompatible-release-tags) The symbol "Ident" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
+// @public (undocumented)
+export abstract class Ident<T extends string = string, U extends string = string> extends Value<T, false> implements Resolvable<Ident, never> {
+    protected constructor(type: T, value: U);
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    is(...values: Array<string>): boolean;
+    // (undocumented)
+    resolve(): Ident<T, U>;
+    // (undocumented)
+    toJSON(): Ident.JSON<T, U>;
+    // (undocumented)
+    toString(): U;
+    // (undocumented)
+    get value(): U;
+    // (undocumented)
+    protected readonly _value: U;
+}
+
+// @public (undocumented)
+export namespace Ident {
+    // (undocumented)
+    export function isIdent(value: unknown): value is Ident;
+    // (undocumented)
+    export interface JSON<T extends string = string, U extends string = string> extends Value.JSON<T> {
+        // (undocumented)
+        value: U;
+    }
+}
+
 // Warning: (ae-incompatible-release-tags) The symbol "Image" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 // Warning: (ae-incompatible-release-tags) The symbol "Image" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
 //
@@ -996,23 +1048,11 @@ export namespace Integer {
 // Warning: (ae-incompatible-release-tags) The symbol "Keyword" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
-export class Keyword<T extends string = string> extends Value<"keyword", false> implements Resolvable<Keyword<T>, never> {
+export class Keyword<T extends string = string> extends Ident<"keyword", T> implements Resolvable<Keyword<T>, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    is(...values: Array<string>): boolean;
-    // (undocumented)
     static of<T extends string>(value: T): Keyword<T>;
-    // (undocumented)
-    resolve(): Keyword<T>;
-    // (undocumented)
-    toJSON(): Keyword.JSON<T>;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get value(): T;
 }
 
 // @public (undocumented)
@@ -1020,9 +1060,7 @@ export namespace Keyword {
     // (undocumented)
     export function isKeyword(value: unknown): value is Keyword;
     // (undocumented)
-    export interface JSON<T extends string = string> extends Value.JSON<"keyword"> {
-        // (undocumented)
-        value: T;
+    export interface JSON<T extends string = string> extends Ident.JSON<"keyword", T> {
     }
     // (undocumented)
     export function parse<T extends string>(...keywords: Array<T>): Parser<ToKeywords<T>>;

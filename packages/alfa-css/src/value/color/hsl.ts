@@ -7,7 +7,7 @@ import {
   type Parser as CSSParser,
   Token,
 } from "../../syntax/index.js";
-import { Keyword } from "../keyword.js";
+import { Keyword } from "../textual/keyword.js";
 
 import { Angle, Number, Percentage } from "../numeric/index.js";
 

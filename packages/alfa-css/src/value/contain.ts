@@ -2,7 +2,7 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Keyword } from "./keyword.js";
+import { Keyword } from "./textual/keyword.js";
 import type { Resolvable } from "./resolvable.js";
 import { Value } from "./value.js";
 

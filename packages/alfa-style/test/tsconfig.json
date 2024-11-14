@@ -67,6 +67,7 @@
     "./property/top.spec.tsx",
     "./property/transform.spec.tsx",
     "./property/translate.spec.tsx",
+    "./property/will-change.spec.tsx",
     "./property/z-index.spec.tsx",
     "./style.spec.tsx",
     "./variable.spec.ts"

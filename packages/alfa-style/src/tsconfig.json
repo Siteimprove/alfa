@@ -188,6 +188,7 @@
     "./property/visibility.ts",
     "./property/white-space.ts",
     "./property/width.ts",
+    "./property/will-change.ts",
     "./property/word-spacing.ts",
     "./property/z-index.ts",
     "./resolver.ts",

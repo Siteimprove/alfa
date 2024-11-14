@@ -5,7 +5,7 @@ import type { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
-import { Keyword } from "../keyword.js";
+import { Keyword } from "../textual/keyword.js";
 import type { Length } from "../numeric/index.js";
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";

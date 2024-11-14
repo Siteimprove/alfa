@@ -14,6 +14,8 @@ namespace String_2 {
     function indent(input: string): string;
     function isWhitespace(input: string, allowEmpty?: boolean): boolean;
     function normalize(input: string, toLowerCase?: boolean): string;
+    // (undocumented)
+    function toLowerCase<T extends string = string>(input: T): Lowercase<T>;
 }
 export { String_2 as String }
 
