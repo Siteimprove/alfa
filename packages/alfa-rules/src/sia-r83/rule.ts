@@ -378,8 +378,7 @@ namespace ClippingAncestor {
       _softWrapPointsCache.get(device, Cache.empty).get(node, () => {
         if (isText(node)) {
           // This is not fully correct, depending on languages
-          // See https://drafts.csswg.org/css-text/#line-breaking
-          return String.hasWhitespace(node.data);
+          return String.hasSoftWrapOpportunity(node.data);
         }
 
         if (isElement(node)) {

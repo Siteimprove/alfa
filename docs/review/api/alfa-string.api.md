@@ -10,6 +10,7 @@ type String_2 = globalThis.String;
 // @public (undocumented)
 namespace String_2 {
     function flatten(input: string): string;
+    function hasSoftWrapOpportunity(input: string): boolean;
     function hasWhitespace(input: string): boolean;
     function indent(input: string): string;
     function isWhitespace(input: string, allowEmpty?: boolean): boolean;

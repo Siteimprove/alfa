@@ -53,4 +53,19 @@ export namespace String {
   export function hasWhitespace(input: string): boolean {
     return /\s/.test(input);
   }
+
+  /**
+   * Checks whether the string contains soft break points
+   * {@link https://drafts.csswg.org/css-text/#line-breaking}
+   *
+   * @remarks
+   * Spaces are always soft break points. Other are hard to correctly detect.
+   * We do not want here to have a full break point detection which, based on
+   * language, requires lexical analysis.
+   * We accept punctuation as soft break points since they would act so in most
+   * Western languages.
+   */
+  export function hasSoftWrapOpportunity(input: string): boolean {
+    return /\s|\p{P}/u.test(input);
+  }
 }
