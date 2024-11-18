@@ -9,7 +9,7 @@ import { isRendered } from "../predicate/is-rendered.js";
 
 const { hasName, isElement } = Element;
 const { isText } = Text;
-const { and } = Predicate;
+const { and, not } = Predicate;
 
 const isWhitespace: Predicate<Text> = (text) =>
   String.isWhitespace(text.data, false);
@@ -58,6 +58,13 @@ function fromNode(
 
 /**
  * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
+ * {@link https://html.spec.whatwg.org/multipage/dom.html#the-innertext-idl-attribute}
+ *
+ * @remarks
+ * This differs from the HTML innerText algorithm which collapses adjacent newline
+ * (keeping only the maximum), and a few other cleanup. Our main use cases will
+ * normalise the string afterward, so this is OK. But we will need to update
+ * that if we need to more closely reflects HTML algorithm.
  */
 function fromElement(
   device: Device,
@@ -87,11 +94,11 @@ function fromElement(
       values: [outside], // this covers both outside and internal specified.
     } = Style.from(element, device).computed("display").value;
 
-    if (outside.value === "block" || outside.value === "table-caption") {
+    if (outside.is("block", "table-caption")) {
       return fromNode(device, isAcceptable, "\n")(element);
     }
 
-    if (outside.value === "table-cell" || outside.value === "table-row") {
+    if (outside.is("table-cell", "table-row")) {
       return fromNode(device, isAcceptable, " ")(element);
     }
 

@@ -87,3 +87,23 @@ test("innerText() keeps text of whitespace only elements", (t) => {
 
   t.equal(Style.innerText(device, Style.isVisible)(element), "Hello world!");
 });
+
+test("innerText() adds spaces around tables cells and rows, and newline around captions", (t) => {
+  const element = (
+    <table>
+      <caption>Caption</caption>
+      <tbody>
+        <tr>
+          <td>X</td>
+          <td>Y</td>
+        </tr>
+      </tbody>
+    </table>
+  );
+  h.document([element]);
+
+  // \n are wrapping the full table, and the caption; HTML would collapse them.
+  // \n wrapping the full result are trimmed by HTML, not by us.
+  // whitespace are wrapping the row, and each cell; HTML would use TAB instead.
+  t.equal(innerText(element), "\n\nCaption\n  X  Y  \n");
+});
