@@ -39,21 +39,21 @@ function fromText(
 function fromNode(
   device: Device,
   isAcceptable: (device: Device) => Predicate<Text> = () => () => true,
+  wrapper: string = "",
 ): (node: Node) => string {
-  return (node) => {
-    let result = "";
-
-    for (const child of node.children(Node.flatTree)) {
-      result += Selective.of(child)
-        .if(isText, fromText(device, isAcceptable))
-        .if(isElement, fromElement(device, isAcceptable))
-        .else(fromNode(device, isAcceptable))
-        .get();
-    }
-
-    //Returning the whole text from the children
-    return result;
-  };
+  return (node) =>
+    wrapper +
+    node
+      .children(Node.flatTree)
+      .map((child) =>
+        Selective.of(child)
+          .if(isText, fromText(device, isAcceptable))
+          .if(isElement, fromElement(device, isAcceptable))
+          .else(fromNode(device, isAcceptable))
+          .get(),
+      )
+      .join("") +
+    wrapper;
 }
 
 /**
@@ -80,20 +80,19 @@ function fromElement(
       // {@link
       // https://html.spec.whatwg.org/multipage/dom.html#rendered-text-collection-steps}
       // (Step 8)
-      return "\n\n" + fromNode(device, isAcceptable)(element) + "\n\n";
+      return fromNode(device, isAcceptable, "\n\n")(element);
     }
 
-    const display = Style.from(element, device).computed("display").value;
     const {
       values: [outside], // this covers both outside and internal specified.
-    } = display;
+    } = Style.from(element, device).computed("display").value;
 
     if (outside.value === "block" || outside.value === "table-caption") {
-      return "\n" + fromNode(device, isAcceptable)(element) + "\n";
+      return fromNode(device, isAcceptable, "\n")(element);
     }
 
     if (outside.value === "table-cell" || outside.value === "table-row") {
-      return " " + fromNode(device, isAcceptable)(element) + " ";
+      return fromNode(device, isAcceptable, " ")(element);
     }
 
     return fromNode(device, isAcceptable)(element);
