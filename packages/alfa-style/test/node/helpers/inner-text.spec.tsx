@@ -4,16 +4,14 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Style } from "../../../dist/style.js";
 
-const { innerText } = Style;
-
 const device = Device.standard();
 
-const all = () => true;
+const innerText = Style.innerText(device);
 
 test("innerText() extracts the inner text of an element", (t) => {
   const element = <span>X</span>;
 
-  t.equal(innerText(all, element, device), "X");
+  t.equal(innerText(element), "X");
 });
 
 test("innerText() concatenates the inner text of a nested elements", (t) => {
@@ -24,21 +22,21 @@ test("innerText() concatenates the inner text of a nested elements", (t) => {
     </span>
   );
 
-  t.equal(innerText(all, element, device), "XYZ");
+  t.equal(innerText(element), "XYZ");
 });
 
 test("innerText() adds line breaks around block elements", (t) => {
   const element = <div>X</div>;
   h.document([element]);
 
-  t.equal(innerText(all, element, device), "\nX\n");
+  t.equal(innerText(element), "\nX\n");
 });
 
 test("innerText() adds two line breaks around <p> elements", (t) => {
   const element = <p>X</p>;
   h.document([element]);
 
-  t.equal(innerText(all, element, device), "\n\nX\n\n");
+  t.equal(innerText(element), "\n\nX\n\n");
 });
 
 test("innerText() replaces <br> elements with new lines", (t) => {
@@ -48,7 +46,7 @@ test("innerText() replaces <br> elements with new lines", (t) => {
     </span>
   );
 
-  t.equal(innerText(all, element, device), "X\nY");
+  t.equal(innerText(element), "X\nY");
 });
 
 test("innerText() does not include non-rendered elements", (t) => {
@@ -59,7 +57,7 @@ test("innerText() does not include non-rendered elements", (t) => {
   );
   h.document([element]);
 
-  t.equal(innerText(all, element, device), "\nX\n");
+  t.equal(innerText(element), "\nX\n");
 });
 
 test("innerText() does not include non-acceptable elements", (t) => {
@@ -71,7 +69,10 @@ test("innerText() does not include non-acceptable elements", (t) => {
   h.document([element]);
 
   t.equal(
-    innerText((text) => text.data !== "ignore", element, device),
+    Style.innerText(
+      device,
+      (device) => (text) => text.data !== "ignore",
+    )(element),
     "\nX\n",
   );
 });
@@ -84,5 +85,5 @@ test("innerText() keeps text of whitespace only elements", (t) => {
   );
   h.document([element]);
 
-  t.equal(innerText(Style.isVisible(device), element, device), "Hello world!");
+  t.equal(Style.innerText(device, Style.isVisible)(element), "Hello world!");
 });

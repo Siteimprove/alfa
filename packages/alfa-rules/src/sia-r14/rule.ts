@@ -55,7 +55,7 @@ export default Rule.Atomic.of<Page, Element>({
         );
 
         const textContent = removePunctuationAndNormalise(
-          Style.innerText(isPerceivableForAll(device), target, device),
+          Style.innerText(device, isPerceivableForAll)(target),
         );
 
         let name = "";
