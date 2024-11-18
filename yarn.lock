@@ -1600,6 +1600,8 @@ __metadata:
 "@siteimprove/alfa-string@workspace:^0.93.8, @siteimprove/alfa-string@workspace:packages/alfa-string":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-string@workspace:packages/alfa-string"
+  dependencies:
+    "@siteimprove/alfa-test": "workspace:^0.93.8"
   languageName: unknown
   linkType: soft
 
