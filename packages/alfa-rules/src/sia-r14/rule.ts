@@ -51,11 +51,10 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Removes all punctuation (underscore, hyphen, brackets, quotation marks, etc)
-        // and normalise
-        function removePunctuationAndNormalise(input: string): string {
-          return String.normalize(input.replace(/\p{P}|\p{S}|\p{Cf}/gu, ""));
-        }
+        const removePunctuationAndNormalise = String.and(
+          String.removePunctuation,
+          String.normalize,
+        );
 
         const textContent = removePunctuationAndNormalise(
           getPerceivableInnerTextFromElement(target, device),
