@@ -57,7 +57,7 @@ export default Rule.Atomic.of<Page, Element>({
         );
 
         const textContent = removePunctuationAndNormalise(
-          getPerceivableInnerTextFromElement(target, device),
+          Style.innerText(isPerceivableForAll(device), target, device),
         );
 
         let name = "";
@@ -80,75 +80,6 @@ export default Rule.Atomic.of<Page, Element>({
     };
   },
 });
-
-/**
- * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
- */
-function getPerceivableInnerTextFromTextNode(
-  text: Text,
-  device: Device,
-): string {
-  if (isPerceivableForAll(device)(text)) {
-    return text.data;
-  }
-
-  if (
-    and(not(isPerceivableForAll(device)), isRendered(device))(text) &&
-    String.isWhitespace(text.data, false)
-  ) {
-    return " ";
-  }
-
-  return "";
-}
-
-function getPerceivableInnerTextFromElement(
-  element: Element,
-  device: Device,
-): string {
-  if (!isRendered(device)(element)) {
-    return "";
-  }
-
-  if (hasName("br")(element)) {
-    return "\n";
-  }
-
-  if (hasName("p")(element)) {
-    return "\n" + childrenPerceivableText(element, device) + "\n";
-  }
-
-  const display = Style.from(element, device).computed("display").value;
-  const {
-    values: [outside], // this covers both outside and internal specified.
-  } = display;
-
-  if (outside.value === "block" || outside.value === "table-caption") {
-    return "\n" + childrenPerceivableText(element, device) + "\n";
-  }
-
-  if (outside.value === "table-cell" || outside.value === "table-row") {
-    return " " + childrenPerceivableText(element, device) + " ";
-  }
-
-  return childrenPerceivableText(element, device);
-}
-
-function childrenPerceivableText(node: Node, device: Device): string {
-  let result = "";
-
-  for (const child of node.children(Node.flatTree)) {
-    if (isText(child)) {
-      result = result + getPerceivableInnerTextFromTextNode(child, device);
-    } else if (isElement(child)) {
-      result = result + getPerceivableInnerTextFromElement(child, device);
-    } else {
-      result = result + childrenPerceivableText(child, device);
-    }
-  }
-  //Returning the whole text from its children
-  return result;
-}
 
 /**
  * @public

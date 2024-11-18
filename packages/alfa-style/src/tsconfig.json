@@ -25,6 +25,7 @@
     "./index.ts",
     "./longhand.ts",
     "./longhands.ts",
+    "./node/helpers/inner-text.ts",
     "./node/node.ts",
     "./node/predicate/has-same-foreground-as-background.ts",
     "./node/predicate/is-clipped.ts",
