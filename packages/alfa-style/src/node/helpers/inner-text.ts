@@ -77,7 +77,12 @@ function fromElement(
   }
 
   if (hasName("p")(element)) {
-    return "\n" + fromNode(isAcceptable, element, device) + "\n";
+    // We return 2 newline here, according to HTML inner text algorithm.
+    // This differs from Alfa's visible inner text, which is OK since main use
+    // cases will normalise the string afterward.
+    // {@link https://html.spec.whatwg.org/multipage/dom.html#rendered-text-collection-steps}
+    // (Step 8)
+    return "\n\n" + fromNode(isAcceptable, element, device) + "\n\n";
   }
 
   const display = Style.from(element, device).computed("display").value;
@@ -98,5 +103,9 @@ function fromElement(
 
 /**
  * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
+ *
+ * @remarks
+ * depending on use cases, we may want the visible or perceivable text, hence
+ * this is parametric with a predicate.
  */
 export const innerText = fromElement;
