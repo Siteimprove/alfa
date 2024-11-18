@@ -1,6 +1,7 @@
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Selective } from "@siteimprove/alfa-selective";
 import { String } from "@siteimprove/alfa-string";
 
 import { Style } from "../../style.js";
@@ -8,7 +9,10 @@ import { isRendered } from "../predicate/is-rendered.js";
 
 const { hasName, isElement } = Element;
 const { isText } = Text;
-const { and, not } = Predicate;
+const { and } = Predicate;
+
+const isWhitespace: Predicate<Text> = (text) =>
+  String.isWhitespace(text.data, false);
 
 /**
  * {@link https://alfa.siteimprove.com/terms/visible-inner-text}
@@ -22,18 +26,11 @@ function fromText(
   text: Text,
   device: Device,
 ): string {
-  if (isAcceptable(text)) {
-    return text.data;
-  }
-
-  if (
-    and(not(isAcceptable), isRendered(device))(text) &&
-    String.isWhitespace(text.data, false)
-  ) {
-    return " ";
-  }
-
-  return "";
+  return Selective.of(text)
+    .if(isAcceptable, () => text.data)
+    .if(and(isRendered(device), isWhitespace), () => " ")
+    .else(() => "")
+    .get();
 }
 
 /**
@@ -47,13 +44,11 @@ function fromNode(
   let result = "";
 
   for (const child of node.children(Node.flatTree)) {
-    if (isText(child)) {
-      result = result + fromText(isAcceptable, child, device);
-    } else if (isElement(child)) {
-      result = result + fromElement(isAcceptable, child, device);
-    } else {
-      result = result + fromNode(isAcceptable, child, device);
-    }
+    result += Selective.of(child)
+      .if(isText, (text) => fromText(isAcceptable, text, device))
+      .if(isElement, (element) => fromElement(isAcceptable, element, device))
+      .else(() => fromNode(isAcceptable, child, device))
+      .get();
   }
 
   //Returning the whole text from the children

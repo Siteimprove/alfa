@@ -75,3 +75,14 @@ test("innerText() does not include non-acceptable elements", (t) => {
     "\nX\n",
   );
 });
+
+test("innerText() keeps text of whitespace only elements", (t) => {
+  const element = (
+    <span>
+      Hello<span> </span>world!
+    </span>
+  );
+  h.document([element]);
+
+  t.equal(innerText(Style.isVisible(device), element, device), "Hello world!");
+});

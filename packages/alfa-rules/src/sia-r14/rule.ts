@@ -1,6 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -15,11 +14,10 @@ import { expectation } from "../common/act/expectation.js";
 import { Scope, Stability } from "../tags/index.js";
 
 const { hasAccessibleName, hasRole, isPerceivableForAll } = DOM;
-const { hasAttribute, hasNamespace, hasName, isElement } = Element;
-const { isText } = Text;
+const { hasAttribute, hasNamespace } = Element;
 const { hasDescendant } = Node;
-const { and, test, not } = Predicate;
-const { isFocusable, isRendered } = Style;
+const { and, test } = Predicate;
+const { isFocusable } = Style;
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
