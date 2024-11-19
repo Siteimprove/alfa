@@ -9,7 +9,7 @@ import { isRendered } from "../predicate/is-rendered.js";
 
 const { hasName, isElement } = Element;
 const { isText } = Text;
-const { and, not } = Predicate;
+const { and } = Predicate;
 
 const isWhitespace: Predicate<Text> = (text) =>
   String.isWhitespace(text.data, false);
@@ -62,9 +62,9 @@ function fromNode(
  *
  * @remarks
  * This differs from the HTML innerText algorithm which collapses adjacent newline
- * (keeping only the maximum), and a few other cleanup. Our main use cases will
+ * (keeping only the maximum), and a few other cleanups. Our main use cases will
  * normalise the string afterward, so this is OK. But we will need to update
- * that if we need to more closely reflects HTML algorithm.
+ * that if we need to more closely reflect the HTML algorithm.
  */
 function fromElement(
   device: Device,
@@ -80,13 +80,13 @@ function fromElement(
     }
 
     if (hasName("p")(element)) {
-      // We return 2 newline here, according to HTML inner text algorithm.
+      // We wrap with 2 newline here, according to HTML inner text algorithm.
       // This differs from Alfa's visible inner text, which is OK since main
-      // use
-      // cases will normalise the string afterward.
+      // use cases will normalise the string afterward.
       // {@link
       // https://html.spec.whatwg.org/multipage/dom.html#rendered-text-collection-steps}
       // (Step 8)
+      // {@link https://alfa.siteimprove.com/terms/visible-inner-text}
       return fromNode(device, isAcceptable, "\n\n")(element);
     }
 
