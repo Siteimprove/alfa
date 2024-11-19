@@ -7,16 +7,18 @@ import { Techniques } from "./technique/data.js";
  */
 export class Technique<
   N extends Technique.Name = Technique.Name,
-> extends Requirement {
+> extends Requirement<"technique", Technique.URI<N>> {
   public static of<N extends Technique.Name>(name: N): Technique<N> {
-    return new Technique(name);
+    return new Technique(name, Techniques[name].uri);
   }
 
   private readonly _name: N;
+  private readonly _title: Technique.Title<N>;
 
-  private constructor(name: N) {
-    super();
+  private constructor(name: N, uri: Technique.URI<N>) {
+    super("technique", uri);
     this._name = name;
+    this._title = Techniques[name].title;
   }
 
   /**
@@ -30,37 +32,25 @@ export class Technique<
    * The title of this technique.
    */
   public get title(): Technique.Title<N> {
-    return Techniques[this._name].title;
+    return this._title;
   }
 
-  /**
-   * The URI of this technique.
-   */
-  public get uri(): Technique.URI<N> {
-    return Techniques[this._name].uri;
-  }
-
-  public toJSON(): Technique.JSON {
-    const { title, uri } = Techniques[this._name];
-
+  public toJSON(): Technique.JSON<N> {
     return {
       ...super.toJSON(),
       name: this._name,
-      title,
-      uri,
+      title: this._title,
     };
   }
 
   public toEARL(): Technique.EARL {
-    const { title } = Techniques[this._name];
-
     return {
       ...super.toEARL(),
       "@context": {
         earl: "http://www.w3.org/ns/earl#",
         dct: "http://purl.org/dc/terms/",
       },
-      "dct:title": title,
+      "dct:title": this._title,
       "dct:isPartOf": "https://www.w3.org/WAI/WCAG21/Techniques/",
     };
   }
@@ -70,10 +60,10 @@ export class Technique<
  * @public
  */
 export namespace Technique {
-  export interface JSON extends Requirement.JSON {
+  export interface JSON<N extends Technique.Name = Technique.Name>
+    extends Requirement.JSON<"technique", Technique.URI<N>> {
     name: Name;
     title: Title;
-    uri: URI;
   }
 
   export interface EARL extends Requirement.EARL {

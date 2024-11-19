@@ -513,8 +513,8 @@ export namespace Question {
 }
 
 // @public (undocumented)
-export abstract class Requirement implements Equatable, json.Serializable<Requirement.JSON>, earl.Serializable<Requirement.EARL> {
-    protected constructor();
+export abstract class Requirement<T extends string = string, U extends string = string> implements Equatable, json.Serializable<Requirement.JSON>, earl.Serializable<Requirement.EARL> {
+    protected constructor(type: T, uri: U);
     // (undocumented)
     equals(value: Requirement): boolean;
     // (undocumented)
@@ -522,9 +522,11 @@ export abstract class Requirement implements Equatable, json.Serializable<Requir
     // (undocumented)
     toEARL(): Requirement.EARL;
     // (undocumented)
-    toJSON(): Requirement.JSON;
+    toJSON(): Requirement.JSON<T, U>;
     // (undocumented)
-    abstract get uri(): string;
+    get type(): T;
+    // (undocumented)
+    get uri(): U;
 }
 
 // @public (undocumented)
@@ -543,11 +545,13 @@ export namespace Requirement {
     // (undocumented)
     export function isRequirement(value: unknown): value is Requirement;
     // (undocumented)
-    export interface JSON {
+    export interface JSON<T extends string = string, U extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        uri: string;
+        type: T;
+        // (undocumented)
+        uri: U;
     }
 }
 

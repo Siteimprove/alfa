@@ -2,17 +2,17 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import type { Attribute } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
 import { roleAttributes } from "../common/applicability/role-attributes.js";
+import { BestPractice } from "../requirements/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r21",
-  requirements: [Technique.of("ARIA4"), Technique.of("G108")],
+  requirements: [BestPractice.of("all-roles-valid")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {

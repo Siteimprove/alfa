@@ -18,6 +18,7 @@ import { Node } from '@siteimprove/alfa-dom';
 import type { Option } from '@siteimprove/alfa-option';
 import type { Page } from '@siteimprove/alfa-web';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
+import { Requirement } from '@siteimprove/alfa-act';
 import type { RGB } from '@siteimprove/alfa-css';
 import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
@@ -27,6 +28,40 @@ import { Text } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
 export const alfaVersion = "0.93.8";
+
+// @public (undocumented)
+export class ARIA extends Requirement<"ARIA"> {
+    // (undocumented)
+    static of(uri: string): ARIA;
+    // (undocumented)
+    toJSON(): ARIA.JSON;
+}
+
+// @public (undocumented)
+export namespace ARIA {
+    // (undocumented)
+    export function isARIA(value: unknown): value is ARIA;
+    // (undocumented)
+    export interface JSON extends Requirement.JSON<"ARIA"> {
+    }
+}
+
+// @public (undocumented)
+export class BestPractice extends Requirement<"best practice"> {
+    // (undocumented)
+    static of(uri: string): BestPractice;
+    // (undocumented)
+    toJSON(): BestPractice.JSON;
+}
+
+// @public (undocumented)
+export namespace BestPractice {
+    // (undocumented)
+    export function isBestPractice(value: unknown): value is BestPractice;
+    // (undocumented)
+    export interface JSON extends Requirement.JSON<"best practice"> {
+    }
+}
 
 // @public (undocumented)
 const _default: Rule.Atomic<Page, Element<string>, {}, Element<string>>;

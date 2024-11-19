@@ -8,6 +8,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
+import { BestPractice } from "../requirements/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
 import { withDocumentElement } from "../common/applicability/with-document-element.js";
@@ -18,6 +19,7 @@ const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r61",
+  requirements: [BestPractice.of("document-start-with-level-1-heading")],
   tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document }) {
     const firstHeading = document

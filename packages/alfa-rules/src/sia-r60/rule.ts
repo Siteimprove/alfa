@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import type { Role} from "@siteimprove/alfa-aria";
+import type { Role } from "@siteimprove/alfa-aria";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
@@ -10,8 +10,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
 import { WithRole } from "../common/diagnostic/with-role.js";
+import { BestPractice } from "../requirements/index.js";
 import { Scope, Stability } from "../tags/index.js";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
@@ -21,6 +22,7 @@ const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r60",
+  requirements: [BestPractice.of("group-has-name")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {

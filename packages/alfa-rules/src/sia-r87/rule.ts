@@ -1,6 +1,6 @@
 import { Diagnostic, type Interview, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import type { Document} from "@siteimprove/alfa-dom";
+import type { Document } from "@siteimprove/alfa-dom";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import type { Maybe, Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
@@ -13,12 +13,13 @@ import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
 
 import { Question } from "../common/act/question.js";
 import { withDocumentElement } from "../common/applicability/with-document-element.js";
 
 import { isAtTheStart } from "../common/predicate.js";
+import { BestPractice } from "../requirements/index.js";
 import { Scope, Stability } from "../tags/index.js";
 
 const { hasRole, isIgnored } = DOM;
@@ -29,7 +30,10 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
-  requirements: [Technique.of("G1")],
+  requirements: [
+    Technique.of("G1"),
+    BestPractice.of("first-focusable-is-skip-link"),
+  ],
   tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document, response }) {
     return {

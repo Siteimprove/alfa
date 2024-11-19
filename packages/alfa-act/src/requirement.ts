@@ -6,15 +6,30 @@ import type * as json from "@siteimprove/alfa-json";
 /**
  * @public
  */
-export abstract class Requirement
+export abstract class Requirement<
+    T extends string = string,
+    U extends string = string,
+  >
   implements
     Equatable,
     json.Serializable<Requirement.JSON>,
     earl.Serializable<Requirement.EARL>
 {
-  protected constructor() {}
+  private readonly _type: T;
+  private readonly _uri: U;
 
-  public abstract get uri(): string;
+  protected constructor(type: T, uri: U) {
+    this._type = type;
+    this._uri = uri;
+  }
+
+  public get type(): T {
+    return this._type;
+  }
+
+  public get uri(): U {
+    return this._uri;
+  }
 
   public equals(value: Requirement): boolean;
 
@@ -24,9 +39,10 @@ export abstract class Requirement
     return value instanceof Requirement && value.uri === this.uri;
   }
 
-  public toJSON(): Requirement.JSON {
+  public toJSON(): Requirement.JSON<T, U> {
     return {
-      uri: this.uri,
+      type: this._type,
+      uri: this._uri,
     };
   }
 
@@ -45,9 +61,10 @@ export abstract class Requirement
  * @public
  */
 export namespace Requirement {
-  export interface JSON {
+  export interface JSON<T extends string = string, U extends string = string> {
     [key: string]: json.JSON;
-    uri: string;
+    type: T;
+    uri: U;
   }
 
   export interface EARL extends earl.EARL {

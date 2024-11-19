@@ -12,6 +12,7 @@ import { Style } from "@siteimprove/alfa-style";
 import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
+import { BestPractice } from "../requirements/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
 
@@ -25,6 +26,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
+  requirements: [BestPractice.of("font-size-above-minimum")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     const visibleTextCache = Cache.empty<Element<string>, Sequence<Text>>();

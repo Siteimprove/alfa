@@ -14,6 +14,7 @@ import { expectation } from "../common/act/expectation.js";
 import { Group } from "../common/act/group.js";
 import { Question } from "../common/act/question.js";
 import { WithRole } from "../common/diagnostic/with-role.js";
+import { ARIA } from "../requirements/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
 
@@ -28,6 +29,11 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r55",
+  requirements: [
+    ARIA.of(
+      "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/#aria_lh_step3",
+    ),
+  ],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
