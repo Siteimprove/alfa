@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-toJSON(): Requirement.JSON;
+toJSON(): Requirement.JSON<T, U>;
 ```
 **Returns:**
 
-[Requirement.JSON](./alfa-act.requirement.json.md)
+[Requirement.JSON](./alfa-act.requirement.json.md)<!-- -->&lt;T, U&gt;
 

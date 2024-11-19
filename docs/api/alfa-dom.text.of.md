@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(data: string, externalId?: string, serializationId?: string, extraData?: any): Text;
+static of(data: string, externalId?: string, internalId?: string, extraData?: any): Text;
 ```
 
 ## Parameters
@@ -16,7 +16,7 @@ static of(data: string, externalId?: string, serializationId?: string, extraData
 |  --- | --- | --- |
 |  data | string |  |
 |  externalId | string | _(Optional)_ |
-|  serializationId | string | _(Optional)_ |
+|  internalId | string | _(Optional)_ |
 |  extraData | any | _(Optional)_ |
 
 **Returns:**

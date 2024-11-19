@@ -8,6 +8,8 @@
 
 |  Class | Description |
 |  --- | --- |
+|  [ARIA](./alfa-rules.aria.md) |  |
+|  [BestPractice](./alfa-rules.bestpractice.md) |  |
 |  [Group](./alfa-rules.group.md) |  |
 |  [Scope](./alfa-rules.scope.md) |  |
 |  [Stability](./alfa-rules.stability.md) |  |
@@ -17,6 +19,8 @@
 
 |  Namespace | Description |
 |  --- | --- |
+|  [ARIA](./alfa-rules.aria.md) |  |
+|  [BestPractice](./alfa-rules.bestpractice.md) |  |
 |  [deprecatedRules](./alfa-rules.deprecatedrules.md) |  |
 |  [Diagnostic](./alfa-rules.diagnostic.md) |  |
 |  [experimentalRules](./alfa-rules.experimentalrules.md) |  |

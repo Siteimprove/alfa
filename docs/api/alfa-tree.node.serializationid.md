@@ -4,8 +4,13 @@
 
 ## Node.serializationId property
 
+> Warning: This API is now obsolete.
+> 
+> Aliases to .
+> 
+
 **Signature:**
 
 ```typescript
-get serializationId(): string;
+get serializationId(): string | undefined;
 ```

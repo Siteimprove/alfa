@@ -1,5 +1,7 @@
 # @siteimprove/alfa-toolchain
 
+## 0.94.0
+
 ## 0.93.8
 
 ### Patch Changes

@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-getInclusiveElementDescendants: typeof inclusiveElementDescendants.getInclusiveElementDescendants
+getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants
 ```

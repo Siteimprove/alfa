@@ -12,6 +12,7 @@
 |  [Circle](./alfa-css.circle.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-circle](https://drafts.csswg.org/css-shapes/#funcdef-circle) |
 |  [Component](./alfa-css.component.md) | [https://drafts.csswg.org/css-syntax/\#component-value](https://drafts.csswg.org/css-syntax/#component-value) |
 |  [ContainFlags](./alfa-css.containflags.md) |  |
+|  [CustomIdent](./alfa-css.customident.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident) |
 |  [Declaration](./alfa-css.declaration.md) | [https://drafts.csswg.org/css-syntax/\#declaration](https://drafts.csswg.org/css-syntax/#declaration) |
 |  [Ellipse](./alfa-css.ellipse.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-ellipse](https://drafts.csswg.org/css-shapes/#funcdef-ellipse) |
 |  [Function\_2](./alfa-css.function_2.md) | [https://drafts.csswg.org/css-syntax/\#function](https://drafts.csswg.org/css-syntax/#function) |
@@ -46,6 +47,7 @@
 |  Abstract Class | Description |
 |  --- | --- |
 |  [Expression](./alfa-css.expression.md) | [https://drafts.csswg.org/css-values/\#calculation-tree](https://drafts.csswg.org/css-values/#calculation-tree) |
+|  [Ident](./alfa-css.ident.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/ident](https://developer.mozilla.org/en-US/docs/Web/CSS/ident) |
 |  [Value](./alfa-css.value.md) | Representation of a CSS Value |
 
 ## Interfaces
@@ -70,6 +72,7 @@
 |  [ContainFlags](./alfa-css.containflags.md) |  |
 |  [Converter](./alfa-css.converter.md) |  |
 |  [Current](./alfa-css.current.md) |  |
+|  [CustomIdent](./alfa-css.customident.md) |  |
 |  [Declaration](./alfa-css.declaration.md) |  |
 |  [Dimension](./alfa-css.dimension.md) |  |
 |  [Ellipse](./alfa-css.ellipse.md) |  |
@@ -78,6 +81,7 @@
 |  [Gradient](./alfa-css.gradient.md) |  |
 |  [Hex](./alfa-css.hex.md) |  |
 |  [HSL](./alfa-css.hsl.md) |  |
+|  [Ident](./alfa-css.ident.md) |  |
 |  [Image](./alfa-css.image.md) |  |
 |  [Inset](./alfa-css.inset.md) |  |
 |  [Integer](./alfa-css.integer.md) | [https://drafts.csswg.org/css-values/\#integers](https://drafts.csswg.org/css-values/#integers) |

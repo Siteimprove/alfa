@@ -1,5 +1,13 @@
 # @siteimprove/alfa-css
 
+## 0.94.0
+
+### Minor Changes
+
+- **Added:** CSS property `will-change` is now supported. ([#1707](https://github.com/Siteimprove/alfa/pull/1707))
+
+- **Added:** CSS property `perspective` is now supported. ([#1708](https://github.com/Siteimprove/alfa/pull/1708))
+
 ## 0.93.8
 
 ## 0.93.7

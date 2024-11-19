@@ -1,5 +1,17 @@
 # @siteimprove/alfa-dom
 
+## 0.94.0
+
+### Minor Changes
+
+- **Breaking:** `#serializationId` has been replaced with `#internalId`. ([#1705](https://github.com/Siteimprove/alfa/pull/1705))
+
+  The old `#serializationId` is now deprecated and acts as an alias to `#internalId`. It will be removed in a future version.
+
+- **Added:** A `Query.descendants` helper is now available, to filter DOM descendants by a predicate. ([#1709](https://github.com/Siteimprove/alfa/pull/1709))
+
+  Results are cached by predicate and node.
+
 ## 0.93.8
 
 ## 0.93.7

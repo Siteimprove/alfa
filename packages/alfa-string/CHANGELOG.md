@@ -1,5 +1,23 @@
 # @siteimprove/alfa-string
 
+## 0.94.0
+
+### Minor Changes
+
+- **Added:** A `String.and` combinator for chaining transformers is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+- **Added:** A `String.removePunctuation` transformer is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+- **Added:** A `String.hasSoftWrapOpportunity` predicate is now available. ([#1710](https://github.com/Siteimprove/alfa/pull/1710))
+
+- **Added:** A `String.Transformer` type alias is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+### Patch Changes
+
+- **Added:** The function `String.toLowerCase` was added. ([#1707](https://github.com/Siteimprove/alfa/pull/1707))
+
+  It just calls the built in `.toLowerCase` function but returns `Lowercase<string>`.
+
 ## 0.93.8
 
 ## 0.93.7

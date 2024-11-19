@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-uri: string;
+uri: U;
 ```
