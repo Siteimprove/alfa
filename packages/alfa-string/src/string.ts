@@ -7,6 +7,13 @@ export type String = globalThis.String;
  * @public
  */
 export namespace String {
+  export type Transformer = (input: string) => string;
+
+  export function and(...transformers: Array<Transformer>): Transformer {
+    return (input) =>
+      transformers.reduce((input, transformer) => transformer(input), input);
+  }
+
   /**
    * Adds two spaces at the start of each line.
    */
@@ -29,6 +36,17 @@ export namespace String {
     toLowerCase: boolean = true,
   ): string {
     return flatten(toLowerCase ? input.toLowerCase() : input).trim();
+  }
+
+  /**
+   * Removes all punctuation (underscore, hyphen, brackets, quotation marks, etc)
+   *
+   * @remarks
+   * This removes the Unicode classes P (punctuation), S (symbols),
+   * and Cf (formatting characters).
+   */
+  export function removePunctuation(input: string): string {
+    return input.replace(/\p{P}|\p{S}|\p{Cf}/gu, "");
   }
 
   export function toLowerCase<T extends string = string>(

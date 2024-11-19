@@ -1634,6 +1634,7 @@ __metadata:
     "@siteimprove/alfa-selector": "workspace:^0.93.8"
     "@siteimprove/alfa-set": "workspace:^0.93.8"
     "@siteimprove/alfa-slice": "workspace:^0.93.8"
+    "@siteimprove/alfa-string": "workspace:^0.93.8"
     "@siteimprove/alfa-test": "workspace:^0.93.8"
     "@siteimprove/alfa-trilean": "workspace:^0.93.8"
   languageName: unknown
