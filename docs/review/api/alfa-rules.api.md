@@ -338,6 +338,10 @@ export namespace Question {
             readonly type: "string";
             readonly message: "What is the main language of the document?";
         };
+        readonly "title-descriptive": {
+            readonly type: "boolean";
+            readonly message: "Does this title describe the content of the document?";
+        };
     };
         {};
 }

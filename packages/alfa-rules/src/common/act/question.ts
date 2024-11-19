@@ -253,5 +253,10 @@ export namespace Question {
       type: "string",
       message: "What is the main language of the document?",
     },
+    // R114 (experimental)
+    "title-descriptive": {
+      type: "boolean",
+      message: "Does this title describe the content of the document?",
+    },
   } as const;
 }
