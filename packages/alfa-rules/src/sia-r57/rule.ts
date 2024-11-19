@@ -10,7 +10,8 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as dom from "@siteimprove/alfa-dom";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
+import { ARIA } from "../requirements/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
 
@@ -28,6 +29,11 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r57",
+  requirements: [
+    ARIA.of(
+      "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/#generalprinciplesoflandmarkdesign",
+    ),
+  ],
   tags: [Scope.Page, Stability.Stable],
   evaluate({ document, device }) {
     const firstTabbable = document
