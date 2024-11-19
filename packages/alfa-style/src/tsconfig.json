@@ -225,6 +225,7 @@
     { "path": "../../alfa-selector" },
     { "path": "../../alfa-set" },
     { "path": "../../alfa-slice" },
+    { "path": "../../alfa-string" },
     { "path": "../../alfa-trilean" }
   ]
 }
