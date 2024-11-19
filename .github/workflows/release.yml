@@ -21,5 +21,5 @@ jobs:
       generate-documentation: true
       npm-publish: true
     secrets:
-      token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+      token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
       npm-token: ${{ secrets.NPM_TOKEN }}

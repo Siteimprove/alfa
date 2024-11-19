@@ -19,7 +19,7 @@ jobs:
         uses: siteimprove/pr-command/check-run/check@v2.5
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
-          token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+          token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
 
       # The repository has been checked out by PR commands!
 
@@ -38,4 +38,4 @@ jobs:
         uses: siteimprove/pr-command/check-run/run@v2.5
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
-          token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+          token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
