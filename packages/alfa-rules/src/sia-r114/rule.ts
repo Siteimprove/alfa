@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
 
       expectations(target) {
         return {
-          1: Question.of("title-descriptive", target).map((descriptive) =>
+          1: Question.of("is-title-descriptive", target).map((descriptive) =>
             expectation(
               descriptive,
               () => Outcomes.TitleIsDescriptive,
