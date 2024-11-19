@@ -115,3 +115,37 @@ test("evaluate() only considers the first title", async (t) => {
     ],
   );
 });
+
+test("evaluate() can't tell if questions are left unanswered", async (t) => {
+  t.deepEqual(await evaluate(R114, { document: goodDocument }), [
+    cantTell(R114, goodTitle),
+  ]);
+});
+
+test("evaluate() is inapplicable to documents without title", async (t) => {
+  const document = h.document([
+    <html>
+      <div>Some text in English</div>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R114, { document }), [inapplicable(R114)]);
+});
+
+test("evaluate() is inapplicable if the title contains only whitespace", async (t) => {
+  const document = h.document([
+    <html>
+      <head>
+        <title>
+          {" "}
+          <span> </span>{" "}
+        </title>
+      </head>
+      <body>
+        <div>Some text in English</div>
+      </body>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R114, { document }), [inapplicable(R114)]);
+});

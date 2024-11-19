@@ -1,7 +1,8 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Query, Text } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { String } from "@siteimprove/alfa-string";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
@@ -28,9 +29,14 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   evaluate({ document }) {
     return {
       applicability() {
-        return Query.getElementDescendants(document).find(
-          and(hasNamespace(Namespace.HTML), hasName("title")),
-        );
+        return Query.getElementDescendants(document)
+          .find(and(hasNamespace(Namespace.HTML), hasName("title")))
+          .filter((title) =>
+            title
+              .descendants()
+              .filter(Text.isText)
+              .some((text) => !String.isWhitespace(text.data)),
+          );
       },
 
       expectations(target) {
