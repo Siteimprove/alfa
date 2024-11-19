@@ -9,15 +9,25 @@ import { Criteria } from "./criterion/data.js";
  */
 export class Criterion<
   C extends Criterion.Chapter = Criterion.Chapter,
-> extends Requirement {
+  U extends Criterion.URI<C, "2.1" | "2.2"> = Criterion.URI<C, "2.1" | "2.2">,
+> extends Requirement<"criterion", U> {
   public static of<C extends Criterion.Chapter>(chapter: C): Criterion<C> {
-    return new Criterion(chapter);
+    const versions = [...Criteria[chapter].versions];
+    // Use the criterion URI from the recommendation, if available, otherwise
+    // use the URI from the previous version. This ensures that the most recent identifier
+    // is used when available.
+    const [, { uri }] =
+      versions.find(
+        ([version]) => version === Criterion.Version.Recommendation,
+      ) ?? versions.find(([version]) => version === Criterion.Version.Old)!;
+
+    return new Criterion(chapter, uri as Criterion.URI<C, "2.1" | "2.2">);
   }
 
   private readonly _chapter: C;
 
-  private constructor(chapter: C) {
-    super();
+  private constructor(chapter: C, uri: U) {
+    super("criterion", uri);
     this._chapter = chapter;
   }
 
@@ -33,27 +43,6 @@ export class Criterion<
    */
   public get title(): Criterion.Title<C> {
     return Criteria[this._chapter].title;
-  }
-
-  /**
-   * The URI of this criterion.
-   *
-   * @remarks
-   * The `Requirement` class requires a single URI for each requirement and so
-   * we can't branch of the criterion version. We therefore pick the most stable
-   * URI and use that.
-   */
-  public get uri(): Criterion.URI<C, "2.1" | "2.2"> {
-    const versions = [...Criteria[this._chapter].versions];
-    // Use the criterion URI from the recommendation, if available, otherwise
-    // use the URI from the previous version. This ensures that the most recent identifier
-    // is used when avaiable.
-    const [, { uri }] =
-      versions.find(
-        ([version]) => version === Criterion.Version.Recommendation,
-      ) ?? versions.find(([version]) => version === Criterion.Version.Old)!;
-
-    return uri as Criterion.URI<C, "2.1" | "2.2">;
   }
 
   /**
@@ -78,7 +67,7 @@ export class Criterion<
     );
   }
 
-  public toJSON(): Criterion.JSON {
+  public toJSON(): Criterion.JSON<C, U> {
     const { title } = Criteria[this._chapter];
 
     return {
@@ -107,8 +96,11 @@ export class Criterion<
  * @public
  */
 export namespace Criterion {
-  export interface JSON extends Requirement.JSON {
-    chapter: Chapter;
+  export interface JSON<
+    C extends Criterion.Chapter = Criterion.Chapter,
+    U extends Criterion.URI<C, "2.1" | "2.2"> = Criterion.URI<C, "2.1" | "2.2">,
+  > extends Requirement.JSON<"criterion", U> {
+    chapter: C;
     title: string;
   }
 
