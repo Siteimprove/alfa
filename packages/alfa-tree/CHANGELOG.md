@@ -1,5 +1,7 @@
 # @siteimprove/alfa-tree
 
+## 0.94.1
+
 ## 0.94.0
 
 ### Minor Changes

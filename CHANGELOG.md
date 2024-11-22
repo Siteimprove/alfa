@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.94.1](../../compare/v0.94.0...v0.94.1) (2024-11-22)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0941): SIA-R111 and SIA-R113 now ignores invisible descendants of interactive elements when computing the clickable areas. ([#1716](https://github.com/Siteimprove/alfa/pull/1716))
+
 ## [0.94.0](../../compare/v0.93.8...v0.94.0) (2024-11-19)
 
 ### Breaking
