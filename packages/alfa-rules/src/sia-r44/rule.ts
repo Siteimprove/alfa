@@ -3,14 +3,8 @@ import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
 import type { Feature } from "@siteimprove/alfa-css-feature";
 import { Device, Viewport } from "@siteimprove/alfa-device";
-import type {
-  Declaration} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  MediaRule,
-  Node,
-  Query,
-} from "@siteimprove/alfa-dom";
+import type { Declaration } from "@siteimprove/alfa-dom";
+import { Element, MediaRule, Node, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -20,12 +14,12 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
 
 const { isElement } = Element;
-const { some } = Iterable;
+const { filter, flatMap, none, some } = Iterable;
 const { abs, acos, PI } = Math;
 const { or } = Predicate;
 const { hasComputedStyle, isVisible } = Style;
@@ -65,6 +59,25 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
+        // We first go through all the style rules to see if any of them
+        // if orientation-conditional. If there are no orientation media
+        // query at all, we can bail out early and avoid paying the price of
+        // resolving the cascade with a different device.
+        if (
+          none(
+            filter(
+              flatMap(document.style, (sheet) => sheet.descendants()),
+              MediaRule.isMediaRule,
+            ),
+            (rule) =>
+              some(rule.queries.queries, (query) =>
+                query.condition.some(hasOrientationCondition),
+              ),
+          )
+        ) {
+          return [];
+        }
+
         return getElementDescendants(document, Node.fullTree)
           .filter(isVisible(device))
           .filter(
