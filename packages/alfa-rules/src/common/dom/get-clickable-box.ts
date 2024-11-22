@@ -2,39 +2,55 @@ import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import { type Element, Query } from "@siteimprove/alfa-dom";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Err, Result } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 
 const { getInclusiveElementDescendants } = Query;
+const { isVisible } = Style;
 
-const cache = Cache.empty<Device, Cache<Element, Option<Rectangle>>>();
+const cache = Cache.empty<Device, Cache<Element, Result<Rectangle, string>>>();
 
 /**
  * Gets the bounding box of the clickable area of an element
- * or None if the element or one of its descendants doesn't have a bounding box.
+ * or an error if the element or one of its descendants doesn't have a bounding box
+ * or if the element itself is not visible.
  *
  * @remarks
  * This function assumes that the element can receive pointer events, i.e. is clickable.
  * If called on an element that is not clickable, the function will still return the
  * the area that would be clickable if the element could receive pointer events.
  *
+ * The clickable box is approximated by the smallest rectangle containing
+ * the bounding boxes of the element and all it's visible descendants.
+ *
  * @internal
  */
 export function getClickableBox(
   device: Device,
   element: Element,
-): Option<Rectangle> {
-  return cache.get(device, Cache.empty).get(element, () => {
-    let boxes: Array<Rectangle> = [];
-    for (let box of getInclusiveElementDescendants(element).map((element) =>
-      element.getBoundingBox(device),
-    )) {
-      if (!box.isSome()) {
-        return None;
+): Result<Rectangle, string> {
+  const visible = isVisible(device);
+
+  return cache
+    .get(device, Cache.empty)
+    .get(element, (): Result<Rectangle, string> => {
+      if (!visible(element)) {
+        return Err.of("Cannot get clickable box of an invisible element.");
       }
 
-      boxes.push(box.get());
-    }
+      let boxes: Array<Rectangle> = [];
+      for (let box of getInclusiveElementDescendants(element)
+        .filter(visible)
+        .map((element) => element.getBoundingBox(device))) {
+        if (!box.isSome()) {
+          return Err.of(
+            "The element of one its descendants does not have a bounding box.",
+          );
+        }
 
-    return Option.of(Rectangle.union(...boxes));
-  });
+        boxes.push(box.get());
+      }
+
+      return Result.of(Rectangle.union(...boxes));
+    });
 }
