@@ -21,7 +21,7 @@ const cache = Cache.empty<Device, Cache<Element, Result<Rectangle, string>>>();
  * the area that would be clickable if the element could receive pointer events.
  *
  * The clickable box is approximated by the smallest rectangle containing
- * the bounding boxes of the element and all it's visible descendants.
+ * the bounding boxes of the element and all its visible descendants.
  *
  * @internal
  */
