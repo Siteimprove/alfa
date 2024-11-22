@@ -60,7 +60,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         // We first go through all the style rules to see if any of them
-        // if orientation-conditional. If there are no orientation media
+        // is orientation-conditional. If there are no orientation media
         // query at all, we can bail out early and avoid paying the price of
         // resolving the cascade with a different device.
         if (
