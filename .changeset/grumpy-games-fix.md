@@ -1,7 +1,5 @@
 ---
-"@siteimprove/alfa-rules": minor
+"@siteimprove/alfa-rules": patch
 ---
 
-**Fixed:** The function `getClickableBox` now only considers visible descendants.
-
-The return type of the function was also changed from `Option` to `Result`.
+**Fixed:** SIA-R111 and SIA-R113 now ignores invisible descendants of interactive elements when computing the clickable areas.
