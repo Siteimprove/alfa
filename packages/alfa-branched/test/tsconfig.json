@@ -4,6 +4,6 @@
   "compilerOptions": {
     "noEmit": true
   },
-  "files": ["./comparable.spec.ts"],
+  "files": ["./branched.spec.ts"],
   "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

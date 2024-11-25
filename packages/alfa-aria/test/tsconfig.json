@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "@siteimprove/alfa-dom",
+    "noEmit": true
+  },
+  "files": [
+    "./dom/predicate/has-accessible-name.spec.tsx",
+    "./dom/predicate/has-incorrect-role-without-name.spec.tsx",
+    "./dom/predicate/has-role.spec.tsx",
+    "./name.spec.tsx",
+    "./name-testable-statements.spec.tsx",
+    "./node.spec.tsx",
+    "./role.spec.tsx"
+  ],
+  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
+}
