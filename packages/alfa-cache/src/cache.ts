@@ -5,8 +5,8 @@ import type { Mapper } from "@siteimprove/alfa-mapper";
 /**
  * @public
  */
-export class Cache<K extends object, V> {
-  public static empty<K extends object, V>(): Cache<K, V> {
+export class Cache<K extends Cache.Key, V> {
+  public static empty<K extends Cache.Key, V>(): Cache<K, V> {
     return new Cache();
   }
 
@@ -65,7 +65,9 @@ export class Cache<K extends object, V> {
  * @public
  */
 export namespace Cache {
-  export function from<K extends object, V>(
+  export type Key = object;
+
+  export function from<K extends Key, V>(
     iterable: Iterable<readonly [K, V]>,
   ): Cache<K, V> {
     return Cache.empty<K, V>().merge(iterable);
