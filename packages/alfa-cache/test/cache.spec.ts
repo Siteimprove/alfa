@@ -44,3 +44,86 @@ test("get() adds a value to a cache when ifMissing is provided", (t) => {
   t(cache.has(three));
   t.equal(value, 3);
 });
+
+test("memoize caches values of a unary function", (t) => {
+  // We also test the return values of `doStuff` to ensure that we didn't retrieve
+  // the wrong cache entry.
+  let called = 0;
+
+  function doStuff(foo: Foo): number {
+    called++;
+    return foo.x;
+  }
+
+  // Not memoized, `called` is incremented each time
+  t.equal(doStuff(zero), 0);
+  t.equal(called, 1);
+
+  t.equal(doStuff(zero), 0);
+  t.equal(called, 2);
+
+  t.equal(doStuff(one), 1);
+  t.equal(called, 3);
+
+  const memoized = Cache.memoize(doStuff);
+
+  // Memoized, `called` is incremented only in case of cache miss.
+  t.equal(memoized(zero), 0); // Initial call, miss
+  t.equal(called, 4);
+
+  t.equal(memoized(zero), 0); // hit
+  t.equal(called, 4);
+
+  t.equal(memoized(one), 1); // different argument, miss
+  t.equal(called, 5);
+
+  t.equal(memoized(one), 1); // hit
+  t.equal(called, 5);
+
+  t.equal(memoized(zero), 0); // still a hit
+  t.equal(called, 5);
+});
+
+test("memoize caches values of a binary function", (t) => {
+  let called = 0;
+
+  function doStuff(foo: Foo, bar: Bar): number {
+    called++;
+
+    return foo.x + bar.y.length;
+  }
+
+  // Not memoized, `called` is incremented each time
+  t.equal(doStuff(zero, a), 1);
+  t.equal(called, 1);
+
+  t.equal(doStuff(one, a), 2);
+  t.equal(called, 2);
+
+  t.equal(doStuff(zero, a), 1);
+  t.equal(called, 3);
+
+  const memoize = Cache.memoize(doStuff);
+
+  // Memoized, `called` is incremented only in case of cache miss.
+  t.equal(memoize(zero, a), 1); // Initial call, miss
+  t.equal(called, 4);
+
+  t.equal(memoize(one, a), 2); // different foo, miss
+  t.equal(called, 5);
+
+  t.equal(memoize(zero, a), 1); // hit (same as 1st)
+  t.equal(called, 5);
+
+  t.equal(memoize(one, a), 2); // hit (same as 2nd)
+  t.equal(called, 5);
+
+  t.equal(memoize(zero, b), 10); // different bar, miss
+  t.equal(called, 6);
+
+  t.equal(memoize(zero, b), 10); // hit (same as 5th)
+  t.equal(called, 6);
+
+  t.equal(memoize(one, b), 11); // different pair, miss
+  t.equal(called, 7);
+});
