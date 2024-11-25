@@ -1,5 +1,5 @@
 import type { Simple } from "@siteimprove/alfa-selector";
-import { test } from "@siteimprove/alfa-test";
+import { type Assertions, test } from "@siteimprove/alfa-test";
 
 import { AncestorFilter, Bucket } from "../dist/ancestor-filter.js";
 
@@ -82,7 +82,7 @@ const selectors = {
 };
 
 function match(
-  t: any,
+  t: Assertions,
   filter: AncestorFilter,
   expected: AncestorFilter.JSON,
   matching: Array<keyof typeof selectors>,

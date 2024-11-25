@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
-import { test } from "@siteimprove/alfa-test";
+import { type Assertions, test } from "@siteimprove/alfa-test";
 
 import { cascaded } from "../common.js";
 
 function parse(
-  t: any,
+  t: Assertions,
   value: string,
   box: "block" | "inline",
   side: "start" | "end",

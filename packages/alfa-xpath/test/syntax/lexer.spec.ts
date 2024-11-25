@@ -1,9 +1,9 @@
-import { test } from "@siteimprove/alfa-test";
+import { type Assertions, test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../dist/syntax/lexer.js";
 import type { Token } from "../../dist/syntax/token.js";
 
-function lex(t: any, input: string, expected: Array<Token.JSON>) {
+function lex(t: Assertions, input: string, expected: Array<Token.JSON>) {
   t.deepEqual(
     Lexer.lex(input).map((token) => token.toJSON()),
     expected,

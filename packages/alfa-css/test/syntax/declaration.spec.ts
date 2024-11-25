@@ -1,9 +1,9 @@
-import { test } from "@siteimprove/alfa-test";
+import { type Assertions, test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../dist/syntax/lexer.js";
 import { Declaration } from "../../dist/syntax/declaration.js";
 
-function consume(t: any, input: string, expected: Declaration.JSON) {
+function consume(t: Assertions, input: string, expected: Declaration.JSON) {
   t.deepEqual(
     Declaration.consume(Lexer.lex(input))
       .map(([, declaration]) => declaration)
