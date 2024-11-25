@@ -72,4 +72,40 @@ export namespace Cache {
   ): Cache<K, V> {
     return Cache.empty<K, V>().merge(iterable);
   }
+
+  type ToCache<Args extends Array<object>, T> = Args extends [
+    infer Head extends object,
+    ...infer Tail extends Array<object>,
+  ]
+    ? Cache<Head, ToCache<Tail, T>>
+    : T;
+
+  export function memoize<This, Args extends Array<object>, Return>(
+    target: (this: This, ...args: Args) => Return,
+  ): (this: This, ...args: Args) => Return {
+    const cache = Cache.empty() as ToCache<Args, Return>;
+
+    return function (this: This, ...args: Args) {
+      const that = this;
+      function memoized<A extends Array<Object>>(
+        cache: ToCache<A, Return>,
+        ...inner: A
+      ): Return {
+        if (inner.length === 0) {
+          return cache as Return;
+        }
+
+        const [head, ...tail] = inner;
+        // @ts-ignore
+        const next = cache.get(
+          head,
+          // @ts-ignore
+          tail.length === 0 ? () => target.bind(that)(...args) : Cache.empty,
+        );
+        return memoized(next, ...tail);
+      }
+
+      return memoized(cache, ...args);
+    };
+  }
 }
