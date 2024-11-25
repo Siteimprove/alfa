@@ -127,3 +127,63 @@ test("memoize caches values of a binary function", (t) => {
   t.equal(memoize(one, b), 11); // different pair, miss
   t.equal(called, 7);
 });
+
+test("@memoize caches values of a binary method", (t) => {
+  // Here also, we test the return values of `doStuffA` / `doStuffB` to ensure
+  // that we didn't retrieve the wrong cache entry.
+
+  class MyClass {
+    public called: number;
+
+    public constructor() {
+      this.called = 0;
+    }
+
+    public doStuffA(foo: Foo, bar: Bar): number {
+      this.called++;
+
+      return foo.x + bar.y.length;
+    }
+
+    @Cache.memoize
+    public doStuffB(foo: Foo, bar: Bar): number {
+      this.called++;
+
+      return foo.x + bar.y.length;
+    }
+  }
+
+  const instance = new MyClass();
+
+  // doStuffA is not cached, `called` is incremented each time
+  t.equal(instance.doStuffA(zero, a), 1);
+  t.equal(instance.called, 1);
+
+  t.equal(instance.doStuffA(one, a), 2);
+  t.equal(instance.called, 2);
+
+  t.equal(instance.doStuffA(zero, a), 1);
+  t.equal(instance.called, 3);
+
+  // doStuffB is cached, `called` is incremented only in case of cache miss
+  t.equal(instance.doStuffB(zero, a), 1); // Initial call, miss
+  t.equal(instance.called, 4);
+
+  t.equal(instance.doStuffB(one, a), 2); // different foo, miss
+  t.equal(instance.called, 5);
+
+  t.equal(instance.doStuffB(zero, a), 1); // hit (same as 1st)
+  t.equal(instance.called, 5);
+
+  t.equal(instance.doStuffB(one, a), 2); // hit (same as 2nd)
+  t.equal(instance.called, 5);
+
+  t.equal(instance.doStuffB(zero, b), 10); // different bar, miss
+  t.equal(instance.called, 6);
+
+  t.equal(instance.doStuffB(zero, b), 10); // hit (same as 5th)
+  t.equal(instance.called, 6);
+
+  t.equal(instance.doStuffB(one, b), 11); // different pair, miss
+  t.equal(instance.called, 7);
+});
