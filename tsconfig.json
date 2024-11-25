@@ -11,8 +11,7 @@
     "sourceMap": true,
     "strict": true,
     "types": [],
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true
+    "verbatimModuleSyntax": true
   },
   "files": [],
   "references": [{ "path": "packages" }, { "path": "scratches" }]

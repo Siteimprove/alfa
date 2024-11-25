@@ -1,10 +1,10 @@
 import { h } from "@siteimprove/alfa-dom";
-import { type Assertions, test } from "@siteimprove/alfa-test";
+import { test } from "@siteimprove/alfa-test";
 
 import { cascaded } from "../common.js";
 
 function parse(
-  t: Assertions,
+  t: any,
   value: string,
   box: "block" | "inline",
   side: "start" | "end",
@@ -39,14 +39,14 @@ function parse(
   t.deepEqual(cascaded(element, `${shorthand}-width` as const), {
     value: width
       ? {
-          type: "length",
-          value: width,
-          unit: "px",
-        }
+        type: "length",
+        value: width,
+        unit: "px",
+      }
       : {
-          type: "keyword",
-          value: "initial",
-        },
+        type: "keyword",
+        value: "initial",
+      },
     source: declaration.toJSON(),
   });
 }

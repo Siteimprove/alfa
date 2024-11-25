@@ -1,7 +1,5 @@
 import { assert, it } from "vitest";
 
-import type { Assertions } from "./types.js";
-
 import {
   type Controller,
   defaultController,
@@ -21,11 +19,7 @@ export interface Notifier {
  */
 export async function test<T = number>(
   name: string,
-  assertion: (
-    assert: Assertions,
-    rng: RNG<T>,
-    seed: number,
-  ) => void | Promise<void>,
+  assertion: (assert: any, rng: RNG<T>, seed: number) => void | Promise<void>,
   controller?: Partial<Controller<T>>,
 ): Promise<void>;
 
@@ -34,22 +28,14 @@ export async function test<T = number>(
  */
 export async function test<T = number>(
   name: string,
-  assertion: (
-    assert: Assertions,
-    rng: RNG<T>,
-    seed: number,
-  ) => void | Promise<void>,
+  assertion: (assert: any, rng: RNG<T>, seed: number) => void | Promise<void>,
   notifier: Notifier,
   controller?: Partial<Controller<T>>,
 ): Promise<void>;
 
 export async function test<T = number>(
   name: string,
-  assertion: (
-    assert: Assertions,
-    rng: RNG<T>,
-    seed: number,
-  ) => void | Promise<void>,
+  assertion: (assert: any, rng: RNG<T>, seed: number) => void | Promise<void>,
   notifierOrController?: Notifier | Partial<Controller<T>>,
   controller?: Partial<Controller<T>>,
 ): Promise<void> {

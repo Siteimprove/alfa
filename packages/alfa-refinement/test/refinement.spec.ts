@@ -9,7 +9,7 @@ test(".test() evaluates a refinement on a value", (t) => {
   const value: string = "foo";
 
   if (Refinement.test(r, value)) {
-    t.equal<"foo">(value, "foo");
+    t.equal(value, "foo");
   } else {
     t.fail();
   }
@@ -20,11 +20,11 @@ test(".test() evaluates a refinement on a value", (t) => {
 });
 
 test(".fold() folds over the truth values of a refinement", (t) => {
-  t.equal<"foo">(
+  t.equal(
     Refinement.fold(
       (value): value is "foo" => value === "foo",
       (value) => {
-        t.equal<"foo">(value, "foo");
+        t.equal(value, "foo");
         return value;
       },
       () => t.fail(),
