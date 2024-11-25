@@ -1,5 +1,157 @@
 # Alfa changelog
 
+## [0.94.1](../../compare/v0.94.0...v0.94.1) (2024-11-22)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0941): SIA-R111 and SIA-R113 now ignores invisible descendants of interactive elements when computing the clickable areas. ([#1716](https://github.com/Siteimprove/alfa/pull/1716))
+
+## [0.94.0](../../compare/v0.93.8...v0.94.0) (2024-11-19)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940), [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#0940), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0940): `#serializationId` has been replaced with `#internalId`. ([#1705](https://github.com/Siteimprove/alfa/pull/1705))
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0940), [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0940): CSS property `will-change` is now supported. ([#1707](https://github.com/Siteimprove/alfa/pull/1707))
+
+- [@siteimprove/alfa-refinement](packages/alfa-refinement/CHANGELOG.md#0940): `Refinement.tee` is now available. ([#1709](https://github.com/Siteimprove/alfa/pull/1709))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0940): A `Query.descendants` helper is now available, to filter DOM descendants by a predicate. ([#1709](https://github.com/Siteimprove/alfa/pull/1709))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0940): A `Style.innerText` helper is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): A `String.and` combinator for chaining transformers is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): A `String.removePunctuation` transformer is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940): classes for ARIA and Best Practices requirements are now available. ([#1714](https://github.com/Siteimprove/alfa/pull/1714))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): The function `String.toLowerCase` was added. ([#1707](https://github.com/Siteimprove/alfa/pull/1707))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940): Rules checking ARIA conformance, or Best Practices, now have a corresponding requirement. ([#1714](https://github.com/Siteimprove/alfa/pull/1714))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940): An experimental rule "SIA-R114: Title is descriptive" is now available. ([#1713](https://github.com/Siteimprove/alfa/pull/1713))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): A `String.hasSoftWrapOpportunity` predicate is now available. ([#1710](https://github.com/Siteimprove/alfa/pull/1710))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0940), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0940): CSS property `perspective` is now supported. ([#1708](https://github.com/Siteimprove/alfa/pull/1708))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): A `String.Transformer` type alias is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940): SIA-R83 is now better at detecting soft wrap opportunity in text nodes. ([#1710](https://github.com/Siteimprove/alfa/pull/1710))
+
+## [0.93.8](../../compare/v0.93.7...v0.93.8) (2024-10-22)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0938): Dummy release.
+
+## [0.93.7](../../compare/v0.93.6...v0.93.7) (2024-10-22)
+
+### Changed
+
+- [@siteimprove/alfa-performance](packages/alfa-performance/CHANGELOG.md#0937): `Performance.now()` does not try to use `node:perf_hooks` anymore. ([#1704](https://github.com/Siteimprove/alfa/pull/1704))
+
+## [0.93.6](../../compare/v0.93.5...v0.93.6) (2024-10-22)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0936): Dummy release.
+
+## [0.93.5](../../compare/v0.93.4...v0.93.5) (2024-10-22)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0935): Dummy release.
+
+## [0.93.4](../../compare/v0.93.3...v0.93.4) (2024-10-21)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0934): Dummy release.
+
+## [0.93.3](../../compare/v0.93.2...v0.93.3) (2024-10-21)
+
+### Changed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0933), [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md#0933): `Node.from` and `Page.from` are now cached. ([#1703](https://github.com/Siteimprove/alfa/pull/1703))
+
+## [0.93.2](../../compare/v0.93.1...v0.93.2) (2024-10-11)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0932): SIA-R66 and SIA-R69 ar now inapplicable to text in `aria-disabled` `<a>` elements without `href`. ([#1698](https://github.com/Siteimprove/alfa/pull/1698))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0932): SIA-R83 is better at detecting clipping elements that actually have room to grow. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0932): SIA-R83 now correctly considers the used value of `overflow` rather than the computed one. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0932): The User-Agent style shet now sets `<select>` elements to `display: inline-block`, matching rendering recommendations. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0932): Resolution of chained CSS variables has been improved. ([#1697](https://github.com/Siteimprove/alfa/pull/1697))
+
+## [0.93.1](../../compare/v0.93.0...v0.93.1) (2024-10-07)
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0931): Mono-line `<select>` are again correctly considered as visible. ([#1696](https://github.com/Siteimprove/alfa/pull/1696))
+
+## [0.93.0](../../compare/v0.92.0...v0.93.0) (2024-10-03)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0930): `Element.hasDisplaySize()` now builds a `Predicate<Element<"select">>` instead of a `Predicate<Element>`. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0930): The helper `Element.inputType(element)` has been replaced by a method `element.inputType()`. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0930): Support for CSS properties `scale` and `translate` was added. ([#1688](https://github.com/Siteimprove/alfa/pull/1688))
+
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md#0930): A `Parser.doubleBar` combinator is now available, to parse CSS "double bar". ([#1691](https://github.com/Siteimprove/alfa/pull/1691))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930): A `Style.hasUsedStyle` predicate builder is now available. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930): Style properties `container-type`, `mix-blend-mode` and `isolation` are now supported. ([#1675](https://github.com/Siteimprove/alfa/pull/1675))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0930): Style property `contain` is now supported. ([#1679](https://github.com/Siteimprove/alfa/pull/1679))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0930): A `Keyword#is` predicate is now available. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- [@siteimprove/alfa-option](packages/alfa-option/CHANGELOG.md#0930): An `Option.conditional` builder is now available, returning `None` if the predicate is false. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0930): A method `Element<"select">#displaySize()` is now available. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0930): The `:checked` pseudo-class is now supported. ([#1684](https://github.com/Siteimprove/alfa/pull/1684))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0930): Experimental rule SIA-ER8. It adds support for `type="password"` and more. ([#1667](https://github.com/Siteimprove/alfa/pull/1667))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930): `Style` objects now have an optional `owner` pointing to the element whose style it is. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0930): An `Element<"select">#optionsList()` helper is now available. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930): Basic support for used values is now available. ([#1689](https://github.com/Siteimprove/alfa/pull/1689))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0930): Transform functions `scale3d()` and `scaleZ()` have been added and the scale transformation functions now accept percentages. ([#1688](https://github.com/Siteimprove/alfa/pull/1688))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0930): A `String.hasWhitespace` predicate is now available. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0930): SIA-R83 is now better at handling `white-space` and `text-overflow`. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930): `flex-wrap` now has a used value of `None` on elements that are not flex containers. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930): `<option>` elements that are hidden by their `<select>` are now correctly considered as invisible. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930): `overflow` and `text-overflow` now have no used value on elements where they don't apply. ([#1689](https://github.com/Siteimprove/alfa/pull/1689))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0930): The computed value of `display` for `<button>` elements now correctly handles button layout. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
 ## [0.92.0](../../compare/v0.91.2...v0.92.0) (2024-09-11)
 
 ### Changed

@@ -3,7 +3,7 @@ import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Token } from "../../syntax/index.js";
 
-import { Keyword } from "../keyword.js";
+import { Keyword } from "../textual/keyword.js";
 import type { Angle, Number, Percentage } from "../numeric/index.js";
 
 import { Current } from "./current.js";

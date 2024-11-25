@@ -3,8 +3,13 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, Origin } from "@siteimprove/alfa-cascade";
 import { Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import type { Declaration } from "@siteimprove/alfa-dom";
-import { Document, Element, Node, Shadow } from "@siteimprove/alfa-dom";
+import {
+  type Declaration,
+  Document,
+  Element,
+  Node,
+  Shadow,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type * as json from "@siteimprove/alfa-json";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -20,6 +25,7 @@ import * as element from "./element/element.js";
 import type { Longhand } from "./longhand.js";
 import { Longhands } from "./longhands.js";
 import * as node from "./node/node.js";
+import * as predicates from "./predicate/index.js";
 import type { Shorthand } from "./shorthand.js";
 import { Shorthands } from "./shorthands.js";
 
@@ -43,6 +49,7 @@ export class Style implements Serializable<Style.JSON> {
     styleDeclarations: Iterable<[Declaration, Origin]>,
     device: Device,
     parent: Option<Style> = None,
+    owner: Option<Element> = None,
   ): Style {
     // declarations are read twice, once for variables and once for properties,
     // so we cannot use a read-once iterable. Main use case from `Style.from`
@@ -171,10 +178,11 @@ export class Style implements Serializable<Style.JSON> {
       }
     }
 
-    return new Style(device, parent, variables, properties);
+    return new Style(owner, device, parent, variables, properties);
   }
 
   private static _empty = new Style(
+    None,
     Device.standard(),
     None,
     Map.empty(),
@@ -185,6 +193,7 @@ export class Style implements Serializable<Style.JSON> {
     return this._empty;
   }
 
+  private readonly _owner: Option<Element>;
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
   private readonly _variables: Map<string, Value<Slice<Token>>>;
@@ -197,15 +206,21 @@ export class Style implements Serializable<Style.JSON> {
   private _computed = Map.empty<Name, Value>();
 
   private constructor(
+    owner: Option<Element>,
     device: Device,
     parent: Option<Style>,
     variables: Map<string, Value<Slice<Token>>>,
     properties: Map<Name, Value>,
   ) {
+    this._owner = owner;
     this._device = device;
     this._parent = parent;
     this._variables = variables;
     this._properties = properties;
+  }
+
+  public get owner(): Option<Element> {
+    return this._owner;
   }
 
   public get device(): Device {
@@ -444,6 +459,7 @@ export namespace Style {
             .parent(Node.flatTree)
             .filter(Element.isElement)
             .map((parent) => from(parent, device, context)),
+          Option.of(element),
         );
       });
   }
@@ -472,6 +488,7 @@ export namespace Style {
     hasSpecifiedStyle,
     hasTextDecoration,
     hasTransparentBackground,
+    hasUsedStyle,
     isFocusable,
     isImportant,
     isInert,
@@ -480,7 +497,10 @@ export namespace Style {
     isVisibleShadow,
   } = element;
 
-  export const { isRendered, isVisible, isScrolledBehind } = node;
+  export const { innerText, isRendered, isVisible, isScrolledBehind } = node;
+
+  export const { isBlockContainer, isFlexContainer, isGridContainer } =
+    predicates;
 }
 
 function parseLonghand<N extends Longhands.Name>(

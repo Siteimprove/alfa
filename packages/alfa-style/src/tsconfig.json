@@ -15,6 +15,7 @@
     "./element/predicate/has-specified-style.ts",
     "./element/predicate/has-text-decoration.ts",
     "./element/predicate/has-transparent-background.ts",
+    "./element/predicate/has-used-style.ts",
     "./element/predicate/is-focusable.ts",
     "./element/predicate/is-important.ts",
     "./element/predicate/is-inert.ts",
@@ -24,6 +25,7 @@
     "./index.ts",
     "./longhand.ts",
     "./longhands.ts",
+    "./node/helpers/inner-text.ts",
     "./node/node.ts",
     "./node/predicate/has-same-foreground-as-background.ts",
     "./node/predicate/is-clipped.ts",
@@ -33,6 +35,7 @@
     "./node/predicate/is-rendered.ts",
     "./node/predicate/is-transparent.ts",
     "./node/predicate/is-visible.ts",
+    "./predicate/index.ts",
     "./predicate/is-block-container.ts",
     "./predicate/is-flex-container.ts",
     "./predicate/is-grid-container.ts",
@@ -163,6 +166,7 @@
     "./property/overflow.ts",
     "./property/overflow-x.ts",
     "./property/overflow-y.ts",
+    "./property/perspective.ts",
     "./property/pointer-events.ts",
     "./property/position.ts",
     "./property/right.ts",
@@ -185,6 +189,7 @@
     "./property/visibility.ts",
     "./property/white-space.ts",
     "./property/width.ts",
+    "./property/will-change.ts",
     "./property/word-spacing.ts",
     "./property/z-index.ts",
     "./resolver.ts",
@@ -220,6 +225,7 @@
     { "path": "../../alfa-selector" },
     { "path": "../../alfa-set" },
     { "path": "../../alfa-slice" },
+    { "path": "../../alfa-string" },
     { "path": "../../alfa-trilean" }
   ]
 }

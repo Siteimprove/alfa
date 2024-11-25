@@ -1,5 +1,33 @@
 # @siteimprove/alfa-performance
 
+## 0.94.1
+
+## 0.94.0
+
+## 0.93.8
+
+## 0.93.7
+
+### Patch Changes
+
+- **Changed:** `Performance.now()` does not try to use `node:perf_hooks` anymore. ([#1704](https://github.com/Siteimprove/alfa/pull/1704))
+
+  This created problem when trying to bundle `Performance` for browsers, where `node:` imports are not available.
+
+## 0.93.6
+
+## 0.93.5
+
+## 0.93.4
+
+## 0.93.3
+
+## 0.93.2
+
+## 0.93.1
+
+## 0.93.0
+
 ## 0.92.0
 
 ### Minor Changes

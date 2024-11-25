@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function takeUntil<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, condition: Parser<I, unknown, E, A>): Parser<I, Array<T>, E, A>;
+export function takeUntil<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, condition: Parser<I, unknown, E, A>): Parser<I, Array<T>, E, A>;
 ```
 
 ## Parameters

@@ -11,11 +11,17 @@
 export declare namespace Query 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [getElementDescendants(node, options)](./alfa-dom.query.getelementdescendants.md) |  |
+
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [getElementDescendants](./alfa-dom.query.getelementdescendants.md) |  |
+|  [getDescendants](./alfa-dom.query.getdescendants.md) |  |
 |  [getElementIdMap](./alfa-dom.query.getelementidmap.md) |  |
 |  [getInclusiveElementDescendants](./alfa-dom.query.getinclusiveelementdescendants.md) |  |
 

@@ -37,7 +37,6 @@ export declare namespace Element
 |  [hasNamespace](./alfa-dom.element.hasnamespace.md) |  |
 |  [hasTabIndex](./alfa-dom.element.hastabindex.md) |  |
 |  [hasUniqueId](./alfa-dom.element.hasuniqueid.md) |  |
-|  [inputType](./alfa-dom.element.inputtype.md) |  |
 |  [isActuallyDisabled](./alfa-dom.element.isactuallydisabled.md) |  |
 |  [isBrowsingContextContainer](./alfa-dom.element.isbrowsingcontextcontainer.md) |  |
 |  [isContent](./alfa-dom.element.iscontent.md) |  |
@@ -48,4 +47,10 @@ export declare namespace Element
 |  [isReplaced](./alfa-dom.element.isreplaced.md) |  |
 |  [isScopedTo](./alfa-dom.element.isscopedto.md) |  |
 |  [isSuggestedFocusable](./alfa-dom.element.issuggestedfocusable.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [InputType](./alfa-dom.element.inputtype.md) |  |
 

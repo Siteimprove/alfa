@@ -28,6 +28,7 @@ export declare namespace Scale
 |  Variable | Description |
 |  --- | --- |
 |  [parse](./alfa-css.scale.parse.md) |  |
+|  [parseProp](./alfa-css.scale.parseprop.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/scale](https://developer.mozilla.org/en-US/docs/Web/CSS/scale) |
 
 ## Type Aliases
 

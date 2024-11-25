@@ -18,7 +18,7 @@ test("toJSON() calls toJSON() on error elements", (t) => {
 });
 
 test("toJSON() calls toJSON() on error elements and respects serialization options", (t) => {
-  const serializationId = crypto.randomUUID();
+  const internalId = crypto.randomUUID();
   const element = h.element(
     "div",
     undefined,
@@ -28,7 +28,7 @@ test("toJSON() calls toJSON() on error elements and respects serialization optio
     undefined,
     undefined,
     undefined,
-    serializationId,
+    internalId,
   );
   const diagnostic = WithBadElements.of("Foo", [element]);
 
@@ -43,7 +43,8 @@ test("toJSON() calls toJSON() on error elements and respects serialization optio
         // @ts-ignore the type checker is not able to infer that the type should be Element.MinimalJSON when the serialization options are passed through WithBadElements.toJSON
         {
           type: "element",
-          serializationId,
+          internalId,
+          serializationId: internalId,
         },
       ],
     },

@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-toJSON(): Technique.JSON;
+toJSON(): Technique.JSON<N>;
 ```
 **Returns:**
 
-[Technique.JSON](./alfa-wcag.technique.json.md)
+[Technique.JSON](./alfa-wcag.technique.json.md)<!-- -->&lt;N&gt;
 

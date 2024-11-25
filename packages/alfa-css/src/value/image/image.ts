@@ -7,7 +7,7 @@ import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 
 import { Value } from "../value.js";
 
-import { URL } from "./url.js";
+import { URL } from "../textual/url.js";
 import { Gradient } from "./gradient/index.js";
 
 const { map, either } = Parser;

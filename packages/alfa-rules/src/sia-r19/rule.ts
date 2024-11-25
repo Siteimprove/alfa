@@ -1,13 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Device } from "@siteimprove/alfa-device";
-import type {
-  Attribute} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-} from "@siteimprove/alfa-dom";
+import type { Attribute } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -16,8 +10,9 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
 import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional.js";
+import { ARIA } from "../requirements/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
 
@@ -28,6 +23,9 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r19",
+  requirements: [
+    ARIA.of("https://www.w3.org/TR/wai-aria-1.2/#propcharacteristic_value"),
+  ],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {

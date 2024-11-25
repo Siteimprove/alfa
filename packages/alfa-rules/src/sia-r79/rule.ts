@@ -7,7 +7,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
+import { BestPractice } from "../requirements/index.js";
 import { Scope, Stability } from "../tags/index.js";
 
 const { equals } = Predicate;
@@ -19,6 +20,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r79",
+  requirements: [BestPractice.of("preformated-text-is-code-or-figure")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {

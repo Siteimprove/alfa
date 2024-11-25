@@ -1,5 +1,57 @@
 # @siteimprove/alfa-dom
 
+## 0.94.1
+
+## 0.94.0
+
+### Minor Changes
+
+- **Breaking:** `#serializationId` has been replaced with `#internalId`. ([#1705](https://github.com/Siteimprove/alfa/pull/1705))
+
+  The old `#serializationId` is now deprecated and acts as an alias to `#internalId`. It will be removed in a future version.
+
+- **Added:** A `Query.descendants` helper is now available, to filter DOM descendants by a predicate. ([#1709](https://github.com/Siteimprove/alfa/pull/1709))
+
+  Results are cached by predicate and node.
+
+## 0.93.8
+
+## 0.93.7
+
+## 0.93.6
+
+## 0.93.5
+
+## 0.93.4
+
+## 0.93.3
+
+### Patch Changes
+
+- **Changed:** `Node.from` and `Page.from` are now cached. ([#1703](https://github.com/Siteimprove/alfa/pull/1703))
+
+  This makes multiple de-serialisation inexpensive as long as the JSON object is not discarded, thus simplifying logic for callers.
+
+## 0.93.2
+
+## 0.93.1
+
+## 0.93.0
+
+### Minor Changes
+
+- **Breaking:** `Element.hasDisplaySize()` now builds a `Predicate<Element<"select">>` instead of a `Predicate<Element>`. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+  That is, it can only be applied to elements that have been typed as `<select>` elements, where it makes sense. If the type of element cannot be narrowed in TypeScript (e.g. because it is the result of a direct test on `Element#name`), a type assertion is needed; in general, using the `Element.hasName` refinement is recommended over testing `Element#name`.
+
+- **Added:** A method `Element<"select">#displaySize()` is now available. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+- **Breaking:** The helper `Element.inputType(element)` has been replaced by a method `element.inputType()`. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
+  It can still only be called if `element` has been typed as `Element<"input">`, i.e. is an `<input>` HTML element.
+
+- **Added:** An `Element<"select">#optionsList()` helper is now available. ([#1683](https://github.com/Siteimprove/alfa/pull/1683))
+
 ## 0.92.0
 
 ### Minor Changes

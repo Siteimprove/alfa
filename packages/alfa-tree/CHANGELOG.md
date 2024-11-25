@@ -1,5 +1,33 @@
 # @siteimprove/alfa-tree
 
+## 0.94.1
+
+## 0.94.0
+
+### Minor Changes
+
+- **Breaking:** `#serializationId` has been replaced with `#internalId`. ([#1705](https://github.com/Siteimprove/alfa/pull/1705))
+
+  The old `#serializationId` is now deprecated and acts as an alias to `#internalId`. It will be removed in a future version.
+
+## 0.93.8
+
+## 0.93.7
+
+## 0.93.6
+
+## 0.93.5
+
+## 0.93.4
+
+## 0.93.3
+
+## 0.93.2
+
+## 0.93.1
+
+## 0.93.0
+
 ## 0.92.0
 
 ### Minor Changes

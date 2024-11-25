@@ -20,7 +20,7 @@ export namespace Conformance {
 }
 
 // @public (undocumented)
-export class Criterion<C extends Criterion.Chapter = Criterion.Chapter> extends Requirement {
+export class Criterion<C extends Criterion.Chapter = Criterion.Chapter, U extends Criterion.URI<C, "2.1" | "2.2"> = Criterion.URI<C, "2.1" | "2.2">> extends Requirement<"criterion", U> {
     get chapter(): C;
     get level(): Branched<Criterion.Level, Criterion.Version>;
     // (undocumented)
@@ -29,8 +29,7 @@ export class Criterion<C extends Criterion.Chapter = Criterion.Chapter> extends 
     // (undocumented)
     toEARL(): Criterion.EARL;
     // (undocumented)
-    toJSON(): Criterion.JSON;
-    get uri(): Criterion.URI<C, "2.1" | "2.2">;
+    toJSON(): Criterion.JSON<C, U>;
     get versions(): Iterable<Criterion.Version>;
 }
 
@@ -57,9 +56,9 @@ export namespace Criterion {
     // (undocumented)
     export function isCriterion(value: unknown): value is Criterion;
     // (undocumented)
-    export interface JSON extends Requirement.JSON {
+    export interface JSON<C extends Criterion.Chapter = Criterion.Chapter, U extends Criterion.URI<C, "2.1" | "2.2"> = Criterion.URI<C, "2.1" | "2.2">> extends Requirement.JSON<"criterion", U> {
         // (undocumented)
-        chapter: Chapter;
+        chapter: C;
         // (undocumented)
         title: string;
     }
@@ -91,7 +90,7 @@ export namespace Criterion {
 }
 
 // @public (undocumented)
-export class Technique<N extends Technique.Name = Technique.Name> extends Requirement {
+export class Technique<N extends Technique.Name = Technique.Name> extends Requirement<"technique", Technique.URI<N>> {
     get name(): N;
     // (undocumented)
     static of<N extends Technique.Name>(name: N): Technique<N>;
@@ -99,8 +98,7 @@ export class Technique<N extends Technique.Name = Technique.Name> extends Requir
     // (undocumented)
     toEARL(): Technique.EARL;
     // (undocumented)
-    toJSON(): Technique.JSON;
-    get uri(): Technique.URI<N>;
+    toJSON(): Technique.JSON<N>;
 }
 
 // @public (undocumented)
@@ -122,13 +120,11 @@ export namespace Technique {
     // (undocumented)
     export function isTechnique(value: unknown): value is Technique;
     // (undocumented)
-    export interface JSON extends Requirement.JSON {
+    export interface JSON<N extends Technique.Name = Technique.Name> extends Requirement.JSON<"technique", Technique.URI<N>> {
         // (undocumented)
         name: Name;
         // (undocumented)
         title: Title;
-        // (undocumented)
-        uri: URI;
     }
     // Warning: (ae-forgotten-export) The symbol "Techniques" needs to be exported by the entry point index.d.ts
     export type Name = keyof Techniques;

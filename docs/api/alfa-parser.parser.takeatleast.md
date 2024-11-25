@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function takeAtLeast<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, lower: number): Parser<I, Array<T>, E, A>;
+export function takeAtLeast<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, lower: number): Parser<I, Array<T>, E, A>;
 ```
 
 ## Parameters

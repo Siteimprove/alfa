@@ -28,6 +28,7 @@ export declare namespace Translate
 |  Variable | Description |
 |  --- | --- |
 |  [parse](./alfa-css.translate.parse.md) |  |
+|  [parseProp](./alfa-css.translate.parseprop.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/translate](https://developer.mozilla.org/en-US/docs/Web/CSS/translate) |
 
 ## Type Aliases
 

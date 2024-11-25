@@ -22,6 +22,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
@@ -35,16 +36,15 @@ const { Discrete, Range } = Feature.Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const {
-  hasAttribute,
-  hasBox,
-  hasDisplaySize,
-  hasName,
-  hasNamespace,
-  isElement,
-} = Element;
+const { hasAttribute, hasBox, hasName, hasNamespace, isElement } = Element;
 const { isText } = Text;
-const { getPositioningParent, hasCascadedStyle, isVisible } = Style;
+const {
+  getPositioningParent,
+  hasCascadedStyle,
+  hasComputedStyle,
+  hasUsedStyle,
+  isVisible,
+} = Style;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
@@ -74,7 +74,6 @@ export default Rule.Atomic.of<Page, Text>({
                 or(
                   hasAttribute("aria-hidden", equals("true")),
                   not(hasNamespace(Namespace.HTML)),
-                  and(hasName("select"), hasDisplaySize(1)),
                 ),
               ),
               node,
@@ -105,227 +104,66 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        const parent = target.parent(Node.fullTree).filter(isElement);
+        return target
+          .parent(Node.fullTree)
+          .filter(isElement)
+          .map((parent) => {
+            const horizontallyClippedBy = ClippingAncestor.horizontal(
+              device,
+              parent,
+            );
 
-        const horizontallyClippedBy = parent.flatMap(
-          horizontallyClipper(device),
-        );
+            const verticallyClippedBy = ClippingAncestor.vertical(
+              device,
+              parent,
+            );
 
-        const verticallyClippedBy = parent.flatMap(
-          verticalClippingAncestor(device),
-        );
+            const hasBig = isTwiceAsBig(parent, device);
 
-        return {
-          1: expectation(
-            horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
-            () =>
-              // If the clipping ancestor happens to be twice as big as the text
-              // (parent), clipping only occurs after 200% zoom, which is OK.
-              // We do not really care where is the text inside the clipping
-              // ancestor, and simply assume that if it's big enough it will have
-              // room to grow. This is not always true as the text may be pushed
-              // to the far side already and ends up being clipped anyway.
-              // This would only create false negatives, so this is OK.
+            return {
+              1: expectation(
+                horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
+                () =>
+                  // If the clipping ancestor happens to be twice as big as the text
+                  // (parent), clipping only occurs after 200% zoom, which is OK.
+                  // We do not really care where is the text inside the clipping
+                  // ancestor, and simply assume that if it's big enough it will have
+                  // room to grow. This is not always true as the text may be pushed
+                  // to the far side already and ends up being clipped anyway.
+                  // This would only create false negatives, so this is OK.
 
-              // There may be another further ancestor that is actually small and
-              // clips both the text and the found clipping ancestors. We assume
-              // this is not likely and just ignore it. This would only create
-              // false negatives.
-              horizontallyClippedBy.every(
-                hasBox(
-                  (clippingBox) =>
-                    target
-                      .parent()
-                      .filter(isElement)
-                      .some(
-                        hasBox(
-                          (targetBox) =>
-                            clippingBox.width >= 2 * targetBox.width,
-                          device,
-                        ),
+                  // There may be another further ancestor that is actually small and
+                  // clips both the text and the found clipping ancestors. We assume
+                  // this is not likely and just ignore it. This would only create
+                  // false negatives.
+                  expectation(
+                    horizontallyClippedBy.every(hasBig("width")) &&
+                      verticallyClippedBy.every(hasBig("height")),
+                    () =>
+                      Outcomes.IsContainer(
+                        horizontallyClippedBy,
+                        verticallyClippedBy,
                       ),
-                  device,
-                ),
-              ) &&
-              verticallyClippedBy.every(
-                hasBox(
-                  (clippingBox) =>
-                    target
-                      .parent()
-                      .filter(isElement)
-                      .some(
-                        hasBox(
-                          (targetBox) =>
-                            clippingBox.height >= 2 * targetBox.height,
-                          device,
-                        ),
+                    () =>
+                      Outcomes.ClipsText(
+                        horizontallyClippedBy,
+                        verticallyClippedBy,
                       ),
-                  device,
-                ),
-              )
-                ? Outcomes.IsContainer(
-                    horizontallyClippedBy,
-                    verticallyClippedBy,
-                  )
-                : Outcomes.ClipsText(
-                    horizontallyClippedBy,
-                    verticallyClippedBy,
                   ),
-            () => Outcomes.WrapsText,
-          ),
-        };
+                () => Outcomes.WrapsText,
+              ),
+            };
+          })
+          .getOr({ 1: Outcomes.WrapsText });
       },
     };
   },
 });
 
-const verticallyClippingCache = Cache.empty<
-  Device,
-  Cache<Element, Option<Element>>
->();
-/**
- * Checks if an element clips its vertical overflow by having an ancestor with
- * both a fixed height and a clipping overflow (before any scrolling ancestor).
- *
- * Note that element with a fixed height will create an overflow anyway, and
- * that may be clipped by any other ancestor. However, there may also be several
- * elements below that can absorb the vertical overflow. So we only report
- * when the same element has fixed height and clips.
- */
-function verticalClippingAncestor(
-  device: Device,
-): (element: Element) => Option<Element> {
-  return function clippingAncestor(element: Element): Option<Element> {
-    return verticallyClippingCache.get(device, Cache.empty).get(element, () => {
-      if (hasFontRelativeValue(device, "height")(element)) {
-        // The element has a font-relative height or min-height and we assume
-        // it will properly grow with the font, without ever clipping it.
-        // This is not fully correct since an ancestor may still clip vertically,
-        // but there may be several elements in between to absorb the growth.
-        return None;
-      }
-
-      if (test(usesFontRelativeMediaRule(device, isHeight), element)) {
-        // The element uses a (font relative) media rule, and we can't guess what
-        // the page would like upon resizing and triggering a different media
-        // query, so we just accept it as good enough
-        return None;
-      }
-
-      if (
-        hasFixedHeight(device)(element) &&
-        overflow(element, device, "y") === Overflow.Clip
-      ) {
-        return Option.of(element);
-      }
-
-      if (overflow(element, device, "y") === Overflow.Handle) {
-        return None;
-      }
-
-      return getPositioningParent(element, device).flatMap(clippingAncestor);
-    });
-  };
-}
-
-/**
- * Checks if an element ultimately clips its horizontal overflow:
- * * all elements are assumed to have fixed width because the page cannot extend
- *   infinitely in the horizontal dimension;
- * * first we look at the element itself and how it handles the text overflow of
- *   its children text nodes;
- * * if text overflows its parent, it does so as content, so we look for an
- *   ancestor that either handles it (scroll bar) or clips it.
- */
-function horizontallyClipper(
-  device: Device,
-): (element: Element) => Option<Element> {
-  return (element) => {
-    if (hasFontRelativeValue(device, "width")(element)) {
-      // The element grows with its text.
-      return None;
-    }
-
-    if (test(usesFontRelativeMediaRule(device, isWidth), element)) {
-      // The element uses a (font relative) media rule, and we can't guess what
-      // the page would like upon resizing and triggering a different media
-      // query, so we just accept it as good enough
-      return None;
-    }
-
-    switch (horizontalTextOverflow(element, device)) {
-      case Overflow.Clip:
-        return Option.of(element);
-      case Overflow.Handle:
-        return None;
-      case Overflow.Overflow:
-        return getPositioningParent(element, device).flatMap(
-          horizontallyClippingAncestor(device),
-        );
-    }
-  };
-}
-
-const horizontallyClippingCache = Cache.empty<
-  Device,
-  Cache<Element, Option<Element>>
->();
-/**
- * Checks whether the first offset ancestor that doesn't overflow is
- * clipping.
- *
- * When encountering an ancestor which is a wrapping flex container, we assume
- * that this ancestor is correctly wrapping all its children and that no
- * individual child overflows enough to overflow the parent (when alone on a
- * line). This is not fully correct (since an individual child might overflow
- * enough that it would overflow the flex-wrapping ancestor even if alone on a
- * line); but this seems to be a frequent use case.
- */
-function horizontallyClippingAncestor(
-  device: Device,
-): (element: Element) => Option<Element> {
-  return function clippingAncestor(element: Element): Option<Element> {
-    return horizontallyClippingCache
-      .get(device, Cache.empty)
-      .get(element, () => {
-        if (hasFontRelativeValue(device, "width")(element)) {
-          // The element grows with its content.
-          // The content might still be clipped by an ancestor, but we
-          // assume this denotes a small component inside a large container
-          // with enough room for the component to grow to 200% or more
-          // before being clipped.
-          return None;
-        }
-
-        if (test(usesFontRelativeMediaRule(device, isWidth), element)) {
-          // The element uses a (font relative) media rule, and we can't guess what
-          // the page would like upon resizing and triggering a different media
-          // query, so we just accept it as good enough
-          return None;
-        }
-
-        if (isWrappingFlexContainer(device)(element)) {
-          // The element handles overflow by wrapping its flex descendants
-          return None;
-        }
-        switch (overflow(element, device, "x")) {
-          case Overflow.Clip:
-            return Option.of(element);
-          case Overflow.Handle:
-            return None;
-          case Overflow.Overflow:
-            return getPositioningParent(element, device).flatMap(
-              clippingAncestor,
-            );
-        }
-      });
-  };
-}
-
 enum Overflow {
-  Clip, // The element clips its overflow.
-  Handle, // The element definitely handles its overflow.
-  Overflow, // The element overflows into its parent.
+  Clip = "Clip", // The element clips its overflow.
+  Handle = "Handle", // The element definitely handles its overflow.
+  Overflow = "Overflow", // The element overflows into its parent.
 }
 
 function overflow(
@@ -333,80 +171,308 @@ function overflow(
   device: Device,
   dimension: "x" | "y",
 ): Overflow {
-  switch (
-    Style.from(element, device).computed(`overflow-${dimension}`).value.value
-  ) {
-    case "clip":
-    case "hidden":
-      return Overflow.Clip;
-    case "scroll":
-    case "auto":
-      return Overflow.Handle;
-    case "visible":
-      return Overflow.Overflow;
-  }
+  return Style.from(element, device)
+    .used(`overflow-${dimension}`)
+    .map((overflow) => {
+      switch (overflow.value.value) {
+        case "clip":
+        case "hidden":
+          return Overflow.Clip;
+        case "scroll":
+        case "auto":
+          return Overflow.Handle;
+        case "visible":
+          return Overflow.Overflow;
+      }
+    })
+    .getOr(Overflow.Overflow);
 }
 
-/**
- * Checks how an element handle its text overflow (overflow of its children
- * text nodes).
- */
-function horizontalTextOverflow(element: Element, device: Device): Overflow {
-  const style = Style.from(element, device);
-
-  const { value: whitespace } = style.computed("white-space");
-
-  if (whitespace.value !== "nowrap" && whitespace.value !== "pre") {
-    // Whitespace causes wrapping, the element doesn't overflow its text.
-    return Overflow.Handle;
-  }
-  // If whitespace does not cause wrapping, we need to check if a text
-  // overflow occurs and could cause the text to clip.
-  switch (overflow(element, device, "x")) {
-    case Overflow.Overflow:
-      // The text always overflow into the parent, parent needs to handle an
-      // horizontal content overflow
-      return Overflow.Overflow;
-    case Overflow.Handle:
-      // The element handles its text overflow with a scroll bar
-      return Overflow.Handle;
-    case Overflow.Clip:
-      // The element clip its overflow, but maybe `text-overflow` handles it.
-      const { value: overflow } = style.computed("text-overflow");
-      // We assume that anything other than `clip` handles the overflow.
-      return overflow.value === "clip" ? Overflow.Clip : Overflow.Handle;
-  }
+function isTwiceAsBig(
+  target: Element,
+  device: Device,
+): (dimension: "width" | "height") => Predicate<Element> {
+  return (dimension) =>
+    hasBox(
+      (clippingBox) =>
+        test(
+          hasBox(
+            (targetBox) => clippingBox[dimension] >= 2 * targetBox[dimension],
+            device,
+          ),
+          target,
+        ),
+      device,
+    );
 }
 
-/**
- * Checks if an element has fixed (not font relative) height.
- *
- * @remarks
- * We use the cascaded value to avoid lengths being resolved to pixels.
- * Otherwise, we won't be able to tell if a font relative length was
- * used.
- *
- * @remarks
- * Calculated values cannot be resolved at cascade time. So we just accept them
- * (consider they are font relative) to avoid more false positives.
- *
- * @remarks
- * For heights set via the `style` attribute (the style has no parent),
- * we assume that its value is controlled by JavaScript and is adjusted
- * as the content scales.
- *
- */
-function hasFixedHeight(device: Device): Predicate<Element> {
-  return hasCascadedStyle(
-    "height",
-    (height, source) =>
-      Length.isLength(height) &&
-      !height.hasCalculation() &&
-      height.value > 0 &&
-      !height.isFontRelative() &&
-      source.some((declaration) => declaration.parent.isSome()),
-    device,
-  );
+namespace ClippingAncestor {
+  export const vertical = clipper("height", localVerticalOverflow);
+  // This is eta-expanded to avoid premature evaluation of the localHorizontalOverflow function.
+  export const horizontal = (device: Device, element: Element) =>
+    clipper("width", localHorizontalOverflow())(device, element);
+
+  const predicates = { height: isHeight, width: isWidth };
+  const clipperCaches = {
+    height: Cache.empty<Device, Cache<Element, Option<Element>>>(),
+    width: Cache.empty<Device, Cache<Element, Option<Element>>>(),
+  };
+
+  function clipper(
+    dimension: "height" | "width",
+    localOverflow: (device: Device, element: Element) => Overflow,
+  ): (device: Device, element: Element) => Option<Element> {
+    return (device, element) => {
+      function clipper(element: Element): Option<Element> {
+        return clipperCaches[dimension]
+          .get(device, Cache.empty)
+          .get(element, () => {
+            if (hasFontRelativeValue(device, dimension)(element)) {
+              // The element has a font-relative [dimension] or min-[dimension]
+              // and we assume it will properly grow with the font, without ever
+              // clipping it. This is not fully correct since an ancestor may
+              // still clip, but there may be several elements in between to
+              // absorb the growth.
+              return None;
+            }
+
+            if (
+              test(
+                Media.usesFontRelativeMediaRule(device, predicates[dimension]),
+                element,
+              )
+            ) {
+              // The element uses a (font relative) media rule, and we can't guess
+              // what the page would like upon resizing and triggering a different
+              // media query, so we just accept it as good enough
+              return None;
+            }
+
+            switch (localOverflow(device, element)) {
+              case Overflow.Clip:
+                // The element definitely clips, we've found our clipper.
+                return Option.of(element);
+              case Overflow.Handle:
+                // The element definitely handles, nothing to report.
+                return None;
+              case Overflow.Overflow:
+                // The element overflows, need to recurse into ancestors.
+                return getPositioningParent(element, device).flatMap(clipper);
+            }
+          });
+      }
+
+      return clipper(element);
+    };
+  }
+
+  /**
+   * Finds how the element manages its vertical overflow.
+   */
+  function localVerticalOverflow(device: Device, element: Element): Overflow {
+    const verticalOverflow = overflow(element, device, "y");
+    switch (verticalOverflow) {
+      case Overflow.Clip:
+        return hasFixedDimension(device, "height")(element)
+          ? Overflow.Clip
+          : Overflow.Overflow;
+      default:
+        return verticalOverflow;
+    }
+  }
+
+  /**
+   * Finds how the element manages its vertical overflow.
+   *
+   * @remarks
+   * We re-create a function on each call, so it can internally store whether
+   * that run has escaped its block container or not. `text-overflow` only takes
+   * effect on the first ancestor block container.
+   */
+  function localHorizontalOverflow(): (
+    device: Device,
+    element: Element,
+  ) => Overflow {
+    // While we are in the same block as the text:
+    // * text can break at soft wrap points (whitespace).
+    // * text-overflow can handle the overflow.
+    let inSameBlock = true;
+
+    return (device, element) => {
+      const style = Style.from(element, device);
+
+      if (
+        inSameBlock &&
+        test(
+          and(
+            hasComputedStyle(
+              "white-space",
+              (value) => !value.is("nowrap", "pre"),
+              device,
+            ),
+            hasSoftWrapPoints(device),
+          ),
+          element,
+        )
+      ) {
+        // The element both allows wrapping and has soft wrap points for it to
+        // actually occur.
+        return Overflow.Handle;
+      }
+
+      if (
+        hasUsedStyle(
+          "flex-wrap",
+          (value) => !value.is("nowrap"),
+          device,
+        )(element)
+      ) {
+        // The element is a wrapping flex container, children will wrap
+        // It may still overflow if individual children are too big, but we
+        // assume this won't happen; this only creates false negatives.
+        return Overflow.Handle;
+      }
+
+      let horizontalOverflow = overflow(element, device, "x");
+      if (horizontalOverflow === Overflow.Clip) {
+        if (
+          inSameBlock &&
+          hasUsedStyle(
+            "text-overflow",
+            (value) => value.is("ellipsis"),
+            device,
+          )(element)
+        ) {
+          // As long as we are in the same block, we consider ellispis as an
+          // indication that clipping was taken into consideration.
+          horizontalOverflow = Overflow.Handle;
+        }
+
+        if (
+          constrainingAncestor(element, device, "width").every(
+            isTwiceAsBig(element, device)("width"),
+          )
+        ) {
+          // If the element is not itself constrained, and twice as small as its
+          // closest constraining ancestor, it has room to grow.
+          // We return a somewhat incorrect value here as it will ultimately
+          // turn into an Oatcome.WrapsText while a Outcome.IsContainer would
+          // be more correct. This is OK since we do not really rely on that
+          // information anywhere.
+          horizontalOverflow = Overflow.Handle;
+        }
+      }
+
+      if (Style.isBlockContainer(style)) {
+        // Are we exiting the block?
+        inSameBlock = false;
+      }
+
+      return horizontalOverflow;
+    };
+  }
+
+  const _softWrapPointsCache = Cache.empty<Device, Cache<Node, boolean>>();
+  function hasSoftWrapPoints(device: Device): Predicate<Node> {
+    return (node) =>
+      _softWrapPointsCache.get(device, Cache.empty).get(node, () => {
+        if (isText(node)) {
+          // This is not fully correct, depending on languages
+          return String.hasSoftWrapOpportunity(node.data);
+        }
+
+        if (isElement(node)) {
+          // If the element itself refuses to wrap, it cancels the soft wrap
+          // points of its children.
+          if (
+            hasComputedStyle(
+              "white-space",
+              (value) => value.is("nowrap", "pre"),
+              device,
+            )(node)
+          ) {
+            return false;
+          }
+
+          // If the element has only one child, that child must have wrap points.
+          // Otherwise, we assume that soft wrap points exist in-between children.
+          // This is not fully correct since inter-element spaces is needed for
+          // that, e.g. we incorrectly consider that
+          // `<div><span>he</span><span>llo</span></div>` has wrap points between
+          // the `<span>`.
+          // This is OK-ish because Alfa does explicit the inter-elements space.
+          const children = node.children(Node.fullTree);
+          return (
+            children.size > 1 ||
+            children.first().some(hasSoftWrapPoints(device))
+          );
+        }
+
+        return false;
+      });
+  }
+
+  const constrainingCaches = {
+    height: Cache.empty<Device, Cache<Element, Option<Element>>>(),
+    width: Cache.empty<Device, Cache<Element, Option<Element>>>(),
+  };
+  function constrainingAncestor(
+    element: Element,
+    device: Device,
+    dimension: "height" | "width",
+  ): Option<Element> {
+    return constrainingCaches[dimension]
+      .get(device, Cache.empty)
+      .get(element, () =>
+        hasFixedDimension(device, dimension)(element) ||
+        // The <body> element is horizontally constrained by the viewport
+        // That is we consider infinite scroll vertically, not horizontally.
+        (dimension === "width" && hasName("body")(element))
+          ? Option.of(element)
+          : getPositioningParent(element, device).flatMap<Element>((parent) =>
+              constrainingAncestor(parent, device, dimension),
+            ),
+      );
+  }
+
+  /**
+   * Checks if an element has fixed (not font relative) dimension.
+   *
+   * @remarks
+   * We use the cascaded value to avoid lengths being resolved to pixels.
+   * Otherwise, we won't be able to tell if a font relative length was
+   * used.
+   *
+   * @remarks
+   * Calculated values cannot be resolved at cascade time. So we just accept
+   * them (consider they are font relative) to avoid more false positives.
+   *
+   * @remarks
+   * For heights set via the `style` attribute (the style has no parent),
+   * we assume that its value is controlled by JavaScript and is adjusted
+   * as the content scales.
+   *
+   */
+  function hasFixedDimension(
+    device: Device,
+    dimension: "height" | "width",
+  ): Predicate<Element> {
+    return hasCascadedStyle(
+      dimension,
+      (value, source) =>
+        // not a length => "auto", i.e not fixed.
+        Length.isLength(value) &&
+        // We bail out on calculated dimensions
+        !value.hasCalculation() &&
+        // 0 is a special case making the content invisible anyway.
+        value.value > 0 &&
+        // Font relative dimension is good
+        !value.isFontRelative() &&
+        // No source means the style is set via the `style` attribute
+        source.some((declaration) => declaration.parent.isSome()),
+      device,
+    );
+  }
 }
 
 /**
@@ -443,22 +509,6 @@ function hasFontRelativeValue(
   );
 }
 
-function isWrappingFlexContainer(device: Device): Predicate<Element> {
-  return (element) => {
-    const style = Style.from(element, device);
-    const {
-      value: { values: display },
-    } = style.computed("display");
-
-    if (display[1]?.value === "flex") {
-      // The element is a flex container
-      const { value: flexWrap } = style.computed("flex-wrap");
-      return flexWrap.value !== "nowrap";
-    }
-
-    return false;
-  };
-}
 /*
  * We accept any property depending on a media query as handling the overflow,
  * not just the concerned properties (height, width, …) This is because the mere
@@ -470,98 +520,101 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
  * bounds will not trigger when text size increase, so they cannot control
  * overflow.
  */
-const mediaRulesCache = Cache.empty<CSSRule, Sequence<MediaRule>>();
-
-function ancestorMediaRules(rule: CSSRule | null): Sequence<MediaRule> {
-  if (rule === null) {
-    return Sequence.empty();
+namespace Media {
+  export function usesFontRelativeMediaRule(
+    device: Device,
+    predicate: Predicate<Feature.Media.Feature>,
+    context: Context = Context.empty(),
+  ): Predicate<Element> {
+    return usesMediaRule(isFontRelativeMediaRule(predicate), device, context);
   }
 
-  return mediaRulesCache.get(rule, () => {
-    const mediaRules = rule.parent
-      .map((parent) => ancestorMediaRules(parent))
-      .getOrElse<Sequence<MediaRule>>(Sequence.empty);
+  const _mediaRulesCache = Cache.empty<CSSRule, Sequence<MediaRule>>();
+  function ancestorMediaRules(rule: CSSRule | null): Sequence<MediaRule> {
+    if (rule === null) {
+      return Sequence.empty();
+    }
 
-    return MediaRule.isMediaRule(rule) ? mediaRules.prepend(rule) : mediaRules;
-  });
-}
+    return _mediaRulesCache.get(rule, () => {
+      const mediaRules = rule.parent
+        .map((parent) => ancestorMediaRules(parent))
+        .getOrElse<Sequence<MediaRule>>(Sequence.empty);
 
-const ruleTreeCache = Cache.empty<RuleTree.Node, Sequence<RuleTree.Node>>();
-
-function ancestorsInRuleTree(rule: RuleTree.Node): Sequence<RuleTree.Node> {
-  return ruleTreeCache.get(rule, () =>
-    Sequence.from(rule.inclusiveAncestors()),
-  );
-}
-
-function getUsedMediaRules(
-  element: Element,
-  device: Device,
-  context: Context = Context.empty(),
-): Sequence<MediaRule> {
-  const root = element.root();
-
-  if (!Document.isDocument(root)) {
-    return Sequence.empty();
+      return MediaRule.isMediaRule(rule)
+        ? mediaRules.prepend(rule)
+        : mediaRules;
+    });
   }
 
-  // Get all nodes (style rules) in the RuleTree that affect the element;
-  // for each of these rules, get all ancestor media rules in the CSS tree.
-  return ancestorsInRuleTree(
-    Cascade.from(root, device).get(element, context),
-  ).flatMap((node) => ancestorMediaRules(node.block.rule));
-}
-
-function usesMediaRule(
-  predicate: Predicate<MediaRule> = () => true,
-  device: Device,
-  context: Context = Context.empty(),
-): Predicate<Element> {
-  return (element) =>
-    getUsedMediaRules(element, device, context).some(predicate);
-}
-
-/**
- * Checks whether at least one feature in one of the queries of the media rule
- * is a font-relative one. Only checks feature matching the refinement.
- *
- * @remarks
- * We currently do not support calculated media queries. But this is lost in the
- * typing of Media.Feature. Here, we simply consider them as "good" (font relative).
- */
-function isFontRelativeMediaRule<F extends Feature.Media.Feature>(
-  refinement: Refinement<Feature.Media.Feature, F>,
-): Predicate<MediaRule> {
-  return (rule) =>
-    Iterable.some(rule.queries.queries, (query) =>
-      query.condition.some((condition) =>
-        Iterable.some(
-          condition,
-          (feature) =>
-            refinement(feature) &&
-            feature.value.some((value) =>
-              Range.isRange(value)
-                ? value.minimum.some(
-                    (min) =>
-                      Length.isLength(min.value) &&
-                      (min.value.hasCalculation() ||
-                        min.value.isFontRelative()),
-                  )
-                : Discrete.isDiscrete<Length>(value) &&
-                  (value.value.hasCalculation() ||
-                    value.value.isFontRelative()),
-            ),
-        ),
-      ),
+  const _ruleTreeCache = Cache.empty<RuleTree.Node, Sequence<RuleTree.Node>>();
+  function ancestorsInRuleTree(rule: RuleTree.Node): Sequence<RuleTree.Node> {
+    return _ruleTreeCache.get(rule, () =>
+      Sequence.from(rule.inclusiveAncestors()),
     );
-}
+  }
 
-function usesFontRelativeMediaRule<F extends Feature.Media.Feature>(
-  device: Device,
-  refinement: Refinement<Feature.Media.Feature, F>,
-  context: Context = Context.empty(),
-): Predicate<Element> {
-  return usesMediaRule(isFontRelativeMediaRule(refinement), device, context);
+  function getUsedMediaRules(
+    element: Element,
+    device: Device,
+    context: Context = Context.empty(),
+  ): Sequence<MediaRule> {
+    const root = element.root();
+
+    if (!Document.isDocument(root)) {
+      return Sequence.empty();
+    }
+
+    // Get all nodes (style rules) in the RuleTree that affect the element;
+    // for each of these rules, get all ancestor media rules in the CSS tree.
+    return ancestorsInRuleTree(
+      Cascade.from(root, device).get(element, context),
+    ).flatMap((node) => ancestorMediaRules(node.block.rule));
+  }
+
+  function usesMediaRule(
+    predicate: Predicate<MediaRule> = () => true,
+    device: Device,
+    context: Context = Context.empty(),
+  ): Predicate<Element> {
+    return (element) =>
+      getUsedMediaRules(element, device, context).some(predicate);
+  }
+
+  /**
+   * Checks whether at least one feature in one of the queries of the media
+   * rule is a font-relative one. Only checks feature matching the predicate.
+   *
+   * @remarks
+   * We currently do not support calculated media queries. But this is lost in
+   * the typing of Media.Feature. Here, we simply consider them as "good"
+   * (font relative).
+   */
+  function isFontRelativeMediaRule(
+    predicate: Predicate<Feature.Media.Feature>,
+  ): Predicate<MediaRule> {
+    return (rule) =>
+      Iterable.some(rule.queries.queries, (query) =>
+        query.condition.some((condition) =>
+          Iterable.some(
+            condition,
+            (feature) =>
+              predicate(feature) &&
+              feature.value.some((value) =>
+                Range.isRange(value)
+                  ? value.minimum.some(
+                      (min) =>
+                        Length.isLength(min.value) &&
+                        (min.value.hasCalculation() ||
+                          min.value.isFontRelative()),
+                    )
+                  : Discrete.isDiscrete<Length>(value) &&
+                    (value.value.hasCalculation() ||
+                      value.value.isFontRelative()),
+              ),
+          ),
+        ),
+      );
+  }
 }
 
 /**

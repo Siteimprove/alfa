@@ -1,5 +1,43 @@
 # @siteimprove/alfa-css
 
+## 0.94.1
+
+## 0.94.0
+
+### Minor Changes
+
+- **Added:** CSS property `will-change` is now supported. ([#1707](https://github.com/Siteimprove/alfa/pull/1707))
+
+- **Added:** CSS property `perspective` is now supported. ([#1708](https://github.com/Siteimprove/alfa/pull/1708))
+
+## 0.93.8
+
+## 0.93.7
+
+## 0.93.6
+
+## 0.93.5
+
+## 0.93.4
+
+## 0.93.3
+
+## 0.93.2
+
+## 0.93.1
+
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** Support for CSS properties `scale` and `translate` was added. ([#1688](https://github.com/Siteimprove/alfa/pull/1688))
+
+- **Added:** Style property `contain` is now supported. ([#1679](https://github.com/Siteimprove/alfa/pull/1679))
+
+- **Added:** A `Keyword#is` predicate is now available. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
+- **Added:** Transform functions `scale3d()` and `scaleZ()` have been added and the scale transformation functions now accept percentages. ([#1688](https://github.com/Siteimprove/alfa/pull/1688))
+
 ## 0.92.0
 
 ### Minor Changes

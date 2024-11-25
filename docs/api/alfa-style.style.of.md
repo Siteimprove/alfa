@@ -9,7 +9,7 @@ Build a style from a list of declarations.
 **Signature:**
 
 ```typescript
-static of(styleDeclarations: Iterable<[Declaration, Origin]>, device: Device, parent?: Option<Style>): Style;
+static of(styleDeclarations: Iterable<[Declaration, Origin]>, device: Device, parent?: Option<Style>, owner?: Option<Element>): Style;
 ```
 
 ## Parameters
@@ -19,6 +19,7 @@ static of(styleDeclarations: Iterable<[Declaration, Origin]>, device: Device, pa
 |  styleDeclarations | Iterable&lt;\[Declaration, Origin\]&gt; |  |
 |  device | Device |  |
 |  parent | Option&lt;[Style](./alfa-style.style.md)<!-- -->&gt; | _(Optional)_ |
+|  owner | Option&lt;Element&gt; | _(Optional)_ |
 
 **Returns:**
 

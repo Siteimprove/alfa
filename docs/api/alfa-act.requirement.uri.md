@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-abstract get uri(): string;
+get uri(): U;
 ```

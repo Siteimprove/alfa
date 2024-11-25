@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import type { Node } from "@siteimprove/alfa-dom";
 import { Document } from "@siteimprove/alfa-dom";
@@ -125,18 +126,22 @@ export namespace Page {
     "dct:hasPart": [Request.EARL, Response.EARL];
   }
 
+  const cache = Cache.empty<JSON, Result<Page, string>>();
+
   export function from(json: JSON): Result<Page, string> {
-    const device = Device.from(json.device);
-    return Request.from(json.request).andThen((request) =>
-      Response.from(json.response).map((response) =>
-        Page.of(
-          request,
-          response,
-          Document.from(json.document, device),
-          device,
+    return cache.get(json, () => {
+      const device = Device.from(json.device);
+      return Request.from(json.request).andThen((request) =>
+        Response.from(json.response).map((response) =>
+          Page.of(
+            request,
+            response,
+            Document.from(json.document, device),
+            device,
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   export function isPage(value: unknown): value is Page {

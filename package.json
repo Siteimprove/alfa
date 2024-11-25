@@ -31,8 +31,11 @@
     "@changesets/cli": "^2.26.2",
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
-    "@siteimprove/alfa-toolchain": "workspace:^0.92.0",
-    "@types/node": "^20.5.9",
+    "@siteimprove/alfa-toolchain": "workspace:^0.94.1",
+    "@types/async": "^3.2.20",
+    "@types/node": "^22.0.0",
+    "async": "^3.2.1",
+    "execa": "^9.0.0",
     "knip": "^5.23.1",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
@@ -40,5 +43,5 @@
     "typescript": "^5.5.2",
     "vitest": "^2.1.1"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.5.2"
 }

@@ -4,6 +4,9 @@ const entry = ["src/index.ts!", "test/**/*.ts", "test/**/*.tsx"];
 const project = ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"];
 
 const config: KnipConfig = {
+  // This can be cleaned once we get a better split in the release workflow
+  // to let callers do their own local setup.
+  ignoreBinaries: ["playwright"],
   workspaces: {
     ".": {
       entry: ["scripts/*.mjs"],

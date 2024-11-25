@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function tee<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, callback: Callback<T, void, [remainder: I, ...args: A]>): Parser<I, T, E, A>;
+export function tee<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, callback: Callback<T, void, [remainder: I, ...args: A]>): Parser<I, T, E, A>;
 ```
 
 ## Parameters

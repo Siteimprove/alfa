@@ -16,6 +16,7 @@ export declare namespace Style
 |  Function | Description |
 |  --- | --- |
 |  [from(element, device, context)](./alfa-style.style.from.md) | Build the style of an element. |
+|  [innerText(device, isAcceptable)](./alfa-style.style.innertext.md) |  |
 
 ## Interfaces
 
@@ -38,7 +39,11 @@ export declare namespace Style
 |  [hasSpecifiedStyle](./alfa-style.style.hasspecifiedstyle.md) |  |
 |  [hasTextDecoration](./alfa-style.style.hastextdecoration.md) |  |
 |  [hasTransparentBackground](./alfa-style.style.hastransparentbackground.md) |  |
+|  [hasUsedStyle](./alfa-style.style.hasusedstyle.md) |  |
+|  [isBlockContainer](./alfa-style.style.isblockcontainer.md) |  |
+|  [isFlexContainer](./alfa-style.style.isflexcontainer.md) |  |
 |  [isFocusable](./alfa-style.style.isfocusable.md) |  |
+|  [isGridContainer](./alfa-style.style.isgridcontainer.md) |  |
 |  [isImportant](./alfa-style.style.isimportant.md) |  |
 |  [isInert](./alfa-style.style.isinert.md) |  |
 |  [isPositioned](./alfa-style.style.ispositioned.md) |  |

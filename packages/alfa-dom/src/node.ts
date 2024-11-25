@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import {
   Comparable,
   type Comparer,
@@ -49,10 +50,10 @@ export abstract class Node<T extends string = string>
     children: Array<Node>,
     type: T,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super(children, type, externalId, serializationId, extraData);
+    super(children, type, externalId, internalId, extraData);
   }
 
   /**
@@ -418,6 +419,9 @@ export namespace Node {
     Traversal.nested,
   );
 
+  const cacheWithDevice = Cache.empty<JSON, Cache<Device, Node>>();
+  const cacheWithoutDevice = Cache.empty<JSON, Node>();
+
   export function from(json: Element.JSON, device?: Device): Element;
 
   export function from(json: Attribute.JSON, device?: Device): Attribute;
@@ -435,7 +439,11 @@ export namespace Node {
   export function from(json: JSON, device?: Device): Node;
 
   export function from(json: JSON, device?: Device): Node {
-    return fromNode(json, device).run();
+    return device === undefined
+      ? cacheWithoutDevice.get(json, () => fromNode(json, device).run())
+      : cacheWithDevice
+          .get(json, Cache.empty)
+          .get(device, () => fromNode(json, device).run());
   }
 
   /**

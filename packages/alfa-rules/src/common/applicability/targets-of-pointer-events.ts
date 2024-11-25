@@ -119,7 +119,7 @@ function isTarget(device: Device): Predicate<Element> {
 }
 
 function hasClickableBox(device: Device): Predicate<Element> {
-  return (element) => getClickableBox(device, element).isSome();
+  return (element) => getClickableBox(device, element).isOk();
 }
 
 const nonTargetTextCache = Cache.empty<Device, Cache<Element, boolean>>();

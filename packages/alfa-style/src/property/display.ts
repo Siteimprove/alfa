@@ -1,4 +1,5 @@
 import { Keyword, Token, Tuple } from "@siteimprove/alfa-css";
+import { Element } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
@@ -261,7 +262,9 @@ export default Longhand.of<Specified, Computed>(
         // to know whether the element is the root element, which is not
         // currently doable at that level.
         value.map(displayTable)
-      : value;
+      : style.owner.some(Element.hasName("button"))
+        ? value.map(buttonLayout)
+        : value;
   },
 );
 /**
@@ -299,4 +302,29 @@ function displayTable(value: Specified): Computed {
     default:
       return value;
   }
+}
+
+/**
+ * {@link https://html.spec.whatwg.org/multipage/rendering.html#button-layout}
+ */
+function buttonLayout(value: Specified): Computed {
+  const [outside, inside] = value.values;
+
+  if (inside?.is("flex", "grid")) {
+    // flex, inline-flex, grid, inline-grid
+    return value;
+  }
+
+  if (outside.is("contents", "none")) {
+    // contents, none
+    return value;
+  }
+
+  if (outside.is("inline")) {
+    // inline
+    return Tuple.of(Keyword.of("inline"), Keyword.of("flow-root"));
+  }
+
+  // default
+  return Tuple.of(Keyword.of("block"), Keyword.of("flow-root"));
 }

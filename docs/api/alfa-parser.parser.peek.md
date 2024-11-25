@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function peek<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
+export function peek<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
 ```
 
 ## Parameters

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function option<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Option<T>, E, A>;
+export function option<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Option<T>, E, A>;
 ```
 
 ## Parameters

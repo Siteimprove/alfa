@@ -9,5 +9,13 @@ Constructs a new instance of the `Requirement` class
 **Signature:**
 
 ```typescript
-protected constructor();
+protected constructor(type: T, uri: U);
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  type | T |  |
+|  uri | U |  |
+

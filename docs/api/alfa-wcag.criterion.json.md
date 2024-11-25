@@ -7,14 +7,14 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Requirement.JSON 
+interface JSON<C extends Criterion.Chapter = Criterion.Chapter, U extends Criterion.URI<C, "2.1" | "2.2"> = Criterion.URI<C, "2.1" | "2.2">> extends Requirement.JSON<"criterion", U> 
 ```
-**Extends:** [Requirement.JSON](./alfa-act.requirement.json.md)
+**Extends:** [Requirement.JSON](./alfa-act.requirement.json.md)<!-- -->&lt;"criterion", U&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [chapter](./alfa-wcag.criterion.json.chapter.md) |  | [Chapter](./alfa-wcag.criterion.chapter.md) |  |
+|  [chapter](./alfa-wcag.criterion.json.chapter.md) |  | C |  |
 |  [title](./alfa-wcag.criterion.json.title.md) |  | string |  |
 

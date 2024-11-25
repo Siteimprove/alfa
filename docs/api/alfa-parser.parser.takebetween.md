@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function takeBetween<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, lower: number, upper: number): Parser<I, Array<T>, E, A>;
+export function takeBetween<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, lower: number, upper: number): Parser<I, Array<T>, E, A>;
 ```
 
 ## Parameters

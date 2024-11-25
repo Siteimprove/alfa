@@ -9,7 +9,7 @@ Parse a separated list containing at least one item
 **Signature:**
 
 ```typescript
-function separatedList<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, lower?: number, upper?: number): Parser<I, [T, ...Array<T>], E, A>;
+export function separatedList<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, lower?: number, upper?: number): Parser<I, [T, ...Array<T>], E, A>;
 ```
 
 ## Parameters

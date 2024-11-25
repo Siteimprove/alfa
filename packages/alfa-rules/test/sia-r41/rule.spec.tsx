@@ -181,10 +181,10 @@ test(`toJSON() with minimal verbosity produces target with correct serialization
   const elmId2 = crypto.randomUUID();
 
   const target = [
-    <a href="foo.html" serializationId={elmId1}>
+    <a href="foo.html" internalId={elmId1}>
       {accessibleName}
     </a>,
-    <a href="foo.html" serializationId={elmId2}>
+    <a href="foo.html" internalId={elmId2}>
       {accessibleName}
     </a>,
   ];
@@ -205,10 +205,12 @@ test(`toJSON() with minimal verbosity produces target with correct serialization
     [
       {
         type: "element",
+        internalId: elmId1,
         serializationId: elmId1,
       },
       {
         type: "element",
+        internalId: elmId2,
         serializationId: elmId2,
       },
     ],

@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-interface JSON extends Requirement.JSON 
+interface JSON<N extends Technique.Name = Technique.Name> extends Requirement.JSON<"technique", Technique.URI<N>> 
 ```
-**Extends:** [Requirement.JSON](./alfa-act.requirement.json.md)
+**Extends:** [Requirement.JSON](./alfa-act.requirement.json.md)<!-- -->&lt;"technique", [Technique.URI](./alfa-wcag.technique.uri.md)<!-- -->&lt;N&gt;&gt;
 
 ## Properties
 
@@ -17,5 +17,4 @@ interface JSON extends Requirement.JSON
 |  --- | --- | --- | --- |
 |  [name](./alfa-wcag.technique.json.name.md) |  | [Name](./alfa-wcag.technique.name.md) |  |
 |  [title](./alfa-wcag.technique.json.title.md) |  | [Title](./alfa-wcag.technique.title.md) |  |
-|  [uri](./alfa-wcag.technique.json.uri.md) |  | [URI](./alfa-wcag.technique.uri.md) |  |
 

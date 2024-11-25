@@ -1,5 +1,65 @@
 # @siteimprove/alfa-rules
 
+## 0.94.1
+
+### Patch Changes
+
+- **Fixed:** SIA-R111 and SIA-R113 now ignores invisible descendants of interactive elements when computing the clickable areas. ([#1716](https://github.com/Siteimprove/alfa/pull/1716))
+
+## 0.94.0
+
+### Minor Changes
+
+- **Breaking:** `#serializationId` has been replaced with `#internalId`. ([#1705](https://github.com/Siteimprove/alfa/pull/1705))
+
+  The old `#serializationId` is now deprecated and acts as an alias to `#internalId`. It will be removed in a future version.
+
+- **Added:** classes for ARIA and Best Practices requirements are now available. ([#1714](https://github.com/Siteimprove/alfa/pull/1714))
+
+- **Added:** An experimental rule "SIA-R114: Title is descriptive" is now available. ([#1713](https://github.com/Siteimprove/alfa/pull/1713))
+
+### Patch Changes
+
+- **Fixed:** SIA-R83 is now better at detecting soft wrap opportunity in text nodes. ([#1710](https://github.com/Siteimprove/alfa/pull/1710))
+
+- **Added:** Rules checking ARIA conformance, or Best Practices, now have a corresponding requirement. ([#1714](https://github.com/Siteimprove/alfa/pull/1714))
+
+## 0.93.8
+
+## 0.93.7
+
+## 0.93.6
+
+## 0.93.5
+
+## 0.93.4
+
+## 0.93.3
+
+## 0.93.2
+
+### Patch Changes
+
+- **Fixed:** SIA-R66 and SIA-R69 ar now inapplicable to text in `aria-disabled` `<a>` elements without `href`. ([#1698](https://github.com/Siteimprove/alfa/pull/1698))
+
+  See https://github.com/act-rules/act-rules.github.io/issues/2215
+
+- **Fixed:** SIA-R83 is better at detecting clipping elements that actually have room to grow. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+- **Fixed:** SIA-R83 now correctly considers the used value of `overflow` rather than the computed one. ([#1699](https://github.com/Siteimprove/alfa/pull/1699))
+
+## 0.93.1
+
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** Experimental rule SIA-ER8. It adds support for `type="password"` and more. ([#1667](https://github.com/Siteimprove/alfa/pull/1667))
+
+### Patch Changes
+
+- **Fixed:** SIA-R83 is now better at handling `white-space` and `text-overflow`. ([#1694](https://github.com/Siteimprove/alfa/pull/1694))
+
 ## 0.92.0
 
 ### Minor Changes

@@ -18,5 +18,5 @@ function isElement(value: unknown): value is Element;
 
 **Returns:**
 
-value is [Element](./alfa-dom.element.md)
+value is Element
 

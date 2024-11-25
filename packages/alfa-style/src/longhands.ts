@@ -93,6 +93,7 @@ import OutlineStyle from "./property/outline-style.js";
 import OutlineWidth from "./property/outline-width.js";
 import OverflowX from "./property/overflow-x.js";
 import OverflowY from "./property/overflow-y.js";
+import Perspective from "./property/perspective.js";
 import PointerEvents from "./property/pointer-events.js";
 import Position from "./property/position.js";
 import Right from "./property/right.js";
@@ -114,6 +115,7 @@ import VerticalAlign from "./property/vertical-align.js";
 import Visibility from "./property/visibility.js";
 import WhiteSpace from "./property/white-space.js";
 import Width from "./property/width.js";
+import WillChange from "./property/will-change.js";
 import WordSpacing from "./property/word-spacing.js";
 import ZIndex from "./property/z-index.js";
 
@@ -276,6 +278,7 @@ export namespace Longhands {
     "outline-width": OutlineWidth,
     "overflow-x": OverflowX,
     "overflow-y": OverflowY,
+    perspective: Perspective,
     "pointer-events": PointerEvents,
     position: Position,
     right: Right,
@@ -297,6 +300,7 @@ export namespace Longhands {
     visibility: Visibility,
     "white-space": WhiteSpace,
     width: Width,
+    "will-change": WillChange,
     "word-spacing": WordSpacing,
     "z-index": ZIndex,
   } as const;

@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function filter<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, predicate: Predicate<T>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
+export function filter<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, predicate: Predicate<T>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
 ```
 
 ## Parameters

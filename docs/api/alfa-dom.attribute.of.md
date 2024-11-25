@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string, externalId?: string, serializationId?: string, extraData?: any): Attribute<N>;
+static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string, externalId?: string, internalId?: string, extraData?: any): Attribute<N>;
 ```
 
 ## Parameters
@@ -19,7 +19,7 @@ static of<N extends string = string>(namespace: Option<Namespace>, prefix: Optio
 |  name | N |  |
 |  value | string |  |
 |  externalId | string | _(Optional)_ |
-|  serializationId | string | _(Optional)_ |
+|  internalId | string | _(Optional)_ |
 |  extraData | any | _(Optional)_ |
 
 **Returns:**

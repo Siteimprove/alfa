@@ -2,7 +2,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import type { Parser as CSSParser } from "../../syntax/index.js";
 
-import { Keyword } from "../keyword.js";
+import { Keyword } from "../textual/keyword.js";
 import { LengthPercentage } from "../numeric/index.js";
 
 import type { Keywords } from "./keywords.js";

@@ -9,7 +9,7 @@ import { Value } from "../value.js";
 import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
 import { Box } from "../box.js";
-import { Keyword } from "../keyword.js";
+import { Keyword } from "../textual/keyword.js";
 
 import { Circle } from "./circle.js";
 import { Inset } from "./inset.js";

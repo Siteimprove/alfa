@@ -2,10 +2,22 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-dom](./alfa-dom.md) &gt; [Query](./alfa-dom.query.md) &gt; [getElementDescendants](./alfa-dom.query.getelementdescendants.md)
 
-## Query.getElementDescendants variable
+## Query.getElementDescendants() function
 
 **Signature:**
 
 ```typescript
-getElementDescendants: typeof elementDescendants.getElementDescendants
+getElementDescendants: (node: import("../../node.js").Node, options?: import("../../node.js").Node.Traversal) => import("@siteimprove/alfa-sequence").Sequence<import("../element.js").Element<string>>
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  node | import("../../node.js").[Node](./alfa-dom.node.md) |  |
+|  options | import("../../node.js").[Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
+
+**Returns:**
+
+import("@siteimprove/alfa-sequence").[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;import("../element.js").Element&lt;string&gt;&gt;
+

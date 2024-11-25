@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function parseIf<I, T, E, A extends Array<unknown> = []>(predicate: Predicate<T>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
+export function parseIf<I, T, E, A extends Array<unknown> = []>(predicate: Predicate<T>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
 ```
 
 ## Parameters

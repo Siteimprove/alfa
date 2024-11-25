@@ -7,17 +7,17 @@
 **Signature:**
 
 ```typescript
-static of(x: Number, y: Number): Scale;
+static of<X extends Number.Canonical | Percentage.Canonical, Y extends Number.Canonical | Percentage.Canonical>(x: X, y: Y): Scale<X, Y, never>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  x | Number |  |
-|  y | Number |  |
+|  x | X |  |
+|  y | Y |  |
 
 **Returns:**
 
-[Scale](./alfa-css.scale.md)
+[Scale](./alfa-css.scale.md)<!-- -->&lt;X, Y, never&gt;
 

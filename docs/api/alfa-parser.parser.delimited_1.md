@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function delimited<I, T, E, A extends Array<unknown> = []>(left: Parser<I, unknown, E, A>, parser: Parser<I, T, E, A>, right: Parser<I, unknown, E, A>): Parser<I, T, E, A>;
+export function delimited<I, T, E, A extends Array<unknown> = []>(left: Parser<I, unknown, E, A>, parser: Parser<I, T, E, A>, right: Parser<I, unknown, E, A>): Parser<I, T, E, A>;
 ```
 
 ## Parameters

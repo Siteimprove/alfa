@@ -15,16 +15,16 @@ export declare namespace h
 
 |  Function | Description |
 |  --- | --- |
-|  [attribute(name, value, externalId, serializationId, extraData)](./alfa-dom.h.attribute.md) |  |
+|  [attribute(name, value, externalId, internalId, extraData)](./alfa-dom.h.attribute.md) |  |
 |  [block(declarations)](./alfa-dom.h.block.md) |  |
 |  [declaration(name, value, important)](./alfa-dom.h.declaration.md) |  |
-|  [document(children, style, externalId, serializationId, extraData)](./alfa-dom.h.document.md) |  |
-|  [element(name, attributes, children, style, namespace, box, device, externalId, serializationId, extraData)](./alfa-dom.h.element.md) |  |
+|  [document(children, style, externalId, internalId, extraData)](./alfa-dom.h.document.md) |  |
+|  [element(name, attributes, children, style, namespace, box, device, externalId, internalId, extraData)](./alfa-dom.h.element.md) |  |
 |  [fragment(children, externalId, extraData)](./alfa-dom.h.fragment.md) |  |
-|  [shadow(children, style, mode, externalId, serializationId, extraData)](./alfa-dom.h.shadow.md) |  |
+|  [shadow(children, style, mode, externalId, internalId, extraData)](./alfa-dom.h.shadow.md) |  |
 |  [sheet(rules, disabled, condition)](./alfa-dom.h.sheet.md) |  |
-|  [text(data, externalId, serializationId, extraData)](./alfa-dom.h.text.md) |  |
-|  [type(name, publicId, systemId, externalId, serializationId, extraData)](./alfa-dom.h.type.md) |  |
+|  [text(data, externalId, internalId, extraData)](./alfa-dom.h.text.md) |  |
+|  [type(name, publicId, systemId, externalId, internalId, extraData)](./alfa-dom.h.type.md) |  |
 
 ## Namespaces
 

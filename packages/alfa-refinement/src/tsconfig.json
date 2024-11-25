@@ -4,6 +4,7 @@
   "compilerOptions": { "outDir": "../dist" },
   "files": ["./index.ts", "./refinement.ts"],
   "references": [
+    { "path": "../../alfa-callback" },
     { "path": "../../alfa-mapper" },
     { "path": "../../alfa-predicate" }
   ]

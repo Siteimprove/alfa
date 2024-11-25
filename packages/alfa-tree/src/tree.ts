@@ -50,7 +50,7 @@ export abstract class Node<
   private readonly _externalId: string | undefined;
   private readonly _extraData: any;
 
-  private readonly _serializationId: string;
+  private readonly _internalId: string;
 
   /**
    * Whether the node is frozen.
@@ -69,7 +69,7 @@ export abstract class Node<
     children: Array<Node<F>>,
     type: T,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
     this._children = (children as Array<Node<F>>).filter((child) =>
@@ -79,7 +79,7 @@ export abstract class Node<
     this._externalId = externalId;
     this._extraData = extraData;
 
-    this._serializationId = serializationId ?? crypto.randomUUID();
+    this._internalId = internalId ?? crypto.randomUUID();
   }
 
   public get type(): T {
@@ -94,8 +94,15 @@ export abstract class Node<
     return this._extraData;
   }
 
-  public get serializationId(): string {
-    return this._serializationId;
+  public get internalId(): string {
+    return this._internalId;
+  }
+
+  /**
+   * @deprecated Aliases to {@link Node#internalId}.
+   */
+  public get serializationId(): string | undefined {
+    return this.internalId;
   }
 
   public get frozen(): boolean {
@@ -413,12 +420,13 @@ export abstract class Node<
     };
 
     if (verbosity < json.Serializable.Verbosity.Medium) {
-      // Only type and serializationId
-      result.serializationId = this._serializationId;
+      // Only type and internalId
+      result.internalId = this._internalId;
+      result.serializationId = this.serializationId;
       return result;
     }
 
-    // If verbosity is Medium or above, include everything (except serializationId)
+    // If verbosity is Medium or above, include everything (except internalId)
     result.children = this._children.map((child) => child.toJSON(options));
 
     if (this._externalId !== undefined) {
@@ -426,8 +434,9 @@ export abstract class Node<
     }
 
     if (verbosity >= json.Serializable.Verbosity.High) {
-      // If verbosity is High or above, include also serializationId
-      result.serializationId = this._serializationId;
+      // If verbosity is High or above, include also internalId
+      result.internalId = this._internalId;
+      result.serializationId = this.serializationId;
     }
 
     return result;
@@ -457,6 +466,7 @@ export namespace Node {
     type: T;
     children?: Array<JSON>;
     externalId?: string;
+    internalId?: string;
     serializationId?: string;
   }
 }

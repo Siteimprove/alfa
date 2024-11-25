@@ -176,6 +176,11 @@ export const UserAgent = h.sheet([
     textAlign: "initial",
   }),
 
+  /**
+   * {@link https://html.spec.whatwg.org/multipage/rendering.html#the-select-element-2}
+   */
+  h.rule.style("select", { display: "inline-block" }),
+
   h.rule.style(
     "input:is([type=reset i], [type=button i], [type=submit i]), button",
     {

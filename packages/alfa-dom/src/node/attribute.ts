@@ -25,7 +25,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     name: N,
     value: string,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ): Attribute<N> {
     return new Attribute(
@@ -34,7 +34,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
       name,
       value,
       externalId,
-      serializationId,
+      internalId,
       extraData,
     );
   }
@@ -51,10 +51,10 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     name: N,
     value: string,
     externalId?: string,
-    serializationId?: string,
+    internalId?: string,
     extraData?: any,
   ) {
-    super([], "attribute", externalId, serializationId, extraData);
+    super([], "attribute", externalId, internalId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -242,7 +242,7 @@ export namespace Attribute {
         attribute.name,
         attribute.value,
         attribute.externalId,
-        attribute.serializationId,
+        attribute.internalId,
       ),
     );
   }
@@ -260,7 +260,7 @@ export namespace Attribute {
         attribute.name,
         attribute.value,
         attribute.externalId,
-        attribute.serializationId,
+        attribute.internalId,
         attribute.extraData,
       ),
     );

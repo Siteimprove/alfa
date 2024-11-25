@@ -1,5 +1,33 @@
 # @siteimprove/alfa-parser
 
+## 0.94.1
+
+## 0.94.0
+
+## 0.93.8
+
+## 0.93.7
+
+## 0.93.6
+
+## 0.93.5
+
+## 0.93.4
+
+## 0.93.3
+
+## 0.93.2
+
+## 0.93.1
+
+## 0.93.0
+
+### Minor Changes
+
+- **Added:** A `Parser.doubleBar` combinator is now available, to parse CSS "double bar". ([#1691](https://github.com/Siteimprove/alfa/pull/1691))
+
+  It corresponds to CSS combinator `||` where both sides are optionals and order doesn't matter.
+
 ## 0.92.0
 
 ### Minor Changes

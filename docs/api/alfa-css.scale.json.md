@@ -15,6 +15,7 @@ interface JSON extends Function.JSON<"scale">
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [x](./alfa-css.scale.json.x.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
-|  [y](./alfa-css.scale.json.y.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
+|  [x](./alfa-css.scale.json.x.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+|  [y](./alfa-css.scale.json.y.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+|  [z](./alfa-css.scale.json.z.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
 
