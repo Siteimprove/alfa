@@ -22,7 +22,7 @@ export class Cache<K extends Cache.Key, V> {
 export namespace Cache {
     export function from<K extends Key, V>(iterable: Iterable_2<readonly [K, V]>): Cache<K, V>;
     export type Key = object;
-    export function memoize<This, Args extends Array<object>, Return>(target: (this: This, ...args: Args) => Return): (this: This, ...args: Args) => Return;
+    export function memoize<This, Args extends Array<Key>, Return>(target: (this: This, ...args: Args) => Return): (this: This, ...args: Args) => Return;
 }
 
 // (No @packageDocumentation comment for this package)
