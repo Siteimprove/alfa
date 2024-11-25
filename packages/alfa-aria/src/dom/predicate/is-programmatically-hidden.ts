@@ -58,8 +58,4 @@ function _hasHiddenAncestors(
   );
 }
 
-const hasHiddenAncestors = Cache.memoize<
-  unknown,
-  [Device, Context],
-  Predicate<Node>
->(_hasHiddenAncestors);
+const hasHiddenAncestors = Cache.memoize(_hasHiddenAncestors);

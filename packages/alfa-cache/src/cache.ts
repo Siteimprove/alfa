@@ -131,8 +131,20 @@ export namespace Cache {
     : T;
 
   /**
-   * Memoize a function or method.
+   * Memoize a method.
    */
+  export function memoize<This, Args extends Array<Key>, Return>(
+    // When called on an instance's method `target`, `this` is the instance.
+    target: (this: This, ...args: Args) => Return,
+  ): (this: This, ...args: Args) => Return;
+
+  /**
+   * Memoize a function
+   */
+  export function memoize<Args extends Array<Key>, Return>(
+    target: (...args: Args) => Return,
+  ): (...args: Args) => Return;
+
   export function memoize<This, Args extends Array<Key>, Return>(
     // When called on an instance's method `target`, `this` is the instance.
     target: (this: This, ...args: Args) => Return,
