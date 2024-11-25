@@ -123,9 +123,9 @@ export namespace Cache {
   /**
    * Turns `<[A, B, C], T>` into `Cache<A, Cache<B, Cache<C, T>>>`.
    */
-  type ToCache<Args extends Array<object>, T> = Args extends [
-    infer Head extends object,
-    ...infer Tail extends Array<object>,
+  type ToCache<Args extends Array<Key>, T> = Args extends [
+    infer Head extends Key,
+    ...infer Tail extends Array<Key>,
   ]
     ? Cache<Head, ToCache<Tail, T>>
     : T;
@@ -133,7 +133,7 @@ export namespace Cache {
   /**
    * Memoize a function or method.
    */
-  export function memoize<This, Args extends Array<object>, Return>(
+  export function memoize<This, Args extends Array<Key>, Return>(
     // When called on an instance's method `target`, `this` is the instance.
     target: (this: This, ...args: Args) => Return,
   ): (this: This, ...args: Args) => Return {
@@ -152,7 +152,7 @@ export namespace Cache {
       // together with the remaining parameters.
       // This is OK since the side-effect happens only to the previously defined
       // scoped cache.
-      function memoized<A extends Array<Object>>(
+      function memoized<A extends Array<Key>>(
         cache: ToCache<A, Return>,
         ...innerArgs: A
       ): Return {
