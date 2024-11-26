@@ -5,7 +5,6 @@
   "files": [
     "./index.ts",
     "./rng.ts",
-    "./stack.ts",
     "./test.ts",
     "./types.ts",
     "./vitest.d.ts"
