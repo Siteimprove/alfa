@@ -10,7 +10,8 @@
     "noExternalDeps": true,
     "allowedExternalDeps": {
       "@siteimprove/alfa-compatibility": ["browserslist"],
-      "@siteimprove/alfa-test": ["chalk"],
+      "@siteimprove/alfa-test": ["vitest"],
+      "@siteimprove/alfa-test-deprecated": ["chalk"],
       "@siteimprove/alfa-toolchain": [
         "@changesets/assemble-release-plan",
         "@changesets/config",
