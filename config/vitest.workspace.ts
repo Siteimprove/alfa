@@ -1,1 +1,1 @@
-export default ["packages/alfa-*"];
+export default ["packages/alfa-*", "!packages/alfa-test-deprecated"];
