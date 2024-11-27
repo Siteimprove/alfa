@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-chapter: Chapter;
+chapter: C;
 ```

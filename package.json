@@ -31,7 +31,7 @@
     "@changesets/cli": "^2.26.2",
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
-    "@siteimprove/alfa-toolchain": "workspace:^0.93.8",
+    "@siteimprove/alfa-toolchain": "workspace:^0.94.1",
     "@types/async": "^3.2.20",
     "@types/node": "^22.0.0",
     "async": "^3.2.1",
@@ -42,5 +42,5 @@
     "prettier": "^3.0.0",
     "typescript": "^5.5.2"
   },
-  "packageManager": "yarn@4.5.1"
+  "packageManager": "yarn@4.5.2"
 }

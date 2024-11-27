@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function attribute<N extends string = string>(name: N, value: string, externalId?: string, serializationId?: string, extraData?: any): Attribute<N>;
+function attribute<N extends string = string>(name: N, value: string, externalId?: string, internalId?: string, extraData?: any): Attribute<N>;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ function attribute<N extends string = string>(name: N, value: string, externalId
 |  name | N |  |
 |  value | string |  |
 |  externalId | string | _(Optional)_ |
-|  serializationId | string | _(Optional)_ |
+|  internalId | string | _(Optional)_ |
 |  extraData | any | _(Optional)_ |
 
 **Returns:**

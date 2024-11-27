@@ -7,13 +7,7 @@
 **Signature:**
 
 ```typescript
-interface JSON<T extends string = string> extends Value.JSON<"keyword"> 
+interface JSON<T extends string = string> extends Ident.JSON<"keyword", T> 
 ```
-**Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"keyword"&gt;
-
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [value](./alfa-css.keyword.json.value.md) |  | T |  |
+**Extends:** [Ident.JSON](./alfa-css.ident.json.md)<!-- -->&lt;"keyword", T&gt;
 

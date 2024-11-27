@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable<Attribute>, children?: Iterable<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, serializationId?: string, extraData?: any): Element<N>;
+static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable<Attribute>, children?: Iterable<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, internalId?: string, extraData?: any): Element<N>;
 ```
 
 ## Parameters
@@ -23,7 +23,7 @@ static of<N extends string = string>(namespace: Option<Namespace>, prefix: Optio
 |  box | Option&lt;Rectangle&gt; | _(Optional)_ |
 |  device | Option&lt;Device&gt; | _(Optional)_ |
 |  externalId | string | _(Optional)_ |
-|  serializationId | string | _(Optional)_ |
+|  internalId | string | _(Optional)_ |
 |  extraData | any | _(Optional)_ |
 
 **Returns:**

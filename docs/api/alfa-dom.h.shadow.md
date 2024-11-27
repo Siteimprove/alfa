@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function shadow(children: Array<Node | string>, style?: Array<Sheet>, mode?: Shadow.Mode, externalId?: string, serializationId?: string, extraData?: any): Shadow;
+function shadow(children: Array<Node | string>, style?: Array<Sheet>, mode?: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any): Shadow;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ function shadow(children: Array<Node | string>, style?: Array<Sheet>, mode?: Sha
 |  style | Array&lt;Sheet&gt; | _(Optional)_ |
 |  mode | [Shadow.Mode](./alfa-dom.shadow.mode.md) | _(Optional)_ |
 |  externalId | string | _(Optional)_ |
-|  serializationId | string | _(Optional)_ |
+|  internalId | string | _(Optional)_ |
 |  extraData | any | _(Optional)_ |
 
 **Returns:**

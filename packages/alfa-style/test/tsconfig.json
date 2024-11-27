@@ -8,6 +8,7 @@
   },
   "files": [
     "./common.ts",
+    "./node/helpers/inner-text.spec.tsx",
     "./node/predicate/has-transparent-background.spec.tsx",
     "./node/predicate/is-clipped.spec.tsx",
     "./node/predicate/is-offscreen.spec.tsx",

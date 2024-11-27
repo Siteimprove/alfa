@@ -4,6 +4,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import type * as act from "@siteimprove/alfa-act";
 
 export * from "./tags/index.js";
+export * from "./requirements/index.js";
 import * as experimentalRules from "./experimental.js";
 export { experimentalRules };
 

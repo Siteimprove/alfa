@@ -18,6 +18,7 @@ import { Node } from '@siteimprove/alfa-dom';
 import type { Option } from '@siteimprove/alfa-option';
 import type { Page } from '@siteimprove/alfa-web';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
+import { Requirement } from '@siteimprove/alfa-act';
 import type { RGB } from '@siteimprove/alfa-css';
 import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
@@ -26,13 +27,50 @@ import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
-export const alfaVersion = "0.93.8";
+export const alfaVersion = "0.94.1";
+
+// @public (undocumented)
+export class ARIA extends Requirement<"ARIA"> {
+    // (undocumented)
+    static of(uri: string): ARIA;
+    // (undocumented)
+    toJSON(): ARIA.JSON;
+}
+
+// @public (undocumented)
+export namespace ARIA {
+    // (undocumented)
+    export function isARIA(value: unknown): value is ARIA;
+    // (undocumented)
+    export interface JSON extends Requirement.JSON<"ARIA"> {
+    }
+}
+
+// @public (undocumented)
+export class BestPractice extends Requirement<"best practice"> {
+    // (undocumented)
+    static of(uri: string): BestPractice;
+    // (undocumented)
+    toJSON(): BestPractice.JSON;
+}
+
+// @public (undocumented)
+export namespace BestPractice {
+    // (undocumented)
+    export function isBestPractice(value: unknown): value is BestPractice;
+    // (undocumented)
+    export interface JSON extends Requirement.JSON<"best practice"> {
+    }
+}
 
 // @public (undocumented)
 const _default: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public @deprecated (undocumented)
 const _default_10: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+
+// @public @deprecated (undocumented)
+const _default_11: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 // @public
 const _default_2: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
@@ -43,29 +81,29 @@ const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<str
 // @public
 const _default_4: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
-// @public @deprecated (undocumented)
-const _default_5: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+// @public
+const _default_5: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public @deprecated (undocumented)
-const _default_6: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
+const _default_6: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
-// @public (undocumented)
-const _default_7: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+// @public @deprecated (undocumented)
+const _default_7: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 // @public (undocumented)
 const _default_8: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public @deprecated (undocumented)
-const _default_9: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+// @public (undocumented)
+const _default_9: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 declare namespace deprecatedRules {
     export {
-        _default_5 as DR6,
-        _default_6 as DR18,
-        _default_7 as DR34,
-        _default_8 as DR36,
-        _default_9 as DR66,
-        _default_10 as DR69
+        _default_6 as DR6,
+        _default_7 as DR18,
+        _default_8 as DR34,
+        _default_9 as DR36,
+        _default_10 as DR66,
+        _default_11 as DR69
     }
 }
 export { deprecatedRules }
@@ -99,7 +137,8 @@ declare namespace experimentalRules {
         _default as ER8,
         _default_2 as ER87,
         _default_3 as R82,
-        _default_4 as R109
+        _default_4 as R109,
+        _default_5 as R114
     }
 }
 export { experimentalRules }
@@ -337,6 +376,10 @@ export namespace Question {
         readonly "document-language": {
             readonly type: "string";
             readonly message: "What is the main language of the document?";
+        };
+        readonly "is-title-descriptive": {
+            readonly type: "boolean";
+            readonly message: "Does this title describe the content of the document?";
         };
     };
         {};

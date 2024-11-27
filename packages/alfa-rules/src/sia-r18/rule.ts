@@ -12,7 +12,8 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
+import { ARIA } from "../requirements/index.js";
 
 import { Scope, Stability, Version } from "../tags/index.js";
 
@@ -23,7 +24,10 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",
-  requirements: [Technique.of("ARIA5")],
+  requirements: [
+    ARIA.of("https://www.w3.org/TR/wai-aria-1.2/#state_property_processing"),
+    Technique.of("ARIA5"),
+  ],
   tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     const global = Set.from(Role.of("roletype").supportedAttributes);

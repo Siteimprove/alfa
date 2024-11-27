@@ -7,12 +7,13 @@
 **Signature:**
 
 ```typescript
-interface JSON 
+interface JSON<T extends string = string, U extends string = string> 
 ```
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [uri](./alfa-act.requirement.json.uri.md) |  | string |  |
+|  [type](./alfa-act.requirement.json.type.md) |  | T |  |
+|  [uri](./alfa-act.requirement.json.uri.md) |  | U |  |
 

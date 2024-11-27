@@ -16,6 +16,7 @@ export declare namespace Style
 |  Function | Description |
 |  --- | --- |
 |  [from(element, device, context)](./alfa-style.style.from.md) | Build the style of an element. |
+|  [innerText(device, isAcceptable)](./alfa-style.style.innertext.md) |  |
 
 ## Interfaces
 

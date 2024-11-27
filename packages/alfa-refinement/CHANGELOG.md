@@ -1,5 +1,13 @@
 # @siteimprove/alfa-refinement
 
+## 0.94.1
+
+## 0.94.0
+
+### Minor Changes
+
+- **Added:** `Refinement.tee` is now available. ([#1709](https://github.com/Siteimprove/alfa/pull/1709))
+
 ## 0.93.8
 
 ## 0.93.7

@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-toJSON(): Criterion.JSON;
+toJSON(): Criterion.JSON<C, U>;
 ```
 **Returns:**
 
-[Criterion.JSON](./alfa-wcag.criterion.json.md)
+[Criterion.JSON](./alfa-wcag.criterion.json.md)<!-- -->&lt;C, U&gt;
 

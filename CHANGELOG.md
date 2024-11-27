@@ -1,5 +1,49 @@
 # Alfa changelog
 
+## [0.94.1](../../compare/v0.94.0...v0.94.1) (2024-11-22)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0941): SIA-R111 and SIA-R113 now ignores invisible descendants of interactive elements when computing the clickable areas. ([#1716](https://github.com/Siteimprove/alfa/pull/1716))
+
+## [0.94.0](../../compare/v0.93.8...v0.94.0) (2024-11-19)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940), [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#0940), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0940): `#serializationId` has been replaced with `#internalId`. ([#1705](https://github.com/Siteimprove/alfa/pull/1705))
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0940), [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0940): CSS property `will-change` is now supported. ([#1707](https://github.com/Siteimprove/alfa/pull/1707))
+
+- [@siteimprove/alfa-refinement](packages/alfa-refinement/CHANGELOG.md#0940): `Refinement.tee` is now available. ([#1709](https://github.com/Siteimprove/alfa/pull/1709))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0940): A `Query.descendants` helper is now available, to filter DOM descendants by a predicate. ([#1709](https://github.com/Siteimprove/alfa/pull/1709))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0940): A `Style.innerText` helper is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): A `String.and` combinator for chaining transformers is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): A `String.removePunctuation` transformer is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940): classes for ARIA and Best Practices requirements are now available. ([#1714](https://github.com/Siteimprove/alfa/pull/1714))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): The function `String.toLowerCase` was added. ([#1707](https://github.com/Siteimprove/alfa/pull/1707))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940): Rules checking ARIA conformance, or Best Practices, now have a corresponding requirement. ([#1714](https://github.com/Siteimprove/alfa/pull/1714))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940): An experimental rule "SIA-R114: Title is descriptive" is now available. ([#1713](https://github.com/Siteimprove/alfa/pull/1713))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): A `String.hasSoftWrapOpportunity` predicate is now available. ([#1710](https://github.com/Siteimprove/alfa/pull/1710))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0940), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0940): CSS property `perspective` is now supported. ([#1708](https://github.com/Siteimprove/alfa/pull/1708))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0940): A `String.Transformer` type alias is now available. ([#1712](https://github.com/Siteimprove/alfa/pull/1712))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0940): SIA-R83 is now better at detecting soft wrap opportunity in text nodes. ([#1710](https://github.com/Siteimprove/alfa/pull/1710))
+
 ## [0.93.8](../../compare/v0.93.7...v0.93.8) (2024-10-22)
 
 ### Changed

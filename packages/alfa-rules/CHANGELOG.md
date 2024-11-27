@@ -1,5 +1,29 @@
 # @siteimprove/alfa-rules
 
+## 0.94.1
+
+### Patch Changes
+
+- **Fixed:** SIA-R111 and SIA-R113 now ignores invisible descendants of interactive elements when computing the clickable areas. ([#1716](https://github.com/Siteimprove/alfa/pull/1716))
+
+## 0.94.0
+
+### Minor Changes
+
+- **Breaking:** `#serializationId` has been replaced with `#internalId`. ([#1705](https://github.com/Siteimprove/alfa/pull/1705))
+
+  The old `#serializationId` is now deprecated and acts as an alias to `#internalId`. It will be removed in a future version.
+
+- **Added:** classes for ARIA and Best Practices requirements are now available. ([#1714](https://github.com/Siteimprove/alfa/pull/1714))
+
+- **Added:** An experimental rule "SIA-R114: Title is descriptive" is now available. ([#1713](https://github.com/Siteimprove/alfa/pull/1713))
+
+### Patch Changes
+
+- **Fixed:** SIA-R83 is now better at detecting soft wrap opportunity in text nodes. ([#1710](https://github.com/Siteimprove/alfa/pull/1710))
+
+- **Added:** Rules checking ARIA conformance, or Best Practices, now have a corresponding requirement. ([#1714](https://github.com/Siteimprove/alfa/pull/1714))
+
 ## 0.93.8
 
 ## 0.93.7

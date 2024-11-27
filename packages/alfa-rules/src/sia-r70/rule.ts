@@ -1,22 +1,17 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import type {
-  Document} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-} from "@siteimprove/alfa-dom";
+import type { Document } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import type { Page } from "@siteimprove/alfa-web";
 
-import { expectation } from "../common/act/expectation.js";
+import { expectation } from "../common/act/index.js";
 import { WithBadElements } from "../common/diagnostic/with-bad-elements.js";
 
 import { withDocumentElement } from "../common/applicability/with-document-element.js";
+import { BestPractice } from "../requirements/index.js";
 import { Scope, Stability } from "../tags/index.js";
 
 const { hasName, hasNamespace } = Element;
@@ -56,6 +51,7 @@ const isDeprecated = hasName(
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r70",
+  requirements: [BestPractice.of("no-deprecated-elements")],
   tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document }) {
     return {

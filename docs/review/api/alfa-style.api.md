@@ -65,7 +65,7 @@ import { Specified as Specified_7 } from './property/border-top-width.js';
 import { Specified as Specified_8 } from './property/border-image-outset.js';
 import { Specified as Specified_9 } from './property/border-image-repeat.js';
 import { String as String_2 } from '@siteimprove/alfa-css';
-import type { Text } from '@siteimprove/alfa-dom';
+import { Text } from '@siteimprove/alfa-dom';
 import { Token } from '@siteimprove/alfa-css';
 import { Transform } from '@siteimprove/alfa-css';
 import { Translate } from '@siteimprove/alfa-css';
@@ -433,7 +433,8 @@ export namespace Style {
     isPositioned: typeof element.isPositioned, // (undocumented)
     isTabbable: typeof element.isTabbable, // (undocumented)
     isVisibleShadow: typeof element.isVisibleShadow;
-    const // Warning: (ae-forgotten-export) The symbol "node" needs to be exported by the entry point index.d.ts
+    const // (undocumented)
+    innerText: (device: Device, isAcceptable?: (device: Device) => Predicate<Text>) => (element: Element) => string, // Warning: (ae-forgotten-export) The symbol "node" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     isRendered: typeof node.isRendered, // (undocumented)

@@ -497,7 +497,7 @@ export namespace Style {
     isVisibleShadow,
   } = element;
 
-  export const { isRendered, isVisible, isScrolledBehind } = node;
+  export const { innerText, isRendered, isVisible, isScrolledBehind } = node;
 
   export const { isBlockContainer, isFlexContainer, isGridContainer } =
     predicates;
