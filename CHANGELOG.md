@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.95.0](../../compare/v0.94.1...v0.95.0) (2024-11-28)
+
+### Breaking
+
+- [@siteimprove/alfa-test-deprecated](packages/alfa-test-deprecated/CHANGELOG.md#0950), [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md#0950): The `alfa-test` package is now called `alfa-test-deprecated` and a new `alfa-test` package was added. ([#1692](https://github.com/Siteimprove/alfa/pull/1692))
+
 ## [0.94.1](../../compare/v0.94.0...v0.94.1) (2024-11-22)
 
 ### Fixed

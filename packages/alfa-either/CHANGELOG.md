@@ -1,5 +1,7 @@
 # @siteimprove/alfa-either
 
+## 0.95.0
+
 ## 0.94.1
 
 ## 0.94.0
