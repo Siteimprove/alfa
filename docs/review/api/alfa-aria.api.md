@@ -126,6 +126,7 @@ export namespace DOM {
 
 // @public (undocumented)
 export class Element extends Node<"element"> {
+    allowedAttributes(): readonly Attribute.Name[];
     // (undocumented)
     attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
     // (undocumented)
@@ -136,6 +137,8 @@ export class Element extends Node<"element"> {
     get attributes(): ReadonlyArray<Attribute>;
     // (undocumented)
     clone(): Element;
+    // (undocumented)
+    isAttributeAllowed(attribute: Attribute.Name): boolean;
     // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
