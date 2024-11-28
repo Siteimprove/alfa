@@ -68,6 +68,7 @@
     { "path": "alfa-style" },
     { "path": "alfa-table" },
     { "path": "alfa-test" },
+    { "path": "alfa-test-deprecated" },
     { "path": "alfa-thenable" },
     { "path": "alfa-thunk" },
     { "path": "alfa-time" },

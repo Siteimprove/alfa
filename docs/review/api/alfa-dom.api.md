@@ -89,10 +89,10 @@ export namespace Attribute {
     // (undocumented)
     export interface MinimalJSON extends Node.JSON<"attribute"> {
     }
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasName: typeof predicate.hasName;
+    hasName: typeof predicate_3.hasName;
 }
 
 // @public (undocumented)
@@ -374,28 +374,28 @@ export namespace Element {
         // (undocumented)
         style: Block.JSON | string | null;
     }
-    const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasAttribute: typeof predicate_3.hasAttribute, // (undocumented)
-    hasBox: typeof predicate_3.hasBox, // (undocumented)
-    hasDisplaySize: typeof predicate_3.hasDisplaySize, // (undocumented)
-    hasId: typeof predicate_3.hasId, // (undocumented)
-    hasInputType: typeof predicate_3.hasInputType, // (undocumented)
-    hasName: typeof predicate_3.hasName, // (undocumented)
-    hasNamespace: typeof predicate_3.hasNamespace, // (undocumented)
-    hasTabIndex: typeof predicate_3.hasTabIndex, // (undocumented)
+    hasAttribute: typeof predicate.hasAttribute, // (undocumented)
+    hasBox: typeof predicate.hasBox, // (undocumented)
+    hasDisplaySize: typeof predicate.hasDisplaySize, // (undocumented)
+    hasId: typeof predicate.hasId, // (undocumented)
+    hasInputType: typeof predicate.hasInputType, // (undocumented)
+    hasName: typeof predicate.hasName, // (undocumented)
+    hasNamespace: typeof predicate.hasNamespace, // (undocumented)
+    hasTabIndex: typeof predicate.hasTabIndex, // (undocumented)
     hasUniqueId: Predicate<Element<string>>, // (undocumented)
-    isBrowsingContextContainer: typeof predicate_3.isBrowsingContextContainer, // (undocumented)
-    isContent: typeof predicate_3.isContent, // (undocumented)
-    isActuallyDisabled: typeof predicate_3.isActuallyDisabled, // (undocumented)
-    isDocumentElement: typeof predicate_3.isDocumentElement, // (undocumented)
-    isDraggable: typeof predicate_3.isDraggable, // (undocumented)
-    isEditingHost: typeof predicate_3.isEditingHost, // (undocumented)
-    isFallback: typeof predicate_3.isFallback, // (undocumented)
-    isScopedTo: typeof predicate_3.isScopedTo, // (undocumented)
-    isSuggestedFocusable: typeof predicate_3.isSuggestedFocusable, // (undocumented)
-    isReplaced: typeof predicate_3.isReplaced;
+    isBrowsingContextContainer: typeof predicate.isBrowsingContextContainer, // (undocumented)
+    isContent: typeof predicate.isContent, // (undocumented)
+    isActuallyDisabled: typeof predicate.isActuallyDisabled, // (undocumented)
+    isDocumentElement: typeof predicate.isDocumentElement, // (undocumented)
+    isDraggable: typeof predicate.isDraggable, // (undocumented)
+    isEditingHost: typeof predicate.isEditingHost, // (undocumented)
+    isFallback: typeof predicate.isFallback, // (undocumented)
+    isScopedTo: typeof predicate.isScopedTo, // (undocumented)
+    isSuggestedFocusable: typeof predicate.isSuggestedFocusable, // (undocumented)
+    isReplaced: typeof predicate.isReplaced;
     // (undocumented)
     export interface MinimalJSON extends Node.JSON<"element"> {
     }
