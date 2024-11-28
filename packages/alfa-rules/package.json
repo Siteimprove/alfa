@@ -62,7 +62,6 @@
     "@siteimprove/alfa-refinement": "workspace:^0.94.1",
     "@siteimprove/alfa-result": "workspace:^0.94.1",
     "@siteimprove/alfa-sarif": "workspace:^0.94.1",
-    "@siteimprove/alfa-selective": "workspace:^0.94.1",
     "@siteimprove/alfa-selector": "workspace:^0.94.1",
     "@siteimprove/alfa-sequence": "workspace:^0.94.1",
     "@siteimprove/alfa-set": "workspace:^0.94.1",

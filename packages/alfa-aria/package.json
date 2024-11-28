@@ -41,6 +41,7 @@
     "@siteimprove/alfa-predicate": "workspace:^0.94.1",
     "@siteimprove/alfa-refinement": "workspace:^0.94.1",
     "@siteimprove/alfa-selector": "workspace:^0.94.1",
+    "@siteimprove/alfa-selective": "workspace:^0.94.1",
     "@siteimprove/alfa-sequence": "workspace:^0.94.1",
     "@siteimprove/alfa-set": "workspace:^0.94.1",
     "@siteimprove/alfa-string": "workspace:^0.94.1",
