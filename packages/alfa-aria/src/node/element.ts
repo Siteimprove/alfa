@@ -122,7 +122,7 @@ export class Element extends Node<"element"> {
 
   private static allowedAttributesForInputType(
     inputType: InputType
-  ): readonly Attribute.Name[] {
+  ): ReadonlyArray<Attribute.Name> {
     switch (inputType) {
       // https://www.w3.org/TR/html-aria/#el-input-color
       case "color":
@@ -154,7 +154,7 @@ export class Element extends Node<"element"> {
    * The attributes that are allowed on this element, taking into consideration ARIA in HTML conformance requirements.
    * See {@link https://w3c.github.io/html-aria/#docconformance}
    */
-  public allowedAttributes(): readonly Attribute.Name[] {
+  public allowedAttributes(): ReadonlyArray<Attribute.Name> {
     const global = Role.of("roletype").supportedAttributes;
     const fromRole = this.role.map(role => role.supportedAttributes).getOr([]);
     const additional = Selective.of(this.node)
