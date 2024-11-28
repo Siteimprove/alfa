@@ -72,6 +72,7 @@
 |  [@siteimprove/alfa-string](./alfa-string.md) |  |
 |  [@siteimprove/alfa-style](./alfa-style.md) |  |
 |  [@siteimprove/alfa-table](./alfa-table.md) |  |
+|  [@siteimprove/alfa-test-deprecated](./alfa-test-deprecated.md) |  |
 |  [@siteimprove/alfa-thenable](./alfa-thenable.md) |  |
 |  [@siteimprove/alfa-thunk](./alfa-thunk.md) |  |
 |  [@siteimprove/alfa-time](./alfa-time.md) |  |

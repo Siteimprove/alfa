@@ -1,5 +1,13 @@
 # @siteimprove/alfa-test
 
+## 0.95.0
+
+### Minor Changes
+
+- **Breaking:** The `alfa-test` package is now called `alfa-test-deprecated` and a new `alfa-test` package was added. ([#1692](https://github.com/Siteimprove/alfa/pull/1692))
+
+  Consumers can either migrate by replacing references to `alfa-test` with `alfa-test-deprecated` or they can attempt to use `alfa-test` which builds on [Vitest](https://vitest.dev).
+
 ## 0.94.1
 
 ## 0.94.0
