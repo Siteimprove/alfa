@@ -126,7 +126,7 @@ export namespace DOM {
 
 // @public (undocumented)
 export class Element extends Node<"element"> {
-    allowedAttributes(): readonly Attribute.Name[];
+    allowedAttributes(): ReadonlyArray<Attribute.Name>;
     // (undocumented)
     attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
     // (undocumented)
