@@ -45,7 +45,7 @@ const parseDimension = either(LengthPercentage.parse, Keyword.parse("auto"));
 /**
  * @internal
  */
-export const parse = either(
+const parse = either(
   map(
     pair(
       parseDimension,
@@ -63,7 +63,7 @@ const parseList = List.parseCommaSeparated(parse);
 /**
  * @internal
  */
-export const initialItem = Tuple.of(Keyword.of("auto"), Keyword.of("auto"));
+const initialItem = Tuple.of(Keyword.of("auto"), Keyword.of("auto"));
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-size}

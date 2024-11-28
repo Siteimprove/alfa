@@ -24,7 +24,7 @@ const parse = List.parseCommaSeparated(Position.Component.parseHorizontal);
 /**
  * @internal
  */
-export const initialItem: Computed.Item = Position.Side.of(
+const initialItem: Computed.Item = Position.Side.of(
   Keyword.of("left"),
   Percentage.of(0),
 );
