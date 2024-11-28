@@ -32,7 +32,6 @@
     "./syntax/token.ts",
     "./value/box.ts",
     "./value/contain.ts",
-    "./value/coord-box.ts",
     "./unit/converter.ts",
     "./unit/index.ts",
     "./unit/unit.ts",

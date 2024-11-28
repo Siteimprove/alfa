@@ -1,11 +1,11 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { CoordBox, Keyword, List } from "@siteimprove/alfa-css";
+import { Box, Keyword, List } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 
 const { either } = Parser;
 
-type Specified = List<CoordBox | Keyword<"no-clip">>;
+type Specified = List<Box.CoordBox | Keyword<"no-clip">>;
 type Computed = Specified;
 
 /**
@@ -14,6 +14,6 @@ type Computed = Specified;
  */
 export default Longhand.of<Specified, Computed>(
   List.of([Keyword.of("border-box")]),
-  List.parseCommaSeparated(either(CoordBox.parse, Keyword.parse("no-clip"))),
+  List.parseCommaSeparated(either(Box.parseCoordBox, Keyword.parse("no-clip"))),
   (value) => value,
 );
