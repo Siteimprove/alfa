@@ -13,6 +13,7 @@
     "./node/attribute.ts",
     "./node/attribute/predicate.ts",
     "./node/attribute/predicate/has-name.ts",
+    "./node/attribute/autocomplete.ts",
     "./node/comment.ts",
     "./node/document.ts",
     "./node/element.ts",
@@ -96,6 +97,9 @@
     { "path": "../../alfa-sequence" },
     { "path": "../../alfa-string" },
     { "path": "../../alfa-trampoline" },
-    { "path": "../../alfa-tree" }
+    { "path": "../../alfa-tree" },
+    { "path": "../../alfa-slice" },
+    { "path": "../../alfa-parser" },
+    { "path": "../../alfa-result" }
   ]
 }
