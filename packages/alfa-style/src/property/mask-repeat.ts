@@ -28,7 +28,7 @@ type Specified = List<RepeatStyle>;
 type Computed = Specified;
 
 /**
- * {@link https://drafts.fxtf.org/css-masking/#the-mask-repeat}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-repeat}
  *
  * @privateRemarks
  * The spec says that the computed value "Consists of: two keywords, one per dimension",
