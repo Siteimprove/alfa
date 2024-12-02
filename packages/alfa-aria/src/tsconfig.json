@@ -57,6 +57,7 @@
     { "path": "../../alfa-option" },
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-selective" },
     { "path": "../../alfa-selector" },
     { "path": "../../alfa-sequence" },
     { "path": "../../alfa-set" },

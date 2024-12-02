@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": ".",
+    "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@siteimprove/alfa-dom"
   },

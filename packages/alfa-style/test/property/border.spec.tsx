@@ -36,14 +36,14 @@ function parse(
     t.deepEqual(cascaded(element, `border-${side}-width` as const), {
       value: width
         ? {
-            type: "length",
-            value: width,
-            unit: "px",
-          }
+          type: "length",
+          value: width,
+          unit: "px",
+        }
         : {
-            type: "keyword",
-            value: "initial",
-          },
+          type: "keyword",
+          value: "initial",
+        },
       source: declaration.toJSON(),
     });
   }

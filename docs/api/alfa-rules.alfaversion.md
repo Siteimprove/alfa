@@ -8,5 +8,5 @@
 **Signature:**
 
 ```typescript
-alfaVersion = "0.94.1"
+alfaVersion = "0.95.0"
 ```

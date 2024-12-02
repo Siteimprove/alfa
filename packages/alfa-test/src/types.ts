@@ -33,15 +33,6 @@ export interface Assertions {
   fail(message?: string): never;
 
   /**
-   * {@link https://nodejs.org/api/assert.html#assert_assert_rejects_block_error_message}
-   */
-  rejects<T>(
-    block: Function | Promise<T>,
-    error?: RegExp | Function | Object | Error,
-    message?: string,
-  ): void;
-
-  /**
    * {@link https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message}
    */
   throws(

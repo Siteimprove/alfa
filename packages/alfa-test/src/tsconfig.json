@@ -3,11 +3,10 @@
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
   "files": [
-    "./format.ts",
     "./index.ts",
     "./rng.ts",
-    "./stack.ts",
     "./test.ts",
-    "./types.ts"
+    "./types.ts",
+    "./vitest.d.ts"
   ]
 }
