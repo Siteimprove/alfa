@@ -198,7 +198,6 @@
     { "path": "../../alfa-refinement" },
     { "path": "../../alfa-result" },
     { "path": "../../alfa-sarif" },
-    { "path": "../../alfa-selective" },
     { "path": "../../alfa-selector" },
     { "path": "../../alfa-sequence" },
     { "path": "../../alfa-set" },
