@@ -6,13 +6,16 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 
 const { either, end, option, right, parseIf } = Parser;
 
+/**
+ * @public
+ */
 export namespace Autocomplete {
 
   /**
    * Autofill detail tokens from steps 2-4 of the list in {@link https://html.spec.whatwg.org/multipage/#autofill-detail-tokens}.
    */
   export namespace AutofillDetailTokens {
-    export const unmodifiables = Array.from([
+    export const unmodifiables = [
       "name",
       "honorific-prefix",
       "given-name",
@@ -57,9 +60,9 @@ export namespace Autocomplete {
       "sex",
       "url",
       "photo",
-    ]);
+    ];
 
-    export const modifiables = Array.from([
+    export const modifiables = [
       "tel",
       "tel-country-code",
       "tel-national",
@@ -70,10 +73,10 @@ export namespace Autocomplete {
       "tel-extension",
       "email",
       "impp",
-    ]);
+    ];
 
-    export const modifiers = Array.from(["home", "work", "mobile", "fax", "pager"]);
-    export const addressTypes = Array.from(["shipping", "billing"]);
+    export const modifiers = ["home", "work", "mobile", "fax", "pager"];
+    export const addressTypes = ["shipping", "billing"];
     export const webauthn = "webauthn";
   }
 

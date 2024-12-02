@@ -2,4 +2,4 @@
 "@siteimprove/alfa-dom": minor
 ---
 
-**Added:** Expose autocomplete logic through `alfa-dom`'s `Attribute`.
+**Added:** An `Attribute.Autocomplete` namespace is now available, grouping functionalities around the `autocomplete` attribute.
