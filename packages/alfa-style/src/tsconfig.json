@@ -158,6 +158,7 @@
     "./property/mask-position.ts",
     "./property/mask-repeat.ts",
     "./property/mask-size.ts",
+    "./property/mask.ts",
     "./property/margin-bottom.ts",
     "./property/margin-left.ts",
     "./property/margin-right.ts",

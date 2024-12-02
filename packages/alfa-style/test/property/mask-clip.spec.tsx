@@ -57,10 +57,15 @@ test("#computed parses single keywords", (t) => {
   }
 });
 
-test("#computed parses multiple keywords", (t) => {
-  const element1 = <div style={{ maskClip: "padding-box, no-clip" }}></div>;
-  const style1 = Style.from(element1, device);
-  t.deepEqual(style1.computed("mask-clip").toJSON(), {
+test("#computed parses multiple layers", (t) => {
+  const element = <div style={{
+    maskImage: "url(foo.svg), url(bar.svg)",
+    maskClip: "padding-box, no-clip"
+  }}></div>;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("mask-clip").toJSON(), {
     value: {
       type: "list",
       separator: ", ",
@@ -78,11 +83,46 @@ test("#computed parses multiple keywords", (t) => {
     source: h.declaration("mask-clip", "padding-box, no-clip").toJSON(),
   });
 
-  const element2 = (
-    <div style={{ maskClip: "view-box, fill-box, border-box" }}></div>
+});
+
+test("#computed discards excess values when there are more values than layers", (t) => {
+  const element = (
+    <div style={{
+      maskImage: "url(foo.svg), url(bar.svg)",
+      maskClip: "view-box, fill-box, border-box"
+    }}></div>
   );
-  const style2 = Style.from(element2, device);
-  t.deepEqual(style2.computed("mask-clip").toJSON(), {
+  const style = Style.from(element, device);
+  t.deepEqual(style.computed("mask-clip").toJSON(), {
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          type: "keyword",
+          value: "view-box",
+        },
+        {
+          type: "keyword",
+          value: "fill-box",
+        },
+      ],
+    },
+    source: h
+      .declaration("mask-clip", "view-box, fill-box, border-box")
+      .toJSON(),
+  });
+});
+
+test("#computed repeats values when there are more layers than values", (t) => {
+  const element = (
+    <div style={{
+      maskImage: "url(foo.svg), url(bar.svg), url(baz.svg)",
+      maskClip: "view-box, fill-box"
+    }}></div>
+  );
+  const style = Style.from(element, device);
+  t.deepEqual(style.computed("mask-clip").toJSON(), {
     value: {
       type: "list",
       separator: ", ",
@@ -97,12 +137,12 @@ test("#computed parses multiple keywords", (t) => {
         },
         {
           type: "keyword",
-          value: "border-box",
+          value: "view-box",
         },
       ],
     },
     source: h
-      .declaration("mask-clip", "view-box, fill-box, border-box")
+      .declaration("mask-clip", "view-box, fill-box")
       .toJSON(),
   });
 });

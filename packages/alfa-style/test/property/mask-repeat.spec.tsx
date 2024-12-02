@@ -132,7 +132,10 @@ test("#computed parses at most two space separated values", (t) => {
 });
 
 test("#computed parses mutiple layers", (t) => {
-  const element = <div style={{ maskImage: "url(foo.svg), url(bar.svg)", maskRepeat: "round repeat, space" }}></div>;
+  const element = <div style={{
+    maskImage: "url(foo.svg), url(bar.svg)",
+    maskRepeat: "round repeat, space"
+  }}></div>;
 
   const style = Style.from(element, device);
 
@@ -173,7 +176,10 @@ test("#computed parses mutiple layers", (t) => {
 });
 
 test("#computed discards excess values when there are more values than layers", (t) => {
-  const element = <div style={{ maskImage: "url(foo.svg)", maskRepeat: "round repeat, space" }}></div>;
+  const element = <div style={{
+    maskImage: "url(foo.svg)",
+    maskRepeat: "round repeat, space"
+  }}></div>;
 
   const style = Style.from(element, device);
 
@@ -203,7 +209,10 @@ test("#computed discards excess values when there are more values than layers", 
 });
 
 test("#computed repeats values when there are more layers than values", (t) => {
-  const element = <div style={{ maskImage: "url(foo.svg), url(bar.svg), url(baz.svg)", maskRepeat: "round repeat, space" }}></div>;
+  const element = <div style={{
+    maskImage: "url(foo.svg), url(bar.svg), url(baz.svg)",
+    maskRepeat: "round repeat, space"
+  }}></div>;
 
   const style = Style.from(element, device);
 
