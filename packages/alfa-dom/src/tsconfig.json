@@ -89,17 +89,17 @@
     { "path": "../../alfa-lazy" },
     { "path": "../../alfa-map" },
     { "path": "../../alfa-option" },
+    { "path": "../../alfa-parser" },
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-rectangle" },
     { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-result" },
     { "path": "../../alfa-sarif" },
     { "path": "../../alfa-selective" },
     { "path": "../../alfa-sequence" },
+    { "path": "../../alfa-slice" },
     { "path": "../../alfa-string" },
     { "path": "../../alfa-trampoline" },
-    { "path": "../../alfa-tree" },
-    { "path": "../../alfa-slice" },
-    { "path": "../../alfa-parser" },
-    { "path": "../../alfa-result" }
+    { "path": "../../alfa-tree" }
   ]
 }
