@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "@siteimprove/alfa-css";

@@ -85,7 +85,7 @@ export class Device implements Equatable, Hashable, Serializable {
     return this._preferences
       .get(name)
       .getOrElse(() =>
-        Preference.of<N>(name, Preference.unset(name)),
+        Preference.of(name, Preference.unset(name)),
       ) as Preference<N>;
   }
 
