@@ -1,7 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "@siteimprove/alfa-css";
-import { Device, Viewport, Display } from "@siteimprove/alfa-device";
+import {
+  Device,
+  Display,
+  Preference,
+  Viewport,
+} from "@siteimprove/alfa-device";
 
 import { Feature } from "../dist/index.js";
 
@@ -460,7 +465,7 @@ test("#matches() matches ranges", (t) => {
   t.deepEqual(isGoldylocks.matches(largeLandscape), false);
 });
 
-test("#matches correctly behave at boundaries", (t) => {
+test("#matches() correctly behave at boundaries", (t) => {
   // Inclusive bound is matched inclusively
   const isLarge = parse(`(width >= ${width}px)`).getUnsafe();
   // Exclusive bound is matched exclusively
@@ -471,4 +476,20 @@ test("#matches correctly behave at boundaries", (t) => {
   t.deepEqual(isLarge.matches(largeLandscape), true);
   t.deepEqual(isSmall.matches(largeLandscape), false);
   t.deepEqual(isLargeToo.matches(largeLandscape), true);
+});
+
+test("#matches() matches unset prefers-color-scheme", (t) => {
+  const prefersColorScheme = parse("(prefers-color-scheme)").getUnsafe();
+
+  t.deepEqual(prefersColorScheme.matches(smallPortrait), true);
+
+  const withLightScheme = Device.of(
+    Device.Type.Screen,
+    Viewport.of(200, 400, Viewport.Orientation.Portrait),
+    Display.of(300),
+    undefined,
+    [Preference.of("prefers-color-scheme", "light")],
+  );
+
+  t.deepEqual(prefersColorScheme.matches(withLightScheme), false);
 });
