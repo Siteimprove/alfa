@@ -17,6 +17,7 @@ type Computed = Specified;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-mode}
+ *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(

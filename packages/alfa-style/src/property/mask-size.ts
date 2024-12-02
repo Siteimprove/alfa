@@ -67,6 +67,7 @@ const initialItem = Tuple.of(Keyword.of("auto"), Keyword.of("auto"));
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-size}
+ *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(

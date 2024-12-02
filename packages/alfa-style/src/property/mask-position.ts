@@ -32,6 +32,7 @@ const initialItem: Computed.Item = Position.Side.of(
 // TODO: Copied from background-position-x.ts. Adjust for mask-position.
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
+ *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
