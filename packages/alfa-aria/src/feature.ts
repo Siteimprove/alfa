@@ -287,6 +287,14 @@ const Features: Features = {
 
     dd: html("definition"),
 
+    details: html("group", function* (element) {
+      // https://w3c.github.io/html-aam/#att-open-details
+      yield Attribute.of(
+        "aria-expanded",
+        element.attribute("open").isSome() ? "true" : "false",
+      );
+    }),
+
     dfn: html("term"),
 
     dialog: html("dialog", function* (element) {
@@ -296,17 +304,6 @@ const Features: Features = {
         element.attribute("open").isSome() ? "true" : "false",
       );
     }),
-
-    details: html(
-      () => None,
-      function* (element) {
-        // https://w3c.github.io/html-aam/#att-open-details
-        yield Attribute.of(
-          "aria-expanded",
-          element.attribute("open").isSome() ? "true" : "false",
-        );
-      },
-    ),
 
     dt: html("term"),
 
@@ -675,6 +672,8 @@ const Features: Features = {
       },
       nameFromLabel,
     ),
+
+    summary: html(() => None),
 
     table: html("table", () => [], nameFromChild(hasName("caption"))),
 
