@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "@siteimprove/alfa-css";
@@ -478,18 +479,18 @@ test("#matches() correctly behave at boundaries", (t) => {
   t.deepEqual(isLargeToo.matches(largeLandscape), true);
 });
 
-test("#matches() matches unset prefers-color-scheme", (t) => {
-  const prefersColorScheme = parse("(prefers-color-scheme)").getUnsafe();
+test("#matches() matches boolean prefers-reduced-motion", (t) => {
+  const prefersReducedMotion = parse("(prefers-reduced-motion)").getUnsafe();
 
-  t.deepEqual(prefersColorScheme.matches(smallPortrait), true);
+  t.deepEqual(prefersReducedMotion.matches(smallPortrait), false);
 
-  const withLightScheme = Device.of(
+  const withReducedMotion = Device.of(
     Device.Type.Screen,
     Viewport.of(200, 400, Viewport.Orientation.Portrait),
     Display.of(300),
     undefined,
-    [Preference.of("prefers-color-scheme", "light")],
+    [Preference.of("prefers-reduced-motion", "reduce")],
   );
 
-  t.deepEqual(prefersColorScheme.matches(withLightScheme), false);
+  t.deepEqual(prefersReducedMotion.matches(withReducedMotion), true);
 });
