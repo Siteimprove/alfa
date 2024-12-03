@@ -1,6 +1,7 @@
 import { Keyword, List, type Parser as CSSParser } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
+import { matchLayers } from "./mask.js";
 
 type CompositingOperator =
   | Keyword<"add">
@@ -23,7 +24,7 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([Keyword.of("add")]),
+  List.of([Keyword.of("add")], ", "),
   List.parseCommaSeparated(compositingOperator),
-  (value) => value,
+  (value, style) => value.map((value) => matchLayers(value, style)),
 );

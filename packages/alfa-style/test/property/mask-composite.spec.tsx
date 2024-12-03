@@ -15,7 +15,7 @@ test("initial value is add", (t) => {
   t.deepEqual(style.computed("mask-composite").toJSON(), {
     value: {
       type: "list",
-      separator: " ",
+      separator: ", ",
       values: [
         {
           type: "keyword",
@@ -49,8 +49,77 @@ test("#computed parses single keywords", (t) => {
   }
 });
 
-test("#computed parses multiple keywords", (t) => {
-  const element = <div style={{ maskComposite: "add, exclude" }}></div>;
+test("#computed parses multiple layers", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg)",
+        maskComposite: "add, exclude",
+      }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("mask-composite").toJSON(), {
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          type: "keyword",
+          value: "add",
+        },
+        {
+          type: "keyword",
+          value: "exclude",
+        },
+      ],
+    },
+    source: h.declaration("mask-composite", "add, exclude").toJSON(),
+  });
+});
+
+test("#computed discards excess values when there are more values than layers", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg)",
+        maskComposite: "add, exclude, intersect",
+      }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("mask-composite").toJSON(), {
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          type: "keyword",
+          value: "add",
+        },
+        {
+          type: "keyword",
+          value: "exclude",
+        },
+      ],
+    },
+    source: h.declaration("mask-composite", "add, exclude, intersect").toJSON(),
+  });
+});
+
+test("#computed repeats values when there are more layers than values", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg), url(baz.svg)",
+        maskComposite: "add, exclude",
+      }}
+    ></div>
+  );
   const style = Style.from(element, device);
   t.deepEqual(style.computed("mask-composite").toJSON(), {
     value: {
@@ -64,6 +133,10 @@ test("#computed parses multiple keywords", (t) => {
         {
           type: "keyword",
           value: "exclude",
+        },
+        {
+          type: "keyword",
+          value: "add",
         },
       ],
     },
