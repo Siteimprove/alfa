@@ -1,6 +1,7 @@
 import { Keyword, List, type Parser as CSSParser } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
+import { matchLayers } from "./mask.js";
 
 type MaskingMode =
   | Keyword<"alpha">
@@ -21,7 +22,7 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([Keyword.of("match-source")]),
+  List.of([Keyword.of("match-source")], ", "),
   List.parseCommaSeparated(maskingMode),
-  (value) => value,
+  (value, style) => value.map((value) => matchLayers(value, style)),
 );

@@ -15,7 +15,7 @@ test("initial value is match-source", (t) => {
   t.deepEqual(style.computed("mask-mode").toJSON(), {
     value: {
       type: "list",
-      separator: " ",
+      separator: ", ",
       values: [
         {
           type: "keyword",
@@ -49,8 +49,15 @@ test("#computed parses single keywords", (t) => {
   }
 });
 
-test("#computed parses multiple keywords", (t) => {
-  const element = <div style={{ maskMode: "alpha, match-source" }}></div>;
+test("#computed parses multiple layers", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg)",
+        maskMode: "alpha, match-source",
+      }}
+    ></div>
+  );
   const style = Style.from(element, device);
   t.deepEqual(style.computed("mask-mode").toJSON(), {
     value: {
@@ -64,6 +71,74 @@ test("#computed parses multiple keywords", (t) => {
         {
           type: "keyword",
           value: "match-source",
+        },
+      ],
+    },
+    source: h.declaration("mask-mode", "alpha, match-source").toJSON(),
+  });
+});
+
+test("#computed discards excess values when there are more values than layers", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg)",
+        maskMode: "alpha, match-source, luminance",
+      }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("mask-mode").toJSON(), {
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          type: "keyword",
+          value: "alpha",
+        },
+        {
+          type: "keyword",
+          value: "match-source",
+        },
+      ],
+    },
+    source: h
+      .declaration("mask-mode", "alpha, match-source, luminance")
+      .toJSON(),
+  });
+});
+
+test("#computed repeats values when there are more layers than values", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg), url(baz.svg)",
+        maskMode: "alpha, match-source",
+      }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("mask-mode").toJSON(), {
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          type: "keyword",
+          value: "alpha",
+        },
+        {
+          type: "keyword",
+          value: "match-source",
+        },
+        {
+          type: "keyword",
+          value: "alpha",
         },
       ],
     },
