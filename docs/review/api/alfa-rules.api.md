@@ -6,7 +6,7 @@
 
 import * as act from '@siteimprove/alfa-act';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import type { Attribute } from '@siteimprove/alfa-dom';
+import { Attribute } from '@siteimprove/alfa-dom';
 import type { Document } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
 import { Element } from '@siteimprove/alfa-dom';

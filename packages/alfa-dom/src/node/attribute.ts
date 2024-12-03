@@ -11,6 +11,7 @@ import { Node } from "../node.js";
 import type { Element } from "./element.js";
 
 import * as predicate from "./attribute/predicate.js";
+import * as autocomplete from "./attribute/autocomplete.js";
 
 const { isEmpty } = Iterable;
 const { equals, not } = Predicate;
@@ -282,4 +283,6 @@ export namespace Attribute {
   }
 
   export const { hasName } = predicate;
+
+  export import Autocomplete = autocomplete.Autocomplete;
 }

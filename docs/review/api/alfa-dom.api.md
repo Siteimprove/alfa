@@ -93,6 +93,7 @@ export namespace Attribute {
     //
     // (undocumented)
     hasName: typeof predicate_3.hasName;
+    import Autocomplete = autocomplete.Autocomplete;
 }
 
 // @public (undocumented)
