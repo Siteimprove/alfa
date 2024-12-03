@@ -1,47 +1,32 @@
-import { Keyword, List, Percentage, Position } from "@siteimprove/alfa-css";
+import {
+  Keyword,
+  LengthPercentage,
+  List,
+  Position,
+} from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
+import { matchLayers } from "./mask.js";
 
-type Specified = List<Specified.Item>;
-
-/**
- * @internal
- */
-export namespace Specified {
-  export type Item = Position.Component<Position.Keywords.Horizontal>;
-}
-
-type Computed = List<Computed.Item>;
-
-namespace Computed {
-  export type Item =
-    Position.Component.PartiallyResolved<Position.Keywords.Horizontal>;
-}
-
-const parse = List.parseCommaSeparated(Position.Component.parseHorizontal);
+type Specified = List<Position>;
+type Computed = Specified;
 
 /**
- * @internal
- */
-const initialItem: Computed.Item = Position.Side.of(
-  Keyword.of("left"),
-  Percentage.of(0),
-);
-
-// TODO: Copied from background-position-x.ts. Adjust for mask-position.
-/**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position}
  *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([initialItem]),
-  parse,
-  (value, style) =>
-    value.map((positions) =>
-      positions.map(
-        Position.Component.partiallyResolve(Resolver.length(style)),
+  List.of(
+    [
+      Position.of(
+        Position.Side.of(Keyword.of("left"), LengthPercentage.of(0)),
+        Position.Side.of(Keyword.of("top"), LengthPercentage.of(0)),
       ),
-    ),
+    ],
+    ", ",
+  ),
+  List.parseCommaSeparated(Position.parse(/* legacySyntax */ true)),
+  (value, style) => value.map((positions) => matchLayers(positions, style)),
 );
