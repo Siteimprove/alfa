@@ -15,7 +15,7 @@ test("initial value is border-box", (t) => {
   t.deepEqual(style.computed("mask-origin").toJSON(), {
     value: {
       type: "list",
-      separator: " ",
+      separator: ", ",
       values: [
         {
           type: "keyword",
@@ -56,16 +56,91 @@ test("#computed parses single keywords", (t) => {
   }
 });
 
-test("#computed parses multiple keywords", (t) => {
-  const element1 = (
-    <div style={{ maskOrigin: "padding-box, content-box" }}></div>
+test("#computed parses multiple layers", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg)",
+        maskOrigin: "content-box, padding-box",
+      }}
+    ></div>
   );
-  const style1 = Style.from(element1, device);
-  t.deepEqual(style1.computed("mask-origin").toJSON(), {
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("mask-origin").toJSON(), {
     value: {
       type: "list",
       separator: ", ",
       values: [
+        {
+          type: "keyword",
+          value: "content-box",
+        },
+        {
+          type: "keyword",
+          value: "padding-box",
+        },
+      ],
+    },
+    source: h.declaration("mask-origin", "content-box, padding-box").toJSON(),
+  });
+});
+
+test("#computed discards excess values when there are more values than layers", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg)",
+        maskOrigin: "content-box, padding-box, border-box",
+      }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("mask-origin").toJSON(), {
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          type: "keyword",
+          value: "content-box",
+        },
+        {
+          type: "keyword",
+          value: "padding-box",
+        },
+      ],
+    },
+    source: h
+      .declaration("mask-origin", "content-box, padding-box, border-box")
+      .toJSON(),
+  });
+});
+
+test("#computed repeats values when there are more layers than values", (t) => {
+  const element = (
+    <div
+      style={{
+        maskImage: "url(foo.svg), url(bar.svg), url(baz.svg)",
+        maskOrigin: "content-box, padding-box",
+      }}
+    ></div>
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("mask-origin").toJSON(), {
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          type: "keyword",
+          value: "content-box",
+        },
         {
           type: "keyword",
           value: "padding-box",
@@ -76,34 +151,6 @@ test("#computed parses multiple keywords", (t) => {
         },
       ],
     },
-    source: h.declaration("mask-origin", "padding-box, content-box").toJSON(),
-  });
-
-  const element2 = (
-    <div style={{ maskOrigin: "view-box, fill-box, border-box" }}></div>
-  );
-  const style2 = Style.from(element2, device);
-  t.deepEqual(style2.computed("mask-origin").toJSON(), {
-    value: {
-      type: "list",
-      separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "view-box",
-        },
-        {
-          type: "keyword",
-          value: "fill-box",
-        },
-        {
-          type: "keyword",
-          value: "border-box",
-        },
-      ],
-    },
-    source: h
-      .declaration("mask-origin", "view-box, fill-box, border-box")
-      .toJSON(),
+    source: h.declaration("mask-origin", "content-box, padding-box").toJSON(),
   });
 });

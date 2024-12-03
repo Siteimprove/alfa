@@ -1,6 +1,7 @@
 import { Box, Keyword, List } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
+import { matchLayers } from "./mask.js";
 
 type Specified = List<Box.CoordBox>;
 type Computed = Specified;
@@ -11,7 +12,7 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([Keyword.of("border-box")]),
+  List.of([Keyword.of("border-box")], ", "),
   List.parseCommaSeparated(Box.parseCoordBox),
-  (value) => value,
+  (value, style) => value.map((value) => matchLayers(value, style)),
 );
