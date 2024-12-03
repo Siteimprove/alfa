@@ -1,7 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "@siteimprove/alfa-css";
-import { Device, Viewport, Display } from "@siteimprove/alfa-device";
+import {
+  Device,
+  Display,
+  Preference,
+  Viewport,
+} from "@siteimprove/alfa-device";
 
 import { Feature } from "../dist/index.js";
 
@@ -460,7 +465,7 @@ test("#matches() matches ranges", (t) => {
   t.deepEqual(isGoldylocks.matches(largeLandscape), false);
 });
 
-test("#matches correctly behave at boundaries", (t) => {
+test("#matches() correctly behave at boundaries", (t) => {
   // Inclusive bound is matched inclusively
   const isLarge = parse(`(width >= ${width}px)`).getUnsafe();
   // Exclusive bound is matched exclusively
@@ -471,4 +476,20 @@ test("#matches correctly behave at boundaries", (t) => {
   t.deepEqual(isLarge.matches(largeLandscape), true);
   t.deepEqual(isSmall.matches(largeLandscape), false);
   t.deepEqual(isLargeToo.matches(largeLandscape), true);
+});
+
+test("#matches() matches boolean prefers-reduced-motion", (t) => {
+  const prefersReducedMotion = parse("(prefers-reduced-motion)").getUnsafe();
+
+  t.deepEqual(prefersReducedMotion.matches(smallPortrait), false);
+
+  const withReducedMotion = Device.of(
+    Device.Type.Screen,
+    Viewport.of(200, 400, Viewport.Orientation.Portrait),
+    Display.of(300),
+    undefined,
+    [Preference.of("prefers-reduced-motion", "reduce")],
+  );
+
+  t.deepEqual(prefersReducedMotion.matches(withReducedMotion), true);
 });

@@ -1,5 +1,5 @@
 import { Keyword, type Parser as CSSParser } from "@siteimprove/alfa-css";
-import type { Device} from "@siteimprove/alfa-device";
+import type { Device } from "@siteimprove/alfa-device";
 import { Preference } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 
@@ -41,7 +41,7 @@ export namespace Discrete {
 
         return this._value
           .map((value) => value.matches(Keyword.of(deviceValue)))
-          .getOr(deviceValue !== booleanFalse ?? "none");
+          .getOr(deviceValue !== (booleanFalse ?? "none"));
       }
 
       private static _from(value: Option<Value<Keyword<K>>>): Discrete {
