@@ -1,96 +1,57 @@
 import {
   Keyword,
-  List,
   LengthPercentage,
-  Token,
-  Tuple,
+  List,
+  type Parser as CSSParser,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
+import { matchLayers } from "./mask.js";
 
-const { map, either, option, pair, right } = Parser;
+const { either } = Parser;
 
-type Specified = List<Specified.Item>;
+type BgSize =
+  | List<LengthPercentage | Keyword<"auto">>
+  | Keyword<"cover">
+  | Keyword<"contain">;
 
-/**
- * @internal
- */
-export namespace Specified {
-  type Dimension = LengthPercentage | Keyword<"auto">;
-
-  export type Item =
-    | Tuple<[Dimension, Dimension]>
-    | Keyword<"cover">
-    | Keyword<"contain">;
-}
-
-type Computed = List<Computed.Item>;
-
-namespace Computed {
-  type Dimension = LengthPercentage.PartiallyResolved | Keyword<"auto">;
-
-  export type Item =
-    | Tuple<[Dimension, Dimension]>
-    | Keyword<"cover">
-    | Keyword<"contain">;
-}
-
-/**
- * @internal
- */
-const parseDimension = either(LengthPercentage.parse, Keyword.parse("auto"));
-
-/**
- * @internal
- */
-const parse = either(
-  map(
-    pair(
-      parseDimension,
-      map(option(right(Token.parseWhitespace, parseDimension)), (y) =>
-        y.getOrElse(() => Keyword.of("auto")),
-      ),
-    ),
-    ([x, y]) => Tuple.of(x, y),
+const bgSize: CSSParser<BgSize> = either(
+  List.parseSpaceSeparated(
+    either(LengthPercentage.parse, Keyword.parse("auto")),
+    1,
+    2,
   ),
-  Keyword.parse("contain", "cover"),
+  Keyword.parse("cover", "contain"),
 );
 
-const parseList = List.parseCommaSeparated(parse);
+type Specified = List<BgSize>;
+type Computed = Specified;
 
 /**
- * @internal
- */
-const initialItem = Tuple.of(Keyword.of("auto"), Keyword.of("auto"));
-
-/**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-size}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-size}
  *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([initialItem], ", "),
-  parseList,
+  List.of([List.of([Keyword.of("auto")], " ")], ", "),
+  List.parseCommaSeparated(bgSize),
   (value, style) =>
     value.map((sizes) =>
-      sizes.map((size) => {
-        if (Keyword.isKeyword(size)) {
-          return size;
-        }
-
-        const [x, y] = size.values;
-        const resolver = Resolver.length(style);
-
-        return Tuple.of(
-          Keyword.isKeyword(x)
-            ? x
-            : LengthPercentage.partiallyResolve(resolver)(x),
-          Keyword.isKeyword(y)
-            ? y
-            : LengthPercentage.partiallyResolve(resolver)(y),
-        );
-      }),
+      matchLayers(
+        sizes.map((size) =>
+          Keyword.isKeyword(size)
+            ? size
+            : size.map((value) =>
+                Keyword.isKeyword(value)
+                  ? value
+                  : LengthPercentage.partiallyResolve(Resolver.length(style))(
+                      value,
+                    ),
+              ),
+        ),
+        style,
+      ),
     ),
 );

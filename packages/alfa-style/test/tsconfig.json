@@ -60,6 +60,7 @@
     "./property/mask-mode.spec.tsx",
     "./property/mask-origin.spec.tsx",
     "./property/mask-repeat.spec.tsx",
+    "./property/mask-size.spec.tsx",
     "./property/mix-blend-mode.spec.tsx",
     "./property/opacity.spec.tsx",
     "./property/outline.spec.tsx",
