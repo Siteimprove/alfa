@@ -120,7 +120,9 @@ test("#computed repeats values when there are more layers than values", (t) => {
       }}
     ></div>
   );
+
   const style = Style.from(element, device);
+
   t.deepEqual(style.computed("mask-composite").toJSON(), {
     value: {
       type: "list",

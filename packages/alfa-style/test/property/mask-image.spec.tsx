@@ -41,7 +41,7 @@ test("#computed parses url value", (t) => {
           type: "image",
           image: {
             type: "url",
-            url: "masks.svg#mask1", // TODO: should be made absolute
+            url: "masks.svg#mask1",
           },
         },
       ],

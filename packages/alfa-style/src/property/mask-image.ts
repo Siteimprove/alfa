@@ -21,12 +21,12 @@ type Specified = List<MaskReference>;
 type Computed = Specified;
 
 /**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-composite}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-image}
  *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
   List.of([Keyword.of("none")]),
   List.parseCommaSeparated(maskReference),
-  (value) => value, // TODO: as specified, but with <url> values made absolute
+  (value) => value, // TODO: How to resolve absolute URL?
 );
