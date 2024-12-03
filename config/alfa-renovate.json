@@ -8,16 +8,7 @@
   "reviewers": ["team:alfa-owners"],
   "dependencyDashboard": true,
   "postUpdateOptions": ["yarnDedupeHighest"],
-  "npmrc": "@siteimprove:registry=https://npm.pkg.github.com/",
   "rangeStrategy": "replace",
-  "hostRules": [
-      {
-        "hostType": "npm",
-        "matchHost": "https://npm.pkg.github.com/",
-        "description": "Token of a public user with 'Packages:read' permission only, needed due to https://github.com/renovatebot/renovate/discussions/26475",
-        "token": "{{ secrets.RENOVATE_TOKEN }}"
-      }
-    ],
   "packageRules": [
     {
       "description": "Update Alfa as soon as a new release is published",
