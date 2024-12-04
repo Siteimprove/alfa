@@ -6,7 +6,6 @@ import {
 } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
-import { Resolver } from "../resolver.js";
 import { matchLayers } from "./mask.js";
 
 type Specified = List<Position>;
