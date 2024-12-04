@@ -7,9 +7,10 @@ import {
 
 import { Longhand } from "../longhand.js";
 import { matchLayers } from "./mask.js";
+import { Resolver } from "../resolver.js";
 
 type Specified = List<Position>;
-type Computed = Specified;
+type Computed = List<Position.PartiallyResolved>;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position}
@@ -27,5 +28,13 @@ export default Longhand.of<Specified, Computed>(
     ", ",
   ),
   List.parseCommaSeparated(Position.parse(/* legacySyntax */ true)),
-  (value, style) => value.map((positions) => matchLayers(positions, style)),
+  (value, style) =>
+    value.map((positions) =>
+      matchLayers(
+        positions.map((position) =>
+          position.partiallyResolve(Resolver.length(style)),
+        ),
+        style,
+      ),
+    ),
 );
