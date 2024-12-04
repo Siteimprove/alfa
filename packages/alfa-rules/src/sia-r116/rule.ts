@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Element<"summary">>({
               // If the explicit role is none/presentation but the element is
               // nonetheless included in the accessibility tree, then the
               // conflict triggered, and we want to keep it as target.
-              not(hasExplicitRole(Role.hasName("none", "presentation"))),
+              not(hasExplicitRole(not(Role.hasName("none", "presentation")))),
             ),
           );
       },
