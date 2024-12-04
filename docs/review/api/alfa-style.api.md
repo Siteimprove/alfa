@@ -232,7 +232,7 @@ export namespace Longhands {
         readonly "mask-image": Longhand<List<Keyword<"none"> | URL | Image<Gradient | URL>>, List<Keyword<"none"> | URL | Image<Gradient | URL>>>;
         readonly "mask-mode": Longhand<List<Keyword<"alpha"> | Keyword<"luminance"> | Keyword<"match-source">>, List<Keyword<"alpha"> | Keyword<"luminance"> | Keyword<"match-source">>>;
         readonly "mask-origin": Longhand<List<Box.CoordBox>, List<Box.CoordBox>>;
-        readonly "mask-position": Longhand<List<Position<Keywords.Horizontal, Keywords.Vertical, Component<Keywords.Horizontal>, Component<Keywords.Vertical>>>, List<Position<Keywords.Horizontal, Keywords.Vertical, Component<Keywords.Horizontal>, Component<Keywords.Vertical>>>>;
+        readonly "mask-position": Longhand<List<Position<Keywords.Horizontal, Keywords.Vertical, Component<Keywords.Horizontal>, Component<Keywords.Vertical>>>, List<Position.PartiallyResolved<Keywords.Horizontal, Keywords.Vertical>>>;
         readonly "mask-repeat": Longhand<List<Keyword<"repeat-x"> | Keyword<"repeat-y"> | List<Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">>>, List<Keyword<"repeat-x"> | Keyword<"repeat-y"> | List<Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">>>>;
         readonly "mask-size": Longhand<List<Keyword<"cover"> | Keyword<"contain"> | List<LengthPercentage | Keyword<"auto">>>, List<Keyword<"cover"> | Keyword<"contain"> | List<LengthPercentage | Keyword<"auto">>>>;
         readonly "min-height": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
