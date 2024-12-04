@@ -673,7 +673,11 @@ const Features: Features = {
       nameFromLabel,
     ),
 
-    summary: html(() => None),
+    summary: html((element) =>
+      (element as Element<"summary">).isSummaryForItsParentDetails()
+        ? None
+        : Option.of(Role.of("generic")),
+    ),
 
     table: html("table", () => [], nameFromChild(hasName("caption"))),
 

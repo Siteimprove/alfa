@@ -572,3 +572,89 @@ test(`.from() behaves when encountering an element with global properties where
     ],
   });
 });
+
+test(`.from() names <summary> elements that are summary for their parent detail`, (t) => {
+  const summary = <summary>Opening times</summary>;
+
+  <details>
+    {summary}
+    <p>This is a website. We are available 24/7.</p>
+  </details>;
+
+  t.deepEqual(Node.from(summary, device).toJSON(), {
+    type: "element",
+    node: "/details[1]/summary[1]",
+    role: null,
+    name: "Opening times",
+    attributes: [],
+    children: [
+      {
+        type: "text",
+        node: "/details[1]/summary[1]/text()[1]",
+        name: "Opening times",
+      },
+    ],
+  });
+});
+
+test(`.from() treats isolated <summary> elements as generic`, (t) => {
+  const summary = <summary>Opening times</summary>;
+
+  t.deepEqual(Node.from(summary, device).toJSON(), {
+    type: "container",
+    node: "/summary[1]",
+    role: "generic",
+    children: [
+      {
+        type: "text",
+        node: "/summary[1]/text()[1]",
+        name: "Opening times",
+      },
+    ],
+  });
+});
+
+test(`.from() treats nested <summary> elements as generic`, (t) => {
+  const summary = <summary>Opening times</summary>;
+
+  <details>
+    <div>{summary}</div>
+    <p>This is a website. We are available 24/7.</p>
+  </details>;
+
+  t.deepEqual(Node.from(summary, device).toJSON(), {
+    type: "container",
+    node: "/details[1]/div[1]/summary[1]",
+    role: "generic",
+    children: [
+      {
+        type: "text",
+        node: "/details[1]/div[1]/summary[1]/text()[1]",
+        name: "Opening times",
+      },
+    ],
+  });
+});
+
+test(`.from() treates second <summary> elements as generic`, (t) => {
+  const summary = <summary>Opening times</summary>;
+
+  <details>
+    <summary>Hello</summary>
+    {summary}
+    <p>This is a website. We are available 24/7.</p>
+  </details>;
+
+  t.deepEqual(Node.from(summary, device).toJSON(), {
+    type: "container",
+    node: "/details[1]/summary[2]",
+    role: "generic",
+    children: [
+      {
+        type: "text",
+        node: "/details[1]/summary[2]/text()[1]",
+        name: "Opening times",
+      },
+    ],
+  });
+});
