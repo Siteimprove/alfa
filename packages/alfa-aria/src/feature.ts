@@ -674,6 +674,7 @@ const Features: Features = {
     ),
 
     summary: html((element) =>
+      // the type is ensured by the name.
       (element as Element<"summary">).isSummaryForItsParentDetails()
         ? None
         : Option.of(Role.of("generic")),
