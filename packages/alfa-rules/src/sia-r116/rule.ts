@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Element<"summary">>({
           .filter(
             and(
               isIncludedInTheAccessibilityTree(device),
-              isSummaryForItsParentDetails,
+              (summary) => summary.isSummaryForItsParentDetails(),
               // If the explicit role is none/presentation but the element is
               // nonetheless included in the accessibility tree, then the
               // conflict triggered, and we want to keep it as target.
@@ -67,20 +67,4 @@ export namespace Outcomes {
   export const HasNoAccessibleName = Err.of(
     Diagnostic.of(`The \`<summary>\` element does not have an accessible name`),
   );
-}
-
-/**
- * {@link
- * https://html.spec.whatwg.org/multipage/#summary-for-its-parent-details}
- */
-function isSummaryForItsParentDetails(summary: Element<"summary">): boolean {
-  return summary
-    .parent()
-    .filter(and(isElement, hasName("details")))
-    .some((details) =>
-      details
-        .children()
-        .find(and(isElement, hasName("summary")))
-        .includes(summary),
-    );
 }
