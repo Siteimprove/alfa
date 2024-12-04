@@ -1,7 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
-import type { Attribute} from "@siteimprove/alfa-dom";
+import type { Attribute } from "@siteimprove/alfa-dom";
 import { Element, Node, Query, Text } from "@siteimprove/alfa-dom";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Iterable } from "@siteimprove/alfa-iterable";
