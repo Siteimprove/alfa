@@ -112,7 +112,7 @@ export namespace Cache {
   export type Key = object;
 
   /**
-   * Create a new cache from an iterable of key-value pairs.
+   * Creates a new cache from an iterable of key-value pairs.
    */
   export function from<K extends Key, V>(
     iterable: Iterable<readonly [K, V]>,
@@ -131,7 +131,7 @@ export namespace Cache {
     : T;
 
   /**
-   * Memoize a method.
+   * Memoizes a method.
    */
   export function memoize<This, Args extends Array<Key>, Return>(
     // When called on an instance's method `target`, `this` is the instance.
@@ -139,7 +139,7 @@ export namespace Cache {
   ): (this: This, ...args: Args) => Return;
 
   /**
-   * Memoize a function
+   * Memoizes a function
    *
    * @remarks
    * When memoizing a recursive function, care must be taken to also memoize the
@@ -200,12 +200,15 @@ export namespace Cache {
         const next = cache.get(
           head,
           // @ts-ignore
-          // If there are no more parameters, we need to call the original function.
-          // In case of method, we need to re-bind it to the original instance.
-          // (we could directly return the result in that case, but since we need
-          // to test `innerArgs.length === 0` anyway, we let that handle it)
+          // If `head` is not in the cache, and there are no more parameters,
+          // we need to call the original function. In case of method, we need
+          // to re-bind it to the original instance.
+          // (we could directly return the result in that case, instead of going
+          // to the next call to `memoized`; but since we need to test
+          // `innerArgs.length === 0` anyway, we let that handle it)
           //
-          // If there are more parameters, we just create an empty cache.
+          // If `head` is not in the cache but there are more parameters,
+          // we just create an empty cache.
           tail.length === 0 ? () => target.bind(that)(...args) : Cache.empty,
         );
 
