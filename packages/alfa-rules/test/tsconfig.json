@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": ".",
+    "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@siteimprove/alfa-dom"
   },
@@ -118,7 +118,8 @@
     "./sia-r110/rule.spec.tsx",
     "./sia-r111/rule.spec.tsx",
     "./sia-r113/rule.spec.tsx",
-    "./sia-r114/rule.spec.tsx"
+    "./sia-r114/rule.spec.tsx",
+    "./sia-r115/rule.spec.tsx"
   ],
   "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

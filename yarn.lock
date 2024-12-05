@@ -383,6 +383,174 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@esbuild/aix-ppc64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/aix-ppc64@npm:0.24.0"
+  conditions: os=aix & cpu=ppc64
+  languageName: node
+  linkType: hard
+
+"@esbuild/android-arm64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/android-arm64@npm:0.24.0"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@esbuild/android-arm@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/android-arm@npm:0.24.0"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@esbuild/android-x64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/android-x64@npm:0.24.0"
+  conditions: os=android & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@esbuild/darwin-arm64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/darwin-arm64@npm:0.24.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@esbuild/darwin-x64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/darwin-x64@npm:0.24.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@esbuild/freebsd-arm64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/freebsd-arm64@npm:0.24.0"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@esbuild/freebsd-x64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/freebsd-x64@npm:0.24.0"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-arm64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-arm64@npm:0.24.0"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-arm@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-arm@npm:0.24.0"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-ia32@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-ia32@npm:0.24.0"
+  conditions: os=linux & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-loong64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-loong64@npm:0.24.0"
+  conditions: os=linux & cpu=loong64
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-mips64el@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-mips64el@npm:0.24.0"
+  conditions: os=linux & cpu=mips64el
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-ppc64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-ppc64@npm:0.24.0"
+  conditions: os=linux & cpu=ppc64
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-riscv64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-riscv64@npm:0.24.0"
+  conditions: os=linux & cpu=riscv64
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-s390x@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-s390x@npm:0.24.0"
+  conditions: os=linux & cpu=s390x
+  languageName: node
+  linkType: hard
+
+"@esbuild/linux-x64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/linux-x64@npm:0.24.0"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@esbuild/netbsd-x64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/netbsd-x64@npm:0.24.0"
+  conditions: os=netbsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@esbuild/openbsd-arm64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/openbsd-arm64@npm:0.24.0"
+  conditions: os=openbsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@esbuild/openbsd-x64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/openbsd-x64@npm:0.24.0"
+  conditions: os=openbsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@esbuild/sunos-x64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/sunos-x64@npm:0.24.0"
+  conditions: os=sunos & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@esbuild/win32-arm64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/win32-arm64@npm:0.24.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@esbuild/win32-ia32@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/win32-ia32@npm:0.24.0"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@esbuild/win32-x64@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@esbuild/win32-x64@npm:0.24.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@jridgewell/sourcemap-codec@npm:^1.5.0":
   version: 1.5.0
   resolution: "@jridgewell/sourcemap-codec@npm:1.5.0"
@@ -600,6 +768,132 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-android-arm-eabi@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-android-arm-eabi@npm:4.27.4"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-android-arm64@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-android-arm64@npm:4.27.4"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-darwin-arm64@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-darwin-arm64@npm:4.27.4"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-darwin-x64@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-darwin-x64@npm:4.27.4"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-freebsd-arm64@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-freebsd-arm64@npm:4.27.4"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-freebsd-x64@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-freebsd-x64@npm:4.27.4"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm-gnueabihf@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-arm-gnueabihf@npm:4.27.4"
+  conditions: os=linux & cpu=arm & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm-musleabihf@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-arm-musleabihf@npm:4.27.4"
+  conditions: os=linux & cpu=arm & libc=musl
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm64-gnu@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-arm64-gnu@npm:4.27.4"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm64-musl@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-arm64-musl@npm:4.27.4"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-powerpc64le-gnu@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-powerpc64le-gnu@npm:4.27.4"
+  conditions: os=linux & cpu=ppc64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-riscv64-gnu@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-riscv64-gnu@npm:4.27.4"
+  conditions: os=linux & cpu=riscv64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-s390x-gnu@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-s390x-gnu@npm:4.27.4"
+  conditions: os=linux & cpu=s390x & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-gnu@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.27.4"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-musl@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-linux-x64-musl@npm:4.27.4"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-arm64-msvc@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-win32-arm64-msvc@npm:4.27.4"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-ia32-msvc@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-win32-ia32-msvc@npm:4.27.4"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-x64-msvc@npm:4.27.4":
+  version: 4.27.4
+  resolution: "@rollup/rollup-win32-x64-msvc@npm:4.27.4"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@rushstack/node-core-library@npm:3.66.0":
   version: 3.66.0
   resolution: "@rushstack/node-core-library@npm:3.66.0"
@@ -642,228 +936,215 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sec-ant/readable-stream@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@sec-ant/readable-stream@npm:0.4.1"
-  checksum: 10c0/64e9e9cf161e848067a5bf60cdc04d18495dc28bb63a8d9f8993e4dd99b91ad34e4b563c85de17d91ffb177ec17a0664991d2e115f6543e73236a906068987af
-  languageName: node
-  linkType: hard
-
-"@sindresorhus/merge-streams@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@sindresorhus/merge-streams@npm:4.0.0"
-  checksum: 10c0/482ee543629aa1933b332f811a1ae805a213681ecdd98c042b1c1b89387df63e7812248bb4df3910b02b3cc5589d3d73e4393f30e197c9dde18046ccd471fc6b
-  languageName: node
-  linkType: hard
-
-"@siteimprove/alfa-act@workspace:^0.94.1, @siteimprove/alfa-act@workspace:packages/alfa-act":
+"@siteimprove/alfa-act@workspace:^0.95.0, @siteimprove/alfa-act@workspace:packages/alfa-act":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-act@workspace:packages/alfa-act"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-earl": "workspace:^0.94.1"
-    "@siteimprove/alfa-either": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-future": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-list": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-performance": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-record": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-sarif": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-string": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
-    "@siteimprove/alfa-trilean": "workspace:^0.94.1"
-    "@siteimprove/alfa-tuple": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-earl": "workspace:^0.95.0"
+    "@siteimprove/alfa-either": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-future": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-list": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-performance": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-record": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-sarif": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-string": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
+    "@siteimprove/alfa-trilean": "workspace:^0.95.0"
+    "@siteimprove/alfa-tuple": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-affine@workspace:^0.94.1, @siteimprove/alfa-affine@workspace:packages/alfa-affine":
+"@siteimprove/alfa-affine@workspace:^0.95.0, @siteimprove/alfa-affine@workspace:packages/alfa-affine":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-affine@workspace:packages/alfa-affine"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-math": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-math": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-applicative@workspace:^0.94.1, @siteimprove/alfa-applicative@workspace:packages/alfa-applicative":
+"@siteimprove/alfa-applicative@workspace:^0.95.0, @siteimprove/alfa-applicative@workspace:packages/alfa-applicative":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-applicative@workspace:packages/alfa-applicative"
   dependencies:
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-aria@workspace:^0.94.1, @siteimprove/alfa-aria@workspace:packages/alfa-aria":
+"@siteimprove/alfa-aria@workspace:^0.95.0, @siteimprove/alfa-aria@workspace:packages/alfa-aria":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-aria@workspace:packages/alfa-aria"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-cache": "workspace:^0.94.1"
-    "@siteimprove/alfa-device": "workspace:^0.94.1"
-    "@siteimprove/alfa-dom": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-flags": "workspace:^0.94.1"
-    "@siteimprove/alfa-graph": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-selector": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-set": "workspace:^0.94.1"
-    "@siteimprove/alfa-string": "workspace:^0.94.1"
-    "@siteimprove/alfa-style": "workspace:^0.94.1"
-    "@siteimprove/alfa-table": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
-    "@siteimprove/alfa-tree": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-cache": "workspace:^0.95.0"
+    "@siteimprove/alfa-device": "workspace:^0.95.0"
+    "@siteimprove/alfa-dom": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-flags": "workspace:^0.95.0"
+    "@siteimprove/alfa-graph": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-selective": "workspace:^0.95.0"
+    "@siteimprove/alfa-selector": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-set": "workspace:^0.95.0"
+    "@siteimprove/alfa-string": "workspace:^0.95.0"
+    "@siteimprove/alfa-style": "workspace:^0.95.0"
+    "@siteimprove/alfa-table": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
+    "@siteimprove/alfa-tree": "workspace:^0.95.0"
     prettier: "npm:^3.0.0"
     puppeteer: "npm:^23.0.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-array@workspace:^0.94.1, @siteimprove/alfa-array@workspace:packages/alfa-array":
+"@siteimprove/alfa-array@workspace:^0.95.0, @siteimprove/alfa-array@workspace:packages/alfa-array":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-array@workspace:packages/alfa-array"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-clone": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-clone": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-bits@workspace:^0.94.1, @siteimprove/alfa-bits@workspace:packages/alfa-bits":
+"@siteimprove/alfa-bits@workspace:^0.95.0, @siteimprove/alfa-bits@workspace:packages/alfa-bits":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-bits@workspace:packages/alfa-bits"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-branched@workspace:^0.94.1, @siteimprove/alfa-branched@workspace:packages/alfa-branched":
+"@siteimprove/alfa-branched@workspace:^0.95.0, @siteimprove/alfa-branched@workspace:packages/alfa-branched":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-branched@workspace:packages/alfa-branched"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-collection": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-list": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-collection": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-list": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-cache@workspace:^, @siteimprove/alfa-cache@workspace:^0.94.1, @siteimprove/alfa-cache@workspace:packages/alfa-cache":
+"@siteimprove/alfa-cache@workspace:^, @siteimprove/alfa-cache@workspace:^0.95.0, @siteimprove/alfa-cache@workspace:packages/alfa-cache":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-cache@workspace:packages/alfa-cache"
   dependencies:
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-callback@workspace:^0.94.1, @siteimprove/alfa-callback@workspace:packages/alfa-callback":
+"@siteimprove/alfa-callback@workspace:^0.95.0, @siteimprove/alfa-callback@workspace:packages/alfa-callback":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-callback@workspace:packages/alfa-callback"
   dependencies:
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-cascade@workspace:^0.94.1, @siteimprove/alfa-cascade@workspace:packages/alfa-cascade":
+"@siteimprove/alfa-cascade@workspace:^0.95.0, @siteimprove/alfa-cascade@workspace:packages/alfa-cascade":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-cascade@workspace:packages/alfa-cascade"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-cache": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-css": "workspace:^0.94.1"
-    "@siteimprove/alfa-css-feature": "workspace:^0.94.1"
-    "@siteimprove/alfa-device": "workspace:^0.94.1"
-    "@siteimprove/alfa-dom": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-selective": "workspace:^0.94.1"
-    "@siteimprove/alfa-selector": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-cache": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-css": "workspace:^0.95.0"
+    "@siteimprove/alfa-css-feature": "workspace:^0.95.0"
+    "@siteimprove/alfa-device": "workspace:^0.95.0"
+    "@siteimprove/alfa-dom": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-selective": "workspace:^0.95.0"
+    "@siteimprove/alfa-selector": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-clone@workspace:^0.94.1, @siteimprove/alfa-clone@workspace:packages/alfa-clone":
+"@siteimprove/alfa-clone@workspace:^0.95.0, @siteimprove/alfa-clone@workspace:packages/alfa-clone":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-clone@workspace:packages/alfa-clone"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-collection@workspace:^0.94.1, @siteimprove/alfa-collection@workspace:packages/alfa-collection":
+"@siteimprove/alfa-collection@workspace:^0.95.0, @siteimprove/alfa-collection@workspace:packages/alfa-collection":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-collection@workspace:packages/alfa-collection"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-foldable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-foldable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-comparable@workspace:^0.94.1, @siteimprove/alfa-comparable@workspace:packages/alfa-comparable":
+"@siteimprove/alfa-comparable@workspace:^0.95.0, @siteimprove/alfa-comparable@workspace:packages/alfa-comparable":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-comparable@workspace:packages/alfa-comparable"
   dependencies:
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
@@ -872,220 +1153,223 @@ __metadata:
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
     "@mdn/browser-compat-data": "npm:^5.0.0"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
     browserslist: "npm:^4.17.0"
     prettier: "npm:^3.0.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-continuation@workspace:^0.94.1, @siteimprove/alfa-continuation@workspace:packages/alfa-continuation":
+"@siteimprove/alfa-continuation@workspace:^0.95.0, @siteimprove/alfa-continuation@workspace:packages/alfa-continuation":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-continuation@workspace:packages/alfa-continuation"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-css-feature@workspace:^0.94.1, @siteimprove/alfa-css-feature@workspace:packages/alfa-css-feature":
+"@siteimprove/alfa-css-feature@workspace:^0.95.0, @siteimprove/alfa-css-feature@workspace:packages/alfa-css-feature":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-css-feature@workspace:packages/alfa-css-feature"
   dependencies:
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-css": "workspace:^0.94.1"
-    "@siteimprove/alfa-device": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-parser": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-slice": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-css": "workspace:^0.95.0"
+    "@siteimprove/alfa-device": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-parser": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-slice": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-css@workspace:^0.94.1, @siteimprove/alfa-css@workspace:packages/alfa-css":
+"@siteimprove/alfa-css@workspace:^0.95.0, @siteimprove/alfa-css@workspace:packages/alfa-css":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-css@workspace:packages/alfa-css"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-math": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-parser": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-record": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-selective": "workspace:^0.94.1"
-    "@siteimprove/alfa-slice": "workspace:^0.94.1"
-    "@siteimprove/alfa-string": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-math": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-parser": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-record": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-selective": "workspace:^0.95.0"
+    "@siteimprove/alfa-slice": "workspace:^0.95.0"
+    "@siteimprove/alfa-string": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-device@workspace:^0.94.1, @siteimprove/alfa-device@workspace:packages/alfa-device":
+"@siteimprove/alfa-device@workspace:^0.95.0, @siteimprove/alfa-device@workspace:packages/alfa-device":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-device@workspace:packages/alfa-device"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-dom@workspace:^0.94.1, @siteimprove/alfa-dom@workspace:packages/alfa-dom":
+"@siteimprove/alfa-dom@workspace:^0.95.0, @siteimprove/alfa-dom@workspace:packages/alfa-dom":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-dom@workspace:packages/alfa-dom"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-cache": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-css": "workspace:^0.94.1"
-    "@siteimprove/alfa-css-feature": "workspace:^0.94.1"
-    "@siteimprove/alfa-device": "workspace:^0.94.1"
-    "@siteimprove/alfa-earl": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-flags": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-lazy": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-rectangle": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-sarif": "workspace:^0.94.1"
-    "@siteimprove/alfa-selective": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-string": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-trampoline": "workspace:^0.94.1"
-    "@siteimprove/alfa-tree": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-cache": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-css": "workspace:^0.95.0"
+    "@siteimprove/alfa-css-feature": "workspace:^0.95.0"
+    "@siteimprove/alfa-device": "workspace:^0.95.0"
+    "@siteimprove/alfa-earl": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-flags": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-lazy": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-parser": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-rectangle": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-sarif": "workspace:^0.95.0"
+    "@siteimprove/alfa-selective": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-slice": "workspace:^0.95.0"
+    "@siteimprove/alfa-string": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-trampoline": "workspace:^0.95.0"
+    "@siteimprove/alfa-tree": "workspace:^0.95.0"
     "@types/jsdom": "npm:^21.1.6"
     jsdom: "npm:^25.0.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-earl@workspace:^0.94.1, @siteimprove/alfa-earl@workspace:packages/alfa-earl":
+"@siteimprove/alfa-earl@workspace:^0.95.0, @siteimprove/alfa-earl@workspace:packages/alfa-earl":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-earl@workspace:packages/alfa-earl"
   dependencies:
-    "@siteimprove/alfa-json-ld": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-json-ld": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-either@workspace:^0.94.1, @siteimprove/alfa-either@workspace:packages/alfa-either":
+"@siteimprove/alfa-either@workspace:^0.95.0, @siteimprove/alfa-either@workspace:packages/alfa-either":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-either@workspace:packages/alfa-either"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-foldable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-foldable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-emitter@workspace:^0.94.1, @siteimprove/alfa-emitter@workspace:packages/alfa-emitter":
+"@siteimprove/alfa-emitter@workspace:^0.95.0, @siteimprove/alfa-emitter@workspace:packages/alfa-emitter":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-emitter@workspace:packages/alfa-emitter"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-continuation": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-continuation": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-encoding@workspace:^0.94.1, @siteimprove/alfa-encoding@workspace:packages/alfa-encoding":
+"@siteimprove/alfa-encoding@workspace:^0.95.0, @siteimprove/alfa-encoding@workspace:packages/alfa-encoding":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-encoding@workspace:packages/alfa-encoding"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-equatable@workspace:^0.94.1, @siteimprove/alfa-equatable@workspace:packages/alfa-equatable":
+"@siteimprove/alfa-equatable@workspace:^0.95.0, @siteimprove/alfa-equatable@workspace:packages/alfa-equatable":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-equatable@workspace:packages/alfa-equatable"
   dependencies:
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-flags@workspace:^0.94.1, @siteimprove/alfa-flags@workspace:packages/alfa-flags":
+"@siteimprove/alfa-flags@workspace:^0.95.0, @siteimprove/alfa-flags@workspace:packages/alfa-flags":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-flags@workspace:packages/alfa-flags"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-fnv@workspace:^0.94.1, @siteimprove/alfa-fnv@workspace:packages/alfa-fnv":
+"@siteimprove/alfa-fnv@workspace:^0.95.0, @siteimprove/alfa-fnv@workspace:packages/alfa-fnv":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-fnv@workspace:packages/alfa-fnv"
   dependencies:
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-foldable@workspace:^0.94.1, @siteimprove/alfa-foldable@workspace:packages/alfa-foldable":
+"@siteimprove/alfa-foldable@workspace:^0.95.0, @siteimprove/alfa-foldable@workspace:packages/alfa-foldable":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-foldable@workspace:packages/alfa-foldable"
   dependencies:
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-functor@workspace:^0.94.1, @siteimprove/alfa-functor@workspace:packages/alfa-functor":
+"@siteimprove/alfa-functor@workspace:^0.95.0, @siteimprove/alfa-functor@workspace:packages/alfa-functor":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-functor@workspace:packages/alfa-functor"
   dependencies:
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-future@workspace:^0.94.1, @siteimprove/alfa-future@workspace:packages/alfa-future":
+"@siteimprove/alfa-future@workspace:^0.95.0, @siteimprove/alfa-future@workspace:packages/alfa-future":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-future@workspace:packages/alfa-future"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-continuation": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thenable": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-continuation": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thenable": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
@@ -1093,189 +1377,189 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-generator@workspace:packages/alfa-generator"
   dependencies:
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-graph@workspace:^0.94.1, @siteimprove/alfa-graph@workspace:packages/alfa-graph":
+"@siteimprove/alfa-graph@workspace:^0.95.0, @siteimprove/alfa-graph@workspace:packages/alfa-graph":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-graph@workspace:packages/alfa-graph"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-set": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-set": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-hash@workspace:^0.94.1, @siteimprove/alfa-hash@workspace:packages/alfa-hash":
+"@siteimprove/alfa-hash@workspace:^0.95.0, @siteimprove/alfa-hash@workspace:packages/alfa-hash":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-hash@workspace:packages/alfa-hash"
   dependencies:
-    "@siteimprove/alfa-encoding": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-encoding": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-http@workspace:^0.94.1, @siteimprove/alfa-http@workspace:packages/alfa-http":
+"@siteimprove/alfa-http@workspace:^0.95.0, @siteimprove/alfa-http@workspace:packages/alfa-http":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-http@workspace:packages/alfa-http"
   dependencies:
-    "@siteimprove/alfa-earl": "workspace:^0.94.1"
-    "@siteimprove/alfa-encoding": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-url": "workspace:^0.94.1"
+    "@siteimprove/alfa-earl": "workspace:^0.95.0"
+    "@siteimprove/alfa-encoding": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-url": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-iana@workspace:^0.94.1, @siteimprove/alfa-iana@workspace:packages/alfa-iana":
+"@siteimprove/alfa-iana@workspace:^0.95.0, @siteimprove/alfa-iana@workspace:packages/alfa-iana":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-iana@workspace:packages/alfa-iana"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-slice": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-slice": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
     axios: "npm:^1.7.4"
     prettier: "npm:^3.0.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-iterable@workspace:^0.94.1, @siteimprove/alfa-iterable@workspace:packages/alfa-iterable":
+"@siteimprove/alfa-iterable@workspace:^0.95.0, @siteimprove/alfa-iterable@workspace:packages/alfa-iterable":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-iterable@workspace:packages/alfa-iterable"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-json-ld@workspace:^0.94.1, @siteimprove/alfa-json-ld@workspace:packages/alfa-json-ld":
+"@siteimprove/alfa-json-ld@workspace:^0.95.0, @siteimprove/alfa-json-ld@workspace:packages/alfa-json-ld":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-json-ld@workspace:packages/alfa-json-ld"
   dependencies:
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-json@workspace:^0.94.1, @siteimprove/alfa-json@workspace:packages/alfa-json":
+"@siteimprove/alfa-json@workspace:^0.95.0, @siteimprove/alfa-json@workspace:packages/alfa-json":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-json@workspace:packages/alfa-json"
   dependencies:
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-lazy@workspace:^0.94.1, @siteimprove/alfa-lazy@workspace:packages/alfa-lazy":
+"@siteimprove/alfa-lazy@workspace:^0.95.0, @siteimprove/alfa-lazy@workspace:packages/alfa-lazy":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-lazy@workspace:packages/alfa-lazy"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
-    "@siteimprove/alfa-trampoline": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
+    "@siteimprove/alfa-trampoline": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-list@workspace:^0.94.1, @siteimprove/alfa-list@workspace:packages/alfa-list":
+"@siteimprove/alfa-list@workspace:^0.95.0, @siteimprove/alfa-list@workspace:packages/alfa-list":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-list@workspace:packages/alfa-list"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-bits": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-collection": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-set": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-bits": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-collection": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-set": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-map@workspace:^0.94.1, @siteimprove/alfa-map@workspace:packages/alfa-map":
+"@siteimprove/alfa-map@workspace:^0.95.0, @siteimprove/alfa-map@workspace:packages/alfa-map":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-map@workspace:packages/alfa-map"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-bits": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-collection": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-fnv": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-bits": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-collection": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-fnv": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-mapper@workspace:^0.94.1, @siteimprove/alfa-mapper@workspace:packages/alfa-mapper":
+"@siteimprove/alfa-mapper@workspace:^0.95.0, @siteimprove/alfa-mapper@workspace:packages/alfa-mapper":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-mapper@workspace:packages/alfa-mapper"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-math@workspace:^0.94.1, @siteimprove/alfa-math@workspace:packages/alfa-math":
+"@siteimprove/alfa-math@workspace:^0.95.0, @siteimprove/alfa-math@workspace:packages/alfa-math":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-math@workspace:packages/alfa-math"
   dependencies:
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-monad@workspace:^0.94.1, @siteimprove/alfa-monad@workspace:packages/alfa-monad":
+"@siteimprove/alfa-monad@workspace:^0.95.0, @siteimprove/alfa-monad@workspace:packages/alfa-monad":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-monad@workspace:packages/alfa-monad"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
@@ -1283,71 +1567,71 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-network@workspace:packages/alfa-network"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-graph": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-set": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-graph": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-set": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-option@workspace:^0.94.1, @siteimprove/alfa-option@workspace:packages/alfa-option":
+"@siteimprove/alfa-option@workspace:^0.95.0, @siteimprove/alfa-option@workspace:packages/alfa-option":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-option@workspace:packages/alfa-option"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-foldable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-foldable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-parser@workspace:^0.94.1, @siteimprove/alfa-parser@workspace:packages/alfa-parser":
+"@siteimprove/alfa-parser@workspace:^0.95.0, @siteimprove/alfa-parser@workspace:packages/alfa-parser":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-parser@workspace:packages/alfa-parser"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-performance@workspace:^0.94.1, @siteimprove/alfa-performance@workspace:packages/alfa-performance":
+"@siteimprove/alfa-performance@workspace:^0.95.0, @siteimprove/alfa-performance@workspace:packages/alfa-performance":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-performance@workspace:packages/alfa-performance"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-emitter": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-emitter": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-predicate@workspace:^0.94.1, @siteimprove/alfa-predicate@workspace:packages/alfa-predicate":
+"@siteimprove/alfa-predicate@workspace:^0.95.0, @siteimprove/alfa-predicate@workspace:packages/alfa-predicate":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-predicate@workspace:packages/alfa-predicate"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
@@ -1355,75 +1639,75 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-promise@workspace:packages/alfa-promise"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-continuation": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-continuation": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-record@workspace:^0.94.1, @siteimprove/alfa-record@workspace:packages/alfa-record":
+"@siteimprove/alfa-record@workspace:^0.95.0, @siteimprove/alfa-record@workspace:packages/alfa-record":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-record@workspace:packages/alfa-record"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-foldable": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-list": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-foldable": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-list": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-rectangle@workspace:^0.94.1, @siteimprove/alfa-rectangle@workspace:packages/alfa-rectangle":
+"@siteimprove/alfa-rectangle@workspace:^0.95.0, @siteimprove/alfa-rectangle@workspace:packages/alfa-rectangle":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-rectangle@workspace:packages/alfa-rectangle"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-fnv": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-fnv": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-reducer@workspace:^0.94.1, @siteimprove/alfa-reducer@workspace:packages/alfa-reducer":
+"@siteimprove/alfa-reducer@workspace:^0.95.0, @siteimprove/alfa-reducer@workspace:packages/alfa-reducer":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-reducer@workspace:packages/alfa-reducer"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-refinement@workspace:^0.94.1, @siteimprove/alfa-refinement@workspace:packages/alfa-refinement":
+"@siteimprove/alfa-refinement@workspace:^0.95.0, @siteimprove/alfa-refinement@workspace:packages/alfa-refinement":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-refinement@workspace:packages/alfa-refinement"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-result@workspace:^0.94.1, @siteimprove/alfa-result@workspace:packages/alfa-result":
+"@siteimprove/alfa-result@workspace:^0.95.0, @siteimprove/alfa-result@workspace:packages/alfa-result":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-result@workspace:packages/alfa-result"
   dependencies:
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-foldable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-foldable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
@@ -1431,263 +1715,269 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-rules@workspace:packages/alfa-rules"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.94.1"
-    "@siteimprove/alfa-affine": "workspace:^0.94.1"
-    "@siteimprove/alfa-aria": "workspace:^0.94.1"
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-cache": "workspace:^0.94.1"
-    "@siteimprove/alfa-cascade": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-css": "workspace:^0.94.1"
-    "@siteimprove/alfa-css-feature": "workspace:^0.94.1"
-    "@siteimprove/alfa-device": "workspace:^0.94.1"
-    "@siteimprove/alfa-dom": "workspace:^0.94.1"
-    "@siteimprove/alfa-earl": "workspace:^0.94.1"
-    "@siteimprove/alfa-either": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-future": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-http": "workspace:^0.94.1"
-    "@siteimprove/alfa-iana": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-list": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-math": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-parser": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-record": "workspace:^0.94.1"
-    "@siteimprove/alfa-rectangle": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-sarif": "workspace:^0.94.1"
-    "@siteimprove/alfa-selective": "workspace:^0.94.1"
-    "@siteimprove/alfa-selector": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-set": "workspace:^0.94.1"
-    "@siteimprove/alfa-slice": "workspace:^0.94.1"
-    "@siteimprove/alfa-string": "workspace:^0.94.1"
-    "@siteimprove/alfa-style": "workspace:^0.94.1"
-    "@siteimprove/alfa-table": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
-    "@siteimprove/alfa-trilean": "workspace:^0.94.1"
-    "@siteimprove/alfa-url": "workspace:^0.94.1"
-    "@siteimprove/alfa-wcag": "workspace:^0.94.1"
-    "@siteimprove/alfa-web": "workspace:^0.94.1"
+    "@siteimprove/alfa-act": "workspace:^0.95.0"
+    "@siteimprove/alfa-affine": "workspace:^0.95.0"
+    "@siteimprove/alfa-aria": "workspace:^0.95.0"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-cache": "workspace:^0.95.0"
+    "@siteimprove/alfa-cascade": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-css": "workspace:^0.95.0"
+    "@siteimprove/alfa-css-feature": "workspace:^0.95.0"
+    "@siteimprove/alfa-device": "workspace:^0.95.0"
+    "@siteimprove/alfa-dom": "workspace:^0.95.0"
+    "@siteimprove/alfa-earl": "workspace:^0.95.0"
+    "@siteimprove/alfa-either": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-future": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-http": "workspace:^0.95.0"
+    "@siteimprove/alfa-iana": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-list": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-math": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-record": "workspace:^0.95.0"
+    "@siteimprove/alfa-rectangle": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-sarif": "workspace:^0.95.0"
+    "@siteimprove/alfa-selector": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-set": "workspace:^0.95.0"
+    "@siteimprove/alfa-string": "workspace:^0.95.0"
+    "@siteimprove/alfa-style": "workspace:^0.95.0"
+    "@siteimprove/alfa-table": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
+    "@siteimprove/alfa-trilean": "workspace:^0.95.0"
+    "@siteimprove/alfa-url": "workspace:^0.95.0"
+    "@siteimprove/alfa-wcag": "workspace:^0.95.0"
+    "@siteimprove/alfa-web": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-sarif@workspace:^0.94.1, @siteimprove/alfa-sarif@workspace:packages/alfa-sarif":
+"@siteimprove/alfa-sarif@workspace:^0.95.0, @siteimprove/alfa-sarif@workspace:packages/alfa-sarif":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-sarif@workspace:packages/alfa-sarif"
   dependencies:
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
     "@types/sarif": "npm:^2.1.4"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-selective@workspace:^0.94.1, @siteimprove/alfa-selective@workspace:packages/alfa-selective":
+"@siteimprove/alfa-selective@workspace:^0.95.0, @siteimprove/alfa-selective@workspace:packages/alfa-selective":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-selective@workspace:packages/alfa-selective"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-either": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-either": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-selector@workspace:^0.94.1, @siteimprove/alfa-selector@workspace:packages/alfa-selector":
+"@siteimprove/alfa-selector@workspace:^0.95.0, @siteimprove/alfa-selector@workspace:packages/alfa-selector":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-selector@workspace:packages/alfa-selector"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-cache": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-css": "workspace:^0.94.1"
-    "@siteimprove/alfa-dom": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-parser": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-slice": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-cache": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-css": "workspace:^0.95.0"
+    "@siteimprove/alfa-dom": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-parser": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-slice": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-sequence@workspace:^0.94.1, @siteimprove/alfa-sequence@workspace:packages/alfa-sequence":
+"@siteimprove/alfa-sequence@workspace:^0.95.0, @siteimprove/alfa-sequence@workspace:packages/alfa-sequence":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-sequence@workspace:packages/alfa-sequence"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-collection": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-lazy": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-set": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-collection": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-lazy": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-set": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-set@workspace:^0.94.1, @siteimprove/alfa-set@workspace:packages/alfa-set":
+"@siteimprove/alfa-set@workspace:^0.95.0, @siteimprove/alfa-set@workspace:packages/alfa-set":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-set@workspace:packages/alfa-set"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-collection": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-collection": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-slice@workspace:^0.94.1, @siteimprove/alfa-slice@workspace:packages/alfa-slice":
+"@siteimprove/alfa-slice@workspace:^0.95.0, @siteimprove/alfa-slice@workspace:packages/alfa-slice":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-slice@workspace:packages/alfa-slice"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-collection": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-collection": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-string@workspace:^0.94.1, @siteimprove/alfa-string@workspace:packages/alfa-string":
+"@siteimprove/alfa-string@workspace:^0.95.0, @siteimprove/alfa-string@workspace:packages/alfa-string":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-string@workspace:packages/alfa-string"
   dependencies:
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-style@workspace:^0.94.1, @siteimprove/alfa-style@workspace:packages/alfa-style":
+"@siteimprove/alfa-style@workspace:^0.95.0, @siteimprove/alfa-style@workspace:packages/alfa-style":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-style@workspace:packages/alfa-style"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-cache": "workspace:^0.94.1"
-    "@siteimprove/alfa-cascade": "workspace:^0.94.1"
-    "@siteimprove/alfa-css": "workspace:^0.94.1"
-    "@siteimprove/alfa-device": "workspace:^0.94.1"
-    "@siteimprove/alfa-dom": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-math": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-parser": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-rectangle": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-selective": "workspace:^0.94.1"
-    "@siteimprove/alfa-selector": "workspace:^0.94.1"
-    "@siteimprove/alfa-set": "workspace:^0.94.1"
-    "@siteimprove/alfa-slice": "workspace:^0.94.1"
-    "@siteimprove/alfa-string": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-trilean": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-cache": "workspace:^0.95.0"
+    "@siteimprove/alfa-cascade": "workspace:^0.95.0"
+    "@siteimprove/alfa-css": "workspace:^0.95.0"
+    "@siteimprove/alfa-device": "workspace:^0.95.0"
+    "@siteimprove/alfa-dom": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-math": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-parser": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-rectangle": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-selective": "workspace:^0.95.0"
+    "@siteimprove/alfa-selector": "workspace:^0.95.0"
+    "@siteimprove/alfa-set": "workspace:^0.95.0"
+    "@siteimprove/alfa-slice": "workspace:^0.95.0"
+    "@siteimprove/alfa-string": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-trilean": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-table@workspace:^0.94.1, @siteimprove/alfa-table@workspace:packages/alfa-table":
+"@siteimprove/alfa-table@workspace:^0.95.0, @siteimprove/alfa-table@workspace:packages/alfa-table":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-table@workspace:packages/alfa-table"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-cache": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-dom": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-math": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-cache": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-dom": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-math": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-test@workspace:^0.94.1, @siteimprove/alfa-test@workspace:packages/alfa-test":
+"@siteimprove/alfa-test-deprecated@workspace:packages/alfa-test-deprecated":
   version: 0.0.0-use.local
-  resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
+  resolution: "@siteimprove/alfa-test-deprecated@workspace:packages/alfa-test-deprecated"
   dependencies:
     "@types/node": "npm:^22.0.0"
     chalk: "npm:^5.3.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-thenable@workspace:^0.94.1, @siteimprove/alfa-thenable@workspace:packages/alfa-thenable":
+"@siteimprove/alfa-test@workspace:^0.95.0, @siteimprove/alfa-test@workspace:packages/alfa-test":
   version: 0.0.0-use.local
-  resolution: "@siteimprove/alfa-thenable@workspace:packages/alfa-thenable"
+  resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-continuation": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@types/node": "npm:^22.0.0"
+    vitest: "npm:^2.1.6"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-thunk@workspace:^0.94.1, @siteimprove/alfa-thunk@workspace:packages/alfa-thunk":
+"@siteimprove/alfa-thenable@workspace:^0.95.0, @siteimprove/alfa-thenable@workspace:packages/alfa-thenable":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-thenable@workspace:packages/alfa-thenable"
+  dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-continuation": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+  languageName: unknown
+  linkType: soft
+
+"@siteimprove/alfa-thunk@workspace:^0.95.0, @siteimprove/alfa-thunk@workspace:packages/alfa-thunk":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-thunk@workspace:packages/alfa-thunk"
   dependencies:
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
@@ -1695,11 +1985,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-time@workspace:packages/alfa-time"
   dependencies:
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-toolchain@workspace:^0.94.1, @siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain":
+"@siteimprove/alfa-toolchain@workspace:^0.95.0, @siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain"
   dependencies:
@@ -1710,12 +2000,12 @@ __metadata:
     "@changesets/read": "npm:^0.6.0"
     "@changesets/types": "npm:^6.0.0"
     "@manypkg/get-packages": "npm:=1.1.3"
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-map": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-set": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-map": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-set": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
     "@svitejs/changesets-changelog-github-compact": "npm:^1.1.0"
     "@ts-graphviz/adapter": "npm:^2.0.3"
     "@types/madge": "npm:^5.0.3"
@@ -1729,112 +2019,112 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-trampoline@workspace:^0.94.1, @siteimprove/alfa-trampoline@workspace:packages/alfa-trampoline":
+"@siteimprove/alfa-trampoline@workspace:^0.95.0, @siteimprove/alfa-trampoline@workspace:packages/alfa-trampoline":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-trampoline@workspace:packages/alfa-trampoline"
   dependencies:
-    "@siteimprove/alfa-applicative": "workspace:^0.94.1"
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-foldable": "workspace:^0.94.1"
-    "@siteimprove/alfa-functor": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-monad": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
-    "@siteimprove/alfa-thunk": "workspace:^0.94.1"
+    "@siteimprove/alfa-applicative": "workspace:^0.95.0"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-foldable": "workspace:^0.95.0"
+    "@siteimprove/alfa-functor": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-monad": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
+    "@siteimprove/alfa-thunk": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-tree@workspace:^0.94.1, @siteimprove/alfa-tree@workspace:packages/alfa-tree":
+"@siteimprove/alfa-tree@workspace:^0.95.0, @siteimprove/alfa-tree@workspace:packages/alfa-tree":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-tree@workspace:packages/alfa-tree"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-flags": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-lazy": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-flags": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-lazy": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-trilean@workspace:^0.94.1, @siteimprove/alfa-trilean@workspace:packages/alfa-trilean":
+"@siteimprove/alfa-trilean@workspace:^0.95.0, @siteimprove/alfa-trilean@workspace:packages/alfa-trilean":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-trilean@workspace:packages/alfa-trilean"
   dependencies:
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-tuple@workspace:^0.94.1, @siteimprove/alfa-tuple@workspace:packages/alfa-tuple":
+"@siteimprove/alfa-tuple@workspace:^0.95.0, @siteimprove/alfa-tuple@workspace:packages/alfa-tuple":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-tuple@workspace:packages/alfa-tuple"
   dependencies:
-    "@siteimprove/alfa-array": "workspace:^0.94.1"
-    "@siteimprove/alfa-callback": "workspace:^0.94.1"
-    "@siteimprove/alfa-comparable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-mapper": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-reducer": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-array": "workspace:^0.95.0"
+    "@siteimprove/alfa-callback": "workspace:^0.95.0"
+    "@siteimprove/alfa-comparable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-reducer": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-url@workspace:^0.94.1, @siteimprove/alfa-url@workspace:packages/alfa-url":
+"@siteimprove/alfa-url@workspace:^0.95.0, @siteimprove/alfa-url@workspace:packages/alfa-url":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-url@workspace:packages/alfa-url"
   dependencies:
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-hash": "workspace:^0.94.1"
-    "@siteimprove/alfa-iterable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-sequence": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-hash": "workspace:^0.95.0"
+    "@siteimprove/alfa-iterable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-sequence": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-wcag@workspace:^0.94.1, @siteimprove/alfa-wcag@workspace:packages/alfa-wcag":
+"@siteimprove/alfa-wcag@workspace:^0.95.0, @siteimprove/alfa-wcag@workspace:packages/alfa-wcag":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-wcag@workspace:packages/alfa-wcag"
   dependencies:
-    "@siteimprove/alfa-act": "workspace:^0.94.1"
-    "@siteimprove/alfa-branched": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
+    "@siteimprove/alfa-act": "workspace:^0.95.0"
+    "@siteimprove/alfa-branched": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
     prettier: "npm:^3.0.0"
     puppeteer: "npm:^23.0.0"
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-web@workspace:^0.94.1, @siteimprove/alfa-web@workspace:packages/alfa-web":
+"@siteimprove/alfa-web@workspace:^0.95.0, @siteimprove/alfa-web@workspace:packages/alfa-web":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-web@workspace:packages/alfa-web"
   dependencies:
     "@siteimprove/alfa-cache": "workspace:^"
-    "@siteimprove/alfa-device": "workspace:^0.94.1"
-    "@siteimprove/alfa-dom": "workspace:^0.94.1"
-    "@siteimprove/alfa-earl": "workspace:^0.94.1"
-    "@siteimprove/alfa-encoding": "workspace:^0.94.1"
-    "@siteimprove/alfa-graph": "workspace:^0.94.1"
-    "@siteimprove/alfa-http": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-sarif": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-device": "workspace:^0.95.0"
+    "@siteimprove/alfa-dom": "workspace:^0.95.0"
+    "@siteimprove/alfa-earl": "workspace:^0.95.0"
+    "@siteimprove/alfa-encoding": "workspace:^0.95.0"
+    "@siteimprove/alfa-graph": "workspace:^0.95.0"
+    "@siteimprove/alfa-http": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-sarif": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
@@ -1842,16 +2132,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-xpath@workspace:packages/alfa-xpath"
   dependencies:
-    "@siteimprove/alfa-dom": "workspace:^0.94.1"
-    "@siteimprove/alfa-equatable": "workspace:^0.94.1"
-    "@siteimprove/alfa-json": "workspace:^0.94.1"
-    "@siteimprove/alfa-option": "workspace:^0.94.1"
-    "@siteimprove/alfa-parser": "workspace:^0.94.1"
-    "@siteimprove/alfa-predicate": "workspace:^0.94.1"
-    "@siteimprove/alfa-refinement": "workspace:^0.94.1"
-    "@siteimprove/alfa-result": "workspace:^0.94.1"
-    "@siteimprove/alfa-slice": "workspace:^0.94.1"
-    "@siteimprove/alfa-test": "workspace:^0.94.1"
+    "@siteimprove/alfa-dom": "workspace:^0.95.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.95.0"
+    "@siteimprove/alfa-json": "workspace:^0.95.0"
+    "@siteimprove/alfa-option": "workspace:^0.95.0"
+    "@siteimprove/alfa-parser": "workspace:^0.95.0"
+    "@siteimprove/alfa-predicate": "workspace:^0.95.0"
+    "@siteimprove/alfa-refinement": "workspace:^0.95.0"
+    "@siteimprove/alfa-result": "workspace:^0.95.0"
+    "@siteimprove/alfa-slice": "workspace:^0.95.0"
+    "@siteimprove/alfa-test": "workspace:^0.95.0"
   languageName: unknown
   linkType: soft
 
@@ -1862,16 +2152,14 @@ __metadata:
     "@changesets/cli": "npm:^2.26.2"
     "@microsoft/api-documenter": "npm:^7.19.9"
     "@microsoft/api-extractor": "npm:^7.29.5"
-    "@siteimprove/alfa-toolchain": "workspace:^0.94.1"
-    "@types/async": "npm:^3.2.20"
+    "@siteimprove/alfa-toolchain": "workspace:^0.95.0"
     "@types/node": "npm:^22.0.0"
-    async: "npm:^3.2.1"
-    execa: "npm:^9.0.0"
     knip: "npm:^5.23.1"
     minimist: "npm:^1.2.6"
     package-dependency-graph: "npm:^1.14.4"
     prettier: "npm:^3.0.0"
     typescript: "npm:^5.5.2"
+    vitest: "npm:^2.1.5"
   languageName: unknown
   linkType: soft
 
@@ -1982,10 +2270,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/async@npm:^3.2.20":
-  version: 3.2.24
-  resolution: "@types/async@npm:3.2.24"
-  checksum: 10c0/4df8e108932fe9907fcb09aa192e57d4b97909803e92dc11ba5765347ca6bfa992ea4392fe6f78f3aef495580a1e9b342440878e1d639d5fc2ab1c44f1ad7862
+"@types/estree@npm:1.0.6, @types/estree@npm:^1.0.0":
+  version: 1.0.6
+  resolution: "@types/estree@npm:1.0.6"
+  checksum: 10c0/cdfd751f6f9065442cd40957c07fd80361c962869aa853c1c2fd03e101af8b9389d8ff4955a43a6fcfa223dd387a089937f95be0f3eec21ca527039fd2d9859a
   languageName: node
   linkType: hard
 
@@ -2102,6 +2390,87 @@ __metadata:
     "@typescript-eslint/types": "npm:7.18.0"
     eslint-visitor-keys: "npm:^3.4.3"
   checksum: 10c0/538b645f8ff1d9debf264865c69a317074eaff0255e63d7407046176b0f6a6beba34a6c51d511f12444bae12a98c69891eb6f403c9f54c6c2e2849d1c1cb73c0
+  languageName: node
+  linkType: hard
+
+"@vitest/expect@npm:2.1.6":
+  version: 2.1.6
+  resolution: "@vitest/expect@npm:2.1.6"
+  dependencies:
+    "@vitest/spy": "npm:2.1.6"
+    "@vitest/utils": "npm:2.1.6"
+    chai: "npm:^5.1.2"
+    tinyrainbow: "npm:^1.2.0"
+  checksum: 10c0/86327692f03b2ec6895486b118f25e1a141749c31ba671d253da4e33cf81db81f40755198ac9b46616155a8b74765d0ab15b8080041dbe139c83a9a0690004a2
+  languageName: node
+  linkType: hard
+
+"@vitest/mocker@npm:2.1.6":
+  version: 2.1.6
+  resolution: "@vitest/mocker@npm:2.1.6"
+  dependencies:
+    "@vitest/spy": "npm:2.1.6"
+    estree-walker: "npm:^3.0.3"
+    magic-string: "npm:^0.30.12"
+  peerDependencies:
+    msw: ^2.4.9
+    vite: ^5.0.0 || ^6.0.0
+  peerDependenciesMeta:
+    msw:
+      optional: true
+    vite:
+      optional: true
+  checksum: 10c0/f8f4482e196a72cc9f202edb07da6f8d612f0daef272525a4c2447a5ffa435cc1cfe758cb79af0e296a60faa973ee0e2767cbb8bb6769eff2b5b9c6941ceda7c
+  languageName: node
+  linkType: hard
+
+"@vitest/pretty-format@npm:2.1.6, @vitest/pretty-format@npm:^2.1.6":
+  version: 2.1.6
+  resolution: "@vitest/pretty-format@npm:2.1.6"
+  dependencies:
+    tinyrainbow: "npm:^1.2.0"
+  checksum: 10c0/5c82496e5816c0c388bbe18a88ed01b39f5492aaa8e0df90868a65a50ee135105da367e58b4a0bed0dc67201c0518c451a32a5d9b81f56665b76b1c75c550686
+  languageName: node
+  linkType: hard
+
+"@vitest/runner@npm:2.1.6":
+  version: 2.1.6
+  resolution: "@vitest/runner@npm:2.1.6"
+  dependencies:
+    "@vitest/utils": "npm:2.1.6"
+    pathe: "npm:^1.1.2"
+  checksum: 10c0/3105aaa875ac58e237626ae3f9734cf003c2e40886a96ba20e78f1c1f721c9013d4f720d4a2fa4cd3a415ccd529bb4c7ff73021871c8ecda423f7e1fb7695cd4
+  languageName: node
+  linkType: hard
+
+"@vitest/snapshot@npm:2.1.6":
+  version: 2.1.6
+  resolution: "@vitest/snapshot@npm:2.1.6"
+  dependencies:
+    "@vitest/pretty-format": "npm:2.1.6"
+    magic-string: "npm:^0.30.12"
+    pathe: "npm:^1.1.2"
+  checksum: 10c0/91708ee9fdf9ccaa637d9fa58141342831aaf2119641f050a45f80cca37f0a4c1f7d65363e609a6353594418d5ecfebacd090c64273cd63de6915d186c948632
+  languageName: node
+  linkType: hard
+
+"@vitest/spy@npm:2.1.6":
+  version: 2.1.6
+  resolution: "@vitest/spy@npm:2.1.6"
+  dependencies:
+    tinyspy: "npm:^3.0.2"
+  checksum: 10c0/4d3e965f9096968125dd4f53a66a8afd7a105852a41bd36865288bef5b6a79f3ec6f2056cc1c7be5a0afb2cd86b3b83e354451f452bf049ddd4516005a748f6f
+  languageName: node
+  linkType: hard
+
+"@vitest/utils@npm:2.1.6":
+  version: 2.1.6
+  resolution: "@vitest/utils@npm:2.1.6"
+  dependencies:
+    "@vitest/pretty-format": "npm:2.1.6"
+    loupe: "npm:^3.1.2"
+    tinyrainbow: "npm:^1.2.0"
+  checksum: 10c0/1ec077b9707ec627075348f1a98687c7bb2fcbf9edf6e73dea6842c328d0d51a33663d22679e2a90a75f45afca9246f8fa3ea452447f474ae9d5f4eca4023b91
   languageName: node
   linkType: hard
 
@@ -2398,6 +2767,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"assertion-error@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "assertion-error@npm:2.0.1"
+  checksum: 10c0/bbbcb117ac6480138f8c93cf7f535614282dea9dc828f540cdece85e3c665e8f78958b96afac52f29ff883c72638e6a87d469ecc9fe5bc902df03ed24a55dba8
+  languageName: node
+  linkType: hard
+
 "ast-module-types@npm:^6.0.0":
   version: 6.0.0
   resolution: "ast-module-types@npm:6.0.0"
@@ -2411,13 +2787,6 @@ __metadata:
   dependencies:
     tslib: "npm:^2.0.1"
   checksum: 10c0/3a1a409764faa1471601a0ad01b3aa699292991aa9c8a30c7717002cabdf5d98008e7b53ae61f6e058f757fc6ba965e147967a93c13e62692c907d79cfb245f8
-  languageName: node
-  linkType: hard
-
-"async@npm:^3.2.1":
-  version: 3.2.5
-  resolution: "async@npm:3.2.5"
-  checksum: 10c0/1408287b26c6db67d45cb346e34892cee555b8b59e6c68e6f8c3e495cad5ca13b4f218180e871f3c2ca30df4ab52693b66f2f6ff43644760cab0b2198bda79c1
   languageName: node
   linkType: hard
 
@@ -2614,6 +2983,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cac@npm:^6.7.14":
+  version: 6.7.14
+  resolution: "cac@npm:6.7.14"
+  checksum: 10c0/4ee06aaa7bab8981f0d54e5f5f9d4adcd64058e9697563ce336d8a3878ed018ee18ebe5359b2430eceae87e0758e62ea2019c3f52ae6e211b1bd2e133856cd10
+  languageName: node
+  linkType: hard
+
 "cacache@npm:^15.0.5":
   version: 15.0.6
   resolution: "cacache@npm:15.0.6"
@@ -2693,6 +3069,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chai@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "chai@npm:5.1.2"
+  dependencies:
+    assertion-error: "npm:^2.0.1"
+    check-error: "npm:^2.1.1"
+    deep-eql: "npm:^5.0.1"
+    loupe: "npm:^3.1.0"
+    pathval: "npm:^2.0.0"
+  checksum: 10c0/6c04ff8495b6e535df9c1b062b6b094828454e9a3c9493393e55b2f4dbff7aa2a29a4645133cad160fb00a16196c4dc03dc9bb37e1f4ba9df3b5f50d7533a736
+  languageName: node
+  linkType: hard
+
 "chalk@npm:^2.0.0, chalk@npm:^2.1.0":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
@@ -2725,6 +3114,13 @@ __metadata:
   version: 0.7.0
   resolution: "chardet@npm:0.7.0"
   checksum: 10c0/96e4731b9ec8050cbb56ab684e8c48d6c33f7826b755802d14e3ebfdc51c57afeece3ea39bc6b09acc359e4363525388b915e16640c1378053820f5e70d0f27d
+  languageName: node
+  linkType: hard
+
+"check-error@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "check-error@npm:2.1.1"
+  checksum: 10c0/979f13eccab306cf1785fa10941a590b4e7ea9916ea2a4f8c87f0316fc3eab07eabefb6e587424ef0f88cbcd3805791f172ea739863ca3d7ce2afc54641c7f0e
   languageName: node
   linkType: hard
 
@@ -2971,17 +3367,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.3":
-  version: 7.0.3
-  resolution: "cross-spawn@npm:7.0.3"
-  dependencies:
-    path-key: "npm:^3.1.0"
-    shebang-command: "npm:^2.0.0"
-    which: "npm:^2.0.1"
-  checksum: 10c0/5738c312387081c98d69c98e105b6327b069197f864a60593245d64c8089c8a0a744e16349281210d56835bb9274130d825a78b2ad6853ca13cfbeffc0c31750
-  languageName: node
-  linkType: hard
-
 "cssstyle@npm:^4.0.1":
   version: 4.0.1
   resolution: "cssstyle@npm:4.0.1"
@@ -3088,15 +3473,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.4, debug@npm:^4.3.6":
-  version: 4.3.6
-  resolution: "debug@npm:4.3.6"
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.4, debug@npm:^4.3.6, debug@npm:^4.3.7":
+  version: 4.3.7
+  resolution: "debug@npm:4.3.7"
   dependencies:
-    ms: "npm:2.1.2"
+    ms: "npm:^2.1.3"
   peerDependenciesMeta:
     supports-color:
       optional: true
-  checksum: 10c0/3293416bff072389c101697d4611c402a6bacd1900ac20c0492f61a9cdd6b3b29750fc7f5e299f8058469ef60ff8fb79b86395a30374fbd2490113c1c7112285
+  checksum: 10c0/1471db19c3b06d485a622d62f65947a19a23fbd0dd73f7fd3eafb697eec5360cde447fb075919987899b1a2096e85d35d4eb5a4de09a57600ac9cf7e6c8e768b
   languageName: node
   linkType: hard
 
@@ -3130,6 +3515,13 @@ __metadata:
   dependencies:
     mimic-response: "npm:^2.0.0"
   checksum: 10c0/5e4821be332e80e3639acee2441c41d245fc07ac3ee85a6f28893c10c079d66d9bf09e8d84bffeae5656a4625e09e9b93fb4a5705adbe6b07202eea64fae1c8d
+  languageName: node
+  linkType: hard
+
+"deep-eql@npm:^5.0.1":
+  version: 5.0.2
+  resolution: "deep-eql@npm:5.0.2"
+  checksum: 10c0/7102cf3b7bb719c6b9c0db2e19bf0aa9318d141581befe8c7ce8ccd39af9eaa4346e5e05adef7f9bd7015da0f13a3a25dcfe306ef79dc8668aedbecb658dd247
   languageName: node
   linkType: hard
 
@@ -3488,6 +3880,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es-module-lexer@npm:^1.5.4":
+  version: 1.5.4
+  resolution: "es-module-lexer@npm:1.5.4"
+  checksum: 10c0/300a469488c2f22081df1e4c8398c78db92358496e639b0df7f89ac6455462aaf5d8893939087c1a1cbcbf20eed4610c70e0bcb8f3e4b0d80a5d2611c539408c
+  languageName: node
+  linkType: hard
+
 "es-set-tostringtag@npm:^2.0.1":
   version: 2.0.1
   resolution: "es-set-tostringtag@npm:2.0.1"
@@ -3516,6 +3915,89 @@ __metadata:
     is-date-object: "npm:^1.0.1"
     is-symbol: "npm:^1.0.2"
   checksum: 10c0/0886572b8dc075cb10e50c0af62a03d03a68e1e69c388bd4f10c0649ee41b1fbb24840a1b7e590b393011b5cdbe0144b776da316762653685432df37d6de60f1
+  languageName: node
+  linkType: hard
+
+"esbuild@npm:^0.24.0":
+  version: 0.24.0
+  resolution: "esbuild@npm:0.24.0"
+  dependencies:
+    "@esbuild/aix-ppc64": "npm:0.24.0"
+    "@esbuild/android-arm": "npm:0.24.0"
+    "@esbuild/android-arm64": "npm:0.24.0"
+    "@esbuild/android-x64": "npm:0.24.0"
+    "@esbuild/darwin-arm64": "npm:0.24.0"
+    "@esbuild/darwin-x64": "npm:0.24.0"
+    "@esbuild/freebsd-arm64": "npm:0.24.0"
+    "@esbuild/freebsd-x64": "npm:0.24.0"
+    "@esbuild/linux-arm": "npm:0.24.0"
+    "@esbuild/linux-arm64": "npm:0.24.0"
+    "@esbuild/linux-ia32": "npm:0.24.0"
+    "@esbuild/linux-loong64": "npm:0.24.0"
+    "@esbuild/linux-mips64el": "npm:0.24.0"
+    "@esbuild/linux-ppc64": "npm:0.24.0"
+    "@esbuild/linux-riscv64": "npm:0.24.0"
+    "@esbuild/linux-s390x": "npm:0.24.0"
+    "@esbuild/linux-x64": "npm:0.24.0"
+    "@esbuild/netbsd-x64": "npm:0.24.0"
+    "@esbuild/openbsd-arm64": "npm:0.24.0"
+    "@esbuild/openbsd-x64": "npm:0.24.0"
+    "@esbuild/sunos-x64": "npm:0.24.0"
+    "@esbuild/win32-arm64": "npm:0.24.0"
+    "@esbuild/win32-ia32": "npm:0.24.0"
+    "@esbuild/win32-x64": "npm:0.24.0"
+  dependenciesMeta:
+    "@esbuild/aix-ppc64":
+      optional: true
+    "@esbuild/android-arm":
+      optional: true
+    "@esbuild/android-arm64":
+      optional: true
+    "@esbuild/android-x64":
+      optional: true
+    "@esbuild/darwin-arm64":
+      optional: true
+    "@esbuild/darwin-x64":
+      optional: true
+    "@esbuild/freebsd-arm64":
+      optional: true
+    "@esbuild/freebsd-x64":
+      optional: true
+    "@esbuild/linux-arm":
+      optional: true
+    "@esbuild/linux-arm64":
+      optional: true
+    "@esbuild/linux-ia32":
+      optional: true
+    "@esbuild/linux-loong64":
+      optional: true
+    "@esbuild/linux-mips64el":
+      optional: true
+    "@esbuild/linux-ppc64":
+      optional: true
+    "@esbuild/linux-riscv64":
+      optional: true
+    "@esbuild/linux-s390x":
+      optional: true
+    "@esbuild/linux-x64":
+      optional: true
+    "@esbuild/netbsd-x64":
+      optional: true
+    "@esbuild/openbsd-arm64":
+      optional: true
+    "@esbuild/openbsd-x64":
+      optional: true
+    "@esbuild/sunos-x64":
+      optional: true
+    "@esbuild/win32-arm64":
+      optional: true
+    "@esbuild/win32-ia32":
+      optional: true
+    "@esbuild/win32-x64":
+      optional: true
+  bin:
+    esbuild: bin/esbuild
+  checksum: 10c0/9f1aadd8d64f3bff422ae78387e66e51a5e09de6935a6f987b6e4e189ed00fdc2d1bc03d2e33633b094008529c8b6e06c7ad1a9782fb09fec223bf95998c0683
   languageName: node
   linkType: hard
 
@@ -3582,6 +4064,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"estree-walker@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "estree-walker@npm:3.0.3"
+  dependencies:
+    "@types/estree": "npm:^1.0.0"
+  checksum: 10c0/c12e3c2b2642d2bcae7d5aa495c60fa2f299160946535763969a1c83fc74518ffa9c2cd3a8b69ac56aea547df6a8aac25f729a342992ef0bbac5f1c73e78995d
+  languageName: node
+  linkType: hard
+
 "esutils@npm:^2.0.2":
   version: 2.0.3
   resolution: "esutils@npm:2.0.3"
@@ -3589,23 +4080,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^9.0.0":
-  version: 9.1.0
-  resolution: "execa@npm:9.1.0"
-  dependencies:
-    "@sindresorhus/merge-streams": "npm:^4.0.0"
-    cross-spawn: "npm:^7.0.3"
-    figures: "npm:^6.1.0"
-    get-stream: "npm:^9.0.0"
-    human-signals: "npm:^7.0.0"
-    is-plain-obj: "npm:^4.1.0"
-    is-stream: "npm:^4.0.1"
-    npm-run-path: "npm:^5.2.0"
-    pretty-ms: "npm:^9.0.0"
-    signal-exit: "npm:^4.1.0"
-    strip-final-newline: "npm:^4.0.0"
-    yoctocolors: "npm:^2.0.0"
-  checksum: 10c0/9a4810b93d098eb0bed48793b61c3aa3e5804867c2c5808cd2a597a6e71738151a74dc792909085ce1d38e89f4b0e078d93ffd165aaca2d9a6728f3616f8e5c0
+"expect-type@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "expect-type@npm:1.1.0"
+  checksum: 10c0/5af0febbe8fe18da05a6d51e3677adafd75213512285408156b368ca471252565d5ca6e59e4bddab25121f3cfcbbebc6a5489f8cc9db131cc29e69dcdcc7ae15
   languageName: node
   linkType: hard
 
@@ -3693,15 +4171,6 @@ __metadata:
   dependencies:
     pend: "npm:~1.2.0"
   checksum: 10c0/304dd70270298e3ffe3bcc05e6f7ade2511acc278bc52d025f8918b48b6aa3b77f10361bddfadfe2a28163f7af7adbdce96f4d22c31b2f648ba2901f0c5fc20e
-  languageName: node
-  linkType: hard
-
-"figures@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "figures@npm:6.1.0"
-  dependencies:
-    is-unicode-supported: "npm:^2.0.0"
-  checksum: 10c0/9159df4264d62ef447a3931537de92f5012210cf5135c35c010df50a2169377581378149abfe1eb238bd6acbba1c0d547b1f18e0af6eee49e30363cedaffcfe4
   languageName: node
   linkType: hard
 
@@ -3840,6 +4309,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fsevents@npm:~2.3.2, fsevents@npm:~2.3.3":
+  version: 2.3.3
+  resolution: "fsevents@npm:2.3.3"
+  dependencies:
+    node-gyp: "npm:latest"
+  checksum: 10c0/a1f0c44595123ed717febbc478aa952e47adfc28e2092be66b8ab1635147254ca6cfe1df792a8997f22716d4cbafc73309899ff7bfac2ac3ad8cf2e4ecc3ec60
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
+
+"fsevents@patch:fsevents@npm%3A~2.3.2#optional!builtin<compat/fsevents>, fsevents@patch:fsevents@npm%3A~2.3.3#optional!builtin<compat/fsevents>":
+  version: 2.3.3
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.3#optional!builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"
+  dependencies:
+    node-gyp: "npm:latest"
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
+
 "function-bind@npm:^1.1.1, function-bind@npm:^1.1.2":
   version: 1.1.2
   resolution: "function-bind@npm:1.1.2"
@@ -3940,16 +4428,6 @@ __metadata:
   dependencies:
     pump: "npm:^3.0.0"
   checksum: 10c0/43797ffd815fbb26685bf188c8cfebecb8af87b3925091dd7b9a9c915993293d78e3c9e1bce125928ff92f2d0796f3889b92b5ec6d58d1041b574682132e0a80
-  languageName: node
-  linkType: hard
-
-"get-stream@npm:^9.0.0":
-  version: 9.0.1
-  resolution: "get-stream@npm:9.0.1"
-  dependencies:
-    "@sec-ant/readable-stream": "npm:^0.4.1"
-    is-stream: "npm:^4.0.1"
-  checksum: 10c0/d70e73857f2eea1826ac570c3a912757dcfbe8a718a033fa0c23e12ac8e7d633195b01710e0559af574cbb5af101009b42df7b6f6b29ceec8dbdf7291931b948
   languageName: node
   linkType: hard
 
@@ -4253,13 +4731,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"human-signals@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "human-signals@npm:7.0.0"
-  checksum: 10c0/ce0c6d62d2e9bfe529d48f7c7fdf4b8c70fce950eef7850719b4e3f5bc71795ae7d61a3699ce13262bed7847705822601cc81f1921ea6a2906852e16228a94ab
-  languageName: node
-  linkType: hard
-
 "humanize-ms@npm:^1.2.1":
   version: 1.2.1
   resolution: "humanize-ms@npm:1.2.1"
@@ -4554,13 +5025,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-plain-obj@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "is-plain-obj@npm:4.1.0"
-  checksum: 10c0/32130d651d71d9564dc88ba7e6fda0e91a1010a3694648e9f4f47bb6080438140696d3e3e15c741411d712e47ac9edc1a8a9de1fe76f3487b0d90be06ac9975e
-  languageName: node
-  linkType: hard
-
 "is-potential-custom-element-name@npm:^1.0.1":
   version: 1.0.1
   resolution: "is-potential-custom-element-name@npm:1.0.1"
@@ -4591,13 +5055,6 @@ __metadata:
   dependencies:
     call-bind: "npm:^1.0.2"
   checksum: 10c0/cfeee6f171f1b13e6cbc6f3b6cc44e192b93df39f3fcb31aa66ffb1d2df3b91e05664311659f9701baba62f5e98c83b0673c628e7adc30f55071c4874fcdccec
-  languageName: node
-  linkType: hard
-
-"is-stream@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "is-stream@npm:4.0.1"
-  checksum: 10c0/2706c7f19b851327ba374687bc4a3940805e14ca496dc672b9629e744d143b1ad9c6f1b162dece81c7bfbc0f83b32b61ccc19ad2e05aad2dd7af347408f60c7f
   languageName: node
   linkType: hard
 
@@ -4645,13 +5102,6 @@ __metadata:
   version: 0.1.0
   resolution: "is-unicode-supported@npm:0.1.0"
   checksum: 10c0/00cbe3455c3756be68d2542c416cab888aebd5012781d6819749fefb15162ff23e38501fe681b3d751c73e8ff561ac09a5293eba6f58fdf0178462ce6dcb3453
-  languageName: node
-  linkType: hard
-
-"is-unicode-supported@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "is-unicode-supported@npm:2.0.0"
-  checksum: 10c0/3013dfb8265fe9f9a0d1e9433fc4e766595631a8d85d60876c457b4bedc066768dab1477c553d02e2f626d88a4e019162706e04263c94d74994ef636a33b5f94
   languageName: node
   linkType: hard
 
@@ -4961,6 +5411,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"loupe@npm:^3.1.0, loupe@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "loupe@npm:3.1.2"
+  checksum: 10c0/b13c02e3ddd6a9d5f8bf84133b3242de556512d824dddeea71cce2dbd6579c8f4d672381c4e742d45cf4423d0701765b4a6e5fbc24701def16bc2b40f8daa96a
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^4.0.1":
   version: 4.1.5
   resolution: "lru-cache@npm:4.1.5"
@@ -5023,12 +5480,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.10":
-  version: 0.30.11
-  resolution: "magic-string@npm:0.30.11"
+"magic-string@npm:^0.30.10, magic-string@npm:^0.30.12":
+  version: 0.30.14
+  resolution: "magic-string@npm:0.30.14"
   dependencies:
     "@jridgewell/sourcemap-codec": "npm:^1.5.0"
-  checksum: 10c0/b9eb370773d0bd90ca11a848753409d8e5309b1ad56d2a1aa49d6649da710a6d2fe7237ad1a643c5a5d3800de2b9946ed9690acdfc00e6cc1aeafff3ab1752c4
+  checksum: 10c0/c52c2a6e699dfa8a840e13154da35464a40cd8b07049b695a8b282883b0426c0811af1e36ac26860b4267289340b42772c156a5608e87be97b63d510e617e87a
   languageName: node
   linkType: hard
 
@@ -5336,14 +5793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ms@npm:2.1.2":
-  version: 2.1.2
-  resolution: "ms@npm:2.1.2"
-  checksum: 10c0/a437714e2f90dbf881b5191d35a6db792efbca5badf112f87b9e1c712aace4b4b9b742dd6537f3edf90fd6f684de897cec230abde57e87883766712ddda297cc
-  languageName: node
-  linkType: hard
-
-"ms@npm:^2.0.0":
+"ms@npm:^2.0.0, ms@npm:^2.1.3":
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: 10c0/d924b57e7312b3b63ad21fc5b3dc0af5e78d61a1fc7cfb5457edaf26326bf62be5307cc87ffb6862ef1c2b33b0233cdb5d4f01c4c958cc0d660948b65a287a48
@@ -5445,15 +5895,6 @@ __metadata:
     semver: "npm:2 || 3 || 4 || 5"
     validate-npm-package-license: "npm:^3.0.1"
   checksum: 10c0/357cb1646deb42f8eb4c7d42c4edf0eec312f3628c2ef98501963cc4bbe7277021b2b1d977f982b2edce78f5a1014613ce9cf38085c3df2d76730481357ca504
-  languageName: node
-  linkType: hard
-
-"npm-run-path@npm:^5.2.0":
-  version: 5.3.0
-  resolution: "npm-run-path@npm:5.3.0"
-  dependencies:
-    path-key: "npm:^4.0.0"
-  checksum: 10c0/124df74820c40c2eb9a8612a254ea1d557ddfab1581c3e751f825e3e366d9f00b0d76a3c94ecd8398e7f3eee193018622677e95816e8491f0797b21e30b2deba
   languageName: node
   linkType: hard
 
@@ -5782,20 +6223,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-key@npm:^3.1.0":
-  version: 3.1.1
-  resolution: "path-key@npm:3.1.1"
-  checksum: 10c0/748c43efd5a569c039d7a00a03b58eecd1d75f3999f5a28303d75f521288df4823bc057d8784eb72358b2895a05f29a070bc9f1f17d28226cc4e62494cc58c4c
-  languageName: node
-  linkType: hard
-
-"path-key@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "path-key@npm:4.0.0"
-  checksum: 10c0/794efeef32863a65ac312f3c0b0a99f921f3e827ff63afa5cb09a377e202c262b671f7b3832a4e64731003fa94af0263713962d317b9887bd1e0c48a342efba3
-  languageName: node
-  linkType: hard
-
 "path-parse@npm:^1.0.6, path-parse@npm:^1.0.7":
   version: 1.0.7
   resolution: "path-parse@npm:1.0.7"
@@ -5810,6 +6237,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pathe@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "pathe@npm:1.1.2"
+  checksum: 10c0/64ee0a4e587fb0f208d9777a6c56e4f9050039268faaaaecd50e959ef01bf847b7872785c36483fa5cdcdbdfdb31fef2ff222684d4fc21c330ab60395c681897
+  languageName: node
+  linkType: hard
+
+"pathval@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "pathval@npm:2.0.0"
+  checksum: 10c0/602e4ee347fba8a599115af2ccd8179836a63c925c23e04bd056d0674a64b39e3a081b643cc7bc0b84390517df2d800a46fcc5598d42c155fe4977095c2f77c5
+  languageName: node
+  linkType: hard
+
 "pend@npm:~1.2.0":
   version: 1.2.0
   resolution: "pend@npm:1.2.0"
@@ -5817,10 +6258,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.0.0, picocolors@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "picocolors@npm:1.0.1"
-  checksum: 10c0/c63cdad2bf812ef0d66c8db29583802355d4ca67b9285d846f390cc15c2f6ccb94e8cb7eb6a6e97fc5990a6d3ad4ae42d86c84d3146e667c739a4234ed50d400
+"picocolors@npm:^1.0.0, picocolors@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "picocolors@npm:1.1.1"
+  checksum: 10c0/e2e3e8170ab9d7c7421969adaa7e1b31434f789afb9b3f115f6b96d91945041ac3ceb02e9ec6fe6510ff036bcc0bf91e69a1772edc0b707e12b19c0f2d6bcf58
   languageName: node
   linkType: hard
 
@@ -5874,14 +6315,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.40":
-  version: 8.4.41
-  resolution: "postcss@npm:8.4.41"
+"postcss@npm:^8.4.40, postcss@npm:^8.4.49":
+  version: 8.4.49
+  resolution: "postcss@npm:8.4.49"
   dependencies:
     nanoid: "npm:^3.3.7"
-    picocolors: "npm:^1.0.1"
-    source-map-js: "npm:^1.2.0"
-  checksum: 10c0/c1828fc59e7ec1a3bf52b3a42f615dba53c67960ed82a81df6441b485fe43c20aba7f4e7c55425762fd99c594ecabbaaba8cf5b30fd79dfec5b52a9f63a2d690
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10c0/f1b3f17aaf36d136f59ec373459f18129908235e65dbdc3aee5eef8eba0756106f52de5ec4682e29a2eab53eb25170e7e871b3e4b52a8f1de3d344a514306be3
   languageName: node
   linkType: hard
 
@@ -6361,6 +6802,75 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rollup@npm:^4.23.0":
+  version: 4.27.4
+  resolution: "rollup@npm:4.27.4"
+  dependencies:
+    "@rollup/rollup-android-arm-eabi": "npm:4.27.4"
+    "@rollup/rollup-android-arm64": "npm:4.27.4"
+    "@rollup/rollup-darwin-arm64": "npm:4.27.4"
+    "@rollup/rollup-darwin-x64": "npm:4.27.4"
+    "@rollup/rollup-freebsd-arm64": "npm:4.27.4"
+    "@rollup/rollup-freebsd-x64": "npm:4.27.4"
+    "@rollup/rollup-linux-arm-gnueabihf": "npm:4.27.4"
+    "@rollup/rollup-linux-arm-musleabihf": "npm:4.27.4"
+    "@rollup/rollup-linux-arm64-gnu": "npm:4.27.4"
+    "@rollup/rollup-linux-arm64-musl": "npm:4.27.4"
+    "@rollup/rollup-linux-powerpc64le-gnu": "npm:4.27.4"
+    "@rollup/rollup-linux-riscv64-gnu": "npm:4.27.4"
+    "@rollup/rollup-linux-s390x-gnu": "npm:4.27.4"
+    "@rollup/rollup-linux-x64-gnu": "npm:4.27.4"
+    "@rollup/rollup-linux-x64-musl": "npm:4.27.4"
+    "@rollup/rollup-win32-arm64-msvc": "npm:4.27.4"
+    "@rollup/rollup-win32-ia32-msvc": "npm:4.27.4"
+    "@rollup/rollup-win32-x64-msvc": "npm:4.27.4"
+    "@types/estree": "npm:1.0.6"
+    fsevents: "npm:~2.3.2"
+  dependenciesMeta:
+    "@rollup/rollup-android-arm-eabi":
+      optional: true
+    "@rollup/rollup-android-arm64":
+      optional: true
+    "@rollup/rollup-darwin-arm64":
+      optional: true
+    "@rollup/rollup-darwin-x64":
+      optional: true
+    "@rollup/rollup-freebsd-arm64":
+      optional: true
+    "@rollup/rollup-freebsd-x64":
+      optional: true
+    "@rollup/rollup-linux-arm-gnueabihf":
+      optional: true
+    "@rollup/rollup-linux-arm-musleabihf":
+      optional: true
+    "@rollup/rollup-linux-arm64-gnu":
+      optional: true
+    "@rollup/rollup-linux-arm64-musl":
+      optional: true
+    "@rollup/rollup-linux-powerpc64le-gnu":
+      optional: true
+    "@rollup/rollup-linux-riscv64-gnu":
+      optional: true
+    "@rollup/rollup-linux-s390x-gnu":
+      optional: true
+    "@rollup/rollup-linux-x64-gnu":
+      optional: true
+    "@rollup/rollup-linux-x64-musl":
+      optional: true
+    "@rollup/rollup-win32-arm64-msvc":
+      optional: true
+    "@rollup/rollup-win32-ia32-msvc":
+      optional: true
+    "@rollup/rollup-win32-x64-msvc":
+      optional: true
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 10c0/1442650cfea5e4617ce14743784f6f578817e31db56f9c8aaf96a82daa9bc20b6ccd66c0d677dbf302a4da3e70664dc3bef11a1aec85e6aff3cecccb945b1d35
+  languageName: node
+  linkType: hard
+
 "rrweb-cssom@npm:^0.6.0":
   version: 0.6.0
   resolution: "rrweb-cssom@npm:0.6.0"
@@ -6490,26 +7000,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shebang-command@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "shebang-command@npm:2.0.0"
-  dependencies:
-    shebang-regex: "npm:^3.0.0"
-  checksum: 10c0/a41692e7d89a553ef21d324a5cceb5f686d1f3c040759c50aab69688634688c5c327f26f3ecf7001ebfd78c01f3c7c0a11a7c8bfd0a8bc9f6240d4f40b224e4e
-  languageName: node
-  linkType: hard
-
 "shebang-regex@npm:^1.0.0":
   version: 1.0.0
   resolution: "shebang-regex@npm:1.0.0"
   checksum: 10c0/9abc45dee35f554ae9453098a13fdc2f1730e525a5eb33c51f096cc31f6f10a4b38074c1ebf354ae7bffa7229506083844008dfc3bb7818228568c0b2dc1fff2
-  languageName: node
-  linkType: hard
-
-"shebang-regex@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "shebang-regex@npm:3.0.0"
-  checksum: 10c0/1dbed0726dd0e1152a92696c76c7f06084eb32a90f0528d11acd764043aacf76994b2fb30aa1291a21bd019d6699164d048286309a278855ee7bec06cf6fb690
   languageName: node
   linkType: hard
 
@@ -6531,17 +7025,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"siginfo@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "siginfo@npm:2.0.0"
+  checksum: 10c0/3def8f8e516fbb34cb6ae415b07ccc5d9c018d85b4b8611e3dc6f8be6d1899f693a4382913c9ed51a06babb5201639d76453ab297d1c54a456544acf5c892e34
+  languageName: node
+  linkType: hard
+
 "signal-exit@npm:^3.0.0, signal-exit@npm:^3.0.2":
   version: 3.0.7
   resolution: "signal-exit@npm:3.0.7"
   checksum: 10c0/25d272fa73e146048565e08f3309d5b942c1979a6f4a58a8c59d5fa299728e9c2fcd1a759ec870863b1fd38653670240cd420dad2ad9330c71f36608a6a1c912
-  languageName: node
-  linkType: hard
-
-"signal-exit@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "signal-exit@npm:4.1.0"
-  checksum: 10c0/41602dce540e46d599edba9d9860193398d135f7ff72cab629db5171516cfae628d21e7bfccde1bbfdf11c48726bc2a6d1a8fb8701125852fbfda7cf19c6aa83
   languageName: node
   linkType: hard
 
@@ -6632,10 +7126,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "source-map-js@npm:1.2.0"
-  checksum: 10c0/7e5f896ac10a3a50fe2898e5009c58ff0dc102dcb056ed27a354623a0ece8954d4b2649e1a1b2b52ef2e161d26f8859c7710350930751640e71e374fe2d321a4
+"source-map-js@npm:^1.2.0, source-map-js@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "source-map-js@npm:1.2.1"
+  checksum: 10c0/7bda1fc4c197e3c6ff17de1b8b2c20e60af81b63a52cb32ec5a5d67a20a7d42651e2cb34ebe93833c5a2a084377e17455854fee3e21e7925c64a51b6a52b0faf
   languageName: node
   linkType: hard
 
@@ -6703,6 +7197,20 @@ __metadata:
   dependencies:
     minipass: "npm:^3.1.1"
   checksum: 10c0/5cfae216ae02dcd154d1bbed2d0a60038a4b3a2fcaac3c7e47401ff4e058e551ee74cfdba618871bf168cd583db7b8324f94af6747d4303b73cd4c3f6dc5c9c2
+  languageName: node
+  linkType: hard
+
+"stackback@npm:0.0.2":
+  version: 0.0.2
+  resolution: "stackback@npm:0.0.2"
+  checksum: 10c0/89a1416668f950236dd5ac9f9a6b2588e1b9b62b1b6ad8dff1bfc5d1a15dbf0aafc9b52d2226d00c28dffff212da464eaeebfc6b7578b9d180cef3e3782c5983
+  languageName: node
+  linkType: hard
+
+"std-env@npm:^3.8.0":
+  version: 3.8.0
+  resolution: "std-env@npm:3.8.0"
+  checksum: 10c0/f560a2902fd0fa3d648d7d0acecbd19d664006f7372c1fba197ed4c216b4c9e48db6e2769b5fe1616d42a9333c9f066c5011935035e85c59f45dc4f796272040
   languageName: node
   linkType: hard
 
@@ -6862,13 +7370,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-final-newline@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "strip-final-newline@npm:4.0.0"
-  checksum: 10c0/b0cf2b62d597a1b0e3ebc42b88767f0a0d45601f89fd379a928a1812c8779440c81abba708082c946445af1d6b62d5f16e2a7cf4f30d9d6587b89425fae801ff
-  languageName: node
-  linkType: hard
-
 "strip-indent@npm:^3.0.0":
   version: 3.0.0
   resolution: "strip-indent@npm:3.0.0"
@@ -7018,6 +7519,41 @@ __metadata:
   version: 2.3.8
   resolution: "through@npm:2.3.8"
   checksum: 10c0/4b09f3774099de0d4df26d95c5821a62faee32c7e96fb1f4ebd54a2d7c11c57fe88b0a0d49cf375de5fee5ae6bf4eb56dbbf29d07366864e2ee805349970d3cc
+  languageName: node
+  linkType: hard
+
+"tinybench@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "tinybench@npm:2.9.0"
+  checksum: 10c0/c3500b0f60d2eb8db65250afe750b66d51623057ee88720b7f064894a6cb7eb93360ca824a60a31ab16dab30c7b1f06efe0795b352e37914a9d4bad86386a20c
+  languageName: node
+  linkType: hard
+
+"tinyexec@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "tinyexec@npm:0.3.1"
+  checksum: 10c0/11e7a7c5d8b3bddf8b5cbe82a9290d70a6fad84d528421d5d18297f165723cb53d2e737d8f58dcce5ca56f2e4aa2d060f02510b1f8971784f97eb3e9aec28f09
+  languageName: node
+  linkType: hard
+
+"tinypool@npm:^1.0.1":
+  version: 1.0.2
+  resolution: "tinypool@npm:1.0.2"
+  checksum: 10c0/31ac184c0ff1cf9a074741254fe9ea6de95026749eb2b8ec6fd2b9d8ca94abdccda731f8e102e7f32e72ed3b36d32c6975fd5f5523df3f1b6de6c3d8dfd95e63
+  languageName: node
+  linkType: hard
+
+"tinyrainbow@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "tinyrainbow@npm:1.2.0"
+  checksum: 10c0/7f78a4b997e5ba0f5ecb75e7ed786f30bab9063716e7dff24dd84013fb338802e43d176cb21ed12480561f5649a82184cf31efb296601a29d38145b1cdb4c192
+  languageName: node
+  linkType: hard
+
+"tinyspy@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "tinyspy@npm:3.0.2"
+  checksum: 10c0/55ffad24e346622b59292e097c2ee30a63919d5acb7ceca87fc0d1c223090089890587b426e20054733f97a58f20af2c349fb7cc193697203868ab7ba00bcea0
   languageName: node
   linkType: hard
 
@@ -7420,6 +7956,123 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vite-node@npm:2.1.6":
+  version: 2.1.6
+  resolution: "vite-node@npm:2.1.6"
+  dependencies:
+    cac: "npm:^6.7.14"
+    debug: "npm:^4.3.7"
+    es-module-lexer: "npm:^1.5.4"
+    pathe: "npm:^1.1.2"
+    vite: "npm:^5.0.0 || ^6.0.0"
+  bin:
+    vite-node: vite-node.mjs
+  checksum: 10c0/513c815a6d4ca09a48fc8741bd4bfb1a6cbfe5555b009081b194069863326aede7d66197c2b60927514d22cc6efc2c793d1ca1bb70e13dca120e01a507bcf35b
+  languageName: node
+  linkType: hard
+
+"vite@npm:^5.0.0 || ^6.0.0":
+  version: 6.0.0
+  resolution: "vite@npm:6.0.0"
+  dependencies:
+    esbuild: "npm:^0.24.0"
+    fsevents: "npm:~2.3.3"
+    postcss: "npm:^8.4.49"
+    rollup: "npm:^4.23.0"
+  peerDependencies:
+    "@types/node": ^18.0.0 || ^20.0.0 || >=22.0.0
+    jiti: ">=1.21.0"
+    less: "*"
+    lightningcss: ^1.21.0
+    sass: "*"
+    sass-embedded: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.16.0
+    tsx: ^4.8.1
+    yaml: ^2.4.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    jiti:
+      optional: true
+    less:
+      optional: true
+    lightningcss:
+      optional: true
+    sass:
+      optional: true
+    sass-embedded:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+    tsx:
+      optional: true
+    yaml:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: 10c0/2516144161c108452691ec1379aefd8f3201da8f225e628cb1cdb7b35b92d856d990cd31f1c36c0f36517346efe181ea3c096a04bc846c5b0d1416b7b7111af8
+  languageName: node
+  linkType: hard
+
+"vitest@npm:^2.1.5, vitest@npm:^2.1.6":
+  version: 2.1.6
+  resolution: "vitest@npm:2.1.6"
+  dependencies:
+    "@vitest/expect": "npm:2.1.6"
+    "@vitest/mocker": "npm:2.1.6"
+    "@vitest/pretty-format": "npm:^2.1.6"
+    "@vitest/runner": "npm:2.1.6"
+    "@vitest/snapshot": "npm:2.1.6"
+    "@vitest/spy": "npm:2.1.6"
+    "@vitest/utils": "npm:2.1.6"
+    chai: "npm:^5.1.2"
+    debug: "npm:^4.3.7"
+    expect-type: "npm:^1.1.0"
+    magic-string: "npm:^0.30.12"
+    pathe: "npm:^1.1.2"
+    std-env: "npm:^3.8.0"
+    tinybench: "npm:^2.9.0"
+    tinyexec: "npm:^0.3.1"
+    tinypool: "npm:^1.0.1"
+    tinyrainbow: "npm:^1.2.0"
+    vite: "npm:^5.0.0 || ^6.0.0"
+    vite-node: "npm:2.1.6"
+    why-is-node-running: "npm:^2.3.0"
+  peerDependencies:
+    "@edge-runtime/vm": "*"
+    "@types/node": ^18.0.0 || ^20.0.0 || >=22.0.0
+    "@vitest/browser": 2.1.6
+    "@vitest/ui": 2.1.6
+    happy-dom: "*"
+    jsdom: "*"
+  peerDependenciesMeta:
+    "@edge-runtime/vm":
+      optional: true
+    "@types/node":
+      optional: true
+    "@vitest/browser":
+      optional: true
+    "@vitest/ui":
+      optional: true
+    happy-dom:
+      optional: true
+    jsdom:
+      optional: true
+  bin:
+    vitest: vitest.mjs
+  checksum: 10c0/a183e4f573aacccf14d6466fdee0cee9ecd3f258bf98ebffa2da33c4d5aa1886d156f50d9eeb3d751c634679257e2196d8b3c9988256f2e860b9a1d7070bd4df
+  languageName: node
+  linkType: hard
+
 "vlq@npm:^0.2.1":
   version: 0.2.3
   resolution: "vlq@npm:0.2.3"
@@ -7557,7 +8210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"which@npm:^2.0.1, which@npm:^2.0.2":
+"which@npm:^2.0.2":
   version: 2.0.2
   resolution: "which@npm:2.0.2"
   dependencies:
@@ -7565,6 +8218,18 @@ __metadata:
   bin:
     node-which: ./bin/node-which
   checksum: 10c0/66522872a768b60c2a65a57e8ad184e5372f5b6a9ca6d5f033d4b0dc98aff63995655a7503b9c0a2598936f532120e81dd8cc155e2e92ed662a2b9377cc4374f
+  languageName: node
+  linkType: hard
+
+"why-is-node-running@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "why-is-node-running@npm:2.3.0"
+  dependencies:
+    siginfo: "npm:^2.0.0"
+    stackback: "npm:0.0.2"
+  bin:
+    why-is-node-running: cli.js
+  checksum: 10c0/1cde0b01b827d2cf4cb11db962f3958b9175d5d9e7ac7361d1a7b0e2dc6069a263e69118bd974c4f6d0a890ef4eedfe34cf3d5167ec14203dbc9a18620537054
   languageName: node
   linkType: hard
 
@@ -7735,13 +8400,6 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
-  languageName: node
-  linkType: hard
-
-"yoctocolors@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "yoctocolors@npm:2.0.0"
-  checksum: 10c0/994f5d99e7647a1b333331ffecbbf7c4463d9c2823e371b44e21146a4496cad0f14fbe2f73f44383312a6f843d93523f830f1360009f0ac93027b167ef5c63be
   languageName: node
   linkType: hard
 

@@ -10,7 +10,11 @@ import type * as dom from "@siteimprove/alfa-dom";
 import type { Attribute } from "../attribute.js";
 import type { Name } from "../name/index.js";
 import { Node } from "../node.js";
-import type { Role } from "../role.js";
+import { Set } from "@siteimprove/alfa-set";
+import { Role } from "../role.js";
+import type { InputType } from "../../../alfa-dom/src/node/element/input-type.js";
+import { Element as DomElement } from "@siteimprove/alfa-dom";
+import { Selective } from "@siteimprove/alfa-selective";
 
 /**
  * @public
@@ -114,6 +118,65 @@ export class Element extends Node<"element"> {
       ].join(" "),
       ...this._children.map((child) => String.indent(child.toString())),
     ].join("\n");
+  }
+
+  private static allowedAttributesForInputType(
+    inputType: InputType
+  ): ReadonlyArray<Attribute.Name> {
+    switch (inputType) {
+      // https://www.w3.org/TR/html-aria/#el-input-color
+      case "color":
+        return ["aria-disabled"];
+      // https://www.w3.org/TR/html-aria/#el-input-date
+      case "date":
+      // https://www.w3.org/TR/html-aria/#el-input-datetime-local
+      case "datetime-local":
+      // https://www.w3.org/TR/html-aria/#el-input-email
+      case "email":
+      // https://www.w3.org/TR/html-aria/#el-input-month
+      case "month":
+      // https://www.w3.org/TR/html-aria/#el-input-password
+      case "password":
+      // https://www.w3.org/TR/html-aria/#el-input-time
+      case "time":
+      // https://www.w3.org/TR/html-aria/#el-input-week
+      case "week":
+        return Role.of("textbox").supportedAttributes;
+      // https://www.w3.org/TR/html-aria/#el-input-file
+      case "file":
+        return ["aria-disabled", "aria-invalid", "aria-required"];
+      default:
+        return [];
+    }
+  }
+
+  /**
+   * The attributes that are allowed on this element, taking into consideration ARIA in HTML conformance requirements.
+   * See {@link https://w3c.github.io/html-aria/#docconformance}
+   */
+  public allowedAttributes(): ReadonlyArray<Attribute.Name> {
+    const global = Role.of("roletype").supportedAttributes;
+    const fromRole = this.role.map(role => role.supportedAttributes).getOr([]);
+    const additional = Selective.of(this.node)
+      .if(DomElement.hasName("input"), input =>
+        Element.allowedAttributesForInputType(input.inputType())
+      )
+      // https://www.w3.org/TR/html-aria/#el-select
+      .if(
+        DomElement.hasName("select"),
+        select =>
+          DomElement.hasDisplaySize((size: Number) => size !== 1)(select)
+            ? Role.of("combobox").supportedAttributes
+            : Role.of("menu").supportedAttributes
+      )
+      .else(() => [])
+      .get();
+
+    return Array.from(Set.from([... global, ...fromRole, ...additional]));
+  }
+
+  public isAttributeAllowed(attribute: Attribute.Name): boolean {
+    return this.allowedAttributes().includes(attribute);
   }
 }
 

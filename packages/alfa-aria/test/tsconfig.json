@@ -4,7 +4,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "@siteimprove/alfa-dom",
-    "outDir": "."
+    "noEmit": true
   },
   "files": [
     "./dom/predicate/has-accessible-name.spec.tsx",

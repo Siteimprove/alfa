@@ -39,14 +39,14 @@ function parse(
     value:
       width !== undefined
         ? {
-            type: "length",
-            value: width,
-            unit: "px",
-          }
+          type: "length",
+          value: width,
+          unit: "px",
+        }
         : {
-            type: "keyword",
-            value: "initial",
-          },
+          type: "keyword",
+          value: "initial",
+        },
     source: declaration.toJSON(),
   });
 }
