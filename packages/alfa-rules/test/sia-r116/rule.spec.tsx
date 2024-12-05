@@ -1,6 +1,4 @@
-import { Device } from "@siteimprove/alfa-device";
 import { type Element, h } from "@siteimprove/alfa-dom";
-import { Node } from "@siteimprove/alfa-aria";
 import { test } from "@siteimprove/alfa-test";
 
 import R116, { Outcomes } from "../../dist/sia-r116/rule.js";

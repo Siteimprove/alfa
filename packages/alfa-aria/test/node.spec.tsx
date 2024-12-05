@@ -636,7 +636,7 @@ test(`.from() treats nested <summary> elements as generic`, (t) => {
   });
 });
 
-test(`.from() treates second <summary> elements as generic`, (t) => {
+test(`.from() treats second <summary> elements as generic`, (t) => {
   const summary = <summary>Opening times</summary>;
 
   <details>

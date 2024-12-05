@@ -15,7 +15,7 @@ const {
   hasNonEmptyAccessibleName,
   isIncludedInTheAccessibilityTree,
 } = DOM;
-const { hasName, hasNamespace, isElement } = Element;
+const { hasName, hasNamespace } = Element;
 const { and, not } = Refinement;
 const { getElementDescendants } = Query;
 
