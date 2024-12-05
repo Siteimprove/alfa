@@ -34,7 +34,7 @@ export function isProgrammaticallyHidden(
   );
 }
 
-function _hasHiddenAncestors(
+const hasHiddenAncestors = Cache.memoize(function (
   device: Device,
   context: Context,
 ): Predicate<Node> {
@@ -54,8 +54,6 @@ function _hasHiddenAncestors(
     ),
     // Or its parent is programmatically hidden
     (node: Node) =>
-      node.parent(Node.fullTree).some(_hasHiddenAncestors(device, context)),
+      node.parent(Node.fullTree).some(hasHiddenAncestors(device, context)),
   );
-}
-
-const hasHiddenAncestors = Cache.memoize(_hasHiddenAncestors);
+});

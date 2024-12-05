@@ -187,3 +187,65 @@ test("@memoize caches values of a binary method", (t) => {
   t.equal(instance.doStuffB(one, b), 11); // different pair, miss
   t.equal(instance.called, 7);
 });
+
+test("memoize() caches a recursive function when used correctly", (t) => {
+  type Foo = { x: number; y: Foo | undefined };
+  const zero: Foo = { x: 0, y: undefined };
+  const one: Foo = { x: 1, y: zero };
+  const two: Foo = { x: 2, y: one };
+  const three: Foo = { x: 3, y: two };
+
+  let called = 0;
+
+  const memoized = Cache.memoize(function (foo: Foo): number {
+    called++;
+
+    return foo.x + (foo.y ? memoized(foo.y) : 0);
+  });
+
+  t.equal(called, 0);
+
+  // Initial call, fills the cache for all values it recurses on
+  t.equal(memoized(three), 6);
+  t.equal(called, 4);
+
+  // Same call, gets the result immediately
+  t.equal(memoized(three), 6);
+  t.equal(called, 4);
+
+  // Call on a sub-object, the cache was still correctly filled.
+  t.equal(memoized(two), 3);
+  t.equal(called, 4);
+});
+
+test("memoize() does not fully cache a recursive function when used incorrectly", (t) => {
+  type Foo = { x: number; y: Foo | undefined };
+  const zero: Foo = { x: 0, y: undefined };
+  const one: Foo = { x: 1, y: zero };
+  const two: Foo = { x: 2, y: one };
+  const three: Foo = { x: 3, y: two };
+
+  let called = 0;
+
+  function sum(foo: Foo): number {
+    called++;
+
+    return foo.x + (foo.y ? sum(foo.y) : 0);
+  }
+  const memoized = Cache.memoize(sum);
+
+  t.equal(called, 0);
+
+  // Initial call, fills the cache for all values it recurses on
+  t.equal(memoized(three), 6);
+  t.equal(called, 4);
+
+  // Same call, gets the result immediately
+  t.equal(memoized(three), 6);
+  t.equal(called, 4);
+
+  // Call on a sub-object, the cache was not filled since the recursion was
+  // done on the original function.
+  t.equal(memoized(two), 3);
+  t.equal(called, 7);
+});

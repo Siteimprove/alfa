@@ -140,6 +140,12 @@ export namespace Cache {
 
   /**
    * Memoize a function
+   *
+   * @remarks
+   * When memoizing a recursive function, care must be taken to also memoize the
+   * recursive calls. This is best done by wrapping an anonymous function that
+   * recurses on the memoized function:
+   * `const foo = Cache.memoize(function (x: A): B { … foo(x2) … }`
    */
   export function memoize<Args extends Array<Key>, Return>(
     target: (...args: Args) => Return,
@@ -189,7 +195,7 @@ export namespace Cache {
         // @ts-ignore
 
         // Compute the next cache to use, by retrieving the values associated
-        // with `head`. This will be either the final value (if `head` is the las
+        // with `head`. This will be either the final value (if `head` is the last
         // parameter), or a further cache.
         const next = cache.get(
           head,
