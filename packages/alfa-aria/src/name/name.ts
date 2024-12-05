@@ -436,8 +436,7 @@ export namespace Name {
         // step produces an empty name.
         if (
           !state.isReferencing &&
-          !role.some((role) => role.isNamedBy("contents")) &&
-          !wantsNameWithoutRole(element)
+          !role.some((role) => role.isNamedBy("contents"))
         ) {
           return None;
         }
@@ -460,34 +459,6 @@ export namespace Name {
           name.spaced(spaced),
         );
       },
-    );
-  }
-
-  /**
-   * Is this an element without an ARIA role that nonetheless should have a
-   * name exposed?
-   *
-   * @remarks
-   * This is a bit wonky and currently very specific. The `summary` element,
-   * and maybe a few other, does not have an implicit ARIA semantics (no implicit
-   * role), but still is interactive and needs a name. In the HTML AAM, it is
-   * listed as having a "computed role" of `html-summary` which is used for these
-   * cases.
-   *
-   * Since we only support ARIA role, our summary elements have no role. Thus,
-   * they cannot be named from content, which is a property of role. Additionally,
-   * the `html-summary` (pseudo-)role or its friends are not listed anywhere as
-   * allowing or not name from content.
-   *
-   * We have here a very ad-hoc test for the case that currently matter, and we
-   * can expand it as needed. Hopefully, a better solution will be found.
-   *
-   * {@link https://github.com/w3c/accname/issues/245}
-   */
-  function wantsNameWithoutRole(element: Element): boolean {
-    return (
-      Element.hasName("summary")(element) &&
-      element.isSummaryForItsParentDetails()
     );
   }
 

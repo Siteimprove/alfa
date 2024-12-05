@@ -247,6 +247,8 @@ type Features = {
  * The third parameter (`name`) is called during Step 2E of name computation,
  * that is after `aria-labelledby` and `aria-label`, and before content.
  * The `html` wrapper adds `nameFromAttributes(element, title)` at its end.
+ *
+ * {@link https://w3c.github.io/html-aam/#accname-computation}
  */
 const Features: Features = {
   [Namespace.HTML]: {
@@ -673,11 +675,17 @@ const Features: Features = {
       nameFromLabel,
     ),
 
-    summary: html((element) =>
-      // the type is ensured by the name.
-      (element as Element<"summary">).isSummaryForItsParentDetails()
-        ? None
-        : Option.of(Role.of("generic")),
+    summary: html(
+      (element) =>
+        // the type is ensured by the name.
+        (element as Element<"summary">).isSummaryForItsParentDetails()
+          ? None
+          : Option.of(Role.of("generic")),
+      () => [],
+      (element, device, state) =>
+        (element as Element<"summary">).isSummaryForItsParentDetails()
+          ? Name.fromDescendants(element, device, state)
+          : None,
     ),
 
     table: html("table", () => [], nameFromChild(hasName("caption"))),
