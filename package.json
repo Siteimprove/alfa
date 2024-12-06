@@ -14,7 +14,6 @@
     "build": "node --max-old-space-size=8192 scripts/build.mjs --pretty",
     "clean": "node scripts/clean.mjs --pretty",
     "test": "yarn build && vitest run --config ./config/vitest.config.ts",
-    "test:watch": "yarn build && vitest --config ./config/vitest.config.ts",
     "watch": "node scripts/watch.mjs --pretty",
     "extract": "node scripts/api-extractor.mjs --pretty",
     "document": "api-documenter generate -i docs/data/api -o docs/api",

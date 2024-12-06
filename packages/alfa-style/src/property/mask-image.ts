@@ -11,11 +11,16 @@ const { either } = Parser;
 
 import { Longhand } from "../longhand.js";
 
-type MaskReference = Keyword<"none"> | Image | URL;
-const maskReference: CSSParser<MaskReference> = either(
-  Keyword.parse("none"),
-  either(Image.parse, URL.parse),
-);
+export type MaskReference = Keyword<"none"> | Image | URL;
+
+export namespace MaskReference {
+  export const parse: CSSParser<MaskReference> = either(
+    Keyword.parse("none"),
+    either(Image.parse, URL.parse),
+  );
+
+  export const initialItem = Keyword.of("none");
+}
 
 type Specified = List<MaskReference>;
 type Computed = Specified;
@@ -26,7 +31,7 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([Keyword.of("none")]),
-  List.parseCommaSeparated(maskReference),
+  List.of([MaskReference.initialItem], ", "),
+  List.parseCommaSeparated(MaskReference.parse),
   (value) => value, // TODO: How to resolve absolute URL?
 );

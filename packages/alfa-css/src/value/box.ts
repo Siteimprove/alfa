@@ -110,6 +110,9 @@ export namespace Box {
 
   /**
    * {@link https://www.w3.org/TR/css-box-4/#typedef-coord-box}
+   *
+   * @privateRemarks
+   * This is not the same type as `Geometry`. The only difference is that this type does not contain `margin-box`.
    */
   export type CoordBox = PaintBox | Keyword<"view-box">;
 

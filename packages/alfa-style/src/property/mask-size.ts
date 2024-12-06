@@ -12,19 +12,22 @@ import { matchLayers } from "./mask.js";
 
 const { either } = Parser;
 
-type BgSize =
+export type BgSize =
   | List<LengthPercentage | Keyword<"auto">>
   | Keyword<"cover">
   | Keyword<"contain">;
 
-const bgSize: CSSParser<BgSize> = either(
-  List.parseSpaceSeparated(
-    either(LengthPercentage.parse, Keyword.parse("auto")),
-    1,
-    2,
-  ),
-  Keyword.parse("cover", "contain"),
-);
+export namespace BgSize {
+  export const parse: CSSParser<BgSize> = either(
+    List.parseSpaceSeparated(
+      either(LengthPercentage.parse, Keyword.parse("auto")),
+      1,
+      2,
+    ),
+    Keyword.parse("cover", "contain"),
+  );
+  export const initialItem = List.of([Keyword.of("auto")], " ");
+}
 
 type Specified = List<BgSize>;
 type Computed = Specified;
@@ -35,8 +38,8 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([List.of([Keyword.of("auto")], " ")], ", "),
-  List.parseCommaSeparated(bgSize),
+  List.of([BgSize.initialItem], ", "),
+  List.parseCommaSeparated(BgSize.parse),
   (value, style) =>
     value.map((sizes) =>
       matchLayers(

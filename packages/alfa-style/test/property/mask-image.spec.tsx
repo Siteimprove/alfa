@@ -15,7 +15,7 @@ test("initial value is none", (t) => {
   t.deepEqual(style.computed("mask-image").toJSON(), {
     value: {
       type: "list",
-      separator: " ",
+      separator: ", ",
       values: [
         {
           type: "keyword",

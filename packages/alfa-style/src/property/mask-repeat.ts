@@ -6,7 +6,7 @@ import { matchLayers } from "./mask.js";
 
 const { either } = Parser;
 
-type RepeatStyle =
+export type RepeatStyle =
   | Keyword<"repeat-x">
   | Keyword<"repeat-y">
   | List<
@@ -15,14 +15,18 @@ type RepeatStyle =
       | Keyword<"round">
       | Keyword<"no-repeat">
     >;
-const repeatStyle: CSSParser<RepeatStyle> = either(
-  Keyword.parse("repeat-x", "repeat-y"),
-  List.parseSpaceSeparated(
-    Keyword.parse("repeat", "space", "round", "no-repeat"),
-    1,
-    2,
-  ),
-);
+
+export namespace RepeatStyle {
+  export const parse: CSSParser<RepeatStyle> = either(
+    Keyword.parse("repeat-x", "repeat-y"),
+    List.parseSpaceSeparated(
+      Keyword.parse("repeat", "space", "round", "no-repeat"),
+      1,
+      2,
+    ),
+  );
+  export const initialItem = List.of([Keyword.of("repeat")], " ");
+}
 
 type Specified = List<RepeatStyle>;
 type Computed = Specified;
@@ -40,7 +44,7 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([List.of([Keyword.of("repeat")], " ")], ", "),
-  List.parseCommaSeparated(repeatStyle),
+  List.of([RepeatStyle.initialItem], ", "),
+  List.parseCommaSeparated(RepeatStyle.parse),
   (value, style) => value.map((value) => matchLayers(value, style)),
 );
