@@ -4,6 +4,8 @@
 
 ## Cache.set() method
 
+Adds a key-value pair to a cache.
+
 **Signature:**
 
 ```typescript
@@ -20,4 +22,8 @@ set(key: K, value: V): this;
 **Returns:**
 
 this
+
+## Remarks
+
+Avoid using this. Prefer using the `ifMissing` parameter of `get()` instead.
 

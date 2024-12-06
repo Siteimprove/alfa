@@ -15,5 +15,13 @@ export declare namespace Cache
 
 |  Function | Description |
 |  --- | --- |
-|  [from(iterable)](./alfa-cache.cache.from.md) |  |
+|  [from(iterable)](./alfa-cache.cache.from.md) | Creates a new cache from an iterable of key-value pairs. |
+|  [memoize(target)](./alfa-cache.cache.memoize.md) | Memoizes a method. |
+|  [memoize(target)](./alfa-cache.cache.memoize_1.md) | Memoizes a function |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Key](./alfa-cache.cache.key.md) | Allowed keys in a Cache. |
 

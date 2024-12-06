@@ -1,5 +1,7 @@
 # @siteimprove/alfa-http
 
+## 0.96.0
+
 ## 0.95.0
 
 ## 0.94.1
