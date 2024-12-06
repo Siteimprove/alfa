@@ -66,4 +66,62 @@ export namespace Box {
     parseShape,
     Keyword.parse("fill-box", "stroke-box", "view-box"),
   );
+
+  /**
+   * {@link https://www.w3.org/TR/css-box-4/#typedef-visual-box}
+   */
+  export type VisualBox =
+    | Keyword<"content-box">
+    | Keyword<"padding-box">
+    | Keyword<"border-box">;
+
+  namespace VisualBox {
+    export type JSON =
+      | Keyword.JSON<"content-box">
+      | Keyword.JSON<"padding-box">
+      | Keyword.JSON<"border-box">;
+  }
+
+  export const parseVisualBox: CSSParser<VisualBox> = Keyword.parse(
+    "content-box",
+    "padding-box",
+    "border-box",
+  );
+
+  /**
+   * {@link https://www.w3.org/TR/css-box-4/#typedef-paint-box}
+   */
+  export type PaintBox =
+    | VisualBox
+    | Keyword<"fill-box">
+    | Keyword<"stroke-box">;
+
+  namespace PaintBox {
+    export type JSON =
+      | VisualBox.JSON
+      | Keyword.JSON<"fill-box">
+      | Keyword.JSON<"stroke-box">;
+  }
+
+  export const parsePaintBox: CSSParser<PaintBox> = either(
+    parseVisualBox,
+    Keyword.parse("fill-box", "stroke-box"),
+  );
+
+  /**
+   * {@link https://www.w3.org/TR/css-box-4/#typedef-coord-box}
+   *
+   * @privateRemarks
+   * This is not the same type as `Geometry`. The only difference is that this type does not contain `margin-box`.
+   */
+  export type CoordBox = PaintBox | Keyword<"view-box">;
+
+  export namespace CoordBox {
+    export type JSON = PaintBox.JSON | Keyword.JSON<"view-box">;
+  }
+
+  export const parseCoordBox: CSSParser<CoordBox> = either(
+    parsePaintBox,
+    Keyword.parse("view-box"),
+  );
 }
