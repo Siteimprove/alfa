@@ -1,5 +1,13 @@
 # @siteimprove/alfa-cache
 
+## 0.96.0
+
+### Minor Changes
+
+- **Added:** A `Cache.memoize` decorator is now available. ([#1720](https://github.com/Siteimprove/alfa/pull/1720))
+
+  It can decorate methods, or wrap functions, whose parameters are all objects. It will automatically create a cache with the various parameters and correctly call it.
+
 ## 0.95.0
 
 ## 0.94.1

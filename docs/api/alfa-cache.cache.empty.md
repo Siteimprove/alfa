@@ -4,10 +4,12 @@
 
 ## Cache.empty() method
 
+Creates an empty cache.
+
 **Signature:**
 
 ```typescript
-static empty<K extends object, V>(): Cache<K, V>;
+static empty<K extends Cache.Key, V>(): Cache<K, V>;
 ```
 **Returns:**
 

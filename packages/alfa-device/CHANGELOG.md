@@ -1,5 +1,11 @@
 # @siteimprove/alfa-device
 
+## 0.96.0
+
+### Patch Changes
+
+- **Fixed:** Values of undefined user preferences are now correctly set to their default. ([#1725](https://github.com/Siteimprove/alfa/pull/1725))
+
 ## 0.95.0
 
 ## 0.94.1

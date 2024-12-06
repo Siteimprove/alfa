@@ -4,6 +4,8 @@
 
 ## Cache.get() method
 
+Returns the value associated with the given key; if it does not exist, evaluates `ifMissing`<!-- -->, store the result in the cache and returns it.
+
 **Signature:**
 
 ```typescript

@@ -7,9 +7,14 @@
  */
 
 import { None, Some } from "@siteimprove/alfa-option";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
+
 import { Element } from "../element.js";
 import type { InputType } from "./input-type.js";
+
+const { isElement } = Element;
+const { and } = Refinement;
 
 declare module "../element.js" {
   interface Element<N extends string> {
@@ -34,6 +39,11 @@ declare module "../element.js" {
      * {@link https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-option-list}
      */
     optionsList(this: Element<"select">): Sequence<Element<"option">>;
+
+    /**
+     * {@link https://html.spec.whatwg.org/multipage/#summary-for-its-parent-details}
+     */
+    isSummaryForItsParentDetails(this: Element<"summary">): boolean;
   }
 }
 
@@ -92,7 +102,7 @@ Element.prototype.optionsList = function (
 ): Sequence<Element<"option">> {
   if (this._optionsList === undefined) {
     this._optionsList = this.children()
-      .filter(Element.isElement)
+      .filter(isElement)
       .flatMap((child) => {
         switch (child.name) {
           case "option":
@@ -101,7 +111,7 @@ Element.prototype.optionsList = function (
           case "optgroup":
             return child
               .children()
-              .filter(Element.isElement)
+              .filter(isElement)
               .filter(
                 // We cannot really use `Element.hasName` here as it would
                 // create a circular dependency.
@@ -116,4 +126,20 @@ Element.prototype.optionsList = function (
   }
 
   return this._optionsList;
+};
+
+Element.prototype.isSummaryForItsParentDetails = function (
+  this: Element<"summary">,
+): boolean {
+  // We cannot use `Element.hasName` here as it would create a circular dependency.
+  return this.parent()
+    .filter(and(Element.isElement, (parent) => parent.name === "details"))
+    .some((details) =>
+      details
+        .children()
+        .find(
+          and(Element.isElement, (candidate) => candidate.name === "summary"),
+        )
+        .includes(this),
+    );
 };
