@@ -4,6 +4,8 @@
 
 ## Cache.has() method
 
+Tests whether a given key exists in the cache.
+
 **Signature:**
 
 ```typescript

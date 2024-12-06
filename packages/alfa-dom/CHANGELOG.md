@@ -1,5 +1,13 @@
 # @siteimprove/alfa-dom
 
+## 0.96.0
+
+### Minor Changes
+
+- **Added:** An `Element<"summary">#isSummaryForItsParentDetails` predicate is now available. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- **Added:** An `Attribute.Autocomplete` namespace is now available, grouping functionalities around the `autocomplete` attribute. ([#1724](https://github.com/Siteimprove/alfa/pull/1724))
+
 ## 0.95.0
 
 ## 0.94.1

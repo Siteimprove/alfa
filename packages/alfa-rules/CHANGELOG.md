@@ -1,5 +1,17 @@
 # @siteimprove/alfa-rules
 
+## 0.96.0
+
+### Minor Changes
+
+- **Added:** A new experimental rule SIA-R115: "Heading is descriptive" is now available. ([#1722](https://github.com/Siteimprove/alfa/pull/1722))
+
+- **Added:** SIA-R116: "`<summary>` element has non-empty accessible name" is now available. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- **Added:** Expose `allowedAttributes` on ARIA Element type. ([#1721](https://github.com/Siteimprove/alfa/pull/1721))
+
+  This function takes into account "implicit ARIA semantics" and "ARIA role allowances" from [ARIA in HTML](https://w3c.github.io/html-aria/#docconformance). The logic is moved from rule R18 implementation.
+
 ## 0.95.0
 
 ## 0.94.1

@@ -4,10 +4,12 @@
 
 ## Cache.from() function
 
+Creates a new cache from an iterable of key-value pairs.
+
 **Signature:**
 
 ```typescript
-function from<K extends object, V>(iterable: Iterable<readonly [K, V]>): Cache<K, V>;
+function from<K extends Key, V>(iterable: Iterable<readonly [K, V]>): Cache<K, V>;
 ```
 
 ## Parameters

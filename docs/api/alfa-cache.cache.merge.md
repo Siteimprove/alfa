@@ -4,6 +4,8 @@
 
 ## Cache.merge() method
 
+Merges a cache with an iterable of key-value pairs.
+
 **Signature:**
 
 ```typescript

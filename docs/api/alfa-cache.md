@@ -8,7 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Cache](./alfa-cache.cache.md) |  |
+|  [Cache](./alfa-cache.cache.md) | Caches are wrapper around Javascript's <code>WeakMap</code> to store transient values. |
 
 ## Namespaces
 
