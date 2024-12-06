@@ -7,7 +7,7 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 const { hasAttribute, isElement } = Element;
-const { or, test, equals } = Predicate;
+const { or, equals } = Predicate;
 const { and } = Refinement;
 const { hasComputedStyle } = Style;
 
@@ -34,39 +34,26 @@ export function isProgrammaticallyHidden(
   );
 }
 
-const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
-
-function hasHiddenAncestors(
+const hasHiddenAncestors = Cache.memoize(function (
   device: Device,
-  context: Context = Context.empty(),
+  context: Context,
 ): Predicate<Node> {
-  return (node) =>
-    cache
-      .get(device, Cache.empty)
-      .get(context, Cache.empty)
-      .get(node, () =>
-        test(
-          or(
-            // Either it is a programmatically hidden element
-            and(
-              isElement,
-              or(
-                hasComputedStyle(
-                  "display",
-                  ({ values: [outside] }) => outside.value === "none",
-                  device,
-                  context,
-                ),
-                hasAttribute("aria-hidden", equals("true")),
-              ),
-            ),
-            // Or its parent is programmatically hidden
-            (node: Node) =>
-              node
-                .parent(Node.fullTree)
-                .some(hasHiddenAncestors(device, context)),
-          ),
-          node,
+  return or(
+    // Either it is a programmatically hidden element
+    and(
+      isElement,
+      or(
+        hasComputedStyle(
+          "display",
+          ({ values: [outside] }) => outside.value === "none",
+          device,
+          context,
         ),
-      );
-}
+        hasAttribute("aria-hidden", equals("true")),
+      ),
+    ),
+    // Or its parent is programmatically hidden
+    (node: Node) =>
+      node.parent(Node.fullTree).some(hasHiddenAncestors(device, context)),
+  );
+});
