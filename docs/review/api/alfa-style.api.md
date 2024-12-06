@@ -352,6 +352,7 @@ export namespace Shorthands {
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
         readonly inset: Shorthand<"top" | "bottom" | "left" | "right">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
+        readonly mask: Shorthand<"mask-clip" | "mask-composite" | "mask-image" | "mask-mode" | "mask-origin" | "mask-position" | "mask-repeat" | "mask-size">;
         readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
         readonly "text-decoration": Shorthand<"text-decoration-color" | "text-decoration-line" | "text-decoration-style" | "text-decoration-thickness">;
@@ -640,41 +641,42 @@ export namespace Value {
 // src/longhands.ts:319:7 - (ae-incompatible-release-tags) The symbol ""will-change"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:320:7 - (ae-incompatible-release-tags) The symbol ""word-spacing"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:321:7 - (ae-incompatible-release-tags) The symbol ""z-index"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/shorthands.ts:47:14 - (ae-incompatible-release-tags) The symbol "background" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:48:14 - (ae-incompatible-release-tags) The symbol ""background-position"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:49:14 - (ae-incompatible-release-tags) The symbol ""background-repeat"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:50:14 - (ae-incompatible-release-tags) The symbol ""border-block-color"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:51:14 - (ae-incompatible-release-tags) The symbol ""border-block-end"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:52:14 - (ae-incompatible-release-tags) The symbol ""border-block-start"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:53:14 - (ae-incompatible-release-tags) The symbol ""border-block-style"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:54:14 - (ae-incompatible-release-tags) The symbol ""border-block"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:55:14 - (ae-incompatible-release-tags) The symbol ""border-block-width"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:56:14 - (ae-incompatible-release-tags) The symbol ""border-bottom"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:57:14 - (ae-incompatible-release-tags) The symbol ""border-color"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:58:14 - (ae-incompatible-release-tags) The symbol ""border-image"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:59:14 - (ae-incompatible-release-tags) The symbol ""border-inline-color"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:60:14 - (ae-incompatible-release-tags) The symbol ""border-inline-end"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:61:14 - (ae-incompatible-release-tags) The symbol ""border-inline-start"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:62:14 - (ae-incompatible-release-tags) The symbol ""border-inline-style"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:63:14 - (ae-incompatible-release-tags) The symbol ""border-inline"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:64:14 - (ae-incompatible-release-tags) The symbol ""border-inline-width"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:65:14 - (ae-incompatible-release-tags) The symbol ""border-left"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:66:14 - (ae-incompatible-release-tags) The symbol ""border-radius"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:67:14 - (ae-incompatible-release-tags) The symbol ""border-right"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:68:14 - (ae-incompatible-release-tags) The symbol ""border-style"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:69:14 - (ae-incompatible-release-tags) The symbol ""border-top"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:70:14 - (ae-incompatible-release-tags) The symbol "border" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:71:14 - (ae-incompatible-release-tags) The symbol ""border-width"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:72:14 - (ae-incompatible-release-tags) The symbol ""flex-flow"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:73:14 - (ae-incompatible-release-tags) The symbol "font" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:74:14 - (ae-incompatible-release-tags) The symbol ""font-variant"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:75:14 - (ae-incompatible-release-tags) The symbol ""inset-block"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:76:14 - (ae-incompatible-release-tags) The symbol ""inset-inline"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:77:14 - (ae-incompatible-release-tags) The symbol "inset" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:78:14 - (ae-incompatible-release-tags) The symbol "margin" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:79:14 - (ae-incompatible-release-tags) The symbol "outline" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:80:14 - (ae-incompatible-release-tags) The symbol "overflow" is marked as @public, but its signature references "Shorthand" which is marked as @internal
-// src/shorthands.ts:81:14 - (ae-incompatible-release-tags) The symbol ""text-decoration"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:48:14 - (ae-incompatible-release-tags) The symbol "background" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:49:14 - (ae-incompatible-release-tags) The symbol ""background-position"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:50:14 - (ae-incompatible-release-tags) The symbol ""background-repeat"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:51:14 - (ae-incompatible-release-tags) The symbol ""border-block-color"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:52:14 - (ae-incompatible-release-tags) The symbol ""border-block-end"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:53:14 - (ae-incompatible-release-tags) The symbol ""border-block-start"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:54:14 - (ae-incompatible-release-tags) The symbol ""border-block-style"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:55:14 - (ae-incompatible-release-tags) The symbol ""border-block"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:56:14 - (ae-incompatible-release-tags) The symbol ""border-block-width"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:57:14 - (ae-incompatible-release-tags) The symbol ""border-bottom"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:58:14 - (ae-incompatible-release-tags) The symbol ""border-color"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:59:14 - (ae-incompatible-release-tags) The symbol ""border-image"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:60:14 - (ae-incompatible-release-tags) The symbol ""border-inline-color"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:61:14 - (ae-incompatible-release-tags) The symbol ""border-inline-end"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:62:14 - (ae-incompatible-release-tags) The symbol ""border-inline-start"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:63:14 - (ae-incompatible-release-tags) The symbol ""border-inline-style"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:64:14 - (ae-incompatible-release-tags) The symbol ""border-inline"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:65:14 - (ae-incompatible-release-tags) The symbol ""border-inline-width"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:66:14 - (ae-incompatible-release-tags) The symbol ""border-left"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:67:14 - (ae-incompatible-release-tags) The symbol ""border-radius"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:68:14 - (ae-incompatible-release-tags) The symbol ""border-right"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:69:14 - (ae-incompatible-release-tags) The symbol ""border-style"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:70:14 - (ae-incompatible-release-tags) The symbol ""border-top"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:71:14 - (ae-incompatible-release-tags) The symbol "border" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:72:14 - (ae-incompatible-release-tags) The symbol ""border-width"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:73:14 - (ae-incompatible-release-tags) The symbol ""flex-flow"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:74:14 - (ae-incompatible-release-tags) The symbol "font" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:75:14 - (ae-incompatible-release-tags) The symbol ""font-variant"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:76:14 - (ae-incompatible-release-tags) The symbol ""inset-block"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:77:14 - (ae-incompatible-release-tags) The symbol ""inset-inline"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:78:14 - (ae-incompatible-release-tags) The symbol "inset" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:79:14 - (ae-incompatible-release-tags) The symbol "margin" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:80:14 - (ae-incompatible-release-tags) The symbol "mask" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:81:14 - (ae-incompatible-release-tags) The symbol "outline" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:82:14 - (ae-incompatible-release-tags) The symbol "overflow" is marked as @public, but its signature references "Shorthand" which is marked as @internal
+// src/shorthands.ts:83:14 - (ae-incompatible-release-tags) The symbol ""text-decoration"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
 
 // (No @packageDocumentation comment for this package)
 
