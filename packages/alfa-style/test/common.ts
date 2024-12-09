@@ -35,6 +35,17 @@ export function specified<N extends Longhands.Name>(
 /**
  * @internal
  */
+export function computed<N extends Longhands.Name>(
+  element: Element,
+  name: N,
+  context: Context = Context.empty(),
+): Value.JSON<Style.Specified<N>> {
+  return Style.from(element, device, context).computed(name).toJSON();
+}
+
+/**
+ * @internal
+ */
 export function used<N extends Longhands.Name>(
   element: Element,
   name: N,
