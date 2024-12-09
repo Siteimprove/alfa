@@ -10,8 +10,7 @@ import type { Style } from "../../style.js";
  * A layer is created for each of the comma separated values for `mask-image`.
  *
  * If there are more values than layers, the excess values are discarded.
- * Otherwise, the values must be repeated
- * until the number of values matches the number of layers.
+ * Otherwise, the values must be repeated until the number of values matches the number of layers.
  */
 export function matchLayers<V extends Value>(
   value: List<V>,
