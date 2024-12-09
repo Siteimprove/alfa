@@ -1,18 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../dist/index.js";
-
-const device = Device.standard();
+import { computed } from "../common.js";
 
 test("initial value is border-box", (t) => {
   const element = <div></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-origin").toJSON(), {
+  t.deepEqual(computed(element, "mask-origin"), {
     value: {
       type: "list",
       separator: ", ",
@@ -38,9 +32,7 @@ test("#computed parses single keywords", (t) => {
   ] as const) {
     const element = <div style={{ maskOrigin: kw }}></div>;
 
-    const style = Style.from(element, device);
-
-    t.deepEqual(style.computed("mask-origin").toJSON(), {
+    t.deepEqual(computed(element, "mask-origin"), {
       value: {
         type: "list",
         separator: ", ",
@@ -66,9 +58,7 @@ test("#computed parses multiple layers", (t) => {
     ></div>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-origin").toJSON(), {
+  t.deepEqual(computed(element, "mask-origin"), {
     value: {
       type: "list",
       separator: ", ",
@@ -97,9 +87,7 @@ test("#computed discards excess values when there are more values than layers", 
     ></div>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-origin").toJSON(), {
+  t.deepEqual(computed(element, "mask-origin"), {
     value: {
       type: "list",
       separator: ", ",
@@ -130,9 +118,7 @@ test("#computed repeats values when there are more layers than values", (t) => {
     ></div>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-origin").toJSON(), {
+  t.deepEqual(computed(element, "mask-origin"), {
     value: {
       type: "list",
       separator: ", ",

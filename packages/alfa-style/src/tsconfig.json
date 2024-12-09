@@ -39,6 +39,7 @@
     "./predicate/is-block-container.ts",
     "./predicate/is-flex-container.ts",
     "./predicate/is-grid-container.ts",
+    "./property/helpers/match-layers.ts",
     "./property/background.ts",
     "./property/background-attachment.ts",
     "./property/background-clip.ts",

@@ -6,10 +6,12 @@ import {
   URL,
   type Parser as CSSParser,
 } from "@siteimprove/alfa-css";
+import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;
 
 import { Longhand } from "../longhand.js";
+import { Resolver } from "../resolver.js";
 
 export type MaskReference = Keyword<"none"> | Image | URL;
 
@@ -33,5 +35,14 @@ type Computed = Specified;
 export default Longhand.of<Specified, Computed>(
   List.of([MaskReference.initialItem], ", "),
   List.parseCommaSeparated(MaskReference.parse),
-  (value) => value, // TODO: How to resolve absolute URL?
+  (value, style) =>
+    value.map((images) =>
+      images.map((image) =>
+        Selective.of(image)
+          .if(Image.isImage, (image) =>
+            image.partiallyResolve(Resolver.length(style)),
+          )
+          .get(),
+      ),
+    ),
 );

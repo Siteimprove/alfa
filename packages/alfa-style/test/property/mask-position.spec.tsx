@@ -1,18 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../dist/index.js";
-
-const device = Device.standard();
+import { computed } from "../common.js";
 
 test("initial value is 0% 0%", (t) => {
   const element = <div></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-position").toJSON(), {
+  t.deepEqual(computed(element, "mask-position"), {
     value: {
       type: "list",
       separator: ", ",
@@ -54,9 +48,7 @@ test("#computed parses single keywords", (t) => {
   for (const kw of ["top", "bottom"] as const) {
     const element = <div style={{ maskPosition: kw }}></div>;
 
-    const style = Style.from(element, device);
-
-    t.deepEqual(style.computed("mask-position").toJSON(), {
+    t.deepEqual(computed(element, "mask-position"), {
       value: {
         type: "list",
         separator: ", ",
@@ -85,9 +77,7 @@ test("#computed parses single keywords", (t) => {
   for (const kw of ["left", "right"] as const) {
     const element = <div style={{ maskPosition: kw }}></div>;
 
-    const style = Style.from(element, device);
-
-    t.deepEqual(style.computed("mask-position").toJSON(), {
+    t.deepEqual(computed(element, "mask-position"), {
       value: {
         type: "list",
         separator: ", ",
@@ -115,9 +105,7 @@ test("#computed parses single keywords", (t) => {
 
   const element = <div style={{ maskPosition: "center" }}></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-position").toJSON(), {
+  t.deepEqual(computed(element, "mask-position"), {
     value: {
       type: "list",
       separator: ", ",
@@ -142,9 +130,7 @@ test("#computed parses single keywords", (t) => {
 test("#computed parses lengths and percentages", (t) => {
   const element = <div style={{ maskPosition: "10% 3em" }}></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-position").toJSON(), {
+  t.deepEqual(computed(element, "mask-position"), {
     value: {
       type: "list",
       separator: ", ",
@@ -191,9 +177,7 @@ test("#computed parses multiple layers", (t) => {
     ></div>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-position").toJSON(), {
+  t.deepEqual(computed(element, "mask-position"), {
     value: {
       type: "list",
       separator: ", ",

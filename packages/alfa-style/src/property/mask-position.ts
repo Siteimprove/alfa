@@ -6,16 +6,19 @@ import {
 } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
-import { matchLayers } from "./mask.js";
 import { Resolver } from "../resolver.js";
+
+import { matchLayers } from "./helpers/match-layers.js";
 
 type Specified = List<Position>;
 type Computed = List<Position.PartiallyResolved>;
 
-export const initialItem = Position.of(
-  Position.Side.of(Keyword.of("left"), LengthPercentage.of(0)),
-  Position.Side.of(Keyword.of("top"), LengthPercentage.of(0)),
-);
+export namespace MaskPosition {
+  export const initialItem = Position.of(
+    Position.Side.of(Keyword.of("left"), LengthPercentage.of(0)),
+    Position.Side.of(Keyword.of("top"), LengthPercentage.of(0)),
+  );
+}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position}
@@ -23,7 +26,7 @@ export const initialItem = Position.of(
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([initialItem], ", "),
+  List.of([MaskPosition.initialItem], ", "),
   List.parseCommaSeparated(Position.parse(/* legacySyntax */ true)),
   (value, style) =>
     value.map((positions) =>

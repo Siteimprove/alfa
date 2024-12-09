@@ -3,7 +3,6 @@ import {
   List,
   type Parser as CSSParser,
   Position,
-  type Value,
   Box,
   Keyword,
 } from "@siteimprove/alfa-css";
@@ -13,16 +12,14 @@ import { Option } from "@siteimprove/alfa-option";
 
 import { Shorthand } from "../shorthand.js";
 
-import type { Style } from "../style.js";
-
 import { MaskReference } from "./mask-image.js";
 import { BgSize } from "./mask-size.js";
 import { RepeatStyle } from "./mask-repeat.js";
 import { CompositingOperator } from "./mask-composite.js";
 import { MaskingMode } from "./mask-mode.js";
-import { initialItem as posInitialItem } from "./mask-position.js";
-import { initialItem as clipInitialItem } from "./mask-clip.js";
-import { initialItem as originInitialItem } from "./mask-origin.js";
+import { MaskPosition } from "./mask-position.js";
+import { MaskClip } from "./mask-clip.js";
+import { MaskOrigin } from "./mask-origin.js";
 
 const {
   doubleBar,
@@ -34,42 +31,6 @@ const {
   delimited,
   separatedList,
 } = Parser;
-
-/**
- * {@link https://drafts.fxtf.org/css-masking/#layering}.
- *
- * @remarks
- * The computed value depends on the number of layers.
- * A layer is created for each of the comma separated values for `mask-image`.
- *
- * If there are more values than layers, the excess values are discarded.
- * Otherwise, the values must be repeated
- * until the number of values matches the number of layers.
- */
-export function matchLayers<V extends Value>(
-  value: List<V>,
-  style: Style,
-): List<V> {
-  const numberOfLayers = Math.max(
-    style.computed("mask-image").value.values.length,
-    1,
-  );
-
-  const numberOfValues = value.values.length;
-  if (numberOfValues === numberOfLayers) {
-    return value;
-  }
-
-  return List.of(
-    (numberOfLayers < numberOfValues
-      ? value.values
-      : Array(Math.ceil(numberOfLayers / numberOfValues))
-          .fill(value.values)
-          .flat()
-    ).slice(0, numberOfLayers),
-    ", ",
-  );
-}
 
 const slash = delimited(option(Token.parseWhitespace), Token.parseDelim("/"));
 
@@ -169,11 +130,11 @@ export default Shorthand.of(
     for (const layer of layers) {
       const [image, pos, size, repeat, origin, clip, composite, mode] = layer;
       images.push(image ?? MaskReference.initialItem);
-      positions.push(pos ?? posInitialItem);
+      positions.push(pos ?? MaskPosition.initialItem);
       sizes.push(size ?? BgSize.initialItem);
       repeats.push(repeat ?? RepeatStyle.initialItem);
-      origins.push(origin ?? originInitialItem);
-      clips.push(clip ?? clipInitialItem);
+      origins.push(origin ?? MaskOrigin.initialItem);
+      clips.push(clip ?? MaskClip.initialItem);
       composites.push(composite ?? CompositingOperator.initialItem);
       modes.push(mode ?? MaskingMode.initialItem);
     }

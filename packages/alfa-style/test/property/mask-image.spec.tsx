@@ -1,18 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../dist/index.js";
-
-const device = Device.standard();
+import { computed } from "../common.js";
 
 test("initial value is none", (t) => {
   const element = <div></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-image").toJSON(), {
+  t.deepEqual(computed(element, "mask-image"), {
     value: {
       type: "list",
       separator: ", ",
@@ -30,9 +24,7 @@ test("initial value is none", (t) => {
 test("#computed parses url value", (t) => {
   const element = <div style={{ maskImage: "url(masks.svg#mask1)" }}></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-image").toJSON(), {
+  t.deepEqual(computed(element, "mask-image"), {
     value: {
       type: "list",
       separator: ", ",
@@ -54,8 +46,8 @@ test("#computed parses linear-gradient value", (t) => {
   const element = (
     <div style={{ maskImage: "linear-gradient(red, blue)" }}></div>
   );
-  const style = Style.from(element, device);
-  t.deepEqual(style.computed("mask-image").toJSON(), {
+
+  t.deepEqual(computed(element, "mask-image"), {
     value: {
       type: "list",
       separator: ", ",
@@ -72,18 +64,48 @@ test("#computed parses linear-gradient value", (t) => {
             items: [
               {
                 color: {
-                  color: "red",
-                  format: "named",
                   type: "color",
+                  format: "rgb",
+                  alpha: {
+                    type: "percentage",
+                    value: 1,
+                  },
+                  red: {
+                    type: "percentage",
+                    value: 1,
+                  },
+                  green: {
+                    type: "percentage",
+                    value: 0,
+                  },
+                  blue: {
+                    type: "percentage",
+                    value: 0,
+                  },
                 },
                 position: null,
                 type: "stop",
               },
               {
                 color: {
-                  color: "blue",
-                  format: "named",
                   type: "color",
+                  format: "rgb",
+                  alpha: {
+                    type: "percentage",
+                    value: 1,
+                  },
+                  red: {
+                    type: "percentage",
+                    value: 0,
+                  },
+                  green: {
+                    type: "percentage",
+                    value: 0,
+                  },
+                  blue: {
+                    type: "percentage",
+                    value: 1,
+                  },
                 },
                 position: null,
                 type: "stop",
@@ -95,5 +117,35 @@ test("#computed parses linear-gradient value", (t) => {
       ],
     },
     source: h.declaration("mask-image", "linear-gradient(red, blue)").toJSON(),
+  });
+});
+
+test("#computed parses multiple layers", (t) => {
+  const element = (
+    <div style={{ maskImage: "url(foo.svg), url(bar.svg)" }}></div>
+  );
+
+  t.deepEqual(computed(element, "mask-image"), {
+    value: {
+      type: "list",
+      separator: ", ",
+      values: [
+        {
+          type: "image",
+          image: {
+            type: "url",
+            url: "foo.svg",
+          },
+        },
+        {
+          type: "image",
+          image: {
+            type: "url",
+            url: "bar.svg",
+          },
+        },
+      ],
+    },
+    source: h.declaration("mask-image", "url(foo.svg), url(bar.svg)").toJSON(),
   });
 });

@@ -2,7 +2,8 @@ import { Keyword, List, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand.js";
-import { matchLayers } from "./mask.js";
+
+import { matchLayers } from "./helpers/match-layers.js";
 
 const { either } = Parser;
 

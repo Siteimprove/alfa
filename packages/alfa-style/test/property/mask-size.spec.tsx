@@ -1,11 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../dist/index.js";
-
-const device = Device.standard();
+import { computed } from "../common.js";
 
 test("initial value is auto", (t) => {
   const element = (
@@ -16,9 +12,7 @@ test("initial value is auto", (t) => {
     ></div>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-size").toJSON(), {
+  t.deepEqual(computed(element, "mask-size"), {
     value: {
       type: "list",
       separator: ", ",
@@ -53,9 +47,7 @@ test("#computed parses single keywords", (t) => {
   for (const kw of ["cover", "contain"] as const) {
     const element = <div style={{ maskSize: kw }}></div>;
 
-    const style = Style.from(element, device);
-
-    t.deepEqual(style.computed("mask-size").toJSON(), {
+    t.deepEqual(computed(element, "mask-size"), {
       value: {
         type: "list",
         separator: ", ",
@@ -74,9 +66,7 @@ test("#computed parses single keywords", (t) => {
 test("#computed parses percentage width", (t) => {
   const element = <div style={{ maskSize: "50%" }}></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-size").toJSON(), {
+  t.deepEqual(computed(element, "mask-size"), {
     value: {
       type: "list",
       separator: ", ",
@@ -100,9 +90,7 @@ test("#computed parses percentage width", (t) => {
 test("#computed resolves em width", (t) => {
   const element = <div style={{ maskSize: "3em" }}></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-size").toJSON(), {
+  t.deepEqual(computed(element, "mask-size"), {
     value: {
       type: "list",
       separator: ", ",
@@ -127,9 +115,7 @@ test("#computed resolves em width", (t) => {
 test("#computed parses pixel width", (t) => {
   const element = <div style={{ maskSize: "12px" }}></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-size").toJSON(), {
+  t.deepEqual(computed(element, "mask-size"), {
     value: {
       type: "list",
       separator: ", ",
@@ -154,9 +140,7 @@ test("#computed parses pixel width", (t) => {
 test("#computed parses width and height", (t) => {
   const element = <div style={{ maskSize: "3em 25%" }}></div>;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-size").toJSON(), {
+  t.deepEqual(computed(element, "mask-size"), {
     value: {
       type: "list",
       separator: ", ",
@@ -192,9 +176,7 @@ test("#computed parses multiple layers", (t) => {
     ></div>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.computed("mask-size").toJSON(), {
+  t.deepEqual(computed(element, "mask-size"), {
     value: {
       type: "list",
       separator: ", ",
