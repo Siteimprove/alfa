@@ -2,7 +2,7 @@ import { Keyword, List, type Parser as CSSParser } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 
-import { matchLayers } from "./helpers/match-layers.js";
+import { matchLayers } from "./helpers/mask-layers.js";
 
 export type MaskingMode =
   | Keyword<"alpha">

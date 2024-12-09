@@ -2,7 +2,7 @@ import { Box, Keyword, List } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 
-import { matchLayers } from "./helpers/match-layers.js";
+import { matchLayers } from "./helpers/mask-layers.js";
 
 type Specified = List<Box.CoordBox>;
 type Computed = Specified;

@@ -9,7 +9,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
-import { matchLayers } from "./helpers/match-layers.js";
+import { matchLayers } from "./helpers/mask-layers.js";
 
 const { either } = Parser;
 
