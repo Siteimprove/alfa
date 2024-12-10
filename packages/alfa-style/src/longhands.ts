@@ -83,6 +83,7 @@ import MarginBottom from "./property/margin-bottom.js";
 import MarginLeft from "./property/margin-left.js";
 import MarginRight from "./property/margin-right.js";
 import MarginTop from "./property/margin-top.js";
+import MaskBorderSource from "./property/mask-border-source.js";
 import MinHeight from "./property/min-height.js";
 import MinWidth from "./property/min-width.js";
 import MixBlendMode from "./property/mix-blend-mode.js";
@@ -268,6 +269,7 @@ export namespace Longhands {
     "margin-left": MarginLeft,
     "margin-right": MarginRight,
     "margin-top": MarginTop,
+    "mask-border-source": MaskBorderSource,
     "min-height": MinHeight,
     "min-width": MinWidth,
     "mix-blend-mode": MixBlendMode,
