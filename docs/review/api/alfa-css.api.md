@@ -201,9 +201,18 @@ export type Box = Keyword<"border-box"> | Keyword<"padding-box"> | Keyword<"cont
 // @public (undocumented)
 export namespace Box {
     // (undocumented)
-    export type Geometry = Shape | Keyword<"fill-box"> | Keyword<"stroke-box"> | Keyword<"view-box">;
+    export type CoordBox = PaintBox | Keyword<"view-box">;
     const // (undocumented)
     parse: Parser<Box>;
+    // (undocumented)
+    export namespace CoordBox {
+        // (undocumented)
+        export type JSON = PaintBox.JSON | Keyword.JSON<"view-box">;
+    }
+    // (undocumented)
+    export type Geometry = Shape | Keyword<"fill-box"> | Keyword<"stroke-box"> | Keyword<"view-box">;
+    const // (undocumented)
+    parseShape: Parser<Shape>;
     // (undocumented)
     export namespace Geometry {
         // (undocumented)
@@ -212,7 +221,16 @@ export namespace Box {
     // (undocumented)
     export type JSON = Keyword.JSON<"border-box"> | Keyword.JSON<"padding-box"> | Keyword.JSON<"content-box">;
     const // (undocumented)
-    parseShape: Parser<Shape>;
+    parseGeometry: Parser<Geometry>;
+    // (undocumented)
+    export type PaintBox = VisualBox | Keyword<"fill-box"> | Keyword<"stroke-box">;
+    // (undocumented)
+    export namespace PaintBox {
+        // (undocumented)
+        export type JSON = VisualBox.JSON | Keyword.JSON<"fill-box"> | Keyword.JSON<"stroke-box">;
+    }
+    const // (undocumented)
+    parseVisualBox: Parser<VisualBox>;
     // (undocumented)
     export type Shape = Box | Keyword<"margin-box">;
     // (undocumented)
@@ -221,7 +239,17 @@ export namespace Box {
         export type JSON = Box.JSON | Keyword.JSON<"margin-box">;
     }
     const // (undocumented)
-    parseGeometry: Parser<Geometry>;
+    parsePaintBox: Parser<PaintBox>;
+    // (undocumented)
+    export type VisualBox = Keyword<"content-box"> | Keyword<"padding-box"> | Keyword<"border-box">;
+    // (undocumented)
+    export namespace VisualBox {
+        // (undocumented)
+        export type JSON = Keyword.JSON<"content-box"> | Keyword.JSON<"padding-box"> | Keyword.JSON<"border-box">;
+    }
+    const // (undocumented)
+    parseCoordBox: Parser<CoordBox>;
+        {};
 }
 
 // Warning: (ae-forgotten-export) The symbol "BasicShape" needs to be exported by the entry point index.d.ts
