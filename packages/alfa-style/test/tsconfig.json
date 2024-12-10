@@ -54,6 +54,7 @@
     "./property/isolation.spec.tsx",
     "./property/line-height.spec.tsx",
     "./property/margin.spec.tsx",
+    "./property/mask-border-source.spec.tsx",
     "./property/mix-blend-mode.spec.tsx",
     "./property/opacity.spec.tsx",
     "./property/outline.spec.tsx",
