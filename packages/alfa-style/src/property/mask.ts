@@ -46,8 +46,8 @@ const parsePosAndSize: CSSParser<[Position, Option<BgSize>]> = pair(
  * As of December 2024 the specification uses the <geometry-box> type in the shorthand defintion
  * whereas the longhands `mask-clip` and `mask-origin` uses <coord-box>.
  * These are not the same types - <coord-box> does not have `margin-box`.
- * Chrome and Firefox does not, at time of writing, allow `margin-box` in the shorthand.
- * Therefore we assume that the discrepancy is a spec-bug and that the intended type is <coord-box>.
+ * There is an open PR to fix that, which we follow.
+ * {@link https://github.com/w3c/fxtf-drafts/pull/552}
  */
 const maskLayer: CSSParser<
   [
