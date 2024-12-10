@@ -11,6 +11,8 @@ import type { Style } from "../../style.js";
  *
  * If there are more values than layers, the excess values are discarded.
  * Otherwise, the values must be repeated until the number of values matches the number of layers.
+ *
+ * @internal
  */
 export function matchLayers<V extends Value>(
   value: List<V>,
