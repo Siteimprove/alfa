@@ -44,6 +44,10 @@ export class List<V extends Value>
     return this._values;
   }
 
+  public get size(): number {
+    return this._values.length;
+  }
+
   public resolve(
     resolver?: Resolvable.Resolver<V>,
   ): List<Resolvable.Resolved<V>> {
@@ -63,6 +67,33 @@ export class List<V extends Value>
 
   public map<U extends Value>(mapper: Mapper<V, U>): List<U> {
     return new List(this._values.map(mapper), this._separator);
+  }
+
+  /**
+   * Returns a copy of the current instance cut off or extended with repeated values to match the given `length`.
+   *
+   * @example
+   * List.of([1, 2, 3]).cutOrExtend(2); // returns a new List with values [1, 2]
+   *
+   * @example
+   * List.of([1, 2, 3]).cutOrExtend(5); // returns a new List with values [1, 2, 3, 1, 2]
+   */
+  public cutOrExtend(length: number): List<V> {
+    if (this.size === length) {
+      return new List(this._values, this._separator);
+    }
+
+    if (length < this.size) {
+      return new List(this._values.slice(0, length), this._separator);
+    }
+
+    const extended: Array<V> = [];
+    for (let i = 0; i < length; ++i) {
+      // Cyclically repeat the values until the result has the desired length.
+      extended.push(this._values[i % this.size]);
+    }
+
+    return new List(extended, this._separator);
   }
 
   public equals<T extends Value>(value: List<T>): boolean;
