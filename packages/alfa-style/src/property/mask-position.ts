@@ -8,15 +8,31 @@ import {
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
-type Specified = List<Position>;
-type Computed = List<Position.PartiallyResolved>;
+type Specified = List<Specified.Item>;
 
-export namespace MaskPosition {
-  export const initialItem = Position.of(
-    Position.Side.of(Keyword.of("left"), LengthPercentage.of(0)),
-    Position.Side.of(Keyword.of("top"), LengthPercentage.of(0)),
-  );
+/**
+ * @internal
+ */
+export namespace Specified {
+  export type Item = Position;
 }
+
+type Computed = Specified;
+
+/**
+ * @internal
+ */
+export const parse = Position.parse(/* legacySyntax */ true);
+
+const parseList = List.parseCommaSeparated(parse);
+
+/**
+ * @internal
+ */
+export const initialItem = Position.of(
+  Position.Side.of(Keyword.of("left"), LengthPercentage.of(0)),
+  Position.Side.of(Keyword.of("top"), LengthPercentage.of(0)),
+);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position}
@@ -24,8 +40,8 @@ export namespace MaskPosition {
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([MaskPosition.initialItem], ", "),
-  List.parseCommaSeparated(Position.parse(/* legacySyntax */ true)),
+  List.of([initialItem], ", "),
+  parseList,
   (value, style) => {
     const layers = Resolver.layers<Position.PartiallyResolved>(
       style,

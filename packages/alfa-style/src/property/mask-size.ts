@@ -1,9 +1,4 @@
-import {
-  Keyword,
-  LengthPercentage,
-  List,
-  type Parser as CSSParser,
-} from "@siteimprove/alfa-css";
+import { Keyword, LengthPercentage, List } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand.js";
@@ -11,25 +6,38 @@ import { Resolver } from "../resolver.js";
 
 const { either } = Parser;
 
-export type BgSize =
-  | List<LengthPercentage | Keyword<"auto">>
-  | Keyword<"cover">
-  | Keyword<"contain">;
+type Specified = List<Specified.Item>;
 
-export namespace BgSize {
-  export const parse: CSSParser<BgSize> = either(
-    List.parseSpaceSeparated(
-      either(LengthPercentage.parse, Keyword.parse("auto")),
-      1,
-      2,
-    ),
-    Keyword.parse("cover", "contain"),
-  );
-  export const initialItem = List.of([Keyword.of("auto")], " ");
+/**
+ * @internal
+ */
+export namespace Specified {
+  export type Item =
+    | List<LengthPercentage | Keyword<"auto">>
+    | Keyword<"cover">
+    | Keyword<"contain">;
 }
 
-type Specified = List<BgSize>;
 type Computed = Specified;
+
+/**
+ * @internal
+ */
+export const parse = either(
+  List.parseSpaceSeparated(
+    either(LengthPercentage.parse, Keyword.parse("auto")),
+    1,
+    2,
+  ),
+  Keyword.parse("cover", "contain"),
+);
+
+const parseList = List.parseCommaSeparated(parse);
+
+/**
+ * @internal
+ */
+export const initialItem = List.of([Keyword.of("auto")], " ");
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-size}
@@ -37,10 +45,10 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([BgSize.initialItem], ", "),
-  List.parseCommaSeparated(BgSize.parse),
+  List.of([initialItem], ", "),
+  parseList,
   (value, style) => {
-    const layers = Resolver.layers<BgSize>(style, "mask-image");
+    const layers = Resolver.layers<Specified.Item>(style, "mask-image");
 
     return value.map((sizes) =>
       layers(

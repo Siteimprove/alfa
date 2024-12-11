@@ -59,48 +59,56 @@ test("#computed parses multiple layers", (t) => {
     },
   );
 });
+
 test("#computed discards excess values when there are more values than layers", (t) => {
-  const element = (
-    <div
-      style={{
-        maskImage: "url(foo.svg), url(bar.svg)",
-        maskClip: "view-box, fill-box, border-box",
-      }}
-    ></div>
-  );
-  t.deepEqual(computed(element, "mask-clip"), {
-    value: {
-      type: "list",
-      separator: ", ",
-      values: [
-        { type: "keyword", value: "view-box" },
-        { type: "keyword", value: "fill-box" },
-      ],
+  t.deepEqual(
+    computed(
+      <div
+        style={{
+          maskImage: "url(foo.svg), url(bar.svg)",
+          maskClip: "view-box, fill-box, border-box",
+        }}
+      ></div>,
+      "mask-clip",
+    ),
+    {
+      value: {
+        type: "list",
+        separator: ", ",
+        values: [
+          { type: "keyword", value: "view-box" },
+          { type: "keyword", value: "fill-box" },
+        ],
+      },
+      source: h
+        .declaration("mask-clip", "view-box, fill-box, border-box")
+        .toJSON(),
     },
-    source: h
-      .declaration("mask-clip", "view-box, fill-box, border-box")
-      .toJSON(),
-  });
+  );
 });
+
 test("#computed repeats values when there are more layers than values", (t) => {
-  const element = (
-    <div
-      style={{
-        maskImage: "url(foo.svg), url(bar.svg), url(baz.svg)",
-        maskClip: "view-box, fill-box",
-      }}
-    ></div>
-  );
-  t.deepEqual(computed(element, "mask-clip"), {
-    value: {
-      type: "list",
-      separator: ", ",
-      values: [
-        { type: "keyword", value: "view-box" },
-        { type: "keyword", value: "fill-box" },
-        { type: "keyword", value: "view-box" },
-      ],
+  t.deepEqual(
+    computed(
+      <div
+        style={{
+          maskImage: "url(foo.svg), url(bar.svg), url(baz.svg)",
+          maskClip: "view-box, fill-box",
+        }}
+      ></div>,
+      "mask-clip",
+    ),
+    {
+      value: {
+        type: "list",
+        separator: ", ",
+        values: [
+          { type: "keyword", value: "view-box" },
+          { type: "keyword", value: "fill-box" },
+          { type: "keyword", value: "view-box" },
+        ],
+      },
+      source: h.declaration("mask-clip", "view-box, fill-box").toJSON(),
     },
-    source: h.declaration("mask-clip", "view-box, fill-box").toJSON(),
-  });
+  );
 });

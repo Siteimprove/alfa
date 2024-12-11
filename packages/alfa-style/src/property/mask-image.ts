@@ -1,31 +1,37 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import {
-  Image,
-  Keyword,
-  List,
-  URL,
-  type Parser as CSSParser,
-} from "@siteimprove/alfa-css";
+import { Image, Keyword, List, URL } from "@siteimprove/alfa-css";
 import { Selective } from "@siteimprove/alfa-selective";
-
-const { either } = Parser;
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
-export type MaskReference = Keyword<"none"> | Image | URL;
+const { either } = Parser;
 
-export namespace MaskReference {
-  export const parse: CSSParser<MaskReference> = either(
-    Keyword.parse("none"),
-    either(Image.parse, URL.parse),
-  );
+type Specified = List<Specified.Item>;
 
-  export const initialItem = Keyword.of("none");
+/**
+ * @internal
+ */
+export namespace Specified {
+  export type Item = Keyword<"none"> | Image | URL;
 }
 
-type Specified = List<MaskReference>;
 type Computed = Specified;
+
+/**
+ * @internal
+ */
+export const parse = either(
+  Keyword.parse("none"),
+  either(Image.parse, URL.parse),
+);
+
+const parseList = List.parseCommaSeparated(parse);
+
+/**
+ * @internal
+ */
+export const initialItem = Keyword.of("none");
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-image}
@@ -33,8 +39,8 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([MaskReference.initialItem], ", "),
-  List.parseCommaSeparated(MaskReference.parse),
+  List.of([initialItem], ", "),
+  parseList,
   (value, style) =>
     value.map((images) =>
       images.map((image) =>

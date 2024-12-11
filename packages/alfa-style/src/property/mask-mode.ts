@@ -1,24 +1,33 @@
-import { Keyword, List, type Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Keyword, List } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
-export type MaskingMode =
-  | Keyword<"alpha">
-  | Keyword<"luminance">
-  | Keyword<"match-source">;
+type Specified = List<Specified.Item>;
 
-export namespace MaskingMode {
-  export const parse: CSSParser<MaskingMode> = Keyword.parse(
-    "alpha",
-    "luminance",
-    "match-source",
-  );
-  export const initialItem = Keyword.of("match-source");
+/**
+ * @internal
+ */
+export namespace Specified {
+  export type Item =
+    | Keyword<"alpha">
+    | Keyword<"luminance">
+    | Keyword<"match-source">;
 }
 
-type Specified = List<MaskingMode>;
 type Computed = Specified;
+
+/**
+ * @internal
+ */
+export const parse = Keyword.parse("alpha", "luminance", "match-source");
+
+const parseList = List.parseCommaSeparated(parse);
+
+/**
+ * @internal
+ */
+export const initialItem = Keyword.of("match-source");
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-mode}
@@ -26,7 +35,7 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([MaskingMode.initialItem], ", "),
-  List.parseCommaSeparated(MaskingMode.parse),
+  List.of([initialItem], ", "),
+  parseList,
   (value, style) => value.map(Resolver.layers(style, "mask-image")),
 );

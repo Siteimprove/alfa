@@ -1,26 +1,34 @@
-import { Keyword, List, type Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Keyword, List } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
-export type CompositingOperator =
-  | Keyword<"add">
-  | Keyword<"subtract">
-  | Keyword<"intersect">
-  | Keyword<"exclude">;
+type Specified = List<Specified.Item>;
 
-export namespace CompositingOperator {
-  export const parse: CSSParser<CompositingOperator> = Keyword.parse(
-    "add",
-    "subtract",
-    "intersect",
-    "exclude",
-  );
-  export const initialItem = Keyword.of("add");
+/**
+ * @internal
+ */
+export namespace Specified {
+  export type Item =
+    | Keyword<"add">
+    | Keyword<"subtract">
+    | Keyword<"intersect">
+    | Keyword<"exclude">;
 }
 
-type Specified = List<CompositingOperator>;
 type Computed = Specified;
+
+/**
+ * @internal
+ */
+export const parse = Keyword.parse("add", "subtract", "intersect", "exclude");
+
+const parseList = List.parseCommaSeparated(parse);
+
+/**
+ * @internal
+ */
+export const initialItem = Keyword.of("add");
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-composite}
@@ -28,7 +36,7 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  List.of([CompositingOperator.initialItem], ", "),
-  List.parseCommaSeparated(CompositingOperator.parse),
+  List.of([initialItem], ", "),
+  parseList,
   (value, style) => value.map(Resolver.layers(style, "mask-image")),
 );
