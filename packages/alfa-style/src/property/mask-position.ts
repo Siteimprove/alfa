@@ -8,8 +8,6 @@ import {
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
-import { matchLayers } from "./helpers/mask-layers.js";
-
 type Specified = List<Position>;
 type Computed = List<Position.PartiallyResolved>;
 
@@ -28,13 +26,18 @@ export namespace MaskPosition {
 export default Longhand.of<Specified, Computed>(
   List.of([MaskPosition.initialItem], ", "),
   List.parseCommaSeparated(Position.parse(/* legacySyntax */ true)),
-  (value, style) =>
-    value.map((positions) =>
-      matchLayers(
+  (value, style) => {
+    const layers = Resolver.layers<Position.PartiallyResolved>(
+      style,
+      "mask-image",
+    );
+
+    return value.map((positions) =>
+      layers(
         positions.map((position) =>
           position.partiallyResolve(Resolver.length(style)),
         ),
-        style,
       ),
-    ),
+    );
+  },
 );

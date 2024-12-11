@@ -1,5 +1,5 @@
-import type { LengthPercentage, Unit } from "@siteimprove/alfa-css";
-import { Length } from "@siteimprove/alfa-css";
+import type { LengthPercentage, Unit, Value } from "@siteimprove/alfa-css";
+import { Length, List } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 
 import type { Style } from "./style.js";
@@ -49,5 +49,27 @@ export namespace Resolver {
     style: Style,
   ): LengthPercentage.Resolver {
     return { percentageBase: base, length: lengthResolver(style) };
+  }
+
+  /**
+   * Resolve layers for properties that uses layering like background and mask.
+   *
+   * The number of layers is determined by the number of comma separated values
+   * in the property where the image is specified, i.e. `background-image` or `mask-image`.
+   *
+   * If there are more values than layers, the excess values are discarded.
+   * Otherwise, the values must be repeated until the number of values matches the number of layers.
+   *
+   * {@link https://www.w3.org/TR/css-backgrounds-3/#layering}
+   * {@link https://drafts.fxtf.org/css-masking/#layering}.
+   *
+   * @internal
+   */
+  export function layers<V extends Value>(
+    style: Style,
+    name: "mask-image" | "background-image",
+  ): Mapper<List<V>, List<V>> {
+    return (value) =>
+      value.cutOrExtend(Math.max(style.computed(name).value.size, 1));
   }
 }

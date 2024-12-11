@@ -2,8 +2,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Box, Keyword, List } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
-
-import { matchLayers } from "./helpers/mask-layers.js";
+import { Resolver } from "../resolver.js";
 
 const { either } = Parser;
 
@@ -22,5 +21,5 @@ export namespace MaskClip {
 export default Longhand.of<Specified, Computed>(
   List.of([MaskClip.initialItem]),
   List.parseCommaSeparated(either(Box.parseCoordBox, Keyword.parse("no-clip"))),
-  (value, style) => value.map((value) => matchLayers(value, style)),
+  (value, style) => value.map(Resolver.layers(style, "mask-image")),
 );

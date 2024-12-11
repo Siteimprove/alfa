@@ -13,15 +13,7 @@ test("longhands resolve correctly from shorthand", (t) => {
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "image",
-          image: {
-            type: "url",
-            url: "foo.svg",
-          },
-        },
-      ],
+      values: [{ type: "image", image: { type: "url", url: "foo.svg" } }],
     },
     source: decl.toJSON(),
   });
@@ -35,25 +27,13 @@ test("longhands resolve correctly from shorthand", (t) => {
           type: "position",
           horizontal: {
             type: "side",
-            offset: {
-              type: "percentage",
-              value: 0.5,
-            },
-            side: {
-              type: "keyword",
-              value: "left",
-            },
+            offset: { type: "percentage", value: 0.5 },
+            side: { type: "keyword", value: "left" },
           },
           vertical: {
             type: "side",
-            offset: {
-              type: "percentage",
-              value: 0,
-            },
-            side: {
-              type: "keyword",
-              value: "top",
-            },
+            offset: { type: "percentage", value: 0 },
+            side: { type: "keyword", value: "top" },
           },
         },
       ],
@@ -69,13 +49,7 @@ test("longhands resolve correctly from shorthand", (t) => {
         {
           type: "list",
           separator: " ",
-          values: [
-            {
-              type: "length",
-              unit: "px",
-              value: 12,
-            },
-          ],
+          values: [{ type: "length", unit: "px", value: 12 }],
         },
       ],
     },
@@ -86,12 +60,7 @@ test("longhands resolve correctly from shorthand", (t) => {
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "repeat-x",
-        },
-      ],
+      values: [{ type: "keyword", value: "repeat-x" }],
     },
     source: decl.toJSON(),
   });
@@ -100,12 +69,7 @@ test("longhands resolve correctly from shorthand", (t) => {
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "view-box",
-        },
-      ],
+      values: [{ type: "keyword", value: "view-box" }],
     },
     source: decl.toJSON(),
   });
@@ -114,12 +78,7 @@ test("longhands resolve correctly from shorthand", (t) => {
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "padding-box",
-        },
-      ],
+      values: [{ type: "keyword", value: "padding-box" }],
     },
     source: decl.toJSON(),
   });
@@ -128,12 +87,7 @@ test("longhands resolve correctly from shorthand", (t) => {
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "subtract",
-        },
-      ],
+      values: [{ type: "keyword", value: "subtract" }],
     },
     source: decl.toJSON(),
   });
@@ -142,12 +96,7 @@ test("longhands resolve correctly from shorthand", (t) => {
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "luminance",
-        },
-      ],
+      values: [{ type: "keyword", value: "luminance" }],
     },
     source: decl.toJSON(),
   });
@@ -162,12 +111,7 @@ test("if one `<coord-box>` value and the `no-clip` keyword are present then `<co
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "view-box",
-        },
-      ],
+      values: [{ type: "keyword", value: "view-box" }],
     },
     source: decl.toJSON(),
   });
@@ -176,12 +120,7 @@ test("if one `<coord-box>` value and the `no-clip` keyword are present then `<co
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "no-clip",
-        },
-      ],
+      values: [{ type: "keyword", value: "no-clip" }],
     },
     source: decl.toJSON(),
   });
@@ -196,12 +135,7 @@ test("if one `<coord-box>` value and no `no-clip` keyword are present then `<coo
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "view-box",
-        },
-      ],
+      values: [{ type: "keyword", value: "view-box" }],
     },
     source: decl.toJSON(),
   });
@@ -210,12 +144,7 @@ test("if one `<coord-box>` value and no `no-clip` keyword are present then `<coo
     value: {
       type: "list",
       separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "view-box",
-        },
-      ],
+      values: [{ type: "keyword", value: "view-box" }],
     },
     source: decl.toJSON(),
   });
@@ -231,20 +160,8 @@ test("longhands resolves correctly from shorthand with layers", (t) => {
       type: "list",
       separator: ", ",
       values: [
-        {
-          type: "image",
-          image: {
-            type: "url",
-            url: "foo.svg",
-          },
-        },
-        {
-          type: "image",
-          image: {
-            type: "url",
-            url: "bar.svg",
-          },
-        },
+        { type: "image", image: { type: "url", url: "foo.svg" } },
+        { type: "image", image: { type: "url", url: "bar.svg" } },
       ],
     },
     source: decl.toJSON(),
@@ -259,50 +176,26 @@ test("longhands resolves correctly from shorthand with layers", (t) => {
           type: "position",
           horizontal: {
             type: "side",
-            offset: {
-              type: "percentage",
-              value: 0.5,
-            },
-            side: {
-              type: "keyword",
-              value: "left",
-            },
+            offset: { type: "percentage", value: 0.5 },
+            side: { type: "keyword", value: "left" },
           },
           vertical: {
             type: "side",
-            offset: {
-              type: "percentage",
-              value: 0,
-            },
-            side: {
-              type: "keyword",
-              value: "top",
-            },
+            offset: { type: "percentage", value: 0 },
+            side: { type: "keyword", value: "top" },
           },
         },
         {
           type: "position",
           horizontal: {
             type: "side",
-            offset: {
-              type: "percentage",
-              value: 0,
-            },
-            side: {
-              type: "keyword",
-              value: "left",
-            },
+            offset: { type: "percentage", value: 0 },
+            side: { type: "keyword", value: "left" },
           },
           vertical: {
             type: "side",
-            offset: {
-              type: "percentage",
-              value: 0.5,
-            },
-            side: {
-              type: "keyword",
-              value: "top",
-            },
+            offset: { type: "percentage", value: 0.5 },
+            side: { type: "keyword", value: "top" },
           },
         },
       ],
@@ -318,23 +211,12 @@ test("longhands resolves correctly from shorthand with layers", (t) => {
         {
           type: "list",
           separator: " ",
-          values: [
-            {
-              type: "length",
-              unit: "px",
-              value: 12,
-            },
-          ],
+          values: [{ type: "length", unit: "px", value: 12 }],
         },
         {
           type: "list",
           separator: " ",
-          values: [
-            {
-              type: "keyword",
-              value: "auto",
-            },
-          ],
+          values: [{ type: "keyword", value: "auto" }],
         },
       ],
     },

@@ -4,18 +4,11 @@ import { h } from "@siteimprove/alfa-dom";
 import { computed } from "../common.js";
 
 test("initial value is border-box", (t) => {
-  const element = <div></div>;
-
-  t.deepEqual(computed(element, "mask-clip"), {
+  t.deepEqual(computed(<div></div>, "mask-clip"), {
     value: {
       type: "list",
       separator: " ",
-      values: [
-        {
-          type: "keyword",
-          value: "border-box",
-        },
-      ],
+      values: [{ type: "keyword", value: "border-box" }],
     },
     source: null,
   });
@@ -31,18 +24,11 @@ test("#computed parses single keywords", (t) => {
     "view-box",
     "no-clip",
   ] as const) {
-    const element = <div style={{ maskClip: kw }}></div>;
-
-    t.deepEqual(computed(element, "mask-clip"), {
+    t.deepEqual(computed(<div style={{ maskClip: kw }}></div>, "mask-clip"), {
       value: {
         type: "list",
         separator: ", ",
-        values: [
-          {
-            type: "keyword",
-            value: kw,
-          },
-        ],
+        values: [{ type: "keyword", value: kw }],
       },
       source: h.declaration("mask-clip", kw).toJSON(),
     });
@@ -50,34 +36,29 @@ test("#computed parses single keywords", (t) => {
 });
 
 test("#computed parses multiple layers", (t) => {
-  const element = (
-    <div
-      style={{
-        maskImage: "url(foo.svg), url(bar.svg)",
-        maskClip: "padding-box, no-clip",
-      }}
-    ></div>
-  );
-
-  t.deepEqual(computed(element, "mask-clip"), {
-    value: {
-      type: "list",
-      separator: ", ",
-      values: [
-        {
-          type: "keyword",
-          value: "padding-box",
-        },
-        {
-          type: "keyword",
-          value: "no-clip",
-        },
-      ],
+  t.deepEqual(
+    computed(
+      <div
+        style={{
+          maskImage: "url(foo.svg), url(bar.svg)",
+          maskClip: "padding-box, no-clip",
+        }}
+      ></div>,
+      "mask-clip",
+    ),
+    {
+      value: {
+        type: "list",
+        separator: ", ",
+        values: [
+          { type: "keyword", value: "padding-box" },
+          { type: "keyword", value: "no-clip" },
+        ],
+      },
+      source: h.declaration("mask-clip", "padding-box, no-clip").toJSON(),
     },
-    source: h.declaration("mask-clip", "padding-box, no-clip").toJSON(),
-  });
+  );
 });
-
 test("#computed discards excess values when there are more values than layers", (t) => {
   const element = (
     <div
@@ -87,20 +68,13 @@ test("#computed discards excess values when there are more values than layers", 
       }}
     ></div>
   );
-
   t.deepEqual(computed(element, "mask-clip"), {
     value: {
       type: "list",
       separator: ", ",
       values: [
-        {
-          type: "keyword",
-          value: "view-box",
-        },
-        {
-          type: "keyword",
-          value: "fill-box",
-        },
+        { type: "keyword", value: "view-box" },
+        { type: "keyword", value: "fill-box" },
       ],
     },
     source: h
@@ -108,7 +82,6 @@ test("#computed discards excess values when there are more values than layers", 
       .toJSON(),
   });
 });
-
 test("#computed repeats values when there are more layers than values", (t) => {
   const element = (
     <div
@@ -118,24 +91,14 @@ test("#computed repeats values when there are more layers than values", (t) => {
       }}
     ></div>
   );
-
   t.deepEqual(computed(element, "mask-clip"), {
     value: {
       type: "list",
       separator: ", ",
       values: [
-        {
-          type: "keyword",
-          value: "view-box",
-        },
-        {
-          type: "keyword",
-          value: "fill-box",
-        },
-        {
-          type: "keyword",
-          value: "view-box",
-        },
+        { type: "keyword", value: "view-box" },
+        { type: "keyword", value: "fill-box" },
+        { type: "keyword", value: "view-box" },
       ],
     },
     source: h.declaration("mask-clip", "view-box, fill-box").toJSON(),

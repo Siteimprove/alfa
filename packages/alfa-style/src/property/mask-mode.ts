@@ -1,8 +1,7 @@
 import { Keyword, List, type Parser as CSSParser } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
-
-import { matchLayers } from "./helpers/mask-layers.js";
+import { Resolver } from "../resolver.js";
 
 export type MaskingMode =
   | Keyword<"alpha">
@@ -29,5 +28,5 @@ type Computed = Specified;
 export default Longhand.of<Specified, Computed>(
   List.of([MaskingMode.initialItem], ", "),
   List.parseCommaSeparated(MaskingMode.parse),
-  (value, style) => value.map((value) => matchLayers(value, style)),
+  (value, style) => value.map(Resolver.layers(style, "mask-image")),
 );

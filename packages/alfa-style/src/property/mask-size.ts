@@ -9,8 +9,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
-import { matchLayers } from "./helpers/mask-layers.js";
-
 const { either } = Parser;
 
 export type BgSize =
@@ -41,9 +39,11 @@ type Computed = Specified;
 export default Longhand.of<Specified, Computed>(
   List.of([BgSize.initialItem], ", "),
   List.parseCommaSeparated(BgSize.parse),
-  (value, style) =>
-    value.map((sizes) =>
-      matchLayers(
+  (value, style) => {
+    const layers = Resolver.layers<BgSize>(style, "mask-image");
+
+    return value.map((sizes) =>
+      layers(
         sizes.map((size) =>
           Keyword.isKeyword(size)
             ? size
@@ -55,7 +55,7 @@ export default Longhand.of<Specified, Computed>(
                     ),
               ),
         ),
-        style,
       ),
-    ),
+    );
+  },
 );
