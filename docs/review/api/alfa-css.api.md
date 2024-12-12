@@ -1258,6 +1258,7 @@ export namespace Lexer {
 export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V]>> implements Iterable_2<V>, Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>>, PartiallyResolvable<List<Resolvable.PartiallyResolved<V>>, Resolvable.PartialResolver<V>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<V>;
+    cutOrExtend(length: number): List<V>;
     // (undocumented)
     equals<T extends Value>(value: List<T>): boolean;
     // (undocumented)
@@ -1272,6 +1273,8 @@ export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V
     partiallyResolve(resolver?: Resolvable.PartialResolver<V>): List<Resolvable.PartiallyResolved<V>>;
     // (undocumented)
     resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>>;
+    // (undocumented)
+    get size(): number;
     // (undocumented)
     toJSON(): List.JSON<V>;
     // (undocumented)

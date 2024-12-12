@@ -6,11 +6,8 @@
 
 import type { Applicative } from '@siteimprove/alfa-applicative';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { BgSize } from './property/mask-size.js';
 import { Box } from '@siteimprove/alfa-css';
 import { Color } from '@siteimprove/alfa-css';
-import { Component } from '@siteimprove/alfa-css/dist/value/position/component.js';
-import { CompositingOperator } from './property/mask-composite.js';
 import { Computed } from './property/line-height.js';
 import { Contain } from '@siteimprove/alfa-css';
 import { Context } from '@siteimprove/alfa-selector';
@@ -31,8 +28,6 @@ import { LengthPercentage } from '@siteimprove/alfa-css';
 import { List } from '@siteimprove/alfa-css';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import type { Mapper } from '@siteimprove/alfa-mapper';
-import { MaskingMode } from './property/mask-mode.js';
-import { MaskReference } from './property/mask-image.js';
 import type { Monad } from '@siteimprove/alfa-monad';
 import { Node } from '@siteimprove/alfa-dom';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
@@ -43,10 +38,8 @@ import { Parser } from '@siteimprove/alfa-css';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
 import { Perspective } from '@siteimprove/alfa-css';
-import { Position } from '@siteimprove/alfa-css';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-css';
-import { RepeatStyle } from './property/mask-repeat.js';
 import type { Resolvable } from '@siteimprove/alfa-css';
 import { Rotate } from '@siteimprove/alfa-css';
 import { Scale } from '@siteimprove/alfa-css';
@@ -63,7 +56,14 @@ import { Specified as Specified_13 } from './property/font-stretch.js';
 import { Specified as Specified_14 } from './property/font-variant-east-asian.js';
 import { Specified as Specified_15 } from './property/font-variant-ligatures.js';
 import { Specified as Specified_16 } from './property/font-variant-numeric.js';
+import { Specified as Specified_17 } from './property/mask-clip.js';
+import { Specified as Specified_18 } from './property/mask-composite.js';
+import { Specified as Specified_19 } from './property/mask-image.js';
 import { Specified as Specified_2 } from './property/background-image.js';
+import { Specified as Specified_20 } from './property/mask-mode.js';
+import { Specified as Specified_21 } from './property/mask-position.js';
+import { Specified as Specified_22 } from './property/mask-repeat.js';
+import { Specified as Specified_23 } from './property/mask-size.js';
 import { Specified as Specified_3 } from './property/background-position-x.js';
 import { Specified as Specified_4 } from './property/background-position-y.js';
 import { Specified as Specified_5 } from './property/background-repeat-x.js';
@@ -231,14 +231,14 @@ export namespace Longhands {
         readonly "margin-left": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         readonly "margin-right": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         readonly "margin-top": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        readonly "mask-clip": Longhand<List<Box.CoordBox | Keyword<"no-clip">>, List<Box.CoordBox | Keyword<"no-clip">>>;
-        readonly "mask-composite": Longhand<List<CompositingOperator>, List<CompositingOperator>>;
-        readonly "mask-image": Longhand<List<MaskReference>, List<MaskReference>>;
-        readonly "mask-mode": Longhand<List<MaskingMode>, List<MaskingMode>>;
+        readonly "mask-clip": Longhand<List<Specified_17.Item>, List<Specified_17.Item>>;
+        readonly "mask-composite": Longhand<List<Specified_18.Item>, List<Specified_18.Item>>;
+        readonly "mask-image": Longhand<List<Specified_19.Item>, List<Specified_19.Item>>;
+        readonly "mask-mode": Longhand<List<Specified_20.Item>, List<Specified_20.Item>>;
         readonly "mask-origin": Longhand<List<Box.CoordBox>, List<Box.CoordBox>>;
-        readonly "mask-position": Longhand<List<Position<Keywords.Horizontal, Keywords.Vertical, Component<Keywords.Horizontal>, Component<Keywords.Vertical>>>, List<Position.PartiallyResolved<Keywords.Horizontal, Keywords.Vertical>>>;
-        readonly "mask-repeat": Longhand<List<RepeatStyle>, List<RepeatStyle>>;
-        readonly "mask-size": Longhand<List<BgSize>, List<BgSize>>;
+        readonly "mask-position": Longhand<List<Specified_21.Item>, List<Specified_21.Item>>;
+        readonly "mask-repeat": Longhand<List<Specified_22.Item>, List<Specified_22.Item>>;
+        readonly "mask-size": Longhand<List<Specified_23.Item>, List<Specified_23.Item>>;
         readonly "min-height": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
         readonly "min-width": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
         readonly "mix-blend-mode": Longhand<Keyword.ToKeywords<"screen" | "color" | "hue" | "saturation" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "luminosity" | "plus-darker" | "plus-lighter">, Keyword.ToKeywords<"screen" | "color" | "hue" | "saturation" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "luminosity" | "plus-darker" | "plus-lighter">>;
@@ -285,6 +285,7 @@ export namespace Longhands {
 //
 // @internal
 export namespace Resolver {
+    export function layers<V extends Value_2>(style: Style, name: "mask-image" | "background-image"): Mapper<List<V>, List<V>>;
     // (undocumented)
     export function length(style: Style): Length.Resolver;
     // (undocumented)
@@ -320,7 +321,7 @@ export namespace Shorthands {
     export function isName(name: string): name is Name;
     const // (undocumented)
     shortHands: {
-        readonly background: Shorthand<"background-attachment" | "background-clip" | "background-color" | "background-image" | "background-origin" | "background-position-x" | "background-position-y" | "background-repeat-x" | "background-repeat-y" | "background-size">;
+        readonly background: Shorthand<"background-image" | "background-attachment" | "background-clip" | "background-color" | "background-origin" | "background-position-x" | "background-position-y" | "background-repeat-x" | "background-repeat-y" | "background-size">;
         readonly "background-position": Shorthand<"background-position-x" | "background-position-y">;
         readonly "background-repeat": Shorthand<"background-repeat-x" | "background-repeat-y">;
         readonly "border-block-color": Shorthand<"border-block-end-color" | "border-block-start-color">;
@@ -352,7 +353,7 @@ export namespace Shorthands {
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
         readonly inset: Shorthand<"top" | "bottom" | "left" | "right">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
-        readonly mask: Shorthand<"mask-clip" | "mask-composite" | "mask-image" | "mask-mode" | "mask-origin" | "mask-position" | "mask-repeat" | "mask-size">;
+        readonly mask: Shorthand<"mask-image" | "mask-clip" | "mask-composite" | "mask-mode" | "mask-origin" | "mask-position" | "mask-repeat" | "mask-size">;
         readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
         readonly "text-decoration": Shorthand<"text-decoration-color" | "text-decoration-line" | "text-decoration-style" | "text-decoration-thickness">;
