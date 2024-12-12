@@ -10,9 +10,11 @@ test("initial value is repeat", (t) => {
       separator: ", ",
       values: [
         {
-          type: "list",
-          values: [{ type: "keyword", value: "repeat" }],
-          separator: " ",
+          type: "tuple",
+          values: [
+            { type: "keyword", value: "repeat" },
+            { type: "keyword", value: "repeat" },
+          ],
         },
       ],
     },
@@ -21,19 +23,45 @@ test("initial value is repeat", (t) => {
 });
 
 test("#computed parses single keywords", (t) => {
-  for (const kw of ["repeat-x", "repeat-y"] as const) {
-    t.deepEqual(
-      computed(<div style={{ maskRepeat: kw }}></div>, "mask-repeat"),
-      {
-        value: {
-          type: "list",
-          separator: ", ",
-          values: [{ type: "keyword", value: kw }],
-        },
-        source: h.declaration("mask-repeat", kw).toJSON(),
+  t.deepEqual(
+    computed(<div style={{ maskRepeat: "repeat-x" }}></div>, "mask-repeat"),
+    {
+      value: {
+        type: "list",
+        separator: ", ",
+        values: [
+          {
+            type: "tuple",
+            values: [
+              { type: "keyword", value: "repeat" },
+              { type: "keyword", value: "no-repeat" },
+            ],
+          },
+        ],
       },
-    );
-  }
+      source: h.declaration("mask-repeat", "repeat-x").toJSON(),
+    },
+  );
+
+  t.deepEqual(
+    computed(<div style={{ maskRepeat: "repeat-y" }}></div>, "mask-repeat"),
+    {
+      value: {
+        type: "list",
+        separator: ", ",
+        values: [
+          {
+            type: "tuple",
+            values: [
+              { type: "keyword", value: "no-repeat" },
+              { type: "keyword", value: "repeat" },
+            ],
+          },
+        ],
+      },
+      source: h.declaration("mask-repeat", "repeat-y").toJSON(),
+    },
+  );
 
   for (const kw of ["repeat", "space", "round", "no-repeat"] as const) {
     t.deepEqual(
@@ -44,9 +72,11 @@ test("#computed parses single keywords", (t) => {
           separator: ", ",
           values: [
             {
-              type: "list",
-              separator: " ",
-              values: [{ type: "keyword", value: kw }],
+              type: "tuple",
+              values: [
+                { type: "keyword", value: kw },
+                { type: "keyword", value: kw },
+              ],
             },
           ],
         },
@@ -65,8 +95,7 @@ test("#computed parses at most two space separated values", (t) => {
         separator: ", ",
         values: [
           {
-            type: "list",
-            separator: " ",
+            type: "tuple",
             values: [
               { type: "keyword", value: "repeat" },
               { type: "keyword", value: "space" },
@@ -89,9 +118,11 @@ test("#computed parses at most two space separated values", (t) => {
         separator: ", ",
         values: [
           {
-            type: "list",
-            separator: " ",
-            values: [{ type: "keyword", value: "repeat" }],
+            type: "tuple",
+            values: [
+              { type: "keyword", value: "repeat" },
+              { type: "keyword", value: "repeat" },
+            ],
           },
         ],
       },

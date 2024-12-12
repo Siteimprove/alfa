@@ -60,7 +60,15 @@ test("longhands resolve correctly from shorthand", (t) => {
     value: {
       type: "list",
       separator: ", ",
-      values: [{ type: "keyword", value: "repeat-x" }],
+      values: [
+        {
+          type: "tuple",
+          values: [
+            { type: "keyword", value: "repeat" },
+            { type: "keyword", value: "no-repeat" },
+          ],
+        },
+      ],
     },
     source: decl.toJSON(),
   });
