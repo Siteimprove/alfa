@@ -37,6 +37,13 @@ export const initialItem = Position.of(
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-position}
  *
+ * @remarks
+ * We do not currently fully follow the definition of computed value given in the specification.
+ * Accordingly the computed value should consist of two keywords and two offsets.
+ * E.g specifying a single keyword `right` would compute to `top 50% left 100%` or similar.
+ * But in the current implementation keyword based values are not resolved into keywords with offsets.
+ * So the single keyword `right` will just compute unaltered to `right`.
+ *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(

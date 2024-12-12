@@ -28,8 +28,6 @@ test("initial value is 0% 0%", (t) => {
   });
 });
 
-// TODO: The spec requires the computed value to be two lengths or percentages, not a keyword value.
-// E.g. the keyword `left` should be computes to `0% 50%` in Chrome and Firefox.
 test("#computed parses single keywords", (t) => {
   for (const kw of ["top", "bottom"] as const) {
     t.deepEqual(
