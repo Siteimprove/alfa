@@ -285,7 +285,7 @@ export namespace Longhands {
 //
 // @internal
 export namespace Resolver {
-    export function layers<V extends Value_2>(style: Style, name: "mask-image" | "background-image"): Mapper<List<V>, List<V>>;
+    export function layers(style: Style, name: "mask-image" | "background-image"): <V extends Value_2>(value: List<V>) => List<V>;
     // (undocumented)
     export function length(style: Style): Length.Resolver;
     // (undocumented)
