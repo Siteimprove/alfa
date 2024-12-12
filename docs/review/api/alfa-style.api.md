@@ -237,7 +237,7 @@ export namespace Longhands {
         readonly "mask-mode": Longhand<List<Specified_20.Item>, List<Specified_20.Item>>;
         readonly "mask-origin": Longhand<List<Box.CoordBox>, List<Box.CoordBox>>;
         readonly "mask-position": Longhand<List<Specified_21.Item>, List<Specified_21.Item>>;
-        readonly "mask-repeat": Longhand<List<Specified_22.Item>, List<Specified_22.Item>>;
+        readonly "mask-repeat": Longhand<List<Specified_22.Item>, List<Tuple<[Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">, Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">]>>>;
         readonly "mask-size": Longhand<List<Specified_23.Item>, List<Specified_23.Item>>;
         readonly "min-height": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
         readonly "min-width": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
