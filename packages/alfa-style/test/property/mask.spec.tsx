@@ -47,9 +47,11 @@ test("longhands resolve correctly from shorthand", (t) => {
       separator: ", ",
       values: [
         {
-          type: "list",
-          separator: " ",
-          values: [{ type: "length", unit: "px", value: 12 }],
+          type: "tuple",
+          values: [
+            { type: "length", unit: "px", value: 12 },
+            { type: "length", unit: "px", value: 12 },
+          ],
         },
       ],
     },
@@ -217,14 +219,18 @@ test("longhands resolves correctly from shorthand with layers", (t) => {
       separator: ", ",
       values: [
         {
-          type: "list",
-          separator: " ",
-          values: [{ type: "length", unit: "px", value: 12 }],
+          type: "tuple",
+          values: [
+            { type: "length", unit: "px", value: 12 },
+            { type: "length", unit: "px", value: 12 },
+          ],
         },
         {
-          type: "list",
-          separator: " ",
-          values: [{ type: "keyword", value: "auto" }],
+          type: "tuple",
+          values: [
+            { type: "keyword", value: "auto" },
+            { type: "keyword", value: "auto" },
+          ],
         },
       ],
     },

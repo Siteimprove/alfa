@@ -15,14 +15,18 @@ test("initial value is auto", (t) => {
         separator: ", ",
         values: [
           {
-            type: "list",
-            separator: " ",
-            values: [{ type: "keyword", value: "auto" }],
+            type: "tuple",
+            values: [
+              { type: "keyword", value: "auto" },
+              { type: "keyword", value: "auto" },
+            ],
           },
           {
-            type: "list",
-            separator: " ",
-            values: [{ type: "keyword", value: "auto" }],
+            type: "tuple",
+            values: [
+              { type: "keyword", value: "auto" },
+              { type: "keyword", value: "auto" },
+            ],
           },
         ],
       },
@@ -51,9 +55,11 @@ test("#computed parses percentage width", (t) => {
       separator: ", ",
       values: [
         {
-          type: "list",
-          separator: " ",
-          values: [{ type: "percentage", value: 0.5 }],
+          type: "tuple",
+          values: [
+            { type: "percentage", value: 0.5 },
+            { type: "percentage", value: 0.5 },
+          ],
         },
       ],
     },
@@ -68,9 +74,11 @@ test("#computed resolves em width", (t) => {
       separator: ", ",
       values: [
         {
-          type: "list",
-          separator: " ",
-          values: [{ type: "length", unit: "px", value: 48 }],
+          type: "tuple",
+          values: [
+            { type: "length", unit: "px", value: 48 },
+            { type: "length", unit: "px", value: 48 },
+          ],
         },
       ],
     },
@@ -85,9 +93,11 @@ test("#computed parses pixel width", (t) => {
       separator: ", ",
       values: [
         {
-          type: "list",
-          separator: " ",
-          values: [{ type: "length", unit: "px", value: 12 }],
+          type: "tuple",
+          values: [
+            { type: "length", unit: "px", value: 12 },
+            { type: "length", unit: "px", value: 12 },
+          ],
         },
       ],
     },
@@ -104,8 +114,7 @@ test("#computed parses width and height", (t) => {
         separator: ", ",
         values: [
           {
-            type: "list",
-            separator: " ",
+            type: "tuple",
             values: [
               { type: "length", unit: "px", value: 48 },
               { type: "percentage", value: 0.25 },
