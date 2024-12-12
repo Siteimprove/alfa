@@ -84,6 +84,14 @@ import MarginLeft from "./property/margin-left.js";
 import MarginRight from "./property/margin-right.js";
 import MarginTop from "./property/margin-top.js";
 import MaskBorderSource from "./property/mask-border-source.js";
+import MaskClip from "./property/mask-clip.js";
+import MaskComposite from "./property/mask-composite.js";
+import MaskImage from "./property/mask-image.js";
+import MaskMode from "./property/mask-mode.js";
+import MaskOrigin from "./property/mask-origin.js";
+import MaskPosition from "./property/mask-position.js";
+import MaskRepeat from "./property/mask-repeat.js";
+import MaskSize from "./property/mask-size.js";
 import MinHeight from "./property/min-height.js";
 import MinWidth from "./property/min-width.js";
 import MixBlendMode from "./property/mix-blend-mode.js";
@@ -270,6 +278,14 @@ export namespace Longhands {
     "margin-right": MarginRight,
     "margin-top": MarginTop,
     "mask-border-source": MaskBorderSource,
+    "mask-clip": MaskClip,
+    "mask-composite": MaskComposite,
+    "mask-image": MaskImage,
+    "mask-mode": MaskMode,
+    "mask-origin": MaskOrigin,
+    "mask-position": MaskPosition,
+    "mask-repeat": MaskRepeat,
+    "mask-size": MaskSize,
     "min-height": MinHeight,
     "min-width": MinWidth,
     "mix-blend-mode": MixBlendMode,

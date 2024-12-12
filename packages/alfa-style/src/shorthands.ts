@@ -30,6 +30,7 @@ import InsetBlock from "./property/inset-block.js";
 import InsetInline from "./property/inset-inline.js";
 import Inset from "./property/inset.js";
 import Margin from "./property/margin.js";
+import Mask from "./property/mask.js";
 import Outline from "./property/outline.js";
 import Overflow from "./property/overflow.js";
 import TextDecoration from "./property/text-decoration.js";
@@ -76,6 +77,7 @@ export namespace Shorthands {
     "inset-inline": InsetInline,
     inset: Inset,
     margin: Margin,
+    mask: Mask,
     outline: Outline,
     overflow: Overflow,
     "text-decoration": TextDecoration,
