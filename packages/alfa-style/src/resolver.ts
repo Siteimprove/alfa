@@ -65,11 +65,11 @@ export namespace Resolver {
    *
    * @internal
    */
-  export function layers<V extends Value>(
+  export function layers(
     style: Style,
     name: "mask-image" | "background-image",
-  ): Mapper<List<V>, List<V>> {
-    return (value) =>
+  ) {
+    return <V extends Value>(value: List<V>): List<V> =>
       value.cutOrExtend(Math.max(style.computed(name).value.size, 1));
   }
 }

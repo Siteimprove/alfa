@@ -48,7 +48,7 @@ export default Longhand.of<Specified, Computed>(
   List.of([initialItem], ", "),
   parseList,
   (value, style) => {
-    const layers = Resolver.layers<Specified.Item>(style, "mask-image");
+    const layers = Resolver.layers(style, "mask-image");
 
     return value.map((sizes) =>
       layers(
