@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.97.0
+
+### Patch Changes
+
+- **Fixed:** URI of SIA-R115 is now correct. ([#1734](https://github.com/Siteimprove/alfa/pull/1734))
+
 ## 0.96.0
 
 ### Minor Changes

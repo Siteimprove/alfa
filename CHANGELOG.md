@@ -1,5 +1,19 @@
 # Alfa changelog
 
+## [0.97.0](../../compare/v0.96.0...v0.97.0) (2024-12-13)
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0970): CSS shorthand property `mask` and corresponding longhand properties are now supported. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0970): `List#cutOrExtend` is now available. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0970): `List#size` is now available. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0970): URI of SIA-R115 is now correct. ([#1734](https://github.com/Siteimprove/alfa/pull/1734))
+
 ## [0.96.0](../../compare/v0.95.0...v0.96.0) (2024-12-06)
 
 ### Added

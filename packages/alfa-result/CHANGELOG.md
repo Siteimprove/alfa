@@ -1,5 +1,7 @@
 # @siteimprove/alfa-result
 
+## 0.97.0
+
 ## 0.96.0
 
 ## 0.95.0

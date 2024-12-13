@@ -1,5 +1,7 @@
 # @siteimprove/alfa-css-feature
 
+## 0.97.0
+
 ## 0.96.0
 
 ### Patch Changes

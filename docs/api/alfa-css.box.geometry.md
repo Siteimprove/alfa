@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-type Geometry = Shape | Keyword<"fill-box"> | Keyword<"stroke-box"> | Keyword<"view-box">;
+export type Geometry = Shape | Keyword<"fill-box"> | Keyword<"stroke-box"> | Keyword<"view-box">;
 ```
 **References:** [Shape](./alfa-css.box.shape.md)
 
