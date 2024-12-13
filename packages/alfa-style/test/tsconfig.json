@@ -54,6 +54,7 @@
     "./property/isolation.spec.tsx",
     "./property/line-height.spec.tsx",
     "./property/margin.spec.tsx",
+    "./property/mask-border-slice.spec.tsx",
     "./property/mask-border-source.spec.tsx",
     "./property/mask-clip.spec.tsx",
     "./property/mask-composite.spec.tsx",

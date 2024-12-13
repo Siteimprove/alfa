@@ -1,9 +1,4 @@
-import {
-  Image,
-  Keyword,
-  URL,
-  type Parser as CSSParser,
-} from "@siteimprove/alfa-css";
+import { Image, Keyword, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 
@@ -12,18 +7,24 @@ import { Resolver } from "../resolver.js";
 
 const { either } = Parser;
 
-export type MaskBorderSource = Keyword<"none"> | Image | URL;
+/**
+ * @internal
+ */
+export type Specified = Keyword<"none"> | Image | URL;
 
-export namespace MaskBorderSource {
-  export const parse: CSSParser<MaskBorderSource> = either(
-    Keyword.parse("none"),
-    either(Image.parse, URL.parse),
-  );
+/**
+ * @internal
+ */
+export const parse = either(
+  Keyword.parse("none"),
+  either(Image.parse, URL.parse),
+);
 
-  export const initialItem = Keyword.of("none");
-}
+/**
+ * @internal
+ */
+export const initialItem = Keyword.of("none");
 
-type Specified = MaskBorderSource;
 type Computed = Specified;
 
 /**
@@ -32,8 +33,8 @@ type Computed = Specified;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  MaskBorderSource.initialItem,
-  MaskBorderSource.parse,
+  initialItem,
+  parse,
   (value, style) =>
     value.map((image) =>
       Selective.of(image)

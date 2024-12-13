@@ -83,6 +83,7 @@ import MarginBottom from "./property/margin-bottom.js";
 import MarginLeft from "./property/margin-left.js";
 import MarginRight from "./property/margin-right.js";
 import MarginTop from "./property/margin-top.js";
+import MaskBorderSlice from "./property/mask-border-slice.js";
 import MaskBorderSource from "./property/mask-border-source.js";
 import MaskClip from "./property/mask-clip.js";
 import MaskComposite from "./property/mask-composite.js";
@@ -277,6 +278,7 @@ export namespace Longhands {
     "margin-left": MarginLeft,
     "margin-right": MarginRight,
     "margin-top": MarginTop,
+    "mask-border-slice": MaskBorderSlice,
     "mask-border-source": MaskBorderSource,
     "mask-clip": MaskClip,
     "mask-composite": MaskComposite,

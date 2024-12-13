@@ -163,6 +163,7 @@
     "./property/margin-left.ts",
     "./property/margin-right.ts",
     "./property/margin-top.ts",
+    "./property/mask-border-slice.ts",
     "./property/mask-border-source.ts",
     "./property/min-height.ts",
     "./property/min-width.ts",
