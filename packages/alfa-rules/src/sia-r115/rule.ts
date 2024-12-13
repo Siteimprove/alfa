@@ -21,7 +21,7 @@ const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
  * backend can automatically determine the answer.
  */
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r114",
+  uri: "https://alfa.siteimprove.com/rules/sia-r115",
   requirements: [Criterion.of("2.4.6"), Technique.of("G130")],
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
