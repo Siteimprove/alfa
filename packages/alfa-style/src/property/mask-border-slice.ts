@@ -65,10 +65,6 @@ export const parse = map(
     () => "At least one non-keyword value must be present.",
   ),
   ([p1, p2, p3, p4, fill]) => {
-    // At least one number is guaranteed to be defined by the filter above
-    // and we assume that `doubleBar` is implemented such that the defined values appears first.
-    p1 = p1 as NumberPercentage;
-
     // Represents the postions in order of [top, right, bottom, left]
     let positions: [
       NumberPercentage,
@@ -76,19 +72,20 @@ export const parse = map(
       NumberPercentage,
       NumberPercentage,
     ];
+    // The filter above should guarantee that `p1` is never `undefined`, but since TypeScript is not able to tell we use `p1!` in the following.
     if (p2 === undefined) {
-      positions = [p1, p1, p1, p1];
+      positions = [p1!, p1!, p1!, p1!];
     } else if (p3 === undefined) {
       // when two positions are specified, the first creates slices measured from the **top and bottom**,
       // the second creates slices measured from the **left and right**.
-      positions = [p1, p2, p1, p2];
+      positions = [p1!, p2, p1!, p2];
     } else if (p4 === undefined) {
       // when three positions are specified, the first creates a slice measured from the **top**,
       // the second creates slices measured from the **left and right**,
       // the third creates a slice measured from the **bottom**.
-      positions = [p1, p2, p3, p2];
+      positions = [p1!, p2, p3, p2];
     } else {
-      positions = [p1, p2, p3, p4];
+      positions = [p1!, p2, p3, p4];
     }
 
     return fill !== undefined
