@@ -53,7 +53,7 @@ export class Side<
   private readonly _side: S;
   private readonly _offset: Option<O>;
 
-  private constructor(side: S, offset: Option<O>) {
+  protected constructor(side: S, offset: Option<O>) {
     super(
       "side",
       offset.some(Value.hasCalculation) as Value.HasCalculation<[O]>,

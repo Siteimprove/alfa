@@ -44,7 +44,7 @@ export namespace AnglePercentage {
       return new Calculated(value);
     }
 
-    private constructor(math: Math<"angle-percentage">) {
+    protected constructor(math: Math<"angle-percentage">) {
       super(math, "angle-percentage");
     }
 

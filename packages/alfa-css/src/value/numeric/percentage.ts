@@ -3,8 +3,7 @@ import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import { type Expression, Math } from "../../calculation/index.js";
-import type {
-  Numeric as BaseNumeric} from "../../calculation/numeric/index.js";
+import type { Numeric as BaseNumeric } from "../../calculation/numeric/index.js";
 import {
   Angle as BaseAngle,
   Integer as BaseInteger,
@@ -77,7 +76,7 @@ export namespace Percentage {
       return new Calculated(value);
     }
 
-    private constructor(math: Math<"percentage">) {
+    protected constructor(math: Math<"percentage">) {
       super(math, "percentage");
     }
 
@@ -172,7 +171,7 @@ export namespace Percentage {
       );
     }
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       super(value, "percentage");
     }
 

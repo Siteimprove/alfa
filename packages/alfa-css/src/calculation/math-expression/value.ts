@@ -5,14 +5,8 @@ import { Selective } from "@siteimprove/alfa-selective";
 
 import { Unit } from "../../unit/index.js";
 
-import type {
-  Numeric} from "../numeric/index.js";
-import {
-  Angle,
-  Length,
-  Number,
-  Percentage,
-} from "../numeric/index.js";
+import type { Numeric } from "../numeric/index.js";
+import { Angle, Length, Number, Percentage } from "../numeric/index.js";
 
 import { Expression } from "./expression.js";
 import { Kind } from "./kind.js";
@@ -42,7 +36,7 @@ export class Value<N extends Numeric = Numeric> extends Expression {
 
   private readonly _value: N;
 
-  private constructor(value: N, kind: Kind) {
+  protected constructor(value: N, kind: Kind) {
     super("value", kind);
 
     this._value = value;

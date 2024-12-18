@@ -28,7 +28,7 @@ export class Fragment extends Node<"fragment"> {
     return new Fragment([]);
   }
 
-  private constructor(
+  protected constructor(
     children: Array<Node>,
     externalId?: string,
     internalId?: string,

@@ -23,7 +23,7 @@ export class Block implements Iterable<Token>, Equatable, Serializable {
   private readonly _token: Block.Open;
   private readonly _value: Array<Token>;
 
-  private constructor(token: Block.Open, value: Array<Token>) {
+  protected constructor(token: Block.Open, value: Array<Token>) {
     this._token = token;
     this._value = value;
   }

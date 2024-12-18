@@ -20,7 +20,7 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
     return new Angle(value, unit);
   }
 
-  private constructor(value: number, unit: U) {
+  protected constructor(value: number, unit: U) {
     super(value, unit, "angle");
   }
 

@@ -28,7 +28,7 @@ export class Matrix
 
   private readonly _values: Matrix.Values<Number.Canonical>;
 
-  private constructor(values: Matrix.Values<Number.Canonical>) {
+  protected constructor(values: Matrix.Values<Number.Canonical>) {
     super("matrix", false);
     this._values = values;
   }

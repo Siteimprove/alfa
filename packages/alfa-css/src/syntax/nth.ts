@@ -22,7 +22,7 @@ export class Nth implements Iterable<Token>, Equatable, Serializable {
   private readonly _step: number;
   private readonly _offset: number;
 
-  private constructor(step: number, offset: number) {
+  protected constructor(step: number, offset: number) {
     this._step = step;
     this._offset = offset;
   }

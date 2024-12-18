@@ -34,7 +34,7 @@ export class List<V extends Value>
   private readonly _values: Array<V>;
   private readonly _separator: string;
 
-  private constructor(values: Array<V>, separator: string) {
+  protected constructor(values: Array<V>, separator: string) {
     super("list", Value.hasCalculation(...values));
     this._values = values;
     this._separator = separator;

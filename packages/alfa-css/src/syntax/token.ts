@@ -88,7 +88,7 @@ export namespace Token {
 
     private readonly _value: string;
 
-    private constructor(value: string) {
+    protected constructor(value: string) {
       this._value = value;
     }
 
@@ -151,7 +151,7 @@ export namespace Token {
 
     private readonly _value: string;
 
-    private constructor(value: string) {
+    protected constructor(value: string) {
       this._value = value;
     }
 
@@ -212,7 +212,7 @@ export namespace Token {
 
     private readonly _value: string;
 
-    private constructor(value: string) {
+    protected constructor(value: string) {
       this._value = value;
     }
 
@@ -258,7 +258,7 @@ export namespace Token {
     private readonly _value: string;
     private readonly _isIdentifier: boolean;
 
-    private constructor(value: string, isIdentifier: boolean) {
+    protected constructor(value: string, isIdentifier: boolean) {
       this._value = value;
       this._isIdentifier = isIdentifier;
     }
@@ -322,7 +322,7 @@ export namespace Token {
 
     private readonly _value: string;
 
-    private constructor(value: string) {
+    protected constructor(value: string) {
       this._value = value;
     }
 
@@ -375,7 +375,7 @@ export namespace Token {
 
     private readonly _value: string;
 
-    private constructor(value: string) {
+    protected constructor(value: string) {
       this._value = value;
     }
 
@@ -472,7 +472,7 @@ export namespace Token {
 
     private readonly _value: number;
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       this._value = value;
     }
 
@@ -543,7 +543,11 @@ export namespace Token {
     private readonly _isInteger: boolean;
     private readonly _isSigned: boolean;
 
-    private constructor(value: number, isInteger: boolean, isSigned: boolean) {
+    protected constructor(
+      value: number,
+      isInteger: boolean,
+      isSigned: boolean,
+    ) {
       this._value = value;
       this._isInteger = isInteger;
       this._isSigned = isSigned;
@@ -620,7 +624,7 @@ export namespace Token {
     private readonly _value: number;
     private readonly _isInteger: boolean;
 
-    private constructor(value: number, isInteger: boolean) {
+    protected constructor(value: number, isInteger: boolean) {
       this._value = value;
       this._isInteger = isInteger;
     }
@@ -694,7 +698,7 @@ export namespace Token {
     private readonly _isInteger: boolean;
     private readonly _isSigned: boolean;
 
-    private constructor(
+    protected constructor(
       value: number,
       unit: string,
       isInteger: boolean,

@@ -25,7 +25,7 @@ export class Skew
   private readonly _x: Angle.Canonical;
   private readonly _y: Angle.Canonical;
 
-  private constructor(x: Angle.Canonical, y: Angle.Canonical) {
+  protected constructor(x: Angle.Canonical, y: Angle.Canonical) {
     super("skew", false);
     this._x = x;
     this._y = y;

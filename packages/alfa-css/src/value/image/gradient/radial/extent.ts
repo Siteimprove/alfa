@@ -27,7 +27,7 @@ export class Extent
   private readonly _shape: Extent.Shape;
   private readonly _size: Extent.Size;
 
-  private constructor(shape: Extent.Shape, size: Extent.Size) {
+  protected constructor(shape: Extent.Shape, size: Extent.Size) {
     super("extent", false);
     this._shape = shape;
     this._size = size;

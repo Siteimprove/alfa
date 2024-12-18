@@ -25,7 +25,7 @@ export class Hint<P extends LengthPercentage = LengthPercentage>
 
   private readonly _position: P;
 
-  private constructor(position: P) {
+  protected constructor(position: P) {
     super("hint", Value.hasCalculation(position));
     this._position = position;
   }

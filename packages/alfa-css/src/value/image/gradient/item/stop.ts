@@ -33,7 +33,7 @@ export class Stop<
   private readonly _color: C;
   private readonly _position: Option<P>;
 
-  private constructor(color: C, position: Option<P>) {
+  protected constructor(color: C, position: Option<P>) {
     super(
       "stop",
       (Value.hasCalculation(color) ||

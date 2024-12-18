@@ -46,7 +46,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
   private readonly _value: string;
   private _owner: Option<Element> = None;
 
-  private constructor(
+  protected constructor(
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: N,

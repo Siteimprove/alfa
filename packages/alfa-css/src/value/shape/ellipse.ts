@@ -40,7 +40,7 @@ export class Ellipse<R extends Radius = Radius, P extends Position = Position>
   private readonly _ry: R;
   private readonly _center: P;
 
-  private constructor(rx: R, ry: R, center: P) {
+  protected constructor(rx: R, ry: R, center: P) {
     super(
       "ellipse",
       // TS sees the first as Value.HasCalculation<[R, R, P]>
