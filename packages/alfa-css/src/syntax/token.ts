@@ -422,8 +422,10 @@ export namespace Token {
   }
 
   export class BadURL implements Equatable, Serializable<BadURL.JSON> {
+    private static _instance = new BadURL();
+
     public static of(): BadURL {
-      return new BadURL();
+      return BadURL._instance;
     }
 
     private constructor() {}
