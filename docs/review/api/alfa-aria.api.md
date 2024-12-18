@@ -30,6 +30,7 @@ import * as tree from '@siteimprove/alfa-tree';
 
 // @public (undocumented)
 export class Attribute<N extends Attribute.Name = Attribute.Name> implements Equatable, Serializable {
+    protected constructor(name: N, value: string);
     // (undocumented)
     get default(): Option<Attribute.Default<N>>;
     // (undocumented)
@@ -80,6 +81,7 @@ export namespace Attribute {
 
 // @public (undocumented)
 export class Container extends Node<"container"> {
+    protected constructor(owner: dom_2.Node, children: Array<Node>, role: Option<Role>);
     // (undocumented)
     clone(parent?: Option<Node>): Container;
     // (undocumented)
@@ -126,6 +128,7 @@ export namespace DOM {
 
 // @public (undocumented)
 export class Element extends Node<"element"> {
+    protected constructor(owner: dom_2.Node, role: Option<Role>, name: Option<Name>, attributes: Array<Attribute>, children: Array<Node>);
     allowedAttributes(): ReadonlyArray<Attribute.Name>;
     // (undocumented)
     attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
@@ -170,6 +173,7 @@ export namespace Element {
 //
 // @internal (undocumented)
 export class Feature {
+    protected constructor(roleAspect: Feature.Aspect<Role.Name | Iterable_2<Role>>, attributes: Feature.AttributesAspect, name: Feature.NameAspect);
     // (undocumented)
     get attributes(): Feature.AttributesAspect;
     // (undocumented)
@@ -204,6 +208,7 @@ export function hasValue(value: string, ...rest: Array<string>): Predicate<Name>
 
 // @public (undocumented)
 export class Inert extends Node<"inert"> {
+    protected constructor(owner: dom_2.Node);
     // (undocumented)
     clone(): Inert;
     // (undocumented)
@@ -218,6 +223,7 @@ export class Inert extends Node<"inert"> {
 
 // @public (undocumented)
 export class Name implements Equatable, Serializable<Name.JSON> {
+    protected constructor(value: string, sources: Array_2<Source>, spaceBefore: boolean, spaceAfter: boolean);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -406,6 +412,7 @@ export namespace Node {
 
 // @public (undocumented)
 export class Role<N extends Role.Name = Role.Name> implements Equatable, Hashable, Serializable {
+    protected constructor(name: N, supportedAttributes: Array_2<Attribute.Name>, requiredAttributes: Array_2<Attribute.Name>, prohibitedAttributes: Array_2<Attribute.Name>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -490,6 +497,7 @@ export namespace Source {
     export class Ancestor implements Equatable, Serializable<Ancestor.JSON> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Node_2>;
+        protected constructor(element: Element_2, name: Name);
         // (undocumented)
         get element(): Element_2;
         // (undocumented)
@@ -523,6 +531,7 @@ export namespace Source {
     export class Data implements Equatable, Serializable<Data.JSON> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Node_2>;
+        protected constructor(text: Text_2);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -552,6 +561,7 @@ export namespace Source {
     export class Descendant implements Equatable, Serializable<Descendant.JSON> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Node_2>;
+        protected constructor(element: Element_2, name: Name);
         // (undocumented)
         get element(): Element_2;
         // (undocumented)
@@ -587,6 +597,7 @@ export namespace Source {
     export class Label implements Equatable, Serializable<Label.JSON> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Node_2>;
+        protected constructor(attribute: Attribute_2);
         // (undocumented)
         get attribute(): Attribute_2;
         // (undocumented)
@@ -616,6 +627,7 @@ export namespace Source {
     export class Reference implements Equatable, Serializable<Reference.JSON> {
         // (undocumented)
         [Symbol.iterator](): Iterator<Node_2>;
+        protected constructor(attribute: Attribute_2, name: Name);
         // (undocumented)
         get attribute(): Attribute_2;
         // (undocumented)
@@ -651,6 +663,7 @@ export namespace Source {
 //
 // @internal (undocumented)
 export class State implements Equatable, Serializable<State.JSON> {
+    protected constructor(visited: Array_2<Element_2>, referrer: Option<Element_2>, referred: Option<Element_2>, isRecursing: boolean, isDescending: boolean);
     // (undocumented)
     descend(isDescending: boolean): State;
     // (undocumented)
@@ -698,6 +711,7 @@ export namespace State {
 
 // @public (undocumented)
 export class Text extends Node<"text"> {
+    protected constructor(owner: dom_2.Node, name: Option<Name>);
     // (undocumented)
     clone(): Text;
     // (undocumented)

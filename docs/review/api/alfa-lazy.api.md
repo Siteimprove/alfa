@@ -11,11 +11,13 @@ import type { Mapper } from '@siteimprove/alfa-mapper';
 import type { Monad } from '@siteimprove/alfa-monad';
 import { Serializable } from '@siteimprove/alfa-json';
 import type { Thunk } from '@siteimprove/alfa-thunk';
+import { Trampoline } from '@siteimprove/alfa-trampoline';
 
 // @public (undocumented)
 export class Lazy<T> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Lazy.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(value: Trampoline<T>);
     // (undocumented)
     apply<U>(mapper: Lazy<Mapper<T, U>>): Lazy<U>;
     // (undocumented)

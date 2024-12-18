@@ -17,6 +17,7 @@ import { Set as Set_2 } from '@siteimprove/alfa-set';
 export class Graph<T> implements Iterable_2<[T, Iterable_2<T>]>, Equatable, Hashable, Serializable<Graph.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[T, Iterable_2<T>]>;
+    protected constructor(nodes: Map_2<T, Set_2<T>>);
     // (undocumented)
     add(node: T): Graph<T>;
     // (undocumented)

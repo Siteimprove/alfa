@@ -241,6 +241,7 @@ export type Expression = Expression.Primary | Expression.Path | Expression.Axis 
 export namespace Expression {
     // (undocumented)
     export class Axis implements Equatable, Serializable {
+        protected constructor(axis: Axis.Type, test: Option<Test>, predicates: Array<Expression>);
         // (undocumented)
         get axis(): Axis.Type;
         // (undocumented)
@@ -299,6 +300,7 @@ export namespace Expression {
     }
     // (undocumented)
     export class Decimal implements Equatable, Serializable {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -326,6 +328,7 @@ export namespace Expression {
     }
     // (undocumented)
     export class Double implements Equatable, Serializable {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -353,6 +356,7 @@ export namespace Expression {
     }
     // (undocumented)
     export class Filter implements Equatable, Serializable {
+        protected constructor(base: Expression, predicates: Array<Expression>);
         // (undocumented)
         get base(): Expression;
         // (undocumented)
@@ -384,6 +388,7 @@ export namespace Expression {
     }
     // (undocumented)
     export class FunctionCall implements Equatable, Serializable {
+        protected constructor(prefix: Option<string>, name: string, arity: number, parameters: Array<Expression>);
         // (undocumented)
         get arity(): number;
         // (undocumented)
@@ -423,6 +428,7 @@ export namespace Expression {
     }
     // (undocumented)
     export class Integer implements Equatable, Serializable {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -459,6 +465,7 @@ export namespace Expression {
     }
     // (undocumented)
     export class Path implements Equatable, Serializable {
+        protected constructor(left: Expression, right: Expression);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -511,6 +518,7 @@ export namespace Expression {
     }
     // (undocumented)
     export class String implements Equatable, Serializable {
+        protected constructor(value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -542,6 +550,7 @@ export namespace Expression {
     export namespace Test {
         // (undocumented)
         export class Attribute implements Equatable, Serializable {
+            protected constructor(name: Option<string>);
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
@@ -627,6 +636,7 @@ export namespace Expression {
         }
         // (undocumented)
         export class Element implements Equatable, Serializable {
+            protected constructor(name: Option<string>);
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
@@ -667,6 +677,7 @@ export namespace Expression {
         }
         // (undocumented)
         export class Name implements Equatable, Serializable {
+            protected constructor(prefix: Option<string>, name: string);
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
@@ -899,6 +910,7 @@ export type Token = Token.Integer | Token.Decimal | Token.Double | Token.String 
 export namespace Token {
     // (undocumented)
     export class Character implements Equatable, Serializable<Character.JSON> {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -926,6 +938,7 @@ export namespace Token {
     }
     // (undocumented)
     export class Comment implements Equatable, Serializable<Comment.JSON> {
+        protected constructor(value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -955,6 +968,7 @@ export namespace Token {
     parseInteger: Parser_2<Slice<Token>, Integer, string, []>;
     // (undocumented)
     export class Decimal implements Equatable, Serializable<Decimal.JSON> {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -982,6 +996,7 @@ export namespace Token {
     }
     // (undocumented)
     export class Double implements Equatable, Serializable<Double.JSON> {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1011,6 +1026,7 @@ export namespace Token {
     }
     // (undocumented)
     export class Integer implements Equatable, Serializable<Integer.JSON> {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1060,6 +1076,7 @@ export namespace Token {
     export type JSON = Integer.JSON | Decimal.JSON | Double.JSON | String.JSON | Comment.JSON | Name.JSON | Character.JSON;
     // (undocumented)
     export class Name implements Equatable, Serializable<Name.JSON> {
+        protected constructor(prefix: Option<string>, value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1093,6 +1110,7 @@ export namespace Token {
     }
     // (undocumented)
     export class String implements Equatable, Serializable<String.JSON> {
+        protected constructor(value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)

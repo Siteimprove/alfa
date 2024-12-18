@@ -85,6 +85,7 @@ import type { Value as Value_2 } from '@siteimprove/alfa-css';
 //
 // @internal (undocumented)
 export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
+    protected constructor(initial: COMPUTED, parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>, compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>, inherits: boolean, use: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>);
     // (undocumented)
     get compute(): Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
     // (undocumented)
@@ -297,6 +298,7 @@ export namespace Resolver {
 //
 // @internal (undocumented)
 export class Shorthand<N extends Name_2 = never> {
+    protected constructor(properties: Array<N>, parse: Shorthand.Parser<N>);
     // (undocumented)
     static of<N extends Name_2>(properties: Array<N>, parse: Shorthand.Parser<N>): Shorthand<N>;
     // (undocumented)
@@ -371,7 +373,7 @@ export namespace Shorthands {
 // @public (undocumented)
 export class Style implements Serializable<Style.JSON> {
     // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
-    //
+    protected constructor(owner: Option<Element>, device: Device, parent: Option<Style>, variables: Map_2<string, Value<Slice<Token>>>, properties: Map_2<Name, Value>);
     // (undocumented)
     cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
     // (undocumented)
@@ -469,6 +471,7 @@ export namespace Style {
 export class Value<T = unknown> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Value.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(value: T, source: Option<Declaration>);
     // (undocumented)
     apply<U>(mapper: Value<Mapper<T, U>>): Value<U>;
     // (undocumented)

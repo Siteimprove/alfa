@@ -24,6 +24,7 @@ import type { Thunk } from '@siteimprove/alfa-thunk';
 export class Err<E> implements Result<never, E> {
     // (undocumented)
     [Symbol.iterator](): Generator<never, void, unknown>;
+    protected constructor(error: E);
     // (undocumented)
     and(): Err<E>;
     // (undocumented)
@@ -127,6 +128,7 @@ export namespace Err {
 export class Ok<T> implements Result<T, never> {
     // (undocumented)
     [Symbol.iterator](): Generator<T, void, unknown>;
+    protected constructor(value: T);
     // (undocumented)
     and<U, F>(result: Result<U, F>): Result<U, F>;
     // (undocumented)

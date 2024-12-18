@@ -6,8 +6,11 @@
 
 import type { Callback } from '@siteimprove/alfa-callback';
 import type { Collection } from '@siteimprove/alfa-collection';
+import { Equatable } from '@siteimprove/alfa-equatable';
 import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
+import { List } from '@siteimprove/alfa-list';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import type { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
@@ -19,6 +22,8 @@ import { Serializable } from '@siteimprove/alfa-json';
 export class Branched<T, B = never> implements Collection<T>, Iterable_2<[T, Iterable_2<B>]> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[T, Iterable_2<B>]>;
+    // Warning: (ae-forgotten-export) The symbol "Value" needs to be exported by the entry point index.d.ts
+    protected constructor(values: List<Value<T, B>>);
     // (undocumented)
     apply<U>(mapper: Branched<Mapper<T, U>, B>): Branched<U, B>;
     // (undocumented)

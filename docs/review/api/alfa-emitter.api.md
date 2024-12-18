@@ -12,6 +12,7 @@ import type { Mapper } from '@siteimprove/alfa-mapper';
 export class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> {
     // (undocumented)
     [Symbol.asyncIterator](): AsyncIterator<T>;
+    protected constructor(listeners: Map<Callback<never>, Callback<T>>);
     // (undocumented)
     asyncIterator(): AsyncIterator<T>;
     // (undocumented)

@@ -21,6 +21,7 @@ import type { Serializable } from '@siteimprove/alfa-json';
 export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<S | T>, Equatable, Hashable, Serializable<Selective.JSON<S, T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<S | T>;
+    protected constructor(value: Either<S, T>);
     // (undocumented)
     apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U>;
     // (undocumented)

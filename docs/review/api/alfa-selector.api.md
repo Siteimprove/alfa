@@ -12,6 +12,7 @@ import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import type { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type * as json from '@siteimprove/alfa-json';
+import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Maybe } from '@siteimprove/alfa-option';
 import { Nth } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
@@ -41,6 +42,7 @@ export namespace Absolute {
 export class Attribute extends WithName<"attribute"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Attribute>;
+    protected constructor(namespace: Option<string>, name: string, value: Option<string>, matcher: Option<Attribute.Matcher>, modifier: Option<Attribute.Modifier>);
     // (undocumented)
     equals(value: Attribute): boolean;
     // (undocumented)
@@ -108,6 +110,7 @@ export namespace Attribute {
 export class Class extends WithName<"class"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Class>;
+    protected constructor(name: string);
     // (undocumented)
     equals(value: Class): boolean;
     // (undocumented)
@@ -159,6 +162,7 @@ export namespace Combinator {
 export class Complex extends Selector_2<"complex"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Complex>;
+    protected constructor(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound);
     // (undocumented)
     get combinator(): Combinator;
     // (undocumented)
@@ -201,6 +205,7 @@ export namespace Complex {
 export class Compound extends Selector_2<"compound"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Compound>;
+    protected constructor(selectors: Array_2<Simple>);
     // (undocumented)
     equals(value: Compound): boolean;
     // (undocumented)
@@ -236,6 +241,7 @@ export namespace Compound {
 
 // @public (undocumented)
 export class Context {
+    protected constructor(state: Map_2<Element, Context.State>);
     // (undocumented)
     active(element: Element): Context;
     // (undocumented)
@@ -299,6 +305,7 @@ export namespace Context {
 export class Id extends WithName<"id"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Id>;
+    protected constructor(name: string);
     // (undocumented)
     equals(value: Id): boolean;
     // (undocumented)
@@ -332,6 +339,7 @@ export namespace Id {
 export class List<T extends Item = Item> extends Selector_2<"list"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(selectors: Array_2<T>);
     // (undocumented)
     equals(value: List): boolean;
     // (undocumented)
@@ -446,6 +454,7 @@ export namespace PseudoElement {
 export class Relative extends Selector_2<"relative"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Relative>;
+    protected constructor(combinator: Combinator, selector: Simple | Compound | Complex);
     // (undocumented)
     get combinator(): Combinator;
     // (undocumented)
@@ -507,6 +516,7 @@ export namespace Simple {
 
 // @public (undocumented)
 export class Specificity implements Serializable<Specificity.JSON>, Equatable, Hashable {
+    protected constructor(a: number, b: number, c: number);
     // (undocumented)
     get a(): number;
     // (undocumented)
@@ -558,6 +568,7 @@ export namespace Specificity {
 export class Type extends WithName<"type"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Type>;
+    protected constructor(namespace: Option<string>, name: string);
     // (undocumented)
     equals(value: Type): boolean;
     // (undocumented)
@@ -593,6 +604,7 @@ export namespace Type {
 export class Universal extends Selector_2<"universal"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Universal>;
+    protected constructor(namespace: Option<string>);
     // (undocumented)
     static empty(): Universal;
     // (undocumented)

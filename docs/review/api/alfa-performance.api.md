@@ -12,6 +12,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 export class Performance<T> implements AsyncIterable<Performance.Entry<T>>, Serializable<Performance.JSON> {
     // (undocumented)
     [Symbol.asyncIterator](): AsyncIterator<Performance.Entry<T>>;
+    protected constructor();
     // (undocumented)
     asyncIterator(): AsyncIterator<Performance.Entry<T>>;
     // (undocumented)
@@ -56,6 +57,7 @@ export namespace Performance {
     }
     // (undocumented)
     export class Mark<T> implements Serializable<Mark.JSON<T>> {
+        protected constructor(data: T, start: number);
         // (undocumented)
         get data(): T;
         // (undocumented)
@@ -88,6 +90,7 @@ export namespace Performance {
     isMark: typeof Mark.isMark;
     // (undocumented)
     export class Measure<T> implements Serializable<Measure.JSON<T>> {
+        protected constructor(data: T, start: number, duration: number);
         // (undocumented)
         get data(): T;
         // (undocumented)

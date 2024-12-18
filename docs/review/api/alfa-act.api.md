@@ -15,6 +15,7 @@ import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { List } from '@siteimprove/alfa-list';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Maybe } from '@siteimprove/alfa-option';
 import type { Monad } from '@siteimprove/alfa-monad';
@@ -31,6 +32,7 @@ import { Tuple } from '@siteimprove/alfa-tuple';
 
 // @public
 export class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> {
+    protected constructor(input: I, rules: List<Rule<I, T, Q, S>>, oracle: Oracle<I, T, Q, S>);
     // (undocumented)
     evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
@@ -39,6 +41,7 @@ export class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = 
 
 // @public (undocumented)
 export class Cache {
+    protected constructor();
     // (undocumented)
     static empty(): Cache;
     // (undocumented)
@@ -142,6 +145,7 @@ export namespace Outcome {
     //
     // (undocumented)
     export class CantTell<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.CantTell> {
+        protected constructor(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode);
         // (undocumented)
         get diagnostic(): Diagnostic;
         // (undocumented)
@@ -205,6 +209,9 @@ export namespace Outcome {
     //
     // (undocumented)
     export class Failed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Failed> {
+        protected constructor(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
+            [key: string]: Result<Diagnostic>;
+        }>, mode: Mode);
         // (undocumented)
         equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Failed<I, T, Q, S>): boolean;
         // (undocumented)
@@ -272,6 +279,7 @@ export namespace Outcome {
     //
     // (undocumented)
     export class Inapplicable<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Inapplicable> {
+        protected constructor(rule: Rule<I, T, Q, S>, mode: Mode);
         // (undocumented)
         equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Inapplicable<I, T, Q, S>): boolean;
         // (undocumented)
@@ -338,6 +346,9 @@ export namespace Outcome {
     //
     // (undocumented)
     export class Passed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Passed> {
+        protected constructor(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
+            [key: string]: Result<Diagnostic>;
+        }>, mode: Mode);
         // (undocumented)
         equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Passed<I, T, Q, S>): boolean;
         // (undocumented)
@@ -600,6 +611,7 @@ export abstract class Rule<I, T extends Hashable, Q extends Question.Metadata = 
 export namespace Rule {
     // (undocumented)
     export class Atomic<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Rule<I, T, Q, S> {
+        protected constructor(uri: string, requirements: Array_2<Requirement>, tags: Array_2<Tag>, evaluate: Atomic.Evaluate<I, T, Q, S>);
         // (undocumented)
         static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(properties: {
             uri: string;
@@ -637,6 +649,7 @@ export namespace Rule {
     }
     // (undocumented)
     export class Composite<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Rule<I, T, Q, S> {
+        protected constructor(uri: string, requirements: Array_2<Requirement>, tags: Array_2<Tag>, composes: Array_2<Rule<I, T, Q, S>>, evaluate: Composite.Evaluate<I, T, Q, S>);
         // (undocumented)
         get composes(): ReadonlyArray<Rule<I, T, Q, S>>;
         // (undocumented)

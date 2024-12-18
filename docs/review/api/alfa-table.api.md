@@ -80,6 +80,7 @@ export abstract class Cell implements Anchored, Equatable, Serializable<Cell.JSO
 export namespace Cell {
     // (undocumented)
     export class Data extends Cell {
+        protected constructor(element: Element, anchor: Slot, width: number, height: number, headers: Array_2<Slot>);
         // (undocumented)
         equals(cell: Data): boolean;
         // (undocumented)
@@ -109,6 +110,7 @@ export namespace Cell {
     hasElement: typeof predicate.hasElement;
     // (undocumented)
     export class Header extends Cell {
+        protected constructor(element: Element, anchor: Slot, width: number, height: number, headers: Array_2<Slot>, scope: Scope);
         // (undocumented)
         equals(cell: Header): boolean;
         // (undocumented)
@@ -165,6 +167,7 @@ export namespace Cell {
 //
 // @public (undocumented)
 export class Column implements Anchored, Equatable, Serializable<Column.JSON> {
+    protected constructor(x: number);
     // (undocumented)
     get anchor(): Slot;
     // (undocumented)
@@ -187,6 +190,7 @@ export namespace Column {
     //
     // (undocumented)
     export class Group implements Anchored, Equatable, Serializable<Group.JSON> {
+        protected constructor(element: Element, x: number, width: number);
         // (undocumented)
         get anchor(): Slot;
         // (undocumented)
@@ -255,6 +259,7 @@ export namespace Group {
 //
 // @public (undocumented)
 export class Row implements Anchored, Equatable, Serializable<Row.JSON> {
+    protected constructor(y: number);
     // (undocumented)
     get anchor(): Slot;
     // (undocumented)
@@ -277,6 +282,7 @@ export namespace Row {
     //
     // (undocumented)
     export class Group implements Anchored, Equatable, Serializable<Group.JSON> {
+        protected constructor(element: Element, y: number, height: number);
         // (undocumented)
         get anchor(): Slot;
         // (undocumented)
@@ -337,6 +343,7 @@ export namespace Scope {
 
 // @public (undocumented)
 export class Slot implements Comparable<Slot>, Equatable, Serializable<Slot.JSON> {
+    protected constructor(x: number, y: number);
     // (undocumented)
     compare(slot: Slot): Comparison;
     // (undocumented)
@@ -370,6 +377,7 @@ export namespace Slot {
 
 // @public (undocumented)
 export class Table implements Equatable, Serializable<Table.JSON> {
+    protected constructor(element: Element, cells: Array_2<Cell>, groups: Array_2<Group>);
     // (undocumented)
     get cells(): Sequence<Cell>;
     // (undocumented)

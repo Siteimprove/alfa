@@ -10,6 +10,7 @@ import { Option } from '@siteimprove/alfa-option';
 
 // @public
 export class Cache<K extends Cache.Key, V> {
+    protected constructor();
     static empty<K extends Cache.Key, V>(): Cache<K, V>;
     get(key: K): Option<V>;
     get<U extends V = V>(key: K, ifMissing: Mapper<this, U>): V;

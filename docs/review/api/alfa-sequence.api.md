@@ -26,6 +26,7 @@ import { Set as Set_2 } from '@siteimprove/alfa-set';
 export class Cons<T> implements Sequence<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(head: T, tail: Lazy<Sequence<T>>);
     // (undocumented)
     append(value: T): Cons<T>;
     // (undocumented)

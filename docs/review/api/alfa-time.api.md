@@ -19,6 +19,7 @@ export class Time {
 
 // @public (undocumented)
 export class Timeout {
+    protected constructor(timeout: number, time: Time);
     // (undocumented)
     elapsed(now?: number): number;
     // (undocumented)
