@@ -20,7 +20,7 @@ export class Bound<T = unknown>
   private readonly _value: T;
   private readonly _isInclusive: boolean;
 
-  private constructor(value: T, isInclusive: boolean) {
+  protected constructor(value: T, isInclusive: boolean) {
     this._value = value;
     this._isInclusive = isInclusive;
   }

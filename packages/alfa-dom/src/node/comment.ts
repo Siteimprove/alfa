@@ -23,7 +23,7 @@ export class Comment extends Node<"comment"> {
 
   private readonly _data: string;
 
-  private constructor(
+  protected constructor(
     data: string,
     externalId?: string,
     internalId?: string,

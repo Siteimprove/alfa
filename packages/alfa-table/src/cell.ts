@@ -148,7 +148,7 @@ export namespace Cell {
       );
     }
 
-    private constructor(
+    protected constructor(
       element: Element,
       anchor: Slot,
       width: number,
@@ -219,7 +219,7 @@ export namespace Cell {
 
     private readonly _scope: Scope;
 
-    private constructor(
+    protected constructor(
       element: Element,
       anchor: Slot,
       width: number,

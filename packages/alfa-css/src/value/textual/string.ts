@@ -23,7 +23,7 @@ export class String
 
   private readonly _value: string;
 
-  private constructor(value: string) {
+  protected constructor(value: string) {
     super("string", false);
     this._value = value;
   }

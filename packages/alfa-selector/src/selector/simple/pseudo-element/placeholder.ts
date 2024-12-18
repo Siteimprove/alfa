@@ -8,7 +8,7 @@ export class Placeholder extends PseudoElementSelector<"placeholder"> {
     return new Placeholder();
   }
 
-  private constructor() {
+  protected constructor() {
     super("placeholder");
   }
 

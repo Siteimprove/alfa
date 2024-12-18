@@ -59,7 +59,7 @@ export namespace Token {
 
     private readonly _value: number;
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       this._value = value;
     }
 
@@ -108,7 +108,7 @@ export namespace Token {
 
     private readonly _value: number;
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       this._value = value;
     }
 
@@ -157,7 +157,7 @@ export namespace Token {
 
     private readonly _value: number;
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       this._value = value;
     }
 
@@ -206,7 +206,7 @@ export namespace Token {
 
     private readonly _value: string;
 
-    private constructor(value: string) {
+    protected constructor(value: string) {
       this._value = value;
     }
 
@@ -255,7 +255,7 @@ export namespace Token {
 
     private readonly _value: string;
 
-    private constructor(value: string) {
+    protected constructor(value: string) {
       this._value = value;
     }
 
@@ -305,7 +305,7 @@ export namespace Token {
     private readonly _prefix: Option<string>;
     private readonly _value: string;
 
-    private constructor(prefix: Option<string>, value: string) {
+    protected constructor(prefix: Option<string>, value: string) {
       this._prefix = prefix;
       this._value = value;
     }
@@ -379,7 +379,7 @@ export namespace Token {
 
     private readonly _value: number;
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       this._value = value;
     }
 

@@ -1,6 +1,6 @@
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Serializable } from "@siteimprove/alfa-json";
-import type { Option} from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 
 import type * as json from "@siteimprove/alfa-json";
@@ -51,7 +51,7 @@ export namespace Expression {
 
     private readonly _value: number;
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       this._value = value;
     }
 
@@ -94,7 +94,7 @@ export namespace Expression {
 
     private readonly _value: number;
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       this._value = value;
     }
 
@@ -137,7 +137,7 @@ export namespace Expression {
 
     private readonly _value: number;
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       this._value = value;
     }
 
@@ -180,7 +180,7 @@ export namespace Expression {
 
     private readonly _value: string;
 
-    private constructor(value: string) {
+    protected constructor(value: string) {
       this._value = value;
     }
 
@@ -224,7 +224,7 @@ export namespace Expression {
     private readonly _left: Expression;
     private readonly _right: Expression;
 
-    private constructor(left: Expression, right: Expression) {
+    protected constructor(left: Expression, right: Expression) {
       this._left = left;
       this._right = right;
     }
@@ -284,7 +284,7 @@ export namespace Expression {
     private readonly _test: Option<Test>;
     private readonly _predicates: Array<Expression>;
 
-    private constructor(
+    protected constructor(
       axis: Axis.Type,
       test: Option<Test>,
       predicates: Array<Expression>,
@@ -462,7 +462,7 @@ export namespace Expression {
 
       private readonly _name: Option<string>;
 
-      private constructor(name: Option<string>) {
+      protected constructor(name: Option<string>) {
         this._name = name;
       }
 
@@ -511,7 +511,7 @@ export namespace Expression {
 
       private readonly _name: Option<string>;
 
-      private constructor(name: Option<string>) {
+      protected constructor(name: Option<string>) {
         this._name = name;
       }
 
@@ -643,7 +643,7 @@ export namespace Expression {
       private readonly _prefix: Option<string>;
       private readonly _name: string;
 
-      private constructor(prefix: Option<string>, name: string) {
+      protected constructor(prefix: Option<string>, name: string) {
         this._prefix = prefix;
         this._name = name;
       }
@@ -701,7 +701,7 @@ export namespace Expression {
     private readonly _base: Expression;
     private readonly _predicates: Array<Expression>;
 
-    private constructor(base: Expression, predicates: Array<Expression>) {
+    protected constructor(base: Expression, predicates: Array<Expression>) {
       this._base = base;
       this._predicates = predicates;
     }
@@ -803,7 +803,7 @@ export namespace Expression {
     private readonly _arity: number;
     private readonly _parameters: Array<Expression>;
 
-    private constructor(
+    protected constructor(
       prefix: Option<string>,
       name: string,
       arity: number,

@@ -105,7 +105,7 @@ export class WithFirstHeading extends Diagnostic {
   private readonly _firstHeading: Element;
   private readonly _level: number;
 
-  private constructor(message: string, firstHeading: Element, level: number) {
+  protected constructor(message: string, firstHeading: Element, level: number) {
     super(message);
     this._firstHeading = firstHeading;
     this._level = level;

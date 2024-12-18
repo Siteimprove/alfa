@@ -12,7 +12,7 @@ export class FirstChild extends PseudoClassSelector<"first-child"> {
     return new FirstChild();
   }
 
-  private constructor() {
+  protected constructor() {
     super("first-child");
   }
 

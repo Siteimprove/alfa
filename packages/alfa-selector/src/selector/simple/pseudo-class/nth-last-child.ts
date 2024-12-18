@@ -23,7 +23,7 @@ export class NthLastChild extends WithIndexAndSelector<"nth-last-child"> {
 
   private readonly _indices = new WeakMap<Element, number>();
 
-  private constructor(nth: Nth, selector: Option<Absolute>) {
+  protected constructor(nth: Nth, selector: Option<Absolute>) {
     super("nth-last-child", nth, selector);
   }
 

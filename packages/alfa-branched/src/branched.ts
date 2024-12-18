@@ -36,7 +36,7 @@ export class Branched<T, B = never>
 
   private readonly _values: List<Value<T, B>>;
 
-  private constructor(values: List<Value<T, B>>) {
+  protected constructor(values: List<Value<T, B>>) {
     this._values = values;
   }
 
@@ -362,7 +362,7 @@ class Value<T, B> implements Equatable, Hashable {
   private readonly _value: T;
   private readonly _branches: Option<List<B>>;
 
-  private constructor(value: T, branches: Option<List<B>>) {
+  protected constructor(value: T, branches: Option<List<B>>) {
     this._value = value;
     this._branches = branches;
   }

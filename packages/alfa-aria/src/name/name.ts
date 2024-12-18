@@ -88,7 +88,7 @@ export class Name implements Equatable, Serializable<Name.JSON> {
   private readonly _spaceBefore: boolean;
   private readonly _spaceAfter: boolean;
 
-  private constructor(
+  protected constructor(
     value: string,
     sources: Array<Source>,
     spaceBefore: boolean,

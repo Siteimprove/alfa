@@ -21,7 +21,7 @@ export class StyleRule extends Rule<"style"> {
   private readonly _style: Block;
   private readonly _hint: boolean;
 
-  private constructor(
+  protected constructor(
     selector: string,
     declarations: Array<Declaration>,
     hint: boolean,

@@ -20,7 +20,7 @@ export class Row implements Anchored, Equatable, Serializable<Row.JSON> {
 
   private readonly _y: number;
 
-  private constructor(y: number) {
+  protected constructor(y: number) {
     this._y = y;
   }
 
@@ -76,7 +76,7 @@ export namespace Row {
     private readonly _y: number;
     private readonly _height: number;
 
-    private constructor(element: Element, y: number, height: number) {
+    protected constructor(element: Element, y: number, height: number) {
       this._element = element;
       this._y = y;
       this._height = height;

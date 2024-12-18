@@ -35,7 +35,7 @@ export class Transformation implements Equatable, Serializable {
 
   private readonly _matrix: Matrix;
 
-  private constructor(matrix: Matrix) {
+  protected constructor(matrix: Matrix) {
     this._matrix = matrix;
   }
 

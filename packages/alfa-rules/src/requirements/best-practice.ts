@@ -8,7 +8,7 @@ export class BestPractice extends Requirement<"best practice"> {
     return new BestPractice(uri);
   }
 
-  private constructor(uri: string) {
+  protected constructor(uri: string) {
     super("best practice", uri);
   }
 

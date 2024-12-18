@@ -125,7 +125,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
   private readonly _requiredAttributes: ReadonlyArray<aria.Attribute.Name>;
   private readonly _missingAttributes: ReadonlyArray<aria.Attribute.Name>;
 
-  private constructor(
+  protected constructor(
     message: string,
     role: Role.Name,
     requiredAttributes: ReadonlyArray<aria.Attribute.Name>,

@@ -35,7 +35,7 @@ export class Type<N extends string = string> extends Node<"type"> {
   private readonly _publicId: Option<string>;
   private readonly _systemId: Option<string>;
 
-  private constructor(
+  protected constructor(
     name: N,
     publicId: Option<string>,
     systemId: Option<string>,

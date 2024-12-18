@@ -48,7 +48,7 @@ export class WithOtherHeading extends Diagnostic {
   private readonly _otherLevel: number;
   private readonly _otherPosition: HeadingPosition;
 
-  private constructor(
+  protected constructor(
     message: string,
     otherHeading: Option<Element>,
     currentLevel: number,

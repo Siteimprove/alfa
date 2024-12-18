@@ -12,7 +12,7 @@ export class FocusVisible extends PseudoClassSelector<"focus-visible"> {
     return new FocusVisible();
   }
 
-  private constructor() {
+  protected constructor() {
     super("focus-visible");
   }
 

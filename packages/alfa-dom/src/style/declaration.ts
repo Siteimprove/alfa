@@ -40,7 +40,7 @@ export class Declaration implements Equatable, Serializable {
    */
   private _owner: Option<Element> = None;
 
-  private constructor(name: string, value: string, important: boolean) {
+  protected constructor(name: string, value: string, important: boolean) {
     this._name = name;
     this._value = value;
     this._important = important;

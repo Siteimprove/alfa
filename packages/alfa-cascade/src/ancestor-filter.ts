@@ -76,7 +76,7 @@ export class AncestorFilter implements Serializable<AncestorFilter.JSON> {
   private readonly _classes = Bucket.empty();
   private readonly _types = Bucket.empty();
 
-  private constructor() {}
+  protected constructor() {}
 
   public add(element: Element): void {
     for (const id of element.id) {
@@ -206,7 +206,7 @@ export class Bucket implements Serializable<Bucket.JSON> {
 
   private readonly _entries = new Map<string, number>();
 
-  private constructor() {}
+  protected constructor() {}
 
   public has(entry: string): boolean {
     return this._entries.has(entry);

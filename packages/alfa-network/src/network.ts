@@ -29,7 +29,7 @@ export class Network<N, E>
 
   private readonly _nodes: Map<N, Map<N, Set<E>>>;
 
-  private constructor(nodes: Map<N, Map<N, Set<E>>>) {
+  protected constructor(nodes: Map<N, Map<N, Set<E>>>) {
     this._nodes = nodes;
   }
 

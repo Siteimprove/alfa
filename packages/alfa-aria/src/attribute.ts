@@ -25,7 +25,7 @@ export class Attribute<N extends Attribute.Name = Attribute.Name>
   private readonly _name: N;
   private readonly _value: string;
 
-  private constructor(name: N, value: string) {
+  protected constructor(name: N, value: string) {
     this._name = name;
     this._value = value;
   }

@@ -156,7 +156,7 @@ export class WithRoleAndName extends WithRole {
 
   private readonly _name: string;
 
-  private constructor(message: string, role: Role.Name, name: string) {
+  protected constructor(message: string, role: Role.Name, name: string) {
     super(message, role);
     this._name = name;
   }

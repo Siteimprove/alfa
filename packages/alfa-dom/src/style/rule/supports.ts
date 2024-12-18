@@ -19,7 +19,7 @@ export class SupportsRule extends ConditionRule<"supports"> {
 
   private readonly _query: Option<Feature.Supports.Query>;
 
-  private constructor(condition: string, rules: Array<Rule>) {
+  protected constructor(condition: string, rules: Array<Rule>) {
     super("supports", condition, rules);
 
     this._query = Feature.parseSupportsQuery(Lexer.lex(condition))

@@ -47,7 +47,7 @@ export class Device implements Equatable, Hashable, Serializable {
   private readonly _scripting: Scripting;
   private readonly _preferences: Map<Preference.Name, Preference>;
 
-  private constructor(
+  protected constructor(
     type: Device.Type,
     viewport: Viewport,
     display: Display,

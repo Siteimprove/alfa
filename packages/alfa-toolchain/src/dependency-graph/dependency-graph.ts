@@ -69,7 +69,7 @@ export class DependencyGraph {
   private readonly _edges: Array<[string, string]> = [];
   private readonly _clusters: Map<string, gv.Color>;
 
-  private constructor(
+  protected constructor(
     pkg: Package,
     fullDepTree: madge.MadgeInstance,
     noTypeDepTree: madge.MadgeInstance,

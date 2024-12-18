@@ -22,7 +22,7 @@ export class Preference<N extends Preference.Name = Preference.Name>
   private readonly _name: N;
   private readonly _value: Preference.Value<N>;
 
-  private constructor(name: N, value: Preference.Value<N>) {
+  protected constructor(name: N, value: Preference.Value<N>) {
     this._name = name;
     this._value = value;
   }

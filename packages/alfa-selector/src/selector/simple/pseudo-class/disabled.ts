@@ -13,7 +13,7 @@ export class Disabled extends PseudoClassSelector<"disabled"> {
     return new Disabled();
   }
 
-  private constructor() {
+  protected constructor() {
     super("disabled");
   }
 

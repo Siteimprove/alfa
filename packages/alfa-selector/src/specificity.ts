@@ -46,7 +46,7 @@ export class Specificity
   private readonly _c: number;
   private readonly _value: number;
 
-  private constructor(a: number, b: number, c: number) {
+  protected constructor(a: number, b: number, c: number) {
     this._a = a;
     this._b = b;
     this._c = c;

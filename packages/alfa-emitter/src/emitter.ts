@@ -19,7 +19,7 @@ export class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> {
    */
   private readonly _listeners: Map<Callback<never>, Callback<T>>;
 
-  private constructor(listeners: Map<Callback<never>, Callback<T>>) {
+  protected constructor(listeners: Map<Callback<never>, Callback<T>>) {
     this._listeners = listeners;
   }
 

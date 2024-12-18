@@ -8,7 +8,7 @@ export class Backdrop extends PseudoElementSelector<"backdrop"> {
     return new Backdrop();
   }
 
-  private constructor() {
+  protected constructor() {
     super("backdrop");
   }
 

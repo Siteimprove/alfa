@@ -26,7 +26,7 @@ export class Sheet implements Equatable, Serializable {
   private readonly _disabled: boolean;
   private readonly _condition: Option<string>;
 
-  private constructor(
+  protected constructor(
     rules: Array<Rule>,
     disabled: boolean,
     condition: Option<string>,

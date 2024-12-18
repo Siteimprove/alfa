@@ -24,7 +24,7 @@ export class Err<E> implements Result<never, E> {
 
   private readonly _error: E;
 
-  private constructor(error: E) {
+  protected constructor(error: E) {
     this._error = error;
   }
 

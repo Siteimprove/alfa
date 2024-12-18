@@ -13,7 +13,7 @@ export class Link extends PseudoClassSelector<"link"> {
     return new Link();
   }
 
-  private constructor() {
+  protected constructor() {
     super("link");
   }
 

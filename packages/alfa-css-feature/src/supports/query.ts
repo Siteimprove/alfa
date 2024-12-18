@@ -25,7 +25,7 @@ export class Query implements Feature<Condition<Property>, Query.JSON> {
 
   private readonly _condition: Condition<Property>;
 
-  private constructor(condition: Condition<Property>) {
+  protected constructor(condition: Condition<Property>) {
     this._condition = condition;
   }
 

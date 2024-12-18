@@ -8,7 +8,7 @@ export class ARIA extends Requirement<"ARIA"> {
     return new ARIA(uri);
   }
 
-  private constructor(uri: string) {
+  protected constructor(uri: string) {
     super("ARIA", uri);
   }
 

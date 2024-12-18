@@ -19,7 +19,7 @@ export class Type implements Feature<Type> {
 
   private readonly _name: string;
 
-  private constructor(name: string) {
+  protected constructor(name: string) {
     this._name = name;
   }
 

@@ -8,7 +8,7 @@ export class FirstLine extends PseudoElementSelector<"first-line"> {
     return new FirstLine();
   }
 
-  private constructor() {
+  protected constructor() {
     super("first-line");
   }
 

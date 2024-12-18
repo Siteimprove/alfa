@@ -40,7 +40,7 @@ export class Element extends Node<"element"> {
   private readonly _name: Option<Name>;
   private readonly _attributes: Array<Attribute>;
 
-  private constructor(
+  protected constructor(
     owner: dom.Node,
     role: Option<Role>,
     name: Option<Name>,

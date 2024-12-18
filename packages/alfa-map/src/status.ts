@@ -30,7 +30,7 @@ export namespace Status {
       return new Created(result);
     }
 
-    private constructor(result: T) {
+    protected constructor(result: T) {
       super(result);
     }
 
@@ -46,7 +46,7 @@ export namespace Status {
       return new Updated(result);
     }
 
-    private constructor(result: T) {
+    protected constructor(result: T) {
       super(result);
     }
 
@@ -62,7 +62,7 @@ export namespace Status {
       return new Deleted(result);
     }
 
-    private constructor(result: T) {
+    protected constructor(result: T) {
       super(result);
     }
 
@@ -78,7 +78,7 @@ export namespace Status {
       return new Unchanged(result);
     }
 
-    private constructor(result: T) {
+    protected constructor(result: T) {
       super(result);
     }
 

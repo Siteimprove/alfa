@@ -110,7 +110,7 @@ export class SelectorMap implements Serializable {
   private readonly _other: Array<Block<Block.Source>>;
   private readonly _shadow: Array<Block<Block.Source>>;
 
-  private constructor(
+  protected constructor(
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
@@ -494,7 +494,7 @@ export namespace SelectorMap {
 
     private readonly _nodes: Map<string, Array<Block<Block.Source>>>;
 
-    private constructor(nodes: Map<string, Array<Block<Block.Source>>>) {
+    protected constructor(nodes: Map<string, Array<Block<Block.Source>>>) {
       this._nodes = nodes;
     }
 

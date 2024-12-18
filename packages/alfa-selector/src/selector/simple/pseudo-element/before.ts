@@ -8,7 +8,7 @@ export class Before extends PseudoElementSelector<"before"> {
     return new Before();
   }
 
-  private constructor() {
+  protected constructor() {
     super("before");
   }
 

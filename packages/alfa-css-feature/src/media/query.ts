@@ -35,7 +35,7 @@ export class Query implements Feature<Condition<Media>, Query.JSON> {
   private readonly _type: Option<Type>;
   private readonly _condition: Option<Condition<Media>>;
 
-  private constructor(
+  protected constructor(
     modifier: Option<Modifier>,
     type: Option<Type>,
     condition: Option<Condition<Media>>,

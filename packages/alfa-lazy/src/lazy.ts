@@ -29,7 +29,7 @@ export class Lazy<T>
 
   private _value: Trampoline<T>;
 
-  private constructor(value: Trampoline<T>) {
+  protected constructor(value: Trampoline<T>) {
     this._value = value;
   }
 

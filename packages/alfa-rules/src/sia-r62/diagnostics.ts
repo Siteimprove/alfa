@@ -44,7 +44,7 @@ export class ElementDistinguishable
     Contrast.Pairing<["container", "link"]>
   >;
 
-  private constructor(
+  protected constructor(
     distinguishingProperties: ReadonlyArray<ElementDistinguishable.Property>,
     style: Map<Name, string>,
     pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>,
@@ -203,7 +203,7 @@ export class DistinguishingStyles extends Diagnostic {
   private readonly _hoverStyles: Sequence<Result<ElementDistinguishable>>;
   private readonly _focusStyles: Sequence<Result<ElementDistinguishable>>;
 
-  private constructor(
+  protected constructor(
     message: string,
     defaultStyles: Sequence<Result<ElementDistinguishable>>,
     hoverStyles: Sequence<Result<ElementDistinguishable>>,
