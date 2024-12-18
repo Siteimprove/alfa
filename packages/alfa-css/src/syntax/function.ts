@@ -39,7 +39,7 @@ export class Function implements Iterable<Token>, Equatable, Serializable {
   private readonly _name: string;
   private readonly _value: Array<Token>;
 
-  private constructor(name: string, value: Array<Token>) {
+  protected constructor(name: string, value: Array<Token>) {
     this._name = name;
     this._value = value;
   }

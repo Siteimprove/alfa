@@ -20,7 +20,7 @@ export class Viewport implements Equatable, Hashable, Serializable {
   private readonly _height: number;
   private readonly _orientation: Viewport.Orientation;
 
-  private constructor(
+  protected constructor(
     width: number,
     height: number,
     orientation: Viewport.Orientation,

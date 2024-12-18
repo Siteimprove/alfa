@@ -14,7 +14,7 @@ export class NamespaceRule extends Rule<"namespace"> {
   private readonly _namespace: string;
   private readonly _prefix: Option<string>;
 
-  private constructor(namespace: string, prefix: Option<string>) {
+  protected constructor(namespace: string, prefix: Option<string>) {
     super("namespace");
 
     this._namespace = namespace;

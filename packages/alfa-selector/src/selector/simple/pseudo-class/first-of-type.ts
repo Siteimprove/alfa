@@ -12,7 +12,7 @@ export class FirstOfType extends PseudoClassSelector<"first-of-type"> {
     return new FirstOfType();
   }
 
-  private constructor() {
+  protected constructor() {
     super("first-of-type");
   }
 

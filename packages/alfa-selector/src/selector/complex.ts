@@ -42,7 +42,7 @@ export class Complex extends Selector<"complex"> {
   private readonly _right: Simple | Compound;
   protected readonly _key: Option<Id | Class | Type>;
 
-  private constructor(
+  protected constructor(
     combinator: Combinator,
     left: Simple | Compound | Complex,
     right: Simple | Compound,

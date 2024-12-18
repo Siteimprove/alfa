@@ -8,7 +8,7 @@ export class TargetText extends PseudoElementSelector<"target-text"> {
     return new TargetText();
   }
 
-  private constructor() {
+  protected constructor() {
     super("target-text");
   }
 

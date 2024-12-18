@@ -106,7 +106,7 @@ export class Leaf<K, V> implements Node<K, V> {
   private readonly _key: K;
   private readonly _value: V;
 
-  private constructor(hash: number, key: K, value: V) {
+  protected constructor(hash: number, key: K, value: V) {
     this._hash = hash;
     this._key = key;
     this._value = value;
@@ -197,7 +197,7 @@ export class Collision<K, V> implements Node<K, V> {
   private readonly _hash: number;
   private readonly _nodes: Array<Leaf<K, V>>;
 
-  private constructor(hash: number, nodes: Array<Leaf<K, V>>) {
+  protected constructor(hash: number, nodes: Array<Leaf<K, V>>) {
     this._hash = hash;
     this._nodes = nodes;
   }
@@ -314,7 +314,7 @@ export class Sparse<K, V> implements Node<K, V> {
   private readonly _mask: number;
   private readonly _nodes: Array<Node<K, V>>;
 
-  private constructor(mask: number, nodes: Array<Node<K, V>>) {
+  protected constructor(mask: number, nodes: Array<Node<K, V>>) {
     this._mask = mask;
     this._nodes = nodes;
   }

@@ -14,7 +14,7 @@ export class Checked extends PseudoClassSelector<"checked"> {
     return new Checked();
   }
 
-  private constructor() {
+  protected constructor() {
     super("checked");
   }
 

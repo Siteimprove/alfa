@@ -15,7 +15,7 @@ export class Percentage extends Numeric<"percentage"> {
     return new Percentage(value);
   }
 
-  private constructor(value: number) {
+  protected constructor(value: number) {
     super(value, "percentage");
   }
 

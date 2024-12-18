@@ -21,7 +21,7 @@ export class Right<R> implements Either<never, R> {
 
   private readonly _value: R;
 
-  private constructor(value: R) {
+  protected constructor(value: R) {
     this._value = value;
   }
 

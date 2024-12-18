@@ -7,6 +7,7 @@
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import type { Foldable } from '@siteimprove/alfa-foldable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
+import { List } from '@siteimprove/alfa-list';
 import type { Option } from '@siteimprove/alfa-option';
 import type { Predicate } from '@siteimprove/alfa-predicate';
 import type { Reducer } from '@siteimprove/alfa-reducer';
@@ -16,6 +17,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 class Record_2<T> implements Foldable<Record_2.Value<T>>, Iterable_2<Record_2.Entry<T>>, Equatable, Serializable<Record_2.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Record_2.Entry<T>>;
+    protected constructor(indices: ReadonlyMap<string, number>, keys: ReadonlyArray<Record_2.Key<T>>, values: List<T[Record_2.Key<T>]>);
     // (undocumented)
     entries(): Iterable_2<Record_2.Entry<T>>;
     // (undocumented)

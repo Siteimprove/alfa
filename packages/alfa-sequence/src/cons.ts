@@ -1,7 +1,11 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Callback } from "@siteimprove/alfa-callback";
 import type { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, type Comparer, type Comparison } from "@siteimprove/alfa-comparable";
+import {
+  Comparable,
+  type Comparer,
+  type Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -35,7 +39,7 @@ export class Cons<T> implements Sequence<T> {
   private readonly _head: T;
   private readonly _tail: Lazy<Sequence<T>>;
 
-  private constructor(head: T, tail: Lazy<Sequence<T>>) {
+  protected constructor(head: T, tail: Lazy<Sequence<T>>) {
     this._head = head;
     this._tail = tail;
   }

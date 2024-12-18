@@ -25,7 +25,7 @@ export class State implements Equatable, Serializable<State.JSON> {
   private readonly _isRecursing: boolean;
   private readonly _isDescending: boolean;
 
-  private constructor(
+  protected constructor(
     visited: Array<Element>,
     referrer: Option<Element>,
     referred: Option<Element>,

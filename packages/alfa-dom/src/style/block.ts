@@ -17,7 +17,7 @@ export class Block implements Iterable<Declaration>, Equatable, Serializable {
 
   private _declarations: Array<Declaration>;
 
-  private constructor(declarations: Array<Declaration>) {
+  protected constructor(declarations: Array<Declaration>) {
     this._declarations = declarations;
   }
 

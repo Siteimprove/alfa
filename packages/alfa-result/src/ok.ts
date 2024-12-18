@@ -25,7 +25,7 @@ export class Ok<T> implements Result<T, never> {
 
   private readonly _value: T;
 
-  private constructor(value: T) {
+  protected constructor(value: T) {
     this._value = value;
   }
 

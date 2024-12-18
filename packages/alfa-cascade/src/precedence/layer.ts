@@ -70,7 +70,7 @@ export class Layer<ORDERED extends boolean = boolean>
   private _ordered: ORDERED;
   private _order: number;
 
-  private constructor(
+  protected constructor(
     ordered: ORDERED,
     name: string,
     importance: boolean,

@@ -7,7 +7,7 @@ export class After extends PseudoElementSelector<"after"> {
   public static of(): After {
     return new After();
   }
-  private constructor() {
+  protected constructor() {
     super("after");
   }
 

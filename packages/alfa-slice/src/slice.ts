@@ -1,7 +1,11 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Callback } from "@siteimprove/alfa-callback";
 import type { Collection } from "@siteimprove/alfa-collection";
-import { Comparable, type Comparer, type Comparison } from "@siteimprove/alfa-comparable";
+import {
+  Comparable,
+  type Comparer,
+  type Comparison,
+} from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -39,7 +43,11 @@ export class Slice<T> implements Collection.Indexed<T> {
   private readonly _offset: number;
   private readonly _length: number;
 
-  private constructor(array: ReadonlyArray<T>, offset: number, length: number) {
+  protected constructor(
+    array: ReadonlyArray<T>,
+    offset: number,
+    length: number,
+  ) {
     this._array = array;
     this._offset = offset;
     this._length = length;

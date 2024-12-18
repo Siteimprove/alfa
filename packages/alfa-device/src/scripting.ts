@@ -22,7 +22,7 @@ export class Scripting implements Equatable, Hashable, Serializable {
 
   private readonly _enabled: boolean;
 
-  private constructor(enabled: boolean) {
+  protected constructor(enabled: boolean) {
     this._enabled = enabled;
   }
 

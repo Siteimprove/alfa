@@ -27,7 +27,7 @@ export class Contrast<N extends Name = Name> extends Diagnostic {
   private readonly _threshold: number;
   private readonly _pairings: Array<Contrast.Pairing<N>>;
 
-  private constructor(
+  protected constructor(
     message: string,
     threshold: number,
     pairings: Array<Contrast.Pairing<N>>,
@@ -113,7 +113,7 @@ export namespace Contrast {
     private readonly _color2: Color<SecondColor<N>>;
     private readonly _contrast: number;
 
-    private constructor(
+    protected constructor(
       color1: Color<FirstColor<N>>,
       color2: Color<SecondColor<N>>,
       contrast: number,
@@ -194,7 +194,7 @@ export namespace Contrast {
     private readonly _name: N;
     private readonly _value: RGB;
 
-    private constructor(name: N, value: RGB) {
+    protected constructor(name: N, value: RGB) {
       this._name = name;
       this._value = value;
     }

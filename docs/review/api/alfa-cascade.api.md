@@ -30,6 +30,7 @@ import type { StyleRule } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
 export class Cascade implements Serializable {
+    protected constructor(root: Document | Shadow, device: Device);
     // (undocumented)
     static from(node: Document | Shadow, device: Device): Cascade;
     get(element: Element, context?: Context): RuleTree.Node;
@@ -69,6 +70,7 @@ export namespace Encapsulation {
 
 // @public (undocumented)
 export class Layer<ORDERED extends boolean = boolean> implements Serializable<Layer.JSON>, Equatable, Comparable<Layer<true>> {
+    protected constructor(ordered: ORDERED, name: string, importance: boolean, order: number);
     // (undocumented)
     compare(this: Layer<true>, value: Layer<true>): Comparison;
     // (undocumented)
@@ -211,6 +213,7 @@ export namespace Precedence {
 
 // @public
 export class RuleTree implements Serializable {
+    protected constructor();
     // Warning: (ae-forgotten-export) The symbol "Block" needs to be exported by the entry point index.d.ts
     //
     // @internal
@@ -227,6 +230,7 @@ export namespace RuleTree {
     export type JSON = Array<Node.JSON>;
     // (undocumented)
     export class Node implements Serializable {
+        protected constructor(block: Block, children: Array<Node>, parent: Option<Node>);
         // @internal
         add(block: Block): Node;
         // (undocumented)

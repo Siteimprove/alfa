@@ -12,7 +12,7 @@ export class Active extends PseudoClassSelector<"active"> {
     return new Active();
   }
 
-  private constructor() {
+  protected constructor() {
     super("active");
   }
 

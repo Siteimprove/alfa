@@ -34,7 +34,7 @@ export class Cache<K extends Cache.Key, V> {
 
   private readonly _storage = new WeakMap<K, V>();
 
-  private constructor() {}
+  protected constructor() {}
 
   /**
    * Returns the value (if it exists) associated with the given key.

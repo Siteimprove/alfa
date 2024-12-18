@@ -18,7 +18,7 @@ export class Display implements Equatable, Hashable, Serializable {
   private readonly _resolution: number;
   private readonly _scan: Display.Scan;
 
-  private constructor(resolution: number, scan: Display.Scan) {
+  protected constructor(resolution: number, scan: Display.Scan) {
     this._resolution = resolution;
     this._scan = scan;
   }

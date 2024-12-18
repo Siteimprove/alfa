@@ -75,7 +75,7 @@ export class RGB<
   private readonly _blue: C;
   private readonly _alpha: A;
 
-  private constructor(red: C, green: C, blue: C, alpha: A) {
+  protected constructor(red: C, green: C, blue: C, alpha: A) {
     super("rgb");
     this._red = red;
     this._green = green;

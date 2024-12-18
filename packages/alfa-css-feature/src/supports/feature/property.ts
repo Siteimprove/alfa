@@ -22,7 +22,7 @@ export class Property<N extends string = string>
   private readonly _name: N;
   private readonly _value: string;
 
-  private constructor(name: N, value: string) {
+  protected constructor(name: N, value: string) {
     this._name = name;
     this._value = value;
   }

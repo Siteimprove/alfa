@@ -31,7 +31,7 @@ export namespace Layer {
 
     private readonly _layers: Array<string>;
 
-    private constructor(layers: Array<string>) {
+    protected constructor(layers: Array<string>) {
       super("layer-statement");
       this._layers = layers;
     }
@@ -82,7 +82,7 @@ export namespace Layer {
 
     private readonly _layer: Option<string>;
 
-    private constructor(layer: Option<string>, rules: Array<Rule>) {
+    protected constructor(layer: Option<string>, rules: Array<Rule>) {
       super("layer-block", rules);
       this._layer = layer;
     }

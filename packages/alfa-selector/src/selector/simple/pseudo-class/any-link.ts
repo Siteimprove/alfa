@@ -12,7 +12,7 @@ export class AnyLink extends PseudoClassSelector<"any-link"> {
     return new AnyLink();
   }
 
-  private constructor() {
+  protected constructor() {
     super("any-link");
   }
 

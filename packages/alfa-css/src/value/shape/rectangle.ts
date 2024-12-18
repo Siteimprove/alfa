@@ -43,7 +43,7 @@ export class Rectangle<
   public readonly _bottom: O;
   public readonly _left: O;
 
-  private constructor(top: O, right: O, bottom: O, left: O) {
+  protected constructor(top: O, right: O, bottom: O, left: O) {
     super("rectangle", Value.hasCalculation(top, right, bottom, left));
     this._top = top;
     this._right = right;

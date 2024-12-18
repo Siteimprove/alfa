@@ -47,7 +47,7 @@ export namespace Angle {
       return new Calculated(value);
     }
 
-    private constructor(value: Math<"angle">) {
+    protected constructor(value: Math<"angle">) {
       super(value, "angle");
     }
 
@@ -99,7 +99,7 @@ export namespace Angle {
       return new Fixed(value.value, value.unit);
     }
 
-    private constructor(value: number, unit: U) {
+    protected constructor(value: number, unit: U) {
       super(value, unit, "angle");
     }
 

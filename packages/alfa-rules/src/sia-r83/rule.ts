@@ -632,7 +632,7 @@ export class ClippingAncestors extends Diagnostic {
   private readonly _horizontal: Option<Element>;
   private readonly _vertical: Option<Element>;
 
-  private constructor(
+  protected constructor(
     message: string,
     horizontal: Option<Element>,
     vertical: Option<Element>,

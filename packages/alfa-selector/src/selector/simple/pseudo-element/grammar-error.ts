@@ -8,7 +8,7 @@ export class GrammarError extends PseudoElementSelector<"grammar-error"> {
     return new GrammarError();
   }
 
-  private constructor() {
+  protected constructor() {
     super("grammar-error");
   }
 

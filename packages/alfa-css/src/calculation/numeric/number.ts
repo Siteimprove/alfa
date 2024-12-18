@@ -15,7 +15,7 @@ export class Number extends Numeric<"number"> {
     return new Number(value);
   }
 
-  private constructor(value: number) {
+  protected constructor(value: number) {
     super(value, "number");
   }
 

@@ -10,7 +10,7 @@ export class Version<N extends number = number> extends Tag<"version"> {
 
   private readonly _version: N;
 
-  private constructor(version: N) {
+  protected constructor(version: N) {
     super();
     this._version = version;
   }

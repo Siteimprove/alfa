@@ -6,7 +6,7 @@ import type { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import type { Monad } from "@siteimprove/alfa-monad";
-import type { Option} from "@siteimprove/alfa-option";
+import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -31,7 +31,7 @@ export class Value<T = unknown>
   private readonly _value: T;
   private readonly _source: Option<Declaration>;
 
-  private constructor(value: T, source: Option<Declaration>) {
+  protected constructor(value: T, source: Option<Declaration>) {
     this._value = value;
     this._source = source;
   }

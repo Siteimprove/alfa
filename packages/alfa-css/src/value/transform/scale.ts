@@ -74,7 +74,7 @@ export class Scale<
   private readonly _y: Y;
   private readonly _z: Option<Z>;
 
-  private constructor(x: X, y: Y, z?: Z) {
+  protected constructor(x: X, y: Y, z?: Z) {
     super("scale", false);
     this._x = x;
     this._y = y;

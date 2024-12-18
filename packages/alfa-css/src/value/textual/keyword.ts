@@ -23,7 +23,7 @@ export class Keyword<T extends string = string>
     return new Keyword(value);
   }
 
-  private constructor(value: T) {
+  protected constructor(value: T) {
     super("keyword", value);
   }
 

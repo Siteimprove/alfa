@@ -117,7 +117,7 @@ export class LabelAndName extends Diagnostic {
   private readonly _textContent: string;
   private readonly _name: string;
 
-  private constructor(message: string, textContent: string, name: string) {
+  protected constructor(message: string, textContent: string, name: string) {
     super(message);
     this._textContent = textContent;
     this._name = name;

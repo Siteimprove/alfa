@@ -41,7 +41,7 @@ export class Shape<
   private readonly _shape: S;
   private readonly _box: B;
 
-  private constructor(shape: S, box: B) {
+  protected constructor(shape: S, box: B) {
     super("shape", Value.hasCalculation(shape));
     this._shape = shape;
     this._box = box;

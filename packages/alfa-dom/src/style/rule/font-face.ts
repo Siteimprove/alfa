@@ -15,7 +15,7 @@ export class FontFaceRule extends Rule<"font-face"> {
 
   private readonly _style: Block;
 
-  private constructor(declarations: Array<Declaration>) {
+  protected constructor(declarations: Array<Declaration>) {
     super("font-face");
 
     this._style = Block.of(

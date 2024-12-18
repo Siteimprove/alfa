@@ -32,7 +32,7 @@ export class Ellipse<R extends LengthPercentage = LengthPercentage>
   private readonly _horizontal: R;
   private readonly _vertical: R;
 
-  private constructor(horizontal: R, vertical: R) {
+  protected constructor(horizontal: R, vertical: R) {
     super("ellipse", Value.hasCalculation(horizontal, vertical));
     this._horizontal = horizontal;
     this._vertical = vertical;

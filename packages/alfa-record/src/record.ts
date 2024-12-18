@@ -34,7 +34,7 @@ export class Record<T>
   private readonly _keys: ReadonlyArray<Record.Key<T>>;
   private readonly _values: List<Record.Value<T>>;
 
-  private constructor(
+  protected constructor(
     indices: ReadonlyMap<string, number>,
     keys: ReadonlyArray<Record.Key<T>>,
     values: List<T[Record.Key<T>]>,

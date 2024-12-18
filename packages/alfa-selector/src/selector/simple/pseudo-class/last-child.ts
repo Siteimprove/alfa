@@ -12,7 +12,7 @@ export class LastChild extends PseudoClassSelector<"last-child"> {
     return new LastChild();
   }
 
-  private constructor() {
+  protected constructor() {
     super("last-child");
   }
 

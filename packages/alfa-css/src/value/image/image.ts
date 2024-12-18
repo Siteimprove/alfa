@@ -29,7 +29,7 @@ export class Image<I extends URL | Gradient = URL | Gradient>
 
   private readonly _image: I;
 
-  private constructor(image: I) {
+  protected constructor(image: I) {
     super("image", Value.hasCalculation(image));
     this._image = image;
   }

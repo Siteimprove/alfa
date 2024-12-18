@@ -16,7 +16,7 @@ export class Hover extends PseudoClassSelector<"hover"> {
     return new Hover();
   }
 
-  private constructor() {
+  protected constructor() {
     super("hover");
   }
 

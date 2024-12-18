@@ -40,7 +40,7 @@ export class Shadow extends Node<"shadow"> {
   private _host: Option<Element> = None;
   private readonly _style: Array<Sheet>;
 
-  private constructor(
+  protected constructor(
     children: Array<Node>,
     style: Array<Sheet>,
     mode: Shadow.Mode,

@@ -177,7 +177,7 @@ export namespace Language {
       return new Primary(name);
     }
 
-    private constructor(name: Primary.Name) {
+    protected constructor(name: Primary.Name) {
       super(name);
     }
 
@@ -235,7 +235,7 @@ export namespace Language {
       return new Extended(name);
     }
 
-    private constructor(name: Extended.Name) {
+    protected constructor(name: Extended.Name) {
       super(name);
     }
 
@@ -293,7 +293,7 @@ export namespace Language {
       return new Script(name);
     }
 
-    private constructor(name: Script.Name) {
+    protected constructor(name: Script.Name) {
       super(name);
     }
 
@@ -341,7 +341,7 @@ export namespace Language {
       return new Region(name);
     }
 
-    private constructor(name: Region.Name) {
+    protected constructor(name: Region.Name) {
       super(name);
     }
 
@@ -389,7 +389,7 @@ export namespace Language {
       return new Variant(name);
     }
 
-    private constructor(name: Variant.Name) {
+    protected constructor(name: Variant.Name) {
       super(name);
     }
 

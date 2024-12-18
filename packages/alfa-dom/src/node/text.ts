@@ -26,7 +26,7 @@ export class Text extends Node<"text"> implements Slotable {
 
   private readonly _data: string;
 
-  private constructor(
+  protected constructor(
     data: string,
     externalId?: string,
     internalId?: string,

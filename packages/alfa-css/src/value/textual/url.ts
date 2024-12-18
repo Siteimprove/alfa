@@ -24,7 +24,7 @@ export class URL extends Value<"url", false> implements Resolvable<URL, never> {
 
   private readonly _url: string;
 
-  private constructor(url: string) {
+  protected constructor(url: string) {
     super("url", false);
     this._url = url;
   }

@@ -13,7 +13,7 @@ export class Has extends WithSelector<"has"> {
     return new Has(selector);
   }
 
-  private constructor(selector: Absolute) {
+  protected constructor(selector: Absolute) {
     super("has", selector, selector.specificity);
   }
 

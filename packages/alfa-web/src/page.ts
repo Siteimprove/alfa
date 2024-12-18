@@ -38,7 +38,7 @@ export class Page
   private readonly _document: Document;
   private readonly _device: Device;
 
-  private constructor(
+  protected constructor(
     request: Request,
     response: Response,
     document: Document,

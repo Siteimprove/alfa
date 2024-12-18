@@ -14,7 +14,7 @@ export class KeyframesRule extends GroupingRule<"keyframes"> {
 
   private readonly _name: string;
 
-  private constructor(name: string, rules: Array<Rule>) {
+  protected constructor(name: string, rules: Array<Rule>) {
     super("keyframes", rules);
 
     this._name = name;

@@ -21,7 +21,7 @@ export class Class extends WithName<"class"> {
   }
 
   protected readonly _key: Option<Class>;
-  private constructor(name: string) {
+  protected constructor(name: string) {
     super("class", name, Specificity.of(0, 1, 0));
 
     this._key = Option.of(this);

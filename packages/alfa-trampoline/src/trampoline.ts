@@ -127,7 +127,7 @@ class Done<T> extends Trampoline<T> {
 
   private readonly _value: T;
 
-  private constructor(value: T) {
+  protected constructor(value: T) {
     super();
     this._value = value;
   }
@@ -164,7 +164,7 @@ class Suspend<T> extends Trampoline<T> {
 
   private readonly _thunk: Thunk<Trampoline<T>>;
 
-  private constructor(thunk: Thunk<Trampoline<T>>) {
+  protected constructor(thunk: Thunk<Trampoline<T>>) {
     super();
     this._thunk = thunk;
   }
@@ -197,7 +197,7 @@ class Bind<S, T> extends Trampoline<T> {
   private readonly _thunk: Thunk<Trampoline<S>>;
   private readonly _mapper: Mapper<S, Trampoline<T>>;
 
-  private constructor(
+  protected constructor(
     thunk: Thunk<Trampoline<S>>,
     mapper: Mapper<S, Trampoline<T>>,
   ) {

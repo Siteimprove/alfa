@@ -12,6 +12,7 @@ import { Vector } from '@siteimprove/alfa-math';
 
 // @public (undocumented)
 export class Transformation implements Equatable, Serializable {
+    protected constructor(matrix: Matrix);
     // (undocumented)
     apply(transformation: Transformation): Transformation;
     // (undocumented)

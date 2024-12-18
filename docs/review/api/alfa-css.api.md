@@ -39,6 +39,7 @@ export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.
 export namespace Angle {
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Calculated extends Dimension.Calculated<"angle"> implements Resolvable<Canonical, never> {
+        protected constructor(value: Math_2<"angle">);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -58,6 +59,7 @@ export namespace Angle {
     export type Canonical = Fixed<"deg">;
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Fixed<U extends Unit.Angle = Unit.Angle> extends Dimension.Fixed<"angle", U> implements Resolvable<Canonical, never>, Comparable<Fixed<U>> {
+        protected constructor(value: number, unit: U);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -112,6 +114,7 @@ export type AnglePercentage<U extends Unit.Angle = Unit.Angle> = AnglePercentage
 export namespace AnglePercentage {
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Calculated extends Dimension.Calculated<"angle-percentage"> implements Resolvable<Canonical, never> {
+        protected constructor(math: Math_2<"angle-percentage">);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -164,6 +167,7 @@ export namespace AnglePercentage {
 export class Block implements Iterable<Token>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Token>;
+    protected constructor(token: Block.Open, value: Array<Token>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -258,6 +262,7 @@ export namespace Box {
 //
 // @public (undocumented)
 export class Circle<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"circle", Value.HasCalculation<[R, P]>> implements Resolvable<Circle.Canonical, Circle.Resolver>, PartiallyResolvable<Circle.PartiallyResolved, Circle.PartialResolver> {
+    protected constructor(radius: R, center: P);
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -340,6 +345,7 @@ export namespace Comma {
 export class Component implements Iterable<Token>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Token>;
+    protected constructor(value: Array<Token>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -375,6 +381,7 @@ export namespace Contain {
 //
 // @public (undocumented)
 export class ContainFlags extends Value<"contain-flags", false> implements Resolvable<ContainFlags, never> {
+    protected constructor(size: boolean, inlineSize: boolean, layout: boolean, style: boolean, paint: boolean);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -454,6 +461,7 @@ export namespace Current {
 //
 // @public (undocumented)
 export class CustomIdent extends Ident<"custom-ident"> implements Resolvable<CustomIdent, never> {
+    protected constructor(value: string);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -472,6 +480,7 @@ export namespace CustomIdent {
 export class Declaration implements Iterable<Token>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Token>;
+    protected constructor(name: string, value: Array<Token>, important: boolean);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -584,6 +593,7 @@ export namespace Dimension {
 //
 // @public (undocumented)
 export class Ellipse<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"ellipse", Value.HasCalculation<[R, P]>> implements Resolvable<Ellipse.Canonical, Ellipse.Resolver>, PartiallyResolvable<Ellipse.PartiallyResolved, Ellipse.PartialResolver> {
+    protected constructor(rx: R, ry: R, center: P);
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -705,6 +715,7 @@ export namespace Expression {
 class Function_2 implements Iterable<Token>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Token>;
+    protected constructor(name: string, value: Array<Token>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -766,6 +777,7 @@ export namespace Gradient {
 //
 // @public (undocumented)
 export class Hex extends Format<"hex"> {
+    protected constructor(value: number);
     // (undocumented)
     get alpha(): Number_2.Fixed;
     // (undocumented)
@@ -805,6 +817,7 @@ export namespace Hex {
 
 // @public (undocumented)
 export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed<"percentage"> = Number_2.Fixed | Percentage.Fixed<"percentage">> extends Format<"hsl"> {
+    protected constructor(hue: H, saturation: Percentage.Canonical, lightness: Percentage.Canonical, alpha: A);
     // (undocumented)
     get alpha(): A;
     // (undocumented)
@@ -895,6 +908,7 @@ export namespace Ident {
 //
 // @public (undocumented)
 export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image", Value.HasCalculation<[I]>> implements Resolvable<Image.Canonical, Image.Resolver>, PartiallyResolvable<Image.PartiallyResolved, Image.PartialResolver> {
+    protected constructor(image: I);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -941,6 +955,7 @@ export namespace Image {
 //
 // @public (undocumented)
 export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2> extends BasicShape<"inset", HasCalculation<O, C>> implements Resolvable<Inset.Canonical, Inset.Resolver>, PartiallyResolvable<Inset.PartiallyResolved, Inset.PartialResolver> {
+    protected constructor(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>);
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -1011,6 +1026,7 @@ export type Integer = Integer.Calculated | Integer.Fixed;
 export namespace Integer {
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Calculated extends Numeric.Calculated<"integer"> implements Resolvable<Canonical, never> {
+        protected constructor(value: Math_2<"number">);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1032,6 +1048,7 @@ export namespace Integer {
     export type Canonical = Fixed;
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Fixed extends Numeric.Fixed<"integer"> implements Resolvable<Canonical, never> {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1077,6 +1094,7 @@ export namespace Integer {
 //
 // @public (undocumented)
 export class Keyword<T extends string = string> extends Ident<"keyword", T> implements Resolvable<Keyword<T>, never> {
+    protected constructor(value: T);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1104,6 +1122,7 @@ export type Length<U extends Unit.Length = Unit.Length> = Length.Calculated | Le
 export namespace Length {
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Calculated extends Dimension.Calculated<"length"> implements Resolvable<Canonical, Resolver> {
+        protected constructor(math: Math_2<"length">);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1123,6 +1142,7 @@ export namespace Length {
     export type Canonical = Fixed<Unit.Length.Canonical>;
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     export class Fixed<U extends Unit.Length = Unit.Length> extends Dimension.Fixed<"length", U> implements Resolvable<Canonical, Resolver>, Comparable<Fixed<U>> {
+        protected constructor(value: number, unit: U);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1191,6 +1211,7 @@ export namespace LengthPercentage {
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
     export class Calculated extends Dimension.Calculated<"length-percentage"> implements Resolvable<Length.Canonical, Resolver>, PartiallyResolvable<Calculated, PartialResolver> {
+        protected constructor(math: Math_2<"length-percentage">);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1258,6 +1279,7 @@ export namespace Lexer {
 export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V]>> implements Iterable_2<V>, Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>>, PartiallyResolvable<List<Resolvable.PartiallyResolved<V>>, Resolvable.PartialResolver<V>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<V>;
+    protected constructor(values: Array<V>, separator: string);
     cutOrExtend(length: number): List<V>;
     // (undocumented)
     equals<T extends Value>(value: List<T>): boolean;
@@ -1304,6 +1326,7 @@ export namespace List {
 
 // @public (undocumented)
 class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> {
+    protected constructor(expression: Expression);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1384,6 +1407,7 @@ export { Math_2 as Math }
 //
 // @public (undocumented)
 export class Matrix extends Function_3<"matrix", false> implements Resolvable<Matrix.Canonical, never> {
+    protected constructor(values: Matrix.Values<Number_2.Canonical>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1444,6 +1468,7 @@ export namespace Matrix {
 
 // @public (undocumented)
 export class Named<C extends Named.Color = Named.Color> extends Format<"named"> {
+    protected constructor(color: C);
     // (undocumented)
     get alpha(): Number_2.Fixed;
     // (undocumented)
@@ -1489,6 +1514,7 @@ export namespace Named {
 export class Nth implements Iterable<Token>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Token>;
+    protected constructor(step: number, offset: number);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1530,6 +1556,7 @@ type Number_2 = Number_2.Calculated | Number_2.Fixed;
 namespace Number_2 {
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     class Calculated extends Numeric.Calculated<"number"> implements Resolvable<Canonical, never> {
+        protected constructor(value: Math_2<"number">);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1551,6 +1578,7 @@ namespace Number_2 {
     type Canonical = Fixed;
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     class Fixed extends Numeric.Fixed<"number"> implements Resolvable<Canonical, never> {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1704,6 +1732,7 @@ export namespace Percentage {
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     // Warning: (ae-incompatible-release-tags) The symbol "Calculated" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
     export class Calculated<H extends Numeric_2.Type = Numeric_2.Type> extends Numeric.Calculated<"percentage", H, "percentage"> implements Resolvable<Canonicals[H], Resolver<H>>, PartiallyResolvable<PartiallyResolved<H>, PartialResolver> {
+        protected constructor(math: Math_2<"percentage">);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1731,6 +1760,7 @@ export namespace Percentage {
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "Resolvable" which is marked as @internal
     // Warning: (ae-incompatible-release-tags) The symbol "Fixed" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
     export class Fixed<H extends Numeric_2.Type = Numeric_2.Type> extends Numeric.Fixed<"percentage", "percentage" | H, "percentage"> implements Resolvable<Canonical | Canonicals[H], Resolver<H>>, PartiallyResolvable<PartiallyResolved<H>, PartialResolver> {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1788,6 +1818,7 @@ export namespace Percentage {
 //
 // @public (undocumented)
 export class Perspective<D extends Length = Length> extends Function_3<"perspective", Value.HasCalculation<[D]>> implements Resolvable<Perspective.Canonical, Perspective.Resolver> {
+    protected constructor(depth: D);
     // (undocumented)
     get depth(): D;
     // (undocumented)
@@ -1828,6 +1859,7 @@ export namespace Perspective {
 //
 // @public (undocumented)
 export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape<"polygon", Value.HasCalculation<[V]>> implements Resolvable<Polygon.Canonical, Polygon.Resolver>, PartiallyResolvable<Polygon.PartiallyResolved, Polygon.PartialResolver> {
+    protected constructor(fill: Option<F>, vertices: Array_2<Polygon.Vertex<V>>);
     // (undocumented)
     equals(value: Polygon): boolean;
     // (undocumented)
@@ -1885,6 +1917,7 @@ export namespace Polygon {
 //
 // @public (undocumented)
 export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>> extends Value<"position", Value.HasCalculation<[HC, VC]>> implements Resolvable<Position.Canonical<H, V>, Position.Resolver>, PartiallyResolvable<Position.PartiallyResolved<H, V>, Position.PartialResolver> {
+    protected constructor(horizontal: HC, vertical: VC);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1940,6 +1973,7 @@ export namespace Position {
 //
 // @public (undocumented)
 export class Radius<R extends LengthPercentage | Radius.Side = LengthPercentage | Radius.Side> extends BasicShape<"radius", Value.HasCalculation<[R]>> implements Resolvable<Radius.Canonical, Radius.Resolver>, PartiallyResolvable<Radius.PartiallyResolved, Radius.PartialResolver> {
+    protected constructor(value: R);
     // (undocumented)
     equals(value: Radius): boolean;
     // (undocumented)
@@ -1994,6 +2028,7 @@ export namespace Radius {
 //
 // @public @deprecated (undocumented)
 export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Auto> extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>> implements Resolvable<Rectangle.Canonical, Rectangle.Resolver> {
+    protected constructor(top: O, right: O, bottom: O, left: O);
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -2072,6 +2107,7 @@ export namespace Resolvable {
 
 // @public (undocumented)
 export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, A extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">> extends Format<"rgb"> {
+    protected constructor(red: C, green: C, blue: C, alpha: A);
     // (undocumented)
     get alpha(): A;
     // (undocumented)
@@ -2123,6 +2159,7 @@ export namespace RGB {
 //
 // @public (undocumented)
 export class Rotate extends Function_3<"rotate", false> implements Resolvable<Rotate.Canonical, never> {
+    protected constructor(x: Number_2.Canonical, y: Number_2.Canonical, z: Number_2.Canonical, angle: Angle.Canonical);
     // (undocumented)
     get angle(): Angle.Canonical;
     // (undocumented)
@@ -2170,6 +2207,7 @@ export namespace Rotate {
 //
 // @public
 export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, Y extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, Z extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">> extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, never> {
+    protected constructor(x: X, y: Y, z?: Z);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2231,6 +2269,7 @@ export namespace Scale {
 //
 // @public (undocumented)
 export class Shadow<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color> extends Value<"shadow", Value.HasCalculation<[H, V, B, S, C]>> implements Resolvable<Shadow.Canonical, Shadow.Resolver> {
+    protected constructor(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean);
     // (undocumented)
     get blur(): B;
     // (undocumented)
@@ -2296,6 +2335,7 @@ export namespace Shadow {
 //
 // @public (undocumented)
 export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry> extends Value<"shape", Value.HasCalculation<[S]>> implements Resolvable<Shape.Canonical, Shape.Resolver>, PartiallyResolvable<Shape.PartiallyResolved, Shape.PartialResolver> {
+    protected constructor(shape: S, box: B);
     // (undocumented)
     get box(): B;
     // (undocumented)
@@ -2362,6 +2402,7 @@ export namespace Shape {
 //
 // @public (undocumented)
 export class Skew extends Function_3<"skew", false> implements Resolvable<Skew.Canonical, never> {
+    protected constructor(x: Angle.Canonical, y: Angle.Canonical);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2401,6 +2442,7 @@ export namespace Skew {
 //
 // @public (undocumented)
 class String_2 extends Value<"string", false> implements Resolvable<String_2, never> {
+    protected constructor(value: string);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2449,6 +2491,7 @@ export type Token = Token.Ident | Token.Function | Token.AtKeyword | Token.Hash 
 export namespace Token {
     // (undocumented)
     export class AtKeyword implements Equatable, Serializable<AtKeyword.JSON> {
+        protected constructor(value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -2669,6 +2712,7 @@ export namespace Token {
     }
     // (undocumented)
     export class Delim implements Equatable, Serializable<Delim.JSON> {
+        protected constructor(value: number);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -2701,6 +2745,7 @@ export namespace Token {
     }
     // (undocumented)
     export class Dimension implements Equatable, Serializable<Dimension.JSON> {
+        protected constructor(value: number, unit: string, isInteger: boolean, isSigned: boolean);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -2744,6 +2789,7 @@ export namespace Token {
     badURL: typeof BadURL.of;
     // (undocumented)
     export class Function implements Equatable, Serializable<Function.JSON> {
+        protected constructor(value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -2778,6 +2824,7 @@ export namespace Token {
     isDelim: typeof Delim.isDelim;
     // (undocumented)
     export class Hash implements Equatable, Serializable<Hash.JSON> {
+        protected constructor(value: string, isIdentifier: boolean);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -2811,6 +2858,7 @@ export namespace Token {
     }
     // (undocumented)
     export class Ident implements Equatable, Serializable<Ident.JSON> {
+        protected constructor(value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -2845,6 +2893,7 @@ export namespace Token {
     export type JSON = Ident.JSON | Function.JSON | AtKeyword.JSON | Hash.JSON | String.JSON | URL.JSON | BadURL.JSON | Delim.JSON | Number.JSON | Percentage.JSON | Dimension.JSON | Whitespace.JSON | Colon.JSON | Semicolon.JSON | Comma.JSON | OpenParenthesis.JSON | CloseParenthesis.JSON | OpenSquareBracket.JSON | CloseSquareBracket.JSON | OpenCurlyBracket.JSON | CloseCurlyBracket.JSON | OpenComment.JSON | CloseComment.JSON;
     // (undocumented)
     export class Number implements Equatable, Serializable<Number.JSON> {
+        protected constructor(value: number, isInteger: boolean, isSigned: boolean);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -3047,6 +3096,7 @@ export namespace Token {
     parseOpenSquareBracket: Parser_2<Slice<Token>, OpenSquareBracket, string, []>;
     // (undocumented)
     export class Percentage implements Equatable, Serializable<Percentage.JSON> {
+        protected constructor(value: number, isInteger: boolean);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -3115,6 +3165,7 @@ export namespace Token {
     parseOpenCurlyBracket: Parser_2<Slice<Token>, OpenCurlyBracket, string, []>;
     // (undocumented)
     export class String implements Equatable, Serializable<String.JSON> {
+        protected constructor(value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -3149,6 +3200,7 @@ export namespace Token {
     parseCloseCurlyBracket: Parser_2<Slice<Token>, CloseCurlyBracket, string, []>;
     // (undocumented)
     export class URL implements Equatable, Serializable<URL.JSON> {
+        protected constructor(value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -3253,6 +3305,7 @@ export namespace Transform {
 //
 // @public (undocumented)
 export class Translate<X extends LengthPercentage = LengthPercentage, Y extends LengthPercentage = LengthPercentage, Z extends Length = Length> extends Function_3<"translate", Value.HasCalculation<[X, Y, Z]>> implements Resolvable<Translate.Canonical, Translate.Resolver>, PartiallyResolvable<Translate.PartiallyResolved, Translate.PartialResolver> {
+    protected constructor(x: X, y: Y, z: Z);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -3307,6 +3360,7 @@ export namespace Translate {
 //
 // @public (undocumented)
 export class Tuple<T extends Array<Value>> extends Value<"tuple", Value.HasCalculation<T>> implements Resolvable<Tuple<Tuple.Resolved<T>>, Tuple.Resolver<T>>, PartiallyResolvable<Tuple<Tuple.PartiallyResolved<T>>, Tuple.PartialResolver<T>> {
+    protected constructor(values: Readonly<T>);
     // (undocumented)
     equals<T extends Array<Value>>(value: Tuple<T>): boolean;
     // (undocumented)
@@ -3456,6 +3510,7 @@ export namespace Unit {
 //
 // @public (undocumented)
 export class URL extends Value<"url", false> implements Resolvable<URL, never> {
+    protected constructor(url: string);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)

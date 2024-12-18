@@ -41,7 +41,7 @@ export class Audit<
   private readonly _rules: List<Rule<I, T, Q, S>>;
   private readonly _oracle: Oracle<I, T, Q, S>;
 
-  private constructor(
+  protected constructor(
     input: I,
     rules: List<Rule<I, T, Q, S>>,
     oracle: Oracle<I, T, Q, S>,

@@ -18,7 +18,7 @@ export class Site<R extends Resource = Resource>
 
   private readonly _resources: Graph<R>;
 
-  private constructor(resources: Graph<R>) {
+  protected constructor(resources: Graph<R>) {
     this._resources = resources;
   }
 

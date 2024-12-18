@@ -14,7 +14,7 @@ export class Cookie implements Equatable, Serializable<Cookie.JSON> {
   private readonly _name: string;
   private readonly _value: string;
 
-  private constructor(name: string, value: string) {
+  protected constructor(name: string, value: string) {
     this._name = name;
     this._value = value;
   }
