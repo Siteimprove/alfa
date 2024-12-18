@@ -1,1 +1,1 @@
-export * from "./monad.js";
+export type * from "./monad.js";
