@@ -32,7 +32,7 @@ export class Rotate
   private readonly _z: Number.Canonical;
   private readonly _angle: Angle.Canonical;
 
-  private constructor(
+  protected constructor(
     x: Number.Canonical,
     y: Number.Canonical,
     z: Number.Canonical,

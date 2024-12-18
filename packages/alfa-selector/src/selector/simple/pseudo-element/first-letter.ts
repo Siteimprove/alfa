@@ -8,7 +8,7 @@ export class FirstLetter extends PseudoElementSelector<"first-letter"> {
     return new FirstLetter();
   }
 
-  private constructor() {
+  protected constructor() {
     super("first-letter");
   }
 

@@ -20,7 +20,7 @@ export class Column implements Anchored, Equatable, Serializable<Column.JSON> {
 
   private readonly _x: number;
 
-  private constructor(x: number) {
+  protected constructor(x: number) {
     this._x = x;
   }
 
@@ -76,7 +76,7 @@ export namespace Column {
     private readonly _x: number;
     private readonly _width: number;
 
-    private constructor(element: Element, x: number, width: number) {
+    protected constructor(element: Element, x: number, width: number) {
       this._element = element;
       this._x = x;
       this._width = width;

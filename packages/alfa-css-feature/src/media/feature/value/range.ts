@@ -35,7 +35,7 @@ export class Range<T = unknown>
   private readonly _minimum: Option<Bound<T>>;
   private readonly _maximum: Option<Bound<T>>;
 
-  private constructor(minimum: Option<Bound<T>>, maximum: Option<Bound<T>>) {
+  protected constructor(minimum: Option<Bound<T>>, maximum: Option<Bound<T>>) {
     this._minimum = minimum;
     this._maximum = maximum;
   }

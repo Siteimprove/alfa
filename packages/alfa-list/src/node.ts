@@ -85,7 +85,7 @@ export class Leaf<T> implements Node<T> {
 
   private readonly _values: Array<T>;
 
-  private constructor(values: Array<T>) {
+  protected constructor(values: Array<T>) {
     this._values = values;
   }
 
@@ -158,7 +158,7 @@ export class Branch<T> implements Node<T> {
 
   private readonly _nodes: Array<Branch<T> | Leaf<T>>;
 
-  private constructor(nodes: Array<Branch<T> | Leaf<T>>) {
+  protected constructor(nodes: Array<Branch<T> | Leaf<T>>) {
     this._nodes = nodes;
   }
 

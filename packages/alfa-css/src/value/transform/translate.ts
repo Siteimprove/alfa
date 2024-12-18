@@ -41,7 +41,7 @@ export class Translate<
   private readonly _y: Y;
   private readonly _z: Z;
 
-  private constructor(x: X, y: Y, z: Z) {
+  protected constructor(x: X, y: Y, z: Z) {
     super("translate", Value.hasCalculation(x, y, z));
     this._x = x;
     this._y = y;

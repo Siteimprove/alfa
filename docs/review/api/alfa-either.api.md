@@ -77,6 +77,7 @@ export namespace Either {
 export class Left<L> implements Either<L, never> {
     // (undocumented)
     [Symbol.iterator](): Iterator<L>;
+    protected constructor(value: L);
     // (undocumented)
     apply(): Left<L>;
     // (undocumented)
@@ -138,6 +139,7 @@ export namespace Left {
 export class Right<R> implements Either<never, R> {
     // (undocumented)
     [Symbol.iterator](): Iterator<R>;
+    protected constructor(value: R);
     // (undocumented)
     apply<L, T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
     // (undocumented)

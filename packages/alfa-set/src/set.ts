@@ -29,7 +29,7 @@ export class Set<T> implements Collection.Unkeyed<T> {
 
   private readonly _values: Map<T, T>;
 
-  private constructor(values: Map<T, T>) {
+  protected constructor(values: Map<T, T>) {
     this._values = values;
   }
 

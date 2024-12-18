@@ -16,7 +16,7 @@ export class Where extends WithSelector<"where"> {
     return new Where(selector);
   }
 
-  private constructor(selector: Absolute) {
+  protected constructor(selector: Absolute) {
     super("where", selector, Specificity.of(0, 0, 0));
   }
 

@@ -42,7 +42,7 @@ export namespace Integer {
       return new Calculated(value);
     }
 
-    private constructor(value: Calculation<"number">) {
+    protected constructor(value: Calculation<"number">) {
       super(value, "integer");
     }
 
@@ -101,7 +101,7 @@ export namespace Integer {
       );
     }
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       super(value, "integer");
     }
 

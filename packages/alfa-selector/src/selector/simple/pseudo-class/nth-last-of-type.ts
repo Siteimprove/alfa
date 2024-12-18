@@ -13,7 +13,7 @@ export class NthLastOfType extends WithIndex<"nth-last-of-type"> {
     return new NthLastOfType(index);
   }
 
-  private constructor(index: Nth) {
+  protected constructor(index: Nth) {
     super("nth-last-of-type", index);
   }
 

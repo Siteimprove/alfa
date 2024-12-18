@@ -21,7 +21,7 @@ export class Performance<T>
   private readonly _epoch = now();
   private readonly _emitter = Emitter.of<Performance.Entry<T>>();
 
-  private constructor() {}
+  protected constructor() {}
 
   public get epoch(): number {
     return this._epoch;
@@ -131,7 +131,7 @@ export namespace Performance {
     private readonly _data: T;
     private readonly _start: number;
 
-    private constructor(data: T, start: number) {
+    protected constructor(data: T, start: number) {
       this._data = data;
       this._start = start;
     }
@@ -181,7 +181,7 @@ export namespace Performance {
     private readonly _start: number;
     private readonly _duration: number;
 
-    private constructor(data: T, start: number, duration: number) {
+    protected constructor(data: T, start: number, duration: number) {
       this._data = data;
       this._start = start;
       this._duration = duration;

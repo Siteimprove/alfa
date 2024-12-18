@@ -39,7 +39,7 @@ export class Request
   private readonly _headers: Headers;
   private readonly _body: ArrayBuffer;
 
-  private constructor(
+  protected constructor(
     method: string,
     url: URL,
     headers: Headers,

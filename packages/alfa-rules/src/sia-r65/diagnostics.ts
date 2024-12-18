@@ -18,7 +18,7 @@ export class MatchingClasses extends Diagnostic {
   private readonly _matchingTargets: Map<string, number>;
   private readonly _matchingNonTargets: Map<string, number>;
 
-  private constructor(
+  protected constructor(
     message: string,
     matchingTargets: Map<string, number>,
     matchingNonTargets: Map<string, number>,

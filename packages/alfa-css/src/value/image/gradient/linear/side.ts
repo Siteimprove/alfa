@@ -23,7 +23,7 @@ export class Side
 
   private readonly _side: Position.Vertical | Position.Horizontal;
 
-  private constructor(side: Position.Vertical | Position.Horizontal) {
+  protected constructor(side: Position.Vertical | Position.Horizontal) {
     super("side", false);
     this._side = side;
   }

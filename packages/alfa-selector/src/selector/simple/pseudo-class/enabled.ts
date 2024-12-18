@@ -15,7 +15,7 @@ export class Enabled extends PseudoClassSelector<"enabled"> {
     return new Enabled();
   }
 
-  private constructor() {
+  protected constructor() {
     super("enabled");
   }
 

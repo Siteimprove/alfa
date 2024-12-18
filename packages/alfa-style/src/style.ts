@@ -205,7 +205,7 @@ export class Style implements Serializable<Style.JSON> {
   // from computed values.
   private _computed = Map.empty<Name, Value>();
 
-  private constructor(
+  protected constructor(
     owner: Option<Element>,
     device: Device,
     parent: Option<Style>,

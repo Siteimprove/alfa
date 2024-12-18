@@ -22,7 +22,7 @@ export class List implements Feature<Query, List.JSON> {
 
   private readonly _queries: Array<Query>;
 
-  private constructor(queries: Iterable<Query>) {
+  protected constructor(queries: Iterable<Query>) {
     this._queries = Array.from(queries);
   }
 

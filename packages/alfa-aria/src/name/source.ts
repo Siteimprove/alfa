@@ -39,7 +39,7 @@ export namespace Source {
 
     private readonly _text: Text;
 
-    private constructor(text: Text) {
+    protected constructor(text: Text) {
       this._text = text;
     }
 
@@ -87,7 +87,7 @@ export namespace Source {
     private readonly _element: Element;
     private readonly _name: Name;
 
-    private constructor(element: Element, name: Name) {
+    protected constructor(element: Element, name: Name) {
       this._element = element;
       this._name = name;
     }
@@ -147,7 +147,7 @@ export namespace Source {
     private readonly _element: Element;
     private readonly _name: Name;
 
-    private constructor(element: Element, name: Name) {
+    protected constructor(element: Element, name: Name) {
       this._element = element;
       this._name = name;
     }
@@ -206,7 +206,7 @@ export namespace Source {
 
     private readonly _attribute: Attribute;
 
-    private constructor(attribute: Attribute) {
+    protected constructor(attribute: Attribute) {
       this._attribute = attribute;
     }
 
@@ -254,7 +254,7 @@ export namespace Source {
     private readonly _attribute: Attribute;
     private readonly _name: Name;
 
-    private constructor(attribute: Attribute, name: Name) {
+    protected constructor(attribute: Attribute, name: Name) {
       this._attribute = attribute;
       this._name = name;
     }

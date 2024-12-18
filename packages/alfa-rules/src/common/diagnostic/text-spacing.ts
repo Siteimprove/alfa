@@ -56,7 +56,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
   // The element with the bad style attribute
   private readonly _owner: Element;
 
-  private constructor(
+  protected constructor(
     message: string,
     property: N,
     value: Length.Canonical,

@@ -28,7 +28,7 @@ export namespace Discrete {
 
       private static _boolean = new Discrete(None);
 
-      private constructor(value: Option<Value<Keyword<K>>>) {
+      protected constructor(value: Option<Value<Keyword<K>>>) {
         super(name, value);
       }
 

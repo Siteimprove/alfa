@@ -36,7 +36,7 @@ export class Attribute extends WithName<"attribute"> {
   private readonly _matcher: Option<Attribute.Matcher>;
   private readonly _modifier: Option<Attribute.Modifier>;
 
-  private constructor(
+  protected constructor(
     namespace: Option<string>,
     name: string,
     value: Option<string>,

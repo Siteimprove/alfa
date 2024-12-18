@@ -28,7 +28,7 @@ export class Graph<T>
 
   private readonly _nodes: Map<T, Set<T>>;
 
-  private constructor(nodes: Map<T, Set<T>>) {
+  protected constructor(nodes: Map<T, Set<T>>) {
     this._nodes = nodes;
   }
 

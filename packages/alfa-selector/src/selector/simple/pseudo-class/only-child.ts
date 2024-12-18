@@ -12,7 +12,7 @@ export class OnlyChild extends PseudoClassSelector<"only-child"> {
     return new OnlyChild();
   }
 
-  private constructor() {
+  protected constructor() {
     super("only-child");
   }
 

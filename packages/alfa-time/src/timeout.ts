@@ -11,7 +11,7 @@ export class Timeout {
   private readonly _timeout: number;
   private readonly _time: Time;
 
-  private constructor(timeout: number, time: Time) {
+  protected constructor(timeout: number, time: Time) {
     this._timeout = timeout;
     this._time = time;
   }

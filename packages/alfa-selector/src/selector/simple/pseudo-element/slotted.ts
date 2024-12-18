@@ -29,7 +29,7 @@ export class Slotted extends PseudoElementSelector<"slotted"> {
 
   private readonly _selector: Compound | Simple;
 
-  private constructor(selector: Compound | Simple) {
+  protected constructor(selector: Compound | Simple) {
     super(
       "slotted",
       Specificity.sum(selector.specificity, Specificity.of(0, 0, 1)),

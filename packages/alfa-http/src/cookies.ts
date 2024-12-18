@@ -28,7 +28,7 @@ export class Cookies implements Iterable<Cookie>, Serializable<Cookies.JSON> {
 
   private readonly _cookies: Map<string, Cookie>;
 
-  private constructor(cookies: Map<string, Cookie>) {
+  protected constructor(cookies: Map<string, Cookie>) {
     this._cookies = cookies;
   }
 

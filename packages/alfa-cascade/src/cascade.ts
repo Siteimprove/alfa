@@ -64,7 +64,7 @@ export class Cascade implements Serializable {
     Cache<Context, RuleTree.Node>
   >();
 
-  private constructor(root: Document | Shadow, device: Device) {
+  protected constructor(root: Document | Shadow, device: Device) {
     this._root = root;
     this._depth = getDepth(root);
     this._device = device;

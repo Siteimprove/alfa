@@ -8,7 +8,7 @@ export class FileSelectorButton extends PseudoElementSelector<"file-selector-but
     return new FileSelectorButton();
   }
 
-  private constructor() {
+  protected constructor() {
     super("file-selector-button");
   }
 

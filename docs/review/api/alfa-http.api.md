@@ -8,6 +8,7 @@ import type * as earl from '@siteimprove/alfa-earl';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type * as json from '@siteimprove/alfa-json';
+import { Map as Map_2 } from '@siteimprove/alfa-map';
 import type { Option } from '@siteimprove/alfa-option';
 import type { Result } from '@siteimprove/alfa-result';
 import type { Serializable } from '@siteimprove/alfa-json';
@@ -40,6 +41,7 @@ export namespace Body {
 
 // @public (undocumented)
 export class Cookie implements Equatable, Serializable<Cookie.JSON> {
+    protected constructor(name: string, value: string);
     // (undocumented)
     equals(value: Cookie): boolean;
     // (undocumented)
@@ -77,6 +79,7 @@ export namespace Cookie {
 export class Cookies implements Iterable_2<Cookie>, Serializable<Cookies.JSON> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Cookie>;
+    protected constructor(cookies: Map_2<string, Cookie>);
     // (undocumented)
     add(cookie: Cookie): Cookies;
     // (undocumented)
@@ -110,6 +113,7 @@ export namespace Cookies {
 
 // @public (undocumented)
 export class Header implements Equatable, json.Serializable<Header.JSON>, earl.Serializable<Header.EARL> {
+    protected constructor(name: string, value: string);
     // (undocumented)
     equals(value: Header): boolean;
     // (undocumented)
@@ -162,6 +166,7 @@ export namespace Header {
 export class Headers implements Iterable_2<Header>, json.Serializable<Headers.JSON>, earl.Serializable<Headers.EARL> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Header>;
+    protected constructor(headers: Map_2<string, Header>);
     // (undocumented)
     add(header: Header): Headers;
     // (undocumented)
@@ -206,6 +211,7 @@ export namespace Headers {
 
 // @public (undocumented)
 export class Request implements Body, json.Serializable<Request.JSON>, earl.Serializable<Request.EARL> {
+    protected constructor(method: string, url: URL, headers: Headers, body: ArrayBuffer);
     // (undocumented)
     get body(): ArrayBuffer;
     // (undocumented)
@@ -266,6 +272,7 @@ export namespace Request {
 
 // @public (undocumented)
 export class Response implements Body, json.Serializable<Response.JSON>, earl.Serializable<Response.EARL> {
+    protected constructor(url: URL, status: number, headers: Headers, body: ArrayBuffer);
     // (undocumented)
     get body(): ArrayBuffer;
     // (undocumented)

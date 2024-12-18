@@ -34,7 +34,7 @@ export class List<T extends Item = Item> extends Selector<"list"> {
   private readonly _selectors: Array<T>;
   private readonly _length: number;
 
-  private constructor(selectors: Array<T>) {
+  protected constructor(selectors: Array<T>) {
     super(
       "list",
       Specificity.max(...selectors.map((selector) => selector.specificity)),

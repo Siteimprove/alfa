@@ -24,7 +24,7 @@ export class Perspective<D extends Length = Length>
 
   private readonly _depth: D;
 
-  private constructor(depth: D) {
+  protected constructor(depth: D) {
     super("perspective", Value.hasCalculation(depth));
     this._depth = depth;
   }

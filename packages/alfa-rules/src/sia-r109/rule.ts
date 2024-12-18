@@ -115,7 +115,7 @@ export class Languages extends Diagnostic {
   private readonly _programmatic: Language;
   private readonly _natural: Option<Language>;
 
-  private constructor(
+  protected constructor(
     message: string,
     programmatic: Language,
     natural: Option<Language>,

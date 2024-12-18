@@ -22,7 +22,7 @@ export class CustomIdent
     return new CustomIdent(value);
   }
 
-  private constructor(value: string) {
+  protected constructor(value: string) {
     super("custom-ident", value);
   }
 

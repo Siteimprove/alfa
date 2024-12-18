@@ -69,7 +69,7 @@ export namespace Function {
       return new Calculation([expression], expression.kind);
     }
 
-    private constructor(args: [Expression], kind: Kind) {
+    protected constructor(args: [Expression], kind: Kind) {
       super("calculation", args, kind);
     }
 
@@ -107,7 +107,10 @@ export namespace Function {
       return kind.map((kind) => new Max([first, ...expressions], kind));
     }
 
-    private constructor(args: [Expression, ...Array<Expression>], kind: Kind) {
+    protected constructor(
+      args: [Expression, ...Array<Expression>],
+      kind: Kind,
+    ) {
       super("max", args, kind);
     }
 

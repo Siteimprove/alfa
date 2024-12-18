@@ -22,7 +22,7 @@ export class Tuple<T extends Array<Value>>
 
   private readonly _values: Readonly<T>;
 
-  private constructor(values: Readonly<T>) {
+  protected constructor(values: Readonly<T>) {
     super("tuple", Value.hasCalculation(...values));
     this._values = values;
   }

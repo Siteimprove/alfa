@@ -38,7 +38,7 @@ export class Circle<R extends Radius = Radius, P extends Position = Position>
   private readonly _radius: R;
   private readonly _center: P;
 
-  private constructor(radius: R, center: P) {
+  protected constructor(radius: R, center: P) {
     super("circle", Value.hasCalculation(radius, center));
     this._radius = radius;
     this._center = center;

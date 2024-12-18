@@ -82,7 +82,7 @@ export class HSL<
   private readonly _blue: Percentage.Canonical;
   private readonly _alpha: A;
 
-  private constructor(
+  protected constructor(
     hue: H,
     saturation: Percentage.Canonical,
     lightness: Percentage.Canonical,

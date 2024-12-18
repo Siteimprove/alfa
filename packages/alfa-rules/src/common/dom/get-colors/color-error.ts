@@ -49,7 +49,7 @@ export class ColorErrors<
 
   private readonly _errors: ReadonlyArray<ColorError<T>>;
 
-  private constructor(message: string, errors: ReadonlyArray<ColorError<T>>) {
+  protected constructor(message: string, errors: ReadonlyArray<ColorError<T>>) {
     super(message);
     this._errors = errors;
   }
@@ -474,7 +474,7 @@ export namespace ColorError {
 
     private readonly _color: Color.Computed;
 
-    private constructor(
+    protected constructor(
       element: Element,
       value: Style.Computed<"background-image">,
       color: Color.Computed,
@@ -579,7 +579,7 @@ export namespace ColorError {
 
     private readonly _positionedDescendants: Sequence<Element>;
 
-    private constructor(
+    protected constructor(
       message: string,
       element: Element,
       positionedDescendants: Sequence<Element>,

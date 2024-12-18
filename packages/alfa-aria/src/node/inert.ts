@@ -10,7 +10,7 @@ export class Inert extends Node<"inert"> {
     return new Inert(owner);
   }
 
-  private constructor(owner: dom.Node) {
+  protected constructor(owner: dom.Node) {
     super(owner, [], "inert");
   }
 

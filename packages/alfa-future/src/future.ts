@@ -160,7 +160,7 @@ class Now<T> extends Future<T> {
 
   private readonly _value: T;
 
-  private constructor(value: T) {
+  protected constructor(value: T) {
     super();
     this._value = value;
   }
@@ -205,7 +205,7 @@ class Defer<T> extends Future<T> {
 
   private readonly _continuation: Continuation<T>;
 
-  private constructor(continuation: Continuation<T>) {
+  protected constructor(continuation: Continuation<T>) {
     super();
     this._continuation = continuation;
   }
@@ -251,7 +251,7 @@ namespace Defer {
     private readonly _continuation: Continuation<S>;
     private readonly _mapper: Mapper<S, Future<T>>;
 
-    private constructor(
+    protected constructor(
       continuation: Continuation<S>,
       mapper: Mapper<S, Future<T>>,
     ) {
@@ -303,7 +303,7 @@ class Suspend<T> extends Future<T> {
 
   private readonly _thunk: Thunk<Future<T>>;
 
-  private constructor(thunk: Thunk<Future<T>>) {
+  protected constructor(thunk: Thunk<Future<T>>) {
     super();
     this._thunk = thunk;
   }
@@ -341,7 +341,7 @@ namespace Suspend {
     private readonly _thunk: Thunk<Future<S>>;
     private readonly _mapper: Mapper<S, Future<T>>;
 
-    private constructor(thunk: Thunk<Future<S>>, mapper: Mapper<S, Future<T>>) {
+    protected constructor(thunk: Thunk<Future<S>>, mapper: Mapper<S, Future<T>>) {
       super();
       this._thunk = thunk;
       this._mapper = mapper;

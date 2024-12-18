@@ -1,4 +1,4 @@
-import type { Comparable} from "@siteimprove/alfa-comparable";
+import type { Comparable } from "@siteimprove/alfa-comparable";
 import { Comparison } from "@siteimprove/alfa-comparable";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -20,7 +20,7 @@ export class Slot
   private readonly _x: number;
   private readonly _y: number;
 
-  private constructor(x: number, y: number) {
+  protected constructor(x: number, y: number) {
     this._x = x;
     this._y = y;
   }

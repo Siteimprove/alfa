@@ -15,7 +15,7 @@ export class Is extends WithSelector<"is"> {
     return new Is(selector);
   }
 
-  private constructor(selector: Absolute) {
+  protected constructor(selector: Absolute) {
     super("is", selector, selector.specificity);
   }
 

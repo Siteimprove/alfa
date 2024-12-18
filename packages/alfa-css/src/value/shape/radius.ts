@@ -34,7 +34,7 @@ export class Radius<
 
   private readonly _value: R;
 
-  private constructor(value: R) {
+  protected constructor(value: R) {
     super("radius", Value.hasCalculation(value));
     this._value = value;
   }

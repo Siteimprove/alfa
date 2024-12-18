@@ -36,7 +36,7 @@ export class ImportRule extends ConditionRule<"import"> {
   // CSSImportRule interface
   private _layer: Option<string>;
 
-  private constructor(
+  protected constructor(
     href: string,
     sheet: Sheet,
     mediaCondition: Option<string>,

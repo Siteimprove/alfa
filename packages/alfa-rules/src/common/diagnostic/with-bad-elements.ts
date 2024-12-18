@@ -17,7 +17,7 @@ export class WithBadElements extends Diagnostic implements Iterable<Element> {
 
   private readonly _errors: ReadonlyArray<Element>;
 
-  private constructor(message: string, errors: Array<Element>) {
+  protected constructor(message: string, errors: Array<Element>) {
     super(message);
     this._errors = errors;
   }

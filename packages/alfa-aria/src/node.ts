@@ -299,7 +299,7 @@ export namespace Node {
     private readonly _isPresentational: boolean;
     private readonly _isVisible: boolean;
 
-    private constructor(isPresentational: boolean, isVisible: boolean) {
+    protected constructor(isPresentational: boolean, isVisible: boolean) {
       this._isPresentational = isPresentational;
       this._isVisible = isVisible;
     }

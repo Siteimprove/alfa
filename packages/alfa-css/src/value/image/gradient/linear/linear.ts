@@ -41,7 +41,7 @@ export class Linear<I extends Item = Item, D extends Direction = Direction>
   private readonly _items: Array<I>;
   private readonly _repeats: boolean;
 
-  private constructor(direction: D, items: Array<I>, repeats: boolean) {
+  protected constructor(direction: D, items: Array<I>, repeats: boolean) {
     super("gradient", Value.hasCalculation(direction, ...items));
     this._direction = direction;
     this._items = items;

@@ -12,7 +12,7 @@ export class LastOfType extends PseudoClassSelector<"last-of-type"> {
     return new LastOfType();
   }
 
-  private constructor() {
+  protected constructor() {
     super("last-of-type");
   }
 

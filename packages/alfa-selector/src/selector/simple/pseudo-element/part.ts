@@ -16,7 +16,7 @@ export class Part extends PseudoElementSelector<"part"> {
 
   private readonly _idents: ReadonlyArray<Token.Ident>;
 
-  private constructor(idents: Array<Token.Ident>) {
+  protected constructor(idents: Array<Token.Ident>) {
     super("part");
     this._idents = idents;
   }

@@ -39,7 +39,7 @@ export class Feature {
   private readonly _attributes: Feature.AttributesAspect;
   private readonly _name: Feature.NameAspect;
 
-  private constructor(
+  protected constructor(
     roleAspect: Feature.Aspect<Role.Name | Iterable<Role>>,
     attributes: Feature.AttributesAspect,
     name: Feature.NameAspect,

@@ -48,7 +48,7 @@ export class Table implements Equatable, Serializable<Table.JSON> {
   private readonly _cells: Array<Cell>;
   private readonly _groups: Array<Group>;
 
-  private constructor(
+  protected constructor(
     element: Element,
     cells: Array<Cell>,
     groups: Array<Group>,

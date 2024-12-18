@@ -30,7 +30,7 @@ export class Compound extends Selector<"compound"> {
   private readonly _length: number;
   protected readonly _key: Option<Id | Class | Type>;
 
-  private constructor(selectors: Array<Simple>) {
+  protected constructor(selectors: Array<Simple>) {
     super(
       "compound",
       Specificity.sum(...selectors.map((selector) => selector.specificity)),

@@ -18,6 +18,7 @@ import { Set as Set_2 } from '@siteimprove/alfa-set';
 export class Network<N, E> implements Iterable_2<[N, Iterable_2<[N, Iterable_2<E>]>]>, Equatable, Hashable, Serializable<Network.JSON<N, E>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[N, Iterable_2<[N, Iterable_2<E>]>]>;
+    protected constructor(nodes: Map_2<N, Map_2<N, Set_2<E>>>);
     // (undocumented)
     add(node: N): Network<N, E>;
     // (undocumented)

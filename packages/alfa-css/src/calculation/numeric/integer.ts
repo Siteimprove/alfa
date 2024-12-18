@@ -22,7 +22,7 @@ export class Integer extends Numeric<"integer"> {
     return new Integer(Math.round(value) | 0);
   }
 
-  private constructor(value: number) {
+  protected constructor(value: number) {
     super(value, "integer");
   }
 

@@ -31,6 +31,7 @@ export const alfaVersion = "0.97.0";
 
 // @public (undocumented)
 export class ARIA extends Requirement<"ARIA"> {
+    protected constructor(uri: string);
     // (undocumented)
     static of(uri: string): ARIA;
     // (undocumented)
@@ -48,6 +49,7 @@ export namespace ARIA {
 
 // @public (undocumented)
 export class BestPractice extends Requirement<"best practice"> {
+    protected constructor(uri: string);
     // (undocumented)
     static of(uri: string): BestPractice;
     // (undocumented)
@@ -174,6 +176,7 @@ export default FlattenedRules;
 export class Group<T extends Hashable> implements Iterable<T>, Equatable, Hashable, json.Serializable<Group.JSON<T>>, earl.Serializable<Group.EARL>, sarif.Serializable<sarif.Location> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(members: ReadonlyArray<T>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -401,6 +404,7 @@ export const Rules: Record_2<typeof rules>;
 
 // @public (undocumented)
 export class Scope<S extends string = string> extends Tag<"scope"> {
+    protected constructor(scope: S);
     // (undocumented)
     equals(value: Scope): boolean;
     // (undocumented)
@@ -428,6 +432,7 @@ export namespace Scope {
 
 // @public (undocumented)
 export class Stability<S extends string = string> extends Tag<"stability"> {
+    protected constructor(stability: S);
     // (undocumented)
     equals(value: Stability): boolean;
     // (undocumented)
@@ -456,6 +461,7 @@ export namespace Stability {
 
 // @public (undocumented)
 export class Version<N extends number = number> extends Tag<"version"> {
+    protected constructor(version: N);
     // (undocumented)
     equals(value: Version): boolean;
     // (undocumented)

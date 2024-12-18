@@ -40,7 +40,7 @@ export namespace Length {
       return new Calculated(value);
     }
 
-    private constructor(math: Math<"length">) {
+    protected constructor(math: Math<"length">) {
       super(math, "length");
     }
 
@@ -89,7 +89,7 @@ export namespace Length {
       return new Fixed(value.value, value.unit);
     }
 
-    private constructor(value: number, unit: U) {
+    protected constructor(value: number, unit: U) {
       super(value, unit, "length");
     }
 

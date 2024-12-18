@@ -23,7 +23,7 @@ export class Circle<R extends Length = Length>
 
   private readonly _radius: R;
 
-  private constructor(radius: R) {
+  protected constructor(radius: R) {
     super("circle", Value.hasCalculation(radius));
     this._radius = radius;
   }

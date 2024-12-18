@@ -202,7 +202,7 @@ export namespace Outcome {
       [key: string]: Result<Diagnostic>;
     }>;
 
-    private constructor(
+    protected constructor(
       rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
@@ -381,7 +381,7 @@ export namespace Outcome {
       [key: string]: Result<Diagnostic>;
     }>;
 
-    private constructor(
+    protected constructor(
       rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
@@ -565,7 +565,7 @@ export namespace Outcome {
     private readonly _target: T;
     private readonly _diagnostic: Diagnostic;
 
-    private constructor(
+    protected constructor(
       rule: Rule<I, T, Q, S>,
       target: T,
       diagnostic: Diagnostic,
@@ -745,7 +745,7 @@ export namespace Outcome {
       return new Inapplicable(rule, mode);
     }
 
-    private constructor(rule: Rule<I, T, Q, S>, mode: Mode) {
+    protected constructor(rule: Rule<I, T, Q, S>, mode: Mode) {
       super(Value.Inapplicable, rule, mode);
     }
 

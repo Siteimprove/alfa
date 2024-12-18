@@ -26,7 +26,7 @@ export class Layer {
   private readonly _colors: ReadonlyArray<Color.Resolved>;
   private readonly _opacity: number;
 
-  private constructor(colors: ReadonlyArray<Color.Resolved>, opacity: number) {
+  protected constructor(colors: ReadonlyArray<Color.Resolved>, opacity: number) {
     this._colors = colors;
     this._opacity = opacity;
   }

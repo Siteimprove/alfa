@@ -8,7 +8,7 @@ export class Marker extends PseudoElementSelector<"marker"> {
     return new Marker();
   }
 
-  private constructor() {
+  protected constructor() {
     super("marker");
   }
 
