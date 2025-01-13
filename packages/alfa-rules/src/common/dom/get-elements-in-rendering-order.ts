@@ -1,99 +1,258 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
+import { Lazy } from "@siteimprove/alfa-lazy";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
-import * as tree from "@siteimprove/alfa-tree";
-
-const { and } = Refinement;
-const { hasComputedStyle, isRendered } = Style;
+const { and, not, or } = Refinement;
+const {
+  hasComputedStyle,
+  isPositioned,
+  isRendered: getIsRenderedPredicate,
+} = Style;
 
 const cache = Cache.empty<Device, Cache<Node, Sequence<Element>>>();
 
+/**
+ * Gets the descendant elements of a given element in rendering order.
+ *
+ * @public
+ */
 export function getElementsInRenderingOrder(
-  element: Element,
+  root: Element,
   device: Device,
 ): Sequence<Element> {
-  const root = element
-    .root(Node.flatTree)
-    .inclusiveDescendants()
-    .find(Element.isElement)
-    .getUnsafe();
-
-  return cache.get(device, Cache.empty).get(root, () =>
-    RenderingNode.fromElement(root, device)
-      .run()
-      .inclusiveDescendants()
-      .map((renderingNode) => renderingNode.element),
-  );
+  return cache
+    .get(device, Cache.empty)
+    .get(root, () => StackingContext.fromElement(root, device).descendants);
 }
 
-class RenderingNode extends tree.Node<0, "rendering-node"> {
-  constructor(element: Element, children: Array<RenderingNode>) {
-    super(children, "rendering-node");
+/**
+ * @private
+ */
+class StackingContext {
+  constructor(element: Element, children: Array<Element | StackingContext>) {
     this._element = element;
+    this._children = children;
   }
 
   private readonly _element: Element;
+  private readonly _children: Array<Element | StackingContext>;
 
   public get element() {
     return this._element;
   }
 
-  public inclusiveDescendants(): Sequence<RenderingNode> {
-    return super.inclusiveDescendants() as Sequence<RenderingNode>;
+  public get children() {
+    return Sequence.from(this._children);
+  }
+
+  public get descendants(): Sequence<Element> {
+    return this.children.flatMap((child) => {
+      if (Element.isElement(child)) {
+        return Sequence.of(child);
+      }
+
+      return Sequence.of(
+        child.element,
+        Lazy.of(() => child.descendants),
+      );
+    });
   }
 }
 
-namespace RenderingNode {
+/**
+ * @private
+ */
+namespace StackingContext {
+  /**
+   * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context}
+   */
+  function getCreatesStackingContextPredicate(device: Device) {
+    return or(
+      and(
+        isPositioned(device, "absolute", "relative"),
+        hasComputedStyle(
+          "z-index",
+          ({ value: zIndex }) => zIndex !== "auto",
+          device,
+        ),
+      ),
+      isPositioned(device, "fixed", "sticky"),
+      // TODO: container-type
+      // TODO: flex child
+      // TODO: grid child
+      hasComputedStyle("opacity", ({ value: opacity }) => opacity < 1, device),
+      // TODO: mix-blend-mode
+      // TODO: transform, scale, etc.
+      // TODO: isolation
+      // TODO: will-change
+      // TODO: contain
+      // TODO: top-layer ::backdrop
+      // TODO: animation
+    );
+  }
+
+  /**
+   * Recursively builds a stacking context hierarchy from an element.
+   * Stacking contexts are created from a DOM element by traversing it's element descendants
+   * and adding every descendant that does not form a stacking contexts as a child in the parent stacking context.
+   * We refer to process of adding the descendants that do not form stacking contexts as assimilating them into the parent stacking context.
+   * When an element that does form a stacking contexts is encountered a new stacking context is recursively constructed.
+   *
+   * {@link https://www.w3.org/TR/CSS2/zindex.html}
+   *
+   * @public
+   */
   export function fromElement(
     element: Element,
     device: Device,
-  ): Trampoline<RenderingNode> {
-    const rendered = isRendered(device);
-
-    const createsStackingContext = and(
-      hasComputedStyle(
-        "position",
-        (position) => position.value !== "static",
-        device,
-      ),
-      hasComputedStyle("z-index", (zIndex) => zIndex.value !== "auto", device),
+  ): StackingContext {
+    const isRendered = getIsRenderedPredicate(device);
+    const createsStackingContext = getCreatesStackingContextPredicate(device);
+    const isInline = hasComputedStyle(
+      "display",
+      ({ values: [outside] }) => outside.value === "inline",
+      device,
     );
+    const isFloat = hasComputedStyle(
+      "float",
+      ({ value }) => value !== "none",
+      device,
+    );
+    const isStatic = and(isPositioned(device, "static"), not(isFloat));
 
-    function compareStackingContexts(ctx1: RenderingNode, ctx2: RenderingNode) {
-      const zIndex1 = Style.from(ctx1.element, device).computed("z-index").value
-        .value as number;
-      const zIndex2 = Style.from(ctx2.element, device).computed("z-index").value
-        .value as number;
+    function compare(
+      a: Element | StackingContext,
+      b: Element | StackingContext,
+    ) {
+      function getZIndex(element: Element) {
+        // Setting a z-index on a non-positioned element has no effect
+        if (isStatic(element)) {
+          return 0;
+        }
 
-      return zIndex1 < zIndex2 ? -1 : zIndex1 > zIndex2 ? 1 : 0;
+        const {
+          value: { value: zIndex },
+        } = Style.from(element, device).computed("z-index");
+
+        return zIndex !== "auto" ? zIndex : 0;
+      }
+
+      function getRenderingPriority(element: Element) {
+        // Order of elements:
+        // 0. Static non-inline elements
+        // 1. Floating elements
+        // 2. Static inline elements
+        // 3. Positoned elements
+        if (and(isStatic, not(isInline))(element)) {
+          return 0;
+        } else if (isFloat(element)) {
+          return 1;
+        } else if (isStatic(element)) {
+          return 2;
+        } else if (not(isStatic)(element)) {
+          return 3;
+        }
+
+        return Infinity;
+      }
+
+      function compare(a: Element, b: Element) {
+        // First, compare z-indices
+        const aZ = getZIndex(a);
+        const bZ = getZIndex(b);
+        if (aZ < bZ) {
+          return Comparison.Less;
+        }
+
+        if (bZ < aZ) {
+          return Comparison.Greater;
+        }
+
+        // Second, compare by rendering priority
+        return Comparable.compare(
+          getRenderingPriority(a),
+          getRenderingPriority(b),
+        );
+      }
+
+      return compare(
+        Element.isElement(a) ? a : a.element,
+        Element.isElement(b) ? b : b.element,
+      );
+    }
+
+    function traverse(element: Element): Array<Element | StackingContext> {
+      if (createsStackingContext(element)) {
+        return [fromElement(element, device)];
+      }
+
+      const result: Array<Element | StackingContext> = [element];
+
+      for (const child of element
+        .children(Node.fullTree)
+        .filter(and(Element.isElement, isRendered))) {
+        result.push(...traverse(child));
+      }
+
+      return result;
+    }
+
+    const children: Array<Element | StackingContext> = [];
+    for (const child of element
+      .children(Node.fullTree)
+      .filter(and(Element.isElement, isRendered))) {
+      children.push(...traverse(child));
+    }
+
+    children.sort(compare);
+    return new StackingContext(element, children);
+  }
+
+  // Unsuccessful attempt at using Trampoline to avoid recursion (and avoid potential risk of stack overflow).
+  //
+  // The attempt was unsuccessful because the algorithm uses two "interlocking" recursive functions and I could not find a way to either rewrite the algorithm
+  // or have a two recursions with a trampoline.
+  // It uses two recursions becuase to build the stacking context, we recursively traverse the DOM and when we encounter an element that creates a new stacking context,
+  // we call the outer function recursively.
+  export function fromElementWithTrampoline(
+    element: Element,
+    device: Device,
+  ): Trampoline<StackingContext> {
+    const isRendered = getIsRenderedPredicate(device);
+    const createsStackingContext = getCreatesStackingContextPredicate(device);
+
+    function traverse(
+      element: Element,
+    ): Trampoline<Array<Element | StackingContext>> {
+      if (createsStackingContext(element)) {
+        return Trampoline.done([
+          fromElementWithTrampoline(element, device).run(),
+        ]);
+      }
+
+      return Trampoline.traverse(
+        element
+          .children(Node.fullTree)
+          .filter(and(Element.isElement, isRendered)),
+        traverse,
+      ).map((children) => Array.flatten(Array.from(children)));
     }
 
     return Trampoline.traverse(
-      element.children().filter(and(Element.isElement, rendered)),
-      (child) => RenderingNode.fromElement(child, device),
-    ).map((children) => {
-      const stackingContexts: Array<RenderingNode> = [];
-      const staticElements: Array<RenderingNode> = [];
-
-      for (let node of children) {
-        if (createsStackingContext(node.element)) {
-          stackingContexts.push(node);
-        } else {
-          staticElements.push(node);
-        }
-      }
-
-      stackingContexts.sort(compareStackingContexts);
-
-      return new RenderingNode(
-        element,
-        staticElements.concat(stackingContexts),
-      );
-    });
+      element
+        .children(Node.fullTree)
+        .filter(and(Element.isElement, isRendered)),
+      traverse,
+    ).map(
+      (children) =>
+        new StackingContext(element, Array.flatten(Array.from(children))),
+    );
   }
 }
