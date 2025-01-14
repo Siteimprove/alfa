@@ -66,6 +66,14 @@ class StackingContext {
   }
 }
 
+function hasZIndex(device: Device) {
+  return hasComputedStyle(
+    "z-index",
+    ({ value: zIndex }) => zIndex !== "auto",
+    device,
+  );
+}
+
 /**
  * @private
  */
@@ -75,18 +83,39 @@ namespace StackingContext {
    */
   function getCreatesStackingContextPredicate(device: Device) {
     return or(
-      and(
-        isPositioned(device, "absolute", "relative"),
-        hasComputedStyle(
-          "z-index",
-          ({ value: zIndex }) => zIndex !== "auto",
-          device,
-        ),
-      ),
+      // positioned with z-index:
+      and(isPositioned(device, "absolute", "relative"), hasZIndex(device)),
+
+      // fixed or sticky:
       isPositioned(device, "fixed", "sticky"),
-      // TODO: container-type
-      // TODO: flex child
+
+      // TODO: January 2025: It seems chromium and firefox don't create stacking contexts for elements with container-type: size | inline-size.
+      // Some sources seem to indicate that it is intentional and that the spec is wrong and will be updated, but I'm not sure if it's actually more complicated than that. Will have to investigate further.
+      // https://dev.to/michaelcharles/chrome-129s-container-query-change-2i77
+      // https://issues.chromium.org/issues/369781727
+      //
+      // hasComputedStyle(
+      //   "container-type",
+      //   ({ value }) => value === "size" || value === "inline-size",
+      //   device,
+      // ),
+
+      // flex child:
+      and(hasZIndex(device), (element: Element) =>
+        element
+          .parent(Node.fullTree)
+          .filter(Element.isElement)
+          .some((parent) =>
+            hasComputedStyle(
+              "display",
+              ({ values: [, inside] }) => inside?.value === "flex",
+              device,
+            )(parent),
+          ),
+      ),
       // TODO: grid child
+
+      // opacity < 1:
       hasComputedStyle("opacity", ({ value: opacity }) => opacity < 1, device),
       // TODO: mix-blend-mode
       // TODO: transform, scale, etc.
