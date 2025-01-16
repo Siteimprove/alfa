@@ -483,6 +483,7 @@ export namespace Style {
     hasBoxShadow,
     hasCascadedStyle,
     hasComputedStyle,
+    hasInitialComputedStyle,
     hasPositioningParent,
     hasOutline,
     hasSpecifiedStyle,

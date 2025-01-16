@@ -1,17 +1,18 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Keyword } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 const { and, not, or } = Refinement;
 const {
   hasComputedStyle,
+  hasInitialComputedStyle,
   isPositioned,
   isRendered: getIsRenderedPredicate,
 } = Style;
@@ -66,14 +67,6 @@ class StackingContext {
   }
 }
 
-function hasZIndex(device: Device) {
-  return hasComputedStyle(
-    "z-index",
-    ({ value: zIndex }) => zIndex !== "auto",
-    device,
-  );
-}
-
 /**
  * @private
  */
@@ -82,6 +75,9 @@ namespace StackingContext {
    * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context}
    */
   function getCreatesStackingContextPredicate(device: Device) {
+    function hasZIndex(device: Device) {
+      return not(hasInitialComputedStyle("z-index", device));
+    }
     return or(
       // positioned with z-index:
       and(isPositioned(device, "absolute", "relative"), hasZIndex(device)),
@@ -100,7 +96,7 @@ namespace StackingContext {
       //   device,
       // ),
 
-      // flex child:
+      // (flex | grid) child:
       and(hasZIndex(device), (element: Element) =>
         element
           .parent(Node.fullTree)
@@ -108,22 +104,88 @@ namespace StackingContext {
           .some((parent) =>
             hasComputedStyle(
               "display",
-              ({ values: [, inside] }) => inside?.value === "flex",
+              ({ values: [, inside] }) =>
+                inside?.value === "flex" || inside?.value === "grid",
               device,
             )(parent),
           ),
       ),
-      // TODO: grid child
 
       // opacity < 1:
       hasComputedStyle("opacity", ({ value: opacity }) => opacity < 1, device),
-      // TODO: mix-blend-mode
-      // TODO: transform, scale, etc.
-      // TODO: isolation
-      // TODO: will-change
-      // TODO: contain
-      // TODO: top-layer ::backdrop
-      // TODO: animation
+
+      // mix-blend-mode: !normal
+      hasComputedStyle(
+        "mix-blend-mode",
+        ({ value }) => value !== "normal",
+        device,
+      ),
+
+      // non-initial properties:
+      not(hasInitialComputedStyle("transform", device)),
+      not(hasInitialComputedStyle("scale", device)),
+      not(hasInitialComputedStyle("rotate", device)),
+      not(hasInitialComputedStyle("translate", device)),
+      // not(hasInitialComputedStyle("filter", device)),  TODO: CSS property not implemented in Alfa
+      // not(hasInitialComputedStyle("backdrop-filter", device)),  TODO: CSS property not implemented in Alfa
+      not(hasInitialComputedStyle("perspective", device)),
+      not(hasInitialComputedStyle("clip-path", device)),
+      not(hasInitialComputedStyle("mask-clip", device)),
+      not(hasInitialComputedStyle("mask-composite", device)),
+      not(hasInitialComputedStyle("mask-mode", device)),
+      not(hasInitialComputedStyle("mask-origin", device)),
+      not(hasInitialComputedStyle("mask-position", device)),
+      not(hasInitialComputedStyle("mask-repeat", device)),
+      not(hasInitialComputedStyle("mask-size", device)),
+      not(hasInitialComputedStyle("mask-image", device)),
+      //not(hasInitialComputedStyle("mask-border", device)), TODO: CSS property not implemented in Alfa
+
+      // isolation: isolate
+      hasComputedStyle("isolation", ({ value }) => value === "isolate", device),
+
+      // will-change: specifying any property that would create a stacking context on non-initial value
+      // note: specifying the longhands for the shorthand `mask` does not create a stacking context in chromium
+      hasComputedStyle(
+        "will-change",
+        (value) =>
+          !Keyword.isKeyword(value) &&
+          value.values.some(({ value }) =>
+            [
+              "position",
+              "z-index",
+              "opacity",
+              "mix-blend-mode",
+              "transform",
+              "scale",
+              "rotate",
+              "translate",
+              "filter",
+              "backdrop-filter",
+              "perspective",
+              "clip-path",
+              "mask",
+              "isolation",
+            ].includes(value),
+          ),
+
+        device,
+      ),
+
+      // contain: strict | content | layout | paint
+      hasComputedStyle(
+        "contain",
+        (value) => {
+          return Keyword.isKeyword(value)
+            ? value.is("strict", "content")
+            : value.layout || value.paint;
+        },
+        device,
+      ),
+
+      // TODO: top-layer - if the the element is placed on the top-layer. Do we want to suppor top-layer?
+
+      // TODO: animation - if the element has had stacking context properties (such as opacity) animated using @keyframes,
+      // with animation-fill-mode: forwards | both
     );
   }
 
@@ -154,13 +216,13 @@ namespace StackingContext {
       ({ value }) => value !== "none",
       device,
     );
-    const isStatic = and(isPositioned(device, "static"), not(isFloat));
+    const isStatic = isPositioned(device, "static");
 
     function compare(
       a: Element | StackingContext,
       b: Element | StackingContext,
     ) {
-      function getZIndex(element: Element) {
+      function getStackLevel(element: Element) {
         // Setting a z-index on a non-positioned element has no effect
         if (isStatic(element)) {
           return 0;
@@ -173,29 +235,35 @@ namespace StackingContext {
         return zIndex !== "auto" ? zIndex : 0;
       }
 
+      /**
+       * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_floating_elements}
+       *
+       * Without z-index, or when elements have the same stack level, they are rendered in the following priority:
+       * 1. Non-positioned, non-floating elements
+       * 2. Non-positioned, floating elements
+       * 4. Floating, positioned elements
+       * 5. Positioned elements
+       */
       function getRenderingPriority(element: Element) {
-        // Order of elements:
-        // 0. Static non-inline elements
-        // 1. Floating elements
-        // 2. Static inline elements
-        // 3. Positoned elements
-        if (and(isStatic, not(isInline))(element)) {
-          return 0;
-        } else if (isFloat(element)) {
+        if (and(isStatic, not(isFloat))(element)) {
           return 1;
-        } else if (isStatic(element)) {
-          return 2;
-        } else if (not(isStatic)(element)) {
-          return 3;
         }
 
-        return Infinity;
+        if (and(isStatic, isFloat)(element)) {
+          return 2;
+        }
+
+        if (and(not(isStatic), isFloat)(element)) {
+          return 4;
+        }
+
+        return 5;
       }
 
       function compare(a: Element, b: Element) {
         // First, compare z-indices
-        const aZ = getZIndex(a);
-        const bZ = getZIndex(b);
+        const aZ = getStackLevel(a);
+        const bZ = getStackLevel(b);
         if (aZ < bZ) {
           return Comparison.Less;
         }
@@ -242,46 +310,5 @@ namespace StackingContext {
 
     children.sort(compare);
     return new StackingContext(element, children);
-  }
-
-  // Unsuccessful attempt at using Trampoline to avoid recursion (and avoid potential risk of stack overflow).
-  //
-  // The attempt was unsuccessful because the algorithm uses two "interlocking" recursive functions and I could not find a way to either rewrite the algorithm
-  // or have a two recursions with a trampoline.
-  // It uses two recursions becuase to build the stacking context, we recursively traverse the DOM and when we encounter an element that creates a new stacking context,
-  // we call the outer function recursively.
-  export function fromElementWithTrampoline(
-    element: Element,
-    device: Device,
-  ): Trampoline<StackingContext> {
-    const isRendered = getIsRenderedPredicate(device);
-    const createsStackingContext = getCreatesStackingContextPredicate(device);
-
-    function traverse(
-      element: Element,
-    ): Trampoline<Array<Element | StackingContext>> {
-      if (createsStackingContext(element)) {
-        return Trampoline.done([
-          fromElementWithTrampoline(element, device).run(),
-        ]);
-      }
-
-      return Trampoline.traverse(
-        element
-          .children(Node.fullTree)
-          .filter(and(Element.isElement, isRendered)),
-        traverse,
-      ).map((children) => Array.flatten(Array.from(children)));
-    }
-
-    return Trampoline.traverse(
-      element
-        .children(Node.fullTree)
-        .filter(and(Element.isElement, isRendered)),
-      traverse,
-    ).map(
-      (children) =>
-        new StackingContext(element, Array.flatten(Array.from(children))),
-    );
   }
 }
