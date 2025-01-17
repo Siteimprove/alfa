@@ -32,7 +32,7 @@
     "./common/dom/get-colors/get-foreground.ts",
     "./common/dom/get-colors/get-layers.ts",
     "./common/dom/get-interposed-descendant.ts",
-    "./common/dom/get-elements-in-rendering-order.ts",
+    "./common/dom/get-painting-order.ts",
     "./common/expectation/contrast.ts",
     "./common/expectation/get-refresh-time.ts",
     "./common/expectation/is-wide-enough.ts",
