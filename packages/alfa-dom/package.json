@@ -65,7 +65,7 @@
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.97.0",
     "@types/jsdom": "^21.1.6",
-    "jsdom": "^25.0.0"
+    "jsdom": "^26.0.0"
   },
   "publishConfig": {
     "access": "public",
