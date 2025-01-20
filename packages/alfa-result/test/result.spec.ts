@@ -51,3 +51,45 @@ test(".from() constructs a result from an async thunk that throws", async (t) =>
     error: "fail",
   });
 });
+
+test("#getOrElse() returns the ok value", (t) => {
+  t.deepEqual(
+    n.getOrElse(() => 2),
+    1,
+  );
+});
+
+test("#getOrElse() returns the thunk value on errors", (t) => {
+  t.deepEqual(
+    err.getOrElse(() => 2),
+    2,
+  );
+});
+
+test("#getOrElse() returns the callback value on errors", (t) => {
+  t.deepEqual(
+    err.getOrElse((msg) => msg.length),
+    5,
+  );
+});
+
+test("#getErrOrElse() returns the error value", (t) => {
+  t.deepEqual(
+    err.getErrOrElse(() => 2),
+    "error",
+  );
+});
+
+test("#getErrOrElse() returns the thunk value on oks", (t) => {
+  t.deepEqual(
+    n.getErrOrElse(() => 20),
+    20,
+  );
+});
+
+test("#getErrOrElse() returns the callback value on oks", (t) => {
+  t.deepEqual(
+    n.getErrOrElse((value) => value + 3),
+    4,
+  );
+});
