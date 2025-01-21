@@ -25,6 +25,10 @@
     "access": "public",
     "registry": "https://npm.pkg.github.com/"
   },
+  "dependencies": {
+    "@siteimprove/alfa-callback": "workspace:^",
+    "@siteimprove/alfa-predicate": "workspace:^"
+  },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.97.0"
   }

@@ -49,7 +49,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const removePunctuationAndNormalise = String.and(
+        const removePunctuationAndNormalise = String.Transformer.and(
           String.removePunctuation,
           String.normalize,
         );

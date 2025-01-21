@@ -1,3 +1,6 @@
+import type { Callback } from "@siteimprove/alfa-callback";
+import type { Predicate } from "@siteimprove/alfa-predicate";
+
 /**
  * @public
  */
@@ -7,13 +10,27 @@ export type String = globalThis.String;
  * @public
  */
 export namespace String {
-  export type Transformer = (input: string) => string;
+  export type Transformer<S extends string = string> = Callback<string, S>;
 
-  export function and(...transformers: Array<Transformer>): Transformer {
-    return (input) =>
-      transformers.reduce((input, transformer) => transformer(input), input);
+  export namespace Transformer {
+    /**
+     * Transform a string if it matches a predicate
+     */
+    export function when(
+      predicate: Predicate<string>,
+      transformer: Transformer,
+    ): Transformer {
+      return (input) => (predicate(input) ? transformer(input) : input);
+    }
+
+    /**
+     * Chains transformers on a string.
+     */
+    export function and(...transformers: Array<Transformer>): Transformer {
+      return (input) =>
+        transformers.reduce((input, transformer) => transformer(input), input);
+    }
   }
-
   /**
    * Adds two spaces at the start of each line.
    */
@@ -29,7 +46,8 @@ export namespace String {
   }
 
   /**
-   * Trims, collapses adjacent whitespace into a single ASCII space, optionally lowercases (default: true).
+   * Trims, collapses adjacent whitespace into a single ASCII space, optionally
+   * lowercases (default: true).
    */
   export function normalize(
     input: string,
@@ -39,7 +57,8 @@ export namespace String {
   }
 
   /**
-   * Removes all punctuation (underscore, hyphen, brackets, quotation marks, etc)
+   * Removes all punctuation (underscore, hyphen, brackets, quotation marks,
+   * etc)
    *
    * @remarks
    * This removes the Unicode classes P (punctuation), S (symbols),
@@ -56,13 +75,21 @@ export namespace String {
   }
 
   /**
-   * Checks whether the input contains only whitespace
+   * Checks whether the input contains only whitespace, optionally allowing
+   * empty strings (default: true).
    */
   export function isWhitespace(
     input: string,
     allowEmpty: boolean = true,
   ): boolean {
     return (allowEmpty || input.length > 0) && input.trim() === "";
+  }
+
+  /**
+   * Fallback to a default value if the input is empty or whitespace
+   */
+  export function fallback(fallback: string): Transformer {
+    return Transformer.when(isWhitespace, () => fallback);
   }
 
   /**
