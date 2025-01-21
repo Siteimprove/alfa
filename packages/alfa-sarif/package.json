@@ -22,8 +22,8 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-option": "workspace:^0.97.0",
-    "@siteimprove/alfa-refinement": "workspace:^0.97.0",
+    "@siteimprove/alfa-option": "workspace:^",
+    "@siteimprove/alfa-refinement": "workspace:^",
     "@types/sarif": "^2.1.4"
   },
   "publishConfig": {
