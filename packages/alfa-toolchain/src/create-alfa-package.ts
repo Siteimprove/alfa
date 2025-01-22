@@ -1,11 +1,15 @@
 import type { PackageJSON } from "@changesets/types";
 import { getPackages } from "@manypkg/get-packages";
+import { simpleGit } from "simple-git";
+import chalk from "chalk";
 
 import { String } from "@siteimprove/alfa-string";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { stdin as input, stdout as output } from "node:process";
 import { createInterface } from "node:readline/promises";
+
+const git = simpleGit();
 
 /*
  * Gathering info about workspaces structure.
@@ -33,7 +37,9 @@ async function questionWithFallback(
   msg: string,
   fallback: string,
 ): Promise<string> {
-  return String.fallback(fallback)(await rl.question(`${msg} [${fallback}]:`));
+  return String.fallback(fallback)(
+    await rl.question(`${msg} [${chalk.dim(fallback)}]:`),
+  );
 }
 
 const packageName = await questionWithFallback("Package name", "alfa-foo");
@@ -44,6 +50,7 @@ const dirName = await questionWithFallback(
 const description = await questionWithFallback("Description", "A package.");
 
 rl.close();
+console.log("\n");
 
 const packageDir = path.join(rootDir, dirName);
 
@@ -134,14 +141,14 @@ for (const subDir of ["config", "dist", "src", "test"]) {
 /*
  * Creating empty files.
  */
-console.log("Creating empty files...");
+console.log(chalk.dim("Creating empty files..."));
 fs.writeFileSync(path.join(packageDir, "src", "index.ts"), "");
 fs.writeFileSync(path.join(packageDir, "CHANGELOG.md"), "");
 
 /*
  * Copying static templates
  */
-console.log("Copying static templates...");
+console.log(chalk.dim("Copying static templates..."));
 fs.writeFileSync(
   path.join(packageDir, "config", "api-extractor.json"),
   JSON.stringify(Templates.apiExtractor, null, 2),
@@ -163,8 +170,28 @@ fs.writeFileSync(
 /*
  * Creating package.json
  */
-console.log("Creating package.json...");
+console.log(chalk.dim("Creating package.json..."));
 fs.writeFileSync(
   path.join(packageDir, "package.json"),
   JSON.stringify(Templates.packageJSON, null, 2),
 );
+/*
+ * Adding files to git
+ */
+console.log(chalk.dim("Staging files..."));
+git.add([
+  path.join(packageDir, "src", "index.ts"),
+  path.join(packageDir, "CHANGELOG.md"),
+  path.join(packageDir, "config", "api-extractor.json"),
+  path.join(packageDir, "README.md"),
+  path.join(packageDir, "tsconfig.json"),
+  path.join(packageDir, "src", "tsconfig.json"),
+  path.join(packageDir, "test", "tsconfig.json"),
+  path.join(packageDir, "package.json"),
+]);
+
+/*
+ * Closing
+ */
+console.log("\nDone!");
+console.warn(chalk.bold("Check created files and commit changes."));
