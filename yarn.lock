@@ -2076,6 +2076,7 @@ __metadata:
     ts-graphviz: "npm:^2.0.0"
   bin:
     alfa-changelog: dist/changeset/changelog-global.js
+    create-alfa-package: dist/create-alfa-package.js
     generate-dependency-graphs: dist/dependency-graph/generate-graphs.js
     validate-structure: dist/validation/validate-all.js
   languageName: unknown

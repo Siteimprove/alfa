@@ -27,6 +27,7 @@
   "types": "dist/index.d.ts",
   "bin": {
     "alfa-changelog": "dist/changeset/changelog-global.js",
+    "create-alfa-package": "dist/create-alfa-package.js",
     "generate-dependency-graphs": "dist/dependency-graph/generate-graphs.js",
     "validate-structure": "dist/validation/validate-all.js"
   },
@@ -41,6 +42,7 @@
     "registry": "https://npm.pkg.github.com/",
     "executableFiles": [
       "dist/changeset/changelog-global.js",
+      "dist/create-alfa-package.js",
       "dist/dependency-graph/generate-graphs.js",
       "dist/validation/validate-all.js"
     ]
