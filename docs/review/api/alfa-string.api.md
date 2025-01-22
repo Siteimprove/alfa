@@ -4,6 +4,7 @@
 
 ```ts
 
+import type { Callback } from '@siteimprove/alfa-callback';
 import type { Predicate } from '@siteimprove/alfa-predicate';
 
 // @public (undocumented)
@@ -22,7 +23,7 @@ namespace String_2 {
     // (undocumented)
     function toLowerCase<T extends string = string>(input: T): Lowercase<T>;
     // (undocumented)
-    type Transformer<S extends string = string> = (input: string) => S;
+    type Transformer<S extends string = string> = Callback<string, S>;
     // (undocumented)
     namespace Transformer {
         function and(...transformers: Array<Transformer>): Transformer;
