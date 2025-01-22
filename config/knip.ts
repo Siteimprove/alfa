@@ -32,6 +32,10 @@ const config: KnipConfig = {
       ],
       project,
     },
+    "packages/alfa-toolchain": {
+      entry: [...entry, "src/create-alfa-package.ts!"],
+      project,
+    },
     "packages/alfa-web": { entry: [...entry, "src/native.ts!"], project },
   },
 };
