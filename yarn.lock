@@ -1138,7 +1138,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-callback@workspace:^0.97.0, @siteimprove/alfa-callback@workspace:packages/alfa-callback":
+"@siteimprove/alfa-callback@workspace:^, @siteimprove/alfa-callback@workspace:^0.97.0, @siteimprove/alfa-callback@workspace:packages/alfa-callback":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-callback@workspace:packages/alfa-callback"
   dependencies:
@@ -1683,7 +1683,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-predicate@workspace:^0.97.0, @siteimprove/alfa-predicate@workspace:packages/alfa-predicate":
+"@siteimprove/alfa-predicate@workspace:^, @siteimprove/alfa-predicate@workspace:^0.97.0, @siteimprove/alfa-predicate@workspace:packages/alfa-predicate":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-predicate@workspace:packages/alfa-predicate"
   dependencies:
@@ -1937,10 +1937,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-string@workspace:^0.97.0, @siteimprove/alfa-string@workspace:packages/alfa-string":
+"@siteimprove/alfa-string@workspace:^, @siteimprove/alfa-string@workspace:^0.97.0, @siteimprove/alfa-string@workspace:packages/alfa-string":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-string@workspace:packages/alfa-string"
   dependencies:
+    "@siteimprove/alfa-callback": "workspace:^"
+    "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^0.97.0"
   languageName: unknown
   linkType: soft
@@ -2064,6 +2066,7 @@ __metadata:
     "@siteimprove/alfa-option": "workspace:^0.97.0"
     "@siteimprove/alfa-result": "workspace:^0.97.0"
     "@siteimprove/alfa-set": "workspace:^0.97.0"
+    "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^0.97.0"
     "@svitejs/changesets-changelog-github-compact": "npm:^1.1.0"
     "@ts-graphviz/adapter": "npm:^2.0.3"
