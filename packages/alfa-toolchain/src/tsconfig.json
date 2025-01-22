@@ -25,6 +25,7 @@
     { "path": "../../alfa-map" },
     { "path": "../../alfa-option" },
     { "path": "../../alfa-result" },
-    { "path": "../../alfa-set" }
+    { "path": "../../alfa-set" },
+    { "path": "../../alfa-string" }
   ]
 }

@@ -3,5 +3,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
   "files": ["./index.ts", "./string.ts"],
-  "references": [{ "path": "../../alfa-predicate" }]
+  "references": [
+    { "path": "../../alfa-callback" },
+    { "path": "../../alfa-predicate" }
+  ]
 }
