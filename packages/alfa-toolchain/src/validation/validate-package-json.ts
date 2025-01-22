@@ -70,7 +70,9 @@ export function validatePackageJson(
   // repository
   if (config.repo !== undefined) {
     if (packageJson?.repository?.type !== "git") {
-      errors.push(`${name}: package.json does not repository.type: "git".`);
+      errors.push(
+        `${name}: package.json does not have repository.type: "git".`,
+      );
     }
     if (packageJson?.repository?.url !== config.repo) {
       errors.push(
