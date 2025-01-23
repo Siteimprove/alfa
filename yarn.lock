@@ -1797,6 +1797,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-rng@workspace:packages/alfa-rng"
   dependencies:
+    "@siteimprove/alfa-functor": "workspace:^"
+    "@siteimprove/alfa-mapper": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
   linkType: soft
