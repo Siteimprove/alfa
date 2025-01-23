@@ -1,3 +1,3 @@
-# Alfa rng
+# Alfa RNG
 
-  A simple RNG and functionalities around it.
+A simple RNG and functionalities around it.
