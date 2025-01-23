@@ -1793,6 +1793,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@siteimprove/alfa-rng@workspace:packages/alfa-rng":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-rng@workspace:packages/alfa-rng"
+  dependencies:
+    "@siteimprove/alfa-test": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "@siteimprove/alfa-rules@workspace:packages/alfa-rules":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-rules@workspace:packages/alfa-rules"
@@ -2095,6 +2103,7 @@ __metadata:
     "@ts-graphviz/adapter": "npm:^2.0.3"
     "@types/madge": "npm:^5.0.3"
     chalk: "npm:^5.4.1"
+    json-stringify-pretty-compact: "npm:^4.0.0"
     madge: "npm:^8.0.0"
     resolve-from: "npm:^5.0.0"
     simple-git: "npm:^3.27.0"
@@ -5363,6 +5372,13 @@ __metadata:
   version: 0.4.1
   resolution: "json-schema-traverse@npm:0.4.1"
   checksum: 10c0/108fa90d4cc6f08243aedc6da16c408daf81793bf903e9fd5ab21983cda433d5d2da49e40711da016289465ec2e62e0324dcdfbc06275a607fe3233fde4942ce
+  languageName: node
+  linkType: hard
+
+"json-stringify-pretty-compact@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "json-stringify-pretty-compact@npm:4.0.0"
+  checksum: 10c0/505781b4be7c72047ae8dfa667b520d20461ceac451b6516cb8ac5e12a758fbd7491d99d5e3f7e60423ce9d26ed4e4bcaccab3420bf651298901635c849017cf
   languageName: node
   linkType: hard
 

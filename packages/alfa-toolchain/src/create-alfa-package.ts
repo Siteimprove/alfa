@@ -2,6 +2,7 @@ import type { PackageJSON } from "@changesets/types";
 import { getPackages } from "@manypkg/get-packages";
 import { simpleGit } from "simple-git";
 import chalk from "chalk";
+import stringify from "json-stringify-pretty-compact";
 
 import { String } from "@siteimprove/alfa-string";
 import * as fs from "node:fs";
@@ -151,20 +152,38 @@ fs.writeFileSync(path.join(packageDir, "CHANGELOG.md"), "");
 console.log(chalk.dim("Copying static templates..."));
 fs.writeFileSync(
   path.join(packageDir, "config", "api-extractor.json"),
-  JSON.stringify(Templates.apiExtractor, null, 2),
+  stringify(Templates.apiExtractor),
 );
 fs.writeFileSync(path.join(packageDir, "README.md"), Templates.readme);
 fs.writeFileSync(
   path.join(packageDir, "tsconfig.json"),
-  JSON.stringify(Templates.TSConfig.workspace, null, 2),
+  stringify(Templates.TSConfig.workspace),
 );
 fs.writeFileSync(
   path.join(packageDir, "src", "tsconfig.json"),
-  JSON.stringify(Templates.TSConfig.src, null, 2),
+  stringify(Templates.TSConfig.src),
 );
 fs.writeFileSync(
   path.join(packageDir, "test", "tsconfig.json"),
-  JSON.stringify(Templates.TSConfig.test, null, 2),
+  stringify(Templates.TSConfig.test),
+);
+
+/*
+ * Updating intermediate tsconfig.json
+ */
+console.log(chalk.dim("Updating intermediate tsconfig.json..."));
+// We could use ts.readConfigFile but it somehow seems to be typed as returning
+// `any`, so it brings little value.
+const intermediateTSConfig = JSON.parse(
+  fs.readFileSync(path.join(packageDir, "..", "tsconfig.json"), "utf-8"),
+);
+intermediateTSConfig.references.push({ path: packageName });
+(intermediateTSConfig.references as Array<{ path: string }>).sort((a, b) =>
+  a.path.localeCompare(b.path),
+);
+fs.writeFileSync(
+  path.join(packageDir, "..", "tsconfig.json"),
+  stringify(intermediateTSConfig),
 );
 
 /*
@@ -173,8 +192,9 @@ fs.writeFileSync(
 console.log(chalk.dim("Creating package.json..."));
 fs.writeFileSync(
   path.join(packageDir, "package.json"),
-  JSON.stringify(Templates.packageJSON, null, 2),
+  stringify(Templates.packageJSON),
 );
+
 /*
  * Adding files to git
  */
