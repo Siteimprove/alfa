@@ -67,7 +67,7 @@ namespace Templates {
 
   export const readme = `# ${packageName.replace("alfa-", "Alfa ").replace(/-/g, " ")}
 
-  ${description}
+${description}
 `;
 
   export namespace TSConfig {
