@@ -27,6 +27,7 @@
   "types": "dist/index.d.ts",
   "bin": {
     "alfa-changelog": "dist/changeset/changelog-global.js",
+    "create-alfa-package": "dist/create-alfa-package.js",
     "generate-dependency-graphs": "dist/dependency-graph/generate-graphs.js",
     "validate-structure": "dist/validation/validate-all.js"
   },
@@ -41,6 +42,7 @@
     "registry": "https://npm.pkg.github.com/",
     "executableFiles": [
       "dist/changeset/changelog-global.js",
+      "dist/create-alfa-package.js",
       "dist/dependency-graph/generate-graphs.js",
       "dist/validation/validate-all.js"
     ]
@@ -57,10 +59,13 @@
     "@siteimprove/alfa-option": "workspace:^",
     "@siteimprove/alfa-result": "workspace:^",
     "@siteimprove/alfa-set": "workspace:^",
+    "@siteimprove/alfa-string": "workspace:^",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@ts-graphviz/adapter": "^2.0.3",
+    "chalk": "^5.4.1",
     "madge": "^8.0.0",
     "resolve-from": "^5.0.0",
+    "simple-git": "^3.27.0",
     "ts-graphviz": "^2.0.0"
   },
   "devDependencies": {

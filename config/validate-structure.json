@@ -21,8 +21,10 @@
         "@manypkg/get-packages",
         "@ts-graphviz/adapter",
         "@svitejs/changesets-changelog-github-compact",
+        "chalk",
         "madge",
         "resolve-from",
+        "simple-git",
         "ts-graphviz"
       ]
     }

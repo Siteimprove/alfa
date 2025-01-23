@@ -4,13 +4,15 @@
 
 ```ts
 
+import type { Callback } from '@siteimprove/alfa-callback';
+import type { Predicate } from '@siteimprove/alfa-predicate';
+
 // @public (undocumented)
 type String_2 = globalThis.String;
 
 // @public (undocumented)
 namespace String_2 {
-    // (undocumented)
-    function and(...transformers: Array<Transformer>): Transformer;
+    function fallback(fallback: string): Transformer;
     function flatten(input: string): string;
     function hasSoftWrapOpportunity(input: string): boolean;
     function hasWhitespace(input: string): boolean;
@@ -21,7 +23,12 @@ namespace String_2 {
     // (undocumented)
     function toLowerCase<T extends string = string>(input: T): Lowercase<T>;
     // (undocumented)
-    type Transformer = (input: string) => string;
+    type Transformer<S extends string = string> = Callback<string, S>;
+    // (undocumented)
+    namespace Transformer {
+        function and(...transformers: Array<Transformer>): Transformer;
+        function when(predicate: Predicate<string>, transformer: Transformer): Transformer;
+    }
 }
 export { String_2 as String }
 
