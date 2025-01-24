@@ -21,15 +21,15 @@
     "dist/**/*.js",
     "dist/**/*.d.ts"
   ],
+  "dependencies": {
+    "@siteimprove/alfa-functor": "workspace:^",
+    "@siteimprove/alfa-mapper": "workspace:^"
+  },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^"
+    "vitest": "^3.0.3"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"
-  },
-  "dependencies": {
-    "@siteimprove/alfa-functor": "workspace:^",
-    "@siteimprove/alfa-mapper": "workspace:^"
   }
 }

@@ -109,7 +109,7 @@ export class RNG<T = number> {
     return new RNG(seed, rng);
   }
 
-  private readonly _rng: () => T;
+  private readonly _rand: () => T;
   private readonly _seed: number;
   private _iterations: number;
 
@@ -117,17 +117,21 @@ export class RNG<T = number> {
     this._seed = seed;
     this._iterations = 0;
 
-    this._rng = () => {
+    this._rand = () => {
       this._iterations++;
       return rng();
     };
   }
 
   /**
-   * The RNG itself
+   * Generate a random number.
+   *
+   * @privateRemarks
+   * This is a getter return a 0-arity function. So, it is used as `rng.rand()`
+   * which matches the syntax of usual `rand()` functions.
    */
-  public get rng(): () => T {
-    return this._rng;
+  public get rand(): () => T {
+    return this._rand;
   }
 
   /**
@@ -145,15 +149,36 @@ export class RNG<T = number> {
   }
 }
 
-const foo = RNGFactory.of(1).group(3).create();
-console.log(foo.rng());
-console.log(foo.iterations);
-console.log(foo.rng());
-console.log(foo.iterations);
-console.log(foo.rng());
-console.log(foo.iterations);
+/**
+ * @public
+ */
+export namespace RNG {
+  /**
+   * @remarks
+   * Must have 0 ⩽ value < 1.
+   * Result will be 0 ⩽ value < max.
+   */
+  function toInteger(max: number): (value: number) => number {
+    return (value) => Math.floor(value * max);
+  }
 
-const bar = RNGFactory.of(1).create().rng;
-console.log(bar());
-console.log(bar());
-console.log(bar());
+  export function integer(
+    max: number = Number.MAX_SAFE_INTEGER,
+    seed?: number,
+  ): RNG<number> {
+    return RNGFactory.of(seed).map(toInteger(max)).create();
+  }
+
+  function toHex(value: number): string {
+    return value.toString(16);
+  }
+
+  export function hexString(length: number, seed?: number): RNG<string> {
+    return RNGFactory.of(seed)
+      .map(toInteger(16))
+      .map(toHex)
+      .group(length)
+      .map((group) => group.join(""))
+      .create();
+  }
+}
