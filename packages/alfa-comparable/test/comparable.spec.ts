@@ -24,7 +24,7 @@ test(
             : b > d
               ? Comparison.Greater
               : Comparison.Equal,
-      `Failing lexicographic comparison of [${a}, ${b}] and [${c}, ${d}] at seed ${rng.seed} and iteration ${rng.iterations}`,
+      `Failing lexicographic comparison of [${a}, ${b}] and [${c}, ${d}] at seed ${rng.seed} at iteration ${rng.iterations}`,
     );
   },
   {
