@@ -177,8 +177,8 @@ test(`evaluate() can't tell if two links that have the same name references
 test(`toJSON() with minimal verbosity produces target with correct serialization ids`, async (t) => {
   const accessibleName = "Foo";
 
-  const elmId1 = crypto.randomUUID();
-  const elmId2 = crypto.randomUUID();
+  const elmId1 = "first id";
+  const elmId2 = "second id";
 
   const target = [
     <a href="foo.html" internalId={elmId1}>

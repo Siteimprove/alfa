@@ -1334,6 +1334,7 @@ __metadata:
     "@siteimprove/alfa-rectangle": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     "@siteimprove/alfa-result": "workspace:^"
+    "@siteimprove/alfa-rng": "workspace:^"
     "@siteimprove/alfa-sarif": "workspace:^"
     "@siteimprove/alfa-selective": "workspace:^"
     "@siteimprove/alfa-sequence": "workspace:^"
@@ -1793,7 +1794,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-rng@workspace:packages/alfa-rng":
+"@siteimprove/alfa-rng@workspace:^, @siteimprove/alfa-rng@workspace:packages/alfa-rng":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-rng@workspace:packages/alfa-rng"
   dependencies:
@@ -1836,6 +1837,7 @@ __metadata:
     "@siteimprove/alfa-rectangle": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     "@siteimprove/alfa-result": "workspace:^"
+    "@siteimprove/alfa-rng": "workspace:^"
     "@siteimprove/alfa-sarif": "workspace:^"
     "@siteimprove/alfa-selector": "workspace:^"
     "@siteimprove/alfa-sequence": "workspace:^"
@@ -2148,6 +2150,7 @@ __metadata:
     "@siteimprove/alfa-option": "workspace:^"
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
+    "@siteimprove/alfa-rng": "workspace:^"
     "@siteimprove/alfa-sequence": "workspace:^"
   languageName: unknown
   linkType: soft

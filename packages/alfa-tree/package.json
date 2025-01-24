@@ -30,6 +30,7 @@
     "@siteimprove/alfa-option": "workspace:^",
     "@siteimprove/alfa-predicate": "workspace:^",
     "@siteimprove/alfa-refinement": "workspace:^",
+    "@siteimprove/alfa-rng": "workspace:^",
     "@siteimprove/alfa-sequence": "workspace:^"
   },
   "publishConfig": {
