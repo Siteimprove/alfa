@@ -12,8 +12,17 @@ export class RNG<T = number> {
     protected constructor(seed: number, rng: () => T);
     get iterations(): number;
     static of<T = number>(seed: number, rng: () => T): RNG<T>;
-    get rng(): () => T;
+    get rand(): () => T;
     get seed(): number;
+}
+
+// @public (undocumented)
+export namespace RNG {
+    export function hexString(length: number, seed?: number): RNG<string>;
+    export function integer(max?: number, seed?: number): RNG<number>;
+    export function standard(seed?: number): RNG<number>;
+    // @internal (undocumented)
+    export function toInteger(max?: number): (value: number) => number;
 }
 
 // @public

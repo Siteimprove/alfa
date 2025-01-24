@@ -165,8 +165,8 @@ export namespace RNG {
 
   /**
    * @remarks
-   * Must have 0 ⩽ value < 1.
-   * Result will be 0 ⩽ value < max.
+   * Must have 0 ⩽ value \< 1.
+   * Result will be 0 ⩽ value \< max.
    *
    * @internal
    */
