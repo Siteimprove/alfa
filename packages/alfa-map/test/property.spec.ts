@@ -1,4 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
+import { RNGFactory } from "@siteimprove/alfa-rng";
 
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -35,13 +36,9 @@ function key(id: number): Key {
   return self;
 }
 
-function wrapper(rng: RNG<number>): RNG<Key> {
-  return () => key(makeInt(rng()));
-}
-
 test<Key>(
   `#add and #delete behave when used in bulk`,
-  (t, rng, seed) => {
+  (t, rng) => {
     // How many elements are we adding/removing in each iteration of the test?
     const size = 1000;
 
@@ -50,18 +47,22 @@ test<Key>(
 
     // Adding elements
     for (let i = 0; i < size; i++) {
-      const key = rng();
+      const key = rng.rand();
 
-      t.deepEqual(map.size, i, `Pre-add map.size() fails with seed ${seed}`);
+      t.deepEqual(
+        map.size,
+        i,
+        `Pre-add map.size() fails with seed ${rng.seed} at iteration ${rng.iterations}`,
+      );
       t.deepEqual(
         map.has(key),
         false,
-        `Pre-add map.has() fails with seed ${seed}`,
+        `Pre-add map.has() fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
       t.deepEqual(
         Iterable.includes(map.keys(), key),
         false,
-        `Pre-add includes fails with seed ${seed}`,
+        `Pre-add includes fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
 
       map = map.set(key, true);
@@ -70,17 +71,17 @@ test<Key>(
       t.deepEqual(
         map.size,
         i + 1,
-        `Post-add map.size() fails with seed ${seed}`,
+        `Post-add map.size() fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
       t.deepEqual(
         map.has(key),
         true,
-        `Post-add map.has() fails with seed ${seed}`,
+        `Post-add map.has() fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
       t.deepEqual(
         Iterable.includes(map.keys(), key),
         true,
-        `Post-add includes fails with seed ${seed}`,
+        `Post-add includes fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
     }
 
@@ -90,16 +91,20 @@ test<Key>(
     // Hopefully, this creates enough entropy to test various scenarios.
     for (let i = size; i > 0; i--) {
       const key = keys[size - i];
-      t.deepEqual(map.size, i, `Pre-delete map.size() fails with seed ${seed}`);
+      t.deepEqual(
+        map.size,
+        i,
+        `Pre-delete map.size() fails with seed ${rng.seed} at iteration ${rng.iterations}`,
+      );
       t.deepEqual(
         map.has(key),
         true,
-        `Pre-delete map.has() fails with seed ${seed}`,
+        `Pre-delete map.has() fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
       t.deepEqual(
         Iterable.includes(map.keys(), key),
         true,
-        `Pre-delete includes fails with seed ${seed}`,
+        `Pre-delete includes fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
 
       map = map.delete(key);
@@ -107,19 +112,19 @@ test<Key>(
       t.deepEqual(
         map.size,
         i - 1,
-        `Post-delete map.size() fails with seed ${seed}`,
+        `Post-delete map.size() fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
       t.deepEqual(
         map.has(key),
         false,
-        `Post-delete map.has() fails with seed ${seed}`,
+        `Post-delete map.has() fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
       t.deepEqual(
         Iterable.includes(map.keys(), key),
         false,
-        `Post-delete includes fails with seed ${seed}`,
+        `Post-delete includes fails with seed ${rng.seed} at iteration ${rng.iterations}`,
       );
     }
   },
-  { wrapper },
+  { rng: RNGFactory.of().map(makeInt).map(key).create() },
 );
