@@ -1,4 +1,4 @@
-import { type RNG, test } from "@siteimprove/alfa-test";
+import { test } from "@siteimprove/alfa-test";
 
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";

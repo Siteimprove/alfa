@@ -25,6 +25,7 @@
     "@siteimprove/alfa-refinement": "workspace:^"
   },
   "devDependencies": {
+    "@siteimprove/alfa-rng": "workspace:^",
     "@siteimprove/alfa-test": "workspace:^"
   },
   "publishConfig": {

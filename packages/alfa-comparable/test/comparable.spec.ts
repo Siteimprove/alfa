@@ -1,15 +1,13 @@
-import { type RNG, test } from "@siteimprove/alfa-test";
-import { Comparable, Comparison } from "../dist/index.js";
+import { RNG, RNGFactory } from "@siteimprove/alfa-rng";
+import { test } from "@siteimprove/alfa-test";
 
-function wrapper(rng: RNG): RNG<[number, number]> {
-  return () => [Math.round(rng() * 1000), Math.round(rng() * 1000)];
-}
+import { Comparable, Comparison } from "../dist/index.js";
 
 test(
   "compareLexicographically compares couple of integers",
-  (t, rng, seed) => {
-    const [a, b] = rng();
-    const [c, d] = rng();
+  (t, rng) => {
+    const [a, b] = rng.rand();
+    const [c, d] = rng.rand();
 
     t.deepEqual(
       Comparable.compareLexicographically<[number, number]>(
@@ -26,15 +24,18 @@ test(
             : b > d
               ? Comparison.Greater
               : Comparison.Equal,
-      `Failing lexicographic comparison of [${a}, ${b}] and [${c}, ${d}] at seed ${seed}`,
+      `Failing lexicographic comparison of [${a}, ${b}] and [${c}, ${d}] at seed ${rng.seed} and iteration ${rng.iterations}`,
     );
   },
-  { wrapper, iterations: 100 },
+  {
+    rng: RNGFactory.of().map(RNG.toInteger()).group(2).create(),
+    iterations: 100,
+  },
 );
 
 test("compareLexicographically compares heterogenous tuples", (t) => {
   const a: [number, string, string] = [1, "a", "a"];
-  // nearly equal to force comparsion go all the way.
+  // nearly equal to force comparison go all the way.
   const b: [number, string, string] = [1, "a", "b"];
 
   t.deepEqual(
