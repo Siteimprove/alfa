@@ -7,9 +7,9 @@
 import { assert, describe, it } from "vitest";
 import { RNG, RNGFactory } from "../dist/rng.js";
 
-describe("RNGFactory", () => {
+describe("RNG.standard", () => {
   it("should generate random numbers between 0 and 1", () => {
-    const rng = RNGFactory.of().create();
+    const rng = RNG.standard();
 
     for (let i = 0; i < 100; i++) {
       const value = rng.rand();
@@ -28,8 +28,9 @@ describe("RNGFactory", () => {
   });
 
   it("should generate the same sequence of numbers with the same seed", () => {
-    const rng1 = RNGFactory.of(1).create();
-    const rng2 = RNGFactory.of(1).create();
+    const seed = Math.random();
+    const rng1 = RNG.standard(seed);
+    const rng2 = RNG.standard(seed);
 
     for (let i = 0; i < 100; i++) {
       const value1 = rng1.rand();
@@ -43,8 +44,8 @@ describe("RNGFactory", () => {
   });
 
   it("should generate different sequences of numbers with different seeds", () => {
-    const rng1 = RNGFactory.of().create();
-    const rng2 = RNGFactory.of().create();
+    const rng1 = RNG.standard();
+    const rng2 = RNG.standard();
 
     let equals = 0;
 

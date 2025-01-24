@@ -3,5 +3,5 @@
   "extends": "../tsconfig.json",
   "compilerOptions": { "noEmit": true },
   "files": [],
-  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
+  "references": [{ "path": "../src" }]
 }

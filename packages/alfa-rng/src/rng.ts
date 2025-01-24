@@ -154,14 +154,34 @@ export class RNG<T = number> {
  */
 export namespace RNG {
   /**
+   * Seedable RNG returning a number between 0 (included) and 1 (excluded).
+   *
+   * @remarks
+   * This RNG is decent but not crypto-safe.
+   */
+  export function standard(seed?: number): RNG<number> {
+    return RNGFactory.of(seed).create();
+  }
+
+  /**
    * @remarks
    * Must have 0 ⩽ value < 1.
    * Result will be 0 ⩽ value < max.
+   *
+   * @internal
    */
-  function toInteger(max: number): (value: number) => number {
+  export function toInteger(
+    max: number = Number.MAX_SAFE_INTEGER,
+  ): (value: number) => number {
     return (value) => Math.floor(value * max);
   }
 
+  /**
+   * Seedable RNG returning an integer between 0 (included) and max (excluded).
+   *
+   * @remarks
+   * This RNG is decent but not crypto-safe.
+   */
   export function integer(
     max: number = Number.MAX_SAFE_INTEGER,
     seed?: number,
@@ -173,6 +193,12 @@ export namespace RNG {
     return value.toString(16);
   }
 
+  /**
+   * Seedable RNG returning a hex string of a given length.
+   *
+   * @remarks
+   * This RNG is decent but not crypto-safe.
+   */
   export function hexString(length: number, seed?: number): RNG<string> {
     return RNGFactory.of(seed)
       .map(toInteger(16))
