@@ -1,6 +1,6 @@
 /*
- * These tests use vitest directly, because the alfa-test package that we use
- * elsewhere itself depends on alfa-rng for its randomness needs. So we need
+ * These tests use Vitest directly, because the alfa-test package that we use
+ * elsewhere itself depends on alfa-rng for its randomness needs. So we have to
  * to avoid a circular dependency.
  */
 
