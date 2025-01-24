@@ -4,9 +4,9 @@
   "compilerOptions": { "outDir": "../dist" },
   "files": [
     "./index.ts",
-    "./rng.ts",
     "./test.ts",
     "./types.ts",
     "./vitest.d.ts"
-  ]
+  ],
+  "references": [{ "path": "../../alfa-rng" }]
 }
