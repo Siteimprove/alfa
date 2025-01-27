@@ -6,7 +6,6 @@
   "references": [
     { "path": "../../alfa-equatable" },
     { "path": "../../alfa-hash" },
-    { "path": "../../alfa-json" },
-    { "path": "../../alfa-fnv" }
+    { "path": "../../alfa-json" }
   ]
 }
