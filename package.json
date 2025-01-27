@@ -28,7 +28,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
+    "@changesets/cli": "^2.27.12",
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
     "@siteimprove/alfa-toolchain": "workspace:^",
