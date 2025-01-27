@@ -18,11 +18,9 @@ export class RNG<T = number> {
 
 // @public (undocumented)
 export namespace RNG {
-    export function hexString(length: number, seed?: number): RNG<string>;
-    export function integer(max?: number, seed?: number): RNG<number>;
-    export function standard(seed?: number): RNG<number>;
-    // @internal (undocumented)
-    export function toInteger(max?: number): (value: number) => number;
+    export function hexString(length: number, seed?: number): RNGFactory<string>;
+    export function integer(max?: number, seed?: number): RNGFactory<number>;
+    export function standard(seed?: number): RNGFactory<number>;
 }
 
 // @public
