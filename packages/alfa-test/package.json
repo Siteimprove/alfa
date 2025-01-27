@@ -22,8 +22,9 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-rng": "workspace:^",
     "@types/node": "^22.0.0",
-    "vitest": "^3.0.0"
+    "vitest": "^3.0.4"
   },
   "publishConfig": {
     "access": "public",

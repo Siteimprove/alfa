@@ -66,7 +66,7 @@ test("h() put elements in the correct namespace", (t) => {
 });
 
 test("h() accepts a internalId which is set on the Element", (t) => {
-  const internalId = crypto.randomUUID();
+  const internalId = "some string";
   const elm = h(
     "div",
     undefined,
@@ -86,7 +86,7 @@ test("h() creates internalId when it is not provided", (t) => {
 
   t.equal(
     elm.internalId.length,
-    36,
-    "internalId should be a UUID of length 36",
+    32,
+    "internalId should be an hex string of length 32",
   );
 });

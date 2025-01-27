@@ -122,5 +122,10 @@
     "./sia-r115/rule.spec.tsx",
     "./sia-r116/rule.spec.tsx"
   ],
-  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
+  "references": [
+    { "path": "../src" },
+    { "path": "../../alfa-future" },
+    { "path": "../../alfa-http" },
+    { "path": "../../alfa-test" }
+  ]
 }

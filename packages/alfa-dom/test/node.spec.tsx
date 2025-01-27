@@ -116,7 +116,7 @@ test(`Node.clone() creates new instance with same value`, (t) => {
     ],
     [h.sheet([h.rule.style("p", { background: "green" })])],
     "bar",
-    crypto.randomUUID(),
+    "some id",
     { extraStuff: "baz" },
   );
 
@@ -334,9 +334,9 @@ function docWithinternalIds(
 }
 
 test("#toJSON() includes only internalId when verbosity is minimal", (t) => {
-  const docId = crypto.randomUUID();
-  const elmId = crypto.randomUUID();
-  const attrId = crypto.randomUUID();
+  const docId = "id of doc";
+  const elmId = "id of element";
+  const attrId = "id of attribute";
 
   const doc = docWithinternalIds(docId, elmId, attrId);
 
@@ -421,9 +421,9 @@ test("#toJSON() includes everything except internalId when options is undefined 
 });
 
 test("#toJSON() includes everything including internalId and assigned slot when verbosity is high", (t) => {
-  const docId = crypto.randomUUID();
-  const elmId = crypto.randomUUID();
-  const attrId = crypto.randomUUID();
+  const docId = "id of doc";
+  const elmId = "id of element";
+  const attrId = "id of attribute";
 
   const doc = docWithinternalIds(docId, elmId, attrId);
 

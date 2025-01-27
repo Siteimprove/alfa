@@ -7,11 +7,17 @@ import { Lazy } from "@siteimprove/alfa-lazy";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { RNG } from "@siteimprove/alfa-rng";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
 const { equals } = Refinement;
+
+// we want to always use the same RNG so we can seed it if needed for investigation
+// 32 hex digits is what UUID4 uses (with some semi-fixed one) and corresponds
+// to 128 bits.
+const rng = RNG.hexString(32).create();
 
 /**
  * Model for n-ary trees with some traversal flags.
@@ -79,7 +85,7 @@ export abstract class Node<
     this._externalId = externalId;
     this._extraData = extraData;
 
-    this._internalId = internalId ?? crypto.randomUUID();
+    this._internalId = internalId ?? rng.rand();
   }
 
   public get type(): T {
