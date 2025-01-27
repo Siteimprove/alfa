@@ -38,5 +38,5 @@ export interface Controller<T = number> {
 }
 
 function defaultController(): Controller<number> {
-  return { rng: RNG.standard(), iterations: 1 };
+  return { rng: RNG.standard().create(), iterations: 1 };
 }

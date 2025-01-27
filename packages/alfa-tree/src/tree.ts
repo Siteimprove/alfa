@@ -17,7 +17,7 @@ const { equals } = Refinement;
 // we want to always use the same RNG so we can seed it if needed for investigation
 // 32 hex digits is what UUID4 uses (with some semi-fixed one) and corresponds
 // to 128 bits.
-const rng = RNG.hexString(32);
+const rng = RNG.hexString(32).create();
 
 /**
  * Model for n-ary trees with some traversal flags.

@@ -9,7 +9,7 @@ import { RNG, RNGFactory } from "../dist/rng.js";
 
 describe("RNG.standard", () => {
   it("should generate random numbers between 0 and 1", () => {
-    const rng = RNG.standard();
+    const rng = RNG.standard().create();
 
     for (let i = 0; i < 100; i++) {
       const value = rng.rand();
@@ -29,8 +29,8 @@ describe("RNG.standard", () => {
 
   it("should generate the same sequence of numbers with the same seed", () => {
     const seed = Math.random();
-    const rng1 = RNG.standard(seed);
-    const rng2 = RNG.standard(seed);
+    const rng1 = RNG.standard(seed).create();
+    const rng2 = RNG.standard(seed).create();
 
     for (let i = 0; i < 100; i++) {
       const value1 = rng1.rand();
@@ -44,8 +44,8 @@ describe("RNG.standard", () => {
   });
 
   it("should generate different sequences of numbers with different seeds", () => {
-    const rng1 = RNG.standard();
-    const rng2 = RNG.standard();
+    const rng1 = RNG.standard().create();
+    const rng2 = RNG.standard().create();
 
     let equals = 0;
 
@@ -97,7 +97,7 @@ describe("RNGFactory#group", () => {
 
 describe("RNG.integer", () => {
   it("should generate random integers within bounds", () => {
-    const rng = RNG.integer(10);
+    const rng = RNG.integer(10).create();
 
     for (let i = 0; i < 100; i++) {
       const value = rng.rand();
@@ -123,7 +123,7 @@ describe("RNG.integer", () => {
 
 describe("RNG.hexString", () => {
   it("should generate random hex strings", () => {
-    const rng = RNG.hexString(10);
+    const rng = RNG.hexString(10).create();
 
     for (let i = 0; i < 100; i++) {
       const value = rng.rand();

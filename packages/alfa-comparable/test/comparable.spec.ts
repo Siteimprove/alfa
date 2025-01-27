@@ -1,4 +1,4 @@
-import { RNG, RNGFactory } from "@siteimprove/alfa-rng";
+import { RNG } from "@siteimprove/alfa-rng";
 import { test } from "@siteimprove/alfa-test";
 
 import { Comparable, Comparison } from "../dist/index.js";
@@ -28,7 +28,7 @@ test(
     );
   },
   {
-    rng: RNGFactory.of().map(RNG.toInteger()).group(2).create(),
+    rng: RNG.integer().group(2).create(),
     iterations: 100,
   },
 );

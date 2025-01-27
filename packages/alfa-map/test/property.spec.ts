@@ -1,5 +1,5 @@
 import { test } from "@siteimprove/alfa-test";
-import { RNGFactory } from "@siteimprove/alfa-rng";
+import { RNG } from "@siteimprove/alfa-rng";
 
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -126,5 +126,5 @@ test<Key>(
       );
     }
   },
-  { rng: RNGFactory.of().map(makeInt).map(key).create() },
+  { rng: RNG.standard().map(makeInt).map(key).create() },
 );

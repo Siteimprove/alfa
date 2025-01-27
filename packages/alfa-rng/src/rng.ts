@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import type { Functor } from "@siteimprove/alfa-functor";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 
@@ -159,8 +158,8 @@ export namespace RNG {
    * @remarks
    * This RNG is decent but not crypto-safe.
    */
-  export function standard(seed?: number): RNG<number> {
-    return RNGFactory.of(seed).create();
+  export function standard(seed?: number): RNGFactory<number> {
+    return RNGFactory.of(seed);
   }
 
   /**
@@ -170,7 +169,7 @@ export namespace RNG {
    *
    * @internal
    */
-  export function toInteger(
+  function toInteger(
     max: number = Number.MAX_SAFE_INTEGER,
   ): (value: number) => number {
     return (value) => Math.floor(value * max);
@@ -185,8 +184,8 @@ export namespace RNG {
   export function integer(
     max: number = Number.MAX_SAFE_INTEGER,
     seed?: number,
-  ): RNG<number> {
-    return RNGFactory.of(seed).map(toInteger(max)).create();
+  ): RNGFactory<number> {
+    return RNGFactory.of(seed).map(toInteger(max));
   }
 
   function toHex(value: number): string {
@@ -199,12 +198,11 @@ export namespace RNG {
    * @remarks
    * This RNG is decent but not crypto-safe.
    */
-  export function hexString(length: number, seed?: number): RNG<string> {
+  export function hexString(length: number, seed?: number): RNGFactory<string> {
     return RNGFactory.of(seed)
       .map(toInteger(16))
       .map(toHex)
       .group(length)
-      .map((group) => group.join(""))
-      .create();
+      .map((group) => group.join(""));
   }
 }

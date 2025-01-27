@@ -8,7 +8,7 @@ const controller = (seed?: number) => ({
   iterations: 10,
   // The max value for specificity components is 1024. Picking a "weird"
   // number that is slightly smaller than half to avoid overflows.
-  rng: RNG.integer(487, seed),
+  rng: RNG.integer(487, seed).create(),
 });
 
 test(
