@@ -278,7 +278,7 @@ export abstract class Node<T extends string = string>
       ...super.toJSON(options),
       ...(json.Serializable.Verbosity.Minimal < verbosity &&
       verbosity < json.Serializable.Verbosity.Medium
-        ? { path: this.path(Node.fullTree) }
+        ? { path: this.path(Node.composedNested) }
         : {}),
     };
   }

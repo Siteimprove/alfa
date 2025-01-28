@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -407,6 +408,106 @@ test("#toJSON() includes internalId and path when verbosity is low", (t) => {
     path: "/div[1]/@id",
     internalId: attrId,
     serializationId: attrId,
+  });
+});
+
+test("#toJSON() uses composed path when verbosity is low", (t) => {
+  // We want the serialized path to be explicit about entering shadow DOM
+  const a = <span internalId="a"></span>;
+  const b = <span internalId="b"></span>;
+  const slot = <slot internalId="slot" />;
+  const shadow = h.shadow([slot, b], undefined, undefined, undefined, "shadow");
+
+  const div = (
+    <div internalId="div">
+      {shadow}
+      {a}
+    </div>
+  );
+
+  t.deepEqual(div.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]",
+    internalId: "div",
+    serializationId: "div",
+  });
+
+  t.deepEqual(a.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/span[1]",
+    internalId: "a",
+    serializationId: "a",
+  });
+
+  t.deepEqual(b.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/shadow-root()/span[1]",
+    internalId: "b",
+    serializationId: "b",
+  });
+
+  t.deepEqual(slot.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/shadow-root()/slot[1]",
+    internalId: "slot",
+    serializationId: "slot",
+  });
+
+  t.deepEqual(shadow.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "shadow",
+    path: "/div[1]/shadow-root()",
+    internalId: "shadow",
+    serializationId: "shadow",
+  });
+});
+
+test("#toJSON() uses nested path when verbosity is low", (t) => {
+  // We want the serialized path to be explicit about entering nested documents
+  const a = <span internalId="a"></span>;
+  const b = <span internalId="b"></span>;
+  const innerDoc = h.document([b], undefined, undefined, "document");
+  const iframe = <iframe internalId="iframe">{innerDoc}</iframe>;
+
+  const div = (
+    <div internalId="div">
+      {iframe}
+      {a}
+    </div>
+  );
+
+  t.deepEqual(div.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]",
+    internalId: "div",
+    serializationId: "div",
+  });
+
+  t.deepEqual(a.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/span[1]",
+    internalId: "a",
+    serializationId: "a",
+  });
+
+  t.deepEqual(b.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/iframe[1]/document-node()/span[1]",
+    internalId: "b",
+    serializationId: "b",
+  });
+
+  t.deepEqual(innerDoc.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "document",
+    path: "/div[1]/iframe[1]/document-node()",
+    internalId: "document",
+    serializationId: "document",
+  });
+
+  t.deepEqual(iframe.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/iframe[1]",
+    internalId: "iframe",
+    serializationId: "iframe",
   });
 });
 
