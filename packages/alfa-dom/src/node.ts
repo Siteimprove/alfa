@@ -6,6 +6,7 @@ import {
 } from "@siteimprove/alfa-comparable";
 import type { Device } from "@siteimprove/alfa-device";
 import { Flags } from "@siteimprove/alfa-flags";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Option } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
@@ -16,7 +17,7 @@ import { String } from "@siteimprove/alfa-string";
 import type { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import type * as earl from "@siteimprove/alfa-earl";
-import type * as json from "@siteimprove/alfa-json";
+import * as json from "@siteimprove/alfa-json";
 import type * as sarif from "@siteimprove/alfa-sarif";
 import * as tree from "@siteimprove/alfa-tree";
 
@@ -160,10 +161,12 @@ export abstract class Node<T extends string = string>
      * shadow tree or content document.
      *
      * @remarks
-     * It is important that this expansion happens **after** sorting by tabindex
+     * It is important that this expansion happens **after** sorting by
+     *   tabindex
      * since shadow DOM and content documents build their own sequential focus
-     * order that is inserted as-is in the light tree or parent browsing context.
-     * That is, a tabindex of 1 in a shadow tree or content document does
+     * order that is inserted as-is in the light tree or parent browsing
+     *   context. That is, a tabindex of 1 in a shadow tree or content document
+     *   does
      * **not** come before a tabindex of 2 in the main document.
      */
     function expand([element, tabIndex]: [
@@ -269,6 +272,17 @@ export abstract class Node<T extends string = string>
     return value === this;
   }
 
+  public toJSON(options?: Serializable.Options): Node.JSON<T> {
+    const verbosity = options?.verbosity ?? json.Serializable.Verbosity.Medium;
+    return {
+      ...super.toJSON(options),
+      ...(json.Serializable.Verbosity.Minimal < verbosity &&
+      verbosity < json.Serializable.Verbosity.Medium
+        ? { path: this.path(Node.fullTree) }
+        : {}),
+    };
+  }
+
   public toEARL(): Node.EARL {
     return {
       "@context": {
@@ -337,7 +351,9 @@ export interface Node {
  * @public
  */
 export namespace Node {
-  export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
+  export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
+    path?: string;
+  }
 
   export interface SerializationOptions extends json.Serializable.Options {
     device?: Device;

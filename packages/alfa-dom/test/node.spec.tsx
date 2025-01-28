@@ -342,39 +342,72 @@ test("#toJSON() includes only internalId when verbosity is minimal", (t) => {
 
   const device = Device.standard();
 
-  const verbosities = [
-    json.Serializable.Verbosity.Minimal,
-    json.Serializable.Verbosity.Low,
-  ] as const;
+  const options = {
+    device,
+    verbosity: json.Serializable.Verbosity.Minimal,
+  } as const;
 
-  for (const verbosity of verbosities) {
-    const options = {
-      device,
-      verbosity,
-    } as const;
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    internalId: docId,
+    serializationId: docId,
+  });
 
-    t.deepEqual(doc.toJSON(options), {
-      type: "document",
-      internalId: docId,
-      serializationId: docId,
-    });
+  const elm = doc.children().first().getUnsafe() as Element<"div">;
 
-    const elm = doc.children().first().getUnsafe() as Element<"div">;
+  t.deepEqual(elm.toJSON(options), {
+    type: "element",
+    internalId: elmId,
+    serializationId: elmId,
+  });
 
-    t.deepEqual(elm.toJSON(options), {
-      type: "element",
-      internalId: elmId,
-      serializationId: elmId,
-    });
+  const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
 
-    const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
+  t.deepEqual(attr.toJSON(options), {
+    type: "attribute",
+    internalId: attrId,
+    serializationId: attrId,
+  });
+});
 
-    t.deepEqual(attr.toJSON(options), {
-      type: "attribute",
-      internalId: attrId,
-      serializationId: attrId,
-    });
-  }
+test("#toJSON() includes internalId and path when verbosity is low", (t) => {
+  const docId = "id of doc";
+  const elmId = "id of element";
+  const attrId = "id of attribute";
+
+  const doc = docWithinternalIds(docId, elmId, attrId);
+
+  const device = Device.standard();
+
+  const options = {
+    device,
+    verbosity: json.Serializable.Verbosity.Low,
+  } as const;
+
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    path: "/",
+    internalId: docId,
+    serializationId: docId,
+  });
+
+  const elm = doc.children().first().getUnsafe() as Element<"div">;
+
+  t.deepEqual(elm.toJSON(options), {
+    type: "element",
+    path: "/div[1]",
+    internalId: elmId,
+    serializationId: elmId,
+  });
+
+  const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
+
+  t.deepEqual(attr.toJSON(options), {
+    type: "attribute",
+    path: "/div[1]/@id",
+    internalId: attrId,
+    serializationId: attrId,
+  });
 });
 
 test("#toJSON() includes everything except internalId when options is undefined or verbosity is medium", (t) => {
