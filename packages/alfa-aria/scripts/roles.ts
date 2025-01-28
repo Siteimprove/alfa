@@ -44,8 +44,7 @@ puppeteer.launch().then(async (browser) => {
 
               // Is it an abstract role?
               const abstract =
-                role.querySelector(".role-abstract")?.textContent === "True" ??
-                false;
+                role.querySelector(".role-abstract")?.textContent === "True";
 
               // Which roles does it inherit from?
               const inherited = Array.from(
@@ -138,7 +137,7 @@ puppeteer.launch().then(async (browser) => {
               const name = {
                 required:
                   role.querySelector(".role-namerequired")?.textContent ===
-                    "True" ?? false,
+                  "True",
 
                 prohibited: from.includes("prohibited"),
 
@@ -167,7 +166,7 @@ puppeteer.launch().then(async (browser) => {
               const children = {
                 presentational:
                   role.querySelector(".role-childpresentational")
-                    ?.textContent === "True" ?? false,
+                    ?.textContent === "True",
 
                 required: Array.from(
                   role.querySelectorAll(
