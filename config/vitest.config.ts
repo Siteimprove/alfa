@@ -6,15 +6,6 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["json", "html"],
-      exclude: [
-        "config/**",
-        "docs/**",
-        "scratches/**",
-        "scripts/**",
-        "**/dist/**",
-        "**/scripts/**",
-        ...coverageConfigDefaults.exclude,
-      ],
     },
   },
 });
