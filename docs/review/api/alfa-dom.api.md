@@ -21,7 +21,7 @@ import { Rectangle } from '@siteimprove/alfa-rectangle';
 import type { Refinement } from '@siteimprove/alfa-refinement';
 import type * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
-import type { Serializable } from '@siteimprove/alfa-json';
+import { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 import * as tree from '@siteimprove/alfa-tree';
 
@@ -815,6 +815,8 @@ export abstract class Node<T extends string = string> extends tree.Node<Node.Tra
     // (undocumented)
     toEARL(): Node.EARL;
     // (undocumented)
+    toJSON(options?: Serializable.Options): Node.JSON<T>;
+    // (undocumented)
     toSARIF(): sarif.Location;
 }
 
@@ -941,6 +943,8 @@ export namespace Node {
     export function isNode(value: unknown): value is Node;
     // (undocumented)
     export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
+        // (undocumented)
+        path?: string;
     }
     // (undocumented)
     export interface SerializationOptions extends json.Serializable.Options {
