@@ -254,7 +254,7 @@ export namespace Rule {
       );
     }
 
-    private constructor(
+    protected constructor(
       uri: string,
       requirements: Array<Requirement>,
       tags: Array<Tag>,
@@ -456,7 +456,7 @@ export namespace Rule {
 
     private readonly _composes: Array<Rule<I, T, Q, S>>;
 
-    private constructor(
+    protected constructor(
       uri: string,
       requirements: Array<Requirement>,
       tags: Array<Tag>,

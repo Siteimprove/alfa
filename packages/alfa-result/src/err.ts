@@ -24,7 +24,7 @@ export class Err<E> implements Result<never, E> {
 
   private readonly _error: E;
 
-  private constructor(error: E) {
+  protected constructor(error: E) {
     this._error = error;
   }
 
@@ -150,8 +150,8 @@ export class Err<E> implements Result<never, E> {
     return value;
   }
 
-  public getOrElse<U>(value: Thunk<U>): U {
-    return value();
+  public getOrElse<U>(value: Callback<E, U>): U {
+    return value(this._error);
   }
 
   public getErrOr(): E {

@@ -9,7 +9,7 @@ export class Empty extends PseudoClassSelector<"empty"> {
     return new Empty();
   }
 
-  private constructor() {
+  protected constructor() {
     super("empty");
   }
 

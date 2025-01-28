@@ -146,6 +146,7 @@ export namespace Option {
 export class Some<T> implements Option<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(value: T);
     // (undocumented)
     and<U>(option: Option<U>): Option<U>;
     // (undocumented)

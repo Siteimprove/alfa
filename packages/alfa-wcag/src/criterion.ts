@@ -26,7 +26,7 @@ export class Criterion<
 
   private readonly _chapter: C;
 
-  private constructor(chapter: C, uri: U) {
+  protected constructor(chapter: C, uri: U) {
     super("criterion", uri);
     this._chapter = chapter;
   }

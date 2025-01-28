@@ -8,7 +8,7 @@ export class Selection extends PseudoElementSelector<"selection"> {
     return new Selection();
   }
 
-  private constructor() {
+  protected constructor() {
     super("selection");
   }
 

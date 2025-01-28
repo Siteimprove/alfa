@@ -258,5 +258,10 @@ export namespace Question {
       type: "boolean",
       message: "Does this title describe the content of the document?",
     },
+    // R115 (experimental)
+    "is-heading-descriptive": {
+      type: "boolean",
+      message: "Does this heading describe the following content?",
+    },
   } as const;
 }

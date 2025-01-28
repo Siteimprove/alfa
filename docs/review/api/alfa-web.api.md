@@ -17,6 +17,7 @@ import type * as sarif from '@siteimprove/alfa-sarif';
 
 // @public (undocumented)
 export class Page implements Resource, json.Serializable<Page.JSON>, earl.Serializable<Page.EARL>, sarif.Serializable<sarif.Artifact> {
+    protected constructor(request: Request, response: Response, document: Document, device: Device);
     // (undocumented)
     get device(): Device;
     // (undocumented)
@@ -88,6 +89,7 @@ export namespace Resource {
 
 // @public (undocumented)
 export class Site<R extends Resource = Resource> implements json.Serializable<Site.JSON<R>> {
+    protected constructor(resources: Graph<R>);
     // (undocumented)
     static of<R extends Resource>(resources: Graph<R>): Site<R>;
     // (undocumented)

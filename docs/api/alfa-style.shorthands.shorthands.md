@@ -8,7 +8,7 @@
 
 ```typescript
 shortHands: {
-        readonly background: Shorthand<"background-attachment" | "background-clip" | "background-color" | "background-image" | "background-origin" | "background-position-x" | "background-position-y" | "background-repeat-x" | "background-repeat-y" | "background-size">;
+        readonly background: Shorthand<"background-image" | "background-attachment" | "background-clip" | "background-color" | "background-origin" | "background-position-x" | "background-position-y" | "background-repeat-x" | "background-repeat-y" | "background-size">;
         readonly "background-position": Shorthand<"background-position-x" | "background-position-y">;
         readonly "background-repeat": Shorthand<"background-repeat-x" | "background-repeat-y">;
         readonly "border-block-color": Shorthand<"border-block-end-color" | "border-block-start-color">;
@@ -40,6 +40,7 @@ shortHands: {
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
         readonly inset: Shorthand<"top" | "bottom" | "left" | "right">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
+        readonly mask: Shorthand<"mask-image" | "mask-clip" | "mask-composite" | "mask-mode" | "mask-origin" | "mask-position" | "mask-repeat" | "mask-size">;
         readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
         readonly "text-decoration": Shorthand<"text-decoration-color" | "text-decoration-line" | "text-decoration-style" | "text-decoration-thickness">;

@@ -46,6 +46,7 @@ export namespace Browser {
     export function query<N extends Name>(query: Query<N>, scope?: Scope): Scope<N>;
     // (undocumented)
     export class Release<N extends Name = Name, V extends Version<N> = Version<N>> implements Serializable {
+        protected constructor(browser: N, version: V, date: number);
         // (undocumented)
         get browser(): N;
         // @internal (undocumented)

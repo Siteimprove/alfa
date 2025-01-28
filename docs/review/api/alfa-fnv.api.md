@@ -8,6 +8,7 @@ import { Hash } from '@siteimprove/alfa-hash';
 
 // @public (undocumented)
 export class FNV extends Hash {
+    protected constructor();
     // (undocumented)
     static empty(): Hash;
     // (undocumented)

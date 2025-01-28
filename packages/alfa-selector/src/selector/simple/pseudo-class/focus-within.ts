@@ -16,7 +16,7 @@ export class FocusWithin extends PseudoClassSelector<"focus-within"> {
     return new FocusWithin();
   }
 
-  private constructor() {
+  protected constructor() {
     super("focus-within");
   }
 

@@ -14,7 +14,7 @@ export class Root extends PseudoClassSelector<"root"> {
     return new Root();
   }
 
-  private constructor() {
+  protected constructor() {
     super("root");
   }
 

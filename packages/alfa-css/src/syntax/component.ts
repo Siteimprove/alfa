@@ -23,7 +23,7 @@ export class Component implements Iterable<Token>, Equatable, Serializable {
 
   private readonly _value: Array<Token>;
 
-  private constructor(value: Array<Token>) {
+  protected constructor(value: Array<Token>) {
     this._value = value;
   }
 

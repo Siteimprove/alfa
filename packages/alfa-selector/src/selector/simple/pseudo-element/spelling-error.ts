@@ -8,7 +8,7 @@ export class SpellingError extends PseudoElementSelector<"spelling-error"> {
     return new SpellingError();
   }
 
-  private constructor() {
+  protected constructor() {
     super("spelling-error");
   }
 

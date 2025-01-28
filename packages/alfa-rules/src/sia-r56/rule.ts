@@ -114,7 +114,7 @@ export class SameNames extends Diagnostic implements Iterable<List<Element>> {
   private readonly _role: Role.Name;
   private readonly _errors: ReadonlyArray<List<Element>>;
 
-  private constructor(
+  protected constructor(
     message: string,
     role: Role.Name,
     errors: ReadonlyArray<List<Element>>,

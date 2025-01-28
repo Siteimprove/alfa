@@ -12,14 +12,8 @@ import {
 } from "../../syntax/index.js";
 import type { Unit } from "../../unit/index.js";
 
-import type {
-  Numeric} from "../numeric/index.js";
-import {
-  Angle,
-  Length,
-  Number,
-  Percentage,
-} from "../numeric/index.js";
+import type { Numeric } from "../numeric/index.js";
+import { Angle, Length, Number, Percentage } from "../numeric/index.js";
 
 import type { Expression } from "./expression.js";
 import { Function } from "./function.js";
@@ -57,7 +51,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
   private readonly _expression: Expression;
   private readonly _type = "math expression";
 
-  private constructor(expression: Expression) {
+  protected constructor(expression: Expression) {
     this._expression = expression;
   }
 

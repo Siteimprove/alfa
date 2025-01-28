@@ -10,7 +10,7 @@ export class FNV extends Hash {
 
   private _hash = 2166136261;
 
-  private constructor() {
+  protected constructor() {
     super();
   }
 

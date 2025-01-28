@@ -148,5 +148,9 @@ Data: {
             readonly type: "boolean";
             readonly message: "Does this title describe the content of the document?";
         };
+        readonly "is-heading-descriptive": {
+            readonly type: "boolean";
+            readonly message: "Does this heading describe the following content?";
+        };
     }
 ```

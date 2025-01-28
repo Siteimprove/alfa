@@ -12,6 +12,7 @@ import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class Rectangle implements Equatable, Hashable, Serializable<Rectangle.JSON> {
+    protected constructor(x: number, y: number, width: number, height: number);
     // (undocumented)
     get area(): number;
     // (undocumented)

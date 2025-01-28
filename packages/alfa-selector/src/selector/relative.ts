@@ -20,7 +20,7 @@ export class Relative extends Selector<"relative"> {
   private readonly _combinator: Combinator;
   private readonly _selector: Simple | Compound | Complex;
 
-  private constructor(
+  protected constructor(
     combinator: Combinator,
     selector: Simple | Compound | Complex,
   ) {

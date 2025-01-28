@@ -32,7 +32,7 @@ export class Declaration implements Iterable<Token>, Equatable, Serializable {
   private readonly _value: Array<Token>;
   private readonly _important: boolean;
 
-  private constructor(name: string, value: Array<Token>, important: boolean) {
+  protected constructor(name: string, value: Array<Token>, important: boolean) {
     this._name = name;
     this._value = value;
     this._important = important;

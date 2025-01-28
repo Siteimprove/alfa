@@ -53,7 +53,7 @@ export class Position<
   private readonly _horizontal: HC;
   private readonly _vertical: VC;
 
-  private constructor(horizontal: HC, vertical: VC) {
+  protected constructor(horizontal: HC, vertical: VC) {
     super("position", Value.hasCalculation(horizontal, vertical));
     this._horizontal = horizontal;
     this._vertical = vertical;

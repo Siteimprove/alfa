@@ -50,7 +50,7 @@ export class Shadow<
   private readonly _color: C;
   private readonly _isInset: boolean;
 
-  private constructor(
+  protected constructor(
     horizontal: H,
     vertical: V,
     blur: B,

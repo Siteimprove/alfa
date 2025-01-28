@@ -1,5 +1,15 @@
 # @siteimprove/alfa-css
 
+## 0.97.0
+
+### Minor Changes
+
+- **Added:** `List#cutOrExtend` is now available. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+- **Added:** `List#size` is now available. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+## 0.96.0
+
 ## 0.95.0
 
 ## 0.94.1

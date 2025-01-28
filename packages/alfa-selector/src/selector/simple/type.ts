@@ -23,7 +23,7 @@ export class Type extends WithName<"type"> {
   private readonly _namespace: Option<string>;
   protected readonly _key: Option<Type>;
 
-  private constructor(namespace: Option<string>, name: string) {
+  protected constructor(namespace: Option<string>, name: string) {
     super("type", name, Specificity.of(0, 0, 1));
     this._namespace = namespace;
 

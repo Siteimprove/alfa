@@ -12,7 +12,7 @@ export class OnlyOfType extends PseudoClassSelector<"only-of-type"> {
     return new OnlyOfType();
   }
 
-  private constructor() {
+  protected constructor() {
     super("only-of-type");
   }
 

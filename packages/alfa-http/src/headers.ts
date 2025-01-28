@@ -35,7 +35,7 @@ export class Headers
 
   private readonly _headers: Map<string, Header>;
 
-  private constructor(headers: Map<string, Header>) {
+  protected constructor(headers: Map<string, Header>) {
     this._headers = headers;
   }
 

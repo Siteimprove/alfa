@@ -30,7 +30,7 @@ export class Some<T> implements Option<T> {
 
   private readonly _value: T;
 
-  private constructor(value: T) {
+  protected constructor(value: T) {
     this._value = value;
   }
 

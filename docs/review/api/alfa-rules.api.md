@@ -6,7 +6,7 @@
 
 import * as act from '@siteimprove/alfa-act';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import type { Attribute } from '@siteimprove/alfa-dom';
+import { Attribute } from '@siteimprove/alfa-dom';
 import type { Document } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
 import { Element } from '@siteimprove/alfa-dom';
@@ -27,10 +27,11 @@ import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
-export const alfaVersion = "0.95.0";
+export const alfaVersion = "0.97.0";
 
 // @public (undocumented)
 export class ARIA extends Requirement<"ARIA"> {
+    protected constructor(uri: string);
     // (undocumented)
     static of(uri: string): ARIA;
     // (undocumented)
@@ -48,6 +49,7 @@ export namespace ARIA {
 
 // @public (undocumented)
 export class BestPractice extends Requirement<"best practice"> {
+    protected constructor(uri: string);
     // (undocumented)
     static of(uri: string): BestPractice;
     // (undocumented)
@@ -66,11 +68,14 @@ export namespace BestPractice {
 // @public (undocumented)
 const _default: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
-// @public @deprecated (undocumented)
-const _default_10: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+// @public (undocumented)
+const _default_10: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public @deprecated (undocumented)
 const _default_11: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+
+// @public @deprecated (undocumented)
+const _default_12: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 // @public
 const _default_2: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
@@ -84,26 +89,26 @@ const _default_4: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 // @public
 const _default_5: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public @deprecated (undocumented)
-const _default_6: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+// @public
+const _default_6: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public @deprecated (undocumented)
-const _default_7: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
+const _default_7: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
-// @public (undocumented)
-const _default_8: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+// @public @deprecated (undocumented)
+const _default_8: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 // @public (undocumented)
 const _default_9: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 declare namespace deprecatedRules {
     export {
-        _default_6 as DR6,
-        _default_7 as DR18,
-        _default_8 as DR34,
-        _default_9 as DR36,
-        _default_10 as DR66,
-        _default_11 as DR69
+        _default_7 as DR6,
+        _default_8 as DR18,
+        _default_9 as DR34,
+        _default_10 as DR36,
+        _default_11 as DR66,
+        _default_12 as DR69
     }
 }
 export { deprecatedRules }
@@ -138,7 +143,8 @@ declare namespace experimentalRules {
         _default_2 as ER87,
         _default_3 as R82,
         _default_4 as R109,
-        _default_5 as R114
+        _default_5 as R114,
+        _default_6 as R115
     }
 }
 export { experimentalRules }
@@ -170,6 +176,7 @@ export default FlattenedRules;
 export class Group<T extends Hashable> implements Iterable<T>, Equatable, Hashable, json.Serializable<Group.JSON<T>>, earl.Serializable<Group.EARL>, sarif.Serializable<sarif.Location> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(members: ReadonlyArray<T>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -381,6 +388,10 @@ export namespace Question {
             readonly type: "boolean";
             readonly message: "Does this title describe the content of the document?";
         };
+        readonly "is-heading-descriptive": {
+            readonly type: "boolean";
+            readonly message: "Does this heading describe the following content?";
+        };
     };
         {};
 }
@@ -393,6 +404,7 @@ export const Rules: Record_2<typeof rules>;
 
 // @public (undocumented)
 export class Scope<S extends string = string> extends Tag<"scope"> {
+    protected constructor(scope: S);
     // (undocumented)
     equals(value: Scope): boolean;
     // (undocumented)
@@ -420,6 +432,7 @@ export namespace Scope {
 
 // @public (undocumented)
 export class Stability<S extends string = string> extends Tag<"stability"> {
+    protected constructor(stability: S);
     // (undocumented)
     equals(value: Stability): boolean;
     // (undocumented)
@@ -448,6 +461,7 @@ export namespace Stability {
 
 // @public (undocumented)
 export class Version<N extends number = number> extends Tag<"version"> {
+    protected constructor(version: N);
     // (undocumented)
     equals(value: Version): boolean;
     // (undocumented)

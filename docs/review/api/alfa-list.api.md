@@ -28,6 +28,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 export class Branch<T> implements Node<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(nodes: Array<Branch<T> | Leaf<T>>);
     // (undocumented)
     clone(): Branch<T>;
     // (undocumented)
@@ -65,6 +66,7 @@ export const Empty: Empty;
 export class Leaf<T> implements Node<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(values: Array<T>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -89,6 +91,10 @@ export class Leaf<T> implements Node<T> {
 export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "Empty" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "Leaf" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "Branch" which is marked as @internal
+    protected constructor(head: Empty | Leaf<T> | Branch<T>, tail: Empty | Leaf<T>, shift: number, size: number);
     // (undocumented)
     append(value: T): List<T>;
     // (undocumented)

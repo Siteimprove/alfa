@@ -36,7 +36,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   private readonly _root: Node<K, V>;
   private readonly _size: number;
 
-  private constructor(root: Node<K, V>, size: number) {
+  protected constructor(root: Node<K, V>, size: number) {
     this._root = root;
     this._size = size;
   }

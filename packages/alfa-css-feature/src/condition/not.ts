@@ -17,7 +17,7 @@ export class Not<F extends Feature<F>> implements Feature<F, Not.JSON<F>> {
 
   private readonly _condition: Condition<F>;
 
-  private constructor(condition: Condition<F>) {
+  protected constructor(condition: Condition<F>) {
     this._condition = condition;
   }
 

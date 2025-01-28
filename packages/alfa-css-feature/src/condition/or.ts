@@ -21,7 +21,7 @@ export class Or<F extends Feature<F>> implements Feature<F, Or.JSON<F>> {
   private readonly _left: Condition<F>;
   private readonly _right: Condition<F>;
 
-  private constructor(left: Condition<F>, right: Condition<F>) {
+  protected constructor(left: Condition<F>, right: Condition<F>) {
     this._left = left;
     this._right = right;
   }

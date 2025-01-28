@@ -10,7 +10,7 @@ export class Stability<S extends string = string> extends Tag<"stability"> {
 
   private readonly _stability: S;
 
-  private constructor(stability: S) {
+  protected constructor(stability: S) {
     super();
     this._stability = stability;
   }

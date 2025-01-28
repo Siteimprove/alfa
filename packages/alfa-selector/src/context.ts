@@ -17,7 +17,7 @@ export class Context {
 
   private readonly _state: Map<Element, Context.State>;
 
-  private constructor(state: Map<Element, Context.State>) {
+  protected constructor(state: Map<Element, Context.State>) {
     this._state = state;
   }
 

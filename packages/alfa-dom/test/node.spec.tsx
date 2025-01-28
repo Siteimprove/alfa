@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -116,7 +117,7 @@ test(`Node.clone() creates new instance with same value`, (t) => {
     ],
     [h.sheet([h.rule.style("p", { background: "green" })])],
     "bar",
-    crypto.randomUUID(),
+    "some id",
     { extraStuff: "baz" },
   );
 
@@ -334,47 +335,180 @@ function docWithinternalIds(
 }
 
 test("#toJSON() includes only internalId when verbosity is minimal", (t) => {
-  const docId = crypto.randomUUID();
-  const elmId = crypto.randomUUID();
-  const attrId = crypto.randomUUID();
+  const docId = "id of doc";
+  const elmId = "id of element";
+  const attrId = "id of attribute";
 
   const doc = docWithinternalIds(docId, elmId, attrId);
 
   const device = Device.standard();
 
-  const verbosities = [
-    json.Serializable.Verbosity.Minimal,
-    json.Serializable.Verbosity.Low,
-  ] as const;
+  const options = {
+    device,
+    verbosity: json.Serializable.Verbosity.Minimal,
+  } as const;
 
-  for (const verbosity of verbosities) {
-    const options = {
-      device,
-      verbosity,
-    } as const;
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    internalId: docId,
+    serializationId: docId,
+  });
 
-    t.deepEqual(doc.toJSON(options), {
-      type: "document",
-      internalId: docId,
-      serializationId: docId,
-    });
+  const elm = doc.children().first().getUnsafe() as Element<"div">;
 
-    const elm = doc.children().first().getUnsafe() as Element<"div">;
+  t.deepEqual(elm.toJSON(options), {
+    type: "element",
+    internalId: elmId,
+    serializationId: elmId,
+  });
 
-    t.deepEqual(elm.toJSON(options), {
-      type: "element",
-      internalId: elmId,
-      serializationId: elmId,
-    });
+  const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
 
-    const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
+  t.deepEqual(attr.toJSON(options), {
+    type: "attribute",
+    internalId: attrId,
+    serializationId: attrId,
+  });
+});
 
-    t.deepEqual(attr.toJSON(options), {
-      type: "attribute",
-      internalId: attrId,
-      serializationId: attrId,
-    });
-  }
+test("#toJSON() includes internalId and path when verbosity is low", (t) => {
+  const docId = "id of doc";
+  const elmId = "id of element";
+  const attrId = "id of attribute";
+
+  const doc = docWithinternalIds(docId, elmId, attrId);
+
+  const device = Device.standard();
+
+  const options = {
+    device,
+    verbosity: json.Serializable.Verbosity.Low,
+  } as const;
+
+  t.deepEqual(doc.toJSON(options), {
+    type: "document",
+    path: "/",
+    internalId: docId,
+    serializationId: docId,
+  });
+
+  const elm = doc.children().first().getUnsafe() as Element<"div">;
+
+  t.deepEqual(elm.toJSON(options), {
+    type: "element",
+    path: "/div[1]",
+    internalId: elmId,
+    serializationId: elmId,
+  });
+
+  const attr = elm.attributes.first().getUnsafe() as Attribute<"id">;
+
+  t.deepEqual(attr.toJSON(options), {
+    type: "attribute",
+    path: "/div[1]/@id",
+    internalId: attrId,
+    serializationId: attrId,
+  });
+});
+
+test("#toJSON() uses composed path when verbosity is low", (t) => {
+  // We want the serialized path to be explicit about entering shadow DOM
+  const a = <span internalId="a"></span>;
+  const b = <span internalId="b"></span>;
+  const slot = <slot internalId="slot" />;
+  const shadow = h.shadow([slot, b], undefined, undefined, undefined, "shadow");
+
+  const div = (
+    <div internalId="div">
+      {shadow}
+      {a}
+    </div>
+  );
+
+  t.deepEqual(div.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]",
+    internalId: "div",
+    serializationId: "div",
+  });
+
+  t.deepEqual(a.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/span[1]",
+    internalId: "a",
+    serializationId: "a",
+  });
+
+  t.deepEqual(b.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/shadow-root()/span[1]",
+    internalId: "b",
+    serializationId: "b",
+  });
+
+  t.deepEqual(slot.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/shadow-root()/slot[1]",
+    internalId: "slot",
+    serializationId: "slot",
+  });
+
+  t.deepEqual(shadow.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "shadow",
+    path: "/div[1]/shadow-root()",
+    internalId: "shadow",
+    serializationId: "shadow",
+  });
+});
+
+test("#toJSON() uses nested path when verbosity is low", (t) => {
+  // We want the serialized path to be explicit about entering nested documents
+  const a = <span internalId="a"></span>;
+  const b = <span internalId="b"></span>;
+  const innerDoc = h.document([b], undefined, undefined, "document");
+  const iframe = <iframe internalId="iframe">{innerDoc}</iframe>;
+
+  const div = (
+    <div internalId="div">
+      {iframe}
+      {a}
+    </div>
+  );
+
+  t.deepEqual(div.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]",
+    internalId: "div",
+    serializationId: "div",
+  });
+
+  t.deepEqual(a.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/span[1]",
+    internalId: "a",
+    serializationId: "a",
+  });
+
+  t.deepEqual(b.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/iframe[1]/document-node()/span[1]",
+    internalId: "b",
+    serializationId: "b",
+  });
+
+  t.deepEqual(innerDoc.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "document",
+    path: "/div[1]/iframe[1]/document-node()",
+    internalId: "document",
+    serializationId: "document",
+  });
+
+  t.deepEqual(iframe.toJSON({ verbosity: json.Serializable.Verbosity.Low }), {
+    type: "element",
+    path: "/div[1]/iframe[1]",
+    internalId: "iframe",
+    serializationId: "iframe",
+  });
 });
 
 test("#toJSON() includes everything except internalId when options is undefined or verbosity is medium", (t) => {
@@ -421,9 +555,9 @@ test("#toJSON() includes everything except internalId when options is undefined 
 });
 
 test("#toJSON() includes everything including internalId and assigned slot when verbosity is high", (t) => {
-  const docId = crypto.randomUUID();
-  const elmId = crypto.randomUUID();
-  const attrId = crypto.randomUUID();
+  const docId = "id of doc";
+  const elmId = "id of element";
+  const attrId = "id of attribute";
 
   const doc = docWithinternalIds(docId, elmId, attrId);
 

@@ -44,7 +44,7 @@ export class List<T> implements Collection.Indexed<T> {
   private readonly _shift: number;
   private readonly _size: number;
 
-  private constructor(
+  protected constructor(
     head: Empty | Leaf<T> | Branch<T>,
     tail: Empty | Leaf<T>,
     shift: number,

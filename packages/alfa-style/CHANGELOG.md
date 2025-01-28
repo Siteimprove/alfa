@@ -1,5 +1,13 @@
 # @siteimprove/alfa-style
 
+## 0.97.0
+
+### Minor Changes
+
+- **Added:** CSS shorthand property `mask` and corresponding longhand properties are now supported. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+## 0.96.0
+
 ## 0.95.0
 
 ## 0.94.1

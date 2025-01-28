@@ -47,7 +47,7 @@ export class Rectangle
   private readonly _width: number;
   private readonly _height: number;
 
-  private constructor(x: number, y: number, width: number, height: number) {
+  protected constructor(x: number, y: number, width: number, height: number) {
     this._x = x;
     this._y = y;
     this._width = width;
@@ -204,29 +204,28 @@ export class Rectangle
    * where the circle center lies in one of the corners of the padded rectangle.
    *
    * @privateRemarks
-    * To check intersection, we pad the rectangle by the radius of the circle and divide the problem into three cases:
-    *
-    * 1. The circle center is outside the padded rectangle.
-    * 2. The circle center is inside the padded rectangle, but not in one of the corners.
-    * 3. The circle center lies in one of the corners of the padded rectangle in which case we need to compute the distance to the corner
-    *
-    *                 r
-    *              +-------+-------------------------+-------+
-    *              |       |                         |       |
-    *     1        |       |                         |       |
-    *              +-------+-------------------------+-------+
-    *              |       |                         |       |
-    *              |       |                         |       |
-    *              |       |                         |       |
-    *              |       |                         |       |
-    *              |       |                         |       |
-    *              +-------+-------------------------+-------+
-    *              |       |            2            |       |
-    *              | 3     |                         |       |
-    *              +-------+-------------------------+-------+
+   * To check intersection, we pad the rectangle by the radius of the circle and divide the problem into three cases:
+   *
+   * 1. The circle center is outside the padded rectangle.
+   * 2. The circle center is inside the padded rectangle, but not in one of the corners.
+   * 3. The circle center lies in one of the corners of the padded rectangle in which case we need to compute the distance to the corner
+   *
+   *                 r
+   *              +-------+-------------------------+-------+
+   *              |       |                         |       |
+   *     1        |       |                         |       |
+   *              +-------+-------------------------+-------+
+   *              |       |                         |       |
+   *              |       |                         |       |
+   *              |       |                         |       |
+   *              |       |                         |       |
+   *              |       |                         |       |
+   *              +-------+-------------------------+-------+
+   *              |       |            2            |       |
+   *              | 3     |                         |       |
+   *              +-------+-------------------------+-------+
    */
   public intersectsCircle(cx: number, cy: number, r: number): boolean {
-
     const center = this.center;
     const halfWidth = this.width / 2;
     const halfHeight = this.height / 2;

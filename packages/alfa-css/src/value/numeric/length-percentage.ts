@@ -54,7 +54,7 @@ export namespace LengthPercentage {
       return new Calculated(value);
     }
 
-    private constructor(math: Math<"length-percentage">) {
+    protected constructor(math: Math<"length-percentage">) {
       super(math, "length-percentage");
     }
 

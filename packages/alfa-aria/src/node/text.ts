@@ -15,7 +15,7 @@ export class Text extends Node<"text"> {
 
   private readonly _name: Option<Name>;
 
-  private constructor(owner: dom.Node, name: Option<Name>) {
+  protected constructor(owner: dom.Node, name: Option<Name>) {
     super(owner, [], "text");
 
     this._name = name;

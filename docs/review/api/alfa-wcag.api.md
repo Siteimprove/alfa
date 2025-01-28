@@ -21,6 +21,7 @@ export namespace Conformance {
 
 // @public (undocumented)
 export class Criterion<C extends Criterion.Chapter = Criterion.Chapter, U extends Criterion.URI<C, "2.1" | "2.2"> = Criterion.URI<C, "2.1" | "2.2">> extends Requirement<"criterion", U> {
+    protected constructor(chapter: C, uri: U);
     get chapter(): C;
     get level(): Branched<Criterion.Level, Criterion.Version>;
     // (undocumented)
@@ -91,6 +92,7 @@ export namespace Criterion {
 
 // @public (undocumented)
 export class Technique<N extends Technique.Name = Technique.Name> extends Requirement<"technique", Technique.URI<N>> {
+    protected constructor(name: N, uri: Technique.URI<N>);
     get name(): N;
     // (undocumented)
     static of<N extends Technique.Name>(name: N): Technique<N>;

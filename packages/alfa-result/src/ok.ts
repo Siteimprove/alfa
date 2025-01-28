@@ -25,7 +25,7 @@ export class Ok<T> implements Result<T, never> {
 
   private readonly _value: T;
 
-  private constructor(value: T) {
+  protected constructor(value: T) {
     this._value = value;
   }
 
@@ -159,8 +159,8 @@ export class Ok<T> implements Result<T, never> {
     return error;
   }
 
-  public getErrOrElse<F>(error: Thunk<F>): F {
-    return error();
+  public getErrOrElse<F>(error: Callback<T, F>): F {
+    return error(this._value);
   }
 
   public ok(): Option<T> {

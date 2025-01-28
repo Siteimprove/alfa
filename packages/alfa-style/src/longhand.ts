@@ -67,7 +67,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     [style: Style]
   >;
 
-  private constructor(
+  protected constructor(
     initial: COMPUTED,
     parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,

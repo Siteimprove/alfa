@@ -21,7 +21,7 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<
     return new Length(value, unit);
   }
 
-  private constructor(value: number, unit: U) {
+  protected constructor(value: number, unit: U) {
     super(value, unit, "length");
   }
 

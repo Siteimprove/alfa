@@ -22,7 +22,7 @@ export class Named<
 
   private readonly _color: C;
 
-  private constructor(color: C) {
+  protected constructor(color: C) {
     super("named");
     this._color = color;
   }

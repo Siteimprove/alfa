@@ -68,7 +68,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
   private readonly _fragment: Option<string>;
   private readonly _cannotBeABase: boolean;
 
-  private constructor(
+  protected constructor(
     scheme: string,
     username: Option<string>,
     password: Option<string>,

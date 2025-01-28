@@ -45,7 +45,7 @@ export class Polygon<
   private readonly _fill: Option<F>;
   private readonly _vertices: Array<Polygon.Vertex<V>>;
 
-  private constructor(fill: Option<F>, vertices: Array<Polygon.Vertex<V>>) {
+  protected constructor(fill: Option<F>, vertices: Array<Polygon.Vertex<V>>) {
     super(
       "polygon",
       vertices.reduce(

@@ -48,7 +48,7 @@ export class Inset<
   private readonly _offsets: readonly [O, O, O, O];
   private readonly _corners: Option<readonly [C, C, C, C]>;
 
-  private constructor(
+  protected constructor(
     offsets: readonly [O, O, O, O],
     corners: Option<readonly [C, C, C, C]>,
   ) {

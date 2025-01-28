@@ -12,7 +12,7 @@ export class Focus extends PseudoClassSelector<"focus"> {
     return new Focus();
   }
 
-  private constructor() {
+  protected constructor() {
     super("focus");
   }
 

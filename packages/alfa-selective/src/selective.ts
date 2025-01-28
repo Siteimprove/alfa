@@ -1,6 +1,6 @@
 import type { Applicative } from "@siteimprove/alfa-applicative";
 import type { Callback } from "@siteimprove/alfa-callback";
-import type { Either} from "@siteimprove/alfa-either";
+import type { Either } from "@siteimprove/alfa-either";
 import { Left, Right } from "@siteimprove/alfa-either";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Functor } from "@siteimprove/alfa-functor";
@@ -32,7 +32,7 @@ export class Selective<S, T = never>
 
   private readonly _value: Either<S, T>;
 
-  private constructor(value: Either<S, T>) {
+  protected constructor(value: Either<S, T>) {
     this._value = value;
   }
 

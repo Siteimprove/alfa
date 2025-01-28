@@ -9,6 +9,7 @@ import type { Callback } from '@siteimprove/alfa-callback';
 import type { Collection } from '@siteimprove/alfa-collection';
 import type { Hash } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
+import { Map as Map_2 } from '@siteimprove/alfa-map';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import type { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
@@ -20,6 +21,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(values: Map_2<T, T>);
     // (undocumented)
     add(value: T): Set_2<T>;
     // (undocumented)

@@ -10,7 +10,7 @@ export class Scope<S extends string = string> extends Tag<"scope"> {
 
   private readonly _scope: S;
 
-  private constructor(scope: S) {
+  protected constructor(scope: S) {
     super();
     this._scope = scope;
   }

@@ -74,7 +74,7 @@ export class Element<N extends string = string>
   private readonly _classes: Array<string>;
   private readonly _boxes: Cache<Device, Rectangle>;
 
-  private constructor(
+  protected constructor(
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: N,

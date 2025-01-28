@@ -23,7 +23,7 @@ export class CueRegion extends PseudoElementSelector<"cue-region"> {
 
   private readonly _selector: Option<Selector>;
 
-  private constructor(selector: Option<Selector>) {
+  protected constructor(selector: Option<Selector>) {
     super("cue-region");
     this._selector = selector;
   }

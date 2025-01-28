@@ -30,7 +30,7 @@ export class Shorthand<N extends Name = never> {
   private readonly _properties: Array<N>;
   private readonly _parse: Shorthand.Parser<N>;
 
-  private constructor(properties: Array<N>, parse: Shorthand.Parser<N>) {
+  protected constructor(properties: Array<N>, parse: Shorthand.Parser<N>) {
     this._properties = properties;
     this._parse = parse;
   }

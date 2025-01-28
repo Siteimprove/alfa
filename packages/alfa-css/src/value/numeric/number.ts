@@ -40,7 +40,7 @@ export namespace Number {
       return new Calculated(value);
     }
 
-    private constructor(value: Math<"number">) {
+    protected constructor(value: Math<"number">) {
       super(value, "number");
     }
 
@@ -84,7 +84,7 @@ export namespace Number {
       return new Fixed(BaseNumber.isNumber(value) ? value.value : value);
     }
 
-    private constructor(value: number) {
+    protected constructor(value: number) {
       super(value, "number");
     }
 

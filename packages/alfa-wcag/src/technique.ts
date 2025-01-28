@@ -15,7 +15,7 @@ export class Technique<
   private readonly _name: N;
   private readonly _title: Technique.Title<N>;
 
-  private constructor(name: N, uri: Technique.URI<N>) {
+  protected constructor(name: N, uri: Technique.URI<N>) {
     super("technique", uri);
     this._name = name;
     this._title = Techniques[name].title;

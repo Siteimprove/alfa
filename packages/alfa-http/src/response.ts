@@ -39,7 +39,7 @@ export class Response
   private readonly _headers: Headers;
   private readonly _body: ArrayBuffer;
 
-  private constructor(
+  protected constructor(
     url: URL,
     status: number,
     headers: Headers,

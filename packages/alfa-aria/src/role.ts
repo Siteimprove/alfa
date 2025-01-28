@@ -81,7 +81,7 @@ export class Role<N extends Role.Name = Role.Name>
   private readonly _requiredAttributes: ReadonlyArray<Attribute.Name>;
   private readonly _prohibitedAttributes: ReadonlyArray<Attribute.Name>;
 
-  private constructor(
+  protected constructor(
     name: N,
     supportedAttributes: Array<Attribute.Name>,
     requiredAttributes: Array<Attribute.Name>,

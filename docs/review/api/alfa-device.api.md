@@ -9,10 +9,12 @@ import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type * as json from '@siteimprove/alfa-json';
+import { Map as Map_2 } from '@siteimprove/alfa-map';
 import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class Device implements Equatable, Hashable, Serializable {
+    protected constructor(type: Device.Type, viewport: Viewport, display: Display, scripting: Scripting, preferences: Map_2<Preference.Name, Preference>);
     // (undocumented)
     get display(): Display;
     // (undocumented)
@@ -69,6 +71,7 @@ export namespace Device {
 
 // @public (undocumented)
 export class Display implements Equatable, Hashable, Serializable {
+    protected constructor(resolution: number, scan: Display.Scan);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -109,6 +112,7 @@ export namespace Display {
 
 // @public (undocumented)
 export class Preference<N extends Preference.Name = Preference.Name> implements Equatable, Hashable, Serializable {
+    protected constructor(name: N, value: Preference.Value<N>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -158,6 +162,7 @@ export namespace Preference {
 
 // @public (undocumented)
 export class Scripting implements Equatable, Hashable, Serializable {
+    protected constructor(enabled: boolean);
     // (undocumented)
     get enabled(): boolean;
     // (undocumented)
@@ -187,6 +192,7 @@ export namespace Scripting {
 
 // @public (undocumented)
 export class Viewport implements Equatable, Hashable, Serializable {
+    protected constructor(width: number, height: number, orientation: Viewport.Orientation);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)

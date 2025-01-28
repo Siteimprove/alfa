@@ -13,7 +13,7 @@ export class Visited extends PseudoClassSelector<"visited"> {
     return new Visited();
   }
 
-  private constructor() {
+  protected constructor() {
     super("visited");
   }
 

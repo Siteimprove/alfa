@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-type JSON = Keyword.JSON<"border-box"> | Keyword.JSON<"padding-box"> | Keyword.JSON<"content-box">;
+export type JSON = Keyword.JSON<"border-box"> | Keyword.JSON<"padding-box"> | Keyword.JSON<"content-box">;
 ```
 **References:** [Keyword.JSON](./alfa-css.keyword.json.md)
 

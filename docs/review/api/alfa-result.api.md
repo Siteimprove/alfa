@@ -24,6 +24,7 @@ import type { Thunk } from '@siteimprove/alfa-thunk';
 export class Err<E> implements Result<never, E> {
     // (undocumented)
     [Symbol.iterator](): Generator<never, void, unknown>;
+    protected constructor(error: E);
     // (undocumented)
     and(): Err<E>;
     // (undocumented)
@@ -55,7 +56,7 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     getOr<U>(value: U): U;
     // (undocumented)
-    getOrElse<U>(value: Thunk<U>): U;
+    getOrElse<U>(value: Callback<E, U>): U;
     // @internal (undocumented)
     getUnsafe(message?: string): never;
     // (undocumented)
@@ -127,6 +128,7 @@ export namespace Err {
 export class Ok<T> implements Result<T, never> {
     // (undocumented)
     [Symbol.iterator](): Generator<T, void, unknown>;
+    protected constructor(value: T);
     // (undocumented)
     and<U, F>(result: Result<U, F>): Result<U, F>;
     // (undocumented)
@@ -152,7 +154,7 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     getErrOr<F>(error: F): F;
     // (undocumented)
-    getErrOrElse<F>(error: Thunk<F>): F;
+    getErrOrElse<F>(error: Callback<T, F>): F;
     // @internal (undocumented)
     getErrUnsafe(message?: string): never;
     // (undocumented)
@@ -251,13 +253,13 @@ export interface Result<T, E = T> extends Monad<T>, Foldable<T>, Iterable<T>, Eq
     // (undocumented)
     getErrOr<F>(error: F): E | F;
     // (undocumented)
-    getErrOrElse<F>(error: Thunk<F>): E | F;
+    getErrOrElse<F>(error: Callback<T, F>): E | F;
     // @internal
     getErrUnsafe(message?: string): E;
     // (undocumented)
     getOr<U>(value: U): T | U;
     // (undocumented)
-    getOrElse<U>(value: Thunk<U>): T | U;
+    getOrElse<U>(value: Callback<E, U>): T | U;
     // @internal
     getUnsafe(message?: string): T;
     // (undocumented)

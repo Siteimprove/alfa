@@ -16,7 +16,7 @@ export class Cache {
 
   private readonly _storage = new WeakMap<object, unknown>();
 
-  private constructor() {}
+  protected constructor() {}
 
   public get<I, T extends Hashable, Q extends Question.Metadata, S>(
     rule: Rule<I, T, Q, S>,

@@ -28,7 +28,7 @@ export class HostContext extends WithSelector<
     return new HostContext(selector);
   }
 
-  private constructor(selector: Compound | Simple) {
+  protected constructor(selector: Compound | Simple) {
     super(
       "host-context",
       selector,

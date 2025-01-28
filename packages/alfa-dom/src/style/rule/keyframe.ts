@@ -19,7 +19,7 @@ export class KeyframeRule extends Rule<"keyframe"> {
   private readonly _key: string;
   private readonly _style: Block;
 
-  private constructor(key: string, declarations: Array<Declaration>) {
+  protected constructor(key: string, declarations: Array<Declaration>) {
     super("keyframe");
 
     this._key = key;

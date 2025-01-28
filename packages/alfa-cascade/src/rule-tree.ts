@@ -87,7 +87,7 @@ export class RuleTree implements Serializable {
     None,
   );
 
-  private constructor() {}
+  protected constructor() {}
 
   /**
    * Add a bunch of items to the tree. Returns the last node created, which is
@@ -148,7 +148,7 @@ export namespace RuleTree {
     private readonly _children: Array<Node>;
     private readonly _parent: Option<Node>;
 
-    private constructor(
+    protected constructor(
       block: Block,
       children: Array<Node>,
       parent: Option<Node>,

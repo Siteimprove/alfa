@@ -16,6 +16,7 @@ import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
+    protected constructor(scheme: string, username: Option<string>, password: Option<string>, host: Option<string>, port: Option<number>, path: Sequence<string>, query: Option<string>, fragment: Option<string>, cannotBeABase: boolean);
     // (undocumented)
     static blank(): URL;
     // (undocumented)

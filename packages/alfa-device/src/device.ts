@@ -47,7 +47,7 @@ export class Device implements Equatable, Hashable, Serializable {
   private readonly _scripting: Scripting;
   private readonly _preferences: Map<Preference.Name, Preference>;
 
-  private constructor(
+  protected constructor(
     type: Device.Type,
     viewport: Viewport,
     display: Display,
@@ -84,7 +84,9 @@ export class Device implements Equatable, Hashable, Serializable {
   public preference<N extends Preference.Name>(name: N): Preference<N> {
     return this._preferences
       .get(name)
-      .getOrElse(() => Preference.unset(name)) as Preference<N>;
+      .getOrElse(() =>
+        Preference.of(name, Preference.unset(name)),
+      ) as Preference<N>;
   }
 
   public equals(value: unknown): value is this {

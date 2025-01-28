@@ -8,26 +8,23 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 
-// @public (undocumented)
-export class Cache<K extends object, V> {
-    // (undocumented)
-    static empty<K extends object, V>(): Cache<K, V>;
-    // (undocumented)
+// @public
+export class Cache<K extends Cache.Key, V> {
+    protected constructor();
+    static empty<K extends Cache.Key, V>(): Cache<K, V>;
     get(key: K): Option<V>;
-    // (undocumented)
     get<U extends V = V>(key: K, ifMissing: Mapper<this, U>): V;
-    // (undocumented)
     has(key: K): boolean;
-    // (undocumented)
     merge(iterable: Iterable_2<readonly [K, V]>): this;
-    // (undocumented)
     set(key: K, value: V): this;
 }
 
 // @public (undocumented)
 export namespace Cache {
-    // (undocumented)
-    export function from<K extends object, V>(iterable: Iterable_2<readonly [K, V]>): Cache<K, V>;
+    export function from<K extends Key, V>(iterable: Iterable_2<readonly [K, V]>): Cache<K, V>;
+    export type Key = object;
+    export function memoize<This, Args extends Array<Key>, Return>(target: (this: This, ...args: Args) => Return): (this: This, ...args: Args) => Return;
+    export function memoize<Args extends Array<Key>, Return>(target: (...args: Args) => Return): (...args: Args) => Return;
 }
 
 // (No @packageDocumentation comment for this package)

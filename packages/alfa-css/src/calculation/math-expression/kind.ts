@@ -37,7 +37,7 @@ export class Kind implements Equatable, Serializable {
 
   private readonly _hint: Option<Kind.Hint>;
 
-  private constructor(kinds: Kind.Map, hint: Option<Kind.Hint>) {
+  protected constructor(kinds: Kind.Map, hint: Option<Kind.Hint>) {
     this._kinds = kinds;
     this._hint = hint;
   }

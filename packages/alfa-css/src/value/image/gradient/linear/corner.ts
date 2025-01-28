@@ -27,7 +27,7 @@ export class Corner
   private readonly _vertical: Position.Vertical;
   private readonly _horizontal: Position.Horizontal;
 
-  private constructor(
+  protected constructor(
     vertical: Position.Vertical,
     horizontal: Position.Horizontal,
   ) {

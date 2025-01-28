@@ -24,6 +24,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 export class Collision<K, V> implements Node<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
+    protected constructor(hash: number, nodes: Array<Leaf<K, V>>);
     // (undocumented)
     delete(key: K, hash: number): Status<Node<K, V>>;
     // (undocumented)
@@ -59,6 +60,7 @@ export const Empty: Empty;
 export class Leaf<K, V> implements Node<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
+    protected constructor(hash: number, key: K, value: V);
     // (undocumented)
     delete(key: K, hash: number): Status<Node<K, V>>;
     // (undocumented)
@@ -85,6 +87,8 @@ export class Leaf<K, V> implements Node<K, V> {
 class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
+    // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "Node" which is marked as @internal
+    protected constructor(root: Node<K, V>, size: number);
     apply<U>(mapper: Map_2<K, Mapper<V, U>>): Map_2<K, U>;
     // (undocumented)
     collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Map_2<K, U>;
@@ -219,6 +223,7 @@ export namespace Node {
 export class Sparse<K, V> implements Node<K, V> {
     // (undocumented)
     [Symbol.iterator](): Iterator<[K, V]>;
+    protected constructor(mask: number, nodes: Array<Node<K, V>>);
     // (undocumented)
     delete(key: K, hash: number, shift: number): Status<Node<K, V>>;
     // (undocumented)

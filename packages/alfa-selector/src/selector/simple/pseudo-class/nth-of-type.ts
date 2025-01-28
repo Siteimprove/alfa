@@ -13,7 +13,7 @@ export class NthOfType extends WithIndex<"nth-of-type"> {
     return new NthOfType(index);
   }
 
-  private constructor(index: Nth) {
+  protected constructor(index: Nth) {
     super("nth-of-type", index);
   }
 

@@ -53,7 +53,7 @@ function validatePackageJson({ dir, packageJson, }: {
 function validateWorkspaceTsconfig({ dir, packageJson, }: {
     dir: string;
     packageJson: PackageJSON;
-}): Array<string>;
+}): Array_2<string>;
 
 declare namespace Validation {
     export {

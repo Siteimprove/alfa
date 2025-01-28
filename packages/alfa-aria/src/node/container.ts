@@ -29,7 +29,7 @@ export class Container extends Node<"container"> {
 
   private readonly _role: Option<Role>;
 
-  private constructor(
+  protected constructor(
     owner: dom.Node,
     children: Array<Node>,
     role: Option<Role>,

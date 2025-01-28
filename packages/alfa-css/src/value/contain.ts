@@ -45,7 +45,7 @@ export class ContainFlags
   private readonly _style: boolean;
   private readonly _paint: boolean;
 
-  private constructor(
+  protected constructor(
     size: boolean,
     inlineSize: boolean,
     layout: boolean,

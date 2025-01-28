@@ -23,6 +23,7 @@ import { Serializable } from '@siteimprove/alfa-json';
 export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
+    protected constructor(array: ReadonlyArray<T>, offset: number, length: number);
     // (undocumented)
     append(value: T): Slice<T>;
     // (undocumented)

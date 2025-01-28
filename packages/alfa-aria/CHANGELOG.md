@@ -1,5 +1,23 @@
 # @siteimprove/alfa-aria
 
+## 0.97.0
+
+## 0.96.0
+
+### Minor Changes
+
+- **Added:** Expose `allowedAttributes` on ARIA Element type. ([#1721](https://github.com/Siteimprove/alfa/pull/1721))
+
+  This function takes into account "implicit ARIA semantics" and "ARIA role allowances" from [ARIA in HTML](https://w3c.github.io/html-aria/#docconformance). The logic is moved from rule R18 implementation.
+
+### Patch Changes
+
+- **Fixed:** `<summary>` elements that are not summary for their parent details are now correctly treated as `generic` role. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- **Fixed:** `<details>` elements now correctly have an implicit role of `group`. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- **Fixed:** `<summary>` elements that are summary for their parent details now correctly have their name computed from content. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
 ## 0.95.0
 
 ## 0.94.1

@@ -21,12 +21,13 @@ import { Rectangle } from '@siteimprove/alfa-rectangle';
 import type { Refinement } from '@siteimprove/alfa-refinement';
 import type * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
-import type { Serializable } from '@siteimprove/alfa-json';
+import { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 import * as tree from '@siteimprove/alfa-tree';
 
 // @public (undocumented)
 export class Attribute<N extends string = string> extends Node<"attribute"> {
+    protected constructor(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachOwner(owner: Element): boolean;
     // @internal (undocumented)
@@ -93,12 +94,14 @@ export namespace Attribute {
     //
     // (undocumented)
     hasName: typeof predicate_3.hasName;
+    import Autocomplete = autocomplete.Autocomplete;
 }
 
 // @public (undocumented)
 export class Block implements Iterable_2<Declaration>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Declaration>;
+    protected constructor(declarations: Array<Declaration>);
     // (undocumented)
     declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
     // (undocumented)
@@ -127,6 +130,7 @@ export namespace Block {
 
 // @public (undocumented)
 export class Comment extends Node<"comment"> {
+    protected constructor(data: string, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     get data(): string;
     // (undocumented)
@@ -187,6 +191,7 @@ export namespace ConditionRule {
 
 // @public (undocumented)
 export class Declaration implements Equatable, Serializable {
+    protected constructor(name: string, value: string, important: boolean);
     // (undocumented)
     ancestors(): Iterable<Rule>;
     // @internal (undocumented)
@@ -231,6 +236,7 @@ export namespace Declaration {
 
 // @public (undocumented)
 export class Document extends Node<"document"> {
+    protected constructor(children: Array_2<Node>, style: Iterable_2<Sheet>, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachFrame(frame: Element): boolean;
     // @internal (undocumented)
@@ -277,6 +283,7 @@ export namespace Document {
 
 // @public (undocumented)
 export class Element<N extends string = string> extends Node<"element"> implements Slot, Slotable {
+    protected constructor(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes: Array<Attribute>, children: Array<Node>, style: Option<Block>, box: Option<Rectangle>, device: Option<Device>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     assignedNodes(): Iterable_2<Slotable>;
     // (undocumented)
@@ -403,6 +410,7 @@ export namespace Element {
 
 // @public (undocumented)
 export class FontFaceRule extends Rule<"font-face"> {
+    protected constructor(declarations: Array<Declaration>);
     // (undocumented)
     static of(declarations: Iterable<Declaration>): FontFaceRule;
     // (undocumented)
@@ -428,6 +436,7 @@ export namespace FontFaceRule {
 
 // @public (undocumented)
 export class Fragment extends Node<"fragment"> {
+    protected constructor(children: Array<Node>, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachParent(): boolean;
     // (undocumented)
@@ -531,6 +540,7 @@ export namespace h {
 
 // @public (undocumented)
 export class ImportRule extends ConditionRule<"import"> {
+    protected constructor(href: string, sheet: Sheet, mediaCondition: Option<string>, supportCondition: Option<string>, layer: Option<string>);
     // (undocumented)
     get href(): string;
     // (undocumented)
@@ -603,6 +613,7 @@ export namespace jsx {
 
 // @public (undocumented)
 export class KeyframeRule extends Rule<"keyframe"> {
+    protected constructor(key: string, declarations: Array<Declaration>);
     // (undocumented)
     get key(): string;
     // (undocumented)
@@ -632,6 +643,7 @@ export namespace KeyframeRule {
 
 // @public (undocumented)
 export class KeyframesRule extends GroupingRule<"keyframes"> {
+    protected constructor(name: string, rules: Array<Rule>);
     // (undocumented)
     get name(): string;
     // (undocumented)
@@ -659,6 +671,7 @@ export namespace KeyframesRule {
 export namespace Layer {
     // (undocumented)
     export class BlockRule extends GroupingRule<"layer-block"> {
+        protected constructor(layer: Option<string>, rules: Array_2<Rule>);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -684,6 +697,7 @@ export namespace Layer {
     }
     // (undocumented)
     export class StatementRule extends Rule<"layer-statement"> {
+        protected constructor(layers: Array_2<string>);
         // (undocumented)
         get layers(): Iterable<string>;
         // (undocumented)
@@ -709,6 +723,7 @@ export namespace Layer {
 
 // @public (undocumented)
 export class MediaRule extends ConditionRule<"media"> {
+    protected constructor(condition: string, rules: Array<Rule>);
     // (undocumented)
     static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
     // (undocumented)
@@ -756,6 +771,7 @@ export namespace Namespace {
 
 // @public (undocumented)
 export class NamespaceRule extends Rule<"namespace"> {
+    protected constructor(namespace: string, prefix: Option<string>);
     // (undocumented)
     get namespace(): string;
     // (undocumented)
@@ -798,6 +814,8 @@ export abstract class Node<T extends string = string> extends tree.Node<Node.Tra
     textContent(options?: Node.Traversal): string;
     // (undocumented)
     toEARL(): Node.EARL;
+    // (undocumented)
+    toJSON(options?: Serializable.Options): Node.JSON<T>;
     // (undocumented)
     toSARIF(): sarif.Location;
 }
@@ -925,6 +943,8 @@ export namespace Node {
     export function isNode(value: unknown): value is Node;
     // (undocumented)
     export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
+        // (undocumented)
+        path?: string;
     }
     // (undocumented)
     export interface SerializationOptions extends json.Serializable.Options {
@@ -964,6 +984,7 @@ export namespace Node {
 
 // @public (undocumented)
 export class PageRule extends Rule<"page"> {
+    protected constructor(selector: string, declarations: Array<Declaration>);
     // (undocumented)
     static of(selector: string, declarations: Iterable<Declaration>): PageRule;
     // (undocumented)
@@ -1077,6 +1098,7 @@ export namespace Rule {
 
 // @public (undocumented)
 export class Shadow extends Node<"shadow"> {
+    protected constructor(children: Array<Node>, style: Array<Sheet>, mode: Shadow.Mode, externalId?: string, internalId?: string, extraData?: any);
     // @internal (undocumented)
     _attachHost(host: Element): boolean;
     // @internal (undocumented)
@@ -1136,6 +1158,7 @@ export namespace Shadow {
 
 // @public (undocumented)
 export class Sheet implements Equatable, Serializable {
+    protected constructor(rules: Array<Rule>, disabled: boolean, condition: Option<string>);
     // (undocumented)
     children(): Iterable<Rule>;
     // (undocumented)
@@ -1209,6 +1232,7 @@ export namespace Slotable {
 
 // @public (undocumented)
 export class StyleRule extends Rule<"style"> {
+    protected constructor(selector: string, declarations: Array<Declaration>, hint: boolean);
     // (undocumented)
     get hint(): boolean;
     // (undocumented)
@@ -1242,6 +1266,7 @@ export namespace StyleRule {
 
 // @public (undocumented)
 export class SupportsRule extends ConditionRule<"supports"> {
+    protected constructor(condition: string, rules: Array<Rule>);
     // (undocumented)
     static of(condition: string, rules: Iterable<Rule>): SupportsRule;
     // (undocumented)
@@ -1267,6 +1292,7 @@ export namespace SupportsRule {
 
 // @public (undocumented)
 export class Text extends Node<"text"> implements Slotable {
+    protected constructor(data: string, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     assignedSlot(): Option<Slot>;
     // (undocumented)
@@ -1307,6 +1333,7 @@ export namespace Text {
 
 // @public (undocumented)
 export class Type<N extends string = string> extends Node<"type"> {
+    protected constructor(name: N, publicId: Option<string>, systemId: Option<string>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     static empty(): Type;
     // (undocumented)

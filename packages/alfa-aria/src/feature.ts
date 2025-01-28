@@ -39,7 +39,7 @@ export class Feature {
   private readonly _attributes: Feature.AttributesAspect;
   private readonly _name: Feature.NameAspect;
 
-  private constructor(
+  protected constructor(
     roleAspect: Feature.Aspect<Role.Name | Iterable<Role>>,
     attributes: Feature.AttributesAspect,
     name: Feature.NameAspect,
@@ -247,6 +247,8 @@ type Features = {
  * The third parameter (`name`) is called during Step 2E of name computation,
  * that is after `aria-labelledby` and `aria-label`, and before content.
  * The `html` wrapper adds `nameFromAttributes(element, title)` at its end.
+ *
+ * {@link https://w3c.github.io/html-aam/#accname-computation}
  */
 const Features: Features = {
   [Namespace.HTML]: {
@@ -287,6 +289,14 @@ const Features: Features = {
 
     dd: html("definition"),
 
+    details: html("group", function* (element) {
+      // https://w3c.github.io/html-aam/#att-open-details
+      yield Attribute.of(
+        "aria-expanded",
+        element.attribute("open").isSome() ? "true" : "false",
+      );
+    }),
+
     dfn: html("term"),
 
     dialog: html("dialog", function* (element) {
@@ -296,17 +306,6 @@ const Features: Features = {
         element.attribute("open").isSome() ? "true" : "false",
       );
     }),
-
-    details: html(
-      () => None,
-      function* (element) {
-        // https://w3c.github.io/html-aam/#att-open-details
-        yield Attribute.of(
-          "aria-expanded",
-          element.attribute("open").isSome() ? "true" : "false",
-        );
-      },
-    ),
 
     dt: html("term"),
 
@@ -674,6 +673,19 @@ const Features: Features = {
         }
       },
       nameFromLabel,
+    ),
+
+    summary: html(
+      (element) =>
+        // the type is ensured by the name.
+        (element as Element<"summary">).isSummaryForItsParentDetails()
+          ? None
+          : Option.of(Role.of("generic")),
+      () => [],
+      (element, device, state) =>
+        (element as Element<"summary">).isSummaryForItsParentDetails()
+          ? Name.fromDescendants(element, device, state)
+          : None,
     ),
 
     table: html("table", () => [], nameFromChild(hasName("caption"))),

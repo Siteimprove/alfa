@@ -24,7 +24,7 @@ export class Group<T extends Hashable>
 
   private readonly _members: ReadonlyArray<T>;
 
-  private constructor(members: ReadonlyArray<T>) {
+  protected constructor(members: ReadonlyArray<T>) {
     this._members = members;
   }
 

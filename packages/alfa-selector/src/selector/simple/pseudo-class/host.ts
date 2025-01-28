@@ -40,7 +40,7 @@ export class Host extends PseudoClassSelector<"host"> {
 
   private readonly _selector: Option<Compound | Simple>;
 
-  private constructor(selector: Option<Compound | Simple>) {
+  protected constructor(selector: Option<Compound | Simple>) {
     super(
       "host",
       Specificity.sum(

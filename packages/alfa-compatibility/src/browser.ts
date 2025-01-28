@@ -48,7 +48,7 @@ export namespace Browser {
     private readonly _version: V;
     private readonly _date: number;
 
-    private constructor(browser: N, version: V, date: number) {
+    protected constructor(browser: N, version: V, date: number) {
       this._browser = browser;
       this._version = version;
       this._date = date;

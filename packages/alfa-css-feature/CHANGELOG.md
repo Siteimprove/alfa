@@ -1,5 +1,13 @@
 # @siteimprove/alfa-css-feature
 
+## 0.97.0
+
+## 0.96.0
+
+### Patch Changes
+
+- **Fixed:** Matching of user-preferences in the boolean context now correctly handles `none` defaults. ([#1725](https://github.com/Siteimprove/alfa/pull/1725))
+
 ## 0.95.0
 
 ## 0.94.1

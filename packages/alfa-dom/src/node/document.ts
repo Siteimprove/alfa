@@ -38,7 +38,7 @@ export class Document extends Node<"document"> {
   private readonly _style: Array<Sheet>;
   private _frame: Option<Element> = None;
 
-  private constructor(
+  protected constructor(
     children: Array<Node>,
     style: Iterable<Sheet>,
     externalId?: string,

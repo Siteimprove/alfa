@@ -37,6 +37,7 @@ export class Language implements Equatable, Serializable {
 export namespace Language {
     // (undocumented)
     export class Extended extends Subtag<"extended", Extended.Name> {
+        protected constructor(name: Extended.Name);
         // (undocumented)
         equals(value: Extended): boolean;
         // (undocumented)
@@ -83,6 +84,7 @@ export namespace Language {
     }
     // (undocumented)
     export class Primary extends Subtag<"primary", Primary.Name> {
+        protected constructor(name: Primary.Name);
         // (undocumented)
         equals(value: Primary): boolean;
         // (undocumented)
@@ -114,6 +116,7 @@ export namespace Language {
     }
     // (undocumented)
     export class Region extends Subtag<"region", Region.Name> {
+        protected constructor(name: Region.Name);
         // (undocumented)
         equals(value: Region): boolean;
         // (undocumented)
@@ -149,6 +152,7 @@ export namespace Language {
     isExtendedName: typeof Extended.isName;
     // (undocumented)
     export class Script extends Subtag<"script", Script.Name> {
+        protected constructor(name: Script.Name);
         // (undocumented)
         equals(value: Script): boolean;
         // (undocumented)
@@ -212,6 +216,7 @@ export namespace Language {
     isRegionName: typeof Region.isName;
     // (undocumented)
     export class Variant extends Subtag<"variant", Variant.Name> {
+        protected constructor(name: Variant.Name);
         // (undocumented)
         equals(value: Variant): boolean;
         // (undocumented)

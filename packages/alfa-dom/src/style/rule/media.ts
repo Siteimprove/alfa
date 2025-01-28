@@ -19,7 +19,7 @@ export class MediaRule extends ConditionRule<"media"> {
 
   private readonly _queries: Feature.Media.List;
 
-  private constructor(condition: string, rules: Array<Rule>) {
+  protected constructor(condition: string, rules: Array<Rule>) {
     super("media", condition, rules);
 
     this._queries = Feature.parseMediaQuery(Lexer.lex(condition))

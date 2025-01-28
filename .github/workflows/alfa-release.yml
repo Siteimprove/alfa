@@ -127,7 +127,7 @@ jobs:
         # yarn is deliberately low on lifecycle scripts and does not include a postversion one.
         # See https://yarnpkg.com/advanced/lifecycle-scripts
         # We therefore do it manually and rely on yarn workspaces ignoring non-existent scripts.
-        # We also call our script differently to avoid problems in case npm is ever used and
+        # We also name our script differently to avoid problems in case npm is ever used and
         # triggers the hooks.
         run: yarn workspaces foreach --all --no-private --topological-dev run alfa-postversion
 

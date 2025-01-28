@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-type Shape = Box | Keyword<"margin-box">;
+export type Shape = Box | Keyword<"margin-box">;
 ```
 **References:** [Box](./alfa-css.box.md)
 

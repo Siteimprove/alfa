@@ -18,7 +18,7 @@ export class Height extends Media<"height", Length.Fixed> {
 
   private static _boolean = new Height(None);
 
-  private constructor(value: Option<Value<Length.Fixed>>) {
+  protected constructor(value: Option<Value<Length.Fixed>>) {
     super("height", value);
   }
 

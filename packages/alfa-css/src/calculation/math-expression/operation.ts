@@ -3,8 +3,7 @@ import type { Result } from "@siteimprove/alfa-result";
 
 import { Unit } from "../../unit/index.js";
 
-import type {
-  Numeric} from "../numeric/index.js";
+import type { Numeric } from "../numeric/index.js";
 import {
   Angle,
   Dimension,
@@ -104,7 +103,7 @@ export namespace Operation {
 
       return kind.map((kind) => new Sum(operands, kind));
     }
-    private constructor(operands: [Expression, Expression], kind: Kind) {
+    protected constructor(operands: [Expression, Expression], kind: Kind) {
       super("sum", operands, kind);
     }
 
@@ -165,7 +164,7 @@ export namespace Operation {
       return new Negate([operand], operand.kind);
     }
 
-    private constructor(operand: [Expression], kind: Kind) {
+    protected constructor(operand: [Expression], kind: Kind) {
       super("negate", operand, kind);
     }
 
@@ -226,7 +225,7 @@ export namespace Operation {
       return kind.map((kind) => new Product(operands, kind));
     }
 
-    private constructor(operands: [Expression, Expression], kind: Kind) {
+    protected constructor(operands: [Expression, Expression], kind: Kind) {
       super("product", operands, kind);
     }
 
@@ -286,7 +285,7 @@ export namespace Operation {
       return new Invert([operand], operand.kind.invert());
     }
 
-    private constructor(operand: [Expression], kind: Kind) {
+    protected constructor(operand: [Expression], kind: Kind) {
       super("invert", operand, kind);
     }
 

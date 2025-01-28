@@ -29,7 +29,7 @@ export class Universal extends Selector<"universal"> {
 
   private readonly _namespace: Option<string>;
 
-  private constructor(namespace: Option<string>) {
+  protected constructor(namespace: Option<string>) {
     super("universal", Specificity.empty());
     this._namespace = namespace;
   }

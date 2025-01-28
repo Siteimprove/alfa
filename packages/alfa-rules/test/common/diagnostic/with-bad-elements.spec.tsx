@@ -18,7 +18,7 @@ test("toJSON() calls toJSON() on error elements", (t) => {
 });
 
 test("toJSON() calls toJSON() on error elements and respects serialization options", (t) => {
-  const internalId = crypto.randomUUID();
+  const internalId = "some id";
   const element = h.element(
     "div",
     undefined,

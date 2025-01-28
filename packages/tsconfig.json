@@ -57,6 +57,7 @@
     { "path": "alfa-reducer" },
     { "path": "alfa-refinement" },
     { "path": "alfa-result" },
+    { "path": "alfa-rng" },
     { "path": "alfa-rules" },
     { "path": "alfa-sarif" },
     { "path": "alfa-selective" },

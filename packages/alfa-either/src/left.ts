@@ -20,7 +20,7 @@ export class Left<L> implements Either<L, never> {
 
   private readonly _value: L;
 
-  private constructor(value: L) {
+  protected constructor(value: L) {
     this._value = value;
   }
 

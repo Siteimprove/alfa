@@ -20,7 +20,7 @@ export class Hex extends Format<"hex"> {
 
   private readonly _value: number;
 
-  private constructor(value: number) {
+  protected constructor(value: number) {
     super("hex");
 
     // Make sure that only the lower 4 bytes are stored.

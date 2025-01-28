@@ -19,7 +19,7 @@ export class PageRule extends Rule<"page"> {
   private readonly _selector: string;
   private readonly _style: Block;
 
-  private constructor(selector: string, declarations: Array<Declaration>) {
+  protected constructor(selector: string, declarations: Array<Declaration>) {
     super("page");
 
     this._selector = selector;

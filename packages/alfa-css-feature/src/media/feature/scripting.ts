@@ -17,7 +17,7 @@ export class Scripting extends Media<"scripting", Keyword> {
 
   private static _boolean = new Scripting(None);
 
-  private constructor(value: Option<Value<Keyword>>) {
+  protected constructor(value: Option<Value<Keyword>>) {
     super("scripting", value);
   }
 

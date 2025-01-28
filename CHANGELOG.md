@@ -1,5 +1,47 @@
 # Alfa changelog
 
+## [0.97.0](../../compare/v0.96.0...v0.97.0) (2024-12-13)
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0970): CSS shorthand property `mask` and corresponding longhand properties are now supported. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0970): `List#cutOrExtend` is now available. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0970): `List#size` is now available. ([#1711](https://github.com/Siteimprove/alfa/pull/1711))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0970): URI of SIA-R115 is now correct. ([#1734](https://github.com/Siteimprove/alfa/pull/1734))
+
+## [0.96.0](../../compare/v0.95.0...v0.96.0) (2024-12-06)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0960): A new experimental rule SIA-R115: "Heading is descriptive" is now available. ([#1722](https://github.com/Siteimprove/alfa/pull/1722))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0960): An `Element<"summary">#isSummaryForItsParentDetails` predicate is now available. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0960): SIA-R116: "`<summary>` element has non-empty accessible name" is now available. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- [@siteimprove/alfa-cache](packages/alfa-cache/CHANGELOG.md#0960): A `Cache.memoize` decorator is now available. ([#1720](https://github.com/Siteimprove/alfa/pull/1720))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0960): An `Attribute.Autocomplete` namespace is now available, grouping functionalities around the `autocomplete` attribute. ([#1724](https://github.com/Siteimprove/alfa/pull/1724))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0960), [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0960): Expose `allowedAttributes` on ARIA Element type. ([#1721](https://github.com/Siteimprove/alfa/pull/1721))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0960): `<summary>` elements that are not summary for their parent details are now correctly treated as `generic` role. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0960): `<details>` elements now correctly have an implicit role of `group`. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0960): Values of undefined user preferences are now correctly set to their default. ([#1725](https://github.com/Siteimprove/alfa/pull/1725))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0960): `<summary>` elements that are summary for their parent details now correctly have their name computed from content. ([#1728](https://github.com/Siteimprove/alfa/pull/1728))
+
+- [@siteimprove/alfa-css-feature](packages/alfa-css-feature/CHANGELOG.md#0960): Matching of user-preferences in the boolean context now correctly handles `none` defaults. ([#1725](https://github.com/Siteimprove/alfa/pull/1725))
+
 ## [0.95.0](../../compare/v0.94.1...v0.95.0) (2024-11-28)
 
 ### Breaking

@@ -55,7 +55,7 @@ export class Radial<
   private readonly _items: Array<I>;
   private readonly _repeats: boolean;
 
-  private constructor(
+  protected constructor(
     shape: S,
     position: P,
     items: Array<I>,
