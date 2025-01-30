@@ -21,6 +21,13 @@
     "dist/**/*.js",
     "dist/**/*.d.ts"
   ],
+  "dependencies": {
+    "@siteimprove/alfa-css": "workspace:^",
+    "@siteimprove/alfa-device": "workspace:^",
+    "@siteimprove/alfa-dom": "workspace:^",
+    "@siteimprove/alfa-refinement": "workspace:^",
+    "@siteimprove/alfa-style": "workspace:^"
+  },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^"
   },
