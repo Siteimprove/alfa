@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-painting-order",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.97.0",
+  "license": "MIT",
+  "description": "Support for computing painting order of elements.",
+  "repository": {
+    "type": "git",
+    "url": "github:Siteimprove/alfa",
+    "directory": "packages/alfa-painting-order"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}
