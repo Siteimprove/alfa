@@ -12,10 +12,37 @@ function sequence<T>(futures: Iterable<Future<T>>): Future<Iterable<T>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  futures | Iterable&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+futures
+
+
+</td><td>
+
+Iterable&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;

@@ -14,9 +14,62 @@ constructor(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | TYPE |  |
-|  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT&gt; |  |
-|  name | NAME |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+TYPE
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+rule
+
+
+</td><td>
+
+[Rule](./alfa-act.rule.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+NAME
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

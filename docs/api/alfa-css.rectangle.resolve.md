@@ -12,10 +12,37 @@ resolve(resolver: Rectangle.Resolver): Rectangle.Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Rectangle.Resolver](./alfa-css.rectangle.resolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Rectangle.Resolver](./alfa-css.rectangle.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Rectangle.Canonical](./alfa-css.rectangle.canonical.md)

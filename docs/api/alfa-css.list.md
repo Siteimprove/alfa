@@ -13,16 +13,75 @@ export declare namespace List
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isList(value)](./alfa-css.list.islist.md) |  |
-|  [isList(value)](./alfa-css.list.islist_1.md) |  |
-|  [parseCommaSeparated(parseValue, lower, upper)](./alfa-css.list.parsecommaseparated.md) |  |
-|  [parseSpaceSeparated(parseValue, lower, upper)](./alfa-css.list.parsespaceseparated.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isList(value)](./alfa-css.list.islist.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isList(value)](./alfa-css.list.islist_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseCommaSeparated(parseValue, lower, upper)](./alfa-css.list.parsecommaseparated.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseSpaceSeparated(parseValue, lower, upper)](./alfa-css.list.parsespaceseparated.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.list.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.list.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

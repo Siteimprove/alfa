@@ -12,10 +12,39 @@ abstract resolve(resolver?: GenericResolver): Fixed<R>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | GenericResolver | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+GenericResolver
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;R&gt;

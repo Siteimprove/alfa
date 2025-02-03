@@ -12,11 +12,53 @@ function from(json: Comment.JSON, device?: Device): Comment;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [Comment.JSON](./alfa-dom.comment.json.md) |  |
-|  device | Device | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[Comment.JSON](./alfa-dom.comment.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Comment

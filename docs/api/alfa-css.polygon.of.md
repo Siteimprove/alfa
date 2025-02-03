@@ -12,11 +12,51 @@ static of<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = Le
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  fill | Option&lt;F&gt; |  |
-|  vertices | Iterable&lt;[Polygon.Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+fill
+
+
+</td><td>
+
+Option&lt;F&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+vertices
+
+
+</td><td>
+
+Iterable&lt;[Polygon.Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Polygon](./alfa-css.polygon.md)<!-- -->&lt;F, V&gt;

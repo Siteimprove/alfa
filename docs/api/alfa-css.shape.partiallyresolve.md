@@ -12,10 +12,37 @@ partiallyResolve(resolver: Shape.PartialResolver): Shape.PartiallyResolved;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Shape.PartialResolver](./alfa-css.shape.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Shape.PartialResolver](./alfa-css.shape.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Shape.PartiallyResolved](./alfa-css.shape.partiallyresolved.md)

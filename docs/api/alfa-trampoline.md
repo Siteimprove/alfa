@@ -6,13 +6,51 @@
 
 ## Abstract Classes
 
-|  Abstract Class | Description |
-|  --- | --- |
-|  [Trampoline](./alfa-trampoline.trampoline.md) | [http://blog.higher-order.com/assets/trampolines.pdf](http://blog.higher-order.com/assets/trampolines.pdf) |
+<table><thead><tr><th>
+
+Abstract Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Trampoline](./alfa-trampoline.trampoline.md)
+
+
+</td><td>
+
+[http://blog.higher-order.com/assets/trampolines.pdf](http://blog.higher-order.com/assets/trampolines.pdf)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Trampoline](./alfa-trampoline.trampoline.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Trampoline](./alfa-trampoline.trampoline.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

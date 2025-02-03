@@ -12,10 +12,76 @@ enum Verbosity
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  High | <code>300</code> |  |
-|  Low | <code>100</code> |  |
-|  Medium | <code>200</code> |  |
-|  Minimal | <code>0</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+High
+
+
+</td><td>
+
+`300`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Low
+
+
+</td><td>
+
+`100`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Medium
+
+
+</td><td>
+
+`200`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Minimal
+
+
+</td><td>
+
+`0`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

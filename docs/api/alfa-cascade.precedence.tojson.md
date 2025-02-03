@@ -12,10 +12,37 @@ function toJSON(precedence: Precedence): JSON;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  precedence | [Precedence](./alfa-cascade.precedence.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+precedence
+
+
+</td><td>
+
+[Precedence](./alfa-cascade.precedence.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [JSON](./alfa-cascade.precedence.json.md)

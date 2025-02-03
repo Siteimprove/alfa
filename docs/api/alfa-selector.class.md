@@ -13,13 +13,48 @@ export declare namespace Class
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isClass(value)](./alfa-selector.class.isclass.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isClass(value)](./alfa-selector.class.isclass.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.class.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.class.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ writeHashable(data: Hashable): this;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  data | Hashable |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+data
+
+
+</td><td>
+
+Hashable
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this

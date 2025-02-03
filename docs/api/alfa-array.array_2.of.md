@@ -12,10 +12,37 @@ function of<T>(...values: Array<T>): Array<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  values | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+values
+
+
+</td><td>
+
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;

@@ -12,8 +12,65 @@ interface Implementation<N extends Name = Name, I extends Implementer<N> = Imple
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [added](./alfa-compatibility.feature.implementation.added.md) | <code>readonly</code> | [Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt; \| true |  |
-|  [removed?](./alfa-compatibility.feature.implementation.removed.md) | <code>readonly</code> | [Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[added](./alfa-compatibility.feature.implementation.added.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+[Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt; \| true
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[removed?](./alfa-compatibility.feature.implementation.removed.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+[Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

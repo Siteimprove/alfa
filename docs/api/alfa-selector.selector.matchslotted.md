@@ -14,12 +14,67 @@ function matchSlotted(selector: Selector, slotted: Element, context?: Context): 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  selector | [Selector](./alfa-selector.selector.md) |  |
-|  slotted | Element |  |
-|  context | Context | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+selector
+
+
+</td><td>
+
+[Selector](./alfa-selector.selector.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+slotted
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+context
+
+
+</td><td>
+
+Context
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

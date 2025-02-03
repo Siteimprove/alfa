@@ -6,13 +6,49 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Thenable](./alfa-thenable.thenable.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Thenable](./alfa-thenable.thenable.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Thenable](./alfa-thenable.thenable.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Thenable](./alfa-thenable.thenable.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

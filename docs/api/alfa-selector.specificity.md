@@ -13,21 +13,90 @@ export declare namespace Specificity
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isSpecificity(value)](./alfa-selector.specificity.isspecificity.md) |  |
-|  [max(specificities)](./alfa-selector.specificity.max.md) |  |
-|  [sum(specificities)](./alfa-selector.specificity.sum.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isSpecificity(value)](./alfa-selector.specificity.isspecificity.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[max(specificities)](./alfa-selector.specificity.max.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[sum(specificities)](./alfa-selector.specificity.sum.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.specificity.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.specificity.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [compare](./alfa-selector.specificity.compare.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[compare](./alfa-selector.specificity.compare.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

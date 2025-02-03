@@ -12,10 +12,37 @@ function from<T>(arrayLike: ArrayLike<T>): Iterable<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  arrayLike | ArrayLike&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+arrayLike
+
+
+</td><td>
+
+ArrayLike&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;

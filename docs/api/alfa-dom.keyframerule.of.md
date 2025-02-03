@@ -12,11 +12,51 @@ static of(key: string, declarations: Iterable<Declaration>): KeyframeRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | string |  |
-|  declarations | Iterable&lt;Declaration&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+declarations
+
+
+</td><td>
+
+Iterable&lt;Declaration&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [KeyframeRule](./alfa-dom.keyframerule.md)

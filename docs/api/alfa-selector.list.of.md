@@ -12,10 +12,37 @@ static of<T extends Item>(...selectors: Array<T>): List<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  selectors | Array&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+selectors
+
+
+</td><td>
+
+Array&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [List](./alfa-selector.list.md)<!-- -->&lt;T&gt;

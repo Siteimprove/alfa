@@ -12,11 +12,118 @@ interface JSON<T extends string = string>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [children?](./alfa-tree.node.json.children.md) |  | Array&lt;[JSON](./alfa-tree.node.json.md)<!-- -->&gt; | _(Optional)_ |
-|  [externalId?](./alfa-tree.node.json.externalid.md) |  | string | _(Optional)_ |
-|  [internalId?](./alfa-tree.node.json.internalid.md) |  | string | _(Optional)_ |
-|  [serializationId?](./alfa-tree.node.json.serializationid.md) |  | string | _(Optional)_ |
-|  [type](./alfa-tree.node.json.type.md) |  | T |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[children?](./alfa-tree.node.json.children.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[JSON](./alfa-tree.node.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[externalId?](./alfa-tree.node.json.externalid.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[internalId?](./alfa-tree.node.json.internalid.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[serializationId?](./alfa-tree.node.json.serializationid.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-tree.node.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

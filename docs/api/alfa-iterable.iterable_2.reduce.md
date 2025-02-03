@@ -12,12 +12,65 @@ function reduce<T, U = T>(iterable: Iterable<T>, reducer: Reducer<T, U, [index: 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
-|  reducer | Reducer&lt;T, U, \[index: number\]&gt; |  |
-|  accumulator | U |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+iterable
+
+
+</td><td>
+
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+reducer
+
+
+</td><td>
+
+Reducer&lt;T, U, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+accumulator
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 U

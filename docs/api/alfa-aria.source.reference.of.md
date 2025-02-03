@@ -12,11 +12,51 @@ static of(attribute: Attribute, name: Name): Reference;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  attribute | Attribute |  |
-|  name | Name |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+attribute
+
+
+</td><td>
+
+Attribute
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+Name
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Reference](./alfa-aria.source.reference.md)

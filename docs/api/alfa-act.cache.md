@@ -11,10 +11,84 @@
 export declare class Cache 
 ```
 
+## Constructors
+
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)()](./alfa-act.cache._constructor_.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Constructs a new instance of the `Cache` class
+
+
+</td></tr>
+</tbody></table>
+
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [empty()](./alfa-act.cache.empty.md) | <code>static</code> |  |
-|  [get(rule, ifMissing)](./alfa-act.cache.get.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[empty()](./alfa-act.cache.empty.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[get(rule, ifMissing)](./alfa-act.cache.get.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

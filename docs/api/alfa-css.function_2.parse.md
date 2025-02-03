@@ -12,11 +12,55 @@ parse: <T>(query?: string | Predicate<Token.Function>, body?: CSSParser<T> | Thu
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  query | string \| Predicate&lt;[Token.Function](./alfa-css.token.function.md)<!-- -->&gt; | _(Optional)_ |
-|  body | [CSSParser](./alfa-css.parser.md)<!-- -->&lt;T&gt; \| Thunk&lt;[CSSParser](./alfa-css.parser.md)<!-- -->&lt;T&gt;&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+query
+
+
+</td><td>
+
+string \| Predicate&lt;[Token.Function](./alfa-css.token.function.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+body
+
+
+</td><td>
+
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;T&gt; \| Thunk&lt;[CSSParser](./alfa-css.parser.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;Token&gt;, readonly \[[Function](./alfa-css.function_2.md)<!-- -->, T\], string, \[\]&gt;

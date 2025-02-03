@@ -12,10 +12,37 @@ function matches(device: Device): Predicate<SupportsRule>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  device | Device |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Predicate&lt;[SupportsRule](./alfa-dom.supportsrule.md)<!-- -->&gt;

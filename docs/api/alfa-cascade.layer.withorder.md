@@ -14,11 +14,51 @@ withOrder(this: Layer<false>, order: number): Layer<true>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Layer](./alfa-cascade.layer.md)<!-- -->&lt;false&gt; |  |
-|  order | number |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Layer](./alfa-cascade.layer.md)<!-- -->&lt;false&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+order
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Layer](./alfa-cascade.layer.md)<!-- -->&lt;true&gt;

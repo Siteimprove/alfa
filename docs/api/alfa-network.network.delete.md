@@ -12,10 +12,37 @@ delete(node: N): Network<N, E>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  node | N |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+node
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;

@@ -12,10 +12,37 @@ function delay<T>(thunk: Thunk<T>): Future<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  thunk | Thunk&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+thunk
+
+
+</td><td>
+
+Thunk&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;

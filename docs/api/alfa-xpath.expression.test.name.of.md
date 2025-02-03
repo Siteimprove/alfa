@@ -12,11 +12,51 @@ static of(prefix: Option<string>, name: string): Name;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  prefix | Option&lt;string&gt; |  |
-|  name | string |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+prefix
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Name](./alfa-xpath.expression.test.name.md)

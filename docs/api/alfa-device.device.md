@@ -13,20 +13,81 @@ export declare namespace Device
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Type](./alfa-device.device.type.md) |  |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Type](./alfa-device.device.type.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-device.device.from.md) |  |
-|  [standard()](./alfa-device.device.standard.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-device.device.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[standard()](./alfa-device.device.standard.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-device.device.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-device.device.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

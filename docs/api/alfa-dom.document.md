@@ -13,14 +13,57 @@ export declare namespace Document
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isDocument(value)](./alfa-dom.document.isdocument.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isDocument(value)](./alfa-dom.document.isdocument.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.document.json.md) |  |
-|  [MinimalJSON](./alfa-dom.document.minimaljson.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.document.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-dom.document.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

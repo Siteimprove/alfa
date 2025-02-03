@@ -6,15 +6,70 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Browser](./alfa-compatibility.browser.md) |  |
-|  [Feature](./alfa-compatibility.feature.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Browser](./alfa-compatibility.browser.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Feature](./alfa-compatibility.feature.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Browser](./alfa-compatibility.browser.md) |  |
-|  [Feature](./alfa-compatibility.feature.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Browser](./alfa-compatibility.browser.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Feature](./alfa-compatibility.feature.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

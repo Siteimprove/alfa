@@ -12,10 +12,39 @@ partiallyResolve(resolver?: Tuple.PartialResolver<T>): Tuple<Tuple.PartiallyReso
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Tuple.PartialResolver](./alfa-css.tuple.partialresolver.md)<!-- -->&lt;T&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Tuple.PartialResolver](./alfa-css.tuple.partialresolver.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Tuple](./alfa-css.tuple.md)<!-- -->&lt;[Tuple.PartiallyResolved](./alfa-css.tuple.partiallyresolved.md)<!-- -->&lt;T&gt;&gt;

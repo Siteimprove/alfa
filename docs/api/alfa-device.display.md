@@ -13,20 +13,81 @@ export declare namespace Display
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Scan](./alfa-device.display.scan.md) |  |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Scan](./alfa-device.display.scan.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-device.display.from.md) |  |
-|  [standard()](./alfa-device.display.standard.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-device.display.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[standard()](./alfa-device.display.standard.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-device.display.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-device.display.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

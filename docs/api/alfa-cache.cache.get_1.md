@@ -14,11 +14,51 @@ get<U extends V = V>(key: K, ifMissing: Mapper<this, U>): V;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | K |  |
-|  ifMissing | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;this, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+K
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ifMissing
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;this, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 V

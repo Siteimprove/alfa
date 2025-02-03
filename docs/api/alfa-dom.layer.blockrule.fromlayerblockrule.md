@@ -12,10 +12,37 @@ function fromLayerBlockRule(json: JSON): Trampoline<BlockRule>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [JSON](./alfa-dom.layer.blockrule.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[JSON](./alfa-dom.layer.blockrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Trampoline&lt;[BlockRule](./alfa-dom.layer.blockrule.md)<!-- -->&gt;

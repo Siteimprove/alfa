@@ -12,15 +12,117 @@ static of<N extends string = string>(name: N, publicId?: Option<string>, systemI
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | N |  |
-|  publicId | Option&lt;string&gt; | _(Optional)_ |
-|  systemId | Option&lt;string&gt; | _(Optional)_ |
-|  externalId | string | _(Optional)_ |
-|  internalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+name
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+publicId
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+systemId
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+externalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+internalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+extraData
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Type](./alfa-dom.type.md)<!-- -->&lt;N&gt;

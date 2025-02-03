@@ -12,11 +12,51 @@ export function separated<I, T, U, E, A extends Array<unknown> = []>(parser: Par
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  separator | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+parser
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+separator
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, \[T, T\], E, A&gt;

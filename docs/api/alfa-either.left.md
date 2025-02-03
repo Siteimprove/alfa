@@ -13,14 +13,57 @@ export declare namespace Left
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isLeft(value)](./alfa-either.left.isleft.md) |  |
-|  [isLeft(value)](./alfa-either.left.isleft_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isLeft(value)](./alfa-either.left.isleft.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isLeft(value)](./alfa-either.left.isleft_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-either.left.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-either.left.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

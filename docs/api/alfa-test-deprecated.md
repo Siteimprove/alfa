@@ -6,20 +6,85 @@
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [test(name, assertion, controller)](./alfa-test-deprecated.test.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[test(name, assertion, controller)](./alfa-test-deprecated.test.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Assertions](./alfa-test-deprecated.assertions.md) |  |
-|  [Controller](./alfa-test-deprecated.controller.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Assertions](./alfa-test-deprecated.assertions.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Controller](./alfa-test-deprecated.controller.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [RNG](./alfa-test-deprecated.rng.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[RNG](./alfa-test-deprecated.rng.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

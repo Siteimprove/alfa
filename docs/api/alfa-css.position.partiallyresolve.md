@@ -12,10 +12,37 @@ partiallyResolve(resolver: Position.PartialResolver): Position.PartiallyResolved
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Position.PartialResolver](./alfa-css.position.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Position.PartialResolver](./alfa-css.position.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Position.PartiallyResolved](./alfa-css.position.partiallyresolved.md)<!-- -->&lt;H, V&gt;

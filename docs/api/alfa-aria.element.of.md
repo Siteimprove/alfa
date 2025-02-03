@@ -12,14 +12,101 @@ static of(owner: dom.Node, role?: Option<Role>, name?: Option<Name>, attributes?
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  owner | [dom.Node](./alfa-dom.node.md) |  |
-|  role | Option&lt;Role&gt; | _(Optional)_ |
-|  name | Option&lt;Name&gt; | _(Optional)_ |
-|  attributes | Iterable&lt;Attribute&gt; | _(Optional)_ |
-|  children | Iterable&lt;Node&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+owner
+
+
+</td><td>
+
+[dom.Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+role
+
+
+</td><td>
+
+Option&lt;Role&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+Option&lt;Name&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+attributes
+
+
+</td><td>
+
+Iterable&lt;Attribute&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+children
+
+
+</td><td>
+
+Iterable&lt;Node&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Element](./alfa-aria.element.md)

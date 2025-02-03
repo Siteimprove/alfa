@@ -12,10 +12,39 @@ function parseNumber(predicate?: Predicate<Number>): Parser<Slice<Token>, Number
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;[Number](./alfa-css.token.number.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;[Number](./alfa-css.token.number.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Number](./alfa-css.token.number.md)<!-- -->, string, \[\]&gt;

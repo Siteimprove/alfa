@@ -14,10 +14,37 @@ isSubclassOf<N extends Role.Name>(name: N): this is Role<Role.SubclassOf<N>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | N |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+name
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.SubclassOf](./alfa-aria.role.subclassof.md)<!-- -->&lt;N&gt;&gt;

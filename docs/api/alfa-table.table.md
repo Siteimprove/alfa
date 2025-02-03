@@ -13,13 +13,48 @@ export declare namespace Table
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(element)](./alfa-table.table.from.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(element)](./alfa-table.table.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-table.table.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-table.table.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

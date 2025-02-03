@@ -14,12 +14,69 @@ throws(block: Function, error?: RegExp | Function | Object | Error, message?: st
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  block | Function |  |
-|  error | RegExp \| Function \| Object \| Error | _(Optional)_ |
-|  message | string | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+block
+
+
+</td><td>
+
+Function
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+error
+
+
+</td><td>
+
+RegExp \| Function \| Object \| Error
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+message
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

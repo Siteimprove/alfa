@@ -13,14 +13,161 @@ interface JSON<N extends string = string> extends Node.JSON<"element">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [attributes](./alfa-dom.element.json.attributes.md) |  | Array&lt;[Attribute.JSON](./alfa-dom.attribute.json.md)<!-- -->&gt; |  |
-|  [box](./alfa-dom.element.json.box.md) |  | [Rectangle.JSON](./alfa-rectangle.rectangle.json.md) \| null |  |
-|  [content](./alfa-dom.element.json.content.md) |  | [Document.JSON](./alfa-dom.document.json.md) \| null |  |
-|  [name](./alfa-dom.element.json.name.md) |  | N |  |
-|  [namespace](./alfa-dom.element.json.namespace.md) |  | string \| null |  |
-|  [prefix](./alfa-dom.element.json.prefix.md) |  | string \| null |  |
-|  [shadow](./alfa-dom.element.json.shadow.md) |  | [Shadow.JSON](./alfa-dom.shadow.json.md) \| null |  |
-|  [style](./alfa-dom.element.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) \| string \| null |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[attributes](./alfa-dom.element.json.attributes.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Attribute.JSON](./alfa-dom.attribute.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[box](./alfa-dom.element.json.box.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Rectangle.JSON](./alfa-rectangle.rectangle.json.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[content](./alfa-dom.element.json.content.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Document.JSON](./alfa-dom.document.json.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[name](./alfa-dom.element.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[namespace](./alfa-dom.element.json.namespace.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[prefix](./alfa-dom.element.json.prefix.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[shadow](./alfa-dom.element.json.shadow.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Shadow.JSON](./alfa-dom.shadow.json.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[style](./alfa-dom.element.json.style.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Block.JSON](./alfa-dom.block.json.md) \| string \| null
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

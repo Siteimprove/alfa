@@ -6,19 +6,75 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Serializable](./alfa-sarif.serializable.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Serializable](./alfa-sarif.serializable.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Serializable](./alfa-sarif.serializable.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Serializable](./alfa-sarif.serializable.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [SARIF](./alfa-sarif.sarif.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[SARIF](./alfa-sarif.sarif.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

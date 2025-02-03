@@ -12,12 +12,65 @@ export function reject<I, T, U extends T, E, A extends Array<unknown> = []>(pars
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  refinement | Refinement&lt;T, U&gt; |  |
-|  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, E&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+parser
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+refinement
+
+
+</td><td>
+
+Refinement&lt;T, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ifError
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, E&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Exclude&lt;T, U&gt;, E, A&gt;

@@ -13,13 +13,48 @@ export declare namespace Body
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isBody(value)](./alfa-http.body.isbody.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isBody(value)](./alfa-http.body.isbody.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-http.body.earl.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-http.body.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ static of(value: Math<"length-percentage">): Calculated;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | Math&lt;"length-percentage"&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+Math&lt;"length-percentage"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Calculated](./alfa-css.lengthpercentage.calculated.md)

@@ -12,12 +12,65 @@ static of<X extends Number.Canonical | Percentage.Canonical, Y extends Number.Ca
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  x | X |  |
-|  y | Y |  |
-|  z | Z |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+x
+
+
+</td><td>
+
+X
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+y
+
+
+</td><td>
+
+Y
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+z
+
+
+</td><td>
+
+Z
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Scale](./alfa-css.scale.md)<!-- -->&lt;X, Y, Z&gt;

@@ -13,10 +13,93 @@ interface JSON extends WithName.JSON<"attribute">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [matcher](./alfa-selector.attribute.json.matcher.md) |  | string \| null |  |
-|  [modifier](./alfa-selector.attribute.json.modifier.md) |  | string \| null |  |
-|  [namespace](./alfa-selector.attribute.json.namespace.md) |  | string \| null |  |
-|  [value](./alfa-selector.attribute.json.value.md) |  | string \| null |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[matcher](./alfa-selector.attribute.json.matcher.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[modifier](./alfa-selector.attribute.json.modifier.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[namespace](./alfa-selector.attribute.json.namespace.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-selector.attribute.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

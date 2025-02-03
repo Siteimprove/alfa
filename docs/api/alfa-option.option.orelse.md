@@ -12,10 +12,37 @@ orElse<U>(option: Thunk<Option<U>>): Option<T | U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  option | Thunk&lt;[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+option
+
+
+</td><td>
+
+Thunk&lt;[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;T \| U&gt;

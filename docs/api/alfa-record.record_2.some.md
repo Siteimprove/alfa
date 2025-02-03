@@ -12,10 +12,37 @@ some(predicate: Predicate<Record.Value<T>, [Record.Key<T>]>): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;[Record.Value](./alfa-record.record_2.value.md)<!-- -->&lt;T&gt;, \[[Record.Key](./alfa-record.record_2.key.md)<!-- -->&lt;T&gt;\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;[Record.Value](./alfa-record.record_2.value.md)<!-- -->&lt;T&gt;, \[[Record.Key](./alfa-record.record_2.key.md)<!-- -->&lt;T&gt;\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

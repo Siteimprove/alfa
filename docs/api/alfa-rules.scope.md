@@ -13,14 +13,61 @@ export declare namespace Scope
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-rules.scope.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-rules.scope.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [Component](./alfa-rules.scope.component.md) | For rules that test failures at the component level. These rules only make sense to include in an audit if at least an entire component is available. |
-|  [Page](./alfa-rules.scope.page.md) | For rules that test failures at the page level. These rules only make sense to include in an audit if an entire page is available. |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Component](./alfa-rules.scope.component.md)
+
+
+</td><td>
+
+For rules that test failures at the component level. These rules only make sense to include in an audit if at least an entire component is available.
+
+
+</td></tr>
+<tr><td>
+
+[Page](./alfa-rules.scope.page.md)
+
+
+</td><td>
+
+For rules that test failures at the page level. These rules only make sense to include in an audit if an entire page is available.
+
+
+</td></tr>
+</tbody></table>

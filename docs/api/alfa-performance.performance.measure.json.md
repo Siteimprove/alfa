@@ -12,10 +12,93 @@ interface JSON<T>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [data](./alfa-performance.performance.measure.json.data.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
-|  [duration](./alfa-performance.performance.measure.json.duration.md) |  | number |  |
-|  [start](./alfa-performance.performance.measure.json.start.md) |  | number |  |
-|  [type](./alfa-performance.performance.measure.json.type.md) |  | "measure" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[data](./alfa-performance.performance.measure.json.data.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[duration](./alfa-performance.performance.measure.json.duration.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[start](./alfa-performance.performance.measure.json.start.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-performance.performance.measure.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"measure"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

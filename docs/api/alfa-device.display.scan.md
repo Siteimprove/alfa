@@ -12,8 +12,48 @@ enum Scan
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Interlace | <code>&quot;interlace&quot;</code> |  |
-|  Progressive | <code>&quot;progressive&quot;</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+Interlace
+
+
+</td><td>
+
+`"interlace"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Progressive
+
+
+</td><td>
+
+`"progressive"`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

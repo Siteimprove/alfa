@@ -12,7 +12,24 @@ namespace Label
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-aria.source.label.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-aria.source.label.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

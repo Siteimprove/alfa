@@ -12,12 +12,67 @@ static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(input:
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  input | I |  |
-|  rules | Iterable&lt;Rule&lt;I, T, Q, S&gt;&gt; |  |
-|  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;I, T, Q, S&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+input
+
+
+</td><td>
+
+I
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+rules
+
+
+</td><td>
+
+Iterable&lt;Rule&lt;I, T, Q, S&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+oracle
+
+
+</td><td>
+
+[Oracle](./alfa-act.oracle.md)<!-- -->&lt;I, T, Q, S&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Audit](./alfa-act.audit.md)<!-- -->&lt;I, T, Q, S&gt;

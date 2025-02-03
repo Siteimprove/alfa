@@ -12,11 +12,51 @@ export function findLast<T extends Tuple, U extends Item<T>>(tuple: T, refinemen
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  tuple | T |  |
-|  refinement | Refinement&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+tuple
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+refinement
+
+
+</td><td>
+
+Refinement&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Option&lt;U&gt;

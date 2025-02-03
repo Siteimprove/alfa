@@ -6,13 +6,51 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Cache](./alfa-cache.cache.md) | Caches are wrapper around Javascript's <code>WeakMap</code> to store transient values. |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cache](./alfa-cache.cache.md)
+
+
+</td><td>
+
+Caches are wrapper around Javascript's `WeakMap` to store transient values.
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Cache](./alfa-cache.cache.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cache](./alfa-cache.cache.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

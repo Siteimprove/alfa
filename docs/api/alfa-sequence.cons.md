@@ -13,14 +13,57 @@ export declare namespace Cons
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isCons(value)](./alfa-sequence.cons.iscons.md) |  |
-|  [isCons(value)](./alfa-sequence.cons.iscons_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isCons(value)](./alfa-sequence.cons.iscons.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isCons(value)](./alfa-sequence.cons.iscons_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-sequence.cons.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-sequence.cons.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

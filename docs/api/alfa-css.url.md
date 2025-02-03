@@ -13,26 +13,107 @@ export declare namespace URL
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isURL(value)](./alfa-css.url.isurl.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isURL(value)](./alfa-css.url.isurl.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.url.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.url.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.url.parse.md) | [https://drafts.csswg.org/css-values/\#url-value](https://drafts.csswg.org/css-values/#url-value) |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.url.parse.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-values/\#url-value](https://drafts.csswg.org/css-values/#url-value)
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.url.canonical.md) |  |
-|  [Resolver](./alfa-css.url.resolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.url.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.url.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

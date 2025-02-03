@@ -6,13 +6,50 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Callback](./alfa-callback.callback.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Callback](./alfa-callback.callback.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Callback](./alfa-callback.callback.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Callback](./alfa-callback.callback.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

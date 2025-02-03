@@ -13,37 +13,174 @@ export declare namespace Cell
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Data](./alfa-table.cell.data.md) |  |
-|  [Header](./alfa-table.cell.header.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Data](./alfa-table.cell.data.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Header](./alfa-table.cell.header.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isCell(value)](./alfa-table.cell.iscell.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isCell(value)](./alfa-table.cell.iscell.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-table.cell.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-table.cell.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Data](./alfa-table.cell.data.md) |  |
-|  [Header](./alfa-table.cell.header.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Data](./alfa-table.cell.data.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Header](./alfa-table.cell.header.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [data](./alfa-table.cell.data.md) |  |
-|  [hasElement](./alfa-table.cell.haselement.md) |  |
-|  [header](./alfa-table.cell.header.md) |  |
-|  [isData](./alfa-table.cell.isdata.md) |  |
-|  [isHeader](./alfa-table.cell.isheader.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[data](./alfa-table.cell.data.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasElement](./alfa-table.cell.haselement.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[header](./alfa-table.cell.header.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isData](./alfa-table.cell.isdata.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isHeader](./alfa-table.cell.isheader.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

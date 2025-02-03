@@ -14,8 +14,33 @@ export interface Applicative<T> extends Functor<T>
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [apply(mapper)](./alfa-applicative.applicative.apply.md) |  |
-|  [map(mapper)](./alfa-applicative.applicative.map.md) |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[apply(mapper)](./alfa-applicative.applicative.apply.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[map(mapper)](./alfa-applicative.applicative.map.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,14 +13,61 @@ export declare namespace Component
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [consume](./alfa-css.component.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-component-value](https://drafts.csswg.org/css-syntax/#consume-a-component-value) |
-|  [parse](./alfa-css.component.parse.md) | [https://drafts.csswg.org/css-syntax/\#parse-component-value](https://drafts.csswg.org/css-syntax/#parse-component-value) |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[consume](./alfa-css.component.consume.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-syntax/\#consume-a-component-value](https://drafts.csswg.org/css-syntax/#consume-a-component-value)
+
+
+</td></tr>
+<tr><td>
+
+[parse](./alfa-css.component.parse.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-syntax/\#parse-component-value](https://drafts.csswg.org/css-syntax/#parse-component-value)
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.component.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.component.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

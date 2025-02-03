@@ -6,13 +6,50 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Branched](./alfa-branched.branched.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Branched](./alfa-branched.branched.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Branched](./alfa-branched.branched.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Branched](./alfa-branched.branched.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

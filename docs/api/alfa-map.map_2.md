@@ -13,17 +13,84 @@ export declare namespace Map
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(iterable)](./alfa-map.map_2.from.md) |  |
-|  [fromArray(array)](./alfa-map.map_2.fromarray.md) |  |
-|  [fromIterable(iterable)](./alfa-map.map_2.fromiterable.md) |  |
-|  [isMap(value)](./alfa-map.map_2.ismap.md) |  |
-|  [isMap(value)](./alfa-map.map_2.ismap_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(iterable)](./alfa-map.map_2.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromArray(array)](./alfa-map.map_2.fromarray.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromIterable(iterable)](./alfa-map.map_2.fromiterable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isMap(value)](./alfa-map.map_2.ismap.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isMap(value)](./alfa-map.map_2.ismap_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-map.map_2.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-map.map_2.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

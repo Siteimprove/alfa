@@ -13,29 +13,134 @@ export declare namespace Translate
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isTranslate(value)](./alfa-css.translate.istranslate.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isTranslate(value)](./alfa-css.translate.istranslate.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.translate.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.translate.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.translate.parse.md) |  |
-|  [parseProp](./alfa-css.translate.parseprop.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/translate](https://developer.mozilla.org/en-US/docs/Web/CSS/translate) |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.translate.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseProp](./alfa-css.translate.parseprop.md)
+
+
+</td><td>
+
+[https://developer.mozilla.org/en-US/docs/Web/CSS/translate](https://developer.mozilla.org/en-US/docs/Web/CSS/translate)
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.translate.canonical.md) |  |
-|  [PartiallyResolved](./alfa-css.translate.partiallyresolved.md) |  |
-|  [PartialResolver](./alfa-css.translate.partialresolver.md) |  |
-|  [Resolver](./alfa-css.translate.resolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.translate.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartiallyResolved](./alfa-css.translate.partiallyresolved.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartialResolver](./alfa-css.translate.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.translate.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

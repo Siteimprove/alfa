@@ -12,10 +12,37 @@ function max(...specificities: ReadonlyArray<Specificity>): Specificity;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  specificities | ReadonlyArray&lt;[Specificity](./alfa-selector.specificity.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+specificities
+
+
+</td><td>
+
+ReadonlyArray&lt;[Specificity](./alfa-selector.specificity.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Specificity](./alfa-selector.specificity.md)

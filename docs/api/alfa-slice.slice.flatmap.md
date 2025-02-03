@@ -12,10 +12,37 @@ flatMap<U>(mapper: Mapper<T, Slice<U>, [index: number]>): Slice<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;

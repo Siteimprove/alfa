@@ -12,11 +12,51 @@ compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | Option&lt;Comparable&lt;T&gt;&gt; |  |
-|  option | Option&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+Option&lt;Comparable&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+option
+
+
+</td><td>
+
+Option&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)

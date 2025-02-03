@@ -13,7 +13,24 @@ export declare namespace Container
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-aria.container.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-aria.container.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

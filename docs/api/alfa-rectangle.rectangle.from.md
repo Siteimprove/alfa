@@ -12,10 +12,37 @@ function from(json: Rectangle.JSON): Rectangle;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [Rectangle.JSON](./alfa-rectangle.rectangle.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[Rectangle.JSON](./alfa-rectangle.rectangle.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Rectangle](./alfa-rectangle.rectangle.md)

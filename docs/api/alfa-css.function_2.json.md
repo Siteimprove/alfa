@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-css.function_2.json.name.md) |  | string |  |
-|  [value](./alfa-css.function_2.json.value.md) |  | Array&lt;[Token.JSON](./alfa-css.token.json.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-css.function_2.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-css.function_2.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Token.JSON](./alfa-css.token.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

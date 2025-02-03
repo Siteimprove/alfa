@@ -13,27 +13,118 @@ export declare namespace Perspective
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isPerspective(value)](./alfa-css.perspective.isperspective.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isPerspective(value)](./alfa-css.perspective.isperspective.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.perspective.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.perspective.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.perspective.parse.md) | [https://drafts.csswg.org/css-transforms-2/\#funcdef-perspective](https://drafts.csswg.org/css-transforms-2/#funcdef-perspective) |
-|  [parseProp](./alfa-css.perspective.parseprop.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/perspective](https://developer.mozilla.org/en-US/docs/Web/CSS/perspective) |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.perspective.parse.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-transforms-2/\#funcdef-perspective](https://drafts.csswg.org/css-transforms-2/#funcdef-perspective)
+
+
+</td></tr>
+<tr><td>
+
+[parseProp](./alfa-css.perspective.parseprop.md)
+
+
+</td><td>
+
+[https://developer.mozilla.org/en-US/docs/Web/CSS/perspective](https://developer.mozilla.org/en-US/docs/Web/CSS/perspective)
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.perspective.canonical.md) |  |
-|  [Resolver](./alfa-css.perspective.resolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.perspective.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.perspective.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

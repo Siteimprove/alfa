@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-xpath.expression.double.json.type.md) |  | "double" |  |
-|  [value](./alfa-xpath.expression.double.json.value.md) |  | number |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-xpath.expression.double.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"double"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-xpath.expression.double.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

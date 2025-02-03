@@ -13,28 +13,127 @@ export declare namespace Graph
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(iterable)](./alfa-graph.graph.from.md) |  |
-|  [isGraph(value)](./alfa-graph.graph.isgraph.md) |  |
-|  [isGraph(value)](./alfa-graph.graph.isgraph_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(iterable)](./alfa-graph.graph.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isGraph(value)](./alfa-graph.graph.isgraph.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isGraph(value)](./alfa-graph.graph.isgraph_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Traversal](./alfa-graph.graph.traversal.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Traversal](./alfa-graph.graph.traversal.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [BreadthFirst](./alfa-graph.graph.breadthfirst.md) | [https://en.wikipedia.org/wiki/Breadth-first\_search](https://en.wikipedia.org/wiki/Breadth-first_search) |
-|  [DepthFirst](./alfa-graph.graph.depthfirst.md) | [https://en.wikipedia.org/wiki/Depth-first\_search](https://en.wikipedia.org/wiki/Depth-first_search) |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[BreadthFirst](./alfa-graph.graph.breadthfirst.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Breadth-first\_search](https://en.wikipedia.org/wiki/Breadth-first_search)
+
+
+</td></tr>
+<tr><td>
+
+[DepthFirst](./alfa-graph.graph.depthfirst.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Depth-first\_search](https://en.wikipedia.org/wiki/Depth-first_search)
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-graph.graph.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-graph.graph.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

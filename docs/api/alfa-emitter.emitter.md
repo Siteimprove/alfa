@@ -12,17 +12,168 @@ export declare class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T
 ```
 **Implements:** [Functor.Invariant](./alfa-functor.functor.invariant.md)<!-- -->&lt;T&gt;, AsyncIterable&lt;T&gt;
 
+## Constructors
+
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(listeners)](./alfa-emitter.emitter._constructor_.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Constructs a new instance of the `Emitter` class
+
+
+</td></tr>
+</tbody></table>
+
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [\[Symbol.asyncIterator\]()](./alfa-emitter.emitter._symbol.asynciterator_.md) |  |  |
-|  [asyncIterator()](./alfa-emitter.emitter.asynciterator.md) |  |  |
-|  [contraMap(mapper)](./alfa-emitter.emitter.contramap.md) |  |  |
-|  [emit(event)](./alfa-emitter.emitter.emit.md) |  |  |
-|  [of()](./alfa-emitter.emitter.of.md) | <code>static</code> |  |
-|  [off(listener)](./alfa-emitter.emitter.off.md) |  |  |
-|  [on(listener)](./alfa-emitter.emitter.on.md) |  |  |
-|  [once()](./alfa-emitter.emitter.once.md) |  |  |
-|  [once(listener)](./alfa-emitter.emitter.once_1.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[\[Symbol.asyncIterator\]()](./alfa-emitter.emitter._symbol.asynciterator_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[asyncIterator()](./alfa-emitter.emitter.asynciterator.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[contraMap(mapper)](./alfa-emitter.emitter.contramap.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[emit(event)](./alfa-emitter.emitter.emit.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[of()](./alfa-emitter.emitter.of.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[off(listener)](./alfa-emitter.emitter.off.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[on(listener)](./alfa-emitter.emitter.on.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[once()](./alfa-emitter.emitter.once.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[once(listener)](./alfa-emitter.emitter.once_1.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

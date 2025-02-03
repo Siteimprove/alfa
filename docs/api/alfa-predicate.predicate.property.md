@@ -12,11 +12,51 @@ function property<T, K extends keyof T = keyof T, A extends Array<unknown> = []>
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  property | K |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T\[K\], A&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+property
+
+
+</td><td>
+
+K
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+predicate
+
+
+</td><td>
+
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T\[K\], A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;

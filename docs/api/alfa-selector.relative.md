@@ -13,7 +13,24 @@ export declare namespace Relative
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.relative.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.relative.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -14,11 +14,51 @@ function compare(a: bigint, b: bigint): Comparison;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  a | bigint |  |
-|  b | bigint |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+a
+
+
+</td><td>
+
+bigint
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+b
+
+
+</td><td>
+
+bigint
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)

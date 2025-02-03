@@ -13,7 +13,24 @@ export declare namespace Node
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-tree.node.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-tree.node.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

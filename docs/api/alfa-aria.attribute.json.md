@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-aria.attribute.json.name.md) |  | [Name](./alfa-aria.attribute.name.md) |  |
-|  [value](./alfa-aria.attribute.json.value.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-aria.attribute.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Name](./alfa-aria.attribute.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-aria.attribute.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

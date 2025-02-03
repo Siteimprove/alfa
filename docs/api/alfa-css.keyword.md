@@ -13,20 +13,83 @@ export declare namespace Keyword
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isKeyword(value)](./alfa-css.keyword.iskeyword.md) |  |
-|  [parse(keywords)](./alfa-css.keyword.parse.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isKeyword(value)](./alfa-css.keyword.iskeyword.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parse(keywords)](./alfa-css.keyword.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.keyword.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.keyword.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [ToKeywords](./alfa-css.keyword.tokeywords.md) | ToKeywords<!-- -->&lt;<!-- -->"a" \| "b" \| "c"<!-- -->&gt; === Keyword<!-- -->&lt;<!-- -->"a"<!-- -->&gt; \| Keyword<!-- -->&lt;<!-- -->"b"<!-- -->&gt; \| Keyword<!-- -->&lt;<!-- -->"c"<!-- -->&gt; |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ToKeywords](./alfa-css.keyword.tokeywords.md)
+
+
+</td><td>
+
+ToKeywords<!-- -->&lt;<!-- -->"a" \| "b" \| "c"<!-- -->&gt; === Keyword<!-- -->&lt;<!-- -->"a"<!-- -->&gt; \| Keyword<!-- -->&lt;<!-- -->"b"<!-- -->&gt; \| Keyword<!-- -->&lt;<!-- -->"c"<!-- -->&gt;
+
+
+</td></tr>
+</tbody></table>

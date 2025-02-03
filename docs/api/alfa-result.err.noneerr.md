@@ -12,10 +12,37 @@ noneErr<F extends E>(refinement: Refinement<E, F>): this is Result<never, Exclud
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  refinement | Refinement&lt;E, F&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+refinement
+
+
+</td><td>
+
+Refinement&lt;E, F&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this is Result&lt;never, Exclude&lt;E, F&gt;&gt;

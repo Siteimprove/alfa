@@ -12,10 +12,37 @@ function of<H extends BaseNumeric.Type = BaseNumeric.Type>(value: number): Fixed
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | number |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt;

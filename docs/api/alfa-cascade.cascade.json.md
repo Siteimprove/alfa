@@ -12,10 +12,93 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [device](./alfa-cascade.cascade.json.device.md) |  | [Device.JSON](./alfa-device.device.json.md) |  |
-|  [root](./alfa-cascade.cascade.json.root.md) |  | [Document.JSON](./alfa-dom.document.json.md) \| [Shadow.JSON](./alfa-dom.shadow.json.md) |  |
-|  [rules](./alfa-cascade.cascade.json.rules.md) |  | [RuleTree.JSON](./alfa-cascade.ruletree.json.md) |  |
-|  [selectors](./alfa-cascade.cascade.json.selectors.md) |  | SelectorMap.JSON |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[device](./alfa-cascade.cascade.json.device.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Device.JSON](./alfa-device.device.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[root](./alfa-cascade.cascade.json.root.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Document.JSON](./alfa-dom.document.json.md) \| [Shadow.JSON](./alfa-dom.shadow.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[rules](./alfa-cascade.cascade.json.rules.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[RuleTree.JSON](./alfa-cascade.ruletree.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[selectors](./alfa-cascade.cascade.json.selectors.md)
+
+
+</td><td>
+
+
+</td><td>
+
+SelectorMap.JSON
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

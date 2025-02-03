@@ -12,10 +12,37 @@ resolve(resolver: Ellipse.Resolver): Ellipse.Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Ellipse.Resolver](./alfa-css.ellipse.resolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Ellipse.Resolver](./alfa-css.ellipse.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Ellipse.Canonical](./alfa-css.ellipse.canonical.md)

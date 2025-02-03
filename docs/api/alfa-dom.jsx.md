@@ -13,20 +13,83 @@ export declare namespace jsx
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Properties](./alfa-dom.jsx.properties.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Properties](./alfa-dom.jsx.properties.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [JSX](./alfa-dom.jsx.jsx.md) | [https://www.typescriptlang.org/docs/handbook/jsx.html](https://www.typescriptlang.org/docs/handbook/jsx.html) |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSX](./alfa-dom.jsx.jsx.md)
+
+
+</td><td>
+
+[https://www.typescriptlang.org/docs/handbook/jsx.html](https://www.typescriptlang.org/docs/handbook/jsx.html)
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Child](./alfa-dom.jsx.child.md) |  |
-|  [Children](./alfa-dom.jsx.children.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Child](./alfa-dom.jsx.child.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Children](./alfa-dom.jsx.children.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

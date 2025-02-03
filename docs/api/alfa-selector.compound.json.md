@@ -13,7 +13,42 @@ interface JSON extends Selector.JSON<"compound">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [selectors](./alfa-selector.compound.json.selectors.md) |  | Array&lt;[Simple.JSON](./alfa-selector.simple.json.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[selectors](./alfa-selector.compound.json.selectors.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Simple.JSON](./alfa-selector.simple.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

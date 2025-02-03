@@ -14,12 +14,69 @@ function clone(node: Node, options?: ElementReplacementOptions, device?: Device)
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  node | [Node](./alfa-dom.node.md) |  |
-|  options | [ElementReplacementOptions](./alfa-dom.node.elementreplacementoptions.md) | _(Optional)_ |
-|  device | Device | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+node
+
+
+</td><td>
+
+[Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[ElementReplacementOptions](./alfa-dom.node.elementreplacementoptions.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Node](./alfa-dom.node.md)

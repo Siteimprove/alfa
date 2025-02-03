@@ -12,10 +12,93 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [device](./alfa-web.page.json.device.md) |  | [Device.JSON](./alfa-device.device.json.md) |  |
-|  [document](./alfa-web.page.json.document.md) |  | [Document.JSON](./alfa-dom.document.json.md) |  |
-|  [request](./alfa-web.page.json.request.md) |  | [Request.JSON](./alfa-http.request.json.md) |  |
-|  [response](./alfa-web.page.json.response.md) |  | [Response.JSON](./alfa-http.response.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[device](./alfa-web.page.json.device.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Device.JSON](./alfa-device.device.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[document](./alfa-web.page.json.document.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Document.JSON](./alfa-dom.document.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[request](./alfa-web.page.json.request.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Request.JSON](./alfa-http.request.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[response](./alfa-web.page.json.response.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Response.JSON](./alfa-http.response.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

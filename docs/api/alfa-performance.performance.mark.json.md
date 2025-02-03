@@ -12,9 +12,76 @@ interface JSON<T>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [data](./alfa-performance.performance.mark.json.data.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
-|  [start](./alfa-performance.performance.mark.json.start.md) |  | number |  |
-|  [type](./alfa-performance.performance.mark.json.type.md) |  | "mark" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[data](./alfa-performance.performance.mark.json.data.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[start](./alfa-performance.performance.mark.json.start.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-performance.performance.mark.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"mark"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

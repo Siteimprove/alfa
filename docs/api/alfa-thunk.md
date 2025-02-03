@@ -6,13 +6,50 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Thunk](./alfa-thunk.thunk.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Thunk](./alfa-thunk.thunk.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Thunk](./alfa-thunk.thunk.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Thunk](./alfa-thunk.thunk.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

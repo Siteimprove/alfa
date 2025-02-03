@@ -12,12 +12,69 @@ static of(owner: dom.Node, children?: Iterable<Node>, role?: Option<Role>): Cont
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  owner | [dom.Node](./alfa-dom.node.md) |  |
-|  children | Iterable&lt;Node&gt; | _(Optional)_ |
-|  role | Option&lt;Role&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+owner
+
+
+</td><td>
+
+[dom.Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+children
+
+
+</td><td>
+
+Iterable&lt;Node&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+role
+
+
+</td><td>
+
+Option&lt;Role&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Container](./alfa-aria.container.md)

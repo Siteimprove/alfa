@@ -12,13 +12,120 @@ export declare class Inert extends Node<"inert">
 ```
 **Extends:** Node&lt;"inert"&gt;
 
+## Constructors
+
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(owner)](./alfa-aria.inert._constructor_.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Constructs a new instance of the `Inert` class
+
+
+</td></tr>
+</tbody></table>
+
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [clone()](./alfa-aria.inert.clone.md) |  |  |
-|  [isIgnored()](./alfa-aria.inert.isignored.md) |  |  |
-|  [of(owner)](./alfa-aria.inert.of.md) | <code>static</code> |  |
-|  [toJSON()](./alfa-aria.inert.tojson.md) |  |  |
-|  [toString()](./alfa-aria.inert.tostring.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[clone()](./alfa-aria.inert.clone.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isIgnored()](./alfa-aria.inert.isignored.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[of(owner)](./alfa-aria.inert.of.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toJSON()](./alfa-aria.inert.tojson.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toString()](./alfa-aria.inert.tostring.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

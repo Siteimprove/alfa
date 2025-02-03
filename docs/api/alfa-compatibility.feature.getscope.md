@@ -12,11 +12,53 @@ function getScope<N extends Name>(feature: N, scope?: Browser.Scope): Browser.Sc
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  feature | N |  |
-|  scope | [Browser.Scope](./alfa-compatibility.browser.scope.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+feature
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+scope
+
+
+</td><td>
+
+[Browser.Scope](./alfa-compatibility.browser.scope.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Browser.Scope](./alfa-compatibility.browser.scope.md)<!-- -->&lt;[Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->&lt;N&gt;&gt;

@@ -13,7 +13,42 @@ interface JSON extends Node.JSON<"document">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [style](./alfa-dom.document.json.style.md) |  | Array&lt;[Sheet.JSON](./alfa-dom.sheet.json.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[style](./alfa-dom.document.json.style.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Sheet.JSON](./alfa-dom.sheet.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

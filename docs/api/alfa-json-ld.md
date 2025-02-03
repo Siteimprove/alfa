@@ -6,20 +6,88 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Context](./alfa-json-ld.context.md) | [https://www.w3.org/TR/json-ld/\#dfn-context-definition](https://www.w3.org/TR/json-ld/#dfn-context-definition) |
-|  [Document](./alfa-json-ld.document.md) | [https://www.w3.org/TR/json-ld/\#dfn-json-ld-document](https://www.w3.org/TR/json-ld/#dfn-json-ld-document) |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Context](./alfa-json-ld.context.md)
+
+
+</td><td>
+
+[https://www.w3.org/TR/json-ld/\#dfn-context-definition](https://www.w3.org/TR/json-ld/#dfn-context-definition)
+
+
+</td></tr>
+<tr><td>
+
+[Document](./alfa-json-ld.document.md)
+
+
+</td><td>
+
+[https://www.w3.org/TR/json-ld/\#dfn-json-ld-document](https://www.w3.org/TR/json-ld/#dfn-json-ld-document)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Keyword](./alfa-json-ld.keyword.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Keyword](./alfa-json-ld.keyword.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Keyword](./alfa-json-ld.keyword.md) | [https://www.w3.org/TR/json-ld/\#dfn-keyword](https://www.w3.org/TR/json-ld/#dfn-keyword) |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Keyword](./alfa-json-ld.keyword.md)
+
+
+</td><td>
+
+[https://www.w3.org/TR/json-ld/\#dfn-keyword](https://www.w3.org/TR/json-ld/#dfn-keyword)
+
+
+</td></tr>
+</tbody></table>

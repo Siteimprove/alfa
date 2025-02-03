@@ -12,10 +12,37 @@ static of(attribute: Attribute): Label;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  attribute | Attribute |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+attribute
+
+
+</td><td>
+
+Attribute
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Label](./alfa-aria.source.label.md)

@@ -12,11 +12,53 @@ resolve(this: Math<"number">, resolver?: Expression.GenericResolver): Result<Num
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"number"&gt; |  |
-|  resolver | Expression.GenericResolver | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Math](./alfa-css.math_2.md)<!-- -->&lt;"number"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+resolver
+
+
+</td><td>
+
+Expression.GenericResolver
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Result&lt;Number, string&gt;

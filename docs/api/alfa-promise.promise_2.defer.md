@@ -12,10 +12,37 @@ function defer<T>(continuation: Continuation<T, void, [reject: Callback<unknown>
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  continuation | Continuation&lt;T, void, \[reject: Callback&lt;unknown&gt;\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+continuation
+
+
+</td><td>
+
+Continuation&lt;T, void, \[reject: Callback&lt;unknown&gt;\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;

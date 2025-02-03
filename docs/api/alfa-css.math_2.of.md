@@ -12,10 +12,37 @@ static of(expression: Expression): Math;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  expression | [Expression](./alfa-css.expression.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+expression
+
+
+</td><td>
+
+[Expression](./alfa-css.expression.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Math](./alfa-css.math_2.md)

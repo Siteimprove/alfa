@@ -12,10 +12,37 @@ partiallyResolve(resolver: Polygon.PartialResolver): Polygon.PartiallyResolved;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Polygon.PartialResolver](./alfa-css.polygon.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Polygon.PartialResolver](./alfa-css.polygon.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Polygon.PartiallyResolved](./alfa-css.polygon.partiallyresolved.md)

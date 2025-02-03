@@ -8,7 +8,25 @@ This package provides types for modelling [applicative functors](https://en.wiki
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Applicative](./alfa-applicative.applicative.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Applicative](./alfa-applicative.applicative.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

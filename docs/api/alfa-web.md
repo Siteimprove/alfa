@@ -6,22 +6,108 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Page](./alfa-web.page.md) | [https://en.wikipedia.org/wiki/Web\_page](https://en.wikipedia.org/wiki/Web_page) |
-|  [Site](./alfa-web.site.md) | [https://en.wikipedia.org/wiki/Web\_site](https://en.wikipedia.org/wiki/Web_site) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Page](./alfa-web.page.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Web\_page](https://en.wikipedia.org/wiki/Web_page)
+
+
+</td></tr>
+<tr><td>
+
+[Site](./alfa-web.site.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Web\_site](https://en.wikipedia.org/wiki/Web_site)
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Resource](./alfa-web.resource.md) | [https://en.wikipedia.org/wiki/Web\_resource](https://en.wikipedia.org/wiki/Web_resource) |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Resource](./alfa-web.resource.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Web\_resource](https://en.wikipedia.org/wiki/Web_resource)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Page](./alfa-web.page.md) |  |
-|  [Resource](./alfa-web.resource.md) |  |
-|  [Site](./alfa-web.site.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Page](./alfa-web.page.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Resource](./alfa-web.resource.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Site](./alfa-web.site.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

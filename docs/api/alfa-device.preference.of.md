@@ -12,11 +12,51 @@ static of<N extends Preference.Name>(name: N, value: Preference.Value<N>): Prefe
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | N |  |
-|  value | [Preference.Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+name
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+[Preference.Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;

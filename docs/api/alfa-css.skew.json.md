@@ -13,8 +13,59 @@ interface JSON extends Function.JSON<"skew">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [x](./alfa-css.skew.json.x.md) |  | [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md) |  |
-|  [y](./alfa-css.skew.json.y.md) |  | [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[x](./alfa-css.skew.json.x.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[y](./alfa-css.skew.json.y.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

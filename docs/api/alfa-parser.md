@@ -6,13 +6,50 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Parser](./alfa-parser.parser.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Parser](./alfa-parser.parser.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Parser](./alfa-parser.parser.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Parser](./alfa-parser.parser.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

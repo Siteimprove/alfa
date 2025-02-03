@@ -12,10 +12,39 @@ toJSON(options?: json.Serializable.Options): Outcome.JSON<V>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  options | [json.Serializable.Options](./alfa-json.serializable.options.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+options
+
+
+</td><td>
+
+[json.Serializable.Options](./alfa-json.serializable.options.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Outcome.JSON](./alfa-act.outcome.json.md)<!-- -->&lt;V&gt;

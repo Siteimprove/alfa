@@ -12,10 +12,37 @@ concat(iterable: Iterable<T>): Slice<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+iterable
+
+
+</td><td>
+
+Iterable&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;

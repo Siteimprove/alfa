@@ -6,7 +6,25 @@
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Mapper](./alfa-mapper.mapper.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Mapper](./alfa-mapper.mapper.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

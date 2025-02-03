@@ -12,11 +12,51 @@ answerIf(predicate: Predicate<SUBJECT, [context: CONTEXT]>, answer: ANSWER): Que
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;SUBJECT, \[context: CONTEXT\]&gt; |  |
-|  answer | ANSWER |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;SUBJECT, \[context: CONTEXT\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+answer
+
+
+</td><td>
+
+ANSWER
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;

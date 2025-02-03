@@ -12,11 +12,51 @@ export function take<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  count | number |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+parser
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+count
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Array&lt;T&gt;, E, A&gt;

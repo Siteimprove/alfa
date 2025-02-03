@@ -13,7 +13,24 @@ namespace Calculated
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.number_2.calculated.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.number_2.calculated.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

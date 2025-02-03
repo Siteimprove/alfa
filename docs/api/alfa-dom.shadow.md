@@ -13,20 +13,81 @@ export declare namespace Shadow
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Mode](./alfa-dom.shadow.mode.md) |  |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Mode](./alfa-dom.shadow.mode.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isShadow(value)](./alfa-dom.shadow.isshadow.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isShadow(value)](./alfa-dom.shadow.isshadow.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.shadow.json.md) |  |
-|  [MinimalJSON](./alfa-dom.shadow.minimaljson.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.shadow.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-dom.shadow.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

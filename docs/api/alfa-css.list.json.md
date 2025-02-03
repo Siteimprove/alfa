@@ -13,8 +13,59 @@ interface JSON<V extends Value> extends Value.JSON<"list">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [separator](./alfa-css.list.json.separator.md) |  | string |  |
-|  [values](./alfa-css.list.json.values.md) |  | Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;V&gt;&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[separator](./alfa-css.list.json.separator.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[values](./alfa-css.list.json.values.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;V&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,7 +13,24 @@ namespace Fixed
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.angle.fixed.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.angle.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

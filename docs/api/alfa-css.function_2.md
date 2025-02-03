@@ -13,19 +13,74 @@ export declare namespace Function
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [parse(query, body)](./alfa-css.function_2.parse.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse(query, body)](./alfa-css.function_2.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.function_2.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.function_2.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [consume](./alfa-css.function_2.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-function](https://drafts.csswg.org/css-syntax/#consume-a-function) |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[consume](./alfa-css.function_2.consume.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-syntax/\#consume-a-function](https://drafts.csswg.org/css-syntax/#consume-a-function)
+
+
+</td></tr>
+</tbody></table>

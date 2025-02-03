@@ -13,19 +13,74 @@ export declare namespace HSL
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isHSL(value)](./alfa-css.hsl.ishsl.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isHSL(value)](./alfa-css.hsl.ishsl.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.hsl.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.hsl.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.hsl.parse.md) | [https://drafts.csswg.org/css-color/\#funcdef-hsl](https://drafts.csswg.org/css-color/#funcdef-hsl) |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.hsl.parse.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-color/\#funcdef-hsl](https://drafts.csswg.org/css-color/#funcdef-hsl)
+
+
+</td></tr>
+</tbody></table>

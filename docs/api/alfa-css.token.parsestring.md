@@ -12,10 +12,39 @@ function parseString(predicate?: Predicate<String>): Parser<Slice<Token>, String
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;[String](./alfa-css.token.string.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;[String](./alfa-css.token.string.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [String](./alfa-css.token.string.md)<!-- -->, string, \[\]&gt;

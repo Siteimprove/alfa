@@ -12,10 +12,39 @@ function parseURL(predicate?: Predicate<URL>): Parser<Slice<Token>, URL, string,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;[URL](./alfa-css.token.url.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;[URL](./alfa-css.token.url.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [URL](./alfa-css.token.url.md)<!-- -->, string, \[\]&gt;

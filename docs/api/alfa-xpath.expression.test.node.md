@@ -12,7 +12,24 @@ namespace Node
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-xpath.expression.test.node.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-xpath.expression.test.node.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

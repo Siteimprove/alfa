@@ -12,10 +12,37 @@ apply<U>(mapper: Keyed<K, Mapper<V, U>>): Keyed<K, U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;

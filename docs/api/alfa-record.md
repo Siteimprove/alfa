@@ -6,13 +6,50 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Record\_2](./alfa-record.record_2.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Record\_2](./alfa-record.record_2.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Record\_2](./alfa-record.record_2.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Record\_2](./alfa-record.record_2.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

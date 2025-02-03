@@ -12,13 +12,79 @@ static of(request: Request, response: Response, document: Document, device: Devi
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  request | Request |  |
-|  response | Response |  |
-|  document | Document |  |
-|  device | Device |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+request
+
+
+</td><td>
+
+Request
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+response
+
+
+</td><td>
+
+Response
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+document
+
+
+</td><td>
+
+Document
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Page](./alfa-web.page.md)

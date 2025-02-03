@@ -8,13 +8,50 @@ This package provides functionality for working with [affine transformations](ht
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Transformation](./alfa-affine.transformation.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Transformation](./alfa-affine.transformation.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Transformation](./alfa-affine.transformation.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Transformation](./alfa-affine.transformation.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

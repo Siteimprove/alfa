@@ -14,11 +14,96 @@ protected constructor(children: Array<Node<F>>, type: T, externalId?: string, in
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  children | Array&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt; |  |
-|  type | T |  |
-|  externalId | string | _(Optional)_ |
-|  internalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+children
+
+
+</td><td>
+
+Array&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+type
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+externalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+internalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+extraData
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

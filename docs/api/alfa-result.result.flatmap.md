@@ -12,10 +12,37 @@ flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;

@@ -13,13 +13,48 @@ export declare namespace Slot
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isSlot(value)](./alfa-table.slot.isslot.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isSlot(value)](./alfa-table.slot.isslot.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-table.slot.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-table.slot.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

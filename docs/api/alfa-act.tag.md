@@ -13,13 +13,48 @@ export declare namespace Tag
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isTag(value, type)](./alfa-act.tag.istag.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isTag(value, type)](./alfa-act.tag.istag.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-act.tag.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-act.tag.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

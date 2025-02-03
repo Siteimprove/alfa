@@ -12,10 +12,37 @@ function isPassed<I, T extends Hashable, Q extends Question.Metadata, S>(value: 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | unknown |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+unknown
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 value is [Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt;

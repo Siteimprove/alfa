@@ -13,16 +13,75 @@ export declare namespace Rectangle
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-rectangle.rectangle.from.md) |  |
-|  [intersection(rectangles)](./alfa-rectangle.rectangle.intersection.md) |  |
-|  [isRectangle(value)](./alfa-rectangle.rectangle.isrectangle.md) |  |
-|  [union(rectangles)](./alfa-rectangle.rectangle.union.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-rectangle.rectangle.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[intersection(rectangles)](./alfa-rectangle.rectangle.intersection.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRectangle(value)](./alfa-rectangle.rectangle.isrectangle.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[union(rectangles)](./alfa-rectangle.rectangle.union.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-rectangle.rectangle.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-rectangle.rectangle.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

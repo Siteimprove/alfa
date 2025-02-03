@@ -12,12 +12,65 @@ static of<X extends LengthPercentage = LengthPercentage, Y extends LengthPercent
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  x | X |  |
-|  y | Y |  |
-|  z | Z |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+x
+
+
+</td><td>
+
+X
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+y
+
+
+</td><td>
+
+Y
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+z
+
+
+</td><td>
+
+Z
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;

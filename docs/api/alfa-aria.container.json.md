@@ -13,7 +13,42 @@ interface JSON extends Node.JSON<"container">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [role](./alfa-aria.container.json.role.md) |  | [Role.Name](./alfa-aria.role.name.md) \| null |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[role](./alfa-aria.container.json.role.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Role.Name](./alfa-aria.role.name.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

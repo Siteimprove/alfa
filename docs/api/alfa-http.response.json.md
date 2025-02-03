@@ -12,10 +12,93 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [body](./alfa-http.response.json.body.md) |  | string |  |
-|  [headers](./alfa-http.response.json.headers.md) |  | [Headers.JSON](./alfa-http.headers.json.md) |  |
-|  [status](./alfa-http.response.json.status.md) |  | number |  |
-|  [url](./alfa-http.response.json.url.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[body](./alfa-http.response.json.body.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[headers](./alfa-http.response.json.headers.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Headers.JSON](./alfa-http.headers.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[status](./alfa-http.response.json.status.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[url](./alfa-http.response.json.url.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

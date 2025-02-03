@@ -13,10 +13,93 @@ interface JSON extends Function.JSON<"rotate">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [angle](./alfa-css.rotate.json.angle.md) |  | [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)<!-- -->&lt;"deg"&gt; |  |
-|  [x](./alfa-css.rotate.json.x.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
-|  [y](./alfa-css.rotate.json.y.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
-|  [z](./alfa-css.rotate.json.z.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[angle](./alfa-css.rotate.json.angle.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)<!-- -->&lt;"deg"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[x](./alfa-css.rotate.json.x.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[y](./alfa-css.rotate.json.y.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[z](./alfa-css.rotate.json.z.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

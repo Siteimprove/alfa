@@ -14,12 +14,69 @@ rejects<T>(block: Function | Promise<T>, error?: RegExp | Function | Object | Er
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  block | Function \| Promise&lt;T&gt; |  |
-|  error | RegExp \| Function \| Object \| Error | _(Optional)_ |
-|  message | string | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+block
+
+
+</td><td>
+
+Function \| Promise&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+error
+
+
+</td><td>
+
+RegExp \| Function \| Object \| Error
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+message
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

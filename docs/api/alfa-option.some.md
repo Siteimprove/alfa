@@ -13,14 +13,57 @@ export declare namespace Some
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isSome(value)](./alfa-option.some.issome.md) |  |
-|  [isSome(value)](./alfa-option.some.issome_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isSome(value)](./alfa-option.some.issome.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSome(value)](./alfa-option.some.issome_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-option.some.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-option.some.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

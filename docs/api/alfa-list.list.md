@@ -13,17 +13,84 @@ export declare namespace List
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(iterable)](./alfa-list.list.from.md) |  |
-|  [fromArray(array)](./alfa-list.list.fromarray.md) |  |
-|  [fromIterable(iterable)](./alfa-list.list.fromiterable.md) |  |
-|  [isList(value)](./alfa-list.list.islist.md) |  |
-|  [isList(value)](./alfa-list.list.islist_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(iterable)](./alfa-list.list.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromArray(array)](./alfa-list.list.fromarray.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromIterable(iterable)](./alfa-list.list.fromiterable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isList(value)](./alfa-list.list.islist.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isList(value)](./alfa-list.list.islist_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-list.list.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-list.list.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

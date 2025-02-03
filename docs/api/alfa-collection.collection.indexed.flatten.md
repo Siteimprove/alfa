@@ -12,10 +12,37 @@ flatten<T>(this: Indexed<Indexed<T>>): Indexed<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;

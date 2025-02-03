@@ -14,14 +14,132 @@ protected constructor(type: TYPE, uri: URI, message: string, diagnostic: Diagnos
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | TYPE |  |
-|  uri | URI |  |
-|  message | string |  |
-|  diagnostic | Diagnostic |  |
-|  fallback | Option&lt;ANSWER&gt; |  |
-|  subject | SUBJECT |  |
-|  context | CONTEXT |  |
-|  quester | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;ANSWER, T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+TYPE
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+uri
+
+
+</td><td>
+
+URI
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+message
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+diagnostic
+
+
+</td><td>
+
+Diagnostic
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+fallback
+
+
+</td><td>
+
+Option&lt;ANSWER&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+subject
+
+
+</td><td>
+
+SUBJECT
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+context
+
+
+</td><td>
+
+CONTEXT
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+quester
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;ANSWER, T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

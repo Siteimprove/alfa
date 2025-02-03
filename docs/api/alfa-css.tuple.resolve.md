@@ -12,10 +12,39 @@ resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | Tuple.Resolver&lt;T&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+Tuple.Resolver&lt;T&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Tuple](./alfa-css.tuple.md)<!-- -->&lt;Tuple.Resolved&lt;T&gt;&gt;

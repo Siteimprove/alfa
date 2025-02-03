@@ -12,10 +12,37 @@ static of<T>(thunk: Thunk<T>): Lazy<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  thunk | Thunk&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+thunk
+
+
+</td><td>
+
+Thunk&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;

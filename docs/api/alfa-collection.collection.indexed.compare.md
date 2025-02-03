@@ -12,11 +12,51 @@ compare<T>(this: Indexed<Comparable<T>>, iterable: Iterable<T>): Comparison;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;Comparable&lt;T&gt;&gt; |  |
-|  iterable | Iterable&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;Comparable&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+iterable
+
+
+</td><td>
+
+Iterable&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)

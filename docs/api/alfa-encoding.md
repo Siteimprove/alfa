@@ -6,8 +6,37 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Decoder](./alfa-encoding.decoder.md) | [https://encoding.spec.whatwg.org/\#textdecoder](https://encoding.spec.whatwg.org/#textdecoder) |
-|  [Encoder](./alfa-encoding.encoder.md) | [https://encoding.spec.whatwg.org/\#textencoder](https://encoding.spec.whatwg.org/#textencoder) |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Decoder](./alfa-encoding.decoder.md)
+
+
+</td><td>
+
+[https://encoding.spec.whatwg.org/\#textdecoder](https://encoding.spec.whatwg.org/#textdecoder)
+
+
+</td></tr>
+<tr><td>
+
+[Encoder](./alfa-encoding.encoder.md)
+
+
+</td><td>
+
+[https://encoding.spec.whatwg.org/\#textencoder](https://encoding.spec.whatwg.org/#textencoder)
+
+
+</td></tr>
+</tbody></table>

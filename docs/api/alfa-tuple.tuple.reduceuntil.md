@@ -12,13 +12,79 @@ export function reduceUntil<T extends Tuple, U>(tuple: T, predicate: Predicate<I
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  tuple | T |  |
-|  predicate | Predicate&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
-|  reducer | Reducer&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
-|  accumulator | U |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+tuple
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+reducer
+
+
+</td><td>
+
+Reducer&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+accumulator
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 U

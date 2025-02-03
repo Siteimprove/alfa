@@ -12,10 +12,37 @@ resolve(resolver: Inset.Resolver): Inset.Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Inset.Resolver](./alfa-css.inset.resolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Inset.Resolver](./alfa-css.inset.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Inset.Canonical](./alfa-css.inset.canonical.md)

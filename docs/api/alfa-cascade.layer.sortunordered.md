@@ -14,10 +14,37 @@ function sortUnordered(layers: ReadonlyArray<Pair<false>>): Array<Pair<true>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  layers | ReadonlyArray&lt;Pair&lt;false&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+layers
+
+
+</td><td>
+
+ReadonlyArray&lt;Pair&lt;false&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Array&lt;Pair&lt;true&gt;&gt;

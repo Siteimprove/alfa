@@ -13,17 +13,114 @@ export declare namespace Feature
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [and](./alfa-css-feature.feature.and.md) |  |
-|  [isAnd](./alfa-css-feature.feature.isand.md) |  |
-|  [isCondition](./alfa-css-feature.feature.iscondition.md) |  |
-|  [isMedia](./alfa-css-feature.feature.ismedia.md) |  |
-|  [isNot](./alfa-css-feature.feature.isnot.md) |  |
-|  [isOr](./alfa-css-feature.feature.isor.md) |  |
-|  [isProperty](./alfa-css-feature.feature.isproperty.md) |  |
-|  [not](./alfa-css-feature.feature.not.md) |  |
-|  [or](./alfa-css-feature.feature.or.md) |  |
-|  [parseMediaQuery](./alfa-css-feature.feature.parsemediaquery.md) |  |
-|  [parseSupportsQuery](./alfa-css-feature.feature.parsesupportsquery.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[and](./alfa-css-feature.feature.and.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isAnd](./alfa-css-feature.feature.isand.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isCondition](./alfa-css-feature.feature.iscondition.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isMedia](./alfa-css-feature.feature.ismedia.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isNot](./alfa-css-feature.feature.isnot.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isOr](./alfa-css-feature.feature.isor.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isProperty](./alfa-css-feature.feature.isproperty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[not](./alfa-css-feature.feature.not.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[or](./alfa-css-feature.feature.or.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseMediaQuery](./alfa-css-feature.feature.parsemediaquery.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseSupportsQuery](./alfa-css-feature.feature.parsesupportsquery.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,39 @@ parseCharacter: (query?: string | Predicate<Character>) => Parser<Slice<Token>, 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  query | string \| Predicate&lt;[Character](./alfa-xpath.token.character.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+query
+
+
+</td><td>
+
+string \| Predicate&lt;[Character](./alfa-xpath.token.character.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-xpath.token.md)<!-- -->&gt;, [Character](./alfa-xpath.token.character.md)<!-- -->, string, \[\]&gt;

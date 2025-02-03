@@ -13,13 +13,48 @@ export declare namespace Block
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(jsonOrText)](./alfa-dom.block.from.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(jsonOrText)](./alfa-dom.block.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.block.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.block.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

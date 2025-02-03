@@ -12,11 +12,110 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [anchor](./alfa-table.cell.json.anchor.md) |  | [Slot.JSON](./alfa-table.slot.json.md) |  |
-|  [element](./alfa-table.cell.json.element.md) |  | string |  |
-|  [headers](./alfa-table.cell.json.headers.md) |  | Array&lt;[Slot.JSON](./alfa-table.slot.json.md)<!-- -->&gt; |  |
-|  [height](./alfa-table.cell.json.height.md) |  | number |  |
-|  [width](./alfa-table.cell.json.width.md) |  | number |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[anchor](./alfa-table.cell.json.anchor.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Slot.JSON](./alfa-table.slot.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[element](./alfa-table.cell.json.element.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[headers](./alfa-table.cell.json.headers.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Slot.JSON](./alfa-table.slot.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[height](./alfa-table.cell.json.height.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[width](./alfa-table.cell.json.width.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

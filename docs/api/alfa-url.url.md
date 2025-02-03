@@ -13,15 +13,70 @@ export declare namespace URL
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-url.url.from.md) |  |
-|  [isSpecialScheme(scheme)](./alfa-url.url.isspecialscheme.md) | [https://url.spec.whatwg.org/\#special-scheme](https://url.spec.whatwg.org/#special-scheme) |
-|  [parse(url, base)](./alfa-url.url.parse.md) | [https://url.spec.whatwg.org/\#concept-url-parser](https://url.spec.whatwg.org/#concept-url-parser) |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-url.url.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSpecialScheme(scheme)](./alfa-url.url.isspecialscheme.md)
+
+
+</td><td>
+
+[https://url.spec.whatwg.org/\#special-scheme](https://url.spec.whatwg.org/#special-scheme)
+
+
+</td></tr>
+<tr><td>
+
+[parse(url, base)](./alfa-url.url.parse.md)
+
+
+</td><td>
+
+[https://url.spec.whatwg.org/\#concept-url-parser](https://url.spec.whatwg.org/#concept-url-parser)
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-url.url.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-url.url.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

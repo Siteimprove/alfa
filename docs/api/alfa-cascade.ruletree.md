@@ -13,19 +13,72 @@ export declare namespace RuleTree
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Node](./alfa-cascade.ruletree.node.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Node](./alfa-cascade.ruletree.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Node](./alfa-cascade.ruletree.node.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Node](./alfa-cascade.ruletree.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-cascade.ruletree.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-cascade.ruletree.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

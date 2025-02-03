@@ -12,10 +12,37 @@ abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;

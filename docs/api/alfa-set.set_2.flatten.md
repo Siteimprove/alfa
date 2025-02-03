@@ -12,10 +12,37 @@ flatten<T>(this: Set<Set<T>>): Set<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Set](./alfa-set.set_2.md)<!-- -->&lt;[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Set](./alfa-set.set_2.md)<!-- -->&lt;[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;

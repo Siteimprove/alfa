@@ -12,11 +12,51 @@ function forEach<T>(iterable: Iterable<T>, callback: Callback<T, void, [index: n
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
-|  callback | Callback&lt;T, void, \[index: number\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+iterable
+
+
+</td><td>
+
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+callback
+
+
+</td><td>
+
+Callback&lt;T, void, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

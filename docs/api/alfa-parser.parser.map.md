@@ -12,11 +12,51 @@ export function map<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+parser
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt;

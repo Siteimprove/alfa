@@ -14,13 +14,79 @@ function from<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rule | Rule&lt;I, T, Q, S&gt; |  |
-|  target | T |  |
-|  expectations | Record&lt;{ \[key: string\]: Option&lt;Result&lt;Diagnostic&gt;&gt;; }&gt; |  |
-|  mode | [Mode](./alfa-act.outcome.mode.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+rule
+
+
+</td><td>
+
+Rule&lt;I, T, Q, S&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+target
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+expectations
+
+
+</td><td>
+
+Record&lt;{ \[key: string\]: Option&lt;Result&lt;Diagnostic&gt;&gt;; }&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mode
+
+
+</td><td>
+
+[Mode](./alfa-act.outcome.mode.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Outcome.Applicable](./alfa-act.outcome.applicable.md)<!-- -->&lt;I, T, Q, S&gt;

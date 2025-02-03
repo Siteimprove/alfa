@@ -12,11 +12,51 @@ function has<T>(array: ReadonlyArray<T>, index: number): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  array | ReadonlyArray&lt;T&gt; |  |
-|  index | number |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+array
+
+
+</td><td>
+
+ReadonlyArray&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+index
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

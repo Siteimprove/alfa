@@ -14,10 +14,51 @@ export interface Monad<T> extends Functor<T>, Applicative<T>
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [apply(mapper)](./alfa-monad.monad.apply.md) |  |
-|  [flatMap(mapper)](./alfa-monad.monad.flatmap.md) |  |
-|  [flatten(this)](./alfa-monad.monad.flatten.md) |  |
-|  [map(mapper)](./alfa-monad.monad.map.md) |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[apply(mapper)](./alfa-monad.monad.apply.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[flatMap(mapper)](./alfa-monad.monad.flatmap.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[flatten(this)](./alfa-monad.monad.flatten.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[map(mapper)](./alfa-monad.monad.map.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,9 +13,76 @@ interface JSON extends Node.JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [mode](./alfa-dom.shadow.json.mode.md) |  | string |  |
-|  [style](./alfa-dom.shadow.json.style.md) |  | Array&lt;[Sheet.JSON](./alfa-dom.sheet.json.md)<!-- -->&gt; |  |
-|  [type](./alfa-dom.shadow.json.type.md) |  | "shadow" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[mode](./alfa-dom.shadow.json.mode.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[style](./alfa-dom.shadow.json.style.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Sheet.JSON](./alfa-dom.sheet.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-dom.shadow.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"shadow"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

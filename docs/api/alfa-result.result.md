@@ -13,21 +13,120 @@ export declare namespace Result
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(thunk)](./alfa-result.result.from.md) |  |
-|  [from(thunk)](./alfa-result.result.from_1.md) |  |
-|  [isErr(value)](./alfa-result.result.iserr.md) |  |
-|  [isErr(value)](./alfa-result.result.iserr_1.md) |  |
-|  [isOk(value)](./alfa-result.result.isok.md) |  |
-|  [isOk(value)](./alfa-result.result.isok_1.md) |  |
-|  [isResult(value)](./alfa-result.result.isresult.md) |  |
-|  [isResult(value)](./alfa-result.result.isresult_1.md) |  |
-|  [of(value)](./alfa-result.result.of.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(thunk)](./alfa-result.result.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(thunk)](./alfa-result.result.from_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isErr(value)](./alfa-result.result.iserr.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isErr(value)](./alfa-result.result.iserr_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isOk(value)](./alfa-result.result.isok.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isOk(value)](./alfa-result.result.isok_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isResult(value)](./alfa-result.result.isresult.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isResult(value)](./alfa-result.result.isresult_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[of(value)](./alfa-result.result.of.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-result.result.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-result.result.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

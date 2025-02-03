@@ -14,9 +14,62 @@ protected constructor(outcome: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  outcome | V |  |
-|  rule | Rule&lt;I, T, Q, S&gt; |  |
-|  mode | [Outcome.Mode](./alfa-act.outcome.mode.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+outcome
+
+
+</td><td>
+
+V
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+rule
+
+
+</td><td>
+
+Rule&lt;I, T, Q, S&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mode
+
+
+</td><td>
+
+[Outcome.Mode](./alfa-act.outcome.mode.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

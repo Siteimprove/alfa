@@ -12,11 +12,51 @@ static of<O extends Inset.Offset = Inset.Offset, C extends Corner = Corner>(offs
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  offsets | readonly \[O, O, O, O\] |  |
-|  corners | Option&lt;readonly \[C, C, C, C\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+offsets
+
+
+</td><td>
+
+readonly \[O, O, O, O\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+corners
+
+
+</td><td>
+
+Option&lt;readonly \[C, C, C, C\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Inset](./alfa-css.inset.md)<!-- -->&lt;O, C&gt;

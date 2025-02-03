@@ -13,7 +13,24 @@ export declare namespace Element
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-aria.element.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-aria.element.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

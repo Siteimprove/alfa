@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-xpath.expression.string.json.type.md) |  | "string" |  |
-|  [value](./alfa-xpath.expression.string.json.value.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-xpath.expression.string.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"string"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-xpath.expression.string.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

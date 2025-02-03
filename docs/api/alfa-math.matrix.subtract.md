@@ -12,11 +12,51 @@ function subtract(m: Matrix, n: Matrix): Matrix;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  m | [Matrix](./alfa-math.matrix.md) |  |
-|  n | [Matrix](./alfa-math.matrix.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+m
+
+
+</td><td>
+
+[Matrix](./alfa-math.matrix.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+n
+
+
+</td><td>
+
+[Matrix](./alfa-math.matrix.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Matrix](./alfa-math.matrix.md)

@@ -6,26 +6,112 @@
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Comparison](./alfa-comparable.comparison.md) |  |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Comparison](./alfa-comparable.comparison.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Comparable](./alfa-comparable.comparable.md) | This interface describes strcutures that define a [total order](https://en.wikipedia.org/wiki/Total_order)<!-- -->. |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Comparable](./alfa-comparable.comparable.md)
+
+
+</td><td>
+
+This interface describes strcutures that define a [total order](https://en.wikipedia.org/wiki/Total_order)<!-- -->.
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Comparable](./alfa-comparable.comparable.md) | This namespace provides additional functions for the [Comparable](./alfa-comparable.comparable.md) interface. |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Comparable](./alfa-comparable.comparable.md)
+
+
+</td><td>
+
+This namespace provides additional functions for the [Comparable](./alfa-comparable.comparable.md) interface.
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Comparer](./alfa-comparable.comparer.md) |  |
-|  [TupleComparer](./alfa-comparable.tuplecomparer.md) | Turns a tuple of types into a tuple of comparer over these types. |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Comparer](./alfa-comparable.comparer.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[TupleComparer](./alfa-comparable.tuplecomparer.md)
+
+
+</td><td>
+
+Turns a tuple of types into a tuple of comparer over these types.
+
+
+</td></tr>
+</tbody></table>

@@ -12,12 +12,65 @@ static of(element: Element, cells: Iterable<Cell>, groups: Iterable<Group>): Tab
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  element | Element |  |
-|  cells | Iterable&lt;Cell&gt; |  |
-|  groups | Iterable&lt;Group&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+element
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+cells
+
+
+</td><td>
+
+Iterable&lt;Cell&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+groups
+
+
+</td><td>
+
+Iterable&lt;Group&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Table](./alfa-table.table.md)

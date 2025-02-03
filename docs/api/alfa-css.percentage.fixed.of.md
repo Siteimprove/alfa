@@ -12,10 +12,37 @@ static of<H extends BaseNumeric.Type = BaseNumeric.Type>(value: number | BasePer
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | number \| BasePercentage |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+number \| BasePercentage
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt;

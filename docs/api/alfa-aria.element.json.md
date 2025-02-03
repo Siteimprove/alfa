@@ -13,9 +13,76 @@ interface JSON extends Node.JSON<"element">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [attributes](./alfa-aria.element.json.attributes.md) |  | Array&lt;[Attribute.JSON](./alfa-aria.attribute.json.md)<!-- -->&gt; |  |
-|  [name](./alfa-aria.element.json.name.md) |  | string \| null |  |
-|  [role](./alfa-aria.element.json.role.md) |  | [Role.Name](./alfa-aria.role.name.md) \| null |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[attributes](./alfa-aria.element.json.attributes.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Attribute.JSON](./alfa-aria.attribute.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[name](./alfa-aria.element.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[role](./alfa-aria.element.json.role.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Role.Name](./alfa-aria.role.name.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ function from(jsonOrText: JSON | string): Block;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  jsonOrText | [JSON](./alfa-dom.block.json.md) \| string |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+jsonOrText
+
+
+</td><td>
+
+[JSON](./alfa-dom.block.json.md) \| string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Block](./alfa-dom.block.md)

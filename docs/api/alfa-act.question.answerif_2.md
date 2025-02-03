@@ -12,10 +12,37 @@ answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, UR
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  answer | Option&lt;ANSWER&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+answer
+
+
+</td><td>
+
+Option&lt;ANSWER&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;

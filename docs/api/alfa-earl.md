@@ -6,14 +6,60 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-earl.earl.md) |  |
-|  [Serializable](./alfa-earl.serializable.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-earl.earl.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Serializable](./alfa-earl.serializable.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Serializable](./alfa-earl.serializable.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Serializable](./alfa-earl.serializable.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

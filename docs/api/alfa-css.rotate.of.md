@@ -12,13 +12,79 @@ static of<A extends Angle>(x: Number, y: Number, z: Number, angle: A): Rotate;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  x | Number |  |
-|  y | Number |  |
-|  z | Number |  |
-|  angle | A |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+x
+
+
+</td><td>
+
+Number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+y
+
+
+</td><td>
+
+Number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+z
+
+
+</td><td>
+
+Number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+angle
+
+
+</td><td>
+
+A
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Rotate](./alfa-css.rotate.md)

@@ -13,11 +13,60 @@ export declare namespace Item
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Optional](./alfa-xpath.item.optional.md) |  |
-|  [Sequence](./alfa-xpath.item.sequence.md) |  |
-|  [Type](./alfa-xpath.item.type.md) |  |
-|  [TypeFor](./alfa-xpath.item.typefor.md) |  |
-|  [Value](./alfa-xpath.item.value.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Optional](./alfa-xpath.item.optional.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Sequence](./alfa-xpath.item.sequence.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Type](./alfa-xpath.item.type.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[TypeFor](./alfa-xpath.item.typefor.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Value](./alfa-xpath.item.value.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

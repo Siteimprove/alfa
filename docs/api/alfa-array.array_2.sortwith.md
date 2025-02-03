@@ -12,11 +12,51 @@ function sortWith<T>(array: Array<T>, comparer: Comparer<T>): Array<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  array | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
-|  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+array
+
+
+</td><td>
+
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+comparer
+
+
+</td><td>
+
+[Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;

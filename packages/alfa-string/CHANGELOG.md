@@ -1,5 +1,15 @@
 # @siteimprove/alfa-string
 
+## 0.98.0
+
+### Minor Changes
+
+- **Added:** A new `String.fallback` transformer combinator is available, to replace whitespace only strings with a fallback value. ([#1745](https://github.com/Siteimprove/alfa/pull/1745))
+
+- **Breaking:** `String.and` has been renamed `String.Transformer.and`. ([#1745](https://github.com/Siteimprove/alfa/pull/1745))
+
+- **Added:** A new `String.Transformer.when` combinator is available, to conditionally apply a transformer based on a predicate. ([#1745](https://github.com/Siteimprove/alfa/pull/1745))
+
 ## 0.97.0
 
 ## 0.96.0

@@ -12,11 +12,51 @@ function from(node: dom.Node, device: Device): Node;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  node | [dom.Node](./alfa-dom.node.md) |  |
-|  device | Device |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+node
+
+
+</td><td>
+
+[dom.Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Node](./alfa-aria.node.md)

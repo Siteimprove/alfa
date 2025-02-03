@@ -12,9 +12,76 @@ interface JSON<V extends Value = Value>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [mode](./alfa-act.outcome.json.mode.md) |  | [Mode](./alfa-act.outcome.mode.md) |  |
-|  [outcome](./alfa-act.outcome.json.outcome.md) |  | V |  |
-|  [rule](./alfa-act.outcome.json.rule.md) |  | [Rule.JSON](./alfa-act.rule.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[mode](./alfa-act.outcome.json.mode.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Mode](./alfa-act.outcome.mode.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[outcome](./alfa-act.outcome.json.outcome.md)
+
+
+</td><td>
+
+
+</td><td>
+
+V
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[rule](./alfa-act.outcome.json.rule.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Rule.JSON](./alfa-act.rule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

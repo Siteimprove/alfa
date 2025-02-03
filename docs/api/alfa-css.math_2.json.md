@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [expression](./alfa-css.math_2.json.expression.md) |  | [Expression.JSON](./alfa-css.expression.json.md) |  |
-|  [type](./alfa-css.math_2.json.type.md) |  | "math expression" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[expression](./alfa-css.math_2.json.expression.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Expression.JSON](./alfa-css.expression.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-css.math_2.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"math expression"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

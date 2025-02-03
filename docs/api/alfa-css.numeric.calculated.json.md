@@ -13,7 +13,42 @@ interface JSON<T extends Type = Type> extends Value.JSON<T>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [math](./alfa-css.numeric.calculated.json.math.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;ToMath&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[math](./alfa-css.numeric.calculated.json.math.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;ToMath&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

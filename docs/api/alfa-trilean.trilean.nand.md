@@ -12,11 +12,51 @@ function nand<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Pr
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  left | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt; |  |
-|  right | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+left
+
+
+</td><td>
+
+[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+right
+
+
+</td><td>
+
+[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;

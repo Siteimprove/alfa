@@ -12,11 +12,51 @@ export function forEach<T extends Tuple>(tuple: T, callback: Callback<Item<T>, v
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  tuple | T |  |
-|  callback | Callback&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, void, \[index: number\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+tuple
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+callback
+
+
+</td><td>
+
+Callback&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, void, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

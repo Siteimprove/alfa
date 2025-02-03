@@ -13,8 +13,59 @@ interface JSON<F extends Fill = Fill, V extends LengthPercentage = LengthPercent
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [fill](./alfa-css.polygon.json.fill.md) |  | [Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;F&gt; |  |
-|  [vertices](./alfa-css.polygon.json.vertices.md) |  | Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;[Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt;&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[fill](./alfa-css.polygon.json.fill.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;F&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[vertices](./alfa-css.polygon.json.vertices.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;[Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

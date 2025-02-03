@@ -12,10 +12,37 @@ resolve(resolver: Shadow.Resolver): Shadow.Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Shadow.Resolver](./alfa-css.shadow.resolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Shadow.Resolver](./alfa-css.shadow.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Shadow.Canonical](./alfa-css.shadow.canonical.md)

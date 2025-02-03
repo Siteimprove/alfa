@@ -13,24 +13,147 @@ export declare namespace Sequence
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [empty()](./alfa-sequence.sequence.empty.md) |  |
-|  [from(iterable)](./alfa-sequence.sequence.from.md) |  |
-|  [fromArray(array)](./alfa-sequence.sequence.fromarray.md) |  |
-|  [fromIterable(iterable)](./alfa-sequence.sequence.fromiterable.md) |  |
-|  [fromIterator(iterator)](./alfa-sequence.sequence.fromiterator.md) |  |
-|  [isCons(value)](./alfa-sequence.sequence.iscons.md) |  |
-|  [isCons(value)](./alfa-sequence.sequence.iscons_1.md) |  |
-|  [isNil(value)](./alfa-sequence.sequence.isnil.md) |  |
-|  [isNil(value)](./alfa-sequence.sequence.isnil_1.md) |  |
-|  [isSequence(value)](./alfa-sequence.sequence.issequence.md) |  |
-|  [isSequence(value)](./alfa-sequence.sequence.issequence_1.md) |  |
-|  [of(head, tail)](./alfa-sequence.sequence.of.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[empty()](./alfa-sequence.sequence.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(iterable)](./alfa-sequence.sequence.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromArray(array)](./alfa-sequence.sequence.fromarray.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromIterable(iterable)](./alfa-sequence.sequence.fromiterable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromIterator(iterator)](./alfa-sequence.sequence.fromiterator.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isCons(value)](./alfa-sequence.sequence.iscons.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isCons(value)](./alfa-sequence.sequence.iscons_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isNil(value)](./alfa-sequence.sequence.isnil.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isNil(value)](./alfa-sequence.sequence.isnil_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSequence(value)](./alfa-sequence.sequence.issequence.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSequence(value)](./alfa-sequence.sequence.issequence_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[of(head, tail)](./alfa-sequence.sequence.of.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-sequence.sequence.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-sequence.sequence.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

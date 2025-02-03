@@ -13,13 +13,48 @@ export declare namespace Version
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isVersion(value)](./alfa-rules.version.isversion.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isVersion(value)](./alfa-rules.version.isversion.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-rules.version.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-rules.version.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

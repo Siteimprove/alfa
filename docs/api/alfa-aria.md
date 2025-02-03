@@ -8,52 +8,301 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Attribute](./alfa-aria.attribute.md) |  |
-|  [Container](./alfa-aria.container.md) |  |
-|  [Element](./alfa-aria.element.md) |  |
-|  [Inert](./alfa-aria.inert.md) |  |
-|  [Name](./alfa-aria.name.md) |  |
-|  [Role](./alfa-aria.role.md) |  |
-|  [Text](./alfa-aria.text.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Attribute](./alfa-aria.attribute.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Container](./alfa-aria.container.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Element](./alfa-aria.element.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Inert](./alfa-aria.inert.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Name](./alfa-aria.name.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Role](./alfa-aria.role.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Text](./alfa-aria.text.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Abstract Classes
 
-|  Abstract Class | Description |
-|  --- | --- |
-|  [Node](./alfa-aria.node.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
+<table><thead><tr><th>
+
+Abstract Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Node](./alfa-aria.node.md)
+
+
+</td><td>
+
+[https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree)
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [hasValue(predicate)](./alfa-aria.hasvalue.md) |  |
-|  [hasValue(value, rest)](./alfa-aria.hasvalue_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[hasValue(predicate)](./alfa-aria.hasvalue.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[hasValue(value, rest)](./alfa-aria.hasvalue_1.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Node](./alfa-aria.node.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Node](./alfa-aria.node.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Attribute](./alfa-aria.attribute.md) |  |
-|  [Container](./alfa-aria.container.md) |  |
-|  [DOM](./alfa-aria.dom.md) | Helpers and Predicates for accessibility aspects of DOM objects |
-|  [Element](./alfa-aria.element.md) |  |
-|  [Name](./alfa-aria.name.md) |  |
-|  [Node](./alfa-aria.node.md) |  |
-|  [Role](./alfa-aria.role.md) |  |
-|  [Source](./alfa-aria.source.md) |  |
-|  [Text](./alfa-aria.text.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Attribute](./alfa-aria.attribute.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Container](./alfa-aria.container.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[DOM](./alfa-aria.dom.md)
+
+
+</td><td>
+
+Helpers and Predicates for accessibility aspects of DOM objects
+
+
+</td></tr>
+<tr><td>
+
+[Element](./alfa-aria.element.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Name](./alfa-aria.name.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Node](./alfa-aria.node.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Role](./alfa-aria.role.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Source](./alfa-aria.source.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Text](./alfa-aria.text.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Source](./alfa-aria.source.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Source](./alfa-aria.source.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

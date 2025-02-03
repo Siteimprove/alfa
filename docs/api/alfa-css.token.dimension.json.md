@@ -12,11 +12,110 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [isInteger](./alfa-css.token.dimension.json.isinteger.md) |  | boolean |  |
-|  [isSigned](./alfa-css.token.dimension.json.issigned.md) |  | boolean |  |
-|  [type](./alfa-css.token.dimension.json.type.md) |  | "dimension" |  |
-|  [unit](./alfa-css.token.dimension.json.unit.md) |  | string |  |
-|  [value](./alfa-css.token.dimension.json.value.md) |  | number |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isInteger](./alfa-css.token.dimension.json.isinteger.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSigned](./alfa-css.token.dimension.json.issigned.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-css.token.dimension.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"dimension"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[unit](./alfa-css.token.dimension.json.unit.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-css.token.dimension.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

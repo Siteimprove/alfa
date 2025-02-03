@@ -13,13 +13,48 @@ export declare namespace Id
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isId(value)](./alfa-selector.id.isid.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isId(value)](./alfa-selector.id.isid.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.id.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.id.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

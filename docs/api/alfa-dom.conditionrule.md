@@ -13,13 +13,48 @@ export declare namespace ConditionRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isConditionRule(value)](./alfa-dom.conditionrule.isconditionrule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isConditionRule(value)](./alfa-dom.conditionrule.isconditionrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.conditionrule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.conditionrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

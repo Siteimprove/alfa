@@ -13,13 +13,48 @@ export declare namespace Declaration
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-dom.declaration.from.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-dom.declaration.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.declaration.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.declaration.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

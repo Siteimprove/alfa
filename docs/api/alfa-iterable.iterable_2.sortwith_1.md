@@ -12,11 +12,51 @@ function sortWith<T, U extends T = T>(iterable: Iterable<U>, comparer: Comparer<
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;U&gt; |  |
-|  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+iterable
+
+
+</td><td>
+
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+comparer
+
+
+</td><td>
+
+[Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;U&gt;

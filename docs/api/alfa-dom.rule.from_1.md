@@ -12,10 +12,37 @@ function from(json: ImportRule.JSON): ImportRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [ImportRule.JSON](./alfa-dom.importrule.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[ImportRule.JSON](./alfa-dom.importrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ImportRule

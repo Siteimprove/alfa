@@ -12,19 +12,181 @@ function element<N extends string = string>(name: N, attributes?: Array<Attribut
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | N |  |
-|  attributes | Array&lt;Attribute&gt; \| Record&lt;string, string \| boolean&gt; | _(Optional)_ |
-|  children | Array&lt;Node \| string&gt; | _(Optional)_ |
-|  style | Array&lt;Declaration&gt; \| Record&lt;string, string&gt; | _(Optional)_ |
-|  namespace | Namespace | _(Optional)_ |
-|  box | Rectangle | _(Optional)_ |
-|  device | Device | _(Optional)_ |
-|  externalId | string | _(Optional)_ |
-|  internalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+name
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+attributes
+
+
+</td><td>
+
+Array&lt;Attribute&gt; \| Record&lt;string, string \| boolean&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+children
+
+
+</td><td>
+
+Array&lt;Node \| string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+style
+
+
+</td><td>
+
+Array&lt;Declaration&gt; \| Record&lt;string, string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+namespace
+
+
+</td><td>
+
+Namespace
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+box
+
+
+</td><td>
+
+Rectangle
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+externalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+internalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+extraData
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Element&lt;N&gt;

@@ -12,10 +12,37 @@ flatten<T, E>(this: Ok<Result<T, E>>): Result<T, E>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Ok](./alfa-result.ok.md)<!-- -->&lt;Result&lt;T, E&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Ok](./alfa-result.ok.md)<!-- -->&lt;Result&lt;T, E&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Result&lt;T, E&gt;

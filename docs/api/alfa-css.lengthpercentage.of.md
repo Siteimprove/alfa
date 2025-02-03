@@ -12,11 +12,51 @@ function of<U extends Unit.Length>(value: number, unit: U): Length.Fixed<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | number |  |
-|  unit | U |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+unit
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;U&gt;

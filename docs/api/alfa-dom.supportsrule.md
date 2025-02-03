@@ -13,14 +13,57 @@ export declare namespace SupportsRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isSupportsRule(value)](./alfa-dom.supportsrule.issupportsrule.md) |  |
-|  [matches(device)](./alfa-dom.supportsrule.matches.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isSupportsRule(value)](./alfa-dom.supportsrule.issupportsrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[matches(device)](./alfa-dom.supportsrule.matches.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.supportsrule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.supportsrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

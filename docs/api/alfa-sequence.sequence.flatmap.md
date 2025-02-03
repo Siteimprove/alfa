@@ -12,10 +12,37 @@ flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;

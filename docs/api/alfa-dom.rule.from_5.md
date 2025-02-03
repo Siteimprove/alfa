@@ -12,10 +12,37 @@ function from(json: Layer.StatementRule.JSON): Layer.StatementRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [Layer.StatementRule.JSON](./alfa-dom.layer.statementrule.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[Layer.StatementRule.JSON](./alfa-dom.layer.statementrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Layer.StatementRule](./alfa-dom.layer.statementrule.md)

@@ -12,10 +12,37 @@ function from<N, E>(iterable: Iterable<readonly [N, Iterable<readonly [N, Iterab
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  iterable | Iterable&lt;readonly \[N, Iterable&lt;readonly \[N, Iterable&lt;E&gt;\]&gt;\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+iterable
+
+
+</td><td>
+
+Iterable&lt;readonly \[N, Iterable&lt;readonly \[N, Iterable&lt;E&gt;\]&gt;\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;

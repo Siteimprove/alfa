@@ -12,10 +12,84 @@
 export declare class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> 
 ```
 
+## Constructors
+
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)(input, rules, oracle)](./alfa-act.audit._constructor_.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Constructs a new instance of the `Audit` class
+
+
+</td></tr>
+</tbody></table>
+
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [evaluate(performance)](./alfa-act.audit.evaluate.md) |  |  |
-|  [of(input, rules, oracle)](./alfa-act.audit.of.md) | <code>static</code> |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[evaluate(performance)](./alfa-act.audit.evaluate.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[of(input, rules, oracle)](./alfa-act.audit.of.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -8,13 +8,49 @@ This package provides functionality for working with arrays.
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Array\_2](./alfa-array.array_2.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Array\_2](./alfa-array.array_2.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Array\_2](./alfa-array.array_2.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Array\_2](./alfa-array.array_2.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

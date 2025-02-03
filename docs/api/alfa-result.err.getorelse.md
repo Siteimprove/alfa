@@ -7,15 +7,42 @@
 **Signature:**
 
 ```typescript
-getOrElse<U>(value: Thunk<U>): U;
+getOrElse<U>(value: Callback<E, U>): U;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | Thunk&lt;U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+Callback&lt;E, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 U

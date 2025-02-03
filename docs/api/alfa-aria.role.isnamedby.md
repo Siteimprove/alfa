@@ -14,10 +14,37 @@ isNamedBy(method: Role.NamedBy): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  method | [Role.NamedBy](./alfa-aria.role.namedby.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+method
+
+
+</td><td>
+
+[Role.NamedBy](./alfa-aria.role.namedby.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

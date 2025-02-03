@@ -12,11 +12,51 @@ if<P, Q extends P, U>(refinement: Refinement<P, Q>, mapper: Mapper<S & Q, U>): S
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  refinement | Refinement&lt;P, Q&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S &amp; Q, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+refinement
+
+
+</td><td>
+
+Refinement&lt;P, Q&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S &amp; Q, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;Exclude&lt;S, Q&gt;, T \| U&gt;

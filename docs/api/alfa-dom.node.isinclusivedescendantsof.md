@@ -12,11 +12,53 @@ isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  node | [Node](./alfa-dom.node.md) |  |
-|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+node
+
+
+</td><td>
+
+[Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[Node.Traversal](./alfa-dom.node.traversal.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

@@ -6,46 +6,276 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Builder](./alfa-xpath.builder.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Builder](./alfa-xpath.builder.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [axis(axis, name)](./alfa-xpath.axis.md) |  |
-|  [context()](./alfa-xpath.context.md) |  |
-|  [evaluate(scope, expression, options)](./alfa-xpath.evaluate.md) |  |
-|  [nth(i)](./alfa-xpath.nth.md) |  |
-|  [step(left, right)](./alfa-xpath.step.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[axis(axis, name)](./alfa-xpath.axis.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[context()](./alfa-xpath.context.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[evaluate(scope, expression, options)](./alfa-xpath.evaluate.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[nth(i)](./alfa-xpath.nth.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[step(left, right)](./alfa-xpath.step.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Item](./alfa-xpath.item.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Item](./alfa-xpath.item.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [axis](./alfa-xpath.axis.md) |  |
-|  [Builder](./alfa-xpath.builder.md) |  |
-|  [evaluate](./alfa-xpath.evaluate.md) |  |
-|  [Expression](./alfa-xpath.expression.md) |  |
-|  [Item](./alfa-xpath.item.md) |  |
-|  [Lexer](./alfa-xpath.lexer.md) |  |
-|  [Parser](./alfa-xpath.parser.md) |  |
-|  [Token](./alfa-xpath.token.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[axis](./alfa-xpath.axis.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Builder](./alfa-xpath.builder.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[evaluate](./alfa-xpath.evaluate.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Expression](./alfa-xpath.expression.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Item](./alfa-xpath.item.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Lexer](./alfa-xpath.lexer.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Parser](./alfa-xpath.parser.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Token](./alfa-xpath.token.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Expression](./alfa-xpath.expression.md) |  |
-|  [Token](./alfa-xpath.token.md) | [https://www.w3.org/TR/xpath-31/\#terminal-symbols](https://www.w3.org/TR/xpath-31/#terminal-symbols) |
-|  [Type](./alfa-xpath.type.md) |  |
-|  [TypeFor](./alfa-xpath.typefor.md) |  |
-|  [Value](./alfa-xpath.value.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Expression](./alfa-xpath.expression.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Token](./alfa-xpath.token.md)
+
+
+</td><td>
+
+[https://www.w3.org/TR/xpath-31/\#terminal-symbols](https://www.w3.org/TR/xpath-31/#terminal-symbols)
+
+
+</td></tr>
+<tr><td>
+
+[Type](./alfa-xpath.type.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[TypeFor](./alfa-xpath.typefor.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Value](./alfa-xpath.value.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

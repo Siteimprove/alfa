@@ -12,13 +12,79 @@ static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(top: O, r
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  top | O |  |
-|  right | O |  |
-|  bottom | O |  |
-|  left | O |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+top
+
+
+</td><td>
+
+O
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+right
+
+
+</td><td>
+
+O
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+bottom
+
+
+</td><td>
+
+O
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+left
+
+
+</td><td>
+
+O
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Rectangle](./alfa-css.rectangle.md)<!-- -->&lt;O&gt;

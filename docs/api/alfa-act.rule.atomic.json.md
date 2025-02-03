@@ -13,7 +13,42 @@ interface JSON extends Rule.JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-act.rule.atomic.json.type.md) |  | "atomic" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-act.rule.atomic.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"atomic"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

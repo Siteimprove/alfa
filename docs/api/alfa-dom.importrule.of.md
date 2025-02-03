@@ -12,14 +12,99 @@ static of(href: string, sheet: Sheet, mediaCondition?: Option<string>, supportCo
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  href | string |  |
-|  sheet | Sheet |  |
-|  mediaCondition | Option&lt;string&gt; | _(Optional)_ |
-|  supportCondition | Option&lt;string&gt; | _(Optional)_ |
-|  layer | Option&lt;string&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+href
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheet
+
+
+</td><td>
+
+Sheet
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mediaCondition
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+supportCondition
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+layer
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [ImportRule](./alfa-dom.importrule.md)

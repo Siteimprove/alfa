@@ -12,10 +12,37 @@ function from<T>(iterable: Iterable<readonly [T, Iterable<T>]>): Graph<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  iterable | Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+iterable
+
+
+</td><td>
+
+Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;

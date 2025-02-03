@@ -12,12 +12,69 @@ static of(rules: Iterable<Rule>, disabled?: boolean, condition?: Option<string>)
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rules | Iterable&lt;Rule&gt; |  |
-|  disabled | boolean | _(Optional)_ |
-|  condition | Option&lt;string&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+rules
+
+
+</td><td>
+
+Iterable&lt;Rule&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+disabled
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+condition
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Sheet](./alfa-dom.sheet.md)

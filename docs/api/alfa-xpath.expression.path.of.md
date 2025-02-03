@@ -12,11 +12,51 @@ static of(left: Expression, right: Expression): Path;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  left | [Expression](./alfa-xpath.expression.md) |  |
-|  right | [Expression](./alfa-xpath.expression.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+left
+
+
+</td><td>
+
+[Expression](./alfa-xpath.expression.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+right
+
+
+</td><td>
+
+[Expression](./alfa-xpath.expression.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Path](./alfa-xpath.expression.path.md)

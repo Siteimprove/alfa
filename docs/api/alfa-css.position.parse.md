@@ -16,10 +16,39 @@ function parse(legacySyntax?: boolean): CSSParser<Position>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  legacySyntax | boolean | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+legacySyntax
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Position](./alfa-css.position.md)<!-- -->&gt;

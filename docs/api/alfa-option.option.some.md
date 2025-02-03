@@ -12,10 +12,37 @@ some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  refinement | Refinement&lt;T, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+refinement
+
+
+</td><td>
+
+Refinement&lt;T, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this is Some&lt;U&gt;

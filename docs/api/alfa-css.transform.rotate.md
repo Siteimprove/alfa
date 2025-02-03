@@ -12,13 +12,79 @@ function rotate(x: Number, y: Number, z: Number, angle: Angle): Rotate;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  x | Number |  |
-|  y | Number |  |
-|  z | Number |  |
-|  angle | Angle |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+x
+
+
+</td><td>
+
+Number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+y
+
+
+</td><td>
+
+Number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+z
+
+
+</td><td>
+
+Number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+angle
+
+
+</td><td>
+
+Angle
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Rotate

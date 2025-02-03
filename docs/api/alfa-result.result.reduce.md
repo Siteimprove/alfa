@@ -12,11 +12,51 @@ reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  reducer | Reducer&lt;T, U&gt; |  |
-|  accumulator | U |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+reducer
+
+
+</td><td>
+
+Reducer&lt;T, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+accumulator
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 U

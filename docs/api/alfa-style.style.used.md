@@ -14,10 +14,37 @@ used<N extends Name>(name: N): Option<Value<Style.Computed<N>>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | N |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+name
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Option&lt;[Value](./alfa-style.value.md)<!-- -->&lt;[Style.Computed](./alfa-style.style.computed.md)<!-- -->&lt;N&gt;&gt;&gt;

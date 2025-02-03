@@ -12,12 +12,65 @@ tee<A extends Array<unknown> = []>(left: Callback<S, void, A>, right: Callback<T
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  left | Callback&lt;S, void, A&gt; |  |
-|  right | Callback&lt;T, void, A&gt; |  |
-|  args | A |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+left
+
+
+</td><td>
+
+Callback&lt;S, void, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+right
+
+
+</td><td>
+
+Callback&lt;T, void, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+args
+
+
+</td><td>
+
+A
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this

@@ -12,11 +12,51 @@ reduce<R>(reducer: Reducer<Record.Value<T>, R, [Record.Key<T>]>, accumulator: R)
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  reducer | Reducer&lt;[Record.Value](./alfa-record.record_2.value.md)<!-- -->&lt;T&gt;, R, \[[Record.Key](./alfa-record.record_2.key.md)<!-- -->&lt;T&gt;\]&gt; |  |
-|  accumulator | R |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+reducer
+
+
+</td><td>
+
+Reducer&lt;[Record.Value](./alfa-record.record_2.value.md)<!-- -->&lt;T&gt;, R, \[[Record.Key](./alfa-record.record_2.key.md)<!-- -->&lt;T&gt;\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+accumulator
+
+
+</td><td>
+
+R
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 R

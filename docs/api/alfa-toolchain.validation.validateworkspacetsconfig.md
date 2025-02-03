@@ -16,10 +16,37 @@ export declare function validateWorkspaceTsconfig({ dir, packageJson, }: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { dir, packageJson, } | { dir: string; packageJson: PackageJSON; } |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ dir, packageJson, }
+
+
+</td><td>
+
+{ dir: string; packageJson: PackageJSON; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Array&lt;string&gt;

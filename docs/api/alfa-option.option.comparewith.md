@@ -12,11 +12,51 @@ compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  option | [Option](./alfa-option.option.md)<!-- -->&lt;U&gt; |  |
-|  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+option
+
+
+</td><td>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+comparer
+
+
+</td><td>
+
+[Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)

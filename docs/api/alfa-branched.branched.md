@@ -13,16 +13,75 @@ export declare namespace Branched
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(values)](./alfa-branched.branched.from.md) |  |
-|  [isBranched(value)](./alfa-branched.branched.isbranched.md) |  |
-|  [sequence(values)](./alfa-branched.branched.sequence.md) |  |
-|  [traverse(values, mapper)](./alfa-branched.branched.traverse.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(values)](./alfa-branched.branched.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isBranched(value)](./alfa-branched.branched.isbranched.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[sequence(values)](./alfa-branched.branched.sequence.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[traverse(values, mapper)](./alfa-branched.branched.traverse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-branched.branched.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-branched.branched.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

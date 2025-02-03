@@ -13,8 +13,59 @@ interface JSON<O extends Offset = Offset, C extends Corner = Corner> extends Bas
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [corners](./alfa-css.inset.json.corners.md) |  | [Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;readonly \[C, C, C, C\]&gt; |  |
-|  [offsets](./alfa-css.inset.json.offsets.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;readonly \[O, O, O, O\]&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[corners](./alfa-css.inset.json.corners.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;readonly \[C, C, C, C\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[offsets](./alfa-css.inset.json.offsets.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;readonly \[O, O, O, O\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

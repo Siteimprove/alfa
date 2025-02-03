@@ -13,14 +13,57 @@ export declare namespace StyleRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isEmpty(rule)](./alfa-dom.stylerule.isempty.md) |  |
-|  [isStyleRule(value)](./alfa-dom.stylerule.isstylerule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isEmpty(rule)](./alfa-dom.stylerule.isempty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isStyleRule(value)](./alfa-dom.stylerule.isstylerule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.stylerule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.stylerule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

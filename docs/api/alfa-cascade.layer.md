@@ -13,19 +13,74 @@ export declare namespace Layer
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [sortUnordered(layers)](./alfa-cascade.layer.sortunordered.md) | Order layers, according to their names (and importance), and relative order of declaration. The arary must contain path-prefix layers (up to the empty path) for each layer! |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[sortUnordered(layers)](./alfa-cascade.layer.sortunordered.md)
+
+
+</td><td>
+
+Order layers, according to their names (and importance), and relative order of declaration. The arary must contain path-prefix layers (up to the empty path) for each layer!
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-cascade.layer.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-cascade.layer.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [compare](./alfa-cascade.layer.compare.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[compare](./alfa-cascade.layer.compare.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,17 +12,114 @@ namespace rule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [fontFace(declarations)](./alfa-dom.h.rule.fontface.md) |  |
-|  [importRule(url, sheet, mediaCondition, supportCondition, layer)](./alfa-dom.h.rule.importrule.md) |  |
-|  [keyframe(key, declarations)](./alfa-dom.h.rule.keyframe.md) |  |
-|  [keyframes(name, rules)](./alfa-dom.h.rule.keyframes.md) |  |
-|  [layerBlock(rules, layer)](./alfa-dom.h.rule.layerblock.md) |  |
-|  [layerStatement(layers)](./alfa-dom.h.rule.layerstatement.md) |  |
-|  [media(condition, rules)](./alfa-dom.h.rule.media.md) |  |
-|  [namespace(namespace, prefix)](./alfa-dom.h.rule.namespace.md) |  |
-|  [page(selector, declarations)](./alfa-dom.h.rule.page.md) |  |
-|  [style(selector, declarations, hint)](./alfa-dom.h.rule.style.md) |  |
-|  [supports(condition, rules)](./alfa-dom.h.rule.supports.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[fontFace(declarations)](./alfa-dom.h.rule.fontface.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[importRule(url, sheet, mediaCondition, supportCondition, layer)](./alfa-dom.h.rule.importrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[keyframe(key, declarations)](./alfa-dom.h.rule.keyframe.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[keyframes(name, rules)](./alfa-dom.h.rule.keyframes.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[layerBlock(rules, layer)](./alfa-dom.h.rule.layerblock.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[layerStatement(layers)](./alfa-dom.h.rule.layerstatement.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[media(condition, rules)](./alfa-dom.h.rule.media.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[namespace(namespace, prefix)](./alfa-dom.h.rule.namespace.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[page(selector, declarations)](./alfa-dom.h.rule.page.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[style(selector, declarations, hint)](./alfa-dom.h.rule.style.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[supports(condition, rules)](./alfa-dom.h.rule.supports.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

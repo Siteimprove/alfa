@@ -12,11 +12,51 @@ tee<A extends Array<unknown> = []>(callback: Callback<Indexed<T>, void, [...args
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  callback | Callback&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
-|  args | A |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+callback
+
+
+</td><td>
+
+Callback&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+args
+
+
+</td><td>
+
+A
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;

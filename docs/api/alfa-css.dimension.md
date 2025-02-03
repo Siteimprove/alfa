@@ -13,23 +13,112 @@ export declare namespace Dimension
 
 ## Abstract Classes
 
-|  Abstract Class | Description |
-|  --- | --- |
-|  [Calculated](./alfa-css.dimension.calculated.md) | Dimensions that are the result of a calculation. |
-|  [Fixed](./alfa-css.dimension.fixed.md) | Dimensions that are a fixed (not calculated) value. |
+<table><thead><tr><th>
+
+Abstract Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Calculated](./alfa-css.dimension.calculated.md)
+
+
+</td><td>
+
+Dimensions that are the result of a calculation.
+
+
+</td></tr>
+<tr><td>
+
+[Fixed](./alfa-css.dimension.fixed.md)
+
+
+</td><td>
+
+Dimensions that are a fixed (not calculated) value.
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isCalculated(value)](./alfa-css.dimension.iscalculated.md) |  |
-|  [isDimension(value)](./alfa-css.dimension.isdimension.md) |  |
-|  [isFixed(value)](./alfa-css.dimension.isfixed.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isCalculated(value)](./alfa-css.dimension.iscalculated.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isDimension(value)](./alfa-css.dimension.isdimension.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFixed(value)](./alfa-css.dimension.isfixed.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Calculated](./alfa-css.dimension.calculated.md) |  |
-|  [Fixed](./alfa-css.dimension.fixed.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Calculated](./alfa-css.dimension.calculated.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Fixed](./alfa-css.dimension.fixed.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

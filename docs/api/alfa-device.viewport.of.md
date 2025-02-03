@@ -12,12 +12,69 @@ static of(width: number, height?: number, orientation?: Viewport.Orientation): V
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  width | number |  |
-|  height | number | _(Optional)_ |
-|  orientation | [Viewport.Orientation](./alfa-device.viewport.orientation.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+width
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+height
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+orientation
+
+
+</td><td>
+
+[Viewport.Orientation](./alfa-device.viewport.orientation.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Viewport](./alfa-device.viewport.md)

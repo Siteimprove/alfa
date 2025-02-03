@@ -13,13 +13,48 @@ export declare namespace Fragment
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isFragment(value)](./alfa-dom.fragment.isfragment.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isFragment(value)](./alfa-dom.fragment.isfragment.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.fragment.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.fragment.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

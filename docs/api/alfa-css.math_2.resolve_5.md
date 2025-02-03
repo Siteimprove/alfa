@@ -12,11 +12,53 @@ resolve<T extends Numeric = Percentage>(this: Math<"percentage">, resolver?: Exp
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"percentage"&gt; |  |
-|  resolver | Expression.PercentageResolver&lt;T&gt; &amp; Expression.GenericResolver | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Math](./alfa-css.math_2.md)<!-- -->&lt;"percentage"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+resolver
+
+
+</td><td>
+
+Expression.PercentageResolver&lt;T&gt; &amp; Expression.GenericResolver
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Result&lt;T, string&gt;

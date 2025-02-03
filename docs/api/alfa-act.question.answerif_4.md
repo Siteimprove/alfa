@@ -12,10 +12,37 @@ answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSW
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  answer | Result&lt;ANSWER, unknown&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+answer
+
+
+</td><td>
+
+Result&lt;ANSWER, unknown&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;

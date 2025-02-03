@@ -12,10 +12,37 @@ static of(name: Extended.Name): Extended;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | [Extended.Name](./alfa-iana.language.extended.name.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+name
+
+
+</td><td>
+
+[Extended.Name](./alfa-iana.language.extended.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Extended](./alfa-iana.language.extended.md)

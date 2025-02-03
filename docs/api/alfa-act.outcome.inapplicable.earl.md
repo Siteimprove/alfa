@@ -13,7 +13,42 @@ interface EARL extends Outcome.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["earl:result"](./alfa-act.outcome.inapplicable.earl._earl_result_.md) |  | { "@type": "earl:TestResult"; "earl:outcome": { "@id": "earl:inapplicable"; }; } |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["earl:result"](./alfa-act.outcome.inapplicable.earl._earl_result_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ "@type": "earl:TestResult"; "earl:outcome": { "@id": "earl:inapplicable"; }; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

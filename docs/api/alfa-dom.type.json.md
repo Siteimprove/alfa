@@ -13,9 +13,76 @@ interface JSON<N extends string = string> extends Node.JSON<"type">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-dom.type.json.name.md) |  | N |  |
-|  [publicId](./alfa-dom.type.json.publicid.md) |  | string \| null |  |
-|  [systemId](./alfa-dom.type.json.systemid.md) |  | string \| null |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-dom.type.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[publicId](./alfa-dom.type.json.publicid.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[systemId](./alfa-dom.type.json.systemid.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

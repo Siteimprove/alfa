@@ -12,7 +12,42 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-css.token.closeparenthesis.json.type.md) |  | "close-parenthesis" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-css.token.closeparenthesis.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"close-parenthesis"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

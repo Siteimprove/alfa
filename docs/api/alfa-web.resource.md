@@ -13,7 +13,24 @@ export declare namespace Resource
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isResource(value)](./alfa-web.resource.isresource.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isResource(value)](./alfa-web.resource.isresource.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -14,11 +14,51 @@ export function doubleBar<I, T extends Array<unknown>, E, A extends Array<unknow
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  separator | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, any, E, A&gt; |  |
-|  parsers | ToParsers&lt;I, T, E, A&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+separator
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, any, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+parsers
+
+
+</td><td>
+
+ToParsers&lt;I, T, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Maybe&lt;T&gt;, E, A&gt;

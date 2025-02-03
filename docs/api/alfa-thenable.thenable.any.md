@@ -12,10 +12,37 @@ function any<T, E = unknown>(...thenables: Array<Thenable<T, E>>): Thenable<T, A
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  thenables | Array&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+thenables
+
+
+</td><td>
+
+Array&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, Array&lt;E&gt;&gt;

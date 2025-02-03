@@ -12,10 +12,37 @@ flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;

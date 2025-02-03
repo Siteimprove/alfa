@@ -13,7 +13,42 @@ interface JSON extends BasicShape.JSON<"radius">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [value](./alfa-css.radius.json.value.md) |  | [LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[value](./alfa-css.radius.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

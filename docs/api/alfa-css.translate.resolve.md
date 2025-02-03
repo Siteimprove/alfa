@@ -12,10 +12,37 @@ resolve(resolver: Translate.Resolver): Translate.Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Translate.Resolver](./alfa-css.translate.resolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Translate.Resolver](./alfa-css.translate.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Translate.Canonical](./alfa-css.translate.canonical.md)

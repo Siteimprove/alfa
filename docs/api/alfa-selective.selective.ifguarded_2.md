@@ -12,13 +12,79 @@ ifGuarded<U>(predicate: Predicate<S>, guard: Predicate<S>, ifTrue: Mapper<S, U>,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;S&gt; |  |
-|  guard | Predicate&lt;S&gt; |  |
-|  ifTrue | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S, U&gt; |  |
-|  ifFalse | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;S&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+guard
+
+
+</td><td>
+
+Predicate&lt;S&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ifTrue
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ifFalse
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T \| U&gt;

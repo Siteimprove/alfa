@@ -13,7 +13,42 @@ interface JSON extends Rule.JSON<"layer-statement">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [layers](./alfa-dom.layer.statementrule.json.layers.md) |  | Array&lt;string&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[layers](./alfa-dom.layer.statementrule.json.layers.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

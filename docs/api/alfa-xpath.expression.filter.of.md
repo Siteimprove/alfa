@@ -12,11 +12,51 @@ static of(base: Expression, predicates: Array<Expression>): Filter;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  base | [Expression](./alfa-xpath.expression.md) |  |
-|  predicates | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+base
+
+
+</td><td>
+
+[Expression](./alfa-xpath.expression.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+predicates
+
+
+</td><td>
+
+Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Filter](./alfa-xpath.expression.filter.md)

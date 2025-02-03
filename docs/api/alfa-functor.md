@@ -6,13 +6,50 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Functor](./alfa-functor.functor.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Functor](./alfa-functor.functor.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Functor](./alfa-functor.functor.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Functor](./alfa-functor.functor.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

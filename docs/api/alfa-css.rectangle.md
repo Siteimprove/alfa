@@ -17,27 +17,114 @@ export declare namespace Rectangle
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isRectangle(value)](./alfa-css.rectangle.isrectangle.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isRectangle(value)](./alfa-css.rectangle.isrectangle.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.rectangle.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.rectangle.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.rectangle.parse.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.rectangle.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Auto](./alfa-css.rectangle.auto.md) |  |
-|  [Canonical](./alfa-css.rectangle.canonical.md) |  |
-|  [Resolver](./alfa-css.rectangle.resolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Auto](./alfa-css.rectangle.auto.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Canonical](./alfa-css.rectangle.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.rectangle.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -6,13 +6,50 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Slice](./alfa-slice.slice.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Slice](./alfa-slice.slice.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Slice](./alfa-slice.slice.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Slice](./alfa-slice.slice.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

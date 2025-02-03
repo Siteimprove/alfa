@@ -12,7 +12,24 @@ namespace Double
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-xpath.token.double.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-xpath.token.double.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

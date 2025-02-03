@@ -12,11 +12,51 @@ sortWith<T, U extends T = T>(this: Sequence<U>, comparer: Comparer<T>): Sequence
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt; |  |
-|  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+comparer
+
+
+</td><td>
+
+[Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;

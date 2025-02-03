@@ -12,10 +12,37 @@ function isEither<L, R>(value: Iterable<L | R>): value is Either<L, R>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | Iterable&lt;L \| R&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+Iterable&lt;L \| R&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 value is [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;

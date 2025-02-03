@@ -12,7 +12,44 @@ interface Options
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [verbosity?](./alfa-json.serializable.options.verbosity.md) |  | [Verbosity](./alfa-json.serializable.verbosity.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[verbosity?](./alfa-json.serializable.options.verbosity.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Verbosity](./alfa-json.serializable.verbosity.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

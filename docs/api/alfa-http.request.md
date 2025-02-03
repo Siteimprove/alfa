@@ -13,15 +13,66 @@ export declare namespace Request
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-http.request.from.md) |  |
-|  [isRequest(value)](./alfa-http.request.isrequest.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-http.request.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRequest(value)](./alfa-http.request.isrequest.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-http.request.earl.md) |  |
-|  [JSON](./alfa-http.request.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-http.request.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-http.request.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

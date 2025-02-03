@@ -12,11 +12,51 @@ static of(namespace: Option<string>, name: string): Type;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  namespace | Option&lt;string&gt; |  |
-|  name | string |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+namespace
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Type](./alfa-selector.type.md)

@@ -13,10 +13,95 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-dom.node.earl.__context_.md) |  | { ptr: "http://www.w3.org/2009/pointers\#"; } |  |
-|  ["@type"](./alfa-dom.node.earl.__type_.md) |  | \[ "ptr:Pointer", "ptr:SinglePointer", "ptr:ExpressionPointer", "ptr:XPathPointer" \] |  |
-|  ["ptr:expression"](./alfa-dom.node.earl._ptr_expression_.md) |  | string |  |
-|  ["ptr:reference"?](./alfa-dom.node.earl._ptr_reference_.md) |  | { "@id": string; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-dom.node.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ ptr: "http://www.w3.org/2009/pointers\#"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@type"](./alfa-dom.node.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\[ "ptr:Pointer", "ptr:SinglePointer", "ptr:ExpressionPointer", "ptr:XPathPointer" \]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["ptr:expression"](./alfa-dom.node.earl._ptr_expression_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["ptr:reference"?](./alfa-dom.node.earl._ptr_reference_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ "@id": string; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

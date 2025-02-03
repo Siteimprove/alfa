@@ -13,12 +13,69 @@ export declare namespace axis
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [ancestor(name)](./alfa-xpath.axis.ancestor.md) |  |
-|  [attribute(name)](./alfa-xpath.axis.attribute.md) |  |
-|  [child(name)](./alfa-xpath.axis.child.md) |  |
-|  [descendant(name)](./alfa-xpath.axis.descendant.md) |  |
-|  [parent(name)](./alfa-xpath.axis.parent.md) |  |
-|  [self(name)](./alfa-xpath.axis.self.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ancestor(name)](./alfa-xpath.axis.ancestor.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[attribute(name)](./alfa-xpath.axis.attribute.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[child(name)](./alfa-xpath.axis.child.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[descendant(name)](./alfa-xpath.axis.descendant.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parent(name)](./alfa-xpath.axis.parent.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[self(name)](./alfa-xpath.axis.self.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

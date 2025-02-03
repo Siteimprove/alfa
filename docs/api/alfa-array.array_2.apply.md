@@ -12,11 +12,51 @@ function apply<T, U>(array: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  array | ReadonlyArray&lt;T&gt; |  |
-|  mapper | ReadonlyArray&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+array
+
+
+</td><td>
+
+ReadonlyArray&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mapper
+
+
+</td><td>
+
+ReadonlyArray&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Array](./alfa-array.array_2.md)<!-- -->&lt;U&gt;

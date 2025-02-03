@@ -18,13 +18,48 @@ This namespace is currently needed to let the TypeScript compiler know the shape
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [IntrinsicElements](./alfa-dom.jsx.jsx.intrinsicelements.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[IntrinsicElements](./alfa-dom.jsx.jsx.intrinsicelements.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Element](./alfa-dom.jsx.jsx.element.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Element](./alfa-dom.jsx.jsx.element.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

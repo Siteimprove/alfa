@@ -12,7 +12,42 @@ interface Resolver
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [length](./alfa-css.length.resolver.length.md) |  | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Relative](./alfa-css.unit.length.relative.md)<!-- -->&gt;, [Canonical](./alfa-css.length.canonical.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[length](./alfa-css.length.resolver.length.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Relative](./alfa-css.unit.length.relative.md)<!-- -->&gt;, [Canonical](./alfa-css.length.canonical.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

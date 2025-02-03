@@ -13,13 +13,48 @@ export declare namespace FontFaceRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isFontFaceRule(value)](./alfa-dom.fontfacerule.isfontfacerule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isFontFaceRule(value)](./alfa-dom.fontfacerule.isfontfacerule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.fontfacerule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.fontfacerule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

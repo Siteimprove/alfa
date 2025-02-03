@@ -12,11 +12,53 @@ traverse(root: N, traversal?: Network.Traversal): Sequence<[node: N, edges: Iter
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  root | N |  |
-|  traversal | [Network.Traversal](./alfa-network.network.traversal.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+root
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+traversal
+
+
+</td><td>
+
+[Network.Traversal](./alfa-network.network.traversal.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Sequence&lt;\[node: N, edges: Iterable&lt;E&gt;, parent: N\]&gt;

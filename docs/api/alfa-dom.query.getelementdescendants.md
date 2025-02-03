@@ -12,11 +12,53 @@ getElementDescendants: (node: import("../../node.js").Node, options?: import("..
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  node | import("../../node.js").[Node](./alfa-dom.node.md) |  |
-|  options | import("../../node.js").[Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+node
+
+
+</td><td>
+
+import("../../node.js").[Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+import("../../node.js").[Node.Traversal](./alfa-dom.node.traversal.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 import("@siteimprove/alfa-sequence").[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;import("../element.js").Element&lt;string&gt;&gt;

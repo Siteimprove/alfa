@@ -12,10 +12,37 @@ function defer<T>(continuation: Continuation<T>): Future<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  continuation | Continuation&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+continuation
+
+
+</td><td>
+
+Continuation&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;

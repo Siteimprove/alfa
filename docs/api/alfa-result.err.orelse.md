@@ -12,10 +12,37 @@ orElse<U, F>(result: Thunk<Result<U, F>>): Result<U, F>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  result | Thunk&lt;Result&lt;U, F&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+result
+
+
+</td><td>
+
+Thunk&lt;Result&lt;U, F&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Result&lt;U, F&gt;

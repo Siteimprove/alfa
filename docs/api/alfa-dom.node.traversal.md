@@ -12,17 +12,96 @@ namespace Traversal
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [composed](./alfa-dom.node.traversal.composed.md) | <p>When set, traverse the node in shadow-including tree order.</p><p>[https://dom.spec.whatwg.org/\#concept-shadow-including-tree-order](https://dom.spec.whatwg.org/#concept-shadow-including-tree-order)</p> |
-|  [empty](./alfa-dom.node.traversal.empty.md) |  |
-|  [flattened](./alfa-dom.node.traversal.flattened.md) | <p>When set, traverse the flattened element tree rooted at the node.</p><p>[https://drafts.csswg.org/css-scoping/\#flat-tree](https://drafts.csswg.org/css-scoping/#flat-tree)</p> |
-|  [nested](./alfa-dom.node.traversal.nested.md) | <p>When set, traverse all nested browsing contexts encountered.</p><p>[https://html.spec.whatwg.org/\#nested-browsing-context](https://html.spec.whatwg.org/#nested-browsing-context)</p> |
-|  [none](./alfa-dom.node.traversal.none.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[composed](./alfa-dom.node.traversal.composed.md)
+
+
+</td><td>
+
+When set, traverse the node in shadow-including tree order.
+
+[https://dom.spec.whatwg.org/\#concept-shadow-including-tree-order](https://dom.spec.whatwg.org/#concept-shadow-including-tree-order)
+
+
+</td></tr>
+<tr><td>
+
+[empty](./alfa-dom.node.traversal.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[flattened](./alfa-dom.node.traversal.flattened.md)
+
+
+</td><td>
+
+When set, traverse the flattened element tree rooted at the node.
+
+[https://drafts.csswg.org/css-scoping/\#flat-tree](https://drafts.csswg.org/css-scoping/#flat-tree)
+
+
+</td></tr>
+<tr><td>
+
+[nested](./alfa-dom.node.traversal.nested.md)
+
+
+</td><td>
+
+When set, traverse all nested browsing contexts encountered.
+
+[https://html.spec.whatwg.org/\#nested-browsing-context](https://html.spec.whatwg.org/#nested-browsing-context)
+
+
+</td></tr>
+<tr><td>
+
+[none](./alfa-dom.node.traversal.none.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Flag](./alfa-dom.node.traversal.flag.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Flag](./alfa-dom.node.traversal.flag.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

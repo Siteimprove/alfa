@@ -14,7 +14,44 @@ export interface EARL extends Document
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"?](./alfa-earl.earl.__context_.md) |  | { earl?: "http://www.w3.org/ns/earl\#"; cnt?: "http://www.w3.org/2011/content\#"; dct?: "http://purl.org/dc/terms/"; doap?: "http://usefulinc.com/ns/doap\#"; foaf?: "http://xmlns.com/foaf/0.1/"; http?: "http://www.w3.org/2011/http\#"; ptr?: "http://www.w3.org/2009/pointers\#"; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"?](./alfa-earl.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ earl?: "http://www.w3.org/ns/earl\#"; cnt?: "http://www.w3.org/2011/content\#"; dct?: "http://purl.org/dc/terms/"; doap?: "http://usefulinc.com/ns/doap\#"; foaf?: "http://xmlns.com/foaf/0.1/"; http?: "http://www.w3.org/2011/http\#"; ptr?: "http://www.w3.org/2009/pointers\#"; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

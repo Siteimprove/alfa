@@ -12,11 +12,53 @@ static of<T>(head: T, tail?: Lazy<Sequence<T>>): Cons<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  head | T |  |
-|  tail | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;Sequence&lt;T&gt;&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+head
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tail
+
+
+</td><td>
+
+[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;Sequence&lt;T&gt;&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
