@@ -4,6 +4,7 @@ export * from "./predicate/has-border.js";
 export * from "./predicate/has-box-shadow.js";
 export * from "./predicate/has-cascaded-style.js";
 export * from "./predicate/has-computed-style.js";
+export * from "./predicate/has-initial-computed-style.js";
 export * from "./predicate/has-outline.js";
 export * from "./predicate/has-positioning-parent.js";
 export * from "./predicate/has-specified-style.js";
