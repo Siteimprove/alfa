@@ -12,10 +12,37 @@ resolve(resolver: Polygon.Resolver): Polygon.Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Polygon.Resolver](./alfa-css.polygon.resolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Polygon.Resolver](./alfa-css.polygon.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Polygon.Canonical](./alfa-css.polygon.canonical.md)

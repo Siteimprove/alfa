@@ -12,14 +12,93 @@ function fold<T, A extends Array<unknown> = [], V = T, W = T>(predicate: Predica
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
-|  ifTrue | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, V&gt; |  |
-|  ifFalse | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, W&gt; |  |
-|  value | T |  |
-|  args | A |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ifTrue
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, V&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ifFalse
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, W&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+args
+
+
+</td><td>
+
+A
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 V \| W

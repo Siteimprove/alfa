@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [resolution](./alfa-device.display.json.resolution.md) |  | number |  |
-|  [scan](./alfa-device.display.json.scan.md) |  | \`${[Scan](./alfa-device.display.scan.md)<!-- -->}\` |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[resolution](./alfa-device.display.json.resolution.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[scan](./alfa-device.display.json.scan.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\`${[Scan](./alfa-device.display.scan.md)<!-- -->}\`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

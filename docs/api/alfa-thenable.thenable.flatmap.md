@@ -12,11 +12,51 @@ function flatMap<T, U, E = unknown, F = E>(thenable: Thenable<T, E>, mapper: Map
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  thenable | [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, F&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+thenable
+
+
+</td><td>
+
+[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, F&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, E \| F&gt;

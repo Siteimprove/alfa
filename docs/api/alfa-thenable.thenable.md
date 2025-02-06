@@ -13,18 +13,125 @@ export declare namespace Thenable
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [all(thenables)](./alfa-thenable.thenable.all.md) |  |
-|  [any(thenables)](./alfa-thenable.thenable.any.md) |  |
-|  [apply(thenable, mapper)](./alfa-thenable.thenable.apply.md) |  |
-|  [defer(continuation)](./alfa-thenable.thenable.defer.md) |  |
-|  [empty()](./alfa-thenable.thenable.empty.md) |  |
-|  [flatMap(thenable, mapper)](./alfa-thenable.thenable.flatmap.md) |  |
-|  [flatten(thenable)](./alfa-thenable.thenable.flatten.md) |  |
-|  [isThenable(value)](./alfa-thenable.thenable.isthenable.md) | Check if an unknown value implements the [Thenable](./alfa-thenable.thenable.md) interface. |
-|  [map(thenable, mapper)](./alfa-thenable.thenable.map.md) |  |
-|  [race(thenables)](./alfa-thenable.thenable.race.md) |  |
-|  [reject(error)](./alfa-thenable.thenable.reject.md) |  |
-|  [resolve(value)](./alfa-thenable.thenable.resolve.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[all(thenables)](./alfa-thenable.thenable.all.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[any(thenables)](./alfa-thenable.thenable.any.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[apply(thenable, mapper)](./alfa-thenable.thenable.apply.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[defer(continuation)](./alfa-thenable.thenable.defer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[empty()](./alfa-thenable.thenable.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[flatMap(thenable, mapper)](./alfa-thenable.thenable.flatmap.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[flatten(thenable)](./alfa-thenable.thenable.flatten.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isThenable(value)](./alfa-thenable.thenable.isthenable.md)
+
+
+</td><td>
+
+Check if an unknown value implements the [Thenable](./alfa-thenable.thenable.md) interface.
+
+
+</td></tr>
+<tr><td>
+
+[map(thenable, mapper)](./alfa-thenable.thenable.map.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[race(thenables)](./alfa-thenable.thenable.race.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[reject(error)](./alfa-thenable.thenable.reject.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[resolve(value)](./alfa-thenable.thenable.resolve.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

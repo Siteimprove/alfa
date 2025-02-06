@@ -12,7 +12,24 @@ namespace Descendant
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-aria.source.descendant.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-aria.source.descendant.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

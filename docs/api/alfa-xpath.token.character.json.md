@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-xpath.token.character.json.type.md) |  | "character" |  |
-|  [value](./alfa-xpath.token.character.json.value.md) |  | number |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-xpath.token.character.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"character"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-xpath.token.character.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

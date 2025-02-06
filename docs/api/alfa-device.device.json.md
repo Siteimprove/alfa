@@ -12,11 +12,110 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [display](./alfa-device.device.json.display.md) |  | [Display.JSON](./alfa-device.display.json.md) |  |
-|  [preferences](./alfa-device.device.json.preferences.md) |  | Array&lt;[Preference.JSON](./alfa-device.preference.json.md)<!-- -->&gt; |  |
-|  [scripting](./alfa-device.device.json.scripting.md) |  | [Scripting.JSON](./alfa-device.scripting.json.md) |  |
-|  [type](./alfa-device.device.json.type.md) |  | \`${[Type](./alfa-device.device.type.md)<!-- -->}\` |  |
-|  [viewport](./alfa-device.device.json.viewport.md) |  | [Viewport.JSON](./alfa-device.viewport.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[display](./alfa-device.device.json.display.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Display.JSON](./alfa-device.display.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[preferences](./alfa-device.device.json.preferences.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Preference.JSON](./alfa-device.preference.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[scripting](./alfa-device.device.json.scripting.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Scripting.JSON](./alfa-device.scripting.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-device.device.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\`${[Type](./alfa-device.device.type.md)<!-- -->}\`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[viewport](./alfa-device.device.json.viewport.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Viewport.JSON](./alfa-device.viewport.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

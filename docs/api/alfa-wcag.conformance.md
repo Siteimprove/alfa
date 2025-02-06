@@ -16,17 +16,96 @@ export declare namespace Conformance
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isA(version)](./alfa-wcag.conformance.isa.md) | Check if a criterion is needed for level AA conformance under the specified version. |
-|  [isAA(version)](./alfa-wcag.conformance.isaa.md) | Check if a criterion is needed for level AA conformance under the specified version. |
-|  [isAAA(version)](./alfa-wcag.conformance.isaaa.md) | Check if a criterion is needed for level AAA conformance under the specified version. |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isA(version)](./alfa-wcag.conformance.isa.md)
+
+
+</td><td>
+
+Check if a criterion is needed for level AA conformance under the specified version.
+
+
+</td></tr>
+<tr><td>
+
+[isAA(version)](./alfa-wcag.conformance.isaa.md)
+
+
+</td><td>
+
+Check if a criterion is needed for level AA conformance under the specified version.
+
+
+</td></tr>
+<tr><td>
+
+[isAAA(version)](./alfa-wcag.conformance.isaaa.md)
+
+
+</td><td>
+
+Check if a criterion is needed for level AAA conformance under the specified version.
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [A](./alfa-wcag.conformance.a.md) | All criteria needed for conformance level A. |
-|  [AA](./alfa-wcag.conformance.aa.md) | All criteria needed for level AA conformance. |
-|  [AAA](./alfa-wcag.conformance.aaa.md) | All criteria needed for level AAA conformance. |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[A](./alfa-wcag.conformance.a.md)
+
+
+</td><td>
+
+All criteria needed for conformance level A.
+
+
+</td></tr>
+<tr><td>
+
+[AA](./alfa-wcag.conformance.aa.md)
+
+
+</td><td>
+
+All criteria needed for level AA conformance.
+
+
+</td></tr>
+<tr><td>
+
+[AAA](./alfa-wcag.conformance.aaa.md)
+
+
+</td><td>
+
+All criteria needed for level AAA conformance.
+
+
+</td></tr>
+</tbody></table>

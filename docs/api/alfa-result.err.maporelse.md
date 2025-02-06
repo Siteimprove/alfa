@@ -12,11 +12,51 @@ mapOrElse<U>(ok: unknown, err: Mapper<E, U>): U;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  ok | unknown |  |
-|  err | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;E, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+ok
+
+
+</td><td>
+
+unknown
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+err
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;E, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 U

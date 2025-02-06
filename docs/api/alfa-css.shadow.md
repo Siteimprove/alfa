@@ -13,20 +13,81 @@ export declare namespace Shadow
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [parse(options)](./alfa-css.shadow.parse.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse(options)](./alfa-css.shadow.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.shadow.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.shadow.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.shadow.canonical.md) |  |
-|  [Resolver](./alfa-css.shadow.resolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.shadow.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.shadow.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

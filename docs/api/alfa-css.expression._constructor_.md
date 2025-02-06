@@ -14,8 +14,48 @@ protected constructor(type: T, kind: Kind);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | T |  |
-|  kind | Kind |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+kind
+
+
+</td><td>
+
+Kind
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

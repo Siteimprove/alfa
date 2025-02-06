@@ -14,8 +14,37 @@ export declare namespace Equatable
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [equals(a, b)](./alfa-equatable.equatable.equals.md) | Check if two unknown values are equal. |
-|  [isEquatable(value)](./alfa-equatable.equatable.isequatable.md) | Check if an unknown value implements the [Equatable](./alfa-equatable.equatable.md) interface. |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[equals(a, b)](./alfa-equatable.equatable.equals.md)
+
+
+</td><td>
+
+Check if two unknown values are equal.
+
+
+</td></tr>
+<tr><td>
+
+[isEquatable(value)](./alfa-equatable.equatable.isequatable.md)
+
+
+</td><td>
+
+Check if an unknown value implements the [Equatable](./alfa-equatable.equatable.md) interface.
+
+
+</td></tr>
+</tbody></table>

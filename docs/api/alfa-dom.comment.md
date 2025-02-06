@@ -13,14 +13,57 @@ export declare namespace Comment
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isComment(value)](./alfa-dom.comment.iscomment.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isComment(value)](./alfa-dom.comment.iscomment.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.comment.json.md) |  |
-|  [MinimalJSON](./alfa-dom.comment.minimaljson.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.comment.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-dom.comment.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

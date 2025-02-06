@@ -12,8 +12,59 @@ interface ElementReplacementOptions
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [newElements](./alfa-dom.node.elementreplacementoptions.newelements.md) |  | Iterable&lt;Element&gt; |  |
-|  [predicate](./alfa-dom.node.elementreplacementoptions.predicate.md) |  | Predicate&lt;Element&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[newElements](./alfa-dom.node.elementreplacementoptions.newelements.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Iterable&lt;Element&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[predicate](./alfa-dom.node.elementreplacementoptions.predicate.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Predicate&lt;Element&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

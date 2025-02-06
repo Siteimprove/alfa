@@ -12,10 +12,37 @@ function isMap<K, V>(value: Iterable<readonly [K, V]>): value is Map<K, V>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | Iterable&lt;readonly \[K, V\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+Iterable&lt;readonly \[K, V\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 value is [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;

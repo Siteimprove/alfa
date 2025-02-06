@@ -6,28 +6,130 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Some](./alfa-option.some.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Some](./alfa-option.some.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [None](./alfa-option.none.md) |  |
-|  [Option](./alfa-option.option.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[None](./alfa-option.none.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Option](./alfa-option.option.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [None](./alfa-option.none.md) |  |
-|  [Option](./alfa-option.option.md) |  |
-|  [Some](./alfa-option.some.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[None](./alfa-option.none.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Option](./alfa-option.option.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Some](./alfa-option.some.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [None](./alfa-option.none.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[None](./alfa-option.none.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

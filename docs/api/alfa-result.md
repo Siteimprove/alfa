@@ -6,22 +6,105 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Err](./alfa-result.err.md) |  |
-|  [Ok](./alfa-result.ok.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Err](./alfa-result.err.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Ok](./alfa-result.ok.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Result](./alfa-result.result.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Result](./alfa-result.result.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Err](./alfa-result.err.md) |  |
-|  [Ok](./alfa-result.ok.md) |  |
-|  [Result](./alfa-result.result.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Err](./alfa-result.err.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Ok](./alfa-result.ok.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Result](./alfa-result.result.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

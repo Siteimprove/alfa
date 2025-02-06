@@ -12,11 +12,51 @@ then(resolved: Callback<T>, rejected: Callback<E>): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolved | Callback&lt;T&gt; |  |
-|  rejected | Callback&lt;E&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolved
+
+
+</td><td>
+
+Callback&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+rejected
+
+
+</td><td>
+
+Callback&lt;E&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

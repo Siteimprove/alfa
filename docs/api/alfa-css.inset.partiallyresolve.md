@@ -12,10 +12,37 @@ partiallyResolve(resolver: Inset.PartialResolver): Inset.PartiallyResolved;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Inset.PartialResolver](./alfa-css.inset.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Inset.PartialResolver](./alfa-css.inset.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Inset.PartiallyResolved](./alfa-css.inset.partiallyresolved.md)

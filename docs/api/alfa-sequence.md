@@ -6,28 +6,130 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Cons](./alfa-sequence.cons.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cons](./alfa-sequence.cons.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Nil](./alfa-sequence.nil.md) |  |
-|  [Sequence](./alfa-sequence.sequence.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Nil](./alfa-sequence.nil.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Sequence](./alfa-sequence.sequence.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Cons](./alfa-sequence.cons.md) |  |
-|  [Nil](./alfa-sequence.nil.md) |  |
-|  [Sequence](./alfa-sequence.sequence.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cons](./alfa-sequence.cons.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Nil](./alfa-sequence.nil.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Sequence](./alfa-sequence.sequence.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [Nil](./alfa-sequence.nil.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Nil](./alfa-sequence.nil.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

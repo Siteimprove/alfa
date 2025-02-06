@@ -12,11 +12,90 @@ enum State
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Active | <code>2</code> |  |
-|  Focus | <code>4</code> |  |
-|  Hover | <code>1</code> |  |
-|  None | <code>0</code> |  |
-|  Visited | <code>8</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+Active
+
+
+</td><td>
+
+`2`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Focus
+
+
+</td><td>
+
+`4`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Hover
+
+
+</td><td>
+
+`1`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+None
+
+
+</td><td>
+
+`0`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Visited
+
+
+</td><td>
+
+`8`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

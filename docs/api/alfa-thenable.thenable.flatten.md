@@ -12,10 +12,37 @@ function flatten<T, E = unknown, F = E>(thenable: Thenable<Thenable<T, F>, E>): 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  thenable | [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, F&gt;, E&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+thenable
+
+
+</td><td>
+
+[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, F&gt;, E&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E \| F&gt;

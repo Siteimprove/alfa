@@ -12,11 +12,53 @@ static of(rules: Iterable<Rule>, layer?: string | null): BlockRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rules | Iterable&lt;Rule&gt; |  |
-|  layer | string \| null | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+rules
+
+
+</td><td>
+
+Iterable&lt;Rule&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+layer
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [BlockRule](./alfa-dom.layer.blockrule.md)

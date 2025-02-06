@@ -13,11 +13,110 @@ interface JSON extends Value.JSON<"contain-flags">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [inlineSize](./alfa-css.containflags.json.inlinesize.md) |  | boolean |  |
-|  [layout](./alfa-css.containflags.json.layout.md) |  | boolean |  |
-|  [paint](./alfa-css.containflags.json.paint.md) |  | boolean |  |
-|  [size](./alfa-css.containflags.json.size.md) |  | boolean |  |
-|  [style](./alfa-css.containflags.json.style.md) |  | boolean |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[inlineSize](./alfa-css.containflags.json.inlinesize.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[layout](./alfa-css.containflags.json.layout.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[paint](./alfa-css.containflags.json.paint.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[size](./alfa-css.containflags.json.size.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[style](./alfa-css.containflags.json.style.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

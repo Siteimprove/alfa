@@ -12,10 +12,39 @@ evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable<Out
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  performance | Performance&lt;[Rule.Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+performance
+
+
+</td><td>
+
+Performance&lt;[Rule.Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S&gt;&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;

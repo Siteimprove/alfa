@@ -13,10 +13,93 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-act.rule.earl.__context_.md) |  | { earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; } |  |
-|  ["@id"](./alfa-act.rule.earl.__id_.md) |  | string |  |
-|  ["@type"](./alfa-act.rule.earl.__type_.md) |  | \["earl:TestCriterion", "earl:TestCase"\] |  |
-|  ["dct:isPartOf"](./alfa-act.rule.earl._dct_ispartof_.md) |  | { "@set": Array&lt;[Requirement.EARL](./alfa-act.requirement.earl.md)<!-- -->&gt;; } |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-act.rule.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@id"](./alfa-act.rule.earl.__id_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@type"](./alfa-act.rule.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\["earl:TestCriterion", "earl:TestCase"\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["dct:isPartOf"](./alfa-act.rule.earl._dct_ispartof_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ "@set": Array&lt;[Requirement.EARL](./alfa-act.requirement.earl.md)<!-- -->&gt;; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ function from(json: FontFaceRule.JSON): FontFaceRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [FontFaceRule.JSON](./alfa-dom.fontfacerule.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[FontFaceRule.JSON](./alfa-dom.fontfacerule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 FontFaceRule

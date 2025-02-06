@@ -12,10 +12,37 @@ partiallyResolve(resolver: Radius.PartialResolver): Radius.PartiallyResolved;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Radius.PartialResolver](./alfa-css.radius.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Radius.PartialResolver](./alfa-css.radius.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Radius.PartiallyResolved](./alfa-css.radius.partiallyresolved.md)

@@ -12,11 +12,51 @@ function contraMap<T, R, U, A extends Array<unknown> = []>(callback: Callback<T,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, R, A&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;U, T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+callback
+
+
+</td><td>
+
+[Callback](./alfa-callback.callback.md)<!-- -->&lt;T, R, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;U, T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Callback](./alfa-callback.callback.md)<!-- -->&lt;U, R, A&gt;

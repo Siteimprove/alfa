@@ -13,59 +13,314 @@ export declare namespace Outcome
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [CantTell](./alfa-act.outcome.canttell.md) |  |
-|  [Failed](./alfa-act.outcome.failed.md) |  |
-|  [Inapplicable](./alfa-act.outcome.inapplicable.md) |  |
-|  [Passed](./alfa-act.outcome.passed.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[CantTell](./alfa-act.outcome.canttell.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Failed](./alfa-act.outcome.failed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Inapplicable](./alfa-act.outcome.inapplicable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Passed](./alfa-act.outcome.passed.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Mode](./alfa-act.outcome.mode.md) | [https://www.w3.org/TR/EARL10-Schema/\#TestMode](https://www.w3.org/TR/EARL10-Schema/#TestMode) |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Mode](./alfa-act.outcome.mode.md)
+
+
+</td><td>
+
+[https://www.w3.org/TR/EARL10-Schema/\#TestMode](https://www.w3.org/TR/EARL10-Schema/#TestMode)
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(rule, target, expectations, mode)](./alfa-act.outcome.from.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(rule, target, expectations, mode)](./alfa-act.outcome.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-act.outcome.earl.md) |  |
-|  [JSON](./alfa-act.outcome.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-act.outcome.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-act.outcome.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Applicable](./alfa-act.outcome.applicable.md) |  |
-|  [CantTell](./alfa-act.outcome.canttell.md) |  |
-|  [Failed](./alfa-act.outcome.failed.md) |  |
-|  [Inapplicable](./alfa-act.outcome.inapplicable.md) |  |
-|  [Passed](./alfa-act.outcome.passed.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Applicable](./alfa-act.outcome.applicable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[CantTell](./alfa-act.outcome.canttell.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Failed](./alfa-act.outcome.failed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Inapplicable](./alfa-act.outcome.inapplicable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Passed](./alfa-act.outcome.passed.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [cantTell](./alfa-act.outcome.canttell.md) |  |
-|  [failed](./alfa-act.outcome.failed.md) |  |
-|  [inapplicable](./alfa-act.outcome.inapplicable.md) |  |
-|  [isApplicable](./alfa-act.outcome.isapplicable.md) |  |
-|  [isCantTell](./alfa-act.outcome.iscanttell.md) |  |
-|  [isFailed](./alfa-act.outcome.isfailed.md) |  |
-|  [isInapplicable](./alfa-act.outcome.isinapplicable.md) |  |
-|  [isPassed](./alfa-act.outcome.ispassed.md) |  |
-|  [passed](./alfa-act.outcome.passed.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[cantTell](./alfa-act.outcome.canttell.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[failed](./alfa-act.outcome.failed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[inapplicable](./alfa-act.outcome.inapplicable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isApplicable](./alfa-act.outcome.isapplicable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isCantTell](./alfa-act.outcome.iscanttell.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFailed](./alfa-act.outcome.isfailed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isInapplicable](./alfa-act.outcome.isinapplicable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isPassed](./alfa-act.outcome.ispassed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[passed](./alfa-act.outcome.passed.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Applicable](./alfa-act.outcome.applicable.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Applicable](./alfa-act.outcome.applicable.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

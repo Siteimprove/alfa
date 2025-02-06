@@ -12,13 +12,120 @@ export declare class FNV extends Hash
 ```
 **Extends:** [Hash](./alfa-hash.hash.md)
 
+## Constructors
+
+<table><thead><tr><th>
+
+Constructor
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[(constructor)()](./alfa-fnv.fnv._constructor_.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Constructs a new instance of the `FNV` class
+
+
+</td></tr>
+</tbody></table>
+
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [empty()](./alfa-fnv.fnv.empty.md) | <code>static</code> |  |
-|  [equals(value)](./alfa-fnv.fnv.equals.md) |  |  |
-|  [equals(value)](./alfa-fnv.fnv.equals_1.md) |  |  |
-|  [finish()](./alfa-fnv.fnv.finish.md) |  |  |
-|  [write(data)](./alfa-fnv.fnv.write.md) |  |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[empty()](./alfa-fnv.fnv.empty.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[equals(value)](./alfa-fnv.fnv.equals.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[equals(value)](./alfa-fnv.fnv.equals_1.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[finish()](./alfa-fnv.fnv.finish.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[write(data)](./alfa-fnv.fnv.write.md)
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

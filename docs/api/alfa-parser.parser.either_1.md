@@ -12,12 +12,65 @@ export function either<I, T, E, A extends Array<unknown> = []>(left: Parser<I, T
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  left | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  right | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  rest | Array&lt;[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+left
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+right
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+rest
+
+
+</td><td>
+
+Array&lt;[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;

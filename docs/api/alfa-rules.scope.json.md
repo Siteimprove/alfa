@@ -13,7 +13,42 @@ interface JSON<S extends string = string> extends Tag.JSON<"scope">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [scope](./alfa-rules.scope.json.scope.md) |  | S |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[scope](./alfa-rules.scope.json.scope.md)
+
+
+</td><td>
+
+
+</td><td>
+
+S
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,27 +13,144 @@ namespace Event
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [end(rule, name)](./alfa-act.rule.event.end.md) |  |
-|  [end(rule)](./alfa-act.rule.event.end_1.md) |  |
-|  [endApplicability(rule)](./alfa-act.rule.event.endapplicability.md) |  |
-|  [endExpectation(rule)](./alfa-act.rule.event.endexpectation.md) |  |
-|  [isEvent(value)](./alfa-act.rule.event.isevent.md) |  |
-|  [start(rule, name)](./alfa-act.rule.event.start.md) |  |
-|  [start(rule)](./alfa-act.rule.event.start_1.md) |  |
-|  [startApplicability(rule)](./alfa-act.rule.event.startapplicability.md) |  |
-|  [startExpectation(rule)](./alfa-act.rule.event.startexpectation.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[end(rule, name)](./alfa-act.rule.event.end.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[end(rule)](./alfa-act.rule.event.end_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[endApplicability(rule)](./alfa-act.rule.event.endapplicability.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[endExpectation(rule)](./alfa-act.rule.event.endexpectation.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isEvent(value)](./alfa-act.rule.event.isevent.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[start(rule, name)](./alfa-act.rule.event.start.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[start(rule)](./alfa-act.rule.event.start_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[startApplicability(rule)](./alfa-act.rule.event.startapplicability.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[startExpectation(rule)](./alfa-act.rule.event.startexpectation.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-act.rule.event.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-act.rule.event.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Type](./alfa-act.rule.event.type.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Type](./alfa-act.rule.event.type.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

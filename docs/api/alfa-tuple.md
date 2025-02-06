@@ -6,13 +6,50 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Tuple](./alfa-tuple.tuple.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Tuple](./alfa-tuple.tuple.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Tuple](./alfa-tuple.tuple.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Tuple](./alfa-tuple.tuple.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

@@ -13,14 +13,57 @@ export declare namespace Text
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isText(value)](./alfa-dom.text.istext.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isText(value)](./alfa-dom.text.istext.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.text.json.md) |  |
-|  [MinimalJSON](./alfa-dom.text.minimaljson.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.text.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-dom.text.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

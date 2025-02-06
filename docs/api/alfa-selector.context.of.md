@@ -12,10 +12,37 @@ static of(state: Iterable<[Element, Context.State]>): Context;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  state | Iterable&lt;\[Element, [Context.State](./alfa-selector.context.state.md)<!-- -->\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+state
+
+
+</td><td>
+
+Iterable&lt;\[Element, [Context.State](./alfa-selector.context.state.md)<!-- -->\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Context](./alfa-selector.context.md)

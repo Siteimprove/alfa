@@ -13,19 +13,72 @@ export declare namespace Name
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(node, device)](./alfa-aria.name.from.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(node, device)](./alfa-aria.name.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-aria.name.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-aria.name.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [hasValue](./alfa-aria.name.hasvalue.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[hasValue](./alfa-aria.name.hasvalue.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,12 +12,69 @@ function sheet(rules: Array<Rule>, disabled?: boolean, condition?: string): Shee
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rules | Array&lt;Rule&gt; |  |
-|  disabled | boolean | _(Optional)_ |
-|  condition | string | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+rules
+
+
+</td><td>
+
+Array&lt;Rule&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+disabled
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+condition
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Sheet

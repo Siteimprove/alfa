@@ -14,8 +14,48 @@ protected constructor(type: T, uri: U);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | T |  |
-|  uri | U |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+uri
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

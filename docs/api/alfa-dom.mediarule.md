@@ -13,14 +13,57 @@ export declare namespace MediaRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isMediaRule(value)](./alfa-dom.mediarule.ismediarule.md) |  |
-|  [matches(device)](./alfa-dom.mediarule.matches.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isMediaRule(value)](./alfa-dom.mediarule.ismediarule.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[matches(device)](./alfa-dom.mediarule.matches.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.mediarule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.mediarule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,9 +12,62 @@ enum Type
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Print | <code>&quot;print&quot;</code> |  |
-|  Screen | <code>&quot;screen&quot;</code> |  |
-|  Speech | <code>&quot;speech&quot;</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+Print
+
+
+</td><td>
+
+`"print"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Screen
+
+
+</td><td>
+
+`"screen"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Speech
+
+
+</td><td>
+
+`"speech"`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

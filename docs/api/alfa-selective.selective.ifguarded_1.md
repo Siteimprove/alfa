@@ -12,13 +12,79 @@ ifGuarded<P, Q extends P, U>(predicate: Refinement<P, Q>, guard: Predicate<S & Q
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Refinement&lt;P, Q&gt; |  |
-|  guard | Predicate&lt;S &amp; Q&gt; |  |
-|  ifTrue | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S &amp; Q, U&gt; |  |
-|  ifFalse | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S &amp; Q, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Refinement&lt;P, Q&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+guard
+
+
+</td><td>
+
+Predicate&lt;S &amp; Q&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ifTrue
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S &amp; Q, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ifFalse
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S &amp; Q, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;Exclude&lt;S, Q&gt;, T \| U&gt;

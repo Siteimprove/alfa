@@ -12,11 +12,51 @@ static of<T, B = never>(value: T, ...branches: Array<B>): Branched<T, B>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | T |  |
-|  branches | Array&lt;B&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+branches
+
+
+</td><td>
+
+Array&lt;B&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;

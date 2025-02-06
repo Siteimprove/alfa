@@ -12,10 +12,37 @@ static of(headers: Iterable<Header>): Headers;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  headers | Iterable&lt;Header&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+headers
+
+
+</td><td>
+
+Iterable&lt;Header&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Headers](./alfa-http.headers.md)

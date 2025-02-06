@@ -12,11 +12,53 @@ static of(resolution: number, scan?: Display.Scan): Display;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolution | number |  |
-|  scan | [Display.Scan](./alfa-device.display.scan.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolution
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+scan
+
+
+</td><td>
+
+[Display.Scan](./alfa-device.display.scan.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Display](./alfa-device.display.md)

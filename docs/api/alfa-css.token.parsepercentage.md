@@ -12,10 +12,39 @@ function parsePercentage(predicate?: Predicate<Percentage>): Parser<Slice<Token>
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;[Percentage](./alfa-css.token.percentage.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;[Percentage](./alfa-css.token.percentage.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Percentage](./alfa-css.token.percentage.md)<!-- -->, string, \[\]&gt;

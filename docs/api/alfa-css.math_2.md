@@ -13,27 +13,144 @@ export declare namespace Math
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isCalculation(value)](./alfa-css.math_2.iscalculation.md) |  |
-|  [isNumber(value)](./alfa-css.math_2.isnumber.md) |  |
-|  [isPercentage(value)](./alfa-css.math_2.ispercentage.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isCalculation(value)](./alfa-css.math_2.iscalculation.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isNumber(value)](./alfa-css.math_2.isnumber.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isPercentage(value)](./alfa-css.math_2.ispercentage.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.math_2.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.math_2.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.math_2.parse.md) |  |
-|  [parseAngle](./alfa-css.math_2.parseangle.md) |  |
-|  [parseAnglePercentage](./alfa-css.math_2.parseanglepercentage.md) |  |
-|  [parseLength](./alfa-css.math_2.parselength.md) |  |
-|  [parseLengthPercentage](./alfa-css.math_2.parselengthpercentage.md) |  |
-|  [parseNumber](./alfa-css.math_2.parsenumber.md) |  |
-|  [parsePercentage](./alfa-css.math_2.parsepercentage.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.math_2.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseAngle](./alfa-css.math_2.parseangle.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseAnglePercentage](./alfa-css.math_2.parseanglepercentage.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseLength](./alfa-css.math_2.parselength.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseLengthPercentage](./alfa-css.math_2.parselengthpercentage.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseNumber](./alfa-css.math_2.parsenumber.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parsePercentage](./alfa-css.math_2.parsepercentage.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,14 +12,97 @@ static of(type: Device.Type, viewport: Viewport, display: Display, scripting?: S
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | [Device.Type](./alfa-device.device.type.md) |  |
-|  viewport | Viewport |  |
-|  display | Display |  |
-|  scripting | Scripting | _(Optional)_ |
-|  preferences | Iterable&lt;Preference&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+[Device.Type](./alfa-device.device.type.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+viewport
+
+
+</td><td>
+
+Viewport
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+display
+
+
+</td><td>
+
+Display
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+scripting
+
+
+</td><td>
+
+Scripting
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+preferences
+
+
+</td><td>
+
+Iterable&lt;Preference&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Device](./alfa-device.device.md)

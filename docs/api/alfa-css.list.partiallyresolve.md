@@ -12,10 +12,39 @@ partiallyResolve(resolver?: Resolvable.PartialResolver<V>): List<Resolvable.Part
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | Resolvable.PartialResolver&lt;V&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+Resolvable.PartialResolver&lt;V&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [List](./alfa-css.list.md)<!-- -->&lt;Resolvable.PartiallyResolved&lt;V&gt;&gt;

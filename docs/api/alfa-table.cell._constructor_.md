@@ -14,11 +14,90 @@ protected constructor(element: Element, anchor: Slot, width: number, height: num
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  element | Element |  |
-|  anchor | Slot |  |
-|  width | number |  |
-|  height | number |  |
-|  headers | Array&lt;Slot&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+element
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+anchor
+
+
+</td><td>
+
+Slot
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+width
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+height
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+headers
+
+
+</td><td>
+
+Array&lt;Slot&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ flatten<T>(this: Some<Option<T>>): Option<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Some](./alfa-option.some.md)<!-- -->&lt;Option&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Some](./alfa-option.some.md)<!-- -->&lt;Option&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Option&lt;T&gt;

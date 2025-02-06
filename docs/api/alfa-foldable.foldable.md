@@ -13,7 +13,24 @@ export interface Foldable<T>
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [reduce(reducer, accumulator)](./alfa-foldable.foldable.reduce.md) |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[reduce(reducer, accumulator)](./alfa-foldable.foldable.reduce.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

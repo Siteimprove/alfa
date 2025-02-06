@@ -13,13 +13,48 @@ export declare namespace Ident
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isIdent(value)](./alfa-css.ident.isident.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isIdent(value)](./alfa-css.ident.isident.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.ident.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.ident.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

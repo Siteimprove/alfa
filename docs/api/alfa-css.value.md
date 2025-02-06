@@ -13,13 +13,48 @@ export declare namespace Value
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isValue(value, type)](./alfa-css.value.isvalue.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isValue(value, type)](./alfa-css.value.isvalue.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.value.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.value.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

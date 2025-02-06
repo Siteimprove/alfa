@@ -12,11 +12,51 @@ sortWith<T, U extends T = T>(this: Slice<U>, comparer: Comparer<T>): Slice<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt; |  |
-|  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+comparer
+
+
+</td><td>
+
+[Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;

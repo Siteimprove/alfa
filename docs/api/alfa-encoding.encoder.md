@@ -14,7 +14,26 @@ export declare namespace Encoder
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [encode(input)](./alfa-encoding.encoder.encode.md) | [https://encoding.spec.whatwg.org/\#dom-textencoder-encode](https://encoding.spec.whatwg.org/#dom-textencoder-encode) [https://encoding.spec.whatwg.org/\#utf-8-encoder](https://encoding.spec.whatwg.org/#utf-8-encoder) |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[encode(input)](./alfa-encoding.encoder.encode.md)
+
+
+</td><td>
+
+[https://encoding.spec.whatwg.org/\#dom-textencoder-encode](https://encoding.spec.whatwg.org/#dom-textencoder-encode) [https://encoding.spec.whatwg.org/\#utf-8-encoder](https://encoding.spec.whatwg.org/#utf-8-encoder)
+
+
+</td></tr>
+</tbody></table>

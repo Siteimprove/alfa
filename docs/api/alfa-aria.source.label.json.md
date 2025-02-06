@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [attribute](./alfa-aria.source.label.json.attribute.md) |  | string |  |
-|  [type](./alfa-aria.source.label.json.type.md) |  | "label" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[attribute](./alfa-aria.source.label.json.attribute.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-aria.source.label.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"label"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

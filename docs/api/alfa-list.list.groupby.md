@@ -12,10 +12,37 @@ groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  grouper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+grouper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Map&lt;K, [List](./alfa-list.list.md)<!-- -->&lt;T&gt;&gt;

@@ -13,22 +13,99 @@ export declare namespace Shorthands
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [get(name)](./alfa-style.shorthands.get.md) |  |
-|  [isName(name)](./alfa-style.shorthands.isname.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[get(name)](./alfa-style.shorthands.get.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isName(name)](./alfa-style.shorthands.isname.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [shortHands](./alfa-style.shorthands.shorthands.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[shortHands](./alfa-style.shorthands.shorthands.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Longhands](./alfa-style.shorthands.longhands.md) |  |
-|  [Name](./alfa-style.shorthands.name.md) |  |
-|  [Property](./alfa-style.shorthands.property.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Longhands](./alfa-style.shorthands.longhands.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Name](./alfa-style.shorthands.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Property](./alfa-style.shorthands.property.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

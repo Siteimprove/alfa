@@ -12,11 +12,51 @@ function flatMap<T, U, R = void, A extends Array<unknown> = []>(continuation: Co
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  continuation | [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, R, A&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;U, R, A&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+continuation
+
+
+</td><td>
+
+[Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, R, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;U, R, A&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;U, R, A&gt;

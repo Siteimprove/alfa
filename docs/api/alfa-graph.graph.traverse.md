@@ -12,11 +12,53 @@ traverse(root: T, traversal?: Graph.Traversal): Sequence<[node: T, parent: T]>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  root | T |  |
-|  traversal | [Graph.Traversal](./alfa-graph.graph.traversal.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+root
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+traversal
+
+
+</td><td>
+
+[Graph.Traversal](./alfa-graph.graph.traversal.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Sequence&lt;\[node: T, parent: T\]&gt;

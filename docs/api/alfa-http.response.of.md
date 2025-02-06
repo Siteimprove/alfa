@@ -12,13 +12,83 @@ static of(url: URL, status: number, headers?: Headers, body?: ArrayBuffer): Resp
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  url | URL |  |
-|  status | number |  |
-|  headers | Headers | _(Optional)_ |
-|  body | ArrayBuffer | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+url
+
+
+</td><td>
+
+URL
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+status
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+headers
+
+
+</td><td>
+
+Headers
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+body
+
+
+</td><td>
+
+ArrayBuffer
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Response](./alfa-http.response.md)

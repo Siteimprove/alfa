@@ -12,7 +12,46 @@ interface Properties
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [style?](./alfa-dom.jsx.properties.style.md) |  | Record&lt;string, string&gt; | <p>_(Optional)_ An optional record of CSS property names and their associated values. This works similarly to the <code>style</code> property in React.</p><p>[https://reactjs.org/docs/dom-elements.html\#style](https://reactjs.org/docs/dom-elements.html#style)</p> |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[style?](./alfa-dom.jsx.properties.style.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Record&lt;string, string&gt;
+
+
+</td><td>
+
+_(Optional)_ An optional record of CSS property names and their associated values. This works similarly to the `style` property in React.
+
+[https://reactjs.org/docs/dom-elements.html\#style](https://reactjs.org/docs/dom-elements.html#style)
+
+
+</td></tr>
+</tbody></table>

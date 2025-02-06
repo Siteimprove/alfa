@@ -12,10 +12,37 @@ equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Rule<I, T, 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

@@ -12,10 +12,37 @@ function isEvery<N extends Name>(query: Query<N>): query is Every<N>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  query | [Query](./alfa-compatibility.browser.query.md)<!-- -->&lt;N&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+query
+
+
+</td><td>
+
+[Query](./alfa-compatibility.browser.query.md)<!-- -->&lt;N&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 query is [Every](./alfa-compatibility.browser.query.every.md)<!-- -->&lt;N&gt;

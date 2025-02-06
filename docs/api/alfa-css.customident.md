@@ -13,8 +13,33 @@ export declare namespace CustomIdent
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isCustomIdent(value)](./alfa-css.customident.iscustomident.md) |  |
-|  [parse(predicate)](./alfa-css.customident.parse.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isCustomIdent(value)](./alfa-css.customident.iscustomident.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parse(predicate)](./alfa-css.customident.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

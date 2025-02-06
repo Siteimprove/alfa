@@ -14,11 +14,110 @@ interface Type
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["color\[\]"](./alfa-rules.question.type._color___.md) |  | Iterable&lt;RGB&gt; |  |
-|  ["node\[\]"](./alfa-rules.question.type._node___.md) |  | Iterable&lt;Node&gt; |  |
-|  [boolean](./alfa-rules.question.type.boolean.md) |  | boolean |  |
-|  [node](./alfa-rules.question.type.node.md) |  | Option&lt;Node&gt; |  |
-|  [string](./alfa-rules.question.type.string.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["color\[\]"](./alfa-rules.question.type._color___.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Iterable&lt;RGB&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["node\[\]"](./alfa-rules.question.type._node___.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Iterable&lt;Node&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[boolean](./alfa-rules.question.type.boolean.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[node](./alfa-rules.question.type.node.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Option&lt;Node&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[string](./alfa-rules.question.type.string.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,9 +13,76 @@ interface JSON extends Selector.JSON<"complex">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [combinator](./alfa-selector.complex.json.combinator.md) |  | Combinator |  |
-|  [left](./alfa-selector.complex.json.left.md) |  | [Simple.JSON](./alfa-selector.simple.json.md) \| [Compound.JSON](./alfa-selector.compound.json.md) \| [Complex.JSON](./alfa-selector.complex.json.md) |  |
-|  [right](./alfa-selector.complex.json.right.md) |  | [Simple.JSON](./alfa-selector.simple.json.md) \| [Compound.JSON](./alfa-selector.compound.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[combinator](./alfa-selector.complex.json.combinator.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Combinator
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[left](./alfa-selector.complex.json.left.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Simple.JSON](./alfa-selector.simple.json.md) \| [Compound.JSON](./alfa-selector.compound.json.md) \| [Complex.JSON](./alfa-selector.complex.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[right](./alfa-selector.complex.json.right.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Simple.JSON](./alfa-selector.simple.json.md) \| [Compound.JSON](./alfa-selector.compound.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

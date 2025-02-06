@@ -12,10 +12,39 @@ resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | Resolvable.Resolver&lt;V&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+Resolvable.Resolver&lt;V&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [List](./alfa-css.list.md)<!-- -->&lt;Resolvable.Resolved&lt;V&gt;&gt;

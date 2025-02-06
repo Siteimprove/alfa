@@ -6,40 +6,223 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Cascade](./alfa-cascade.cascade.md) | [https://drafts.csswg.org/css-cascade-5/](https://drafts.csswg.org/css-cascade-5/) |
-|  [Layer](./alfa-cascade.layer.md) |  |
-|  [RuleTree](./alfa-cascade.ruletree.md) | The rule tree is a data structure used for storing the rules that match each element when computing cascade for a document. |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cascade](./alfa-cascade.cascade.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-cascade-5/](https://drafts.csswg.org/css-cascade-5/)
+
+
+</td></tr>
+<tr><td>
+
+[Layer](./alfa-cascade.layer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[RuleTree](./alfa-cascade.ruletree.md)
+
+
+</td><td>
+
+The rule tree is a data structure used for storing the rules that match each element when computing cascade for a document.
+
+
+</td></tr>
+</tbody></table>
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Origin](./alfa-cascade.origin.md) | [https://www.w3.org/TR/css-cascade-5/\#cascading-origins](https://www.w3.org/TR/css-cascade-5/#cascading-origins) [https://www.w3.org/TR/css-cascade-5/\#cascade-origin](https://www.w3.org/TR/css-cascade-5/#cascade-origin) |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Origin](./alfa-cascade.origin.md)
+
+
+</td><td>
+
+[https://www.w3.org/TR/css-cascade-5/\#cascading-origins](https://www.w3.org/TR/css-cascade-5/#cascading-origins) [https://www.w3.org/TR/css-cascade-5/\#cascade-origin](https://www.w3.org/TR/css-cascade-5/#cascade-origin)
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Precedence](./alfa-cascade.precedence.md) | <p>Store the various components needed for precedence in the Cascade Sorting Order.</p><p>[https://drafts.csswg.org/css-cascade-5/\#cascade-sort](https://drafts.csswg.org/css-cascade-5/#cascade-sort)</p> |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Precedence](./alfa-cascade.precedence.md)
+
+
+</td><td>
+
+Store the various components needed for precedence in the Cascade Sorting Order.
+
+[https://drafts.csswg.org/css-cascade-5/\#cascade-sort](https://drafts.csswg.org/css-cascade-5/#cascade-sort)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Cascade](./alfa-cascade.cascade.md) |  |
-|  [Encapsulation](./alfa-cascade.encapsulation.md) |  |
-|  [Layer](./alfa-cascade.layer.md) |  |
-|  [Order](./alfa-cascade.order.md) |  |
-|  [Origin](./alfa-cascade.origin.md) |  |
-|  [Precedence](./alfa-cascade.precedence.md) | [https://drafts.csswg.org/css-cascade-5/\#cascade-sort](https://drafts.csswg.org/css-cascade-5/#cascade-sort) |
-|  [RuleTree](./alfa-cascade.ruletree.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cascade](./alfa-cascade.cascade.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Encapsulation](./alfa-cascade.encapsulation.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Layer](./alfa-cascade.layer.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Order](./alfa-cascade.order.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Origin](./alfa-cascade.origin.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Precedence](./alfa-cascade.precedence.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-cascade-5/\#cascade-sort](https://drafts.csswg.org/css-cascade-5/#cascade-sort)
+
+
+</td></tr>
+<tr><td>
+
+[RuleTree](./alfa-cascade.ruletree.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Encapsulation](./alfa-cascade.encapsulation.md) | [https://drafts.csswg.org/css-cascade-5/\#cascade-context](https://drafts.csswg.org/css-cascade-5/#cascade-context) |
-|  [Order](./alfa-cascade.order.md) | Order of appearance of CSS rules in a sheet. [https://drafts.csswg.org/css-cascade-5/\#cascade-order](https://drafts.csswg.org/css-cascade-5/#cascade-order) |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Encapsulation](./alfa-cascade.encapsulation.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-cascade-5/\#cascade-context](https://drafts.csswg.org/css-cascade-5/#cascade-context)
+
+
+</td></tr>
+<tr><td>
+
+[Order](./alfa-cascade.order.md)
+
+
+</td><td>
+
+Order of appearance of CSS rules in a sheet. [https://drafts.csswg.org/css-cascade-5/\#cascade-order](https://drafts.csswg.org/css-cascade-5/#cascade-order)
+
+
+</td></tr>
+</tbody></table>

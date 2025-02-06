@@ -13,20 +13,87 @@ export declare namespace Block
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.block.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.block.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [consume](./alfa-css.block.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-simple-block](https://drafts.csswg.org/css-syntax/#consume-a-simple-block) |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[consume](./alfa-css.block.consume.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-syntax/\#consume-a-simple-block](https://drafts.csswg.org/css-syntax/#consume-a-simple-block)
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Close](./alfa-css.block.close.md) | The tokens that are allowed to close a block. |
-|  [Open](./alfa-css.block.open.md) | The tokens that are allowed to open a block. |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Close](./alfa-css.block.close.md)
+
+
+</td><td>
+
+The tokens that are allowed to close a block.
+
+
+</td></tr>
+<tr><td>
+
+[Open](./alfa-css.block.open.md)
+
+
+</td><td>
+
+The tokens that are allowed to open a block.
+
+
+</td></tr>
+</tbody></table>

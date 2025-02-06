@@ -12,10 +12,37 @@ function sequence<T, B>(values: Iterable<Branched<T, B>>): Branched<Iterable<T>,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  values | Iterable&lt;[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+values
+
+
+</td><td>
+
+Iterable&lt;[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;Iterable&lt;T&gt;, B&gt;

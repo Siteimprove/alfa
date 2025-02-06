@@ -12,11 +12,51 @@ static of<R extends Radius, P extends Position>(radius: R, center: P): Circle<R,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  radius | R |  |
-|  center | P |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+radius
+
+
+</td><td>
+
+R
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+center
+
+
+</td><td>
+
+P
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Circle](./alfa-css.circle.md)<!-- -->&lt;R, P&gt;

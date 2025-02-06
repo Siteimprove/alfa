@@ -14,10 +14,37 @@ apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Map](./alfa-map.map_2.md)<!-- -->&lt;K, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Map](./alfa-map.map_2.md)<!-- -->&lt;K, U&gt;

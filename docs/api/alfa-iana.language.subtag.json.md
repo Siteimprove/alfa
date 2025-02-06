@@ -12,8 +12,59 @@ interface JSON<T extends string = string, N extends string = string>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-iana.language.subtag.json.name.md) |  | N |  |
-|  [type](./alfa-iana.language.subtag.json.type.md) |  | T |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-iana.language.subtag.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-iana.language.subtag.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

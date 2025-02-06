@@ -6,22 +6,105 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Left](./alfa-either.left.md) |  |
-|  [Right](./alfa-either.right.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Left](./alfa-either.left.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Right](./alfa-either.right.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Either](./alfa-either.either.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Either](./alfa-either.either.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Either](./alfa-either.either.md) |  |
-|  [Left](./alfa-either.left.md) |  |
-|  [Right](./alfa-either.right.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Either](./alfa-either.either.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Left](./alfa-either.left.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Right](./alfa-either.right.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

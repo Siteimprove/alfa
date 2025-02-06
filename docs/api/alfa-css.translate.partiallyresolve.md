@@ -12,10 +12,37 @@ partiallyResolve(resolver: Translate.PartialResolver): Translate.PartiallyResolv
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Translate.PartialResolver](./alfa-css.translate.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Translate.PartialResolver](./alfa-css.translate.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Translate.PartiallyResolved](./alfa-css.translate.partiallyresolved.md)

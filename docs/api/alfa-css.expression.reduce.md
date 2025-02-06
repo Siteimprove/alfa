@@ -14,10 +14,37 @@ abstract reduce<L extends Unit.Length = Unit.Length.Canonical, P extends Numeric
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Expression.Resolver](./alfa-css.expression.resolver.md)<!-- -->&lt;L, P&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Expression.Resolver](./alfa-css.expression.resolver.md)<!-- -->&lt;L, P&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Expression](./alfa-css.expression.md)

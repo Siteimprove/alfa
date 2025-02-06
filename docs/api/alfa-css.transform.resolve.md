@@ -12,10 +12,37 @@ function resolve(resolver: Resolver): (value: Transform) => Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.transform.resolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Resolver](./alfa-css.transform.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 (value: [Transform](./alfa-css.transform.md)<!-- -->) =&gt; [Canonical](./alfa-css.transform.canonical.md)

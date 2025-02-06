@@ -13,10 +13,93 @@ interface JSON extends Format.JSON<"rgb">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [alpha](./alfa-css.rgb.json.alpha.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [blue](./alfa-css.rgb.json.blue.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [green](./alfa-css.rgb.json.green.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [red](./alfa-css.rgb.json.red.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[alpha](./alfa-css.rgb.json.alpha.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[blue](./alfa-css.rgb.json.blue.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[green](./alfa-css.rgb.json.green.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[red](./alfa-css.rgb.json.red.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

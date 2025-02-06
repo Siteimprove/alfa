@@ -13,7 +13,24 @@ export declare namespace Functor
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Invariant](./alfa-functor.functor.invariant.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Invariant](./alfa-functor.functor.invariant.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

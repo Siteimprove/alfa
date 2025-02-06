@@ -12,10 +12,37 @@ function from<T, E = unknown>(thunk: Thunk<Promise<T>>): Promise<Result<T, E>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  thunk | Thunk&lt;Promise&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+thunk
+
+
+</td><td>
+
+Thunk&lt;Promise&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;&gt;

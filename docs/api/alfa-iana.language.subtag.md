@@ -12,7 +12,24 @@ namespace Subtag
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-iana.language.subtag.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-iana.language.subtag.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

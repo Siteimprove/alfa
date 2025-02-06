@@ -13,15 +13,66 @@ export declare namespace Page
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-web.page.from.md) |  |
-|  [isPage(value)](./alfa-web.page.ispage.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-web.page.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isPage(value)](./alfa-web.page.ispage.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-web.page.earl.md) |  |
-|  [JSON](./alfa-web.page.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-web.page.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-web.page.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

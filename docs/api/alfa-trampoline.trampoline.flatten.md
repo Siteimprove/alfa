@@ -12,10 +12,37 @@ flatten<T>(this: Trampoline<Trampoline<T>>): Trampoline<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;

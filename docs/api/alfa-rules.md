@@ -6,42 +6,270 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [ARIA](./alfa-rules.aria.md) |  |
-|  [BestPractice](./alfa-rules.bestpractice.md) |  |
-|  [Group](./alfa-rules.group.md) |  |
-|  [Scope](./alfa-rules.scope.md) |  |
-|  [Stability](./alfa-rules.stability.md) |  |
-|  [Version](./alfa-rules.version.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ARIA](./alfa-rules.aria.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[BestPractice](./alfa-rules.bestpractice.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Group](./alfa-rules.group.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Scope](./alfa-rules.scope.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Stability](./alfa-rules.stability.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Version](./alfa-rules.version.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [ARIA](./alfa-rules.aria.md) |  |
-|  [BestPractice](./alfa-rules.bestpractice.md) |  |
-|  [deprecatedRules](./alfa-rules.deprecatedrules.md) |  |
-|  [Diagnostic](./alfa-rules.diagnostic.md) |  |
-|  [experimentalRules](./alfa-rules.experimentalrules.md) |  |
-|  [Flattened](./alfa-rules.flattened.md) |  |
-|  [Group](./alfa-rules.group.md) |  |
-|  [Question](./alfa-rules.question.md) |  |
-|  [Scope](./alfa-rules.scope.md) |  |
-|  [Stability](./alfa-rules.stability.md) |  |
-|  [Version](./alfa-rules.version.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ARIA](./alfa-rules.aria.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[BestPractice](./alfa-rules.bestpractice.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[deprecatedRules](./alfa-rules.deprecatedrules.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Diagnostic](./alfa-rules.diagnostic.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[experimentalRules](./alfa-rules.experimentalrules.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Flattened](./alfa-rules.flattened.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Group](./alfa-rules.group.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Question](./alfa-rules.question.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Scope](./alfa-rules.scope.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Stability](./alfa-rules.stability.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Version](./alfa-rules.version.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [alfaVersion](./alfa-rules.alfaversion.md) |  |
-|  [FlattenedRules](./alfa-rules.flattenedrules.md) | A list of all available rules joined under a single type. The type of each rule is not preserved in the list as the types have been flattened. |
-|  [Rules](./alfa-rules.rules.md) | An immutable record of individual rules. The type of each individual rule is preserved in the record. |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[alfaVersion](./alfa-rules.alfaversion.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[FlattenedRules](./alfa-rules.flattenedrules.md)
+
+
+</td><td>
+
+A list of all available rules joined under a single type. The type of each rule is not preserved in the list as the types have been flattened.
+
+
+</td></tr>
+<tr><td>
+
+[Rules](./alfa-rules.rules.md)
+
+
+</td><td>
+
+An immutable record of individual rules. The type of each individual rule is preserved in the record.
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Rules](./alfa-rules.rules.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Rules](./alfa-rules.rules.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

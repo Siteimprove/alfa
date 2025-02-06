@@ -12,11 +12,51 @@ function isImplementer<N extends Name>(feature: N, browser: Browser.Name): brows
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  feature | N |  |
-|  browser | [Browser.Name](./alfa-compatibility.browser.name.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+feature
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+browser
+
+
+</td><td>
+
+[Browser.Name](./alfa-compatibility.browser.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 browser is [Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->&lt;N&gt;

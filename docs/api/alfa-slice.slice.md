@@ -13,15 +13,66 @@ export declare namespace Slice
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(iterable)](./alfa-slice.slice.from.md) |  |
-|  [isSlice(value)](./alfa-slice.slice.isslice.md) |  |
-|  [isSlice(value)](./alfa-slice.slice.isslice_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(iterable)](./alfa-slice.slice.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSlice(value)](./alfa-slice.slice.isslice.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSlice(value)](./alfa-slice.slice.isslice_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-slice.slice.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-slice.slice.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

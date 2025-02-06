@@ -13,29 +13,132 @@ export declare namespace Inset
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isInset(value)](./alfa-css.inset.isinset.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isInset(value)](./alfa-css.inset.isinset.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.inset.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.inset.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.inset.parse.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.inset.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.inset.canonical.md) |  |
-|  [Offset](./alfa-css.inset.offset.md) |  |
-|  [PartiallyResolved](./alfa-css.inset.partiallyresolved.md) |  |
-|  [PartialResolver](./alfa-css.inset.partialresolver.md) |  |
-|  [Resolver](./alfa-css.inset.resolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.inset.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Offset](./alfa-css.inset.offset.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartiallyResolved](./alfa-css.inset.partiallyresolved.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartialResolver](./alfa-css.inset.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.inset.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

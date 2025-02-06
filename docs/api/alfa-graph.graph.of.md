@@ -12,10 +12,37 @@ static of<T>(nodes: Map<T, Set<T>>): Graph<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  nodes | Map&lt;T, Set&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+nodes
+
+
+</td><td>
+
+Map&lt;T, Set&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;

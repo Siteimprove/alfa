@@ -12,10 +12,37 @@ function fromLayerStatementRule(json: JSON): Trampoline<StatementRule>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [JSON](./alfa-dom.layer.statementrule.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[JSON](./alfa-dom.layer.statementrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Trampoline&lt;[StatementRule](./alfa-dom.layer.statementrule.md)<!-- -->&gt;

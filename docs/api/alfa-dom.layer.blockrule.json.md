@@ -13,7 +13,42 @@ interface JSON extends GroupingRule.JSON<"layer-block">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [layer](./alfa-dom.layer.blockrule.json.layer.md) |  | string \| null |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[layer](./alfa-dom.layer.blockrule.json.layer.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

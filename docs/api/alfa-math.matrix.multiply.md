@@ -14,11 +14,51 @@ function multiply(m: Matrix, n: number | Matrix): Matrix;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  m | [Matrix](./alfa-math.matrix.md) |  |
-|  n | number \| [Matrix](./alfa-math.matrix.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+m
+
+
+</td><td>
+
+[Matrix](./alfa-math.matrix.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+n
+
+
+</td><td>
+
+number \| [Matrix](./alfa-math.matrix.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Matrix](./alfa-math.matrix.md)

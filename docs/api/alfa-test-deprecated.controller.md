@@ -13,9 +13,78 @@ export interface Controller<T = number>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [iterations](./alfa-test-deprecated.controller.iterations.md) |  | number |  |
-|  [seed?](./alfa-test-deprecated.controller.seed.md) |  | number | _(Optional)_ |
-|  [wrapper](./alfa-test-deprecated.controller.wrapper.md) |  | (rng: [RNG](./alfa-test-deprecated.rng.md)<!-- -->&lt;number&gt;, iteration: number) =&gt; [RNG](./alfa-test-deprecated.rng.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[iterations](./alfa-test-deprecated.controller.iterations.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[seed?](./alfa-test-deprecated.controller.seed.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[wrapper](./alfa-test-deprecated.controller.wrapper.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(rng: [RNG](./alfa-test-deprecated.rng.md)<!-- -->&lt;number&gt;, iteration: number) =&gt; [RNG](./alfa-test-deprecated.rng.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ function from<T, B = never>(values: Iterable<readonly [T, Iterable<B>]>): Branch
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  values | Iterable&lt;readonly \[T, Iterable&lt;B&gt;\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+values
+
+
+</td><td>
+
+Iterable&lt;readonly \[T, Iterable&lt;B&gt;\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;

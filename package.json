@@ -31,7 +31,7 @@
     "@changesets/cli": "^2.27.12",
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
-    "@siteimprove/alfa-toolchain": "workspace:^",
+    "@siteimprove/alfa-toolchain": "workspace:^0.98.0",
     "@types/node": "^22.0.0",
     "knip": "^5.23.1",
     "minimist": "^1.2.6",

@@ -12,11 +12,53 @@ function layerBlock(rules: Array<Rule>, layer?: string): Layer.BlockRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rules | Array&lt;Rule&gt; |  |
-|  layer | string | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+rules
+
+
+</td><td>
+
+Array&lt;Rule&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+layer
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Layer.BlockRule](./alfa-dom.layer.blockrule.md)

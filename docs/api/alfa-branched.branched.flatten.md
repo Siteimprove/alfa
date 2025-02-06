@@ -12,10 +12,37 @@ flatten<T, B>(this: Branched<Branched<T, B>, B>): Branched<T, B>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Branched](./alfa-branched.branched.md)<!-- -->&lt;[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;, B&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Branched](./alfa-branched.branched.md)<!-- -->&lt;[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;, B&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;

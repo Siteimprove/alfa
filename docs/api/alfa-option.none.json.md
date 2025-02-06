@@ -12,7 +12,42 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-option.none.json.type.md) |  | "none" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-option.none.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"none"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

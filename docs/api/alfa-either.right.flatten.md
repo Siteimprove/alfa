@@ -12,10 +12,37 @@ flatten<L, R>(this: Right<Either<L, R>>): Either<L, R>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Right](./alfa-either.right.md)<!-- -->&lt;Either&lt;L, R&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Right](./alfa-either.right.md)<!-- -->&lt;Either&lt;L, R&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Either&lt;L, R&gt;

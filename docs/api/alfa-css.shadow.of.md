@@ -12,15 +12,107 @@ static of<H extends Length = Length, V extends Length = H, B extends Length = Le
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  horizontal | H |  |
-|  vertical | V |  |
-|  blur | B |  |
-|  spread | S |  |
-|  color | C |  |
-|  isInset | boolean |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+horizontal
+
+
+</td><td>
+
+H
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+vertical
+
+
+</td><td>
+
+V
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+blur
+
+
+</td><td>
+
+B
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+spread
+
+
+</td><td>
+
+S
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+color
+
+
+</td><td>
+
+C
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+isInset
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Shadow](./alfa-css.shadow.md)<!-- -->&lt;H, V, B, S, C&gt;

@@ -12,13 +12,79 @@ function hsl<H extends Number.Canonical | Angle.Canonical, A extends Number.Cano
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  hue | H |  |
-|  saturation | Percentage&lt;"percentage"&gt; |  |
-|  lightness | Percentage&lt;"percentage"&gt; |  |
-|  alpha | A |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+hue
+
+
+</td><td>
+
+H
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+saturation
+
+
+</td><td>
+
+Percentage&lt;"percentage"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+lightness
+
+
+</td><td>
+
+Percentage&lt;"percentage"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+alpha
+
+
+</td><td>
+
+A
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 HSL&lt;H, A&gt;

@@ -12,10 +12,37 @@ andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, E | F>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  result | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+result
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E \| F&gt;

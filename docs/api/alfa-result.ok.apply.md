@@ -12,10 +12,37 @@ apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | Result&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, E&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+Result&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, E&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Result&lt;U, E&gt;

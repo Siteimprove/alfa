@@ -12,15 +12,68 @@ namespace Traversal
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [empty](./alfa-aria.node.traversal.empty.md) |  |
-|  [ignored](./alfa-aria.node.traversal.ignored.md) | When set, traverse both exposed and ignored nodes. |
-|  [none](./alfa-aria.node.traversal.none.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[empty](./alfa-aria.node.traversal.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ignored](./alfa-aria.node.traversal.ignored.md)
+
+
+</td><td>
+
+When set, traverse both exposed and ignored nodes.
+
+
+</td></tr>
+<tr><td>
+
+[none](./alfa-aria.node.traversal.none.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Flag](./alfa-aria.node.traversal.flag.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Flag](./alfa-aria.node.traversal.flag.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

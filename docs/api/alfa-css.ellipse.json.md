@@ -13,9 +13,76 @@ interface JSON extends BasicShape.JSON<"ellipse">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [center](./alfa-css.ellipse.json.center.md) |  | [Position.JSON](./alfa-css.position.json.md) |  |
-|  [rx](./alfa-css.ellipse.json.rx.md) |  | [Radius.JSON](./alfa-css.radius.json.md) |  |
-|  [ry](./alfa-css.ellipse.json.ry.md) |  | [Radius.JSON](./alfa-css.radius.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[center](./alfa-css.ellipse.json.center.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Position.JSON](./alfa-css.position.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[rx](./alfa-css.ellipse.json.rx.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Radius.JSON](./alfa-css.radius.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ry](./alfa-css.ellipse.json.ry.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Radius.JSON](./alfa-css.radius.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

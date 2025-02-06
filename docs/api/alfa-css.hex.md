@@ -13,19 +13,74 @@ export declare namespace Hex
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isHex(value)](./alfa-css.hex.ishex.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isHex(value)](./alfa-css.hex.ishex.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.hex.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.hex.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.hex.parse.md) | [https://drafts.csswg.org/css-color/\#typedef-hex-color](https://drafts.csswg.org/css-color/#typedef-hex-color) |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.hex.parse.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-color/\#typedef-hex-color](https://drafts.csswg.org/css-color/#typedef-hex-color)
+
+
+</td></tr>
+</tbody></table>

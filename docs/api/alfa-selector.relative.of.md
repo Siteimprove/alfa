@@ -12,11 +12,51 @@ static of(combinator: Combinator, selector: Simple | Compound | Complex): Relati
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  combinator | Combinator |  |
-|  selector | Simple \| Compound \| Complex |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+combinator
+
+
+</td><td>
+
+Combinator
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+selector
+
+
+</td><td>
+
+Simple \| Compound \| Complex
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Relative](./alfa-selector.relative.md)

@@ -12,12 +12,67 @@ path(from: N, to: N, traversal?: Network.Traversal): Sequence<[node: N, edges: I
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  from | N |  |
-|  to | N |  |
-|  traversal | [Network.Traversal](./alfa-network.network.traversal.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+from
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+to
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+traversal
+
+
+</td><td>
+
+[Network.Traversal](./alfa-network.network.traversal.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Sequence&lt;\[node: N, edges: Iterable&lt;E&gt;\]&gt;

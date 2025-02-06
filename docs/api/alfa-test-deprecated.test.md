@@ -13,12 +13,67 @@ export declare function test<T = number>(name: string, assertion: (assert: Asser
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string |  |
-|  assertion | (assert: [Assertions](./alfa-test-deprecated.assertions.md)<!-- -->, rng: [RNG](./alfa-test-deprecated.rng.md)<!-- -->&lt;T&gt;, seed: number) =&gt; void \| Promise&lt;void&gt; |  |
-|  controller | Partial&lt;[Controller](./alfa-test-deprecated.controller.md)<!-- -->&lt;T&gt;&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+name
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+assertion
+
+
+</td><td>
+
+(assert: [Assertions](./alfa-test-deprecated.assertions.md)<!-- -->, rng: [RNG](./alfa-test-deprecated.rng.md)<!-- -->&lt;T&gt;, seed: number) =&gt; void \| Promise&lt;void&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+controller
+
+
+</td><td>
+
+Partial&lt;[Controller](./alfa-test-deprecated.controller.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Promise&lt;void&gt;

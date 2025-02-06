@@ -6,30 +6,188 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Cookie](./alfa-http.cookie.md) |  |
-|  [Cookies](./alfa-http.cookies.md) |  |
-|  [Header](./alfa-http.header.md) |  |
-|  [Headers](./alfa-http.headers.md) |  |
-|  [Request](./alfa-http.request.md) | [https://fetch.spec.whatwg.org/\#request-class](https://fetch.spec.whatwg.org/#request-class) |
-|  [Response](./alfa-http.response.md) | [https://fetch.spec.whatwg.org/\#response-class](https://fetch.spec.whatwg.org/#response-class) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cookie](./alfa-http.cookie.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Cookies](./alfa-http.cookies.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Header](./alfa-http.header.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Headers](./alfa-http.headers.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Request](./alfa-http.request.md)
+
+
+</td><td>
+
+[https://fetch.spec.whatwg.org/\#request-class](https://fetch.spec.whatwg.org/#request-class)
+
+
+</td></tr>
+<tr><td>
+
+[Response](./alfa-http.response.md)
+
+
+</td><td>
+
+[https://fetch.spec.whatwg.org/\#response-class](https://fetch.spec.whatwg.org/#response-class)
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Body](./alfa-http.body.md) | [https://fetch.spec.whatwg.org/\#body-mixin](https://fetch.spec.whatwg.org/#body-mixin) |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Body](./alfa-http.body.md)
+
+
+</td><td>
+
+[https://fetch.spec.whatwg.org/\#body-mixin](https://fetch.spec.whatwg.org/#body-mixin)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Body](./alfa-http.body.md) |  |
-|  [Cookie](./alfa-http.cookie.md) |  |
-|  [Cookies](./alfa-http.cookies.md) |  |
-|  [Header](./alfa-http.header.md) |  |
-|  [Headers](./alfa-http.headers.md) |  |
-|  [Request](./alfa-http.request.md) |  |
-|  [Response](./alfa-http.response.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Body](./alfa-http.body.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Cookie](./alfa-http.cookie.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Cookies](./alfa-http.cookies.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Header](./alfa-http.header.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Headers](./alfa-http.headers.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Request](./alfa-http.request.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Response](./alfa-http.response.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

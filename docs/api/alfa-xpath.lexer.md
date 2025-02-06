@@ -13,7 +13,24 @@ export declare namespace Lexer
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [lex(input)](./alfa-xpath.lexer.lex.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[lex(input)](./alfa-xpath.lexer.lex.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

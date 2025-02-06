@@ -13,7 +13,42 @@ interface JSON extends Subtag.JSON<"primary", Name>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [scope](./alfa-iana.language.primary.json.scope.md) |  | [Scope](./alfa-iana.language.scope.md) \| null |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[scope](./alfa-iana.language.primary.json.scope.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Scope](./alfa-iana.language.scope.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

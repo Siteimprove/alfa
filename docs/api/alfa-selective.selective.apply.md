@@ -12,10 +12,37 @@ apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Selective](./alfa-selective.selective.md)<!-- -->&lt;S, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, U&gt;

@@ -6,8 +6,35 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Time](./alfa-time.time.md) |  |
-|  [Timeout](./alfa-time.timeout.md) |  |
+<table><thead><tr><th>
 
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Time](./alfa-time.time.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Timeout](./alfa-time.timeout.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

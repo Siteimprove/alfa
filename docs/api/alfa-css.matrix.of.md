@@ -12,10 +12,37 @@ static of(...values: Matrix.Values<Number>): Matrix;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  values | [Matrix.Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+values
+
+
+</td><td>
+
+[Matrix.Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Matrix](./alfa-css.matrix.md)

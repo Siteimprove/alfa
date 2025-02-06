@@ -13,7 +13,42 @@ interface JSON<N extends number = number> extends Tag.JSON<"version">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [version](./alfa-rules.version.json.version.md) |  | N |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[version](./alfa-rules.version.json.version.md)
+
+
+</td><td>
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

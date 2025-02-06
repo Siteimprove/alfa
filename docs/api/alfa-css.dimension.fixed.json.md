@@ -13,7 +13,42 @@ interface JSON<T extends BaseNumeric.Dimension = BaseNumeric.Dimension, U extend
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [unit](./alfa-css.dimension.fixed.json.unit.md) |  | U |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[unit](./alfa-css.dimension.fixed.json.unit.md)
+
+
+</td><td>
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,12 +12,104 @@ enum Matcher
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  DashMatch | <code>&quot;&#124;=&quot;</code> |  |
-|  Equal | <code>&quot;=&quot;</code> |  |
-|  Includes | <code>&quot;~=&quot;</code> |  |
-|  Prefix | <code>&quot;^=&quot;</code> |  |
-|  Substring | <code>&quot;*=&quot;</code> |  |
-|  Suffix | <code>&quot;$=&quot;</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+DashMatch
+
+
+</td><td>
+
+`"|="`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Equal
+
+
+</td><td>
+
+`"="`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Includes
+
+
+</td><td>
+
+`"~="`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Prefix
+
+
+</td><td>
+
+`"^="`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Substring
+
+
+</td><td>
+
+`"*="`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Suffix
+
+
+</td><td>
+
+`"$="`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,14 +13,57 @@ export declare namespace Requirement
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isRequirement(value)](./alfa-act.requirement.isrequirement.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isRequirement(value)](./alfa-act.requirement.isrequirement.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-act.requirement.earl.md) |  |
-|  [JSON](./alfa-act.requirement.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-act.requirement.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-act.requirement.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

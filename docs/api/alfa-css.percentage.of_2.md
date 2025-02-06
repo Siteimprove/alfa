@@ -12,10 +12,37 @@ function of<H extends BaseNumeric.Type = BaseNumeric.Type>(value: Math<"percenta
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | Math&lt;"percentage"&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+Math&lt;"percentage"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;

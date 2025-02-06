@@ -6,7 +6,25 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Feature](./alfa-css-feature.feature.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Feature](./alfa-css-feature.feature.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

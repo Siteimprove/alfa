@@ -14,11 +14,53 @@ closest(predicate: Predicate<Node<F>>, options?: Flags<F>): Option<Node<F>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt; |  |
-|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Option&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;

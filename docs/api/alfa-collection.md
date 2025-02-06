@@ -6,13 +6,50 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Collection](./alfa-collection.collection.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Collection](./alfa-collection.collection.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Collection](./alfa-collection.collection.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Collection](./alfa-collection.collection.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

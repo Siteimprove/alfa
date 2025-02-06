@@ -12,11 +12,51 @@ export function hash<T extends Tuple>(tuple: T, hash: Hash): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  tuple | T |  |
-|  hash | [Hash](./alfa-hash.hash.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+tuple
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+hash
+
+
+</td><td>
+
+[Hash](./alfa-hash.hash.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

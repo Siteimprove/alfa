@@ -12,10 +12,37 @@ function nand<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicates | Array&lt;[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicates
+
+
+</td><td>
+
+Array&lt;[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;

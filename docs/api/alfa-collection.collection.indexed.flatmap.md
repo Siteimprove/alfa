@@ -12,10 +12,37 @@ flatMap<U>(mapper: Mapper<T, Indexed<U>, [index: number]>): Indexed<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;, \[index: number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;

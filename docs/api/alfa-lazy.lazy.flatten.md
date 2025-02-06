@@ -12,10 +12,37 @@ flatten<T>(this: Lazy<Lazy<T>>): Lazy<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;

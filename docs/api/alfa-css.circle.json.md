@@ -13,8 +13,59 @@ interface JSON extends BasicShape.JSON<"circle">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [center](./alfa-css.circle.json.center.md) |  | [Position.JSON](./alfa-css.position.json.md) |  |
-|  [radius](./alfa-css.circle.json.radius.md) |  | [Radius.JSON](./alfa-css.radius.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[center](./alfa-css.circle.json.center.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Position.JSON](./alfa-css.position.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[radius](./alfa-css.circle.json.radius.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Radius.JSON](./alfa-css.radius.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

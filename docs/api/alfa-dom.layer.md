@@ -18,15 +18,70 @@ There are actually two kinds of `@layer` rules: block and statements. Both are i
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [BlockRule](./alfa-dom.layer.blockrule.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/@layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) [https://drafts.csswg.org/css-cascade-5/\#layer-block](https://drafts.csswg.org/css-cascade-5/#layer-block) [https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerBlockRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerBlockRule) |
-|  [StatementRule](./alfa-dom.layer.statementrule.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/@layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) [https://drafts.csswg.org/css-cascade-5/\#layer-empty](https://drafts.csswg.org/css-cascade-5/#layer-empty) [https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerStatementRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerStatementRule) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[BlockRule](./alfa-dom.layer.blockrule.md)
+
+
+</td><td>
+
+[https://developer.mozilla.org/en-US/docs/Web/CSS/@layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) [https://drafts.csswg.org/css-cascade-5/\#layer-block](https://drafts.csswg.org/css-cascade-5/#layer-block) [https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerBlockRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerBlockRule)
+
+
+</td></tr>
+<tr><td>
+
+[StatementRule](./alfa-dom.layer.statementrule.md)
+
+
+</td><td>
+
+[https://developer.mozilla.org/en-US/docs/Web/CSS/@layer](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) [https://drafts.csswg.org/css-cascade-5/\#layer-empty](https://drafts.csswg.org/css-cascade-5/#layer-empty) [https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerStatementRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSLayerStatementRule)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [BlockRule](./alfa-dom.layer.blockrule.md) |  |
-|  [StatementRule](./alfa-dom.layer.statementrule.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[BlockRule](./alfa-dom.layer.blockrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[StatementRule](./alfa-dom.layer.statementrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

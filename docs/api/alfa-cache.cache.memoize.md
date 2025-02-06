@@ -14,10 +14,37 @@ function memoize<This, Args extends Array<Key>, Return>(target: (this: This, ...
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  target | (this: This, ...args: Args) =&gt; Return |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+target
+
+
+</td><td>
+
+(this: This, ...args: Args) =&gt; Return
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 (this: This, ...args: Args) =&gt; Return

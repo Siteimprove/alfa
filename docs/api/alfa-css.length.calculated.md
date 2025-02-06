@@ -12,7 +12,24 @@ namespace Calculated
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.length.calculated.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.length.calculated.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

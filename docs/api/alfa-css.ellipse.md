@@ -13,28 +13,123 @@ export declare namespace Ellipse
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isEllipse(value)](./alfa-css.ellipse.isellipse.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isEllipse(value)](./alfa-css.ellipse.isellipse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.ellipse.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.ellipse.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.ellipse.parse.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.ellipse.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.ellipse.canonical.md) |  |
-|  [PartiallyResolved](./alfa-css.ellipse.partiallyresolved.md) |  |
-|  [PartialResolver](./alfa-css.ellipse.partialresolver.md) |  |
-|  [Resolver](./alfa-css.ellipse.resolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.ellipse.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartiallyResolved](./alfa-css.ellipse.partiallyresolved.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartialResolver](./alfa-css.ellipse.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.ellipse.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,8 +12,59 @@ interface JSON<T>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-option.some.json.type.md) |  | "some" |  |
-|  [value](./alfa-option.some.json.value.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-option.some.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"some"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-option.some.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

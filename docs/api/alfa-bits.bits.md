@@ -13,13 +13,78 @@ export declare namespace Bits
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [bit(i)](./alfa-bits.bits.bit.md) |  |
-|  [clear(bits, i)](./alfa-bits.bits.clear.md) |  |
-|  [popCount(bits)](./alfa-bits.bits.popcount.md) |  |
-|  [set(bits, i)](./alfa-bits.bits.set.md) |  |
-|  [skip(bits, n)](./alfa-bits.bits.skip.md) |  |
-|  [take(bits, n)](./alfa-bits.bits.take.md) |  |
-|  [test(bits, i)](./alfa-bits.bits.test.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[bit(i)](./alfa-bits.bits.bit.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[clear(bits, i)](./alfa-bits.bits.clear.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[popCount(bits)](./alfa-bits.bits.popcount.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[set(bits, i)](./alfa-bits.bits.set.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[skip(bits, n)](./alfa-bits.bits.skip.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[take(bits, n)](./alfa-bits.bits.take.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[test(bits, i)](./alfa-bits.bits.test.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

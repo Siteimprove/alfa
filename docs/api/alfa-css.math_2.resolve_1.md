@@ -12,11 +12,53 @@ resolve(this: Math<"angle-percentage">, resolver?: Expression.PercentageResolver
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"angle-percentage"&gt; |  |
-|  resolver | Expression.PercentageResolver&lt;Angle&lt;[Unit.Angle.Canonical](./alfa-css.unit.angle.canonical.md)<!-- -->&gt;&gt; &amp; Expression.GenericResolver | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Math](./alfa-css.math_2.md)<!-- -->&lt;"angle-percentage"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+resolver
+
+
+</td><td>
+
+Expression.PercentageResolver&lt;Angle&lt;[Unit.Angle.Canonical](./alfa-css.unit.angle.canonical.md)<!-- -->&gt;&gt; &amp; Expression.GenericResolver
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Result&lt;Angle&lt;[Unit.Angle.Canonical](./alfa-css.unit.angle.canonical.md)<!-- -->&gt;, string&gt;

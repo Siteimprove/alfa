@@ -14,23 +14,108 @@ export declare namespace Precedence
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [equals(a, b)](./alfa-cascade.precedence.equals.md) |  |
-|  [isImportant(precedence)](./alfa-cascade.precedence.isimportant.md) |  |
-|  [toJSON(precedence)](./alfa-cascade.precedence.tojson.md) |  |
-|  [toTuple(precedence)](./alfa-cascade.precedence.totuple.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[equals(a, b)](./alfa-cascade.precedence.equals.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isImportant(precedence)](./alfa-cascade.precedence.isimportant.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toJSON(precedence)](./alfa-cascade.precedence.tojson.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toTuple(precedence)](./alfa-cascade.precedence.totuple.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-cascade.precedence.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-cascade.precedence.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [compare](./alfa-cascade.precedence.compare.md) |  |
-|  [empty](./alfa-cascade.precedence.empty.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[compare](./alfa-cascade.precedence.compare.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[empty](./alfa-cascade.precedence.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

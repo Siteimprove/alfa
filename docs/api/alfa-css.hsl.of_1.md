@@ -12,13 +12,79 @@ static of<H extends Number | Angle, A extends Number | Percentage<"percentage">,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  hue | H |  |
-|  saturation | S |  |
-|  lightness | L |  |
-|  alpha | A |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+hue
+
+
+</td><td>
+
+H
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+saturation
+
+
+</td><td>
+
+S
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+lightness
+
+
+</td><td>
+
+L
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+alpha
+
+
+</td><td>
+
+A
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [HSL](./alfa-css.hsl.md)<!-- -->&lt;ToCanonical&lt;H&gt;, ToCanonical&lt;A&gt;&gt;

@@ -12,16 +12,127 @@ static of<N extends string = string>(namespace: Option<Namespace>, prefix: Optio
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  namespace | Option&lt;Namespace&gt; |  |
-|  prefix | Option&lt;string&gt; |  |
-|  name | N |  |
-|  value | string |  |
-|  externalId | string | _(Optional)_ |
-|  internalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+namespace
+
+
+</td><td>
+
+Option&lt;Namespace&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+prefix
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+externalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+internalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+extraData
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Attribute](./alfa-dom.attribute.md)<!-- -->&lt;N&gt;

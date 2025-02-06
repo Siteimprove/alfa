@@ -13,24 +13,147 @@ export declare namespace Rule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-dom.rule.from.md) |  |
-|  [from(json)](./alfa-dom.rule.from_9.md) |  |
-|  [from(json)](./alfa-dom.rule.from_10.md) |  |
-|  [from(json)](./alfa-dom.rule.from_11.md) |  |
-|  [from(json)](./alfa-dom.rule.from_1.md) |  |
-|  [from(json)](./alfa-dom.rule.from_2.md) |  |
-|  [from(json)](./alfa-dom.rule.from_3.md) |  |
-|  [from(json)](./alfa-dom.rule.from_4.md) |  |
-|  [from(json)](./alfa-dom.rule.from_5.md) |  |
-|  [from(json)](./alfa-dom.rule.from_6.md) |  |
-|  [from(json)](./alfa-dom.rule.from_7.md) |  |
-|  [from(json)](./alfa-dom.rule.from_8.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-dom.rule.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_9.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_10.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_11.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_2.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_3.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_4.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_5.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_6.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_7.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(json)](./alfa-dom.rule.from_8.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.rule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.rule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

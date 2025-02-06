@@ -12,10 +12,37 @@ static of<C extends Criterion.Chapter>(chapter: C): Criterion<C>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  chapter | C |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+chapter
+
+
+</td><td>
+
+C
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Criterion](./alfa-wcag.criterion.md)<!-- -->&lt;C&gt;

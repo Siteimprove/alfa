@@ -12,11 +12,53 @@ innerText: (device: Device, isAcceptable?: (device: Device) => import("@siteimpr
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  device | Device |  |
-|  isAcceptable | (device: Device) =&gt; import("@siteimprove/alfa-predicate").[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;import("@siteimprove/alfa-dom").[Text](./alfa-dom.text.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+isAcceptable
+
+
+</td><td>
+
+(device: Device) =&gt; import("@siteimprove/alfa-predicate").[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;import("@siteimprove/alfa-dom").[Text](./alfa-dom.text.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 (element: Element) =&gt; string

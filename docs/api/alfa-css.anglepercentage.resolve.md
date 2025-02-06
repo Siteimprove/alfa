@@ -14,11 +14,53 @@ function resolve(value: AnglePercentage, resolver?: Numeric.GenericResolver): Ca
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | [AnglePercentage](./alfa-css.anglepercentage.md) |  |
-|  resolver | Numeric.GenericResolver | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+[AnglePercentage](./alfa-css.anglepercentage.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+resolver
+
+
+</td><td>
+
+Numeric.GenericResolver
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Canonical](./alfa-css.anglepercentage.canonical.md)

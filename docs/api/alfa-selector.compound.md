@@ -13,13 +13,48 @@ export declare namespace Compound
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isCompound(value)](./alfa-selector.compound.iscompound.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isCompound(value)](./alfa-selector.compound.iscompound.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.compound.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.compound.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

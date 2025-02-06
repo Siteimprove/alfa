@@ -12,9 +12,76 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [device](./alfa-style.style.json.device.md) |  | [Device.JSON](./alfa-device.device.json.md) |  |
-|  [properties](./alfa-style.style.json.properties.md) |  | Array&lt;\[string, [Value.JSON](./alfa-style.value.json.md)<!-- -->\]&gt; |  |
-|  [variables](./alfa-style.style.json.variables.md) |  | Array&lt;\[string, [Value.JSON](./alfa-style.value.json.md)<!-- -->\]&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[device](./alfa-style.style.json.device.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Device.JSON](./alfa-device.device.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[properties](./alfa-style.style.json.properties.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;\[string, [Value.JSON](./alfa-style.value.json.md)<!-- -->\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[variables](./alfa-style.style.json.variables.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;\[string, [Value.JSON](./alfa-style.value.json.md)<!-- -->\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

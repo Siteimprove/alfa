@@ -12,10 +12,37 @@ static of<R extends Resource>(resources: Graph<R>): Site<R>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resources | Graph&lt;R&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resources
+
+
+</td><td>
+
+Graph&lt;R&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Site](./alfa-web.site.md)<!-- -->&lt;R&gt;

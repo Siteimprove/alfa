@@ -12,11 +12,51 @@ function prepend<T>(array: Array<T>, value: T): [T, ...Array<T>];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  array | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
-|  value | T |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+array
+
+
+</td><td>
+
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 \[T, ...[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;\]

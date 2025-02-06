@@ -12,15 +12,109 @@ static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYP
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | TYPE |  |
-|  uri | URI |  |
-|  message | string |  |
-|  subject | SUBJECT |  |
-|  context | CONTEXT |  |
-|  options | [Question.Options](./alfa-act.question.options.md)<!-- -->&lt;ANSWER&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+TYPE
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+uri
+
+
+</td><td>
+
+URI
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+message
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+subject
+
+
+</td><td>
+
+SUBJECT
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+context
+
+
+</td><td>
+
+CONTEXT
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[Question.Options](./alfa-act.question.options.md)<!-- -->&lt;ANSWER&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI&gt;

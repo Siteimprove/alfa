@@ -12,7 +12,42 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-css.token.opencomment.json.type.md) |  | "open-comment" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-css.token.opencomment.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"open-comment"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

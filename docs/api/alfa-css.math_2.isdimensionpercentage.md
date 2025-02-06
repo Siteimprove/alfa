@@ -14,10 +14,37 @@ isDimensionPercentage<D extends Numeric.Dimension>(dimension: D): this is Math<`
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  dimension | D |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+dimension
+
+
+</td><td>
+
+D
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this is [Math](./alfa-css.math_2.md)<!-- -->&lt;\`${D}-percentage\`&gt;

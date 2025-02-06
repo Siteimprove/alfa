@@ -12,14 +12,93 @@ static of(size: boolean, inlineSize: boolean, layout: boolean, style: boolean, p
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  size | boolean |  |
-|  inlineSize | boolean |  |
-|  layout | boolean |  |
-|  style | boolean |  |
-|  paint | boolean |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+size
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+inlineSize
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+layout
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+style
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+paint
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [ContainFlags](./alfa-css.containflags.md)

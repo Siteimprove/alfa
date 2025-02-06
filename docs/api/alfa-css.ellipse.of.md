@@ -12,12 +12,65 @@ static of<R extends Radius = Radius, P extends Position = Position>(rx: R, ry: R
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rx | R |  |
-|  ry | R |  |
-|  center | P |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+rx
+
+
+</td><td>
+
+R
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+ry
+
+
+</td><td>
+
+R
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+center
+
+
+</td><td>
+
+P
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Ellipse](./alfa-css.ellipse.md)<!-- -->&lt;R, P&gt;

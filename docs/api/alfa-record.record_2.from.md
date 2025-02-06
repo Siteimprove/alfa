@@ -12,10 +12,37 @@ function from<T>(entries: Iterable<Entry<T>>): Record<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  entries | Iterable&lt;[Entry](./alfa-record.record_2.entry.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+entries
+
+
+</td><td>
+
+Iterable&lt;[Entry](./alfa-record.record_2.entry.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Record](./alfa-record.record_2.md)<!-- -->&lt;T&gt;

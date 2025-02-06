@@ -12,10 +12,37 @@ function from(json: NamespaceRule.JSON): NamespaceRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [NamespaceRule.JSON](./alfa-dom.namespacerule.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[NamespaceRule.JSON](./alfa-dom.namespacerule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 NamespaceRule

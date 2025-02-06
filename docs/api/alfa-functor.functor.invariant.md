@@ -12,7 +12,24 @@ interface Invariant<T>
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [contraMap(mapper)](./alfa-functor.functor.invariant.contramap.md) |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[contraMap(mapper)](./alfa-functor.functor.invariant.contramap.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

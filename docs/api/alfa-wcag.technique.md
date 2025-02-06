@@ -13,23 +13,114 @@ export declare namespace Technique
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isName(value)](./alfa-wcag.technique.isname.md) |  |
-|  [isTechnique(value)](./alfa-wcag.technique.istechnique.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isName(value)](./alfa-wcag.technique.isname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isTechnique(value)](./alfa-wcag.technique.istechnique.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-wcag.technique.earl.md) |  |
-|  [JSON](./alfa-wcag.technique.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-wcag.technique.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-wcag.technique.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Name](./alfa-wcag.technique.name.md) | The names of all techniques. |
-|  [Title](./alfa-wcag.technique.title.md) | The title of the technique with the specified name. |
-|  [URI](./alfa-wcag.technique.uri.md) | The URI of the technique with the specified name. |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Name](./alfa-wcag.technique.name.md)
+
+
+</td><td>
+
+The names of all techniques.
+
+
+</td></tr>
+<tr><td>
+
+[Title](./alfa-wcag.technique.title.md)
+
+
+</td><td>
+
+The title of the technique with the specified name.
+
+
+</td></tr>
+<tr><td>
+
+[URI](./alfa-wcag.technique.uri.md)
+
+
+</td><td>
+
+The URI of the technique with the specified name.
+
+
+</td></tr>
+</tbody></table>

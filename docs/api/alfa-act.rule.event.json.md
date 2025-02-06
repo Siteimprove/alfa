@@ -12,9 +12,76 @@ interface JSON<T extends Type = Type, N extends string = string>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-act.rule.event.json.name.md) |  | N |  |
-|  [rule](./alfa-act.rule.event.json.rule.md) |  | [Rule.JSON](./alfa-act.rule.json.md) |  |
-|  [type](./alfa-act.rule.event.json.type.md) |  | T |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-act.rule.event.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[rule](./alfa-act.rule.event.json.rule.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Rule.JSON](./alfa-act.rule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-act.rule.event.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

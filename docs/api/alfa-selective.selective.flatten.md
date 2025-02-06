@@ -12,10 +12,37 @@ flatten<S, T>(this: Selective<S, Selective<S, T>>): Selective<S, T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Selective](./alfa-selective.selective.md)<!-- -->&lt;S, [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt;

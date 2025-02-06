@@ -13,14 +13,57 @@ export declare namespace Scripting
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-device.scripting.from.md) |  |
-|  [isScripting(value)](./alfa-device.scripting.isscripting.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-device.scripting.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isScripting(value)](./alfa-device.scripting.isscripting.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-device.scripting.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-device.scripting.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

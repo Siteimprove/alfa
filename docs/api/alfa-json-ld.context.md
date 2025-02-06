@@ -15,8 +15,63 @@ export interface Context extends JSON.Object
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@base"?](./alfa-json-ld.context.__base_.md) |  | string | _(Optional)_ |
-|  ["@version"?](./alfa-json-ld.context.__version_.md) |  | 1.1 | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@base"?](./alfa-json-ld.context.__base_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+["@version"?](./alfa-json-ld.context.__version_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+1.1
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ resolve(resolver: Resolver & Numeric.GenericResolver): Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.length.resolver.md) &amp; Numeric.GenericResolver |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Resolver](./alfa-css.length.resolver.md) &amp; Numeric.GenericResolver
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Canonical](./alfa-css.length.canonical.md)

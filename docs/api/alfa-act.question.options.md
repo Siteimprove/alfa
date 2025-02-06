@@ -12,8 +12,67 @@ interface Options<A>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [diagnostic?](./alfa-act.question.options.diagnostic.md) | <code>readonly</code> | Diagnostic | _(Optional)_ |
-|  [fallback?](./alfa-act.question.options.fallback.md) | <code>readonly</code> | Option&lt;A&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[diagnostic?](./alfa-act.question.options.diagnostic.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+Diagnostic
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[fallback?](./alfa-act.question.options.fallback.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+Option&lt;A&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

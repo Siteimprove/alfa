@@ -13,7 +13,42 @@ interface JSON<T extends string = string> extends Rule.JSON<T>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [rules](./alfa-dom.groupingrule.json.rules.md) |  | Array&lt;[Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[rules](./alfa-dom.groupingrule.json.rules.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

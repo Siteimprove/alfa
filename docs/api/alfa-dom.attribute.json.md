@@ -13,10 +13,93 @@ interface JSON<N extends string = string> extends Node.JSON<"attribute">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-dom.attribute.json.name.md) |  | N |  |
-|  [namespace](./alfa-dom.attribute.json.namespace.md) |  | string \| null |  |
-|  [prefix](./alfa-dom.attribute.json.prefix.md) |  | string \| null |  |
-|  [value](./alfa-dom.attribute.json.value.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-dom.attribute.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[namespace](./alfa-dom.attribute.json.namespace.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[prefix](./alfa-dom.attribute.json.prefix.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-dom.attribute.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ static of(layers: Iterable<string>): StatementRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  layers | Iterable&lt;string&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+layers
+
+
+</td><td>
+
+Iterable&lt;string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [StatementRule](./alfa-dom.layer.statementrule.md)

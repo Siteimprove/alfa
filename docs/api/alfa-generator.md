@@ -6,13 +6,49 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Generator\_2](./alfa-generator.generator_2.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Generator\_2](./alfa-generator.generator_2.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Generator\_2](./alfa-generator.generator_2.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Generator\_2](./alfa-generator.generator_2.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

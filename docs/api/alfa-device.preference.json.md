@@ -12,8 +12,59 @@ interface JSON<N extends Name = Name>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-device.preference.json.name.md) |  | N |  |
-|  [value](./alfa-device.preference.json.value.md) |  | [Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-device.preference.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-device.preference.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

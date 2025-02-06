@@ -13,22 +13,129 @@ export declare namespace Option
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [conditional(value, predicate)](./alfa-option.option.conditional.md) |  |
-|  [empty()](./alfa-option.option.empty.md) |  |
-|  [from(value)](./alfa-option.option.from.md) |  |
-|  [isNone(value)](./alfa-option.option.isnone.md) |  |
-|  [isNone(value)](./alfa-option.option.isnone_1.md) |  |
-|  [isOption(value)](./alfa-option.option.isoption.md) |  |
-|  [isOption(value)](./alfa-option.option.isoption_1.md) |  |
-|  [isSome(value)](./alfa-option.option.issome.md) |  |
-|  [isSome(value)](./alfa-option.option.issome_1.md) |  |
-|  [of(value)](./alfa-option.option.of.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[conditional(value, predicate)](./alfa-option.option.conditional.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[empty()](./alfa-option.option.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(value)](./alfa-option.option.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isNone(value)](./alfa-option.option.isnone.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isNone(value)](./alfa-option.option.isnone_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isOption(value)](./alfa-option.option.isoption.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isOption(value)](./alfa-option.option.isoption_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSome(value)](./alfa-option.option.issome.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSome(value)](./alfa-option.option.issome_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[of(value)](./alfa-option.option.of.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-option.option.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-option.option.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

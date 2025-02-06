@@ -14,9 +14,62 @@ enum Mode
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Automatic | <code>&quot;automatic&quot;</code> |  |
-|  Manual | <code>&quot;manual&quot;</code> |  |
-|  SemiAuto | <code>&quot;semiAuto&quot;</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+Automatic
+
+
+</td><td>
+
+`"automatic"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Manual
+
+
+</td><td>
+
+`"manual"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+SemiAuto
+
+
+</td><td>
+
+`"semiAuto"`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

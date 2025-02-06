@@ -6,16 +6,83 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Criterion](./alfa-wcag.criterion.md) |  |
-|  [Technique](./alfa-wcag.technique.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Criterion](./alfa-wcag.criterion.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Technique](./alfa-wcag.technique.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Conformance](./alfa-wcag.conformance.md) | <p>This namespace defines types and functions for working with conformance- related queries.</p><p>[https://www.w3.org/TR/WCAG/\#conformance](https://www.w3.org/TR/WCAG/#conformance)</p> |
-|  [Criterion](./alfa-wcag.criterion.md) |  |
-|  [Technique](./alfa-wcag.technique.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Conformance](./alfa-wcag.conformance.md)
+
+
+</td><td>
+
+This namespace defines types and functions for working with conformance- related queries.
+
+[https://www.w3.org/TR/WCAG/\#conformance](https://www.w3.org/TR/WCAG/#conformance)
+
+
+</td></tr>
+<tr><td>
+
+[Criterion](./alfa-wcag.criterion.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Technique](./alfa-wcag.technique.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

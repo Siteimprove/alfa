@@ -13,13 +13,48 @@ export declare namespace Type
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isType(value)](./alfa-selector.type.istype.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isType(value)](./alfa-selector.type.istype.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.type.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.type.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

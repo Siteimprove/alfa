@@ -12,15 +12,111 @@ static of(element: Element, anchor: Slot, width: number, height: number, headers
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  element | Element |  |
-|  anchor | Slot |  |
-|  width | number |  |
-|  height | number |  |
-|  headers | Iterable&lt;Slot&gt; | _(Optional)_ |
-|  scope | Scope | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+element
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+anchor
+
+
+</td><td>
+
+Slot
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+width
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+height
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+headers
+
+
+</td><td>
+
+Iterable&lt;Slot&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+scope
+
+
+</td><td>
+
+Scope
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Header](./alfa-table.cell.header.md)

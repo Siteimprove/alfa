@@ -12,10 +12,37 @@ function isImportant<LAYERED extends boolean>(precedence: Precedence<LAYERED>): 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  precedence | [Precedence](./alfa-cascade.precedence.md)<!-- -->&lt;LAYERED&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+precedence
+
+
+</td><td>
+
+[Precedence](./alfa-cascade.precedence.md)<!-- -->&lt;LAYERED&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

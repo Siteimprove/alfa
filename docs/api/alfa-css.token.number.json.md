@@ -12,10 +12,93 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [isInteger](./alfa-css.token.number.json.isinteger.md) |  | boolean |  |
-|  [isSigned](./alfa-css.token.number.json.issigned.md) |  | boolean |  |
-|  [type](./alfa-css.token.number.json.type.md) |  | "number" |  |
-|  [value](./alfa-css.token.number.json.value.md) |  | number |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isInteger](./alfa-css.token.number.json.isinteger.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSigned](./alfa-css.token.number.json.issigned.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-css.token.number.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"number"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-css.token.number.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

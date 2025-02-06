@@ -12,12 +12,69 @@ parseCommaSeparated: <V extends Value>(parseValue: CSSParser<V>, lower?: number,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  parseValue | [CSSParser](./alfa-css.parser.md)<!-- -->&lt;V&gt; |  |
-|  lower | number | _(Optional)_ |
-|  upper | number | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+parseValue
+
+
+</td><td>
+
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;V&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+lower
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+upper
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[List](./alfa-css.list.md)<!-- -->&lt;V&gt;&gt;

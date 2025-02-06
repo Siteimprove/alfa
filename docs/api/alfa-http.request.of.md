@@ -12,13 +12,83 @@ static of(method: string, url: URL, headers?: Headers, body?: ArrayBuffer): Requ
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  method | string |  |
-|  url | URL |  |
-|  headers | Headers | _(Optional)_ |
-|  body | ArrayBuffer | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+method
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+url
+
+
+</td><td>
+
+URL
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+headers
+
+
+</td><td>
+
+Headers
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+body
+
+
+</td><td>
+
+ArrayBuffer
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Request](./alfa-http.request.md)

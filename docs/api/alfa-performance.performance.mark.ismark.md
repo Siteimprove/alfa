@@ -12,10 +12,37 @@ function isMark<T>(value: unknown | Entry<T>): value is Mark<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | unknown \| [Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+unknown \| [Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 value is [Mark](./alfa-performance.performance.mark.md)<!-- -->&lt;T&gt;

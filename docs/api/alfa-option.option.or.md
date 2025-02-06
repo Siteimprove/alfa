@@ -12,10 +12,37 @@ or<U>(option: Option<U>): Option<T | U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  option | [Option](./alfa-option.option.md)<!-- -->&lt;U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+option
+
+
+</td><td>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;T \| U&gt;

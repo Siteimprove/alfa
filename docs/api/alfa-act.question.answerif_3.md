@@ -12,11 +12,53 @@ answerIf(answer: Result<ANSWER, Diagnostic>, merger?: Mapper<Diagnostic, Diagnos
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  answer | Result&lt;ANSWER, Diagnostic&gt; |  |
-|  merger | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;Diagnostic, Diagnostic, \[Diagnostic\]&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+answer
+
+
+</td><td>
+
+Result&lt;ANSWER, Diagnostic&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+merger
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;Diagnostic, Diagnostic, \[Diagnostic\]&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;

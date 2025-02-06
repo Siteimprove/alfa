@@ -13,13 +13,48 @@ export declare namespace KeyframesRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isKeyframesRule(value)](./alfa-dom.keyframesrule.iskeyframesrule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isKeyframesRule(value)](./alfa-dom.keyframesrule.iskeyframesrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.keyframesrule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.keyframesrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,7 +13,24 @@ export declare namespace Context
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [State](./alfa-selector.context.state.md) |  |
+<table><thead><tr><th>
 
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[State](./alfa-selector.context.state.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

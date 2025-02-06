@@ -14,11 +14,53 @@ closest<T extends Node<F>>(refinement: Refinement<Node<F>, T>, options?: Flags<F
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  refinement | Refinement&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;, T&gt; |  |
-|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+refinement
+
+
+</td><td>
+
+Refinement&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;, T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Option&lt;T&gt;

@@ -13,7 +13,42 @@ interface JSON extends Function.JSON<"perspective">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [depth](./alfa-css.perspective.json.depth.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[depth](./alfa-css.perspective.json.depth.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Length.JSON](./alfa-css.length.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

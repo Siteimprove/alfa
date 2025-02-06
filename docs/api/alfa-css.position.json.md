@@ -13,8 +13,59 @@ interface JSON extends Value.JSON<"position">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [horizontal](./alfa-css.position.json.horizontal.md) |  | Component.JSON |  |
-|  [vertical](./alfa-css.position.json.vertical.md) |  | Component.JSON |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[horizontal](./alfa-css.position.json.horizontal.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Component.JSON
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[vertical](./alfa-css.position.json.vertical.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Component.JSON
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,8 +13,59 @@ interface JSON extends Value.JSON<"shape">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [box](./alfa-css.shape.json.box.md) |  | [Box.Geometry.JSON](./alfa-css.box.geometry.json.md) |  |
-|  [shape](./alfa-css.shape.json.shape.md) |  | [Basic.JSON](./alfa-css.shape.basic.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[box](./alfa-css.shape.json.box.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Box.Geometry.JSON](./alfa-css.box.geometry.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[shape](./alfa-css.shape.json.shape.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Basic.JSON](./alfa-css.shape.basic.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

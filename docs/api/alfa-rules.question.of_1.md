@@ -12,14 +12,97 @@ export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, me
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  uri | U |  |
-|  subject | S |  |
-|  context | C |  |
-|  message | string | _(Optional)_ |
-|  options | [act.Question.Options](./alfa-act.question.options.md)<!-- -->&lt;Typeof&lt;U&gt;&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+uri
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+subject
+
+
+</td><td>
+
+S
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+context
+
+
+</td><td>
+
+C
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+message
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[act.Question.Options](./alfa-act.question.options.md)<!-- -->&lt;Typeof&lt;U&gt;&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [act.Question](./alfa-act.question.md)<!-- -->&lt;TypeName&lt;U&gt;, S, C, Typeof&lt;U&gt;, Typeof&lt;U&gt;, U&gt;

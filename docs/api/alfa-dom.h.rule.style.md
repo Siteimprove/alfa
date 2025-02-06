@@ -12,12 +12,67 @@ function style(selector: string, declarations: Array<Declaration> | Record<strin
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  selector | string |  |
-|  declarations | Array&lt;Declaration&gt; \| Record&lt;string, string&gt; |  |
-|  hint | boolean | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+selector
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+declarations
+
+
+</td><td>
+
+Array&lt;Declaration&gt; \| Record&lt;string, string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+hint
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 StyleRule

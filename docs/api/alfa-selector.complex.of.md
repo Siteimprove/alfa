@@ -12,12 +12,65 @@ static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simp
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  combinator | Combinator |  |
-|  left | Simple \| Compound \| [Complex](./alfa-selector.complex.md) |  |
-|  right | Simple \| Compound |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+combinator
+
+
+</td><td>
+
+Combinator
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+left
+
+
+</td><td>
+
+Simple \| Compound \| [Complex](./alfa-selector.complex.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+right
+
+
+</td><td>
+
+Simple \| Compound
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Complex](./alfa-selector.complex.md)

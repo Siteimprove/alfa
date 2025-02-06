@@ -13,8 +13,59 @@ interface JSON extends Cell.JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [scope](./alfa-table.cell.header.json.scope.md) |  | Scope |  |
-|  [type](./alfa-table.cell.header.json.type.md) |  | "header" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[scope](./alfa-table.cell.header.json.scope.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Scope
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-table.cell.header.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"header"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

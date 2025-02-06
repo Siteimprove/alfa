@@ -12,8 +12,48 @@ enum Orientation
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Landscape | <code>&quot;landscape&quot;</code> |  |
-|  Portrait | <code>&quot;portrait&quot;</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+Landscape
+
+
+</td><td>
+
+`"landscape"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Portrait
+
+
+</td><td>
+
+`"portrait"`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

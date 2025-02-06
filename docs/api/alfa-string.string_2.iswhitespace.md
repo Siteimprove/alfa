@@ -4,7 +4,7 @@
 
 ## String\_2.isWhitespace() function
 
-Checks whether the input contains only whitespace
+Checks whether the input contains only whitespace, optionally allowing empty strings (default: true).
 
 **Signature:**
 
@@ -14,11 +14,53 @@ function isWhitespace(input: string, allowEmpty?: boolean): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  input | string |  |
-|  allowEmpty | boolean | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+input
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+allowEmpty
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

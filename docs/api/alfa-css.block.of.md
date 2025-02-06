@@ -12,11 +12,51 @@ static of(token: Block.Open, value: Iterable<Token>): Block;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  token | [Block.Open](./alfa-css.block.open.md) |  |
-|  value | Iterable&lt;Token&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+token
+
+
+</td><td>
+
+[Block.Open](./alfa-css.block.open.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+Iterable&lt;Token&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Block](./alfa-css.block.md)

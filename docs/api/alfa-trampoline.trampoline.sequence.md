@@ -12,10 +12,37 @@ function sequence<T>(futures: Iterable<Trampoline<T>>): Trampoline<Iterable<T>>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  futures | Iterable&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+futures
+
+
+</td><td>
+
+Iterable&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;

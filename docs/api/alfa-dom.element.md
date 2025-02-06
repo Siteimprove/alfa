@@ -13,44 +13,267 @@ export declare namespace Element
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isElement(value)](./alfa-dom.element.iselement.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isElement(value)](./alfa-dom.element.iselement.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.element.json.md) |  |
-|  [MinimalJSON](./alfa-dom.element.minimaljson.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.element.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-dom.element.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [hasAttribute](./alfa-dom.element.hasattribute.md) |  |
-|  [hasBox](./alfa-dom.element.hasbox.md) |  |
-|  [hasDisplaySize](./alfa-dom.element.hasdisplaysize.md) |  |
-|  [hasId](./alfa-dom.element.hasid.md) |  |
-|  [hasInputType](./alfa-dom.element.hasinputtype.md) |  |
-|  [hasName](./alfa-dom.element.hasname.md) |  |
-|  [hasNamespace](./alfa-dom.element.hasnamespace.md) |  |
-|  [hasTabIndex](./alfa-dom.element.hastabindex.md) |  |
-|  [hasUniqueId](./alfa-dom.element.hasuniqueid.md) |  |
-|  [isActuallyDisabled](./alfa-dom.element.isactuallydisabled.md) |  |
-|  [isBrowsingContextContainer](./alfa-dom.element.isbrowsingcontextcontainer.md) |  |
-|  [isContent](./alfa-dom.element.iscontent.md) |  |
-|  [isDocumentElement](./alfa-dom.element.isdocumentelement.md) |  |
-|  [isDraggable](./alfa-dom.element.isdraggable.md) |  |
-|  [isEditingHost](./alfa-dom.element.iseditinghost.md) |  |
-|  [isFallback](./alfa-dom.element.isfallback.md) |  |
-|  [isReplaced](./alfa-dom.element.isreplaced.md) |  |
-|  [isScopedTo](./alfa-dom.element.isscopedto.md) |  |
-|  [isSuggestedFocusable](./alfa-dom.element.issuggestedfocusable.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[hasAttribute](./alfa-dom.element.hasattribute.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasBox](./alfa-dom.element.hasbox.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasDisplaySize](./alfa-dom.element.hasdisplaysize.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasId](./alfa-dom.element.hasid.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasInputType](./alfa-dom.element.hasinputtype.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasName](./alfa-dom.element.hasname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasNamespace](./alfa-dom.element.hasnamespace.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasTabIndex](./alfa-dom.element.hastabindex.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasUniqueId](./alfa-dom.element.hasuniqueid.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isActuallyDisabled](./alfa-dom.element.isactuallydisabled.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isBrowsingContextContainer](./alfa-dom.element.isbrowsingcontextcontainer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isContent](./alfa-dom.element.iscontent.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isDocumentElement](./alfa-dom.element.isdocumentelement.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isDraggable](./alfa-dom.element.isdraggable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isEditingHost](./alfa-dom.element.iseditinghost.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFallback](./alfa-dom.element.isfallback.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isReplaced](./alfa-dom.element.isreplaced.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isScopedTo](./alfa-dom.element.isscopedto.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSuggestedFocusable](./alfa-dom.element.issuggestedfocusable.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [InputType](./alfa-dom.element.inputtype.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[InputType](./alfa-dom.element.inputtype.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

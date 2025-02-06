@@ -12,10 +12,37 @@ function from(json: Layer.BlockRule.JSON): Layer.BlockRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [Layer.BlockRule.JSON](./alfa-dom.layer.blockrule.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[Layer.BlockRule.JSON](./alfa-dom.layer.blockrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Layer.BlockRule](./alfa-dom.layer.blockrule.md)

@@ -13,22 +13,129 @@ export declare namespace h
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [attribute(name, value, externalId, internalId, extraData)](./alfa-dom.h.attribute.md) |  |
-|  [block(declarations)](./alfa-dom.h.block.md) |  |
-|  [declaration(name, value, important)](./alfa-dom.h.declaration.md) |  |
-|  [document(children, style, externalId, internalId, extraData)](./alfa-dom.h.document.md) |  |
-|  [element(name, attributes, children, style, namespace, box, device, externalId, internalId, extraData)](./alfa-dom.h.element.md) |  |
-|  [fragment(children, externalId, extraData)](./alfa-dom.h.fragment.md) |  |
-|  [shadow(children, style, mode, externalId, internalId, extraData)](./alfa-dom.h.shadow.md) |  |
-|  [sheet(rules, disabled, condition)](./alfa-dom.h.sheet.md) |  |
-|  [text(data, externalId, internalId, extraData)](./alfa-dom.h.text.md) |  |
-|  [type(name, publicId, systemId, externalId, internalId, extraData)](./alfa-dom.h.type.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[attribute(name, value, externalId, internalId, extraData)](./alfa-dom.h.attribute.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[block(declarations)](./alfa-dom.h.block.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[declaration(name, value, important)](./alfa-dom.h.declaration.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[document(children, style, externalId, internalId, extraData)](./alfa-dom.h.document.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[element(name, attributes, children, style, namespace, box, device, externalId, internalId, extraData)](./alfa-dom.h.element.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fragment(children, externalId, extraData)](./alfa-dom.h.fragment.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[shadow(children, style, mode, externalId, internalId, extraData)](./alfa-dom.h.shadow.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[sheet(rules, disabled, condition)](./alfa-dom.h.sheet.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[text(data, externalId, internalId, extraData)](./alfa-dom.h.text.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type(name, publicId, systemId, externalId, internalId, extraData)](./alfa-dom.h.type.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [rule](./alfa-dom.h.rule.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[rule](./alfa-dom.h.rule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

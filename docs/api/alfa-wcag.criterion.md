@@ -13,33 +13,178 @@ export declare namespace Criterion
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [fromURI(uri)](./alfa-wcag.criterion.fromuri.md) |  |
-|  [isChapter(value)](./alfa-wcag.criterion.ischapter.md) |  |
-|  [isCriterion(value)](./alfa-wcag.criterion.iscriterion.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[fromURI(uri)](./alfa-wcag.criterion.fromuri.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isChapter(value)](./alfa-wcag.criterion.ischapter.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isCriterion(value)](./alfa-wcag.criterion.iscriterion.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-wcag.criterion.earl.md) |  |
-|  [JSON](./alfa-wcag.criterion.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-wcag.criterion.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-wcag.criterion.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Level](./alfa-wcag.criterion.level.md) |  |
-|  [Version](./alfa-wcag.criterion.version.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Level](./alfa-wcag.criterion.level.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Version](./alfa-wcag.criterion.version.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Chapter](./alfa-wcag.criterion.chapter.md) | The chapters of all criteria. |
-|  [Level](./alfa-wcag.criterion.level.md) | The level of the specified criterion under the specified version. |
-|  [Title](./alfa-wcag.criterion.title.md) | The title of the specified criterion. |
-|  [URI](./alfa-wcag.criterion.uri.md) | The URI of the specified criterion. |
-|  [Version](./alfa-wcag.criterion.version.md) | The different versions of the WCAG. |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Chapter](./alfa-wcag.criterion.chapter.md)
+
+
+</td><td>
+
+The chapters of all criteria.
+
+
+</td></tr>
+<tr><td>
+
+[Level](./alfa-wcag.criterion.level.md)
+
+
+</td><td>
+
+The level of the specified criterion under the specified version.
+
+
+</td></tr>
+<tr><td>
+
+[Title](./alfa-wcag.criterion.title.md)
+
+
+</td><td>
+
+The title of the specified criterion.
+
+
+</td></tr>
+<tr><td>
+
+[URI](./alfa-wcag.criterion.uri.md)
+
+
+</td><td>
+
+The URI of the specified criterion.
+
+
+</td></tr>
+<tr><td>
+
+[Version](./alfa-wcag.criterion.version.md)
+
+
+</td><td>
+
+The different versions of the WCAG.
+
+
+</td></tr>
+</tbody></table>

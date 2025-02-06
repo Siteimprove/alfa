@@ -12,9 +12,76 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [element](./alfa-aria.source.ancestor.json.element.md) |  | string |  |
-|  [name](./alfa-aria.source.ancestor.json.name.md) |  | [Name.JSON](./alfa-aria.name.json.md) |  |
-|  [type](./alfa-aria.source.ancestor.json.type.md) |  | "ancestor" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[element](./alfa-aria.source.ancestor.json.element.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[name](./alfa-aria.source.ancestor.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Name.JSON](./alfa-aria.name.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-aria.source.ancestor.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"ancestor"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

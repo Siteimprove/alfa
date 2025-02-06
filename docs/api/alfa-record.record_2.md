@@ -13,17 +13,84 @@ export declare namespace Record
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(entries)](./alfa-record.record_2.from.md) |  |
-|  [isRecord(value)](./alfa-record.record_2.isrecord.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(entries)](./alfa-record.record_2.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRecord(value)](./alfa-record.record_2.isrecord.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Entry](./alfa-record.record_2.entry.md) |  |
-|  [JSON](./alfa-record.record_2.json.md) |  |
-|  [Key](./alfa-record.record_2.key.md) |  |
-|  [Value](./alfa-record.record_2.value.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Entry](./alfa-record.record_2.entry.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-record.record_2.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Key](./alfa-record.record_2.key.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Value](./alfa-record.record_2.value.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

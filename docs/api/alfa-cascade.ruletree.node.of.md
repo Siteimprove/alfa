@@ -12,12 +12,65 @@ static of(block: Block, children: Array<Node>, parent: Option<Node>): Node;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  block | Block |  |
-|  children | Array&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
-|  parent | Option&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+block
+
+
+</td><td>
+
+Block
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+children
+
+
+</td><td>
+
+Array&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+parent
+
+
+</td><td>
+
+Option&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Node](./alfa-cascade.ruletree.node.md)

@@ -12,10 +12,37 @@ static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  entries | Array&lt;readonly \[K, V\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+entries
+
+
+</td><td>
+
+Array&lt;readonly \[K, V\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;

@@ -13,9 +13,76 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-rules.group.earl.__context_.md) |  | { ptr: "http://www.w3.org/2009/pointers\#"; } |  |
-|  ["@type"](./alfa-rules.group.earl.__type_.md) |  | \["ptr:Pointer", "ptr:PointersGroup", "ptr:RelatedPointers"\] |  |
-|  ["ptr:groupPointer"](./alfa-rules.group.earl._ptr_grouppointer_.md) |  | { "@list": Array&lt;[earl.EARL](./alfa-earl.earl.md)<!-- -->&gt;; } |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-rules.group.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ ptr: "http://www.w3.org/2009/pointers\#"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@type"](./alfa-rules.group.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\["ptr:Pointer", "ptr:PointersGroup", "ptr:RelatedPointers"\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["ptr:groupPointer"](./alfa-rules.group.earl._ptr_grouppointer_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ "@list": Array&lt;[earl.EARL](./alfa-earl.earl.md)<!-- -->&gt;; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

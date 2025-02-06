@@ -12,11 +12,53 @@ function of<T>(head: T, tail?: Lazy<Sequence<T>>): Sequence<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  head | T |  |
-|  tail | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+head
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tail
+
+
+</td><td>
+
+[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;

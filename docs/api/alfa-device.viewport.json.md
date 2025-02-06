@@ -12,9 +12,76 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [height](./alfa-device.viewport.json.height.md) |  | number |  |
-|  [orientation](./alfa-device.viewport.json.orientation.md) |  | \`${[Orientation](./alfa-device.viewport.orientation.md)<!-- -->}\` |  |
-|  [width](./alfa-device.viewport.json.width.md) |  | number |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[height](./alfa-device.viewport.json.height.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[orientation](./alfa-device.viewport.json.orientation.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\`${[Orientation](./alfa-device.viewport.orientation.md)<!-- -->}\`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[width](./alfa-device.viewport.json.width.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

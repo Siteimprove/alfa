@@ -12,11 +12,110 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [arity](./alfa-xpath.expression.functioncall.json.arity.md) |  | number |  |
-|  [name](./alfa-xpath.expression.functioncall.json.name.md) |  | string |  |
-|  [parameters](./alfa-xpath.expression.functioncall.json.parameters.md) |  | Array&lt;[Expression.JSON](./alfa-xpath.expression.json.md)<!-- -->&gt; |  |
-|  [prefix](./alfa-xpath.expression.functioncall.json.prefix.md) |  | string \| null |  |
-|  [type](./alfa-xpath.expression.functioncall.json.type.md) |  | "function-call" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[arity](./alfa-xpath.expression.functioncall.json.arity.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[name](./alfa-xpath.expression.functioncall.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parameters](./alfa-xpath.expression.functioncall.json.parameters.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Expression.JSON](./alfa-xpath.expression.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[prefix](./alfa-xpath.expression.functioncall.json.prefix.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-xpath.expression.functioncall.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"function-call"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

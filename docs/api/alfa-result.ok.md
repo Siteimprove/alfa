@@ -13,14 +13,57 @@ export declare namespace Ok
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isOk(value)](./alfa-result.ok.isok.md) |  |
-|  [isOk(value)](./alfa-result.ok.isok_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isOk(value)](./alfa-result.ok.isok.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isOk(value)](./alfa-result.ok.isok_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-result.ok.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-result.ok.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

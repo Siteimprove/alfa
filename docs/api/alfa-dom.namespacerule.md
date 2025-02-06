@@ -13,13 +13,48 @@ export declare namespace NamespaceRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isNamespaceRule(value)](./alfa-dom.namespacerule.isnamespacerule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isNamespaceRule(value)](./alfa-dom.namespacerule.isnamespacerule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.namespacerule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.namespacerule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

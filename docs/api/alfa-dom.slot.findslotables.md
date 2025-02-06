@@ -14,10 +14,37 @@ function findSlotables(slot: Slot): Iterable<Slotable>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  slot | [Slot](./alfa-dom.slot.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+slot
+
+
+</td><td>
+
+[Slot](./alfa-dom.slot.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Iterable&lt;Slotable&gt;

@@ -12,10 +12,37 @@ partiallyResolve(resolver: Circle.PartialResolver): Circle.PartiallyResolved;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Circle.PartialResolver](./alfa-css.circle.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Circle.PartialResolver](./alfa-css.circle.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Circle.PartiallyResolved](./alfa-css.circle.partiallyresolved.md)

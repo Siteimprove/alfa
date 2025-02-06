@@ -14,13 +14,83 @@ static of(styleDeclarations: Iterable<[Declaration, Origin]>, device: Device, pa
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  styleDeclarations | Iterable&lt;\[Declaration, Origin\]&gt; |  |
-|  device | Device |  |
-|  parent | Option&lt;[Style](./alfa-style.style.md)<!-- -->&gt; | _(Optional)_ |
-|  owner | Option&lt;Element&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+styleDeclarations
+
+
+</td><td>
+
+Iterable&lt;\[Declaration, Origin\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+parent
+
+
+</td><td>
+
+Option&lt;[Style](./alfa-style.style.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+owner
+
+
+</td><td>
+
+Option&lt;Element&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Style](./alfa-style.style.md)

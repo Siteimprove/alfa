@@ -12,10 +12,37 @@ flatten<T>(this: Unkeyed<Unkeyed<T>>): Unkeyed<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;

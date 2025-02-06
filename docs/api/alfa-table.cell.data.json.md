@@ -13,7 +13,42 @@ interface JSON extends Cell.JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-table.cell.data.json.type.md) |  | "data" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-table.cell.data.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"data"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,16 +13,83 @@ export declare namespace Declaration
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.declaration.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.declaration.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [consume](./alfa-css.declaration.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-declaration](https://drafts.csswg.org/css-syntax/#consume-a-declaration) |
-|  [consumeList](./alfa-css.declaration.consumelist.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-list-of-declarations](https://drafts.csswg.org/css-syntax/#consume-a-list-of-declarations) |
-|  [parse](./alfa-css.declaration.parse.md) | [https://drafts.csswg.org/css-syntax/\#parse-a-declaration](https://drafts.csswg.org/css-syntax/#parse-a-declaration) |
-|  [parseList](./alfa-css.declaration.parselist.md) | [https://drafts.csswg.org/css-syntax/\#parse-a-list-of-declarations](https://drafts.csswg.org/css-syntax/#parse-a-list-of-declarations) |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[consume](./alfa-css.declaration.consume.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-syntax/\#consume-a-declaration](https://drafts.csswg.org/css-syntax/#consume-a-declaration)
+
+
+</td></tr>
+<tr><td>
+
+[consumeList](./alfa-css.declaration.consumelist.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-syntax/\#consume-a-list-of-declarations](https://drafts.csswg.org/css-syntax/#consume-a-list-of-declarations)
+
+
+</td></tr>
+<tr><td>
+
+[parse](./alfa-css.declaration.parse.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-syntax/\#parse-a-declaration](https://drafts.csswg.org/css-syntax/#parse-a-declaration)
+
+
+</td></tr>
+<tr><td>
+
+[parseList](./alfa-css.declaration.parselist.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-syntax/\#parse-a-list-of-declarations](https://drafts.csswg.org/css-syntax/#parse-a-list-of-declarations)
+
+
+</td></tr>
+</tbody></table>

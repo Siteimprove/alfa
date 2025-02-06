@@ -20,13 +20,81 @@ function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metad
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  interview | [Interview](./alfa-act.interview.md)<!-- -->&lt;QUESTION, SUBJECT, TARGET, ANSWER&gt; |  |
-|  rule | Rule&lt;INPUT, TARGET, QUESTION, SUBJECT&gt; |  |
-|  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT&gt; |  |
-|  oracleUsed | boolean | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+interview
+
+
+</td><td>
+
+[Interview](./alfa-act.interview.md)<!-- -->&lt;QUESTION, SUBJECT, TARGET, ANSWER&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+rule
+
+
+</td><td>
+
+Rule&lt;INPUT, TARGET, QUESTION, SUBJECT&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+oracle
+
+
+</td><td>
+
+[Oracle](./alfa-act.oracle.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+oracleUsed
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Future&lt;Either&lt;Tuple&lt;\[ANSWER, boolean\]&gt;, Tuple&lt;\[Diagnostic, boolean\]&gt;&gt;&gt;

@@ -12,10 +12,37 @@ flatten<T>(this: Future<Future<T>>): Future<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Future](./alfa-future.future.md)<!-- -->&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Future](./alfa-future.future.md)<!-- -->&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;

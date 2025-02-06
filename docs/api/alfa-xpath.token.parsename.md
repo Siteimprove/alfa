@@ -12,10 +12,39 @@ parseName: (query?: string | Predicate<Name>) => Parser<Slice<Token>, Name, stri
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  query | string \| Predicate&lt;[Name](./alfa-xpath.token.name.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+query
+
+
+</td><td>
+
+string \| Predicate&lt;[Name](./alfa-xpath.token.name.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-xpath.token.md)<!-- -->&gt;, [Name](./alfa-xpath.token.name.md)<!-- -->, string, \[\]&gt;

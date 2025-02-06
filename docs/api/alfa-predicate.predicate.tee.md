@@ -12,11 +12,51 @@ function tee<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, callb
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
-|  callback | Callback&lt;T, void, \[result: boolean, ...args: A\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+callback
+
+
+</td><td>
+
+Callback&lt;T, void, \[result: boolean, ...args: A\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;

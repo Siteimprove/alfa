@@ -6,17 +6,90 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Style](./alfa-style.style.md) |  |
-|  [Value](./alfa-style.value.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Style](./alfa-style.style.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Value](./alfa-style.value.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Longhands](./alfa-style.longhands.md) |  |
-|  [Shorthands](./alfa-style.shorthands.md) |  |
-|  [Style](./alfa-style.style.md) |  |
-|  [Value](./alfa-style.value.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Longhands](./alfa-style.longhands.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Shorthands](./alfa-style.shorthands.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Style](./alfa-style.style.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Value](./alfa-style.value.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

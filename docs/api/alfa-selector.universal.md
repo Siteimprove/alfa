@@ -13,19 +13,74 @@ export declare namespace Universal
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isUniversal(value)](./alfa-selector.universal.isuniversal.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isUniversal(value)](./alfa-selector.universal.isuniversal.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.universal.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.universal.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-selector.universal.parse.md) | [https://drafts.csswg.org/selectors/\#typedef-type-selector](https://drafts.csswg.org/selectors/#typedef-type-selector) |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-selector.universal.parse.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#typedef-type-selector](https://drafts.csswg.org/selectors/#typedef-type-selector)
+
+
+</td></tr>
+</tbody></table>

@@ -6,7 +6,25 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Foldable](./alfa-foldable.foldable.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Foldable](./alfa-foldable.foldable.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

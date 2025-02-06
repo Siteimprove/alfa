@@ -13,30 +13,145 @@ export declare namespace Question
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [of(uri, subject, message, options)](./alfa-rules.question.of.md) |  |
-|  [of(uri, subject, context, message, options)](./alfa-rules.question.of_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[of(uri, subject, message, options)](./alfa-rules.question.of.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[of(uri, subject, context, message, options)](./alfa-rules.question.of_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Type](./alfa-rules.question.type.md) | Maps the <code>type</code> parameter of questions to the expected type of the answer. |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Type](./alfa-rules.question.type.md)
+
+
+</td><td>
+
+Maps the `type` parameter of questions to the expected type of the answer.
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [Data](./alfa-rules.question.data.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Data](./alfa-rules.question.data.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Data](./alfa-rules.question.data.md) |  |
-|  [Metadata](./alfa-rules.question.metadata.md) | Maps the <code>uri</code> parameter of questions to their <code>type</code> parameter and the expected type of answers. |
-|  [TypeName](./alfa-rules.question.typename.md) |  |
-|  [Typeof](./alfa-rules.question.typeof.md) |  |
-|  [Uri](./alfa-rules.question.uri.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Data](./alfa-rules.question.data.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Metadata](./alfa-rules.question.metadata.md)
+
+
+</td><td>
+
+Maps the `uri` parameter of questions to their `type` parameter and the expected type of answers.
+
+
+</td></tr>
+<tr><td>
+
+[TypeName](./alfa-rules.question.typename.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Typeof](./alfa-rules.question.typeof.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Uri](./alfa-rules.question.uri.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

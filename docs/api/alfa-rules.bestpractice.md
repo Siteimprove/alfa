@@ -13,13 +13,48 @@ export declare namespace BestPractice
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isBestPractice(value)](./alfa-rules.bestpractice.isbestpractice.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isBestPractice(value)](./alfa-rules.bestpractice.isbestpractice.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-rules.bestpractice.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-rules.bestpractice.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

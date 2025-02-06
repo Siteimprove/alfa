@@ -12,10 +12,37 @@ flatten<T>(this: Monad<Monad<T>>): Monad<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Monad](./alfa-monad.monad.md)<!-- -->&lt;[Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Monad](./alfa-monad.monad.md)<!-- -->&lt;[Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;

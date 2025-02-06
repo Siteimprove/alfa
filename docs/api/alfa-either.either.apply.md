@@ -12,10 +12,37 @@ apply<T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  mapper | [Either](./alfa-either.either.md)<!-- -->&lt;L, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+mapper
+
+
+</td><td>
+
+[Either](./alfa-either.either.md)<!-- -->&lt;L, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Either](./alfa-either.either.md)<!-- -->&lt;L, T&gt;

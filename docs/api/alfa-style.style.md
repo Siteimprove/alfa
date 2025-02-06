@@ -13,54 +13,359 @@ export declare namespace Style
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(element, device, context)](./alfa-style.style.from.md) | Build the style of an element. |
-|  [innerText(device, isAcceptable)](./alfa-style.style.innertext.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(element, device, context)](./alfa-style.style.from.md)
+
+
+</td><td>
+
+Build the style of an element.
+
+
+</td></tr>
+<tr><td>
+
+[innerText(device, isAcceptable)](./alfa-style.style.innertext.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-style.style.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-style.style.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [getOffsetParent](./alfa-style.style.getoffsetparent.md) |  |
-|  [getPositioningParent](./alfa-style.style.getpositioningparent.md) |  |
-|  [hasBorder](./alfa-style.style.hasborder.md) |  |
-|  [hasBoxShadow](./alfa-style.style.hasboxshadow.md) |  |
-|  [hasCascadedStyle](./alfa-style.style.hascascadedstyle.md) |  |
-|  [hasComputedStyle](./alfa-style.style.hascomputedstyle.md) |  |
-|  [hasOutline](./alfa-style.style.hasoutline.md) |  |
-|  [hasPositioningParent](./alfa-style.style.haspositioningparent.md) |  |
-|  [hasSpecifiedStyle](./alfa-style.style.hasspecifiedstyle.md) |  |
-|  [hasTextDecoration](./alfa-style.style.hastextdecoration.md) |  |
-|  [hasTransparentBackground](./alfa-style.style.hastransparentbackground.md) |  |
-|  [hasUsedStyle](./alfa-style.style.hasusedstyle.md) |  |
-|  [isBlockContainer](./alfa-style.style.isblockcontainer.md) |  |
-|  [isFlexContainer](./alfa-style.style.isflexcontainer.md) |  |
-|  [isFocusable](./alfa-style.style.isfocusable.md) |  |
-|  [isGridContainer](./alfa-style.style.isgridcontainer.md) |  |
-|  [isImportant](./alfa-style.style.isimportant.md) |  |
-|  [isInert](./alfa-style.style.isinert.md) |  |
-|  [isPositioned](./alfa-style.style.ispositioned.md) |  |
-|  [isRendered](./alfa-style.style.isrendered.md) |  |
-|  [isScrolledBehind](./alfa-style.style.isscrolledbehind.md) |  |
-|  [isTabbable](./alfa-style.style.istabbable.md) |  |
-|  [isVisible](./alfa-style.style.isvisible.md) |  |
-|  [isVisibleShadow](./alfa-style.style.isvisibleshadow.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[getOffsetParent](./alfa-style.style.getoffsetparent.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[getPositioningParent](./alfa-style.style.getpositioningparent.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasBorder](./alfa-style.style.hasborder.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasBoxShadow](./alfa-style.style.hasboxshadow.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasCascadedStyle](./alfa-style.style.hascascadedstyle.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasComputedStyle](./alfa-style.style.hascomputedstyle.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasOutline](./alfa-style.style.hasoutline.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasPositioningParent](./alfa-style.style.haspositioningparent.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasSpecifiedStyle](./alfa-style.style.hasspecifiedstyle.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasTextDecoration](./alfa-style.style.hastextdecoration.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasTransparentBackground](./alfa-style.style.hastransparentbackground.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasUsedStyle](./alfa-style.style.hasusedstyle.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isBlockContainer](./alfa-style.style.isblockcontainer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFlexContainer](./alfa-style.style.isflexcontainer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFocusable](./alfa-style.style.isfocusable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isGridContainer](./alfa-style.style.isgridcontainer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isImportant](./alfa-style.style.isimportant.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isInert](./alfa-style.style.isinert.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isPositioned](./alfa-style.style.ispositioned.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRendered](./alfa-style.style.isrendered.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isScrolledBehind](./alfa-style.style.isscrolledbehind.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isTabbable](./alfa-style.style.istabbable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isVisible](./alfa-style.style.isvisible.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isVisibleShadow](./alfa-style.style.isvisibleshadow.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Cascaded](./alfa-style.style.cascaded.md) |  |
-|  [Computed](./alfa-style.style.computed.md) |  |
-|  [Declared](./alfa-style.style.declared.md) |  |
-|  [Inherited](./alfa-style.style.inherited.md) |  |
-|  [Initial](./alfa-style.style.initial.md) |  |
-|  [Specified](./alfa-style.style.specified.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cascaded](./alfa-style.style.cascaded.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Computed](./alfa-style.style.computed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Declared](./alfa-style.style.declared.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Inherited](./alfa-style.style.inherited.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Initial](./alfa-style.style.initial.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Specified](./alfa-style.style.specified.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

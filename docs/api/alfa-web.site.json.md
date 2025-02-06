@@ -12,7 +12,42 @@ interface JSON<R extends Resource = Resource>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [resources](./alfa-web.site.json.resources.md) |  | [Graph.JSON](./alfa-graph.graph.json.md)<!-- -->&lt;R&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[resources](./alfa-web.site.json.resources.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Graph.JSON](./alfa-graph.graph.json.md)<!-- -->&lt;R&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

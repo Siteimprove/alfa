@@ -6,7 +6,25 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Emitter](./alfa-emitter.emitter.md) |  |
+<table><thead><tr><th>
 
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Emitter](./alfa-emitter.emitter.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

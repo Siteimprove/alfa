@@ -12,10 +12,39 @@ function parse(options?: Options): CSSParser<Shadow>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  options | Options | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+options
+
+
+</td><td>
+
+Options
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Shadow](./alfa-css.shadow.md)<!-- -->&gt;

@@ -13,28 +13,175 @@ export declare namespace Longhands
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [get(name)](./alfa-style.longhands.get.md) |  |
-|  [isName(name)](./alfa-style.longhands.isname.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[get(name)](./alfa-style.longhands.get.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isName(name)](./alfa-style.longhands.isname.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [longHands](./alfa-style.longhands.longhands.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[longHands](./alfa-style.longhands.longhands.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Cascaded](./alfa-style.longhands.cascaded.md) | <p>Extract the cascaded type of a named property.</p><p>[https://drafts.csswg.org/css-cascade/\#cascaded](https://drafts.csswg.org/css-cascade/#cascaded)</p> |
-|  [Computed](./alfa-style.longhands.computed.md) | <p>Extract the computed type a named property.</p><p>[https://drafts.csswg.org/css-cascade/\#computed](https://drafts.csswg.org/css-cascade/#computed)</p> |
-|  [Declared](./alfa-style.longhands.declared.md) | <p>Extract the declared type of a named property.</p><p>[https://drafts.csswg.org/css-cascade/\#declared](https://drafts.csswg.org/css-cascade/#declared)</p> |
-|  [Inherited](./alfa-style.longhands.inherited.md) | Extract the inherited type of a named property. |
-|  [Initial](./alfa-style.longhands.initial.md) | Extract the initial type of a named property. |
-|  [Name](./alfa-style.longhands.name.md) |  |
-|  [Parsed](./alfa-style.longhands.parsed.md) | Extract the parsed type of a named property. |
-|  [Property](./alfa-style.longhands.property.md) |  |
-|  [Specified](./alfa-style.longhands.specified.md) | <p>Extract the specified type of a named property.</p><p>[https://drafts.csswg.org/css-cascade/\#specified](https://drafts.csswg.org/css-cascade/#specified)</p> |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cascaded](./alfa-style.longhands.cascaded.md)
+
+
+</td><td>
+
+Extract the cascaded type of a named property.
+
+[https://drafts.csswg.org/css-cascade/\#cascaded](https://drafts.csswg.org/css-cascade/#cascaded)
+
+
+</td></tr>
+<tr><td>
+
+[Computed](./alfa-style.longhands.computed.md)
+
+
+</td><td>
+
+Extract the computed type a named property.
+
+[https://drafts.csswg.org/css-cascade/\#computed](https://drafts.csswg.org/css-cascade/#computed)
+
+
+</td></tr>
+<tr><td>
+
+[Declared](./alfa-style.longhands.declared.md)
+
+
+</td><td>
+
+Extract the declared type of a named property.
+
+[https://drafts.csswg.org/css-cascade/\#declared](https://drafts.csswg.org/css-cascade/#declared)
+
+
+</td></tr>
+<tr><td>
+
+[Inherited](./alfa-style.longhands.inherited.md)
+
+
+</td><td>
+
+Extract the inherited type of a named property.
+
+
+</td></tr>
+<tr><td>
+
+[Initial](./alfa-style.longhands.initial.md)
+
+
+</td><td>
+
+Extract the initial type of a named property.
+
+
+</td></tr>
+<tr><td>
+
+[Name](./alfa-style.longhands.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Parsed](./alfa-style.longhands.parsed.md)
+
+
+</td><td>
+
+Extract the parsed type of a named property.
+
+
+</td></tr>
+<tr><td>
+
+[Property](./alfa-style.longhands.property.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Specified](./alfa-style.longhands.specified.md)
+
+
+</td><td>
+
+Extract the specified type of a named property.
+
+[https://drafts.csswg.org/css-cascade/\#specified](https://drafts.csswg.org/css-cascade/#specified)
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ static of(cookies: Iterable<Cookie>): Cookies;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  cookies | Iterable&lt;Cookie&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+cookies
+
+
+</td><td>
+
+Iterable&lt;Cookie&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Cookies](./alfa-http.cookies.md)

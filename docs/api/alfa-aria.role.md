@@ -13,38 +13,237 @@ export declare namespace Role
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(element)](./alfa-aria.role.from.md) | Get the role assigned either explicitly or implicitly to an element, if any. |
-|  [fromExplicit(element)](./alfa-aria.role.fromexplicit.md) | Get the role explicitly assigned to an element, if any. |
-|  [fromImplicit(element)](./alfa-aria.role.fromimplicit.md) | Get the role implicitly assigned to an element, if any. |
-|  [isName(value)](./alfa-aria.role.isname.md) |  |
-|  [isRole(value, name)](./alfa-aria.role.isrole.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(element)](./alfa-aria.role.from.md)
+
+
+</td><td>
+
+Get the role assigned either explicitly or implicitly to an element, if any.
+
+
+</td></tr>
+<tr><td>
+
+[fromExplicit(element)](./alfa-aria.role.fromexplicit.md)
+
+
+</td><td>
+
+Get the role explicitly assigned to an element, if any.
+
+
+</td></tr>
+<tr><td>
+
+[fromImplicit(element)](./alfa-aria.role.fromimplicit.md)
+
+
+</td><td>
+
+Get the role implicitly assigned to an element, if any.
+
+
+</td></tr>
+<tr><td>
+
+[isName(value)](./alfa-aria.role.isname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRole(value, name)](./alfa-aria.role.isrole.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-aria.role.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-aria.role.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [hasName](./alfa-aria.role.hasname.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[hasName](./alfa-aria.role.hasname.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Abstract](./alfa-aria.role.abstract.md) | The names of all abstract roles. |
-|  [Concrete](./alfa-aria.role.concrete.md) | The names of all non-abstract roles. |
-|  [Inherited](./alfa-aria.role.inherited.md) | The inherited roles for the specified role. |
-|  [Landmark](./alfa-aria.role.landmark.md) | The names of all landmark roles. |
-|  [Name](./alfa-aria.role.name.md) |  |
-|  [NamedBy](./alfa-aria.role.namedby.md) | The methods by which the element assigned to the specified role may receive its name. |
-|  [Presentational](./alfa-aria.role.presentational.md) | The names of all presentational roles. |
-|  [SubclassOf](./alfa-aria.role.subclassof.md) | All roles that are subclasses of the specified role. |
-|  [SuperclassOf](./alfa-aria.role.superclassof.md) | All roles that are superclasses of the specified role. |
-|  [Widget](./alfa-aria.role.widget.md) | The names of all widget roles. |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Abstract](./alfa-aria.role.abstract.md)
+
+
+</td><td>
+
+The names of all abstract roles.
+
+
+</td></tr>
+<tr><td>
+
+[Concrete](./alfa-aria.role.concrete.md)
+
+
+</td><td>
+
+The names of all non-abstract roles.
+
+
+</td></tr>
+<tr><td>
+
+[Inherited](./alfa-aria.role.inherited.md)
+
+
+</td><td>
+
+The inherited roles for the specified role.
+
+
+</td></tr>
+<tr><td>
+
+[Landmark](./alfa-aria.role.landmark.md)
+
+
+</td><td>
+
+The names of all landmark roles.
+
+
+</td></tr>
+<tr><td>
+
+[Name](./alfa-aria.role.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[NamedBy](./alfa-aria.role.namedby.md)
+
+
+</td><td>
+
+The methods by which the element assigned to the specified role may receive its name.
+
+
+</td></tr>
+<tr><td>
+
+[Presentational](./alfa-aria.role.presentational.md)
+
+
+</td><td>
+
+The names of all presentational roles.
+
+
+</td></tr>
+<tr><td>
+
+[SubclassOf](./alfa-aria.role.subclassof.md)
+
+
+</td><td>
+
+All roles that are subclasses of the specified role.
+
+
+</td></tr>
+<tr><td>
+
+[SuperclassOf](./alfa-aria.role.superclassof.md)
+
+
+</td><td>
+
+All roles that are superclasses of the specified role.
+
+
+</td></tr>
+<tr><td>
+
+[Widget](./alfa-aria.role.widget.md)
+
+
+</td><td>
+
+The names of all widget roles.
+
+
+</td></tr>
+</tbody></table>

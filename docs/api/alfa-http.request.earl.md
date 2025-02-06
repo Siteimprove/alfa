@@ -13,12 +13,127 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-http.request.earl.__context_.md) |  | { http: "http://www.w3.org/2011/http\#"; } |  |
-|  ["@type"](./alfa-http.request.earl.__type_.md) |  | \["http:Message", "http:Request"\] |  |
-|  ["http:body"](./alfa-http.request.earl._http_body_.md) |  | [Body.EARL](./alfa-http.body.earl.md) |  |
-|  ["http:headers"](./alfa-http.request.earl._http_headers_.md) |  | [Headers.EARL](./alfa-http.headers.earl.md) |  |
-|  ["http:methodName"](./alfa-http.request.earl._http_methodname_.md) |  | string |  |
-|  ["http:requestURI"](./alfa-http.request.earl._http_requesturi_.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-http.request.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ http: "http://www.w3.org/2011/http\#"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@type"](./alfa-http.request.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\["http:Message", "http:Request"\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["http:body"](./alfa-http.request.earl._http_body_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Body.EARL](./alfa-http.body.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["http:headers"](./alfa-http.request.earl._http_headers_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Headers.EARL](./alfa-http.headers.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["http:methodName"](./alfa-http.request.earl._http_methodname_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["http:requestURI"](./alfa-http.request.earl._http_requesturi_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,17 +13,84 @@ export declare namespace Collection
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Indexed](./alfa-collection.collection.indexed.md) |  |
-|  [Keyed](./alfa-collection.collection.keyed.md) |  |
-|  [Unkeyed](./alfa-collection.collection.unkeyed.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Indexed](./alfa-collection.collection.indexed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Keyed](./alfa-collection.collection.keyed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Indexed](./alfa-collection.collection.indexed.md) |  |
-|  [Keyed](./alfa-collection.collection.keyed.md) |  |
-|  [Unkeyed](./alfa-collection.collection.unkeyed.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Indexed](./alfa-collection.collection.indexed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Keyed](./alfa-collection.collection.keyed.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ getErrOr<F>(error: F): E | F;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  error | F |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+error
+
+
+</td><td>
+
+F
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 E \| F

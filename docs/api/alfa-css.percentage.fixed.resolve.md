@@ -12,10 +12,37 @@ resolve<T extends Canonicals[H]>(resolver: Resolver<H> & Numeric.GenericResolver
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;H&gt; &amp; Numeric.GenericResolver |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;H&gt; &amp; Numeric.GenericResolver
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 T
