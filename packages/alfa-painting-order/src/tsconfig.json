@@ -7,5 +7,16 @@
     "./painting-order.ts",
     "./predicate/creates-stacking-context.ts",
     "./predicate/is-flex-or-grid-child.ts"
+  ],
+  "references": [
+    { "path": "../../alfa-array" },
+    { "path": "../../alfa-cache" },
+    { "path": "../../alfa-comparable" },
+    { "path": "../../alfa-css" },
+    { "path": "../../alfa-device" },
+    { "path": "../../alfa-dom" },
+    { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-sequence" },
+    { "path": "../../alfa-style" }
   ]
 }
