@@ -440,6 +440,7 @@ export namespace Style {
     hasBoxShadow: typeof element.hasBoxShadow, // (undocumented)
     hasCascadedStyle: typeof element.hasCascadedStyle, // (undocumented)
     hasComputedStyle: typeof element.hasComputedStyle, // (undocumented)
+    hasInitialComputedStyle: typeof element.hasInitialComputedStyle, // (undocumented)
     hasPositioningParent: typeof element.hasPositioningParent, // (undocumented)
     hasOutline: typeof element.hasOutline, // (undocumented)
     hasSpecifiedStyle: typeof element.hasSpecifiedStyle, // (undocumented)
