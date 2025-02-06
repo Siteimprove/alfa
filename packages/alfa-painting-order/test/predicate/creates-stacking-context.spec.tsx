@@ -4,7 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 
 import { createsStackingContext } from "../../dist/predicate/creates-stacking-context.js";
 
-test("non positioned element with z-index does not create a stacking context", async (t) => {
+test("non positioned element with z-index does not create a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ zIndex: "1" }}></div>,
@@ -13,7 +13,7 @@ test("non positioned element with z-index does not create a stacking context", a
   );
 });
 
-test("absolutely positioned element without z-index does not create a stacking context", async (t) => {
+test("absolutely positioned element without z-index does not create a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ position: "absolute" }}></div>,
@@ -22,7 +22,7 @@ test("absolutely positioned element without z-index does not create a stacking c
   );
 });
 
-test("relatively positioned element without z-index does not create a stacking context", async (t) => {
+test("relatively positioned element without z-index does not create a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ position: "absolute" }}></div>,
@@ -31,7 +31,7 @@ test("relatively positioned element without z-index does not create a stacking c
   );
 });
 
-test("element with opacity equal to 1 does not create a stacking context", async (t) => {
+test("element with opacity equal to 1 does not create a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ opacity: "1" }}></div>,
@@ -40,7 +40,7 @@ test("element with opacity equal to 1 does not create a stacking context", async
   );
 });
 
-test("absolutely positioned element with z-index creates a stacking context", async (t) => {
+test("absolutely positioned element with z-index creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ position: "absolute", zIndex: "1" }}></div>,
@@ -49,7 +49,7 @@ test("absolutely positioned element with z-index creates a stacking context", as
   );
 });
 
-test("relatively positioned element with z-index creates a stacking context", async (t) => {
+test("relatively positioned element with z-index creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ position: "relative", zIndex: "1" }}></div>,
@@ -58,7 +58,7 @@ test("relatively positioned element with z-index creates a stacking context", as
   );
 });
 
-test("fixed element creates a stacking context", async (t) => {
+test("fixed element creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ position: "fixed" }}></div>,
@@ -67,7 +67,7 @@ test("fixed element creates a stacking context", async (t) => {
   );
 });
 
-test("sticky element creates a stacking context", async (t) => {
+test("sticky element creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ position: "sticky" }}></div>,
@@ -76,21 +76,21 @@ test("sticky element creates a stacking context", async (t) => {
   );
 });
 
-test("flex child with z-index creates a stacking context", async (t) => {
+test("flex child with z-index creates a stacking context", (t) => {
   const child = <div style={{ zIndex: "1" }}></div>;
   <div style={{ display: "flex" }}>{child}</div>;
 
   t.equal(createsStackingContext(Device.standard())(child), true);
 });
 
-test("grid child with z-index creates a stacking context", async (t) => {
+test("grid child with z-index creates a stacking context", (t) => {
   const child = <div style={{ zIndex: "1" }}></div>;
   <div style={{ display: "grid" }}>{child}</div>;
 
   t.equal(createsStackingContext(Device.standard())(child), true);
 });
 
-test("element with opacity less than 1 creates a stacking context", async (t) => {
+test("element with opacity less than 1 creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ opacity: "0.9" }}></div>,
@@ -99,7 +99,7 @@ test("element with opacity less than 1 creates a stacking context", async (t) =>
   );
 });
 
-test("element with mix-blend-mode equal to non-initial value creates a stacking context", async (t) => {
+test("element with mix-blend-mode equal to non-initial value creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ mixBlendMode: "multiply" }}></div>,
@@ -108,7 +108,7 @@ test("element with mix-blend-mode equal to non-initial value creates a stacking 
   );
 });
 
-test("element with transform equal to non-initial value creates a stacking context", async (t) => {
+test("element with transform equal to non-initial value creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ transform: "translate(10px)" }}></div>,
@@ -117,7 +117,7 @@ test("element with transform equal to non-initial value creates a stacking conte
   );
 });
 
-test("element with scale equal to non-initial value creates a stacking context", async (t) => {
+test("element with scale equal to non-initial value creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ scale: "90%" }}></div>,
@@ -126,7 +126,7 @@ test("element with scale equal to non-initial value creates a stacking context",
   );
 });
 
-test("element with rotate equal to non-initial value creates a stacking context", async (t) => {
+test("element with rotate equal to non-initial value creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ rotate: "-1deg" }}></div>,
@@ -135,7 +135,7 @@ test("element with rotate equal to non-initial value creates a stacking context"
   );
 });
 
-test("element with translate equal to non-initial value creates a stacking context", async (t) => {
+test("element with translate equal to non-initial value creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ translate: "10px 10px" }}></div>,
@@ -144,7 +144,7 @@ test("element with translate equal to non-initial value creates a stacking conte
   );
 });
 
-test("element with perspective equal to non-initial value creates a stacking context", async (t) => {
+test("element with perspective equal to non-initial value creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ perspective: "800px" }}></div>,
@@ -153,7 +153,7 @@ test("element with perspective equal to non-initial value creates a stacking con
   );
 });
 
-test("element with clip-path equal to non-initial value creates a stacking context", async (t) => {
+test("element with clip-path equal to non-initial value creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ clipPath: "circle(70%)" }}></div>,
@@ -162,7 +162,7 @@ test("element with clip-path equal to non-initial value creates a stacking conte
   );
 });
 
-test("element with mask equal to non-initial value creates a stacking context", async (t) => {
+test("element with mask equal to non-initial value creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ mask: "url(mask.svg) 0% 0% / 5%" }}></div>,
@@ -171,7 +171,7 @@ test("element with mask equal to non-initial value creates a stacking context", 
   );
 });
 
-test("element with isolation equal to isolate creates a stacking context", async (t) => {
+test("element with isolation equal to isolate creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ isolation: "isolate" }}></div>,
@@ -180,7 +180,7 @@ test("element with isolation equal to isolate creates a stacking context", async
   );
 });
 
-test("element with will-change specifying a property that would create a stacking context on non-initial value, creates a stacking context", async (t) => {
+test("element with will-change specifying a property that would create a stacking context on non-initial value, creates a stacking context", (t) => {
   for (const prop of [
     "mix-blend-mode",
     "transform",
@@ -202,7 +202,7 @@ test("element with will-change specifying a property that would create a stackin
   }
 });
 
-test("element with contain equal to layout creates a stacking context", async (t) => {
+test("element with contain equal to layout creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ contain: "layout" }}></div>,
@@ -211,7 +211,7 @@ test("element with contain equal to layout creates a stacking context", async (t
   );
 });
 
-test("element with contain equal to paint creates a stacking context", async (t) => {
+test("element with contain equal to paint creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ contain: "paint" }}></div>,
@@ -220,7 +220,7 @@ test("element with contain equal to paint creates a stacking context", async (t)
   );
 });
 
-test("element with contain equal to strict creates a stacking context", async (t) => {
+test("element with contain equal to strict creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ contain: "strict" }}></div>,
@@ -229,7 +229,7 @@ test("element with contain equal to strict creates a stacking context", async (t
   );
 });
 
-test("element with contain equal to content creates a stacking context", async (t) => {
+test("element with contain equal to content creates a stacking context", (t) => {
   t.equal(
     createsStackingContext(Device.standard())(
       <div style={{ contain: "content" }}></div>,

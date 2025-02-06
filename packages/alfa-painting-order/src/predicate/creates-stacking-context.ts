@@ -1,11 +1,12 @@
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Node } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Style } from "@siteimprove/alfa-style";
 
 const { and, not, or } = Refinement;
 const { hasComputedStyle, hasInitialComputedStyle, isPositioned } = Style;
+
+import { isFlexOrGridChild } from "./is-flex-or-grid-child.js";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context}
@@ -41,19 +42,7 @@ export function createsStackingContext(device: Device) {
     isPositioned(device, "fixed", "sticky"),
 
     // child of flex or grid:
-    and(hasZIndex, (element: Element) =>
-      element
-        .parent(Node.fullTree)
-        .filter(Element.isElement)
-        .some((parent) =>
-          hasComputedStyle(
-            "display",
-            ({ values: [, inside] }) =>
-              inside?.value === "flex" || inside?.value === "grid",
-            device,
-          )(parent),
-        ),
-    ),
+    and(hasZIndex, isFlexOrGridChild(device)),
 
     // opacity < 1:
     hasComputedStyle("opacity", ({ value: opacity }) => opacity < 1, device),

@@ -6,6 +6,9 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@siteimprove/alfa-dom"
   },
-  "files": ["./predicate/creates-stacking-context.spec.tsx"],
+  "files": [
+    "./predicate/creates-stacking-context.spec.tsx",
+    "./painting-order.spec.tsx"
+  ],
   "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }
