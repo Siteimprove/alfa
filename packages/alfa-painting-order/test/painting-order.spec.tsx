@@ -7,40 +7,40 @@ import { computePaintingOrder } from "../dist/painting-order.js";
 
 const device = Device.standard();
 
-test("block-level root element is painted before positioned descendant with negative z-index", (t) => {
-  const negativeZ = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
-  const body = <body>{negativeZ}</body>;
+test("block-level element is painted before positioned descendant with negative z-index", (t) => {
+  const div = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
+  const body = <body>{div}</body>;
 
   h.document([body]);
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, negativeZ]).toJSON(),
+    Sequence.from([body, div]).toJSON(),
   );
 });
 
 test("block-level stacking context element is painted before positioned descendant with negative z-index", (t) => {
-  const negativeZ = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
-  const sc = <div style={{ opacity: "0.8" }}>{negativeZ}</div>;
-  const body = <body>{sc}</body>;
+  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
+  const div1 = <div style={{ opacity: "0.8" }}>{div2}</div>;
+  const body = <body>{div1}</body>;
 
   h.document([body]);
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, sc, negativeZ]).toJSON(),
+    Sequence.from([body, div1, div2]).toJSON(),
   );
 });
 
 test("positioned elements with negative z-index are painted in z-order then tree-order", (t) => {
-  const negativeZ1 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
-  const negativeZ2 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
-  const negativeZ3 = <div style={{ position: "absolute", zIndex: "-2" }}></div>;
+  const div1 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
+  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
+  const div3 = <div style={{ position: "absolute", zIndex: "-2" }}></div>;
   const body = (
     <body>
-      {negativeZ1}
-      {negativeZ2}
-      {negativeZ3}
+      {div1}
+      {div2}
+      {div3}
     </body>
   );
 
@@ -48,17 +48,17 @@ test("positioned elements with negative z-index are painted in z-order then tree
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, negativeZ3, negativeZ1, negativeZ2]).toJSON(),
+    Sequence.from([body, div3, div1, div2]).toJSON(),
   );
 });
 
 test("positioned element with negative z-index is painted before block-level element", (t) => {
-  const negativeZ = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
-  const block = <div></div>;
+  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
+  const div1 = <div></div>;
   const body = (
     <body>
-      {block}
-      {negativeZ}
+      {div1}
+      {div2}
     </body>
   );
 
@@ -66,7 +66,7 @@ test("positioned element with negative z-index is painted before block-level ele
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, negativeZ, block]).toJSON(),
+    Sequence.from([body, div2, div1]).toJSON(),
   );
 });
 
@@ -90,12 +90,12 @@ test("block-level descendants are painted in tree-order", (t) => {
 });
 
 test("block-level elements are painted before floating elements", (t) => {
-  const div = <div></div>;
-  const float = <div style={{ float: "left" }}></div>;
+  const div2 = <div></div>;
+  const div1 = <div style={{ float: "left" }}></div>;
   const body = (
     <body>
-      {float}
-      {div}
+      {div1}
+      {div2}
     </body>
   );
 
@@ -103,7 +103,7 @@ test("block-level elements are painted before floating elements", (t) => {
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div, float]).toJSON(),
+    Sequence.from([body, div2, div1]).toJSON(),
   );
 });
 
@@ -170,12 +170,12 @@ test("floating descendants are not painted atomically with respect to positioned
 });
 
 test("floating descendants are painted before inline-level descendants", (t) => {
-  const inline = <div style={{ display: "inline" }}></div>;
-  const float = <div style={{ float: "left" }}></div>;
+  const div1 = <div style={{ display: "inline" }}></div>;
+  const div2 = <div style={{ float: "left" }}></div>;
   const body = (
     <body>
-      {inline}
-      {float}
+      {div1}
+      {div2}
     </body>
   );
 
@@ -183,7 +183,7 @@ test("floating descendants are painted before inline-level descendants", (t) => 
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, float, inline]).toJSON(),
+    Sequence.from([body, div2, div1]).toJSON(),
   );
 });
 
@@ -207,12 +207,12 @@ test("inline-level descendants are painted in tree-order", (t) => {
 });
 
 test("inline-level descendants are painted before positioned elements", (t) => {
-  const positioned = <div style={{ position: "absolute" }}></div>;
-  const inline = <div style={{ display: "inline" }}></div>;
+  const div1 = <div style={{ position: "absolute" }}></div>;
+  const div2 = <div style={{ display: "inline" }}></div>;
   const body = (
     <body>
-      {positioned}
-      {inline}
+      {div1}
+      {div2}
     </body>
   );
 
@@ -220,7 +220,7 @@ test("inline-level descendants are painted before positioned elements", (t) => {
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, inline, positioned]).toJSON(),
+    Sequence.from([body, div2, div1]).toJSON(),
   );
 });
 
@@ -289,12 +289,12 @@ test("positioned descendants are not painted atomically with respect to position
 });
 
 test("positioned elements without z-index are painted before positioned elements with positve z-index", (t) => {
-  const zIndex = <div style={{ position: "absolute", zIndex: "1" }}></div>;
-  const positioned = <div style={{ position: "absolute" }}></div>;
+  const div1 = <div style={{ position: "absolute", zIndex: "1" }}></div>;
+  const div2 = <div style={{ position: "absolute" }}></div>;
   const body = (
     <body>
-      {zIndex}
-      {positioned}
+      {div1}
+      {div2}
     </body>
   );
 
@@ -302,19 +302,19 @@ test("positioned elements without z-index are painted before positioned elements
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, positioned, zIndex]).toJSON(),
+    Sequence.from([body, div2, div1]).toJSON(),
   );
 });
 
 test("positioned elements with positive z-index are painted in z-order then tree-order", (t) => {
-  const positiveZ1 = <div style={{ position: "absolute", zIndex: "2" }}></div>;
-  const positiveZ2 = <div style={{ position: "absolute", zIndex: "1" }}></div>;
-  const positiveZ3 = <div style={{ position: "absolute", zIndex: "1" }}></div>;
+  const div1 = <div style={{ position: "absolute", zIndex: "2" }}></div>;
+  const div2 = <div style={{ position: "absolute", zIndex: "1" }}></div>;
+  const div3 = <div style={{ position: "absolute", zIndex: "1" }}></div>;
   const body = (
     <body>
-      {positiveZ1}
-      {positiveZ2}
-      {positiveZ3}
+      {div1}
+      {div2}
+      {div3}
     </body>
   );
 
@@ -322,26 +322,26 @@ test("positioned elements with positive z-index are painted in z-order then tree
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, positiveZ2, positiveZ3, positiveZ1]).toJSON(),
+    Sequence.from([body, div2, div3, div1]).toJSON(),
   );
 });
 
 test("inline-level stacking context element is painted after floating descendants and before inline-level descendants", (t) => {
-  const float = <div style={{ float: "left" }}></div>;
-  const inlineChild = <div style={{ display: "inline" }}></div>;
-  const inlineStackingContext = (
+  const div2 = <div style={{ float: "left" }}></div>;
+  const div3 = <div style={{ display: "inline" }}></div>;
+  const div1 = (
     <div style={{ display: "inline", isolation: "isolate" }}>
-      {float}
-      {inlineChild}
+      {div2}
+      {div3}
     </div>
   );
-  const body = <body>{inlineStackingContext}</body>;
+  const body = <body>{div1}</body>;
 
   h.document([body]);
 
   t.deepEqual(
     computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, float, inlineStackingContext, inlineChild]).toJSON(),
+    Sequence.from([body, div2, div1, div3]).toJSON(),
   );
 });
 
