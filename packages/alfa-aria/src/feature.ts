@@ -639,6 +639,8 @@ const Features: Features = {
       }
     }),
 
+    search: html("search"),
+
     // We currently cannot detect at this point if the element has an accessible
     // name, and always map to region.
     // see https://github.com/Siteimprove/alfa/issues/298
