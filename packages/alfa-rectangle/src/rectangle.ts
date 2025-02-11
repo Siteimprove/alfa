@@ -1,6 +1,7 @@
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import type { Serializable } from "@siteimprove/alfa-json";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import type * as json from "@siteimprove/alfa-json";
 
@@ -194,6 +195,78 @@ export class Rectangle
       minRight - maxLeft,
       minBottom - maxTop,
     );
+  }
+
+  /**
+   * Subtracts a given other rectangle. The result is a sequence of smaller
+   * rectangles covering the part of the original rectangle which didn't overlap
+   * the rectangle that was subtracted. The smaller rectangles will have the
+   * maximal possible width and height and there will be between 0 and 4
+   * depending on how the rectangles overlap.
+   *
+   * In the following example, the rectangles overlap in such a way that the
+   * difference will consist of two narrow overlapping rectangles to the right
+   * and below, overlapping in the bottom right corner:
+   *
+   *       +---------------------------------------+
+   *       |                                       |
+   *       |                                       |
+   *       |     +---------------------------------+-------+
+   *       |     |                                 |       |
+   *       |     |                                 |       |
+   *       |     |                                 |       |
+   *       |     |                                 |       |
+   *       |     |                                 |       |
+   *       |     |                                 |       |
+   *       |     |                                 |       |
+   *       |     |                                 |       |
+   *       +-----+---------------------------------+-------+
+   *             |                                 |       |
+   *             |                                 |       |
+   *             +---------------------------------+-------+
+   */
+  public subtract(other: Rectangle): Sequence<Rectangle> {
+    if (!this.intersects(other)) {
+      return Sequence.of(this);
+    }
+
+    const result: Array<Rectangle> = [];
+
+    if (this.top < other.top) {
+      result.push(
+        Rectangle.of(this.left, this.top, this.width, other.top - this.top),
+      );
+    }
+
+    if (this.left < other.left) {
+      result.push(
+        Rectangle.of(this.left, this.top, other.left - this.left, this.height),
+      );
+    }
+
+    if (other.bottom < this.bottom) {
+      result.push(
+        Rectangle.of(
+          this.left,
+          other.bottom,
+          this.width,
+          this.bottom - other.bottom,
+        ),
+      );
+    }
+
+    if (other.right < this.right) {
+      result.push(
+        Rectangle.of(
+          other.right,
+          this.top,
+          this.right - other.right,
+          this.height,
+        ),
+      );
+    }
+
+    return Sequence.from(result);
   }
 
   /**
