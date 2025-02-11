@@ -87,9 +87,6 @@ const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<str
 const _default_4: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
 // @public
-const _default_5: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
-
-// @public
 const _default_6: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public @deprecated (undocumented)
@@ -143,7 +140,6 @@ declare namespace experimentalRules {
         _default_2 as ER87,
         _default_3 as R82,
         _default_4 as R109,
-        _default_5 as R114,
         _default_6 as R115
     }
 }
