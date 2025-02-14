@@ -490,6 +490,7 @@ export namespace Style {
     hasTextDecoration,
     hasTransparentBackground,
     hasUsedStyle,
+    isFlexOrGridChild,
     isFocusable,
     isImportant,
     isInert,
