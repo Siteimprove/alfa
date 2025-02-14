@@ -14,6 +14,7 @@
     { "path": "../../alfa-css" },
     { "path": "../../alfa-device" },
     { "path": "../../alfa-dom" },
+    { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
     { "path": "../../alfa-sequence" },
     { "path": "../../alfa-style" }

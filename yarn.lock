@@ -1716,6 +1716,7 @@ __metadata:
     "@siteimprove/alfa-css": "workspace:^"
     "@siteimprove/alfa-device": "workspace:^"
     "@siteimprove/alfa-dom": "workspace:^"
+    "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     "@siteimprove/alfa-sequence": "workspace:^"
     "@siteimprove/alfa-style": "workspace:^"
