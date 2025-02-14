@@ -8,10 +8,9 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 const { and, not, or } = Refinement;
-const { hasComputedStyle, isRendered } = Style;
+const { hasComputedStyle, isRendered, isFlexOrGridChild } = Style;
 
 import { createsStackingContext } from "./predicate/creates-stacking-context.js";
-import { isFlexOrGridChild } from "./predicate/is-flex-or-grid-child.js";
 
 const cache = Cache.empty<Device, Cache<Element, Sequence<Element>>>();
 

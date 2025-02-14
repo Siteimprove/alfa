@@ -1,12 +1,17 @@
-import { Keyword } from "@siteimprove/alfa-css";
+import { type Ident, Keyword, List } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
+import { Element } from "@siteimprove/alfa-dom";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Style } from "@siteimprove/alfa-style";
 
 const { and, not, or } = Refinement;
-const { hasComputedStyle, hasInitialComputedStyle, isPositioned } = Style;
-
-import { isFlexOrGridChild } from "./is-flex-or-grid-child.js";
+const {
+  hasComputedStyle,
+  hasInitialComputedStyle,
+  isPositioned,
+  isFlexOrGridChild,
+} = Style;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context}
@@ -18,20 +23,20 @@ import { isFlexOrGridChild } from "./is-flex-or-grid-child.js";
  * also create stacking contexts. We will have to update this predicate as such
  * new properties become supported by the browsers.
  *
- * The properties `filter`, `backdrop-filter` and `mask-border` having
- * non-initial values: Support for the properties are not yet implemented in Alfa.
+ * * The properties `filter`, `backdrop-filter` and `mask-border` having
+ *   non-initial values: Support for the properties are not yet implemented in Alfa.
  *
- * Elements placed into the top layer and its corresponding ::backdrop e.g.
- * fullscreen and popover elements: It's unclear how to implement this and it's
- * not the most important use case currently.
+ * * Elements placed into the top layer and its corresponding ::backdrop e.g.
+ *   fullscreen and popover elements: It's unclear how to implement this and it's
+ *   not the most important use case currently.
  *
- * Element that has had stacking context-creating properties animated using
- * @keyframes, with `animation-fill-mode` set to `forwards`: It's unclear how
- * to implement this, but it is a valid case, that we should eventually support.
+ * * Element that has had stacking context-creating properties animated using
+ *   @keyframes, with `animation-fill-mode` set to `forwards`: It's unclear how
+ *   to implement this, but it is a valid case, that we should eventually support.
  *
  * @internal
  */
-export function createsStackingContext(device: Device) {
+export function createsStackingContext(device: Device): Predicate<Element> {
   const hasZIndex = not(hasInitialComputedStyle("z-index", device));
 
   return or(
@@ -71,10 +76,9 @@ export function createsStackingContext(device: Device) {
     // on non-initial value
     hasComputedStyle(
       "will-change",
-      (value) =>
-        !Keyword.isKeyword(value) &&
-        value.values.some(({ value }) =>
-          [
+      and(List.isList<Ident>, (list) =>
+        list.some((ident) =>
+          ident.is(
             "position",
             "z-index",
             "opacity",
@@ -89,9 +93,9 @@ export function createsStackingContext(device: Device) {
             "clip-path",
             "mask",
             "isolation",
-          ].includes(value),
+          ),
         ),
-
+      ),
       device,
     ),
 

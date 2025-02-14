@@ -5,8 +5,7 @@
   "include": [
     "./index.ts",
     "./painting-order.ts",
-    "./predicate/creates-stacking-context.ts",
-    "./predicate/is-flex-or-grid-child.ts"
+    "./predicate/creates-stacking-context.ts"
   ],
   "references": [
     { "path": "../../alfa-array" },
