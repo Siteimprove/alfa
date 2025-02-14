@@ -1,8 +1,9 @@
 import type { Hash } from "@siteimprove/alfa-hash";
-import type { Iterable } from "@siteimprove/alfa-iterable";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 
 import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
@@ -46,6 +47,10 @@ export class List<V extends Value>
 
   public get size(): number {
     return this._values.length;
+  }
+
+  public some(predicate: Predicate<V, [index: number]>) {
+    return Iterable.some(this._values, predicate);
   }
 
   public resolve(
