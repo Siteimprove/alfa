@@ -23,6 +23,9 @@ const {
 
 import { createsStackingContext } from "./predicate/creates-stacking-context.js";
 
+/**
+ * @public
+ */
 export class PaintingOrder
   implements Equatable, Hashable, Serializable<PaintingOrder.JSON>
 {
@@ -57,6 +60,9 @@ export class PaintingOrder
   }
 }
 
+/**
+ * @public
+ */
 export namespace PaintingOrder {
   export type JSON = {
     [key: string]: json.JSON;
