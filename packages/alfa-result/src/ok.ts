@@ -7,7 +7,6 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Reducer } from "@siteimprove/alfa-reducer";
 import type { Refinement } from "@siteimprove/alfa-refinement";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type * as json from "@siteimprove/alfa-json";
 
@@ -48,6 +47,12 @@ export class Ok<T> implements Result<T, never> {
   public mapOrElse<U>(ok: Mapper<T, U>): U {
     return ok(this._value);
   }
+
+  public forEach(callback: Callback<T>) {
+    callback(this._value);
+  }
+
+  public forEachErr(callback: Callback<never>) {}
 
   public apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E> {
     return mapper.map((mapper) => mapper(this._value));
