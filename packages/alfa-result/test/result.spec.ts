@@ -18,6 +18,34 @@ test("#map() does nothing to an err value", (t) => {
   );
 });
 
+test("#forEach() applies a callback to an ok value", (t) => {
+  let actual = 0;
+  n.forEach((n) => (actual = n));
+
+  t.deepEqual(actual, 1);
+});
+
+test("#forEach() does nothing to an err value", (t) => {
+  let actual = "";
+  err.forEach((n) => (actual = `${n}`));
+
+  t.equal(actual, "");
+});
+
+test("#forEachErr() does nothing to an ok value", (t) => {
+  let actual = 0;
+  n.forEachErr((msg) => (actual = msg.length));
+
+  t.deepEqual(actual, 0);
+});
+
+test("#forEachErr() applies a callback to an err value", (t) => {
+  let actual = "";
+  err.forEachErr((msg) => (actual = msg));
+
+  t.equal(actual, "error");
+});
+
 test(".from() constructs a result from a thunk", (t) => {
   const n = Result.from(() => 1);
 
