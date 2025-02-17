@@ -13,7 +13,13 @@ import { Style } from "@siteimprove/alfa-style";
 import * as json from "@siteimprove/alfa-json";
 
 const { and, not, or } = Refinement;
-const { hasComputedStyle, isRendered, isFlexOrGridChild } = Style;
+const {
+  hasInitialComputedStyle,
+  isBlockContainer,
+  isFlexOrGridChild,
+  isPositioned,
+  isRendered,
+} = Style;
 
 import { createsStackingContext } from "./predicate/creates-stacking-context.js";
 
@@ -78,208 +84,220 @@ export namespace PaintingOrder {
    *
    * @public
    */
-  export const from = Cache.memoize(
-    (root: Element, device: Device): PaintingOrder => {
-      function paint(
-        element: Element,
-        canvas: Array<Element>,
-        options: { defer?: boolean } = {
-          defer: false,
-        },
-      ): void {
-        const { defer = false } = options;
-        const positionedOrStackingContexts: Array<Element> = [];
-        const blockLevels: Array<Element> = [];
-        const floats: Array<Element> = [];
-        const inlines: Array<Element> = [];
+  export const from = Cache.memoize(function (
+    root: Element,
+    device: Device,
+  ): PaintingOrder {
+    function paint(
+      element: Element,
+      canvas: Array<Element>,
+      options: { defer?: boolean } = {
+        defer: false,
+      },
+    ): void {
+      const { defer = false } = options;
+      const positionedOrStackingContexts: Array<Element> = [];
+      const blockLevels: Array<Element> = [];
+      const floats: Array<Element> = [];
+      const inlines: Array<Element> = [];
 
-        /**
-         * @remarks
-         * Positioned elements with z-index: auto and floating elements are treated
-         * as if they create stacking contexts, but their positioned descendants
-         * and descendants that create stacking contexts should be considered part
-         * of the parent stacking context, i.e. we need to compute the painting
-         * order of such subtrees, without recursing into positioned descendants
-         * and descendants creating stacking contexts, then iterate the result and
-         * distribute said descendants into layers at this level and add the float
-         * itself and the other descendants to the floats layer.
-         */
-        function distributeIntoLayers(element: Element) {
-          if (or(isFlexOrGridChild(device), createsSC(device))(element)) {
-            positionedOrStackingContexts.push(element);
-          } else if (isPositioned(device)(element)) {
-            if (hasAutoZIndex(device)(element)) {
-              const temporaryLayer: Array<Element> = [];
-              paint(element, temporaryLayer, { defer: true });
-
-              for (const descendant of temporaryLayer) {
-                if (or(isPositioned(device), createsSC(device))(descendant)) {
-                  if (or(isPositioned(device), createsSC(device))(descendant)) {
-                    positionedOrStackingContexts.push(descendant);
-                  } else if (isFloat(device)(descendant)) {
-                    floats.push(descendant);
-                  } else if (isBlockLevel(device)(descendant)) {
-                    blockLevels.push(descendant);
-                  } else {
-                    inlines.push(descendant);
-                  }
-                } else {
-                  positionedOrStackingContexts.push(descendant);
-                }
-              }
-            } else {
-              positionedOrStackingContexts.push(element);
-            }
-          } else if (isFloat(device)(element)) {
+      /**
+       * @remarks
+       * Positioned elements with z-index: auto and floating elements are treated
+       * as if they create stacking contexts, but their positioned descendants
+       * and descendants that create stacking contexts should be considered part
+       * of the parent stacking context, i.e. we need to compute the painting
+       * order of such subtrees, without recursing into positioned descendants
+       * and descendants creating stacking contexts, then iterate the result and
+       * distribute said descendants into layers at this level and add the float
+       * itself and the other descendants to the floats layer.
+       */
+      function distributeIntoLayers(element: Element) {
+        if (
+          or(isFlexOrGridChild(device), createsStackingContext(device))(element)
+        ) {
+          positionedOrStackingContexts.push(element);
+        } else if (not(isPositioned(device, "static"))(element)) {
+          if (hasInitialComputedStyle("z-index", device)(element)) {
             const temporaryLayer: Array<Element> = [];
             paint(element, temporaryLayer, { defer: true });
 
             for (const descendant of temporaryLayer) {
-              if (or(isPositioned(device), createsSC(device))(descendant)) {
-                positionedOrStackingContexts.push(descendant);
+              if (
+                or(
+                  not(isPositioned(device, "static")),
+                  createsStackingContext(device),
+                )(descendant)
+              ) {
+                if (
+                  or(
+                    not(isPositioned(device, "static")),
+                    createsStackingContext(device),
+                  )(descendant)
+                ) {
+                  positionedOrStackingContexts.push(descendant);
+                } else if (
+                  not(hasInitialComputedStyle("float", device))(descendant)
+                ) {
+                  floats.push(descendant);
+                } else if (isBlockContainer(Style.from(descendant, device))) {
+                  blockLevels.push(descendant);
+                } else {
+                  inlines.push(descendant);
+                }
               } else {
-                floats.push(descendant);
+                positionedOrStackingContexts.push(descendant);
               }
             }
-          } else if (isBlockLevel(device)(element)) {
-            blockLevels.push(element);
           } else {
-            // everything else, this is somewhat crude and might not be accurate, but
-            // will do for now.
-            inlines.push(element);
+            positionedOrStackingContexts.push(element);
           }
-        }
+        } else if (not(hasInitialComputedStyle("float", device))(element)) {
+          const temporaryLayer: Array<Element> = [];
+          paint(element, temporaryLayer, { defer: true });
 
-        // Block-level elements, forming a stacking context, are painted before
-        // their descendants. Inline-level elements, forming a stacking context,
-        // are painted in the inline layer before its inline descendants
-        // (and before stacking-context-creating and positioned descendants with
-        // stack level greater than or equal to 0), but after positioned descendants
-        // with negative z-index, block-level descendants and floating descendants.
-        if (isBlockLevel(device)(element)) {
-          canvas.push(element);
-        } else {
-          inlines.push(element);
-        }
-
-        function traverse(element: Element) {
-          for (const child of element
-            .children(Node.fullTree)
-            .filter(and(Element.isElement, rendered(device)))) {
-            distributeIntoLayers(child);
-
+          for (const descendant of temporaryLayer) {
             if (
               or(
-                isPositioned(device),
-                isFloat(device),
-                createsSC(device),
-              )(child)
+                not(isPositioned(device, "static")),
+                createsStackingContext(device),
+              )(descendant)
             ) {
-              // The child is going to be painted in full or partial isolation, so
-              // we need to stop descending.
-              continue;
+              positionedOrStackingContexts.push(descendant);
+            } else {
+              floats.push(descendant);
             }
-
-            traverse(child);
           }
-        }
-        traverse(element);
-
-        positionedOrStackingContexts.sort((a: Element, b: Element) =>
-          Comparable.compare(getZLevel(device, a), getZLevel(device, b)),
-        );
-
-        // If the defer is true, painting of descendant stacking contexts should
-        // be deferred i.e. the element should just be added to the canvas, (which
-        // should be a temporary canvas).
-        let posDescIndex = 0;
-        for (
-          ;
-          posDescIndex < positionedOrStackingContexts.length &&
-          getZLevel(device, positionedOrStackingContexts[posDescIndex]) < 0;
-          ++posDescIndex
-        ) {
-          const posOrSC = positionedOrStackingContexts[posDescIndex];
-          if (!defer && posOrSC !== element) {
-            paint(posOrSC, canvas);
-          } else {
-            canvas.push(posOrSC);
-          }
-        }
-
-        for (const blockLevel of blockLevels) {
-          if (!defer && createsSC(device)(blockLevel)) {
-            paint(blockLevel, canvas);
-          } else {
-            canvas.push(blockLevel);
-          }
-        }
-
-        for (const float of floats) {
-          if (!defer && float !== element && createsSC(device)(float)) {
-            paint(float, canvas);
-          } else {
-            canvas.push(float);
-          }
-        }
-
-        for (const inline of inlines) {
-          if (!defer && inline !== element && createsSC(device)(inline)) {
-            paint(inline, canvas);
-          } else {
-            canvas.push(inline);
-          }
-        }
-
-        for (
-          ;
-          posDescIndex < positionedOrStackingContexts.length;
-          ++posDescIndex
-        ) {
-          const posOrSC = positionedOrStackingContexts[posDescIndex];
-          if (!defer && posOrSC !== element && createsSC(device)(posOrSC)) {
-            paint(posOrSC, canvas);
-          } else {
-            canvas.push(posOrSC);
-          }
+        } else if (isBlockContainer(Style.from(element, device))) {
+          blockLevels.push(element);
+        } else {
+          // everything else, this is somewhat crude and might not be accurate, but
+          // will do for now.
+          inlines.push(element);
         }
       }
 
-      const canvas: Array<Element> = [];
-      paint(root, canvas);
+      // Block-level elements, forming a stacking context, are painted before
+      // their descendants. Inline-level elements, forming a stacking context,
+      // are painted in the inline layer before its inline descendants
+      // (and before stacking-context-creating and positioned descendants with
+      // stack level greater than or equal to 0), but after positioned descendants
+      // with negative z-index, block-level descendants and floating descendants.
+      if (isBlockContainer(Style.from(element, device))) {
+        canvas.push(element);
+      } else {
+        inlines.push(element);
+      }
 
-      return PaintingOrder.of(canvas);
-    },
-  );
-  const isPositioned = (device: Device) =>
-    hasComputedStyle(
-      "position",
-      (position) => position.value !== "static",
-      device,
-    );
-  const hasAutoZIndex = (device: Device) =>
-    hasComputedStyle("z-index", ({ value }) => value === "auto", device);
-  const isBlockLevel = (device: Device) =>
-    hasComputedStyle(
-      "display",
-      ({ values: [outside, inside, listItem] }) =>
-        outside.value === "block" ||
-        inside?.value === "table" ||
-        inside?.value === "flex" ||
-        inside?.value === "grid" ||
-        listItem?.value === "list-item",
-      device,
-    );
-  const isFloat = (device: Device) =>
-    hasComputedStyle("float", ({ value }) => value !== "none", device);
-  const createsSC = (device: Device) => createsStackingContext(device);
-  const rendered = (device: Device) => isRendered(device);
+      function traverse(element: Element) {
+        for (const child of element
+          .children(Node.fullTree)
+          .filter(and(Element.isElement, isRendered(device)))) {
+          distributeIntoLayers(child);
 
-  const getZLevel = (device: Device, element: Element) => {
+          if (
+            or(
+              not(isPositioned(device, "static")),
+              not(hasInitialComputedStyle("float", device)),
+              createsStackingContext(device),
+            )(child)
+          ) {
+            // The child is going to be painted in full or partial isolation, so
+            // we need to stop descending.
+            continue;
+          }
+
+          traverse(child);
+        }
+      }
+      traverse(element);
+
+      positionedOrStackingContexts.sort((a: Element, b: Element) =>
+        Comparable.compare(getZLevel(device, a), getZLevel(device, b)),
+      );
+
+      // If the defer is true, painting of descendant stacking contexts should
+      // be deferred i.e. the element should just be added to the canvas, (which
+      // should be a temporary canvas).
+      let posDescIndex = 0;
+      for (
+        ;
+        posDescIndex < positionedOrStackingContexts.length &&
+        getZLevel(device, positionedOrStackingContexts[posDescIndex]) < 0;
+        ++posDescIndex
+      ) {
+        const posOrSC = positionedOrStackingContexts[posDescIndex];
+        if (!defer && posOrSC !== element) {
+          paint(posOrSC, canvas);
+        } else {
+          canvas.push(posOrSC);
+        }
+      }
+
+      for (const blockLevel of blockLevels) {
+        if (!defer && createsStackingContext(device)(blockLevel)) {
+          paint(blockLevel, canvas);
+        } else {
+          canvas.push(blockLevel);
+        }
+      }
+
+      for (const float of floats) {
+        if (
+          !defer &&
+          float !== element &&
+          createsStackingContext(device)(float)
+        ) {
+          paint(float, canvas);
+        } else {
+          canvas.push(float);
+        }
+      }
+
+      for (const inline of inlines) {
+        if (
+          !defer &&
+          inline !== element &&
+          createsStackingContext(device)(inline)
+        ) {
+          paint(inline, canvas);
+        } else {
+          canvas.push(inline);
+        }
+      }
+
+      for (
+        ;
+        posDescIndex < positionedOrStackingContexts.length;
+        ++posDescIndex
+      ) {
+        const posOrSC = positionedOrStackingContexts[posDescIndex];
+        if (
+          !defer &&
+          posOrSC !== element &&
+          createsStackingContext(device)(posOrSC)
+        ) {
+          paint(posOrSC, canvas);
+        } else {
+          canvas.push(posOrSC);
+        }
+      }
+    }
+
+    const canvas: Array<Element> = [];
+    paint(root, canvas);
+
+    return PaintingOrder.of(canvas);
+  });
+
+  function getZLevel(device: Device, element: Element) {
     // If the element is not positioned and not a flex child, setting a z-index
     // wont affect the z-level.
     if (
-      and(not(isPositioned(device)), not(isFlexOrGridChild(device)))(element)
+      and(
+        isPositioned(device, "static"),
+        not(isFlexOrGridChild(device)),
+      )(element)
     ) {
       return 0;
     }
@@ -289,5 +307,5 @@ export namespace PaintingOrder {
     } = Style.from(element, device).computed("z-index");
 
     return value === "auto" ? 0 : value;
-  };
+  }
 }
