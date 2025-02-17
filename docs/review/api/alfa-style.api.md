@@ -349,7 +349,7 @@ export namespace Shorthands {
         readonly border: Shorthand<"border-bottom-color" | "border-bottom-style" | "border-bottom-width" | "border-left-color" | "border-left-style" | "border-left-width" | "border-right-color" | "border-right-style" | "border-right-width" | "border-top-color" | "border-top-style" | "border-top-width">;
         readonly "border-width": Shorthand<"border-bottom-width" | "border-left-width" | "border-right-width" | "border-top-width">;
         readonly "flex-flow": Shorthand<"flex-direction" | "flex-wrap">;
-        readonly font: Shorthand<"font-family" | "font-size" | "font-stretch" | "font-style" | "font-variant-caps" | "font-variant-east-asian" | "font-variant-ligatures" | "font-variant-numeric" | "font-variant-position" | "font-weight" | "line-height">;
+        readonly font: Shorthand<"font-size" | "font-family" | "font-stretch" | "font-style" | "font-variant-caps" | "font-variant-east-asian" | "font-variant-ligatures" | "font-variant-numeric" | "font-variant-position" | "font-weight" | "line-height">;
         readonly "font-variant": Shorthand<"font-variant-caps" | "font-variant-east-asian" | "font-variant-ligatures" | "font-variant-numeric">;
         readonly "inset-block": Shorthand<"inset-block-end" | "inset-block-start">;
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;

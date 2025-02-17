@@ -4,12 +4,43 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import type { Device } from '@siteimprove/alfa-device';
 import { Element } from '@siteimprove/alfa-dom';
-import { Sequence } from '@siteimprove/alfa-sequence';
+import type { Equatable } from '@siteimprove/alfa-equatable';
+import type { Hash } from '@siteimprove/alfa-hash';
+import type { Hashable } from '@siteimprove/alfa-hash';
+import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
+import * as json from '@siteimprove/alfa-json';
+import type { Serializable } from '@siteimprove/alfa-json';
 
-// @public
-export function computePaintingOrder(root: Element, device: Device): Sequence<Element>;
+// @public (undocumented)
+export class PaintingOrder implements Equatable, Hashable, Serializable<PaintingOrder.JSON> {
+    protected constructor(elements: Array_2<Element>);
+    // (undocumented)
+    equals(value: this): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(elements: Iterable_2<Element>): PaintingOrder;
+    // (undocumented)
+    toJSON(options?: Serializable.Options): PaintingOrder.JSON;
+}
+
+// @public (undocumented)
+export namespace PaintingOrder {
+    // (undocumented)
+    export function isPaintingOrder(value: unknown): value is PaintingOrder;
+    // (undocumented)
+    export type JSON = {
+        [key: string]: json.JSON;
+        type: "painting-order";
+        elements: Array_2<Element.JSON>;
+    };
+    const from: (this: unknown, root: Element<string>, device: Device) => PaintingOrder;
+}
 
 // (No @packageDocumentation comment for this package)
 
