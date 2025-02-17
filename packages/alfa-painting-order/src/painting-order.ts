@@ -80,48 +80,6 @@ export namespace PaintingOrder {
    */
   export const from = Cache.memoize(
     (root: Element, device: Device): PaintingOrder => {
-      const isPositioned = hasComputedStyle(
-        "position",
-        (position) => position.value !== "static",
-        device,
-      );
-      const hasAutoZIndex = hasComputedStyle(
-        "z-index",
-        ({ value }) => value === "auto",
-        device,
-      );
-      const isBlockLevel = hasComputedStyle(
-        "display",
-        ({ values: [outside, inside, listItem] }) =>
-          outside.value === "block" ||
-          inside?.value === "table" ||
-          inside?.value === "flex" ||
-          inside?.value === "grid" ||
-          listItem?.value === "list-item",
-        device,
-      );
-      const isFloat = hasComputedStyle(
-        "float",
-        ({ value }) => value !== "none",
-        device,
-      );
-      const createsSC = createsStackingContext(device);
-      const rendered = isRendered(device);
-
-      const getZLevel = (element: Element) => {
-        // If the element is not positioned and not a flex child, setting a z-index
-        // wont affect the z-level.
-        if (and(not(isPositioned), not(isFlexOrGridChild(device)))(element)) {
-          return 0;
-        }
-
-        const {
-          value: { value },
-        } = Style.from(element, device).computed("z-index");
-
-        return value === "auto" ? 0 : value;
-      };
-
       function paint(
         element: Element,
         canvas: Array<Element>,
@@ -147,20 +105,20 @@ export namespace PaintingOrder {
          * itself and the other descendants to the floats layer.
          */
         function distributeIntoLayers(element: Element) {
-          if (or(isFlexOrGridChild(device), createsSC)(element)) {
+          if (or(isFlexOrGridChild(device), createsSC(device))(element)) {
             positionedOrStackingContexts.push(element);
-          } else if (isPositioned(element)) {
-            if (hasAutoZIndex(element)) {
+          } else if (isPositioned(device)(element)) {
+            if (hasAutoZIndex(device)(element)) {
               const temporaryLayer: Array<Element> = [];
               paint(element, temporaryLayer, { defer: true });
 
               for (const descendant of temporaryLayer) {
-                if (or(isPositioned, createsSC)(descendant)) {
-                  if (or(isPositioned, createsSC)(descendant)) {
+                if (or(isPositioned(device), createsSC(device))(descendant)) {
+                  if (or(isPositioned(device), createsSC(device))(descendant)) {
                     positionedOrStackingContexts.push(descendant);
-                  } else if (isFloat(descendant)) {
+                  } else if (isFloat(device)(descendant)) {
                     floats.push(descendant);
-                  } else if (isBlockLevel(descendant)) {
+                  } else if (isBlockLevel(device)(descendant)) {
                     blockLevels.push(descendant);
                   } else {
                     inlines.push(descendant);
@@ -172,18 +130,18 @@ export namespace PaintingOrder {
             } else {
               positionedOrStackingContexts.push(element);
             }
-          } else if (isFloat(element)) {
+          } else if (isFloat(device)(element)) {
             const temporaryLayer: Array<Element> = [];
             paint(element, temporaryLayer, { defer: true });
 
             for (const descendant of temporaryLayer) {
-              if (or(isPositioned, createsSC)(descendant)) {
+              if (or(isPositioned(device), createsSC(device))(descendant)) {
                 positionedOrStackingContexts.push(descendant);
               } else {
                 floats.push(descendant);
               }
             }
-          } else if (isBlockLevel(element)) {
+          } else if (isBlockLevel(device)(element)) {
             blockLevels.push(element);
           } else {
             // everything else, this is somewhat crude and might not be accurate, but
@@ -198,7 +156,7 @@ export namespace PaintingOrder {
         // (and before stacking-context-creating and positioned descendants with
         // stack level greater than or equal to 0), but after positioned descendants
         // with negative z-index, block-level descendants and floating descendants.
-        if (isBlockLevel(element)) {
+        if (isBlockLevel(device)(element)) {
           canvas.push(element);
         } else {
           inlines.push(element);
@@ -207,10 +165,16 @@ export namespace PaintingOrder {
         function traverse(element: Element) {
           for (const child of element
             .children(Node.fullTree)
-            .filter(and(Element.isElement, rendered))) {
+            .filter(and(Element.isElement, rendered(device)))) {
             distributeIntoLayers(child);
 
-            if (or(isPositioned, isFloat, createsSC)(child)) {
+            if (
+              or(
+                isPositioned(device),
+                isFloat(device),
+                createsSC(device),
+              )(child)
+            ) {
               // The child is going to be painted in full or partial isolation, so
               // we need to stop descending.
               continue;
@@ -222,7 +186,7 @@ export namespace PaintingOrder {
         traverse(element);
 
         positionedOrStackingContexts.sort((a: Element, b: Element) =>
-          Comparable.compare(getZLevel(a), getZLevel(b)),
+          Comparable.compare(getZLevel(device, a), getZLevel(device, b)),
         );
 
         // If the defer is true, painting of descendant stacking contexts should
@@ -232,7 +196,7 @@ export namespace PaintingOrder {
         for (
           ;
           posDescIndex < positionedOrStackingContexts.length &&
-          getZLevel(positionedOrStackingContexts[posDescIndex]) < 0;
+          getZLevel(device, positionedOrStackingContexts[posDescIndex]) < 0;
           ++posDescIndex
         ) {
           const posOrSC = positionedOrStackingContexts[posDescIndex];
@@ -244,7 +208,7 @@ export namespace PaintingOrder {
         }
 
         for (const blockLevel of blockLevels) {
-          if (!defer && createsSC(blockLevel)) {
+          if (!defer && createsSC(device)(blockLevel)) {
             paint(blockLevel, canvas);
           } else {
             canvas.push(blockLevel);
@@ -252,7 +216,7 @@ export namespace PaintingOrder {
         }
 
         for (const float of floats) {
-          if (!defer && float !== element && createsSC(float)) {
+          if (!defer && float !== element && createsSC(device)(float)) {
             paint(float, canvas);
           } else {
             canvas.push(float);
@@ -260,7 +224,7 @@ export namespace PaintingOrder {
         }
 
         for (const inline of inlines) {
-          if (!defer && inline !== element && createsSC(inline)) {
+          if (!defer && inline !== element && createsSC(device)(inline)) {
             paint(inline, canvas);
           } else {
             canvas.push(inline);
@@ -273,7 +237,7 @@ export namespace PaintingOrder {
           ++posDescIndex
         ) {
           const posOrSC = positionedOrStackingContexts[posDescIndex];
-          if (!defer && posOrSC !== element && createsSC(posOrSC)) {
+          if (!defer && posOrSC !== element && createsSC(device)(posOrSC)) {
             paint(posOrSC, canvas);
           } else {
             canvas.push(posOrSC);
@@ -287,4 +251,43 @@ export namespace PaintingOrder {
       return PaintingOrder.of(canvas);
     },
   );
+  const isPositioned = (device: Device) =>
+    hasComputedStyle(
+      "position",
+      (position) => position.value !== "static",
+      device,
+    );
+  const hasAutoZIndex = (device: Device) =>
+    hasComputedStyle("z-index", ({ value }) => value === "auto", device);
+  const isBlockLevel = (device: Device) =>
+    hasComputedStyle(
+      "display",
+      ({ values: [outside, inside, listItem] }) =>
+        outside.value === "block" ||
+        inside?.value === "table" ||
+        inside?.value === "flex" ||
+        inside?.value === "grid" ||
+        listItem?.value === "list-item",
+      device,
+    );
+  const isFloat = (device: Device) =>
+    hasComputedStyle("float", ({ value }) => value !== "none", device);
+  const createsSC = (device: Device) => createsStackingContext(device);
+  const rendered = (device: Device) => isRendered(device);
+
+  const getZLevel = (device: Device, element: Element) => {
+    // If the element is not positioned and not a flex child, setting a z-index
+    // wont affect the z-level.
+    if (
+      and(not(isPositioned(device)), not(isFlexOrGridChild(device)))(element)
+    ) {
+      return 0;
+    }
+
+    const {
+      value: { value },
+    } = Style.from(element, device).computed("z-index");
+
+    return value === "auto" ? 0 : value;
+  };
 }
