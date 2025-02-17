@@ -1716,9 +1716,12 @@ __metadata:
     "@siteimprove/alfa-css": "workspace:^"
     "@siteimprove/alfa-device": "workspace:^"
     "@siteimprove/alfa-dom": "workspace:^"
+    "@siteimprove/alfa-equatable": "workspace:^"
+    "@siteimprove/alfa-hash": "workspace:^"
+    "@siteimprove/alfa-iterable": "workspace:^"
+    "@siteimprove/alfa-json": "workspace:^"
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
-    "@siteimprove/alfa-sequence": "workspace:^"
     "@siteimprove/alfa-style": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
