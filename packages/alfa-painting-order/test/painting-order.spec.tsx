@@ -1,22 +1,30 @@
-import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
-import { Sequence } from "@siteimprove/alfa-sequence";
-import { test } from "@siteimprove/alfa-test";
+import { test, type Assertions } from "@siteimprove/alfa-test";
 
-import { computePaintingOrder } from "../dist/painting-order.js";
+import { Array } from "@siteimprove/alfa-array";
+import { Device } from "@siteimprove/alfa-device";
+import type { Element } from "@siteimprove/alfa-dom";
+import { Serializable } from "@siteimprove/alfa-json";
+
+import { PaintingOrder } from "../dist/painting-order.js";
 
 const device = Device.standard();
+const options = { verbosity: Serializable.Verbosity.Low };
+
+function testOrder(t: Assertions, root: Element, expected: Array<Element>) {
+  h.document([root]);
+
+  t.deepEqual(PaintingOrder.from(root, device).toJSON(options), {
+    type: "painting-order",
+    elements: Array.toJSON(expected, options),
+  });
+}
 
 test("block-level element is painted before positioned descendant with negative z-index", (t) => {
   const div = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
   const body = <body>{div}</body>;
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div]).toJSON(),
-  );
+  testOrder(t, body, [body, div]);
 });
 
 test("block-level stacking context element is painted before positioned descendant with negative z-index", (t) => {
@@ -24,12 +32,7 @@ test("block-level stacking context element is painted before positioned descenda
   const div1 = <div style={{ opacity: "0.8" }}>{div2}</div>;
   const body = <body>{div1}</body>;
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div1, div2]).toJSON(),
-  );
+  testOrder(t, body, [body, div1, div2]);
 });
 
 test("positioned elements with negative z-index are painted in z-order then tree-order", (t) => {
@@ -44,12 +47,7 @@ test("positioned elements with negative z-index are painted in z-order then tree
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div3, div1, div2]).toJSON(),
-  );
+  testOrder(t, body, [body, div3, div1, div2]);
 });
 
 test("positioned element with negative z-index is painted before block-level element", (t) => {
@@ -62,12 +60,7 @@ test("positioned element with negative z-index is painted before block-level ele
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div1]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div1]);
 });
 
 test("block-level descendants are painted in tree-order", (t) => {
@@ -81,12 +74,7 @@ test("block-level descendants are painted in tree-order", (t) => {
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div1, div2, div3]).toJSON(),
-  );
+  testOrder(t, body, [body, div1, div2, div3]);
 });
 
 test("block-level elements are painted before floating elements", (t) => {
@@ -99,12 +87,7 @@ test("block-level elements are painted before floating elements", (t) => {
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div1]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div1]);
 });
 
 test("floating descendants are painted in tree-order", (t) => {
@@ -118,12 +101,7 @@ test("floating descendants are painted in tree-order", (t) => {
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div1, div2, div3]).toJSON(),
-  );
+  testOrder(t, body, [body, div1, div2, div3]);
 });
 
 test("floating descendants are painted atomically with respect to block-level descendants", (t) => {
@@ -142,12 +120,7 @@ test("floating descendants are painted atomically with respect to block-level de
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div3, div1, div2]).toJSON(),
-  );
+  testOrder(t, body, [body, div3, div1, div2]);
 });
 
 test("floating descendants are not painted atomically with respect to positioned descendants", (t) => {
@@ -161,12 +134,7 @@ test("floating descendants are not painted atomically with respect to positioned
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div1, div3]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div1, div3]);
 });
 
 test("floating descendants are painted before inline-level descendants", (t) => {
@@ -179,12 +147,7 @@ test("floating descendants are painted before inline-level descendants", (t) => 
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div1]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div1]);
 });
 
 test("inline-level descendants are painted in tree-order", (t) => {
@@ -198,12 +161,7 @@ test("inline-level descendants are painted in tree-order", (t) => {
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, span1, span2, span3]).toJSON(),
-  );
+  testOrder(t, body, [body, span1, span2, span3]);
 });
 
 test("inline-level descendants are painted before positioned elements", (t) => {
@@ -216,12 +174,7 @@ test("inline-level descendants are painted before positioned elements", (t) => {
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div1]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div1]);
 });
 
 test("positioned descendants with z-index: auto and non-positioned elements that create stacking contexts are painted in tree-order", (t) => {
@@ -237,12 +190,7 @@ test("positioned descendants with z-index: auto and non-positioned elements that
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div1, div2, div3, div4]).toJSON(),
-  );
+  testOrder(t, body, [body, div1, div2, div3, div4]);
 });
 
 test("positioned descendants are painted atomically with respect to block-level descendants", (t) => {
@@ -261,12 +209,7 @@ test("positioned descendants are painted atomically with respect to block-level 
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div3, div1, div2]).toJSON(),
-  );
+  testOrder(t, body, [body, div3, div1, div2]);
 });
 
 test("positioned descendants are not painted atomically with respect to positioned descendants with positive z-indices", (t) => {
@@ -280,12 +223,7 @@ test("positioned descendants are not painted atomically with respect to position
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div1, div3]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div1, div3]);
 });
 
 test("positioned elements without z-index are painted before positioned elements with positve z-index", (t) => {
@@ -298,12 +236,7 @@ test("positioned elements without z-index are painted before positioned elements
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div1]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div1]);
 });
 
 test("positioned elements with positive z-index are painted in z-order then tree-order", (t) => {
@@ -318,12 +251,7 @@ test("positioned elements with positive z-index are painted in z-order then tree
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div3, div1]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div3, div1]);
 });
 
 test("inline-level stacking context element is painted after floating descendants and before inline-level descendants", (t) => {
@@ -337,12 +265,7 @@ test("inline-level stacking context element is painted after floating descendant
   );
   const body = <body>{div1}</body>;
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div1, div3]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div1, div3]);
 });
 
 test("stacking context creating elements are painted atomically", (t) => {
@@ -359,12 +282,7 @@ test("stacking context creating elements are painted atomically", (t) => {
     </body>
   );
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div2, div3, div1]).toJSON(),
-  );
+  testOrder(t, body, [body, div2, div3, div1]);
 });
 
 test("non-positioned elements are not affected by z-index", (t) => {
@@ -378,12 +296,7 @@ test("non-positioned elements are not affected by z-index", (t) => {
   );
   const body = <body>{div1}</body>;
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div1, div2, div3]).toJSON(),
-  );
+  testOrder(t, body, [body, div1, div2, div3]);
 });
 
 test("flex children are affected by z-index", (t) => {
@@ -397,12 +310,7 @@ test("flex children are affected by z-index", (t) => {
   );
   const body = <body>{div1}</body>;
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div1, div3, div2]).toJSON(),
-  );
+  testOrder(t, body, [body, div1, div3, div2]);
 });
 
 test("grid children are affected by z-index", (t) => {
@@ -416,10 +324,5 @@ test("grid children are affected by z-index", (t) => {
   );
   const body = <body>{div1}</body>;
 
-  h.document([body]);
-
-  t.deepEqual(
-    computePaintingOrder(body, device).toJSON(),
-    Sequence.from([body, div1, div3, div2]).toJSON(),
-  );
+  testOrder(t, body, [body, div1, div3, div2]);
 });
