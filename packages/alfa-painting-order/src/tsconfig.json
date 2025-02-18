@@ -20,6 +20,7 @@
     { "path": "../../alfa-json" },
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-sequence" },
     { "path": "../../alfa-style" }
   ]
 }
