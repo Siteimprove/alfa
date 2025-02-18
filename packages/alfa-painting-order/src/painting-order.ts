@@ -126,37 +126,11 @@ export namespace PaintingOrder {
           positionedOrStackingContexts.push(element);
         } else if (not(isPositioned(device, "static"))(element)) {
           if (hasInitialComputedStyle("z-index", device)(element)) {
-            const temporaryLayer = paint(element, Sequence.empty(), {
-              defer: true,
-            });
-
-            for (const descendant of temporaryLayer) {
-              if (
-                or(
-                  not(isPositioned(device, "static")),
-                  createsStackingContext(device),
-                )(descendant)
-              ) {
-                if (
-                  or(
-                    not(isPositioned(device, "static")),
-                    createsStackingContext(device),
-                  )(descendant)
-                ) {
-                  positionedOrStackingContexts.push(descendant);
-                } else if (
-                  not(hasInitialComputedStyle("float", device))(descendant)
-                ) {
-                  floats.push(descendant);
-                } else if (isBlockContainer(Style.from(descendant, device))) {
-                  blockLevels.push(descendant);
-                } else {
-                  inlines.push(descendant);
-                }
-              } else {
-                positionedOrStackingContexts.push(descendant);
-              }
-            }
+            positionedOrStackingContexts.push(
+              ...paint(element, Sequence.empty(), {
+                defer: true,
+              }),
+            );
           } else {
             positionedOrStackingContexts.push(element);
           }
