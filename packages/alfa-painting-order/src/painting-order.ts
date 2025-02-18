@@ -257,9 +257,9 @@ export namespace PaintingOrder {
    * If the defer is true, painting of descendant stacking contexts should
    * be deferred i.e. the layer should just be concatenated to the (temporary) canvas.
    *
-   * For some layers, the parent element, i.e. the element that initated the parent paint procedure,
-   * might not have been painted first and therefore might appear somewhere in the layer. For that reason,
-   * to avoid going into infinite recursion, we need to check that each element in the layer is not the
+   * For some layers, the element that initiated the paint procedure,
+   * might not have been painted yet and therefore might appear somewhere in one of the layers.
+   * For that reason, to avoid going into infinite recursion, we need to check that each element in the layer is not the
    * parent and if it is, it should just be added to the canvas without recursing.
    */
   function paintLayer(
