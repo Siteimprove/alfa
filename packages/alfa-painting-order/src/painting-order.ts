@@ -21,6 +21,7 @@ const {
   isRendered,
 } = Style;
 
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { createsStackingContext } from "./predicate/creates-stacking-context.js";
 
 /**
@@ -96,11 +97,11 @@ export namespace PaintingOrder {
   ): PaintingOrder {
     function paint(
       element: Element,
-      canvas: Array<Element>,
+      canvas: Sequence<Element>,
       options: { defer?: boolean } = {
         defer: false,
       },
-    ): void {
+    ): Sequence<Element> {
       const { defer = false } = options;
       const positionedOrStackingContexts: Array<Element> = [];
       const blockLevels: Array<Element> = [];
@@ -125,8 +126,9 @@ export namespace PaintingOrder {
           positionedOrStackingContexts.push(element);
         } else if (not(isPositioned(device, "static"))(element)) {
           if (hasInitialComputedStyle("z-index", device)(element)) {
-            const temporaryLayer: Array<Element> = [];
-            paint(element, temporaryLayer, { defer: true });
+            const temporaryLayer = paint(element, Sequence.empty(), {
+              defer: true,
+            });
 
             for (const descendant of temporaryLayer) {
               if (
@@ -159,8 +161,9 @@ export namespace PaintingOrder {
             positionedOrStackingContexts.push(element);
           }
         } else if (not(hasInitialComputedStyle("float", device))(element)) {
-          const temporaryLayer: Array<Element> = [];
-          paint(element, temporaryLayer, { defer: true });
+          const temporaryLayer = paint(element, Sequence.empty(), {
+            defer: true,
+          });
 
           for (const descendant of temporaryLayer) {
             if (
@@ -190,7 +193,7 @@ export namespace PaintingOrder {
       // stack level greater than or equal to 0), but after positioned descendants
       // with negative z-index, block-level descendants and floating descendants.
       if (isBlockContainer(Style.from(element, device))) {
-        canvas.push(element);
+        canvas = canvas.append(element);
       } else {
         inlines.push(element);
       }
@@ -234,17 +237,17 @@ export namespace PaintingOrder {
       ) {
         const posOrSC = positionedOrStackingContexts[posDescIndex];
         if (!defer && posOrSC !== element) {
-          paint(posOrSC, canvas);
+          canvas = paint(posOrSC, canvas);
         } else {
-          canvas.push(posOrSC);
+          canvas = canvas.append(posOrSC);
         }
       }
 
       for (const blockLevel of blockLevels) {
         if (!defer && createsStackingContext(device)(blockLevel)) {
-          paint(blockLevel, canvas);
+          canvas = paint(blockLevel, canvas);
         } else {
-          canvas.push(blockLevel);
+          canvas = canvas.append(blockLevel);
         }
       }
 
@@ -254,9 +257,9 @@ export namespace PaintingOrder {
           float !== element &&
           createsStackingContext(device)(float)
         ) {
-          paint(float, canvas);
+          canvas = paint(float, canvas);
         } else {
-          canvas.push(float);
+          canvas = canvas.append(float);
         }
       }
 
@@ -266,9 +269,9 @@ export namespace PaintingOrder {
           inline !== element &&
           createsStackingContext(device)(inline)
         ) {
-          paint(inline, canvas);
+          canvas = paint(inline, canvas);
         } else {
-          canvas.push(inline);
+          canvas = canvas.append(inline);
         }
       }
 
@@ -283,17 +286,16 @@ export namespace PaintingOrder {
           posOrSC !== element &&
           createsStackingContext(device)(posOrSC)
         ) {
-          paint(posOrSC, canvas);
+          canvas = paint(posOrSC, canvas);
         } else {
-          canvas.push(posOrSC);
+          canvas = canvas.append(posOrSC);
         }
       }
+
+      return canvas;
     }
 
-    const canvas: Array<Element> = [];
-    paint(root, canvas);
-
-    return PaintingOrder.of(canvas);
+    return PaintingOrder.of(paint(root, Sequence.empty()));
   });
 
   function getZLevel(device: Device, element: Element) {
