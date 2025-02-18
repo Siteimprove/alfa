@@ -1706,6 +1706,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@siteimprove/alfa-painting-order@workspace:packages/alfa-painting-order":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-painting-order@workspace:packages/alfa-painting-order"
+  dependencies:
+    "@siteimprove/alfa-array": "workspace:^"
+    "@siteimprove/alfa-cache": "workspace:^"
+    "@siteimprove/alfa-comparable": "workspace:^"
+    "@siteimprove/alfa-css": "workspace:^"
+    "@siteimprove/alfa-device": "workspace:^"
+    "@siteimprove/alfa-dom": "workspace:^"
+    "@siteimprove/alfa-equatable": "workspace:^"
+    "@siteimprove/alfa-hash": "workspace:^"
+    "@siteimprove/alfa-iterable": "workspace:^"
+    "@siteimprove/alfa-json": "workspace:^"
+    "@siteimprove/alfa-predicate": "workspace:^"
+    "@siteimprove/alfa-refinement": "workspace:^"
+    "@siteimprove/alfa-sequence": "workspace:^"
+    "@siteimprove/alfa-style": "workspace:^"
+    "@siteimprove/alfa-test": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "@siteimprove/alfa-parser@workspace:^, @siteimprove/alfa-parser@workspace:packages/alfa-parser":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-parser@workspace:packages/alfa-parser"

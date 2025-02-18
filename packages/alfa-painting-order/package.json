@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-painting-order",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.97.0",
+  "license": "MIT",
+  "description": "Support for computing painting order of elements.",
+  "repository": {
+    "type": "git",
+    "url": "github:Siteimprove/alfa",
+    "directory": "packages/alfa-painting-order"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-array": "workspace:^",
+    "@siteimprove/alfa-cache": "workspace:^",
+    "@siteimprove/alfa-comparable": "workspace:^",
+    "@siteimprove/alfa-css": "workspace:^",
+    "@siteimprove/alfa-device": "workspace:^",
+    "@siteimprove/alfa-dom": "workspace:^",
+    "@siteimprove/alfa-equatable": "workspace:^",
+    "@siteimprove/alfa-hash": "workspace:^",
+    "@siteimprove/alfa-iterable": "workspace:^",
+    "@siteimprove/alfa-json": "workspace:^",
+    "@siteimprove/alfa-predicate": "workspace:^",
+    "@siteimprove/alfa-refinement": "workspace:^",
+    "@siteimprove/alfa-sequence": "workspace:^",
+    "@siteimprove/alfa-style": "workspace:^"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}

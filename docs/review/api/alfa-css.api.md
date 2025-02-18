@@ -1298,6 +1298,8 @@ export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V
     // (undocumented)
     get size(): number;
     // (undocumented)
+    some(predicate: Predicate<V, [index: number]>): boolean;
+    // (undocumented)
     toJSON(): List.JSON<V>;
     // (undocumented)
     toString(): string;
