@@ -18,6 +18,8 @@ import type { Serializable } from '@siteimprove/alfa-json';
 export class PaintingOrder implements Equatable, Hashable, Serializable<PaintingOrder.JSON> {
     protected constructor(elements: Array_2<Element>);
     // (undocumented)
+    get elements(): Iterable_2<Element>;
+    // (undocumented)
     equals(value: this): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
