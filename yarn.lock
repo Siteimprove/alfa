@@ -1799,6 +1799,7 @@ __metadata:
     "@siteimprove/alfa-fnv": "workspace:^"
     "@siteimprove/alfa-hash": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
+    "@siteimprove/alfa-sequence": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
   linkType: soft
