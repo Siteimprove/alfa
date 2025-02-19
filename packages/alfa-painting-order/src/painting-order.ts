@@ -40,6 +40,10 @@ export class PaintingOrder
     this._elements = elements;
   }
 
+public get elements(): Iterable<Element> {
+  return this._elements;
+}
+
   public equals(value: this): boolean;
   public equals(value: unknown): value is this;
   public equals(value: unknown): boolean {
