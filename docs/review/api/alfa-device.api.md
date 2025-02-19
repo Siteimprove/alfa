@@ -42,6 +42,8 @@ export namespace Device {
     // (undocumented)
     export function from(json: JSON): Device;
     // (undocumented)
+    export function isDevice(value: unknown): value is Device;
+    // (undocumented)
     export interface JSON {
         // (undocumented)
         [key: string]: json.JSON;
