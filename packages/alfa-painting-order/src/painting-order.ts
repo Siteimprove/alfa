@@ -40,19 +40,19 @@ export class PaintingOrder
     this._elements = elements;
   }
 
-public get elements(): Iterable<Element> {
-  return this._elements;
-}
+  public get elements(): Iterable<Element> {
+    return this._elements;
+  }
 
   public equals(value: this): boolean;
   public equals(value: unknown): value is this;
   public equals(value: unknown): boolean {
     return (
-      (PaintingOrder.isPaintingOrder(value) &&
-        Array.equals(value._elements, this._elements))
+      PaintingOrder.isPaintingOrder(value) &&
+      Array.equals(value._elements, this._elements)
     );
   }
-  
+
   public hash(hash: Hash): void {
     Array.hash(this._elements, hash);
   }
@@ -102,7 +102,7 @@ export namespace PaintingOrder {
     return PaintingOrder.of(paint(device, root, Sequence.empty()));
   });
 
-  const getZLevel = Cache.memoize(function (device: Device, element: Element) {
+  function getZLevel(device: Device, element: Element) {
     // If the element is not positioned and not a flex child, setting a z-index
     // wont affect the z-level.
     if (
@@ -119,7 +119,7 @@ export namespace PaintingOrder {
     } = Style.from(element, device).computed("z-index");
 
     return value === "auto" ? 0 : value;
-  });
+  }
 
   function sortAndSplitByZLevel(
     device: Device,
