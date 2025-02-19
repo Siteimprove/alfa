@@ -146,11 +146,10 @@ export namespace PaintingOrder {
     device: Device,
     element: Element,
     canvas: Sequence<Element>,
-    options: { defer?: boolean } = {
+    options: { defer: boolean } = {
       defer: false,
     },
   ): Sequence<Element> {
-    const { defer = false } = options;
     const positionedOrStackingContexts: Array<Element> = [];
     const blockLevels: Array<Element> = [];
     const floats: Array<Element> = [];
@@ -248,11 +247,11 @@ export namespace PaintingOrder {
       positionedOrStackingContexts,
     );
 
-    canvas = paintLayer(device, canvas, negatives, element, defer);
-    canvas = paintLayer(device, canvas, blockLevels, element, defer);
-    canvas = paintLayer(device, canvas, floats, element, defer);
-    canvas = paintLayer(device, canvas, inlines, element, defer);
-    canvas = paintLayer(device, canvas, nonNegatives, element, defer);
+    canvas = paintLayer(device, canvas, negatives, element, options);
+    canvas = paintLayer(device, canvas, blockLevels, element, options);
+    canvas = paintLayer(device, canvas, floats, element, options);
+    canvas = paintLayer(device, canvas, inlines, element, options);
+    canvas = paintLayer(device, canvas, nonNegatives, element, options);
 
     return canvas;
   }
@@ -271,9 +270,9 @@ export namespace PaintingOrder {
     canvas: Sequence<Element>,
     layer: Array<Element>,
     parent: Element,
-    defer: boolean,
+    options: { defer: boolean },
   ): Sequence<Element> {
-    if (defer) {
+    if (options.defer) {
       return canvas.concat(layer);
     }
 
