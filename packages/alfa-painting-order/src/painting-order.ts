@@ -48,7 +48,6 @@ public get elements(): Iterable<Element> {
   public equals(value: unknown): value is this;
   public equals(value: unknown): boolean {
     return (
-      value === this ||
       (PaintingOrder.isPaintingOrder(value) &&
         Array.equals(value._elements, this._elements))
     );
