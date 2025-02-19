@@ -53,6 +53,7 @@ public get elements(): Iterable<Element> {
         Array.equals(value._elements, this._elements))
     );
   }
+  
   public hash(hash: Hash): void {
     Array.hash(this._elements, hash);
   }
