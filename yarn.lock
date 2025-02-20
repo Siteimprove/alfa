@@ -1706,7 +1706,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-painting-order@workspace:packages/alfa-painting-order":
+"@siteimprove/alfa-painting-order@workspace:^, @siteimprove/alfa-painting-order@workspace:packages/alfa-painting-order":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-painting-order@workspace:packages/alfa-painting-order"
   dependencies:
@@ -1720,9 +1720,13 @@ __metadata:
     "@siteimprove/alfa-hash": "workspace:^"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
+    "@siteimprove/alfa-map": "workspace:^"
+    "@siteimprove/alfa-option": "workspace:^"
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
+    "@siteimprove/alfa-selective": "workspace:^"
     "@siteimprove/alfa-sequence": "workspace:^"
+    "@siteimprove/alfa-slice": "workspace:^"
     "@siteimprove/alfa-style": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
@@ -1879,6 +1883,7 @@ __metadata:
     "@siteimprove/alfa-map": "workspace:^"
     "@siteimprove/alfa-math": "workspace:^"
     "@siteimprove/alfa-option": "workspace:^"
+    "@siteimprove/alfa-painting-order": "workspace:^"
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-record": "workspace:^"
     "@siteimprove/alfa-rectangle": "workspace:^"
