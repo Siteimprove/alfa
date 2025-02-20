@@ -198,7 +198,7 @@ export class Rectangle
   }
 
   /**
-   * Subtracts a given other rectangle. The result is a sequence of smaller
+   * Subtracts a given other rectangle. The result is a collection of smaller
    * rectangles covering the part of the original rectangle which didn't overlap
    * the rectangle that was subtracted. The smaller rectangles will have the
    * maximal possible width and height and there will be between 0 and 4

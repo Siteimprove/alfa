@@ -7,7 +7,11 @@ import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
+import { Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Selective } from "@siteimprove/alfa-selective";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import * as json from "@siteimprove/alfa-json";
@@ -21,7 +25,7 @@ const {
   isRendered,
 } = Style;
 
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { Slice } from "@siteimprove/alfa-slice";
 import { createsStackingContext } from "./predicate/creates-stacking-context.js";
 
 /**
@@ -35,13 +39,26 @@ export class PaintingOrder
   }
 
   private readonly _elements: Array<Element>;
+  private readonly _order: Map<Element, number>;
 
   protected constructor(elements: Array<Element>) {
     this._elements = elements;
+    this._order = Map.from(elements.map((element, index) => [element, index]));
   }
 
   public get elements(): Iterable<Element> {
     return this._elements;
+  }
+
+  public getOrderIndex(element: Element): Option<number> {
+    return this._order.get(element);
+  }
+
+  public getElementsAbove(element: Element): Iterable<Element> {
+    return this._order
+      .get(element)
+      .map((index) => Slice.of(this._elements, index + 1))
+      .getOrElse(() => Slice.of(this._elements));
   }
 
   public equals(value: this): boolean;
@@ -96,10 +113,22 @@ export namespace PaintingOrder {
    * @public
    */
   export const from = Cache.memoize(function (
-    root: Element,
+    root: Node,
     device: Device,
   ): PaintingOrder {
-    return PaintingOrder.of(paint(device, root, Sequence.empty()));
+    return PaintingOrder.of(
+      Selective.of(root)
+        .if(Element.isElement, (element) =>
+          paint(device, element, Sequence.empty()),
+        )
+        .else((node) =>
+          node
+            .children(Node.fullTree)
+            .filter(Element.isElement)
+            .flatMap((element) => paint(device, element, Sequence.empty())),
+        )
+        .get(),
+    );
   });
 
   function getZLevel(device: Device, element: Element) {
