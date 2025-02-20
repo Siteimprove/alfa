@@ -1,3 +1,4 @@
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Longhand } from "./longhand.js";
 
 import BackgroundAttachment from "./property/background-attachment.js";
@@ -50,8 +51,8 @@ import BorderTopStyle from "./property/border-top-style.js";
 import BorderTopWidth from "./property/border-top-width.js";
 import Bottom from "./property/bottom.js";
 import BoxShadow from "./property/box-shadow.js";
-import Clip from "./property/clip.js";
 import ClipPath from "./property/clip-path.js";
+import Clip from "./property/clip.js";
 import Color from "./property/color.js";
 import Contain from "./property/contain.js";
 import ContainerType from "./property/container-type.js";
@@ -132,8 +133,24 @@ import ZIndex from "./property/z-index.js";
  */
 export namespace Longhands {
   export type Property = typeof longHands;
+  /**
+   * @internal
+   */
+  export type PropName = keyof Property;
 
-  export type Name = keyof Property;
+  type Aliases = typeof aliases;
+  type AliasesName = keyof Aliases;
+
+  export type Name = PropName | AliasesName;
+
+  /**
+   * @internal
+   */
+  export type TrueName<N extends Name> = N extends PropName
+    ? N
+    : N extends AliasesName
+      ? Aliases[N]
+      : never;
 
   /**
    * Extract the parsed type of a named property.
@@ -147,7 +164,7 @@ export namespace Longhands {
    * The parsed type doesn't really exist in CSS. It is an artefact on how we
    * handle the default keywords.
    */
-  export type Parsed<N extends Name> = Longhand.Parsed<Property[N]>;
+  export type Parsed<N extends Name> = Longhand.Parsed<Property[TrueName<N>]>;
 
   /**
    * Extract the declared type of a named property.
@@ -180,7 +197,9 @@ export namespace Longhands {
    *
    * {@link https://drafts.csswg.org/css-cascade/#computed}
    */
-  export type Computed<N extends Name> = Longhand.Computed<Property[N]>;
+  export type Computed<N extends Name> = Longhand.Computed<
+    Property[TrueName<N>]
+  >;
 
   /**
    * Extract the initial type of a named property.
@@ -319,13 +338,36 @@ export namespace Longhands {
     "will-change": WillChange,
     "word-spacing": WordSpacing,
     "z-index": ZIndex,
-  } as const;
+  };
 
-  export function isName(name: string): name is Name {
+  /**
+   * {@link https://drafts.csswg.org/css-cascade-5/#legacy-name-alias}
+   */
+  const aliases = {
+    "fake-alias": "color",
+  } satisfies { [alias in string]: PropName };
+
+  function isPropName(name: string): name is PropName {
     return name in longHands;
   }
 
-  export function get<N extends Name>(name: N): Property[N] {
-    return longHands[name];
+  function isAliasesName(name: string): name is AliasesName {
+    return name in aliases;
+  }
+
+  export const isName: (name: string) => name is Name = Refinement.or(
+    isPropName,
+    isAliasesName,
+  );
+
+  /**
+   * @internal
+   */
+  export function propName<N extends Name>(name: N): TrueName<N> {
+    return (isAliasesName(name) ? aliases[name] : name) as TrueName<N>;
+  }
+
+  export function get<N extends Name>(name: N): Property[TrueName<N>] {
+    return longHands[propName(name)];
   }
 }

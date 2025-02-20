@@ -1,13 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
-import type {
-  Document,
-  Node} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Shadow,
-  Slotable,
-} from "@siteimprove/alfa-dom";
+import type { Document, Node } from "@siteimprove/alfa-dom";
+import { Element, Shadow, Slotable } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Context } from "@siteimprove/alfa-selector";
@@ -69,7 +63,7 @@ export class Cascade implements Serializable {
     this._depth = getDepth(root);
     this._device = device;
     this._selectors = SelectorMap.from(
-      [UserAgent, ...root.style],
+      [/*UserAgent,*/ ...root.style],
       device,
       this._depth,
     );

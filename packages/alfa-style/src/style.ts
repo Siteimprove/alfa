@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Callback } from "@siteimprove/alfa-callback";
@@ -97,7 +98,7 @@ export class Style implements Serializable<Style.JSON> {
     // declarations for these.
     let reverted = Set.empty<Name>();
 
-    function registerParsed<N extends Name>(
+    function registerParsed<N extends Longhands.PropName>(
       name: N,
       declaration: Declaration,
     ): Callback<Style.Declared<N>> {
@@ -115,15 +116,13 @@ export class Style implements Serializable<Style.JSON> {
 
     function register<N extends Name>(
       name: N,
-      value: Either<Style.Declared<N>, string>,
+      value: Either<Style.Declared<Longhands.TrueName<N>>, string>,
       declaration: Declaration,
       origin: Origin,
     ): void {
-      const property = Longhands.get(name);
+      console.log(`${name} is ${Longhands.propName(name)}`);
 
-      // if (Longhand.LegacyAlias.isLegacyAlias(property)) {
-      //   return register(property.name, value, declaration, origin, parsed);
-      // }
+      const property = Longhands.get(name);
 
       // If the property has been reverted to User Agent origin,
       // discard any Author declaration.
@@ -137,10 +136,12 @@ export class Style implements Serializable<Style.JSON> {
         // Value. Otherwise, we only have the string and need to parse it
         // (avoid parsing everything before we know we'll need it).
 
-        value.either(registerParsed(name, declaration), (declared) =>
-          parseLonghand(property, declared, variables)
-            .ok()
-            .forEach(registerParsed(name, declaration)),
+        value.either(
+          registerParsed(Longhands.propName(name), declaration),
+          (declared) =>
+            parseLonghand(property, declared, variables).forEach(
+              registerParsed(Longhands.propName(name), declaration),
+            ),
         );
       }
     }
@@ -232,7 +233,9 @@ export class Style implements Serializable<Style.JSON> {
    * {@link https://www.w3.org/TR/css-cascade/#cascaded}
    */
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>> {
-    return this._properties.get(name) as Option<Value<Style.Cascaded<N>>>;
+    return this._properties.get(Longhands.propName(name)) as Option<
+      Value<Style.Cascaded<N>>
+    >;
   }
 
   /**
@@ -488,7 +491,7 @@ export namespace Style {
     predicates;
 }
 
-function parseLonghand<N extends Longhands.Name>(
+function parseLonghand<N extends Longhands.PropName>(
   property: Longhands.Property[N],
   value: string,
   variables: Map<string, Value<Slice<Token>>>,
