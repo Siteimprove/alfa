@@ -100,6 +100,7 @@ import OutlineColor from "./property/outline-color.js";
 import OutlineOffset from "./property/outline-offset.js";
 import OutlineStyle from "./property/outline-style.js";
 import OutlineWidth from "./property/outline-width.js";
+import OverflowWrap from "./property/overflow-wrap.js";
 import OverflowX from "./property/overflow-x.js";
 import OverflowY from "./property/overflow-y.js";
 import Perspective from "./property/perspective.js";
@@ -311,6 +312,7 @@ export namespace Longhands {
     "outline-offset": OutlineOffset,
     "outline-style": OutlineStyle,
     "outline-width": OutlineWidth,
+    "overflow-wrap": OverflowWrap,
     "overflow-x": OverflowX,
     "overflow-y": OverflowY,
     perspective: Perspective,
@@ -344,7 +346,7 @@ export namespace Longhands {
    * {@link https://drafts.csswg.org/css-cascade-5/#legacy-name-alias}
    */
   const aliases = {
-    "fake-alias": "color",
+    "word-wrap": "overflow-wrap",
   } satisfies { [alias in string]: PropName };
 
   function isPropName(name: string): name is PropName {

@@ -173,6 +173,7 @@
     "./property/outline-style.ts",
     "./property/outline-width.ts",
     "./property/overflow.ts",
+    "./property/overflow-wrap.ts",
     "./property/overflow-x.ts",
     "./property/overflow-y.ts",
     "./property/perspective.ts",
