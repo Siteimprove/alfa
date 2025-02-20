@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Callback } from "@siteimprove/alfa-callback";
@@ -120,8 +119,6 @@ export class Style implements Serializable<Style.JSON> {
       declaration: Declaration,
       origin: Origin,
     ): void {
-      console.log(`${name} is ${Longhands.propName(name)}`);
-
       const property = Longhands.get(name);
 
       // If the property has been reverted to User Agent origin,

@@ -63,7 +63,7 @@ export class Cascade implements Serializable {
     this._depth = getDepth(root);
     this._device = device;
     this._selectors = SelectorMap.from(
-      [/*UserAgent,*/ ...root.style],
+      [UserAgent, ...root.style],
       device,
       this._depth,
     );
