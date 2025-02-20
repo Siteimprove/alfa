@@ -8,7 +8,7 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
-import { getClickableBox } from "../common/dom/get-clickable-box.js";
+import { getClickableRegion } from "../common/dom/get-clickable-region.js";
 
 import {
   allTargetsOfPointerEvents,
@@ -33,17 +33,19 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         // Existence of a clickable box is guaranteed by applicability
-        const box = getClickableBox(device, target).getUnsafe();
+        const box = getClickableRegion(device, target).getUnsafe();
         const name = WithName.getName(target, device).getOr("");
 
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () => TargetSize.IsUserAgentControlled(name, box),
+            () =>
+              TargetSize.IsUserAgentControlled(name, box.first().getUnsafe()),
             () =>
               expectation(
                 hasSufficientSize(24, device)(target),
-                () => TargetSize.HasSufficientSize(name, box),
+                () =>
+                  TargetSize.HasSufficientSize(name, box.first().getUnsafe()),
                 () => {
                   const tooCloseNeighbors = Sequence.from(
                     findElementsWithInsufficientSpacingToTarget(
@@ -55,11 +57,15 @@ export default Rule.Atomic.of<Page, Element>({
 
                   return expectation(
                     tooCloseNeighbors.isEmpty(),
-                    () => TargetSize.HasSufficientSpacing(name, box),
+                    () =>
+                      TargetSize.HasSufficientSpacing(
+                        name,
+                        box.first().getUnsafe(),
+                      ),
                     () =>
                       TargetSize.HasInsufficientSizeAndSpacing(
                         name,
-                        box,
+                        box.first().getUnsafe(),
                         tooCloseNeighbors,
                       ),
                   );
@@ -92,7 +98,7 @@ function* findElementsWithInsufficientSpacingToTarget(
   target: Element,
 ): Iterable<Element> {
   // Existence of a clickable box is guaranteed by applicability
-  const targetRect = getClickableBox(device, target).getUnsafe();
+  const targetRegion = getClickableRegion(device, target).getUnsafe();
 
   const undersizedTargets = undersizedCache
     .get(document, Cache.empty)
@@ -106,19 +112,28 @@ function* findElementsWithInsufficientSpacingToTarget(
   for (const candidate of allTargetsOfPointerEvents(document, device)) {
     if (target !== candidate) {
       // Existence of a clickable box should be guaranteed by implementation of allTargetsOfPointerEvents
-      const candidateRect = getClickableBox(device, candidate).getUnsafe();
+      const candidateRegion = getClickableRegion(device, candidate).getUnsafe();
 
+      // TODO: It's not clear how to handle spacing between fragmented clickable regions,
+      // for now let's compare every rectangle with every rectangle and if any two are too close, the elements are too close.
+
+      // The 24px diameter circle of the target must not intersect with the clickable box of any other target,
+      // or if the candidate is undersized, the 24px diameter circle of the target must not intersect with the
+      // 24px diameter circle of the candidate
       if (
-        candidateRect.intersectsCircle(
-          targetRect.center.x,
-          targetRect.center.y,
-          12,
-        ) ||
-        (undersizedTargets.includes(candidate) &&
-          targetRect.distanceSquared(candidateRect) < 24 ** 2)
+        candidateRegion.some((candidateRect) =>
+          targetRegion.some(
+            (targetRect) =>
+              candidateRect.intersectsCircle(
+                targetRect.center.x,
+                targetRect.center.y,
+                12,
+              ) ||
+              (undersizedTargets.includes(candidate) &&
+                targetRect.distanceSquared(candidateRect) < 24 ** 2),
+          ),
+        )
       ) {
-        // The 24px diameter circle of the target must not intersect with the clickable box of any other target, or
-        // if the candidate is undersized, the 24px diameter circle of the target must not intersect with the 24px diameter circle of the candidate
         yield candidate;
       }
     }

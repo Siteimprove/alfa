@@ -12,9 +12,7 @@ const device = Device.standard();
 const options = { verbosity: Serializable.Verbosity.Low };
 
 function testOrder(t: Assertions, root: Element, expected: Array<Element>) {
-  h.document([root]);
-
-  t.deepEqual(PaintingOrder.from(root, device).toJSON(options), {
+  t.deepEqual(PaintingOrder.from(h.document([root]), device).toJSON(options), {
     type: "painting-order",
     elements: Array.toJSON(expected, options),
   });

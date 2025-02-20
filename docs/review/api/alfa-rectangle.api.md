@@ -8,6 +8,7 @@ import type { Equatable } from '@siteimprove/alfa-equatable';
 import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import type * as json from '@siteimprove/alfa-json';
+import { Sequence } from '@siteimprove/alfa-sequence';
 import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
@@ -52,6 +53,7 @@ export class Rectangle implements Equatable, Hashable, Serializable<Rectangle.JS
     static of(x: number, y: number, width: number, height: number): Rectangle;
     // (undocumented)
     get right(): number;
+    subtract(other: Rectangle): Sequence<Rectangle>;
     // (undocumented)
     toJSON(): Rectangle.JSON;
     // (undocumented)

@@ -5,7 +5,7 @@ import type { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation.js";
 import { applicableTargetsOfPointerEvents } from "../common/applicability/targets-of-pointer-events.js";
-import { getClickableBox } from "../common/dom/get-clickable-box.js";
+import { getClickableRegion } from "../common/dom/get-clickable-region.js";
 
 import { WithName } from "../common/diagnostic.js";
 
@@ -25,15 +25,19 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         // Existence of a clickable box is guaranteed by applicability
-        const box = getClickableBox(device, target).getUnsafe();
+        const box = getClickableRegion(device, target).getUnsafe();
         const name = WithName.getName(target, device).getOr("");
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () => TargetSize.IsUserAgentControlled(name, box),
+            () =>
+              // TODO: How should we send to the clickable region?
+              TargetSize.IsUserAgentControlled(name, box.first().getUnsafe()),
             hasSufficientSize(44, device)(target)
-              ? () => TargetSize.HasSufficientSize(name, box)
-              : () => TargetSize.HasInsufficientSize(name, box),
+              ? () =>
+                  TargetSize.HasSufficientSize(name, box.first().getUnsafe())
+              : () =>
+                  TargetSize.HasInsufficientSize(name, box.first().getUnsafe()),
           ),
         };
       },
