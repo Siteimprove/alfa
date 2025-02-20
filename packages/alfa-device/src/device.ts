@@ -164,4 +164,8 @@ export namespace Device {
   export function standard(): Device {
     return Device.of(Type.Screen, Viewport.standard(), Display.standard());
   }
+
+  export function isDevice(value: unknown): value is Device {
+    return value instanceof Device;
+  }
 }
