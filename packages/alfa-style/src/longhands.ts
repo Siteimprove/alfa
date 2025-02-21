@@ -346,6 +346,7 @@ export namespace Longhands {
    * {@link https://drafts.csswg.org/css-cascade-5/#legacy-name-alias}
    */
   const aliases = {
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/word-wrap
     "word-wrap": "overflow-wrap",
   } satisfies { [alias in string]: PropName };
 

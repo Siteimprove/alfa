@@ -48,11 +48,11 @@ export class Ok<T> implements Result<T, never> {
     return ok(this._value);
   }
 
-  public forEach(callback: Callback<T>) {
+  public forEach(callback: Callback<T>): void {
     callback(this._value);
   }
 
-  public forEachErr(callback: Callback<never>) {}
+  public forEachErr(callback: Callback<never>): void {}
 
   public apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E> {
     return mapper.map((mapper) => mapper(this._value));

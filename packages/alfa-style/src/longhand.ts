@@ -6,7 +6,6 @@ import type { Slice } from "@siteimprove/alfa-slice";
 
 import * as parser from "@siteimprove/alfa-parser";
 
-import type { Longhands } from "./longhands.js";
 import type { Style } from "./style.js";
 import type { Value } from "./value.js";
 

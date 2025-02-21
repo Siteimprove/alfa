@@ -1,7 +1,7 @@
 import { Longhand } from "../longhand.js";
 
 /**
- * {@link https://drafts.csswg.org/css-text/#overflow-wrap-property}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap}
  * @internal
  */
 export default Longhand.fromKeywords(
