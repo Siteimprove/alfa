@@ -52,83 +52,88 @@ function expectation(
   return false;
 }
 
-test(`isScrolledBehind() combinatorial test`, (t) => {
-  const device = Device.standard();
-  const context = Context.empty();
+test(
+  `isScrolledBehind() combinatorial test`,
+  (t) => {
+    const device = Device.standard();
+    const context = Context.empty();
 
-  for (const offsetX of [-100, 0, 100]) {
-    for (const offsetY of [-100, 0, 100]) {
-      for (const overflowX of keywords) {
-        for (const overflowY of keywords) {
-          const button = (
-            <button
-              box={{
-                device,
-                x: 134 + offsetX,
-                y: 141 + offsetY,
-                width: 50,
-                height: 20,
-              }}
-            >
-              foo
-            </button>
-          );
-          const div = (
-            <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
-              {button}
-            </div>
-          );
+    for (const offsetX of [-100, 0, 100]) {
+      for (const offsetY of [-100, 0, 100]) {
+        for (const overflowX of keywords) {
+          for (const overflowY of keywords) {
+            const button = (
+              <button
+                box={{
+                  device,
+                  x: 134 + offsetX,
+                  y: 141 + offsetY,
+                  width: 50,
+                  height: 20,
+                }}
+              >
+                foo
+              </button>
+            );
+            const div = (
+              <div box={{ device, x: 108, y: 100, width: 102, height: 102 }}>
+                {button}
+              </div>
+            );
 
-          h.document(
-            [div],
-            [
-              h.sheet([
-                h.rule.style("div", {
-                  overflowX,
-                  overflowY,
-                  margin: "100px 100px",
-                  width: "100px",
-                  height: "100px",
-                }),
-                h.rule.style("button", {
-                  position: "relative",
-                  width: "50px",
-                  height: "20px",
-                  top: `${40 + offsetY}px`,
-                  left: `${25 + offsetX}px`,
-                }),
-              ]),
-            ],
-          );
+            h.document(
+              [div],
+              [
+                h.sheet([
+                  h.rule.style("div", {
+                    overflowX,
+                    overflowY,
+                    margin: "100px 100px",
+                    width: "100px",
+                    height: "100px",
+                  }),
+                  h.rule.style("button", {
+                    position: "relative",
+                    width: "50px",
+                    height: "20px",
+                    top: `${40 + offsetY}px`,
+                    left: `${25 + offsetX}px`,
+                  }),
+                ]),
+              ],
+            );
 
-          const computedOverflowX = Style.from(div, device, context).computed(
-            "overflow-x",
-          ).value.value;
-          const computedOverflowY = Style.from(div, device, context).computed(
-            "overflow-y",
-          ).value.value;
+            const computedOverflowX = Style.from(div, device, context).computed(
+              "overflow-x",
+            ).value.value;
+            const computedOverflowY = Style.from(div, device, context).computed(
+              "overflow-y",
+            ).value.value;
 
-          const expn = expectation(
-            offsetX,
-            offsetY,
-            computedOverflowX,
-            computedOverflowY,
-          );
+            const expn = expectation(
+              offsetX,
+              offsetY,
+              computedOverflowX,
+              computedOverflowY,
+            );
 
-          t.equal(
-            isScrolledBehind(device)(button),
-            expn,
-            `Expected isScrolledBehind() to return ${expn} for
+            t.equal(
+              isScrolledBehind(device)(button),
+              expn,
+              `Expected isScrolledBehind() to return ${expn} for
 offsetX=${offsetX},
 offsetY=${offsetY},
 overflowX=${overflowX} (computed=${computedOverflowX}),
 overflowY=${computedOverflowY} (computed=${computedOverflowY})`,
-          );
+            );
+          }
         }
       }
     }
-  }
-});
+  },
+  // The test is regularly taking 3s or more and sometimes causes a vitest timeout at 5s.
+  { timeout: 8000 },
+);
 
 test(`isScrolledBehind() returns true for text scrolled behind`, (t) => {
   const device = Device.standard();
