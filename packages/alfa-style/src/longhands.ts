@@ -121,11 +121,14 @@ import TextOverflow from "./property/text-overflow.js";
 import TextShadow from "./property/text-shadow.js";
 import TextTransform from "./property/text-transform.js";
 import TextWrapMode from "./property/text-wrap-mode.js";
+import TextWrapStyle from "./property/text-wrap-style.js";
 import Top from "./property/top.js";
 import Transform from "./property/transform.js";
 import Translate from "./property/translate.js";
 import VerticalAlign from "./property/vertical-align.js";
 import Visibility from "./property/visibility.js";
+import WrapAfter from "./property/wrap-after.js";
+import WrapBefore from "./property/wrap-before.js";
 import WrapInside from "./property/wrap-inside.js";
 import WhiteSpace from "./property/white-space.js";
 import Width from "./property/width.js";
@@ -338,11 +341,14 @@ export namespace Longhands {
     "text-shadow": TextShadow,
     "text-transform": TextTransform,
     "text-wrap-mode": TextWrapMode,
+    "text-wrap-style": TextWrapStyle,
     top: Top,
     transform: Transform,
     translate: Translate,
     "vertical-align": VerticalAlign,
     visibility: Visibility,
+    "wrap-after": WrapAfter,
+    "wrap-before": WrapBefore,
     "wrap-inside": WrapInside,
     "white-space": WhiteSpace,
     width: Width,
