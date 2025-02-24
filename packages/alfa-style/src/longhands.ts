@@ -72,6 +72,7 @@ import FontVariantNumeric from "./property/font-variant-numeric.js";
 import FontVariantPosition from "./property/font-variant-position.js";
 import FontWeight from "./property/font-weight.js";
 import Height from "./property/height.js";
+import Hyphens from "./property/hyphens.js";
 import InsetBlockEnd from "./property/inset-block-end.js";
 import InsetBlockStart from "./property/inset-block-start.js";
 import InsetInlineEnd from "./property/inset-inline-end.js";
@@ -79,6 +80,7 @@ import InsetInlineStart from "./property/inset-inline-start.js";
 import Isolation from "./property/isolation.js";
 import Left from "./property/left.js";
 import LetterSpacing from "./property/letter-spacing.js";
+import LineBreak from "./property/line-break.js";
 import LineHeight from "./property/line-height.js";
 import MarginBottom from "./property/margin-bottom.js";
 import MarginLeft from "./property/margin-left.js";
@@ -126,6 +128,7 @@ import Visibility from "./property/visibility.js";
 import WhiteSpace from "./property/white-space.js";
 import Width from "./property/width.js";
 import WillChange from "./property/will-change.js";
+import WordBreak from "./property/word-break.js";
 import WordSpacing from "./property/word-spacing.js";
 import ZIndex from "./property/z-index.js";
 
@@ -284,6 +287,7 @@ export namespace Longhands {
     "font-variant-position": FontVariantPosition,
     "font-weight": FontWeight,
     height: Height,
+    hyphens: Hyphens,
     "inset-block-end": InsetBlockEnd,
     "inset-block-start": InsetBlockStart,
     "inset-inline-end": InsetInlineEnd,
@@ -291,6 +295,7 @@ export namespace Longhands {
     isolation: Isolation,
     left: Left,
     "letter-spacing": LetterSpacing,
+    "line-break": LineBreak,
     "line-height": LineHeight,
     "margin-bottom": MarginBottom,
     "margin-left": MarginLeft,
@@ -338,6 +343,7 @@ export namespace Longhands {
     "white-space": WhiteSpace,
     width: Width,
     "will-change": WillChange,
+    "word-break": WordBreak,
     "word-spacing": WordSpacing,
     "z-index": ZIndex,
   };
