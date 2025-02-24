@@ -34,6 +34,8 @@ import Mask from "./property/mask.js";
 import Outline from "./property/outline.js";
 import Overflow from "./property/overflow.js";
 import TextDecoration from "./property/text-decoration.js";
+import TextWrap from "./property/text-wrap.js";
+
 import type { Shorthand } from "./shorthand.js";
 
 /**
@@ -80,6 +82,7 @@ export namespace Shorthands {
     mask: Mask,
     outline: Outline,
     overflow: Overflow,
+    "text-wrap": TextWrap,
     "text-decoration": TextDecoration,
   } as const;
 

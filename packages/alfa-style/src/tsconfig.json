@@ -198,6 +198,7 @@
     "./property/text-overflow.ts",
     "./property/text-transform.ts",
     "./property/text-shadow.ts",
+    "./property/text-wrap.ts",
     "./property/text-wrap-mode.ts",
     "./property/text-wrap-style.ts",
     "./property/top.ts",
