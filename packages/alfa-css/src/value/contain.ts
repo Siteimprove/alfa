@@ -1,13 +1,14 @@
+import { Flags } from "@siteimprove/alfa-flags";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Keyword } from "./textual/keyword.js";
 import type { Resolvable } from "./resolvable.js";
 import { Value } from "./value.js";
 
 import { Token, type Parser as CSSParser } from "../syntax/index.js";
-import { Slice } from "@siteimprove/alfa-slice";
 
 const { either } = Parser;
 
@@ -22,6 +23,49 @@ export type Contain =
   | Keyword<"content">
   | ContainFlags;
 
+class CFlags extends Flags<CFlags.Flag> {
+  public static of(...flags: Array<CFlags.Flag>): CFlags {
+    return new CFlags(Flags._reduce(...flags));
+  }
+
+  public hasFlag(flag: CFlags.Names): boolean {
+    return this.has(CFlags[flag]);
+  }
+
+  public toJSON(): CFlags.JSON {
+    return {
+      ...super.toJSON(),
+      size: this.hasFlag("size"),
+      inlineSize: this.hasFlag("inlineSize"),
+      layout: this.hasFlag("layout"),
+      style: this.hasFlag("style"),
+      paint: this.hasFlag("paint"),
+    };
+  }
+}
+
+namespace CFlags {
+  export interface JSON extends Flags.JSON {
+    size: boolean;
+    inlineSize: boolean;
+    layout: boolean;
+    style: boolean;
+    paint: boolean;
+  }
+
+  export type Flag = 0 | 1 | 2 | 4 | 8 | 16;
+
+  const names = ["size", "inlineSize", "layout", "style", "paint"] as const;
+  export type Names = (typeof names)[number];
+
+  export const none = 0 as Flag;
+  export const size = (1 << 0) as Flag;
+  export const inlineSize = (1 << 1) as Flag;
+  export const layout = (1 << 2) as Flag;
+  export const style = (1 << 3) as Flag;
+  export const paint = (1 << 4) as Flag;
+}
+
 /**
  * @public
  */
@@ -29,55 +73,35 @@ export class ContainFlags
   extends Value<"contain-flags", false>
   implements Resolvable<ContainFlags, never>
 {
-  public static of(
-    size: boolean,
-    inlineSize: boolean,
-    layout: boolean,
-    style: boolean,
-    paint: boolean,
-  ) {
-    return new ContainFlags(size, inlineSize, layout, style, paint);
+  public static of(flags: CFlags) {
+    return new ContainFlags(flags);
   }
 
-  private readonly _size: boolean;
-  private readonly _inlineSize: boolean;
-  private readonly _layout: boolean;
-  private readonly _style: boolean;
-  private readonly _paint: boolean;
+  private readonly _flags: CFlags;
 
-  protected constructor(
-    size: boolean,
-    inlineSize: boolean,
-    layout: boolean,
-    style: boolean,
-    paint: boolean,
-  ) {
+  protected constructor(flags: CFlags) {
     super("contain-flags", false);
-    this._size = size;
-    this._inlineSize = inlineSize;
-    this._layout = layout;
-    this._style = style;
-    this._paint = paint;
+    this._flags = flags;
   }
 
   public get size(): boolean {
-    return this._size;
+    return this._flags.hasFlag("size");
   }
 
   public get inlineSize(): boolean {
-    return this._inlineSize;
+    return this._flags.hasFlag("inlineSize");
   }
 
   public get layout(): boolean {
-    return this._layout;
+    return this._flags.hasFlag("layout");
   }
 
   public get style(): boolean {
-    return this._style;
+    return this._flags.hasFlag("style");
   }
 
   public get paint(): boolean {
-    return this._paint;
+    return this._flags.hasFlag("paint");
   }
 
   public resolve(): ContainFlags {
@@ -85,51 +109,35 @@ export class ContainFlags
   }
 
   public equals(value: unknown): value is this {
-    return (
-      value instanceof ContainFlags &&
-      value._size === this._size &&
-      value._inlineSize === this._inlineSize &&
-      value._layout === this._layout &&
-      value._style === this._style &&
-      value._paint === this._paint
-    );
+    return value instanceof ContainFlags && value._flags.equals(this._flags);
   }
 
   public hash(hash: Hash): void {
-    hash
-      .writeBoolean(this._size)
-      .writeBoolean(this._inlineSize)
-      .writeBoolean(this._layout)
-      .writeBoolean(this._style)
-      .writeBoolean(this._paint);
+    hash.writeNumber(this._flags.value);
   }
 
   public toJSON(): ContainFlags.JSON {
     return {
       ...super.toJSON(),
-      size: this._size,
-      inlineSize: this._inlineSize,
-      layout: this._layout,
-      style: this._style,
-      paint: this._paint,
+      ...this._flags.toJSON(),
     };
   }
 
   public toString(): string {
     let keywords: Array<string> = [];
-    if (this._size) {
+    if (this.size) {
       keywords.push("size");
     }
-    if (this._inlineSize) {
+    if (this.inlineSize) {
       keywords.push("inline-size");
     }
-    if (this._layout) {
+    if (this.layout) {
       keywords.push("layout");
     }
-    if (this._style) {
+    if (this.style) {
       keywords.push("style");
     }
-    if (this._paint) {
+    if (this.paint) {
       keywords.push("paint");
     }
 
@@ -215,11 +223,13 @@ export namespace ContainFlags {
     return Result.of([
       input,
       ContainFlags.of(
-        size?.value === "size",
-        size?.value === "inline-size",
-        layout !== undefined,
-        style !== undefined,
-        paint !== undefined,
+        CFlags.of(
+          size?.value === "size" ? CFlags.size : CFlags.none,
+          size?.value === "inline-size" ? CFlags.inlineSize : CFlags.none,
+          layout !== undefined ? CFlags.layout : CFlags.none,
+          style !== undefined ? CFlags.style : CFlags.none,
+          paint !== undefined ? CFlags.paint : CFlags.none,
+        ),
       ),
     ]);
   };

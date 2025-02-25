@@ -1304,6 +1304,7 @@ __metadata:
     "@siteimprove/alfa-array": "workspace:^"
     "@siteimprove/alfa-comparable": "workspace:^"
     "@siteimprove/alfa-equatable": "workspace:^"
+    "@siteimprove/alfa-flags": "workspace:^"
     "@siteimprove/alfa-hash": "workspace:^"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"

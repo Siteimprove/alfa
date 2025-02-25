@@ -116,6 +116,7 @@
     { "path": "../../alfa-array" },
     { "path": "../../alfa-comparable" },
     { "path": "../../alfa-equatable" },
+    { "path": "../../alfa-flags" },
     { "path": "../../alfa-hash" },
     { "path": "../../alfa-iterable" },
     { "path": "../../alfa-json" },
