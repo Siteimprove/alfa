@@ -1,13 +1,11 @@
 import { Longhand } from "../longhand.js";
 
-// import Collapse from "./"
-
 export default Longhand.fromKeywords(
   { inherits: true },
-  "normal",
-  "pre",
-  "nowrap",
-  "pre-wrap",
+  "collapse",
+  "discard",
+  "preserve",
+  "preserve-breaks",
+  "preserve-spaces",
   "break-spaces",
-  "pre-line",
 );
