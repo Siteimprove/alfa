@@ -10,7 +10,7 @@ import { Value } from "./value.js";
 
 import { Token, type Parser as CSSParser } from "../syntax/index.js";
 
-const { either } = Parser;
+const { doubleBar, either, mapResult } = Parser;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/contain#formal_syntax}
@@ -117,10 +117,7 @@ export class ContainFlags
   }
 
   public toJSON(): ContainFlags.JSON {
-    return {
-      ...super.toJSON(),
-      ...this._flags.toJSON(),
-    };
+    return { ...super.toJSON(), ...this._flags.toJSON() };
   }
 
   public toString(): string {
@@ -161,78 +158,47 @@ export namespace ContainFlags {
     return value instanceof ContainFlags;
   }
 
-  export const parse: CSSParser<ContainFlags> = (input) => {
-    let size: Keyword<"size"> | Keyword<"inline-size"> | undefined;
-    let layout: Keyword<"layout"> | undefined;
-    let style: Keyword<"style"> | undefined;
-    let paint: Keyword<"paint"> | undefined;
-
-    while (true) {
-      for (const [remainder] of Token.parseWhitespace(input)) {
-        input = remainder;
+  export const parse: CSSParser<ContainFlags> = mapResult(
+    doubleBar<
+      Slice<Token>,
+      [
+        Keyword<"size">,
+        Keyword<"inline-size">,
+        Keyword<"layout">,
+        Keyword<"style">,
+        Keyword<"paint">,
+      ],
+      string
+    >(
+      Token.parseWhitespace,
+      Keyword.parse("size"),
+      Keyword.parse("inline-size"),
+      Keyword.parse("layout"),
+      Keyword.parse("style"),
+      Keyword.parse("paint"),
+    ),
+    ([size, inlineSize, layout, style, paint]) => {
+      if ((size ?? inlineSize ?? layout ?? style ?? paint) === undefined) {
+        return Err.of("Expected at least one keyword");
       }
 
-      if (size === undefined) {
-        const result = Keyword.parse("size", "inline-size")(input);
-
-        if (result.isOk()) {
-          [input, size] = result.get();
-          continue;
-        }
+      if (size !== undefined && inlineSize !== undefined) {
+        return Err.of("Cannot specify both `size` and `inline-size`");
       }
 
-      if (layout === undefined) {
-        const result = Keyword.parse("layout")(input);
-
-        if (result.isOk()) {
-          [input, layout] = result.get();
-          continue;
-        }
-      }
-
-      if (style === undefined) {
-        const result = Keyword.parse("style")(input);
-
-        if (result.isOk()) {
-          [input, style] = result.get();
-          continue;
-        }
-      }
-
-      if (paint === undefined) {
-        const result = Keyword.parse("paint")(input);
-
-        if (result.isOk()) {
-          [input, paint] = result.get();
-          continue;
-        }
-      }
-
-      break;
-    }
-
-    if (
-      size === undefined &&
-      layout === undefined &&
-      style === undefined &&
-      paint === undefined
-    ) {
-      return Err.of("Expected at least one keyword");
-    }
-
-    return Result.of([
-      input,
-      ContainFlags.of(
-        CFlags.of(
-          size?.value === "size" ? CFlags.size : CFlags.none,
-          size?.value === "inline-size" ? CFlags.inlineSize : CFlags.none,
-          layout !== undefined ? CFlags.layout : CFlags.none,
-          style !== undefined ? CFlags.style : CFlags.none,
-          paint !== undefined ? CFlags.paint : CFlags.none,
+      return Result.of(
+        ContainFlags.of(
+          CFlags.of(
+            size !== undefined ? CFlags.size : CFlags.none,
+            inlineSize !== undefined ? CFlags.inlineSize : CFlags.none,
+            layout !== undefined ? CFlags.layout : CFlags.none,
+            style !== undefined ? CFlags.style : CFlags.none,
+            paint !== undefined ? CFlags.paint : CFlags.none,
+          ),
         ),
-      ),
-    ]);
-  };
+      );
+    },
+  );
 }
 
 /**
