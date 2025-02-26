@@ -12,6 +12,8 @@ import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Node } from '@siteimprove/alfa-dom';
+import { Option } from '@siteimprove/alfa-option';
 import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
@@ -23,6 +25,10 @@ export class PaintingOrder implements Equatable, Hashable, Serializable<Painting
     equals(value: this): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
+    // (undocumented)
+    getElementsAbove(element: Element): Iterable_2<Element>;
+    // (undocumented)
+    getOrderIndex(element: Element): Option<number>;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
@@ -41,7 +47,7 @@ export namespace PaintingOrder {
         type: "painting-order";
         elements: Array_2<Element.JSON>;
     };
-    const from: (this: unknown, root: Element<string>, device: Device) => PaintingOrder;
+    const from: (this: unknown, root: Node<string>, device: Device) => PaintingOrder;
 }
 
 // (No @packageDocumentation comment for this package)
