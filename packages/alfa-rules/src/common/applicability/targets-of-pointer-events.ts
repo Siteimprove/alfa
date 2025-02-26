@@ -90,7 +90,10 @@ export const getAllTargets = Cache.memoize(
     ),
 );
 
-function isTarget(device: Device): Predicate<Element> {
+/**
+ * @internal
+ */
+export function isTarget(device: Device): Predicate<Element> {
   return and(
     hasComputedStyle(
       "pointer-events",

@@ -1,4 +1,3 @@
-import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import { type Element, Node, Query } from "@siteimprove/alfa-dom";
@@ -9,10 +8,11 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-const { getInclusiveElementDescendants } = Query;
-const { isFocusable, isVisible, hasComputedStyle } = Style;
+import { isTarget } from "../applicability/targets-of-pointer-events.js";
 
-const { hasRole } = DOM;
+const { getInclusiveElementDescendants } = Query;
+const { isVisible, hasComputedStyle } = Style;
+
 const { and, or } = Refinement;
 
 /**
@@ -88,16 +88,7 @@ function subtractNonDescendantsAndTargets(
       or(
         (elementAbove: Element) =>
           !element.isAncestorOf(elementAbove, Node.fullTree),
-        and(
-          hasComputedStyle(
-            "pointer-events",
-            (keyword) => keyword.value !== "none",
-            device,
-          ),
-          isFocusable(device),
-          isVisible(device),
-          hasRole(device, (role) => role.isWidget()),
-        ),
+        isTarget(device),
       ),
     ),
   );

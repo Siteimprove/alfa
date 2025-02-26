@@ -95,7 +95,7 @@ function* findElementsWithInsufficientSpacingToTarget(
   device: Device,
   target: Element,
 ): Iterable<Element> {
-  // Existence of a clickable box is guaranteed by applicability
+  // Existence of a clickable region is guaranteed by applicability
   const targetRegion = getClickableRegion(device, target).getUnsafe();
   const targetBoundingBox = Rectangle.union(...targetRegion);
 
@@ -108,7 +108,7 @@ function* findElementsWithInsufficientSpacingToTarget(
   // TODO: We could avoid unnecessary comparisons by using a quad tree or similar
   for (const candidate of getAllTargets(document, device)) {
     if (target !== candidate) {
-      // Existence of a clickable box should be guaranteed by implementation of allTargetsOfPointerEvents
+      // Existence of a clickable region should be guaranteed by implementation of getAllTargets
       const candidateRegion = getClickableRegion(device, candidate).getUnsafe();
       const candidateBoundingBox = Rectangle.union(...candidateRegion);
 
