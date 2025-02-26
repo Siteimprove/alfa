@@ -12,6 +12,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Slice } from "@siteimprove/alfa-slice";
 import { Style } from "@siteimprove/alfa-style";
 
 import * as json from "@siteimprove/alfa-json";
@@ -25,7 +26,6 @@ const {
   isRendered,
 } = Style;
 
-import { Slice } from "@siteimprove/alfa-slice";
 import { createsStackingContext } from "./predicate/creates-stacking-context.js";
 
 /**
