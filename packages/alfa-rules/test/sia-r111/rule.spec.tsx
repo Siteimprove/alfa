@@ -97,17 +97,6 @@ test("evaluate() fails button with clickable area of less than 44x44 pixels", as
   ]);
 });
 
-// <div class="red target" style="width: 44px; height: 44px"></div>
-// <div
-//   class="green"
-//   style="
-//     position: absolute;
-//     top: 97px;
-//     left: 25px;
-//     width: 10px;
-//     height: 10px;
-//   "
-// ></div>
 test("evaluate() fails clipped button with bounding box of 44x44 pixels", async (t) => {
   const device = Device.standard();
 
