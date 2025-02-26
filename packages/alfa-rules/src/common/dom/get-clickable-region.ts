@@ -1,15 +1,19 @@
+import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import { type Element, Node, Query } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { PaintingOrder } from "@siteimprove/alfa-painting-order";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 const { getInclusiveElementDescendants } = Query;
-const { isVisible, hasComputedStyle } = Style;
+const { isFocusable, isVisible, hasComputedStyle } = Style;
+
+const { hasRole } = DOM;
+const { and, or } = Refinement;
 
 /**
  * Gets the clickable region of an element or an error if the element or one of its
@@ -34,39 +38,82 @@ export const getClickableRegion = Cache.memoize(function (
   if (!isVisible(device)(element)) {
     return Err.of("Cannot get clickable box of an invisible element.");
   }
+  const paintingOrder = PaintingOrder.from(element.root(Node.fullTree), device);
 
-  let boxes: Array<Rectangle> = [];
-  for (let box of getInclusiveElementDescendants(element)
-    .filter(isVisible(device))
-    .map((element) => element.getBoundingBox(device))) {
+  let result = Sequence.empty<Rectangle>();
+
+  for (const descendant of getInclusiveElementDescendants(element).filter(
+    isVisible(device),
+  )) {
+    const box = descendant.getBoundingBox(device);
     if (!box.isSome()) {
       return Err.of(
         "The element of one its descendants does not have a bounding box.",
       );
     }
 
-    boxes.push(box.get());
+    const diff = subtractNonDescendantsAndTargets(
+      box.get(),
+      paintingOrder,
+      element,
+      device,
+    );
+    result = result.concat(diff);
   }
 
-  let result = Sequence.of(Rectangle.union(...boxes));
+  if (result.isEmpty()) {
+    return Err.of(
+      "The element does not have a clickable box because it's completely covered by other elements.",
+    );
+  }
 
-  for (const above of Iterable.filter(
-    PaintingOrder.from(element.root(Node.fullTree), device).getElementsAbove(
-      element,
+  return Result.of(result);
+});
+
+function subtractNonDescendantsAndTargets(
+  box: Rectangle,
+  paintingOrder: PaintingOrder,
+  element: Element,
+  device: Device,
+): Sequence<Rectangle> {
+  const nonDescendantsAbove = Sequence.from(
+    paintingOrder.getElementsAbove(element),
+  ).filter(
+    and(
+      hasComputedStyle(
+        "pointer-events",
+        ({ value }) => value !== "none",
+        device,
+      ),
+      or(
+        (elementAbove: Element) =>
+          !element.isAncestorOf(elementAbove, Node.fullTree),
+        and(
+          hasComputedStyle(
+            "pointer-events",
+            (keyword) => keyword.value !== "none",
+            device,
+          ),
+          isFocusable(device),
+          isVisible(device),
+          hasRole(device, (role) => role.isWidget()),
+        ),
+      ),
     ),
-    hasComputedStyle("pointer-events", ({ value }) => value !== "none", device),
-  )) {
+  );
+
+  let result = Sequence.of(box);
+
+  for (const above of nonDescendantsAbove) {
     const box = above.getBoundingBox(device);
     if (box.isSome()) {
       result = result.flatMap((rect) => rect.subtract(box.get()));
     }
 
     if (result.isEmpty()) {
-      return Err.of(
-        "The element does not have a clickable box because it's completely covered by other elements.",
-      );
+      return result;
     }
   }
 
-  return Result.of(result);
-});
+  return result;
+}

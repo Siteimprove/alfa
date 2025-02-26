@@ -11,14 +11,15 @@ import { expectation } from "../common/act/expectation.js";
 import { getClickableRegion } from "../common/dom/get-clickable-region.js";
 
 import {
-  allTargetsOfPointerEvents,
-  applicableTargetsOfPointerEvents,
+  getAllTargets,
+  getApplicableTargets,
 } from "../common/applicability/targets-of-pointer-events.js";
 
 import { WithName } from "../common/diagnostic.js";
 
 import { TargetSize } from "../common/outcome/target-size.js";
 
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size.js";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled.js";
 
@@ -28,24 +29,24 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return applicableTargetsOfPointerEvents(document, device);
+        return getApplicableTargets(document, device);
       },
 
       expectations(target) {
-        // Existence of a clickable box is guaranteed by applicability
-        const box = getClickableRegion(device, target).getUnsafe();
+        // Existence of a clickable region is guaranteed by applicability
+        const boundingBox = Rectangle.union(
+          ...getClickableRegion(device, target).getUnsafe(),
+        );
         const name = WithName.getName(target, device).getOr("");
 
         return {
           1: expectation(
             isUserAgentControlled()(target),
-            () =>
-              TargetSize.IsUserAgentControlled(name, box.first().getUnsafe()),
+            () => TargetSize.IsUserAgentControlled(name, boundingBox),
             () =>
               expectation(
                 hasSufficientSize(24, device)(target),
-                () =>
-                  TargetSize.HasSufficientSize(name, box.first().getUnsafe()),
+                () => TargetSize.HasSufficientSize(name, boundingBox),
                 () => {
                   const tooCloseNeighbors = Sequence.from(
                     findElementsWithInsufficientSpacingToTarget(
@@ -57,15 +58,11 @@ export default Rule.Atomic.of<Page, Element>({
 
                   return expectation(
                     tooCloseNeighbors.isEmpty(),
-                    () =>
-                      TargetSize.HasSufficientSpacing(
-                        name,
-                        box.first().getUnsafe(),
-                      ),
+                    () => TargetSize.HasSufficientSpacing(name, boundingBox),
                     () =>
                       TargetSize.HasInsufficientSizeAndSpacing(
                         name,
-                        box.first().getUnsafe(),
+                        boundingBox,
                         tooCloseNeighbors,
                       ),
                   );
@@ -82,6 +79,7 @@ const undersizedCache = Cache.empty<
   Document,
   Cache<Device, Sequence<Element>>
 >();
+
 /**
  * Yields all elements that have insufficient spacing to the target.
  *
@@ -99,40 +97,35 @@ function* findElementsWithInsufficientSpacingToTarget(
 ): Iterable<Element> {
   // Existence of a clickable box is guaranteed by applicability
   const targetRegion = getClickableRegion(device, target).getUnsafe();
+  const targetBoundingBox = Rectangle.union(...targetRegion);
 
   const undersizedTargets = undersizedCache
     .get(document, Cache.empty)
     .get(device, () =>
-      allTargetsOfPointerEvents(document, device).reject(
-        hasSufficientSize(24, device),
-      ),
+      getAllTargets(document, device).reject(hasSufficientSize(24, device)),
     );
 
   // TODO: We could avoid unnecessary comparisons by using a quad tree or similar
-  for (const candidate of allTargetsOfPointerEvents(document, device)) {
+  for (const candidate of getAllTargets(document, device)) {
     if (target !== candidate) {
       // Existence of a clickable box should be guaranteed by implementation of allTargetsOfPointerEvents
       const candidateRegion = getClickableRegion(device, candidate).getUnsafe();
+      const candidateBoundingBox = Rectangle.union(...candidateRegion);
 
-      // TODO: It's not clear how to handle spacing between fragmented clickable regions,
-      // for now let's compare every rectangle with every rectangle and if any two are too close, the elements are too close.
-
-      // The 24px diameter circle of the target must not intersect with the clickable box of any other target,
-      // or if the candidate is undersized, the 24px diameter circle of the target must not intersect with the
-      // 24px diameter circle of the candidate
+      // To determine if an undersized target has sufficient spacing,
+      // we check that the 24 CSS pixel diameter circle of the target
+      // does not intersect another target or the circle of any other
+      // adjacent undersized targets.
       if (
-        candidateRegion.some((candidateRect) =>
-          targetRegion.some(
-            (targetRect) =>
-              candidateRect.intersectsCircle(
-                targetRect.center.x,
-                targetRect.center.y,
-                12,
-              ) ||
-              (undersizedTargets.includes(candidate) &&
-                targetRect.distanceSquared(candidateRect) < 24 ** 2),
+        candidateRegion.some((rect) =>
+          rect.intersectsCircle(
+            targetBoundingBox.center.x,
+            targetBoundingBox.center.y,
+            12,
           ),
-        )
+        ) ||
+        (undersizedTargets.includes(candidate) &&
+          candidateBoundingBox.distanceSquared(targetBoundingBox) < 24 ** 2)
       ) {
         yield candidate;
       }

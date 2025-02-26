@@ -4,10 +4,10 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 
+import { TargetSize } from "../../dist/common/outcome/target-size.js";
 import R111 from "../../dist/sia-r111/rule.js";
 import { evaluate } from "../common/evaluate.js";
 import { failed, inapplicable, passed } from "../common/outcome.js";
-import { TargetSize } from "../../dist/common/outcome/target-size.js";
 
 test("evaluate() passes button with clickable area of exactly 44x44 pixels", async (t) => {
   const device = Device.standard();
@@ -86,6 +86,54 @@ test("evaluate() fails button with clickable area of less than 44x44 pixels", as
   );
 
   const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R111, { document, device }), [
+    failed(R111, target, {
+      1: TargetSize.HasInsufficientSize(
+        "Hello",
+        target.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
+// <div class="red target" style="width: 44px; height: 44px"></div>
+// <div
+//   class="green"
+//   style="
+//     position: absolute;
+//     top: 97px;
+//     left: 25px;
+//     width: 10px;
+//     height: 10px;
+//   "
+// ></div>
+test("evaluate() fails clipped button with bounding box of 44x44 pixels", async (t) => {
+  const device = Device.standard();
+
+  const target = (
+    <button
+      style={{ width: "44px", height: "44px", borderRadius: "0" }}
+      box={{ device, x: 8, y: 8, width: 44, height: 44 }}
+    >
+      Hello
+    </button>
+  );
+
+  const clipping = (
+    <div
+      style={{
+        position: "absolute",
+        top: "25px",
+        left: "25px",
+        width: "10px",
+        height: "10px",
+      }}
+      box={{ device, x: 25, y: 25, width: 12, height: 12 }}
+    ></div>
+  );
+
+  const document = h.document([target, clipping]);
 
   t.deepEqual(await evaluate(R111, { document, device }), [
     failed(R111, target, {
