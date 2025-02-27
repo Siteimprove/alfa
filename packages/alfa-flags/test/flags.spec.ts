@@ -4,7 +4,7 @@ import { Flags } from "../dist/flags.js";
 
 class Example extends Flags<Example.Flag> {
   public static of(...flags: Array<Example.Flag>): Example {
-    return new Example(Flags._reduce(...flags));
+    return new Example(Flags.reduce(...flags));
   }
 }
 

@@ -211,6 +211,7 @@
     "./property/wrap-inside.ts",
     "./property/white-space.ts",
     "./property/white-space-collapse.ts",
+    "./property/white-space-trim.ts",
     "./property/width.ts",
     "./property/will-change.ts",
     "./property/word-break.ts",

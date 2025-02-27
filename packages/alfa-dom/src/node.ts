@@ -381,7 +381,7 @@ export namespace Node {
 
   export class Traversal extends Flags<Traversal.Flag> {
     public static of(...flags: Array<Traversal.Flag>): Traversal {
-      return new Traversal(Flags._reduce(...flags));
+      return new Traversal(Flags.reduce(...flags));
     }
   }
 

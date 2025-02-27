@@ -132,6 +132,7 @@ import WrapBefore from "./property/wrap-before.js";
 import WrapInside from "./property/wrap-inside.js";
 import WhiteSpace from "./property/white-space.js";
 import WhiteSpaceCollapse from "./property/white-space-collapse.js";
+import WhiteSpaceTrim from "./property/white-space-trim.js";
 import Width from "./property/width.js";
 import WillChange from "./property/will-change.js";
 import WordBreak from "./property/word-break.js";
@@ -353,6 +354,7 @@ export namespace Longhands {
     "wrap-inside": WrapInside,
     "white-space": WhiteSpace,
     "white-space-collapse": WhiteSpaceCollapse,
+    "white-space-trim": WhiteSpaceTrim,
     width: Width,
     "will-change": WillChange,
     "word-break": WordBreak,

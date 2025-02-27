@@ -25,7 +25,7 @@ export type Contain =
 
 class CFlags extends Flags<CFlags.Flag> {
   public static of(...flags: Array<CFlags.Flag>): CFlags {
-    return new CFlags(Flags._reduce(...flags));
+    return new CFlags(Flags.reduce(...flags));
   }
 
   public hasFlag(flag: CFlags.Names): boolean {

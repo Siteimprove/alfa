@@ -1,5 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Equatable } from "@siteimprove/alfa-equatable";
+import { Map } from "@siteimprove/alfa-map";
 
 import type * as json from "@siteimprove/alfa-json";
 
@@ -14,24 +15,29 @@ import type * as json from "@siteimprove/alfa-json";
 export class Flags<F extends Flags.allFlags = Flags.allFlags>
   implements Equatable, json.Serializable<Flags.JSON>
 {
-  protected _value: number;
-
-  protected constructor(value: number) {
-    this._value = value;
-  }
-
   /**
    * A compact representation of the set of flags as a number
+   *
+   * @privateRemarks
+   * We usually have protected fields and getters for these cases. However,
+   * this makes TS unhappy about the class factory `named`.
+   * {@link https://github.com/microsoft/TypeScript/issues/17744}
+   * We could (should?) craft the correct type of the class for the factory to
+   * return. However, given the dynamic nature of it (with the named fields),
+   * this gets very tricky. Given that this field is just a number, it is easier
+   * to make it public and forgo the getter.
    */
-  public get value(): number {
-    return this._value;
+  public readonly value: number;
+
+  protected constructor(value: number) {
+    this.value = value;
   }
 
   /**
    * Test whether a given flag is present (or set) in the set of flags
    */
   public has(flag: F): boolean {
-    return (this._value & flag) === flag;
+    return (this.value & flag) === flag;
   }
 
   /**
@@ -44,7 +50,7 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    */
   public add(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
-      this._value | Flags._reduce(...flags),
+      this.value | Flags.reduce(...flags),
     ) as this;
   }
 
@@ -58,7 +64,7 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    */
   public remove(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
-      this._value & ~Flags._reduce(...flags),
+      this.value & ~Flags.reduce(...flags),
     ) as this;
   }
 
@@ -67,18 +73,10 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    */
   public unset = this.remove;
 
-  /**
-   * Reduces a list of flags into a single number representing all of them
-   * (with only the corresponding bits set to 1).
-   */
-  protected static _reduce(...flags: Array<number>): number {
-    return Array.reduce(flags, (prev: number, cur) => prev | cur, 0);
-  }
-
   public equals(value: Flags): boolean;
   public equals(value: unknown): value is this;
   public equals(value: unknown): boolean {
-    return value instanceof Flags && this._value === value._value;
+    return value instanceof Flags && this.value === value.value;
   }
 
   public toJSON(): Flags.JSON {
@@ -90,6 +88,16 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
  * @public
  */
 export namespace Flags {
+  /**
+   * Reduces a list of flags into a single number representing all of them
+   * (with only the corresponding bits set to 1).
+   *
+   * @internal
+   */
+  export function reduce(...flags: Array<number>): number {
+    return Array.reduce(flags, (prev: number, cur) => prev | cur, 0);
+  }
+
   export interface JSON {
     [key: string]: boolean;
   }
@@ -99,8 +107,168 @@ export namespace Flags {
    * two.
    * Since we do not currently need more than 8 flags, we can safely restrict this
    * union.
-   *
+   */
+  const allFlagsArray = [1, 2, 4, 8, 16, 32, 64, 128] as const;
+
+  /**
    * @internal
    */
-  export type allFlags = 0 | 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128;
+  export type allFlags = 0 | (typeof allFlagsArray)[number];
+
+  const maxFlag = allFlagsArray.length;
+
+  /**
+   * Turns ["a", "b", "c"] into { a: X; b: X; c: X }
+   */
+  type KeyedByArray<A extends Array<string>, X> = { [key in A[number]]: X };
+
+  /**
+   * Keep the first Bound.length types in A (or all if less).
+   * Using an array for the bound just makes the type easier since there is no
+   * arithmetic on the `number` type.
+   * This effectively treats Bound as a unary number.
+   */
+  type Shorten<
+    A extends ReadonlyArray<string>,
+    Bound extends ReadonlyArray<any>,
+  > = A extends [infer AHead, ...infer ATail extends ReadonlyArray<string>]
+    ? Bound extends [any, ...infer BTail extends ReadonlyArray<any>]
+      ? [AHead, ...Shorten<ATail, BTail>]
+      : []
+    : [];
+
+  /**
+   * Only keep the first 8 elements of the array (or all if less).
+   *
+   * @remarks
+   * The actual numbers are not used, but keeping powers of 2 stays in line with
+   * how flags are actually implemented, so it is easier to reason about.
+   *
+   * We actually want to keep the first `maxFlag` values, but can't use that
+   * directly. Hence, these two must be kept in sync!
+   */
+  type FirstEight<A extends ReadonlyArray<string>> = Shorten<
+    A,
+    // this should be `typeof allFlagsArray` but TS struggles with it, probably
+    // due to it appearing not static enough for deep inference.
+    [1, 2, 4, 8, 16, 32, 64, 128]
+  >;
+
+  // This replaces the type of `of` in its argument. We cannot just use `&` because
+  // it would instead create an overload with the original `of` signature (without
+  // the getters).
+  type ReplaceOf<T extends { of: any }, Name extends string, Replaced> = {
+    [key in keyof T]: key extends "of"
+      ? (...flags: Array<allFlags | Name>) => Replaced
+      : T[key];
+  };
+
+  export function named<A extends Array<string>>(...flags: A) {
+    /************* Prepping the flags *************/
+    /* It is sheer serendipity that maxFlag and FirstEight have the same `8` magic number */
+    // How many flags do we actually have?
+    const totalFlags = Math.min(flags.length, maxFlag);
+    // Only keep the allowed number of flags
+    type MyNames = FirstEight<A>;
+    type Name = MyNames[number];
+    /********************** ***********************/
+
+    /************** Prepping the (flag -> value) map */
+    const flagValues = allFlagsArray
+      .slice(0, totalFlags)
+      .map((_, i): [string, Flags.allFlags] => [flags[i], allFlagsArray[i]]);
+    const namesMap = Map.of<Name, Flags.allFlags>(...flagValues);
+
+    function toFlag(flag: Name | allFlags): Flags.allFlags {
+      return typeof flag === "string" ? namesMap.get(flag).getOr(0) : flag;
+    }
+    /********************** ***********************/
+
+    function reduceNamed(...flags: Array<allFlags | Name>): number {
+      return reduce(...flags.map(toFlag));
+    }
+
+    /**
+     * A set of named flags.
+     *
+     * @remarks
+     * The flags are accessible both by name and by number.
+     */
+    class Named extends Flags {
+      public static of(...flags: Array<Flags.allFlags | Name>) {
+        return new Named(reduceNamed(...flags));
+      }
+
+      // Every flags set always has 0 for the "no flag" value.
+      public static none = 0;
+
+      /* Rewrite the base clas methods to allow for names in addition of values. */
+      public has(flag: Flags.allFlags | Name): boolean {
+        return super.has(toFlag(flag));
+      }
+      public isSet = this.has;
+
+      public add(...flags: Array<Flags.allFlags | Name>): this {
+        return new Named(this.value | reduceNamed(...flags)) as this;
+      }
+      public set = this.add;
+
+      public remove(...flags: Array<Flags.allFlags | Name>): this {
+        return new Named(this.value & ~reduceNamed(...flags)) as this;
+      }
+      public unset = this.remove;
+
+      public equals(value: Named): boolean;
+      public equals(value: unknown): value is this;
+      public equals(value: unknown): boolean {
+        return value instanceof Named && super.equals(value);
+      }
+
+      public toJSON(): Flags.JSON & KeyedByArray<A, boolean> {
+        let res = super.toJSON();
+
+        for (let i = 0; i < totalFlags; i++) {
+          res[flags[i]] = this.has(flags[i]);
+        }
+
+        return res as Flags.JSON & KeyedByArray<A, boolean>;
+      }
+    }
+
+    /* Now we start to do some dark magic to add direct accessors by the names */
+    // This adds static Named.x, Named.y, etc. for each name in `flags`.
+    // The value is the corresponding flag, i.e. a power of 2.
+    for (let i = 0; i < totalFlags; i++) {
+      Object.defineProperty(Named, flags[i], {
+        value: allFlagsArray[i],
+        writable: false,
+      });
+    }
+
+    // This adds instance getters Named#x, Named#y, etc. for each name in `flags`.
+    // The value is a boolean, whether the flag is set on that specific instance.
+    for (let i = 0; i < totalFlags; i++) {
+      Object.defineProperty(Named.prototype, flags[i], {
+        get: function () {
+          return this.has(flags[i]);
+        },
+      });
+    }
+
+    /* Now, we also to do some TypeScript dark magic to explain the previous steps */
+    // This is the real type of an instance: the class + the flag names as boolean getters.
+    type Instance = Named & KeyedByArray<MyNames, boolean>;
+
+    // We can at last build the type of the class, we need to add the type of the
+    // static Named.x, … and then replace the type of `of`. Since there is no other
+    // factory (and `new` is private), this is enough.
+    type Class = ReplaceOf<
+      typeof Named & KeyedByArray<MyNames, allFlags>,
+      Name,
+      Instance
+    >;
+    /* Dark magic ends here */
+
+    return Named as Class;
+  }
 }

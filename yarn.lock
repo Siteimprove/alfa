@@ -1433,6 +1433,7 @@ __metadata:
     "@siteimprove/alfa-array": "workspace:^"
     "@siteimprove/alfa-equatable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
+    "@siteimprove/alfa-map": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
   linkType: soft
