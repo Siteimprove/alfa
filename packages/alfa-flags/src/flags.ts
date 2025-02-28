@@ -215,6 +215,9 @@ export namespace Flags {
       .slice(0, totalFlags)
       .map((_, i): [string, Flag] => [flags[i], allFlagsArray[i] as Flag]);
     const namesMap = Map.of<Name, Flag>(...flagValues);
+    const flagsMap = Map.of<Flag, Name>(
+      ...flagValues.map(([k, v]) => [v, k] as const),
+    );
 
     function toFlag(flag: Name | Flag): Flag {
       return typeof flag === "string"
@@ -250,21 +253,43 @@ export namespace Flags {
       ) as MyFlags;
 
       /* Rewrite the base clas methods to allow for names in addition of values. */
+      /**
+       * Test whether a given flag is present (or set) in the set of flags
+       */
       public has(flag: Flag | Name): boolean {
         return super.has(toFlag(flag));
       }
+      /**
+       * Test whether a given flag is present (or set) in the set of flags
+       */
       public isSet = this.has;
 
+      /**
+       * Adds a list of flags to the set, and return a new one.
+       */
       public add(...flags: Array<Flag | Name>): this {
         return new Named(kind, this.value | reduceNamed(...flags)) as this;
       }
+      /**
+       * Adds a list of flags to the set (aka sets the flags), and return a new one.
+       */
       public set = this.add;
 
+      /**
+       * Removes a list of flags from the set, and return a new one.
+       */
       public remove(...flags: Array<Flag | Name>): this {
         return new Named(kind, this.value & ~reduceNamed(...flags)) as this;
       }
+      /**
+       * Removes a list of flags to the set (aka unsets the flags), and return a
+       * new one.
+       */
       public unset = this.remove;
 
+      /**
+       * Test whether a set of flags exactly contains the listed flags.
+       */
       public is(...flags: Array<Flag | Name>): boolean {
         return super.is(...flags.map(toFlag));
       }
