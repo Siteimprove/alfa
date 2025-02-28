@@ -1,9 +1,8 @@
-/// <reference lib="dom" />
 import { Array } from "@siteimprove/alfa-array";
 import type { Equatable } from "@siteimprove/alfa-equatable";
-import { Map } from "@siteimprove/alfa-map";
 
 import type * as json from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 
 /**
  * Class for modelling set of boolean flags.
@@ -38,7 +37,9 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    * Test whether a given flag is present (or set) in the set of flags
    */
   public has(flag: F): boolean {
-    return flag !== 0 && (this.value & flag) === flag;
+    // If the flag is 0, we are testing for the absence of any flag.
+    // Otherwise, we are testing for the presence of the flag.
+    return flag === 0 ? this.value === 0 : (this.value & flag) === flag;
   }
 
   /**
@@ -70,9 +71,17 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
   }
 
   /**
-   * Removes a list of flags to the set (aka unsets the flags), and return a new one.
+   * Removes a list of flags to the set (aka unsets the flags), and return a
+   * new one.
    */
   public unset = this.remove;
+
+  /**
+   * Test whether a set of flags exactly contains the listed flags.
+   */
+  public is(...flags: Array<F>): boolean {
+    return this.value === Flags.reduce(...flags);
+  }
 
   public equals(value: Flags): boolean;
   public equals(value: unknown): value is this;
@@ -106,10 +115,13 @@ export namespace Flags {
   /**
    * Individual flags are numbers with at most one bit set to 1, i.e. powers of
    * two.
-   * Since we do not currently need more than 8 flags, we can safely restrict this
-   * union.
+   * Since we do not currently need more than 8 flags, we can safely restrict
+   * this union.
    */
   const allFlagsArray = [1, 2, 4, 8, 16, 32, 64, 128] as const;
+  // this should be `typeof allFlagsArray` but TS struggles with it, probably
+  // due to it appearing not static enough for deep inference.
+  type NonZeroFlags = [1, 2, 4, 8, 16, 32, 64, 128];
 
   /**
    * @internal
@@ -119,7 +131,7 @@ export namespace Flags {
   const maxFlag = allFlagsArray.length;
 
   /**
-   * Turns ["a", "b", "c"] into { a: X; b: X; c: X }
+   * Turns ["a", "b", "c"] into \{ a: X; b: X; c: X \}
    */
   type KeyedByArray<A extends Array<string>, X> = { [key in A[number]]: X };
 
@@ -149,13 +161,7 @@ export namespace Flags {
    * We actually want to keep the first `maxFlag` values, but can't use that
    * directly. Hence, these two must be kept in sync!
    */
-  type FirstEight<T, A extends ReadonlyArray<T>> = Shorten<
-    T,
-    A,
-    // this should be `typeof allFlagsArray` but TS struggles with it, probably
-    // due to it appearing not static enough for deep inference.
-    [1, 2, 4, 8, 16, 32, 64, 128]
-  >;
+  type FirstEight<T, A extends ReadonlyArray<T>> = Shorten<T, A, NonZeroFlags>;
 
   // This replaces the type of `of` in its argument. We cannot just use `&` because
   // it would instead create an overload with the original `of` signature (without
@@ -180,8 +186,7 @@ export namespace Flags {
     // Only keep the allowed number of flags
     type MyNames = FirstEight<string, A>;
     type Name = MyNames[number];
-    // Keep at most MyNames.length values
-    type MyFlags = Shorten<allFlags, typeof allFlagsArray, MyNames>;
+    type MyFlags = Shorten<allFlags, NonZeroFlags, MyNames>;
     type Flag = 0 | MyFlags[number];
     /********************** ***********************/
 
@@ -220,9 +225,7 @@ export namespace Flags {
 
       /* Rewrite the base clas methods to allow for names in addition of values. */
       public has(flag: Flag | Name): boolean {
-        const flag1 = toFlag(flag);
-        console.log(flag1);
-        return super.has(flag1);
+        return super.has(toFlag(flag));
       }
       public isSet = this.has;
 

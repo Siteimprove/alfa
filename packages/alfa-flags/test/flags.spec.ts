@@ -55,9 +55,8 @@ test(".has() returns true for flags that are set", (t) => {
   }
 });
 
-test(".has() returns false for 0", (t) => {
+test(".has() returns false for 0 on non-empty flag sets", (t) => {
   for (const flag of [
-    Example.of(),
     Example.of(1),
     Example.of(2),
     Example.of(1, 4),
@@ -65,6 +64,10 @@ test(".has() returns false for 0", (t) => {
   ]) {
     t.deepEqual(flag.has(Example.none), false);
   }
+});
+
+test(".has() returns true for 0 on empty flag set", (t) => {
+  t.deepEqual(Example.of().has(Example.none), true);
 });
 
 test(".add and .remove behave as expected", (t) => {
