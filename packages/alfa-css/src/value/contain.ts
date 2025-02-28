@@ -24,48 +24,15 @@ export type Contain =
   | Keyword<"content">
   | ContainFlags;
 
-class CFlags extends Flags<"contain", CFlags.Flag> {
-  public static of(...flags: Array<CFlags.Flag>): CFlags {
-    return new CFlags("contain", Flags.reduce(...flags));
-  }
-
-  public hasFlag(flag: CFlags.Names): boolean {
-    return this.has(CFlags[flag]);
-  }
-
-  public toJSON(): CFlags.JSON {
-    return {
-      ...super.toJSON(),
-      size: this.hasFlag("size"),
-      inlineSize: this.hasFlag("inlineSize"),
-      layout: this.hasFlag("layout"),
-      style: this.hasFlag("style"),
-      paint: this.hasFlag("paint"),
-    };
-  }
-}
-
-namespace CFlags {
-  export interface JSON extends Flags.JSON<"contain"> {
-    size: boolean;
-    inlineSize: boolean;
-    layout: boolean;
-    style: boolean;
-    paint: boolean;
-  }
-
-  export type Flag = 0 | 1 | 2 | 4 | 8 | 16;
-
-  const names = ["size", "inlineSize", "layout", "style", "paint"] as const;
-  export type Names = (typeof names)[number];
-
-  export const none = 0 as Flag;
-  export const size = (1 << 0) as Flag;
-  export const inlineSize = (1 << 1) as Flag;
-  export const layout = (1 << 2) as Flag;
-  export const style = (1 << 3) as Flag;
-  export const paint = (1 << 4) as Flag;
-}
+const CFlags = Flags.named(
+  "contain",
+  "size",
+  "inline-size",
+  "layout",
+  "style",
+  "paint",
+);
+type CFlags = ReturnType<(typeof CFlags)["of"]>;
 
 /**
  * @public
@@ -86,23 +53,23 @@ export class ContainFlags
   }
 
   public get size(): boolean {
-    return this._flags.hasFlag("size");
+    return this._flags.size;
   }
 
   public get inlineSize(): boolean {
-    return this._flags.hasFlag("inlineSize");
+    return this._flags["inline-size"];
   }
 
   public get layout(): boolean {
-    return this._flags.hasFlag("layout");
+    return this._flags.layout;
   }
 
   public get style(): boolean {
-    return this._flags.hasFlag("style");
+    return this._flags.style;
   }
 
   public get paint(): boolean {
-    return this._flags.hasFlag("paint");
+    return this._flags.paint;
   }
 
   public resolve(): ContainFlags {
@@ -180,25 +147,17 @@ export namespace ContainFlags {
       Keyword.parse("style"),
       Keyword.parse("paint"),
     ),
-    ([size, inlineSize, layout, style, paint]) => {
-      if ((size ?? inlineSize ?? layout ?? style ?? paint) === undefined) {
+    (flags) => {
+      if (flags.every((flag) => flag === undefined)) {
         return Err.of("Expected at least one keyword");
       }
 
-      if (size !== undefined && inlineSize !== undefined) {
+      if (flags[0] !== undefined && flags[1] !== undefined) {
         return Err.of("Cannot specify both `size` and `inline-size`");
       }
 
       return Result.of(
-        ContainFlags.of(
-          CFlags.of(
-            size !== undefined ? CFlags.size : CFlags.none,
-            inlineSize !== undefined ? CFlags.inlineSize : CFlags.none,
-            layout !== undefined ? CFlags.layout : CFlags.none,
-            style !== undefined ? CFlags.style : CFlags.none,
-            paint !== undefined ? CFlags.paint : CFlags.none,
-          ),
-        ),
+        ContainFlags.of(CFlags.of(...flags.map((flag) => flag?.value ?? 0))),
       );
     },
   );

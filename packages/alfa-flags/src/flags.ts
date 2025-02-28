@@ -31,7 +31,7 @@ export class Flags<
    * to make it public and forgo the getter.
    */
   public readonly value: number;
-  // Same here, should be protected with a getter.
+  // Same here, should be `protected`, with a getter.
   public readonly kind: K;
 
   protected constructor(kind: K, value: number) {
