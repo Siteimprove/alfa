@@ -12,8 +12,11 @@ import { Map } from "@siteimprove/alfa-map";
  *
  * @public
  */
-export class Flags<F extends Flags.allFlags = Flags.allFlags>
-  implements Equatable, json.Serializable<Flags.JSON>
+export class Flags<
+    K extends string = string,
+    F extends Flags.allFlags = Flags.allFlags,
+  >
+  implements Equatable, json.Serializable<Flags.JSON<K>>
 {
   /**
    * A compact representation of the set of flags as a number
@@ -28,8 +31,11 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    * to make it public and forgo the getter.
    */
   public readonly value: number;
+  // Same here, should be protected with a getter.
+  public readonly kind: K;
 
-  protected constructor(value: number) {
+  protected constructor(kind: K, value: number) {
+    this.kind = kind;
     this.value = value;
   }
 
@@ -52,6 +58,7 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    */
   public add(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
+      this.kind,
       this.value | Flags.reduce(...flags),
     ) as this;
   }
@@ -66,6 +73,7 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    */
   public remove(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
+      this.kind,
       this.value & ~Flags.reduce(...flags),
     ) as this;
   }
@@ -86,11 +94,15 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
   public equals(value: Flags): boolean;
   public equals(value: unknown): value is this;
   public equals(value: unknown): boolean {
-    return value instanceof Flags && this.value === value.value;
+    return (
+      value instanceof Flags &&
+      this.kind === value.kind &&
+      this.value === value.value
+    );
   }
 
-  public toJSON(): Flags.JSON {
-    return { type: "flags", value: this.value };
+  public toJSON(): Flags.JSON<K> {
+    return { type: "flags", kind: this.kind, value: this.value };
   }
 }
 
@@ -108,9 +120,10 @@ export namespace Flags {
     return Array.reduce(flags, (prev: number, cur) => prev | cur, 0);
   }
 
-  export interface JSON {
+  export interface JSON<K extends string = string> {
     [key: string]: json.JSON;
     type: "flags";
+    kind: K;
     value: number;
   }
 
@@ -179,7 +192,10 @@ export namespace Flags {
       : T[key];
   };
 
-  export function named<A extends Array<string>>(...flags: A) {
+  export function named<K extends string, A extends Array<string>>(
+    kind: K,
+    ...flags: A
+  ) {
     /************* Prepping the flags *************/
     /* It is sheer serendipity that maxFlag and FirstEight have the same `8` magic number */
     // How many flags do we actually have?
@@ -217,9 +233,9 @@ export namespace Flags {
      * @remarks
      * The flags are accessible both by name and by number.
      */
-    class Named extends Flags<Flag> {
+    class Named extends Flags<K, Flag> {
       public static of(...flags: Array<Flag | Name>): Named {
-        return new Named(reduceNamed(...flags));
+        return new Named(kind, reduceNamed(...flags));
       }
 
       // Every flags set always has 0 for the "no flag" value.
@@ -232,12 +248,12 @@ export namespace Flags {
       public isSet = this.has;
 
       public add(...flags: Array<Flag | Name>): this {
-        return new Named(this.value | reduceNamed(...flags)) as this;
+        return new Named(kind, this.value | reduceNamed(...flags)) as this;
       }
       public set = this.add;
 
       public remove(...flags: Array<Flag | Name>): this {
-        return new Named(this.value & ~reduceNamed(...flags)) as this;
+        return new Named(kind, this.value & ~reduceNamed(...flags)) as this;
       }
       public unset = this.remove;
 
@@ -251,14 +267,14 @@ export namespace Flags {
         return value instanceof Named && super.equals(value);
       }
 
-      public toJSON(): Flags.JSON & KeyedByArray<A, boolean> {
+      public toJSON(): Flags.JSON<K> & KeyedByArray<A, boolean> {
         let res = super.toJSON();
 
         for (let i = 0; i < totalFlags; i++) {
           res[flags[i]] = this.has(flags[i]);
         }
 
-        return res as Flags.JSON & KeyedByArray<A, boolean>;
+        return res as Flags.JSON<K> & KeyedByArray<A, boolean>;
       }
     }
 

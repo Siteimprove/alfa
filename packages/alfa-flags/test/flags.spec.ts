@@ -2,9 +2,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Flags } from "../dist/flags.js";
 
-class Example extends Flags<Example.Flag> {
+class Example extends Flags<"example", Example.Flag> {
   public static of(...flags: Array<Example.Flag>): Example {
-    return new Example(Flags.reduce(...flags));
+    return new Example("example", Flags.reduce(...flags));
   }
 }
 
@@ -128,6 +128,6 @@ test("#is() returns true for sets that exactly match", (t) => {
 test("#toJSON() serialize the value", (t) => {
   t.deepEqual(
     Example.of(Example.flagA, Example.flagC, Example.flagD).toJSON(),
-    { type: "flags", value: 13 },
+    { type: "flags", kind: "example", value: 13 },
   );
 });

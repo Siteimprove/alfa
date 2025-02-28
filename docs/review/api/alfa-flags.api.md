@@ -9,8 +9,8 @@ import type { Equatable } from '@siteimprove/alfa-equatable';
 import type * as json from '@siteimprove/alfa-json';
 
 // @public
-export class Flags<F extends Flags.allFlags = Flags.allFlags> implements Equatable, json.Serializable<Flags.JSON> {
-    protected constructor(value: number);
+export class Flags<K extends string = string, F extends Flags.allFlags = Flags.allFlags> implements Equatable, json.Serializable<Flags.JSON<K>> {
+    protected constructor(kind: K, value: number);
     add(...flags: Array_2<F>): this;
     // (undocumented)
     equals(value: Flags): boolean;
@@ -19,10 +19,12 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags> implements Equatab
     has(flag: F): boolean;
     is(...flags: Array_2<F>): boolean;
     isSet: (flag: F) => boolean;
+    // (undocumented)
+    readonly kind: K;
     remove(...flags: Array_2<F>): this;
     set: (...flags: Array_2<F>) => this;
     // (undocumented)
-    toJSON(): Flags.JSON;
+    toJSON(): Flags.JSON<K>;
     unset: (...flags: Array_2<F>) => this;
     readonly value: number;
 }
@@ -32,9 +34,11 @@ export namespace Flags {
     // @internal (undocumented)
     export type allFlags = 0 | (typeof allFlagsArray)[number];
     // (undocumented)
-    export interface JSON {
+    export interface JSON<K extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
+        // (undocumented)
+        kind: K;
         // (undocumented)
         type: "flags";
         // (undocumented)
@@ -45,8 +49,8 @@ export namespace Flags {
         [key in A[number]]: X;
     };
     // (undocumented)
-    export function named<A extends Array_2<string>>(...flags: A): ReplaceOf<{
-        new (value: number): {
+    export function named<K extends string, A extends Array_2<string>>(kind: K, ...flags: A): ReplaceOf<{
+        new (kind: K, value: number): {
             has(flag: Shorten<string, A, NonZeroFlags>[number] | (0 | (Shorten<string, A, NonZeroFlags> extends infer T ? T extends Shorten<string, A, NonZeroFlags> ? T extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number])): boolean;
             isSet: (flag: Shorten<string, A, NonZeroFlags>[number] | (0 | (Shorten<string, A, NonZeroFlags> extends infer T ? T extends Shorten<string, A, NonZeroFlags> ? T extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number])) => boolean;
             add(...flags: Array_2<Shorten<string, A, NonZeroFlags>[number] | (0 | (Shorten<string, A, NonZeroFlags> extends infer T ? T extends Shorten<string, A, NonZeroFlags> ? T extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number])>): /*elided*/ any;
@@ -56,8 +60,9 @@ export namespace Flags {
             is(...flags: Array_2<Shorten<string, A, NonZeroFlags>[number] | (0 | (Shorten<string, A, NonZeroFlags> extends infer T ? T extends Shorten<string, A, NonZeroFlags> ? T extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number])>): boolean;
             equals(value: /*elided*/ any): boolean;
             equals(value: unknown): value is /*elided*/ any;
-            toJSON(): Flags.JSON & KeyedByArray<A, boolean>;
+            toJSON(): Flags.JSON<K> & KeyedByArray<A, boolean>;
             readonly value: number;
+            readonly kind: K;
         };
         of(...flags: Array_2<(0 | (Shorten<string, A, NonZeroFlags> extends infer T ? T extends Shorten<string, A, NonZeroFlags> ? T extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]) | Shorten<string, A, NonZeroFlags>[number]>): {
             has(flag: (0 | (Shorten<string, A, NonZeroFlags> extends infer T_1 ? T_1 extends Shorten<string, A, NonZeroFlags> ? T_1 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]) | Shorten<string, A, NonZeroFlags>[number]): boolean;
@@ -69,12 +74,13 @@ export namespace Flags {
             is(...flags: Array_2<(0 | (Shorten<string, A, NonZeroFlags> extends infer T_1 ? T_1 extends Shorten<string, A, NonZeroFlags> ? T_1 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]) | Shorten<string, A, NonZeroFlags>[number]>): boolean;
             equals(value: /*elided*/ any): boolean;
             equals(value: unknown): value is /*elided*/ any;
-            toJSON(): Flags.JSON & KeyedByArray<A, boolean>;
+            toJSON(): Flags.JSON<K> & KeyedByArray<A, boolean>;
             readonly value: number;
+            readonly kind: K;
         };
         none: number;
         reduce(...flags: Array_2<number>): number;
-        named<A extends Array_2<string>>(...flags: A): ReplaceOf</*elided*/ any & KeyedByArray<["none", ...Shorten<string, A, NonZeroFlags>], 0 | (Shorten<string, A, NonZeroFlags> extends infer T ? T extends Shorten<string, A, NonZeroFlags> ? T extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]>, Shorten<string, A, NonZeroFlags>[number], 0 | (Shorten<string, A, NonZeroFlags> extends infer T_1 ? T_1 extends Shorten<string, A, NonZeroFlags> ? T_1 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number], {
+        named<K extends string, A extends Array_2<string>>(kind: K, ...flags: A): ReplaceOf</*elided*/ any & KeyedByArray<["none", ...Shorten<string, A, NonZeroFlags>], 0 | (Shorten<string, A, NonZeroFlags> extends infer T ? T extends Shorten<string, A, NonZeroFlags> ? T extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]>, Shorten<string, A, NonZeroFlags>[number], 0 | (Shorten<string, A, NonZeroFlags> extends infer T_1 ? T_1 extends Shorten<string, A, NonZeroFlags> ? T_1 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number], {
             has(flag: (0 | (Shorten<string, A, NonZeroFlags> extends infer T_2 ? T_2 extends Shorten<string, A, NonZeroFlags> ? T_2 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]) | Shorten<string, A, NonZeroFlags>[number]): boolean;
             isSet: (flag: (0 | (Shorten<string, A, NonZeroFlags> extends infer T_2 ? T_2 extends Shorten<string, A, NonZeroFlags> ? T_2 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]) | Shorten<string, A, NonZeroFlags>[number]) => boolean;
             add(...flags: Array_2<Shorten<string, A, NonZeroFlags>[number] | (0 | (Shorten<string, A, NonZeroFlags> extends infer T_2 ? T_2 extends Shorten<string, A, NonZeroFlags> ? T_2 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number])>): /*elided*/ any;
@@ -84,8 +90,9 @@ export namespace Flags {
             is(...flags: Array_2<(0 | (Shorten<string, A, NonZeroFlags> extends infer T_2 ? T_2 extends Shorten<string, A, NonZeroFlags> ? T_2 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]) | Shorten<string, A, NonZeroFlags>[number]>): boolean;
             equals(value: /*elided*/ any): boolean;
             equals(value: unknown): value is /*elided*/ any;
-            toJSON(): Flags.JSON & KeyedByArray<A, boolean>;
+            toJSON(): Flags.JSON<K> & KeyedByArray<A, boolean>;
             readonly value: number;
+            readonly kind: K;
         } & KeyedByArray<Shorten<string, A, NonZeroFlags>, boolean>>;
     } & KeyedByArray<["none", ...Shorten<string, A, NonZeroFlags>], 0 | (Shorten<string, A, NonZeroFlags> extends infer T ? T extends Shorten<string, A, NonZeroFlags> ? T extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]>, Shorten<string, A, NonZeroFlags>[number], 0 | (Shorten<string, A, NonZeroFlags> extends infer T_1 ? T_1 extends Shorten<string, A, NonZeroFlags> ? T_1 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number], {
         has(flag: (0 | (Shorten<string, A, NonZeroFlags> extends infer T_2 ? T_2 extends Shorten<string, A, NonZeroFlags> ? T_2 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]) | Shorten<string, A, NonZeroFlags>[number]): boolean;
@@ -97,8 +104,9 @@ export namespace Flags {
         is(...flags: Array_2<(0 | (Shorten<string, A, NonZeroFlags> extends infer T_2 ? T_2 extends Shorten<string, A, NonZeroFlags> ? T_2 extends [any, ...infer BTail extends readonly any[]] ? [1, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [2, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [4, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [8, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [16, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [32, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [64, ...BTail extends [any, ...infer BTail extends readonly any[]] ? [128] : []] : []] : []] : []] : []] : []] : []] : [] : never : never)[number]) | Shorten<string, A, NonZeroFlags>[number]>): boolean;
         equals(value: /*elided*/ any): boolean;
         equals(value: unknown): value is /*elided*/ any;
-        toJSON(): Flags.JSON & KeyedByArray<A, boolean>;
+        toJSON(): Flags.JSON<K> & KeyedByArray<A, boolean>;
         readonly value: number;
+        readonly kind: K;
     } & KeyedByArray<Shorten<string, A, NonZeroFlags>, boolean>>;
     // (undocumented)
     export type NonZeroFlags = [1, 2, 4, 8, 16, 32, 64, 128];

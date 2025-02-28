@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Flags } from "../dist/flags.js";
 
-const Example = Flags.named("flagA", "flagB", "flagC", "flagD");
+const Example = Flags.named("example", "flagA", "flagB", "flagC", "flagD");
 
 test(".of() performs bitwise or of flags as numbers or names", (t) => {
   t.equal(Example.of(Example.flagA, Example.flagD).value, 9);
@@ -148,6 +148,7 @@ test("Non-flags are undefined", (t) => {
 
 test("Only 8 flags are defined", (t) => {
   const TooManyFlags = Flags.named(
+    "too many",
     "a",
     "b",
     "c",
@@ -207,6 +208,7 @@ test("#toJSON() serialize the value and each flag", (t) => {
     Example.of(Example.flagA, Example.flagC, Example.flagD).toJSON(),
     {
       type: "flags",
+      kind: "example",
       value: 13,
       flagA: true,
       flagB: false,
