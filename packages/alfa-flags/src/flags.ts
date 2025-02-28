@@ -6,6 +6,9 @@ import { Map } from "@siteimprove/alfa-map";
 
 /**
  * Class for modelling set of boolean flags.
+ * Prefer using `Flags.named` where possible.
+ *
+ * @remarks
  * Flags are stored as bits in a single number. Due to Javascript limitation
  * on bitwise operations, this means that a maximum of 32 flags can be handled.
  * We currently limit the class at a maximum of 8 flags since it fits our needs.
@@ -207,17 +210,19 @@ export namespace Flags {
     type MyNames = FirstEight<string, A>;
     type Name = MyNames[number];
     type MyFlags = Shorten<allFlags, NonZeroFlags, MyNames>;
-    type Flag = 0 | MyFlags[number];
+    type NonEmptyFlag = MyFlags[number];
+    type Flag = 0 | NonEmptyFlag;
     /********************** ***********************/
 
     /************** Prepping the (flag -> value) map */
     const flagValues = allFlagsArray
       .slice(0, totalFlags)
-      .map((_, i): [string, Flag] => [flags[i], allFlagsArray[i] as Flag]);
-    const namesMap = Map.of<Name, Flag>(...flagValues);
-    const flagsMap = Map.of<Flag, Name>(
-      ...flagValues.map(([k, v]) => [v, k] as const),
-    );
+      .map((_, i): [Name, NonEmptyFlag] => [
+        flags[i],
+        allFlagsArray[i] as NonEmptyFlag,
+      ]);
+    const namesMap = Map.of(...flagValues);
+    const flagsMap = Map.of(...flagValues.map(([k, v]) => [v, k] as const));
 
     function toFlag(flag: Name | Flag): Flag {
       return typeof flag === "string"
@@ -251,6 +256,15 @@ export namespace Flags {
         0,
         totalFlags,
       ) as MyFlags;
+
+      /**
+       * Returns the name of a flag.
+       */
+      public static nameOf(flag: NonEmptyFlag): Name {
+        return flagsMap
+          .get(flag)
+          .getUnsafe(`Flag ${flag} not found in ${kind} / ${flags}`);
+      }
 
       /* Rewrite the base clas methods to allow for names in addition of values. */
       /**
@@ -339,7 +353,7 @@ export namespace Flags {
     // static Named.x, … and then replace the type of `of`. Since there is no other
     // factory (and `new` is private), this is enough.
     type Class = ReplaceFactories<
-      typeof Named & KeyedByArray<MyNames, MyFlags[number]>,
+      typeof Named & KeyedByArray<MyNames, NonEmptyFlag>,
       Name,
       Flag,
       Instance

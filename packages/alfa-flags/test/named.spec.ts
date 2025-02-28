@@ -226,3 +226,10 @@ test("#toJSON() serialize the value and each flag", (t) => {
     },
   );
 });
+
+test(".nameOf returns the name of a flag", (t) => {
+  t.equal(Example.nameOf(Example.flagA), "flagA");
+  t.equal(Example.nameOf(Example.flagB), "flagB");
+  t.equal(Example.nameOf(Example.flagC), "flagC");
+  t.equal(Example.nameOf(Example.flagD), "flagD");
+});

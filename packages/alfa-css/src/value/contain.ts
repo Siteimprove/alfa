@@ -91,24 +91,7 @@ export class ContainFlags
   }
 
   public toString(): string {
-    let keywords: Array<string> = [];
-    if (this.size) {
-      keywords.push("size");
-    }
-    if (this.inlineSize) {
-      keywords.push("inline-size");
-    }
-    if (this.layout) {
-      keywords.push("layout");
-    }
-    if (this.style) {
-      keywords.push("style");
-    }
-    if (this.paint) {
-      keywords.push("paint");
-    }
-
-    return keywords.join(" ");
+    return CFlags.allFlags.filter(this._flags.has).map(CFlags.nameOf).join(" ");
   }
 }
 
@@ -149,7 +132,7 @@ export namespace ContainFlags {
     ),
     (flags) => {
       if (flags.every((flag) => flag === undefined)) {
-        return Err.of("Expected at least one keyword");
+        return Err.of("Expected at least one contain flag");
       }
 
       if (flags[0] !== undefined && flags[1] !== undefined) {
