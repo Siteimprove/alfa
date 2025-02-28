@@ -33,7 +33,7 @@ const { getElementIdMap, getElementDescendants } = dom.Query;
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<"ARIA traversal", Node.Traversal.Flag, T>
+  extends tree.Node<"ARIA traversal", Node.TraversalFlags, T>
   implements Serializable<Node.JSON<T>>
 {
   protected readonly _node: dom.Node;
@@ -157,29 +157,14 @@ export namespace Node {
     node: string;
   }
 
-  export class Traversal extends Flags<"ARIA traversal", Traversal.Flag> {
-    public static of(...flags: Array<Traversal.Flag>): Traversal {
-      return new Traversal("ARIA traversal", Flags.reduce(...flags));
-    }
-  }
-
-  export namespace Traversal {
-    export type Flag = 0 | 1;
-
-    export const none = 0 as Flag;
-
-    /**
-     * When set, traverse both exposed and ignored nodes.
-     */
-    export const ignored = (1 << 0) as Flag;
-
-    export const empty = Traversal.of(none);
-  }
+  export const Traversal = Flags.named("ARIA traversal", "ignored");
+  export type Traversal = ReturnType<(typeof Traversal)["of"]>;
+  export type TraversalFlags = (typeof Node.Traversal.allFlags)[number];
 
   /**
    * Traversal options to include ignored nodes in the traversal.
    */
-  export const includeIgnored = Traversal.of(Traversal.ignored);
+  export const includeIgnored = Traversal.of("ignored");
 
   const cache = Cache.empty<Device, Cache<dom.Node, Node>>();
 
