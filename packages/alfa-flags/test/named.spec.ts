@@ -227,9 +227,19 @@ test("#toJSON() serialize the value and each flag", (t) => {
   );
 });
 
-test(".nameOf returns the name of a flag", (t) => {
+test(".nameOf() returns the name of a flag", (t) => {
   t.equal(Example.nameOf(Example.flagA), "flagA");
   t.equal(Example.nameOf(Example.flagB), "flagB");
   t.equal(Example.nameOf(Example.flagC), "flagC");
   t.equal(Example.nameOf(Example.flagD), "flagD");
+});
+
+test("#toString() stringifies a flags set", (t) => {
+  t.equal(
+    Example.of(Example.flagA, Example.flagC, Example.flagD).toString(),
+    "flagA flagC flagD",
+  );
+  t.equal(Example.of(Example.flagA, Example.flagC).toString(), "flagA flagC");
+  t.equal(Example.of(Example.flagA).toString(), "flagA");
+  t.equal(Example.of().toString(), "");
 });

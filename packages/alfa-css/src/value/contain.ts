@@ -91,7 +91,7 @@ export class ContainFlags
   }
 
   public toString(): string {
-    return CFlags.allFlags.filter(this._flags.has).map(CFlags.nameOf).join(" ");
+    return this._flags.toString();
   }
 }
 

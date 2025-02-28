@@ -314,6 +314,13 @@ export namespace Flags {
         return value instanceof Named && super.equals(value);
       }
 
+      public toString(): string {
+        return Named.allFlags
+          .filter(this.has.bind(this))
+          .map(Named.nameOf)
+          .join(" ");
+      }
+
       public toJSON(): Flags.JSON<K> & KeyedByArray<A, boolean> {
         let res = super.toJSON();
 
