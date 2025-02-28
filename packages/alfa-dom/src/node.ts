@@ -41,7 +41,7 @@ import * as traversal from "./node/traversal.js";
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<Node.Traversal.Flag, T>
+  extends tree.Node<"DOM traversal", Node.Traversal.Flag, T>
   implements
     earl.Serializable<Node.EARL>,
     json.Serializable<tree.Node.JSON<T>>,
@@ -379,9 +379,9 @@ export namespace Node {
     return value instanceof Node;
   }
 
-  export class Traversal extends Flags<Traversal.Flag> {
+  export class Traversal extends Flags<"DOM traversal", Traversal.Flag> {
     public static of(...flags: Array<Traversal.Flag>): Traversal {
-      return new Traversal(Flags.reduce(...flags));
+      return new Traversal("DOM traversal", Flags.reduce(...flags));
     }
   }
 

@@ -1,19 +1,20 @@
 import { Flags } from "@siteimprove/alfa-flags";
 import type { Hash } from "@siteimprove/alfa-hash";
-import { Err, Result } from "@siteimprove/alfa-result";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Keyword } from "./textual/keyword.js";
+import { type Parser as CSSParser, Token } from "../syntax/index.js";
 import type { Resolvable } from "./resolvable.js";
-import { Value } from "./value.js";
 
-import { Token, type Parser as CSSParser } from "../syntax/index.js";
+import { Keyword } from "./textual/keyword.js";
+import { Value } from "./value.js";
 
 const { doubleBar, either, mapResult } = Parser;
 
 /**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/contain#formal_syntax}
+ * {@link
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/contain#formal_syntax}
  *
  * @public
  */
@@ -23,9 +24,9 @@ export type Contain =
   | Keyword<"content">
   | ContainFlags;
 
-class CFlags extends Flags<CFlags.Flag> {
+class CFlags extends Flags<"contain", CFlags.Flag> {
   public static of(...flags: Array<CFlags.Flag>): CFlags {
-    return new CFlags(Flags.reduce(...flags));
+    return new CFlags("contain", Flags.reduce(...flags));
   }
 
   public hasFlag(flag: CFlags.Names): boolean {
@@ -45,7 +46,7 @@ class CFlags extends Flags<CFlags.Flag> {
 }
 
 namespace CFlags {
-  export interface JSON extends Flags.JSON {
+  export interface JSON extends Flags.JSON<"contain"> {
     size: boolean;
     inlineSize: boolean;
     layout: boolean;
@@ -117,7 +118,9 @@ export class ContainFlags
   }
 
   public toJSON(): ContainFlags.JSON {
-    return { ...super.toJSON(), ...this._flags.toJSON() };
+    const { size, inlineSize, layout, style, paint } = this;
+
+    return { ...super.toJSON(), size, inlineSize, layout, style, paint };
   }
 
   public toString(): string {

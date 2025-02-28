@@ -33,7 +33,7 @@ const { getElementIdMap, getElementDescendants } = dom.Query;
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<Node.Traversal.Flag, T>
+  extends tree.Node<"ARIA traversal", Node.Traversal.Flag, T>
   implements Serializable<Node.JSON<T>>
 {
   protected readonly _node: dom.Node;
@@ -157,9 +157,9 @@ export namespace Node {
     node: string;
   }
 
-  export class Traversal extends Flags<Traversal.Flag> {
+  export class Traversal extends Flags<"ARIA traversal", Traversal.Flag> {
     public static of(...flags: Array<Traversal.Flag>): Traversal {
-      return new Traversal(Flags.reduce(...flags));
+      return new Traversal("ARIA traversal", Flags.reduce(...flags));
     }
   }
 
