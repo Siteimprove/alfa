@@ -186,3 +186,32 @@ test("Only the correct number of flags have values", (t) => {
   const bar = foo.add(64);
   t.equal(bar.value, 1);
 });
+
+test("#is() returns true for sets that exactly match", (t) => {
+  const actual = Example.of(Example.flagA, Example.flagC, Example.flagD);
+
+  t.equal(actual.is("flagA", "flagC", "flagD"), true);
+
+  for (const flags of [
+    [Example.flagA],
+    [Example.flagA, "flagC"],
+    [Example.flagA, Example.flagB],
+    [Example.flagA, "flagB", "flagC", Example.flagD],
+  ] as const) {
+    t.equal(actual.is(...flags), false);
+  }
+});
+
+test("#toJSON() serialize the value and each flag", (t) => {
+  t.deepEqual(
+    Example.of(Example.flagA, Example.flagC, Example.flagD).toJSON(),
+    {
+      type: "flags",
+      value: 13,
+      flagA: true,
+      flagB: false,
+      flagC: true,
+      flagD: true,
+    },
+  );
+});

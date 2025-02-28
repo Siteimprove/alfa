@@ -90,7 +90,7 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
   }
 
   public toJSON(): Flags.JSON {
-    return {};
+    return { type: "flags", value: this.value };
   }
 }
 
@@ -109,7 +109,9 @@ export namespace Flags {
   }
 
   export interface JSON {
-    [key: string]: boolean;
+    [key: string]: json.JSON;
+    type: "flags";
+    value: number;
   }
 
   /**
@@ -238,6 +240,10 @@ export namespace Flags {
         return new Named(this.value & ~reduceNamed(...flags)) as this;
       }
       public unset = this.remove;
+
+      public is(...flags: Array<Flag | Name>): boolean {
+        return super.is(...flags.map(toFlag));
+      }
 
       public equals(value: Named): boolean;
       public equals(value: unknown): value is this;
