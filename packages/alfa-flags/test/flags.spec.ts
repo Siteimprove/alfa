@@ -55,6 +55,18 @@ test(".has() returns true for flags that are set", (t) => {
   }
 });
 
+test(".has() returns false for 0", (t) => {
+  for (const flag of [
+    Example.of(),
+    Example.of(1),
+    Example.of(2),
+    Example.of(1, 4),
+    Example.of(8),
+  ]) {
+    t.deepEqual(flag.has(Example.none), false);
+  }
+});
+
 test(".add and .remove behave as expected", (t) => {
   const none = Example.of(Example.none);
 

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Array } from "@siteimprove/alfa-array";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import { Map } from "@siteimprove/alfa-map";
@@ -37,7 +38,7 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
    * Test whether a given flag is present (or set) in the set of flags
    */
   public has(flag: F): boolean {
-    return (this.value & flag) === flag;
+    return flag !== 0 && (this.value & flag) === flag;
   }
 
   /**
@@ -129,11 +130,12 @@ export namespace Flags {
    * This effectively treats Bound as a unary number.
    */
   type Shorten<
-    A extends ReadonlyArray<string>,
+    T,
+    A extends ReadonlyArray<T>,
     Bound extends ReadonlyArray<any>,
-  > = A extends [infer AHead, ...infer ATail extends ReadonlyArray<string>]
+  > = A extends [infer AHead, ...infer ATail extends ReadonlyArray<T>]
     ? Bound extends [any, ...infer BTail extends ReadonlyArray<any>]
-      ? [AHead, ...Shorten<ATail, BTail>]
+      ? [AHead, ...Shorten<T, ATail, BTail>]
       : []
     : [];
 
@@ -147,7 +149,8 @@ export namespace Flags {
    * We actually want to keep the first `maxFlag` values, but can't use that
    * directly. Hence, these two must be kept in sync!
    */
-  type FirstEight<A extends ReadonlyArray<string>> = Shorten<
+  type FirstEight<T, A extends ReadonlyArray<T>> = Shorten<
+    T,
     A,
     // this should be `typeof allFlagsArray` but TS struggles with it, probably
     // due to it appearing not static enough for deep inference.
@@ -157,9 +160,14 @@ export namespace Flags {
   // This replaces the type of `of` in its argument. We cannot just use `&` because
   // it would instead create an overload with the original `of` signature (without
   // the getters).
-  type ReplaceOf<T extends { of: any }, Name extends string, Replaced> = {
+  type ReplaceOf<
+    T extends { of: any },
+    Name extends string,
+    F extends allFlags,
+    Replaced,
+  > = {
     [key in keyof T]: key extends "of"
-      ? (...flags: Array<allFlags | Name>) => Replaced
+      ? (...flags: Array<F | Name>) => Replaced
       : T[key];
   };
 
@@ -168,23 +176,31 @@ export namespace Flags {
     /* It is sheer serendipity that maxFlag and FirstEight have the same `8` magic number */
     // How many flags do we actually have?
     const totalFlags = Math.min(flags.length, maxFlag);
+    const lastFlag = 2 ** (totalFlags - 1);
     // Only keep the allowed number of flags
-    type MyNames = FirstEight<A>;
+    type MyNames = FirstEight<string, A>;
     type Name = MyNames[number];
+    // Keep at most MyNames.length values
+    type MyFlags = Shorten<allFlags, typeof allFlagsArray, MyNames>;
+    type Flag = 0 | MyFlags[number];
     /********************** ***********************/
 
     /************** Prepping the (flag -> value) map */
     const flagValues = allFlagsArray
       .slice(0, totalFlags)
-      .map((_, i): [string, Flags.allFlags] => [flags[i], allFlagsArray[i]]);
-    const namesMap = Map.of<Name, Flags.allFlags>(...flagValues);
+      .map((_, i): [string, Flag] => [flags[i], allFlagsArray[i] as Flag]);
+    const namesMap = Map.of<Name, Flag>(...flagValues);
 
-    function toFlag(flag: Name | allFlags): Flags.allFlags {
-      return typeof flag === "string" ? namesMap.get(flag).getOr(0) : flag;
+    function toFlag(flag: Name | Flag): Flag {
+      return typeof flag === "string"
+        ? namesMap.get(flag).getOr(0)
+        : flag > lastFlag
+          ? 0
+          : flag;
     }
     /********************** ***********************/
 
-    function reduceNamed(...flags: Array<allFlags | Name>): number {
+    function reduceNamed(...flags: Array<Flag | Name>): number {
       return reduce(...flags.map(toFlag));
     }
 
@@ -194,8 +210,8 @@ export namespace Flags {
      * @remarks
      * The flags are accessible both by name and by number.
      */
-    class Named extends Flags {
-      public static of(...flags: Array<Flags.allFlags | Name>) {
+    class Named extends Flags<Flag> {
+      public static of(...flags: Array<Flag | Name>): Named {
         return new Named(reduceNamed(...flags));
       }
 
@@ -203,17 +219,19 @@ export namespace Flags {
       public static none = 0;
 
       /* Rewrite the base clas methods to allow for names in addition of values. */
-      public has(flag: Flags.allFlags | Name): boolean {
-        return super.has(toFlag(flag));
+      public has(flag: Flag | Name): boolean {
+        const flag1 = toFlag(flag);
+        console.log(flag1);
+        return super.has(flag1);
       }
       public isSet = this.has;
 
-      public add(...flags: Array<Flags.allFlags | Name>): this {
+      public add(...flags: Array<Flag | Name>): this {
         return new Named(this.value | reduceNamed(...flags)) as this;
       }
       public set = this.add;
 
-      public remove(...flags: Array<Flags.allFlags | Name>): this {
+      public remove(...flags: Array<Flag | Name>): this {
         return new Named(this.value & ~reduceNamed(...flags)) as this;
       }
       public unset = this.remove;
@@ -263,8 +281,9 @@ export namespace Flags {
     // static Named.x, … and then replace the type of `of`. Since there is no other
     // factory (and `new` is private), this is enough.
     type Class = ReplaceOf<
-      typeof Named & KeyedByArray<MyNames, allFlags>,
+      typeof Named & KeyedByArray<["none", ...MyNames], Flag>,
       Name,
+      Flag,
       Instance
     >;
     /* Dark magic ends here */
