@@ -4,6 +4,15 @@ import { Flags } from "../dist/flags.js";
 
 const Example = Flags.named("example", "flagA", "flagB", "flagC", "flagD");
 
+test(".allFlags is set correctly", (t) => {
+  t.deepEqual(Example.allFlags, [
+    Example.flagA,
+    Example.flagB,
+    Example.flagC,
+    Example.flagD,
+  ]);
+});
+
 test(".of() performs bitwise or of flags as numbers or names", (t) => {
   t.equal(Example.of(Example.flagA, Example.flagD).value, 9);
 
@@ -71,7 +80,7 @@ test(".has() returns false for 0 on non-empty flag sets", (t) => {
 });
 
 test(".has() returns true for 0 on empty flag set", (t) => {
-  t.deepEqual(Example.of(Example.none).has(Example.none), true);
+  t.deepEqual(Example.empty.has(Example.none), true);
 });
 
 test(".add and .remove behave as expected", (t) => {

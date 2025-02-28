@@ -41,7 +41,11 @@ import * as traversal from "./node/traversal.js";
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<"DOM traversal", Node.Traversal.Flag, T>
+  extends tree.Node<
+    "DOM traversal",
+    (typeof Node.Traversal.allFlags)[number],
+    T
+  >
   implements
     earl.Serializable<Node.EARL>,
     json.Serializable<tree.Node.JSON<T>>,
@@ -379,39 +383,47 @@ export namespace Node {
     return value instanceof Node;
   }
 
-  export class Traversal extends Flags<"DOM traversal", Traversal.Flag> {
-    public static of(...flags: Array<Traversal.Flag>): Traversal {
-      return new Traversal("DOM traversal", Flags.reduce(...flags));
-    }
-  }
+  export const Traversal = Flags.named(
+    "DOM traversal",
+    "composed",
+    "flattened",
+    "nested",
+  );
+  export type Traversal = ReturnType<(typeof Traversal)["of"]>;
 
-  export namespace Traversal {
-    export type Flag = 0 | 1 | 2 | 4;
-
-    export const none = 0 as Flag;
-    /**
-     * When set, traverse the node in shadow-including tree order.
-     *
-     * {@link https://dom.spec.whatwg.org/#concept-shadow-including-tree-order}
-     */
-    export const composed = (1 << 0) as Flag;
-
-    /**
-     * When set, traverse the flattened element tree rooted at the node.
-     *
-     * {@link https://drafts.csswg.org/css-scoping/#flat-tree}
-     */
-    export const flattened = (1 << 1) as Flag;
-
-    /**
-     * When set, traverse all nested browsing contexts encountered.
-     *
-     * {@link https://html.spec.whatwg.org/#nested-browsing-context}
-     */
-    export const nested = (1 << 2) as Flag;
-
-    export const empty = Traversal.of(none);
-  }
+  // export class Traversal extends Flags<"DOM traversal", Traversal.Flag> {
+  //   public static of(...flags: Array<Traversal.Flag>): Traversal {
+  //     return new Traversal("DOM traversal", Flags.reduce(...flags));
+  //   }
+  // }
+  //
+  // export namespace Traversal {
+  //   export type Flag = 0 | 1 | 2 | 4;
+  //
+  //   export const none = 0 as Flag;
+  //   /**
+  //    * When set, traverse the node in shadow-including tree order.
+  //    *
+  //    * {@link https://dom.spec.whatwg.org/#concept-shadow-including-tree-order}
+  //    */
+  //   export const composed = (1 << 0) as Flag;
+  //
+  //   /**
+  //    * When set, traverse the flattened element tree rooted at the node.
+  //    *
+  //    * {@link https://drafts.csswg.org/css-scoping/#flat-tree}
+  //    */
+  //   export const flattened = (1 << 1) as Flag;
+  //
+  //   /**
+  //    * When set, traverse all nested browsing contexts encountered.
+  //    *
+  //    * {@link https://html.spec.whatwg.org/#nested-browsing-context}
+  //    */
+  //   export const nested = (1 << 2) as Flag;
+  //
+  //   export const empty = Traversal.of(none);
+  // }
 
   /**
    * Traversal options to traverse the flat tree.

@@ -181,15 +181,17 @@ export namespace Flags {
   // This replaces the type of `of` in its argument. We cannot just use `&` because
   // it would instead create an overload with the original `of` signature (without
   // the getters).
-  type ReplaceOf<
-    T extends { of: any },
+  type ReplaceFactories<
+    T extends { of: any; empty: any },
     Name extends string,
     F extends allFlags,
-    Replaced,
+    Instance,
   > = {
     [key in keyof T]: key extends "of"
-      ? (...flags: Array<F | Name>) => Replaced
-      : T[key];
+      ? (...flags: Array<F | Name>) => Instance
+      : key extends "empty"
+        ? Instance
+        : T[key];
   };
 
   export function named<K extends string, A extends Array<string>>(
@@ -239,7 +241,13 @@ export namespace Flags {
       }
 
       // Every flags set always has 0 for the "no flag" value.
-      public static none = 0;
+      // Again, these should be private, with a getter.
+      public static readonly none = 0;
+      public static readonly empty = new Named(kind, Named.none);
+      public static readonly allFlags = allFlagsArray.slice(
+        0,
+        totalFlags,
+      ) as MyFlags;
 
       /* Rewrite the base clas methods to allow for names in addition of values. */
       public has(flag: Flag | Name): boolean {
@@ -305,8 +313,8 @@ export namespace Flags {
     // We can at last build the type of the class, we need to add the type of the
     // static Named.x, … and then replace the type of `of`. Since there is no other
     // factory (and `new` is private), this is enough.
-    type Class = ReplaceOf<
-      typeof Named & KeyedByArray<["none", ...MyNames], Flag>,
+    type Class = ReplaceFactories<
+      typeof Named & KeyedByArray<MyNames, MyFlags[number]>,
       Name,
       Flag,
       Instance
