@@ -4,11 +4,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Parser as CSSParser, Token } from "../syntax/index.js";
-import type { Resolvable } from "./resolvable.js";
+import { type Parser as CSSParser, Token } from "../../syntax/index.js";
+import type { Resolvable } from "../resolvable.js";
 
-import { Keyword } from "./textual/keyword.js";
-import { Value } from "./value.js";
+import { Keyword } from "../textual/keyword.js";
+import { Value } from "../value.js";
 
 const { doubleBar, either, mapResult } = Parser;
 

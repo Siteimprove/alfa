@@ -202,7 +202,6 @@ export namespace Flags {
     ...flags: A
   ) {
     /************* Prepping the flags *************/
-    /* It is sheer serendipity that maxFlag and FirstEight have the same `8` magic number */
     // How many flags do we actually have?
     const totalFlags = Math.min(flags.length, maxFlag);
     const lastFlag = 2 ** (totalFlags - 1);
