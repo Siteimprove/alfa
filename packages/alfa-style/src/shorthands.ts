@@ -35,7 +35,7 @@ import Outline from "./property/outline.js";
 import Overflow from "./property/overflow.js";
 import TextDecoration from "./property/text-decoration.js";
 import TextWrap from "./property/text-wrap.js";
-import { WS } from "./property/white-space.js";
+import WhiteSpace from "./property/white-space.js";
 
 import type { Shorthand } from "./shorthand.js";
 
@@ -85,7 +85,7 @@ export namespace Shorthands {
     overflow: Overflow,
     "text-wrap": TextWrap,
     "text-decoration": TextDecoration,
-    "white-space": WS,
+    "white-space": WhiteSpace,
   } as const;
 
   export type Longhands<N extends Name> =

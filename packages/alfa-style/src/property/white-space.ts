@@ -12,16 +12,6 @@ import Trim from "./white-space-trim.js";
 
 const { doubleBar, map, mapResult, either } = Parser;
 
-export default Longhand.fromKeywords(
-  { inherits: true },
-  "normal",
-  "pre",
-  "nowrap",
-  "pre-wrap",
-  "break-spaces",
-  "pre-line",
-);
-
 const parser = map(
   mapResult(
     either(
@@ -102,7 +92,7 @@ const parser = map(
     ] as const,
 );
 
-export const WS = Shorthand.of(
+export default Shorthand.of(
   ["white-space-collapse", "text-wrap-mode", "white-space-trim"],
   parser,
 );

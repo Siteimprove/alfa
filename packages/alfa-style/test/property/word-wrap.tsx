@@ -1,4 +1,3 @@
-import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
 import { type Assertions, test } from "@siteimprove/alfa-test";
 

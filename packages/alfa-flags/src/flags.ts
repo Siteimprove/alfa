@@ -181,9 +181,9 @@ export namespace Flags {
    */
   type FirstEight<T, A extends ReadonlyArray<T>> = Shorten<T, A, NonZeroFlags>;
 
-  // This replaces the type of `of` in its argument. We cannot just use `&` because
-  // it would instead create an overload with the original `of` signature (without
-  // the getters).
+  // This replaces the type of `empty` and `of` in its argument. We cannot just
+  // use `&` because it would instead create an overload with the original `of`
+  // signature (without the getters).
   type ReplaceFactories<
     T extends { of: any; empty: any },
     Name extends string,
@@ -351,13 +351,13 @@ export namespace Flags {
       });
     }
 
-    /* Now, we also to do some TypeScript dark magic to explain the previous steps */
+    /* Now, we also do some TypeScript dark magic to explain the previous steps */
     // This is the real type of an instance: the class + the flag names as boolean getters.
     type Instance = Named & KeyedByArray<MyNames, boolean>;
 
     // We can at last build the type of the class, we need to add the type of the
-    // static Named.x, … and then replace the type of `of`. Since there is no other
-    // factory (and `new` is private), this is enough.
+    // static Named.x, … and then replace the type of `empty` and `of`. Since
+    // there is no other factory (and `new` is private), this is enough.
     type Class = ReplaceFactories<
       typeof Named & KeyedByArray<MyNames, NonEmptyFlag>,
       Name,
