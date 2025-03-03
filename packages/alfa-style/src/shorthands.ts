@@ -85,7 +85,7 @@ export namespace Shorthands {
     overflow: Overflow,
     "text-wrap": TextWrap,
     "text-decoration": TextDecoration,
-    WS: WS,
+    ws: WS,
   } as const;
 
   export type Longhands<N extends Name> =

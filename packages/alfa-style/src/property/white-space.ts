@@ -1,5 +1,4 @@
-import { Keyword } from "@siteimprove/alfa-css";
-import { Token } from "@siteimprove/alfa-css/src/index.js";
+import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
