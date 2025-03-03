@@ -4,14 +4,14 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { cascaded } from "../common.js";
 
 test("#cascaded() parses `white-space: collapse`", (t) => {
-  const element = <div style={{ ws: "collapse" }} />;
+  const element = <div style={{ whiteSpace: "collapse" }} />;
 
   t.deepEqual(cascaded(element, "white-space-collapse"), {
     value: {
       type: "keyword",
       value: "collapse",
     },
-    source: h.declaration("ws", "collapse").toJSON(),
+    source: h.declaration("white-space", "collapse").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-wrap-mode"), {
@@ -19,7 +19,7 @@ test("#cascaded() parses `white-space: collapse`", (t) => {
       type: "keyword",
       value: "initial",
     },
-    source: h.declaration("ws", "collapse").toJSON(),
+    source: h.declaration("white-space", "collapse").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "white-space-trim"), {
@@ -27,19 +27,19 @@ test("#cascaded() parses `white-space: collapse`", (t) => {
       type: "keyword",
       value: "initial",
     },
-    source: h.declaration("ws", "collapse").toJSON(),
+    source: h.declaration("white-space", "collapse").toJSON(),
   });
 });
 
 test("#cascaded() parses `white-space: wrap`", (t) => {
-  const element = <div style={{ ws: "wrap" }} />;
+  const element = <div style={{ whiteSpace: "wrap" }} />;
 
   t.deepEqual(cascaded(element, "white-space-collapse"), {
     value: {
       type: "keyword",
       value: "initial",
     },
-    source: h.declaration("ws", "wrap").toJSON(),
+    source: h.declaration("white-space", "wrap").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-wrap-mode"), {
@@ -47,7 +47,7 @@ test("#cascaded() parses `white-space: wrap`", (t) => {
       type: "keyword",
       value: "wrap",
     },
-    source: h.declaration("ws", "wrap").toJSON(),
+    source: h.declaration("white-space", "wrap").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "white-space-trim"), {
@@ -55,13 +55,13 @@ test("#cascaded() parses `white-space: wrap`", (t) => {
       type: "keyword",
       value: "initial",
     },
-    source: h.declaration("ws", "wrap").toJSON(),
+    source: h.declaration("white-space", "wrap").toJSON(),
   });
 });
 
 test("#cascaded() parses `white-space: wrap discard-after discard-before collapse`", (t) => {
   const element = (
-    <div style={{ ws: "wrap discard-after discard-before collapse" }} />
+    <div style={{ whiteSpace: "wrap discard-after discard-before collapse" }} />
   );
 
   t.deepEqual(cascaded(element, "white-space-collapse"), {
@@ -70,7 +70,7 @@ test("#cascaded() parses `white-space: wrap discard-after discard-before collaps
       value: "collapse",
     },
     source: h
-      .declaration("ws", "wrap discard-after discard-before collapse")
+      .declaration("white-space", "wrap discard-after discard-before collapse")
       .toJSON(),
   });
 
@@ -80,7 +80,7 @@ test("#cascaded() parses `white-space: wrap discard-after discard-before collaps
       value: "wrap",
     },
     source: h
-      .declaration("ws", "wrap discard-after discard-before collapse")
+      .declaration("white-space", "wrap discard-after discard-before collapse")
       .toJSON(),
   });
 
@@ -92,20 +92,20 @@ test("#cascaded() parses `white-space: wrap discard-after discard-before collaps
       "discard-inner": false,
     },
     source: h
-      .declaration("ws", "wrap discard-after discard-before collapse")
+      .declaration("white-space", "wrap discard-after discard-before collapse")
       .toJSON(),
   });
 });
 
 test("#cascaded() parses `white-space: pre`", (t) => {
-  const element = <div style={{ ws: "pre" }} />;
+  const element = <div style={{ whiteSpace: "pre" }} />;
 
   t.deepEqual(cascaded(element, "white-space-collapse"), {
     value: {
       type: "keyword",
       value: "preserve",
     },
-    source: h.declaration("ws", "pre").toJSON(),
+    source: h.declaration("white-space", "pre").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-wrap-mode"), {
@@ -113,7 +113,7 @@ test("#cascaded() parses `white-space: pre`", (t) => {
       type: "keyword",
       value: "nowrap",
     },
-    source: h.declaration("ws", "pre").toJSON(),
+    source: h.declaration("white-space", "pre").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "white-space-trim"), {
@@ -121,24 +121,24 @@ test("#cascaded() parses `white-space: pre`", (t) => {
       type: "keyword",
       value: "none",
     },
-    source: h.declaration("ws", "pre").toJSON(),
+    source: h.declaration("white-space", "pre").toJSON(),
   });
 });
 
-test("white-space overwrites text-mode", (t) => {
-  const element = <div style={{ textWrap: "wrap", ws: "nowrap" }} />;
+test("white-space overwrites text-wrap", (t) => {
+  const element = <div style={{ textWrap: "wrap", whiteSpace: "nowrap" }} />;
 
   t.deepEqual(cascaded(element, "text-wrap-mode"), {
     value: {
       type: "keyword",
       value: "nowrap",
     },
-    source: h.declaration("ws", "nowrap").toJSON(),
+    source: h.declaration("white-space", "nowrap").toJSON(),
   });
 });
 
-test("text-mode overwrite white-space", (t) => {
-  const element = <div style={{ ws: "nowrap", textWrap: "wrap" }} />;
+test("text-wrap overwrite white-space", (t) => {
+  const element = <div style={{ whiteSpace: "nowrap", textWrap: "wrap" }} />;
 
   t.deepEqual(cascaded(element, "text-wrap-mode"), {
     value: {

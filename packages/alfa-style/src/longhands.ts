@@ -352,7 +352,7 @@ export namespace Longhands {
     "wrap-after": WrapAfter,
     "wrap-before": WrapBefore,
     "wrap-inside": WrapInside,
-    "white-space": WhiteSpace,
+    // "white-space": WhiteSpace,
     "white-space-collapse": WhiteSpaceCollapse,
     "white-space-trim": WhiteSpaceTrim,
     width: Width,
