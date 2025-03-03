@@ -48,6 +48,7 @@
     "./value/color/system.ts",
     "./value/flags/contain.ts",
     "./value/flags/index.ts",
+    "./value/flags/trim.ts",
     "./value/image/gradient/gradient.ts",
     "./value/image/gradient/index.ts",
     "./value/image/gradient/item/hint.ts",

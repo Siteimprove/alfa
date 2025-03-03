@@ -12,6 +12,9 @@ import { Value } from "../value.js";
 
 const { doubleBar, mapResult } = Parser;
 
+/**
+ * {@link https://drafts.csswg.org/css-contain/#contain-property}
+ */
 const CFlags = Flags.named(
   "contain",
   "size",
