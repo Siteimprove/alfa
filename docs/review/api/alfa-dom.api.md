@@ -800,7 +800,7 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
+export abstract class Node<T extends string = string> extends tree.Node<"DOM traversal", Node.TraversalFlags, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     equals(value: Node): boolean;
@@ -884,11 +884,136 @@ export namespace Node {
     export function clone(node: Attribute, options?: ElementReplacementOptions, device?: Device): Attribute;
     export function clone(node: Text, options?: ElementReplacementOptions, device?: Device): Text;
     export function clone(node: Comment, options?: ElementReplacementOptions, device?: Device): Comment;
+    const // (undocumented)
+    Traversal: {
+        of: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => {
+            has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
+            isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
+            add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+            set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+            remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+            unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+            is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+            equals(value: any): boolean;
+            equals(value: unknown): value is any;
+            toString(): string;
+            toJSON(): Flags.JSON<"DOM traversal"> & {
+                composed: boolean;
+                flattened: boolean;
+                nested: boolean;
+            };
+            readonly value: number;
+            readonly kind: "DOM traversal";
+        } & {
+            composed: boolean;
+            flattened: boolean;
+            nested: boolean;
+        };
+        readonly none: 0;
+        readonly empty: {
+            has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
+            isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
+            add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+            set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+            remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+            unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+            is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+            equals(value: any): boolean;
+            equals(value: unknown): value is any;
+            toString(): string;
+            toJSON(): Flags.JSON<"DOM traversal"> & {
+                composed: boolean;
+                flattened: boolean;
+                nested: boolean;
+            };
+            readonly value: number;
+            readonly kind: "DOM traversal";
+        } & {
+            composed: boolean;
+            flattened: boolean;
+            nested: boolean;
+        };
+        readonly allFlags: [1, 2, 4];
+        nameOf: (flag: 1 | 2 | 4) => "composed" | "flattened" | "nested";
+        reduce: (...flags: Array_2<number>) => number;
+        named: <K extends string, A extends Array_2<string>>(kind: K, ...flags: A) => {
+            [x: string]: any;
+        };
+        composed: 1 | 2 | 4;
+        flattened: 1 | 2 | 4;
+        nested: 1 | 2 | 4;
+    };
     export function clone(node: Document, options?: ElementReplacementOptions, device?: Device): Document;
     export function clone(node: Type, options?: ElementReplacementOptions, device?: Device): Document;
-    const flatTree: Traversal;
-    const fullTree: Traversal;
-    const composedNested: Traversal;
+    const flatTree: {
+        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
+        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+        equals(value: any): boolean;
+        equals(value: unknown): value is any;
+        toString(): string;
+        toJSON(): Flags.JSON<"DOM traversal"> & {
+            composed: boolean;
+            flattened: boolean;
+            nested: boolean;
+        };
+        readonly value: number;
+        readonly kind: "DOM traversal";
+    } & {
+        composed: boolean;
+        flattened: boolean;
+        nested: boolean;
+    };
+    const fullTree: {
+        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
+        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+        equals(value: any): boolean;
+        equals(value: unknown): value is any;
+        toString(): string;
+        toJSON(): Flags.JSON<"DOM traversal"> & {
+            composed: boolean;
+            flattened: boolean;
+            nested: boolean;
+        };
+        readonly value: number;
+        readonly kind: "DOM traversal";
+    } & {
+        composed: boolean;
+        flattened: boolean;
+        nested: boolean;
+    };
+    const composedNested: {
+        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
+        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
+        add(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+        set: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+        remove(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+        unset: (...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+        is(...flags: Array_2<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+        equals(value: any): boolean;
+        equals(value: unknown): value is any;
+        toString(): string;
+        toJSON(): Flags.JSON<"DOM traversal"> & {
+            composed: boolean;
+            flattened: boolean;
+            nested: boolean;
+        };
+        readonly value: number;
+        readonly kind: "DOM traversal";
+    } & {
+        composed: boolean;
+        flattened: boolean;
+        nested: boolean;
+    };
     export function clone(node: Fragment, options?: ElementReplacementOptions, device?: Device): Fragment;
     export function clone(node: Shadow, options?: ElementReplacementOptions, device?: Device): Shadow;
     export function clone(node: Node, options?: ElementReplacementOptions, device?: Device): Node;
@@ -952,22 +1077,9 @@ export namespace Node {
         device?: Device;
     }
     // (undocumented)
-    export class Traversal extends Flags<Traversal.Flag> {
-        // (undocumented)
-        static of(...flags: Array<Traversal.Flag>): Traversal;
-    }
+    export type Traversal = ReturnType<(typeof Traversal)["of"]>;
     // (undocumented)
-    export namespace Traversal {
-        // (undocumented)
-        export type Flag = 0 | 1 | 2 | 4;
-        const // (undocumented)
-        none: Flag;
-        const composed: Flag;
-        const flattened: Flag;
-        const nested: Flag;
-        const // (undocumented)
-        empty: Traversal;
-    }
+    export type TraversalFlags = (typeof Node.Traversal.allFlags)[number];
     const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
