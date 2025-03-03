@@ -10,19 +10,7 @@ import type { Resolvable } from "../resolvable.js";
 import { Keyword } from "../textual/keyword.js";
 import { Value } from "../value.js";
 
-const { doubleBar, either, mapResult } = Parser;
-
-/**
- * {@link
- * https://developer.mozilla.org/en-US/docs/Web/CSS/contain#formal_syntax}
- *
- * @public
- */
-export type Contain =
-  | Keyword<"none">
-  | Keyword<"strict">
-  | Keyword<"content">
-  | ContainFlags;
+const { doubleBar, mapResult } = Parser;
 
 const CFlags = Flags.named(
   "contain",
@@ -144,15 +132,4 @@ export namespace ContainFlags {
       );
     },
   );
-}
-
-/**
- * @public
- */
-export namespace Contain {
-  export const parse: CSSParser<Contain> = either<
-    Slice<Token>,
-    Contain,
-    string
-  >(Keyword.parse("none", "strict", "content"), ContainFlags.parse);
 }
