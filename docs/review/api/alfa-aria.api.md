@@ -295,7 +295,7 @@ export namespace Name {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements Serializable<Node.JSON<T>> {
+export abstract class Node<T extends string = string> extends tree.Node<"ARIA traversal", Node.TraversalFlags, T> implements Serializable<Node.JSON<T>> {
     protected constructor(owner: dom_2.Node, children: Array<Node>, type: T);
     // (undocumented)
     attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
@@ -381,27 +381,83 @@ export interface Node {
 export namespace Node {
     // (undocumented)
     export function from(node: dom_2.Node, device: Device): Node;
+    const // (undocumented)
+    Traversal: {
+        of: (...flags: Array_2<0 | 1 | "ignored">) => {
+            has(flag: 0 | 1 | "ignored"): boolean;
+            isSet: (flag: 0 | 1 | "ignored") => boolean;
+            add(...flags: Array_2<0 | 1 | "ignored">): any;
+            set: (...flags: Array_2<0 | 1 | "ignored">) => any;
+            remove(...flags: Array_2<0 | 1 | "ignored">): any;
+            unset: (...flags: Array_2<0 | 1 | "ignored">) => any;
+            is(...flags: Array_2<0 | 1 | "ignored">): boolean;
+            equals(value: any): boolean;
+            equals(value: unknown): value is any;
+            toString(): string;
+            toJSON(): Flags.JSON<"ARIA traversal"> & {
+                ignored: boolean;
+            };
+            readonly value: number;
+            readonly kind: "ARIA traversal";
+        } & {
+            ignored: boolean;
+        };
+        readonly none: 0;
+        readonly empty: {
+            has(flag: 0 | 1 | "ignored"): boolean;
+            isSet: (flag: 0 | 1 | "ignored") => boolean;
+            add(...flags: Array_2<0 | 1 | "ignored">): any;
+            set: (...flags: Array_2<0 | 1 | "ignored">) => any;
+            remove(...flags: Array_2<0 | 1 | "ignored">): any;
+            unset: (...flags: Array_2<0 | 1 | "ignored">) => any;
+            is(...flags: Array_2<0 | 1 | "ignored">): boolean;
+            equals(value: any): boolean;
+            equals(value: unknown): value is any;
+            toString(): string;
+            toJSON(): Flags.JSON<"ARIA traversal"> & {
+                ignored: boolean;
+            };
+            readonly value: number;
+            readonly kind: "ARIA traversal";
+        } & {
+            ignored: boolean;
+        };
+        readonly allFlags: [1];
+        nameOf: (flag: 1) => "ignored";
+        reduce: (...flags: Array_2<number>) => number;
+        named: <K extends string, A extends Array_2<string>>(kind: K, ...flags: A) => {
+            [x: string]: any;
+        };
+        ignored: 1;
+    };
     // (undocumented)
     export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
         // (undocumented)
         node: string;
     }
     // (undocumented)
-    export class Traversal extends Flags<Traversal.Flag> {
-        // (undocumented)
-        static of(...flags: Array<Traversal.Flag>): Traversal;
-    }
-    const includeIgnored: Traversal;
+    export type Traversal = ReturnType<(typeof Traversal)["of"]>;
+    const includeIgnored: {
+        has(flag: 0 | 1 | "ignored"): boolean;
+        isSet: (flag: 0 | 1 | "ignored") => boolean;
+        add(...flags: Array_2<0 | 1 | "ignored">): any;
+        set: (...flags: Array_2<0 | 1 | "ignored">) => any;
+        remove(...flags: Array_2<0 | 1 | "ignored">): any;
+        unset: (...flags: Array_2<0 | 1 | "ignored">) => any;
+        is(...flags: Array_2<0 | 1 | "ignored">): boolean;
+        equals(value: any): boolean;
+        equals(value: unknown): value is any;
+        toString(): string;
+        toJSON(): Flags.JSON<"ARIA traversal"> & {
+            ignored: boolean;
+        };
+        readonly value: number;
+        readonly kind: "ARIA traversal";
+    } & {
+        ignored: boolean;
+    };
     // (undocumented)
-    export namespace Traversal {
-        // (undocumented)
-        export type Flag = 0 | 1;
-        const // (undocumented)
-        none: Flag;
-        const ignored: Flag;
-        const // (undocumented)
-        empty: Traversal;
-    }
+    export type TraversalFlags = (typeof Node.Traversal.allFlags)[number];
     const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)

@@ -1,3 +1,4 @@
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Longhand } from "./longhand.js";
 
 import BackgroundAttachment from "./property/background-attachment.js";
@@ -50,8 +51,8 @@ import BorderTopStyle from "./property/border-top-style.js";
 import BorderTopWidth from "./property/border-top-width.js";
 import Bottom from "./property/bottom.js";
 import BoxShadow from "./property/box-shadow.js";
-import Clip from "./property/clip.js";
 import ClipPath from "./property/clip-path.js";
+import Clip from "./property/clip.js";
 import Color from "./property/color.js";
 import Contain from "./property/contain.js";
 import ContainerType from "./property/container-type.js";
@@ -71,6 +72,7 @@ import FontVariantNumeric from "./property/font-variant-numeric.js";
 import FontVariantPosition from "./property/font-variant-position.js";
 import FontWeight from "./property/font-weight.js";
 import Height from "./property/height.js";
+import Hyphens from "./property/hyphens.js";
 import InsetBlockEnd from "./property/inset-block-end.js";
 import InsetBlockStart from "./property/inset-block-start.js";
 import InsetInlineEnd from "./property/inset-inline-end.js";
@@ -78,6 +80,7 @@ import InsetInlineStart from "./property/inset-inline-start.js";
 import Isolation from "./property/isolation.js";
 import Left from "./property/left.js";
 import LetterSpacing from "./property/letter-spacing.js";
+import LineBreak from "./property/line-break.js";
 import LineHeight from "./property/line-height.js";
 import MarginBottom from "./property/margin-bottom.js";
 import MarginLeft from "./property/margin-left.js";
@@ -99,6 +102,7 @@ import OutlineColor from "./property/outline-color.js";
 import OutlineOffset from "./property/outline-offset.js";
 import OutlineStyle from "./property/outline-style.js";
 import OutlineWidth from "./property/outline-width.js";
+import OverflowWrap from "./property/overflow-wrap.js";
 import OverflowX from "./property/overflow-x.js";
 import OverflowY from "./property/overflow-y.js";
 import Perspective from "./property/perspective.js";
@@ -116,14 +120,22 @@ import TextIndent from "./property/text-indent.js";
 import TextOverflow from "./property/text-overflow.js";
 import TextShadow from "./property/text-shadow.js";
 import TextTransform from "./property/text-transform.js";
+import TextWrapMode from "./property/text-wrap-mode.js";
+import TextWrapStyle from "./property/text-wrap-style.js";
 import Top from "./property/top.js";
 import Transform from "./property/transform.js";
 import Translate from "./property/translate.js";
 import VerticalAlign from "./property/vertical-align.js";
 import Visibility from "./property/visibility.js";
+import WrapAfter from "./property/wrap-after.js";
+import WrapBefore from "./property/wrap-before.js";
+import WrapInside from "./property/wrap-inside.js";
 import WhiteSpace from "./property/white-space.js";
+import WhiteSpaceCollapse from "./property/white-space-collapse.js";
+import WhiteSpaceTrim from "./property/white-space-trim.js";
 import Width from "./property/width.js";
 import WillChange from "./property/will-change.js";
+import WordBreak from "./property/word-break.js";
 import WordSpacing from "./property/word-spacing.js";
 import ZIndex from "./property/z-index.js";
 
@@ -132,8 +144,24 @@ import ZIndex from "./property/z-index.js";
  */
 export namespace Longhands {
   export type Property = typeof longHands;
+  /**
+   * @internal
+   */
+  export type PropName = keyof Property;
 
-  export type Name = keyof Property;
+  type Aliases = typeof aliases;
+  type AliasesName = keyof Aliases;
+
+  export type Name = PropName | AliasesName;
+
+  /**
+   * @internal
+   */
+  export type TrueName<N extends Name> = N extends PropName
+    ? N
+    : N extends AliasesName
+      ? Aliases[N]
+      : never;
 
   /**
    * Extract the parsed type of a named property.
@@ -147,7 +175,7 @@ export namespace Longhands {
    * The parsed type doesn't really exist in CSS. It is an artefact on how we
    * handle the default keywords.
    */
-  export type Parsed<N extends Name> = Longhand.Parsed<Property[N]>;
+  export type Parsed<N extends Name> = Longhand.Parsed<Property[TrueName<N>]>;
 
   /**
    * Extract the declared type of a named property.
@@ -180,7 +208,9 @@ export namespace Longhands {
    *
    * {@link https://drafts.csswg.org/css-cascade/#computed}
    */
-  export type Computed<N extends Name> = Longhand.Computed<Property[N]>;
+  export type Computed<N extends Name> = Longhand.Computed<
+    Property[TrueName<N>]
+  >;
 
   /**
    * Extract the initial type of a named property.
@@ -264,6 +294,7 @@ export namespace Longhands {
     "font-variant-position": FontVariantPosition,
     "font-weight": FontWeight,
     height: Height,
+    hyphens: Hyphens,
     "inset-block-end": InsetBlockEnd,
     "inset-block-start": InsetBlockStart,
     "inset-inline-end": InsetInlineEnd,
@@ -271,6 +302,7 @@ export namespace Longhands {
     isolation: Isolation,
     left: Left,
     "letter-spacing": LetterSpacing,
+    "line-break": LineBreak,
     "line-height": LineHeight,
     "margin-bottom": MarginBottom,
     "margin-left": MarginLeft,
@@ -292,6 +324,7 @@ export namespace Longhands {
     "outline-offset": OutlineOffset,
     "outline-style": OutlineStyle,
     "outline-width": OutlineWidth,
+    "overflow-wrap": OverflowWrap,
     "overflow-x": OverflowX,
     "overflow-y": OverflowY,
     perspective: Perspective,
@@ -309,23 +342,55 @@ export namespace Longhands {
     "text-overflow": TextOverflow,
     "text-shadow": TextShadow,
     "text-transform": TextTransform,
+    "text-wrap-mode": TextWrapMode,
+    "text-wrap-style": TextWrapStyle,
     top: Top,
     transform: Transform,
     translate: Translate,
     "vertical-align": VerticalAlign,
     visibility: Visibility,
-    "white-space": WhiteSpace,
+    "wrap-after": WrapAfter,
+    "wrap-before": WrapBefore,
+    "wrap-inside": WrapInside,
+    // "white-space": WhiteSpace,
+    "white-space-collapse": WhiteSpaceCollapse,
+    "white-space-trim": WhiteSpaceTrim,
     width: Width,
     "will-change": WillChange,
+    "word-break": WordBreak,
     "word-spacing": WordSpacing,
     "z-index": ZIndex,
-  } as const;
+  };
 
-  export function isName(name: string): name is Name {
+  /**
+   * {@link https://drafts.csswg.org/css-cascade-5/#legacy-name-alias}
+   */
+  const aliases = {
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/word-wrap
+    "word-wrap": "overflow-wrap",
+  } satisfies { [alias in string]: PropName };
+
+  function isPropName(name: string): name is PropName {
     return name in longHands;
   }
 
-  export function get<N extends Name>(name: N): Property[N] {
-    return longHands[name];
+  function isAliasesName(name: string): name is AliasesName {
+    return name in aliases;
+  }
+
+  export const isName: (name: string) => name is Name = Refinement.or(
+    isPropName,
+    isAliasesName,
+  );
+
+  /**
+   * @internal
+   */
+  export function propName<N extends Name>(name: N): TrueName<N> {
+    return (isAliasesName(name) ? aliases[name] : name) as TrueName<N>;
+  }
+
+  export function get<N extends Name>(name: N): Property[TrueName<N>] {
+    return longHands[propName(name)];
   }
 }

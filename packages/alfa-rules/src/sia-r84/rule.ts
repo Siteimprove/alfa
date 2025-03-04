@@ -106,8 +106,8 @@ function isPossiblyScrollable(device: Device): Predicate<Element> {
               // to instead break along the y-axis.
               if (axis === "x") {
                 return style
-                  .computed("white-space")
-                  .some((whitespace) => whitespace.value === "nowrap");
+                  .computed("text-wrap-mode")
+                  .some((wrap) => wrap.is("nowrap"));
               }
 
               return true;

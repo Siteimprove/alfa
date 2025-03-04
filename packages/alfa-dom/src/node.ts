@@ -41,7 +41,7 @@ import * as traversal from "./node/traversal.js";
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<Node.Traversal.Flag, T>
+  extends tree.Node<"DOM traversal", Node.TraversalFlags, T>
   implements
     earl.Serializable<Node.EARL>,
     json.Serializable<tree.Node.JSON<T>>,
@@ -379,61 +379,33 @@ export namespace Node {
     return value instanceof Node;
   }
 
-  export class Traversal extends Flags<Traversal.Flag> {
-    public static of(...flags: Array<Traversal.Flag>): Traversal {
-      return new Traversal(Flags._reduce(...flags));
-    }
-  }
-
-  export namespace Traversal {
-    export type Flag = 0 | 1 | 2 | 4;
-
-    export const none = 0 as Flag;
-    /**
-     * When set, traverse the node in shadow-including tree order.
-     *
-     * {@link https://dom.spec.whatwg.org/#concept-shadow-including-tree-order}
-     */
-    export const composed = (1 << 0) as Flag;
-
-    /**
-     * When set, traverse the flattened element tree rooted at the node.
-     *
-     * {@link https://drafts.csswg.org/css-scoping/#flat-tree}
-     */
-    export const flattened = (1 << 1) as Flag;
-
-    /**
-     * When set, traverse all nested browsing contexts encountered.
-     *
-     * {@link https://html.spec.whatwg.org/#nested-browsing-context}
-     */
-    export const nested = (1 << 2) as Flag;
-
-    export const empty = Traversal.of(none);
-  }
+  export const Traversal = Flags.named(
+    "DOM traversal",
+    "composed",
+    "flattened",
+    "nested",
+  );
+  export type Traversal = ReturnType<(typeof Traversal)["of"]>;
+  export type TraversalFlags = (typeof Node.Traversal.allFlags)[number];
 
   /**
    * Traversal options to traverse the flat tree.
    *
    * {@link https://drafts.csswg.org/css-scoping-1/#flattening}
    */
-  export const flatTree = Traversal.of(Traversal.flattened);
+  export const flatTree = Traversal.of("flattened");
 
   /**
    * Traversal options to traverse all relevant nodes (flat tree and inside
    * nested browsing container), a very frequent use case.
    */
-  export const fullTree = Traversal.of(Traversal.flattened, Traversal.nested);
+  export const fullTree = Traversal.of("flattened", "nested");
 
   /**
    * Traversal options to traverse in shadow-including tree order and inside
    * nested browsing context container, a common use case.
    */
-  export const composedNested = Traversal.of(
-    Traversal.composed,
-    Traversal.nested,
-  );
+  export const composedNested = Traversal.of("composed", "nested");
 
   const cacheWithDevice = Cache.empty<JSON, Cache<Device, Node>>();
   const cacheWithoutDevice = Cache.empty<JSON, Node>();

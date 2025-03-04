@@ -306,8 +306,8 @@ namespace ClippingAncestor {
         test(
           and(
             hasComputedStyle(
-              "white-space",
-              (value) => !value.is("nowrap", "pre"),
+              "text-wrap-mode",
+              (value) => value.is("wrap"),
               device,
             ),
             hasSoftWrapPoints(device),
@@ -386,8 +386,8 @@ namespace ClippingAncestor {
           // points of its children.
           if (
             hasComputedStyle(
-              "white-space",
-              (value) => value.is("nowrap", "pre"),
+              "text-wrap-mode",
+              (value) => value.is("nowrap"),
               device,
             )(node)
           ) {

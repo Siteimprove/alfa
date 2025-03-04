@@ -10,6 +10,7 @@ import type { Comparison } from '@siteimprove/alfa-comparable';
 import { Component as Component_3 } from '../position/component.js';
 import { Corner as Corner_3 } from './corner.js';
 import type { Equatable } from '@siteimprove/alfa-equatable';
+import { Flags } from '@siteimprove/alfa-flags';
 import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
@@ -368,20 +369,11 @@ export namespace Component {
     parse: Parser_2<Slice<Token>, Component, string, []>;
 }
 
-// @public (undocumented)
-export type Contain = Keyword<"none"> | Keyword<"strict"> | Keyword<"content"> | ContainFlags;
-
-// @public (undocumented)
-export namespace Contain {
-    const // (undocumented)
-    parse: Parser<Contain>;
-}
-
 // Warning: (ae-incompatible-release-tags) The symbol "ContainFlags" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
 export class ContainFlags extends Value<"contain-flags", false> implements Resolvable<ContainFlags, never> {
-    protected constructor(size: boolean, inlineSize: boolean, layout: boolean, style: boolean, paint: boolean);
+    protected constructor(flags: CFlags);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -390,8 +382,10 @@ export class ContainFlags extends Value<"contain-flags", false> implements Resol
     get inlineSize(): boolean;
     // (undocumented)
     get layout(): boolean;
+    // Warning: (ae-forgotten-export) The symbol "CFlags" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    static of(size: boolean, inlineSize: boolean, layout: boolean, style: boolean, paint: boolean): ContainFlags;
+    static of(flags: CFlags): ContainFlags;
     // (undocumented)
     get paint(): boolean;
     // (undocumented)
@@ -3355,6 +3349,50 @@ export namespace Translate {
     parse: Parser<Translate>;
     const // (undocumented)
     parseProp: Parser_2<Slice<Token_2>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>;
+}
+
+// Warning: (ae-incompatible-release-tags) The symbol "TrimFlags" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
+// @public (undocumented)
+export class TrimFlags extends Value<"trim-flags", false> implements Resolvable<TrimFlags, never> {
+    protected constructor(flags: TFlags);
+    // (undocumented)
+    get discardAfter(): boolean;
+    // (undocumented)
+    get discardBefore(): boolean;
+    // (undocumented)
+    get discardInner(): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // Warning: (ae-forgotten-export) The symbol "TFlags" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    static of(flags: TFlags): TrimFlags;
+    // (undocumented)
+    resolve(): this;
+    // (undocumented)
+    toJSON(): TrimFlags.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace TrimFlags {
+    // (undocumented)
+    export function isTrimFlags(value: unknown): value is TrimFlags;
+    // (undocumented)
+    export interface JSON extends Value.JSON<"trim-flags"> {
+        // (undocumented)
+        "discard-after": boolean;
+        // (undocumented)
+        "discard-before": boolean;
+        // (undocumented)
+        "discard-inner": boolean;
+    }
+    const // (undocumented)
+    parse: Parser<TrimFlags>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Tuple" is marked as @public, but its signature references "Resolvable" which is marked as @internal

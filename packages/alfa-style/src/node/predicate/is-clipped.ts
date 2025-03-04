@@ -178,7 +178,7 @@ function isClippedByIndent(
 
     if (x === "hidden") {
       const { value: indent } = style.computed("text-indent");
-      const { value: whitespace } = style.computed("white-space");
+      const { value: wrap } = style.computed("text-wrap-mode");
 
       if (LengthPercentage.isCalculated(indent)) {
         // We couldn't fully resolve the mix of length and percentage.
@@ -186,7 +186,7 @@ function isClippedByIndent(
         return false;
       }
 
-      if (indent.value < 0 || whitespace.value === "nowrap") {
+      if (indent.value < 0 || wrap.value === "nowrap") {
         switch (indent.type) {
           case "percentage":
             if (abs(indent.value) >= 1) {
