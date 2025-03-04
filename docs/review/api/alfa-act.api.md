@@ -329,7 +329,7 @@ export namespace Outcome {
         // (undocumented)
         outcome: V;
         // (undocumented)
-        rule: Rule.JSON;
+        rule: Rule.MinimalJSON | Rule.JSON;
     }
     // (undocumented)
     export enum Mode {
@@ -598,7 +598,13 @@ export abstract class Rule<I, T extends Hashable, Q extends Question.Metadata = 
     // (undocumented)
     toEARL(): Rule.EARL;
     // (undocumented)
+    abstract toJSON(options: {
+        verbosity: json.Serializable.Verbosity.Minimal;
+    }): Rule.MinimalJSON;
+    // (undocumented)
     abstract toJSON(): Rule.JSON;
+    // (undocumented)
+    abstract toJSON(options?: json.Serializable.Options): Rule.MinimalJSON | Rule.JSON;
     // (undocumented)
     toSARIF(): sarif.ReportingDescriptor;
     // (undocumented)
@@ -619,6 +625,10 @@ export namespace Rule {
             tags?: Iterable_2<Tag>;
             evaluate: Atomic.Evaluate<I, T, Q, S>;
         }): Atomic<I, T, Q, S>;
+        // (undocumented)
+        toJSON(options: {
+            verbosity: json.Serializable.Verbosity.Minimal;
+        }): Rule.MinimalJSON;
         // (undocumented)
         toJSON(): Atomic.JSON;
     }
@@ -660,6 +670,10 @@ export namespace Rule {
             composes: Iterable_2<Rule<I, T, Q, S>>;
             evaluate: Composite.Evaluate<I, T, Q, S>;
         }): Composite<I, T, Q, S>;
+        // (undocumented)
+        toJSON(options: {
+            verbosity: json.Serializable.Verbosity.Minimal;
+        }): Rule.MinimalJSON;
         // (undocumented)
         toJSON(): Composite.JSON;
     }
@@ -764,8 +778,6 @@ export namespace Rule {
     export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;
     // (undocumented)
     export function isRule<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Rule<I, T, Q, S>;
-    const // (undocumented)
-    isAtomic: typeof Atomic.isAtomic;
     // (undocumented)
     export interface JSON {
         // (undocumented)
@@ -776,6 +788,15 @@ export namespace Rule {
         tags: Array_2<Tag.JSON>;
         // (undocumented)
         type: string;
+        // (undocumented)
+        uri: string;
+    }
+    const // (undocumented)
+    isAtomic: typeof Atomic.isAtomic;
+    // (undocumented)
+    export interface MinimalJSON {
+        // (undocumented)
+        [key: string]: json.JSON;
         // (undocumented)
         uri: string;
     }
