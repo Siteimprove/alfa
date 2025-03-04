@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { type Element, Query } from "@siteimprove/alfa-dom";
+import { type Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return Query.getElementDescendants(document).filter(
+        return Query.getElementDescendants(document, Node.fullTree).filter(
           and(
             hasRole(device, "heading"),
             isIncludedInTheAccessibilityTree(device),
