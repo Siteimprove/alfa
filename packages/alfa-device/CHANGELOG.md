@@ -1,5 +1,11 @@
 # @siteimprove/alfa-device
 
+## 0.99.0
+
+### Minor Changes
+
+- **Added:** `Device.isDevice` is now available. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
 ## 0.98.0
 
 ### Patch Changes

@@ -434,6 +434,15 @@ This package provides functionality for working with arrays.
 </td></tr>
 <tr><td>
 
+[@siteimprove/alfa-painting-order](./alfa-painting-order.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [@siteimprove/alfa-parser](./alfa-parser.md)
 
 

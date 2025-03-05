@@ -59,6 +59,15 @@ Description
 </td></tr>
 <tr><td>
 
+[isDevice(value)](./alfa-device.device.isdevice.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [standard()](./alfa-device.device.standard.md)
 
 
