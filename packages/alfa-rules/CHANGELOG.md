@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.99.0
+
+### Patch Changes
+
+- **Fixed:** SIA-R115 now correctly also targets headings in nested documents and shadow DOM. ([#1766](https://github.com/Siteimprove/alfa/pull/1766))
+
 ## 0.98.0
 
 ### Patch Changes

@@ -139,6 +139,15 @@ Description
 </td></tr>
 <tr><td>
 
+[hasInitialComputedStyle](./alfa-style.style.hasinitialcomputedstyle.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [hasOutline](./alfa-style.style.hasoutline.md)
 
 
@@ -203,6 +212,15 @@ Description
 <tr><td>
 
 [isFlexContainer](./alfa-style.style.isflexcontainer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFlexOrGridChild](./alfa-style.style.isflexorgridchild.md)
 
 
 </td><td>

@@ -77,7 +77,7 @@ V
 
 </td><td>
 
-[Rule.JSON](./alfa-act.rule.json.md)
+[Rule.MinimalJSON](./alfa-act.rule.minimaljson.md) \| [Rule.JSON](./alfa-act.rule.json.md)
 
 
 </td><td>
