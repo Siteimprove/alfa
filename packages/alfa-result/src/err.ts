@@ -48,6 +48,12 @@ export class Err<E> implements Result<never, E> {
     return err(this._error);
   }
 
+  public forEach(callback: Callback<never>): void {}
+
+  public forEachErr(callback: Callback<E>): void {
+    callback(this._error);
+  }
+
   public apply(): Err<E> {
     return this;
   }

@@ -38,7 +38,7 @@
     "package-dependency-graph": "^1.14.4",
     "prettier": "^3.0.0",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.4"
+    "vitest": "^3.0.6"
   },
   "packageManager": "yarn@4.7.0"
 }

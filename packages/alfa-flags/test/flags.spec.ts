@@ -2,9 +2,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Flags } from "../dist/flags.js";
 
-class Example extends Flags<Example.Flag> {
+class Example extends Flags<"example", Example.Flag> {
   public static of(...flags: Array<Example.Flag>): Example {
-    return new Example(Flags._reduce(...flags));
+    return new Example("example", Flags.reduce(...flags));
   }
 }
 
@@ -29,7 +29,7 @@ test(".of() performs bitwise or of flags", (t) => {
   );
 });
 
-test(".has() returns true for flags that are set", (t) => {
+test("#has() returns true for flags that are set", (t) => {
   const flags = Example.of(Example.flagA, Example.flagC, Example.flagD);
 
   for (const flag of [Example.flagA, Example.flagC, Example.flagD]) {
@@ -55,7 +55,22 @@ test(".has() returns true for flags that are set", (t) => {
   }
 });
 
-test(".add and .remove behave as expected", (t) => {
+test("#has() returns false for 0 on non-empty flag sets", (t) => {
+  for (const flag of [
+    Example.of(1),
+    Example.of(2),
+    Example.of(1, 4),
+    Example.of(8),
+  ]) {
+    t.deepEqual(flag.has(Example.none), false);
+  }
+});
+
+test("#has() returns true for 0 on empty flag set", (t) => {
+  t.deepEqual(Example.of().has(Example.none), true);
+});
+
+test("#add and #remove behave as expected", (t) => {
   const none = Example.of(Example.none);
 
   const foo = none.add(Example.flagD).set(Example.flagC, Example.flagB);
@@ -93,4 +108,26 @@ test(".add and .remove behave as expected", (t) => {
     t.deepEqual(baz.has(flag), false);
     t.deepEqual(baz.isSet(flag), false);
   }
+});
+
+test("#is() returns true for sets that exactly match", (t) => {
+  const actual = Example.of(Example.flagA, Example.flagC, Example.flagD);
+
+  t.equal(actual.is(Example.flagA, Example.flagC, Example.flagD), true);
+
+  for (const flags of [
+    [Example.flagA],
+    [Example.flagA, Example.flagC],
+    [Example.flagA, Example.flagB],
+    [Example.flagA, Example.flagB, Example.flagC, Example.flagD],
+  ] as const) {
+    t.equal(actual.is(...flags), false);
+  }
+});
+
+test("#toJSON() serialize the value", (t) => {
+  t.deepEqual(
+    Example.of(Example.flagA, Example.flagC, Example.flagD).toJSON(),
+    { type: "flags", kind: "example", value: 13 },
+  );
 });

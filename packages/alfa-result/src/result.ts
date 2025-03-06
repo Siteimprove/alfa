@@ -29,6 +29,8 @@ export interface Result<T, E = T>
   map<U>(mapper: Mapper<T, U>): Result<U, E>;
   mapErr<F>(mapper: Mapper<E, F>): Result<T, F>;
   mapOrElse<U>(ok: Mapper<T, U>, err: Mapper<E, U>): U;
+  forEach(callback: Callback<T>): void;
+  forEachErr(callback: Callback<E>): void;
   apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
   flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
   flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
