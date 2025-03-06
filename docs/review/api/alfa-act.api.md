@@ -468,7 +468,7 @@ export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends st
     // (undocumented)
     protected readonly _subject: SUBJECT;
     // (undocumented)
-    toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
+    toJSON(options?: Serializable.Options): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
     // (undocumented)
     get type(): TYPE;
     // (undocumented)

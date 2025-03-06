@@ -286,15 +286,17 @@ export class Question<
     );
   }
 
-  public toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI> {
+  public toJSON(
+    options?: Serializable.Options,
+  ): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI> {
     return {
-      type: Serializable.toJSON(this._type),
+      type: Serializable.toJSON(this._type, options),
       uri: this._uri,
       message: this._message,
-      diagnostic: this._diagnostic.toJSON(),
-      fallback: this._fallback.toJSON(),
-      subject: Serializable.toJSON(this._subject),
-      context: Serializable.toJSON(this._context),
+      diagnostic: this._diagnostic.toJSON(options),
+      fallback: this._fallback.toJSON(options),
+      subject: Serializable.toJSON(this._subject, options),
+      context: Serializable.toJSON(this._context, options),
     };
   }
 }
