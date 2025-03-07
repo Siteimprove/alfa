@@ -19,14 +19,14 @@ function testOrder(t: Assertions, root: Element, expected: Array<Element>) {
 }
 
 test("block-level element is painted before positioned descendant with negative z-index", (t) => {
-  const div = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
+  const div = <div style={{ position: "absolute", zIndex: "-1" }}>Hello</div>;
   const body = <body>{div}</body>;
 
   testOrder(t, body, [body, div]);
 });
 
 test("block-level stacking context element is painted before positioned descendant with negative z-index", (t) => {
-  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
+  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}>Hello</div>;
   const div1 = <div style={{ opacity: "0.8" }}>{div2}</div>;
   const body = <body>{div1}</body>;
 
@@ -34,9 +34,9 @@ test("block-level stacking context element is painted before positioned descenda
 });
 
 test("positioned elements with negative z-index are painted in z-order then tree-order", (t) => {
-  const div1 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
-  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
-  const div3 = <div style={{ position: "absolute", zIndex: "-2" }}></div>;
+  const div1 = <div style={{ position: "absolute", zIndex: "-1" }}>Hello</div>;
+  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}>World</div>;
+  const div3 = <div style={{ position: "absolute", zIndex: "-2" }}>!</div>;
   const body = (
     <body>
       {div1}
@@ -49,8 +49,8 @@ test("positioned elements with negative z-index are painted in z-order then tree
 });
 
 test("positioned element with negative z-index is painted before block-level element", (t) => {
-  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}></div>;
-  const div1 = <div></div>;
+  const div2 = <div style={{ position: "absolute", zIndex: "-1" }}>Hello</div>;
+  const div1 = <div>World</div>;
   const body = (
     <body>
       {div1}
@@ -62,8 +62,8 @@ test("positioned element with negative z-index is painted before block-level ele
 });
 
 test("block-level descendants are painted in tree-order", (t) => {
-  const div3 = <div>3</div>;
-  const div2 = <div>2</div>;
+  const div3 = <div>Hello</div>;
+  const div2 = <div>World</div>;
   const div1 = <div>{div2}</div>;
   const body = (
     <body>
@@ -76,8 +76,8 @@ test("block-level descendants are painted in tree-order", (t) => {
 });
 
 test("block-level elements are painted before floating elements", (t) => {
-  const div2 = <div></div>;
-  const div1 = <div style={{ float: "left" }}></div>;
+  const div2 = <div>Hello</div>;
+  const div1 = <div style={{ float: "left" }}>World</div>;
   const body = (
     <body>
       {div1}
@@ -89,8 +89,8 @@ test("block-level elements are painted before floating elements", (t) => {
 });
 
 test("floating descendants are painted in tree-order", (t) => {
-  const div3 = <div style={{ float: "left" }}>3</div>;
-  const div2 = <div style={{ float: "right" }}>2</div>;
+  const div3 = <div style={{ float: "left" }}>Hello</div>;
+  const div2 = <div style={{ float: "right" }}>World</div>;
   const div1 = <div style={{ float: "" }}>{div2}</div>;
   const body = (
     <body>
@@ -108,9 +108,9 @@ test("floating descendants are painted atomically with respect to block-level de
   // floating elements are painted after their floating ancestor and as a
   // consequence will be painted after block-level descendants outside the float
   // even though they appear earlier in tree-order.
-  const div2 = <div>2</div>;
+  const div2 = <div>Hello</div>;
   const div1 = <div style={{ float: "left" }}>{div2}</div>;
-  const div3 = <div>3</div>;
+  const div3 = <div>World</div>;
   const body = (
     <body>
       {div1}
@@ -122,8 +122,8 @@ test("floating descendants are painted atomically with respect to block-level de
 });
 
 test("floating descendants are not painted atomically with respect to positioned descendants", (t) => {
-  const div1 = <div style={{ position: "absolute" }}>1</div>;
-  const div3 = <div style={{ position: "absolute" }}>3</div>;
+  const div1 = <div style={{ position: "absolute" }}>Hello</div>;
+  const div3 = <div style={{ position: "absolute" }}>World</div>;
   const div2 = <div style={{ float: "left" }}>{div3}</div>;
   const body = (
     <body>
@@ -136,8 +136,8 @@ test("floating descendants are not painted atomically with respect to positioned
 });
 
 test("floating descendants are painted before inline-level descendants", (t) => {
-  const div1 = <div style={{ display: "inline" }}></div>;
-  const div2 = <div style={{ float: "left" }}></div>;
+  const div1 = <div style={{ display: "inline" }}>Hello</div>;
+  const div2 = <div style={{ float: "left" }}>World</div>;
   const body = (
     <body>
       {div1}
@@ -149,8 +149,8 @@ test("floating descendants are painted before inline-level descendants", (t) => 
 });
 
 test("inline-level descendants are painted in tree-order", (t) => {
-  const span3 = <span>3</span>;
-  const span2 = <span>2</span>;
+  const span3 = <span>Hello</span>;
+  const span2 = <span>World</span>;
   const span1 = <span>{span2}</span>;
   const body = (
     <body>
@@ -163,8 +163,8 @@ test("inline-level descendants are painted in tree-order", (t) => {
 });
 
 test("inline-level descendants are painted before positioned elements", (t) => {
-  const div1 = <div style={{ position: "absolute" }}></div>;
-  const div2 = <div style={{ display: "inline" }}></div>;
+  const div1 = <div style={{ position: "absolute" }}>Hello</div>;
+  const div2 = <div style={{ display: "inline" }}>World</div>;
   const body = (
     <body>
       {div1}
@@ -176,10 +176,10 @@ test("inline-level descendants are painted before positioned elements", (t) => {
 });
 
 test("positioned descendants with z-index: auto and non-positioned elements that create stacking contexts are painted in tree-order", (t) => {
-  const div2 = <div style={{ position: "sticky" }}>2</div>;
+  const div2 = <div style={{ position: "sticky" }}>Hello</div>;
   const div1 = <div style={{ position: "fixed" }}>{div2}</div>;
-  const div3 = <div style={{ opacity: "0.8" }}>3</div>;
-  const div4 = <div style={{ position: "relative" }}>4</div>;
+  const div3 = <div style={{ opacity: "0.8" }}>World</div>;
+  const div4 = <div style={{ position: "relative" }}>!</div>;
   const body = (
     <body>
       {div1}
@@ -197,9 +197,9 @@ test("positioned descendants are painted atomically with respect to block-level 
   // positioned elements are painted after their positioned ancestor and as a
   // consequence will be painted after block-level descendants outside the positioned element
   // even though they appear earlier in tree-order.
-  const div2 = <div>2</div>;
+  const div2 = <div>Hello</div>;
   const div1 = <div style={{ position: "absolute" }}>{div2}</div>;
-  const div3 = <div>3</div>;
+  const div3 = <div>World</div>;
   const body = (
     <body>
       {div1}
@@ -211,8 +211,8 @@ test("positioned descendants are painted atomically with respect to block-level 
 });
 
 test("positioned descendants are not painted atomically with respect to positioned descendants with positive z-indices", (t) => {
-  const div1 = <div style={{ position: "absolute", zIndex: "1" }}>1</div>;
-  const div3 = <div style={{ position: "absolute", zIndex: "2" }}>3</div>;
+  const div1 = <div style={{ position: "absolute", zIndex: "1" }}>Hello</div>;
+  const div3 = <div style={{ position: "absolute", zIndex: "2" }}>World</div>;
   const div2 = <div style={{ position: "absolute" }}>{div3}</div>;
   const body = (
     <body>
@@ -225,8 +225,8 @@ test("positioned descendants are not painted atomically with respect to position
 });
 
 test("positioned elements without z-index are painted before positioned elements with positve z-index", (t) => {
-  const div1 = <div style={{ position: "absolute", zIndex: "1" }}></div>;
-  const div2 = <div style={{ position: "absolute" }}></div>;
+  const div1 = <div style={{ position: "absolute", zIndex: "1" }}>Hello</div>;
+  const div2 = <div style={{ position: "absolute" }}>World</div>;
   const body = (
     <body>
       {div1}
@@ -238,9 +238,9 @@ test("positioned elements without z-index are painted before positioned elements
 });
 
 test("positioned elements with positive z-index are painted in z-order then tree-order", (t) => {
-  const div1 = <div style={{ position: "absolute", zIndex: "2" }}></div>;
-  const div2 = <div style={{ position: "absolute", zIndex: "1" }}></div>;
-  const div3 = <div style={{ position: "absolute", zIndex: "1" }}></div>;
+  const div1 = <div style={{ position: "absolute", zIndex: "2" }}>Hello</div>;
+  const div2 = <div style={{ position: "absolute", zIndex: "1" }}>World</div>;
+  const div3 = <div style={{ position: "absolute", zIndex: "1" }}>!</div>;
   const body = (
     <body>
       {div1}
@@ -253,8 +253,8 @@ test("positioned elements with positive z-index are painted in z-order then tree
 });
 
 test("inline-level stacking context element is painted after floating descendants and before inline-level descendants", (t) => {
-  const div2 = <div style={{ float: "left" }}></div>;
-  const div3 = <div style={{ display: "inline" }}></div>;
+  const div2 = <div style={{ float: "left" }}>Hello</div>;
+  const div3 = <div style={{ display: "inline" }}>World</div>;
   const div1 = (
     <div style={{ display: "inline", isolation: "isolate" }}>
       {div2}
@@ -270,8 +270,8 @@ test("stacking context creating elements are painted atomically", (t) => {
   // The element with the lower z-index is painted after the element with the
   // higher z-index because the element with opacity creates a stacking context
   // and therefore is painted atomically before the element with z-index: 2.
-  const div1 = <div style={{ position: "absolute", zIndex: "2" }}></div>;
-  const div3 = <div style={{ position: "relative", zIndex: "10" }}></div>;
+  const div1 = <div style={{ position: "absolute", zIndex: "2" }}>Hello</div>;
+  const div3 = <div style={{ position: "relative", zIndex: "10" }}>World</div>;
   const div2 = <div style={{ opacity: "0.8" }}>{div3}</div>;
   const body = (
     <body>
@@ -284,8 +284,8 @@ test("stacking context creating elements are painted atomically", (t) => {
 });
 
 test("non-positioned elements are not affected by z-index", (t) => {
-  const div2 = <div style={{ zIndex: "1" }}></div>;
-  const div3 = <div></div>;
+  const div2 = <div style={{ zIndex: "1" }}>Hello</div>;
+  const div3 = <div>World</div>;
   const div1 = (
     <div>
       {div2}
@@ -298,8 +298,8 @@ test("non-positioned elements are not affected by z-index", (t) => {
 });
 
 test("flex children are affected by z-index", (t) => {
-  const div2 = <div style={{ zIndex: "1" }}></div>;
-  const div3 = <div></div>;
+  const div2 = <div style={{ zIndex: "1" }}>Hello</div>;
+  const div3 = <div>World</div>;
   const div1 = (
     <div style={{ display: "flex" }}>
       {div2}
@@ -312,8 +312,8 @@ test("flex children are affected by z-index", (t) => {
 });
 
 test("grid children are affected by z-index", (t) => {
-  const div2 = <div style={{ zIndex: "1" }}></div>;
-  const div3 = <div></div>;
+  const div2 = <div style={{ zIndex: "1" }}>Hello</div>;
+  const div3 = <div>World</div>;
   const div1 = (
     <div style={{ display: "grid" }}>
       {div2}
@@ -323,4 +323,16 @@ test("grid children are affected by z-index", (t) => {
   const body = <body>{div1}</body>;
 
   testOrder(t, body, [body, div1, div3, div2]);
+});
+
+test("invisible elements are not painted", (t) => {
+  const body = (
+    <body>
+      <div></div>
+      <div style={{ visibility: "hidden" }}></div>
+      <div style={{ display: "none" }}></div>
+    </body>
+  );
+
+  testOrder(t, body, [body]);
 });

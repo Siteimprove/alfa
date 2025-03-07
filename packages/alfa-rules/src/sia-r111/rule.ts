@@ -25,9 +25,8 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Existence of a clickable region is guaranteed by applicability
         const boundingBox = Rectangle.union(
-          ...getClickableRegion(device, target).getUnsafe(),
+          ...getClickableRegion(device, target),
         );
 
         const name = WithName.getName(target, device).getOr("");

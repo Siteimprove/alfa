@@ -23,7 +23,7 @@ const {
   isBlockContainer,
   isFlexOrGridChild,
   isPositioned,
-  isRendered,
+  isVisible,
 } = Style;
 
 import { createsStackingContext } from "./predicate/creates-stacking-context.js";
@@ -58,7 +58,7 @@ export class PaintingOrder
     return this._order
       .get(element)
       .map((index) => Slice.of(this._elements, index + 1))
-      .getOrElse(() => Slice.of(this._elements));
+      .getOr([]);
   }
 
   public equals(value: this): boolean;
@@ -118,14 +118,12 @@ export namespace PaintingOrder {
   ): PaintingOrder {
     return PaintingOrder.of(
       Selective.of(root)
-        .if(Element.isElement, (element) =>
-          paint(device, element, Sequence.empty()),
-        )
+        .if(Element.isElement, (element) => paint(device, element))
         .else((node) =>
           node
             .children(Node.fullTree)
             .filter(Element.isElement)
-            .flatMap((element) => paint(device, element, Sequence.empty())),
+            .flatMap((element) => paint(device, element)),
         )
         .get(),
     );
@@ -174,7 +172,7 @@ export namespace PaintingOrder {
   function paint(
     device: Device,
     element: Element,
-    canvas: Sequence<Element>,
+    canvas: Sequence<Element> = Sequence.empty(),
     options: { defer: boolean } = {
       defer: false,
     },
@@ -196,9 +194,7 @@ export namespace PaintingOrder {
      * itself and the other descendants to the floats layer.
      */
     function distributeIntoLayers(element: Element) {
-      if (
-        or(isFlexOrGridChild(device), createsStackingContext(device))(element)
-      ) {
+      if (createsStackingContext(device)(element)) {
         positionedOrStackingContexts.push(element);
       } else if (not(isPositioned(device, "static"))(element)) {
         if (hasInitialComputedStyle("z-index", device)(element)) {
@@ -251,7 +247,7 @@ export namespace PaintingOrder {
     function traverse(element: Element) {
       for (const child of element
         .children(Node.fullTree)
-        .filter(and(Element.isElement, isRendered(device)))) {
+        .filter(and(Element.isElement, isVisible(device)))) {
         distributeIntoLayers(child);
 
         if (

@@ -33,9 +33,8 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Existence of a clickable region is guaranteed by applicability
         const boundingBox = Rectangle.union(
-          ...getClickableRegion(device, target).getUnsafe(),
+          ...getClickableRegion(device, target),
         );
         const name = WithName.getName(target, device).getOr("");
 
@@ -95,8 +94,7 @@ function* findElementsWithInsufficientSpacingToTarget(
   device: Device,
   target: Element,
 ): Iterable<Element> {
-  // Existence of a clickable region is guaranteed by applicability
-  const targetRegion = getClickableRegion(device, target).getUnsafe();
+  const targetRegion = getClickableRegion(device, target);
   const targetBoundingBox = Rectangle.union(...targetRegion);
 
   const undersizedTargets = undersizedCache
@@ -108,8 +106,7 @@ function* findElementsWithInsufficientSpacingToTarget(
   // TODO: We could avoid unnecessary comparisons by using a quad tree or similar
   for (const candidate of getAllTargets(document, device)) {
     if (target !== candidate) {
-      // Existence of a clickable region should be guaranteed by implementation of getAllTargets
-      const candidateRegion = getClickableRegion(device, candidate).getUnsafe();
+      const candidateRegion = getClickableRegion(device, candidate);
       const candidateBoundingBox = Rectangle.union(...candidateRegion);
 
       // To determine if an undersized target has sufficient spacing,

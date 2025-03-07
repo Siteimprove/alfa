@@ -1,9 +1,9 @@
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import type { Serializable } from "@siteimprove/alfa-json";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 import type * as json from "@siteimprove/alfa-json";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { max, min } = Math;
 
@@ -198,11 +198,11 @@ export class Rectangle
   }
 
   /**
-   * Subtracts a given other rectangle. The result is a collection of smaller
+   * Subtracts one or more rectangles. The result is a collection of smaller
    * rectangles covering the part of the original rectangle which didn't overlap
-   * the rectangle that was subtracted. The smaller rectangles will have the
-   * maximal possible width and height and there will be between 0 and 4
-   * depending on how the rectangles overlap.
+   * the rectangles that was subtracted. The smaller rectangles will have the
+   * maximal possible width and height and for each subtraction between 0 and 4
+   * smaller rectangles will be produced to cover the difference.
    *
    * In the following example, the rectangles overlap in such a way that the
    * difference will consist of two narrow overlapping rectangles to the right
@@ -211,23 +211,37 @@ export class Rectangle
    *       +---------------------------------------+
    *       |                                       |
    *       |                                       |
-   *       |     +---------------------------------+-------+
-   *       |     |                                 |       |
-   *       |     |                                 |       |
-   *       |     |                                 |       |
-   *       |     |                                 |       |
-   *       |     |                                 |       |
-   *       |     |                                 |       |
-   *       |     |                                 |       |
-   *       |     |                                 |       |
+   *       |     +- - - - - - - - - - - - - - - - -+-------+
+   *       |     |                                 |\\\\\\\|
+   *       |                                       |\\\\\\\|
+   *       |     |                                 |\\\\\\\|
+   *       |                                       |\\\\\\\|
+   *       |     |                                 |\\\\\\\|
+   *       |                                       |\\\\\\\|
+   *       |     |                                 |\\\\\\\|
+   *       |                                       |\\\\\\\|
    *       +-----+---------------------------------+-------+
-   *             |                                 |       |
-   *             |                                 |       |
+   *             |/////////////////////////////////|XXXXXXX|
+   *             |/////////////////////////////////|XXXXXXX|
    *             +---------------------------------+-------+
    */
-  public subtract(other: Rectangle): Sequence<Rectangle> {
+  public subtract(...others: Array<Rectangle>): Sequence<Rectangle> {
+    let result: Array<Rectangle> = [this];
+    for (const other of others) {
+      result = result.flatMap((rect) => rect._subtract(other));
+
+      // If the difference becomes empty, there is no need to keep subtracting.
+      if (result.length === 0) {
+        return Sequence.empty();
+      }
+    }
+
+    return Sequence.from(result);
+  }
+
+  private _subtract(other: Rectangle): Array<Rectangle> {
     if (!this.intersects(other)) {
-      return Sequence.of(this);
+      return [this];
     }
 
     const result: Array<Rectangle> = [];
@@ -266,7 +280,7 @@ export class Rectangle
       );
     }
 
-    return Sequence.from(result);
+    return result;
   }
 
   /**

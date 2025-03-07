@@ -1,110 +1,79 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
-import { type Element, Node, Query } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { PaintingOrder } from "@siteimprove/alfa-painting-order";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import { isTarget } from "../applicability/targets-of-pointer-events.js";
 
-const { getInclusiveElementDescendants } = Query;
 const { isVisible, hasComputedStyle } = Style;
-
-const { and, or } = Refinement;
+const { and, not, or } = Refinement;
+const { hasBox } = Element;
 
 /**
- * Gets the clickable region of an element or an error if the element or one of its
- * descendants doesn't have a bounding box or if the element itself is not visible.
- * The clickable region is represented as a collection of rectangles since an element
- * might be clipped by other elements, fragmenting its clickable region.
+ * Gets a collection of rectangles covering the region where an element would
+ * receive pointer events. If the element is invisible or the region is empty
+ * an error is returned.
  *
- * @remarks
- * This function assumes that the element can receive pointer events, i.e. is clickable.
- * If called on an element that is not clickable, the function will still return the
- * the area that would be clickable if the element could receive pointer events.
- *
- * The clickable box is approximated by the smallest rectangle containing
- * the bounding boxes of the element and all its visible descendants.
+ * @privateRemarks
+ * The clickable region of an element is found by subtracting the bounding
+ * boxes of clipping elements and then recursively finding and concatenating
+ * the clickable regions of the children that are visible and not themselves
+ * targets of pointer event. Here, clipping elements are those elements painted
+ * above, whose bounding boxes overlap the element and who are either
+ * non-descendants or descendants that are also targets of pointer events.
  *
  * @internal
  */
 export const getClickableRegion = Cache.memoize(function (
   device: Device,
   element: Element,
-): Result<Sequence<Rectangle>, string> {
-  if (!isVisible(device)(element)) {
-    return Err.of("Cannot get clickable box of an invisible element.");
+): Sequence<Rectangle> {
+  if (or(not(isVisible(device)), not(hasBox(() => true, device)))(element)) {
+    return Sequence.empty<Rectangle>();
   }
+
+  const box = element.getBoundingBox(device).getUnsafe(); // Existence is guaranteed by above check.
+
   const paintingOrder = PaintingOrder.from(element.root(Node.fullTree), device);
 
-  let result = Sequence.empty<Rectangle>();
-
-  for (const descendant of getInclusiveElementDescendants(element).filter(
-    isVisible(device),
-  )) {
-    const box = descendant.getBoundingBox(device);
-    if (!box.isSome()) {
-      return Err.of(
-        "The element of one its descendants does not have a bounding box.",
-      );
-    }
-
-    const diff = subtractNonDescendantsAndTargets(
-      box.get(),
-      paintingOrder,
-      element,
-      device,
-    );
-    result = result.concat(diff);
-  }
-
-  if (result.isEmpty()) {
-    return Err.of(
-      "The element does not have a clickable box because it's completely covered by other elements.",
-    );
-  }
-
-  return Result.of(result);
-});
-
-function subtractNonDescendantsAndTargets(
-  box: Rectangle,
-  paintingOrder: PaintingOrder,
-  element: Element,
-  device: Device,
-): Sequence<Rectangle> {
-  const nonDescendantsAbove = Sequence.from(
-    paintingOrder.getElementsAbove(element),
-  ).filter(
-    and(
-      hasComputedStyle(
-        "pointer-events",
-        ({ value }) => value !== "none",
-        device,
-      ),
-      or(
-        (elementAbove: Element) =>
-          !element.isAncestorOf(elementAbove, Node.fullTree),
-        isTarget(device),
-      ),
-    ),
+  let result = box.subtract(
+    ...Sequence.from(paintingOrder.getElementsAbove(element))
+      .filter(
+        and(
+          hasComputedStyle(
+            "pointer-events",
+            ({ value }) => value !== "none",
+            device,
+          ),
+          or(
+            (elementAbove: Element) =>
+              !element.isAncestorOf(elementAbove, Node.fullTree),
+            isTarget(device),
+          ),
+        ),
+      )
+      .collect((above) => above.getBoundingBox(device))
+      .filter((above) => above.intersects(box)), // Not strictly necessary, but prevents a lot of needles subtractions.
   );
 
-  let result = Sequence.of(box);
+  const children = element
+    .children(Node.fullTree)
+    .filter(Element.isElement)
+    .filter(and(isVisible(device), not(isTarget(device))));
 
-  for (const above of nonDescendantsAbove) {
-    const box = above.getBoundingBox(device);
-    if (box.isSome()) {
-      result = result.flatMap((rect) => rect.subtract(box.get()));
-    }
-
-    if (result.isEmpty()) {
-      return result;
-    }
+  for (const child of children) {
+    // Only add the child boxes if they contribute to the region, i.e. are not
+    // contained in any already added boxes.
+    result = result.concat(
+      getClickableRegion(device, child)
+        .reject((childBox) => result.some((box) => box.contains(childBox)))
+        .toArray(), // The reference to `result` in the above and the lazyness of `Sequence` causes incorrect results, so we have to force the sequence to materialize
+    );
   }
 
   return result;
-}
+});
