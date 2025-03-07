@@ -55,6 +55,7 @@
     "@siteimprove/alfa-map": "workspace:^",
     "@siteimprove/alfa-math": "workspace:^",
     "@siteimprove/alfa-option": "workspace:^",
+    "@siteimprove/alfa-painting-order": "workspace:^",
     "@siteimprove/alfa-predicate": "workspace:^",
     "@siteimprove/alfa-record": "workspace:^",
     "@siteimprove/alfa-rectangle": "workspace:^",
