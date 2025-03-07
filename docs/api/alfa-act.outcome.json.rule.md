@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-rule: Rule.JSON;
+rule: Rule.MinimalJSON | Rule.JSON;
 ```

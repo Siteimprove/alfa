@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-flags",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.98.0",
+  "version": "0.99.0",
   "license": "MIT",
   "description": "Functionality for manipulating set of boolean flags",
   "repository": {
@@ -24,7 +24,8 @@
   "dependencies": {
     "@siteimprove/alfa-array": "workspace:^",
     "@siteimprove/alfa-equatable": "workspace:^",
-    "@siteimprove/alfa-json": "workspace:^"
+    "@siteimprove/alfa-json": "workspace:^",
+    "@siteimprove/alfa-map": "workspace:^"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^"

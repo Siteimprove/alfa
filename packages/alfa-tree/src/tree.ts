@@ -37,19 +37,21 @@ const rng = RNG.hexString(32).create();
  * @public
  */
 export abstract class Node<
+    // The kind of Flags that control tree traversal.
+    K extends string,
     // The list of flags allowed to control tree traversal.
     F extends Flags.allFlags,
     // The type
     T extends string = string,
   >
   implements
-    Iterable<Node<F>>,
+    Iterable<Node<K, F>>,
     Equatable,
     Hashable,
     json.Serializable<Node.JSON<T>>
 {
-  protected readonly _children: Array<Node<F>>;
-  protected _parent: Option<Node<F>> = None;
+  protected readonly _children: Array<Node<K, F>>;
+  protected _parent: Option<Node<K, F>> = None;
   protected readonly _type: T;
 
   // Externally provided data.
@@ -72,15 +74,15 @@ export abstract class Node<
   protected _frozen: boolean = false;
 
   protected constructor(
-    children: Array<Node<F>>,
+    children: Array<Node<K, F>>,
     type: T,
     externalId?: string,
     internalId?: string,
     extraData?: any,
   ) {
-    this._children = (children as Array<Node<F>>).filter((child) =>
+    this._children = (children as Array<Node<K, F>>).filter((child) =>
       child._attachParent(this),
-    ) as Array<Node<F>>;
+    ) as Array<Node<K, F>>;
     this._type = type;
     this._externalId = externalId;
     this._extraData = extraData;
@@ -127,18 +129,18 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
    */
-  public parent(options?: Flags<F>): Option<Node<F>> {
+  public parent(options?: Flags<K, F>): Option<Node<K, F>> {
     return this._parent;
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
    */
-  public isParentOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isParentOf(node: Node<K, F>, options?: Flags<K, F>): boolean {
     return node.parent(options).includes(this);
   }
 
-  private _lastKnownRoot: Array<Node<F>> = [];
+  private _lastKnownRoot: Array<Node<K, F>> = [];
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-root}
@@ -147,7 +149,7 @@ export abstract class Node<
   // So we cache the last known root, try again from here and update the result
   // if necessary. Once the tree is fully frozen, this only cost an extra look
   // through this.parent which is not expensive.
-  public root(options?: Flags<F>): Node<F> {
+  public root(options?: Flags<K, F>): Node<K, F> {
     const value = options?.value ?? 0;
     let lastKnownRoot = this._lastKnownRoot[value] ?? this;
 
@@ -162,32 +164,32 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-root}
    */
-  public isRootOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isRootOf(node: Node<K, F>, options?: Flags<K, F>): boolean {
     return node.root(options) === this;
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
-  public children(options?: Flags<F>): Sequence<Node<F>> {
+  public children(options?: Flags<K, F>): Sequence<Node<K, F>> {
     return Sequence.from(this._children);
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
-  public isChildOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isChildOf(node: Node<K, F>, options?: Flags<K, F>): boolean {
     return node.children(options).includes(this);
   }
 
-  private _descendants: Array<Sequence<Node<F>>> = [];
+  private _descendants: Array<Sequence<Node<K, F>>> = [];
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
    */
   // While this is lazily built, actually generating the sequence takes time to
   // walk through the tree and resolve all the continuations.
   // Caching it saves a lot of time by generating the sequence only once.
-  public descendants(options?: Flags<F>): Sequence<Node<F>> {
+  public descendants(options?: Flags<K, F>): Sequence<Node<K, F>> {
     const value = options?.value ?? 0;
     if (this._descendants[value] === undefined) {
       this._descendants[value] = this.children(options).flatMap((child) =>
@@ -204,14 +206,14 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
    */
-  public isDescendantOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isDescendantOf(node: Node<K, F>, options?: Flags<K, F>): boolean {
     return node.descendants(options).includes(this);
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
    */
-  public inclusiveDescendants(options?: Flags<F>): Sequence<Node<F>> {
+  public inclusiveDescendants(options?: Flags<K, F>): Sequence<Node<K, F>> {
     return Sequence.of(
       this,
       Lazy.of(() => this.descendants(options)),
@@ -221,14 +223,17 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
    */
-  public isInclusiveDescendantsOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isInclusiveDescendantsOf(
+    node: Node<K, F>,
+    options?: Flags<K, F>,
+  ): boolean {
     return node.inclusiveDescendants(options).includes(this);
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
    */
-  public ancestors(options?: Flags<F>): Sequence<Node<F>> {
+  public ancestors(options?: Flags<K, F>): Sequence<Node<K, F>> {
     for (const parent of this.parent(options)) {
       return Sequence.of(
         parent,
@@ -242,14 +247,14 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
    */
-  public isAncestorOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isAncestorOf(node: Node<K, F>, options?: Flags<K, F>): boolean {
     return node.ancestors(options).includes(this);
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
    */
-  public inclusiveAncestors(options?: Flags<F>): Sequence<Node<F>> {
+  public inclusiveAncestors(options?: Flags<K, F>): Sequence<Node<K, F>> {
     return Sequence.of(
       this,
       Lazy.of(() => this.ancestors(options)),
@@ -259,28 +264,31 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
    */
-  public isInclusiveAncestorOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isInclusiveAncestorOf(
+    node: Node<K, F>,
+    options?: Flags<K, F>,
+  ): boolean {
     return node.inclusiveAncestors(options).includes(this);
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-sibling}
    */
-  public siblings(options?: Flags<F>): Sequence<Node<F>> {
+  public siblings(options?: Flags<K, F>): Sequence<Node<K, F>> {
     return this.inclusiveSiblings(options).reject(equals(this));
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-sibling}
    */
-  public isSiblingOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isSiblingOf(node: Node<K, F>, options?: Flags<K, F>): boolean {
     return node.siblings(options).includes(this);
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling}
    */
-  public inclusiveSiblings(options?: Flags<F>): Sequence<Node<F>> {
+  public inclusiveSiblings(options?: Flags<K, F>): Sequence<Node<K, F>> {
     for (const parent of this.parent(options)) {
       return parent.children(options);
     }
@@ -291,18 +299,21 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling}
    */
-  public isInclusiveSiblingOf(node: Node<F>, options?: Flags<F>): boolean {
+  public isInclusiveSiblingOf(
+    node: Node<K, F>,
+    options?: Flags<K, F>,
+  ): boolean {
     return node.inclusiveSiblings(options).includes(this);
   }
 
-  private _preceding: Array<Sequence<Node<F>>> = [];
+  private _preceding: Array<Sequence<Node<K, F>>> = [];
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-preceding}
    */
   // Due to reversing, this is not lazy and is costly at build time.
   // This only looks in frozen parts of the tree.
-  public preceding(options?: Flags<F>): Sequence<Node<F>> {
+  public preceding(options?: Flags<K, F>): Sequence<Node<K, F>> {
     const value = options?.value ?? 0;
     if (this._preceding[value] === undefined) {
       this._preceding[value] = this.inclusiveSiblings(options)
@@ -313,14 +324,14 @@ export abstract class Node<
     return this._preceding[value];
   }
 
-  private _following: Array<Sequence<Node<F>>> = [];
+  private _following: Array<Sequence<Node<K, F>>> = [];
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-following}
    */
   // Due to skipUntil, this is not fully lazy and is costly at build time.
   // This only looks in frozen parts of the tree.
-  public following(options?: Flags<F>): Sequence<Node<F>> {
+  public following(options?: Flags<K, F>): Sequence<Node<K, F>> {
     const value = options?.value ?? 0;
     if (this._following[value] === undefined) {
       this._following[value] = this.inclusiveSiblings(options)
@@ -335,18 +346,18 @@ export abstract class Node<
    * {@link https://dom.spec.whatwg.org/#concept-tree-first-child}
    */
   // Sequence.first() is fast and doesn't need caching
-  public first(options?: Flags<F>): Option<Node<F>> {
+  public first(options?: Flags<K, F>): Option<Node<K, F>> {
     return this.children(options).first();
   }
 
-  private _last: Array<Option<Node<F>>> = [];
+  private _last: Array<Option<Node<K, F>>> = [];
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-last-child}
    */
   // Due to last, this is not lazy and is costly at build time.
   // This only looks in frozen parts of the tree.
-  public last(options?: Flags<F>): Option<Node<F>> {
+  public last(options?: Flags<K, F>): Option<Node<K, F>> {
     const value = options?.value ?? 0;
     if (this._last[value] === undefined) {
       this._last[value] = this.children(options).last();
@@ -358,55 +369,55 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-previous-sibling}
    */
-  public previous(options?: Flags<F>): Option<Node<F>> {
+  public previous(options?: Flags<K, F>): Option<Node<K, F>> {
     return this.preceding(options).first();
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-next-sibling}
    */
-  public next(options?: Flags<F>): Option<Node<F>> {
+  public next(options?: Flags<K, F>): Option<Node<K, F>> {
     return this.following(options).first();
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-index}
    */
-  public index(options?: Flags<F>): number {
+  public index(options?: Flags<K, F>): number {
     return this.preceding(options).size;
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#dom-element-closest}
    */
-  public closest<T extends Node<F>>(
-    refinement: Refinement<Node<F>, T>,
-    options?: Flags<F>,
+  public closest<T extends Node<K, F>>(
+    refinement: Refinement<Node<K, F>, T>,
+    options?: Flags<K, F>,
   ): Option<T>;
 
   /**
    * {@link https://dom.spec.whatwg.org/#dom-element-closest}
    */
   public closest(
-    predicate: Predicate<Node<F>>,
-    options?: Flags<F>,
-  ): Option<Node<F>>;
+    predicate: Predicate<Node<K, F>>,
+    options?: Flags<K, F>,
+  ): Option<Node<K, F>>;
 
   /**
    * {@link https://dom.spec.whatwg.org/#dom-element-closest}
    */
   public closest(
-    predicate: Predicate<Node<F>>,
-    options?: Flags<F>,
-  ): Option<Node<F>> {
+    predicate: Predicate<Node<K, F>>,
+    options?: Flags<K, F>,
+  ): Option<Node<K, F>> {
     return this.inclusiveAncestors(options).find(predicate);
   }
 
-  public *[Symbol.iterator](): Iterator<Node<F>> {
+  public *[Symbol.iterator](): Iterator<Node<K, F>> {
     yield* this.descendants();
   }
 
-  public equals(value: Node<F>): boolean;
+  public equals(value: Node<K, F>): boolean;
 
   public equals(value: unknown): value is this;
 
@@ -451,7 +462,7 @@ export abstract class Node<
   /**
    * @internal
    */
-  public _attachParent(parent: Node<F>): boolean {
+  public _attachParent(parent: Node<K, F>): boolean {
     if (this._frozen || this._parent.isSome()) {
       return false;
     }

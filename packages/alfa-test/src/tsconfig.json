@@ -2,11 +2,6 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": [
-    "./index.ts",
-    "./test.ts",
-    "./types.ts",
-    "./vitest.d.ts"
-  ],
+  "files": ["./index.ts", "./test.ts", "./types.ts", "./vitest.d.ts"],
   "references": [{ "path": "../../alfa-rng" }]
 }

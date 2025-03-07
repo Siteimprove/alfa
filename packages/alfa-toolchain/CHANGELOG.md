@@ -1,5 +1,7 @@
 # @siteimprove/alfa-toolchain
 
+## 0.99.0
+
 ## 0.98.0
 
 ### Minor Changes

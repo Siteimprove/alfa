@@ -7,9 +7,45 @@
 **Signature:**
 
 ```typescript
-abstract toJSON(): Rule.JSON;
+abstract toJSON(options: {
+        verbosity: json.Serializable.Verbosity.Minimal;
+    }): Rule.MinimalJSON;
 ```
+
+## Parameters
+
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+options
+
+
+</td><td>
+
+{ verbosity: [json.Serializable.Verbosity.Minimal](./alfa-json.serializable.verbosity.md)<!-- -->; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
-[Rule.JSON](./alfa-act.rule.json.md)
+[Rule.MinimalJSON](./alfa-act.rule.minimaljson.md)
 

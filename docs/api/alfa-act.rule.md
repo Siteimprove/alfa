@@ -118,6 +118,15 @@ Description
 
 
 </td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-act.rule.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
 </tbody></table>
 
 ## Namespaces

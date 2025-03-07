@@ -1,5 +1,25 @@
 # Alfa changelog
 
+## [0.99.0](../../compare/v0.98.0...v0.99.0) (2025-03-05)
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0990): `List.some` is now available. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0990): A new predicate `isFlexOrGridChild` is available. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0990): `Device.isDevice` is now available. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0990), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0990): The `<search>` element is now correctly handled. ([#1759](https://github.com/Siteimprove/alfa/pull/1759))
+
+- [@siteimprove/alfa-painting-order](packages/alfa-painting-order/CHANGELOG.md#0990): A new package has been added for computing the painting order of HTML elements. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#0990): A minimal serialization of rules (and outcomes), including only the URI, is now available. ([#1765](https://github.com/Siteimprove/alfa/pull/1765))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0990): SIA-R115 now correctly also targets headings in nested documents and shadow DOM. ([#1766](https://github.com/Siteimprove/alfa/pull/1766))
+
 ## [0.98.0](../../compare/v0.97.0...v0.98.0) (2025-02-03)
 
 ### Breaking

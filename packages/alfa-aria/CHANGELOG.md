@@ -1,5 +1,11 @@
 # @siteimprove/alfa-aria
 
+## 0.99.0
+
+### Minor Changes
+
+- **Added:** The `<search>` element is now correctly handled. ([#1759](https://github.com/Siteimprove/alfa/pull/1759))
+
 ## 0.98.0
 
 ### Patch Changes

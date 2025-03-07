@@ -119,7 +119,7 @@ export abstract class Outcome<
   public toJSON(options?: json.Serializable.Options): Outcome.JSON<V> {
     return {
       outcome: this._outcome,
-      rule: this._rule.toJSON(),
+      rule: this._rule.toJSON(options),
       mode: this._mode,
     };
   }
@@ -168,7 +168,7 @@ export namespace Outcome {
   export interface JSON<V extends Value = Value> {
     [key: string]: json.JSON;
     outcome: V;
-    rule: Rule.JSON;
+    rule: Rule.MinimalJSON | Rule.JSON;
     mode: Mode;
   }
 

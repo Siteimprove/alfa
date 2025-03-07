@@ -1,7 +1,22 @@
-import { Keyword, Contain } from "@siteimprove/alfa-css";
+import { Keyword, ContainFlags } from "@siteimprove/alfa-css";
+import { Parser } from "@siteimprove/alfa-parser";
+
 import { Longhand } from "../longhand.js";
 
-type Specified = Contain;
+const { either } = Parser;
+
+/**
+ * {@link
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/contain#formal_syntax}
+ *
+ * @public
+ */
+type Specified =
+  | Keyword<"none">
+  | Keyword<"strict">
+  | Keyword<"content">
+  | ContainFlags;
+
 type Computed = Specified;
 
 /**
@@ -10,7 +25,7 @@ type Computed = Specified;
  */
 export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
-  Contain.parse,
+  either(Keyword.parse("none", "strict", "content"), ContainFlags.parse),
   (value) => value,
   { inherits: false },
 );
