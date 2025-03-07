@@ -53,7 +53,7 @@ export class Rectangle implements Equatable, Hashable, Serializable<Rectangle.JS
     static of(x: number, y: number, width: number, height: number): Rectangle;
     // (undocumented)
     get right(): number;
-    subtract(other: Rectangle): Sequence<Rectangle>;
+    subtract(...others: Array<Rectangle>): Sequence<Rectangle>;
     // (undocumented)
     toJSON(): Rectangle.JSON;
     // (undocumented)
