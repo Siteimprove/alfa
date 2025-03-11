@@ -1,4 +1,7 @@
-import type { Option } from "@siteimprove/alfa-option";
+import { Cache } from "@siteimprove/alfa-cache";
+import type { Device } from "@siteimprove/alfa-device";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
@@ -13,21 +16,26 @@ import { Slotable } from "./slotable.js";
 export class Text extends Node<"text"> implements Slotable {
   public static of(
     data: string,
+    box: Option<Rectangle> = None,
+    device: Option<Device> = None,
     externalId?: string,
     internalId?: string,
     extraData?: any,
   ): Text {
-    return new Text(data, externalId, internalId, extraData);
+    return new Text(data, box, device, externalId, internalId, extraData);
   }
 
   public static empty(): Text {
-    return new Text("");
+    return new Text("", None, None);
   }
 
   private readonly _data: string;
+  private readonly _boxes: Cache<Device, Rectangle>;
 
   protected constructor(
     data: string,
+    box: Option<Rectangle>,
+    device: Option<Device>,
     externalId?: string,
     internalId?: string,
     extraData?: any,
@@ -35,6 +43,10 @@ export class Text extends Node<"text"> implements Slotable {
     super([], "text", externalId, internalId, extraData);
 
     this._data = data;
+
+    this._boxes = Cache.from(
+      device.isSome() && box.isSome() ? [[device.get(), box.get()]] : [],
+    );
   }
 
   public get data(): string {
@@ -43,6 +55,10 @@ export class Text extends Node<"text"> implements Slotable {
 
   public assignedSlot(): Option<Slot> {
     return Slotable.findSlot(this);
+  }
+
+  public getBoundingBox(device: Device): Option<Rectangle> {
+    return this._boxes.get(device);
   }
 
   /**
@@ -86,6 +102,13 @@ export class Text extends Node<"text"> implements Slotable {
     }
 
     result.data = this.data;
+    result.box =
+      options?.device === undefined
+        ? null
+        : this._boxes
+            .get(options.device)
+            .map((box) => box.toJSON())
+            .getOr(null);
 
     return result;
   }
@@ -110,6 +133,7 @@ export namespace Text {
 
   export interface JSON extends Node.JSON<"text"> {
     data: string;
+    box: Rectangle.JSON | null;
   }
 
   export function isText(value: unknown): value is Text {
@@ -119,18 +143,32 @@ export namespace Text {
   /**
    * @internal
    */
-  export function fromText(json: JSON): Trampoline<Text> {
+  export function fromText(json: JSON, device?: Device): Trampoline<Text> {
     return Trampoline.done(
-      Text.of(json.data, json.externalId, undefined, json.internalId),
+      Text.of(
+        json.data,
+        Option.from(json.box).map(Rectangle.from),
+        Option.from(device),
+        json.externalId,
+        undefined,
+        json.internalId,
+      ),
     );
   }
 
   /**
    * @internal
    */
-  export function cloneText(text: Text) {
+  export function cloneText(text: Text, device?: Device) {
     return Trampoline.done(
-      Text.of(text.data, text.externalId, text.extraData, text.internalId),
+      Text.of(
+        text.data,
+        Option.from(device).flatMap((d) => text.getBoundingBox(d)),
+        Option.from(device),
+        text.externalId,
+        text.extraData,
+        text.internalId,
+      ),
     );
   }
 }

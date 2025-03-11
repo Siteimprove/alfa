@@ -13,9 +13,9 @@ import {
   FontFaceRule,
   Fragment,
   ImportRule,
-  Layer,
   KeyframeRule,
   KeyframesRule,
+  Layer,
   MediaRule,
   Namespace,
   NamespaceRule,
@@ -157,11 +157,20 @@ export namespace h {
 
   export function text(
     data: string,
+    box?: Rectangle,
+    device?: Device,
     externalId?: string,
     internalId?: string,
     extraData?: any,
   ): Text {
-    return Text.of(data, externalId, internalId, extraData);
+    return Text.of(
+      data,
+      Option.from(box),
+      Option.from(device),
+      externalId,
+      internalId,
+      extraData,
+    );
   }
 
   export function document(

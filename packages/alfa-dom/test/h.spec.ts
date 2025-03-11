@@ -6,6 +6,7 @@ import { h } from "../dist/index.js";
 
 import { Namespace } from "../dist/namespace.js";
 
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Document } from "../dist/node/document.js";
 import { Element } from "../dist/node/element.js";
 import { Type } from "../dist/node/type.js";
@@ -89,4 +90,14 @@ test("h() creates internalId when it is not provided", (t) => {
     32,
     "internalId should be an hex string of length 32",
   );
+});
+
+test("h.text() accepts box", (t) => {
+  const device = Device.standard();
+  const rect = Rectangle.of(8, 8, 20, 10);
+  t.deepEqual(h.text("foo", rect, device).toJSON({ device }), {
+    type: "text",
+    data: "foo",
+    box: rect.toJSON(),
+  });
 });
