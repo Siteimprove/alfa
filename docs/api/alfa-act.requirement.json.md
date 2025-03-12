@@ -12,8 +12,59 @@ interface JSON<T extends string = string, U extends string = string>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-act.requirement.json.type.md) |  | T |  |
-|  [uri](./alfa-act.requirement.json.uri.md) |  | U |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-act.requirement.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[uri](./alfa-act.requirement.json.uri.md)
+
+
+</td><td>
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

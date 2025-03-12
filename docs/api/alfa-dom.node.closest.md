@@ -12,11 +12,53 @@ closest<T extends Node>(refinement: Refinement<Node, T>, options?: Node.Traversa
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  refinement | Refinement&lt;[Node](./alfa-dom.node.md)<!-- -->, T&gt; |  |
-|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+refinement
+
+
+</td><td>
+
+Refinement&lt;[Node](./alfa-dom.node.md)<!-- -->, T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[Node.Traversal](./alfa-dom.node.traversal.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Option&lt;T&gt;

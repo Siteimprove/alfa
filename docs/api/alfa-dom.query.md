@@ -13,15 +13,66 @@ export declare namespace Query
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [getElementDescendants(node, options)](./alfa-dom.query.getelementdescendants.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[getElementDescendants(node, options)](./alfa-dom.query.getelementdescendants.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [getDescendants](./alfa-dom.query.getdescendants.md) |  |
-|  [getElementIdMap](./alfa-dom.query.getelementidmap.md) |  |
-|  [getInclusiveElementDescendants](./alfa-dom.query.getinclusiveelementdescendants.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[getDescendants](./alfa-dom.query.getdescendants.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[getElementIdMap](./alfa-dom.query.getelementidmap.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[getInclusiveElementDescendants](./alfa-dom.query.getinclusiveelementdescendants.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

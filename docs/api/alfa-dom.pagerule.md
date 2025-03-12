@@ -13,13 +13,48 @@ export declare namespace PageRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isPageRule(value)](./alfa-dom.pagerule.ispagerule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isPageRule(value)](./alfa-dom.pagerule.ispagerule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.pagerule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.pagerule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

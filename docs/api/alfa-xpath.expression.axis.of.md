@@ -12,12 +12,69 @@ static of(axis: Axis.Type, test?: Option<Test>, predicates?: Array<Expression>):
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  axis | [Axis.Type](./alfa-xpath.expression.axis.type.md) |  |
-|  test | Option&lt;[Test](./alfa-xpath.expression.test.md)<!-- -->&gt; | _(Optional)_ |
-|  predicates | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+axis
+
+
+</td><td>
+
+[Axis.Type](./alfa-xpath.expression.axis.type.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+test
+
+
+</td><td>
+
+Option&lt;[Test](./alfa-xpath.expression.test.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+predicates
+
+
+</td><td>
+
+Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Axis](./alfa-xpath.expression.axis.md)

@@ -12,10 +12,37 @@ flatten<L, R>(this: Either<L, Either<L, R>>): Either<L, R>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Either](./alfa-either.either.md)<!-- -->&lt;L, [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Either](./alfa-either.either.md)<!-- -->&lt;L, [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;

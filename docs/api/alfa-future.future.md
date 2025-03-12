@@ -13,22 +13,129 @@ export declare namespace Future
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [defer(continuation)](./alfa-future.future.defer.md) |  |
-|  [delay(thunk)](./alfa-future.future.delay.md) |  |
-|  [empty()](./alfa-future.future.empty.md) |  |
-|  [from(promise)](./alfa-future.future.from.md) |  |
-|  [isFuture(value)](./alfa-future.future.isfuture.md) |  |
-|  [isFuture(value)](./alfa-future.future.isfuture_1.md) |  |
-|  [now(value)](./alfa-future.future.now.md) |  |
-|  [sequence(futures)](./alfa-future.future.sequence.md) |  |
-|  [suspend(thunk)](./alfa-future.future.suspend.md) |  |
-|  [traverse(values, mapper)](./alfa-future.future.traverse.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[defer(continuation)](./alfa-future.future.defer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[delay(thunk)](./alfa-future.future.delay.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[empty()](./alfa-future.future.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[from(promise)](./alfa-future.future.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFuture(value)](./alfa-future.future.isfuture.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isFuture(value)](./alfa-future.future.isfuture_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[now(value)](./alfa-future.future.now.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[sequence(futures)](./alfa-future.future.sequence.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[suspend(thunk)](./alfa-future.future.suspend.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[traverse(values, mapper)](./alfa-future.future.traverse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Maybe](./alfa-future.future.maybe.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Maybe](./alfa-future.future.maybe.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

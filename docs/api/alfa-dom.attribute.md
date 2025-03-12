@@ -13,20 +13,81 @@ export declare namespace Attribute
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isAttribute(value)](./alfa-dom.attribute.isattribute.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isAttribute(value)](./alfa-dom.attribute.isattribute.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.attribute.json.md) |  |
-|  [MinimalJSON](./alfa-dom.attribute.minimaljson.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.attribute.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-dom.attribute.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [hasName](./alfa-dom.attribute.hasname.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[hasName](./alfa-dom.attribute.hasname.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

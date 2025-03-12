@@ -6,13 +6,51 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Trilean](./alfa-trilean.trilean.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Trilean](./alfa-trilean.trilean.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Trilean](./alfa-trilean.trilean.md) | [https://en.wikipedia.org/wiki/Three-valued\_logic](https://en.wikipedia.org/wiki/Three-valued_logic) |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Trilean](./alfa-trilean.trilean.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Three-valued\_logic](https://en.wikipedia.org/wiki/Three-valued_logic)
+
+
+</td></tr>
+</tbody></table>

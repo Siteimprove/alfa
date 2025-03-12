@@ -13,7 +13,24 @@ export declare namespace evaluate
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Options](./alfa-xpath.evaluate.options.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Options](./alfa-xpath.evaluate.options.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

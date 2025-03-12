@@ -12,8 +12,59 @@ interface JSON<R>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [type](./alfa-either.right.json.type.md) |  | "right" |  |
-|  [value](./alfa-either.right.json.value.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;R&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[type](./alfa-either.right.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"right"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-either.right.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;R&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

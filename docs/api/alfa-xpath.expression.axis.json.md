@@ -12,10 +12,93 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [axis](./alfa-xpath.expression.axis.json.axis.md) |  | string |  |
-|  [predicates](./alfa-xpath.expression.axis.json.predicates.md) |  | Array&lt;[Expression.JSON](./alfa-xpath.expression.json.md)<!-- -->&gt; |  |
-|  [test](./alfa-xpath.expression.axis.json.test.md) |  | [Test.JSON](./alfa-xpath.expression.test.json.md) \| null |  |
-|  [type](./alfa-xpath.expression.axis.json.type.md) |  | "axis" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[axis](./alfa-xpath.expression.axis.json.axis.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[predicates](./alfa-xpath.expression.axis.json.predicates.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Expression.JSON](./alfa-xpath.expression.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[test](./alfa-xpath.expression.axis.json.test.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Test.JSON](./alfa-xpath.expression.test.json.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-xpath.expression.axis.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"axis"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

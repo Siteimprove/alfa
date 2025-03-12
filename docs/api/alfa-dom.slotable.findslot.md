@@ -14,10 +14,37 @@ function findSlot(slotable: Slotable): Option<Slot>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  slotable | [Slotable](./alfa-dom.slotable.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+slotable
+
+
+</td><td>
+
+[Slotable](./alfa-dom.slotable.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Option&lt;Slot&gt;

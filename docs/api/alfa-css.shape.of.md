@@ -12,11 +12,51 @@ static of<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geom
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  shape | S |  |
-|  box | B |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+shape
+
+
+</td><td>
+
+S
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+box
+
+
+</td><td>
+
+B
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Shape](./alfa-css.shape.md)<!-- -->&lt;S, B&gt;

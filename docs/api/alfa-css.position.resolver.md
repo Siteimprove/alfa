@@ -15,8 +15,59 @@ interface Resolver extends Length.Resolver
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [percentageHBase](./alfa-css.position.resolver.percentagehbase.md) |  | [Length.Canonical](./alfa-css.length.canonical.md) |  |
-|  [percentageVBase](./alfa-css.position.resolver.percentagevbase.md) |  | [Length.Canonical](./alfa-css.length.canonical.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[percentageHBase](./alfa-css.position.resolver.percentagehbase.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Length.Canonical](./alfa-css.length.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[percentageVBase](./alfa-css.position.resolver.percentagevbase.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Length.Canonical](./alfa-css.length.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,47 +13,245 @@ export declare namespace Rule
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Atomic](./alfa-act.rule.atomic.md) |  |
-|  [Composite](./alfa-act.rule.composite.md) |  |
-|  [Event](./alfa-act.rule.event.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Atomic](./alfa-act.rule.atomic.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Composite](./alfa-act.rule.composite.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Event](./alfa-act.rule.event.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isRule(value)](./alfa-act.rule.isrule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isRule(value)](./alfa-act.rule.isrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-act.rule.earl.md) |  |
-|  [Evaluate](./alfa-act.rule.evaluate.md) |  |
-|  [JSON](./alfa-act.rule.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-act.rule.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Evaluate](./alfa-act.rule.evaluate.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-act.rule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-act.rule.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Atomic](./alfa-act.rule.atomic.md) |  |
-|  [Composite](./alfa-act.rule.composite.md) |  |
-|  [Event](./alfa-act.rule.event.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Atomic](./alfa-act.rule.atomic.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Composite](./alfa-act.rule.composite.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Event](./alfa-act.rule.event.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [isAtomic](./alfa-act.rule.isatomic.md) |  |
-|  [isComposite](./alfa-act.rule.iscomposite.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isAtomic](./alfa-act.rule.isatomic.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isComposite](./alfa-act.rule.iscomposite.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Input](./alfa-act.rule.input.md) |  |
-|  [Question](./alfa-act.rule.question.md) |  |
-|  [Subject](./alfa-act.rule.subject.md) |  |
-|  [Target](./alfa-act.rule.target.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Input](./alfa-act.rule.input.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Question](./alfa-act.rule.question.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Subject](./alfa-act.rule.subject.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Target](./alfa-act.rule.target.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

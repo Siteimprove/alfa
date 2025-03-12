@@ -12,8 +12,59 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [text](./alfa-aria.source.data.json.text.md) |  | string |  |
-|  [type](./alfa-aria.source.data.json.type.md) |  | "data" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[text](./alfa-aria.source.data.json.text.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-aria.source.data.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"data"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

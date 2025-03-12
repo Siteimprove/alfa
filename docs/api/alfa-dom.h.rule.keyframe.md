@@ -12,11 +12,51 @@ function keyframe(key: string, declarations: Array<Declaration> | Record<string,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | string |  |
-|  declarations | Array&lt;Declaration&gt; \| Record&lt;string, string&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+declarations
+
+
+</td><td>
+
+Array&lt;Declaration&gt; \| Record&lt;string, string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 KeyframeRule

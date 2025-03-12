@@ -13,7 +13,24 @@ export declare namespace Site
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-web.site.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-web.site.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

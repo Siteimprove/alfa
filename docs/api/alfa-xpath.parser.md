@@ -13,7 +13,24 @@ export declare namespace Parser
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [parse(input)](./alfa-xpath.parser.parse.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse(input)](./alfa-xpath.parser.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

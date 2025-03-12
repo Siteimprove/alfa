@@ -13,10 +13,93 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-http.body.earl.__context_.md) |  | { cnt: "http://www.w3.org/2011/content\#"; } |  |
-|  ["@type"](./alfa-http.body.earl.__type_.md) |  | \["cnt:Content", "cnt:ContentAsText"\] |  |
-|  ["cnt:characterEncoding"](./alfa-http.body.earl._cnt_characterencoding_.md) |  | "utf-8" |  |
-|  ["cnt:chars"](./alfa-http.body.earl._cnt_chars_.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-http.body.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ cnt: "http://www.w3.org/2011/content\#"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@type"](./alfa-http.body.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\["cnt:Content", "cnt:ContentAsText"\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["cnt:characterEncoding"](./alfa-http.body.earl._cnt_characterencoding_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"utf-8"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["cnt:chars"](./alfa-http.body.earl._cnt_chars_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

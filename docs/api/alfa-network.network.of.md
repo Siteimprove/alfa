@@ -12,10 +12,37 @@ static of<N, E>(nodes: Map<N, Map<N, Set<E>>>): Network<N, E>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  nodes | Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+nodes
+
+
+</td><td>
+
+Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;

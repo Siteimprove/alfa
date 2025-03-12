@@ -6,7 +6,25 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Monad](./alfa-monad.monad.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Monad](./alfa-monad.monad.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

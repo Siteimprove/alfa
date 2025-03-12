@@ -12,9 +12,76 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [sources](./alfa-aria.name.json.sources.md) |  | Array&lt;[Source.JSON](./alfa-aria.source.json.md)<!-- -->&gt; |  |
-|  [spaces](./alfa-aria.name.json.spaces.md) |  | { before: boolean; after: boolean; } |  |
-|  [value](./alfa-aria.name.json.value.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[sources](./alfa-aria.name.json.sources.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Source.JSON](./alfa-aria.source.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[spaces](./alfa-aria.name.json.spaces.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ before: boolean; after: boolean; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-aria.name.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

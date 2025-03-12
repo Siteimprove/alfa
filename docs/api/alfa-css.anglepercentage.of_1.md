@@ -12,10 +12,37 @@ function of<U extends Unit.Angle>(value: Base.Angle<U>): Angle.Fixed<U>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | Base.Angle&lt;U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+Base.Angle&lt;U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Angle.Fixed](./alfa-css.angle.fixed.md)<!-- -->&lt;U&gt;

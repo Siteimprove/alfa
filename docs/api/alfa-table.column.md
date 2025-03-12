@@ -13,32 +13,131 @@ export declare namespace Column
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Group](./alfa-table.column.group.md) | [https://html.spec.whatwg.org/\#concept-column-group](https://html.spec.whatwg.org/#concept-column-group) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Group](./alfa-table.column.group.md)
+
+
+</td><td>
+
+[https://html.spec.whatwg.org/\#concept-column-group](https://html.spec.whatwg.org/#concept-column-group)
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isColumn(value)](./alfa-table.column.iscolumn.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isColumn(value)](./alfa-table.column.iscolumn.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-table.column.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-table.column.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Group](./alfa-table.column.group.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Group](./alfa-table.column.group.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [group](./alfa-table.column.group.md) |  |
-|  [isGroup](./alfa-table.column.isgroup.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[group](./alfa-table.column.group.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isGroup](./alfa-table.column.isgroup.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,29 +13,134 @@ export declare namespace Shape
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.shape.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.shape.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Basic](./alfa-css.shape.basic.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Basic](./alfa-css.shape.basic.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.shape.parse.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.shape.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Basic](./alfa-css.shape.basic.md) | [https://drafts.csswg.org/css-shapes/\#typedef-basic-shape](https://drafts.csswg.org/css-shapes/#typedef-basic-shape) |
-|  [Canonical](./alfa-css.shape.canonical.md) |  |
-|  [PartiallyResolved](./alfa-css.shape.partiallyresolved.md) |  |
-|  [PartialResolver](./alfa-css.shape.partialresolver.md) |  |
-|  [Resolver](./alfa-css.shape.resolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Basic](./alfa-css.shape.basic.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-shapes/\#typedef-basic-shape](https://drafts.csswg.org/css-shapes/#typedef-basic-shape)
+
+
+</td></tr>
+<tr><td>
+
+[Canonical](./alfa-css.shape.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartiallyResolved](./alfa-css.shape.partiallyresolved.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartialResolver](./alfa-css.shape.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.shape.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

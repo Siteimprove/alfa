@@ -6,11 +6,68 @@
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [hasExtractorConfig(name, dir)](./alfa-toolchain.validation.hasextractorconfig.md) | Checks that a directory includes an API extractor config file. |
-|  [validate(cwd)](./alfa-toolchain.validation.validate.md) |  |
-|  [validateChangesets(cwd, forbidMajor)](./alfa-toolchain.validation.validatechangesets.md) | Validate that all changesets have the expected structure. |
-|  [validatePackageJson({ dir, packageJson, }, config)](./alfa-toolchain.validation.validatepackagejson.md) | Checks that a package.json file has the correct fields and structure. |
-|  [validateWorkspaceTsconfig({ dir, packageJson, })](./alfa-toolchain.validation.validateworkspacetsconfig.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[hasExtractorConfig(name, dir)](./alfa-toolchain.validation.hasextractorconfig.md)
+
+
+</td><td>
+
+Checks that a directory includes an API extractor config file.
+
+
+</td></tr>
+<tr><td>
+
+[validate(cwd)](./alfa-toolchain.validation.validate.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[validateChangesets(cwd, forbidMajor)](./alfa-toolchain.validation.validatechangesets.md)
+
+
+</td><td>
+
+Validate that all changesets have the expected structure.
+
+
+</td></tr>
+<tr><td>
+
+[validatePackageJson({ dir, packageJson, }, config)](./alfa-toolchain.validation.validatepackagejson.md)
+
+
+</td><td>
+
+Checks that a package.json file has the correct fields and structure.
+
+
+</td></tr>
+<tr><td>
+
+[validateWorkspaceTsconfig({ dir, packageJson, })](./alfa-toolchain.validation.validateworkspacetsconfig.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

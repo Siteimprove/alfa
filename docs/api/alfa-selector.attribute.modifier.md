@@ -12,8 +12,48 @@ enum Modifier
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  CaseInsensitive | <code>&quot;i&quot;</code> |  |
-|  CaseSensitive | <code>&quot;s&quot;</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+CaseInsensitive
+
+
+</td><td>
+
+`"i"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+CaseSensitive
+
+
+</td><td>
+
+`"s"`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

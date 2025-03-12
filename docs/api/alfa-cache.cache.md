@@ -13,15 +13,74 @@ export declare namespace Cache
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(iterable)](./alfa-cache.cache.from.md) | Creates a new cache from an iterable of key-value pairs. |
-|  [memoize(target)](./alfa-cache.cache.memoize.md) | Memoizes a method. |
-|  [memoize(target)](./alfa-cache.cache.memoize_1.md) | Memoizes a function |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(iterable)](./alfa-cache.cache.from.md)
+
+
+</td><td>
+
+Creates a new cache from an iterable of key-value pairs.
+
+
+</td></tr>
+<tr><td>
+
+[memoize(target)](./alfa-cache.cache.memoize.md)
+
+
+</td><td>
+
+Memoizes a method.
+
+
+</td></tr>
+<tr><td>
+
+[memoize(target)](./alfa-cache.cache.memoize_1.md)
+
+
+</td><td>
+
+Memoizes a function
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Key](./alfa-cache.cache.key.md) | Allowed keys in a Cache. |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Key](./alfa-cache.cache.key.md)
+
+
+</td><td>
+
+Allowed keys in a Cache.
+
+
+</td></tr>
+</tbody></table>

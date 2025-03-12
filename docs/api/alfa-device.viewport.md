@@ -13,20 +13,81 @@ export declare namespace Viewport
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Orientation](./alfa-device.viewport.orientation.md) |  |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Orientation](./alfa-device.viewport.orientation.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-device.viewport.from.md) |  |
-|  [standard()](./alfa-device.viewport.standard.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-device.viewport.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[standard()](./alfa-device.viewport.standard.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-device.viewport.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-device.viewport.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

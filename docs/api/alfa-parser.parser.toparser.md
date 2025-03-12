@@ -12,10 +12,37 @@ export function toParser<I, T, A extends Array<unknown> = []>(infallible: Parser
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  infallible | [Parser.Infallible](./alfa-parser.parser.infallible.md)<!-- -->&lt;I, T, A&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+infallible
+
+
+</td><td>
+
+[Parser.Infallible](./alfa-parser.parser.infallible.md)<!-- -->&lt;I, T, A&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, never, A&gt;

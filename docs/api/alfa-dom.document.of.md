@@ -12,14 +12,101 @@ static of(children: Iterable<Node>, style?: Iterable<Sheet>, externalId?: string
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  children | Iterable&lt;Node&gt; |  |
-|  style | Iterable&lt;Sheet&gt; | _(Optional)_ |
-|  externalId | string | _(Optional)_ |
-|  internalId | string | _(Optional)_ |
-|  extraData | any | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+children
+
+
+</td><td>
+
+Iterable&lt;Node&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+style
+
+
+</td><td>
+
+Iterable&lt;Sheet&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+externalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+internalId
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+extraData
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Document](./alfa-dom.document.md)

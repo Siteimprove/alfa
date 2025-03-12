@@ -1,5 +1,17 @@
 # @siteimprove/alfa-result
 
+## 0.99.0
+
+## 0.98.0
+
+### Minor Changes
+
+- **Added:** `Result#getOrElse` now accepts a `Callback(E, U)` (building the new value from the error); `Result#getErrOrElse` now accepts a `Callback(T, F)`. ([#1742](https://github.com/Siteimprove/alfa/pull/1742))
+
+### Patch Changes
+
+- **Changed:** Classes that do not implement the Singleton pattern now have `protected` constructor and can be extended. ([#1735](https://github.com/Siteimprove/alfa/pull/1735))
+
 ## 0.97.0
 
 ## 0.96.0

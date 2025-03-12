@@ -13,7 +13,42 @@ interface JSON extends Value.JSON<"image">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [image](./alfa-css.image.json.image.md) |  | [URL.JSON](./alfa-css.url.json.md) \| [Gradient.JSON](./alfa-css.gradient.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[image](./alfa-css.image.json.image.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[URL.JSON](./alfa-css.url.json.md) \| [Gradient.JSON](./alfa-css.gradient.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

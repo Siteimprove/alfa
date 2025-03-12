@@ -12,11 +12,51 @@ static of(owner: dom.Node, name: Option<Name>): Text;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  owner | [dom.Node](./alfa-dom.node.md) |  |
-|  name | Option&lt;Name&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+owner
+
+
+</td><td>
+
+[dom.Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+Option&lt;Name&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Text](./alfa-aria.text.md)

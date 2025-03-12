@@ -12,11 +12,51 @@ tee<A extends Array<unknown> = []>(callback: Callback<Keyed<K, V>, void, [...arg
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  callback | Callback&lt;[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;, void, \[...args: A\]&gt; |  |
-|  args | A |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+callback
+
+
+</td><td>
+
+Callback&lt;[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;, void, \[...args: A\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+args
+
+
+</td><td>
+
+A
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;

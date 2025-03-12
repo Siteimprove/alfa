@@ -12,14 +12,101 @@ static of(primary: Language.Primary, extended?: Option<Language.Extended>, scrip
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  primary | [Language.Primary](./alfa-iana.language.primary.md) |  |
-|  extended | Option&lt;[Language.Extended](./alfa-iana.language.extended.md)<!-- -->&gt; | _(Optional)_ |
-|  script | Option&lt;[Language.Script](./alfa-iana.language.script.md)<!-- -->&gt; | _(Optional)_ |
-|  region | Option&lt;[Language.Region](./alfa-iana.language.region.md)<!-- -->&gt; | _(Optional)_ |
-|  variants | Array&lt;[Language.Variant](./alfa-iana.language.variant.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+primary
+
+
+</td><td>
+
+[Language.Primary](./alfa-iana.language.primary.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+extended
+
+
+</td><td>
+
+Option&lt;[Language.Extended](./alfa-iana.language.extended.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+script
+
+
+</td><td>
+
+Option&lt;[Language.Script](./alfa-iana.language.script.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+region
+
+
+</td><td>
+
+Option&lt;[Language.Region](./alfa-iana.language.region.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+variants
+
+
+</td><td>
+
+Array&lt;[Language.Variant](./alfa-iana.language.variant.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Language](./alfa-iana.language.md)

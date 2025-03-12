@@ -12,13 +12,79 @@ static of(prefix: Option<string>, name: string, arity: number, parameters: Array
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  prefix | Option&lt;string&gt; |  |
-|  name | string |  |
-|  arity | number |  |
-|  parameters | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+prefix
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+arity
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+parameters
+
+
+</td><td>
+
+Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [FunctionCall](./alfa-xpath.expression.functioncall.md)

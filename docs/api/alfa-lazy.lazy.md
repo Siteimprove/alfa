@@ -13,7 +13,24 @@ export declare namespace Lazy
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-lazy.lazy.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-lazy.lazy.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

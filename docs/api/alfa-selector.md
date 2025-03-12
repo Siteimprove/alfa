@@ -6,53 +6,393 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Attribute](./alfa-selector.attribute.md) | [https://drafts.csswg.org/selectors/\#attribute-selector](https://drafts.csswg.org/selectors/#attribute-selector) |
-|  [Class](./alfa-selector.class.md) | [https://drafts.csswg.org/selectors/\#class-selector](https://drafts.csswg.org/selectors/#class-selector) |
-|  [Complex](./alfa-selector.complex.md) | [https://drafts.csswg.org/selectors/\#complex](https://drafts.csswg.org/selectors/#complex) |
-|  [Compound](./alfa-selector.compound.md) | [https://drafts.csswg.org/selectors/\#compound](https://drafts.csswg.org/selectors/#compound) |
-|  [Context](./alfa-selector.context.md) |  |
-|  [Id](./alfa-selector.id.md) | [https://drafts.csswg.org/selectors/\#id-selector](https://drafts.csswg.org/selectors/#id-selector) |
-|  [List](./alfa-selector.list.md) | [https://drafts.csswg.org/selectors/\#selector-list](https://drafts.csswg.org/selectors/#selector-list) |
-|  [Relative](./alfa-selector.relative.md) | [https://drafts.csswg.org/selectors/\#relative-selector](https://drafts.csswg.org/selectors/#relative-selector) |
-|  [Specificity](./alfa-selector.specificity.md) | [https://www.w3.org/TR/selectors/\#specificity](https://www.w3.org/TR/selectors/#specificity) [https://drafts.csswg.org/css-cascade-5/\#cascade-specificity](https://drafts.csswg.org/css-cascade-5/#cascade-specificity) |
-|  [Type](./alfa-selector.type.md) | [https://drafts.csswg.org/selectors/\#type-selector](https://drafts.csswg.org/selectors/#type-selector) |
-|  [Universal](./alfa-selector.universal.md) | [https://drafts.csswg.org/selectors/\#universal-selector](https://drafts.csswg.org/selectors/#universal-selector) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Attribute](./alfa-selector.attribute.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#attribute-selector](https://drafts.csswg.org/selectors/#attribute-selector)
+
+
+</td></tr>
+<tr><td>
+
+[Class](./alfa-selector.class.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#class-selector](https://drafts.csswg.org/selectors/#class-selector)
+
+
+</td></tr>
+<tr><td>
+
+[Complex](./alfa-selector.complex.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#complex](https://drafts.csswg.org/selectors/#complex)
+
+
+</td></tr>
+<tr><td>
+
+[Compound](./alfa-selector.compound.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#compound](https://drafts.csswg.org/selectors/#compound)
+
+
+</td></tr>
+<tr><td>
+
+[Context](./alfa-selector.context.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Id](./alfa-selector.id.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#id-selector](https://drafts.csswg.org/selectors/#id-selector)
+
+
+</td></tr>
+<tr><td>
+
+[List](./alfa-selector.list.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#selector-list](https://drafts.csswg.org/selectors/#selector-list)
+
+
+</td></tr>
+<tr><td>
+
+[Relative](./alfa-selector.relative.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#relative-selector](https://drafts.csswg.org/selectors/#relative-selector)
+
+
+</td></tr>
+<tr><td>
+
+[Specificity](./alfa-selector.specificity.md)
+
+
+</td><td>
+
+[https://www.w3.org/TR/selectors/\#specificity](https://www.w3.org/TR/selectors/#specificity) [https://drafts.csswg.org/css-cascade-5/\#cascade-specificity](https://drafts.csswg.org/css-cascade-5/#cascade-specificity)
+
+
+</td></tr>
+<tr><td>
+
+[Type](./alfa-selector.type.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#type-selector](https://drafts.csswg.org/selectors/#type-selector)
+
+
+</td></tr>
+<tr><td>
+
+[Universal](./alfa-selector.universal.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#universal-selector](https://drafts.csswg.org/selectors/#universal-selector)
+
+
+</td></tr>
+</tbody></table>
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Combinator](./alfa-selector.combinator.md) | [https://drafts.csswg.org/selectors/\#selector-combinator](https://drafts.csswg.org/selectors/#selector-combinator) |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Combinator](./alfa-selector.combinator.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#selector-combinator](https://drafts.csswg.org/selectors/#selector-combinator)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Attribute](./alfa-selector.attribute.md) |  |
-|  [Class](./alfa-selector.class.md) |  |
-|  [Combinator](./alfa-selector.combinator.md) |  |
-|  [Complex](./alfa-selector.complex.md) |  |
-|  [Compound](./alfa-selector.compound.md) |  |
-|  [Context](./alfa-selector.context.md) |  |
-|  [Id](./alfa-selector.id.md) |  |
-|  [List](./alfa-selector.list.md) |  |
-|  [PseudoClass](./alfa-selector.pseudoclass.md) |  |
-|  [PseudoElement](./alfa-selector.pseudoelement.md) |  |
-|  [Relative](./alfa-selector.relative.md) |  |
-|  [Selector](./alfa-selector.selector.md) |  |
-|  [Simple](./alfa-selector.simple.md) |  |
-|  [Specificity](./alfa-selector.specificity.md) |  |
-|  [Type](./alfa-selector.type.md) |  |
-|  [Universal](./alfa-selector.universal.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Attribute](./alfa-selector.attribute.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Class](./alfa-selector.class.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Combinator](./alfa-selector.combinator.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Complex](./alfa-selector.complex.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Compound](./alfa-selector.compound.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Context](./alfa-selector.context.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Id](./alfa-selector.id.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[List](./alfa-selector.list.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[PseudoClass](./alfa-selector.pseudoclass.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[PseudoElement](./alfa-selector.pseudoelement.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Relative](./alfa-selector.relative.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Selector](./alfa-selector.selector.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Simple](./alfa-selector.simple.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Specificity](./alfa-selector.specificity.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Type](./alfa-selector.type.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Universal](./alfa-selector.universal.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [PseudoClass](./alfa-selector.pseudoclass.md) |  |
-|  [PseudoElement](./alfa-selector.pseudoelement.md) |  |
-|  [Selector](./alfa-selector.selector.md) | [https://drafts.csswg.org/selectors/\#selector](https://drafts.csswg.org/selectors/#selector) |
-|  [Simple](./alfa-selector.simple.md) | [https://drafts.csswg.org/selectors/\#simple](https://drafts.csswg.org/selectors/#simple) |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[PseudoClass](./alfa-selector.pseudoclass.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[PseudoElement](./alfa-selector.pseudoelement.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Selector](./alfa-selector.selector.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#selector](https://drafts.csswg.org/selectors/#selector)
+
+
+</td></tr>
+<tr><td>
+
+[Simple](./alfa-selector.simple.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/selectors/\#simple](https://drafts.csswg.org/selectors/#simple)
+
+
+</td></tr>
+</tbody></table>

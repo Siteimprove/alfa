@@ -13,8 +13,59 @@ interface JSON<T> extends Outcome.JSON<Value.CantTell>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [diagnostic](./alfa-act.outcome.canttell.json.diagnostic.md) |  | [json.Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;Diagnostic&gt; |  |
-|  [target](./alfa-act.outcome.canttell.json.target.md) |  | [json.Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[diagnostic](./alfa-act.outcome.canttell.json.diagnostic.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[json.Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;Diagnostic&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[target](./alfa-act.outcome.canttell.json.target.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[json.Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

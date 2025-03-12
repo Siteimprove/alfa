@@ -6,7 +6,25 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [FNV](./alfa-fnv.fnv.md) |  |
+<table><thead><tr><th>
 
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[FNV](./alfa-fnv.fnv.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

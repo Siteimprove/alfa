@@ -6,13 +6,50 @@
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Clone](./alfa-clone.clone.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Clone](./alfa-clone.clone.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Clone](./alfa-clone.clone.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Clone](./alfa-clone.clone.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

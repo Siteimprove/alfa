@@ -12,8 +12,59 @@ interface JSON<E>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [error](./alfa-result.err.json.error.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;E&gt; |  |
-|  [type](./alfa-result.err.json.type.md) |  | "err" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[error](./alfa-result.err.json.error.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;E&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-result.err.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"err"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

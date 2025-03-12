@@ -13,13 +13,48 @@ export declare namespace Complex
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isComplex(value)](./alfa-selector.complex.iscomplex.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isComplex(value)](./alfa-selector.complex.iscomplex.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.complex.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.complex.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

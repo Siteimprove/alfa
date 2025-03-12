@@ -13,14 +13,57 @@ export declare namespace Cookies
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-http.cookies.from.md) |  |
-|  [isCookies(value)](./alfa-http.cookies.iscookies.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-http.cookies.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isCookies(value)](./alfa-http.cookies.iscookies.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-http.cookies.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-http.cookies.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

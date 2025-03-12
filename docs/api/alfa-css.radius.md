@@ -13,35 +13,156 @@ export declare namespace Radius
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isRadius(value)](./alfa-css.radius.isradius.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isRadius(value)](./alfa-css.radius.isradius.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.radius.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.radius.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Side](./alfa-css.radius.side.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Side](./alfa-css.radius.side.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.radius.parse.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.radius.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.radius.canonical.md) |  |
-|  [PartiallyResolved](./alfa-css.radius.partiallyresolved.md) |  |
-|  [PartialResolver](./alfa-css.radius.partialresolver.md) |  |
-|  [Resolver](./alfa-css.radius.resolver.md) |  |
-|  [Side](./alfa-css.radius.side.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.radius.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartiallyResolved](./alfa-css.radius.partiallyresolved.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartialResolver](./alfa-css.radius.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.radius.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Side](./alfa-css.radius.side.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

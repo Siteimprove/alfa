@@ -13,27 +13,114 @@ export declare namespace Serializable
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Verbosity](./alfa-json.serializable.verbosity.md) |  |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Verbosity](./alfa-json.serializable.verbosity.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isSerializable(value)](./alfa-json.serializable.isserializable.md) |  |
-|  [toJSON(value, options)](./alfa-json.serializable.tojson.md) |  |
-|  [toJSON(value, options)](./alfa-json.serializable.tojson_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isSerializable(value)](./alfa-json.serializable.isserializable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toJSON(value, options)](./alfa-json.serializable.tojson.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toJSON(value, options)](./alfa-json.serializable.tojson_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Options](./alfa-json.serializable.options.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Options](./alfa-json.serializable.options.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [ToJSON](./alfa-json.serializable.tojson.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ToJSON](./alfa-json.serializable.tojson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

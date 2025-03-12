@@ -13,25 +13,126 @@ export declare namespace Builder
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Axis](./alfa-xpath.builder.axis.md) |  |
-|  [ContextItem](./alfa-xpath.builder.contextitem.md) |  |
-|  [Filter](./alfa-xpath.builder.filter.md) |  |
-|  [Path](./alfa-xpath.builder.path.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Axis](./alfa-xpath.builder.axis.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ContextItem](./alfa-xpath.builder.contextitem.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Filter](./alfa-xpath.builder.filter.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Path](./alfa-xpath.builder.path.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-xpath.builder.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-xpath.builder.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [Axis\_base](./alfa-xpath.builder.axis_base.md) |  |
-|  [ContextItem\_base](./alfa-xpath.builder.contextitem_base.md) |  |
-|  [Filter\_base](./alfa-xpath.builder.filter_base.md) |  |
-|  [Path\_base](./alfa-xpath.builder.path_base.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Axis\_base](./alfa-xpath.builder.axis_base.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ContextItem\_base](./alfa-xpath.builder.contextitem_base.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Filter\_base](./alfa-xpath.builder.filter_base.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Path\_base](./alfa-xpath.builder.path_base.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

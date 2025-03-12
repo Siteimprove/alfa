@@ -12,14 +12,99 @@ function importRule(url: string, sheet: Sheet, mediaCondition?: string, supportC
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  url | string |  |
-|  sheet | Sheet |  |
-|  mediaCondition | string | _(Optional)_ |
-|  supportCondition | string | _(Optional)_ |
-|  layer | string | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+url
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sheet
+
+
+</td><td>
+
+Sheet
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mediaCondition
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+supportCondition
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+layer
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ImportRule

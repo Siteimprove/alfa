@@ -14,11 +14,53 @@ function parse(url: string, base?: string | URL): Result<URL, string>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  url | string |  |
-|  base | string \| [URL](./alfa-url.url.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+url
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+base
+
+
+</td><td>
+
+string \| [URL](./alfa-url.url.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Result&lt;[URL](./alfa-url.url.md)<!-- -->, string&gt;

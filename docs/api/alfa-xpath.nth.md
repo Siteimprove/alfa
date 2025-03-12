@@ -13,10 +13,37 @@ export declare function nth(i: number): Builder<Expression.Integer>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  i | number |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+i
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Integer](./alfa-xpath.expression.integer.md)<!-- -->&gt;

@@ -12,10 +12,37 @@ function or<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, P
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicates | \[[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;, [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;, ...Array&lt;[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;&gt;\] |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicates
+
+
+</td><td>
+
+\[[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;, [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;, ...Array&lt;[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;&gt;\]
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;

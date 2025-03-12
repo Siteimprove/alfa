@@ -12,10 +12,37 @@ partiallyResolve(resolver: Ellipse.PartialResolver): Ellipse.PartiallyResolved;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Ellipse.PartialResolver](./alfa-css.ellipse.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Ellipse.PartialResolver](./alfa-css.ellipse.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Ellipse.PartiallyResolved](./alfa-css.ellipse.partiallyresolved.md)

@@ -12,11 +12,51 @@ function zip<T, U = T>(array: ReadonlyArray<T>, iterable: Iterable<U>): Array<[T
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  array | ReadonlyArray&lt;T&gt; |  |
-|  iterable | Iterable&lt;U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+array
+
+
+</td><td>
+
+ReadonlyArray&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+iterable
+
+
+</td><td>
+
+Iterable&lt;U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Array](./alfa-array.array_2.md)<!-- -->&lt;\[T, U\]&gt;

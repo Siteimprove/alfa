@@ -13,8 +13,59 @@ interface JSON extends Selector.JSON<"relative">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [combinator](./alfa-selector.relative.json.combinator.md) |  | string |  |
-|  [selector](./alfa-selector.relative.json.selector.md) |  | [Simple.JSON](./alfa-selector.simple.json.md) \| [Compound.JSON](./alfa-selector.compound.json.md) \| [Complex.JSON](./alfa-selector.complex.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[combinator](./alfa-selector.relative.json.combinator.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[selector](./alfa-selector.relative.json.selector.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Simple.JSON](./alfa-selector.simple.json.md) \| [Compound.JSON](./alfa-selector.compound.json.md) \| [Complex.JSON](./alfa-selector.complex.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

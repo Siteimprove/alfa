@@ -13,32 +13,131 @@ export declare namespace Row
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Group](./alfa-table.row.group.md) | [https://html.spec.whatwg.org/\#concept-row-group](https://html.spec.whatwg.org/#concept-row-group) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Group](./alfa-table.row.group.md)
+
+
+</td><td>
+
+[https://html.spec.whatwg.org/\#concept-row-group](https://html.spec.whatwg.org/#concept-row-group)
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isRow(value)](./alfa-table.row.isrow.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isRow(value)](./alfa-table.row.isrow.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-table.row.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-table.row.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Group](./alfa-table.row.group.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Group](./alfa-table.row.group.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [group](./alfa-table.row.group.md) |  |
-|  [isGroup](./alfa-table.row.isgroup.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[group](./alfa-table.row.group.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isGroup](./alfa-table.row.isgroup.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

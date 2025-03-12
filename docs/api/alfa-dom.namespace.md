@@ -13,7 +13,24 @@ export declare namespace Namespace
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isNamespace(value)](./alfa-dom.namespace.isnamespace.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isNamespace(value)](./alfa-dom.namespace.isnamespace.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

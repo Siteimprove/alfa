@@ -13,20 +13,81 @@ export declare namespace Attribute
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Matcher](./alfa-selector.attribute.matcher.md) |  |
-|  [Modifier](./alfa-selector.attribute.modifier.md) |  |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Matcher](./alfa-selector.attribute.matcher.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Modifier](./alfa-selector.attribute.modifier.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isAttribute(value)](./alfa-selector.attribute.isattribute.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isAttribute(value)](./alfa-selector.attribute.isattribute.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-selector.attribute.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-selector.attribute.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

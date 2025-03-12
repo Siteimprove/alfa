@@ -13,8 +13,59 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-http.headers.earl.__context_.md) |  | { http: "http://www.w3.org/2011/http\#"; } |  |
-|  ["@list"](./alfa-http.headers.earl.__list_.md) |  | Array&lt;[Header.EARL](./alfa-http.header.earl.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-http.headers.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ http: "http://www.w3.org/2011/http\#"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@list"](./alfa-http.headers.earl.__list_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Header.EARL](./alfa-http.header.earl.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

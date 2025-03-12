@@ -12,11 +12,120 @@ interface Components
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [perspective](./alfa-affine.transformation.components.perspective.md) |  | Vector | A quaternion representing \[x, y, z, w\] perspective. |
-|  [rotate](./alfa-affine.transformation.components.rotate.md) |  | Vector | A quaternion representing \[x, y, z, w\] rotation. |
-|  [scale](./alfa-affine.transformation.components.scale.md) |  | Vector | A vector representing \[x, y, z\] scaling. |
-|  [skew](./alfa-affine.transformation.components.skew.md) |  | Vector | A vector representing \[xy, xz, yz\] skewing. |
-|  [translate](./alfa-affine.transformation.components.translate.md) |  | Vector | A vector representing \[x, y, z\] translation. |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[perspective](./alfa-affine.transformation.components.perspective.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Vector
+
+
+</td><td>
+
+A quaternion representing \[x, y, z, w\] perspective.
+
+
+</td></tr>
+<tr><td>
+
+[rotate](./alfa-affine.transformation.components.rotate.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Vector
+
+
+</td><td>
+
+A quaternion representing \[x, y, z, w\] rotation.
+
+
+</td></tr>
+<tr><td>
+
+[scale](./alfa-affine.transformation.components.scale.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Vector
+
+
+</td><td>
+
+A vector representing \[x, y, z\] scaling.
+
+
+</td></tr>
+<tr><td>
+
+[skew](./alfa-affine.transformation.components.skew.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Vector
+
+
+</td><td>
+
+A vector representing \[xy, xz, yz\] skewing.
+
+
+</td></tr>
+<tr><td>
+
+[translate](./alfa-affine.transformation.components.translate.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Vector
+
+
+</td><td>
+
+A vector representing \[x, y, z\] translation.
+
+
+</td></tr>
+</tbody></table>

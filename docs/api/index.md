@@ -6,83 +6,738 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [@siteimprove/alfa-act](./alfa-act.md) | This package provides functionality for implementing rules specified in the [ACT Rules Format](https://www.w3.org/TR/act-rules-format/)<!-- -->. |
-|  [@siteimprove/alfa-affine](./alfa-affine.md) | This package provides functionality for working with [affine transformations](https://en.wikipedia.org/wiki/Affine_transformation)<!-- -->. |
-|  [@siteimprove/alfa-applicative](./alfa-applicative.md) | This package provides types for modelling [applicative functors](https://en.wikipedia.org/wiki/Applicative_functor)<!-- -->. |
-|  [@siteimprove/alfa-aria](./alfa-aria.md) | This package provides functionality for working with [ARIA](https://www.w3.org/TR/wai-aria/) and the accessibility tree. |
-|  [@siteimprove/alfa-array](./alfa-array.md) | This package provides functionality for working with arrays. |
-|  [@siteimprove/alfa-bits](./alfa-bits.md) |  |
-|  [@siteimprove/alfa-branched](./alfa-branched.md) |  |
-|  [@siteimprove/alfa-cache](./alfa-cache.md) |  |
-|  [@siteimprove/alfa-callback](./alfa-callback.md) |  |
-|  [@siteimprove/alfa-cascade](./alfa-cascade.md) |  |
-|  [@siteimprove/alfa-clone](./alfa-clone.md) |  |
-|  [@siteimprove/alfa-collection](./alfa-collection.md) |  |
-|  [@siteimprove/alfa-comparable](./alfa-comparable.md) |  |
-|  [@siteimprove/alfa-compatibility](./alfa-compatibility.md) |  |
-|  [@siteimprove/alfa-continuation](./alfa-continuation.md) |  |
-|  [@siteimprove/alfa-css](./alfa-css.md) |  |
-|  [@siteimprove/alfa-css-feature](./alfa-css-feature.md) |  |
-|  [@siteimprove/alfa-device](./alfa-device.md) |  |
-|  [@siteimprove/alfa-dom](./alfa-dom.md) |  |
-|  [@siteimprove/alfa-earl](./alfa-earl.md) |  |
-|  [@siteimprove/alfa-either](./alfa-either.md) |  |
-|  [@siteimprove/alfa-emitter](./alfa-emitter.md) |  |
-|  [@siteimprove/alfa-encoding](./alfa-encoding.md) |  |
-|  [@siteimprove/alfa-equatable](./alfa-equatable.md) |  |
-|  [@siteimprove/alfa-flags](./alfa-flags.md) |  |
-|  [@siteimprove/alfa-fnv](./alfa-fnv.md) |  |
-|  [@siteimprove/alfa-foldable](./alfa-foldable.md) |  |
-|  [@siteimprove/alfa-functor](./alfa-functor.md) |  |
-|  [@siteimprove/alfa-future](./alfa-future.md) |  |
-|  [@siteimprove/alfa-generator](./alfa-generator.md) |  |
-|  [@siteimprove/alfa-graph](./alfa-graph.md) |  |
-|  [@siteimprove/alfa-hash](./alfa-hash.md) |  |
-|  [@siteimprove/alfa-http](./alfa-http.md) |  |
-|  [@siteimprove/alfa-iana](./alfa-iana.md) |  |
-|  [@siteimprove/alfa-iterable](./alfa-iterable.md) |  |
-|  [@siteimprove/alfa-json](./alfa-json.md) |  |
-|  [@siteimprove/alfa-json-ld](./alfa-json-ld.md) |  |
-|  [@siteimprove/alfa-lazy](./alfa-lazy.md) |  |
-|  [@siteimprove/alfa-list](./alfa-list.md) |  |
-|  [@siteimprove/alfa-map](./alfa-map.md) |  |
-|  [@siteimprove/alfa-mapper](./alfa-mapper.md) |  |
-|  [@siteimprove/alfa-math](./alfa-math.md) |  |
-|  [@siteimprove/alfa-monad](./alfa-monad.md) |  |
-|  [@siteimprove/alfa-network](./alfa-network.md) |  |
-|  [@siteimprove/alfa-option](./alfa-option.md) |  |
-|  [@siteimprove/alfa-parser](./alfa-parser.md) |  |
-|  [@siteimprove/alfa-performance](./alfa-performance.md) |  |
-|  [@siteimprove/alfa-predicate](./alfa-predicate.md) |  |
-|  [@siteimprove/alfa-promise](./alfa-promise.md) | This package provides functionality for working with promises. |
-|  [@siteimprove/alfa-record](./alfa-record.md) |  |
-|  [@siteimprove/alfa-rectangle](./alfa-rectangle.md) |  |
-|  [@siteimprove/alfa-reducer](./alfa-reducer.md) |  |
-|  [@siteimprove/alfa-refinement](./alfa-refinement.md) |  |
-|  [@siteimprove/alfa-result](./alfa-result.md) |  |
-|  [@siteimprove/alfa-rules](./alfa-rules.md) |  |
-|  [@siteimprove/alfa-sarif](./alfa-sarif.md) |  |
-|  [@siteimprove/alfa-selective](./alfa-selective.md) |  |
-|  [@siteimprove/alfa-selector](./alfa-selector.md) |  |
-|  [@siteimprove/alfa-sequence](./alfa-sequence.md) |  |
-|  [@siteimprove/alfa-set](./alfa-set.md) |  |
-|  [@siteimprove/alfa-slice](./alfa-slice.md) |  |
-|  [@siteimprove/alfa-string](./alfa-string.md) |  |
-|  [@siteimprove/alfa-style](./alfa-style.md) |  |
-|  [@siteimprove/alfa-table](./alfa-table.md) |  |
-|  [@siteimprove/alfa-test-deprecated](./alfa-test-deprecated.md) |  |
-|  [@siteimprove/alfa-thenable](./alfa-thenable.md) |  |
-|  [@siteimprove/alfa-thunk](./alfa-thunk.md) |  |
-|  [@siteimprove/alfa-time](./alfa-time.md) |  |
-|  [@siteimprove/alfa-toolchain](./alfa-toolchain.md) |  |
-|  [@siteimprove/alfa-trampoline](./alfa-trampoline.md) |  |
-|  [@siteimprove/alfa-tree](./alfa-tree.md) |  |
-|  [@siteimprove/alfa-trilean](./alfa-trilean.md) |  |
-|  [@siteimprove/alfa-tuple](./alfa-tuple.md) |  |
-|  [@siteimprove/alfa-url](./alfa-url.md) |  |
-|  [@siteimprove/alfa-wcag](./alfa-wcag.md) |  |
-|  [@siteimprove/alfa-web](./alfa-web.md) |  |
-|  [@siteimprove/alfa-xpath](./alfa-xpath.md) |  |
+<table><thead><tr><th>
 
+Package
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[@siteimprove/alfa-act](./alfa-act.md)
+
+
+</td><td>
+
+This package provides functionality for implementing rules specified in the [ACT Rules Format](https://www.w3.org/TR/act-rules-format/)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-affine](./alfa-affine.md)
+
+
+</td><td>
+
+This package provides functionality for working with [affine transformations](https://en.wikipedia.org/wiki/Affine_transformation)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-applicative](./alfa-applicative.md)
+
+
+</td><td>
+
+This package provides types for modelling [applicative functors](https://en.wikipedia.org/wiki/Applicative_functor)<!-- -->.
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-aria](./alfa-aria.md)
+
+
+</td><td>
+
+This package provides functionality for working with [ARIA](https://www.w3.org/TR/wai-aria/) and the accessibility tree.
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-array](./alfa-array.md)
+
+
+</td><td>
+
+This package provides functionality for working with arrays.
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-bits](./alfa-bits.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-branched](./alfa-branched.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-cache](./alfa-cache.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-callback](./alfa-callback.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-cascade](./alfa-cascade.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-clone](./alfa-clone.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-collection](./alfa-collection.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-comparable](./alfa-comparable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-compatibility](./alfa-compatibility.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-continuation](./alfa-continuation.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-css](./alfa-css.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-css-feature](./alfa-css-feature.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-device](./alfa-device.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-dom](./alfa-dom.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-earl](./alfa-earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-either](./alfa-either.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-emitter](./alfa-emitter.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-encoding](./alfa-encoding.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-equatable](./alfa-equatable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-flags](./alfa-flags.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-fnv](./alfa-fnv.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-foldable](./alfa-foldable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-functor](./alfa-functor.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-future](./alfa-future.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-generator](./alfa-generator.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-graph](./alfa-graph.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-hash](./alfa-hash.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-http](./alfa-http.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-iana](./alfa-iana.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-iterable](./alfa-iterable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-json](./alfa-json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-json-ld](./alfa-json-ld.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-lazy](./alfa-lazy.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-list](./alfa-list.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-map](./alfa-map.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-mapper](./alfa-mapper.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-math](./alfa-math.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-monad](./alfa-monad.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-network](./alfa-network.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-option](./alfa-option.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-painting-order](./alfa-painting-order.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-parser](./alfa-parser.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-performance](./alfa-performance.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-predicate](./alfa-predicate.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-promise](./alfa-promise.md)
+
+
+</td><td>
+
+This package provides functionality for working with promises.
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-record](./alfa-record.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-rectangle](./alfa-rectangle.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-reducer](./alfa-reducer.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-refinement](./alfa-refinement.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-result](./alfa-result.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-rng](./alfa-rng.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-rules](./alfa-rules.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-sarif](./alfa-sarif.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-selective](./alfa-selective.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-selector](./alfa-selector.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-sequence](./alfa-sequence.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-set](./alfa-set.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-slice](./alfa-slice.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-string](./alfa-string.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-style](./alfa-style.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-table](./alfa-table.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-test-deprecated](./alfa-test-deprecated.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-thenable](./alfa-thenable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-thunk](./alfa-thunk.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-time](./alfa-time.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-toolchain](./alfa-toolchain.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-trampoline](./alfa-trampoline.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-tree](./alfa-tree.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-trilean](./alfa-trilean.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-tuple](./alfa-tuple.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-url](./alfa-url.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-wcag](./alfa-wcag.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-web](./alfa-web.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[@siteimprove/alfa-xpath](./alfa-xpath.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

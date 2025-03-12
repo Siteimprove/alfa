@@ -6,13 +6,51 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Selective](./alfa-selective.selective.md) | [https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf](https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Selective](./alfa-selective.selective.md)
+
+
+</td><td>
+
+[https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf](https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Selective](./alfa-selective.selective.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Selective](./alfa-selective.selective.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

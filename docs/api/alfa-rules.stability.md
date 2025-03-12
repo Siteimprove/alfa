@@ -13,15 +13,72 @@ export declare namespace Stability
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-rules.stability.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-rules.stability.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [Deprecated](./alfa-rules.stability.deprecated.md) | For deprecated rules. These rules are deprecated and will be removed permanently after some grace period. |
-|  [Experimental](./alfa-rules.stability.experimental.md) | For experimental rules. These rules are not necessarily compatible with downstream data processing, and are subject to breaking changes without notice |
-|  [Stable](./alfa-rules.stability.stable.md) | For stable rules. These rules follow the same basic principles and are reasonably stable; their changes are tracked by normal semver numbering. |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Deprecated](./alfa-rules.stability.deprecated.md)
+
+
+</td><td>
+
+For deprecated rules. These rules are deprecated and will be removed permanently after some grace period.
+
+
+</td></tr>
+<tr><td>
+
+[Experimental](./alfa-rules.stability.experimental.md)
+
+
+</td><td>
+
+For experimental rules. These rules are not necessarily compatible with downstream data processing, and are subject to breaking changes without notice
+
+
+</td></tr>
+<tr><td>
+
+[Stable](./alfa-rules.stability.stable.md)
+
+
+</td><td>
+
+For stable rules. These rules follow the same basic principles and are reasonably stable; their changes are tracked by normal semver numbering.
+
+
+</td></tr>
+</tbody></table>

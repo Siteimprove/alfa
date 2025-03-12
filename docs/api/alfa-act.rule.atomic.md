@@ -12,15 +12,66 @@ namespace Atomic
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isAtomic(value)](./alfa-act.rule.atomic.isatomic.md) |  |
-|  [isAtomic(value)](./alfa-act.rule.atomic.isatomic_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isAtomic(value)](./alfa-act.rule.atomic.isatomic.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isAtomic(value)](./alfa-act.rule.atomic.isatomic_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Evaluate](./alfa-act.rule.atomic.evaluate.md) |  |
-|  [JSON](./alfa-act.rule.atomic.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Evaluate](./alfa-act.rule.atomic.evaluate.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-act.rule.atomic.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

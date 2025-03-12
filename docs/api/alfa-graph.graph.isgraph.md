@@ -12,10 +12,37 @@ function isGraph<T>(value: Iterable<readonly [T, Iterable<T>]>): value is Graph<
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 value is [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;

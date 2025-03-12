@@ -12,9 +12,76 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [isIdentifier](./alfa-css.token.hash.json.isidentifier.md) |  | boolean |  |
-|  [type](./alfa-css.token.hash.json.type.md) |  | "hash" |  |
-|  [value](./alfa-css.token.hash.json.value.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isIdentifier](./alfa-css.token.hash.json.isidentifier.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-css.token.hash.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"hash"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[value](./alfa-css.token.hash.json.value.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -14,10 +14,37 @@ function parse<H extends BaseNumeric.Type = BaseNumeric.Type>(input: Slice<Token
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  input | Slice&lt;Token&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+input
+
+
+</td><td>
+
+Slice&lt;Token&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 import("@siteimprove/alfa-result").[Result](./alfa-result.result.md)<!-- -->&lt;\[Slice&lt;Token&gt;, [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt; \| [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;\], string&gt;

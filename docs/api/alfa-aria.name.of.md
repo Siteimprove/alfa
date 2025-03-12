@@ -15,12 +15,69 @@ static of(value: string, sources?: Iterable<Source>, spaces?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | string |  |
-|  sources | Iterable&lt;Source&gt; | _(Optional)_ |
-|  spaces | { before?: boolean; after?: boolean; } | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+sources
+
+
+</td><td>
+
+Iterable&lt;Source&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+spaces
+
+
+</td><td>
+
+{ before?: boolean; after?: boolean; }
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Name](./alfa-aria.name.md)

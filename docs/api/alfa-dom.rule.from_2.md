@@ -12,10 +12,37 @@ function from(json: KeyframeRule.JSON): KeyframeRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [KeyframeRule.JSON](./alfa-dom.keyframerule.json.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[KeyframeRule.JSON](./alfa-dom.keyframerule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 KeyframeRule

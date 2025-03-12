@@ -12,10 +12,39 @@ resolve(resolver?: Partial<Resolver<H> & Numeric.GenericResolver>): Canonical;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | Partial&lt;[Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;H&gt; &amp; Numeric.GenericResolver&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+Partial&lt;[Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;H&gt; &amp; Numeric.GenericResolver&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Canonical](./alfa-css.percentage.canonical.md)

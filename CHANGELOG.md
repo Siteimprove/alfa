@@ -1,5 +1,51 @@
 # Alfa changelog
 
+## [0.99.0](../../compare/v0.98.0...v0.99.0) (2025-03-05)
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0990): `List.some` is now available. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0990): A new predicate `isFlexOrGridChild` is available. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+- [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0990): `Device.isDevice` is now available. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0990), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0990): The `<search>` element is now correctly handled. ([#1759](https://github.com/Siteimprove/alfa/pull/1759))
+
+- [@siteimprove/alfa-painting-order](packages/alfa-painting-order/CHANGELOG.md#0990): A new package has been added for computing the painting order of HTML elements. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#0990): A minimal serialization of rules (and outcomes), including only the URI, is now available. ([#1765](https://github.com/Siteimprove/alfa/pull/1765))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0990): SIA-R115 now correctly also targets headings in nested documents and shadow DOM. ([#1766](https://github.com/Siteimprove/alfa/pull/1766))
+
+## [0.98.0](../../compare/v0.97.0...v0.98.0) (2025-02-03)
+
+### Breaking
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0980): `String.and` has been renamed `String.Transformer.and`. ([#1745](https://github.com/Siteimprove/alfa/pull/1745))
+
+### Added
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0980): A new utility to skaffold workspace creation with default settings is available. ([#1745](https://github.com/Siteimprove/alfa/pull/1745))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0980): A new `String.fallback` transformer combinator is available, to replace whitespace only strings with a fallback value. ([#1745](https://github.com/Siteimprove/alfa/pull/1745))
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#0980): A new `String.Transformer.when` combinator is available, to conditionally apply a transformer based on a predicate. ([#1745](https://github.com/Siteimprove/alfa/pull/1745))
+
+- [@siteimprove/alfa-rng](packages/alfa-rng/CHANGELOG.md#0980): A new package for handling simple seedable RNGs. ([#1746](https://github.com/Siteimprove/alfa/pull/1746))
+
+- [@siteimprove/alfa-result](packages/alfa-result/CHANGELOG.md#0980): `Result#getOrElse` now accepts a `Callback(E, U)` (building the new value from the error); `Result#getErrOrElse` now accepts a `Callback(T, F)`. ([#1742](https://github.com/Siteimprove/alfa/pull/1742))
+
+### Changed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0980): Node serialization with `Low` verbosity now also include the `Node#path`. ([#1748](https://github.com/Siteimprove/alfa/pull/1748))
+
+- [@siteimprove/alfa-compatibility](packages/alfa-compatibility/CHANGELOG.md#0980), [@siteimprove/alfa-css-feature](packages/alfa-css-feature/CHANGELOG.md#0980), [@siteimprove/alfa-performance](packages/alfa-performance/CHANGELOG.md#0980), [@siteimprove/alfa-trampoline](packages/alfa-trampoline/CHANGELOG.md#0980), [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md#0980), [@siteimprove/alfa-selective](packages/alfa-selective/CHANGELOG.md#0980), [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0980), [@siteimprove/alfa-branched](packages/alfa-branched/CHANGELOG.md#0980), [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0980), [@siteimprove/alfa-sequence](packages/alfa-sequence/CHANGELOG.md#0980), [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0980), [@siteimprove/alfa-emitter](packages/alfa-emitter/CHANGELOG.md#0980), [@siteimprove/alfa-network](packages/alfa-network/CHANGELOG.md#0980), [@siteimprove/alfa-affine](packages/alfa-affine/CHANGELOG.md#0980), [@siteimprove/alfa-device](packages/alfa-device/CHANGELOG.md#0980), [@siteimprove/alfa-either](packages/alfa-either/CHANGELOG.md#0980), [@siteimprove/alfa-future](packages/alfa-future/CHANGELOG.md#0980), [@siteimprove/alfa-option](packages/alfa-option/CHANGELOG.md#0980), [@siteimprove/alfa-record](packages/alfa-record/CHANGELOG.md#0980), [@siteimprove/alfa-result](packages/alfa-result/CHANGELOG.md#0980), [@siteimprove/alfa-cache](packages/alfa-cache/CHANGELOG.md#0980), [@siteimprove/alfa-graph](packages/alfa-graph/CHANGELOG.md#0980), [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0980), [@siteimprove/alfa-slice](packages/alfa-slice/CHANGELOG.md#0980), [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0980), [@siteimprove/alfa-table](packages/alfa-table/CHANGELOG.md#0980), [@siteimprove/alfa-xpath](packages/alfa-xpath/CHANGELOG.md#0980), [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0980), [@siteimprove/alfa-http](packages/alfa-http/CHANGELOG.md#0980), [@siteimprove/alfa-iana](packages/alfa-iana/CHANGELOG.md#0980), [@siteimprove/alfa-lazy](packages/alfa-lazy/CHANGELOG.md#0980), [@siteimprove/alfa-list](packages/alfa-list/CHANGELOG.md#0980), [@siteimprove/alfa-time](packages/alfa-time/CHANGELOG.md#0980), [@siteimprove/alfa-wcag](packages/alfa-wcag/CHANGELOG.md#0980), [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#0980), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0980), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0980), [@siteimprove/alfa-fnv](packages/alfa-fnv/CHANGELOG.md#0980), [@siteimprove/alfa-map](packages/alfa-map/CHANGELOG.md#0980), [@siteimprove/alfa-set](packages/alfa-set/CHANGELOG.md#0980), [@siteimprove/alfa-url](packages/alfa-url/CHANGELOG.md#0980), [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md#0980): Classes that do not implement the Singleton pattern now have `protected` constructor and can be extended. ([#1735](https://github.com/Siteimprove/alfa/pull/1735))
+
+- [@siteimprove/alfa-applicative](packages/alfa-applicative/CHANGELOG.md#0980), [@siteimprove/alfa-collection](packages/alfa-collection/CHANGELOG.md#0980), [@siteimprove/alfa-foldable](packages/alfa-foldable/CHANGELOG.md#0980), [@siteimprove/alfa-functor](packages/alfa-functor/CHANGELOG.md#0980), [@siteimprove/alfa-mapper](packages/alfa-mapper/CHANGELOG.md#0980), [@siteimprove/alfa-monad](packages/alfa-monad/CHANGELOG.md#0980): Packages that only export type now only pack their `.d.ts` files. ([#1736](https://github.com/Siteimprove/alfa/pull/1736))
+
 ## [0.97.0](../../compare/v0.96.0...v0.97.0) (2024-12-13)
 
 ### Added

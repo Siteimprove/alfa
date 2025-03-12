@@ -1,5 +1,13 @@
 # @siteimprove/alfa-mapper
 
+## 0.99.0
+
+## 0.98.0
+
+### Patch Changes
+
+- **Changed:** Packages that only export type now only pack their `.d.ts` files. ([#1736](https://github.com/Siteimprove/alfa/pull/1736))
+
 ## 0.97.0
 
 ## 0.96.0

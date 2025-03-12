@@ -13,43 +13,198 @@ export declare namespace Performance
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Mark](./alfa-performance.performance.mark.md) |  |
-|  [Measure](./alfa-performance.performance.measure.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Mark](./alfa-performance.performance.mark.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Measure](./alfa-performance.performance.measure.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isPerformance(value)](./alfa-performance.performance.isperformance.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isPerformance(value)](./alfa-performance.performance.isperformance.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-performance.performance.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-performance.performance.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Entry](./alfa-performance.performance.entry.md) |  |
-|  [Mark](./alfa-performance.performance.mark.md) |  |
-|  [Measure](./alfa-performance.performance.measure.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Entry](./alfa-performance.performance.entry.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Mark](./alfa-performance.performance.mark.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Measure](./alfa-performance.performance.measure.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [isMark](./alfa-performance.performance.ismark.md) |  |
-|  [isMeasure](./alfa-performance.performance.ismeasure.md) |  |
-|  [mark](./alfa-performance.performance.mark.md) |  |
-|  [measure](./alfa-performance.performance.measure.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isMark](./alfa-performance.performance.ismark.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isMeasure](./alfa-performance.performance.ismeasure.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[mark](./alfa-performance.performance.mark.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[measure](./alfa-performance.performance.measure.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Entry](./alfa-performance.performance.entry.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Entry](./alfa-performance.performance.entry.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

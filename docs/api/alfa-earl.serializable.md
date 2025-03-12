@@ -13,9 +13,42 @@ export declare namespace Serializable
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isSerializable(value)](./alfa-earl.serializable.isserializable.md) |  |
-|  [toEARL(value)](./alfa-earl.serializable.toearl.md) |  |
-|  [toEARL(value)](./alfa-earl.serializable.toearl_1.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isSerializable(value)](./alfa-earl.serializable.isserializable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toEARL(value)](./alfa-earl.serializable.toearl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toEARL(value)](./alfa-earl.serializable.toearl_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

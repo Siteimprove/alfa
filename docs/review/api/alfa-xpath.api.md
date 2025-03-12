@@ -67,7 +67,7 @@ export namespace Builder {
             ancestor(name?: string): Path;
             attribute(name?: string): Path;
             readonly expression: Expression.ContextItem;
-            equals(value: unknown): value is any;
+            equals(value: unknown): value is /*elided*/ any;
             toJSON(): Builder.JSON;
             toString(): string;
         };
@@ -86,7 +86,7 @@ export namespace Builder {
             ancestor(name?: string): Path;
             attribute(name?: string): Path;
             readonly expression: Expression.Filter;
-            equals(value: unknown): value is any;
+            equals(value: unknown): value is /*elided*/ any;
             toJSON(): Builder.JSON;
             toString(): string;
         };
@@ -105,7 +105,7 @@ export namespace Builder {
             ancestor(name?: string): Path;
             attribute(name?: string): Path;
             readonly expression: Expression.Axis;
-            equals(value: unknown): value is any;
+            equals(value: unknown): value is /*elided*/ any;
             toJSON(): Builder.JSON;
             toString(): string;
         };
@@ -126,7 +126,7 @@ export namespace Builder {
             ancestor(name?: string): Path;
             attribute(name?: string): Path;
             readonly expression: Expression.Path;
-            equals(value: unknown): value is any;
+            equals(value: unknown): value is /*elided*/ any;
             toJSON(): Builder.JSON;
             toString(): string;
         };

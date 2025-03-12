@@ -12,14 +12,99 @@ static of(namespace: Option<string>, name: string, value?: Option<string>, match
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  namespace | Option&lt;string&gt; |  |
-|  name | string |  |
-|  value | Option&lt;string&gt; | _(Optional)_ |
-|  matcher | Option&lt;[Attribute.Matcher](./alfa-selector.attribute.matcher.md)<!-- -->&gt; | _(Optional)_ |
-|  modifier | Option&lt;[Attribute.Modifier](./alfa-selector.attribute.modifier.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+namespace
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+name
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+matcher
+
+
+</td><td>
+
+Option&lt;[Attribute.Matcher](./alfa-selector.attribute.matcher.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+modifier
+
+
+</td><td>
+
+Option&lt;[Attribute.Modifier](./alfa-selector.attribute.modifier.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Attribute](./alfa-selector.attribute.md)

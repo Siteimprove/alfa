@@ -13,13 +13,92 @@ export interface Assertions
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [deepEqual(actual, expected, message)](./alfa-test-deprecated.assertions.deepequal.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_deepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_deepequal_actual_expected_message) |
-|  [equal(actual, expected, message)](./alfa-test-deprecated.assertions.equal.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_equal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_equal_actual_expected_message) |
-|  [fail(message)](./alfa-test-deprecated.assertions.fail.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_fail\_message](https://nodejs.org/api/assert.html#assert_assert_fail_message) |
-|  [notDeepEqual(actual, expected, message)](./alfa-test-deprecated.assertions.notdeepequal.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_notdeepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notdeepequal_actual_expected_message) |
-|  [notEqual(actual, expected, message)](./alfa-test-deprecated.assertions.notequal.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_notequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notequal_actual_expected_message) |
-|  [rejects(block, error, message)](./alfa-test-deprecated.assertions.rejects.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_rejects\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_rejects_block_error_message) |
-|  [throws(block, error, message)](./alfa-test-deprecated.assertions.throws.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_throws\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message) |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[deepEqual(actual, expected, message)](./alfa-test-deprecated.assertions.deepequal.md)
+
+
+</td><td>
+
+[https://nodejs.org/api/assert.html\#assert\_assert\_deepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_deepequal_actual_expected_message)
+
+
+</td></tr>
+<tr><td>
+
+[equal(actual, expected, message)](./alfa-test-deprecated.assertions.equal.md)
+
+
+</td><td>
+
+[https://nodejs.org/api/assert.html\#assert\_assert\_equal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_equal_actual_expected_message)
+
+
+</td></tr>
+<tr><td>
+
+[fail(message)](./alfa-test-deprecated.assertions.fail.md)
+
+
+</td><td>
+
+[https://nodejs.org/api/assert.html\#assert\_assert\_fail\_message](https://nodejs.org/api/assert.html#assert_assert_fail_message)
+
+
+</td></tr>
+<tr><td>
+
+[notDeepEqual(actual, expected, message)](./alfa-test-deprecated.assertions.notdeepequal.md)
+
+
+</td><td>
+
+[https://nodejs.org/api/assert.html\#assert\_assert\_notdeepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notdeepequal_actual_expected_message)
+
+
+</td></tr>
+<tr><td>
+
+[notEqual(actual, expected, message)](./alfa-test-deprecated.assertions.notequal.md)
+
+
+</td><td>
+
+[https://nodejs.org/api/assert.html\#assert\_assert\_notequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notequal_actual_expected_message)
+
+
+</td></tr>
+<tr><td>
+
+[rejects(block, error, message)](./alfa-test-deprecated.assertions.rejects.md)
+
+
+</td><td>
+
+[https://nodejs.org/api/assert.html\#assert\_assert\_rejects\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_rejects_block_error_message)
+
+
+</td></tr>
+<tr><td>
+
+[throws(block, error, message)](./alfa-test-deprecated.assertions.throws.md)
+
+
+</td><td>
+
+[https://nodejs.org/api/assert.html\#assert\_assert\_throws\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message)
+
+
+</td></tr>
+</tbody></table>

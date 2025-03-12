@@ -12,11 +12,53 @@ static of<V extends Value>(values: Iterable<V>, separator?: string): List<V>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  values | Iterable&lt;V&gt; |  |
-|  separator | string | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+values
+
+
+</td><td>
+
+Iterable&lt;V&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+separator
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [List](./alfa-css.list.md)<!-- -->&lt;V&gt;

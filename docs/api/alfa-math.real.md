@@ -14,16 +14,115 @@ export declare namespace Real
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [add(p, q)](./alfa-math.real.add.md) |  |
-|  [clamp(p, l, u)](./alfa-math.real.clamp.md) | Clamp a real between a lower and an upper value. |
-|  [divide(p, d)](./alfa-math.real.divide.md) |  |
-|  [equals(a, b, e)](./alfa-math.real.equals.md) | Check if two reals are equal, accounting for floating-point precision errors according to a given epsilon. |
-|  [isReal(value)](./alfa-math.real.isreal.md) |  |
-|  [isReal(value)](./alfa-math.real.isreal_1.md) |  |
-|  [modulo(p, d)](./alfa-math.real.modulo.md) | <p>Compute the modulus of a division of two reals.</p><p>[https://en.wikipedia.org/wiki/Modulo\_operation](https://en.wikipedia.org/wiki/Modulo_operation)</p> |
-|  [multiply(p, q)](./alfa-math.real.multiply.md) |  |
-|  [round(p, n)](./alfa-math.real.round.md) | Round a real to a given number of decimals. |
-|  [subtract(p, q)](./alfa-math.real.subtract.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[add(p, q)](./alfa-math.real.add.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[clamp(p, l, u)](./alfa-math.real.clamp.md)
+
+
+</td><td>
+
+Clamp a real between a lower and an upper value.
+
+
+</td></tr>
+<tr><td>
+
+[divide(p, d)](./alfa-math.real.divide.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[equals(a, b, e)](./alfa-math.real.equals.md)
+
+
+</td><td>
+
+Check if two reals are equal, accounting for floating-point precision errors according to a given epsilon.
+
+
+</td></tr>
+<tr><td>
+
+[isReal(value)](./alfa-math.real.isreal.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isReal(value)](./alfa-math.real.isreal_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[modulo(p, d)](./alfa-math.real.modulo.md)
+
+
+</td><td>
+
+Compute the modulus of a division of two reals.
+
+[https://en.wikipedia.org/wiki/Modulo\_operation](https://en.wikipedia.org/wiki/Modulo_operation)
+
+
+</td></tr>
+<tr><td>
+
+[multiply(p, q)](./alfa-math.real.multiply.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[round(p, n)](./alfa-math.real.round.md)
+
+
+</td><td>
+
+Round a real to a given number of decimals.
+
+
+</td></tr>
+<tr><td>
+
+[subtract(p, q)](./alfa-math.real.subtract.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

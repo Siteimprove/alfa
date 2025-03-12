@@ -14,9 +14,62 @@ protected constructor(owner: dom.Node, children: Array<Node>, type: T);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  owner | [dom.Node](./alfa-dom.node.md) |  |
-|  children | Array&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; |  |
-|  type | T |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+owner
+
+
+</td><td>
+
+[dom.Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+children
+
+
+</td><td>
+
+Array&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+type
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

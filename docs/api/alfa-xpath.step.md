@@ -13,11 +13,51 @@ export declare function step(left: Builder<Expression.Step | Expression.Path>, r
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  left | [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Step](./alfa-xpath.expression.step.md) \| [Expression.Path](./alfa-xpath.expression.path.md)<!-- -->&gt; |  |
-|  right | [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Step](./alfa-xpath.expression.step.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+left
+
+
+</td><td>
+
+[Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Step](./alfa-xpath.expression.step.md) \| [Expression.Path](./alfa-xpath.expression.path.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+right
+
+
+</td><td>
+
+[Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Step](./alfa-xpath.expression.step.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Builder.Path](./alfa-xpath.builder.path.md)

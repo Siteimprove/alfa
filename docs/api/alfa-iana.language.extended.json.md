@@ -13,7 +13,42 @@ interface JSON extends Subtag.JSON<"extended", Name>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [prefix](./alfa-iana.language.extended.json.prefix.md) |  | [Primary.Name](./alfa-iana.language.primary.name.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[prefix](./alfa-iana.language.extended.json.prefix.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Primary.Name](./alfa-iana.language.primary.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

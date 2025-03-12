@@ -13,11 +13,110 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-web.page.earl.__context_.md) |  | { earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; } |  |
-|  ["@id"](./alfa-web.page.earl.__id_.md) |  | string |  |
-|  ["@type"](./alfa-web.page.earl.__type_.md) |  | \["earl:TestSubject"\] |  |
-|  ["dct:hasPart"](./alfa-web.page.earl._dct_haspart_.md) |  | \[[Request.EARL](./alfa-http.request.earl.md)<!-- -->, [Response.EARL](./alfa-http.response.earl.md)<!-- -->\] |  |
-|  ["dct:source"](./alfa-web.page.earl._dct_source_.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-web.page.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@id"](./alfa-web.page.earl.__id_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@type"](./alfa-web.page.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\["earl:TestSubject"\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["dct:hasPart"](./alfa-web.page.earl._dct_haspart_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\[[Request.EARL](./alfa-http.request.earl.md)<!-- -->, [Response.EARL](./alfa-http.response.earl.md)<!-- -->\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["dct:source"](./alfa-web.page.earl._dct_source_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

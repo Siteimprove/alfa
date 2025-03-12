@@ -13,9 +13,76 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-act.requirement.earl.__context_.md) |  | { earl: "http://www.w3.org/ns/earl\#"; } |  |
-|  ["@id"](./alfa-act.requirement.earl.__id_.md) |  | string |  |
-|  ["@type"](./alfa-act.requirement.earl.__type_.md) |  | \["earl:TestCriterion", "earl:TestRequirement"\] |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-act.requirement.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ earl: "http://www.w3.org/ns/earl\#"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@id"](./alfa-act.requirement.earl.__id_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@type"](./alfa-act.requirement.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\["earl:TestCriterion", "earl:TestRequirement"\]
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

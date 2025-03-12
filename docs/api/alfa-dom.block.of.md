@@ -12,10 +12,37 @@ static of(declarations: Iterable<Declaration>): Block;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  declarations | Iterable&lt;Declaration&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+declarations
+
+
+</td><td>
+
+Iterable&lt;Declaration&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Block](./alfa-dom.block.md)

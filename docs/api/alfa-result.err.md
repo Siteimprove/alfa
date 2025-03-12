@@ -13,14 +13,57 @@ export declare namespace Err
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isErr(value)](./alfa-result.err.iserr.md) |  |
-|  [isErr(value)](./alfa-result.err.iserr_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isErr(value)](./alfa-result.err.iserr.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isErr(value)](./alfa-result.err.iserr_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-result.err.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-result.err.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

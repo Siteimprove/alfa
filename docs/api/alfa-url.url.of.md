@@ -12,18 +12,165 @@ static of(scheme: string, username?: Option<string>, password?: Option<string>, 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  scheme | string |  |
-|  username | Option&lt;string&gt; | _(Optional)_ |
-|  password | Option&lt;string&gt; | _(Optional)_ |
-|  host | Option&lt;string&gt; | _(Optional)_ |
-|  port | Option&lt;number&gt; | _(Optional)_ |
-|  path | Iterable&lt;string&gt; | _(Optional)_ |
-|  query | Option&lt;string&gt; | _(Optional)_ |
-|  fragment | Option&lt;string&gt; | _(Optional)_ |
-|  cannotBeABase | boolean | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+scheme
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+username
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+password
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+host
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+port
+
+
+</td><td>
+
+Option&lt;number&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+path
+
+
+</td><td>
+
+Iterable&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+query
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+fragment
+
+
+</td><td>
+
+Option&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+cannotBeABase
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [URL](./alfa-url.url.md)

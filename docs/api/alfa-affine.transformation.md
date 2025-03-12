@@ -13,23 +13,108 @@ export declare namespace Transformation
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [perspective(d)](./alfa-affine.transformation.perspective.md) |  |
-|  [rotate(a, u)](./alfa-affine.transformation.rotate.md) |  |
-|  [scale(sx, sy, sz)](./alfa-affine.transformation.scale.md) |  |
-|  [skew(a, b)](./alfa-affine.transformation.skew.md) |  |
-|  [translate(tx, ty, tz)](./alfa-affine.transformation.translate.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[perspective(d)](./alfa-affine.transformation.perspective.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[rotate(a, u)](./alfa-affine.transformation.rotate.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[scale(sx, sy, sz)](./alfa-affine.transformation.scale.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[skew(a, b)](./alfa-affine.transformation.skew.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[translate(tx, ty, tz)](./alfa-affine.transformation.translate.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Components](./alfa-affine.transformation.components.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Components](./alfa-affine.transformation.components.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-affine.transformation.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-affine.transformation.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -14,7 +14,26 @@ export declare namespace Decoder
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [decode(input)](./alfa-encoding.decoder.decode.md) | [https://encoding.spec.whatwg.org/\#dom-textdecoder-decode](https://encoding.spec.whatwg.org/#dom-textdecoder-decode) [https://encoding.spec.whatwg.org/\#utf-8-decoder](https://encoding.spec.whatwg.org/#utf-8-decoder) |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[decode(input)](./alfa-encoding.decoder.decode.md)
+
+
+</td><td>
+
+[https://encoding.spec.whatwg.org/\#dom-textdecoder-decode](https://encoding.spec.whatwg.org/#dom-textdecoder-decode) [https://encoding.spec.whatwg.org/\#utf-8-decoder](https://encoding.spec.whatwg.org/#utf-8-decoder)
+
+
+</td></tr>
+</tbody></table>

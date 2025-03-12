@@ -12,10 +12,37 @@ static join(...names: Array<Name>): Name;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  names | Array&lt;[Name](./alfa-aria.name.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+names
+
+
+</td><td>
+
+Array&lt;[Name](./alfa-aria.name.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Name](./alfa-aria.name.md)

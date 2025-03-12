@@ -13,19 +13,72 @@ export declare namespace Diagnostic
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isDiagnostic(value)](./alfa-act.diagnostic.isdiagnostic.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isDiagnostic(value)](./alfa-act.diagnostic.isdiagnostic.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-act.diagnostic.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-act.diagnostic.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [empty](./alfa-act.diagnostic.empty.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[empty](./alfa-act.diagnostic.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

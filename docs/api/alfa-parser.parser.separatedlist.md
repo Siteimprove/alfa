@@ -14,13 +14,87 @@ export function separatedList<I, T, E, A extends Array<unknown> = []>(parser: Pa
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; | Parser for the items in the list |
-|  separator | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; | Parser for the separator between items |
-|  lower | number | _(Optional)_ Minimum number of items to parse, defaults to 1 |
-|  upper | number | _(Optional)_ Maximum number of items to parse, defaults to Infinity |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+parser
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
+
+
+</td><td>
+
+Parser for the items in the list
+
+
+</td></tr>
+<tr><td>
+
+separator
+
+
+</td><td>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt;
+
+
+</td><td>
+
+Parser for the separator between items
+
+
+</td></tr>
+<tr><td>
+
+lower
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_ Minimum number of items to parse, defaults to 1
+
+
+</td></tr>
+<tr><td>
+
+upper
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+_(Optional)_ Maximum number of items to parse, defaults to Infinity
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, \[T, ...Array&lt;T&gt;\], E, A&gt;

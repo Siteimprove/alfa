@@ -12,10 +12,37 @@ reject<U extends V>(refinement: Refinement<V, U, [key: K]>): Map<K, Exclude<V, U
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  refinement | Refinement&lt;V, U, \[key: K\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+refinement
+
+
+</td><td>
+
+Refinement&lt;V, U, \[key: K\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Map](./alfa-map.map_2.md)<!-- -->&lt;K, Exclude&lt;V, U&gt;&gt;

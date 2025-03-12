@@ -13,66 +13,389 @@ export declare namespace Language
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Extended](./alfa-iana.language.extended.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.2](https://tools.ietf.org/html/bcp47#section-2.2.2) |
-|  [Primary](./alfa-iana.language.primary.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.1](https://tools.ietf.org/html/bcp47#section-2.2.1) |
-|  [Region](./alfa-iana.language.region.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.4](https://tools.ietf.org/html/bcp47#section-2.2.4) |
-|  [Script](./alfa-iana.language.script.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.3](https://tools.ietf.org/html/bcp47#section-2.2.3) |
-|  [Variant](./alfa-iana.language.variant.md) | [https://tools.ietf.org/html/bcp47\#section-2.2.5](https://tools.ietf.org/html/bcp47#section-2.2.5) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Extended](./alfa-iana.language.extended.md)
+
+
+</td><td>
+
+[https://tools.ietf.org/html/bcp47\#section-2.2.2](https://tools.ietf.org/html/bcp47#section-2.2.2)
+
+
+</td></tr>
+<tr><td>
+
+[Primary](./alfa-iana.language.primary.md)
+
+
+</td><td>
+
+[https://tools.ietf.org/html/bcp47\#section-2.2.1](https://tools.ietf.org/html/bcp47#section-2.2.1)
+
+
+</td></tr>
+<tr><td>
+
+[Region](./alfa-iana.language.region.md)
+
+
+</td><td>
+
+[https://tools.ietf.org/html/bcp47\#section-2.2.4](https://tools.ietf.org/html/bcp47#section-2.2.4)
+
+
+</td></tr>
+<tr><td>
+
+[Script](./alfa-iana.language.script.md)
+
+
+</td><td>
+
+[https://tools.ietf.org/html/bcp47\#section-2.2.3](https://tools.ietf.org/html/bcp47#section-2.2.3)
+
+
+</td></tr>
+<tr><td>
+
+[Variant](./alfa-iana.language.variant.md)
+
+
+</td><td>
+
+[https://tools.ietf.org/html/bcp47\#section-2.2.5](https://tools.ietf.org/html/bcp47#section-2.2.5)
+
+
+</td></tr>
+</tbody></table>
 
 ## Abstract Classes
 
-|  Abstract Class | Description |
-|  --- | --- |
-|  [Subtag](./alfa-iana.language.subtag.md) | [https://tools.ietf.org/html/bcp47\#section-3.1.2](https://tools.ietf.org/html/bcp47#section-3.1.2) |
+<table><thead><tr><th>
+
+Abstract Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Subtag](./alfa-iana.language.subtag.md)
+
+
+</td><td>
+
+[https://tools.ietf.org/html/bcp47\#section-3.1.2](https://tools.ietf.org/html/bcp47#section-3.1.2)
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [parse(input)](./alfa-iana.language.parse.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse(input)](./alfa-iana.language.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-iana.language.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-iana.language.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Extended](./alfa-iana.language.extended.md) |  |
-|  [Primary](./alfa-iana.language.primary.md) |  |
-|  [Region](./alfa-iana.language.region.md) |  |
-|  [Script](./alfa-iana.language.script.md) |  |
-|  [Subtag](./alfa-iana.language.subtag.md) |  |
-|  [Variant](./alfa-iana.language.variant.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Extended](./alfa-iana.language.extended.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Primary](./alfa-iana.language.primary.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Region](./alfa-iana.language.region.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Script](./alfa-iana.language.script.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Subtag](./alfa-iana.language.subtag.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Variant](./alfa-iana.language.variant.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [extended](./alfa-iana.language.extended.md) |  |
-|  [isExtended](./alfa-iana.language.isextended.md) |  |
-|  [isExtendedName](./alfa-iana.language.isextendedname.md) |  |
-|  [isPrimary](./alfa-iana.language.isprimary.md) |  |
-|  [isPrimaryName](./alfa-iana.language.isprimaryname.md) |  |
-|  [isRegion](./alfa-iana.language.isregion.md) |  |
-|  [isRegionName](./alfa-iana.language.isregionname.md) |  |
-|  [isScript](./alfa-iana.language.isscript.md) |  |
-|  [isScriptName](./alfa-iana.language.isscriptname.md) |  |
-|  [isVariant](./alfa-iana.language.isvariant.md) |  |
-|  [isVariantName](./alfa-iana.language.isvariantname.md) |  |
-|  [primary](./alfa-iana.language.primary.md) |  |
-|  [region](./alfa-iana.language.region.md) |  |
-|  [script](./alfa-iana.language.script.md) |  |
-|  [variant](./alfa-iana.language.variant.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[extended](./alfa-iana.language.extended.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isExtended](./alfa-iana.language.isextended.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isExtendedName](./alfa-iana.language.isextendedname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isPrimary](./alfa-iana.language.isprimary.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isPrimaryName](./alfa-iana.language.isprimaryname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRegion](./alfa-iana.language.isregion.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRegionName](./alfa-iana.language.isregionname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isScript](./alfa-iana.language.isscript.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isScriptName](./alfa-iana.language.isscriptname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isVariant](./alfa-iana.language.isvariant.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isVariantName](./alfa-iana.language.isvariantname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[primary](./alfa-iana.language.primary.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[region](./alfa-iana.language.region.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[script](./alfa-iana.language.script.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[variant](./alfa-iana.language.variant.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Scope](./alfa-iana.language.scope.md) | [https://tools.ietf.org/html/bcp47\#section-3.1.11](https://tools.ietf.org/html/bcp47#section-3.1.11) |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Scope](./alfa-iana.language.scope.md)
+
+
+</td><td>
+
+[https://tools.ietf.org/html/bcp47\#section-3.1.11](https://tools.ietf.org/html/bcp47#section-3.1.11)
+
+
+</td></tr>
+</tbody></table>

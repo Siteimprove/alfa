@@ -13,14 +13,57 @@ export declare namespace Type
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isType(value)](./alfa-dom.type.istype.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isType(value)](./alfa-dom.type.istype.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.type.json.md) |  |
-|  [MinimalJSON](./alfa-dom.type.minimaljson.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.type.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MinimalJSON](./alfa-dom.type.minimaljson.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -14,10 +14,76 @@ protected constructor(uri: string, requirements: Array<Requirement>, tags: Array
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  uri | string |  |
-|  requirements | Array&lt;Requirement&gt; |  |
-|  tags | Array&lt;Tag&gt; |  |
-|  evaluator | [Rule.Evaluate](./alfa-act.rule.evaluate.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+uri
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+requirements
+
+
+</td><td>
+
+Array&lt;Requirement&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+tags
+
+
+</td><td>
+
+Array&lt;Tag&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+evaluator
+
+
+</td><td>
+
+[Rule.Evaluate](./alfa-act.rule.evaluate.md)<!-- -->&lt;I, T, Q, S&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

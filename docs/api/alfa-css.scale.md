@@ -13,26 +13,107 @@ export declare namespace Scale
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isScale(value)](./alfa-css.scale.isscale.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isScale(value)](./alfa-css.scale.isscale.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.scale.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.scale.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.scale.parse.md) |  |
-|  [parseProp](./alfa-css.scale.parseprop.md) | [https://developer.mozilla.org/en-US/docs/Web/CSS/scale](https://developer.mozilla.org/en-US/docs/Web/CSS/scale) |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.scale.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[parseProp](./alfa-css.scale.parseprop.md)
+
+
+</td><td>
+
+[https://developer.mozilla.org/en-US/docs/Web/CSS/scale](https://developer.mozilla.org/en-US/docs/Web/CSS/scale)
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.scale.canonical.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.scale.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -14,7 +14,24 @@ export interface Convertible<U extends string>
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [withUnit(unit)](./alfa-css.convertible.withunit.md) |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[withUnit(unit)](./alfa-css.convertible.withunit.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

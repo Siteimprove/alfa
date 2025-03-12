@@ -12,11 +12,51 @@ reduce<R>(reducer: Reducer<V, R, [key: K]>, accumulator: R): R;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  reducer | Reducer&lt;V, R, \[key: K\]&gt; |  |
-|  accumulator | R |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+reducer
+
+
+</td><td>
+
+Reducer&lt;V, R, \[key: K\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+accumulator
+
+
+</td><td>
+
+R
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 R

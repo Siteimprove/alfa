@@ -13,28 +13,123 @@ export declare namespace Preference
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-device.preference.from.md) |  |
-|  [isPreference(value, name)](./alfa-device.preference.ispreference.md) |  |
-|  [unset(name)](./alfa-device.preference.unset.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-device.preference.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isPreference(value, name)](./alfa-device.preference.ispreference.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[unset(name)](./alfa-device.preference.unset.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-device.preference.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-device.preference.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [preferences](./alfa-device.preference.preferences.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[preferences](./alfa-device.preference.preferences.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Name](./alfa-device.preference.name.md) |  |
-|  [Value](./alfa-device.preference.value.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Name](./alfa-device.preference.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Value](./alfa-device.preference.value.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

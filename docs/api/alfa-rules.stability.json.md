@@ -13,7 +13,42 @@ interface JSON<S extends string = string> extends Tag.JSON<"stability">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [stability](./alfa-rules.stability.json.stability.md) |  | S |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[stability](./alfa-rules.stability.json.stability.md)
+
+
+</td><td>
+
+
+</td><td>
+
+S
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

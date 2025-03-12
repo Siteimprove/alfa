@@ -13,9 +13,76 @@ interface JSON extends Function.JSON<"scale">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [x](./alfa-css.scale.json.x.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [y](./alfa-css.scale.json.y.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [z](./alfa-css.scale.json.z.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[x](./alfa-css.scale.json.x.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[y](./alfa-css.scale.json.y.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[z](./alfa-css.scale.json.z.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

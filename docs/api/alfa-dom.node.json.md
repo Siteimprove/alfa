@@ -11,3 +11,46 @@ interface JSON<T extends string = string> extends tree.Node.JSON<T>
 ```
 **Extends:** [tree.Node.JSON](./alfa-tree.node.json.md)<!-- -->&lt;T&gt;
 
+## Properties
+
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[path?](./alfa-dom.node.json.path.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

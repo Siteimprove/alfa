@@ -12,10 +12,37 @@ flatten<K, V>(this: Keyed<K, Keyed<K, V>>): Keyed<K, V>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;

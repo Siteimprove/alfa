@@ -12,11 +12,51 @@ function none<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Tril
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+iterable
+
+
+</td><td>
+
+Iterable&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+predicate
+
+
+</td><td>
+
+[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, \[number\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Trilean](./alfa-trilean.trilean.md)

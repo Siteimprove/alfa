@@ -13,7 +13,24 @@ export declare namespace Hashable
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isHashable(value)](./alfa-hash.hashable.ishashable.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isHashable(value)](./alfa-hash.hashable.ishashable.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

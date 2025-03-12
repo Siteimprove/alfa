@@ -14,11 +14,90 @@ constructor(primary: Language.Primary, extended: Option<Language.Extended>, scri
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  primary | [Language.Primary](./alfa-iana.language.primary.md) |  |
-|  extended | Option&lt;[Language.Extended](./alfa-iana.language.extended.md)<!-- -->&gt; |  |
-|  script | Option&lt;[Language.Script](./alfa-iana.language.script.md)<!-- -->&gt; |  |
-|  region | Option&lt;[Language.Region](./alfa-iana.language.region.md)<!-- -->&gt; |  |
-|  variants | Array&lt;[Language.Variant](./alfa-iana.language.variant.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+primary
+
+
+</td><td>
+
+[Language.Primary](./alfa-iana.language.primary.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+extended
+
+
+</td><td>
+
+Option&lt;[Language.Extended](./alfa-iana.language.extended.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+script
+
+
+</td><td>
+
+Option&lt;[Language.Script](./alfa-iana.language.script.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+region
+
+
+</td><td>
+
+Option&lt;[Language.Region](./alfa-iana.language.region.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+variants
+
+
+</td><td>
+
+Array&lt;[Language.Variant](./alfa-iana.language.variant.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

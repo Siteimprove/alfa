@@ -12,7 +12,24 @@ namespace Indexed
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-collection.collection.indexed.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-collection.collection.indexed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

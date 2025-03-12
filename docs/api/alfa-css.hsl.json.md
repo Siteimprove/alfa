@@ -13,10 +13,93 @@ interface JSON extends Format.JSON<"hsl">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [alpha](./alfa-css.hsl.json.alpha.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [hue](./alfa-css.hsl.json.hue.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md) |  |
-|  [lightness](./alfa-css.hsl.json.lightness.md) |  | [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [saturation](./alfa-css.hsl.json.saturation.md) |  | [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[alpha](./alfa-css.hsl.json.alpha.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hue](./alfa-css.hsl.json.hue.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) \| [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[lightness](./alfa-css.hsl.json.lightness.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[saturation](./alfa-css.hsl.json.saturation.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

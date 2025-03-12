@@ -12,10 +12,37 @@ function from<N extends Name>(json: JSON<N>): Preference<N>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  json | [JSON](./alfa-device.preference.json.md)<!-- -->&lt;N&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+json
+
+
+</td><td>
+
+[JSON](./alfa-device.preference.json.md)<!-- -->&lt;N&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;

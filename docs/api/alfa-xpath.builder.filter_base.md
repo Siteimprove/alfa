@@ -15,7 +15,7 @@ Filter_base: {
             ancestor(name?: string): Path;
             attribute(name?: string): Path;
             readonly expression: Expression.Filter;
-            equals(value: unknown): value is any;
+            equals(value: unknown): value is /*elided*/ any;
             toJSON(): Builder.JSON;
             toString(): string;
         };

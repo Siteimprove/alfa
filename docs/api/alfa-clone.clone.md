@@ -13,7 +13,24 @@ export declare namespace Clone
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [clone(value)](./alfa-clone.clone.clone.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[clone(value)](./alfa-clone.clone.clone.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -14,8 +14,48 @@ protected constructor(type: T, hasCalculation: CALC);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | T |  |
-|  hasCalculation | CALC |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+hasCalculation
+
+
+</td><td>
+
+CALC
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

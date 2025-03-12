@@ -13,20 +13,81 @@ export declare namespace Origin
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isAuthor(origin)](./alfa-cascade.origin.isauthor.md) |  |
-|  [isImportant(origin)](./alfa-cascade.origin.isimportant.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isAuthor(origin)](./alfa-cascade.origin.isauthor.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isImportant(origin)](./alfa-cascade.origin.isimportant.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [compare](./alfa-cascade.origin.compare.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[compare](./alfa-cascade.origin.compare.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-cascade.origin.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-cascade.origin.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

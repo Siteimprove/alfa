@@ -12,12 +12,65 @@ function reduce<T, U, R, N>(generator: Generator<T, R, N>, reducer: Reducer<T, U
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  generator | [Generator](./alfa-generator.generator_2.md)<!-- -->&lt;T, R, N&gt; |  |
-|  reducer | Reducer&lt;T, U&gt; |  |
-|  accumulator | U |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+generator
+
+
+</td><td>
+
+[Generator](./alfa-generator.generator_2.md)<!-- -->&lt;T, R, N&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+reducer
+
+
+</td><td>
+
+Reducer&lt;T, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+accumulator
+
+
+</td><td>
+
+U
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 U

@@ -1,5 +1,17 @@
 # @siteimprove/alfa-rules
 
+## 0.99.0
+
+### Patch Changes
+
+- **Fixed:** SIA-R115 now correctly also targets headings in nested documents and shadow DOM. ([#1766](https://github.com/Siteimprove/alfa/pull/1766))
+
+## 0.98.0
+
+### Patch Changes
+
+- **Changed:** Classes that do not implement the Singleton pattern now have `protected` constructor and can be extended. ([#1735](https://github.com/Siteimprove/alfa/pull/1735))
+
 ## 0.97.0
 
 ### Patch Changes

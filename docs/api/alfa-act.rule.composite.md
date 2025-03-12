@@ -12,15 +12,66 @@ namespace Composite
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isComposite(value)](./alfa-act.rule.composite.iscomposite.md) |  |
-|  [isComposite(value)](./alfa-act.rule.composite.iscomposite_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isComposite(value)](./alfa-act.rule.composite.iscomposite.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isComposite(value)](./alfa-act.rule.composite.iscomposite_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Evaluate](./alfa-act.rule.composite.evaluate.md) |  |
-|  [JSON](./alfa-act.rule.composite.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Evaluate](./alfa-act.rule.composite.evaluate.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-act.rule.composite.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

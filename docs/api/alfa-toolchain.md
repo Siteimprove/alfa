@@ -6,21 +6,92 @@
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [generateGraphs(cwd)](./alfa-toolchain.generategraphs.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[generateGraphs(cwd)](./alfa-toolchain.generategraphs.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [globalChangelog](./alfa-toolchain.globalchangelog.md) |  |
-|  [individualChangelog](./alfa-toolchain.individualchangelog.md) |  |
-|  [Validation](./alfa-toolchain.validation.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[globalChangelog](./alfa-toolchain.globalchangelog.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[individualChangelog](./alfa-toolchain.individualchangelog.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Validation](./alfa-toolchain.validation.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [changelogFunctions](./alfa-toolchain.changelogfunctions.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[changelogFunctions](./alfa-toolchain.changelogfunctions.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

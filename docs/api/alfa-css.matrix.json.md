@@ -13,7 +13,42 @@ interface JSON extends Function.JSON<"matrix">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [values](./alfa-css.matrix.json.values.md) |  | [Values](./alfa-css.matrix.values.md)<!-- -->&lt;[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[values](./alfa-css.matrix.json.values.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Values](./alfa-css.matrix.values.md)<!-- -->&lt;[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

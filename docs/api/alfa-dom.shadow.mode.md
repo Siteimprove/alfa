@@ -12,8 +12,48 @@ enum Mode
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  Closed | <code>&quot;closed&quot;</code> |  |
-|  Open | <code>&quot;open&quot;</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+Closed
+
+
+</td><td>
+
+`"closed"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+Open
+
+
+</td><td>
+
+`"open"`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

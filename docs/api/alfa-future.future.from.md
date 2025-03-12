@@ -12,10 +12,37 @@ function from<T>(promise: Promise<T> | Thunk<Promise<T>>): Future<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  promise | Promise&lt;T&gt; \| Thunk&lt;Promise&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+promise
+
+
+</td><td>
+
+Promise&lt;T&gt; \| Thunk&lt;Promise&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;

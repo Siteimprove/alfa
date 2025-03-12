@@ -1,5 +1,17 @@
 # @siteimprove/alfa-style
 
+## 0.99.0
+
+### Minor Changes
+
+- **Added:** A new predicate `isFlexOrGridChild` is available. ([#1756](https://github.com/Siteimprove/alfa/pull/1756))
+
+## 0.98.0
+
+### Patch Changes
+
+- **Changed:** Classes that do not implement the Singleton pattern now have `protected` constructor and can be extended. ([#1735](https://github.com/Siteimprove/alfa/pull/1735))
+
 ## 0.97.0
 
 ### Minor Changes

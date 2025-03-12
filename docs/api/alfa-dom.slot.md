@@ -13,10 +13,55 @@ export declare namespace Slot
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [findSlotables(slot)](./alfa-dom.slot.findslotables.md) | [https://dom.spec.whatwg.org/\#find-slotables](https://dom.spec.whatwg.org/#find-slotables) |
-|  [isSlot(element)](./alfa-dom.slot.isslot.md) |  |
-|  [isSlot(value)](./alfa-dom.slot.isslot_1.md) |  |
-|  [name(slot)](./alfa-dom.slot.name.md) | [https://dom.spec.whatwg.org/\#slot-name](https://dom.spec.whatwg.org/#slot-name) |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[findSlotables(slot)](./alfa-dom.slot.findslotables.md)
+
+
+</td><td>
+
+[https://dom.spec.whatwg.org/\#find-slotables](https://dom.spec.whatwg.org/#find-slotables)
+
+
+</td></tr>
+<tr><td>
+
+[isSlot(element)](./alfa-dom.slot.isslot.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSlot(value)](./alfa-dom.slot.isslot_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[name(slot)](./alfa-dom.slot.name.md)
+
+
+</td><td>
+
+[https://dom.spec.whatwg.org/\#slot-name](https://dom.spec.whatwg.org/#slot-name)
+
+
+</td></tr>
+</tbody></table>

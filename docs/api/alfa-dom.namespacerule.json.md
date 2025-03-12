@@ -13,8 +13,59 @@ interface JSON extends Rule.JSON<"namespace">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [namespace](./alfa-dom.namespacerule.json.namespace.md) |  | string |  |
-|  [prefix](./alfa-dom.namespacerule.json.prefix.md) |  | string \| null |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[namespace](./alfa-dom.namespacerule.json.namespace.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[prefix](./alfa-dom.namespacerule.json.prefix.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| null
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

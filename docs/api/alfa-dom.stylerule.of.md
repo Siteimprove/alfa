@@ -12,12 +12,67 @@ static of(selector: string, declarations: Iterable<Declaration>, hint?: boolean)
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  selector | string |  |
-|  declarations | Iterable&lt;Declaration&gt; |  |
-|  hint | boolean | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+selector
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+declarations
+
+
+</td><td>
+
+Iterable&lt;Declaration&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+hint
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [StyleRule](./alfa-dom.stylerule.md)

@@ -14,8 +14,48 @@ protected constructor(type: T, rules: Array<Rule>);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | T |  |
-|  rules | Array&lt;Rule&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+type
+
+
+</td><td>
+
+T
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+rules
+
+
+</td><td>
+
+Array&lt;Rule&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

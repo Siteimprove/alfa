@@ -14,10 +14,39 @@ function isA<V extends Criterion.Version = Criterion.Version.Recommendation>(ver
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  version | V | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+version
+
+
+</td><td>
+
+V
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Refinement&lt;Criterion, Criterion&lt;[A](./alfa-wcag.conformance.a.md)<!-- -->&lt;V&gt;&gt;&gt;

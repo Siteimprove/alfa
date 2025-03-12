@@ -12,7 +12,42 @@ export interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [expression](./alfa-xpath.builder.json.expression.md) |  | [Expression.JSON](./alfa-xpath.expression.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[expression](./alfa-xpath.builder.json.expression.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Expression.JSON](./alfa-xpath.expression.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

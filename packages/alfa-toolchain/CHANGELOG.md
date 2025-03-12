@@ -1,5 +1,17 @@
 # @siteimprove/alfa-toolchain
 
+## 0.99.0
+
+## 0.98.0
+
+### Minor Changes
+
+- **Added:** A new utility to skaffold workspace creation with default settings is available. ([#1745](https://github.com/Siteimprove/alfa/pull/1745))
+
+### Patch Changes
+
+- **Changed:** Classes that do not implement the Singleton pattern now have `protected` constructor and can be extended. ([#1735](https://github.com/Siteimprove/alfa/pull/1735))
+
 ## 0.97.0
 
 ## 0.96.0

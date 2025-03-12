@@ -12,10 +12,37 @@ static of(...selectors: Array<Simple>): Compound;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  selectors | Array&lt;Simple&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+selectors
+
+
+</td><td>
+
+Array&lt;Simple&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Compound](./alfa-selector.compound.md)

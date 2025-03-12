@@ -6,7 +6,25 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Bits](./alfa-bits.bits.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Bits](./alfa-bits.bits.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

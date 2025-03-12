@@ -6,21 +6,132 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Device](./alfa-device.device.md) |  |
-|  [Display](./alfa-device.display.md) |  |
-|  [Preference](./alfa-device.preference.md) | [https://drafts.csswg.org/mediaqueries-5/\#mf-user-preferences](https://drafts.csswg.org/mediaqueries-5/#mf-user-preferences) |
-|  [Scripting](./alfa-device.scripting.md) | [https://drafts.csswg.org/mediaqueries-5/\#mf-scripting](https://drafts.csswg.org/mediaqueries-5/#mf-scripting) |
-|  [Viewport](./alfa-device.viewport.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Device](./alfa-device.device.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Display](./alfa-device.display.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Preference](./alfa-device.preference.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/mediaqueries-5/\#mf-user-preferences](https://drafts.csswg.org/mediaqueries-5/#mf-user-preferences)
+
+
+</td></tr>
+<tr><td>
+
+[Scripting](./alfa-device.scripting.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/mediaqueries-5/\#mf-scripting](https://drafts.csswg.org/mediaqueries-5/#mf-scripting)
+
+
+</td></tr>
+<tr><td>
+
+[Viewport](./alfa-device.viewport.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Device](./alfa-device.device.md) |  |
-|  [Display](./alfa-device.display.md) |  |
-|  [Preference](./alfa-device.preference.md) |  |
-|  [Scripting](./alfa-device.scripting.md) |  |
-|  [Viewport](./alfa-device.viewport.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Device](./alfa-device.device.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Display](./alfa-device.display.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Preference](./alfa-device.preference.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Scripting](./alfa-device.scripting.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Viewport](./alfa-device.viewport.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

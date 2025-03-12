@@ -13,7 +13,24 @@ export declare namespace Cascade
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-cascade.cascade.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-cascade.cascade.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

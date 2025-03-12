@@ -12,13 +12,79 @@ function rgb<C extends Number.Canonical | Percentage.Canonical, A extends Number
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  red | C |  |
-|  green | C |  |
-|  blue | C |  |
-|  alpha | A |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+red
+
+
+</td><td>
+
+C
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+green
+
+
+</td><td>
+
+C
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+blue
+
+
+</td><td>
+
+C
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+alpha
+
+
+</td><td>
+
+A
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 RGB&lt;C, A&gt;

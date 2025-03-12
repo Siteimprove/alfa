@@ -12,7 +12,24 @@ namespace Release
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-compatibility.browser.release.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-compatibility.browser.release.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,20 +13,111 @@ export declare namespace Either
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isEither(value)](./alfa-either.either.iseither.md) |  |
-|  [isEither(value)](./alfa-either.either.iseither_1.md) |  |
-|  [isLeft(value)](./alfa-either.either.isleft.md) |  |
-|  [isLeft(value)](./alfa-either.either.isleft_1.md) |  |
-|  [isRight(value)](./alfa-either.either.isright.md) |  |
-|  [isRight(value)](./alfa-either.either.isright_1.md) |  |
-|  [left(value)](./alfa-either.either.left.md) |  |
-|  [right(value)](./alfa-either.either.right.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isEither(value)](./alfa-either.either.iseither.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isEither(value)](./alfa-either.either.iseither_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isLeft(value)](./alfa-either.either.isleft.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isLeft(value)](./alfa-either.either.isleft_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRight(value)](./alfa-either.either.isright.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isRight(value)](./alfa-either.either.isright_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[left(value)](./alfa-either.either.left.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[right(value)](./alfa-either.either.right.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-either.either.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-either.either.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

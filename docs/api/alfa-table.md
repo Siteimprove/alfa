@@ -6,35 +6,205 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Column](./alfa-table.column.md) | [https://html.spec.whatwg.org/\#concept-column](https://html.spec.whatwg.org/#concept-column) |
-|  [Row](./alfa-table.row.md) | [https://html.spec.whatwg.org/\#concept-row](https://html.spec.whatwg.org/#concept-row) |
-|  [Slot](./alfa-table.slot.md) | [https://html.spec.whatwg.org/\#concept-slots](https://html.spec.whatwg.org/#concept-slots) |
-|  [Table](./alfa-table.table.md) | [https://html.spec.whatwg.org/\#concept-table](https://html.spec.whatwg.org/#concept-table) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Column](./alfa-table.column.md)
+
+
+</td><td>
+
+[https://html.spec.whatwg.org/\#concept-column](https://html.spec.whatwg.org/#concept-column)
+
+
+</td></tr>
+<tr><td>
+
+[Row](./alfa-table.row.md)
+
+
+</td><td>
+
+[https://html.spec.whatwg.org/\#concept-row](https://html.spec.whatwg.org/#concept-row)
+
+
+</td></tr>
+<tr><td>
+
+[Slot](./alfa-table.slot.md)
+
+
+</td><td>
+
+[https://html.spec.whatwg.org/\#concept-slots](https://html.spec.whatwg.org/#concept-slots)
+
+
+</td></tr>
+<tr><td>
+
+[Table](./alfa-table.table.md)
+
+
+</td><td>
+
+[https://html.spec.whatwg.org/\#concept-table](https://html.spec.whatwg.org/#concept-table)
+
+
+</td></tr>
+</tbody></table>
 
 ## Abstract Classes
 
-|  Abstract Class | Description |
-|  --- | --- |
-|  [Cell](./alfa-table.cell.md) | [https://html.spec.whatwg.org/\#concept-cell](https://html.spec.whatwg.org/#concept-cell) |
+<table><thead><tr><th>
+
+Abstract Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cell](./alfa-table.cell.md)
+
+
+</td><td>
+
+[https://html.spec.whatwg.org/\#concept-cell](https://html.spec.whatwg.org/#concept-cell)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Cell](./alfa-table.cell.md) |  |
-|  [Column](./alfa-table.column.md) |  |
-|  [Group](./alfa-table.group.md) |  |
-|  [Row](./alfa-table.row.md) |  |
-|  [Scope](./alfa-table.scope.md) |  |
-|  [Slot](./alfa-table.slot.md) |  |
-|  [Table](./alfa-table.table.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Cell](./alfa-table.cell.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Column](./alfa-table.column.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Group](./alfa-table.group.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Row](./alfa-table.row.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Scope](./alfa-table.scope.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Slot](./alfa-table.slot.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Table](./alfa-table.table.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Group](./alfa-table.group.md) |  |
-|  [Scope](./alfa-table.scope.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Group](./alfa-table.group.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Scope](./alfa-table.scope.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

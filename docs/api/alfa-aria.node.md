@@ -13,34 +13,149 @@ export declare namespace Node
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Traversal](./alfa-aria.node.traversal.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Traversal](./alfa-aria.node.traversal.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(node, device)](./alfa-aria.node.from.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(node, device)](./alfa-aria.node.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-aria.node.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-aria.node.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Traversal](./alfa-aria.node.traversal.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Traversal](./alfa-aria.node.traversal.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [hasAttribute](./alfa-aria.node.hasattribute.md) |  |
-|  [hasName](./alfa-aria.node.hasname.md) |  |
-|  [hasRole](./alfa-aria.node.hasrole.md) |  |
-|  [includeIgnored](./alfa-aria.node.includeignored.md) | Traversal options to include ignored nodes in the traversal. |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[hasAttribute](./alfa-aria.node.hasattribute.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasName](./alfa-aria.node.hasname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasRole](./alfa-aria.node.hasrole.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[includeIgnored](./alfa-aria.node.includeignored.md)
+
+
+</td><td>
+
+Traversal options to include ignored nodes in the traversal.
+
+
+</td></tr>
+</tbody></table>

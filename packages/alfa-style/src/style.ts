@@ -1,5 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
+import type { Callback } from "@siteimprove/alfa-callback";
 import { Cascade, Origin } from "@siteimprove/alfa-cascade";
 import { Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
@@ -10,6 +11,7 @@ import {
   Node,
   Shadow,
 } from "@siteimprove/alfa-dom";
+import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type * as json from "@siteimprove/alfa-json";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -22,7 +24,7 @@ import type { Slice } from "@siteimprove/alfa-slice";
 
 import * as element from "./element/element.js";
 
-import type { Longhand } from "./longhand.js";
+import { Longhand } from "./longhand.js";
 import { Longhands } from "./longhands.js";
 import * as node from "./node/node.js";
 import * as predicates from "./predicate/index.js";
@@ -95,44 +97,30 @@ export class Style implements Serializable<Style.JSON> {
     // declarations for these.
     let reverted = Set.empty<Name>();
 
-    function registerParsed<N extends Name>(
+    function registerParsed<N extends Longhands.PropName>(
       name: N,
-      value: Style.Declared<N>,
       declaration: Declaration,
-    ): void {
-      if (value.equals(Keyword.of("revert"))) {
-        reverted = reverted.add(name);
-      } else {
-        properties = properties.set(
-          name,
-          Value.of(value, Option.of(declaration)),
-        );
-      }
+    ): Callback<Style.Declared<N>> {
+      return (value) => {
+        if (value.equals(Keyword.of("revert"))) {
+          reverted = reverted.add(name);
+        } else {
+          properties = properties.set(
+            name,
+            Value.of(value, Option.of(declaration)),
+          );
+        }
+      };
     }
 
     function register<N extends Name>(
       name: N,
-      value: Style.Declared<N>,
+      value: Either<Style.Declared<Longhands.TrueName<N>>, string>,
       declaration: Declaration,
       origin: Origin,
-      parsed: true,
-    ): void;
-
-    function register<N extends Name>(
-      name: N,
-      value: string,
-      declaration: Declaration,
-      origin: Origin,
-      parsed: false,
-    ): void;
-
-    function register<N extends Name>(
-      name: N,
-      value: Style.Declared<N> | string,
-      declaration: Declaration,
-      origin: Origin,
-      parsed: boolean,
     ): void {
+      const property = Longhands.get(name);
+
       // If the property has been reverted to User Agent origin,
       // discard any Author declaration.
       if (reverted.has(name) && Origin.isAuthor(origin)) {
@@ -144,19 +132,14 @@ export class Style implements Serializable<Style.JSON> {
         // If the declaration comes from a shorthand, it is pre-parsed in a
         // Value. Otherwise, we only have the string and need to parse it
         // (avoid parsing everything before we know we'll need it).
-        if (parsed) {
-          // Type is ensured by the overload.
-          return registerParsed(name, value as Style.Declared<N>, declaration);
-        } else {
-          for (const result of parseLonghand(
-            Longhands.get(name),
-            // Type is ensured by the overload.
-            value as string,
-            variables,
-          )) {
-            registerParsed(name, result, declaration);
-          }
-        }
+
+        value.either(
+          registerParsed(Longhands.propName(name), declaration),
+          (declared) =>
+            parseLonghand(property, declared, variables).forEach(
+              registerParsed(Longhands.propName(name), declaration),
+            ),
+        );
       }
     }
 
@@ -164,7 +147,7 @@ export class Style implements Serializable<Style.JSON> {
       const { name, value } = declaration;
 
       if (Longhands.isName(name)) {
-        register(name, value, declaration, origin, false);
+        register(name, Right.of(value), declaration, origin);
       } else if (Shorthands.isName(name)) {
         for (const result of parseShorthand(
           Shorthands.get(name),
@@ -172,7 +155,7 @@ export class Style implements Serializable<Style.JSON> {
           variables,
         )) {
           for (const [name, value] of result) {
-            register(name, value, declaration, origin, true);
+            register(name, Left.of(value), declaration, origin);
           }
         }
       }
@@ -247,7 +230,9 @@ export class Style implements Serializable<Style.JSON> {
    * {@link https://www.w3.org/TR/css-cascade/#cascaded}
    */
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>> {
-    return this._properties.get(name) as Option<Value<Style.Cascaded<N>>>;
+    return this._properties.get(Longhands.propName(name)) as Option<
+      Value<Style.Cascaded<N>>
+    >;
   }
 
   /**
@@ -483,12 +468,14 @@ export namespace Style {
     hasBoxShadow,
     hasCascadedStyle,
     hasComputedStyle,
+    hasInitialComputedStyle,
     hasPositioningParent,
     hasOutline,
     hasSpecifiedStyle,
     hasTextDecoration,
     hasTransparentBackground,
     hasUsedStyle,
+    isFlexOrGridChild,
     isFocusable,
     isImportant,
     isInert,
@@ -503,7 +490,7 @@ export namespace Style {
     predicates;
 }
 
-function parseLonghand<N extends Longhands.Name>(
+function parseLonghand<N extends Longhands.PropName>(
   property: Longhands.Property[N],
   value: string,
   variables: Map<string, Value<Slice<Token>>>,

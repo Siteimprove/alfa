@@ -12,10 +12,37 @@ withUnit<V extends U>(unit: V): Convertible<V>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  unit | V |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+unit
+
+
+</td><td>
+
+V
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Convertible](./alfa-css.convertible.md)<!-- -->&lt;V&gt;

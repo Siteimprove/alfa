@@ -13,11 +13,110 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"](./alfa-http.response.earl.__context_.md) |  | { http: "http://www.w3.org/2011/http\#"; } |  |
-|  ["@type"](./alfa-http.response.earl.__type_.md) |  | \["http:Message", "http:Response"\] |  |
-|  ["http:body"](./alfa-http.response.earl._http_body_.md) |  | [Body.EARL](./alfa-http.body.earl.md) |  |
-|  ["http:headers"](./alfa-http.response.earl._http_headers_.md) |  | [Headers.EARL](./alfa-http.headers.earl.md) |  |
-|  ["http:statusCodeValue"](./alfa-http.response.earl._http_statuscodevalue_.md) |  | number |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"](./alfa-http.response.earl.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ http: "http://www.w3.org/2011/http\#"; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["@type"](./alfa-http.response.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\["http:Message", "http:Response"\]
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["http:body"](./alfa-http.response.earl._http_body_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Body.EARL](./alfa-http.body.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["http:headers"](./alfa-http.response.earl._http_headers_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Headers.EARL](./alfa-http.headers.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["http:statusCodeValue"](./alfa-http.response.earl._http_statuscodevalue_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,9 +13,76 @@ interface JSON extends Rule.JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [composes](./alfa-act.rule.composite.json.composes.md) |  | Array&lt;[Rule.JSON](./alfa-act.rule.json.md)<!-- -->&gt; |  |
-|  [type](./alfa-act.rule.composite.json.type.md) |  | "composite" |  |
-|  [uri](./alfa-act.rule.composite.json.uri.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[composes](./alfa-act.rule.composite.json.composes.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Rule.JSON](./alfa-act.rule.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-act.rule.composite.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"composite"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[uri](./alfa-act.rule.composite.json.uri.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

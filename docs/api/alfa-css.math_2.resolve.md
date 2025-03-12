@@ -14,11 +14,53 @@ resolve(this: Math<"angle">, resolver?: Expression.GenericResolver): Result<Angl
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"angle"&gt; |  |
-|  resolver | Expression.GenericResolver | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Math](./alfa-css.math_2.md)<!-- -->&lt;"angle"&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+resolver
+
+
+</td><td>
+
+Expression.GenericResolver
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Result&lt;Angle&lt;"deg"&gt;, string&gt;

@@ -12,14 +12,57 @@ namespace BlockRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [fromLayerBlockRule(json)](./alfa-dom.layer.blockrule.fromlayerblockrule.md) |  |
-|  [isLayerBlockRule(value)](./alfa-dom.layer.blockrule.islayerblockrule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[fromLayerBlockRule(json)](./alfa-dom.layer.blockrule.fromlayerblockrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isLayerBlockRule(value)](./alfa-dom.layer.blockrule.islayerblockrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.layer.blockrule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.layer.blockrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

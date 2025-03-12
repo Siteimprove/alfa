@@ -13,7 +13,24 @@ export declare namespace Comma
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.comma.parse.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.comma.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

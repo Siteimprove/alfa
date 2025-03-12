@@ -12,9 +12,76 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [cells](./alfa-table.table.json.cells.md) |  | Array&lt;[Cell.JSON](./alfa-table.cell.json.md)<!-- -->&gt; |  |
-|  [element](./alfa-table.table.json.element.md) |  | string |  |
-|  [groups](./alfa-table.table.json.groups.md) |  | Array&lt;[Group.JSON](./alfa-table.group.json.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[cells](./alfa-table.table.json.cells.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Cell.JSON](./alfa-table.cell.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[element](./alfa-table.table.json.element.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[groups](./alfa-table.table.json.groups.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Group.JSON](./alfa-table.group.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

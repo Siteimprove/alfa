@@ -16,7 +16,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Tuple } from "@siteimprove/alfa-tuple";
 
 import type * as earl from "@siteimprove/alfa-earl";
-import type * as json from "@siteimprove/alfa-json";
+import * as json from "@siteimprove/alfa-json";
 import type * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache.js";
@@ -128,7 +128,15 @@ export abstract class Rule<
     hash.writeString(this._uri);
   }
 
+  public abstract toJSON(options: {
+    verbosity: json.Serializable.Verbosity.Minimal;
+  }): Rule.MinimalJSON;
+
   public abstract toJSON(): Rule.JSON;
+
+  public abstract toJSON(
+    options?: json.Serializable.Options,
+  ): Rule.MinimalJSON | Rule.JSON;
 
   public toEARL(): Rule.EARL {
     return {
@@ -157,6 +165,11 @@ export abstract class Rule<
  */
 export namespace Rule {
   const { Applicable } = Outcome;
+
+  export interface MinimalJSON {
+    [key: string]: json.JSON;
+    uri: string;
+  }
 
   export interface JSON {
     [key: string]: json.JSON;
@@ -361,15 +374,25 @@ export namespace Rule {
       );
     }
 
-    public toJSON(): Atomic.JSON {
-      return {
-        type: "atomic",
-        uri: this._uri,
-        requirements: this._requirements.map((requirement) =>
-          requirement.toJSON(),
-        ),
-        tags: this._tags.map((tag) => tag.toJSON()),
-      };
+    public toJSON(options: {
+      verbosity: json.Serializable.Verbosity.Minimal;
+    }): Rule.MinimalJSON;
+
+    public toJSON(): Atomic.JSON;
+
+    public toJSON(
+      options?: json.Serializable.Options,
+    ): Rule.MinimalJSON | Atomic.JSON {
+      return options?.verbosity === json.Serializable.Verbosity.Minimal
+        ? { uri: this._uri }
+        : {
+            type: "atomic",
+            uri: this._uri,
+            requirements: this._requirements.map((requirement) =>
+              requirement.toJSON(),
+            ),
+            tags: this._tags.map((tag) => tag.toJSON()),
+          };
     }
   }
 
@@ -542,16 +565,26 @@ export namespace Rule {
       return this._composes;
     }
 
-    public toJSON(): Composite.JSON {
-      return {
-        type: "composite",
-        uri: this._uri,
-        requirements: this._requirements.map((requirement) =>
-          requirement.toJSON(),
-        ),
-        tags: this._tags.map((tag) => tag.toJSON()),
-        composes: this._composes.map((rule) => rule.toJSON()),
-      };
+    public toJSON(options: {
+      verbosity: json.Serializable.Verbosity.Minimal;
+    }): Rule.MinimalJSON;
+
+    public toJSON(): Composite.JSON;
+
+    public toJSON(
+      options?: json.Serializable.Options,
+    ): Rule.MinimalJSON | Composite.JSON {
+      return options?.verbosity === json.Serializable.Verbosity.Minimal
+        ? { uri: this._uri }
+        : {
+            type: "composite",
+            uri: this._uri,
+            requirements: this._requirements.map((requirement) =>
+              requirement.toJSON(),
+            ),
+            tags: this._tags.map((tag) => tag.toJSON()),
+            composes: this._composes.map((rule) => rule.toJSON(options)),
+          };
     }
   }
 

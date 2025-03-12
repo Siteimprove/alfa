@@ -12,10 +12,37 @@ flatten<T>(this: Collection<Collection<T>>): Collection<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Collection](./alfa-collection.collection.md)<!-- -->&lt;[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Collection](./alfa-collection.collection.md)<!-- -->&lt;[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;

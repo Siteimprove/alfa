@@ -12,10 +12,39 @@ function parseDelim(query?: string | number | Predicate<Delim>): Parser<Slice<To
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  query | string \| number \| Predicate&lt;[Delim](./alfa-css.token.delim.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+query
+
+
+</td><td>
+
+string \| number \| Predicate&lt;[Delim](./alfa-css.token.delim.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Delim](./alfa-css.token.delim.md)<!-- -->, string, \[\]&gt;

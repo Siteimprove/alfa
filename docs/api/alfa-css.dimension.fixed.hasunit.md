@@ -12,10 +12,37 @@ abstract hasUnit<V extends BaseDimension.ToUnit[T]>(unit: V): this is Fixed<T, V
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  unit | V |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+unit
+
+
+</td><td>
+
+V
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 this is [Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;T, V&gt;

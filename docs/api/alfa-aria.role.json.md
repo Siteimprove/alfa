@@ -12,7 +12,42 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-aria.role.json.name.md) |  | [Name](./alfa-aria.role.name.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-aria.role.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Name](./alfa-aria.role.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

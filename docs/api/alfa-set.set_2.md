@@ -13,17 +13,84 @@ export declare namespace Set
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(iterable)](./alfa-set.set_2.from.md) |  |
-|  [fromArray(array)](./alfa-set.set_2.fromarray.md) |  |
-|  [fromIterable(iterable)](./alfa-set.set_2.fromiterable.md) |  |
-|  [isSet(value)](./alfa-set.set_2.isset.md) |  |
-|  [isSet(value)](./alfa-set.set_2.isset_1.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(iterable)](./alfa-set.set_2.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromArray(array)](./alfa-set.set_2.fromarray.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[fromIterable(iterable)](./alfa-set.set_2.fromiterable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSet(value)](./alfa-set.set_2.isset.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSet(value)](./alfa-set.set_2.isset_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [JSON](./alfa-set.set_2.json.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-set.set_2.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

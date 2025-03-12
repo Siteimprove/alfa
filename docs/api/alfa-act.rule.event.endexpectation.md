@@ -12,10 +12,37 @@ function endExpectation<I, T extends Hashable, Q extends Question.Metadata, S>(r
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+rule
+
+
+</td><td>
+
+[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S, "end", "expectation"&gt;

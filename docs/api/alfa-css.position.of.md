@@ -12,11 +12,51 @@ static of<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  horizontal | HC |  |
-|  vertical | VC |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+horizontal
+
+
+</td><td>
+
+HC
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+vertical
+
+
+</td><td>
+
+VC
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Position](./alfa-css.position.md)<!-- -->&lt;H, V, HC, VC&gt;

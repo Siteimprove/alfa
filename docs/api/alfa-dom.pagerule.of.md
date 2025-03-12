@@ -12,11 +12,51 @@ static of(selector: string, declarations: Iterable<Declaration>): PageRule;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  selector | string |  |
-|  declarations | Iterable&lt;Declaration&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+selector
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+declarations
+
+
+</td><td>
+
+Iterable&lt;Declaration&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [PageRule](./alfa-dom.pagerule.md)

@@ -12,13 +12,48 @@ namespace Function
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isFunction(value)](./alfa-css.token.function.isfunction.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isFunction(value)](./alfa-css.token.function.isfunction.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.token.function.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.token.function.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

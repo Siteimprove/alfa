@@ -12,10 +12,37 @@ export function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends It
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;I extends Iterable&lt;infer T&gt; ? T : unknown, E&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+ifError
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;I extends Iterable&lt;infer T&gt; ? T : unknown, E&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, void, E&gt;

@@ -1,5 +1,17 @@
 # @siteimprove/alfa-act
 
+## 0.99.0
+
+### Patch Changes
+
+- **Added:** A minimal serialization of rules (and outcomes), including only the URI, is now available. ([#1765](https://github.com/Siteimprove/alfa/pull/1765))
+
+## 0.98.0
+
+### Patch Changes
+
+- **Changed:** Classes that do not implement the Singleton pattern now have `protected` constructor and can be extended. ([#1735](https://github.com/Siteimprove/alfa/pull/1735))
+
 ## 0.97.0
 
 ## 0.96.0

@@ -13,9 +13,76 @@ interface EARL extends earl.EARL
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@type"](./alfa-act.outcome.earl.__type_.md) |  | "earl:Assertion" |  |
-|  ["earl:mode"](./alfa-act.outcome.earl._earl_mode_.md) |  | \`earl:${[Mode](./alfa-act.outcome.mode.md)<!-- -->}\` |  |
-|  ["earl:test"](./alfa-act.outcome.earl._earl_test_.md) |  | { "@id": string; } |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@type"](./alfa-act.outcome.earl.__type_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"earl:Assertion"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["earl:mode"](./alfa-act.outcome.earl._earl_mode_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+\`earl:${[Mode](./alfa-act.outcome.mode.md)<!-- -->}\`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+["earl:test"](./alfa-act.outcome.earl._earl_test_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ "@id": string; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

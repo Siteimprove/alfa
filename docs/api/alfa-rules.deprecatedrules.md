@@ -6,12 +6,69 @@
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [DR18](./alfa-rules.deprecatedrules.dr18.md) |  |
-|  [DR34](./alfa-rules.deprecatedrules.dr34.md) |  |
-|  [DR36](./alfa-rules.deprecatedrules.dr36.md) |  |
-|  [DR6](./alfa-rules.deprecatedrules.dr6.md) |  |
-|  [DR66](./alfa-rules.deprecatedrules.dr66.md) |  |
-|  [DR69](./alfa-rules.deprecatedrules.dr69.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[DR18](./alfa-rules.deprecatedrules.dr18.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[DR34](./alfa-rules.deprecatedrules.dr34.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[DR36](./alfa-rules.deprecatedrules.dr36.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[DR6](./alfa-rules.deprecatedrules.dr6.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[DR66](./alfa-rules.deprecatedrules.dr66.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[DR69](./alfa-rules.deprecatedrules.dr69.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

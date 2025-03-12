@@ -12,10 +12,37 @@ flatten<T>(this: Value<Value<T>>): Value<T>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Value](./alfa-style.value.md)<!-- -->&lt;[Value](./alfa-style.value.md)<!-- -->&lt;T&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Value](./alfa-style.value.md)<!-- -->&lt;[Value](./alfa-style.value.md)<!-- -->&lt;T&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Value](./alfa-style.value.md)<!-- -->&lt;T&gt;

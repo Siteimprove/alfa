@@ -14,10 +14,37 @@ function resolve(resolver: Resolver & Numeric.GenericResolver): (value: LengthPe
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Resolver](./alfa-css.lengthpercentage.resolver.md) &amp; Numeric.GenericResolver |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Resolver](./alfa-css.lengthpercentage.resolver.md) &amp; Numeric.GenericResolver
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 (value: [LengthPercentage](./alfa-css.lengthpercentage.md)<!-- -->) =&gt; [Canonical](./alfa-css.lengthpercentage.canonical.md)

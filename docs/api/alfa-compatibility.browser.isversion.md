@@ -12,11 +12,51 @@ function isVersion<N extends Name>(browser: N, version: string): version is Vers
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  browser | N |  |
-|  version | string |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+browser
+
+
+</td><td>
+
+N
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+version
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 version is [Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;N&gt;

@@ -12,10 +12,37 @@ equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Passed<I, T
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | [Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+[Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

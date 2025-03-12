@@ -6,92 +6,702 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Attribute](./alfa-dom.attribute.md) |  |
-|  [Block](./alfa-dom.block.md) |  |
-|  [Comment](./alfa-dom.comment.md) |  |
-|  [Declaration](./alfa-dom.declaration.md) |  |
-|  [Document](./alfa-dom.document.md) |  |
-|  [Element](./alfa-dom.element.md) |  |
-|  [FontFaceRule](./alfa-dom.fontfacerule.md) |  |
-|  [Fragment](./alfa-dom.fragment.md) |  |
-|  [ImportRule](./alfa-dom.importrule.md) |  |
-|  [KeyframeRule](./alfa-dom.keyframerule.md) |  |
-|  [KeyframesRule](./alfa-dom.keyframesrule.md) |  |
-|  [MediaRule](./alfa-dom.mediarule.md) |  |
-|  [NamespaceRule](./alfa-dom.namespacerule.md) |  |
-|  [PageRule](./alfa-dom.pagerule.md) |  |
-|  [Shadow](./alfa-dom.shadow.md) |  |
-|  [Sheet](./alfa-dom.sheet.md) |  |
-|  [StyleRule](./alfa-dom.stylerule.md) |  |
-|  [SupportsRule](./alfa-dom.supportsrule.md) |  |
-|  [Text](./alfa-dom.text.md) |  |
-|  [Type](./alfa-dom.type.md) |  |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Attribute](./alfa-dom.attribute.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Block](./alfa-dom.block.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Comment](./alfa-dom.comment.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Declaration](./alfa-dom.declaration.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Document](./alfa-dom.document.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Element](./alfa-dom.element.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[FontFaceRule](./alfa-dom.fontfacerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Fragment](./alfa-dom.fragment.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[ImportRule](./alfa-dom.importrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[KeyframeRule](./alfa-dom.keyframerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[KeyframesRule](./alfa-dom.keyframesrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[MediaRule](./alfa-dom.mediarule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[NamespaceRule](./alfa-dom.namespacerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[PageRule](./alfa-dom.pagerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Shadow](./alfa-dom.shadow.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Sheet](./alfa-dom.sheet.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[StyleRule](./alfa-dom.stylerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[SupportsRule](./alfa-dom.supportsrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Text](./alfa-dom.text.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Type](./alfa-dom.type.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Abstract Classes
 
-|  Abstract Class | Description |
-|  --- | --- |
-|  [ConditionRule](./alfa-dom.conditionrule.md) |  |
-|  [GroupingRule](./alfa-dom.groupingrule.md) |  |
-|  [Node](./alfa-dom.node.md) |  |
-|  [Rule](./alfa-dom.rule.md) |  |
+<table><thead><tr><th>
+
+Abstract Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ConditionRule](./alfa-dom.conditionrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[GroupingRule](./alfa-dom.groupingrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Rule](./alfa-dom.rule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [Namespace](./alfa-dom.namespace.md) | [https://infra.spec.whatwg.org/\#namespaces](https://infra.spec.whatwg.org/#namespaces) |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Namespace](./alfa-dom.namespace.md)
+
+
+</td><td>
+
+[https://infra.spec.whatwg.org/\#namespaces](https://infra.spec.whatwg.org/#namespaces)
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [h(name, attributes, children, style, box, device, externalId, internalId, extraData)](./alfa-dom.h.md) |  |
-|  [jsx(name, properties, children)](./alfa-dom.jsx.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[h(name, attributes, children, style, box, device, externalId, internalId, extraData)](./alfa-dom.h.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[jsx(name, properties, children)](./alfa-dom.jsx.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [Node](./alfa-dom.node.md) |  |
-|  [Slot](./alfa-dom.slot.md) |  |
-|  [Slotable](./alfa-dom.slotable.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Slot](./alfa-dom.slot.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Slotable](./alfa-dom.slotable.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Attribute](./alfa-dom.attribute.md) |  |
-|  [Block](./alfa-dom.block.md) |  |
-|  [Comment](./alfa-dom.comment.md) |  |
-|  [ConditionRule](./alfa-dom.conditionrule.md) |  |
-|  [Declaration](./alfa-dom.declaration.md) |  |
-|  [Document](./alfa-dom.document.md) |  |
-|  [Element](./alfa-dom.element.md) |  |
-|  [FontFaceRule](./alfa-dom.fontfacerule.md) |  |
-|  [Fragment](./alfa-dom.fragment.md) |  |
-|  [GroupingRule](./alfa-dom.groupingrule.md) |  |
-|  [h](./alfa-dom.h.md) |  |
-|  [ImportRule](./alfa-dom.importrule.md) |  |
-|  [jsx](./alfa-dom.jsx.md) |  |
-|  [KeyframeRule](./alfa-dom.keyframerule.md) |  |
-|  [KeyframesRule](./alfa-dom.keyframesrule.md) |  |
-|  [Layer](./alfa-dom.layer.md) | Model for CSS layers |
-|  [MediaRule](./alfa-dom.mediarule.md) |  |
-|  [Namespace](./alfa-dom.namespace.md) |  |
-|  [NamespaceRule](./alfa-dom.namespacerule.md) |  |
-|  [Node](./alfa-dom.node.md) |  |
-|  [PageRule](./alfa-dom.pagerule.md) |  |
-|  [Query](./alfa-dom.query.md) |  |
-|  [Rule](./alfa-dom.rule.md) |  |
-|  [Shadow](./alfa-dom.shadow.md) |  |
-|  [Sheet](./alfa-dom.sheet.md) |  |
-|  [Slot](./alfa-dom.slot.md) |  |
-|  [Slotable](./alfa-dom.slotable.md) |  |
-|  [StyleRule](./alfa-dom.stylerule.md) |  |
-|  [SupportsRule](./alfa-dom.supportsrule.md) |  |
-|  [Text](./alfa-dom.text.md) |  |
-|  [Type](./alfa-dom.type.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Attribute](./alfa-dom.attribute.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Block](./alfa-dom.block.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Comment](./alfa-dom.comment.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[ConditionRule](./alfa-dom.conditionrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Declaration](./alfa-dom.declaration.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Document](./alfa-dom.document.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Element](./alfa-dom.element.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[FontFaceRule](./alfa-dom.fontfacerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Fragment](./alfa-dom.fragment.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[GroupingRule](./alfa-dom.groupingrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[h](./alfa-dom.h.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[ImportRule](./alfa-dom.importrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[jsx](./alfa-dom.jsx.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[KeyframeRule](./alfa-dom.keyframerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[KeyframesRule](./alfa-dom.keyframesrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Layer](./alfa-dom.layer.md)
+
+
+</td><td>
+
+Model for CSS layers
+
+
+</td></tr>
+<tr><td>
+
+[MediaRule](./alfa-dom.mediarule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Namespace](./alfa-dom.namespace.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[NamespaceRule](./alfa-dom.namespacerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Node](./alfa-dom.node.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[PageRule](./alfa-dom.pagerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Query](./alfa-dom.query.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Rule](./alfa-dom.rule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Shadow](./alfa-dom.shadow.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Sheet](./alfa-dom.sheet.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Slot](./alfa-dom.slot.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Slotable](./alfa-dom.slotable.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[StyleRule](./alfa-dom.stylerule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[SupportsRule](./alfa-dom.supportsrule.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Text](./alfa-dom.text.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Type](./alfa-dom.type.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

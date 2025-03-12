@@ -12,10 +12,37 @@ function parse(parseSelector: Thunk<CSSParser<Absolute>>): CSSParser<PseudoEleme
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  parseSelector | Thunk&lt;[CSSParser](./alfa-css.parser.md)<!-- -->&lt;Absolute&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+parseSelector
+
+
+</td><td>
+
+Thunk&lt;[CSSParser](./alfa-css.parser.md)<!-- -->&lt;Absolute&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[PseudoElement](./alfa-selector.pseudoelement.md)<!-- -->&gt;

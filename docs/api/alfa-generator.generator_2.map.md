@@ -12,11 +12,51 @@ function map<T, U, R, N>(generator: Generator<T, R, N>, mapper: Mapper<T, U>): G
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  generator | [Generator](./alfa-generator.generator_2.md)<!-- -->&lt;T, R, N&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+generator
+
+
+</td><td>
+
+[Generator](./alfa-generator.generator_2.md)<!-- -->&lt;T, R, N&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+mapper
+
+
+</td><td>
+
+[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Generator](./alfa-generator.generator_2.md)<!-- -->&lt;U, R, N&gt;

@@ -14,20 +14,141 @@ export declare namespace DOM
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [hasAccessibleName](./alfa-aria.dom.hasaccessiblename.md) |  |
-|  [hasExplicitRole](./alfa-aria.dom.hasexplicitrole.md) |  |
-|  [hasHeadingLevel](./alfa-aria.dom.hasheadinglevel.md) |  |
-|  [hasImplicitRole](./alfa-aria.dom.hasimplicitrole.md) |  |
-|  [hasIncorrectRoleWithoutName](./alfa-aria.dom.hasincorrectrolewithoutname.md) |  |
-|  [hasNonDefaultRole](./alfa-aria.dom.hasnondefaultrole.md) |  |
-|  [hasNonEmptyAccessibleName](./alfa-aria.dom.hasnonemptyaccessiblename.md) |  |
-|  [hasRole](./alfa-aria.dom.hasrole.md) |  |
-|  [isIgnored](./alfa-aria.dom.isignored.md) |  |
-|  [isIncludedInTheAccessibilityTree](./alfa-aria.dom.isincludedintheaccessibilitytree.md) |  |
-|  [isMarkedDecorative](./alfa-aria.dom.ismarkeddecorative.md) |  |
-|  [isPerceivableForAll](./alfa-aria.dom.isperceivableforall.md) |  |
-|  [isProgrammaticallyHidden](./alfa-aria.dom.isprogrammaticallyhidden.md) |  |
-|  [isSemanticallyDisabled](./alfa-aria.dom.issemanticallydisabled.md) |  |
+<table><thead><tr><th>
 
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[hasAccessibleName](./alfa-aria.dom.hasaccessiblename.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasExplicitRole](./alfa-aria.dom.hasexplicitrole.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasHeadingLevel](./alfa-aria.dom.hasheadinglevel.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasImplicitRole](./alfa-aria.dom.hasimplicitrole.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasIncorrectRoleWithoutName](./alfa-aria.dom.hasincorrectrolewithoutname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasNonDefaultRole](./alfa-aria.dom.hasnondefaultrole.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasNonEmptyAccessibleName](./alfa-aria.dom.hasnonemptyaccessiblename.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasRole](./alfa-aria.dom.hasrole.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isIgnored](./alfa-aria.dom.isignored.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isIncludedInTheAccessibilityTree](./alfa-aria.dom.isincludedintheaccessibilitytree.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isMarkedDecorative](./alfa-aria.dom.ismarkeddecorative.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isPerceivableForAll](./alfa-aria.dom.isperceivableforall.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isProgrammaticallyHidden](./alfa-aria.dom.isprogrammaticallyhidden.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isSemanticallyDisabled](./alfa-aria.dom.issemanticallydisabled.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-type Transformer = (input: string) => string;
+type Transformer<S extends string = string> = Callback<string, S>;
 ```

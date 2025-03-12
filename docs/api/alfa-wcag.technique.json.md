@@ -13,8 +13,59 @@ interface JSON<N extends Technique.Name = Technique.Name> extends Requirement.JS
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./alfa-wcag.technique.json.name.md) |  | [Name](./alfa-wcag.technique.name.md) |  |
-|  [title](./alfa-wcag.technique.json.title.md) |  | [Title](./alfa-wcag.technique.title.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[name](./alfa-wcag.technique.json.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Name](./alfa-wcag.technique.name.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[title](./alfa-wcag.technique.json.title.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Title](./alfa-wcag.technique.title.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

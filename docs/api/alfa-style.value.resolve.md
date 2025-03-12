@@ -12,11 +12,53 @@ resolve<T extends CSSValue>(this: Value<T>, resolver?: Resolvable.Resolver<T>): 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Value](./alfa-style.value.md)<!-- -->&lt;T&gt; |  |
-|  resolver | Resolvable.Resolver&lt;T&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Value](./alfa-style.value.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+resolver
+
+
+</td><td>
+
+Resolvable.Resolver&lt;T&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Value](./alfa-style.value.md)<!-- -->&lt;Resolvable.Resolved&lt;T&gt;&gt;

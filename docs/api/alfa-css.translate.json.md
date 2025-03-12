@@ -13,9 +13,76 @@ interface JSON extends Function.JSON<"translate">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [x](./alfa-css.translate.json.x.md) |  | [LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md) |  |
-|  [y](./alfa-css.translate.json.y.md) |  | [LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md) |  |
-|  [z](./alfa-css.translate.json.z.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[x](./alfa-css.translate.json.x.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[y](./alfa-css.translate.json.y.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[z](./alfa-css.translate.json.z.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Length.JSON](./alfa-css.length.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -13,14 +13,87 @@ export declare namespace Trampoline
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [delay(thunk)](./alfa-trampoline.trampoline.delay.md) |  |
-|  [done(value)](./alfa-trampoline.trampoline.done.md) |  |
-|  [empty()](./alfa-trampoline.trampoline.empty.md) |  |
-|  [isTrampoline(value)](./alfa-trampoline.trampoline.istrampoline.md) |  |
-|  [isTrampoline(value)](./alfa-trampoline.trampoline.istrampoline_1.md) |  |
-|  [sequence(futures)](./alfa-trampoline.trampoline.sequence.md) |  |
-|  [suspend(thunk)](./alfa-trampoline.trampoline.suspend.md) |  |
-|  [traverse(values, mapper)](./alfa-trampoline.trampoline.traverse.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[delay(thunk)](./alfa-trampoline.trampoline.delay.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[done(value)](./alfa-trampoline.trampoline.done.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[empty()](./alfa-trampoline.trampoline.empty.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isTrampoline(value)](./alfa-trampoline.trampoline.istrampoline.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isTrampoline(value)](./alfa-trampoline.trampoline.istrampoline_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[sequence(futures)](./alfa-trampoline.trampoline.sequence.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[suspend(thunk)](./alfa-trampoline.trampoline.suspend.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[traverse(values, mapper)](./alfa-trampoline.trampoline.traverse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

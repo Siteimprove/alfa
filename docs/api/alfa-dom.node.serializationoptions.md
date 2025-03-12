@@ -13,7 +13,44 @@ interface SerializationOptions extends json.Serializable.Options
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [device?](./alfa-dom.node.serializationoptions.device.md) |  | Device | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[device?](./alfa-dom.node.serializationoptions.device.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

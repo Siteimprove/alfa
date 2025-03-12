@@ -13,30 +13,141 @@ export declare namespace Polygon
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isPolygon(value)](./alfa-css.polygon.ispolygon.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isPolygon(value)](./alfa-css.polygon.ispolygon.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.polygon.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.polygon.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.polygon.parse.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse](./alfa-css.polygon.parse.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.polygon.canonical.md) |  |
-|  [Fill](./alfa-css.polygon.fill.md) |  |
-|  [PartiallyResolved](./alfa-css.polygon.partiallyresolved.md) |  |
-|  [PartialResolver](./alfa-css.polygon.partialresolver.md) |  |
-|  [Resolver](./alfa-css.polygon.resolver.md) |  |
-|  [Vertex](./alfa-css.polygon.vertex.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.polygon.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Fill](./alfa-css.polygon.fill.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartiallyResolved](./alfa-css.polygon.partiallyresolved.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartialResolver](./alfa-css.polygon.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.polygon.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Vertex](./alfa-css.polygon.vertex.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

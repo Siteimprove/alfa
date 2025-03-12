@@ -15,7 +15,44 @@ export interface Document extends JSON.Object
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  ["@context"?](./alfa-json-ld.document.__context_.md) |  | [Context](./alfa-json-ld.context.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+["@context"?](./alfa-json-ld.document.__context_.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Context](./alfa-json-ld.context.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

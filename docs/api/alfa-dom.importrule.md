@@ -13,14 +13,57 @@ export declare namespace ImportRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isImportRule(value)](./alfa-dom.importrule.isimportrule.md) |  |
-|  [matches(device)](./alfa-dom.importrule.matches.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isImportRule(value)](./alfa-dom.importrule.isimportrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[matches(device)](./alfa-dom.importrule.matches.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.importrule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.importrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

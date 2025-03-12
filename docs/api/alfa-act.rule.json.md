@@ -12,10 +12,93 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [requirements](./alfa-act.rule.json.requirements.md) |  | Array&lt;[Requirement.JSON](./alfa-act.requirement.json.md)<!-- -->&gt; |  |
-|  [tags](./alfa-act.rule.json.tags.md) |  | Array&lt;[Tag.JSON](./alfa-act.tag.json.md)<!-- -->&gt; |  |
-|  [type](./alfa-act.rule.json.type.md) |  | string |  |
-|  [uri](./alfa-act.rule.json.uri.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[requirements](./alfa-act.rule.json.requirements.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Requirement.JSON](./alfa-act.requirement.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[tags](./alfa-act.rule.json.tags.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Tag.JSON](./alfa-act.tag.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-act.rule.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[uri](./alfa-act.rule.json.uri.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

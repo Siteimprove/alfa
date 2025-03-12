@@ -12,12 +12,65 @@ function equals(v: Vector, u: Vector, e: number): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  v | [Vector](./alfa-math.vector.md) |  |
-|  u | [Vector](./alfa-math.vector.md) |  |
-|  e | number |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+v
+
+
+</td><td>
+
+[Vector](./alfa-math.vector.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+u
+
+
+</td><td>
+
+[Vector](./alfa-math.vector.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+e
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

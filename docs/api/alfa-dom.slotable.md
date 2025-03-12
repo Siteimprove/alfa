@@ -13,9 +13,46 @@ export declare namespace Slotable
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [findSlot(slotable)](./alfa-dom.slotable.findslot.md) | [https://dom.spec.whatwg.org/\#find-a-slot](https://dom.spec.whatwg.org/#find-a-slot) |
-|  [isSlotable(value)](./alfa-dom.slotable.isslotable.md) |  |
-|  [name(slotable)](./alfa-dom.slotable.name.md) | [https://dom.spec.whatwg.org/\#slotable-name](https://dom.spec.whatwg.org/#slotable-name) |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[findSlot(slotable)](./alfa-dom.slotable.findslot.md)
+
+
+</td><td>
+
+[https://dom.spec.whatwg.org/\#find-a-slot](https://dom.spec.whatwg.org/#find-a-slot)
+
+
+</td></tr>
+<tr><td>
+
+[isSlotable(value)](./alfa-dom.slotable.isslotable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[name(slotable)](./alfa-dom.slotable.name.md)
+
+
+</td><td>
+
+[https://dom.spec.whatwg.org/\#slotable-name](https://dom.spec.whatwg.org/#slotable-name)
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ function fontFace(declarations: Array<Declaration> | Record<string, string>): Fo
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  declarations | Array&lt;Declaration&gt; \| Record&lt;string, string&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+declarations
+
+
+</td><td>
+
+Array&lt;Declaration&gt; \| Record&lt;string, string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 FontFaceRule

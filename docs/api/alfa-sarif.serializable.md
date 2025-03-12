@@ -13,9 +13,42 @@ export declare namespace Serializable
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isSerializable(value)](./alfa-sarif.serializable.isserializable.md) |  |
-|  [toSARIF(value)](./alfa-sarif.serializable.tosarif.md) |  |
-|  [toSARIF(value)](./alfa-sarif.serializable.tosarif_1.md) |  |
+<table><thead><tr><th>
 
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isSerializable(value)](./alfa-sarif.serializable.isserializable.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toSARIF(value)](./alfa-sarif.serializable.tosarif.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[toSARIF(value)](./alfa-sarif.serializable.tosarif_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

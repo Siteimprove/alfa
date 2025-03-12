@@ -13,20 +13,81 @@ export declare namespace Tuple
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isTuple(value)](./alfa-css.tuple.istuple.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isTuple(value)](./alfa-css.tuple.istuple.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.tuple.json.md) |  |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.tuple.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [PartiallyResolved](./alfa-css.tuple.partiallyresolved.md) |  |
-|  [PartialResolver](./alfa-css.tuple.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[PartiallyResolved](./alfa-css.tuple.partiallyresolved.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartialResolver](./alfa-css.tuple.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ and<U, F>(result: Result<U, F>): Result<U, E | F>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  result | [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+result
+
+
+</td><td>
+
+[Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E \| F&gt;

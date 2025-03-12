@@ -13,22 +13,105 @@ export declare namespace Position
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [parse(legacySyntax)](./alfa-css.position.parse.md) | <p>Parse a position, optionally accepting legacy 3-values syntax.</p><p>[https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position)</p> |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[parse(legacySyntax)](./alfa-css.position.parse.md)
+
+
+</td><td>
+
+Parse a position, optionally accepting legacy 3-values syntax.
+
+[https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position)
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.position.json.md) |  |
-|  [Resolver](./alfa-css.position.resolver.md) | Percentages are not resolved against the same base in both dimensions. |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-css.position.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Resolver](./alfa-css.position.resolver.md)
+
+
+</td><td>
+
+Percentages are not resolved against the same base in both dimensions.
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Canonical](./alfa-css.position.canonical.md) |  |
-|  [PartiallyResolved](./alfa-css.position.partiallyresolved.md) |  |
-|  [PartialResolver](./alfa-css.position.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Canonical](./alfa-css.position.canonical.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartiallyResolved](./alfa-css.position.partiallyresolved.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PartialResolver](./alfa-css.position.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

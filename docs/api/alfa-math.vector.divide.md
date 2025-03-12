@@ -12,11 +12,51 @@ function divide(v: Vector, d: number): Vector;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  v | [Vector](./alfa-math.vector.md) |  |
-|  d | number |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+v
+
+
+</td><td>
+
+[Vector](./alfa-math.vector.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+d
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Vector](./alfa-math.vector.md)

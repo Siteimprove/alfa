@@ -12,10 +12,37 @@ add(cookie: Cookie): Cookies;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  cookie | Cookie |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+cookie
+
+
+</td><td>
+
+Cookie
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Cookies](./alfa-http.cookies.md)

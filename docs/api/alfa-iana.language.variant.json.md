@@ -13,7 +13,42 @@ interface JSON extends Subtag.JSON<"variant", Name>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [prefixes](./alfa-iana.language.variant.json.prefixes.md) |  | Array&lt;string&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[prefixes](./alfa-iana.language.variant.json.prefixes.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;string&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

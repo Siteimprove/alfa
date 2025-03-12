@@ -12,10 +12,39 @@ function parse(predicate?: Predicate<string>): CSSParser<CustomIdent>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  predicate | Predicate&lt;string&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+predicate
+
+
+</td><td>
+
+Predicate&lt;string&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[CustomIdent](./alfa-css.customident.md)<!-- -->&gt;

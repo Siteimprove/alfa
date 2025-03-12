@@ -12,11 +12,53 @@ static of(timeout: number, time?: Time): Timeout;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  timeout | number |  |
-|  time | [Time](./alfa-time.time.md) | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+timeout
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+time
+
+
+</td><td>
+
+[Time](./alfa-time.time.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Timeout](./alfa-time.timeout.md)

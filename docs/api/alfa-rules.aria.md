@@ -13,13 +13,48 @@ export declare namespace ARIA
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isARIA(value)](./alfa-rules.aria.isaria.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isARIA(value)](./alfa-rules.aria.isaria.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-rules.aria.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-rules.aria.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

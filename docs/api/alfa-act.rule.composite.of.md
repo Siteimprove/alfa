@@ -18,10 +18,37 @@ static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(proper
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  properties | { uri: string; requirements?: Iterable&lt;Requirement&gt;; tags?: Iterable&lt;Tag&gt;; composes: Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;&gt;; evaluate: [Composite.Evaluate](./alfa-act.rule.composite.evaluate.md)<!-- -->&lt;I, T, Q, S&gt;; } |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+properties
+
+
+</td><td>
+
+{ uri: string; requirements?: Iterable&lt;Requirement&gt;; tags?: Iterable&lt;Tag&gt;; composes: Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;&gt;; evaluate: [Composite.Evaluate](./alfa-act.rule.composite.evaluate.md)<!-- -->&lt;I, T, Q, S&gt;; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Composite](./alfa-act.rule.composite.md)<!-- -->&lt;I, T, Q, S&gt;

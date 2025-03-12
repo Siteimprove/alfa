@@ -13,8 +13,59 @@ interface JSON extends Rule.JSON<"keyframe">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [key](./alfa-dom.keyframerule.json.key.md) |  | string |  |
-|  [style](./alfa-dom.keyframerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) \| string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[key](./alfa-dom.keyframerule.json.key.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[style](./alfa-dom.keyframerule.json.style.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Block.JSON](./alfa-dom.block.json.md) \| string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

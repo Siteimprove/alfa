@@ -12,9 +12,76 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [left](./alfa-xpath.expression.path.json.left.md) |  | [Expression.JSON](./alfa-xpath.expression.json.md) |  |
-|  [right](./alfa-xpath.expression.path.json.right.md) |  | [Expression.JSON](./alfa-xpath.expression.json.md) |  |
-|  [type](./alfa-xpath.expression.path.json.type.md) |  | "path" |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[left](./alfa-xpath.expression.path.json.left.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Expression.JSON](./alfa-xpath.expression.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[right](./alfa-xpath.expression.path.json.right.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Expression.JSON](./alfa-xpath.expression.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-xpath.expression.path.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"path"
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

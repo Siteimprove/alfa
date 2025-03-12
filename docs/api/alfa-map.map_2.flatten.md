@@ -12,10 +12,37 @@ flatten<K, V>(this: Map<K, Map<K, V>>): Map<K, V>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  this | [Map](./alfa-map.map_2.md)<!-- -->&lt;K, [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+this
+
+
+</td><td>
+
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;

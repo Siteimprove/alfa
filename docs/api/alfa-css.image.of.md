@@ -12,10 +12,37 @@ static of<I extends URL | Gradient>(image: I): Image<I>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  image | I |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+image
+
+
+</td><td>
+
+I
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Image](./alfa-css.image.md)<!-- -->&lt;I&gt;

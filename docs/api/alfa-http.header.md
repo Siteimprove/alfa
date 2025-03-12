@@ -13,15 +13,66 @@ export declare namespace Header
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [from(json)](./alfa-http.header.from.md) |  |
-|  [isHeader(value)](./alfa-http.header.isheader.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[from(json)](./alfa-http.header.from.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isHeader(value)](./alfa-http.header.isheader.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [EARL](./alfa-http.header.earl.md) |  |
-|  [JSON](./alfa-http.header.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[EARL](./alfa-http.header.earl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[JSON](./alfa-http.header.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

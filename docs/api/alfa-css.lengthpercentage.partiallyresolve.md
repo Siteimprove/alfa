@@ -14,10 +14,37 @@ function partiallyResolve(resolver: PartialResolver): (value: LengthPercentage) 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [PartialResolver](./alfa-css.lengthpercentage.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[PartialResolver](./alfa-css.lengthpercentage.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 (value: [LengthPercentage](./alfa-css.lengthpercentage.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.lengthpercentage.partiallyresolved.md)

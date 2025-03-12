@@ -12,10 +12,37 @@ function partiallyResolve(resolver: PartialResolver): (value: Transform) => Part
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [PartialResolver](./alfa-css.transform.partialresolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[PartialResolver](./alfa-css.transform.partialresolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 (value: [Transform](./alfa-css.transform.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.transform.partiallyresolved.md)

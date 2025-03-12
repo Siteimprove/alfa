@@ -13,12 +13,127 @@ interface JSON extends Value.JSON<"shadow">
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [blur](./alfa-css.shadow.json.blur.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
-|  [color](./alfa-css.shadow.json.color.md) |  | [Color.JSON](./alfa-css.color.json.md) |  |
-|  [horizontal](./alfa-css.shadow.json.horizontal.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
-|  [isInset](./alfa-css.shadow.json.isinset.md) |  | boolean |  |
-|  [spread](./alfa-css.shadow.json.spread.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
-|  [vertical](./alfa-css.shadow.json.vertical.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[blur](./alfa-css.shadow.json.blur.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Length.JSON](./alfa-css.length.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[color](./alfa-css.shadow.json.color.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Color.JSON](./alfa-css.color.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[horizontal](./alfa-css.shadow.json.horizontal.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Length.JSON](./alfa-css.length.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[isInset](./alfa-css.shadow.json.isinset.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[spread](./alfa-css.shadow.json.spread.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Length.JSON](./alfa-css.length.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[vertical](./alfa-css.shadow.json.vertical.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Length.JSON](./alfa-css.length.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

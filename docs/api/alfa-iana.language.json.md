@@ -12,12 +12,127 @@ interface JSON
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [extended](./alfa-iana.language.json.extended.md) |  | [Extended.JSON](./alfa-iana.language.extended.json.md) \| null |  |
-|  [primary](./alfa-iana.language.json.primary.md) |  | [Primary.JSON](./alfa-iana.language.primary.json.md) |  |
-|  [region](./alfa-iana.language.json.region.md) |  | [Region.JSON](./alfa-iana.language.region.json.md) \| null |  |
-|  [script](./alfa-iana.language.json.script.md) |  | [Script.JSON](./alfa-iana.language.script.json.md) \| null |  |
-|  [type](./alfa-iana.language.json.type.md) |  | "language" |  |
-|  [variants](./alfa-iana.language.json.variants.md) |  | Array&lt;[Variant.JSON](./alfa-iana.language.variant.json.md)<!-- -->&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[extended](./alfa-iana.language.json.extended.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Extended.JSON](./alfa-iana.language.extended.json.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[primary](./alfa-iana.language.json.primary.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Primary.JSON](./alfa-iana.language.primary.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[region](./alfa-iana.language.json.region.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Region.JSON](./alfa-iana.language.region.json.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[script](./alfa-iana.language.json.script.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Script.JSON](./alfa-iana.language.script.json.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[type](./alfa-iana.language.json.type.md)
+
+
+</td><td>
+
+
+</td><td>
+
+"language"
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[variants](./alfa-iana.language.json.variants.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;[Variant.JSON](./alfa-iana.language.variant.json.md)<!-- -->&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

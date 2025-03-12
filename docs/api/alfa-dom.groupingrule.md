@@ -13,13 +13,48 @@ export declare namespace GroupingRule
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [isGroupingRule(value)](./alfa-dom.groupingrule.isgroupingrule.md) |  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[isGroupingRule(value)](./alfa-dom.groupingrule.isgroupingrule.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-dom.groupingrule.json.md) |  |
+<table><thead><tr><th>
 
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[JSON](./alfa-dom.groupingrule.json.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

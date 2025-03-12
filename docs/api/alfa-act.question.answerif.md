@@ -12,11 +12,51 @@ answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, A
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  condition | boolean |  |
-|  answer | ANSWER |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+condition
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+answer
+
+
+</td><td>
+
+ANSWER
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;

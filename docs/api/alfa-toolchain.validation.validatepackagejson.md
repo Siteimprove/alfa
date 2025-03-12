@@ -17,11 +17,51 @@ export declare function validatePackageJson({ dir, packageJson, }: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { dir, packageJson, } | { dir: string; packageJson: JSON; } |  |
-|  config | Config |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ dir, packageJson, }
+
+
+</td><td>
+
+{ dir: string; packageJson: JSON; }
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+config
+
+
+</td><td>
+
+Config
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Array&lt;string&gt;

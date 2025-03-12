@@ -12,11 +12,51 @@ function row(m: Matrix, i: number): Array<number>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  m | [Matrix](./alfa-math.matrix.md) |  |
-|  i | number |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+m
+
+
+</td><td>
+
+[Matrix](./alfa-math.matrix.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+i
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Array&lt;number&gt;

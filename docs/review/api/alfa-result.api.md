@@ -46,6 +46,10 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     flatten<T, E>(this: Result<never, E>): Result<T, E>;
     // (undocumented)
+    forEach(callback: Callback<never>): void;
+    // (undocumented)
+    forEachErr(callback: Callback<E>): void;
+    // (undocumented)
     getErr(): E;
     // (undocumented)
     getErrOr(): E;
@@ -150,6 +154,10 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     flatten<T, E>(this: Ok<Result<T, E>>): Result<T, E>;
     // (undocumented)
+    forEach(callback: Callback<T>): void;
+    // (undocumented)
+    forEachErr(callback: Callback<never>): void;
+    // (undocumented)
     get(): T;
     // (undocumented)
     getErrOr<F>(error: F): F;
@@ -250,6 +258,10 @@ export interface Result<T, E = T> extends Monad<T>, Foldable<T>, Iterable<T>, Eq
     flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
     // (undocumented)
     flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
+    // (undocumented)
+    forEach(callback: Callback<T>): void;
+    // (undocumented)
+    forEachErr(callback: Callback<E>): void;
     // (undocumented)
     getErrOr<F>(error: F): E | F;
     // (undocumented)

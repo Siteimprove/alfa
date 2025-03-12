@@ -13,8 +13,59 @@ interface JSON<C extends Criterion.Chapter = Criterion.Chapter, U extends Criter
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [chapter](./alfa-wcag.criterion.json.chapter.md) |  | C |  |
-|  [title](./alfa-wcag.criterion.json.title.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[chapter](./alfa-wcag.criterion.json.chapter.md)
+
+
+</td><td>
+
+
+</td><td>
+
+C
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[title](./alfa-wcag.criterion.json.title.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

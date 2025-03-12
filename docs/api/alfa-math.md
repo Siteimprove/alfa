@@ -6,16 +6,83 @@
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Matrix](./alfa-math.matrix.md) |  |
-|  [Real](./alfa-math.real.md) | [https://en.wikipedia.org/wiki/Real\_number](https://en.wikipedia.org/wiki/Real_number) |
-|  [Vector](./alfa-math.vector.md) |  |
+<table><thead><tr><th>
+
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Matrix](./alfa-math.matrix.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
+[Real](./alfa-math.real.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Real\_number](https://en.wikipedia.org/wiki/Real_number)
+
+
+</td></tr>
+<tr><td>
+
+[Vector](./alfa-math.vector.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [Matrix](./alfa-math.matrix.md) | [https://en.wikipedia.org/wiki/Matrix\_(mathematics)](https://en.wikipedia.org/wiki/Matrix_(mathematics)) |
-|  [Vector](./alfa-math.vector.md) | [https://en.wikipedia.org/wiki/Vector\_(mathematics\_and\_physics)](https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics)) |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Matrix](./alfa-math.matrix.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Matrix\_(mathematics)](https://en.wikipedia.org/wiki/Matrix_(mathematics))
+
+
+</td></tr>
+<tr><td>
+
+[Vector](./alfa-math.vector.md)
+
+
+</td><td>
+
+[https://en.wikipedia.org/wiki/Vector\_(mathematics\_and\_physics)](https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics))
+
+
+</td></tr>
+</tbody></table>

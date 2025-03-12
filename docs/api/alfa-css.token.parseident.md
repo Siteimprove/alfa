@@ -12,10 +12,39 @@ function parseIdent(query?: string | Predicate<Ident>): Parser<Slice<Token>, Ide
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  query | string \| Predicate&lt;[Ident](./alfa-css.token.ident.md)<!-- -->&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+query
+
+
+</td><td>
+
+string \| Predicate&lt;[Ident](./alfa-css.token.ident.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Ident](./alfa-css.token.ident.md)<!-- -->, string, \[\]&gt;

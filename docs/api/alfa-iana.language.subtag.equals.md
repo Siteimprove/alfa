@@ -12,10 +12,37 @@ abstract equals<T extends string, N extends string>(value: Subtag<T, N>): boolea
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  value | [Subtag](./alfa-iana.language.subtag.md)<!-- -->&lt;T, N&gt; |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+value
+
+
+</td><td>
+
+[Subtag](./alfa-iana.language.subtag.md)<!-- -->&lt;T, N&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 boolean

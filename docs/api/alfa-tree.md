@@ -6,13 +6,57 @@
 
 ## Abstract Classes
 
-|  Abstract Class | Description |
-|  --- | --- |
-|  [Node](./alfa-tree.node.md) | <p>Model for n-ary trees with some traversal flags.</p><p>In order to have a parent pointers, nodes are allowed to attach themselves to a parent node. To prevent mutation of an existing tree, the child is then "frozen".</p><p>Since it is not possible to add children after node creation, and it is not possible to re-attach an already attached node, this means that the trees are effectively downward frozen. In turn, this allows a bunch of optimisation since any traversal function that does not look upward can be cached.</p><p>The full tree (all nodes) must accept the same set of traversal flags, but the node type is not constrained.</p> |
+<table><thead><tr><th>
+
+Abstract Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Node](./alfa-tree.node.md)
+
+
+</td><td>
+
+Model for n-ary trees with some traversal flags.
+
+In order to have a parent pointers, nodes are allowed to attach themselves to a parent node. To prevent mutation of an existing tree, the child is then "frozen".
+
+Since it is not possible to add children after node creation, and it is not possible to re-attach an already attached node, this means that the trees are effectively downward frozen. In turn, this allows a bunch of optimisation since any traversal function that does not look upward can be cached.
+
+The full tree (all nodes) must accept the same set of traversal flags, but the node type is not constrained.
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [Node](./alfa-tree.node.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Node](./alfa-tree.node.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

@@ -12,10 +12,37 @@ resolve(resolver: Position.Resolver): Position.Canonical<H, V>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  resolver | [Position.Resolver](./alfa-css.position.resolver.md) |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+resolver
+
+
+</td><td>
+
+[Position.Resolver](./alfa-css.position.resolver.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Position.Canonical](./alfa-css.position.canonical.md)<!-- -->&lt;H, V&gt;

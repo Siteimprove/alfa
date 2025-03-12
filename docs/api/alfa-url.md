@@ -6,13 +6,51 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [URL](./alfa-url.url.md) | [https://url.spec.whatwg.org/](https://url.spec.whatwg.org/) |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[URL](./alfa-url.url.md)
+
+
+</td><td>
+
+[https://url.spec.whatwg.org/](https://url.spec.whatwg.org/)
+
+
+</td></tr>
+</tbody></table>
 
 ## Namespaces
 
-|  Namespace | Description |
-|  --- | --- |
-|  [URL](./alfa-url.url.md) |  |
+<table><thead><tr><th>
 
+Namespace
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[URL](./alfa-url.url.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+</tbody></table>

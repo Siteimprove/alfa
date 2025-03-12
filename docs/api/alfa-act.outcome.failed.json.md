@@ -13,8 +13,59 @@ interface JSON<T> extends Outcome.JSON<Value.Failed>
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [expectations](./alfa-act.outcome.failed.json.expectations.md) |  | Array&lt;\[string, [Result.JSON](./alfa-result.result.json.md)<!-- -->&lt;[Diagnostic.JSON](./alfa-act.diagnostic.json.md)<!-- -->&gt;\]&gt; |  |
-|  [target](./alfa-act.outcome.failed.json.target.md) |  | [json.Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[expectations](./alfa-act.outcome.failed.json.expectations.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Array&lt;\[string, [Result.JSON](./alfa-result.result.json.md)<!-- -->&lt;[Diagnostic.JSON](./alfa-act.diagnostic.json.md)<!-- -->&gt;\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[target](./alfa-act.outcome.failed.json.target.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[json.Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
