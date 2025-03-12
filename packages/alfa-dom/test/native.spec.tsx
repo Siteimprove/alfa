@@ -38,9 +38,10 @@ async function makeJSON(
   html: string,
   options?: Native.Options,
 ): Promise<Document.JSON> {
-  const { document } = new JSDOM(html).window;
+  const jsdom = new JSDOM(html);
+  globalThis.document = jsdom.window.document;
 
-  return Node.from(await Native.fromNode(document!, options)).toJSON();
+  return Node.from(await Native.fromNode(document, options)).toJSON();
 }
 
 test("Native.fromNode() builds a simple document", async (t) => {

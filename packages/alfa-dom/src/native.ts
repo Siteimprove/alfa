@@ -147,12 +147,15 @@ export namespace Native {
     }
 
     function toText(text: globalThis.Text): Text.JSON {
-      const range = new Range();
+      const range = globalThis.document.createRange();
       range.selectNode(text);
       return {
         type: "text",
         data: text.data,
-        box: toRectangle(range.getBoundingClientRect()),
+        box:
+          range.getBoundingClientRect !== undefined
+            ? toRectangle(range.getBoundingClientRect())
+            : null,
       };
     }
 
