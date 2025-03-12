@@ -153,6 +153,9 @@ export namespace Native {
         type: "text",
         data: text.data,
         box:
+          // We have tests using JSDOM which doesn't have support for layout.
+          // So this guard is only needed to make the tests not break...
+          // https://github.com/jsdom/jsdom/pull/2719#issuecomment-590145974
           range.getBoundingClientRect !== undefined
             ? toRectangle(range.getBoundingClientRect())
             : null,
