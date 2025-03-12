@@ -9,6 +9,7 @@
   "files": [
     "./h.spec.ts",
     "./jsx.spec.tsx",
+    "./native.spec.tsx",
     "./node.spec.tsx",
     "./node/attribute.spec.ts",
     "./node/element.spec.tsx",
