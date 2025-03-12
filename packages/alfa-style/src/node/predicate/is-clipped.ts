@@ -14,9 +14,10 @@ import { hasComputedStyle } from "../../element/predicate/has-computed-style.js"
 import { hasPositioningParent } from "../../element/predicate/has-positioning-parent.js";
 
 const { abs } = Math;
-const { isElement, hasBox } = Element;
+const { isElement } = Element;
 const { not, or, test } = Predicate;
 const { and } = Refinement;
+const { hasBox } = Node;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 

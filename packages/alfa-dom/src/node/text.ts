@@ -16,8 +16,8 @@ import { Slotable } from "./slotable.js";
 export class Text extends Node<"text"> implements Slotable {
   public static of(
     data: string,
-    box: Option<Rectangle> = None,
-    device: Option<Device> = None,
+    box: Option<Rectangle>,
+    device: Option<Device>,
     externalId?: string,
     internalId?: string,
     extraData?: any,
@@ -159,16 +159,17 @@ export namespace Text {
   /**
    * @internal
    */
-  export function cloneText(text: Text, device?: Device) {
-    return Trampoline.done(
-      Text.of(
-        text.data,
-        Option.from(device).flatMap((d) => text.getBoundingBox(d)),
-        Option.from(device),
-        text.externalId,
-        text.extraData,
-        text.internalId,
-      ),
-    );
+  export function cloneText(device?: Device): (text: Text) => Trampoline<Text> {
+    return (text) =>
+      Trampoline.done(
+        Text.of(
+          text.data,
+          Option.from(device).flatMap((d) => text.getBoundingBox(d)),
+          Option.from(device),
+          text.externalId,
+          text.extraData,
+          text.internalId,
+        ),
+      );
   }
 }

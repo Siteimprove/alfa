@@ -13,9 +13,10 @@ import {
 
 import { Style } from "../../style.js";
 
-const { hasBox, isElement } = Element;
+const { isElement } = Element;
 const { abs } = Math;
 const { and, or } = Predicate;
+const { hasBox } = Node;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
