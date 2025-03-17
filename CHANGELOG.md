@@ -1,5 +1,41 @@
 # Alfa changelog
 
+## [0.100.0](../../compare/v0.99.0...v0.100.0) (2025-03-17)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01000): The `hasBox` predicate has been moved from `Element` to `Node`. ([#1768](https://github.com/Siteimprove/alfa/pull/1768))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01000): The `white-space` property is now handled as a shorthand. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#01000): `Tree.Node` now expects to know the kind of traversal flags used. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- [@siteimprove/alfa-flags](packages/alfa-flags/CHANGELOG.md#01000): `new Flags()` now requires a `kind` to be specified. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+### Added
+
+- [@siteimprove/alfa-result](packages/alfa-result/CHANGELOG.md#01000): `Result#forEach` and `Result#forEachErr` methods are now available. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- [@siteimprove/alfa-flags](packages/alfa-flags/CHANGELOG.md#01000): A `Flags.named` class factory is now available for flags sets where flags can be accessed by name. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01000): `Text.of` now accepts `Option<Rectangle>` and `Option<Device>`. A rectangle can also be passed through the `box` JSON property when using `Text.fromText`. ([#1768](https://github.com/Siteimprove/alfa/pull/1768))
+
+- [@siteimprove/alfa-flags](packages/alfa-flags/CHANGELOG.md#01000): `Flags#is` is now available, testing that a flags set exactly matches the provided list. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01000): Legacy name alias properties are now supported. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01000): Properties `hyphens`, `line-break`, `overflow-wrap`, `text-wrap`, `text-wrap-mode`, `text-wrap-style`, `white-space-collapse`, `white-space-trim`, `wrap-after`, `wrap-before`, `wrap-inside`, `word-break`, and `word-wrap` are now supported. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md#01000): A timeout can now be passed to vitest. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+### Changed
+
+- [@siteimprove/alfa-flags](packages/alfa-flags/CHANGELOG.md#01000): `Flag#has(0)` now returns `false` on non-empty flags set. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+### Fixed
+
+- [@siteimprove/alfa-act](packages/alfa-act/CHANGELOG.md#01000): Serialization options are now correctly forwarded when serializing questions. ([#1767](https://github.com/Siteimprove/alfa/pull/1767))
+
 ## [0.99.0](../../compare/v0.98.0...v0.99.0) (2025-03-05)
 
 ### Added

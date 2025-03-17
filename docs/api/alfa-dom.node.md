@@ -11,30 +11,6 @@
 export declare namespace Node 
 ```
 
-## Classes
-
-<table><thead><tr><th>
-
-Class
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[Traversal](./alfa-dom.node.traversal.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-
 ## Functions
 
 <table><thead><tr><th>
@@ -281,30 +257,6 @@ Description
 </td></tr>
 </tbody></table>
 
-## Namespaces
-
-<table><thead><tr><th>
-
-Namespace
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[Traversal](./alfa-dom.node.traversal.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-
 ## Variables
 
 <table><thead><tr><th>
@@ -364,6 +316,15 @@ Traversal options to traverse all relevant nodes (flat tree and inside nested br
 </td></tr>
 <tr><td>
 
+[hasBox](./alfa-dom.node.hasbox.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [hasChild](./alfa-dom.node.haschild.md)
 
 
@@ -401,6 +362,48 @@ Traversal options to traverse all relevant nodes (flat tree and inside nested br
 <tr><td>
 
 [isRoot](./alfa-dom.node.isroot.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Traversal](./alfa-dom.node.traversal.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+## Type Aliases
+
+<table><thead><tr><th>
+
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Traversal](./alfa-dom.node.traversal.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[TraversalFlags](./alfa-dom.node.traversalflags.md)
 
 
 </td><td>

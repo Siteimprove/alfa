@@ -36,6 +36,23 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[box](./alfa-dom.text.json.box.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[Rectangle.JSON](./alfa-rectangle.rectangle.json.md) \| null
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [data](./alfa-dom.text.json.data.md)
 
 

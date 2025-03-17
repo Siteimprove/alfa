@@ -11,7 +11,7 @@ Extract the computed type a named property.
 **Signature:**
 
 ```typescript
-export type Computed<N extends Name> = Longhand.Computed<Property[N]>;
+export type Computed<N extends Name> = Longhand.Computed<Property[TrueName<N>]>;
 ```
 **References:** [Name](./alfa-style.longhands.name.md)<!-- -->, [Property](./alfa-style.longhands.property.md)
 

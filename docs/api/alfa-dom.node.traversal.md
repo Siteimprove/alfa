@@ -2,106 +2,67 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-dom](./alfa-dom.md) &gt; [Node](./alfa-dom.node.md) &gt; [Traversal](./alfa-dom.node.traversal.md)
 
-## Node.Traversal namespace
+## Node.Traversal variable
 
 **Signature:**
 
 ```typescript
-namespace Traversal 
+Traversal: {
+        of: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => {
+            has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
+            isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
+            add(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+            set: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+            remove(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+            unset: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+            is(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+            equals(value: any): boolean;
+            equals(value: unknown): value is any;
+            toString(): string;
+            toJSON(): Flags.JSON<"DOM traversal"> & {
+                composed: boolean;
+                flattened: boolean;
+                nested: boolean;
+            };
+            readonly value: number;
+            readonly kind: "DOM traversal";
+        } & {
+            composed: boolean;
+            flattened: boolean;
+            nested: boolean;
+        };
+        readonly none: 0;
+        readonly empty: {
+            has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
+            isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
+            add(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+            set: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+            remove(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+            unset: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+            is(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+            equals(value: any): boolean;
+            equals(value: unknown): value is any;
+            toString(): string;
+            toJSON(): Flags.JSON<"DOM traversal"> & {
+                composed: boolean;
+                flattened: boolean;
+                nested: boolean;
+            };
+            readonly value: number;
+            readonly kind: "DOM traversal";
+        } & {
+            composed: boolean;
+            flattened: boolean;
+            nested: boolean;
+        };
+        readonly allFlags: [1, 2, 4];
+        nameOf: (flag: 1 | 2 | 4) => "composed" | "flattened" | "nested";
+        reduce: (...flags: import("@siteimprove/alfa-array").Array<number>) => number;
+        named: <K extends string, A extends import("@siteimprove/alfa-array").Array<string>>(kind: K, ...flags: A) => {
+            [x: string]: any;
+        };
+        composed: 1 | 2 | 4;
+        flattened: 1 | 2 | 4;
+        nested: 1 | 2 | 4;
+    }
 ```
-
-## Variables
-
-<table><thead><tr><th>
-
-Variable
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[composed](./alfa-dom.node.traversal.composed.md)
-
-
-</td><td>
-
-When set, traverse the node in shadow-including tree order.
-
-[https://dom.spec.whatwg.org/\#concept-shadow-including-tree-order](https://dom.spec.whatwg.org/#concept-shadow-including-tree-order)
-
-
-</td></tr>
-<tr><td>
-
-[empty](./alfa-dom.node.traversal.empty.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[flattened](./alfa-dom.node.traversal.flattened.md)
-
-
-</td><td>
-
-When set, traverse the flattened element tree rooted at the node.
-
-[https://drafts.csswg.org/css-scoping/\#flat-tree](https://drafts.csswg.org/css-scoping/#flat-tree)
-
-
-</td></tr>
-<tr><td>
-
-[nested](./alfa-dom.node.traversal.nested.md)
-
-
-</td><td>
-
-When set, traverse all nested browsing contexts encountered.
-
-[https://html.spec.whatwg.org/\#nested-browsing-context](https://html.spec.whatwg.org/#nested-browsing-context)
-
-
-</td></tr>
-<tr><td>
-
-[none](./alfa-dom.node.traversal.none.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-
-## Type Aliases
-
-<table><thead><tr><th>
-
-Type Alias
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[Flag](./alfa-dom.node.traversal.flag.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>

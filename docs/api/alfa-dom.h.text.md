@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-function text(data: string, externalId?: string, internalId?: string, extraData?: any): Text;
+function text(data: string, box?: Rectangle, device?: Device, externalId?: string, internalId?: string, extraData?: any): Text;
 ```
 
 ## Parameters
@@ -39,6 +39,38 @@ string
 
 
 </td><td>
+
+
+</td></tr>
+<tr><td>
+
+box
+
+
+</td><td>
+
+Rectangle
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Device
+
+
+</td><td>
+
+_(Optional)_
 
 
 </td></tr>

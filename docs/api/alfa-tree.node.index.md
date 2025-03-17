@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-index(options?: Flags<F>): number;
+index(options?: Flags<K, F>): number;
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ options
 
 </td><td>
 
-[Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt;
+Flags&lt;K, F&gt;
 
 
 </td><td>

@@ -92,15 +92,6 @@ Description
 </td></tr>
 <tr><td>
 
-[hasBox](./alfa-dom.element.hasbox.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
 [hasDisplaySize](./alfa-dom.element.hasdisplaysize.md)
 
 

@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-closest<T extends Node<F>>(refinement: Refinement<Node<F>, T>, options?: Flags<F>): Option<T>;
+closest<T extends Node<K, F>>(refinement: Refinement<Node<K, F>, T>, options?: Flags<K, F>): Option<T>;
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ refinement
 
 </td><td>
 
-Refinement&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;, T&gt;
+Refinement&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;, T&gt;
 
 
 </td><td>
@@ -51,7 +51,7 @@ options
 
 </td><td>
 
-[Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt;
+Flags&lt;K, F&gt;
 
 
 </td><td>

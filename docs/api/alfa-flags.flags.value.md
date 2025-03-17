@@ -9,5 +9,5 @@ A compact representation of the set of flags as a number
 **Signature:**
 
 ```typescript
-get value(): number;
+readonly value: number;
 ```

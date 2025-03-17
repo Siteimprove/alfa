@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-protected readonly _children: Array<Node<F>>;
+protected readonly _children: Array<Node<K, F>>;
 ```

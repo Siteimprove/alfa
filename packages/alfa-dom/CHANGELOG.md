@@ -1,5 +1,22 @@
 # @siteimprove/alfa-dom
 
+## 0.100.0
+
+### Minor Changes
+
+- **Breaking:** The `hasBox` predicate has been moved from `Element` to `Node`. ([#1768](https://github.com/Siteimprove/alfa/pull/1768))
+
+  To migrate, replace `Element.hasBox` with `Node.hasBox`.
+  If `Node` is not imported, add it to the import statement:
+
+  ```
+  import { Element, Node } from "@siteimprove/alfa-dom";
+  ```
+
+- **Added:** `Text.of` now accepts `Option<Rectangle>` and `Option<Device>`. A rectangle can also be passed through the `box` JSON property when using `Text.fromText`. ([#1768](https://github.com/Siteimprove/alfa/pull/1768))
+
+  The rectangle represents the layout of the text node. If a rectangle is passed in, a device must be be supplied, otherwise the rectangle won't be set.
+
 ## 0.99.0
 
 ### Minor Changes

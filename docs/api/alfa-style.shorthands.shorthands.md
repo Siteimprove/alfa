@@ -43,6 +43,8 @@ shortHands: {
         readonly mask: Shorthand<"mask-image" | "mask-clip" | "mask-composite" | "mask-mode" | "mask-origin" | "mask-position" | "mask-repeat" | "mask-size">;
         readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
+        readonly "text-wrap": Shorthand<"text-wrap-mode" | "text-wrap-style">;
         readonly "text-decoration": Shorthand<"text-decoration-color" | "text-decoration-line" | "text-decoration-style" | "text-decoration-thickness">;
+        readonly "white-space": Shorthand<"text-wrap-mode" | "white-space-collapse" | "white-space-trim">;
     }
 ```

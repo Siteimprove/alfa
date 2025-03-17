@@ -9,5 +9,27 @@ Traversal options to traverse all relevant nodes (flat tree and inside nested br
 **Signature:**
 
 ```typescript
-fullTree: Traversal
+fullTree: {
+        has(flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested"): boolean;
+        isSet: (flag: 0 | 1 | 2 | 4 | "composed" | "flattened" | "nested") => boolean;
+        add(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+        set: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+        remove(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): any;
+        unset: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">) => any;
+        is(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | 2 | 4 | "composed" | "flattened" | "nested">): boolean;
+        equals(value: any): boolean;
+        equals(value: unknown): value is any;
+        toString(): string;
+        toJSON(): Flags.JSON<"DOM traversal"> & {
+            composed: boolean;
+            flattened: boolean;
+            nested: boolean;
+        };
+        readonly value: number;
+        readonly kind: "DOM traversal";
+    } & {
+        composed: boolean;
+        flattened: boolean;
+        nested: boolean;
+    }
 ```

@@ -9,7 +9,7 @@ Constructs a new instance of the `Flags` class
 **Signature:**
 
 ```typescript
-protected constructor(value: number);
+protected constructor(kind: K, value: number);
 ```
 
 ## Parameters
@@ -31,6 +31,20 @@ Description
 
 </th></tr></thead>
 <tbody><tr><td>
+
+kind
+
+
+</td><td>
+
+K
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
 
 value
 

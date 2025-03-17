@@ -2,78 +2,57 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-aria](./alfa-aria.md) &gt; [Node](./alfa-aria.node.md) &gt; [Traversal](./alfa-aria.node.traversal.md)
 
-## Node.Traversal namespace
+## Node.Traversal variable
 
 **Signature:**
 
 ```typescript
-namespace Traversal 
+Traversal: {
+        of: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">) => {
+            has(flag: 0 | 1 | "ignored"): boolean;
+            isSet: (flag: 0 | 1 | "ignored") => boolean;
+            add(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">): any;
+            set: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">) => any;
+            remove(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">): any;
+            unset: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">) => any;
+            is(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">): boolean;
+            equals(value: any): boolean;
+            equals(value: unknown): value is any;
+            toString(): string;
+            toJSON(): Flags.JSON<"ARIA traversal"> & {
+                ignored: boolean;
+            };
+            readonly value: number;
+            readonly kind: "ARIA traversal";
+        } & {
+            ignored: boolean;
+        };
+        readonly none: 0;
+        readonly empty: {
+            has(flag: 0 | 1 | "ignored"): boolean;
+            isSet: (flag: 0 | 1 | "ignored") => boolean;
+            add(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">): any;
+            set: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">) => any;
+            remove(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">): any;
+            unset: (...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">) => any;
+            is(...flags: import("@siteimprove/alfa-array").Array<0 | 1 | "ignored">): boolean;
+            equals(value: any): boolean;
+            equals(value: unknown): value is any;
+            toString(): string;
+            toJSON(): Flags.JSON<"ARIA traversal"> & {
+                ignored: boolean;
+            };
+            readonly value: number;
+            readonly kind: "ARIA traversal";
+        } & {
+            ignored: boolean;
+        };
+        readonly allFlags: [1];
+        nameOf: (flag: 1) => "ignored";
+        reduce: (...flags: import("@siteimprove/alfa-array").Array<number>) => number;
+        named: <K extends string, A extends import("@siteimprove/alfa-array").Array<string>>(kind: K, ...flags: A) => {
+            [x: string]: any;
+        };
+        ignored: 1;
+    }
 ```
-
-## Variables
-
-<table><thead><tr><th>
-
-Variable
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[empty](./alfa-aria.node.traversal.empty.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[ignored](./alfa-aria.node.traversal.ignored.md)
-
-
-</td><td>
-
-When set, traverse both exposed and ignored nodes.
-
-
-</td></tr>
-<tr><td>
-
-[none](./alfa-aria.node.traversal.none.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-
-## Type Aliases
-
-<table><thead><tr><th>
-
-Type Alias
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[Flag](./alfa-aria.node.traversal.flag.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>

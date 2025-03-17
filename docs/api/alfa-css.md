@@ -347,6 +347,16 @@ Class representing a transformation that resizes an element in either 2D or 3D s
 </td></tr>
 <tr><td>
 
+[TrimFlags](./alfa-css.trimflags.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
 [Tuple](./alfa-css.tuple.md)
 
 
@@ -529,16 +539,6 @@ Description
 <tr><td>
 
 [Component](./alfa-css.component.md)
-
-
-</td><td>
-
-
-
-</td></tr>
-<tr><td>
-
-[Contain](./alfa-css.contain.md)
 
 
 </td><td>
@@ -990,6 +990,16 @@ Description
 </td></tr>
 <tr><td>
 
+[TrimFlags](./alfa-css.trimflags.md)
+
+
+</td><td>
+
+
+
+</td></tr>
+<tr><td>
+
 [Tuple](./alfa-css.tuple.md)
 
 
@@ -1082,17 +1092,6 @@ Description
 
 </td><td>
 
-
-
-</td></tr>
-<tr><td>
-
-[Contain](./alfa-css.contain.md)
-
-
-</td><td>
-
-[https://developer.mozilla.org/en-US/docs/Web/CSS/contain\#formal\_syntax](https://developer.mozilla.org/en-US/docs/Web/CSS/contain#formal_syntax)
 
 
 </td></tr>

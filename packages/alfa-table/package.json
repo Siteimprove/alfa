@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-table",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.99.0",
+  "version": "0.100.0",
   "license": "MIT",
   "description": "An implementation of the HTML table model for forming and laying out tables",
   "repository": {

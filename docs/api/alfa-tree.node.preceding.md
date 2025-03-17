@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-preceding(options?: Flags<F>): Sequence<Node<F>>;
+preceding(options?: Flags<K, F>): Sequence<Node<K, F>>;
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ options
 
 </td><td>
 
-[Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt;
+Flags&lt;K, F&gt;
 
 
 </td><td>
@@ -49,5 +49,5 @@ _(Optional)_
 </tbody></table>
 **Returns:**
 
-Sequence&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+Sequence&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;&gt;
 

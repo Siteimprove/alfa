@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-isDescendantOf(node: Node<F>, options?: Flags<F>): boolean;
+isDescendantOf(node: Node<K, F>, options?: Flags<K, F>): boolean;
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ node
 
 </td><td>
 
-[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;
+[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;
 
 
 </td><td>
@@ -51,7 +51,7 @@ options
 
 </td><td>
 
-[Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt;
+Flags&lt;K, F&gt;
 
 
 </td><td>

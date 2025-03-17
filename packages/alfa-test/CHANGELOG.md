@@ -1,5 +1,11 @@
 # @siteimprove/alfa-test
 
+## 0.100.0
+
+### Minor Changes
+
+- **Added:** A timeout can now be passed to vitest. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
 ## 0.99.0
 
 ## 0.98.0
