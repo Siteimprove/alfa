@@ -1,12 +1,13 @@
+import { test } from "@siteimprove/alfa-test";
+
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
-import { test } from "@siteimprove/alfa-test";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 
 import { h } from "../dist/index.js";
 
 import { Namespace } from "../dist/namespace.js";
 
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Document } from "../dist/node/document.js";
 import { Element } from "../dist/node/element.js";
 import { Type } from "../dist/node/type.js";

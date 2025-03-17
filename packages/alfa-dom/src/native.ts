@@ -82,6 +82,7 @@ export namespace Native {
     options?: Options,
   ): Promise<Node.JSON> {
     const { withCrossOrigin = false } = options ?? {};
+    const range = globalThis.document.createRange(); // Used by toText - the same instance can be reused for each text node.
 
     return toNode(node);
 
@@ -147,14 +148,12 @@ export namespace Native {
     }
 
     function toText(text: globalThis.Text): Text.JSON {
-      const range = globalThis.document.createRange();
       range.selectNode(text);
       return {
         type: "text",
         data: text.data,
         box:
-          // We have tests using JSDOM which doesn't have support for layout.
-          // So this guard is only needed to make the tests not break...
+          // Not all execution environments have layout, e.g. JSDOM:
           // https://github.com/jsdom/jsdom/pull/2719#issuecomment-590145974
           range.getBoundingClientRect !== undefined
             ? toRectangle(range.getBoundingClientRect())
