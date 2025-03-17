@@ -12,11 +12,12 @@ node_modules
 !**/types/**/*.d.ts
 
 # yarn ignores
-# https://next.yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
+!.yarn/plugins/*.cjs
 !.yarn/releases
 # Prevent yarn releases to be ignored by earlier filter
 !.yarn/releases/*.cjs
