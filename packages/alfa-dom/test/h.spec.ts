@@ -1,6 +1,8 @@
+import { test } from "@siteimprove/alfa-test";
+
 import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
-import { test } from "@siteimprove/alfa-test";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 
 import { h } from "../dist/index.js";
 
@@ -89,4 +91,14 @@ test("h() creates internalId when it is not provided", (t) => {
     32,
     "internalId should be an hex string of length 32",
   );
+});
+
+test("h.text() accepts box", (t) => {
+  const device = Device.standard();
+  const rect = Rectangle.of(8, 8, 20, 10);
+  t.deepEqual(h.text("foo", rect, device).toJSON({ device }), {
+    type: "text",
+    data: "foo",
+    box: rect.toJSON(),
+  });
 });

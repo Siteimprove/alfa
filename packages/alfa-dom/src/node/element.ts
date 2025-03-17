@@ -568,7 +568,6 @@ export namespace Element {
 
   export const {
     hasAttribute,
-    hasBox,
     hasDisplaySize,
     hasId,
     hasInputType,

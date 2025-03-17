@@ -446,7 +446,7 @@ export namespace Node {
         return Attribute.fromAttribute(json as Attribute.JSON);
 
       case "text":
-        return Text.fromText(json as Text.JSON);
+        return Text.fromText(json as Text.JSON, device);
 
       case "comment":
         return Comment.fromComment(json as Comment.JSON);
@@ -632,7 +632,7 @@ export namespace Node {
     return Selective.of(node)
       .if(Element.isElement, Element.cloneElement(options, device))
       .if(Attribute.isAttribute, Attribute.cloneAttribute)
-      .if(Text.isText, Text.cloneText)
+      .if(Text.isText, Text.cloneText(device))
       .if(Comment.isComment, Comment.cloneComment)
       .if(Document.isDocument, Document.cloneDocument(options, device))
       .if(Type.isType, Type.cloneType)
@@ -647,6 +647,7 @@ export namespace Node {
   export const { getNodesBetween } = traversal;
 
   export const {
+    hasBox,
     hasChild,
     hasDescendant,
     hasInclusiveDescendant,

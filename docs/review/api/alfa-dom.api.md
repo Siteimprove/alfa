@@ -385,7 +385,6 @@ export namespace Element {
     //
     // (undocumented)
     hasAttribute: typeof predicate.hasAttribute, // (undocumented)
-    hasBox: typeof predicate.hasBox, // (undocumented)
     hasDisplaySize: typeof predicate.hasDisplaySize, // (undocumented)
     hasId: typeof predicate.hasId, // (undocumented)
     hasInputType: typeof predicate.hasInputType, // (undocumented)
@@ -533,7 +532,7 @@ export namespace h {
     // (undocumented)
     export function sheet(rules: Array<Rule>, disabled?: boolean, condition?: string): Sheet;
     // (undocumented)
-    export function text(data: string, externalId?: string, internalId?: string, extraData?: any): Text;
+    export function text(data: string, box?: Rectangle, device?: Device, externalId?: string, internalId?: string, extraData?: any): Text;
     // (undocumented)
     export function type<N extends string = string>(name: N, publicId?: string, systemId?: string, externalId?: string, internalId?: string, extraData?: any): Type<N>;
 }
@@ -1087,6 +1086,7 @@ export namespace Node {
     const // Warning: (ae-forgotten-export) The symbol "predicate_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
+    hasBox: typeof predicate_2.hasBox, // (undocumented)
     hasChild: typeof predicate_2.hasChild, // (undocumented)
     hasDescendant: typeof predicate_2.hasDescendant, // (undocumented)
     hasInclusiveDescendant: typeof predicate_2.hasInclusiveDescendant, // (undocumented)
@@ -1404,17 +1404,19 @@ export namespace SupportsRule {
 
 // @public (undocumented)
 export class Text extends Node<"text"> implements Slotable {
-    protected constructor(data: string, externalId?: string, internalId?: string, extraData?: any);
+    protected constructor(data: string, box: Option<Rectangle>, device: Option<Device>, externalId?: string, internalId?: string, extraData?: any);
     // (undocumented)
     assignedSlot(): Option<Slot>;
     // (undocumented)
     get data(): string;
     // (undocumented)
     static empty(): Text;
+    // (undocumented)
+    getBoundingBox(device: Device): Option<Rectangle>;
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(data: string, externalId?: string, internalId?: string, extraData?: any): Text;
+    static of(data: string, box: Option<Rectangle>, device: Option<Device>, externalId?: string, internalId?: string, extraData?: any): Text;
     // (undocumented)
     toJSON(options: Node.SerializationOptions & {
         verbosity: json.Serializable.Verbosity.Minimal | json.Serializable.Verbosity.Low;
@@ -1428,13 +1430,15 @@ export class Text extends Node<"text"> implements Slotable {
 // @public (undocumented)
 export namespace Text {
     // @internal (undocumented)
-    export function cloneText(text: Text): Trampoline<Text>;
+    export function cloneText(device?: Device): (text: Text) => Trampoline<Text>;
     // @internal (undocumented)
-    export function fromText(json: JSON): Trampoline<Text>;
+    export function fromText(json: JSON, device?: Device): Trampoline<Text>;
     // (undocumented)
     export function isText(value: unknown): value is Text;
     // (undocumented)
     export interface JSON extends Node.JSON<"text"> {
+        // (undocumented)
+        box: Rectangle.JSON | null;
         // (undocumented)
         data: string;
     }
