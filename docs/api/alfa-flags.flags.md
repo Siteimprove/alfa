@@ -11,6 +11,30 @@
 export declare namespace Flags 
 ```
 
+## Functions
+
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[named(kind, flags)](./alfa-flags.flags.named.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
 ## Interfaces
 
 <table><thead><tr><th>
@@ -30,6 +54,87 @@ Description
 
 
 </td><td>
+
+
+</td></tr>
+</tbody></table>
+
+## Variables
+
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[allFlagsArray](./alfa-flags.flags.allflagsarray.md)
+
+
+</td><td>
+
+Individual flags are numbers with at most one bit set to 1, i.e. powers of two. Since we do not currently need more than 8 flags, we can safely restrict this union.
+
+
+</td></tr>
+</tbody></table>
+
+## Type Aliases
+
+<table><thead><tr><th>
+
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[KeyedByArray](./alfa-flags.flags.keyedbyarray.md)
+
+
+</td><td>
+
+Turns \["a", "b", "c"\] into { a: X; b: X; c: X }
+
+
+</td></tr>
+<tr><td>
+
+[NonZeroFlags](./alfa-flags.flags.nonzeroflags.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ReplaceFactories](./alfa-flags.flags.replacefactories.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Shorten](./alfa-flags.flags.shorten.md)
+
+
+</td><td>
+
+Keep the first Bound.length types in A (or all if less). Using an array for the bound just makes the type easier since there is no arithmetic on the `number` type. This effectively treats Bound as a unary number.
 
 
 </td></tr>

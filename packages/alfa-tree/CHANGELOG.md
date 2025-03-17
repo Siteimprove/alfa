@@ -1,5 +1,11 @@
 # @siteimprove/alfa-tree
 
+## 0.100.0
+
+### Minor Changes
+
+- **Breaking:** `Tree.Node` now expects to know the kind of traversal flags used. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
 ## 0.99.0
 
 ## 0.98.0

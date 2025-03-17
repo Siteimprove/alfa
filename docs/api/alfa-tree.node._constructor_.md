@@ -9,7 +9,7 @@ Constructs a new instance of the `Node` class
 **Signature:**
 
 ```typescript
-protected constructor(children: Array<Node<F>>, type: T, externalId?: string, internalId?: string, extraData?: any);
+protected constructor(children: Array<Node<K, F>>, type: T, externalId?: string, internalId?: string, extraData?: any);
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ children
 
 </td><td>
 
-Array&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+Array&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;&gt;
 
 
 </td><td>

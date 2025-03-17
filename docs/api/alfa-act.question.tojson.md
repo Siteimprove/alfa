@@ -7,8 +7,44 @@
 **Signature:**
 
 ```typescript
-toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
+toJSON(options?: Serializable.Options): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
 ```
+
+## Parameters
+
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+options
+
+
+</td><td>
+
+[Serializable.Options](./alfa-json.serializable.options.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [Question.JSON](./alfa-act.question.json.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, URI&gt;

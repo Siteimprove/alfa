@@ -9,7 +9,7 @@ Extract the parsed type of a named property.
 **Signature:**
 
 ```typescript
-export type Parsed<N extends Name> = Longhand.Parsed<Property[N]>;
+export type Parsed<N extends Name> = Longhand.Parsed<Property[TrueName<N>]>;
 ```
 **References:** [Name](./alfa-style.longhands.name.md)<!-- -->, [Property](./alfa-style.longhands.property.md)
 

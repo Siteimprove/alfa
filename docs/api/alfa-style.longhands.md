@@ -59,6 +59,17 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[aliases](./alfa-style.longhands.aliases.md)
+
+
+</td><td>
+
+[https://drafts.csswg.org/css-cascade-5/\#legacy-name-alias](https://drafts.csswg.org/css-cascade-5/#legacy-name-alias)
+
+
+</td></tr>
+<tr><td>
+
 [longHands](./alfa-style.longhands.longhands.md)
 
 
@@ -82,6 +93,24 @@ Description
 
 </th></tr></thead>
 <tbody><tr><td>
+
+[Aliases](./alfa-style.longhands.aliases.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[AliasesName](./alfa-style.longhands.aliasesname.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
 
 [Cascaded](./alfa-style.longhands.cascaded.md)
 

@@ -1,5 +1,11 @@
 # @siteimprove/alfa-result
 
+## 0.100.0
+
+### Minor Changes
+
+- **Added:** `Result#forEach` and `Result#forEachErr` methods are now available. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
 ## 0.99.0
 
 ## 0.98.0

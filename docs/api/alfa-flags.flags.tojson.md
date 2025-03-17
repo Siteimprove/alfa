@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-toJSON(): Flags.JSON;
+toJSON(): Flags.JSON<K>;
 ```
 **Returns:**
 
-[Flags.JSON](./alfa-flags.flags.json.md)
+[Flags.JSON](./alfa-flags.flags.json.md)<!-- -->&lt;K&gt;
 

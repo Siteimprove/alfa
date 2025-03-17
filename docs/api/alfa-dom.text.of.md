@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(data: string, externalId?: string, internalId?: string, extraData?: any): Text;
+static of(data: string, box: Option<Rectangle>, device: Option<Device>, externalId?: string, internalId?: string, extraData?: any): Text;
 ```
 
 ## Parameters
@@ -36,6 +36,34 @@ data
 </td><td>
 
 string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+box
+
+
+</td><td>
+
+Option&lt;Rectangle&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Option&lt;Device&gt;
 
 
 </td><td>

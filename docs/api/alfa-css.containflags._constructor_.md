@@ -9,7 +9,7 @@ Constructs a new instance of the `ContainFlags` class
 **Signature:**
 
 ```typescript
-protected constructor(size: boolean, inlineSize: boolean, layout: boolean, style: boolean, paint: boolean);
+protected constructor(flags: CFlags);
 ```
 
 ## Parameters
@@ -32,68 +32,12 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-size
+flags
 
 
 </td><td>
 
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-inlineSize
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-layout
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-style
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-paint
-
-
-</td><td>
-
-boolean
+CFlags
 
 
 </td><td>

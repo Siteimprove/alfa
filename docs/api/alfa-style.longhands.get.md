@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function get<N extends Name>(name: N): Property[N];
+export function get<N extends Name>(name: N): Property[TrueName<N>];
 ```
 
 ## Parameters
@@ -45,5 +45,5 @@ N
 </tbody></table>
 **Returns:**
 
-[Property](./alfa-style.longhands.property.md)<!-- -->\[N\]
+[Property](./alfa-style.longhands.property.md)<!-- -->\[TrueName&lt;N&gt;\]
 

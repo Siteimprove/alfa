@@ -1,5 +1,30 @@
 # @siteimprove/alfa-flags
 
+## 0.100.0
+
+### Minor Changes
+
+- **Added:** A `Flags.named` class factory is now available for flags sets where flags can be accessed by name. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+  For example:
+
+  ```
+  const MyFlags = Flags.named("a", "b", "c"); // create a new class for three flags named "a", "b", and "c".
+  const flags = MyFlags.of("a"); // create a flags set where only "a" is set.
+
+  MyFlags.b; // Value of the second flag, i.e. 2^1 = 2, mostly used internally.
+  flags.c; // Is the third flag set? (here false).
+
+  flags.has("a");
+  flags.has(MyFlags.b);
+  ```
+
+- **Added:** `Flags#is` is now available, testing that a flags set exactly matches the provided list. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- **Breaking:** `new Flags()` now requires a `kind` to be specified. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- **Changed:** `Flag#has(0)` now returns `false` on non-empty flags set. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
 ## 0.99.0
 
 ## 0.98.0

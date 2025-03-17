@@ -1,5 +1,11 @@
 # @siteimprove/alfa-act
 
+## 0.100.0
+
+### Patch Changes
+
+- **Fixed:** Serialization options are now correctly forwarded when serializing questions. ([#1767](https://github.com/Siteimprove/alfa/pull/1767))
+
 ## 0.99.0
 
 ### Patch Changes

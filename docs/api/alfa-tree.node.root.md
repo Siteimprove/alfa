@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-root(options?: Flags<F>): Node<F>;
+root(options?: Flags<K, F>): Node<K, F>;
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ options
 
 </td><td>
 
-[Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt;
+Flags&lt;K, F&gt;
 
 
 </td><td>
@@ -49,5 +49,5 @@ _(Optional)_
 </tbody></table>
 **Returns:**
 
-[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;
+[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;
 

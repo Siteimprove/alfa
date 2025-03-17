@@ -7,7 +7,5 @@
 **Signature:**
 
 ```typescript
-export type Name = keyof Property;
+export type Name = PropName | AliasesName;
 ```
-**References:** [Property](./alfa-style.longhands.property.md)
-

@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-[Symbol.iterator](): Iterator<Node<F>>;
+[Symbol.iterator](): Iterator<Node<K, F>>;
 ```
 **Returns:**
 
-Iterator&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+Iterator&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;&gt;
 

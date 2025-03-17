@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-equals(value: Node<F>): boolean;
+equals(value: Node<K, F>): boolean;
 ```
 
 ## Parameters
@@ -35,7 +35,7 @@ value
 
 </td><td>
 
-[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;
+[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;
 
 
 </td><td>

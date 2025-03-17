@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-protected _parent: Option<Node<F>>;
+protected _parent: Option<Node<K, F>>;
 ```

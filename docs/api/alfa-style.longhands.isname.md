@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export function isName(name: string): name is Name;
+isName: (name: string) => name is Name
 ```
 
 ## Parameters

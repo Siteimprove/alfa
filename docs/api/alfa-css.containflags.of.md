@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-static of(size: boolean, inlineSize: boolean, layout: boolean, style: boolean, paint: boolean): ContainFlags;
+static of(flags: CFlags): ContainFlags;
 ```
 
 ## Parameters
@@ -30,68 +30,12 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-size
+flags
 
 
 </td><td>
 
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-inlineSize
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-layout
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-style
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-paint
-
-
-</td><td>
-
-boolean
+CFlags
 
 
 </td><td>

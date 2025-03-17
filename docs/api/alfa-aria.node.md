@@ -11,30 +11,6 @@
 export declare namespace Node 
 ```
 
-## Classes
-
-<table><thead><tr><th>
-
-Class
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[Traversal](./alfa-aria.node.traversal.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-
 ## Functions
 
 <table><thead><tr><th>
@@ -75,30 +51,6 @@ Description
 <tbody><tr><td>
 
 [JSON](./alfa-aria.node.json.md)
-
-
-</td><td>
-
-
-</td></tr>
-</tbody></table>
-
-## Namespaces
-
-<table><thead><tr><th>
-
-Namespace
-
-
-</th><th>
-
-Description
-
-
-</th></tr></thead>
-<tbody><tr><td>
-
-[Traversal](./alfa-aria.node.traversal.md)
 
 
 </td><td>
@@ -155,6 +107,48 @@ Description
 </td><td>
 
 Traversal options to include ignored nodes in the traversal.
+
+
+</td></tr>
+<tr><td>
+
+[Traversal](./alfa-aria.node.traversal.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
+## Type Aliases
+
+<table><thead><tr><th>
+
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[Traversal](./alfa-aria.node.traversal.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[TraversalFlags](./alfa-aria.node.traversalflags.md)
+
+
+</td><td>
 
 
 </td></tr>

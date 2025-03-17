@@ -9,7 +9,7 @@ Constructs a new instance of the `Text` class
 **Signature:**
 
 ```typescript
-protected constructor(data: string, externalId?: string, internalId?: string, extraData?: any);
+protected constructor(data: string, box: Option<Rectangle>, device: Option<Device>, externalId?: string, internalId?: string, extraData?: any);
 ```
 
 ## Parameters
@@ -38,6 +38,34 @@ data
 </td><td>
 
 string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+box
+
+
+</td><td>
+
+Option&lt;Rectangle&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+device
+
+
+</td><td>
+
+Option&lt;Device&gt;
 
 
 </td><td>

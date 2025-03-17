@@ -1,5 +1,17 @@
 # @siteimprove/alfa-style
 
+## 0.100.0
+
+### Minor Changes
+
+- **Breaking:** The `white-space` property is now handled as a shorthand. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+  Declarations should still be backward compatible. However, querying the value must now be done through the longhands `white-space-collapse`, `text-wrap-mode` or `white-space-trim`.
+
+- **Added:** Legacy name alias properties are now supported. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
+- **Added:** Properties `hyphens`, `line-break`, `overflow-wrap`, `text-wrap`, `text-wrap-mode`, `text-wrap-style`, `white-space-collapse`, `white-space-trim`, `wrap-after`, `wrap-before`, `wrap-inside`, `word-break`, and `word-wrap` are now supported. ([#1762](https://github.com/Siteimprove/alfa/pull/1762))
+
 ## 0.99.0
 
 ### Minor Changes

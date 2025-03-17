@@ -9,7 +9,7 @@
 **Signature:**
 
 ```typescript
-closest(predicate: Predicate<Node<F>>, options?: Flags<F>): Option<Node<F>>;
+closest(predicate: Predicate<Node<K, F>>, options?: Flags<K, F>): Option<Node<K, F>>;
 ```
 
 ## Parameters
@@ -37,7 +37,7 @@ predicate
 
 </td><td>
 
-Predicate&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+Predicate&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;&gt;
 
 
 </td><td>
@@ -51,7 +51,7 @@ options
 
 </td><td>
 
-[Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt;
+Flags&lt;K, F&gt;
 
 
 </td><td>
@@ -63,5 +63,5 @@ _(Optional)_
 </tbody></table>
 **Returns:**
 
-Option&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+Option&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;&gt;
 

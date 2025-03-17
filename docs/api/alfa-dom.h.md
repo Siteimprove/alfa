@@ -98,7 +98,7 @@ Description
 </td></tr>
 <tr><td>
 
-[text(data, externalId, internalId, extraData)](./alfa-dom.h.text.md)
+[text(data, box, device, externalId, internalId, extraData)](./alfa-dom.h.text.md)
 
 
 </td><td>
