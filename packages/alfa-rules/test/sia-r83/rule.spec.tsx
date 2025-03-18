@@ -15,6 +15,7 @@ const theSheet = () =>
     h.rule.style(".ellipsis", { textOverflow: "ellipsis" }),
     h.rule.style(".nowrap", { whiteSpace: "nowrap" }),
     h.rule.style(".wrap", { whiteSpace: "normal" }),
+    h.rule.style(".top", { width: "50px" }),
   ]);
 
 const device = Device.standard();
@@ -777,11 +778,11 @@ test(`evaluate() ignores overflow on \`<body\`> element`, async (t) => {
      .nowrap { white-space: nowrap; }
      .wrap { white-space: normal; }
      div > div { padding: 1px; border: 1px solid green }
-     .top { padding: 1em; border: 1px solid red}
+     .top { padding: 1em; border: 1px solid red; width: 50px; }
    </style>
  </head>
  <body>
-   <div class="top clip ellipsis" style="width: 50px">
+   <div class="top clip ellipsis">
      <div class="clip"><span>1 Hello World</span></div>
      <div class="nowrap"><span>2 Hello World</span></div>
      <div class="wrap"><span class="nowrap">3 Hello World</span></div>
@@ -804,7 +805,7 @@ test(`evaluates() passes a text node when nothing prevents the wrap`, async (t) 
   // With initial `white-space: normal`, the `<span>` wraps.
   const target = h.text("1 Hello World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="clip">
         <span>{target}</span>
       </div>
@@ -825,7 +826,7 @@ test(`evaluates() fails a text node when ellipsis is set on a distant block ance
   // level `<div>` clips the result.
   const target = h.text("2 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap">
         <span>{target}</span>
       </div>
@@ -844,7 +845,7 @@ test(`evaluates() fails a text node when its parent cancels the wrapping`, async
   // only child is cancelling them.
   const target = h.text("3 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="wrap">
         <span class="nowrap">{target}</span>
       </div>
@@ -863,7 +864,7 @@ test(`evaluates() passes a text node when the wrap is allowed immediately`, asyn
   // wrap points exist.
   const target = h.text("4 Hello World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap">
         <span class="wrap">{target}</span>
       </div>
@@ -885,7 +886,7 @@ test(`evaluates() fails a text node when ellipsis is not set on the first block 
   // level `<div>` clips the result.
   const target = h.text("5 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap ellipsis">
         <span>{target}</span>
       </div>
@@ -904,7 +905,7 @@ test(`evaluates() passes a text node when clipping and ellipsis happens on the f
   // with an ellipsis, thus nothing escapes it.
   const target = h.text("6 Hello World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="clip nowrap ellipsis">
         <span>{target}</span>
       </div>
@@ -922,7 +923,7 @@ test(`evaluates() fails a text node when clipping happens on a distant block anc
   // The inner `<div>` prevents wrapping, the outer `<div>` clips.
   const target = h.text("7 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap">
         <span class="clip">{target}</span>
       </div>
@@ -948,11 +949,7 @@ test(`evaluates() fails a text node when clipping happens without ellipsis on th
       <span class="nowrap">{target}</span>
     </div>
   );
-  const top = (
-    <div class="top scroll ellipsis" style={{ width: "50px" }}>
-      {clipping}
-    </div>
-  );
+  const top = <div class="top scroll ellipsis">{clipping}</div>;
 
   const document = h.document([<body>{top}</body>], [theSheet()]);
 
@@ -968,7 +965,7 @@ test(`evaluates() fails a text node when ellipsis is not set on the first block 
   // `text-overflow: ellipsis`. Thus, the top level `<div>` clips the result.
   const target = h.text("9 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div>
         <span class="nowrap">{target}</span>
       </div>
@@ -992,11 +989,7 @@ test(`evaluates() fails a text node because ellipsis is ignored on non-block ele
       <span class="ellipsis nowrap">{target}</span>
     </div>
   );
-  const top = (
-    <div class="top scroll ellipsis" style={{ width: "50px" }}>
-      {clipping}
-    </div>
-  );
+  const top = <div class="top scroll ellipsis">{clipping}</div>;
 
   const document = h.document([<body>{top}</body>], [theSheet()]);
 
@@ -1009,7 +1002,7 @@ test(`evaluates() passes a text node when clipping and ellipsis happens on the f
   // There is only one `<div>`, clipping nicely.
   const target = h.text("11 Hello World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <span>{target}</span>
     </div>
   );
@@ -1029,7 +1022,7 @@ test(`evaluates() passes text nodes wrapping between their parents`, async (t) =
   const target1 = h.text("12 Hello");
   const target2 = h.text("World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="wrap">
         <span className="nowrap">{target1}</span>
         <span className="nowrap">{target2}</span>
@@ -1058,7 +1051,7 @@ test(`evaluates() only passes text nodes wrapping inside their parents`, async (
   const target1 = h.text("12 Hello");
   const target2 = h.text("World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap">
         <span class="wrap">{target1}</span>
         <span class="wrap">{target2}</span>
@@ -1078,7 +1071,7 @@ test(`evaluates() fails a very long text node without spaces`, async (t) => {
   // Nothing prevents the wrap, except that there is nowhere to wrap.
   const target = h.text("Supercalifragilisticexpialidocious");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div>
         <span>{target}</span>
       </div>
@@ -1109,6 +1102,28 @@ test(`evaluates() passes a long text node without spaces which is not horizontal
     [<body box={{ device, x: 0, y: 0, width: 400, height: 40 }}>{top}</body>],
     [theSheet()],
   );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test("evaluates() passes when the target's parent has space to grow", async (t) => {
+  const target = h.text("debugSupercalifragilisticexpialidocious");
+  const clipping = (
+    <div
+      class="top clip ellipsis"
+      box={{ device, x: 0, y: 0, width: 200, height: 40 }}
+    >
+      <div>
+        <span box={{ device, x: 0, y: 0, width: 50, height: 40 }}>
+          {target}
+        </span>
+      </div>
+    </div>
+  );
+
+  const document = h.document([<body>{clipping}</body>], [theSheet()]);
 
   t.deepEqual(await evaluate(R83, { document, device }), [
     passed(R83, target, { 1: Outcomes.WrapsText }),
