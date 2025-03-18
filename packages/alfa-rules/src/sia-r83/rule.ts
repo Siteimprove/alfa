@@ -105,57 +105,48 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        return target
-          .parent(Node.fullTree)
-          .filter(isElement)
-          .map((parent) => {
-            const horizontallyClippedBy = ClippingAncestor.horizontal(
-              device,
-              target,
-            );
+        const horizontallyClippedBy = ClippingAncestor.horizontal(
+          device,
+          target,
+        );
 
-            const verticallyClippedBy = ClippingAncestor.vertical(
-              device,
-              target,
-            );
+        const verticallyClippedBy = ClippingAncestor.vertical(device, target);
 
-            const hasBig = isTwiceAsBig(target, device);
+        const hasBig = isTwiceAsBig(target, device);
 
-            return {
-              1: expectation(
-                horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
+        return {
+          1: expectation(
+            horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
+            () =>
+              // If the clipping ancestor happens to be twice as big as the text
+              // (parent), clipping only occurs after 200% zoom, which is OK.
+              // We do not really care where is the text inside the clipping
+              // ancestor, and simply assume that if it's big enough it will have
+              // room to grow. This is not always true as the text may be pushed
+              // to the far side already and ends up being clipped anyway.
+              // This would only create false negatives, so this is OK.
+
+              // There may be another further ancestor that is actually small and
+              // clips both the text and the found clipping ancestors. We assume
+              // this is not likely and just ignore it. This would only create
+              // false negatives.
+              expectation(
+                horizontallyClippedBy.every(hasBig("width")) &&
+                  verticallyClippedBy.every(hasBig("height")),
                 () =>
-                  // If the clipping ancestor happens to be twice as big as the text
-                  // (parent), clipping only occurs after 200% zoom, which is OK.
-                  // We do not really care where is the text inside the clipping
-                  // ancestor, and simply assume that if it's big enough it will have
-                  // room to grow. This is not always true as the text may be pushed
-                  // to the far side already and ends up being clipped anyway.
-                  // This would only create false negatives, so this is OK.
-
-                  // There may be another further ancestor that is actually small and
-                  // clips both the text and the found clipping ancestors. We assume
-                  // this is not likely and just ignore it. This would only create
-                  // false negatives.
-                  expectation(
-                    horizontallyClippedBy.every(hasBig("width")) &&
-                      verticallyClippedBy.every(hasBig("height")),
-                    () =>
-                      Outcomes.IsContainer(
-                        horizontallyClippedBy,
-                        verticallyClippedBy,
-                      ),
-                    () =>
-                      Outcomes.ClipsText(
-                        horizontallyClippedBy,
-                        verticallyClippedBy,
-                      ),
+                  Outcomes.IsContainer(
+                    horizontallyClippedBy,
+                    verticallyClippedBy,
                   ),
-                () => Outcomes.WrapsText,
+                () =>
+                  Outcomes.ClipsText(
+                    horizontallyClippedBy,
+                    verticallyClippedBy,
+                  ),
               ),
-            };
-          })
-          .getOr({ 1: Outcomes.WrapsText });
+            () => Outcomes.WrapsText,
+          ),
+        };
       },
     };
   },

@@ -1086,7 +1086,7 @@ test(`evaluates() fails a very long text node without spaces`, async (t) => {
 });
 
 test(`evaluates() passes a long text node without spaces which is not horizontally constrained`, async (t) => {
-  // While the div clips the text, it is also not constrained and can grow as
+  // While the button clips the text, it is also not constrained and can grow as
   // big as the page itself, thus growing with the text.
   const target = h.text("Supercalifragilisticexpialidocious");
   const top = (
