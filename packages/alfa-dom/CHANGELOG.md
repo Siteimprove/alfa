@@ -1,5 +1,11 @@
 # @siteimprove/alfa-dom
 
+## 0.100.1
+
+### Patch Changes
+
+- **Fixed:** Optional parameters `box` and `device` of `Text.of` now defaults to `None`. ([#1774](https://github.com/Siteimprove/alfa/pull/1774))
+
 ## 0.100.0
 
 ### Minor Changes
