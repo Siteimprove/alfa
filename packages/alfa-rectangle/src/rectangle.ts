@@ -284,6 +284,10 @@ export class Rectangle
       .writeNumber(this._height);
   }
 
+  public toString(): string {
+    return `Rectangle { x: ${this._x}, y: ${this._y}, width: ${this._width}, height: ${this._height} }`;
+  }
+
   public toJSON(): Rectangle.JSON {
     return {
       type: "rectangle",
