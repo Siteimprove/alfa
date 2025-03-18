@@ -13,6 +13,7 @@
     "./node.spec.tsx",
     "./node/attribute.spec.ts",
     "./node/element.spec.tsx",
+    "./node/text.spec.ts",
     "./node/predicate/has-tab-index.spec.tsx",
     "./node/traversal/get-nodes-between.spec.tsx",
     "./node/traversal/lowest-common-ancestor.spec.tsx",
