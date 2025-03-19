@@ -393,6 +393,11 @@ namespace ClippingAncestor {
   }
 
   const _softWrapPointsCache = Cache.empty<Device, Cache<Node, boolean>>();
+
+  /**
+   * Test whether a node contains soft wrap points: either within the texts,
+   * or between its children (if allowed).
+   */
   function hasSoftWrapPoints(device: Device): Predicate<Node> {
     return (node) =>
       _softWrapPointsCache.get(device, Cache.empty).get(node, () => {
