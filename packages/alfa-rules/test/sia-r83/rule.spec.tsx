@@ -1,6 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { test } from "@siteimprove/alfa-test";
 
 import R83, { Outcomes } from "../../dist/sia-r83/rule.js";
@@ -479,20 +480,11 @@ test(`evaluate() passes a text node vertically overflowing its small
 
   const document = h.document(
     [<body>{clipping}</body>],
-    [
-      h.sheet([
-        h.rule.style("div", {
-          overflow: "hidden",
-          height: "20px",
-        }),
-      ]),
-    ],
+    [h.sheet([h.rule.style("div", { overflow: "hidden", height: "20px" })])],
   );
 
   t.deepEqual(await evaluate(R83, { document, device }), [
-    passed(R83, target, {
-      1: Outcomes.IsContainer(None, Option.of(clipping)),
-    }),
+    passed(R83, target, { 1: Outcomes.WrapsText }),
   ]);
 });
 
@@ -1108,14 +1100,13 @@ test(`evaluates() passes a long text node without spaces which is not horizontal
   ]);
 });
 
-test("evaluates() passes when the target's parent has space to grow", async (t) => {
+test("evaluates() passes when the target's parent has space to grow in its constraining ancestor", async (t) => {
+  // The clipping ancestor is constrained in both dimensions, but by an element
+  // which is also twice as big as the text's parent, hence the text can grow.
   const target = h.text("debugSupercalifragilisticexpialidocious");
-  const clipping = (
-    <div
-      class="top clip ellipsis"
-      box={{ device, x: 0, y: 0, width: 200, height: 40 }}
-    >
-      <div>
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
+      <div class="clip">
         <span box={{ device, x: 0, y: 0, width: 50, height: 40 }}>
           {target}
         </span>
@@ -1123,9 +1114,112 @@ test("evaluates() passes when the target's parent has space to grow", async (t) 
     </div>
   );
 
-  const document = h.document([<body>{clipping}</body>], [theSheet()]);
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
 
   t.deepEqual(await evaluate(R83, { document, device }), [
+    // Note: this would be better as a IsContainer, but we currently don't return that.
     passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test("evaluates() fails when the target's parent does not have space to grow in its constraining ancestor", async (t) => {
+  // The clipping ancestor is constrained in both dimensions, by an element
+  // which is not twice as big as the text's parent, hence the text is clipped.
+  const target = h.text("debugSupercalifragilisticexpialidocious");
+  const clipping = (
+    <div class="clip">
+      <span box={{ device, x: 0, y: 0, width: 50, height: 40 }}>{target}</span>
+    </div>
+  );
+
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 99, height: 79 }}>
+      {clipping}
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "99px", height: "79px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText(Option.of(clipping), Option.of(clipping)),
+    }),
+  ]);
+});
+
+test("evaluates() passes when the target has space to grow in its constraining ancestor", async (t) => {
+  // The clipping ancestor is constrained in both dimensions, but by an element
+  // which is also twice as big as the text, hence the text can grow.
+  const target = h.text(
+    "debugSupercalifragilisticexpialidocious",
+    Rectangle.of(0, 0, 50, 40),
+    device,
+  );
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
+      <div class="clip">
+        <span>{target}</span>
+      </div>
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    // Note: this would be better as a IsContainer, but we currently don't return that.
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test("evaluates() fails when the target does not have space to grow in its constraining ancestor", async (t) => {
+  // The clipping ancestor is constrained in both dimensions, by an element
+  // which is not twice as big as the text, hence the text is clipped.
+  const target = h.text(
+    "debugSupercalifragilisticexpialidocious",
+    Rectangle.of(0, 0, 50, 40),
+    device,
+  );
+  const clipping = (
+    <div class="clip">
+      <span>{target}</span>
+    </div>
+  );
+
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 99, height: 79 }}>
+      {clipping}
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "99px", height: "79px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText(Option.of(clipping), Option.of(clipping)),
+    }),
   ]);
 });

@@ -272,15 +272,23 @@ namespace ClippingAncestor {
    */
   function localVerticalOverflow(
     device: Device,
-    _: any,
-    element: Element,
+    text: Text,
+    ancestor: Element,
   ): Overflow {
-    const verticalOverflow = overflow(element, device, "y");
+    const verticalOverflow = overflow(ancestor, device, "y");
     switch (verticalOverflow) {
       case Overflow.Clip:
-        return hasFixedDimension(device, "height")(element)
-          ? Overflow.Clip
-          : Overflow.Overflow;
+        return constrainingAncestor(ancestor, device, "height").every(
+          isTwiceAsBig(text, device)("height"),
+        )
+          ? // If there is no constraining ancestor, or it is big enough, then
+            // the text can overflow.
+            // We return a somewhat incorrect value here as it will ultimately
+            // turn into an Outcome.WrapsText while a Outcome.IsContainer would
+            // be more correct when there is a constraining ancestor. This is
+            // OK since we do not really rely on that information anywhere.
+            Overflow.Overflow
+          : Overflow.Clip;
       default:
         return verticalOverflow;
     }
@@ -365,12 +373,12 @@ namespace ClippingAncestor {
             isTwiceAsBig(text, device)("width"),
           )
         ) {
-          // If the element is not itself constrained, and twice as small as its
-          // closest constraining ancestor, it has room to grow.
+          // If the element has no constraining ancestor or is twice as small as
+          // it, it has room to grow.
           // We return a somewhat incorrect value here as it will ultimately
           // turn into an Outcome.WrapsText while a Outcome.IsContainer would
-          // be more correct. This is OK since we do not really rely on that
-          // information anywhere.
+          // be more correct when there is a constraining ancestor. This is OK
+          // since we do not really rely on that information anywhere.
           horizontalOverflow = Overflow.Handle;
         }
       }
@@ -428,6 +436,21 @@ namespace ClippingAncestor {
     height: Cache.empty<Device, Cache<Element, Option<Element>>>(),
     width: Cache.empty<Device, Cache<Element, Option<Element>>>(),
   };
+
+  /**
+   * Finds the closest ancestor which "constraints" the element in the given
+   * dimension.
+   *
+   * @remarks
+   * An element is constraining if it has fixed dimension, or it is \<body\> in
+   * the horizontal dimension. I.e. we consider \<body\> to be infinitely
+   * scrolling vertically, but immovable horizontally. This is not fully correct,
+   * but a horizontal scroll bar on it must be explicitly added by having a
+   * wider element that doesn't wrap, so it should be good in most actual cases.
+   *
+   * If the constraining ancestor is twice as big as the text, this leaves room
+   * to grow and the text will pass the rule.
+   */
   function constrainingAncestor(
     element: Element,
     device: Device,
