@@ -16,8 +16,8 @@ import { Slotable } from "./slotable.js";
 export class Text extends Node<"text"> implements Slotable {
   public static of(
     data: string,
-    box: Option<Rectangle>,
-    device: Option<Device>,
+    box: Option<Rectangle> = None,
+    device: Option<Device> = None,
     externalId?: string,
     internalId?: string,
     extraData?: any,

@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.100.1](../../compare/v0.100.0...v0.100.1) (2025-03-18)
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01001): Optional parameters `box` and `device` of `Text.of` now defaults to `None`. ([#1774](https://github.com/Siteimprove/alfa/pull/1774))
+
 ## [0.100.0](../../compare/v0.99.0...v0.100.0) (2025-03-17)
 
 ### Breaking
