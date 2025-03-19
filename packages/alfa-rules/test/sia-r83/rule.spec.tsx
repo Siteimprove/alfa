@@ -1,6 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { test } from "@siteimprove/alfa-test";
 
 import R83, { Outcomes } from "../../dist/sia-r83/rule.js";
@@ -15,6 +16,7 @@ const theSheet = () =>
     h.rule.style(".ellipsis", { textOverflow: "ellipsis" }),
     h.rule.style(".nowrap", { whiteSpace: "nowrap" }),
     h.rule.style(".wrap", { whiteSpace: "normal" }),
+    h.rule.style(".top", { width: "50px" }),
   ]);
 
 const device = Device.standard();
@@ -189,7 +191,7 @@ test(`evaluate() passes texts in a wrapping flex container`, async (t) => {
   ]);
 });
 
-test(`evaluates() passes a clipping element with font-relative height`, async (t) => {
+test(`evaluate() passes a clipping element with font-relative height`, async (t) => {
   const target = h.text("Hello World");
 
   const document = h.document(
@@ -214,7 +216,7 @@ test(`evaluates() passes a clipping element with font-relative height`, async (t
   ]);
 });
 
-test(`evaluates() passes a clipping element with font-relative width`, async (t) => {
+test(`evaluate() passes a clipping element with font-relative width`, async (t) => {
   const target = h.text("Hello World");
 
   const document = h.document(
@@ -240,7 +242,7 @@ test(`evaluates() passes a clipping element with font-relative width`, async (t)
   ]);
 });
 
-test("evaluates() ignores overflow on non-block elements", async (t) => {
+test("evaluate() ignores overflow on non-block elements", async (t) => {
   const target = h.text("Hello World");
 
   const document = h.document(
@@ -282,7 +284,7 @@ test(`evaluate() passes a relatively positioned node with a handling static pare
   ]);
 });
 
-test(`evaluates() checks wrapping of text nodes individually`, async (t) => {
+test(`evaluate() checks wrapping of text nodes individually`, async (t) => {
   const target1 = h.text("I have non-wrapped text and I clip");
   const target2 = h.text("I do not clip because I wrap");
 
@@ -440,7 +442,7 @@ test(`evaluate() passes a text node with fixed height and another property
   ]);
 });
 
-test(`evaluates() passes a text node horizontally overflowing its small
+test(`evaluate() passes a text node horizontally overflowing its small
       parent and not clipped by its wide grand-parent`, async (t) => {
   const target = h.text("Hello world");
   const clipping = (
@@ -478,20 +480,11 @@ test(`evaluate() passes a text node vertically overflowing its small
 
   const document = h.document(
     [<body>{clipping}</body>],
-    [
-      h.sheet([
-        h.rule.style("div", {
-          overflow: "hidden",
-          height: "20px",
-        }),
-      ]),
-    ],
+    [h.sheet([h.rule.style("div", { overflow: "hidden", height: "20px" })])],
   );
 
   t.deepEqual(await evaluate(R83, { document, device }), [
-    passed(R83, target, {
-      1: Outcomes.IsContainer(None, Option.of(clipping)),
-    }),
+    passed(R83, target, { 1: Outcomes.WrapsText }),
   ]);
 });
 
@@ -777,11 +770,11 @@ test(`evaluate() ignores overflow on \`<body\`> element`, async (t) => {
      .nowrap { white-space: nowrap; }
      .wrap { white-space: normal; }
      div > div { padding: 1px; border: 1px solid green }
-     .top { padding: 1em; border: 1px solid red}
+     .top { padding: 1em; border: 1px solid red; width: 50px; }
    </style>
  </head>
  <body>
-   <div class="top clip ellipsis" style="width: 50px">
+   <div class="top clip ellipsis">
      <div class="clip"><span>1 Hello World</span></div>
      <div class="nowrap"><span>2 Hello World</span></div>
      <div class="wrap"><span class="nowrap">3 Hello World</span></div>
@@ -800,11 +793,11 @@ test(`evaluate() ignores overflow on \`<body\`> element`, async (t) => {
  </body>
  */
 
-test(`evaluates() passes a text node when nothing prevents the wrap`, async (t) => {
+test(`evaluate() passes a text node when nothing prevents the wrap`, async (t) => {
   // With initial `white-space: normal`, the `<span>` wraps.
   const target = h.text("1 Hello World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="clip">
         <span>{target}</span>
       </div>
@@ -818,14 +811,14 @@ test(`evaluates() passes a text node when nothing prevents the wrap`, async (t) 
   ]);
 });
 
-test(`evaluates() fails a text node when ellipsis is set on a distant block ancestor`, async (t) => {
+test(`evaluate() fails a text node when ellipsis is set on a distant block ancestor`, async (t) => {
   // `white-space: nowrap` prevents the wrap, and the inner div doesn't set
   // `text-overflow`. The content then overflows as a block box, not a line
   // box and ignores the top level `text-overflow: ellipsis`. Thus, the top
   // level `<div>` clips the result.
   const target = h.text("2 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap">
         <span>{target}</span>
       </div>
@@ -839,12 +832,12 @@ test(`evaluates() fails a text node when ellipsis is set on a distant block ance
   ]);
 });
 
-test(`evaluates() fails a text node when its parent cancels the wrapping`, async (t) => {
+test(`evaluate() fails a text node when its parent cancels the wrapping`, async (t) => {
   // While the inner `<div>` could wrap, it has no soft wrap points because the
   // only child is cancelling them.
   const target = h.text("3 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="wrap">
         <span class="nowrap">{target}</span>
       </div>
@@ -858,12 +851,12 @@ test(`evaluates() fails a text node when its parent cancels the wrapping`, async
   ]);
 });
 
-test(`evaluates() passes a text node when the wrap is allowed immediately`, async (t) => {
+test(`evaluate() passes a text node when the wrap is allowed immediately`, async (t) => {
   // While the inner `<div>` doesn't allow wrapping, the `<span>` does, so soft
   // wrap points exist.
   const target = h.text("4 Hello World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap">
         <span class="wrap">{target}</span>
       </div>
@@ -877,7 +870,7 @@ test(`evaluates() passes a text node when the wrap is allowed immediately`, asyn
   ]);
 });
 
-test(`evaluates() fails a text node when ellipsis is not set on the first block ancestor`, async (t) => {
+test(`evaluate() fails a text node when ellipsis is not set on the first block ancestor`, async (t) => {
   // `white-space: nowrap` prevents the wrap. The inner div tries to handle
   // the overflow with an ellipsis, but it keeps its full overflow visible, so
   // this has no effect. The content then overflows as a block box, not a line
@@ -885,7 +878,7 @@ test(`evaluates() fails a text node when ellipsis is not set on the first block 
   // level `<div>` clips the result.
   const target = h.text("5 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap ellipsis">
         <span>{target}</span>
       </div>
@@ -899,12 +892,12 @@ test(`evaluates() fails a text node when ellipsis is not set on the first block 
   ]);
 });
 
-test(`evaluates() passes a text node when clipping and ellipsis happens on the first block ancestor`, async (t) => {
+test(`evaluate() passes a text node when clipping and ellipsis happens on the first block ancestor`, async (t) => {
   // `white-space: nowrap` prevents the wrap. The inner div clips its overflow
   // with an ellipsis, thus nothing escapes it.
   const target = h.text("6 Hello World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="clip nowrap ellipsis">
         <span>{target}</span>
       </div>
@@ -918,11 +911,11 @@ test(`evaluates() passes a text node when clipping and ellipsis happens on the f
   ]);
 });
 
-test(`evaluates() fails a text node when clipping happens on a distant block ancestor`, async (t) => {
+test(`evaluate() fails a text node when clipping happens on a distant block ancestor`, async (t) => {
   // The inner `<div>` prevents wrapping, the outer `<div>` clips.
   const target = h.text("7 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap">
         <span class="clip">{target}</span>
       </div>
@@ -938,7 +931,7 @@ test(`evaluates() fails a text node when clipping happens on a distant block anc
   ]);
 });
 
-test(`evaluates() fails a text node when clipping happens without ellipsis on the first block ancestor`, async (t) => {
+test(`evaluate() fails a text node when clipping happens without ellipsis on the first block ancestor`, async (t) => {
   // `white-space: nowrap` prevents the wrap inside the `<span>`.
   // The inner div clips its overflow, thus nothing escapes it.
   // The scroll bar on the top level `<div>` never comes into play.
@@ -948,11 +941,7 @@ test(`evaluates() fails a text node when clipping happens without ellipsis on th
       <span class="nowrap">{target}</span>
     </div>
   );
-  const top = (
-    <div class="top scroll ellipsis" style={{ width: "50px" }}>
-      {clipping}
-    </div>
-  );
+  const top = <div class="top scroll ellipsis">{clipping}</div>;
 
   const document = h.document([<body>{top}</body>], [theSheet()]);
 
@@ -961,14 +950,14 @@ test(`evaluates() fails a text node when clipping happens without ellipsis on th
   ]);
 });
 
-test(`evaluates() fails a text node when ellipsis is not set on the first block ancestor`, async (t) => {
+test(`evaluate() fails a text node when ellipsis is not set on the first block ancestor`, async (t) => {
   // `white-space: nowrap` prevents the wrap even if the inner `<div>` would
   // allow it, and the inner div doesn't set `text-overflow`. The content then
   // overflows as a block box, not a line box and ignores the top level
   // `text-overflow: ellipsis`. Thus, the top level `<div>` clips the result.
   const target = h.text("9 Hello World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div>
         <span class="nowrap">{target}</span>
       </div>
@@ -982,7 +971,7 @@ test(`evaluates() fails a text node when ellipsis is not set on the first block 
   ]);
 });
 
-test(`evaluates() fails a text node because ellipsis is ignored on non-block elements`, async (t) => {
+test(`evaluate() fails a text node because ellipsis is ignored on non-block elements`, async (t) => {
   // The `<span>` tries to set an ellipsis, but since it is a line element, not
   // a block one, this is ignored. The inner `<div>` clips the text and nothing
   // escapes it.
@@ -992,11 +981,7 @@ test(`evaluates() fails a text node because ellipsis is ignored on non-block ele
       <span class="ellipsis nowrap">{target}</span>
     </div>
   );
-  const top = (
-    <div class="top scroll ellipsis" style={{ width: "50px" }}>
-      {clipping}
-    </div>
-  );
+  const top = <div class="top scroll ellipsis">{clipping}</div>;
 
   const document = h.document([<body>{top}</body>], [theSheet()]);
 
@@ -1005,11 +990,11 @@ test(`evaluates() fails a text node because ellipsis is ignored on non-block ele
   ]);
 });
 
-test(`evaluates() passes a text node when clipping and ellipsis happens on the first block ancestor`, async (t) => {
+test(`evaluate() passes a text node when clipping and ellipsis happens on the first block ancestor`, async (t) => {
   // There is only one `<div>`, clipping nicely.
   const target = h.text("11 Hello World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <span>{target}</span>
     </div>
   );
@@ -1021,7 +1006,7 @@ test(`evaluates() passes a text node when clipping and ellipsis happens on the f
   ]);
 });
 
-test(`evaluates() passes text nodes wrapping between their parents`, async (t) => {
+test(`evaluate() passes text nodes wrapping between their parents`, async (t) => {
   // The `<span>` don't allow wrapping, but the inner `<div>` does, and has
   // room to do so between the `<span>`.
   // Note that the individual `<span>` might still be too wide to fit within
@@ -1029,7 +1014,7 @@ test(`evaluates() passes text nodes wrapping between their parents`, async (t) =
   const target1 = h.text("12 Hello");
   const target2 = h.text("World");
   const top = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="wrap">
         <span className="nowrap">{target1}</span>
         <span className="nowrap">{target2}</span>
@@ -1045,7 +1030,7 @@ test(`evaluates() passes text nodes wrapping between their parents`, async (t) =
   ]);
 });
 
-test(`evaluates() only passes text nodes wrapping inside their parents`, async (t) => {
+test(`evaluate() only passes text nodes wrapping inside their parents`, async (t) => {
   // The first `<span>` allows wrapping, the second doesn't.
   // Note that this seems to render differently in Chrome and Firefox, Chrome
   // does wrap between the `<span>`, likely adding a wrap point at the end of
@@ -1058,7 +1043,7 @@ test(`evaluates() only passes text nodes wrapping inside their parents`, async (
   const target1 = h.text("12 Hello");
   const target2 = h.text("World");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div class="nowrap">
         <span class="wrap">{target1}</span>
         <span class="wrap">{target2}</span>
@@ -1074,11 +1059,11 @@ test(`evaluates() only passes text nodes wrapping inside their parents`, async (
   ]);
 });
 
-test(`evaluates() fails a very long text node without spaces`, async (t) => {
+test(`evaluate() fails a very long text node without spaces`, async (t) => {
   // Nothing prevents the wrap, except that there is nowhere to wrap.
   const target = h.text("Supercalifragilisticexpialidocious");
   const clipping = (
-    <div class="top clip ellipsis" style={{ width: "50px" }}>
+    <div class="top clip ellipsis">
       <div>
         <span>{target}</span>
       </div>
@@ -1092,8 +1077,8 @@ test(`evaluates() fails a very long text node without spaces`, async (t) => {
   ]);
 });
 
-test(`evaluates() passes a long text node without spaces which is not horizontally constrained`, async (t) => {
-  // While the div clips the text, it is also not constrained and can grow as
+test(`evaluate() passes a long text node without spaces which is not horizontally constrained`, async (t) => {
+  // While the button clips the text, it is also not constrained and can grow as
   // big as the page itself, thus growing with the text.
   const target = h.text("Supercalifragilisticexpialidocious");
   const top = (
@@ -1112,5 +1097,251 @@ test(`evaluates() passes a long text node without spaces which is not horizontal
 
   t.deepEqual(await evaluate(R83, { document, device }), [
     passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test("evaluate() passes when the target's parent has space to grow in its constraining ancestor", async (t) => {
+  // The clipping ancestor is constrained in both dimensions, but by an element
+  // which is also twice as big as the text's parent, hence the text can grow.
+  const target = h.text("Supercalifragilisticexpialidocious");
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
+      <div class="clip">
+        <span box={{ device, x: 0, y: 0, width: 50, height: 40 }}>
+          {target}
+        </span>
+      </div>
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    // Note: this would be better as a IsContainer, but we currently don't return that.
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test("evaluate() fails when the target's parent does not have space to grow in its constraining ancestor", async (t) => {
+  // The clipping ancestor is constrained in both dimensions, by an element
+  // which is not twice as big as the text's parent, hence the text is clipped.
+  const target = h.text("Supercalifragilisticexpialidocious");
+  const clipping = (
+    <div class="clip">
+      <span box={{ device, x: 0, y: 0, width: 50, height: 40 }}>{target}</span>
+    </div>
+  );
+
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 99, height: 79 }}>
+      {clipping}
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "99px", height: "79px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText(Option.of(clipping), Option.of(clipping)),
+    }),
+  ]);
+});
+
+test("evaluate() passes when the target has space to grow in its constraining ancestor", async (t) => {
+  // The clipping ancestor is constrained in both dimensions, but by an element
+  // which is also twice as big as the text, hence the text can grow.
+  const target = h.text(
+    "Supercalifragilisticexpialidocious",
+    Rectangle.of(0, 0, 50, 40),
+    device,
+  );
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
+      <div class="clip">
+        <span>{target}</span>
+      </div>
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    // Note: this would be better as a IsContainer, but we currently don't return that.
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test("evaluate() fails when the target does not have space to grow in its constraining ancestor", async (t) => {
+  // The clipping ancestor is constrained in both dimensions, by an element
+  // which is not twice as big as the text, hence the text is clipped.
+  const target = h.text(
+    "Supercalifragilisticexpialidocious",
+    Rectangle.of(0, 0, 50, 40),
+    device,
+  );
+  const clipping = (
+    <div class="clip">
+      <span>{target}</span>
+    </div>
+  );
+
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 99, height: 79 }}>
+      {clipping}
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "99px", height: "79px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText(Option.of(clipping), Option.of(clipping)),
+    }),
+  ]);
+});
+
+test("evaluate() passes small text in a large parent", async (t) => {
+  // The text is small, but in a big parent. This is typically a short text in
+  // a block container, e.g. a list item.
+  const target = h.text(
+    "Supercalifragilisticexpialidocious",
+    Rectangle.of(0, 0, 50, 40),
+    device,
+  );
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
+      <div class="clip">
+        <div box={{ device, x: 0, y: 0, width: 100, height: 80 }}>{target}</div>
+      </div>
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    // Note: this would be better as a IsContainer, but we currently don't return that.
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test("evaluate() fails large text in a small parent", async (t) => {
+  // The text is overflowing its parent, but gets clipped further up.
+  // To be more realistic, the span should have fixed height and width, but the
+  // rule currently doesn't look at that.
+  const target = h.text(
+    "Supercalifragilisticexpialidocious",
+    Rectangle.of(0, 0, 100, 80),
+    device,
+  );
+  const clipping = (
+    <div class="clip">
+      <span box={{ device, x: 0, y: 0, width: 50, height: 40 }}>{target}</span>
+    </div>
+  );
+
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
+      {clipping}
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText(Option.of(clipping), Option.of(clipping)),
+    }),
+  ]);
+});
+
+test("evaluate() fails on small text nodes that add up into a long line", async (t) => {
+  // Union of both is { x:0, y: 0, width: 105 (55+50), height: 40 }
+  const target1 = h.text("foo ", Rectangle.of(0, 0, 50, 40), device);
+  const target2 = h.text("bar", Rectangle.of(55, 0, 50, 40), device);
+  const clipping = (
+    <div
+      class="clip nowrap top"
+      box={{ device, x: 0, y: 0, width: 100, height: 80 }}
+    >
+      {target1}
+      <b>{target2}</b>
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{clipping}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    failed(R83, target1, { 1: Outcomes.ClipsText(Option.of(clipping), None) }),
+    failed(R83, target2, { 1: Outcomes.ClipsText(Option.of(clipping), None) }),
+  ]);
+});
+
+test("evaluate() passes on small text nodes that add up into a short line", async (t) => {
+  // Union of both is { x:0, y: 0, width: 105 (55+50), height: 40 }
+  const target1 = h.text("foo ", Rectangle.of(0, 0, 50, 40), device);
+  const target2 = h.text("bar", Rectangle.of(55, 0, 50, 40), device);
+  const clipping = (
+    <div
+      class="clip nowrap top"
+      box={{ device, x: 0, y: 0, width: 210, height: 80 }}
+    >
+      {target1}
+      <b>{target2}</b>
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{clipping}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "210px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    passed(R83, target1, { 1: Outcomes.WrapsText }),
+    passed(R83, target2, { 1: Outcomes.WrapsText }),
   ]);
 });

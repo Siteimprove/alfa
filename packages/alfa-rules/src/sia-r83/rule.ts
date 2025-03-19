@@ -12,12 +12,14 @@ import {
   MediaRule,
   Namespace,
   Node,
+  Query,
   Text,
 } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
@@ -36,7 +38,8 @@ const { Discrete, Range } = Feature.Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { hasAttribute, hasBox, hasName, hasNamespace, isElement } = Element;
+const { hasAttribute, hasName, hasNamespace, isElement } = Element;
+const { hasBox } = Node;
 const { isText } = Text;
 const {
   getPositioningParent,
@@ -104,57 +107,48 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
-        return target
-          .parent(Node.fullTree)
-          .filter(isElement)
-          .map((parent) => {
-            const horizontallyClippedBy = ClippingAncestor.horizontal(
-              device,
-              parent,
-            );
+        const horizontallyClippedBy = ClippingAncestor.horizontal(
+          device,
+          target,
+        );
 
-            const verticallyClippedBy = ClippingAncestor.vertical(
-              device,
-              parent,
-            );
+        const verticallyClippedBy = ClippingAncestor.vertical(device, target);
 
-            const hasBig = isTwiceAsBig(parent, device);
+        const hasBig = isTwiceAsBig(target, device);
 
-            return {
-              1: expectation(
-                horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
+        return {
+          1: expectation(
+            horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
+            () =>
+              // If the clipping ancestor happens to be twice as big as the text
+              // (parent), clipping only occurs after 200% zoom, which is OK.
+              // We do not really care where is the text inside the clipping
+              // ancestor, and simply assume that if it's big enough it will have
+              // room to grow. This is not always true as the text may be pushed
+              // to the far side already and ends up being clipped anyway.
+              // This would only create false negatives, so this is OK.
+
+              // There may be another further ancestor that is actually small and
+              // clips both the text and the found clipping ancestors. We assume
+              // this is not likely and just ignore it. This would only create
+              // false negatives.
+              expectation(
+                horizontallyClippedBy.every(hasBig("width")) &&
+                  verticallyClippedBy.every(hasBig("height")),
                 () =>
-                  // If the clipping ancestor happens to be twice as big as the text
-                  // (parent), clipping only occurs after 200% zoom, which is OK.
-                  // We do not really care where is the text inside the clipping
-                  // ancestor, and simply assume that if it's big enough it will have
-                  // room to grow. This is not always true as the text may be pushed
-                  // to the far side already and ends up being clipped anyway.
-                  // This would only create false negatives, so this is OK.
-
-                  // There may be another further ancestor that is actually small and
-                  // clips both the text and the found clipping ancestors. We assume
-                  // this is not likely and just ignore it. This would only create
-                  // false negatives.
-                  expectation(
-                    horizontallyClippedBy.every(hasBig("width")) &&
-                      verticallyClippedBy.every(hasBig("height")),
-                    () =>
-                      Outcomes.IsContainer(
-                        horizontallyClippedBy,
-                        verticallyClippedBy,
-                      ),
-                    () =>
-                      Outcomes.ClipsText(
-                        horizontallyClippedBy,
-                        verticallyClippedBy,
-                      ),
+                  Outcomes.IsContainer(
+                    horizontallyClippedBy,
+                    verticallyClippedBy,
                   ),
-                () => Outcomes.WrapsText,
+                () =>
+                  Outcomes.ClipsText(
+                    horizontallyClippedBy,
+                    verticallyClippedBy,
+                  ),
               ),
-            };
-          })
-          .getOr({ 1: Outcomes.WrapsText });
+            () => Outcomes.WrapsText,
+          ),
+        };
       },
     };
   },
@@ -188,20 +182,57 @@ function overflow(
     .getOr(Overflow.Overflow);
 }
 
+/**
+ * Return the box of a text, or its parent element.
+ */
+function textBox(text: Text, device: Device): Option<Rectangle> {
+  return text.getBoundingBox(device).orElse(() =>
+    text
+      .parent(Node.fullTree)
+      .filter(isElement)
+      .flatMap((parent) => parent.getBoundingBox(device)),
+  );
+}
+
+/**
+ * Return the convex hull of all the text boxes in a line.
+ *
+ * @remarks
+ * This essentially considers that the line cannot wrap, which is correct in our
+ * use case since we only call that when we have clipping ancestors. If the line
+ * wraps, this will still return the correct box (because each individual box is
+ * already in its post-wrapping position), but the validity for using it in our
+ * case becomes a bit dubious.
+ */
+function lineBox(text: Text, device: Device): Rectangle {
+  return Rectangle.union(
+    ...text
+      .ancestors(Node.fullTree)
+      .find(
+        and(isElement, (element) =>
+          Style.isBlockContainer(Style.from(element, device)),
+        ),
+      )
+      .map((blockAncestor) =>
+        Query.getDescendants(isText)(blockAncestor, Node.fullTree),
+      )
+      .getOrElse(Sequence.empty)
+      .collect((text) => textBox(text, device)),
+  );
+}
+
+/**
+ * Create a predicate (generator), testing if a container is twice as big as
+ * the target text; uses the text layout if present, else its parent layout.
+ */
 function isTwiceAsBig(
-  target: Element,
+  target: Text,
   device: Device,
 ): (dimension: "width" | "height") => Predicate<Element> {
   return (dimension) =>
     hasBox(
       (clippingBox) =>
-        test(
-          hasBox(
-            (targetBox) => clippingBox[dimension] >= 2 * targetBox[dimension],
-            device,
-          ),
-          target,
-        ),
+        clippingBox[dimension] >= 2 * lineBox(target, device)[dimension],
       device,
     );
 }
@@ -209,8 +240,8 @@ function isTwiceAsBig(
 namespace ClippingAncestor {
   export const vertical = clipper("height", localVerticalOverflow);
   // This is eta-expanded to avoid premature evaluation of the localHorizontalOverflow function.
-  export const horizontal = (device: Device, element: Element) =>
-    clipper("width", localHorizontalOverflow())(device, element);
+  export const horizontal = (device: Device, text: Text) =>
+    clipper("width", localHorizontalOverflow())(device, text);
 
   const predicates = { height: isHeight, width: isWidth };
   const clipperCaches = {
@@ -220,9 +251,9 @@ namespace ClippingAncestor {
 
   function clipper(
     dimension: "height" | "width",
-    localOverflow: (device: Device, element: Element) => Overflow,
-  ): (device: Device, element: Element) => Option<Element> {
-    return (device, element) => {
+    localOverflow: (device: Device, text: Text, parent: Element) => Overflow,
+  ): (device: Device, text: Text) => Option<Element> {
+    return (device, text) => {
       function clipper(element: Element): Option<Element> {
         return clipperCaches[dimension]
           .get(device, Cache.empty)
@@ -248,7 +279,7 @@ namespace ClippingAncestor {
               return None;
             }
 
-            switch (localOverflow(device, element)) {
+            switch (localOverflow(device, text, element)) {
               case Overflow.Clip:
                 // The element definitely clips, we've found our clipper.
                 return Option.of(element);
@@ -262,44 +293,63 @@ namespace ClippingAncestor {
           });
       }
 
-      return clipper(element);
+      return text.parent(Node.fullTree).filter(isElement).flatMap(clipper);
     };
   }
 
   /**
-   * Finds how the element manages its vertical overflow.
+   * Finds how the text manages its vertical overflow within the context of
+   * an ancestor element.
    */
-  function localVerticalOverflow(device: Device, element: Element): Overflow {
-    const verticalOverflow = overflow(element, device, "y");
+  function localVerticalOverflow(
+    device: Device,
+    text: Text,
+    ancestor: Element,
+  ): Overflow {
+    const verticalOverflow = overflow(ancestor, device, "y");
     switch (verticalOverflow) {
       case Overflow.Clip:
-        return hasFixedDimension(device, "height")(element)
-          ? Overflow.Clip
-          : Overflow.Overflow;
+        return constrainingAncestor(ancestor, device, "height").every(
+          isTwiceAsBig(text, device)("height"),
+        )
+          ? // If there is no constraining ancestor, or it is big enough, then
+            // the text can overflow.
+            // We return a somewhat incorrect value here as it will ultimately
+            // turn into an Outcome.WrapsText while a Outcome.IsContainer would
+            // be more correct when there is a constraining ancestor. This is
+            // OK since we do not really rely on that information anywhere.
+            Overflow.Overflow
+          : Overflow.Clip;
       default:
         return verticalOverflow;
     }
   }
 
   /**
-   * Finds how the element manages its vertical overflow.
+   * Finds how the text manages its horizontal overflow within the context of
+   * an ancestor element.
    *
    * @remarks
+   * We need both the text and the ancestor to check because the text may
+   * overflow through many ancestors before finding a clipping one, at which
+   * point we need to compare the width of the text and the clipper.
+   *
    * We re-create a function on each call, so it can internally store whether
-   * that run has escaped its block container or not. `text-overflow` only takes
-   * effect on the first ancestor block container.
+   * that run has escaped its block container or not. `text-overflow` only
+   * takes effect on the first ancestor block container.
    */
   function localHorizontalOverflow(): (
     device: Device,
-    element: Element,
+    text: Text,
+    ancestor: Element,
   ) => Overflow {
     // While we are in the same block as the text:
     // * text can break at soft wrap points (whitespace).
     // * text-overflow can handle the overflow.
     let inSameBlock = true;
 
-    return (device, element) => {
-      const style = Style.from(element, device);
+    return (device, text, ancestor) => {
+      const style = Style.from(ancestor, device);
 
       if (
         inSameBlock &&
@@ -312,7 +362,7 @@ namespace ClippingAncestor {
             ),
             hasSoftWrapPoints(device),
           ),
-          element,
+          ancestor,
         )
       ) {
         // The element both allows wrapping and has soft wrap points for it to
@@ -325,7 +375,7 @@ namespace ClippingAncestor {
           "flex-wrap",
           (value) => !value.is("nowrap"),
           device,
-        )(element)
+        )(ancestor)
       ) {
         // The element is a wrapping flex container, children will wrap
         // It may still overflow if individual children are too big, but we
@@ -333,7 +383,7 @@ namespace ClippingAncestor {
         return Overflow.Handle;
       }
 
-      let horizontalOverflow = overflow(element, device, "x");
+      let horizontalOverflow = overflow(ancestor, device, "x");
       if (horizontalOverflow === Overflow.Clip) {
         if (
           inSameBlock &&
@@ -341,24 +391,24 @@ namespace ClippingAncestor {
             "text-overflow",
             (value) => value.is("ellipsis"),
             device,
-          )(element)
+          )(ancestor)
         ) {
-          // As long as we are in the same block, we consider ellispis as an
+          // As long as we are in the same block, we consider ellipsis as an
           // indication that clipping was taken into consideration.
           horizontalOverflow = Overflow.Handle;
         }
 
         if (
-          constrainingAncestor(element, device, "width").every(
-            isTwiceAsBig(element, device)("width"),
+          constrainingAncestor(ancestor, device, "width").every(
+            isTwiceAsBig(text, device)("width"),
           )
         ) {
-          // If the element is not itself constrained, and twice as small as its
-          // closest constraining ancestor, it has room to grow.
+          // If the element has no constraining ancestor or is twice as small as
+          // it, it has room to grow.
           // We return a somewhat incorrect value here as it will ultimately
-          // turn into an Oatcome.WrapsText while a Outcome.IsContainer would
-          // be more correct. This is OK since we do not really rely on that
-          // information anywhere.
+          // turn into an Outcome.WrapsText while a Outcome.IsContainer would
+          // be more correct when there is a constraining ancestor. This is OK
+          // since we do not really rely on that information anywhere.
           horizontalOverflow = Overflow.Handle;
         }
       }
@@ -373,6 +423,11 @@ namespace ClippingAncestor {
   }
 
   const _softWrapPointsCache = Cache.empty<Device, Cache<Node, boolean>>();
+
+  /**
+   * Test whether a node contains soft wrap points: either within the texts,
+   * or between its children (if allowed).
+   */
   function hasSoftWrapPoints(device: Device): Predicate<Node> {
     return (node) =>
       _softWrapPointsCache.get(device, Cache.empty).get(node, () => {
@@ -416,6 +471,22 @@ namespace ClippingAncestor {
     height: Cache.empty<Device, Cache<Element, Option<Element>>>(),
     width: Cache.empty<Device, Cache<Element, Option<Element>>>(),
   };
+
+  /**
+   * Finds the closest ancestor which "constraints" the element in the given
+   * dimension.
+   *
+   * @remarks
+   * An element is constraining if it has fixed dimension, or it is \<body\> in
+   * the horizontal dimension. I.e. we consider \<body\> to be infinitely
+   * scrolling vertically, but immovable horizontally. This is not fully
+   *   correct, but a horizontal scroll bar on it must be explicitly added by
+   *   having a wider element that doesn't wrap, so it should be good in most
+   *   actual cases.
+   *
+   * If the constraining ancestor is twice as big as the text, this leaves room
+   * to grow and the text will pass the rule.
+   */
   function constrainingAncestor(
     element: Element,
     device: Device,
@@ -448,7 +519,7 @@ namespace ClippingAncestor {
    * them (consider they are font relative) to avoid more false positives.
    *
    * @remarks
-   * For heights set via the `style` attribute (the style has no parent),
+   * For dimensions set via the `style` attribute (the style has no parent),
    * we assume that its value is controlled by JavaScript and is adjusted
    * as the content scales.
    *

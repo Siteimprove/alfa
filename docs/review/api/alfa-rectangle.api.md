@@ -57,6 +57,8 @@ export class Rectangle implements Equatable, Hashable, Serializable<Rectangle.JS
     // (undocumented)
     get top(): number;
     // (undocumented)
+    toString(): string;
+    // (undocumented)
     union(other: Rectangle): Rectangle;
     // (undocumented)
     get width(): number;
