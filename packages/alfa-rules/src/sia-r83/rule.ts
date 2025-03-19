@@ -12,12 +12,14 @@ import {
   MediaRule,
   Namespace,
   Node,
+  Query,
   Text,
 } from "@siteimprove/alfa-dom";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
@@ -181,6 +183,45 @@ function overflow(
 }
 
 /**
+ * Return the box of a text, or its parent element.
+ */
+function textBox(text: Text, device: Device): Option<Rectangle> {
+  return text.getBoundingBox(device).orElse(() =>
+    text
+      .parent(Node.fullTree)
+      .filter(isElement)
+      .flatMap((parent) => parent.getBoundingBox(device)),
+  );
+}
+
+/**
+ * Return the convex hull of all the text boxes in a line.
+ *
+ * @remarks
+ * This essentially considers that the line cannot wrap, which is correct in our
+ * use case since we only call that when we have clipping ancestors. If the line
+ * wraps, this will still return the correct box (because each individual box is
+ * already in its post-wrapping position), but the validity for using it in our
+ * case becomes a bit dubious.
+ */
+function lineBox(text: Text, device: Device): Rectangle {
+  return Rectangle.union(
+    ...text
+      .ancestors(Node.fullTree)
+      .find(
+        and(isElement, (element) =>
+          Style.isBlockContainer(Style.from(element, device)),
+        ),
+      )
+      .map((blockAncestor) =>
+        Query.getDescendants(isText)(blockAncestor, Node.fullTree),
+      )
+      .getOrElse(Sequence.empty)
+      .collect((text) => textBox(text, device)),
+  );
+}
+
+/**
  * Create a predicate (generator), testing if a container is twice as big as
  * the target text; uses the text layout if present, else its parent layout.
  */
@@ -191,17 +232,7 @@ function isTwiceAsBig(
   return (dimension) =>
     hasBox(
       (clippingBox) =>
-        target
-          .getBoundingBox(device)
-          .orElse(() =>
-            target
-              .parent(Node.fullTree)
-              .filter(isElement)
-              .flatMap((parent) => parent.getBoundingBox(device)),
-          )
-          .some(
-            (targetBox) => clippingBox[dimension] >= 2 * targetBox[dimension],
-          ),
+        clippingBox[dimension] >= 2 * lineBox(target, device)[dimension],
       device,
     );
 }
@@ -448,9 +479,10 @@ namespace ClippingAncestor {
    * @remarks
    * An element is constraining if it has fixed dimension, or it is \<body\> in
    * the horizontal dimension. I.e. we consider \<body\> to be infinitely
-   * scrolling vertically, but immovable horizontally. This is not fully correct,
-   * but a horizontal scroll bar on it must be explicitly added by having a
-   * wider element that doesn't wrap, so it should be good in most actual cases.
+   * scrolling vertically, but immovable horizontally. This is not fully
+   *   correct, but a horizontal scroll bar on it must be explicitly added by
+   *   having a wider element that doesn't wrap, so it should be good in most
+   *   actual cases.
    *
    * If the constraining ancestor is twice as big as the text, this leaves room
    * to grow and the text will pass the rule.
