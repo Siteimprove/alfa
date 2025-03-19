@@ -1,5 +1,15 @@
 # Alfa changelog
 
+## [0.101.0](../../compare/v0.100.1...v0.101.0) (2025-03-19)
+
+### Added
+
+- [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md#01010): `Rectangle#toString` serialization is now available. ([#1775](https://github.com/Siteimprove/alfa/pull/1775))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01010): SIA-R83 is now better at detecting small text within large clipping ancestors. ([#1775](https://github.com/Siteimprove/alfa/pull/1775))
+
 ## [0.100.1](../../compare/v0.100.0...v0.100.1) (2025-03-18)
 
 ### Fixed

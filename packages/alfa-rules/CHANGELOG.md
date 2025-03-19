@@ -1,5 +1,13 @@
 # @siteimprove/alfa-rules
 
+## 0.101.0
+
+### Patch Changes
+
+- **Fixed:** SIA-R83 is now better at detecting small text within large clipping ancestors. ([#1775](https://github.com/Siteimprove/alfa/pull/1775))
+
+  This will especially affect single word text in block containers, e.g. in a `<li>` element.
+
 ## 0.100.1
 
 ## 0.100.0

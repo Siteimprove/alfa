@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rectangle
 
+## 0.101.0
+
+### Minor Changes
+
+- **Added:** `Rectangle#toString` serialization is now available. ([#1775](https://github.com/Siteimprove/alfa/pull/1775))
+
 ## 0.100.1
 
 ## 0.100.0
