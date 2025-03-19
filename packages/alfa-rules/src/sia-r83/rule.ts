@@ -182,8 +182,7 @@ function overflow(
 
 /**
  * Create a predicate (generator), testing if a container is twice as big as
- * the target text or element; uses the text layout if present, else its parent
- * layout.
+ * the target text; uses the text layout if present, else its parent layout.
  */
 function isTwiceAsBig(
   target: Text,
@@ -268,7 +267,8 @@ namespace ClippingAncestor {
   }
 
   /**
-   * Finds how the element manages its vertical overflow.
+   * Finds how the text manages its vertical overflow within the context of
+   * an ancestor element.
    */
   function localVerticalOverflow(
     device: Device,
@@ -300,13 +300,12 @@ namespace ClippingAncestor {
    *
    * @remarks
    * We need both the text and the ancestor to check because the text may
-   *   overflow through many ancestors before finding a clipping one, at which
-   *   point we need to compare the width of the text and the clipper.
+   * overflow through many ancestors before finding a clipping one, at which
+   * point we need to compare the width of the text and the clipper.
    *
    * We re-create a function on each call, so it can internally store whether
    * that run has escaped its block container or not. `text-overflow` only
-   *   takes
-   * effect on the first ancestor block container.
+   * takes effect on the first ancestor block container.
    */
   function localHorizontalOverflow(): (
     device: Device,

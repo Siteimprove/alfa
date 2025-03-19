@@ -1103,7 +1103,7 @@ test(`evaluates() passes a long text node without spaces which is not horizontal
 test("evaluates() passes when the target's parent has space to grow in its constraining ancestor", async (t) => {
   // The clipping ancestor is constrained in both dimensions, but by an element
   // which is also twice as big as the text's parent, hence the text can grow.
-  const target = h.text("debugSupercalifragilisticexpialidocious");
+  const target = h.text("Supercalifragilisticexpialidocious");
   const constraining = (
     <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
       <div class="clip">
@@ -1131,7 +1131,7 @@ test("evaluates() passes when the target's parent has space to grow in its const
 test("evaluates() fails when the target's parent does not have space to grow in its constraining ancestor", async (t) => {
   // The clipping ancestor is constrained in both dimensions, by an element
   // which is not twice as big as the text's parent, hence the text is clipped.
-  const target = h.text("debugSupercalifragilisticexpialidocious");
+  const target = h.text("Supercalifragilisticexpialidocious");
   const clipping = (
     <div class="clip">
       <span box={{ device, x: 0, y: 0, width: 50, height: 40 }}>{target}</span>
@@ -1163,7 +1163,7 @@ test("evaluates() passes when the target has space to grow in its constraining a
   // The clipping ancestor is constrained in both dimensions, but by an element
   // which is also twice as big as the text, hence the text can grow.
   const target = h.text(
-    "debugSupercalifragilisticexpialidocious",
+    "Supercalifragilisticexpialidocious",
     Rectangle.of(0, 0, 50, 40),
     device,
   );
@@ -1193,7 +1193,7 @@ test("evaluates() fails when the target does not have space to grow in its const
   // The clipping ancestor is constrained in both dimensions, by an element
   // which is not twice as big as the text, hence the text is clipped.
   const target = h.text(
-    "debugSupercalifragilisticexpialidocious",
+    "Supercalifragilisticexpialidocious",
     Rectangle.of(0, 0, 50, 40),
     device,
   );
@@ -1228,7 +1228,7 @@ test("evaluates() passes small text in a large parent", async (t) => {
   // The text is small, but in a big parent. This is typically a short text in
   // a block container, e.g. a list item.
   const target = h.text(
-    "debugSupercalifragilisticexpialidocious",
+    "Supercalifragilisticexpialidocious",
     Rectangle.of(0, 0, 50, 40),
     device,
   );
@@ -1256,10 +1256,10 @@ test("evaluates() passes small text in a large parent", async (t) => {
 
 test("evaluates() fails large text in a small parent", async (t) => {
   // The text is overflowing its parent, but gets clipped further up.
-  // To be more realistic, the span should have fixed height and widtg, but the
+  // To be more realistic, the span should have fixed height and width, but the
   // rule currently doesn't look at that.
   const target = h.text(
-    "debugSupercalifragilisticexpialidocious",
+    "Supercalifragilisticexpialidocious",
     Rectangle.of(0, 0, 100, 80),
     device,
   );
