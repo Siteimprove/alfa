@@ -10,6 +10,7 @@
     "./element/predicate/has-box-shadow.ts",
     "./element/predicate/has-cascaded-style.ts",
     "./element/predicate/has-computed-style.ts",
+    "./element/predicate/has-hyphenation-opportunity.ts",
     "./element/predicate/has-initial-computed-style.ts",
     "./element/predicate/has-outline.ts",
     "./element/predicate/has-positioning-parent.ts",
