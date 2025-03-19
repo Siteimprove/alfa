@@ -1223,3 +1223,69 @@ test("evaluates() fails when the target does not have space to grow in its const
     }),
   ]);
 });
+
+test("evaluates() passes small text in a large parent", async (t) => {
+  // The text is small, but in a big parent. This is typically a short text in
+  // a block container, e.g. a list item.
+  const target = h.text(
+    "debugSupercalifragilisticexpialidocious",
+    Rectangle.of(0, 0, 50, 40),
+    device,
+  );
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
+      <div class="clip">
+        <div box={{ device, x: 0, y: 0, width: 100, height: 80 }}>{target}</div>
+      </div>
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    // Note: this would be better as a IsContainer, but we currently don't return that.
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test("evaluates() fails large text in a small parent", async (t) => {
+  // The text is overflowing its parent, but gets clipped further up.
+  // To be more realistic, the span should have fixed height and widtg, but the
+  // rule currently doesn't look at that.
+  const target = h.text(
+    "debugSupercalifragilisticexpialidocious",
+    Rectangle.of(0, 0, 100, 80),
+    device,
+  );
+  const clipping = (
+    <div class="clip">
+      <span box={{ device, x: 0, y: 0, width: 50, height: 40 }}>{target}</span>
+    </div>
+  );
+
+  const constraining = (
+    <div class="top" box={{ device, x: 0, y: 0, width: 100, height: 80 }}>
+      {clipping}
+    </div>
+  );
+
+  const document = h.document(
+    [<body>{constraining}</body>],
+    [
+      theSheet(),
+      h.sheet([h.rule.style(".top", { width: "100px", height: "80px" })]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    failed(R83, target, {
+      1: Outcomes.ClipsText(Option.of(clipping), Option.of(clipping)),
+    }),
+  ]);
+});
