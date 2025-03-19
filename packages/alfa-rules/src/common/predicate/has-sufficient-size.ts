@@ -1,20 +1,18 @@
 import type { Device } from "@siteimprove/alfa-device";
-import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Element } from "@siteimprove/alfa-dom";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 
-import { getClickableBox } from "../dom/get-clickable-box.js";
+import { getClickableRegion } from "../dom/get-clickable-region.js";
 
 /**
- * @remarks
- * This predicate tests that the clickable box of an element has width and height larger than a given value.
- * Defaults to true if called on an element without clickable box to avoid false positives.
+ * Returns a predicate testing that the clickable region of an element contains a sufficiently large rectangle.
  */
 export function hasSufficientSize(
   size: number,
   device: Device,
 ): Predicate<Element> {
   return (element) =>
-    getClickableBox(device, element)
-      .map((box) => box.width >= size && box.height >= size)
-      .getOr(true);
+    getClickableRegion(device, element).some(
+      (box) => box.width >= size && box.height >= size,
+    );
 }

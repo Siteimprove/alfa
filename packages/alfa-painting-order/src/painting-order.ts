@@ -7,7 +7,12 @@ import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
+import { Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Selective } from "@siteimprove/alfa-selective";
+import { Sequence } from "@siteimprove/alfa-sequence";
+import { Slice } from "@siteimprove/alfa-slice";
 import { Style } from "@siteimprove/alfa-style";
 
 import * as json from "@siteimprove/alfa-json";
@@ -18,10 +23,9 @@ const {
   isBlockContainer,
   isFlexOrGridChild,
   isPositioned,
-  isRendered,
+  isVisible,
 } = Style;
 
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { createsStackingContext } from "./predicate/creates-stacking-context.js";
 
 /**
@@ -35,13 +39,26 @@ export class PaintingOrder
   }
 
   private readonly _elements: Array<Element>;
+  private readonly _order: Map<Element, number>;
 
   protected constructor(elements: Array<Element>) {
     this._elements = elements;
+    this._order = Map.from(elements.map((element, index) => [element, index]));
   }
 
   public get elements(): Iterable<Element> {
     return this._elements;
+  }
+
+  public getOrderIndex(element: Element): Option<number> {
+    return this._order.get(element);
+  }
+
+  public getElementsAbove(element: Element): Iterable<Element> {
+    return this._order
+      .get(element)
+      .map((index) => Slice.of(this._elements, index + 1))
+      .getOr([]);
   }
 
   public equals(value: this): boolean;
@@ -96,10 +113,20 @@ export namespace PaintingOrder {
    * @public
    */
   export const from = Cache.memoize(function (
-    root: Element,
+    root: Node,
     device: Device,
   ): PaintingOrder {
-    return PaintingOrder.of(paint(device, root, Sequence.empty()));
+    return PaintingOrder.of(
+      Selective.of(root)
+        .if(Element.isElement, (element) => paint(device, element))
+        .else((node) =>
+          node
+            .children(Node.fullTree)
+            .filter(Element.isElement)
+            .flatMap((element) => paint(device, element)),
+        )
+        .get(),
+    );
   });
 
   function getZLevel(device: Device, element: Element) {
@@ -145,7 +172,7 @@ export namespace PaintingOrder {
   function paint(
     device: Device,
     element: Element,
-    canvas: Sequence<Element>,
+    canvas: Sequence<Element> = Sequence.empty(),
     options: { defer: boolean } = {
       defer: false,
     },
@@ -167,9 +194,7 @@ export namespace PaintingOrder {
      * itself and the other descendants to the floats layer.
      */
     function distributeIntoLayers(element: Element) {
-      if (
-        or(isFlexOrGridChild(device), createsStackingContext(device))(element)
-      ) {
+      if (createsStackingContext(device)(element)) {
         positionedOrStackingContexts.push(element);
       } else if (not(isPositioned(device, "static"))(element)) {
         if (hasInitialComputedStyle("z-index", device)(element)) {
@@ -222,7 +247,7 @@ export namespace PaintingOrder {
     function traverse(element: Element) {
       for (const child of element
         .children(Node.fullTree)
-        .filter(and(Element.isElement, isRendered(device)))) {
+        .filter(and(Element.isElement, isVisible(device)))) {
         distributeIntoLayers(child);
 
         if (
