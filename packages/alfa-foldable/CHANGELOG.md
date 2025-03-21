@@ -1,5 +1,7 @@
 # @siteimprove/alfa-foldable
 
+## 0.101.0
+
 ## 0.100.1
 
 ## 0.100.0

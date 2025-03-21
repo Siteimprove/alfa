@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-flags",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.100.1",
+  "version": "0.101.0",
   "license": "MIT",
   "description": "Functionality for manipulating set of boolean flags",
   "repository": {

@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-iana",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.100.1",
+  "version": "0.101.0",
   "license": "MIT",
   "description": "Functionality for working with the different IANA registries, such as the language subtag registry",
   "repository": {
