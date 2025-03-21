@@ -1,60 +1,49 @@
 import { Device } from "@siteimprove/alfa-device";
-import { h, Text } from "@siteimprove/alfa-dom";
-import { test } from "@siteimprove/alfa-test";
+import { type Element, h, Text } from "@siteimprove/alfa-dom";
+import { type Assertions, test } from "@siteimprove/alfa-test";
+import type { Style } from "../../../src/index.js";
 
 import { hasHyphenationOpportunity } from "../../../src/text/predicate/has-hyphenation-opportunity.js";
 
 const device = Device.standard();
 
-test("hasHyphenationOpportunity() returns false for `hyphens: none`", (t) => {
-  const shy = <span>Hel&shy;lo</span>;
-  const hyphen = <span>Hel-lo</span>;
-  const text = <span>Hello</span>;
-
-  h.document(
-    [shy, hyphen, text],
-    [h.sheet([h.rule.style("span", { hyphens: "none" })])],
+function getHyphenationOpportunity(element: Element): boolean {
+  return hasHyphenationOpportunity(device)(
+    element.children().first().getUnsafe() as Text,
   );
+}
 
-  for (const target of [shy, hyphen, text].map((element) =>
-    element.children().first().getUnsafe(),
-  )) {
-    t(!hasHyphenationOpportunity(device)(target as Text));
-  }
-});
+function hyphenationTest(
+  hyphens: Style.Computed<"hyphens">["value"],
+  expected: { shy: boolean; hyphen: boolean; text: boolean },
+): (t: Assertions) => void {
+  return (t) => {
+    const shy = <span>Hel&shy;lo</span>;
+    const hyphen = <span>Hel-lo</span>;
+    const text = <span>Hello</span>;
 
-test("hasHyphenationOpportunity() returns true for `hyphens: auto`", (t) => {
-  const shy = <span>Hel&shy;lo</span>;
-  const hyphen = <span>Hel-lo</span>;
-  const text = <span>Hello</span>;
+    h.document(
+      [shy, hyphen, text],
+      [h.sheet([h.rule.style("span", { hyphens })])],
+    );
 
-  h.document(
-    [shy, hyphen, text],
-    [h.sheet([h.rule.style("span", { hyphens: "auto" })])],
-  );
+    t.equal(getHyphenationOpportunity(shy), expected.shy);
+    t.equal(getHyphenationOpportunity(hyphen), expected.hyphen);
+    t.equal(getHyphenationOpportunity(text), expected.text);
+  };
+}
 
-  for (const target of [shy, hyphen, text].map((element) =>
-    element.children().first().getUnsafe(),
-  )) {
-    t(hasHyphenationOpportunity(device)(target as Text));
-  }
-});
+test(
+  "hasHyphenationOpportunity() returns false for `hyphens: none`",
+  hyphenationTest("none", { shy: false, hyphen: false, text: false }),
+);
 
-test("hasHyphenationOpportunity() returns true on soft hyphens for `hyphens: manual`", (t) => {
-  const shy = <span>Hel&shy;lo</span>;
-  const hyphen = <span>Hel-lo</span>;
-  const text = <span>Hello</span>;
+test(
+  "hasHyphenationOpportunity() returns true for `hyphens: auto`",
+  hyphenationTest("auto", { shy: true, hyphen: true, text: true }),
+);
 
-  h.document(
-    [shy, hyphen, text],
-    [h.sheet([h.rule.style("span", { hyphens: "manual" })])],
-  );
-
-  const targets = [shy, hyphen, text].map((element) =>
-    element.children().first().getUnsafe(),
-  ) as Array<Text>;
-
-  t(hasHyphenationOpportunity(device)(targets[0]));
-  t(!hasHyphenationOpportunity(device)(targets[1]));
-  t(!hasHyphenationOpportunity(device)(targets[2]));
-});
+test(
+  "hasHyphenationOpportunity() returns true on soft hyphens for `hyphens: manual`",
+  hyphenationTest("manual", { shy: true, hyphen: false, text: false }),
+);
