@@ -222,6 +222,8 @@
     "./shorthand.ts",
     "./shorthands.ts",
     "./style.ts",
+    "./text/predicate/has-hyphenation-opportunity.ts",
+    "./text/text.ts",
     "./value.ts",
     "./variable.ts"
   ],
