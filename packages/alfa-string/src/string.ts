@@ -100,7 +100,7 @@ export namespace String {
   }
 
   /**
-   * Checks whether the string contains soft break points
+   * Checks whether the string contains soft wrap opportunities
    * {@link https://drafts.csswg.org/css-text-4/#line-breaking}
    *
    * @remarks
@@ -112,8 +112,8 @@ export namespace String {
    * {@link https://drafts.csswg.org/css-text-4/#hyphens-property}
    *
    * @privateRemarks
-   * \\s, or \\p\{White_Space\} contains non-breaking spaces which we want to exclude
-   * In ES2024, we could use the /v flag to do set substraction. As long as we
+   * \\s, or \\p\{White_Space\} contains non-breaking spaces which we want to exclude.
+   * In ES2024, we could use the /v flag to do set subtraction. As long as we
    * target ES2022, we need to do that manually.
    * \\s is equivalent to
    * [\\f\\n\\r\\t\\v\\u0020\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff]
@@ -134,16 +134,17 @@ export namespace String {
   }
 
   /**
-   * Checks whether the string contains soft break points
+   * Checks whether the string contains hyphenation opportunities
    * {@link https://drafts.csswg.org/css-text-4/#hyphenation-opportunity}
    *
    * @remarks
    * Hyphenation opportunities are places where automatic hyphenation can happen
-   * without it to be visible if it does not happen.
+   * without it to be visible if it does not happen. Hyphenation opportunities
+   * are only soft wrap opportunities when hyphenation is allowed.
    *
    * The soft hyphen character (U+00AD SOFT HYPHEN (HTML \&shy;)) is a
-   * hyphenation opportunity. Always visible hyphens are not because they are
-   * soft wrap opportunities in any case.
+   * hyphenation opportunity. Always visible hyphens (e.g. U+2010 ‐ HYPHEN) are
+   * not because they are always soft wrap opportunities.
    */
   export function hasHyphenationOpportunity(input: string): boolean {
     return /\u00AD/.test(input);
