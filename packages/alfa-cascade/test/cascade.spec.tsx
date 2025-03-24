@@ -7,7 +7,7 @@ import { Cascade } from "../dist/index.js";
 import { Block } from "../dist/block.js";
 import { Layer, Origin } from "../dist/index.js";
 
-import { layer, getBlock, authorOrder } from "./common/common.js";
+import { authorOrder, getBlock, layer } from "./common/common.js";
 
 const device = Device.standard();
 
@@ -17,8 +17,8 @@ test(".from() builds a cascade with the User Agent style sheet", (t) => {
 
   // Even the "empty" cascade is pretty big due to the UA sheet.
   // We only superficially check the selector map
-  t.deepEqual(cascade.toJSON().selectors.types.length, 96);
-  t.deepEqual(cascade.toJSON().selectors.other.length, 8);
+  t.deepEqual(cascade.toJSON().selectors.types.length, 98);
+  t.deepEqual(cascade.toJSON().selectors.other.length, 9);
 
   t.deepEqual(cascade.toJSON().selectors.ids.length, 0);
   t.deepEqual(cascade.toJSON().selectors.classes.length, 0);
