@@ -4,10 +4,10 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 
+import { TargetSize } from "../../dist/common/outcome/target-size.js";
 import R113 from "../../dist/sia-r113/rule.js";
 import { evaluate } from "../common/evaluate.js";
 import { failed, inapplicable, passed } from "../common/outcome.js";
-import { TargetSize } from "../../dist/common/outcome/target-size.js";
 
 test("evaluate() passes button with clickable area of exactly 24x24 pixels", async (t) => {
   const device = Device.standard();
@@ -225,6 +225,125 @@ test("evaluate() passes undersized button with vertically adjacent undersized bu
       1: TargetSize.HasSufficientSpacing(
         "Hello",
         target1.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
+test("evaluate() passes undersized button on top of other target when there is a non-target in-between", async (t) => {
+  const device = Device.standard();
+
+  const behind = (
+    <button
+      style={{
+        width: "240px",
+        height: "240px",
+        borderRadius: "0",
+      }}
+      box={{ device, x: 8, y: 8, width: 240, height: 240 }}
+    ></button>
+  );
+
+  const clipping = (
+    <div
+      style={{
+        position: "absolute",
+        top: "100px",
+        left: "100px",
+        width: "40px",
+        height: "40px",
+      }}
+      box={{ device, x: 100, y: 100, width: 42, height: 42 }}
+    ></div>
+  );
+
+  const target = (
+    <button
+      style={{
+        position: "absolute",
+        top: "110px",
+        left: "110px",
+        width: "20px",
+        height: "20px",
+        borderRadius: "0",
+      }}
+      box={{ device, x: 110, y: 110, width: 20, height: 20 }}
+    >
+      x
+    </button>
+  );
+  const document = h.document([behind, clipping, target]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, behind, {
+      1: TargetSize.HasSufficientSize(
+        "",
+        behind.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+    passed(R113, target, {
+      1: TargetSize.HasSufficientSpacing(
+        "x",
+        target.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+  ]);
+});
+
+test("evaluate() fails button on top of other target with a non-target in-between, when target is too close", async (t) => {
+  const device = Device.standard();
+
+  const behind = (
+    <button
+      style={{
+        width: "240px",
+        height: "240px",
+        borderRadius: "0",
+      }}
+      box={{ device, x: 8, y: 8, width: 240, height: 240 }}
+    ></button>
+  );
+
+  const clipping = (
+    <div
+      style={{
+        position: "absolute",
+        top: "100px",
+        left: "100px",
+        width: "40px",
+        height: "40px",
+      }}
+      box={{ device, x: 100, y: 100, width: 42, height: 42 }}
+    ></div>
+  );
+
+  const target = (
+    <button
+      style={{
+        position: "absolute",
+        top: "105px",
+        left: "105px",
+        width: "10px",
+        height: "10px",
+        borderRadius: "0",
+      }}
+      box={{ device, x: 105, y: 105, width: 14, height: 10 }}
+    ></button>
+  );
+  const document = h.document([behind, clipping, target]);
+
+  t.deepEqual(await evaluate(R113, { document, device }), [
+    passed(R113, behind, {
+      1: TargetSize.HasSufficientSize(
+        "",
+        behind.getBoundingBox(device).getUnsafe(),
+      ),
+    }),
+    failed(R113, target, {
+      1: TargetSize.HasInsufficientSizeAndSpacing(
+        "",
+        target.getBoundingBox(device).getUnsafe(),
+        [behind],
       ),
     }),
   ]);
