@@ -363,3 +363,31 @@ test("isVisible() returns true for single line `<select>`", (t) => {
   // The `<select>` is nonetheless visible, showing the value of the first `<option>`.
   t(isVisible(select));
 });
+
+test("isVisible() returns true for content of open `<details>`", (t) => {
+  const content = <div>World</div>;
+  const details = (
+    <details open>
+      <summary>Hello</summary>
+      {content}
+    </details>
+  );
+
+  h.document([details]);
+
+  t(isVisible(content));
+});
+
+test("isVisible() returns false for content of closed `<details>`", (t) => {
+  const content = <div>World</div>;
+  const details = (
+    <details>
+      <summary>Hello</summary>
+      {content}
+    </details>
+  );
+
+  h.document([details]);
+
+  t(!isVisible(content));
+});
