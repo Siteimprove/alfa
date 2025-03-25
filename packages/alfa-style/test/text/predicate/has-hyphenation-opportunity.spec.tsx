@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { type Element, h, Text } from "@siteimprove/alfa-dom";
+import { type Element, h, type Text } from "@siteimprove/alfa-dom";
 import { type Assertions, test } from "@siteimprove/alfa-test";
 import type { Style } from "../../../src/index.js";
 

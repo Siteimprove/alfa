@@ -490,7 +490,7 @@ export namespace Style {
   export const { isBlockContainer, isFlexContainer, isGridContainer } =
     predicates;
 
-  export const { hasHyphenationOpportunity } = text;
+  export const { hasHyphenationOpportunity, hasSoftWrapOpportunity } = text;
 }
 
 function parseLonghand<N extends Longhands.PropName>(
