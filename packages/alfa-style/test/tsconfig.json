@@ -19,6 +19,7 @@
     "./property/background.spec.tsx",
     "./property/background-color.spec.tsx",
     "./property/background-image.spec.tsx",
+    "./property/background-origin.spec.tsx",
     "./property/background-position.spec.tsx",
     "./property/background-size.spec.tsx",
     "./property/border.spec.tsx",
