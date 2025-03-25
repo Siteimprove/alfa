@@ -391,3 +391,31 @@ test("isVisible() returns false for content of closed `<details>`", (t) => {
 
   t(!isVisible(content));
 });
+
+test("isVisible() returns true for summary of open `<details>`", (t) => {
+  const summary = <summary>Hello</summary>;
+  const details = (
+    <details open>
+      {summary}
+      <div>World</div>
+    </details>
+  );
+
+  h.document([details]);
+
+  t(isVisible(summary));
+});
+
+test("isVisible() returns true for summary of closed `<details>`", (t) => {
+  const summary = <summary>Hello</summary>;
+  const details = (
+    <details>
+      {summary}
+      <div>World</div>
+    </details>
+  );
+
+  h.document([details]);
+
+  t(isVisible(summary));
+});
