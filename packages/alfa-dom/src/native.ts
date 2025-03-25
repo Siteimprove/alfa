@@ -647,7 +647,7 @@ export namespace Native {
     withCrossOrigin?: boolean;
 
     /**
-     * Whether to enforce anonymous CORS on <link> missing one
+     * Whether to enforce anonymous crossorigin attribute on <link> missing one
      */
     enforceAnonymousCrossOrigin?: boolean;
   }
