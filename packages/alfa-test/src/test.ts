@@ -55,7 +55,7 @@ export async function test<T = number>(
  * written to reproduce the incorrect behavior, without failing the test suite.
  * When the behavior is eventually implemented, the `xfail` will fail and it can
  * then simply be converted to a real test. Preferably we would review `xfail`
- * tests periodically and ensure that they converted to real tests.
+ * tests periodically, implement the necessary change and convert them to real tests.
  *
  * Inspired by pytest:
  * {@link https://docs.pytest.org/en/stable/how-to/skipping.html#xfail-mark-test-functions-as-expected-to-fail}
