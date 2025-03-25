@@ -81,7 +81,10 @@ export namespace Native {
     node: globalThis.Node = globalThis.window.document,
     options?: Options,
   ): Promise<Node.JSON> {
-    const { withCrossOrigin = false } = options ?? {};
+    const {
+      withCrossOrigin = false,
+      enforceAnonymousCrossOrigin = withCrossOrigin,
+    } = options ?? {};
     const range = globalThis.document.createRange(); // Used by toText - the same instance can be reused for each text node.
 
     return toNode(node);
@@ -171,7 +174,7 @@ export namespace Native {
     async function toDocument(
       document: globalThis.Document,
     ): Promise<Document.JSON> {
-      if (withCrossOrigin) {
+      if (enforceAnonymousCrossOrigin) {
         await ensureCrossOrigin(document);
       }
 
@@ -194,7 +197,7 @@ export namespace Native {
     async function toShadow(
       shadow: globalThis.ShadowRoot,
     ): Promise<Shadow.JSON> {
-      if (withCrossOrigin) {
+      if (enforceAnonymousCrossOrigin) {
         await ensureCrossOrigin(document);
       }
 
@@ -636,7 +639,16 @@ export namespace Native {
   }
 
   export interface Options {
-    /** Whether to enforce anonymous CORS on <link> missing one */
+    /**
+     * Deprecated, use enforceAnonymousCrossOrigin instead
+     *
+     * @deprecated
+     */
     withCrossOrigin?: boolean;
+
+    /**
+     * Whether to enforce anonymous CORS on <link> missing one
+     */
+    enforceAnonymousCrossOrigin?: boolean;
   }
 }
