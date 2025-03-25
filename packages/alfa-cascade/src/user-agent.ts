@@ -234,4 +234,26 @@ export const UserAgent = h.sheet([
   h.rule.style("fieldset", {
     display: "block",
   }),
+
+  /**
+   * {@link https://html.spec.whatwg.org/multipage/rendering.html#the-details-and-summary-elements}
+   */
+
+  h.rule.style("details, summary", { display: "block" }),
+  h.rule.style("details > summary:first-of-type", {
+    display: "list-item",
+    counterIncrement: "list-item 0",
+    listStyle: "disclosure-closed inside",
+  }),
+  h.rule.style("details[open] > summary:first-of-type", {
+    listStyleType: "disclosure-open",
+  }),
+
+  // This is not totally accurate. Browsers hide <details> content using `content-visibility: hidden`
+  // on an internal shadow pseudo-element `::details-content`. We approximate this behavior by
+  // directly applying `display: none` to the actual DOM content. This ensures proper visibility
+  // detection while acknowledging it's a simplified modeling choice.
+  h.rule.style("details:not([open]) > :not(summary:first-of-type)", {
+    display: "none",
+  }),
 ]);
