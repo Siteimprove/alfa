@@ -17,7 +17,7 @@ import { WithOtherHeading } from "../common/diagnostic.js";
 import isText = Text.isText;
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
-const { hasNamespace, isContent, isElement } = Element;
+const { hasAttribute, hasName, hasNamespace, isContent, isElement } = Element;
 const { not, tee } = Predicate;
 const { and } = Refinement;
 const { getElementDescendants } = Query;
@@ -45,6 +45,21 @@ export default Rule.Atomic.of<Page, Element>({
                 getElementDescendants(heading).some(
                   hasRole(device, "button", "link"),
                 ),
+              ),
+              // Headings inside the <summary> element of a closed <details>
+              // are likely used for accordions and can be ignored
+              not((heading) =>
+                heading
+                  .ancestors(Node.fullTree)
+                  .filter(and(isElement, hasName("summary")))
+                  .some(
+                    (summary) =>
+                      summary.isSummaryForItsParentDetails() &&
+                      summary
+                        .parent(Node.fullTree)
+                        .filter(isElement)
+                        .none(hasAttribute("open")),
+                  ),
               ),
             ),
           ),

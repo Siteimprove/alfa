@@ -149,3 +149,29 @@ test(`evaluate() ignores headings containing button or links (accordions)`, asyn
 
   t.deepEqual(await evaluate(R78, { document }), [inapplicable(R78)]);
 });
+
+test(`evaluate() ignores headings inside summary of closed details`, async (t) => {
+  const document = h.document([
+    <details>
+      <summary>
+        <h1>Is this an accordion?</h1>
+      </summary>
+      <div>Yes, it is.</div>
+    </details>,
+  ]);
+
+  t.deepEqual(await evaluate(R78, { document }), [inapplicable(R78)]);
+});
+
+test(`evaluate() consider headings inside summary of open details`, async (t) => {
+  const target = <h1>Is this an accordion?</h1>;
+  const document = h.document([
+    <details open>
+      <summary>{target}</summary>
+    </details>,
+  ]);
+
+  t.deepEqual(await evaluate(R78, { document }), [
+    failed(R78, target, { 1: Outcomes.hasNoContent(None, 1, -1) }),
+  ]);
+});
