@@ -39,55 +39,72 @@ import type {
 } from "./index.js";
 
 /**
+ * The type of logs.
+ *
+ * @remarks
+ * Each log entry **should** be a JSON stringified object of type
+ * \{ level: "debug" | "info" | "warn" | "error", type: string, message: string \}
+ * Different types may add more fields to the object.
+ *
+ * @privateRemarks
+ * Given that everything is inlined in one function, it is easier to have a
+ * "global" logs array and add to it from any subfunction, rather than merging
+ * logs from these.
+ */
+type Logs = { logs: Array<string> };
+
+/**
  * @internal
  */
 export namespace Native {
   export async function fromNode(
     node: globalThis.Element,
     options?: Options,
-  ): Promise<Element.JSON>;
+  ): Promise<Element.JSON & Logs>;
 
   export async function fromNode(
     node: globalThis.Attr,
     options?: Options,
-  ): Promise<Attribute.JSON>;
+  ): Promise<Attribute.JSON & Logs>;
 
   export async function fromNode(
     node: globalThis.Text,
     options?: Options,
-  ): Promise<Text.JSON>;
+  ): Promise<Text.JSON & Logs>;
 
   export async function fromNode(
     node: globalThis.Comment,
     options?: Options,
-  ): Promise<Comment.JSON>;
+  ): Promise<Comment.JSON & Logs>;
 
   export async function fromNode(
     node?: globalThis.Document,
     options?: Options,
-  ): Promise<Document.JSON>;
+  ): Promise<Document.JSON & Logs>;
 
   export async function fromNode(
     node: globalThis.DocumentType,
     options?: Options,
-  ): Promise<Type.JSON>;
+  ): Promise<Type.JSON & Logs>;
 
   export async function fromNode(
     node: globalThis.Node,
     options?: Options,
-  ): Promise<Node.JSON>;
+  ): Promise<Node.JSON & Logs>;
 
   export async function fromNode(
     node: globalThis.Node = globalThis.window.document,
     options?: Options,
-  ): Promise<Node.JSON> {
+  ): Promise<Node.JSON & Logs> {
+    const logs: Array<string> = [];
+
     const {
       withCrossOrigin = false,
       enforceAnonymousCrossOrigin = withCrossOrigin,
     } = options ?? {};
     const range = globalThis.document.createRange(); // Used by toText - the same instance can be reused for each text node.
 
-    return toNode(node);
+    return { ...(await toNode(node)), logs };
 
     async function toNode(node: globalThis.Node): Promise<Node.JSON> {
       switch (node.nodeType) {
@@ -211,7 +228,8 @@ export namespace Native {
 
     /**
      * @privateRemarks
-     * Adopted stylesheets are assumed to be ordered after document stylesheets.
+     * Adopted stylesheets are assumed to be ordered after document
+     *   stylesheets.
      *
      * {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/adoptedStyleSheets}
      */
@@ -363,14 +381,39 @@ export namespace Native {
     }
 
     function toImportRule(rule: globalThis.CSSImportRule): ImportRule.JSON {
-      return {
-        type: "import",
-        rules: rule.styleSheet === null ? [] : toSheet(rule.styleSheet).rules,
-        condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
-        href: rule.href,
-        supportText: rule.supportsText,
-        layer: rule.layerName,
-      };
+      try {
+        // See https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet#instance_properties
+        // While the error may theoretically occur on any style sheet, it seems
+        // to be mostly present on @import rules due to CORS policy.
+        rule.styleSheet?.cssRules;
+
+        return {
+          type: "import",
+          rules: rule.styleSheet === null ? [] : toSheet(rule.styleSheet).rules,
+          condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
+          href: rule.href,
+          supportText: rule.supportsText,
+          layer: rule.layerName,
+        };
+      } catch (e) {
+        logs.push(
+          JSON.stringify({
+            level: "error",
+            type: "import",
+            message: `Failed to fetch CSS rules for @import rule at ${rule.href}`,
+            originalError: `${e}`,
+          }),
+        );
+
+        return {
+          type: "import",
+          rules: [],
+          condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
+          href: rule.href,
+          supportText: rule.supportsText,
+          layer: rule.layerName,
+        };
+      }
     }
 
     function toKeyframeRule(
@@ -493,8 +536,8 @@ export namespace Native {
      *
      * {@link https://github.com/Siteimprove/alfa/issues/1563}
      *
-     * To circumvent that, we simply return the raw CSS text; and delegate parsing
-     * to consumers, aka Block.from.
+     * To circumvent that, we simply return the raw CSS text; and delegate
+     *   parsing to consumers, aka Block.from.
      *
      * Note that somehow JSDOM behaves differently and correctly associate the
      * value with the shorthand. This means that the local tests using JSDOM
@@ -560,8 +603,8 @@ export namespace Native {
       for (let i = 0; i < links.length; i++) {
         const link = links[i];
         /**
-         * Skip `<link>` elements for which the `crossorigin` attribute is already
-         * set to a valid value.
+         * Skip `<link>` elements for which the `crossorigin` attribute is
+         * already set to a valid value.
          */
         if (link.crossOrigin !== null) {
           continue;
@@ -583,26 +626,26 @@ export namespace Native {
         clone.crossOrigin = "anonymous";
 
         /**
-         * Replace the original `<link>` element with its clone. For style sheets,
-         * this will unfortunately cause a FOUC while the browser recomputes
-         * styles.
+         * Replace the original `<link>` element with its clone. For style
+         * sheets, this will unfortunately cause a FOUC while the browser
+         * recomputes styles.
          *
          * {@link https://en.wikipedia.org/wiki/Flash_of_unstyled_content}
          */
         link.parentNode!.replaceChild(clone, link);
 
         /**
-         * While certain resources will load synchronously from cache, others will
-         * not and we therefore need to await these.
+         * While certain resources will load synchronously from cache, others
+         * will not and we therefore need to await these.
          */
         if (shouldAwait(link)) {
           /**
            * Construct a promise that resolves once the `<link>` element either
-           * loads successfully or fails to load. If the `<link>` element fails to
-           * load, a request error will be logged to the console which should be
-           * enough indication that something didn't go quite as expected. Either
-           * way, we will deliver audit results even in the event of a missing
-           * resource.
+           * loads successfully or fails to load. If the `<link>` element fails
+           * to load, a request error will be logged to the console which
+           * should be enough indication that something didn't go quite as
+           * expected. Either way, we will deliver audit results even in the
+           * event of a missing resource.
            */
           await new Promise<void>((resolve) =>
             ["load", "error"].forEach((event) =>
@@ -617,8 +660,8 @@ export namespace Native {
        */
       function shouldAwait(link: HTMLLinkElement): boolean {
         /**
-         * A `<link>` element with an empty `href` will cause the fetch process to
-         * abort with no events to await.
+         * A `<link>` element with an empty `href` will cause the fetch process
+         * to abort with no events to await.
          */
         if (link.getAttribute("href")?.trim() === "") {
           return false;
