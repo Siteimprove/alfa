@@ -228,8 +228,7 @@ export namespace Native {
 
     /**
      * @privateRemarks
-     * Adopted stylesheets are assumed to be ordered after document
-     *   stylesheets.
+     * Adopted stylesheets are assumed to be ordered after document stylesheets.
      *
      * {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/adoptedStyleSheets}
      */
@@ -537,7 +536,7 @@ export namespace Native {
      * {@link https://github.com/Siteimprove/alfa/issues/1563}
      *
      * To circumvent that, we simply return the raw CSS text; and delegate
-     *   parsing to consumers, aka Block.from.
+     * parsing to consumers, aka Block.from.
      *
      * Note that somehow JSDOM behaves differently and correctly associate the
      * value with the shorthand. This means that the local tests using JSDOM
