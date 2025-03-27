@@ -157,7 +157,7 @@ test("Native.fromNode() adds crossorigin to <link> without one, when asked", asy
   // in this setup.
   const actual = await makeJSON(
     "<head><link rel='icon' href='foo.png' /><link rel='stylesheet' href='bar.css' crossorigin='use-credentials'/></head><body>Hello</body>",
-    { withCrossOrigin: true },
+    { enforceAnonymousCrossOrigin: true },
   );
 
   t.deepEqual(
