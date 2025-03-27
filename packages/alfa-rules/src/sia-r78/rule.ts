@@ -11,13 +11,13 @@ import type { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation.js";
 import { BestPractice } from "../requirements/index.js";
 
-import { Scope, Stability } from "../tags/index.js";
 import { WithOtherHeading } from "../common/diagnostic.js";
+import { Scope, Stability } from "../tags/index.js";
 
 import isText = Text.isText;
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
-const { hasNamespace, isContent, isElement } = Element;
+const { hasNamespace, isContent, isElement, hasName } = Element;
 const { not, tee } = Predicate;
 const { and } = Refinement;
 const { getElementDescendants } = Query;
@@ -45,6 +45,14 @@ export default Rule.Atomic.of<Page, Element>({
                 getElementDescendants(heading).some(
                   hasRole(device, "button", "link"),
                 ),
+              ),
+              // Headings inside <summary> of <details> acts like accordions.
+              not((heading) =>
+                heading
+                  .ancestors(Node.fullTree)
+                  .filter(isElement)
+                  .filter(hasName("summary"))
+                  .some((summary) => summary.isSummaryForItsParentDetails()),
               ),
             ),
           ),

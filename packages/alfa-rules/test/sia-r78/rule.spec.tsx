@@ -5,7 +5,7 @@ import { test } from "@siteimprove/alfa-test";
 import R78, { Outcomes } from "../../dist/sia-r78/rule.js";
 
 import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { failed, inapplicable, passed } from "../common/outcome.js";
 
 test(`evaluates() passes headings with content`, async (t) => {
   const part1 = <h1>Part one</h1>;
@@ -145,6 +145,25 @@ test(`evaluate() ignores headings containing button or links (accordions)`, asyn
         Can I do that?
       </a>
     </h1>,
+  ]);
+
+  t.deepEqual(await evaluate(R78, { document }), [inapplicable(R78)]);
+});
+
+test(`evaluate() ignores headings inside <summary> in a <details>`, async (t) => {
+  const document = h.document([
+    <details>
+      <summary>
+        <h1>Hello</h1>
+      </summary>
+      <div>World</div>
+    </details>,
+    <details>
+      <summary>
+        <h1>Foo</h1>
+      </summary>
+      <div>Bar</div>
+    </details>,
   ]);
 
   t.deepEqual(await evaluate(R78, { document }), [inapplicable(R78)]);
