@@ -1077,6 +1077,58 @@ test(`evaluate() fails a very long text node without spaces`, async (t) => {
   ]);
 });
 
+test(`evaluate() passes a very long text node with soft wrap opportunities`, async (t) => {
+  for (const text of [
+    // Random punctuation
+    "Supercalifragilis.ticexpialidocious",
+    // Non breaking space
+    "Supercalifragilis ticexpialidocious",
+    // U+00AD SOFT HYPHEN but style prevents it.
+    "Supercalifragilis\u00ADticexpialidocious",
+  ]) {
+    const target = h.text(text);
+    const clipping = (
+      <div class="top clip ellipsis">
+        <div style={{ hyphens: "none" }}>
+          <span>{target}</span>
+        </div>
+      </div>
+    );
+
+    const document = h.document([<body>{clipping}</body>], [theSheet()]);
+
+    t.deepEqual(await evaluate(R83, { document }), [
+      failed(R83, target, { 1: Outcomes.ClipsText(Option.of(clipping), None) }),
+    ]);
+  }
+});
+
+test(`evaluate() fails a very long text node without soft wrap opportunities`, async (t) => {
+  for (const text of [
+    // Explicit hyphen
+    "Supercalifragilis-ticexpialidocious",
+    // U+200B ZERO WIDTH SPACE.
+    "Supercalifragilis\u200Bticexpialidocious",
+    // U+00AD SOFT HYPHEN
+    "Supercalifragilis\u00ADticexpialidocious",
+  ]) {
+    const target = h.text(text);
+    const clipping = (
+      <div class="top clip ellipsis">
+        <div>
+          <span>{target}</span>
+        </div>
+      </div>
+    );
+
+    const document = h.document([<body>{clipping}</body>], [theSheet()]);
+
+    t.deepEqual(await evaluate(R83, { document }), [
+      passed(R83, target, { 1: Outcomes.WrapsText }),
+    ]);
+  }
+});
+
 test(`evaluate() passes a long text node without spaces which is not horizontally constrained`, async (t) => {
   // While the button clips the text, it is also not constrained and can grow as
   // big as the page itself, thus growing with the text.
