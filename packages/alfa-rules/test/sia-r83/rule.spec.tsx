@@ -1077,11 +1077,11 @@ test(`evaluate() fails a very long text node without spaces`, async (t) => {
   ]);
 });
 
-test(`evaluate() passes a very long text node with soft wrap opportunities`, async (t) => {
+test(`evaluate() fails a very long text node without soft wrap opportunities`, async (t) => {
   for (const text of [
     // Random punctuation
     "Supercalifragilis.ticexpialidocious",
-    // Non breaking space
+    // Non-breaking space
     "Supercalifragilis ticexpialidocious",
     // U+00AD SOFT HYPHEN but style prevents it.
     "Supercalifragilis\u00ADticexpialidocious",
@@ -1103,7 +1103,7 @@ test(`evaluate() passes a very long text node with soft wrap opportunities`, asy
   }
 });
 
-test(`evaluate() fails a very long text node without soft wrap opportunities`, async (t) => {
+test(`evaluate() passes a very long text node with soft wrap opportunities`, async (t) => {
   for (const text of [
     // Explicit hyphen
     "Supercalifragilis-ticexpialidocious",
