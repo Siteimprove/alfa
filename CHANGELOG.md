@@ -1,5 +1,27 @@
 # Alfa changelog
 
+## [0.102.0](../../compare/v0.101.0...v0.102.0) (2025-03-27)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01020): The `withCrossOrigin` option of `dom.Native.fromNode` has been renamed `ensureAnonymousCrossOrigin`. ([#1779](https://github.com/Siteimprove/alfa/pull/1779))
+
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01020): `Native.fromNode` returned value now contains a `logs` field, with an array of logs. ([#1781](https://github.com/Siteimprove/alfa/pull/1781))
+
+- [@siteimprove/alfa-painting-order](packages/alfa-painting-order/CHANGELOG.md#01020): `PaintingOrder#getOrderIndex` and `PaintingOrder#getElementsAbove` are now available. ([#1761](https://github.com/Siteimprove/alfa/pull/1761))
+
+- [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md#01020): `Rectangle#subtract` is now available. ([#1761](https://github.com/Siteimprove/alfa/pull/1761))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01020): SIA-R111 and SIA-R113 now computes clickable regions more accurately when elements are clipped. ([#1761](https://github.com/Siteimprove/alfa/pull/1761))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#01020): The user agent sheet now includes `details` and `summary`. ([#1777](https://github.com/Siteimprove/alfa/pull/1777))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01020): SIA-R78 now ignores headings inside `<summary>` elements of closed `<details>`. ([#1782](https://github.com/Siteimprove/alfa/pull/1782))
+
 ## [0.101.0](../../compare/v0.100.1...v0.101.0) (2025-03-19)
 
 ### Added
