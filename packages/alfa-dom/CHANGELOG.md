@@ -1,5 +1,17 @@
 # @siteimprove/alfa-dom
 
+## 0.102.0
+
+### Minor Changes
+
+- **Added:** `Native.fromNode` returned value now contains a `logs` field, with an array of logs. ([#1781](https://github.com/Siteimprove/alfa/pull/1781))
+
+- **Breaking:** The `withCrossOrigin` option of `dom.Native.fromNode` has been renamed `ensureAnonymousCrossOrigin`. ([#1779](https://github.com/Siteimprove/alfa/pull/1779))
+
+  The old `withCrossOrigin` option is kept as a deprecated legacy alias and will be removed in a later release.
+
+  The new name better reflects the meaning of the option.
+
 ## 0.101.0
 
 ## 0.100.1
