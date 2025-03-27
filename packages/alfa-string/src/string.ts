@@ -135,6 +135,8 @@ export namespace String {
   export function hasSoftWrapOpportunity(input: string): boolean {
     // TODO: update to use /[\\p{White_Space}--\u00a0\u202f\ufeff]/v when
     // TODO: switching to ES2024
+    // The first dash is a character range. The last two are a \ protected
+    // U+2010 ‐ HYPHEN (to prevent interpretation as range), and a U+002D - HYPHEN-MINUS
     return /[\f\n\r\t\v\u0020\u1680\u2000-\u200a\u2028\u2029\u205f\u3000\-‐\u200b]/.test(
       input,
     );

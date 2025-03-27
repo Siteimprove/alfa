@@ -14,7 +14,7 @@ test(".hasSoftWrapOpportunity() accepts spaces", (t) => {
 
 test(".hasSoftWrapOpportunity() rejects non breaking spaces", (t) => {
   // non-break space and zero-width no-break space
-  for (const space of ["\u{00A0}", "\u{FEFF}"]) {
+  for (const space of ["\u00A0", "\uFEFF"]) {
     t(!String.hasSoftWrapOpportunity(`foo${space}bar`));
   }
 });
