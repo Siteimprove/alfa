@@ -34,9 +34,9 @@ function softWrapTest(
     const text = <span>Supercalifragilisticexpialidocious</span>;
     const space = <span>Supercalifragilistic expialidocious</span>;
     const nbsp = <span>Supercalifragilistic&nbsp;expialidocious</span>;
-    const zwsp = (
-      <span>Supercali&ZeroWidthSpace;fragilisticexpialidocious</span>
-    );
+    // This could/should be a &ZeroWidthSpace; but JSX doesn't parse it (on purpose).
+    // See https://facebook.github.io/jsx/#sec-HTMLCharacterReference
+    const zwsp = <span>Supercali&#x200B;fragilisticexpialidocious</span>;
     const hyphen = <span>Super-califragilisticexpialidocious</span>;
     const comma = <span>Super,califragilisticexpialidocious</span>;
     const shy = <span>Super&shy;califragilisticexpialidocious</span>;
@@ -55,13 +55,41 @@ function softWrapTest(
       ],
     );
 
-    t.equal(getSoftWrapOpportunity(text), expected.text);
-    t.equal(getSoftWrapOpportunity(space), expected.space);
-    t.equal(getSoftWrapOpportunity(nbsp), expected.nbsp);
-    t.equal(getSoftWrapOpportunity(zwsp), expected.zwsp, JSON.stringify(style));
-    t.equal(getSoftWrapOpportunity(hyphen), expected.hyphen);
-    t.equal(getSoftWrapOpportunity(comma), expected.comma);
-    t.equal(getSoftWrapOpportunity(shy), expected.shy);
+    t.equal(
+      getSoftWrapOpportunity(text),
+      expected.text,
+      `Text / ${JSON.stringify(style)}`,
+    );
+    t.equal(
+      getSoftWrapOpportunity(space),
+      expected.space,
+      `Space / ${JSON.stringify(style)}`,
+    );
+    t.equal(
+      getSoftWrapOpportunity(nbsp),
+      expected.nbsp,
+      `Non-breaking space / ${JSON.stringify(style)}`,
+    );
+    t.equal(
+      getSoftWrapOpportunity(zwsp),
+      expected.zwsp,
+      `Zero-width space / ${JSON.stringify(style)}`,
+    );
+    t.equal(
+      getSoftWrapOpportunity(hyphen),
+      expected.hyphen,
+      `Hyphen / ${JSON.stringify(style)}`,
+    );
+    t.equal(
+      getSoftWrapOpportunity(comma),
+      expected.comma,
+      `Comma / ${JSON.stringify(style)}`,
+    );
+    t.equal(
+      getSoftWrapOpportunity(shy),
+      expected.shy,
+      `Soft hyphen / ${JSON.stringify(style)}`,
+    );
   };
 }
 
