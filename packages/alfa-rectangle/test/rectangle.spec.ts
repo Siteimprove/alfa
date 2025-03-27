@@ -415,3 +415,130 @@ test(`distanceSquared() returns the squared distance between the centers of two 
 
   t.equal(rect1.distanceSquared(rect2), 13 ** 2);
 });
+
+test("subtract() returns `this` when rectangles do not intersect", (t) => {
+  t.deepEqual(
+    Rectangle.of(6, 5, 6, 4)
+      .subtract(Rectangle.of(2, 2, 3, 2))
+      .toJSON(),
+    [{ type: "rectangle", x: 6, y: 5, width: 6, height: 4 }],
+  );
+});
+
+test("subtract() returns empty sequence when lhs is contained in rhs", (t) => {
+  t.deepEqual(
+    Rectangle.of(2, 2, 6, 3)
+      .subtract(Rectangle.of(1, 1, 9, 6))
+      .toJSON(),
+    [],
+  );
+});
+
+test("subtract() returns sequence of rectangles when lhs and rhs overlap non-trivially", (t) => {
+  const lhs = Rectangle.of(2, 2, 6, 3);
+  const data = [
+    {
+      rhs: Rectangle.of(1, 3, 9, 4),
+      expected: [{ type: "rectangle", x: 2, y: 2, width: 6, height: 1 }],
+    },
+    {
+      rhs: Rectangle.of(3, 1, 7, 6),
+      expected: [{ type: "rectangle", x: 2, y: 2, width: 1, height: 3 }],
+    },
+    {
+      rhs: Rectangle.of(3, 3, 7, 4),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 6, height: 1 },
+        { type: "rectangle", x: 2, y: 2, width: 1, height: 3 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(1, 1, 9, 3),
+      expected: [{ type: "rectangle", x: 2, y: 4, width: 6, height: 1 }],
+    },
+    {
+      rhs: Rectangle.of(1, 3, 9, 1),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 6, height: 1 },
+        { type: "rectangle", x: 2, y: 4, width: 6, height: 1 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(3, 1, 7, 3),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 1, height: 3 },
+        { type: "rectangle", x: 2, y: 4, width: 6, height: 1 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(3, 3, 7, 1),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 6, height: 1 },
+        { type: "rectangle", x: 2, y: 2, width: 1, height: 3 },
+        { type: "rectangle", x: 2, y: 4, width: 6, height: 1 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(1, 1, 5, 6),
+      expected: [{ type: "rectangle", x: 6, y: 2, width: 2, height: 3 }],
+    },
+    {
+      rhs: Rectangle.of(1, 3, 5, 4),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 6, height: 1 },
+        { type: "rectangle", x: 6, y: 2, width: 2, height: 3 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(3, 1, 3, 6),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 1, height: 3 },
+        { type: "rectangle", x: 6, y: 2, width: 2, height: 3 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(3, 3, 3, 4),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 6, height: 1 },
+        { type: "rectangle", x: 2, y: 2, width: 1, height: 3 },
+        { type: "rectangle", x: 6, y: 2, width: 2, height: 3 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(1, 1, 5, 3),
+      expected: [
+        { type: "rectangle", x: 2, y: 4, width: 6, height: 1 },
+        { type: "rectangle", x: 6, y: 2, width: 2, height: 3 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(1, 3, 5, 1),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 6, height: 1 },
+        { type: "rectangle", x: 2, y: 4, width: 6, height: 1 },
+        { type: "rectangle", x: 6, y: 2, width: 2, height: 3 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(3, 1, 3, 3),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 1, height: 3 },
+        { type: "rectangle", x: 2, y: 4, width: 6, height: 1 },
+        { type: "rectangle", x: 6, y: 2, width: 2, height: 3 },
+      ],
+    },
+    {
+      rhs: Rectangle.of(3, 3, 3, 1),
+      expected: [
+        { type: "rectangle", x: 2, y: 2, width: 6, height: 1 },
+        { type: "rectangle", x: 2, y: 2, width: 1, height: 3 },
+        { type: "rectangle", x: 2, y: 4, width: 6, height: 1 },
+        { type: "rectangle", x: 6, y: 2, width: 2, height: 3 },
+      ],
+    },
+  ];
+
+  for (const { rhs, expected } of data) {
+    t.deepEqual(lhs.subtract(rhs).toJSON(), expected);
+  }
+});

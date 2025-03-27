@@ -24,7 +24,8 @@
   "dependencies": {
     "@siteimprove/alfa-equatable": "workspace:^",
     "@siteimprove/alfa-hash": "workspace:^",
-    "@siteimprove/alfa-json": "workspace:^"
+    "@siteimprove/alfa-json": "workspace:^",
+    "@siteimprove/alfa-sequence": "workspace:^"
   },
   "devDependencies": {
     "@siteimprove/alfa-fnv": "workspace:^",

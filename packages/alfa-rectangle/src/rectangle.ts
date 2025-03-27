@@ -3,6 +3,7 @@ import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import type { Serializable } from "@siteimprove/alfa-json";
 
 import type * as json from "@siteimprove/alfa-json";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { max, min } = Math;
 
@@ -194,6 +195,92 @@ export class Rectangle
       minRight - maxLeft,
       minBottom - maxTop,
     );
+  }
+
+  /**
+   * Subtracts one or more rectangles. The result is a collection of smaller
+   * rectangles covering the part of the original rectangle which didn't overlap
+   * the rectangles that was subtracted. The smaller rectangles will have the
+   * maximal possible width and height and for each subtraction between 0 and 4
+   * smaller rectangles will be produced to cover the difference.
+   *
+   * In the following example, the rectangles overlap in such a way that the
+   * difference will consist of two narrow overlapping rectangles to the right
+   * and below, overlapping in the bottom right corner:
+   *
+   *       +---------------------------------------+
+   *       |                                       |
+   *       |                                       |
+   *       |     +- - - - - - - - - - - - - - - - -+-------+
+   *       |     |                                 |\\\\\\\|
+   *       |                                       |\\\\\\\|
+   *       |     |                                 |\\\\\\\|
+   *       |                                       |\\\\\\\|
+   *       |     |                                 |\\\\\\\|
+   *       |                                       |\\\\\\\|
+   *       |     |                                 |\\\\\\\|
+   *       |                                       |\\\\\\\|
+   *       +-----+---------------------------------+-------+
+   *             |/////////////////////////////////|XXXXXXX|
+   *             |/////////////////////////////////|XXXXXXX|
+   *             +---------------------------------+-------+
+   */
+  public subtract(...others: Array<Rectangle>): Sequence<Rectangle> {
+    let result: Array<Rectangle> = [this];
+    for (const other of others) {
+      result = result.flatMap((rect) => rect._subtract(other));
+
+      // If the difference becomes empty, there is no need to keep subtracting.
+      if (result.length === 0) {
+        return Sequence.empty();
+      }
+    }
+
+    return Sequence.from(result);
+  }
+
+  private _subtract(other: Rectangle): Array<Rectangle> {
+    if (!this.intersects(other)) {
+      return [this];
+    }
+
+    const result: Array<Rectangle> = [];
+
+    if (this.top < other.top) {
+      result.push(
+        Rectangle.of(this.left, this.top, this.width, other.top - this.top),
+      );
+    }
+
+    if (this.left < other.left) {
+      result.push(
+        Rectangle.of(this.left, this.top, other.left - this.left, this.height),
+      );
+    }
+
+    if (other.bottom < this.bottom) {
+      result.push(
+        Rectangle.of(
+          this.left,
+          other.bottom,
+          this.width,
+          this.bottom - other.bottom,
+        ),
+      );
+    }
+
+    if (other.right < this.right) {
+      result.push(
+        Rectangle.of(
+          other.right,
+          this.top,
+          this.right - other.right,
+          this.height,
+        ),
+      );
+    }
+
+    return result;
   }
 
   /**
