@@ -13,7 +13,7 @@ const { or } = Predicate;
 /**
  * Test whether a Text node has soft wrap opportunities.
  *
- * @PrivateRemarks
+ * @privateRemarks
  * For Western languages written in Latin script, only the "anywhere" values
  * change the behaviour. For other languages, notably CJK and South East Asian
  * languages, a finer analysis of the value of these properties and their
