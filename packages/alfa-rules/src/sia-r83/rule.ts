@@ -433,7 +433,7 @@ namespace ClippingAncestor {
       _softWrapPointsCache.get(device, Cache.empty).get(node, () => {
         if (isText(node)) {
           // This is not fully correct, depending on languages
-          return String.hasSoftWrapOpportunity(node.data);
+          return Style.hasSoftWrapOpportunity(device)(node);
         }
 
         if (isElement(node)) {
