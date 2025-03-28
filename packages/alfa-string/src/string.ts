@@ -153,7 +153,8 @@ export namespace String {
    *
    * The soft hyphen character (U+00AD SOFT HYPHEN (HTML \&shy;)) is a
    * hyphenation opportunity. Always visible hyphens (e.g. U+2010 ‐ HYPHEN) are
-   * not because they are always soft wrap opportunities.
+   * not because they are always visible and are always soft wrap opportunities,
+   * even when hyphenation is not allowed.
    */
   export function hasHyphenationOpportunity(input: string): boolean {
     return /\u00AD/.test(input);
