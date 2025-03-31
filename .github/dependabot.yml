@@ -14,6 +14,7 @@ updates:
       - "dependencies"
     reviewers:
       - "Siteimprove/alfa-owners"
+
     groups:
       production-patch:
         # Patch updates to production packages. Low risk.
@@ -25,6 +26,7 @@ updates:
         update-types:
           - "patch"
         # TODO: consider adding custom commit-message.
+
       development-minor-patch:
         # Mino and Patch updates to development packages. Low risk.
         # This group could be auto-merge, this need a separate action. Maybe acting on a label that would be set here?
@@ -36,6 +38,7 @@ updates:
           - "minor"
           - "patch"
         # TODO: consider adding custom commit-message.
+
       security-update:
         # Security updates (patch/minor), apply asap.
         applies-to: security-updates
@@ -44,6 +47,7 @@ updates:
           - "patch"
         schedule:
           interval: daily
+
       # Other dependencies will be in separate PRs (one for each) as we may need to look into them in more detail.
 
 
