@@ -6,9 +6,9 @@ updates:
       - "/packages/alfa-*"
     schedule:
       interval: "weekly"
-      day: monday
-      time: 01:00
-      timezone: Europe/Copenhagen
+      day: "monday"
+      time: "01:00"
+      timezone: "Europe/Copenhagen"
     labels:
       - "npm"
       - "dependencies"
@@ -55,9 +55,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: monday
-      time: 01:00
-      timezone: Europe/Copenhagen
+      day: "monday"
+      time: "01:00"
+      timezone: "Europe/Copenhagen"
     labels:
       - "actions"
       - "dependencies"
