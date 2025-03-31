@@ -560,26 +560,14 @@ export namespace Native {
       arrayLike: ArrayLike<T>,
       mapper: (value: T) => U,
     ): Array<U> {
-      const result = new Array<U>(arrayLike.length);
-
-      for (let i = 0, n = arrayLike.length; i < n; i++) {
-        result[i] = mapper(arrayLike[i]);
-      }
-
-      return result;
+      return Array.from(arrayLike, mapper);
     }
 
     async function mapAsync<T, U>(
       arrayLike: ArrayLike<T>,
       mapper: (value: T) => U | Promise<U>,
     ): Promise<Array<U>> {
-      const result = new Array<U>(arrayLike.length);
-
-      for (let i = 0, n = arrayLike.length; i < n; i++) {
-        result[i] = await mapper(arrayLike[i]);
-      }
-
-      return result;
+      return Promise.all(Array.from(arrayLike, mapper));
     }
 
     /**
