@@ -4,7 +4,7 @@
 
 ## String\_2.hasSoftWrapOpportunity() function
 
-Checks whether the string contains soft break points [https://drafts.csswg.org/css-text/\#line-breaking](https://drafts.csswg.org/css-text/#line-breaking)
+Checks whether the string contains soft wrap opportunities [https://drafts.csswg.org/css-text-4/\#line-breaking](https://drafts.csswg.org/css-text-4/#line-breaking)
 
 **Signature:**
 
@@ -51,5 +51,5 @@ boolean
 
 ## Remarks
 
-Spaces are always soft break points. Other are hard to correctly detect. We do not want here to have a full break point detection which, based on language, requires lexical analysis. We accept punctuation as soft break points since they would act so in most Western languages.
+Spaces are always soft break points. Other are hard to correctly detect. We do not want here to have a full break point detection which, based on language, requires lexical analysis. We accept visible hyphens (U+002D - HYPHEN-MINUS and U+2010 ‐ HYPHEN) that are explicitly called out in CSS hyphens definition. [https://drafts.csswg.org/css-text-4/\#hyphens-property](https://drafts.csswg.org/css-text-4/#hyphens-property)
 

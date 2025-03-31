@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.103.0
+
+### Patch Changes
+
+- **Fixed:** SIA-R83 is now better at detecting soft wrap opportunities in text nodes. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
+
 ## 0.102.0
 
 ### Minor Changes

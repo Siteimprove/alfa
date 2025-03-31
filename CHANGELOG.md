@@ -1,5 +1,21 @@
 # Alfa changelog
 
+## [0.103.0](../../compare/v0.102.0...v0.103.0) (2025-03-31)
+
+### Added
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#01030): A `String.hasHyphenationOpportunity` predicate has been added, detecting U+00AD SOFT HYPHEN. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01030): A `Style.hasSoftWrapOpportunity` predicate is now available. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
+
+### Fixed
+
+- [@siteimprove/alfa-string](packages/alfa-string/CHANGELOG.md#01030): `String.hasSoftWrapOpportunity` is now more strict in what it accepts. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01030): `Native.fromNode` can now handle `document.adoptedStyleSheets` where `length` property is missing. ([#1786](https://github.com/Siteimprove/alfa/pull/1786))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01030): SIA-R83 is now better at detecting soft wrap opportunities in text nodes. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
+
 ## [0.102.0](../../compare/v0.101.0...v0.102.0) (2025-03-27)
 
 ### Breaking

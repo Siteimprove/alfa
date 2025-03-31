@@ -1,5 +1,11 @@
 # @siteimprove/alfa-style
 
+## 0.103.0
+
+### Minor Changes
+
+- **Added:** A `Style.hasSoftWrapOpportunity` predicate is now available. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
+
 ## 0.102.0
 
 ## 0.101.0

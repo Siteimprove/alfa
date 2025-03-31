@@ -1,5 +1,18 @@
 # @siteimprove/alfa-string
 
+## 0.103.0
+
+### Minor Changes
+
+- **Added:** A `String.hasHyphenationOpportunity` predicate has been added, detecting U+00AD SOFT HYPHEN. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
+
+### Patch Changes
+
+- **Fixed:** `String.hasSoftWrapOpportunity` is now more strict in what it accepts. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
+
+  - Non-breaking spaces are not considered soft wrap opportunities anymore.
+  - Punctuation other than always visible hyphens (U+002D - HYPHEN-MINUS and U+2010 ‐ HYPHEN) are not considered soft wrap opportunities anymore.
+
 ## 0.102.0
 
 ## 0.101.0

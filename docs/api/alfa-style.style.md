@@ -139,6 +139,15 @@ Description
 </td></tr>
 <tr><td>
 
+[hasHyphenationOpportunity](./alfa-style.style.hashyphenationopportunity.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [hasInitialComputedStyle](./alfa-style.style.hasinitialcomputedstyle.md)
 
 
@@ -158,6 +167,15 @@ Description
 <tr><td>
 
 [hasPositioningParent](./alfa-style.style.haspositioningparent.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[hasSoftWrapOpportunity](./alfa-style.style.hassoftwrapopportunity.md)
 
 
 </td><td>

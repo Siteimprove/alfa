@@ -1,5 +1,13 @@
 # @siteimprove/alfa-dom
 
+## 0.103.0
+
+### Patch Changes
+
+- **Fixed:** `Native.fromNode` can now handle `document.adoptedStyleSheets` where `length` property is missing. ([#1786](https://github.com/Siteimprove/alfa/pull/1786))
+
+  This addresses what is probably incorrect behavior of the `adoptedStyleSheets` in some browser implementations.
+
 ## 0.102.0
 
 ### Minor Changes
