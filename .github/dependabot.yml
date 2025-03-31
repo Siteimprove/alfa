@@ -55,6 +55,8 @@ updates:
     groups:
       security-update:
         applies-to: security-updates
+        patterns:
+          - "*"
     ignore: # ignore all deps that are not in the security-update group.
       - dependency-name: "*"
 
