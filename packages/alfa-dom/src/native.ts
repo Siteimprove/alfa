@@ -560,14 +560,14 @@ export namespace Native {
       arrayLike: ArrayLike<T>,
       mapper: (value: T) => U,
     ): Array<U> {
-      return Array.from(arrayLike).map(mapper);
+      return Array.from(arrayLike, mapper);
     }
 
     async function mapAsync<T, U>(
       arrayLike: ArrayLike<T>,
       mapper: (value: T) => U | Promise<U>,
     ): Promise<Array<U>> {
-      return Promise.all(Array.from(arrayLike).map(mapper));
+      return Promise.all(Array.from(arrayLike, mapper));
     }
 
     /**
