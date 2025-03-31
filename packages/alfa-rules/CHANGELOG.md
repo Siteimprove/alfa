@@ -1,5 +1,17 @@
 # @siteimprove/alfa-rules
 
+## 0.102.0
+
+### Minor Changes
+
+- **Fixed:** SIA-R111 and SIA-R113 now computes clickable regions more accurately when elements are clipped. ([#1761](https://github.com/Siteimprove/alfa/pull/1761))
+
+### Patch Changes
+
+- **Fixed:** SIA-R78 now ignores headings inside `<summary>` elements of closed `<details>`. ([#1782](https://github.com/Siteimprove/alfa/pull/1782))
+
+  These headings are considered as being part of an accordion pattern.
+
 ## 0.101.0
 
 ### Patch Changes

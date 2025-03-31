@@ -1,5 +1,13 @@
 # @siteimprove/alfa-cascade
 
+## 0.102.0
+
+### Patch Changes
+
+- **Fixed:** The user agent sheet now includes `details` and `summary`. ([#1777](https://github.com/Siteimprove/alfa/pull/1777))
+
+  This fixes the visibility behavior of the content after the `<summary>` element, when the `<details>` is closed.
+
 ## 0.101.0
 
 ## 0.100.1

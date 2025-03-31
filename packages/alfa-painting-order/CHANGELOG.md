@@ -1,5 +1,11 @@
 # @siteimprove/alfa-painting-order
 
+## 0.102.0
+
+### Minor Changes
+
+- **Added:** `PaintingOrder#getOrderIndex` and `PaintingOrder#getElementsAbove` are now available. ([#1761](https://github.com/Siteimprove/alfa/pull/1761))
+
 ## 0.101.0
 
 ## 0.100.1
