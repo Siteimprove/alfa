@@ -16,8 +16,7 @@ updates:
       - "Siteimprove/alfa-owners"
 
     groups:
-      production-patch:
-        # Patch updates to production packages. Low risk.
+      production-patch: # Patch updates to production packages. Low risk.
         # This group could be auto-merge, this need a separate action. Maybe acting on a label that would be set here?
         # We might want to run that for some time before actually enabling auto merging.
         # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions#automatically-approving-a-pull-request
@@ -27,8 +26,7 @@ updates:
           - "patch"
         # TODO: consider adding custom commit-message.
 
-      development-minor-patch:
-        # Mino and Patch updates to development packages. Low risk.
+      development-minor-patch: # Minor and Patch updates to development packages. Low risk.
         # This group could be auto-merge, this need a separate action. Maybe acting on a label that would be set here?
         # We might want to run that for some time before actually enabling auto merging.
         # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions#automatically-approving-a-pull-request
@@ -39,17 +37,21 @@ updates:
           - "patch"
         # TODO: consider adding custom commit-message.
 
-      security-update:
-        # Security updates (patch/minor), apply asap.
-        applies-to: security-updates
-        update-types:
-          - "minor"
-          - "patch"
-        schedule:
-          interval: daily
-
       # Other dependencies will be in separate PRs (one for each) as we may need to look into them in more detail.
 
+  - package-ecosystem: "npm" # Security updates (patch/minor), apply asap.
+    target-branch: "main" #See https://github.com/dependabot/dependabot-core/issues/1778#issuecomment-1988140219
+    schedule:
+      interval: live
+    applies-to: security-updates
+    update-types:
+      - "minor"
+      - "patch"
+    labels:
+      - "npm"
+      - "dependencies"
+    reviewers:
+      - "Siteimprove/alfa-owners"
 
   - package-ecosystem: "github-actions"
     directory: "/"
