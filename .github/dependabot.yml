@@ -40,18 +40,24 @@ updates:
       # Other dependencies will be in separate PRs (one for each) as we may need to look into them in more detail.
 
   - package-ecosystem: "npm" # Security updates (patch/minor), apply asap.
+    directories:
+      - "/"
+      - "/packages/alfa-*"
     target-branch: "main" #See https://github.com/dependabot/dependabot-core/issues/1778#issuecomment-1988140219
     schedule:
-      interval: live
-    applies-to: security-updates
-    update-types:
-      - "minor"
-      - "patch"
+      interval: "daily"
     labels:
       - "npm"
       - "dependencies"
     reviewers:
       - "Siteimprove/alfa-owners"
+
+    groups:
+      security-update:
+        applies-to: security-updates
+    ignore: # ignore all deps that are not in the security-update group.
+      - dependency-name: "*"
+
 
   - package-ecosystem: "github-actions"
     directory: "/"
