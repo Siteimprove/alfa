@@ -83,6 +83,7 @@
     "./property/word-wrap.tsx",
     "./property/z-index.spec.tsx",
     "./style.spec.tsx",
+    "./text/predicate/has-hyphenation-opportunity.spec.tsx",
     "./variable.spec.ts"
   ],
   "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]

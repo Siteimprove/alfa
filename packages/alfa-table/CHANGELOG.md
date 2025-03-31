@@ -1,5 +1,7 @@
 # @siteimprove/alfa-table
 
+## 0.102.0
+
 ## 0.101.0
 
 ## 0.100.1

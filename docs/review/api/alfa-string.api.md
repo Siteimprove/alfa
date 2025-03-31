@@ -14,6 +14,7 @@ type String_2 = globalThis.String;
 namespace String_2 {
     function fallback(fallback: string): Transformer;
     function flatten(input: string): string;
+    function hasHyphenationOpportunity(input: string): boolean;
     function hasSoftWrapOpportunity(input: string): boolean;
     function hasWhitespace(input: string): boolean;
     function indent(input: string): string;
