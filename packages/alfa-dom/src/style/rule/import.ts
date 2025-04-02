@@ -1,7 +1,8 @@
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Device } from "@siteimprove/alfa-device";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -108,6 +109,7 @@ export class ImportRule extends ConditionRule<"import"> {
       // We match the CSSImportRule interface returning null when no layer
       // is declared, and "" for an anonymous layer.
       layer: this._layer.getOr(null),
+      rules: Iterable.toJSON(this.rules),
     };
   }
 
