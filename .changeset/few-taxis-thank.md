@@ -2,4 +2,4 @@
 "@siteimprove/alfa-dom": patch
 ---
 
-**Fixed**: Imported style sheets are now serialized.
+**Fixed:** Imported style sheets are now serialized.
