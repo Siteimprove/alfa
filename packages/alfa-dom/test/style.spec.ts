@@ -10,3 +10,37 @@ test("Sheet.of assigns owner to descendants of condition rules", (t) => {
 
   t.equal(rule.owner.getUnsafe(), sheet);
 });
+
+test("#toJSON serializes imported sheets", (t) => {
+  const importedSheet = h.sheet([
+    h.rule.style("p", { background: "aliceblue" }),
+  ]);
+  const sheet = h.sheet([h.rule.importRule("foo.css", importedSheet)]);
+
+  t.deepEqual(sheet.toJSON(), {
+    rules: [
+      {
+        type: "import",
+        condition: "all",
+        href: "foo.css",
+        layer: null,
+        rules: [
+          {
+            type: "style",
+            selector: "p",
+            style: [
+              {
+                important: false,
+                name: "background",
+                value: "aliceblue",
+              },
+            ],
+          },
+        ],
+        supportText: null,
+      },
+    ],
+    disabled: false,
+    condition: null,
+  });
+});
