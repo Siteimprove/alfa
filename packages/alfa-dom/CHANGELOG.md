@@ -1,5 +1,11 @@
 # @siteimprove/alfa-dom
 
+## 0.103.1
+
+### Patch Changes
+
+- **Fixed:** Imported style sheets are now serialized. ([#1789](https://github.com/Siteimprove/alfa/pull/1789))
+
 ## 0.103.0
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.103.1](../../compare/v0.103.0...v0.103.1) (2025-04-02)
+
+### Fixed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01031): Imported style sheets are now serialized. ([#1789](https://github.com/Siteimprove/alfa/pull/1789))
+
 ## [0.103.0](../../compare/v0.102.0...v0.103.0) (2025-03-31)
 
 ### Added
