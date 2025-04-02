@@ -549,7 +549,7 @@ export class ImportRule extends ConditionRule<"import"> {
     // (undocumented)
     static of(href: string, sheet: Sheet, mediaCondition?: Option<string>, supportCondition?: Option<string>, layer?: Option<string>): ImportRule;
     // (undocumented)
-    get rules(): Iterable<Rule>;
+    get rules(): Iterable_2<Rule>;
     // (undocumented)
     get sheet(): Sheet;
     // (undocumented)
