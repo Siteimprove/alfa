@@ -1,19 +1,73 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/"
+    directories:
+      - "/"
+      - "/packages/alfa-*"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "01:00"
+      timezone: "Europe/Copenhagen"
+    labels:
+      - "npm"
+      - "dependencies"
+    reviewers:
+      - "Siteimprove/alfa-owners"
+
+    groups:
+      production-patch: # Patch updates to production packages. Low risk.
+        # This group could be auto-merge, this need a separate action. Maybe acting on a label that would be set here?
+        # We might want to run that for some time before actually enabling auto merging.
+        # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions#automatically-approving-a-pull-request
+        dependency-type: production
+        applies-to: version-updates
+        update-types:
+          - "patch"
+        # TODO: consider adding custom commit-message.
+
+      development-minor-patch: # Minor and Patch updates to development packages. Low risk.
+        # This group could be auto-merge, this need a separate action. Maybe acting on a label that would be set here?
+        # We might want to run that for some time before actually enabling auto merging.
+        # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions#automatically-approving-a-pull-request
+        dependency-type: development
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+        # TODO: consider adding custom commit-message.
+
+      # Other dependencies will be in separate PRs (one for each) as we may need to look into them in more detail.
+
+  - package-ecosystem: "npm" # Security updates (patch/minor), apply asap.
+    directories:
+      - "/"
+      - "/packages/alfa-*"
+    target-branch: "main" #See https://github.com/dependabot/dependabot-core/issues/1778#issuecomment-1988140219
     schedule:
       interval: "daily"
     labels:
       - "npm"
       - "dependencies"
-    # https://github.com/dependabot/dependabot-core/issues/1297
-    open-pull-requests-limit: 0
+    reviewers:
+      - "Siteimprove/alfa-owners"
+
+    groups:
+      security-update:
+        applies-to: security-updates
+        patterns:
+          - "*"
+    ignore: # ignore all deps that are not in the security-update group.
+      - dependency-name: "*"
+
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "01:00"
+      timezone: "Europe/Copenhagen"
     labels:
       - "actions"
       - "dependencies"
