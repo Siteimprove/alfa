@@ -672,10 +672,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdn/browser-compat-data@npm:^5.0.0":
-  version: 5.6.33
-  resolution: "@mdn/browser-compat-data@npm:5.6.33"
-  checksum: 10c0/94101e8687d247dab0fda52425056b5e54d4baf9be9779d35903ceb62b5bce18025ef28e0152e82a3ed1dd95ca7bc9a3d3edaead3e82332242778dba0f03874e
+"@mdn/browser-compat-data@npm:^6.0.10":
+  version: 6.0.10
+  resolution: "@mdn/browser-compat-data@npm:6.0.10"
+  checksum: 10c0/7c6de012a781f8a405d8495b977854329b3a98e65b2eb81b2a753e52f69a9767577ef5bd2502ae7f8efeb7e0bb85ff943795776e8872893761c768e2a0d315e9
   languageName: node
   linkType: hard
 
@@ -1237,7 +1237,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
-    "@mdn/browser-compat-data": "npm:^5.0.0"
+    "@mdn/browser-compat-data": "npm:^6.0.10"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
     browserslist: "npm:^4.17.0"
