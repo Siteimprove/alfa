@@ -13,6 +13,7 @@ import {
   Error,
   getConfigOption,
   getOrDie,
+  getPackagesShim,
 } from "./helpers.js";
 
 const NON_UNIQUE_VERSION = Error.freeFrom + 1;
@@ -30,7 +31,7 @@ export namespace Changelog {
     // Build release plan (compute old and new versions for each package)
     const releasePlan = assembleReleasePlan(
       changesets,
-      packages,
+      getPackagesShim(packages),
       config,
       undefined,
       undefined,

@@ -11,6 +11,8 @@ import type { Result } from "@siteimprove/alfa-result";
 export namespace Error {
   export const INVALID_CHANGESET_CONFIG = 1;
   export const NO_GLOBAL_CHANGELOG_PROVIDER = 2;
+  export const NO_ROOT_PACKAGE = 3;
+  export const INVALID_PACKAGE_MANAGER_TOOL = 4;
   export const freeFrom = 100;
 }
 
@@ -60,4 +62,28 @@ export function getConfigOption(config: Config, option: string): string {
   }
 
   return value;
+}
+
+/**
+ * @internal
+ */
+export function getPackagesShim(packages: Packages) {
+  const rootPackage = packages.rootPackage;
+  const tool = packages.tool.type;
+
+  if (rootPackage === undefined) {
+    console.error("Could not resolve root package");
+    process.exit(Error.NO_ROOT_PACKAGE);
+  }
+
+  if (tool !== "yarn") {
+    console.error(`Tool must be \`yarn\`, but was: ${tool}`);
+    process.exit(Error.INVALID_PACKAGE_MANAGER_TOOL);
+  }
+
+  return {
+    tool,
+    packages: packages.packages,
+    root: rootPackage,
+  } as const;
 }
