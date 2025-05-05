@@ -639,7 +639,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@manypkg/get-packages@npm:=1.1.3, @manypkg/get-packages@npm:^1.1.3":
+"@manypkg/find-root@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@manypkg/find-root@npm:3.0.0"
+  dependencies:
+    "@manypkg/tools": "npm:^2.0.0"
+  checksum: 10c0/51bd0bb63dbb0822356f14329772e1baf716ae0be56724f984592f06a79b312562f833422590cf3f35b89d41f969e41b07b9111a85b9c0f79c82c9abf9e7468c
+  languageName: node
+  linkType: hard
+
+"@manypkg/get-packages@npm:=3.0.0":
+  version: 3.0.0
+  resolution: "@manypkg/get-packages@npm:3.0.0"
+  dependencies:
+    "@manypkg/find-root": "npm:^3.0.0"
+    "@manypkg/tools": "npm:^2.0.0"
+  checksum: 10c0/bacbb484d4a1c9ec1e19704953786b51d7ebe3ceeace7a17ff1408a26893aa37262ccf60b193a3a35a073e6c46f1eb63c994120bc7d4f5b97c4517ff147b47b5
+  languageName: node
+  linkType: hard
+
+"@manypkg/get-packages@npm:^1.1.3":
   version: 1.1.3
   resolution: "@manypkg/get-packages@npm:1.1.3"
   dependencies:
@@ -650,6 +669,17 @@ __metadata:
     globby: "npm:^11.0.0"
     read-yaml-file: "npm:^1.1.0"
   checksum: 10c0/f05907d1174ae28861eaa06d0efdc144f773d9a4b8b65e1e7cdc01eb93361d335351b4a336e05c6aac02661be39e8809a3f7ad28bc67b6b338071434ab442130
+  languageName: node
+  linkType: hard
+
+"@manypkg/tools@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@manypkg/tools@npm:2.0.0"
+  dependencies:
+    jju: "npm:^1.4.0"
+    js-yaml: "npm:^4.1.0"
+    tinyglobby: "npm:^0.2.13"
+  checksum: 10c0/ac2e45e648846b4edd170e1d4efa5c3b7a9df2cb7758fc21bcfea8e1b73c0b05df4d65dbd0275502c71b69efded431967aed61dd9a34f634faad7c4112077ebd
   languageName: node
   linkType: hard
 
@@ -2131,7 +2161,7 @@ __metadata:
     "@changesets/git": "npm:^3.0.4"
     "@changesets/read": "npm:^0.6.5"
     "@changesets/types": "npm:^6.0.0"
-    "@manypkg/get-packages": "npm:=1.1.3"
+    "@manypkg/get-packages": "npm:=3.0.0"
     "@siteimprove/alfa-array": "workspace:^"
     "@siteimprove/alfa-map": "workspace:^"
     "@siteimprove/alfa-option": "workspace:^"
@@ -4624,7 +4654,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jju@npm:~1.4.0":
+"jju@npm:^1.4.0, jju@npm:~1.4.0":
   version: 1.4.0
   resolution: "jju@npm:1.4.0"
   checksum: 10c0/f3f444557e4364cfc06b1abf8331bf3778b26c0c8552ca54429bc0092652172fdea26cbffe33e1017b303d5aa506f7ede8571857400efe459cb7439180e2acad
