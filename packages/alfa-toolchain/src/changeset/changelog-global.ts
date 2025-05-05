@@ -39,7 +39,7 @@ async function main(cwd: string) {
 
   // SHIM: @changesets/config@3.1.1 still consumes the v1.x `Packages` type from @manypkg/get‑packages,
   // where the field was called `root` - v3.0.0 of get‑packages renamed it to `rootPackage`.
-  // To unblock @manypkg/get-packages from receiving updates, a shim has been implemented.
+  // This shim has been added to avoid blocking @manypkg/get-packages from receiving updates.
   let config: Config;
   try {
     //@ts-ignore - Remove once @changesets and @manypkg are again compatible
