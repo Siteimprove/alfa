@@ -1,13 +1,18 @@
 import { read as readConfig } from "@changesets/config";
 import { getCommitsThatAddFiles } from "@changesets/git";
 import getChangeSets from "@changesets/read";
-import type { NewChangesetWithCommit } from "@changesets/types";
+import type { NewChangesetWithCommit, Config } from "@changesets/types";
 import { getPackages } from "@manypkg/get-packages";
 
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-import { type ChangelogFunctions, getConfigOption, Error } from "./helpers.js";
+import {
+  type ChangelogFunctions,
+  Error,
+  getConfigOption,
+  getPackagesShim,
+} from "./helpers.js";
 
 import resolveFrom = require("resolve-from");
 
@@ -31,7 +36,20 @@ main(targetPath);
 async function main(cwd: string) {
   // Read packages list, and changeset config file
   const packages = await getPackages(cwd);
-  const config = await readConfig(cwd, packages);
+
+  // SHIM: @changesets/config@3.1.1 still consumes the v1.x `Packages` type from @manypkg/get‑packages,
+  // where the field was called `root` - v3.0.0 of get‑packages renamed it to `rootPackage`.
+  // To unblock @manypkg/get-packages from receiving updates, a shim has been implemented.
+  let config: Config;
+  try {
+    //@ts-ignore - Remove once @changesets and @manypkg are again compatible
+    config = await readConfig(cwd, packages);
+    console.warn(
+      "Expected `readConfig` to fail due to incompatible versions, but it didn't. Please remove the try-catch and the shim function",
+    );
+  } catch {
+    config = await readConfig(cwd, getPackagesShim(packages));
+  }
 
   const global = getConfigOption(config, "global");
 

@@ -16,7 +16,14 @@ const git = simpleGit();
  * Gathering info about workspaces structure.
  */
 const packages = await getPackages(".");
-const rootDir = packages.root.dir;
+const rootPackage = packages.rootPackage;
+if (rootPackage === undefined) {
+  console.error("Could not resolve root package");
+  process.exit(1);
+}
+
+const rootDir = rootPackage.dir;
+
 // We'll copy stuff from the first packageJSON file we find, since these should
 // be kept identical anyway.
 const samplePackageJSON = packages.packages[0].packageJson as PackageJSON & {
