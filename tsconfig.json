@@ -6,7 +6,7 @@
     "declarationMap": true,
     "incremental": true,
     "lib": ["es2022"],
-    "module": "Node16",
+    "module": "Node18",
     "target": "es2022",
     "sourceMap": true,
     "strict": true,
