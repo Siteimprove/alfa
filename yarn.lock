@@ -2105,7 +2105,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-test-deprecated@workspace:packages/alfa-test-deprecated"
   dependencies:
-    "@types/node": "npm:^22.0.0"
+    "@types/node": "npm:^22.15.12"
     chalk: "npm:^5.4.1"
   languageName: unknown
   linkType: soft
@@ -2115,7 +2115,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^22.0.0"
+    "@types/node": "npm:^22.15.12"
     vitest: "npm:^3.0.6"
   languageName: unknown
   linkType: soft
@@ -2321,7 +2321,7 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.26.26"
     "@microsoft/api-extractor": "npm:^7.52.7"
     "@siteimprove/alfa-toolchain": "workspace:^0.103.1"
-    "@types/node": "npm:^22.0.0"
+    "@types/node": "npm:^22.15.12"
     knip: "npm:^5.54.1"
     minimist: "npm:^1.2.6"
     package-dependency-graph: "npm:^1.14.4"
@@ -2445,12 +2445,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^22.0.0":
-  version: 22.12.0
-  resolution: "@types/node@npm:22.12.0"
+"@types/node@npm:*, @types/node@npm:^22.15.12":
+  version: 22.15.12
+  resolution: "@types/node@npm:22.15.12"
   dependencies:
-    undici-types: "npm:~6.20.0"
-  checksum: 10c0/be220706732d95db2ed1c441c1e64cab90bf9a47519ce6f4c79cc5a9ec9d5c517131a149a9ac30afac1a30103e67e3a00d453ba7c1b0141608a3a7ba6397c303
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/b9c34f8089764edf229576e4b7d51681a4dfaf0893bf08cd884aec2e76a79a2a74d4ce114590a61cf4419e6818185730ed6165b015c5e552b4ad4444eb2f06db
   languageName: node
   linkType: hard
 
@@ -6841,10 +6841,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.20.0":
-  version: 6.20.0
-  resolution: "undici-types@npm:6.20.0"
-  checksum: 10c0/68e659a98898d6a836a9a59e6adf14a5d799707f5ea629433e025ac90d239f75e408e2e5ff086afc3cace26f8b26ee52155293564593fbb4a2f666af57fc59bf
+"undici-types@npm:~6.21.0":
+  version: 6.21.0
+  resolution: "undici-types@npm:6.21.0"
+  checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
   languageName: node
   linkType: hard
 
