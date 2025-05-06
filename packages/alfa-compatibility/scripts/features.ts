@@ -1,7 +1,12 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as prettier from "prettier";
-import data, { type Identifier } from "@mdn/browser-compat-data";
+import type {
+  Identifier,
+  SimpleSupportStatement,
+  SupportStatement,
+} from "@mdn/browser-compat-data";
+import data from "@mdn/browser-compat-data" with { type: "json" };
 
 // This contains the list of features to generate definitions for from the MDN
 // browser compatibility data. To add more features, add an entry to the JSON
@@ -82,7 +87,8 @@ function parse(key: string) {
         continue;
     }
 
-    let statements = compatibility.support[browser];
+    let statements: SupportStatement | [SimpleSupportStatement] | undefined =
+      compatibility.support[browser];
 
     if (statements === undefined) {
       continue;
@@ -138,7 +144,7 @@ features.sort((a, b) => (a.key > b.key ? 1 : a.key < b.key ? -1 : 0));
 const code = `
 // This file has been automatically generated based on the MDN browser
 // compatibility data. Do therefore not modify it directly! If you wish to make
-// changes, do so in \`scripts/features.js\` and run \`yarn generate\` to rebuild this
+// changes, do so in \`scripts/features.ts\` (remember to \`yarn build\`) and run \`yarn generate\` to rebuild this
 // file.
 
 /**

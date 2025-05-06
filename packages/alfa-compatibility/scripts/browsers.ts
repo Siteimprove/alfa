@@ -1,7 +1,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as prettier from "prettier";
-import data, { type BrowserName } from "@mdn/browser-compat-data";
+import type { BrowserName } from "@mdn/browser-compat-data";
+import data from "@mdn/browser-compat-data" with { type: "json" };
 
 const include: Array<BrowserName> = [
   "chrome",
