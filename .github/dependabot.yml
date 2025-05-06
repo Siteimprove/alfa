@@ -1,9 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directories:
-      - "/"
-      - "/packages/alfa-*"
+    directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -40,9 +38,7 @@ updates:
       # Other dependencies will be in separate PRs (one for each) as we may need to look into them in more detail.
 
   - package-ecosystem: "npm" # Security updates (patch/minor), apply asap.
-    directories:
-      - "/"
-      - "/packages/alfa-*"
+    directory: "/"
     target-branch: "main" #See https://github.com/dependabot/dependabot-core/issues/1778#issuecomment-1988140219
     schedule:
       interval: "daily"
