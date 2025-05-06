@@ -28,16 +28,16 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.29.2",
-    "@microsoft/api-documenter": "^7.26.25",
-    "@microsoft/api-extractor": "^7.52.6",
+    "@changesets/cli": "^2.29.3",
+    "@microsoft/api-documenter": "^7.26.26",
+    "@microsoft/api-extractor": "^7.52.7",
     "@siteimprove/alfa-toolchain": "workspace:^0.103.1",
     "@types/node": "^22.0.0",
-    "knip": "^5.52.0",
+    "knip": "^5.54.1",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "prettier": "^3.5.3",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.3",
     "vitest": "^3.0.6"
   },
   "packageManager": "yarn@4.9.1"
