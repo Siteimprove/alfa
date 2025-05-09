@@ -336,3 +336,10 @@ test("invisible elements are not painted", (t) => {
 
   testOrder(t, body, [body]);
 });
+
+test("block-level element is painted after inline-level parent", (t) => {
+  const div = <div>Hello</div>;
+  const span = <span>{div}</span>;
+
+  testOrder(t, span, [span, div]);
+});
