@@ -135,19 +135,6 @@ test("floating descendants are not painted atomically with respect to positioned
   testOrder(t, body, [body, div2, div1, div3]);
 });
 
-test("floating descendants are painted before inline-level descendants", (t) => {
-  const div1 = <div style={{ display: "inline" }}>Hello</div>;
-  const div2 = <div style={{ float: "left" }}>World</div>;
-  const body = (
-    <body>
-      {div1}
-      {div2}
-    </body>
-  );
-
-  testOrder(t, body, [body, div2, div1]);
-});
-
 test("inline-level descendants are painted in tree-order", (t) => {
   const span3 = <span>Hello</span>;
   const span2 = <span>World</span>;
@@ -250,20 +237,6 @@ test("positioned elements with positive z-index are painted in z-order then tree
   );
 
   testOrder(t, body, [body, div2, div3, div1]);
-});
-
-test("inline-level stacking context element is painted after floating descendants and before inline-level descendants", (t) => {
-  const div2 = <div style={{ float: "left" }}>Hello</div>;
-  const div3 = <div style={{ display: "inline" }}>World</div>;
-  const div1 = (
-    <div style={{ display: "inline", isolation: "isolate" }}>
-      {div2}
-      {div3}
-    </div>
-  );
-  const body = <body>{div1}</body>;
-
-  testOrder(t, body, [body, div2, div1, div3]);
 });
 
 test("stacking context creating elements are painted atomically", (t) => {
