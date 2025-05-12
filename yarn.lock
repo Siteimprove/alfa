@@ -2105,7 +2105,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-test-deprecated@workspace:packages/alfa-test-deprecated"
   dependencies:
-    "@types/node": "npm:^22.15.12"
+    "@types/node": "npm:^22.15.17"
     chalk: "npm:^5.4.1"
   languageName: unknown
   linkType: soft
@@ -2115,7 +2115,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^22.15.12"
+    "@types/node": "npm:^22.15.17"
     vitest: "npm:^3.0.6"
   languageName: unknown
   linkType: soft
@@ -2321,7 +2321,7 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.26.26"
     "@microsoft/api-extractor": "npm:^7.52.7"
     "@siteimprove/alfa-toolchain": "workspace:^0.103.2"
-    "@types/node": "npm:^22.15.12"
+    "@types/node": "npm:^22.15.17"
     knip: "npm:^5.54.1"
     minimist: "npm:^1.2.6"
     package-dependency-graph: "npm:^1.14.4"
@@ -2445,12 +2445,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^22.15.12":
-  version: 22.15.12
-  resolution: "@types/node@npm:22.15.12"
+"@types/node@npm:*, @types/node@npm:^22.15.17":
+  version: 22.15.17
+  resolution: "@types/node@npm:22.15.17"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/b9c34f8089764edf229576e4b7d51681a4dfaf0893bf08cd884aec2e76a79a2a74d4ce114590a61cf4419e6818185730ed6165b015c5e552b4ad4444eb2f06db
+  checksum: 10c0/fb92aa10b628683c5b965749f955bc2322485ecb0ea6c2f4cae5f2c7537a16834607e67083a9e9281faaae8d7dee9ada8d6a5c0de9a52c17d82912ef00c0fdd4
   languageName: node
   linkType: hard
 
