@@ -178,9 +178,16 @@ export namespace PaintingOrder {
     },
   ): Sequence<Element> {
     const positionedOrStackingContexts: Array<Element> = [];
-    const blockLevels: Array<Element> = [];
+    const normalFlow: Array<Element> = [];
     const floats: Array<Element> = [];
-    const inlines: Array<Element> = [];
+
+    // Block-level elements, forming a stacking context, are painted before
+    // their descendants.
+    if (isBlockContainer(Style.from(element, device))) {
+      canvas = canvas.append(element);
+    } else {
+      normalFlow.push(element);
+    }
 
     /**
      * @remarks
@@ -223,25 +230,9 @@ export namespace PaintingOrder {
             floats.push(descendant);
           }
         }
-      } else if (isBlockContainer(Style.from(element, device))) {
-        blockLevels.push(element);
       } else {
-        // everything else, this is somewhat crude and might not be accurate, but
-        // will do for now.
-        inlines.push(element);
+        normalFlow.push(element);
       }
-    }
-
-    // Block-level elements, forming a stacking context, are painted before
-    // their descendants. Inline-level elements, forming a stacking context,
-    // are painted in the inline layer before its inline descendants
-    // (and before stacking-context-creating and positioned descendants with
-    // stack level greater than or equal to 0), but after positioned descendants
-    // with negative z-index, block-level descendants and floating descendants.
-    if (isBlockContainer(Style.from(element, device))) {
-      canvas = canvas.append(element);
-    } else {
-      inlines.push(element);
     }
 
     function traverse(element: Element) {
@@ -273,9 +264,8 @@ export namespace PaintingOrder {
     );
 
     canvas = paintLayer(device, canvas, negatives, element, options);
-    canvas = paintLayer(device, canvas, blockLevels, element, options);
+    canvas = paintLayer(device, canvas, normalFlow, element, options);
     canvas = paintLayer(device, canvas, floats, element, options);
-    canvas = paintLayer(device, canvas, inlines, element, options);
     canvas = paintLayer(device, canvas, nonNegatives, element, options);
 
     return canvas;
