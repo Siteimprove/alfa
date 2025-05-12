@@ -1,5 +1,13 @@
 # Alfa changelog
 
+## [0.103.2](../../compare/v0.103.1...v0.103.2) (2025-05-12)
+
+### Changed
+
+- [@siteimprove/alfa-compatibility](packages/alfa-compatibility/CHANGELOG.md#01032): Compatibility data in `browser/data.ts` and `feature/data.ts` has been updated. ([#1807](https://github.com/Siteimprove/alfa/pull/1807))
+
+- [@siteimprove/alfa-painting-order](packages/alfa-painting-order/CHANGELOG.md#01032): The painting order algorithm now doesn't distinguish between inline and block elements. This trades incorrect results for mixed inline and block parent-child elements with incorrect result for inline and block siblings. ([#1817](https://github.com/Siteimprove/alfa/pull/1817))
+
 ## [0.103.1](../../compare/v0.103.0...v0.103.1) (2025-04-02)
 
 ### Fixed

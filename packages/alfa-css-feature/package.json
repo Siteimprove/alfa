@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-css-feature",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.103.1",
+  "version": "0.103.2",
   "license": "MIT",
   "description": "Functionality for working with CSS feature queries (media, user-preference, and supports).",
   "repository": {

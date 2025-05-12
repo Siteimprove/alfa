@@ -1,5 +1,11 @@
 # @siteimprove/alfa-painting-order
 
+## 0.103.2
+
+### Patch Changes
+
+- **Changed:** The painting order algorithm now doesn't distinguish between inline and block elements. This trades incorrect results for mixed inline and block parent-child elements with incorrect result for inline and block siblings. ([#1817](https://github.com/Siteimprove/alfa/pull/1817))
+
 ## 0.103.1
 
 ## 0.103.0
