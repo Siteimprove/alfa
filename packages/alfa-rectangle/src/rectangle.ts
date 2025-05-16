@@ -3,6 +3,8 @@ import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import type { Serializable } from "@siteimprove/alfa-json";
 
 import type * as json from "@siteimprove/alfa-json";
+
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { max, min } = Math;
@@ -208,6 +210,10 @@ export class Rectangle
    * difference will consist of two narrow overlapping rectangles to the right
    * and below, overlapping in the bottom right corner:
    *
+   * @remarks
+   * When doing repeated subtraction, we need to limit the size of the result
+   * as it can otherwise explode. The limit is hard coded to 256.
+   *
    *       +---------------------------------------+
    *       |                                       |
    *       |                                       |
@@ -226,9 +232,25 @@ export class Rectangle
    *             +---------------------------------+-------+
    */
   public subtract(...others: Array<Rectangle>): Sequence<Rectangle> {
+    // Sort by intersection area descending so that the biggest chunks are removed first.
+    others.sort((a, b) =>
+      Comparable.compare(b.intersection(this).area, a.intersection(this).area),
+    );
     let result: Array<Rectangle> = [this];
     for (const other of others) {
       result = result.flatMap((rect) => rect._subtract(other));
+
+      // The result grows by a factor of at most 4 for every repeated subtraction.
+      // In some cases this can become too big to fit in an array.
+      // We limit the result to avoid running out of memory and we set the limit fairly low
+      // to avoid degrading the performance when the result is later processed.
+      // The assumption is that by ordering the rectangles as we do above so that the most intersecting rectangles are subtracted first,
+      // limiting the result will still provide a good approximation.
+      // We should consider if there is a better way to represent the result of subtraction using rectilinear polygons:
+      // https://en.wikipedia.org/wiki/Rectilinear_polygon
+      if (result.length >= 256) {
+        return Sequence.from(result);
+      }
 
       // If the difference becomes empty, there is no need to keep subtracting.
       if (result.length === 0) {

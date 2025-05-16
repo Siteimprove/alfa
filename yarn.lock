@@ -1810,6 +1810,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-rectangle@workspace:packages/alfa-rectangle"
   dependencies:
+    "@siteimprove/alfa-comparable": "workspace:^"
     "@siteimprove/alfa-equatable": "workspace:^"
     "@siteimprove/alfa-fnv": "workspace:^"
     "@siteimprove/alfa-hash": "workspace:^"
