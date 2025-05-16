@@ -1,5 +1,7 @@
 # @siteimprove/alfa-compatibility
 
+## 0.103.3
+
 ## 0.103.2
 
 ### Patch Changes

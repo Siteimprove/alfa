@@ -1,5 +1,7 @@
 # @siteimprove/alfa-string
 
+## 0.103.3
+
 ## 0.103.2
 
 ## 0.103.1

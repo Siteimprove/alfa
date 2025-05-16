@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-graph",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.103.2",
+  "version": "0.103.3",
   "license": "MIT",
   "description": "An implementation of an immutable, directed graph",
   "repository": {
