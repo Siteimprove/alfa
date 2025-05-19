@@ -101,9 +101,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/assemble-release-plan@npm:^6.0.7":
-  version: 6.0.7
-  resolution: "@changesets/assemble-release-plan@npm:6.0.7"
+"@changesets/assemble-release-plan@npm:^6.0.7, @changesets/assemble-release-plan@npm:^6.0.8":
+  version: 6.0.8
+  resolution: "@changesets/assemble-release-plan@npm:6.0.8"
   dependencies:
     "@changesets/errors": "npm:^0.2.0"
     "@changesets/get-dependents-graph": "npm:^2.1.3"
@@ -111,7 +111,7 @@ __metadata:
     "@changesets/types": "npm:^6.1.0"
     "@manypkg/get-packages": "npm:^1.1.3"
     semver: "npm:^7.5.3"
-  checksum: 10c0/a11bd3c6cf963e61497802f9fb9658ac56a38b2859593e12d3b6aa0926533fc374a02ce81889eb144bbef7c6970e35f3d90206dad5efc61e0e6e96bc7c8fce02
+  checksum: 10c0/b3e133a22896b1a5d5ffeaa8aed2ad044997ceda9fce6327bbcb6c56ba426d9d2df502fa003ae6d6ad6263e6a5d039761bfeaab62c884c825b99fb4cbdd1c42f
   languageName: node
   linkType: hard
 
@@ -2106,7 +2106,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-test-deprecated@workspace:packages/alfa-test-deprecated"
   dependencies:
-    "@types/node": "npm:^22.15.17"
+    "@types/node": "npm:^22.15.18"
     chalk: "npm:^5.4.1"
   languageName: unknown
   linkType: soft
@@ -2116,7 +2116,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^22.15.17"
+    "@types/node": "npm:^22.15.18"
     vitest: "npm:^3.0.6"
   languageName: unknown
   linkType: soft
@@ -2156,7 +2156,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain"
   dependencies:
-    "@changesets/assemble-release-plan": "npm:^6.0.7"
+    "@changesets/assemble-release-plan": "npm:^6.0.8"
     "@changesets/config": "npm:^3.1.1"
     "@changesets/get-github-info": "npm:^0.6.0"
     "@changesets/git": "npm:^3.0.4"
@@ -2322,7 +2322,7 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.26.26"
     "@microsoft/api-extractor": "npm:^7.52.7"
     "@siteimprove/alfa-toolchain": "workspace:^0.103.3"
-    "@types/node": "npm:^22.15.17"
+    "@types/node": "npm:^22.15.18"
     knip: "npm:^5.54.1"
     minimist: "npm:^1.2.6"
     package-dependency-graph: "npm:^1.14.4"
@@ -2446,12 +2446,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^22.15.17":
-  version: 22.15.17
-  resolution: "@types/node@npm:22.15.17"
+"@types/node@npm:*, @types/node@npm:^22.15.18":
+  version: 22.15.18
+  resolution: "@types/node@npm:22.15.18"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/fb92aa10b628683c5b965749f955bc2322485ecb0ea6c2f4cae5f2c7537a16834607e67083a9e9281faaae8d7dee9ada8d6a5c0de9a52c17d82912ef00c0fdd4
+  checksum: 10c0/e23178c568e2dc6b93b6aa3b8dfb45f9556e527918c947fe7406a4c92d2184c7396558912400c3b1b8d0fa952ec63819aca2b8e4d3545455fc6f1e9623e09ca6
   languageName: node
   linkType: hard
 
