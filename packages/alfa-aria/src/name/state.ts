@@ -51,7 +51,8 @@ export class State implements Equatable, Serializable<State.JSON> {
 
   /**
    * The element that referenced the name computation.
-   * (this is the element on which aria-labelledby is set)
+   * E.g the element on which aria-labelledby is set
+   * or the <input> element being labelled by a <label> element.
    */
   public get referrer(): Option<Element> {
     return this._referrer;
@@ -59,7 +60,8 @@ export class State implements Equatable, Serializable<State.JSON> {
 
   /**
    * The element that is referenced during the name computation.
-   * (this is the target of the aria-labelledby attribute)
+   * E.g the target of the aria-labelledby attribute
+   * or the <label> element that labels an <input> element.
    */
   public get referred(): Option<Element> {
     return this._referred;
@@ -126,6 +128,13 @@ export class State implements Equatable, Serializable<State.JSON> {
    * @remarks
    * We currently have no way to clear references since we currently have no
    * use for it.
+   *
+   * @param referrer The element that is source of a labelled-by relation,
+   * e.g. an <input> element or an element with an aria-labelledby attribute.
+   *
+   * @param referred The element that is target of a labelled-by relation,
+   * e.g. a <label> element or an element referenced by an aria-labelled-by attribute
+   * on some other element.
    */
   public reference(referrer: Element, referred: Element): State {
     if (
