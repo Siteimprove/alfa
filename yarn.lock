@@ -730,10 +730,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdn/browser-compat-data@npm:^6.0.17":
-  version: 6.0.17
-  resolution: "@mdn/browser-compat-data@npm:6.0.17"
-  checksum: 10c0/433dd945c5d4bafd28320dba766b6bf79101527559b2f6d8f037db8c08c48e93117af20929aeb262171d3dfd037d8d802d322d65e6a6f19c49396243c0382f2e
+"@mdn/browser-compat-data@npm:^6.0.19":
+  version: 6.0.19
+  resolution: "@mdn/browser-compat-data@npm:6.0.19"
+  checksum: 10c0/41dd30d2b62cf5bcc5cfc12fef5370ece51f36ad83e4b03e126d7a3949a4456b104e6cc302f04c7ad6c3f516ba0bed0ebfc4380fbb373f4bbb949ebc1e514f5f
   languageName: node
   linkType: hard
 
@@ -1265,7 +1265,7 @@ __metadata:
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
     prettier: "npm:^3.5.3"
-    puppeteer: "npm:^24.9.0"
+    puppeteer: "npm:^24.10.0"
   languageName: unknown
   linkType: soft
 
@@ -1399,7 +1399,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
-    "@mdn/browser-compat-data": "npm:^6.0.17"
+    "@mdn/browser-compat-data": "npm:^6.0.19"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
     browserslist: "npm:^4.24.5"
@@ -2406,7 +2406,7 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     prettier: "npm:^3.5.3"
-    puppeteer: "npm:^24.9.0"
+    puppeteer: "npm:^24.10.0"
   languageName: unknown
   linkType: soft
 
@@ -2455,7 +2455,7 @@ __metadata:
     "@microsoft/api-extractor": "npm:^7.52.8"
     "@siteimprove/alfa-toolchain": "workspace:^0.103.3"
     "@types/node": "npm:^22.15.29"
-    knip: "npm:^5.58.0"
+    knip: "npm:^5.59.1"
     minimist: "npm:^1.2.6"
     package-dependency-graph: "npm:^1.14.4"
     prettier: "npm:^3.5.3"
@@ -3755,10 +3755,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devtools-protocol@npm:0.0.1439962":
-  version: 0.0.1439962
-  resolution: "devtools-protocol@npm:0.0.1439962"
-  checksum: 10c0/fb25e6731262ee47aa4764b6711670d29fcdfc6487882c0c9583083714b60153d3748c9195f50290cdfb9fae2f34547b67743a94132d586b3cf56324f7c683da
+"devtools-protocol@npm:0.0.1452169":
+  version: 0.0.1452169
+  resolution: "devtools-protocol@npm:0.0.1452169"
+  checksum: 10c0/01adda82c83209d1151684671b0d3ee6265a3b026240808265c1fea6654c84d3d47a1284e1961a45d8cf5344614cb0723fe3cadc31cea3477a7797bbcd1e466a
   languageName: node
   linkType: hard
 
@@ -4960,9 +4960,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.58.0":
-  version: 5.58.0
-  resolution: "knip@npm:5.58.0"
+"knip@npm:^5.59.1":
+  version: 5.59.1
+  resolution: "knip@npm:5.59.1"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -4983,7 +4983,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/46586ff6cca323da5f07ea6fa8bdba41562b6c06716e0c1e27ffd08a69221bcb7356e21c40e1d6bcfeb8bd646a2be91d8113fabd22938f36d4ee5bd22bf86a58
+  checksum: 10c0/5ab2bea2f79c4ff3390c2105e6d9dcc7a5cdeb62a3dba8fe5d1b7a4d8038e3aeeac9f35bbbaf3c431c52b4d042653c52d1f200b4c98a3d3a61bcc698279c8a3b
   languageName: node
   linkType: hard
 
@@ -6008,33 +6008,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:24.9.0":
-  version: 24.9.0
-  resolution: "puppeteer-core@npm:24.9.0"
+"puppeteer-core@npm:24.10.0":
+  version: 24.10.0
+  resolution: "puppeteer-core@npm:24.10.0"
   dependencies:
     "@puppeteer/browsers": "npm:2.10.5"
     chromium-bidi: "npm:5.1.0"
     debug: "npm:^4.4.1"
-    devtools-protocol: "npm:0.0.1439962"
+    devtools-protocol: "npm:0.0.1452169"
     typed-query-selector: "npm:^2.12.0"
     ws: "npm:^8.18.2"
-  checksum: 10c0/23be59a906799b7233e1866ba19bd1d2349588440f89eaea0362743a5481f19b81f83e3e1b56d5ad73e9cf8a230bc27fe56539a87070da58ee8d82886c76a900
+  checksum: 10c0/1e2f0251e6f6c7890de14a2158264e437e2055ede6e6b5082c41c62058459dce8785f67f2afaff9b244ac049bd9b6ac882acabfeb4c262d5407149792174c002
   languageName: node
   linkType: hard
 
-"puppeteer@npm:^24.9.0":
-  version: 24.9.0
-  resolution: "puppeteer@npm:24.9.0"
+"puppeteer@npm:^24.10.0":
+  version: 24.10.0
+  resolution: "puppeteer@npm:24.10.0"
   dependencies:
     "@puppeteer/browsers": "npm:2.10.5"
     chromium-bidi: "npm:5.1.0"
     cosmiconfig: "npm:^9.0.0"
-    devtools-protocol: "npm:0.0.1439962"
-    puppeteer-core: "npm:24.9.0"
+    devtools-protocol: "npm:0.0.1452169"
+    puppeteer-core: "npm:24.10.0"
     typed-query-selector: "npm:^2.12.0"
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: 10c0/141845e6a9c37366a23d417cc013a1f3e1b8cf57cf8320dfe2161641ac7f8f88a371940f8def4f2022f2fef8f244985360af315bdd1daec3e35be3bb235425f1
+  checksum: 10c0/cb847acffcc997b0ed3cf22c37620e458cb47451b47ef098b19abdee3d510dee2849274073222c5793eb601ed313373fab049b41780a510c766bdf1055e982ce
   languageName: node
   linkType: hard
 
