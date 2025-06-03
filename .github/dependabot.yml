@@ -10,8 +10,6 @@ updates:
     labels:
       - "npm"
       - "dependencies"
-    reviewers:
-      - "Siteimprove/alfa-owners"
 
     groups:
       production-patch: # Patch updates to production packages. Low risk.
@@ -45,8 +43,6 @@ updates:
     labels:
       - "npm"
       - "dependencies"
-    reviewers:
-      - "Siteimprove/alfa-owners"
 
     groups:
       security-update:
@@ -67,5 +63,3 @@ updates:
     labels:
       - "actions"
       - "dependencies"
-    reviewers:
-      - "Siteimprove/alfa-owners"
