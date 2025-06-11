@@ -25,8 +25,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
     Technique.of("G88"),
     Technique.of("H25"),
   ],
-  tags: [Scope.Page, Stability.Experimental],
-  evaluate({ document }) {
+  tags: [Scope.Component, Stability.Stable],
+  evaluate({ device, document }) {
     return {
       applicability() {
         return Query.getElementDescendants(document)
