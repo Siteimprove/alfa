@@ -52,8 +52,8 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^",
-    "prettier": "^3.5.3",
-    "puppeteer": "^24.10.0"
+    "prettier": "^3.6.2",
+    "puppeteer": "^24.11.1"
   },
   "publishConfig": {
     "access": "public",
