@@ -266,7 +266,7 @@ export namespace Question {
     // R117 (experimental)
     "is-image-accessible-name-descriptive": {
       type: "boolean",
-      message: "Does the accessible name of this element describe the image?",
+      message: "Does the accessible name of this element present the same information as the image?",
     },
   } as const;
 }
