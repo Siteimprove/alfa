@@ -19,7 +19,7 @@ jobs:
     name: Build
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-2019]
+        os: [ubuntu-latest, windows-2022]
         node: [20]
     runs-on: ${{ matrix.os }}
     steps:
