@@ -398,7 +398,7 @@ export namespace Question {
         };
         readonly "is-image-accessible-name-descriptive": {
             readonly type: "boolean";
-            readonly message: "Does the accessible name of this element describe the image?";
+            readonly message: "Does the accessible name of this element present the same information as the image?";
         };
     };
         {};
