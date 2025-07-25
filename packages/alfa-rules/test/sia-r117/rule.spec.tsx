@@ -257,3 +257,14 @@ test("evaluate() is inapplicable to img element because it is a child of a link 
 
   t.deepEqual(await evaluate(R117, { document }), [inapplicable(R117)]);
 });
+
+test("evaluate() is inapplicable to img element because it is a child of a link that provides its accessible name using aria-labelledby", async (t) => {
+  const document = h.document([
+    <a href="https://w3.org" aria-labelledby="w3c-website">
+      <img src="/test-assets/shared/w3c-logo.png" alt="ERCIM logo" />
+    </a>,
+    <div id="w3c-website">W3C Website</div>,
+  ]);
+
+  t.deepEqual(await evaluate(R117, { document }), [inapplicable(R117)]);
+});

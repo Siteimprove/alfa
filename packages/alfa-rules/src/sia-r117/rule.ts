@@ -39,7 +39,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
        * doesn't exist).
        *
        * Regarding the first condition, we recurse the DOM and stop descending as soon as we encounter an element named
-       * from author. For now, it's assumed that an element is named from author if the name has a source of type "label".
+       * from author. For now, it's assumed that an element is named from author if the name has a source of type
+       * "label" or "reference".
        *
        * The second condition is not possible to check in Alfa, but we can ask it as a question in the applicability.
        * We could ask "is the image available?" or similar and if the answer is no, the rule will not apply.
@@ -54,7 +55,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
         );
 
         const namedFromAuthor = hasAccessibleName(device, (name) =>
-          name.source.some(({ type }) => type === "label"),
+          name.source.some(
+            ({ type }) => type === "label" || type === "reference",
+          ),
         );
 
         function visit(node: Node) {
