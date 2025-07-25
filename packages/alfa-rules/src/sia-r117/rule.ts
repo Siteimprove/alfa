@@ -35,24 +35,49 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
       /**
        * @remarks
        * In the ACT rule, an element is **not** applicable if it has an ancestor in the flat tree that is named from
-       * author, or it is an img element where the current request's state is not completely available (e.g. if the image
+       * author, or it is an img element where the current request's state is "not completely available" (e.g. if the image
        * doesn't exist).
        *
-       * Regarding the first condition, we could recurse the DOM and stop descending as
-       * soon as we encounter an element named from author. I'm not yet sure how to determine if an element is named
-       * from author, but I think we can use `Name.source`.
+       * Regarding the first condition, we recurse the DOM and stop descending as soon as we encounter an element named
+       * from author. For now, it's assumed that an element is named from author if the name has a source of type "label".
        *
-       * I don't think the second condition is possible to check in Alfa, and I'm not sure if we want
-       * to ask a question about it.
+       * The second condition is not possible to check in Alfa, but we can ask it as a question in the applicability.
+       * We could ask "is the image available?" or similar and if the answer is no, the rule will not apply.
        */
       applicability() {
-        return Query.getElementDescendants(document, Node.fullTree).filter(
-          and(
-            or(hasName("img"), hasName("canvas"), hasName("svg")),
-            isVisible(device),
-            hasAccessibleName(device),
-          ),
+        let targets: Array<Element> = [];
+
+        const applicable = and(
+          or(hasName("img"), hasName("canvas"), hasName("svg")),
+          isVisible(device),
+          hasAccessibleName(device),
         );
+
+        const namedFromAuthor = hasAccessibleName(device, (name) =>
+          name.source.some(({ type }) => type === "label"),
+        );
+
+        function visit(node: Node) {
+          if (Element.isElement(node)) {
+            if (applicable(node)) {
+              targets.push(node);
+              return;
+            }
+
+            // if an element is named from author, its descendants are not applicable so we can stop descending
+            if (namedFromAuthor(node)) {
+              return;
+            }
+          }
+
+          for (const child of node.children(Node.fullTree)) {
+            visit(child);
+          }
+        }
+
+        visit(document);
+
+        return targets;
       },
 
       expectations(target) {

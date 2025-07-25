@@ -247,3 +247,13 @@ test("evaluate() is inapplicable to img element that has no accessible name beca
 
   t.deepEqual(await evaluate(R117, { document }), [inapplicable(R117)]);
 });
+
+test("evaluate() is inapplicable to img element because it is a child of a link that provides its accessible name", async (t) => {
+  const document = h.document([
+    <a href="https://w3.org" aria-label="W3C Website">
+      <img src="/test-assets/shared/w3c-logo.png" alt="ERCIM logo" />
+    </a>,
+  ]);
+
+  t.deepEqual(await evaluate(R117, { document }), [inapplicable(R117)]);
+});
