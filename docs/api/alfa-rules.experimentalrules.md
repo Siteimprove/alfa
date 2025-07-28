@@ -72,6 +72,17 @@ This rule always asks Whether the heading is descriptive. This is not a nice exp
 </td></tr>
 <tr><td>
 
+[R117](./alfa-rules.experimentalrules.r117.md)
+
+
+</td><td>
+
+This rule always asks whether the image accessible name is descriptive. This is not a nice experience for the end user and shouldn't be used until backend can automatically determine the answer.
+
+
+</td></tr>
+<tr><td>
+
 [R82](./alfa-rules.experimentalrules.r82.md)
 
 

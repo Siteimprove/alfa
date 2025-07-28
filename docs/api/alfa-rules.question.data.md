@@ -152,5 +152,9 @@ Data: {
             readonly type: "boolean";
             readonly message: "Does this heading describe the following content?";
         };
+        readonly "is-image-accessible-name-descriptive": {
+            readonly type: "boolean";
+            readonly message: "Does the accessible name of this element present the same information as the image?";
+        };
     }
 ```

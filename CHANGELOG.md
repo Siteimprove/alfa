@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.104.0](../../compare/v0.103.3...v0.104.0) (2025-07-28)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01040): A new experimental rule SIA-R117: "Image accessible name is descriptive" is now available. ([#1845](https://github.com/Siteimprove/alfa/pull/1845))
+
 ## [0.103.3](../../compare/v0.103.2...v0.103.3) (2025-05-16)
 
 ### Fixed

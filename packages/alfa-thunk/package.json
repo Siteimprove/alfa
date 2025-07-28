@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-thunk",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.103.3",
+  "version": "0.104.0",
   "license": "MIT",
   "description": "Functionality for working with thunks, which are computations that are delayed until needed",
   "repository": {
