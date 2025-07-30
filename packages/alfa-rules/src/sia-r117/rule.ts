@@ -86,14 +86,21 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
       expectations(target) {
         const accName = WithName.getName(target, device).getUnsafe(); // Existence of accessible name is guaranteed by applicability
 
+        const message = "Does the accessible name describe the image?";
         return {
-          1: Question.of("is-image-accessible-name-descriptive", target).map(
-            (descriptive) =>
-              expectation(
-                descriptive,
-                () => Outcomes.ImageAccessibleNameIsDescriptive(accName),
-                () => Outcomes.ImageAccessibleNameIsNotDescriptive(accName),
-              ),
+          1: Question.of(
+            "is-image-accessible-name-descriptive",
+            target,
+            message,
+            {
+              diagnostic: WithName.of(message, accName),
+            },
+          ).map((descriptive) =>
+            expectation(
+              descriptive,
+              () => Outcomes.ImageAccessibleNameIsDescriptive(accName),
+              () => Outcomes.ImageAccessibleNameIsNotDescriptive(accName),
+            ),
           ),
         };
       },

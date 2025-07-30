@@ -3,6 +3,7 @@ import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import R117, { Outcomes } from "../../dist/sia-r117/rule.js";
+import { WithName } from "../../dist/common/diagnostic.js";
 
 import { evaluate } from "../common/evaluate.js";
 import { oracle } from "../common/oracle.js";
@@ -99,7 +100,13 @@ test("evaluate() cannot tell if questions are left unanswered", async (t) => {
     await evaluate(R117, {
       document: h.document([img]),
     }),
-    [cantTell(R117, img)],
+    [
+      cantTell(
+        R117,
+        img,
+        WithName.of("Does the accessible name describe the image?", altText),
+      ),
+    ],
   );
 });
 
