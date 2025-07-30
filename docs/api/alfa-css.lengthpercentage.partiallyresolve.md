@@ -45,6 +45,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 (value: [LengthPercentage](./alfa-css.lengthpercentage.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.lengthpercentage.partiallyresolved.md)

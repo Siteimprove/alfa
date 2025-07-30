@@ -95,6 +95,7 @@ _(Optional)_ Maximum number of items to parse, defaults to Infinity
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, \[T, ...Array&lt;T&gt;\], E, A&gt;

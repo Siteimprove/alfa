@@ -45,6 +45,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 (value: [LengthPercentage](./alfa-css.lengthpercentage.md)<!-- -->) =&gt; [Canonical](./alfa-css.lengthpercentage.canonical.md)

@@ -87,6 +87,7 @@ mode
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Failed](./alfa-act.outcome.failed.md)<!-- -->&lt;I, T, Q, S&gt;

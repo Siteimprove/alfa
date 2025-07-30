@@ -43,6 +43,7 @@ Uint8Array
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

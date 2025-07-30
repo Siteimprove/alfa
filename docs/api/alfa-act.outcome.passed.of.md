@@ -87,6 +87,7 @@ mode
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt;

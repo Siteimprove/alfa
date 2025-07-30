@@ -43,6 +43,7 @@ Result&lt;ANSWER, unknown&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;

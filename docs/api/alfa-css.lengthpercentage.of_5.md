@@ -43,6 +43,7 @@ Math&lt;"length-percentage"&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Calculated](./alfa-css.lengthpercentage.calculated.md)

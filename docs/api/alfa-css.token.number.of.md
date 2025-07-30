@@ -71,6 +71,7 @@ boolean
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Number](./alfa-css.token.number.md)

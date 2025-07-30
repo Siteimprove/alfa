@@ -71,3 +71,4 @@ Checks that a package.json file has the correct fields and structure.
 
 </td></tr>
 </tbody></table>
+

@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.104.1](../../compare/v0.104.0...v0.104.1) (2025-07-30)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01041): SIA-R117 now sends diagnostic data as part of its question. ([#1848](https://github.com/Siteimprove/alfa/pull/1848))
+
 ## [0.104.0](../../compare/v0.103.3...v0.104.0) (2025-07-28)
 
 ### Added

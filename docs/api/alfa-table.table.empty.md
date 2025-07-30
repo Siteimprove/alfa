@@ -43,6 +43,7 @@ Element
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Table](./alfa-table.table.md)

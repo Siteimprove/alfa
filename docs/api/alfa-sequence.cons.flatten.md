@@ -43,6 +43,7 @@ Sequence&lt;Sequence&lt;T&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Sequence&lt;T&gt;

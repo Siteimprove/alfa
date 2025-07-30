@@ -57,6 +57,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Attribute](./alfa-aria.attribute.md)<!-- -->&lt;N&gt;

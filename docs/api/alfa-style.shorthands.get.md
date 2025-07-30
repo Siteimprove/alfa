@@ -43,6 +43,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Property](./alfa-style.shorthands.property.md)<!-- -->\[N\]

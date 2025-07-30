@@ -57,6 +57,7 @@ Thunk&lt;Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;

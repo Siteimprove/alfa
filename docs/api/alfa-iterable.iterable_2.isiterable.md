@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;

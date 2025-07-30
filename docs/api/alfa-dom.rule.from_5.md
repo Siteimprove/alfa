@@ -43,6 +43,7 @@ json
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Layer.StatementRule](./alfa-dom.layer.statementrule.md)

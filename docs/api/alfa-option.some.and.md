@@ -43,6 +43,7 @@ Option&lt;U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;U&gt;

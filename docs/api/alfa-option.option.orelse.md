@@ -43,6 +43,7 @@ Thunk&lt;[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;T \| U&gt;

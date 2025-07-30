@@ -89,6 +89,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Request](./alfa-http.request.md)

@@ -59,6 +59,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;

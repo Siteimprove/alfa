@@ -43,6 +43,7 @@ thenable
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E \| F&gt;

@@ -43,6 +43,7 @@ Refinement&lt;V, U, \[key: K\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, Exclude&lt;V, U&gt;&gt;

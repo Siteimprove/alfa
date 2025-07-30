@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Serializable](./alfa-sarif.serializable.md)<!-- -->&lt;T&gt;

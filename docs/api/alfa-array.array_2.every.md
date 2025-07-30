@@ -57,6 +57,7 @@ Refinement&lt;T, U, \[index: number\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 array is [Array](./alfa-array.array_2.md)<!-- -->&lt;U&gt;

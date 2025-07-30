@@ -43,6 +43,7 @@ Device
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Predicate&lt;[MediaRule](./alfa-dom.mediarule.md)<!-- -->&gt;

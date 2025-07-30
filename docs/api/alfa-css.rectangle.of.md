@@ -85,6 +85,7 @@ O
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Rectangle](./alfa-css.rectangle.md)<!-- -->&lt;O&gt;

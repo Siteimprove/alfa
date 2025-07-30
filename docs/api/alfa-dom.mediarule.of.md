@@ -57,6 +57,7 @@ Iterable&lt;Rule&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [MediaRule](./alfa-dom.mediarule.md)

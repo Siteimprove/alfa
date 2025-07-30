@@ -59,6 +59,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Value](./alfa-style.value.md)<!-- -->&lt;T&gt;

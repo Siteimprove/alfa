@@ -57,6 +57,7 @@ ReadonlyArray&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Array](./alfa-array.array_2.md)<!-- -->&lt;U&gt;

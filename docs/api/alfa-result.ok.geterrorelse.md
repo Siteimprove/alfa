@@ -43,6 +43,7 @@ Callback&lt;T, F&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 F

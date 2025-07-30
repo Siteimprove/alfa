@@ -43,6 +43,7 @@ Array&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [List](./alfa-selector.list.md)<!-- -->&lt;T&gt;

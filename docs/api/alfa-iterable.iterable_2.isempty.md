@@ -43,6 +43,7 @@ iterable
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 iterable is [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;never&gt;

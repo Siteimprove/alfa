@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [CloseParenthesis](./alfa-css.token.closeparenthesis.md)

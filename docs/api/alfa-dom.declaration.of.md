@@ -73,6 +73,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Declaration](./alfa-dom.declaration.md)

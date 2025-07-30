@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Applicative](./alfa-applicative.applicative.md)<!-- -->&lt;U&gt;

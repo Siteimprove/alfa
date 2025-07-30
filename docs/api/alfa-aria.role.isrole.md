@@ -59,6 +59,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Role](./alfa-aria.role.md)<!-- -->&lt;[Name](./alfa-aria.role.name.md)<!-- -->&gt;

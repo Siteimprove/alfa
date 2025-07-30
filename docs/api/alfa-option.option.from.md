@@ -43,6 +43,7 @@ T \| null \| undefined
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;NonNullable&lt;T&gt;&gt;

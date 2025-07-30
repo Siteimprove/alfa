@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.104.1
+
+### Patch Changes
+
+- **Fixed:** SIA-R117 now sends diagnostic data as part of its question. ([#1848](https://github.com/Siteimprove/alfa/pull/1848))
+
 ## 0.104.0
 
 ### Minor Changes

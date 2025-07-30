@@ -57,6 +57,7 @@ Callback&lt;T, void, \[result: boolean, ...args: A\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;

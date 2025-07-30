@@ -45,6 +45,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;[Value](./alfa-style.value.md)<!-- -->&lt;[Style.Computed](./alfa-style.style.computed.md)<!-- -->&lt;N&gt;&gt;&gt;

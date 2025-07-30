@@ -47,6 +47,7 @@ Array&lt;[Rectangle](./alfa-rectangle.rectangle.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Sequence&lt;[Rectangle](./alfa-rectangle.rectangle.md)<!-- -->&gt;

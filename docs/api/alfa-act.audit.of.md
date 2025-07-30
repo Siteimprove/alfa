@@ -73,6 +73,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Audit](./alfa-act.audit.md)<!-- -->&lt;I, T, Q, S&gt;

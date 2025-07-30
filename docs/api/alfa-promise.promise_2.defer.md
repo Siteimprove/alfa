@@ -43,6 +43,7 @@ Continuation&lt;T, void, \[reject: Callback&lt;unknown&gt;\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;

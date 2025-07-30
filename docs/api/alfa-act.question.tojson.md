@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Question.JSON](./alfa-act.question.json.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, URI&gt;

@@ -71,6 +71,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Measure](./alfa-performance.performance.measure.md)<!-- -->&lt;T&gt;

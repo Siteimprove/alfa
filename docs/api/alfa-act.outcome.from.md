@@ -87,6 +87,7 @@ mode
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Outcome.Applicable](./alfa-act.outcome.applicable.md)<!-- -->&lt;I, T, Q, S&gt;

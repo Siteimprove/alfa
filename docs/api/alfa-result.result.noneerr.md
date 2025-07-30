@@ -43,6 +43,7 @@ Refinement&lt;E, F&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this is [Result](./alfa-result.result.md)<!-- -->&lt;T, Exclude&lt;E, F&gt;&gt;

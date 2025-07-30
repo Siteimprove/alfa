@@ -57,6 +57,7 @@ comparer
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;

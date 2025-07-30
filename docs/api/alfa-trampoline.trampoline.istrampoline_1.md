@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;

@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;

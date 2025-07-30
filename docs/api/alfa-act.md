@@ -243,3 +243,4 @@ The QUESTION type maps questions' URI to the expected type of answer, both as a 
 
 </td></tr>
 </tbody></table>
+

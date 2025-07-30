@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Node.JSON](./alfa-tree.node.json.md)<!-- -->&lt;T&gt;

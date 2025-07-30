@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 unit is [Time](./alfa-css.unit.time.md)

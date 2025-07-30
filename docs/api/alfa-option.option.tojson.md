@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;T&gt;

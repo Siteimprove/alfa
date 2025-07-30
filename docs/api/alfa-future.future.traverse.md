@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;U&gt;&gt;

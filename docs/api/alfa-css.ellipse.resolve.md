@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Ellipse.Canonical](./alfa-css.ellipse.canonical.md)

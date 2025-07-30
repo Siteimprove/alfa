@@ -113,6 +113,7 @@ boolean
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Shadow](./alfa-css.shadow.md)<!-- -->&lt;H, V, B, S, C&gt;

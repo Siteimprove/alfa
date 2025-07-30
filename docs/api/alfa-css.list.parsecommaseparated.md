@@ -75,6 +75,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[List](./alfa-css.list.md)<!-- -->&lt;V&gt;&gt;

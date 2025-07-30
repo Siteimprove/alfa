@@ -43,6 +43,7 @@ T
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;

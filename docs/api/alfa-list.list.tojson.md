@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [List.JSON](./alfa-list.list.json.md)<!-- -->&lt;T&gt;

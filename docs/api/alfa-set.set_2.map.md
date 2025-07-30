@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Set](./alfa-set.set_2.md)<!-- -->&lt;U&gt;

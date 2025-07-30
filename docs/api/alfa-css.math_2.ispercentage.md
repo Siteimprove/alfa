@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Math](./alfa-css.math_2.md)<!-- -->&lt;"percentage"&gt;

@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 feature is [Name](./alfa-compatibility.feature.name.md)

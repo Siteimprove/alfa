@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Cons](./alfa-sequence.cons.md)<!-- -->&lt;U&gt;

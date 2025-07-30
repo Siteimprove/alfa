@@ -43,6 +43,7 @@ Callback&lt;L&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Left](./alfa-either.left.md)<!-- -->&lt;L&gt;

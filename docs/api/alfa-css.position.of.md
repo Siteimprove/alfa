@@ -57,6 +57,7 @@ VC
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Position](./alfa-css.position.md)<!-- -->&lt;H, V, HC, VC&gt;

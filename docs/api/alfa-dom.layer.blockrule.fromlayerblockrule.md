@@ -43,6 +43,7 @@ json
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Trampoline&lt;[BlockRule](./alfa-dom.layer.blockrule.md)<!-- -->&gt;

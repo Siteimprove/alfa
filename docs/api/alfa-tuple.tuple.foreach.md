@@ -57,6 +57,7 @@ Callback&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, void, \[index: 
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 void

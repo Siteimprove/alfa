@@ -43,6 +43,7 @@ Thunk&lt;Promise&lt;T&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Promise&lt;[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;&gt;

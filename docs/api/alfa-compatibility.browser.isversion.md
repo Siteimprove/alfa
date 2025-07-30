@@ -57,6 +57,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 version is [Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;N&gt;

@@ -59,6 +59,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Tag](./alfa-act.tag.md)<!-- -->&lt;T&gt;

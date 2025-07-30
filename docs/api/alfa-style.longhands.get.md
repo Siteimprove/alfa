@@ -43,6 +43,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Property](./alfa-style.longhands.property.md)<!-- -->\[TrueName&lt;N&gt;\]

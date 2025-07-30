@@ -43,6 +43,7 @@ Refinement&lt;T, U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this is [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;

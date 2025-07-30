@@ -43,6 +43,7 @@ Device
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Predicate&lt;[ImportRule](./alfa-dom.importrule.md)<!-- -->&gt;

@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [AnglePercentage](./alfa-css.anglepercentage.md)

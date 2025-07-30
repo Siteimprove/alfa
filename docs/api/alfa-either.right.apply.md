@@ -43,6 +43,7 @@ Either&lt;L, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Either&lt;L, T&gt;

@@ -68,3 +68,4 @@ Array&lt;[Node.JSON](./alfa-cascade.ruletree.node.json.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

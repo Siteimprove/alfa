@@ -105,6 +105,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Attribute](./alfa-selector.attribute.md)

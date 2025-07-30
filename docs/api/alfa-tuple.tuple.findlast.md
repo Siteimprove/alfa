@@ -57,6 +57,7 @@ Refinement&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: n
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;U&gt;

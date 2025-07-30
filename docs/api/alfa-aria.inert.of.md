@@ -43,6 +43,7 @@ owner
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Inert](./alfa-aria.inert.md)

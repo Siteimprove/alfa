@@ -47,6 +47,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;K, F&gt;&gt;

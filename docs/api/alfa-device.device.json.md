@@ -119,3 +119,4 @@ Array&lt;[Preference.JSON](./alfa-device.preference.json.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

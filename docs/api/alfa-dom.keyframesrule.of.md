@@ -57,6 +57,7 @@ Iterable&lt;Rule&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [KeyframesRule](./alfa-dom.keyframesrule.md)

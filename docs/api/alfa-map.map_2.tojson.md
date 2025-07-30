@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Map.JSON](./alfa-map.map_2.json.md)<!-- -->&lt;K, V&gt;

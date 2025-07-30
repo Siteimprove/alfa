@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [RNGFactory](./alfa-rng.rngfactory.md)<!-- -->&lt;U&gt;

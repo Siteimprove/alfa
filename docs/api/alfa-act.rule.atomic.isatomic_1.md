@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Atomic](./alfa-act.rule.atomic.md)<!-- -->&lt;I, T, Q, S&gt;

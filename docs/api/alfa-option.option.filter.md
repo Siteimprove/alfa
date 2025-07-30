@@ -43,6 +43,7 @@ Refinement&lt;T, U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;

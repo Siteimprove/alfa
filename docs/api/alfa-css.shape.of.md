@@ -57,6 +57,7 @@ B
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Shape](./alfa-css.shape.md)<!-- -->&lt;S, B&gt;

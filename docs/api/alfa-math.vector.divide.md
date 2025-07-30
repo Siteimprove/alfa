@@ -57,6 +57,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Vector](./alfa-math.vector.md)

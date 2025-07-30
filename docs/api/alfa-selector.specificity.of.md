@@ -71,6 +71,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Specificity](./alfa-selector.specificity.md)

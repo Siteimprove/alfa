@@ -59,3 +59,4 @@ Array&lt;[Polygon.Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt;
 
 </td></tr>
 </tbody></table>
+

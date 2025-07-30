@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Radius.PartiallyResolved](./alfa-css.radius.partiallyresolved.md)

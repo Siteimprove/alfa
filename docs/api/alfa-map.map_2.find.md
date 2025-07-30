@@ -43,6 +43,7 @@ Refinement&lt;V, U, \[key: K\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;U&gt;

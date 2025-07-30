@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Set.JSON](./alfa-set.set_2.json.md)<!-- -->&lt;T&gt;

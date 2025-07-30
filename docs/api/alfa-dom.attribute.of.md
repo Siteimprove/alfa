@@ -133,6 +133,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Attribute](./alfa-dom.attribute.md)<!-- -->&lt;N&gt;

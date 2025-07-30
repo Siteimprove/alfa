@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt;

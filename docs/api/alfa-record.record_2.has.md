@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 key is [Record.Key](./alfa-record.record_2.key.md)<!-- -->&lt;T&gt;

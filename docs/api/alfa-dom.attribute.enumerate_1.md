@@ -59,6 +59,7 @@ Array&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;T&gt;

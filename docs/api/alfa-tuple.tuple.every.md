@@ -57,6 +57,7 @@ Predicate&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: numbe
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

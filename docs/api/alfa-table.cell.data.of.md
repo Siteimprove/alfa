@@ -101,6 +101,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Data](./alfa-table.cell.data.md)

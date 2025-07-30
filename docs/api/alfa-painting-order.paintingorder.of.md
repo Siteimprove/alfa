@@ -43,6 +43,7 @@ Iterable&lt;Element&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [PaintingOrder](./alfa-painting-order.paintingorder.md)

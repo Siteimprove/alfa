@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Translate.Canonical](./alfa-css.translate.canonical.md)

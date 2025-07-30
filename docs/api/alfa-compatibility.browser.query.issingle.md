@@ -43,6 +43,7 @@ query
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 query is [Single](./alfa-compatibility.browser.query.single.md)<!-- -->&lt;N&gt;

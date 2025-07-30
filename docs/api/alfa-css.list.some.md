@@ -43,6 +43,7 @@ Predicate&lt;V, \[index: number\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

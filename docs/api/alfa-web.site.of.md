@@ -43,6 +43,7 @@ Graph&lt;R&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Site](./alfa-web.site.md)<!-- -->&lt;R&gt;

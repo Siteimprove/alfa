@@ -71,6 +71,7 @@ A
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Trilean](./alfa-trilean.trilean.md)

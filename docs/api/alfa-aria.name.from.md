@@ -57,6 +57,7 @@ Device
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;[Name](./alfa-aria.name.md)<!-- -->&gt;

@@ -43,6 +43,7 @@ Option&lt;string&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Element](./alfa-xpath.expression.test.element.md)

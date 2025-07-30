@@ -43,6 +43,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;T, R&gt;

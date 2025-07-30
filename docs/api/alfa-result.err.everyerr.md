@@ -43,6 +43,7 @@ Refinement&lt;E, F&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this is Result&lt;never, F&gt;

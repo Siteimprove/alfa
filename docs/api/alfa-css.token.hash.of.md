@@ -57,6 +57,7 @@ boolean
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Hash](./alfa-css.token.hash.md)

@@ -43,6 +43,7 @@ T
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;

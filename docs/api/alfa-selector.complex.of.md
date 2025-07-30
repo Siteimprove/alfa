@@ -71,6 +71,7 @@ Simple \| Compound
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Complex](./alfa-selector.complex.md)

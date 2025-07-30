@@ -71,6 +71,7 @@ ifError
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Exclude&lt;T, U&gt;, E, A&gt;

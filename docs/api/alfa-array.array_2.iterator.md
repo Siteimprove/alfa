@@ -43,6 +43,7 @@ ReadonlyArray&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Iterator&lt;T&gt;

@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Inset.PartiallyResolved](./alfa-css.inset.partiallyresolved.md)

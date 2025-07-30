@@ -43,6 +43,7 @@ Predicate&lt;Attribute&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;Attribute&gt;

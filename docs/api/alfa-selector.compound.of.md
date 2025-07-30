@@ -43,6 +43,7 @@ Array&lt;Simple&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Compound](./alfa-selector.compound.md)

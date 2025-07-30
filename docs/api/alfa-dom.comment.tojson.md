@@ -45,6 +45,7 @@ options
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Comment.MinimalJSON](./alfa-dom.comment.minimaljson.md)

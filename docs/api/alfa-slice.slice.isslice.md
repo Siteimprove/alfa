@@ -43,6 +43,7 @@ Iterable&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;

@@ -43,6 +43,7 @@ Iterable&lt;\[Element, [Context.State](./alfa-selector.context.state.md)<!-- -->
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Context](./alfa-selector.context.md)

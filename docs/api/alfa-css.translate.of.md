@@ -71,6 +71,7 @@ Z
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;

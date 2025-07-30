@@ -43,6 +43,7 @@ bigint
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

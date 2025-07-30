@@ -43,6 +43,7 @@ E
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;never, E&gt;

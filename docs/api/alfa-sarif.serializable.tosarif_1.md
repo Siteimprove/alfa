@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;[SARIF](./alfa-sarif.sarif.md)<!-- -->&gt;

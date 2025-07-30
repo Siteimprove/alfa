@@ -43,6 +43,7 @@ Math&lt;"number"&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Calculated](./alfa-css.number_2.calculated.md)

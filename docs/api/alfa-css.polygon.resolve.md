@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Polygon.Canonical](./alfa-css.polygon.canonical.md)

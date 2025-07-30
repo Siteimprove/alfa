@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;

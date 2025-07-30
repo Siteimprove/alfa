@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 unit is [Canonical](./alfa-css.unit.length.canonical.md)

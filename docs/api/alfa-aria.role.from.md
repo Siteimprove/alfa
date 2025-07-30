@@ -45,6 +45,7 @@ Element
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;[Role](./alfa-aria.role.md)<!-- -->&gt;

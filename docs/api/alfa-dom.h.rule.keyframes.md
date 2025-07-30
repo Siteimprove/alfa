@@ -57,6 +57,7 @@ Array&lt;Rule&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 KeyframesRule

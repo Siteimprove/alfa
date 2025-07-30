@@ -43,6 +43,7 @@ Predicate&lt;T, \[source: Option&lt;Declaration&gt;\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

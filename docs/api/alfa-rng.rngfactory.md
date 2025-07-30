@@ -176,3 +176,4 @@ Create a RNG that returns a number between 0 and 1.
 
 </td></tr>
 </tbody></table>
+

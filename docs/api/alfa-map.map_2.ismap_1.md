@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;

@@ -87,3 +87,4 @@ Array&lt;[Attribute.Name](./alfa-aria.attribute.name.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

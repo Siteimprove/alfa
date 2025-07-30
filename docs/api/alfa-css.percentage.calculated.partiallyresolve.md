@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [PartiallyResolved](./alfa-css.percentage.partiallyresolved.md)<!-- -->&lt;H&gt;

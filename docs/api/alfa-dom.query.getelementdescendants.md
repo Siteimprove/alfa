@@ -59,6 +59,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 import("@siteimprove/alfa-sequence").[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;import("../element.js").Element&lt;string&gt;&gt;

@@ -43,6 +43,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [RNGFactory](./alfa-rng.rngfactory.md)<!-- -->&lt;Array&lt;T&gt;&gt;

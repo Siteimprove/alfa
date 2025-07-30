@@ -43,6 +43,7 @@ Thunk&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;

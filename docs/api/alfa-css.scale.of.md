@@ -57,6 +57,7 @@ Y
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Scale](./alfa-css.scale.md)<!-- -->&lt;X, Y, never&gt;

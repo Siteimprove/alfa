@@ -43,6 +43,7 @@ Callback&lt;E&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;

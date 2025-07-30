@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Inset.Canonical](./alfa-css.inset.canonical.md)

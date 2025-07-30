@@ -43,6 +43,7 @@ Array&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[ToKeywords](./alfa-css.keyword.tokeywords.md)<!-- -->&lt;T&gt;&gt;

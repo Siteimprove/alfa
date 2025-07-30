@@ -47,6 +47,7 @@ options
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Element.JSON](./alfa-dom.element.json.md) &amp; { assignedSlot: [Element.MinimalJSON](./alfa-dom.element.minimaljson.md) \| null; }

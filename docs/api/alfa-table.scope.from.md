@@ -45,6 +45,7 @@ Element
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Scope](./alfa-table.scope.md)

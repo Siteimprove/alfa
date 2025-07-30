@@ -43,6 +43,7 @@ this
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;

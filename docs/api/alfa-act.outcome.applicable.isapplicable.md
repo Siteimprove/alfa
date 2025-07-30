@@ -43,6 +43,7 @@ value
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Applicable](./alfa-act.outcome.applicable.md)<!-- -->&lt;I, T, Q, S&gt;

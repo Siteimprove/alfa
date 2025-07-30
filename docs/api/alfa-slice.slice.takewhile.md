@@ -43,6 +43,7 @@ Refinement&lt;T, U, \[index: number\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;

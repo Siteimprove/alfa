@@ -99,6 +99,7 @@ A
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 V \| W

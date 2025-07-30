@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;T, ToCanonicalUnit\[T\]&gt;

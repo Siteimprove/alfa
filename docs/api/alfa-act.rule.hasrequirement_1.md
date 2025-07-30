@@ -43,6 +43,7 @@ Predicate&lt;Requirement&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

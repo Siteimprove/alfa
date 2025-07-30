@@ -43,6 +43,7 @@ BaseInteger
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Fixed](./alfa-css.integer.fixed.md)

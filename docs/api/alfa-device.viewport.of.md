@@ -75,6 +75,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Viewport](./alfa-device.viewport.md)

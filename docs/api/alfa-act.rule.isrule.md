@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;

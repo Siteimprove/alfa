@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Group.JSON](./alfa-rules.group.json.md)<!-- -->&lt;T&gt;

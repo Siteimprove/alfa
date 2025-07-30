@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [BlockRule](./alfa-dom.layer.blockrule.md)

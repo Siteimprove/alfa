@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [PaintingOrder.JSON](./alfa-painting-order.paintingorder.json.md)

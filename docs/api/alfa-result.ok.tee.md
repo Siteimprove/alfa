@@ -43,6 +43,7 @@ Callback&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;

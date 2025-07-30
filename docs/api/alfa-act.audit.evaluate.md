@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;

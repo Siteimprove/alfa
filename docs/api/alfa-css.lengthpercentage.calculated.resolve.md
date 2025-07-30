@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Canonical](./alfa-css.lengthpercentage.canonical.md)

@@ -43,6 +43,7 @@ Device
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;Rectangle&gt;

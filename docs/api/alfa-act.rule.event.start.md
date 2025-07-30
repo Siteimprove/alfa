@@ -57,6 +57,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S, "start", N&gt;

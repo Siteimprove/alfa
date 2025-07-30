@@ -43,6 +43,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt;

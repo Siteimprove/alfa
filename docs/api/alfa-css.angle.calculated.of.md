@@ -43,6 +43,7 @@ Math&lt;"angle"&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Calculated](./alfa-css.angle.calculated.md)

@@ -43,6 +43,7 @@ Predicate&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;

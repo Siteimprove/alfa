@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Namespace](./alfa-dom.namespace.md)

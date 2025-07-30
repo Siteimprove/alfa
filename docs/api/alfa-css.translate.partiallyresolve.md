@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Translate.PartiallyResolved](./alfa-css.translate.partiallyresolved.md)

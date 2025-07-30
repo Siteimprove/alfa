@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Shadow.Canonical](./alfa-css.shadow.canonical.md)

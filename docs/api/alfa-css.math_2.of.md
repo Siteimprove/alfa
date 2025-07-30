@@ -43,6 +43,7 @@ expression
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Math](./alfa-css.math_2.md)

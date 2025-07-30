@@ -188,3 +188,4 @@ The different versions of the WCAG.
 
 </td></tr>
 </tbody></table>
+

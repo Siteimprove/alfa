@@ -57,6 +57,7 @@ Iterable&lt;U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)

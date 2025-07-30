@@ -43,6 +43,7 @@ Text
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Data](./alfa-aria.source.data.md)

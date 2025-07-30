@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Circle.Canonical](./alfa-css.circle.canonical.md)

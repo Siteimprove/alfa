@@ -43,6 +43,7 @@ Iterable&lt;Declaration&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Block](./alfa-dom.block.md)

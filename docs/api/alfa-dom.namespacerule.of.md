@@ -57,6 +57,7 @@ Option&lt;string&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [NamespaceRule](./alfa-dom.namespacerule.md)

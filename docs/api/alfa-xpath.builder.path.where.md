@@ -43,6 +43,7 @@ predicate
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Path](./alfa-xpath.builder.path.md)

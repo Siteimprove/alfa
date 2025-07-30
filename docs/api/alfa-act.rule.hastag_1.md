@@ -43,6 +43,7 @@ Predicate&lt;Tag&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-mapper
 
+## 0.104.1
+
 ## 0.104.0
 
 ## 0.103.3

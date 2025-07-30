@@ -57,6 +57,7 @@ Simple \| Compound \| Complex
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Relative](./alfa-selector.relative.md)

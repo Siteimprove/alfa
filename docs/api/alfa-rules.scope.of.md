@@ -43,6 +43,7 @@ S
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Scope](./alfa-rules.scope.md)<!-- -->&lt;S&gt;

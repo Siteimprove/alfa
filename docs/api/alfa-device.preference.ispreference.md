@@ -59,6 +59,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;

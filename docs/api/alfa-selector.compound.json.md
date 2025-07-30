@@ -52,3 +52,4 @@ Array&lt;[Simple.JSON](./alfa-selector.simple.json.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

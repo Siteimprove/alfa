@@ -71,6 +71,7 @@ Array&lt;E&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;

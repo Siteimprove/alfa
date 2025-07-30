@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;

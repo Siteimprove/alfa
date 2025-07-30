@@ -57,6 +57,7 @@ browser
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 browser is [Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->&lt;N&gt;

@@ -43,6 +43,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Role](./alfa-aria.role.md)<!-- -->&lt;N&gt;

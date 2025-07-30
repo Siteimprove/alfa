@@ -58,6 +58,7 @@ Array&lt;string&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Predicate&lt;Name&gt;

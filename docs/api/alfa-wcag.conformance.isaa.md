@@ -47,6 +47,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Refinement&lt;Criterion, Criterion&lt;[AA](./alfa-wcag.conformance.aa.md)<!-- -->&lt;V&gt;&gt;&gt;

@@ -43,6 +43,7 @@ Iterable&lt;readonly \[N, Iterable&lt;readonly \[N, Iterable&lt;E&gt;\]&gt;\]&gt
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;

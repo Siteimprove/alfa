@@ -47,6 +47,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Sequence&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;

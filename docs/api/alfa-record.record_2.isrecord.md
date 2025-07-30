@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Record](./alfa-record.record_2.md)<!-- -->&lt;T&gt;

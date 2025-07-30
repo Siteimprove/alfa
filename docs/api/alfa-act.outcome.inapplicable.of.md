@@ -57,6 +57,7 @@ mode
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Inapplicable](./alfa-act.outcome.inapplicable.md)<!-- -->&lt;I, T, Q, S&gt;

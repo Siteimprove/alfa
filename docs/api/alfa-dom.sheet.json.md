@@ -85,3 +85,4 @@ Array&lt;[Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

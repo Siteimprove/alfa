@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Emitter](./alfa-emitter.emitter.md)<!-- -->&lt;U&gt;

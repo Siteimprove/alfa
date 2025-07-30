@@ -45,6 +45,7 @@ target
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 (...args: Args) =&gt; Return

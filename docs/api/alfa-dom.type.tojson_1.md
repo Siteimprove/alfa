@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Type.JSON](./alfa-dom.type.json.md)<!-- -->&lt;N&gt;

@@ -45,6 +45,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;

@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [CantTell.JSON](./alfa-act.outcome.canttell.json.md)<!-- -->&lt;T&gt;

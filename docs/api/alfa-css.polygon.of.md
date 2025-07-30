@@ -57,6 +57,7 @@ Iterable&lt;[Polygon.Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Polygon](./alfa-css.polygon.md)<!-- -->&lt;F, V&gt;

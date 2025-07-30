@@ -43,6 +43,7 @@ Array&lt;string&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Layer.StatementRule](./alfa-dom.layer.statementrule.md)

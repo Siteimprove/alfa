@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Calculated](./alfa-css.anglepercentage.calculated.md) \| [Angle.Calculated](./alfa-css.angle.calculated.md) \| [Percentage.Calculated](./alfa-css.percentage.calculated.md)

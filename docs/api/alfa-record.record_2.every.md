@@ -43,6 +43,7 @@ Predicate&lt;[Record.Value](./alfa-record.record_2.value.md)<!-- -->&lt;T&gt;, \
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

@@ -73,6 +73,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [StyleRule](./alfa-dom.stylerule.md)

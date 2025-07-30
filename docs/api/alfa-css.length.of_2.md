@@ -43,6 +43,7 @@ Math&lt;"length"&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Calculated](./alfa-css.length.calculated.md)

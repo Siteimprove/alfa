@@ -43,6 +43,7 @@ this
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;

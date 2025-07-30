@@ -1,5 +1,7 @@
 # @siteimprove/alfa-string
 
+## 0.104.1
+
 ## 0.104.0
 
 ## 0.103.3
@@ -17,7 +19,6 @@
 ### Patch Changes
 
 - **Fixed:** `String.hasSoftWrapOpportunity` is now more strict in what it accepts. ([#1784](https://github.com/Siteimprove/alfa/pull/1784))
-
   - Non-breaking spaces are not considered soft wrap opportunities anymore.
   - Punctuation other than always visible hyphens (U+002D - HYPHEN-MINUS and U+2010 ‐ HYPHEN) are not considered soft wrap opportunities anymore.
 

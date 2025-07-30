@@ -43,6 +43,7 @@ result
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E \| F&gt;

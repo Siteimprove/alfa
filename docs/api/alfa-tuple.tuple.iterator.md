@@ -43,6 +43,7 @@ T
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Iterator&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;&gt;

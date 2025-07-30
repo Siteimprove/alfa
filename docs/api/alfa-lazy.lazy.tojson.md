@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Lazy.JSON](./alfa-lazy.lazy.json.md)<!-- -->&lt;T&gt;

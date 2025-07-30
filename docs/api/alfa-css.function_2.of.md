@@ -57,6 +57,7 @@ Iterable&lt;Token&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Function](./alfa-css.function_2.md)

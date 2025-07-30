@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Sequence.JSON](./alfa-sequence.sequence.json.md)<!-- -->&lt;T&gt;

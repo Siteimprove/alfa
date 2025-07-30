@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Record.JSON](./alfa-record.record_2.json.md)<!-- -->&lt;T&gt;

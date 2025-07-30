@@ -43,6 +43,7 @@ Thunk&lt;Result&lt;U, F&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;U, F&gt;

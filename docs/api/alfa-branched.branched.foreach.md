@@ -43,6 +43,7 @@ Callback&lt;T, void, \[Iterable&lt;B&gt;\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 void

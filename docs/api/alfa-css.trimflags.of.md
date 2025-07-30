@@ -43,6 +43,7 @@ TFlags
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [TrimFlags](./alfa-css.trimflags.md)

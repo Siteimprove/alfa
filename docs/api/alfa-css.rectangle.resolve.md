@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Rectangle.Canonical](./alfa-css.rectangle.canonical.md)

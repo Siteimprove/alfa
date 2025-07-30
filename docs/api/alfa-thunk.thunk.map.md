@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;U&gt;

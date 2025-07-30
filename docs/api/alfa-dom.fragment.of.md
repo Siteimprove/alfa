@@ -91,6 +91,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Fragment](./alfa-dom.fragment.md)

@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;

@@ -57,6 +57,7 @@ grouper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;\[K, [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;\]&gt;

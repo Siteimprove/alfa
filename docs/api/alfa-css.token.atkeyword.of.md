@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [AtKeyword](./alfa-css.token.atkeyword.md)

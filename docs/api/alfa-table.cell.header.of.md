@@ -117,6 +117,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Header](./alfa-table.cell.header.md)

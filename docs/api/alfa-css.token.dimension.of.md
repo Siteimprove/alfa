@@ -85,6 +85,7 @@ boolean
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Dimension](./alfa-css.token.dimension.md)

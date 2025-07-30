@@ -43,6 +43,7 @@ Option&lt;string&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Universal](./alfa-selector.universal.md)

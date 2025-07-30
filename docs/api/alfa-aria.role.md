@@ -247,3 +247,4 @@ The names of all widget roles.
 
 </td></tr>
 </tbody></table>
+

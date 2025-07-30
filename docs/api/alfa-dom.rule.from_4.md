@@ -43,6 +43,7 @@ json
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Layer.BlockRule](./alfa-dom.layer.blockrule.md)

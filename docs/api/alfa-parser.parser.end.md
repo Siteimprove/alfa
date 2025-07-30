@@ -43,6 +43,7 @@ ifError
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, void, E&gt;

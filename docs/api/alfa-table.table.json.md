@@ -85,3 +85,4 @@ Array&lt;[Group.JSON](./alfa-table.group.json.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

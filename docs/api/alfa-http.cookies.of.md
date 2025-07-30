@@ -43,6 +43,7 @@ Iterable&lt;Cookie&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Cookies](./alfa-http.cookies.md)

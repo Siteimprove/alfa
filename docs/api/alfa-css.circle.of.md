@@ -57,6 +57,7 @@ P
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Circle](./alfa-css.circle.md)<!-- -->&lt;R, P&gt;
