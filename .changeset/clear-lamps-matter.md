@@ -2,4 +2,4 @@
 "@siteimprove/alfa-rules": patch
 ---
 
-**Fixed:** Diagnostic data has been added to the question of R117.
+**Fixed:** SIA-R117 now sends diagnostic data as part of its question.
