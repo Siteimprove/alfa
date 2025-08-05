@@ -146,7 +146,7 @@ export namespace Response {
         url,
         json.status,
         Headers.from(json.headers),
-        Encoder.encode(json.body),
+        Encoder.encode(json.body).buffer,
       ),
     );
   }
