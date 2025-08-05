@@ -43,6 +43,7 @@ Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;

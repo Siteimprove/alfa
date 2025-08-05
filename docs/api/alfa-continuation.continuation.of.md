@@ -43,6 +43,7 @@ T
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, R, A&gt;

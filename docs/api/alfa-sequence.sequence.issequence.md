@@ -43,6 +43,7 @@ Iterable&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;

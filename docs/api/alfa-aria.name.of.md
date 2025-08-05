@@ -78,6 +78,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Name](./alfa-aria.name.md)

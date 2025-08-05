@@ -43,6 +43,7 @@ R
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;

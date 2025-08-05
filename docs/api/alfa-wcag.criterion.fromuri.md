@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;[Criterion](./alfa-wcag.criterion.md)<!-- -->&gt;

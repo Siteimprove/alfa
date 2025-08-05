@@ -57,6 +57,7 @@ state
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Context](./alfa-selector.context.md)

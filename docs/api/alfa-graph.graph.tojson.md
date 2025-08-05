@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Graph.JSON](./alfa-graph.graph.json.md)<!-- -->&lt;T&gt;

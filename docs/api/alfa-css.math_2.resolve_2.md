@@ -57,6 +57,7 @@ Expression.LengthResolver &amp; Expression.GenericResolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;Length&lt;[Unit.Length.Canonical](./alfa-css.unit.length.canonical.md)<!-- -->&gt;, string&gt;

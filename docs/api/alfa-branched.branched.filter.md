@@ -43,6 +43,7 @@ Refinement&lt;T, U, \[Iterable&lt;B&gt;\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;

@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, E&gt;

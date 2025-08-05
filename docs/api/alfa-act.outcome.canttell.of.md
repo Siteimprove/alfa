@@ -85,6 +85,7 @@ mode
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [CantTell](./alfa-act.outcome.canttell.md)<!-- -->&lt;I, T, Q, S&gt;

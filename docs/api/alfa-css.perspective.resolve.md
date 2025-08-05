@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Perspective.Canonical](./alfa-css.perspective.canonical.md)

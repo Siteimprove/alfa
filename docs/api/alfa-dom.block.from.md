@@ -43,6 +43,7 @@ jsonOrText
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Block](./alfa-dom.block.md)

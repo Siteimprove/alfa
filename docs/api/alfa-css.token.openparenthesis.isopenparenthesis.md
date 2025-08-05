@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [OpenParenthesis](./alfa-css.token.openparenthesis.md)

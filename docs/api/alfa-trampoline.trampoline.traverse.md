@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;Iterable&lt;U&gt;&gt;

@@ -43,6 +43,7 @@ Math&lt;"percentage"&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;

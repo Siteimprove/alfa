@@ -59,6 +59,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;Angle&lt;[Unit.Angle.Canonical](./alfa-css.unit.angle.canonical.md)<!-- -->&gt;, string&gt;

@@ -43,6 +43,7 @@ Iterable&lt;[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;Iterable&lt;T&gt;, B&gt;

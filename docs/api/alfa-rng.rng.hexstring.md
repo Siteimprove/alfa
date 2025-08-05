@@ -61,6 +61,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [RNGFactory](./alfa-rng.rngfactory.md)<!-- -->&lt;string&gt;

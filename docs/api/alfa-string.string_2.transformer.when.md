@@ -59,6 +59,7 @@ transformer
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Transformer](./alfa-string.string_2.transformer.md)

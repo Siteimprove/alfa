@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;U&gt;

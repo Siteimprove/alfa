@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Right](./alfa-either.right.md)<!-- -->&lt;T&gt;

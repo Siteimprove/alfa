@@ -73,3 +73,4 @@ Option&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

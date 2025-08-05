@@ -57,6 +57,7 @@ T\[K\]
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Record](./alfa-record.record_2.md)<!-- -->&lt;T&gt;

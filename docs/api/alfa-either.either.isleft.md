@@ -43,6 +43,7 @@ Iterable&lt;L&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is Left&lt;L&gt;

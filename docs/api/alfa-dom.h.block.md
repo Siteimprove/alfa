@@ -43,6 +43,7 @@ Array&lt;Declaration&gt; \| Record&lt;string, string&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Block

@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Ok.JSON](./alfa-result.ok.json.md)<!-- -->&lt;T&gt;

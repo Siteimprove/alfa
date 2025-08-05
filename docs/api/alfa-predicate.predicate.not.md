@@ -43,6 +43,7 @@ predicate
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;

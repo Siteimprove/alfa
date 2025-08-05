@@ -43,6 +43,7 @@ Refinement&lt;T, U, \[index: number\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;

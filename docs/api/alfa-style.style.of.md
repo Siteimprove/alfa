@@ -91,6 +91,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Style](./alfa-style.style.md)

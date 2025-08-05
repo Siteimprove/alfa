@@ -43,6 +43,7 @@ Array&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;unknown&gt;

@@ -43,6 +43,7 @@ C
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Criterion](./alfa-wcag.criterion.md)<!-- -->&lt;C&gt;

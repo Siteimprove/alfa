@@ -43,6 +43,7 @@ Iterable&lt;Header&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Headers](./alfa-http.headers.md)

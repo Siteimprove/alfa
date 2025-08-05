@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-test-deprecated",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.103.1",
+  "version": "0.104.1",
   "license": "MIT",
   "description": "A simple test library sitting on top of the built-in Node.js assert module",
   "repository": {
@@ -22,7 +22,7 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@types/node": "^22.0.0",
+    "@types/node": "^24.2.0",
     "chalk": "^5.4.1"
   },
   "publishConfig": {

@@ -123,6 +123,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Shadow](./alfa-dom.shadow.md)

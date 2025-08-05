@@ -43,6 +43,7 @@ Callback&lt;T, void, \[index: number\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 void

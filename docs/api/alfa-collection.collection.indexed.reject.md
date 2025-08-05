@@ -43,6 +43,7 @@ Refinement&lt;T, U, \[index: number\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;

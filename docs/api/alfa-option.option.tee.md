@@ -43,6 +43,7 @@ Callback&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;T&gt;

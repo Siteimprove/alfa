@@ -43,6 +43,7 @@ ReadonlyArray&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 array is [Array](./alfa-array.array_2.md)<!-- -->&lt;never&gt;

@@ -43,6 +43,7 @@ Math&lt;"angle-percentage"&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Calculated](./alfa-css.anglepercentage.calculated.md)

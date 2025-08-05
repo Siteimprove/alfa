@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 browser is [Name](./alfa-compatibility.browser.name.md)

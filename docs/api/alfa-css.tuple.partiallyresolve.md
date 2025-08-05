@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Tuple](./alfa-css.tuple.md)<!-- -->&lt;[Tuple.PartiallyResolved](./alfa-css.tuple.partiallyresolved.md)<!-- -->&lt;T&gt;&gt;

@@ -85,6 +85,7 @@ A
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 HSL&lt;H, A&gt;

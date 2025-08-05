@@ -85,6 +85,7 @@ A
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [RGB](./alfa-css.rgb.md)<!-- -->&lt;C, A&gt;

@@ -43,6 +43,7 @@ json
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;[Response](./alfa-http.response.md)<!-- -->, string&gt;

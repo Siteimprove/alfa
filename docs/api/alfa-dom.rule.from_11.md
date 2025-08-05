@@ -43,6 +43,7 @@ json
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Rule](./alfa-dom.rule.md)

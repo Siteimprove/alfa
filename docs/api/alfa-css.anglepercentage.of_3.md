@@ -43,6 +43,7 @@ Base.Percentage
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Percentage.Fixed](./alfa-css.percentage.fixed.md)

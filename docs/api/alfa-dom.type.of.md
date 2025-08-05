@@ -123,6 +123,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Type](./alfa-dom.type.md)<!-- -->&lt;N&gt;

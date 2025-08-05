@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;

@@ -43,6 +43,7 @@ Result&lt;never, E&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;T, E&gt;

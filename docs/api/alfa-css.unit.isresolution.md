@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 unit is [Resolution](./alfa-css.unit.resolution.md)

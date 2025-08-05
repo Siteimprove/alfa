@@ -43,6 +43,7 @@ Iterable&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;

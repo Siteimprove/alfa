@@ -43,6 +43,7 @@ precedence
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 \[Origin, Encapsulation, boolean, Layer&lt;LAYERED&gt;, Specificity, Order\]

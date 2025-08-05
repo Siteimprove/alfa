@@ -57,6 +57,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Slot](./alfa-table.slot.md)

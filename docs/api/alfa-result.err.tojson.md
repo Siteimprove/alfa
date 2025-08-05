@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Err.JSON](./alfa-result.err.json.md)<!-- -->&lt;E&gt;

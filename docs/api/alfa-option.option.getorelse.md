@@ -43,6 +43,7 @@ Thunk&lt;U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 T \| U

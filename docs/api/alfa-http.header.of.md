@@ -57,6 +57,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Header](./alfa-http.header.md)

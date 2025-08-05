@@ -43,6 +43,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Transformation](./alfa-affine.transformation.md)

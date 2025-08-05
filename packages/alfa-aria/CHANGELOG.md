@@ -1,5 +1,13 @@
 # @siteimprove/alfa-aria
 
+## 0.104.1
+
+## 0.104.0
+
+## 0.103.3
+
+## 0.103.2
+
 ## 0.103.1
 
 ## 0.103.0
@@ -225,7 +233,6 @@
 ### Patch Changes
 
 - **Fixed:** Alfa now correctly handle spaces in accessible names. ([#1566](https://github.com/Siteimprove/alfa/pull/1566))
-
   - `<br>` elements add a space to the name.
   - Text nodes with leading or trailing spaces (including space only nodes) keep the space when concatenated.
   - Names of descendants with an `aria-label` are spaced, following browsers' behavior.

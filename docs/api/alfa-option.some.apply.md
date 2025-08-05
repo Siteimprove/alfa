@@ -43,6 +43,7 @@ Option&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;U&gt;

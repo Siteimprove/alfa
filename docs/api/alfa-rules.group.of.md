@@ -43,6 +43,7 @@ Iterable&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Group](./alfa-rules.group.md)<!-- -->&lt;T&gt;

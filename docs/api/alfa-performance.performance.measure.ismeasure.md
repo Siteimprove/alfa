@@ -43,6 +43,7 @@ unknown \| [Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Measure](./alfa-performance.performance.measure.md)<!-- -->&lt;T&gt;

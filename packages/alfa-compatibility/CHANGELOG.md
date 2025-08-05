@@ -1,5 +1,17 @@
 # @siteimprove/alfa-compatibility
 
+## 0.104.1
+
+## 0.104.0
+
+## 0.103.3
+
+## 0.103.2
+
+### Patch Changes
+
+- **Changed:** Compatibility data in `browser/data.ts` and `feature/data.ts` has been updated. ([#1807](https://github.com/Siteimprove/alfa/pull/1807))
+
 ## 0.103.1
 
 ## 0.103.0

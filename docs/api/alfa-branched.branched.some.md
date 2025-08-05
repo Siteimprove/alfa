@@ -43,6 +43,7 @@ Predicate&lt;T, \[Iterable&lt;B&gt;\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

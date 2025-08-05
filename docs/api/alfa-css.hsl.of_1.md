@@ -85,6 +85,7 @@ A
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [HSL](./alfa-css.hsl.md)<!-- -->&lt;ToCanonical&lt;H&gt;, ToCanonical&lt;A&gt;&gt;

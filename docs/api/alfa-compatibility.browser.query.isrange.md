@@ -43,6 +43,7 @@ query
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 query is [Range](./alfa-compatibility.browser.query.range.md)<!-- -->&lt;N&gt;

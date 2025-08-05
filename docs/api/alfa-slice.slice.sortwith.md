@@ -43,6 +43,7 @@ comparer
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;

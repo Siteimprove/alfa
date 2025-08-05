@@ -43,6 +43,7 @@ Device
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Predicate&lt;[SupportsRule](./alfa-dom.supportsrule.md)<!-- -->&gt;

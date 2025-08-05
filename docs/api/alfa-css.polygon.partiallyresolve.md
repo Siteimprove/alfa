@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Polygon.PartiallyResolved](./alfa-css.polygon.partiallyresolved.md)

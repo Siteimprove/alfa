@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Inapplicable.JSON](./alfa-act.outcome.inapplicable.json.md)

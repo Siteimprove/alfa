@@ -43,6 +43,7 @@ ReadonlyArray&lt;[Specificity](./alfa-selector.specificity.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Specificity](./alfa-selector.specificity.md)

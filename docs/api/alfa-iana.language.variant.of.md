@@ -43,6 +43,7 @@ name
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Variant](./alfa-iana.language.variant.md)

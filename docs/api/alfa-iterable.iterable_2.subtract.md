@@ -57,6 +57,7 @@ Array&lt;[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;

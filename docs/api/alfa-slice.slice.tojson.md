@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Slice.JSON](./alfa-slice.slice.json.md)<!-- -->&lt;T&gt;

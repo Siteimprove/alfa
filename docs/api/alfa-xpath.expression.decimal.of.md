@@ -43,6 +43,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Decimal](./alfa-xpath.expression.decimal.md)

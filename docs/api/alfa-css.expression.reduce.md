@@ -45,6 +45,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Expression](./alfa-css.expression.md)

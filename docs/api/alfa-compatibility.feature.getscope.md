@@ -59,6 +59,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Browser.Scope](./alfa-compatibility.browser.scope.md)<!-- -->&lt;[Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->&lt;N&gt;&gt;

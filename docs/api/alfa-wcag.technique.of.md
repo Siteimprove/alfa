@@ -43,6 +43,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Technique](./alfa-wcag.technique.md)<!-- -->&lt;N&gt;

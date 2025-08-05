@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;

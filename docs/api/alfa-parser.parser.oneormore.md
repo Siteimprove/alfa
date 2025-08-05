@@ -43,6 +43,7 @@ parser
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, \[T, ...Array&lt;T&gt;\], E, A&gt;

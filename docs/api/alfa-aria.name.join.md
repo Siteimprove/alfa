@@ -43,6 +43,7 @@ Array&lt;[Name](./alfa-aria.name.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Name](./alfa-aria.name.md)

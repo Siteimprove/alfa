@@ -71,6 +71,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Group](./alfa-table.column.group.md)

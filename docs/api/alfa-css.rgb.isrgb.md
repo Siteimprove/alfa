@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [RGB](./alfa-css.rgb.md)<!-- -->&lt;C, A&gt;

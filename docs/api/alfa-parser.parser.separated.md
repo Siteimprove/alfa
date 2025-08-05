@@ -57,6 +57,7 @@ separator
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, \[T, T\], E, A&gt;

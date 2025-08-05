@@ -57,6 +57,7 @@ Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Filter](./alfa-xpath.expression.filter.md)

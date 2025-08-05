@@ -57,6 +57,7 @@ Name
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Descendant](./alfa-aria.source.descendant.md)

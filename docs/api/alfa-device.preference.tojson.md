@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Preference.JSON](./alfa-device.preference.json.md)<!-- -->&lt;N&gt;

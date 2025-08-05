@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Some](./alfa-option.some.md)<!-- -->&lt;U&gt;

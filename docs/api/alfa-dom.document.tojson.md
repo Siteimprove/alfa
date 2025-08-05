@@ -45,6 +45,7 @@ options
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Document.MinimalJSON](./alfa-dom.document.minimaljson.md)

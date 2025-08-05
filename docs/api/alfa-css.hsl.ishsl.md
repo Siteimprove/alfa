@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [HSL](./alfa-css.hsl.md)<!-- -->&lt;H, A&gt;

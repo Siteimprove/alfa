@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Circle.PartiallyResolved](./alfa-css.circle.partiallyresolved.md)

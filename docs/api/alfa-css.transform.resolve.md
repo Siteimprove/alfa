@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 (value: [Transform](./alfa-css.transform.md)<!-- -->) =&gt; [Canonical](./alfa-css.transform.canonical.md)

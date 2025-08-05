@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Cons.JSON](./alfa-sequence.cons.json.md)<!-- -->&lt;T&gt;

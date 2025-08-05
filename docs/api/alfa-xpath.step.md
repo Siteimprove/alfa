@@ -58,6 +58,7 @@ right
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Builder.Path](./alfa-xpath.builder.path.md)

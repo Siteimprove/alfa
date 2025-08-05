@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Image](./alfa-css.image.md)<!-- -->&lt;I&gt;

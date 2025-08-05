@@ -57,6 +57,7 @@ Device
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Cascade](./alfa-cascade.cascade.md)

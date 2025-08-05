@@ -43,6 +43,7 @@ Element
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Context.State](./alfa-selector.context.state.md)

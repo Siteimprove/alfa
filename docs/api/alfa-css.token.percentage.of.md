@@ -57,6 +57,7 @@ boolean
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Percentage](./alfa-css.token.percentage.md)

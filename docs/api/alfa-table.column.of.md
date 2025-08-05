@@ -43,6 +43,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Column](./alfa-table.column.md)

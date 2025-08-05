@@ -85,6 +85,7 @@ A
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [RGB](./alfa-css.rgb.md)<!-- -->&lt;ToCanonical&lt;C&gt;, ToCanonical&lt;A&gt;&gt;

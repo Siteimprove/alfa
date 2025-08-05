@@ -45,6 +45,7 @@ Slice&lt;Token&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 import("@siteimprove/alfa-result").[Result](./alfa-result.result.md)<!-- -->&lt;\[Slice&lt;Token&gt;, [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt; \| [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;H&gt;\], string&gt;

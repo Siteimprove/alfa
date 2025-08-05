@@ -43,6 +43,7 @@ I
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Image](./alfa-css.image.md)<!-- -->&lt;I&gt;

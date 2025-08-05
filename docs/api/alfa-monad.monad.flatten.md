@@ -43,6 +43,7 @@ this
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;

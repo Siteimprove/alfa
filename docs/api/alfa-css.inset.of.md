@@ -57,6 +57,7 @@ Option&lt;readonly \[C, C, C, C\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Inset](./alfa-css.inset.md)<!-- -->&lt;O, C&gt;

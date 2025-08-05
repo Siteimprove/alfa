@@ -120,7 +120,8 @@
     "./sia-r113/rule.spec.tsx",
     "./sia-r114/rule.spec.tsx",
     "./sia-r115/rule.spec.tsx",
-    "./sia-r116/rule.spec.tsx"
+    "./sia-r116/rule.spec.tsx",
+    "./sia-r117/rule.spec.tsx"
   ],
   "references": [
     { "path": "../src" },

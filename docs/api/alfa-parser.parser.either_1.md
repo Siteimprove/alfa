@@ -71,6 +71,7 @@ Array&lt;[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;

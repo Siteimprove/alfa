@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Parser&lt;Slice&lt;[Token](./alfa-xpath.token.md)<!-- -->&gt;, [Character](./alfa-xpath.token.character.md)<!-- -->, string, \[\]&gt;

@@ -43,6 +43,7 @@ precedence
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [JSON](./alfa-cascade.precedence.json.md)

@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;T, F&gt;

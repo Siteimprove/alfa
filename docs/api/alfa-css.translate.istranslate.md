@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;

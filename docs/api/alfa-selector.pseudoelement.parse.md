@@ -43,6 +43,7 @@ Thunk&lt;[CSSParser](./alfa-css.parser.md)<!-- -->&lt;Absolute&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[PseudoElement](./alfa-selector.pseudoelement.md)<!-- -->&gt;

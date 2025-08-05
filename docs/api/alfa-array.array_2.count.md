@@ -57,6 +57,7 @@ Predicate&lt;T, \[index: number\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 number

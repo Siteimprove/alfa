@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 unit is [Absolute](./alfa-css.unit.length.absolute.md)

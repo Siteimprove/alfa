@@ -8,7 +8,7 @@ export namespace Encoder {
    * {@link https://encoding.spec.whatwg.org/#dom-textencoder-encode}
    * {@link https://encoding.spec.whatwg.org/#utf-8-encoder}
    */
-  export function encode(input: string): Uint8Array {
+  export function encode(input: string): Uint8Array<ArrayBuffer> {
     const output: Array<number> = [];
     const length = input.length;
 

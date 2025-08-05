@@ -43,6 +43,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Preference&lt;N&gt;

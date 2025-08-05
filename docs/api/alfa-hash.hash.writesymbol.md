@@ -43,6 +43,7 @@ symbol
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

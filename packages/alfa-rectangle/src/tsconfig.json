@@ -4,6 +4,7 @@
   "compilerOptions": { "outDir": "../dist" },
   "files": ["./index.ts", "./rectangle.ts"],
   "references": [
+    { "path": "../../alfa-comparable" },
     { "path": "../../alfa-equatable" },
     { "path": "../../alfa-hash" },
     { "path": "../../alfa-json" },

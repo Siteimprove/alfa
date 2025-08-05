@@ -43,6 +43,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Version](./alfa-rules.version.md)<!-- -->&lt;N&gt;

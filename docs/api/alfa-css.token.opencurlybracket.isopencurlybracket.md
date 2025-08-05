@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [OpenCurlyBracket](./alfa-css.token.opencurlybracket.md)

@@ -61,6 +61,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;Angle&lt;"deg"&gt;, string&gt;

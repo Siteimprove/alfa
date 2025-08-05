@@ -85,6 +85,7 @@ A
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Rotate](./alfa-css.rotate.md)

@@ -148,7 +148,7 @@ export namespace Request {
         json.method,
         url,
         Headers.from(json.headers),
-        Encoder.encode(json.body),
+        Encoder.encode(json.body).buffer,
       ),
     );
   }

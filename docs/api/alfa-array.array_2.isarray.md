@@ -43,6 +43,7 @@ Iterable&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;

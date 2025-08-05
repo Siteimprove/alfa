@@ -57,6 +57,7 @@ Refinement&lt;T, U, \[index: number\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;

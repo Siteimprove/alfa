@@ -73,6 +73,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Sequence&lt;T&gt;

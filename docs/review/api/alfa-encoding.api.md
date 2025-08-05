@@ -13,7 +13,7 @@ export namespace Decoder {
 // @public (undocumented)
 export namespace Encoder {
     // (undocumented)
-    export function encode(input: string): Uint8Array;
+    export function encode(input: string): Uint8Array<ArrayBuffer>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -43,6 +43,7 @@ result
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;U, F&gt;

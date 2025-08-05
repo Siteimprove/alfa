@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Passed.JSON](./alfa-act.outcome.passed.json.md)<!-- -->&lt;T&gt;

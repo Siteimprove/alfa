@@ -1,5 +1,17 @@
 # @siteimprove/alfa-rectangle
 
+## 0.104.1
+
+## 0.104.0
+
+## 0.103.3
+
+### Patch Changes
+
+- **Fixed:** `Rectangle#subtract` now limits the size of the result of subtracting. ([#1820](https://github.com/Siteimprove/alfa/pull/1820))
+
+## 0.103.2
+
 ## 0.103.1
 
 ## 0.103.0

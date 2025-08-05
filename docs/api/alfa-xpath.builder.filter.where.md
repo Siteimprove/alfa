@@ -43,6 +43,7 @@ predicate
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Filter](./alfa-xpath.builder.filter.md)

@@ -105,6 +105,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [ImportRule](./alfa-dom.importrule.md)

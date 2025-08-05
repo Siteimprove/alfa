@@ -43,6 +43,7 @@ Predicate&lt;E&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 boolean

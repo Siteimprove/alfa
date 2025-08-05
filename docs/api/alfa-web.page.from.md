@@ -43,6 +43,7 @@ json
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;[Page](./alfa-web.page.md)<!-- -->, string&gt;

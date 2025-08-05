@@ -57,6 +57,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Mark](./alfa-performance.performance.mark.md)<!-- -->&lt;T&gt;

@@ -43,6 +43,7 @@ Refinement&lt;T, U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;

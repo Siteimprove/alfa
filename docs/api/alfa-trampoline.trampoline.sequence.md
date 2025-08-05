@@ -43,6 +43,7 @@ Iterable&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;

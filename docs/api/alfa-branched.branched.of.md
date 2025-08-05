@@ -57,6 +57,7 @@ Array&lt;B&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;

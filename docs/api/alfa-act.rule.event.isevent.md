@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Event](./alfa-act.rule.event.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME&gt;

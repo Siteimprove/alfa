@@ -57,6 +57,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Array&lt;number&gt;

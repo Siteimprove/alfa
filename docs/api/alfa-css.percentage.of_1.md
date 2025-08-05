@@ -43,6 +43,7 @@ BasePercentage
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;H&gt;

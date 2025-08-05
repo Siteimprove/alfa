@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 name is [Name](./alfa-style.longhands.name.md)

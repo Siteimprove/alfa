@@ -43,6 +43,7 @@ boolean
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Scripting](./alfa-device.scripting.md)

@@ -43,6 +43,7 @@ Thunk&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;

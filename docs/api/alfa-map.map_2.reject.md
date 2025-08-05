@@ -43,6 +43,7 @@ Refinement&lt;V, U, \[key: K\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Map](./alfa-map.map_2.md)<!-- -->&lt;K, Exclude&lt;V, U&gt;&gt;

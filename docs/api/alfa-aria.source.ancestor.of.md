@@ -57,6 +57,7 @@ Name
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Ancestor](./alfa-aria.source.ancestor.md)

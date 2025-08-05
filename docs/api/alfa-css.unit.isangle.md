@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 unit is [Angle](./alfa-css.unit.angle.md)

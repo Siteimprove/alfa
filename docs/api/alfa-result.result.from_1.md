@@ -43,6 +43,7 @@ Thunk&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;

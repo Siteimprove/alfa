@@ -61,6 +61,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Parser&lt;Slice&lt;Token&gt;, readonly \[[Function](./alfa-css.function_2.md)<!-- -->, T\], string, \[\]&gt;

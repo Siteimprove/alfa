@@ -85,6 +85,7 @@ Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [FunctionCall](./alfa-xpath.expression.functioncall.md)

@@ -48,6 +48,7 @@ properties
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Atomic](./alfa-act.rule.atomic.md)<!-- -->&lt;I, T, Q, S&gt;

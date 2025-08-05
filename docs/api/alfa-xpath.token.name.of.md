@@ -57,6 +57,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Name](./alfa-xpath.token.name.md)

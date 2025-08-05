@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 key is [Keyword](./alfa-json-ld.keyword.md)

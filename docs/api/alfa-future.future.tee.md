@@ -43,6 +43,7 @@ Callback&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;

@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Value](./alfa-css.value.md)<!-- -->&lt;R, false&gt;

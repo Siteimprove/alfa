@@ -43,6 +43,7 @@ T
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;

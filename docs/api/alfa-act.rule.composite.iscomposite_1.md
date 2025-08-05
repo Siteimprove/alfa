@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Composite](./alfa-act.rule.composite.md)<!-- -->&lt;I, T, Q&gt;

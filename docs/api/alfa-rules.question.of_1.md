@@ -103,6 +103,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [act.Question](./alfa-act.question.md)<!-- -->&lt;TypeName&lt;U&gt;, S, C, Typeof&lt;U&gt;, Typeof&lt;U&gt;, U&gt;

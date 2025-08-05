@@ -43,6 +43,7 @@ BaseNumber
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Fixed](./alfa-css.number_2.fixed.md)

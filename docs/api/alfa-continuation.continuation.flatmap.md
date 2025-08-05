@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;U, R, A&gt;

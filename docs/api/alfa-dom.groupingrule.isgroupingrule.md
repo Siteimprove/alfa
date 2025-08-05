@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [GroupingRule](./alfa-dom.groupingrule.md)

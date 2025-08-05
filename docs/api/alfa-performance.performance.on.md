@@ -43,6 +43,7 @@ Callback&lt;[Performance.Entry](./alfa-performance.performance.entry.md)<!-- -->
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this

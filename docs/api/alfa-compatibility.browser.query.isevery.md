@@ -43,6 +43,7 @@ query
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 query is [Every](./alfa-compatibility.browser.query.every.md)<!-- -->&lt;N&gt;

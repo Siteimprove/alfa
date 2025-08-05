@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Diagnostic](./alfa-act.diagnostic.md)

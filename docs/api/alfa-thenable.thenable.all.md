@@ -43,6 +43,7 @@ Array&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;Array&lt;T&gt;, E&gt;

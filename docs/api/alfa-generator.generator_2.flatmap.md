@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Generator](./alfa-generator.generator_2.md)<!-- -->&lt;U, R, N&gt;

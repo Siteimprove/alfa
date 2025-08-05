@@ -85,3 +85,4 @@ Array&lt;[Expression.JSON](./alfa-xpath.expression.json.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

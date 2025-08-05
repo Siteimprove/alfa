@@ -43,6 +43,7 @@ Refinement&lt;T, U, \[Iterable&lt;B&gt;\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;U&gt;

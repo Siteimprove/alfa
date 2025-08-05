@@ -43,6 +43,7 @@ Continuation&lt;T, void, \[reject: Callback&lt;E&gt;\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;

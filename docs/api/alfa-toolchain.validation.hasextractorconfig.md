@@ -59,6 +59,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Array&lt;string&gt;

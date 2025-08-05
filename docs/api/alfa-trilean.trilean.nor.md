@@ -57,6 +57,7 @@ right
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;

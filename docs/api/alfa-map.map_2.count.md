@@ -43,6 +43,7 @@ Predicate&lt;V, \[key: K\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 number

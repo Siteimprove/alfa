@@ -59,6 +59,7 @@ rng
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [RNG](./alfa-rng.rng.md)<!-- -->&lt;T&gt;

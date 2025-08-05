@@ -57,6 +57,7 @@ n
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Matrix](./alfa-math.matrix.md)

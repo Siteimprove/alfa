@@ -43,6 +43,7 @@ json
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Trampoline&lt;[StatementRule](./alfa-dom.layer.statementrule.md)<!-- -->&gt;

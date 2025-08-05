@@ -135,3 +135,4 @@ Check if an unknown value implements the [Thenable](./alfa-thenable.thenable.md)
 
 </td></tr>
 </tbody></table>
+

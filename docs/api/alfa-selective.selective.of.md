@@ -43,6 +43,7 @@ T
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;T&gt;

@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;[EARL](./alfa-earl.earl.md)<!-- -->&gt;

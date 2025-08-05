@@ -43,6 +43,7 @@ string
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Chapter](./alfa-wcag.criterion.chapter.md)

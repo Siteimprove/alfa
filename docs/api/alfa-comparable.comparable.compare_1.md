@@ -59,6 +59,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)

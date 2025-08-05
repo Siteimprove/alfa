@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [CloseSquareBracket](./alfa-css.token.closesquarebracket.md)

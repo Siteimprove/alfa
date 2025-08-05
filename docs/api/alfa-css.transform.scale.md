@@ -57,6 +57,7 @@ Number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Scale

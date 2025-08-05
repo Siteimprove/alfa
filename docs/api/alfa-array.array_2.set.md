@@ -71,6 +71,7 @@ T
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;

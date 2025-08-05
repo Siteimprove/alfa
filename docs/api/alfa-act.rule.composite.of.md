@@ -49,6 +49,7 @@ properties
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Composite](./alfa-act.rule.composite.md)<!-- -->&lt;I, T, Q, S&gt;

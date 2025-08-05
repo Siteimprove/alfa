@@ -43,6 +43,7 @@ Callback&lt;E, U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 T \| U

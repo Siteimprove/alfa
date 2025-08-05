@@ -155,3 +155,4 @@ Maps the `uri` parameter of questions to their `type` parameter and the expected
 
 </td></tr>
 </tbody></table>
+

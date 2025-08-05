@@ -45,6 +45,7 @@ Iterable&lt;readonly \[K, V\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Cache](./alfa-cache.cache.md)<!-- -->&lt;K, V&gt;

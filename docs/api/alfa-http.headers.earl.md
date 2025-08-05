@@ -69,3 +69,4 @@ Array&lt;[Header.EARL](./alfa-http.header.earl.md)<!-- -->&gt;
 
 </td></tr>
 </tbody></table>
+

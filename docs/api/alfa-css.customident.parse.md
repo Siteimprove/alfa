@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[CustomIdent](./alfa-css.customident.md)<!-- -->&gt;

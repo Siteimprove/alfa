@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;Iterable&lt;U&gt;, B&gt;

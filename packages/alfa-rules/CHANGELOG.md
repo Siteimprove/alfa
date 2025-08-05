@@ -1,5 +1,21 @@
 # @siteimprove/alfa-rules
 
+## 0.104.1
+
+### Patch Changes
+
+- **Fixed:** SIA-R117 now sends diagnostic data as part of its question. ([#1848](https://github.com/Siteimprove/alfa/pull/1848))
+
+## 0.104.0
+
+### Minor Changes
+
+- **Added:** A new experimental rule SIA-R117: "Image accessible name is descriptive" is now available. ([#1845](https://github.com/Siteimprove/alfa/pull/1845))
+
+## 0.103.3
+
+## 0.103.2
+
 ## 0.103.1
 
 ## 0.103.0

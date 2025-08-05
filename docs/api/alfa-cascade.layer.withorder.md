@@ -59,6 +59,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Layer](./alfa-cascade.layer.md)<!-- -->&lt;true&gt;

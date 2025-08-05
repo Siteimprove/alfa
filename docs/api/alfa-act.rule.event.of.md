@@ -71,6 +71,7 @@ NAME
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Event](./alfa-act.rule.event.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME&gt;

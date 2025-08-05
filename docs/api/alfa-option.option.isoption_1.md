@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Option](./alfa-option.option.md)<!-- -->&lt;T&gt;

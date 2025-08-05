@@ -45,6 +45,7 @@ D
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this is [Math](./alfa-css.math_2.md)<!-- -->&lt;D&gt;

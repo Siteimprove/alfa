@@ -57,6 +57,7 @@ right
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Path](./alfa-xpath.expression.path.md)

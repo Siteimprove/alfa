@@ -71,6 +71,7 @@ P
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Ellipse](./alfa-css.ellipse.md)<!-- -->&lt;R, P&gt;

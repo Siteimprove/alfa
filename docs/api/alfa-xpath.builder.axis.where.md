@@ -43,6 +43,7 @@ predicate
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Axis](./alfa-xpath.builder.axis.md)

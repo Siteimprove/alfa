@@ -45,6 +45,7 @@ options
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Rule.MinimalJSON](./alfa-act.rule.minimaljson.md)

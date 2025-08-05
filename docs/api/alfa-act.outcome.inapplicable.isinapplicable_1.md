@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Inapplicable](./alfa-act.outcome.inapplicable.md)<!-- -->&lt;I, T, Q, S&gt;

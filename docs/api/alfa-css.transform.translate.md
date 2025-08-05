@@ -71,6 +71,7 @@ Z
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Translate&lt;X, Y, Z&gt;

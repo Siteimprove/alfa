@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Failed](./alfa-act.outcome.failed.md)<!-- -->&lt;I, T, Q, S&gt;

@@ -107,6 +107,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Document](./alfa-dom.document.md)

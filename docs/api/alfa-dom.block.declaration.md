@@ -43,6 +43,7 @@ string \| Predicate&lt;Declaration&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Option&lt;Declaration&gt;

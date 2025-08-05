@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [List](./alfa-css.list.md)<!-- -->&lt;Resolvable.Resolved&lt;V&gt;&gt;

@@ -263,5 +263,10 @@ export namespace Question {
       type: "boolean",
       message: "Does this heading describe the following content?",
     },
+    // R117 (experimental)
+    "is-image-accessible-name-descriptive": {
+      type: "boolean",
+      message: "Does the accessible name of this element present the same information as the image?",
+    },
   } as const;
 }

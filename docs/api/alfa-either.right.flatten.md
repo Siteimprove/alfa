@@ -43,6 +43,7 @@ this
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Either&lt;L, R&gt;

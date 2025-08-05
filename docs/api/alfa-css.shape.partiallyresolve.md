@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Shape.PartiallyResolved](./alfa-css.shape.partiallyresolved.md)

@@ -45,6 +45,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Attribute.JSON](./alfa-dom.attribute.json.md)<!-- -->&lt;N&gt;

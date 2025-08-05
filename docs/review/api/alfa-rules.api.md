@@ -16,7 +16,7 @@ import type { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
 import { Node } from '@siteimprove/alfa-dom';
 import type { Option } from '@siteimprove/alfa-option';
-import type { Page } from '@siteimprove/alfa-web';
+import { Page } from '@siteimprove/alfa-web';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Requirement } from '@siteimprove/alfa-act';
 import type { RGB } from '@siteimprove/alfa-css';
@@ -27,7 +27,7 @@ import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
-export const alfaVersion = "0.103.1";
+export const alfaVersion = "0.104.1";
 
 // @public (undocumented)
 export class ARIA extends Requirement<"ARIA"> {
@@ -71,11 +71,14 @@ const _default: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 // @public (undocumented)
 const _default_10: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public @deprecated (undocumented)
-const _default_11: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+// @public (undocumented)
+const _default_11: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public @deprecated (undocumented)
 const _default_12: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+
+// @public @deprecated (undocumented)
+const _default_13: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 // @public
 const _default_2: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
@@ -92,23 +95,23 @@ const _default_5: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<
 // @public
 const _default_6: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public @deprecated (undocumented)
-const _default_7: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+// @public
+const _default_7: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public @deprecated (undocumented)
-const _default_8: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
+const _default_8: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
-// @public (undocumented)
-const _default_9: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+// @public @deprecated (undocumented)
+const _default_9: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 declare namespace deprecatedRules {
     export {
-        _default_7 as DR6,
-        _default_8 as DR18,
-        _default_9 as DR34,
-        _default_10 as DR36,
-        _default_11 as DR66,
-        _default_12 as DR69
+        _default_8 as DR6,
+        _default_9 as DR18,
+        _default_10 as DR34,
+        _default_11 as DR36,
+        _default_12 as DR66,
+        _default_13 as DR69
     }
 }
 export { deprecatedRules }
@@ -144,7 +147,8 @@ declare namespace experimentalRules {
         _default_3 as R82,
         _default_4 as R109,
         _default_5 as R114,
-        _default_6 as R115
+        _default_6 as R115,
+        _default_7 as R117
     }
 }
 export { experimentalRules }
@@ -391,6 +395,10 @@ export namespace Question {
         readonly "is-heading-descriptive": {
             readonly type: "boolean";
             readonly message: "Does this heading describe the following content?";
+        };
+        readonly "is-image-accessible-name-descriptive": {
+            readonly type: "boolean";
+            readonly message: "Does the accessible name of this element present the same information as the image?";
         };
     };
         {};

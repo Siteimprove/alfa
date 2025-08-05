@@ -43,6 +43,7 @@ Iterable&lt;T&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;

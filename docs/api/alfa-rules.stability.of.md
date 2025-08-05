@@ -43,6 +43,7 @@ S
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Stability](./alfa-rules.stability.md)<!-- -->&lt;S&gt;

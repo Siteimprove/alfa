@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-painting-order",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.103.1",
+  "version": "0.104.1",
   "license": "MIT",
   "description": "Support for computing painting order of elements.",
   "repository": {

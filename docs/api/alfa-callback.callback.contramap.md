@@ -57,6 +57,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Callback](./alfa-callback.callback.md)<!-- -->&lt;U, R, A&gt;

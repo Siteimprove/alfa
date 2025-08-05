@@ -43,6 +43,7 @@ resolver
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Position.Canonical](./alfa-css.position.canonical.md)<!-- -->&lt;H, V&gt;

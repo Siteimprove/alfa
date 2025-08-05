@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [StatementRule](./alfa-dom.layer.statementrule.md)

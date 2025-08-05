@@ -43,6 +43,7 @@ CFlags
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [ContainFlags](./alfa-css.containflags.md)

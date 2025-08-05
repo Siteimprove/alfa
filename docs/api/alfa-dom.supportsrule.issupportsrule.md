@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [SupportsRule](./alfa-dom.supportsrule.md)

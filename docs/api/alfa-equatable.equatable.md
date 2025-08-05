@@ -48,3 +48,4 @@ Check if an unknown value implements the [Equatable](./alfa-equatable.equatable.
 
 </td></tr>
 </tbody></table>
+

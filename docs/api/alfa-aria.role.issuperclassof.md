@@ -45,6 +45,7 @@ N
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.SuperclassOf](./alfa-aria.role.superclassof.md)<!-- -->&lt;N&gt;&gt;

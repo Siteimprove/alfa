@@ -43,6 +43,7 @@ Refinement&lt;T, U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 this is [Ok](./alfa-result.ok.md)<!-- -->&lt;U&gt;

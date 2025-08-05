@@ -57,6 +57,7 @@ Option&lt;Name&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Text](./alfa-aria.text.md)

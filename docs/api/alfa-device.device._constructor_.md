@@ -101,3 +101,4 @@ Map&lt;[Preference.Name](./alfa-device.preference.name.md)<!-- -->, Preference&g
 
 </td></tr>
 </tbody></table>
+

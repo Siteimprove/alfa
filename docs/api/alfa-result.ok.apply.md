@@ -43,6 +43,7 @@ Result&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, E&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Result&lt;U, E&gt;

@@ -1,5 +1,31 @@
 # Alfa changelog
 
+## [0.104.1](../../compare/v0.104.0...v0.104.1) (2025-07-30)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01041): SIA-R117 now sends diagnostic data as part of its question. ([#1848](https://github.com/Siteimprove/alfa/pull/1848))
+
+## [0.104.0](../../compare/v0.103.3...v0.104.0) (2025-07-28)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01040): A new experimental rule SIA-R117: "Image accessible name is descriptive" is now available. ([#1845](https://github.com/Siteimprove/alfa/pull/1845))
+
+## [0.103.3](../../compare/v0.103.2...v0.103.3) (2025-05-16)
+
+### Fixed
+
+- [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md#01033): `Rectangle#subtract` now limits the size of the result of subtracting. ([#1820](https://github.com/Siteimprove/alfa/pull/1820))
+
+## [0.103.2](../../compare/v0.103.1...v0.103.2) (2025-05-12)
+
+### Changed
+
+- [@siteimprove/alfa-compatibility](packages/alfa-compatibility/CHANGELOG.md#01032): Compatibility data in `browser/data.ts` and `feature/data.ts` has been updated. ([#1807](https://github.com/Siteimprove/alfa/pull/1807))
+
+- [@siteimprove/alfa-painting-order](packages/alfa-painting-order/CHANGELOG.md#01032): The painting order algorithm now doesn't distinguish between inline and block elements. This trades incorrect results for mixed inline and block parent-child elements with incorrect result for inline and block siblings. ([#1817](https://github.com/Siteimprove/alfa/pull/1817))
+
 ## [0.103.1](../../compare/v0.103.0...v0.103.1) (2025-04-02)
 
 ### Fixed

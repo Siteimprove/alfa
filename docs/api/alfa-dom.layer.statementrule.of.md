@@ -43,6 +43,7 @@ Iterable&lt;string&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [StatementRule](./alfa-dom.layer.statementrule.md)

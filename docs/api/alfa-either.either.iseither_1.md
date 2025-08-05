@@ -43,6 +43,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;

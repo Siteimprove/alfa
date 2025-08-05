@@ -52,3 +52,4 @@ Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&
 
 </td></tr>
 </tbody></table>
+

@@ -43,6 +43,7 @@ Either&lt;L, never&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 Either&lt;L, R&gt;

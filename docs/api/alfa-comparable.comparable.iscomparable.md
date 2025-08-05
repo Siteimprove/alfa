@@ -45,6 +45,7 @@ unknown
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 value is [Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt;

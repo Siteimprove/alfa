@@ -43,6 +43,7 @@ Refinement&lt;T, U&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;

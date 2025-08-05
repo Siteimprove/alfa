@@ -44,6 +44,7 @@ number
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Integer](./alfa-xpath.expression.integer.md)<!-- -->&gt;

@@ -59,6 +59,7 @@ ToParsers&lt;I, T, E, A&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Maybe&lt;T&gt;, E, A&gt;

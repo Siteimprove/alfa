@@ -43,6 +43,7 @@ ReadonlyArray&lt;readonly \[K, V\]&gt;
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;

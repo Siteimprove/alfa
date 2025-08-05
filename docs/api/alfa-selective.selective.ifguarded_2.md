@@ -85,6 +85,7 @@ ifFalse
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T \| U&gt;

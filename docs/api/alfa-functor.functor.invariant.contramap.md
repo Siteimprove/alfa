@@ -43,6 +43,7 @@ mapper
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [Invariant](./alfa-functor.functor.invariant.md)<!-- -->&lt;U&gt;
