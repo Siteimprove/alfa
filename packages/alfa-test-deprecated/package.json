@@ -22,7 +22,7 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@types/node": "^24.2.0",
+    "@types/node": "^24.2.1",
     "chalk": "^5.4.1"
   },
   "publishConfig": {
