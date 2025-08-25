@@ -1,15 +1,10 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
-import type { Sequence } from "@siteimprove/alfa-sequence";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Node } from "../../node.js";
 import { Element } from "../element.js";
-
-const _descendantsCache = Cache.empty<
-  Predicate<Node>,
-  Cache<Node, Array<Sequence<Node>>>
->();
 
 /**
  * Get all descendants of a node that satisfy a given refinement.
@@ -41,15 +36,7 @@ export function getDescendants(
   predicate: Predicate<Node>,
 ): (node: Node, options?: Node.Traversal) => Sequence<Node> {
   return (node, options = Node.Traversal.empty) => {
-    const optionsMap = _descendantsCache
-      .get(predicate, Cache.empty)
-      .get(node, () => []);
-
-    if (optionsMap[options.value] === undefined) {
-      optionsMap[options.value] = node.descendants(options).filter(predicate);
-    }
-
-    return optionsMap[options.value];
+    return Sequence.from(getDescendantsV2(predicate)(node, options));
   };
 }
 
@@ -65,5 +52,43 @@ export function getInclusiveElementDescendants(
   node: Element,
   options: Node.Traversal = Node.Traversal.empty,
 ): Sequence<Element> {
-  return getElementDescendants(node, options).prepend(node);
+  return Sequence.from(getInclusiveElementDescendantsV2(node, options));
+}
+
+const _descendantsCache = Cache.empty<
+  Predicate<Node>,
+  Cache<Node, Array<Array<Node>>>
+>();
+
+export function getDescendantsV2<T extends Node>(
+  refinement: Refinement<Node, T>,
+): (node: Node, options?: Node.Traversal) => Array<T>;
+
+export function getDescendantsV2(
+  predicate: Predicate<Node>,
+): (node: Node, options?: Node.Traversal) => Array<Node>;
+
+export function getDescendantsV2(
+  predicate: Predicate<Node>,
+): (node: Node, options?: Node.Traversal) => Array<Node> {
+  return (node, options = Node.Traversal.empty) => {
+    const optionsMap = _descendantsCache
+      .get(predicate, Cache.empty)
+      .get(node, () => []);
+
+    if (optionsMap[options.value] === undefined) {
+      optionsMap[options.value] = node.descendantsV2(options).filter(predicate);
+    }
+
+    return optionsMap[options.value];
+  };
+}
+
+export const getElementDescendantsV2 = getDescendantsV2(Element.isElement);
+
+export function getInclusiveElementDescendantsV2(
+  node: Element,
+  options: Node.Traversal = Node.Traversal.empty,
+): Array<Element> {
+  return [node, ...getElementDescendantsV2(node, options)];
 }

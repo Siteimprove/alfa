@@ -322,10 +322,12 @@ export interface Node {
   children(options?: Node.Traversal): Sequence<Node>;
   isChildOf(node: Node, options?: Node.Traversal): boolean;
   descendants(options?: Node.Traversal): Sequence<Node>;
+  descendantsV2(options?: Node.Traversal): Array<Node>;
   isDescendantOf(node: Node, options?: Node.Traversal): boolean;
   inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
   isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
   ancestors(options?: Node.Traversal): Sequence<Node>;
+  ancestorsV2(options?: Node.Traversal): Array<Node>;
   isAncestorOf(node: Node, options?: Node.Traversal): boolean;
   inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
   isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;

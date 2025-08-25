@@ -5,7 +5,7 @@ import type { Node } from "../../node.js";
 import { Document } from "../document.js";
 import type { Element } from "../element.js";
 
-import { getElementDescendants } from "./descendants.js";
+import { getElementDescendantsV2 } from "./descendants.js";
 
 const elementMapCache = Cache.empty<Document, Map<string, Element>>();
 
@@ -31,9 +31,15 @@ function buildElementIdMap(node: Node): Map<string, Element> {
   // The collected references are added to the map in reverse order to ensure
   // that the first occurrence of a given ID is what ends up in the map in
   // event of duplicates.
-  return Map.from(
-    getElementDescendants(node)
-      .collect((element) => element.id.map((id) => [id, element] as const))
-      .reverse(),
-  );
+  const descendants = getElementDescendantsV2(node);
+
+  let map = Map.empty<string, Element>();
+  for (let i = descendants.length - 1; i >= 0; --i) {
+    const element = descendants[i];
+    if (element.id.isSome()) {
+      map = map.set(element.id.get(), element);
+    }
+  }
+
+  return map;
 }

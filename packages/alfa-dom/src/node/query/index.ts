@@ -7,7 +7,10 @@ import * as elementIdMap from "./element-id-map.js";
 export namespace Query {
   export const getDescendants = descendants.getDescendants;
   export const getElementDescendants = descendants.getElementDescendants;
+  export const getElementDescendantsV2 = descendants.getElementDescendantsV2;
   export const getElementIdMap = elementIdMap.getElementIdMap;
   export const getInclusiveElementDescendants =
     descendants.getInclusiveElementDescendants;
+  export const getInclusiveElementDescendantsV2 =
+    descendants.getInclusiveElementDescendantsV2;
 }

@@ -182,7 +182,6 @@ export abstract class Node<
     return node.children(options).includes(this);
   }
 
-  private _descendants: Array<Sequence<Node<K, F>>> = [];
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
    */
@@ -190,14 +189,40 @@ export abstract class Node<
   // walk through the tree and resolve all the continuations.
   // Caching it saves a lot of time by generating the sequence only once.
   public descendants(options?: Flags<K, F>): Sequence<Node<K, F>> {
+    return Sequence.from(this.descendantsV2(options));
+  }
+
+  private _descendants: Array<Array<Node<K, F>>> = [];
+
+  public descendantsV2(options?: Flags<K, F>): Array<Node<K, F>> {
     const value = options?.value ?? 0;
     if (this._descendants[value] === undefined) {
-      this._descendants[value] = this.children(options).flatMap((child) =>
-        Sequence.of(
-          child,
-          Lazy.of(() => child.descendants(options)),
-        ),
-      );
+      const result: Array<Node<K, F>> = [];
+
+      const stack: Array<Node<K, F>> = [];
+      const children = Array.from(this.children(options));
+
+      // Initialize stack with children in reverse order so they are popped in the correct order (pre-order)
+      for (let i = children.length - 1; i >= 0; --i) {
+        stack.push(children[i]);
+      }
+
+      while (stack.length > 0) {
+        const node = stack.pop();
+        if (node === undefined) {
+          continue;
+        }
+
+        result.push(node);
+
+        const children = Array.from(node.children(options));
+
+        for (let i = children.length - 1; i >= 0; --i) {
+          stack.push(children[i]);
+        }
+      }
+
+      this._descendants[value] = result;
     }
 
     return this._descendants[value];
@@ -234,14 +259,21 @@ export abstract class Node<
    * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
    */
   public ancestors(options?: Flags<K, F>): Sequence<Node<K, F>> {
-    for (const parent of this.parent(options)) {
-      return Sequence.of(
-        parent,
-        Lazy.of(() => parent.ancestors(options)),
-      );
+    return Sequence.from(this.ancestorsV2(options));
+  }
+
+  public ancestorsV2(options?: Flags<K, F>): Array<Node<K, F>> {
+    const result: Array<Node<K, F>> = [];
+
+    let parentOpt = this.parent(options);
+
+    while (parentOpt.isSome()) {
+      const parent = parentOpt.get();
+      result.push(parent);
+      parentOpt = parent.parent(options);
     }
 
-    return Sequence.empty();
+    return result;
   }
 
   /**

@@ -1,7 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import { Flags } from "@siteimprove/alfa-flags";
-import { Graph } from "@siteimprove/alfa-graph";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -25,7 +24,68 @@ import * as predicate from "./node/predicate.js";
 
 const { and, equals, not, test } = Predicate;
 const { isRendered } = Style;
-const { getElementIdMap, getElementDescendants } = dom.Query;
+const {
+  getElementIdMap,
+  getElementDescendantsV2,
+  getInclusiveElementDescendantsV2,
+} = dom.Query;
+
+const BuiltInMap = globalThis.Map;
+type BuiltInMap<K, V> = globalThis.Map<K, V>;
+
+class MutableGraph<T> {
+  nodes: BuiltInMap<T, Array<T>>;
+
+  constructor(nodes?: BuiltInMap<T, Array<T>>) {
+    this.nodes = nodes ?? new BuiltInMap<T, Array<T>>();
+  }
+
+  addNode(node: T) {
+    if (!this.nodes.has(node)) this.nodes.set(node, []);
+  }
+
+  connect(from: T, to: T) {
+    this.addNode(from);
+    this.addNode(to);
+    this.nodes.get(from)?.push(to);
+  }
+
+  has(node: T): boolean {
+    return this.nodes.has(node);
+  }
+
+  neighbors(node: T): Array<T> {
+    return this.nodes.get(node) ?? [];
+  }
+
+  hasPath(from: T, to: T): boolean {
+    if (!this.has(from) && !this.has(to)) {
+      return false;
+    }
+
+    const visited = new globalThis.Set();
+    visited.add(from);
+    const queue = [from];
+
+    while (queue.length > 0) {
+      const node = queue.shift();
+      if (node === undefined) {
+        continue;
+      }
+
+      if (node === to) return true;
+
+      for (const neighbor of this.neighbors(node)) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push(neighbor);
+        }
+      }
+    }
+
+    return false;
+  }
+}
 
 /**
  * {@link https://w3c.github.io/aria/#accessibility_tree}
@@ -194,77 +254,46 @@ export namespace Node {
     // Find all elements in the tree. As explicit ownership is specified via ID
     // references, it cannot cross shadow or document boundaries.
 
-    const exclusiveDescendants = getElementDescendants(root);
     const elements = dom.Element.isElement(root)
-      ? exclusiveDescendants.prepend(root)
-      : exclusiveDescendants;
+      ? getInclusiveElementDescendantsV2(root)
+      : getElementDescendantsV2(root);
 
     const ids = getElementIdMap(root);
 
-    // Do a first pass over `aria-owns` attributes and collect the referenced
-    // elements.
-    const references = elements.collect((element) =>
-      element.attribute("aria-owns").map(
-        (attribute) =>
-          [
-            element,
-            attribute
-              .tokens()
-              .collect((id) => ids.get(id))
-              // Reject references from the element to itself or its ancestors
-              // as these would cause cyclic references.
-              .reject(
-                (reference) =>
-                  element === reference ||
-                  element.ancestors().includes(reference),
-              ),
-          ] as const,
-      ),
-    );
+    const claimed = new globalThis.Set<dom.Element>();
+    const graph = new MutableGraph<dom.Element>();
+    const owned = new globalThis.Map<dom.Element, Sequence<dom.Element>>();
 
-    // Refine the collected `aria-owns` references, constructing a set of
-    // claimed elements and resolving conflicting claims as needed.
-    const [claimed, owned] = references.reduce(
-      ([claimed, owned, graph], [element, references]) => {
-        // Reject all element references that have either already been claimed
-        // or would introduce a cyclic reference. While authors are not allowed
-        // to specify a given ID in more than one `aria-owns` attribute, it will
-        // inevitably happen that multiple `aria-owns` attributes reference the
-        // same ID. We deal with this on a first come, first serve basis and
-        // deny anything but the first claim to a given ID.
-        references = references.reject(
-          (reference) =>
-            claimed.has(reference) || graph.hasPath(reference, element),
-        );
+    for (const element of elements) {
+      const ariaOwns = element.attribute("aria-owns");
 
-        // If there are no references left, this element has no explicit
-        // ownership.
-        if (references.isEmpty()) {
-          return [claimed, owned, graph];
+      if (ariaOwns.isSome()) {
+        const references: Array<dom.Element> = [];
+
+        for (const id of ariaOwns.get().tokens()) {
+          const referenceOpt = ids.get(id);
+
+          if (referenceOpt.isSome()) {
+            const reference = referenceOpt.get();
+
+            if (
+              reference !== element &&
+              !element.ancestorsV2().includes(reference) &&
+              !claimed.has(reference) &&
+              !graph.hasPath(reference, element)
+            ) {
+              claimed.add(reference);
+              graph.connect(element, reference);
+              references.push(reference);
+            }
+          }
         }
 
-        // Claim the remaining references.
-        claimed = references.reduce(
-          (claimed, reference) => claimed.add(reference),
-          claimed,
-        );
+        owned.set(element, Sequence.fromArray(references));
+      }
+    }
 
-        // Connect the element to each of its references to track cycles.
-        graph = references.reduce(
-          (graph, reference) => graph.connect(element, reference),
-          graph,
-        );
-
-        return [claimed, owned.set(element, references), graph];
-      },
-      [
-        Set.empty<dom.Element>(),
-        Map.empty<dom.Element, Sequence<dom.Element>>(),
-        Graph.empty<dom.Element>(),
-      ],
-    );
-
-    fromNode(root, device, claimed, owned, State.empty());
+    fromNode(root, device, Set.from(claimed), Map.from(owned), State.empty());
 
     return _cache.get(node, () =>
       // If the cache still doesn't hold an entry for the specified node, then
