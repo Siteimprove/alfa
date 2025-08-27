@@ -187,7 +187,9 @@ export class Style implements Serializable<Style.JSON> {
   // inexpensive to resolve from cascaded and computed values;
   // nor used values, as in our case they are inexpensive to resolve
   // from computed values.
-  private _computed = Map.empty<Name, Value>();
+
+  // PERF: Use built-in map to avoid hashing keys on every get. We don't need to hash keys since they are strings.
+  private _computed = new globalThis.Map<Name, Value>();
 
   protected constructor(
     owner: Option<Element>,
@@ -304,17 +306,16 @@ export class Style implements Serializable<Style.JSON> {
         Style.Computed<N>
       >;
 
-      this._computed = this._computed.set(name, computed);
+      this._computed.set(name, computed);
     }
 
-    return (
-      this._computed
-        .get(name)
-        // The previous block ensure we've set the value.
-        .getUnsafe(`Computed style for ${name} does not exists`) as Value<
-        Style.Computed<N>
-      >
-    );
+    const computed = this._computed.get(name);
+
+    if (computed === undefined) {
+      throw Error(`Computed style for ${name} does not exist.`);
+    }
+
+    return computed as Value<Style.Computed<N>>;
   }
 
   /**
