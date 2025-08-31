@@ -1,4 +1,3 @@
-import { Future } from "@siteimprove/alfa-future";
 import { Either } from "@siteimprove/alfa-either";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
@@ -93,38 +92,30 @@ export namespace Interview {
     rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
     oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>,
     oracleUsed: boolean = false,
-  ): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>> {
+  ): Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>> {
     if (interview instanceof Question) {
-      let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
+      let answer: Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>;
 
       if (interview.isRhetorical()) {
-        answer = Future.now(Option.of(interview.answer()));
+        answer = Option.of(interview.answer());
       } else {
-        answer = oracle(rule, interview).map((option) =>
-          option
-            // Record that the oracle was successfully used
-            .tee((_) => (oracleUsed = true))
-            // If oracle has no answer, use fallback
-            .or(interview.fallback)
-            // Need to bind due to eta-contraction losing `this`.
-            .map(interview.answer.bind(interview)),
-        );
+        answer = oracle(rule, interview)
+          // Record that the oracle was successfully used
+          .tee((_) => (oracleUsed = true))
+          // If oracle has no answer, use fallback
+          .or(interview.fallback)
+          // Need to bind due to eta-contraction losing `this`.
+          .map(interview.answer.bind(interview));
       }
 
-      return answer.flatMap((answer) =>
-        answer
-          // Recursively conduct an interview
-          .map((answer) => conduct(answer, rule, oracle, oracleUsed))
-          // If we still don't have a final answer, return the last diagnostic.
-          .getOrElse(() =>
-            Future.now(
-              Either.right(Tuple.of(interview.diagnostic, oracleUsed)),
-            ),
-          ),
-      );
+      return answer
+        .map((answer) => conduct(answer, rule, oracle, oracleUsed))
+        .getOrElse(() =>
+          Either.right(Tuple.of(interview.diagnostic, oracleUsed)),
+        );
     }
 
     // The interview is not a question, so it is a final answer.
-    return Future.now(Either.left(Tuple.of(interview, oracleUsed)));
+    return Either.left(Tuple.of(interview, oracleUsed));
   }
 }

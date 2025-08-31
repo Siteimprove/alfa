@@ -1,6 +1,5 @@
 import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
-import { Future } from "@siteimprove/alfa-future";
 import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
@@ -40,7 +39,7 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(
@@ -81,7 +80,7 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target1, {
       1: Outcomes.HasSufficientContrast(15.08, 4.5, [
         Diagnostic.Pairing.of(
@@ -130,7 +129,7 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target1, {
       1: Outcomes.HasSufficientContrast(14.84, 4.5, [
         Diagnostic.Pairing.of(
@@ -167,7 +166,7 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(3.34, 3, [
         Diagnostic.Pairing.of(
@@ -196,7 +195,7 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(3.34, 3, [
         Diagnostic.Pairing.of(
@@ -214,7 +213,7 @@ test("evaluate() passes a text node using the user agent default styles", async 
 
   const document = h.document([<html>{target}</html>]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(
@@ -240,7 +239,7 @@ test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     failed(R69, target, {
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
         Diagnostic.Pairing.of(
@@ -266,7 +265,7 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     failed(R69, target, {
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
         Diagnostic.Pairing.of(
@@ -298,9 +297,7 @@ test("evaluate() correctly handles circular `currentcolor` references", async (t
     ColorError.unresolvableForegroundColor(html, Keyword.of(color)),
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
-    cantTell(R69, target, diagnostic),
-  ]);
+  t.deepEqual(evaluate(R69, { document }), [cantTell(R69, target, diagnostic)]);
 });
 
 test("evaluate() passes text nodes in widgets with good contrast", async (t) => {
@@ -312,7 +309,7 @@ test("evaluate() passes text nodes in widgets with good contrast", async (t) => 
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(
@@ -333,7 +330,7 @@ test("evaluate() is inapplicable to text nodes in disabled widgets", async (t) =
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+  t.deepEqual(evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
 test("evaluate() is inapplicable to text nodes in disabled groups", async (t) => {
@@ -345,7 +342,7 @@ test("evaluate() is inapplicable to text nodes in disabled groups", async (t) =>
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+  t.deepEqual(evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
 test("evaluate() is inapplicable to elements that are used in name of disabled widgets", async (t) => {
@@ -358,7 +355,7 @@ test("evaluate() is inapplicable to elements that are used in name of disabled w
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+  t.deepEqual(evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
 test(`evaluate() is inapplicable to the text that is part of a label of a disabled widget
@@ -372,7 +369,7 @@ test(`evaluate() is inapplicable to the text that is part of a label of a disabl
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+  t.deepEqual(evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
 test(`evaluate() is inapplicable to the text that is part of a label of a disabled widget
@@ -392,7 +389,7 @@ test(`evaluate() is inapplicable to the text that is part of a label of a disabl
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+  t.deepEqual(evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
 test("evaluate() is inapplicable to text that would otherwise pass if it was not only punctuation", async (t) => {
@@ -409,7 +406,7 @@ test("evaluate() is inapplicable to text that would otherwise pass if it was not
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+  t.deepEqual(evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
 test("evaluate() is inapplicable to text that would otherwise fail if it was not only punctuation", async (t) => {
@@ -427,7 +424,7 @@ test("evaluate() is inapplicable to text that would otherwise fail if it was not
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+  t.deepEqual(evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
 test("evaluate() passes when a background color with sufficient contrast is input", async (t) => {
@@ -445,7 +442,7 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
   ]);
 
   t.deepEqual(
-    await evaluate(
+    evaluate(
       R69,
       { document },
       oracle({
@@ -486,7 +483,7 @@ test("evaluate() fails when a background color with insufficient contrast is inp
   ]);
 
   t.deepEqual(
-    await evaluate(
+    evaluate(
       R69,
       { document },
       oracle({
@@ -527,7 +524,7 @@ test("evaluate() passes when a linear gradient has sufficient contrast in the be
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(
@@ -560,7 +557,7 @@ test("evaluate() fails when a linear gradient has insufficient contrast in the b
     </html>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     failed(R69, target, {
       1: Outcomes.HasInsufficientContrast(1, 4.5, [
         Diagnostic.Pairing.of(
@@ -593,7 +590,7 @@ test(`evaluate() correctly merges semi-transparent background layers against a
     </div>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(10.41, 4.5, [
         Diagnostic.Pairing.of(
@@ -632,9 +629,7 @@ test(`evaluate() cannot tell when a background has a fixed size`, async (t) => {
     ColorError.backgroundSize(div, backgroundSize),
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
-    cantTell(R69, target, diagnostic),
-  ]);
+  t.deepEqual(evaluate(R69, { document }), [cantTell(R69, target, diagnostic)]);
 });
 
 test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
@@ -647,9 +642,7 @@ test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
   ).value;
   const diagnostic = ColorErrors.of([ColorError.textShadow(div, textShadow)]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
-    cantTell(R69, target, diagnostic),
-  ]);
+  t.deepEqual(evaluate(R69, { document }), [cantTell(R69, target, diagnostic)]);
 });
 
 test(`evaluate() cannot tell when encountering a non-ignored interposed
@@ -676,7 +669,7 @@ test(`evaluate() cannot tell when encountering a non-ignored interposed
   const document = h.document([body]);
 
   // Ask if it should be ignored
-  t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
+  t.deepEqual(evaluate(R69, { document }), [cantTell(R69, target)]);
 
   const diagnostic = ColorErrors.of([
     ColorError.interposedDescendants(body, [interposed]),
@@ -684,17 +677,13 @@ test(`evaluate() cannot tell when encountering a non-ignored interposed
 
   // It shouldn't be ignored, ask for color.
   t.deepEqual(
-    await evaluate(
-      R69,
-      { document },
-      oracle({ "ignored-interposed-elements": [] }),
-    ),
+    evaluate(R69, { document }, oracle({ "ignored-interposed-elements": [] })),
     [cantTell(R69, target, diagnostic, Outcome.Mode.SemiAuto)],
   );
 
   // It should be ignored, resolve automatically.
   t.deepEqual(
-    await evaluate(
+    evaluate(
       R69,
       { document },
       oracle({ "ignored-interposed-elements": [interposed] }),
@@ -743,7 +732,7 @@ test(`evaluate() ignores transparent interposed element before
   );
   const document = h.document([<body>{div}</body>]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(
@@ -786,7 +775,7 @@ test(`evaluate() does not consider ancestors as interposed elements`, async (t) 
 
   const document = h.document([body]);
 
-  await evaluate(R69, { document }, (_, question) => {
+  evaluate(R69, { document }, (_, question) => {
     let expected = "Unexpected question";
     if (question.context === target1) {
       expected = "background-colors";
@@ -797,7 +786,7 @@ test(`evaluate() does not consider ancestors as interposed elements`, async (t) 
     }
 
     t.deepEqual(question.uri, expected);
-    return Future.now(None);
+    return None;
   });
 });
 
@@ -827,7 +816,7 @@ test(`evaluate() ignore interposed descendants if it can resolve colors
 
   const document = h.document([body]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(19.56, 4.5, [
         Diagnostic.Pairing.of(
@@ -859,7 +848,7 @@ test(`evaluate() cannot tell when encountering an absolutely positioned parent
       ColorError.nonStaticPosition(div, Keyword.of("absolute")),
     ]);
 
-    t.deepEqual(await evaluate(R69, { document }), [
+    t.deepEqual(evaluate(R69, { document }), [
       cantTell(R69, target, diagnostic),
     ]);
   }
@@ -879,7 +868,7 @@ test("evaluate() can tell when encountering an opaque background before an absol
     </div>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(
@@ -920,7 +909,7 @@ test("evaluate() can tell when interposed descendant overlaps offset parent, but
     </body>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document, device }), [
+  t.deepEqual(evaluate(R69, { document, device }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(
@@ -936,14 +925,14 @@ test("evaluate() can tell when interposed descendant overlaps offset parent, but
 test("evaluate() is inapplicable to `aria-disabled` `<a>` elements without `href`", async (t) => {
   const document = h.document([<a aria-disabled="true">X</a>]);
 
-  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+  t.deepEqual(evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
 test("evaluate() is applicable to  `<a>` elements without `href`", async (t) => {
   const target = h.text("X");
   const document = h.document([<a>{target}</a>]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(evaluate(R69, { document }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(

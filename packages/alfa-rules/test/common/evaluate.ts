@@ -2,7 +2,6 @@ import type { Rule, Outcome, Oracle, Question } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
-import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Request, Response } from "@siteimprove/alfa-http";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -19,9 +18,9 @@ const defaultDevice = Device.standard();
 export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   page: Partial<Page>,
-  oracle: Oracle<Page, T, Q, S> = () => Future.now(None),
+  oracle: Oracle<Page, T, Q, S> = () => None,
   options?: Serializable.Options,
-): Future<Array<Outcome.JSON>> {
+): Array<Outcome.JSON> {
   const {
     request = defaultRequest,
     response = defaultResponse,
@@ -29,7 +28,10 @@ export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
     device = defaultDevice,
   } = page;
 
-  return rule
-    .evaluate(Page.of(request, response, document, device), oracle)
-    .map((outcomes) => Array.toJSON(Array.from(outcomes), options));
+  return Array.toJSON(
+    Array.from(
+      rule.evaluate(Page.of(request, response, document, device), oracle),
+    ),
+    options,
+  );
 }

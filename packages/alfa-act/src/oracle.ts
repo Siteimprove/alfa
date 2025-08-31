@@ -1,4 +1,3 @@
-import type { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import type { Option } from "@siteimprove/alfa-option";
 
@@ -33,4 +32,4 @@ export type Oracle<
       URI extends string ? URI : never
     >;
   }[keyof QUESTION],
-) => Future<Option<QUESTION[keyof QUESTION][1]>>;
+) => Option<QUESTION[keyof QUESTION][1]>;

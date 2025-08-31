@@ -132,7 +132,7 @@ overflowY=${computedOverflowY} (computed=${computedOverflowY})`,
     }
   },
   // The test is regularly taking 3s or more and sometimes causes a vitest timeout at 5s.
-  { timeout: 8000 },
+  { timeout: 10000 },
 );
 
 test(`isScrolledBehind() returns true for text scrolled behind`, (t) => {

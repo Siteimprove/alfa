@@ -1,5 +1,4 @@
 import type * as act from "@siteimprove/alfa-act";
-import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { None, Option } from "@siteimprove/alfa-option";
 
@@ -15,11 +14,11 @@ function wrapper<
 >(
   question: act.Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>,
   answer: ANSWER,
-): Future<Option<ANSWER>> {
-  return Future.now(Option.of(answer));
+): Option<ANSWER> {
+  return Option.of(answer);
 }
 
-const dontKnow = Future.now(None);
+const dontKnow = None;
 
 export function oracle<I, T extends Hashable, S>(
   answers: Partial<{
