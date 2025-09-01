@@ -27,7 +27,7 @@ const { isText } = Text;
 export const getApplicableTargets = Cache.memoize(function (
   document: Document,
   device: Device,
-): Sequence<Element> {
+): Array<Element> {
   const isArea = (element: Element) => element.name === "area";
   const isBlock = hasComputedStyle(
     "display",
@@ -40,19 +40,29 @@ export const getApplicableTargets = Cache.memoize(function (
     device,
   );
 
-  let targets = Sequence.empty<Element>();
+  const targets: Array<Element> = [];
 
-  function visit(node: Node, lineContainer: Option<Element>): void {
+  let lineContainer: Option<Element> = None;
+  const stack: Array<Node> = [];
+
+  stack.push(document);
+
+  while (stack.length > 0) {
+    const node = stack.pop();
+    if (node === undefined) {
+      continue;
+    }
+
     if (isElement(node)) {
       if (
         and(isTarget(device), hasNonEmptyBoundingBox(device), not(isArea))(node)
       ) {
         // If the target is inline and there is a line container, don't add it or its descendants
         if (lineContainer.isSome() && isInline(node)) {
-          return;
+          continue;
         }
 
-        targets = targets.append(node);
+        targets.push(node);
       }
 
       if (isBlock(node)) {
@@ -64,12 +74,12 @@ export const getApplicableTargets = Cache.memoize(function (
       }
     }
 
-    for (const child of node.children(Node.fullTree)) {
-      visit(child, lineContainer);
+    const children = Array.from(node.children(Node.fullTree));
+
+    for (let i = children.length - 1; i >= 0; --i) {
+      stack.push(children[i]);
     }
   }
-
-  visit(document, None);
 
   return targets;
 });
@@ -114,21 +124,30 @@ function hasNonEmptyBoundingBox(device: Device): Predicate<Element> {
   };
 }
 
-const hasNonTargetText = Cache.memoize(function (
-  device: Device,
-): Predicate<Element> {
-  return function (element) {
-    if (and(isTarget(device), hasNonEmptyBoundingBox(device))(element)) {
-      return false;
-    }
+const hasNonTargetTextCache = Cache.empty<Device, Cache<Element, boolean>>();
+function hasNonTargetText(device: Device): Predicate<Element> {
+  return (element) =>
+    hasNonTargetTextCache.get(device, Cache.empty).get(element, () => {
+      if (and(isTarget(device), hasNonEmptyBoundingBox(device))(element)) {
+        return false;
+      }
 
-    const children = element.children(Node.flatTree);
-    return (
-      children.some(and(isText, isVisible(device))) ||
-      children
-        .filter(isElement)
-        .reject(and(isTarget(device), hasNonEmptyBoundingBox(device)))
-        .some(hasNonTargetText(device))
-    );
-  };
-});
+      const children = Array.from(element.children(Node.flatTree));
+
+      for (const child of children) {
+        if (isText(child) && isVisible(device)(child)) {
+          return true;
+        }
+
+        if (
+          isElement(child) &&
+          !(isTarget(device)(child) && hasNonEmptyBoundingBox(device)(child)) &&
+          hasNonTargetText(device)(child)
+        ) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+}
