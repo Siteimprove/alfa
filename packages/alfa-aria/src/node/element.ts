@@ -10,7 +10,6 @@ import type * as dom from "@siteimprove/alfa-dom";
 import type { Attribute } from "../attribute.js";
 import type { Name } from "../name/index.js";
 import { Node } from "../node.js";
-import { Set } from "@siteimprove/alfa-set";
 import { Role } from "../role.js";
 import type { InputType } from "../../../alfa-dom/src/node/element/input-type.js";
 import { Element as DomElement } from "@siteimprove/alfa-dom";
@@ -121,7 +120,7 @@ export class Element extends Node<"element"> {
   }
 
   private static allowedAttributesForInputType(
-    inputType: InputType
+    inputType: InputType,
   ): ReadonlyArray<Attribute.Name> {
     switch (inputType) {
       // https://www.w3.org/TR/html-aria/#el-input-color
@@ -155,24 +154,40 @@ export class Element extends Node<"element"> {
    * See {@link https://w3c.github.io/html-aria/#docconformance}
    */
   public allowedAttributes(): ReadonlyArray<Attribute.Name> {
+    const set = new globalThis.Set<Attribute.Name>();
+
     const global = Role.of("roletype").supportedAttributes;
-    const fromRole = this.role.map(role => role.supportedAttributes).getOr([]);
+
+    const fromRole = this.role
+      .map((role) => role.supportedAttributes)
+      .getOr([]);
+
     const additional = Selective.of(this.node)
-      .if(DomElement.hasName("input"), input =>
-        Element.allowedAttributesForInputType(input.inputType())
+      .if(DomElement.hasName("input"), (input) =>
+        Element.allowedAttributesForInputType(input.inputType()),
       )
       // https://www.w3.org/TR/html-aria/#el-select
-      .if(
-        DomElement.hasName("select"),
-        select =>
-          DomElement.hasDisplaySize((size: Number) => size !== 1)(select)
-            ? Role.of("combobox").supportedAttributes
-            : Role.of("menu").supportedAttributes
+      .if(DomElement.hasName("select"), (select) =>
+        DomElement.hasDisplaySize((size: Number) => size !== 1)(select)
+          ? Role.of("combobox").supportedAttributes
+          : Role.of("menu").supportedAttributes,
       )
       .else(() => [])
       .get();
 
-    return Array.from(Set.from([... global, ...fromRole, ...additional]));
+    for (const name of global) {
+      set.add(name);
+    }
+
+    for (const name of fromRole) {
+      set.add(name);
+    }
+
+    for (const name of additional) {
+      set.add(name);
+    }
+
+    return Array.from(set);
   }
 
   public isAttributeAllowed(attribute: Attribute.Name): boolean {
