@@ -120,7 +120,7 @@ export function isTarget(device: Device): Predicate<Element> {
 function hasNonEmptyBoundingBox(device: Device): Predicate<Element> {
   return function (element) {
     const region = getClickableRegion(device, element);
-    return Rectangle.union(...region).area > 0;
+    return region.boundingRectangle.area > 0;
   };
 }
 

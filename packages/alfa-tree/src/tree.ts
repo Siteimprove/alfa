@@ -245,6 +245,10 @@ export abstract class Node<
     );
   }
 
+  public inclusiveDescendantsV2(options?: Flags<K, F>): Array<Node<K, F>> {
+    return [this, ...this.descendantsV2(options)];
+  }
+
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
    */

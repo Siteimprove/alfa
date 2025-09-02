@@ -11,8 +11,5 @@ export function hasSufficientSize(
   size: number,
   device: Device,
 ): Predicate<Element> {
-  return (element) =>
-    getClickableRegion(device, element).some(
-      (box) => box.width >= size && box.height >= size,
-    );
+  return (element) => getClickableRegion(device, element).canFitSquare(size);
 }

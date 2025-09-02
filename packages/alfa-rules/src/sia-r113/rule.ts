@@ -33,9 +33,10 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const boundingBox = Rectangle.union(
-          ...getClickableRegion(device, target),
-        );
+        const boundingBox = getClickableRegion(
+          device,
+          target,
+        ).boundingRectangle;
         const name = WithName.getName(target, device).getOr("");
 
         return {
@@ -95,7 +96,7 @@ function* findElementsWithInsufficientSpacingToTarget(
   target: Element,
 ): Iterable<Element> {
   const targetRegion = getClickableRegion(device, target);
-  const targetBoundingBox = Rectangle.union(...targetRegion);
+  const targetBoundingBox = targetRegion.boundingRectangle;
 
   const undersizedTargets = undersizedCache
     .get(document, Cache.empty)
@@ -107,14 +108,14 @@ function* findElementsWithInsufficientSpacingToTarget(
   for (const candidate of getAllTargets(document, device)) {
     if (target !== candidate) {
       const candidateRegion = getClickableRegion(device, candidate);
-      const candidateBoundingBox = Rectangle.union(...candidateRegion);
+      const candidateBoundingBox = candidateRegion.boundingRectangle;
 
       // To determine if an undersized target has sufficient spacing,
       // we check that the 24 CSS pixel diameter circle of the target
       // does not intersect another target or the circle of any other
       // adjacent undersized targets.
       if (
-        candidateRegion.some((rect) =>
+        candidateRegion.rectangles.some((rect) =>
           rect.intersectsCircle(
             targetBoundingBox.center.x,
             targetBoundingBox.center.y,

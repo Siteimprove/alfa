@@ -4,8 +4,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import { Comparable } from "@siteimprove/alfa-comparable";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { Polygon } from "./polygon.js";
 
 const { max, min } = Math;
 
@@ -200,109 +199,45 @@ export class Rectangle
   }
 
   /**
-   * Subtracts one or more rectangles. The result is a collection of smaller
-   * rectangles covering the part of the original rectangle which didn't overlap
-   * the rectangles that was subtracted. The smaller rectangles will have the
-   * maximal possible width and height and for each subtraction between 0 and 4
-   * smaller rectangles will be produced to cover the difference.
-   *
-   * In the following example, the rectangles overlap in such a way that the
-   * difference will consist of two narrow overlapping rectangles to the right
-   * and below, overlapping in the bottom right corner:
-   *
-   * @remarks
-   * When doing repeated subtraction, we need to limit the size of the result
-   * as it can otherwise explode. The limit is hard coded to 256.
-   *
-   *       +---------------------------------------+
-   *       |                                       |
-   *       |                                       |
-   *       |     +- - - - - - - - - - - - - - - - -+-------+
-   *       |     |                                 |\\\\\\\|
-   *       |                                       |\\\\\\\|
-   *       |     |                                 |\\\\\\\|
-   *       |                                       |\\\\\\\|
-   *       |     |                                 |\\\\\\\|
-   *       |                                       |\\\\\\\|
-   *       |     |                                 |\\\\\\\|
-   *       |                                       |\\\\\\\|
-   *       +-----+---------------------------------+-------+
-   *             |/////////////////////////////////|XXXXXXX|
-   *             |/////////////////////////////////|XXXXXXX|
-   *             +---------------------------------+-------+
+   * Subtracts a rectangle from another resulting in a polygon consisting of
+   * non-overlapping rectangles.
    */
-  public subtract(...others: Array<Rectangle>): Sequence<Rectangle> {
-    // Sort by intersection area descending so that the biggest chunks are removed first.
-    others.sort((a, b) =>
-      Comparable.compare(b.intersection(this).area, a.intersection(this).area),
-    );
-    let result: Array<Rectangle> = [this];
-    for (const other of others) {
-      result = result.flatMap((rect) => rect._subtract(other));
+  subtract(other: Rectangle): Polygon {
+    const left = max(this.left, other.left);
+    const top = max(this.top, other.top);
+    const right = min(this.right, other.right);
+    const bottom = min(this.bottom, other.bottom);
 
-      // The result grows by a factor of at most 4 for every repeated subtraction.
-      // In some cases this can become too big to fit in an array.
-      // We limit the result to avoid running out of memory and we set the limit fairly low
-      // to avoid degrading the performance when the result is later processed.
-      // The assumption is that by ordering the rectangles as we do above so that the most intersecting rectangles are subtracted first,
-      // limiting the result will still provide a good approximation.
-      // We should consider if there is a better way to represent the result of subtraction using rectilinear polygons:
-      // https://en.wikipedia.org/wiki/Rectilinear_polygon
-      if (result.length >= 256) {
-        return Sequence.from(result);
-      }
-
-      // If the difference becomes empty, there is no need to keep subtracting.
-      if (result.length === 0) {
-        return Sequence.empty();
-      }
-    }
-
-    return Sequence.from(result);
-  }
-
-  private _subtract(other: Rectangle): Array<Rectangle> {
-    if (!this.intersects(other)) {
-      return [this];
+    if (left >= right || top >= bottom) {
+      // The rectangles do not intersect
+      return Polygon.of([this]);
     }
 
     const result: Array<Rectangle> = [];
 
-    if (this.top < other.top) {
+    // Top
+    if (this.top < top) {
+      result.push(Rectangle.fromCorners(this.left, this.top, this.right, top));
+    }
+
+    // Bottom
+    if (bottom < this.bottom) {
       result.push(
-        Rectangle.of(this.left, this.top, this.width, other.top - this.top),
+        Rectangle.fromCorners(this.left, bottom, this.right, this.bottom),
       );
     }
 
-    if (this.left < other.left) {
-      result.push(
-        Rectangle.of(this.left, this.top, other.left - this.left, this.height),
-      );
+    // Left
+    if (this.left < left) {
+      result.push(Rectangle.fromCorners(this.left, top, left, bottom));
     }
 
-    if (other.bottom < this.bottom) {
-      result.push(
-        Rectangle.of(
-          this.left,
-          other.bottom,
-          this.width,
-          this.bottom - other.bottom,
-        ),
-      );
+    // Right
+    if (right < this.right) {
+      result.push(Rectangle.fromCorners(right, top, this.right, bottom));
     }
 
-    if (other.right < this.right) {
-      result.push(
-        Rectangle.of(
-          other.right,
-          this.top,
-          this.right - other.right,
-          this.height,
-        ),
-      );
-    }
-
-    return result;
+    return Polygon.of(result);
   }
 
   /**
@@ -423,6 +358,15 @@ export namespace Rectangle {
 
   export function from(json: Rectangle.JSON) {
     return Rectangle.of(json.x, json.y, json.width, json.height);
+  }
+
+  export function fromCorners(
+    left: number,
+    top: number,
+    right: number,
+    bottom: number,
+  ) {
+    return Rectangle.of(left, top, right - left, bottom - top);
   }
 
   export function isRectangle(value: unknown): value is Rectangle {

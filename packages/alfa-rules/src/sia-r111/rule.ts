@@ -11,7 +11,6 @@ import { WithName } from "../common/diagnostic.js";
 
 import { TargetSize } from "../common/outcome/target-size.js";
 
-import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { hasSufficientSize } from "../common/predicate/has-sufficient-size.js";
 import { isUserAgentControlled } from "../common/predicate/is-user-agent-controlled.js";
 
@@ -25,9 +24,10 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const boundingBox = Rectangle.union(
-          ...getClickableRegion(device, target),
-        );
+        const boundingBox = getClickableRegion(
+          device,
+          target,
+        ).boundingRectangle;
 
         const name = WithName.getName(target, device).getOr("");
         return {

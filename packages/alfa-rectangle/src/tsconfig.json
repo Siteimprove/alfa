@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
-  "files": ["./index.ts", "./rectangle.ts"],
+  "files": ["./index.ts", "./polygon.ts", "./rectangle.ts"],
   "references": [
     { "path": "../../alfa-comparable" },
     { "path": "../../alfa-equatable" },

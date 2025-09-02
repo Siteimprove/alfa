@@ -325,6 +325,7 @@ export interface Node {
   descendantsV2(options?: Node.Traversal): Array<Node>;
   isDescendantOf(node: Node, options?: Node.Traversal): boolean;
   inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
+  inclusiveDescendantsV2(options?: Node.Traversal): Array<Node>;
   isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
   ancestors(options?: Node.Traversal): Sequence<Node>;
   ancestorsV2(options?: Node.Traversal): Array<Node>;
