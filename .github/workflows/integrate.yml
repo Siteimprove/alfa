@@ -31,7 +31,7 @@ jobs:
       - run: yarn install --immutable
       - run: yarn dedupe --check
       - run: yarn build --quiet
-      - run: yarn test
+      - run: yarn coverage --coverage.reporter=text-summary --coverage.thresholds.lines=85
       - run: yarn validate-structure
       - run: yarn extract --quiet
       - run: yarn knip
