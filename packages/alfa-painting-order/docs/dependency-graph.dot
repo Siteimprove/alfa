@@ -1,0 +1,98 @@
+digraph "dependency-graph-[object Object]" {
+  compound = true;
+  "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/painting-order.ts";
+  "src/predicate/creates-stacking-context.ts";
+  "name_src/predicate";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "name_src" [
+      penwidth = 5;
+      shape = "rectangle";
+      color = "#ff0000";
+      label = "src";
+    ];
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#ff0000";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
+      "src/painting-order.ts" [
+        label = "painting-order.ts";
+      ];
+      subgraph "cluster_src/predicate" {
+        color = "#000000";
+        label = "";
+        "name_src/predicate" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ffff";
+          label = "predicate";
+        ];
+        "exit_src/predicate" [
+          style = "invis";
+        ];
+        "src/predicate/creates-stacking-context.ts" [
+          label = "creates-stacking-context.ts";
+        ];
+        "src/predicate/creates-stacking-context.ts" -> "exit_src/predicate" [
+          style = "invis";
+        ];
+      }
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/painting-order.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/predicate" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "exit_src" -> "dependency-graph-[object Object]" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/painting-order.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/painting-order.ts" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/painting-order.ts";
+    color = "black";
+  ];
+  "src/painting-order.ts" -> "name_src/predicate" [
+    style = "solid";
+    ltail = "cluster_src/painting-order.ts";
+    lhead = "cluster_src/predicate";
+    color = "#ff0000";
+  ];
+}
