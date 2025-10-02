@@ -2412,7 +2412,7 @@ __metadata:
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@svitejs/changesets-changelog-github-compact": "npm:^1.1.0"
-    "@ts-graphviz/adapter": "npm:^2.0.3"
+    "@ts-graphviz/adapter": "npm:^3.0.0"
     "@types/madge": "npm:^5.0.3"
     chalk: "npm:^5.4.1"
     json-stringify-pretty-compact: "npm:^4.0.0"
@@ -2591,12 +2591,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/adapter@npm:^2.0.3, @ts-graphviz/adapter@npm:^2.0.6":
+"@ts-graphviz/adapter@npm:^2.0.6":
   version: 2.0.6
   resolution: "@ts-graphviz/adapter@npm:2.0.6"
   dependencies:
     "@ts-graphviz/common": "npm:^2.1.5"
   checksum: 10c0/43c9b6ee45b9ff73ef75a66f5556205c37b2d828d66cb7520c004c4422a8fd84784ef42ebb6a294689af32e25de1a826cf0889d51e43472b7e23dee5053a0706
+  languageName: node
+  linkType: hard
+
+"@ts-graphviz/adapter@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@ts-graphviz/adapter@npm:3.0.0"
+  dependencies:
+    "@ts-graphviz/common": "npm:^3.0.0"
+  checksum: 10c0/f8fe68c331f67113bcd37714858e27292b86e3c06ccf59aefe3ee7bac0ddce687074e356ce7db4f2194f4dcf74e06132f0fbaf6d0d932b416480ec9003f21e8f
   languageName: node
   linkType: hard
 
@@ -2613,6 +2622,13 @@ __metadata:
   version: 2.1.5
   resolution: "@ts-graphviz/common@npm:2.1.5"
   checksum: 10c0/921f32145cdfecab8f06f93b50cc0300f63f4c2e31a09d909983c509acdcfec03d2b50b97d40fc658ef6f40ecfddad1e1a6fa21bd7a612a4e9bcfbb9f9018b40
+  languageName: node
+  linkType: hard
+
+"@ts-graphviz/common@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@ts-graphviz/common@npm:3.0.0"
+  checksum: 10c0/d5082c3b21abda630271531bd0c44bf41ba85800b01576b74496a9e1d99337a36b1f0d6709263d388416f3f59ea6986d75562af2438169769090e131b97f867d
   languageName: node
   linkType: hard
 
