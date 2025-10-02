@@ -89,6 +89,11 @@ import R110 from "./sia-r110/rule.js";
 import R111 from "./sia-r111/rule.js";
 import R113 from "./sia-r113/rule.js";
 import R116 from "./sia-r116/rule.js";
+import R118 from "./sia-r118/rule.js";
+import R119 from "./sia-r119/rule.js";
+import R120 from "./sia-r120/rule.js";
+import R121 from "./sia-r121/rule.js";
+import R122 from "./sia-r122/rule.js";
 
 export {
   R1,
@@ -182,4 +187,9 @@ export {
   R111,
   R113,
   R116,
+  R118,
+  R119,
+  R120,
+  R121,
+  R122,
 };
