@@ -6,19 +6,13 @@
 
 // @public (undocumented)
 export namespace Bits {
-    // (undocumented)
     export function bit(i: number): number;
-    // (undocumented)
     export function clear(bits: number, i: number): number;
     // (undocumented)
     export function popCount(bits: number): number;
-    // (undocumented)
     export function set(bits: number, i: number): number;
-    // (undocumented)
     export function skip(bits: number, n: number): number;
-    // (undocumented)
     export function take(bits: number, n: number): number;
-    // (undocumented)
     export function test(bits: number, i: number): boolean;
 }
 
