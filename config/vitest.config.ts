@@ -14,7 +14,7 @@ export default defineConfig({
       reporter: ["html", "text-summary"],
       watermarks: {
         branches: [80, 90],
-        functions: [70, 85],
+        functions: [65, 85],
         lines: [80, 85],
         statements: [80, 85],
       },
