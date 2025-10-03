@@ -10,7 +10,14 @@ export default defineConfig({
       include: ["packages/alfa-*/test/**/*.spec-d.ts?(x)"],
     },
     coverage: {
-      reporter: ["html"],
+      provider: "v8",
+      reporter: ["html", "text-summary"],
+      watermarks: {
+        branches: [80, 90],
+        functions: [70, 85],
+        lines: [80, 85],
+        statements: [80, 85],
+      },
       reportsDirectory: "./docs/coverage",
       include: ["packages/alfa-*/**"],
       exclude: [
