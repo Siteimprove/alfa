@@ -1,0 +1,4 @@
+{"total": {"lines":{"total":151,"covered":38,"skipped":0,"pct":25.16},"statements":{"total":151,"covered":38,"skipped":0,"pct":25.16},"functions":{"total":33,"covered":1,"skipped":0,"pct":3.03},"branches":{"total":3,"covered":2,"skipped":0,"pct":66.66},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
+,"/mnt/c/Projects/a11y/alfa/packages/alfa-tuple/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
+,"/mnt/c/Projects/a11y/alfa/packages/alfa-tuple/src/tuple.ts": {"lines":{"total":150,"covered":38,"skipped":0,"pct":25.33},"functions":{"total":32,"covered":1,"skipped":0,"pct":3.12},"statements":{"total":150,"covered":38,"skipped":0,"pct":25.33},"branches":{"total":2,"covered":2,"skipped":0,"pct":100}}
+}

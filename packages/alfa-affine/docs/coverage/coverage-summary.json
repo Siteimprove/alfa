@@ -1,0 +1,4 @@
+{"total": {"lines":{"total":212,"covered":173,"skipped":0,"pct":81.6},"statements":{"total":212,"covered":173,"skipped":0,"pct":81.6},"functions":{"total":20,"covered":11,"skipped":0,"pct":55},"branches":{"total":27,"covered":20,"skipped":0,"pct":74.07},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
+,"/mnt/c/Projects/a11y/alfa/packages/alfa-affine/src/index.ts": {"lines":{"total":2,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":2,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
+,"/mnt/c/Projects/a11y/alfa/packages/alfa-affine/src/transformation.ts": {"lines":{"total":210,"covered":173,"skipped":0,"pct":82.38},"functions":{"total":19,"covered":11,"skipped":0,"pct":57.89},"statements":{"total":210,"covered":173,"skipped":0,"pct":82.38},"branches":{"total":26,"covered":20,"skipped":0,"pct":76.92}}
+}
