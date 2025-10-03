@@ -54,6 +54,10 @@ on:
         required: false
         type: boolean
         default: false
+      coverage:
+        required: false
+        type: boolean
+        default: false # Most Alfa repos do not have coverage.
     secrets:
       # A PAT for the user who will commit. Need to have the repo:write permission.
       token:
@@ -160,12 +164,20 @@ jobs:
           yarn document
           git add docs/api
 
+      - name: Generate global coverage report and commit it
+        if: inputs.coverage
+        run: |
+          yarn coverage
+          git add docs/coverage
+          git commit -m "Update global coverage report"
+
       - name: Commit and push changes
         # If we made it thus far, we can commit the changes
         # We need to take care to **not** commit .yarnrc.yml which has been updated with a token.
         run: |
           # Removed individual changesets, all changelog (global and local), all package.json (new version number), lockfile
           git add .changeset/ CHANGELOG.md **/CHANGELOG.md package.json **/package.json yarn.lock
+          # Global coverage files
           git commit -m ${VERSION}
           git tag --annotate ${VERSION} --message=${VERSION}
           git push --follow-tags
