@@ -11,7 +11,7 @@ export default defineConfig({
     },
     coverage: {
       provider: "v8",
-      reporter: ["html", "text-summary"],
+      reporter: ["html", "text-summary", "json-summary"],
       watermarks: {
         branches: [80, 90],
         functions: [65, 85],
