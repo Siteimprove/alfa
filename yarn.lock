@@ -727,12 +727,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@manypkg/find-root@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@manypkg/find-root@npm:3.0.0"
+"@manypkg/find-root@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@manypkg/find-root@npm:3.1.0"
   dependencies:
-    "@manypkg/tools": "npm:^2.0.0"
-  checksum: 10c0/51bd0bb63dbb0822356f14329772e1baf716ae0be56724f984592f06a79b312562f833422590cf3f35b89d41f969e41b07b9111a85b9c0f79c82c9abf9e7468c
+    "@manypkg/tools": "npm:^2.1.0"
+  checksum: 10c0/15b3f5c5c66881af88c1c70dcec805237a2b7e1d541ca7687aade00978680024f8e77ca2f4bac1415e00377f2e78a998d842c345c288d3e69383d50280620b1c
   languageName: node
   linkType: hard
 
@@ -750,24 +750,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@manypkg/get-packages@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@manypkg/get-packages@npm:3.0.0"
+"@manypkg/get-packages@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@manypkg/get-packages@npm:3.1.0"
   dependencies:
-    "@manypkg/find-root": "npm:^3.0.0"
-    "@manypkg/tools": "npm:^2.0.0"
-  checksum: 10c0/bacbb484d4a1c9ec1e19704953786b51d7ebe3ceeace7a17ff1408a26893aa37262ccf60b193a3a35a073e6c46f1eb63c994120bc7d4f5b97c4517ff147b47b5
+    "@manypkg/find-root": "npm:^3.1.0"
+    "@manypkg/tools": "npm:^2.1.0"
+  checksum: 10c0/e8baabd85a13f4537ae22124d5e53f1523ba0653f33006da45fc8bd642e0134786a6aad9d0a7ed99282ae20a80687ef5700bd72980441627b5c96658503ad83d
   languageName: node
   linkType: hard
 
-"@manypkg/tools@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@manypkg/tools@npm:2.0.0"
+"@manypkg/tools@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@manypkg/tools@npm:2.1.0"
   dependencies:
     jju: "npm:^1.4.0"
     js-yaml: "npm:^4.1.0"
     tinyglobby: "npm:^0.2.13"
-  checksum: 10c0/ac2e45e648846b4edd170e1d4efa5c3b7a9df2cb7758fc21bcfea8e1b73c0b05df4d65dbd0275502c71b69efded431967aed61dd9a34f634faad7c4112077ebd
+  checksum: 10c0/c7dbda3bf027338a10ee8337a1c1774e6979b300afa7db55a89fe205339dfe59810e4b8cf1edc94287b3ddc9da4413d6221bcae9f6dbf0dcadc7f82bd8c5a7bb
   languageName: node
   linkType: hard
 
@@ -2396,7 +2396,7 @@ __metadata:
     "@changesets/git": "npm:^3.0.4"
     "@changesets/read": "npm:^0.6.5"
     "@changesets/types": "npm:^6.1.0"
-    "@manypkg/get-packages": "npm:^3.0.0"
+    "@manypkg/get-packages": "npm:^3.1.0"
     "@siteimprove/alfa-array": "workspace:^"
     "@siteimprove/alfa-map": "workspace:^"
     "@siteimprove/alfa-option": "workspace:^"
@@ -2405,7 +2405,7 @@ __metadata:
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@svitejs/changesets-changelog-github-compact": "npm:^1.1.0"
-    "@ts-graphviz/adapter": "npm:^2.0.3"
+    "@ts-graphviz/adapter": "npm:^3.0.0"
     "@types/madge": "npm:^5.0.3"
     chalk: "npm:^5.4.1"
     json-stringify-pretty-compact: "npm:^4.0.0"
@@ -2584,12 +2584,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/adapter@npm:^2.0.3, @ts-graphviz/adapter@npm:^2.0.6":
+"@ts-graphviz/adapter@npm:^2.0.6":
   version: 2.0.6
   resolution: "@ts-graphviz/adapter@npm:2.0.6"
   dependencies:
     "@ts-graphviz/common": "npm:^2.1.5"
   checksum: 10c0/43c9b6ee45b9ff73ef75a66f5556205c37b2d828d66cb7520c004c4422a8fd84784ef42ebb6a294689af32e25de1a826cf0889d51e43472b7e23dee5053a0706
+  languageName: node
+  linkType: hard
+
+"@ts-graphviz/adapter@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@ts-graphviz/adapter@npm:3.0.0"
+  dependencies:
+    "@ts-graphviz/common": "npm:^3.0.0"
+  checksum: 10c0/f8fe68c331f67113bcd37714858e27292b86e3c06ccf59aefe3ee7bac0ddce687074e356ce7db4f2194f4dcf74e06132f0fbaf6d0d932b416480ec9003f21e8f
   languageName: node
   linkType: hard
 
@@ -2606,6 +2615,13 @@ __metadata:
   version: 2.1.5
   resolution: "@ts-graphviz/common@npm:2.1.5"
   checksum: 10c0/921f32145cdfecab8f06f93b50cc0300f63f4c2e31a09d909983c509acdcfec03d2b50b97d40fc658ef6f40ecfddad1e1a6fa21bd7a612a4e9bcfbb9f9018b40
+  languageName: node
+  linkType: hard
+
+"@ts-graphviz/common@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@ts-graphviz/common@npm:3.0.0"
+  checksum: 10c0/d5082c3b21abda630271531bd0c44bf41ba85800b01576b74496a9e1d99337a36b1f0d6709263d388416f3f59ea6986d75562af2438169769090e131b97f867d
   languageName: node
   linkType: hard
 
