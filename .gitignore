@@ -23,5 +23,3 @@ node_modules
 !.yarn/releases/*.cjs
 !.yarn/sdks
 !.yarn/versions
-
-docs/coverage
