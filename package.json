@@ -16,6 +16,8 @@
     "test": "yarn build && vitest run --config ./config/vitest.config.ts",
     "#coverage:comment": "We use --coverage.enabled instead of --coverage to allow overriding options in the CLI. See warning at https://vitest.dev/config/#coverage",
     "coverage": "yarn build && vitest run --coverage.enabled --config ./config/vitest.config.ts",
+    "#coverage:package:comment": "Run coverage for a single package. Usage: yarn coverage:package <package-name>. We don't rebuild the project, so make sure to run `yarn build` first.",
+    "coverage:package": "vitest run --coverage.enabled --config ./config/vitest.config.ts --coverage.reportsDirectory ./coverage/${0} --coverage.include packages/${0}  packages/${0}",
     "watch": "node scripts/watch.mjs --pretty",
     "extract": "node scripts/api-extractor.mjs --pretty",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
