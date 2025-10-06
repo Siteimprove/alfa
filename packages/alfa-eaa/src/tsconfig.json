@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": ["./criterion/data.ts", "./eaa.ts", "./index.ts"],
+  "references": [
+    { "path": "../../alfa-act" },
+    { "path": "../../alfa-branched" },
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-predicate" },
+    { "path": "../../alfa-refinement" }
+  ]
+}

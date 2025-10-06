@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import type { Element, Text } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
@@ -18,7 +19,7 @@ export default Rule.Atomic.of<
   Text | Group<Element>
 >({
   uri: "https://alfa.siteimprove.com/rules/sia-r69",
-  requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6")],
+  requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6"), EAA.of("9.1.4.3")],
   tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     return {

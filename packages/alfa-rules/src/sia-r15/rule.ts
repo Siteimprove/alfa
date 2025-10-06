@@ -1,6 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -26,7 +27,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r15",
-  requirements: [Criterion.of("4.1.2")],
+  requirements: [Criterion.of("4.1.2"), EAA.of("9.4.1.2")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document, response }) {
     return {

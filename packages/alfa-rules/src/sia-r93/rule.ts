@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import type { Element } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
@@ -13,7 +14,7 @@ const threshold = 1.5;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r93",
-  requirements: [Criterion.of("1.4.12")],
+  requirements: [Criterion.of("1.4.12"), EAA.of("9.1.4.12")],
   tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     return {

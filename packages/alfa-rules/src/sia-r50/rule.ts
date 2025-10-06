@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Element } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Trilean } from "@siteimprove/alfa-trilean";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
@@ -18,6 +19,7 @@ export default Rule.Composite.of<Page, Element, Question.Metadata, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r50",
   requirements: [
     Criterion.of("1.4.2"),
+    EAA.of("9.1.4.2"),
     Technique.of("G60"),
     Technique.of("G170"),
     Technique.of("G171"),
