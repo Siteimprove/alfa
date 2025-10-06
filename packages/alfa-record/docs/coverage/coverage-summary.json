@@ -1,4 +1,0 @@
-{"total": {"lines":{"total":111,"covered":63,"skipped":0,"pct":56.75},"statements":{"total":111,"covered":63,"skipped":0,"pct":56.75},"functions":{"total":18,"covered":5,"skipped":0,"pct":27.77},"branches":{"total":16,"covered":13,"skipped":0,"pct":81.25},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-record/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-record/src/record.ts": {"lines":{"total":110,"covered":63,"skipped":0,"pct":57.27},"functions":{"total":17,"covered":5,"skipped":0,"pct":29.41},"statements":{"total":110,"covered":63,"skipped":0,"pct":57.27},"branches":{"total":15,"covered":13,"skipped":0,"pct":86.66}}
-}

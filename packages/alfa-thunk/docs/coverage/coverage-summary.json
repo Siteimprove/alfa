@@ -1,4 +1,0 @@
-{"total": {"lines":{"total":21,"covered":13,"skipped":0,"pct":61.9},"statements":{"total":21,"covered":13,"skipped":0,"pct":61.9},"functions":{"total":5,"covered":2,"skipped":0,"pct":40},"branches":{"total":6,"covered":5,"skipped":0,"pct":83.33},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-thunk/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-thunk/src/thunk.ts": {"lines":{"total":20,"covered":13,"skipped":0,"pct":65},"functions":{"total":4,"covered":2,"skipped":0,"pct":50},"statements":{"total":20,"covered":13,"skipped":0,"pct":65},"branches":{"total":5,"covered":5,"skipped":0,"pct":100}}
-}

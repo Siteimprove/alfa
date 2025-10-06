@@ -1,4 +1,0 @@
-{"total": {"lines":{"total":60,"covered":51,"skipped":0,"pct":85},"statements":{"total":60,"covered":51,"skipped":0,"pct":85},"functions":{"total":11,"covered":9,"skipped":0,"pct":81.81},"branches":{"total":13,"covered":11,"skipped":0,"pct":84.61},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-emitter/src/emitter.ts": {"lines":{"total":59,"covered":51,"skipped":0,"pct":86.44},"functions":{"total":10,"covered":9,"skipped":0,"pct":90},"statements":{"total":59,"covered":51,"skipped":0,"pct":86.44},"branches":{"total":12,"covered":11,"skipped":0,"pct":91.66}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-emitter/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
-}

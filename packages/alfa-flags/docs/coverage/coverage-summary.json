@@ -1,4 +1,0 @@
-{"total": {"lines":{"total":170,"covered":160,"skipped":0,"pct":94.11},"statements":{"total":170,"covered":160,"skipped":0,"pct":94.11},"functions":{"total":22,"covered":18,"skipped":0,"pct":81.81},"branches":{"total":33,"covered":31,"skipped":0,"pct":93.93},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-flags/src/flags.ts": {"lines":{"total":169,"covered":160,"skipped":0,"pct":94.67},"functions":{"total":21,"covered":18,"skipped":0,"pct":85.71},"statements":{"total":169,"covered":160,"skipped":0,"pct":94.67},"branches":{"total":32,"covered":31,"skipped":0,"pct":96.87}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-flags/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
-}

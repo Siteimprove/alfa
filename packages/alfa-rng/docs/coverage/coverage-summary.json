@@ -1,4 +1,0 @@
-{"total": {"lines":{"total":105,"covered":102,"skipped":0,"pct":97.14},"statements":{"total":105,"covered":102,"skipped":0,"pct":97.14},"functions":{"total":20,"covered":18,"skipped":0,"pct":90},"branches":{"total":27,"covered":25,"skipped":0,"pct":92.59},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-rng/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-rng/src/rng.ts": {"lines":{"total":104,"covered":102,"skipped":0,"pct":98.07},"functions":{"total":19,"covered":18,"skipped":0,"pct":94.73},"statements":{"total":104,"covered":102,"skipped":0,"pct":98.07},"branches":{"total":26,"covered":25,"skipped":0,"pct":96.15}}
-}

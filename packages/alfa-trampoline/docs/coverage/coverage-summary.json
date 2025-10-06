@@ -1,4 +1,0 @@
-{"total": {"lines":{"total":151,"covered":105,"skipped":0,"pct":69.53},"statements":{"total":151,"covered":105,"skipped":0,"pct":69.53},"functions":{"total":35,"covered":19,"skipped":0,"pct":54.28},"branches":{"total":30,"covered":28,"skipped":0,"pct":93.33},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-trampoline/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
-,"/mnt/c/Projects/a11y/alfa/packages/alfa-trampoline/src/trampoline.ts": {"lines":{"total":150,"covered":105,"skipped":0,"pct":70},"functions":{"total":34,"covered":19,"skipped":0,"pct":55.88},"statements":{"total":150,"covered":105,"skipped":0,"pct":70},"branches":{"total":29,"covered":28,"skipped":0,"pct":96.55}}
-}
