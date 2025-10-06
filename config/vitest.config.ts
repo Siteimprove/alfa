@@ -13,6 +13,9 @@ export default defineConfig({
       provider: "v8",
       reporter: ["html", "text-summary", "json-summary"],
       watermarks: {
+        // These are reasonable watermarks that put us in the green zone (except
+        // for functions) in the current state. We should raise them over time
+        // as situation improves.
         branches: [80, 90],
         functions: [65, 85],
         lines: [80, 85],
