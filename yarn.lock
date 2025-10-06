@@ -2593,7 +2593,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/adapter@npm:^3.0.2":
+"@ts-graphviz/adapter@npm:^3.0.0, @ts-graphviz/adapter@npm:^3.0.2":
   version: 3.0.2
   resolution: "@ts-graphviz/adapter@npm:3.0.2"
   dependencies:
@@ -2627,7 +2627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/common@npm:^3.0.2":
+"@ts-graphviz/common@npm:^3.0.0, @ts-graphviz/common@npm:^3.0.2":
   version: 3.0.2
   resolution: "@ts-graphviz/common@npm:3.0.2"
   checksum: 10c0/f0412f88c20e2af041c1fb2070efaf10843ddc70f2f23a609ab3d6e1b71ab995ce26a38d218137c68245b734146e0201b2f6a752e19fc9ecf81e20eff8d5b81a
