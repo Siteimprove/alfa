@@ -25,6 +25,7 @@ export default defineConfig({
       include: ["packages/alfa-*/**"],
       exclude: [
         "packages/alfa-test*/**",
+        "**/docs/**",
         "**/scripts/**",
         ...coverageConfigDefaults.exclude,
       ],
