@@ -2412,7 +2412,7 @@ __metadata:
     madge: "npm:^8.0.0"
     resolve-from: "npm:^5.0.0"
     simple-git: "npm:^3.28.0"
-    ts-graphviz: "npm:^3.0.0"
+    ts-graphviz: "npm:^3.0.2"
   bin:
     alfa-changelog: dist/changeset/changelog-global.js
     create-alfa-package: dist/create-alfa-package.js
@@ -2593,7 +2593,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/adapter@npm:^3.0.0, @ts-graphviz/adapter@npm:^3.0.2":
+"@ts-graphviz/adapter@npm:^3.0.2":
   version: 3.0.2
   resolution: "@ts-graphviz/adapter@npm:3.0.2"
   dependencies:
@@ -2611,12 +2611,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/ast@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@ts-graphviz/ast@npm:3.0.0"
+"@ts-graphviz/ast@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@ts-graphviz/ast@npm:3.0.2"
   dependencies:
-    "@ts-graphviz/common": "npm:^3.0.0"
-  checksum: 10c0/b9c334e41dcce5527bf32a983224b7cb543a40d8d026d2f46f99c7240461057fef7e2c36b7db125a35311bf9cd687196a6add6a116236fd290e6cf70fce82e10
+    "@ts-graphviz/common": "npm:^3.0.2"
+  checksum: 10c0/2875e79da8e2d5158029e6b494002271723bdf2b6bfd919939b60feec974a0d98817e4fbfb07a64dc2be70d367ee8b2227a55b19eb324795562d2f28a5068061
   languageName: node
   linkType: hard
 
@@ -2627,7 +2627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/common@npm:^3.0.0, @ts-graphviz/common@npm:^3.0.2":
+"@ts-graphviz/common@npm:^3.0.2":
   version: 3.0.2
   resolution: "@ts-graphviz/common@npm:3.0.2"
   checksum: 10c0/f0412f88c20e2af041c1fb2070efaf10843ddc70f2f23a609ab3d6e1b71ab995ce26a38d218137c68245b734146e0201b2f6a752e19fc9ecf81e20eff8d5b81a
@@ -2644,13 +2644,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/core@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@ts-graphviz/core@npm:3.0.0"
+"@ts-graphviz/core@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@ts-graphviz/core@npm:3.0.2"
   dependencies:
-    "@ts-graphviz/ast": "npm:^3.0.0"
-    "@ts-graphviz/common": "npm:^3.0.0"
-  checksum: 10c0/30ce1d680f2c117dd7dcfcd91fc566d805d846c8241d17b0953305d9440ba7ca3422138147928460a5f82d60d835fa880b5968d6daedd87c54fa2c2bed53a689
+    "@ts-graphviz/ast": "npm:^3.0.2"
+    "@ts-graphviz/common": "npm:^3.0.2"
+  checksum: 10c0/27c5ebe7540047471a86339783fd8baad37ac5f88ba4d5c6c8aa5a47b0f06fad0b68eae5aa67e5740ef861360083ea65ae2b09a2a010bc493b11b00886b9b426
   languageName: node
   linkType: hard
 
@@ -7369,15 +7369,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-graphviz@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "ts-graphviz@npm:3.0.0"
+"ts-graphviz@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "ts-graphviz@npm:3.0.2"
   dependencies:
-    "@ts-graphviz/adapter": "npm:^3.0.0"
-    "@ts-graphviz/ast": "npm:^3.0.0"
-    "@ts-graphviz/common": "npm:^3.0.0"
-    "@ts-graphviz/core": "npm:^3.0.0"
-  checksum: 10c0/5bf7afc58db265f6a246bbe40098e4f52a45a0f3a817e673f54c4afcba0f253ffae56ced5e4a03fff88781e78a919e61acf72bade9c3d8dc2d786ea8a4e819fb
+    "@ts-graphviz/adapter": "npm:^3.0.2"
+    "@ts-graphviz/ast": "npm:^3.0.2"
+    "@ts-graphviz/common": "npm:^3.0.2"
+    "@ts-graphviz/core": "npm:^3.0.2"
+  checksum: 10c0/067a96bf471edec654e09f5f700b2564c7bb8b31a647e4c3bad3f0c0aa2312ff42c15e61b86d5828529e8ff80e37c6bdbb10cfa6c2cd7396f88db2952aba75af
   languageName: node
   linkType: hard
 
