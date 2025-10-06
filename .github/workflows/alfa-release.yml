@@ -56,10 +56,6 @@ on:
         required: false
         type: boolean
         default: false
-      coverage:
-        required: false
-        type: boolean
-        default: false
     secrets:
       # A PAT for the user who will commit. Need to have the repo:write permission.
       token:
@@ -165,19 +161,6 @@ jobs:
           yarn extract
           yarn document
           git add docs/api
-
-      - name: Generate coverage reports and commit then
-        # The scripts/coverage.sh script needs to be repo specific since
-        # it uses the packages paths. Would be better to work some magic
-        # around `yarn workspaces foreach` but it's a bit tricky without
-        # having a `package.json` script in each package.
-        if: inputs.coverage
-        run: |
-          ./scipts/coverage.sh
-          git add docs/coverage
-          git commit -m "Update global coverage report"
-          git add **/docs/coverage
-          git commit -m "Update package coverage reports"
 
       - name: Commit and push changes
         # If we made it thus far, we can commit the changes

@@ -15,7 +15,7 @@ defaults:
     shell: bash
 
 jobs:
-  release:
+  version:
     name: New version
     runs-on: ubuntu-latest
     outputs:

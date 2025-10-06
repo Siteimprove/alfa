@@ -8,8 +8,8 @@ defaults:
     shell: bash
 
 jobs:
-  release:
-    name: Release
+  coverage:
+    name: Coverage
     runs-on: ubuntu-latest
     steps:
       - name: Are we called from `main`?
@@ -23,7 +23,7 @@ jobs:
       - name: Build project
         run: yarn build
 
-      - name: Generate global coverage reports
+      - name: Generate coverage reports
         # The scripts/coverage.sh script needs to be repo specific since
         # it uses the packages paths. Would be better to work some magic
         # around `yarn workspaces foreach` but it's a bit tricky without
@@ -35,4 +35,4 @@ jobs:
           git add docs/coverage
           git commit -m "Update global coverage report"
           git add **/docs/coverage
-          git commit -m "Update package coverage reports"
+          git commit -m "Update individual coverage reports"

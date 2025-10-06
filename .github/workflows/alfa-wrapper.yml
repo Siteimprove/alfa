@@ -68,6 +68,12 @@ jobs:
     secrets:
       token: ${{ secrets.token }}
 
+  coverage:
+    name: Generate coverage data
+    needs: setup
+    if: inputs.coverage
+    uses: siteimprove/alfa/.github/workflows/alfa-coverage.yml@main
+
   documentation:
     name: Generate documentation
     needs: setup
@@ -80,16 +86,11 @@ jobs:
     if: inputs.publish
     uses: siteimprove/alfa/.github/workflows/alfa-version.yml@main
 
-  coverage:
-    name: Generate coverage data
-    needs: setup
-    if: inputs.coverage
-    uses: siteimprove/alfa/.github/workflows/alfa-coverage.yml@main
-
   push:
     name: Push changes
-    needs: [setup, documentation, coverage, version]
-    if: ${{ always() && !failure() && !cancelled() }} # when none of the needed jobs fail or are cancelled (skipped or successful jobs are ok).
+    needs: [setup, coverage, documentation, version]
+    # when none of the needed jobs fail or are cancelled (skipped or successful jobs are ok).
+    if: ${{ always() && !failure() && !cancelled() }}
     steps:
       - name: push changes
         run: git push --follow-tags

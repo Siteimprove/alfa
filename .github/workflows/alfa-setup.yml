@@ -34,8 +34,8 @@ defaults:
     shell: bash
 
 jobs:
-  release:
-    name: Release
+  setup:
+    name: Setup Alfa
     runs-on: ubuntu-latest
     steps:
       - name: Are we called from `main`?

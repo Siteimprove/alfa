@@ -15,10 +15,9 @@ Most of these actions assume to a certain degree the structure of the repository
 * One top-level CHANGELOG.md
 * One `yarn alfa-changelog` command to update the top-level changelog.
 * Packages published on the Github registry (may be public or restricted).
-* Global coverage report in `docs/coverage`, built with `yarn coverage`.
-* Individual coverage reports in `<package>/docs/coverage`, built with `yarn coverage:package <dir>`.
+* A `scripts/coverage.sh` script to generate coverage reports.
 
-This workflow is likely to fail on any repository that does not have the same structure. Use at your own judgement call.
+These workflows are likely to fail on any repository that does not have the same structure. Use at your own judgement call.
 
 ## Warning
 
@@ -26,10 +25,10 @@ These actions are meant to push content to the main branch which may trigger oth
 
 ## Overview
 
-* [`alfa-setup.yml`](alfa-setup.yml): sets up the environment for Alfa operations: checkout, node, yarn, git, build packages.
+* [`alfa-setup.yml`](alfa-setup.yml): sets up the environment for Alfa operations: checkout, node, yarn, git, build packages. This is a prerequisite for all other actions.
 * [`alfa-version.yml`](alfa-version.yml): creates a new version and update the changelogs.
 * [`alfa-publish.yml`](alfa-publish.yml): publishes packages to the Github registry, and optionally to the NPM one.
 * [`alfa-coverage.yml`](alfa-coverage.yml): updates the coverage reports.
 * [`alfa-documentation.yml`](alfa-documentation.yml): updates the text documentation.
-* [`alfa-wrapper`.yml](alfa-wrapper.yml): a wrapper that can call any of the above actions in sequence.
+* [`alfa-wrapper`.yml](alfa-wrapper.yml): a wrapper that can call any of the above actions. This is likely the one to use in your own workflows.
 * [`alfa-release.yml`](./alfa-release.yml) (**DEPRECATED**): old monolithic action for releases.
