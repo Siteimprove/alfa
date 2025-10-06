@@ -1,0 +1,38 @@
+name: Generate coverage data
+
+on:
+  workflow_call:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Are we called from `main`?
+        # This should only be called from the main branch of the repo.
+        # If this workflow is somehow called from another branch, crash.
+        if: github.ref_name != 'main'
+        run: |
+          echo "This workflow can only be called from the main branch."
+          exit 1
+
+      - name: Build project
+        run: yarn build
+
+      - name: Generate global coverage reports
+        # The scripts/coverage.sh script needs to be repo specific since
+        # it uses the packages paths. Would be better to work some magic
+        # around `yarn workspaces foreach` but it's a bit tricky without
+        # having a `package.json` script in each package.
+        run: ${{ github.workspace }}/scripts/coverage.sh
+
+      - name: Commit and push changes
+        run: |
+          git add docs/coverage
+          git commit -m "Update global coverage report"
+          git add **/docs/coverage
+          git commit -m "Update package coverage reports"

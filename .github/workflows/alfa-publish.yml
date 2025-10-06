@@ -1,0 +1,102 @@
+# Publish a new version of packages
+name: Publish a new version
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: The version to release, e.g. "1.2.3" or "1.2.3-beta.1"
+        required: true
+        type: string
+      public:
+        description: Whether the packages are public and require a provenance statement.
+        required: false
+        type: boolean
+        default: true # Most Alfa repos are public.
+      npm-publish:
+        description: Whether to publish the packages to the npm registry in addition to the Github Packages registry.
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      # Token for NPM publication, must be set up if inputs.npm-publish is true.
+      npm-token:
+        required: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Are we called from `main`?
+        # This should only be called from the main branch of the repo.
+        # If this workflow is somehow called from another branch, crash.
+        if: github.ref_name != 'main'
+        run: |
+          echo "This workflow can only be called from the main branch."
+          exit 1
+
+      - name: Pack packages
+        # We use yarn for preparing the packs, but npm for actually uploading them and publishing them.
+        # This is because npm poorly handles the "workspace:" protocol which yarn supports.
+        # On the other hand, npm is more flexible in its options for overwriting config file,
+        # and can generate provenance statements.
+        #
+        # It seems that in some cases npm builds its metadata from the package.json file, and not from the
+        # tarball, and thus adds wrong dependencies to "workspace:…" versions that do not exist.
+        # Packing in a separate directory forces npm to use the tarball for metadata.
+        #
+        # This was witnessed with npm 10.7.0 in the CI/CD pipeline, but could not be reproduced
+        # locally with the same npm version. npm may change its behaviour, in which case we
+        # could switch do simply use npm for pack+publish, i.e. do
+        # yarn workspaces foreach <options> exec npm publish <options>
+        # Alternatively, if yarn let us overwrite @siteimprove:registry in the CLI, and generate provenance
+        # statements, we could use yarn for the whole process:
+        # yarn workspaces foreach <options> run npm publish <options>
+        run: |
+          mkdir ${{ github.workspace }}/artifacts
+          yarn workspaces foreach --all --no-private --topological-dev pack --out ${{ github.workspace }}/artifacts/%s-%v.tgz
+
+      - name: Set token for npm publication (Github package registry)
+        run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
+      - name: Make npm release (Github Packages Registry / public)
+        if: inputs.public
+        run: >
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --provenance --tag latest;
+          done
+      - name: Make npm release (Github Packages Registry / private)
+        if: ${{ ! inputs.public }}
+        run: >
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --tag latest;
+          done
+
+
+      - name: Set token for npm publication (npm registry)
+        if: inputs.npm-publish
+        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.npm-token }}
+      - name: Make npm release (npm Packages Registry)
+        # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
+        if: inputs.npm-publish
+        run: >
+          for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
+            npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
+          done
+
+      - name: Make Github release
+        run: >
+          gh release create ${VERSION}
+          --prerelease
+          --verify-tag
+          --title ${VERSION}
+          --notes "[Changelog for this release](CHANGELOG.md)"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # Passing it as a variable rather than inline hardens against script injection.
+          # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+          VERSION: v${{ inputs.version }}

@@ -1,3 +1,5 @@
+# DEPRECATED: Use .github/workflows/alfa-wrapper.yml instead.
+
 # Create a release for the Alfa repos.
 #
 # WARNING! This workflow pushes to main which **does** trigger other workflow (build, scan, …)
@@ -57,7 +59,7 @@ on:
       coverage:
         required: false
         type: boolean
-        default: false # Most Alfa repos do not have coverage.
+        default: false
     secrets:
       # A PAT for the user who will commit. Need to have the repo:write permission.
       token:
@@ -164,12 +166,18 @@ jobs:
           yarn document
           git add docs/api
 
-      - name: Generate global coverage report and commit it
+      - name: Generate coverage reports and commit then
+        # The scripts/coverage.sh script needs to be repo specific since
+        # it uses the packages paths. Would be better to work some magic
+        # around `yarn workspaces foreach` but it's a bit tricky without
+        # having a `package.json` script in each package.
         if: inputs.coverage
         run: |
-          yarn coverage
+          ./scipts/coverage.sh
           git add docs/coverage
           git commit -m "Update global coverage report"
+          git add **/docs/coverage
+          git commit -m "Update package coverage reports"
 
       - name: Commit and push changes
         # If we made it thus far, we can commit the changes
@@ -177,7 +185,6 @@ jobs:
         run: |
           # Removed individual changesets, all changelog (global and local), all package.json (new version number), lockfile
           git add .changeset/ CHANGELOG.md **/CHANGELOG.md package.json **/package.json yarn.lock
-          # Global coverage files
           git commit -m ${VERSION}
           git tag --annotate ${VERSION} --message=${VERSION}
           git push --follow-tags

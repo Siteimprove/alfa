@@ -1,0 +1,109 @@
+# Wrapper for Alfa maintenance operations that update git.
+name: Alfa operations
+
+on:
+  workflow_call:
+    inputs:
+      # Authentication of the user who will commit the changes
+      # This user must be able to bypass branch protections as it will commit directly to main.
+      user-name:
+        description: "The git user name to use for commits"
+        required: true
+        type: string
+      user-email:
+        description: "The git user email to use for commits"
+        required: true
+        type: string
+      setup-playwright:
+        description: "Whether to setup Playwright browsers"
+        required: false
+        type: boolean
+        default: false
+      documentation:
+        description: "Whether to generate documentation"
+        required: false
+        type: boolean
+        default: false
+      coverage:
+        description: "Whether to generate coverage reports."
+        required: false
+        type: boolean
+        default: false
+      publish:
+        description: "Whether to create and publish a new version."
+        required: false
+        type: boolean
+        default: false
+      public:
+        description: "Whether the packages are public and require a provenance statement."
+        required: false
+        type: boolean
+        default: true # Most Alfa repos are public.
+      npm-publish:
+        description: "Whether to publish the packages to the npm registry in addition to the Github Packages registry."
+        required: false
+        type: boolean
+        default: false
+      secrets:
+      # A PAT for the user who will commit. Need to have the repo:write permission.
+      token:
+        required: true
+      # Token for NPM publication, must be set up if inputs.npm-publish is true.
+      npm-token:
+        required: false
+
+defaults:
+  run:
+    shell: bash
+    runs-on: ubuntu-latest
+
+jobs:
+  setup:
+    name: Setup Alfa
+    uses: siteimprove/alfa/.github/workflows/alfa-setup.yml@main
+    with:
+      user-name: ${{ inputs.user-name }}
+      user-email: ${{ inputs.user-email }}
+      setup-playwright: ${{ inputs.setup-playwright }}
+    secrets:
+      token: ${{ secrets.token }}
+
+  documentation:
+    name: Generate documentation
+    needs: setup
+    if: inputs.generate-documentation
+    uses: siteimprove/alfa/.github/workflows/alfa-documentation.yml@main
+
+  version:
+    name: Bump version
+    needs: setup
+    if: inputs.publish
+    uses: siteimprove/alfa/.github/workflows/alfa-version.yml@main
+
+  coverage:
+    name: Generate coverage data
+    needs: setup
+    if: inputs.coverage
+    uses: siteimprove/alfa/.github/workflows/alfa-coverage.yml@main
+
+  push:
+    name: Push changes
+    needs: [setup, documentation, coverage, version]
+    if: ${{ always() && !failure() && !cancelled() }} # when none of the needed jobs fail or are cancelled (skipped or successful jobs are ok).
+    steps:
+      - name: push changes
+        run: git push --follow-tags
+
+  publish:
+    name: Publish packages
+    # This is always done last as we do not want to publish in a broken state.
+    # We nonetheless "need" `version` so that we can reuse its output.
+    needs: [version, push]
+    if: inputs.publish
+    uses: siteimprove/alfa/.github/workflows/alfa-publish.yml@main
+    with:
+      version: ${{ needs.version.outputs.version }}
+      public: ${{ inputs.public }}
+      npm-publish: ${{ inputs.npm-publish }}
+    secrets:
+      npm-token: ${{ secrets.npm-token }}
