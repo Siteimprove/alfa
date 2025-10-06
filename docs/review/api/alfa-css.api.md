@@ -7,31 +7,21 @@
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import type { Comparison } from '@siteimprove/alfa-comparable';
-import { Component as Component_3 } from '../position/component.js';
-import { Corner as Corner_3 } from './corner.js';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
 import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type * as json from '@siteimprove/alfa-json';
-import { Keywords as Keywords_2 } from '../position/keywords.js';
-import { LengthPercentage as LengthPercentage_2 } from '../index.js';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
-import { Parser as Parser_3 } from '../../index.js';
-import { Parser as Parser_4 } from '../../syntax/parser.js';
-import { Position as Position_3 } from '../index.js';
 import { Predicate } from '@siteimprove/alfa-predicate';
-import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
 import type { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
 import type { Thunk } from '@siteimprove/alfa-thunk';
-import { Token as Token_2 } from '../../syntax/token.js';
-import { Unit as Unit_2 } from '../../index.js';
 
 // @public (undocumented)
 export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
@@ -1459,7 +1449,7 @@ export namespace Matrix {
     ]
     ];
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Matrix, string, []>;
+    parse: Parser_2<Slice<Token>, Matrix, string, []>;
 }
 
 // @public (undocumented)
@@ -1845,9 +1835,9 @@ export namespace Perspective {
     // (undocumented)
     export type Resolver = Length.Resolver;
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Perspective<Length<Unit_2.Length>>, string, []>;
+    parse: Parser_2<Slice<Token>, Perspective<Length<import("../../index.js").Unit.Length>>, string, []>;
     const // (undocumented)
-    parseProp: Parser_2<Slice<Token_2>, Perspective<Length<Unit_2.Length>>, string, []>;
+    parseProp: Parser_2<Slice<Token>, Perspective<Length<import("../../index.js").Unit.Length>>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Polygon" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2256,9 +2246,9 @@ export namespace Scale {
         z: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
+    parse: Parser_2<Slice<Token>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
     const // (undocumented)
-    parseProp: Parser_2<Slice<Token_2>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
+    parseProp: Parser_2<Slice<Token>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Shadow" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2372,8 +2362,11 @@ export namespace Shape {
         export type PartialResolver = Circle.PartialResolver & Ellipse.PartialResolver & Inset.PartialResolver & Polygon.PartialResolver & Rectangle.Resolver;
         // (undocumented)
         export type Resolver = Circle.Resolver & Ellipse.Resolver & Inset.Resolver & Polygon.Resolver & Rectangle.Resolver;
-        const // @internal (undocumented)
-        parse: Parser_2<Slice<Token>, Circle<Radius_3<LengthPercentage_2 | Radius_3.Side>, Position_3<Keywords_2.Horizontal, Keywords_2.Vertical, Component_3<Keywords_2.Horizontal>, Component_3<Keywords_2.Vertical>>> | Ellipse<Radius_3<LengthPercentage_2 | Radius_3.Side>, Position_3<Keywords_2.Horizontal, Keywords_2.Vertical, Component_3<Keywords_2.Horizontal>, Component_3<Keywords_2.Vertical>>> | Inset<Inset.Offset, Corner_3> | Polygon<Polygon.Fill, LengthPercentage_2>, string, []>;
+        const // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
+        // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
+        //
+        // @internal (undocumented)
+        parse: Parser_2<Slice<Token>, Circle<Radius<LengthPercentage | import("./radius.js").Radius.Side>, Position<import("../position/keywords.js").Keywords.Horizontal, import("../position/keywords.js").Keywords.Vertical, Component_2<import("../position/keywords.js").Keywords.Horizontal>, Component_2<import("../position/keywords.js").Keywords.Vertical>>> | Ellipse<Radius<LengthPercentage | import("./radius.js").Radius.Side>, Position<import("../position/keywords.js").Keywords.Horizontal, import("../position/keywords.js").Keywords.Vertical, Component_2<import("../position/keywords.js").Keywords.Horizontal>, Component_2<import("../position/keywords.js").Keywords.Vertical>>> | Inset<Inset.Offset, Corner_2> | Polygon<Polygon.Fill, LengthPercentage>, string, []>;
     }
     // (undocumented)
     export type Canonical = Shape<Basic.Canonical, Box.Geometry>;
@@ -2431,7 +2424,7 @@ export namespace Skew {
         y: Angle.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Skew, string, []>;
+    parse: Parser_2<Slice<Token>, Skew, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "String" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -3293,7 +3286,7 @@ export namespace Transform {
     const // @internal (undocumented)
     parse: Parser_2<Slice<Token>, Transform, string, []>;
     const // (undocumented)
-    parseList: Parser_4<List<Transform>>;
+    parseList: Parser<List<Transform>>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Translate" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -3348,7 +3341,7 @@ export namespace Translate {
     const // (undocumented)
     parse: Parser<Translate>;
     const // (undocumented)
-    parseProp: Parser_2<Slice<Token_2>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>;
+    parseProp: Parser_2<Slice<Token>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "TrimFlags" is marked as @public, but its signature references "Resolvable" which is marked as @internal

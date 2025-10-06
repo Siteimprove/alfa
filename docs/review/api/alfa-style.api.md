@@ -8,7 +8,6 @@ import type { Applicative } from '@siteimprove/alfa-applicative';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Box } from '@siteimprove/alfa-css';
 import { Color } from '@siteimprove/alfa-css';
-import { Computed } from './property/line-height.js';
 import { ContainFlags } from '@siteimprove/alfa-css';
 import { Context } from '@siteimprove/alfa-selector';
 import { CustomIdent } from '@siteimprove/alfa-css';
@@ -38,6 +37,7 @@ import { Parser } from '@siteimprove/alfa-css';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
 import { Perspective } from '@siteimprove/alfa-css';
+import { Position } from '@siteimprove/alfa-css';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-css';
 import type { Resolvable } from '@siteimprove/alfa-css';
@@ -48,29 +48,6 @@ import { Shadow } from '@siteimprove/alfa-css';
 import { Shape } from '@siteimprove/alfa-css';
 import { Side } from '@siteimprove/alfa-css/dist/value/position/side.js';
 import type { Slice } from '@siteimprove/alfa-slice';
-import { Specified } from './property/background-attachment.js';
-import { Specified as Specified_10 } from './property/border-image-slice.js';
-import { Specified as Specified_11 } from './property/border-image-source.js';
-import { Specified as Specified_12 } from './property/border-image-width.js';
-import { Specified as Specified_13 } from './property/font-stretch.js';
-import { Specified as Specified_14 } from './property/font-variant-east-asian.js';
-import { Specified as Specified_15 } from './property/font-variant-ligatures.js';
-import { Specified as Specified_16 } from './property/font-variant-numeric.js';
-import { Specified as Specified_17 } from './property/mask-clip.js';
-import { Specified as Specified_18 } from './property/mask-composite.js';
-import { Specified as Specified_19 } from './property/mask-image.js';
-import { Specified as Specified_2 } from './property/background-image.js';
-import { Specified as Specified_20 } from './property/mask-mode.js';
-import { Specified as Specified_21 } from './property/mask-position.js';
-import { Specified as Specified_22 } from './property/mask-repeat.js';
-import { Specified as Specified_23 } from './property/mask-size.js';
-import { Specified as Specified_3 } from './property/background-position-x.js';
-import { Specified as Specified_4 } from './property/background-position-y.js';
-import { Specified as Specified_5 } from './property/background-repeat-x.js';
-import { Specified as Specified_6 } from './property/background-size.js';
-import { Specified as Specified_7 } from './property/border-top-width.js';
-import { Specified as Specified_8 } from './property/border-image-outset.js';
-import { Specified as Specified_9 } from './property/border-image-repeat.js';
 import { String as String_2 } from '@siteimprove/alfa-css';
 import { Text } from '@siteimprove/alfa-dom';
 import { Token } from '@siteimprove/alfa-css';
@@ -164,54 +141,54 @@ export namespace Longhands {
     export function propName<N extends Name>(name: N): TrueName<N>;
     const // (undocumented)
     longHands: {
-        "background-attachment": Longhand<List<Specified.Item>, List<Specified.Item>>;
+        "background-attachment": Longhand<List<import("./property/background-attachment.js").Specified.Item>, List<import("./property/background-attachment.js").Specified.Item>>;
         "background-clip": Longhand<List<Box>, List<Box>>;
         "background-color": Longhand<Color, Color.Canonical>;
-        "background-image": Longhand<List<Specified_2.Item>, List<Image.PartiallyResolved | Keyword<"none">>>;
+        "background-image": Longhand<List<import("./property/background-image.js").Specified.Item>, List<Image.PartiallyResolved | Keyword<"none">>>;
         "background-origin": Longhand<List<Box>, List<Box>>;
-        "background-position-x": Longhand<List<Specified_3.Item>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Horizontal>>>;
-        "background-position-y": Longhand<List<Specified_4.Item>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Vertical>>>;
-        "background-repeat-x": Longhand<List<Specified_5.Item>, List<Specified_5.Item>>;
-        "background-repeat-y": Longhand<List<Specified_5.Item>, List<Specified_5.Item>>;
-        "background-size": Longhand<List<Specified_6.Item>, List<Tuple<[LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">]> | Keyword<"cover"> | Keyword<"contain">>>;
+        "background-position-x": Longhand<List<import("./property/background-position-x.js").Specified.Item>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Horizontal>>>;
+        "background-position-y": Longhand<List<import("./property/background-position-y.js").Specified.Item>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Vertical>>>;
+        "background-repeat-x": Longhand<List<import("./property/background-repeat-x.js").Specified.Item>, List<import("./property/background-repeat-x.js").Specified.Item>>;
+        "background-repeat-y": Longhand<List<import("./property/background-repeat-x.js").Specified.Item>, List<import("./property/background-repeat-x.js").Specified.Item>>;
+        "background-size": Longhand<List<import("./property/background-size.js").Specified.Item>, List<Tuple<[LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">]> | Keyword<"cover"> | Keyword<"contain">>>;
         "border-block-end-color": Longhand<Color, Color.Canonical>;
         "border-block-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        "border-block-end-width": Longhand<Specified_7, Length>;
+        "border-block-end-width": Longhand<Specified, Length>;
         "border-block-start-color": Longhand<Color, Color.Canonical>;
         "border-block-start-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        "border-block-start-width": Longhand<Specified_7, Length>;
+        "border-block-start-width": Longhand<Specified, Length>;
         "border-bottom-color": Longhand<Color, Color.Canonical>;
         "border-bottom-left-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-bottom-right-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-bottom-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        "border-bottom-width": Longhand<Specified_7, Length>;
+        "border-bottom-width": Longhand<Specified, Length>;
         "border-collapse": Longhand<Keyword.ToKeywords<"separate" | "collapse">, Keyword.ToKeywords<"separate" | "collapse">>;
         "border-end-end-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-end-start-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
-        "border-image-outset": Longhand<Specified_8, Tuple<[top: Length | Number_2, right: Length | Number_2, bottom: Length | Number_2, left: Length | Number_2]>>;
-        "border-image-repeat": Longhand<Specified_9, Specified_9>;
-        "border-image-slice": Longhand<Specified_10, Tuple<[top: Number_2.Fixed | Percentage.Canonical, right: Number_2.Fixed | Percentage.Canonical, bottom: Number_2.Fixed | Percentage.Canonical, left: Number_2.Fixed | Percentage.Canonical]> | Tuple<[top: Number_2.Fixed | Percentage.Canonical, right: Number_2.Fixed | Percentage.Canonical, bottom: Number_2.Fixed | Percentage.Canonical, left: Number_2.Fixed | Percentage.Canonical, fill: Keyword<"fill">]>>;
-        "border-image-source": Longhand<Specified_11, Image.PartiallyResolved | Keyword<"none">>;
-        "border-image-width": Longhand<Specified_12, Tuple<[top: Number_2.Fixed | LengthPercentage | Keyword<"auto">, right: Number_2.Fixed | LengthPercentage | Keyword<"auto">, bottom: Number_2.Fixed | LengthPercentage | Keyword<"auto">, left: Number_2.Fixed | LengthPercentage | Keyword<"auto">]>>;
+        "border-image-outset": Longhand<Specified_2, Tuple<[top: Length | Number_2, right: Length | Number_2, bottom: Length | Number_2, left: Length | Number_2]>>;
+        "border-image-repeat": Longhand<Specified_4, Specified_4>;
+        "border-image-slice": Longhand<Specified_6, Tuple<[top: Number_2.Fixed | Percentage.Canonical, right: Number_2.Fixed | Percentage.Canonical, bottom: Number_2.Fixed | Percentage.Canonical, left: Number_2.Fixed | Percentage.Canonical]> | Tuple<[top: Number_2.Fixed | Percentage.Canonical, right: Number_2.Fixed | Percentage.Canonical, bottom: Number_2.Fixed | Percentage.Canonical, left: Number_2.Fixed | Percentage.Canonical, fill: Keyword<"fill">]>>;
+        "border-image-source": Longhand<Specified_7, Image.PartiallyResolved | Keyword<"none">>;
+        "border-image-width": Longhand<Specified_8, Tuple<[top: Number_2.Fixed | LengthPercentage | Keyword<"auto">, right: Number_2.Fixed | LengthPercentage | Keyword<"auto">, bottom: Number_2.Fixed | LengthPercentage | Keyword<"auto">, left: Number_2.Fixed | LengthPercentage | Keyword<"auto">]>>;
         "border-inline-end-color": Longhand<Color, Color.Canonical>;
         "border-inline-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        "border-inline-end-width": Longhand<Specified_7, Length>;
+        "border-inline-end-width": Longhand<Specified, Length>;
         "border-inline-start-color": Longhand<Color, Color.Canonical>;
         "border-inline-start-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        "border-inline-start-width": Longhand<Specified_7, Length>;
+        "border-inline-start-width": Longhand<Specified, Length>;
         "border-left-color": Longhand<Color, Color.Canonical>;
         "border-left-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        "border-left-width": Longhand<Specified_7, Length>;
+        "border-left-width": Longhand<Specified, Length>;
         "border-right-color": Longhand<Color, Color.Canonical>;
         "border-right-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        "border-right-width": Longhand<Specified_7, Length>;
+        "border-right-width": Longhand<Specified, Length>;
         "border-start-end-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-start-start-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-top-color": Longhand<Color, Color.Canonical>;
         "border-top-left-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-top-right-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         "border-top-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        "border-top-width": Longhand<Specified_7, Length>;
+        "border-top-width": Longhand<Specified, Length>;
         bottom: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         "box-shadow": Longhand<Keyword<"none"> | List<Shadow<Length, Length, Length, Length, Color>>, Keyword<"none"> | List<Shadow.Canonical>>;
         "clip-path": Longhand<URL | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>, URL | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>>;
@@ -226,12 +203,12 @@ export namespace Longhands {
         float: Longhand<Keyword.ToKeywords<"none" | "left" | "right">, Keyword.ToKeywords<"none" | "left" | "right">>;
         "font-family": Longhand<List<String_2 | Keyword<"serif"> | Keyword<"sans-serif"> | Keyword<"cursive"> | Keyword<"fantasy"> | Keyword<"monospace">>, List<String_2 | Keyword<"serif"> | Keyword<"sans-serif"> | Keyword<"cursive"> | Keyword<"fantasy"> | Keyword<"monospace">>>;
         "font-size": Longhand<LengthPercentage | Keyword<"medium"> | Keyword<"xx-small"> | Keyword<"x-small"> | Keyword<"small"> | Keyword<"large"> | Keyword<"x-large"> | Keyword<"xx-large"> | Keyword<"xxx-large"> | Keyword<"larger"> | Keyword<"smaller">, Length>;
-        "font-stretch": Longhand<Specified_13, Percentage.Calculated<Numeric.Type> | Percentage.Fixed<Numeric.Type>>;
+        "font-stretch": Longhand<Specified_10, Percentage.Calculated<Numeric.Type> | Percentage.Fixed<Numeric.Type>>;
         "font-style": Longhand<Keyword.ToKeywords<"normal" | "italic" | "oblique">, Keyword.ToKeywords<"normal" | "italic" | "oblique">>;
         "font-variant-caps": Longhand<Keyword.ToKeywords<"normal" | "small-caps" | "all-small-caps" | "petite-caps" | "all-petite-caps" | "unicase" | "titling-caps">, Keyword.ToKeywords<"normal" | "small-caps" | "all-small-caps" | "petite-caps" | "all-petite-caps" | "unicase" | "titling-caps">>;
-        "font-variant-east-asian": Longhand<Specified_14, Specified_14>;
-        "font-variant-ligatures": Longhand<Specified_15, Specified_15>;
-        "font-variant-numeric": Longhand<Specified_16, Specified_16>;
+        "font-variant-east-asian": Longhand<Specified_11, Specified_11>;
+        "font-variant-ligatures": Longhand<Specified_12, Specified_12>;
+        "font-variant-numeric": Longhand<Specified_13, Specified_13>;
         "font-variant-position": Longhand<Keyword.ToKeywords<"sub" | "normal" | "super">, Keyword.ToKeywords<"sub" | "normal" | "super">>;
         "font-weight": Longhand<Number_2 | Keyword<"normal"> | Keyword<"bold"> | Keyword<"bolder"> | Keyword<"lighter">, Number_2.Fixed>;
         height: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
@@ -249,14 +226,14 @@ export namespace Longhands {
         "margin-left": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "margin-right": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "margin-top": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "mask-clip": Longhand<List<Specified_17.Item>, List<Specified_17.Item>>;
-        "mask-composite": Longhand<List<Specified_18.Item>, List<Specified_18.Item>>;
-        "mask-image": Longhand<List<Specified_19.Item>, List<Specified_19.Item>>;
-        "mask-mode": Longhand<List<Specified_20.Item>, List<Specified_20.Item>>;
+        "mask-clip": Longhand<List<import("./property/mask-clip.js").Specified.Item>, List<import("./property/mask-clip.js").Specified.Item>>;
+        "mask-composite": Longhand<List<import("./property/mask-composite.js").Specified.Item>, List<import("./property/mask-composite.js").Specified.Item>>;
+        "mask-image": Longhand<List<import("./property/mask-image.js").Specified.Item>, List<import("./property/mask-image.js").Specified.Item>>;
+        "mask-mode": Longhand<List<import("./property/mask-mode.js").Specified.Item>, List<import("./property/mask-mode.js").Specified.Item>>;
         "mask-origin": Longhand<List<Box.CoordBox>, List<Box.CoordBox>>;
-        "mask-position": Longhand<List<Specified_21.Item>, List<Specified_21.Item>>;
-        "mask-repeat": Longhand<List<Specified_22.Item>, List<Tuple<[Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">, Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">]>>>;
-        "mask-size": Longhand<List<Specified_23.Item>, List<Specified_23.Item>>;
+        "mask-position": Longhand<List<import("./property/mask-position.js").Specified.Item>, List<import("./property/mask-position.js").Specified.Item>>;
+        "mask-repeat": Longhand<List<import("./property/mask-repeat.js").Specified.Item>, List<Tuple<[Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">, Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">]>>>;
+        "mask-size": Longhand<List<import("./property/mask-size.js").Specified.Item>, List<import("./property/mask-size.js").Specified.Item>>;
         "min-height": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
         "min-width": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
         "mix-blend-mode": Longhand<Keyword.ToKeywords<"screen" | "color" | "hue" | "saturation" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "luminosity" | "plus-darker" | "plus-lighter">, Keyword.ToKeywords<"screen" | "color" | "hue" | "saturation" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "luminosity" | "plus-darker" | "plus-lighter">>;
@@ -559,18 +536,25 @@ export namespace Value {
 
 // Warnings were encountered during analysis:
 //
+// src/longhands.ts:226:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:226:7 - (ae-incompatible-release-tags) The symbol ""background-attachment"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:227:7 - (ae-incompatible-release-tags) The symbol ""background-clip"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:228:7 - (ae-incompatible-release-tags) The symbol ""background-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:229:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:229:7 - (ae-incompatible-release-tags) The symbol ""background-image"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:230:7 - (ae-incompatible-release-tags) The symbol ""background-origin"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:231:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:231:7 - (ae-incompatible-release-tags) The symbol ""background-position-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:232:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:232:7 - (ae-incompatible-release-tags) The symbol ""background-position-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:233:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:233:7 - (ae-incompatible-release-tags) The symbol ""background-repeat-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:234:7 - (ae-incompatible-release-tags) The symbol ""background-repeat-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:235:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:235:7 - (ae-incompatible-release-tags) The symbol ""background-size"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:236:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:237:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:238:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:238:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:239:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:240:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
@@ -583,10 +567,15 @@ export namespace Value {
 // src/longhands.ts:247:7 - (ae-incompatible-release-tags) The symbol ""border-collapse"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:248:7 - (ae-incompatible-release-tags) The symbol ""border-end-end-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:249:7 - (ae-incompatible-release-tags) The symbol ""border-end-start-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:250:7 - (ae-forgotten-export) The symbol "Specified_2" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:250:7 - (ae-incompatible-release-tags) The symbol ""border-image-outset"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:251:7 - (ae-forgotten-export) The symbol "Specified_4" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:251:7 - (ae-incompatible-release-tags) The symbol ""border-image-repeat"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:252:7 - (ae-forgotten-export) The symbol "Specified_6" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:252:7 - (ae-incompatible-release-tags) The symbol ""border-image-slice"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:253:7 - (ae-forgotten-export) The symbol "Specified_7" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:253:7 - (ae-incompatible-release-tags) The symbol ""border-image-source"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:254:7 - (ae-forgotten-export) The symbol "Specified_8" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:254:7 - (ae-incompatible-release-tags) The symbol ""border-image-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:255:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:256:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
@@ -621,11 +610,15 @@ export namespace Value {
 // src/longhands.ts:285:7 - (ae-incompatible-release-tags) The symbol "float" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:286:7 - (ae-incompatible-release-tags) The symbol ""font-family"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:287:7 - (ae-incompatible-release-tags) The symbol ""font-size"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:288:7 - (ae-forgotten-export) The symbol "Specified_10" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:288:7 - (ae-incompatible-release-tags) The symbol ""font-stretch"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:289:7 - (ae-incompatible-release-tags) The symbol ""font-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:290:7 - (ae-incompatible-release-tags) The symbol ""font-variant-caps"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:291:7 - (ae-forgotten-export) The symbol "Specified_11" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:291:7 - (ae-incompatible-release-tags) The symbol ""font-variant-east-asian"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:292:7 - (ae-forgotten-export) The symbol "Specified_12" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:292:7 - (ae-incompatible-release-tags) The symbol ""font-variant-ligatures"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:293:7 - (ae-forgotten-export) The symbol "Specified_13" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:293:7 - (ae-incompatible-release-tags) The symbol ""font-variant-numeric"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:294:7 - (ae-incompatible-release-tags) The symbol ""font-variant-position"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:295:7 - (ae-incompatible-release-tags) The symbol ""font-weight"" is marked as @public, but its signature references "Longhand" which is marked as @internal
@@ -639,18 +632,26 @@ export namespace Value {
 // src/longhands.ts:303:7 - (ae-incompatible-release-tags) The symbol "left" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:304:7 - (ae-incompatible-release-tags) The symbol ""letter-spacing"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:305:7 - (ae-incompatible-release-tags) The symbol ""line-break"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:306:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:306:7 - (ae-incompatible-release-tags) The symbol ""line-height"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:307:7 - (ae-incompatible-release-tags) The symbol ""margin-bottom"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:308:7 - (ae-incompatible-release-tags) The symbol ""margin-left"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:309:7 - (ae-incompatible-release-tags) The symbol ""margin-right"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:310:7 - (ae-incompatible-release-tags) The symbol ""margin-top"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:311:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:311:7 - (ae-incompatible-release-tags) The symbol ""mask-clip"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:312:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:312:7 - (ae-incompatible-release-tags) The symbol ""mask-composite"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:313:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:313:7 - (ae-incompatible-release-tags) The symbol ""mask-image"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:314:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:314:7 - (ae-incompatible-release-tags) The symbol ""mask-mode"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:315:7 - (ae-incompatible-release-tags) The symbol ""mask-origin"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:316:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:316:7 - (ae-incompatible-release-tags) The symbol ""mask-position"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:317:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:317:7 - (ae-incompatible-release-tags) The symbol ""mask-repeat"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:318:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:318:7 - (ae-incompatible-release-tags) The symbol ""mask-size"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:319:7 - (ae-incompatible-release-tags) The symbol ""min-height"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:320:7 - (ae-incompatible-release-tags) The symbol ""min-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
