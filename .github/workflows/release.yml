@@ -18,7 +18,7 @@ jobs:
       # See https://api.github.com/users/siteimprove-builduser
       user-name: siteimprove-builduser
       user-email: 8577410+siteimprove-builduser@users.noreply.github.com
-      generate-documentation: true
+      documentation: true
       coverage: true
       publish: true
       npm-publish: true
