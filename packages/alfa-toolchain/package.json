@@ -67,7 +67,7 @@
     "madge": "^8.0.0",
     "resolve-from": "^5.0.0",
     "simple-git": "^3.28.0",
-    "ts-graphviz": "^2.0.0"
+    "ts-graphviz": "^3.0.2"
   },
   "devDependencies": {
     "@changesets/types": "^6.1.0",
