@@ -25,10 +25,12 @@ These actions are meant to push content to the main branch which may trigger oth
 
 ## Overview
 
+* [`alfa-wrapper`.yml](alfa-wrapper.yml): a wrapper that can call any of the below actions. This is likely the one to use in your own workflows.
+
 * [`alfa-setup.yml`](alfa-setup.yml): sets up the environment for Alfa operations: checkout, node, yarn, git, build packages. This is a prerequisite for all other actions.
 * [`alfa-version.yml`](alfa-version.yml): creates a new version and update the changelogs.
 * [`alfa-publish.yml`](alfa-publish.yml): publishes packages to the Github registry, and optionally to the NPM one.
 * [`alfa-coverage.yml`](alfa-coverage.yml): updates the coverage reports.
 * [`alfa-documentation.yml`](alfa-documentation.yml): updates the text documentation.
-* [`alfa-wrapper`.yml](alfa-wrapper.yml): a wrapper that can call any of the above actions. This is likely the one to use in your own workflows.
+
 * [`alfa-release.yml`](./alfa-release.yml) (**DEPRECATED**): old monolithic action for releases.

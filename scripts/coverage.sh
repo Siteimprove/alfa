@@ -6,6 +6,6 @@ set -euxo pipefail
 yarn coverage
 
 # Generate package-specific coverage reports
-for package in packages/alfa-m*; do
+for package in packages/alfa-*; do
   yarn coverage:package ${package}
 done
