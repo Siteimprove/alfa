@@ -3,6 +3,7 @@ import { DOM } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -33,7 +34,7 @@ export default Rule.Atomic.of<
   Node | Array<Node>
 >({
   uri: "https://alfa.siteimprove.com/rules/sia-r82",
-  requirements: [Criterion.of("3.3.1")],
+  requirements: [Criterion.of("3.3.1"), EAA.of("9.3.3.1")],
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
     return {

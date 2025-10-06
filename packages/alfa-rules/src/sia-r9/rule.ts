@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
@@ -21,6 +22,7 @@ export default Rule.Atomic.of<Page, Element>({
     Criterion.of("2.2.1"),
     Criterion.of("2.2.4"),
     Criterion.of("3.2.5"),
+    EAA.of("9.2.2.1"),
     Technique.of("G110"),
     Technique.of("H76"),
   ],

@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -20,7 +21,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r46",
-  requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
+  requirements: [Criterion.of("1.3.1"), EAA.of("9.1.3.1"), Technique.of("H43")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     let data = Map.empty<Element, [cell: Cell, table: Table]>();

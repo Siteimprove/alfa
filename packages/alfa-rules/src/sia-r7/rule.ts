@@ -9,6 +9,7 @@ import {
   Query,
   Text,
 } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Option } from "@siteimprove/alfa-option";
@@ -37,7 +38,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r7",
-  requirements: [Criterion.of("3.1.2"), Technique.of("H58")],
+  requirements: [Criterion.of("3.1.2"), EAA.of("9.3.1.2"), Technique.of("H58")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {

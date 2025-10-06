@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import type { Attribute } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
@@ -14,6 +15,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r110",
   requirements: [
     Criterion.of("1.3.1"),
+    EAA.of("9.1.3.1"),
     Technique.of("ARIA4"),
     Technique.of("G108"),
   ],

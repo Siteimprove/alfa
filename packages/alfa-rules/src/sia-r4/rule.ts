@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { String } from "@siteimprove/alfa-string";
@@ -15,7 +16,7 @@ const { not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r4",
-  requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
+  requirements: [Criterion.of("3.1.1"), EAA.of("9.3.1.1"), Technique.of("H57")],
   tags: [Scope.Page, Stability.Stable],
   evaluate({ document }) {
     return {

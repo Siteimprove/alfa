@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -17,7 +18,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r3",
-  requirements: [Criterion.of("4.1.1"), Technique.of("H93")],
+  requirements: [Criterion.of("4.1.1"), EAA.of("9.4.1.1"), Technique.of("H93")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ document }) {
     return {

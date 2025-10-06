@@ -3,6 +3,7 @@ import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Attribute} from "@siteimprove/alfa-dom";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -21,7 +22,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r45",
-  requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
+  requirements: [Criterion.of("1.3.1"), EAA.of("9.1.3.1"), Technique.of("H43")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     const cellsCache = Cache.empty<Element, Sequence<Element>>();

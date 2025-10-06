@@ -2,6 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Keyword } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import type { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -27,7 +28,7 @@ const { hasBorder, hasBoxShadow, hasOutline, hasTextDecoration, isTabbable } =
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r65",
-  requirements: [Criterion.of("2.4.7")],
+  requirements: [Criterion.of("2.4.7"), EAA.of("9.2.4.7")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     const tabbables = document.tabOrder().filter(isTabbable(device));

@@ -2,6 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -21,7 +22,7 @@ const { and, equals } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r68",
-  requirements: [Criterion.of("1.3.1")],
+  requirements: [Criterion.of("1.3.1"), EAA.of("9.1.3.1")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {

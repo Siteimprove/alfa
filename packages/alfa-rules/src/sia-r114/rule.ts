@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Query, Text } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { String } from "@siteimprove/alfa-string";
@@ -22,6 +23,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r114",
   requirements: [
     Criterion.of("2.4.2"),
+    EAA.of("9.2.4.2"),
     Technique.of("G88"),
     Technique.of("H25"),
   ],

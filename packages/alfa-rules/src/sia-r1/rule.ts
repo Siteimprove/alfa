@@ -1,12 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import type {
-  Document} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-} from "@siteimprove/alfa-dom";
+import type { Document } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { String } from "@siteimprove/alfa-string";
@@ -27,6 +22,7 @@ export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r1",
   requirements: [
     Criterion.of("2.4.2"),
+    EAA.of("9.2.4.2"),
     Technique.of("G88"),
     Technique.of("H25"),
   ],

@@ -22,6 +22,7 @@
     { "path": "alfa-css-feature" },
     { "path": "alfa-device" },
     { "path": "alfa-dom" },
+    { "path": "alfa-eaa" },
     { "path": "alfa-earl" },
     { "path": "alfa-either" },
     { "path": "alfa-emitter" },

@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Document, Node } from "@siteimprove/alfa-dom";
 import { Element } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Language } from "@siteimprove/alfa-iana";
 import { Option } from "@siteimprove/alfa-option";
@@ -23,7 +24,7 @@ const { hasAttribute } = Element;
  */
 export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r109",
-  requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
+  requirements: [Criterion.of("3.1.1"), EAA.of("9.3.1.1"), Technique.of("H57")],
   tags: [Scope.Page, Stability.Experimental],
   evaluate({ document }) {
     let programmaticLanguage: Language;

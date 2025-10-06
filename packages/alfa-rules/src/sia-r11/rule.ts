@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
@@ -22,6 +23,8 @@ export default Rule.Atomic.of<Page, Element>({
     Criterion.of("2.4.4"),
     Criterion.of("2.4.9"),
     Criterion.of("4.1.2"),
+    EAA.of("9.2.4.4"),
+    EAA.of("9.4.1.2"),
     Technique.of("G91"),
   ],
   tags: [Scope.Component, Stability.Stable],

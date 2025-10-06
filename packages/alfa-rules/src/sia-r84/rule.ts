@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -23,6 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [
     Criterion.of("2.1.1"),
     Criterion.of("2.1.3"),
+    EAA.of("9.2.1.1"),
     Technique.of("G202"),
   ],
   tags: [Scope.Component, Stability.Stable],

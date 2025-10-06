@@ -1,6 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Node } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -26,6 +27,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r117",
   requirements: [
     Criterion.of("1.1.1"),
+    EAA.of("9.1.1.1"),
     Technique.of("G94"),
     Technique.of("G95"),
   ],

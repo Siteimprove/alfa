@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Attribute} from "@siteimprove/alfa-dom";
 import { Element } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Language } from "@siteimprove/alfa-iana";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -17,7 +18,7 @@ const { not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r5",
-  requirements: [Criterion.of("3.1.1"), Technique.of("H57")],
+  requirements: [Criterion.of("3.1.1"), EAA.of("9.3.1.1"), Technique.of("H57")],
   tags: [Scope.Page, Stability.Stable],
   evaluate({ document }) {
     return {

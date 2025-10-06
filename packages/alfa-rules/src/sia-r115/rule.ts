@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { type Element, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
@@ -22,7 +23,7 @@ const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
  */
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r115",
-  requirements: [Criterion.of("2.4.6"), Technique.of("G130")],
+  requirements: [Criterion.of("2.4.6"), EAA.of("9.2.4.6"), Technique.of("G130")],
   tags: [Scope.Component, Stability.Experimental],
   evaluate({ device, document }) {
     return {
