@@ -16,3 +16,7 @@ for package in packages/alfa-*; do
 done
 
 set -e
+
+# Consolidate the individual unit test reports into a single overview.
+# This one is defined in alfa-toolchain.
+yarn generate-unit-test-report
