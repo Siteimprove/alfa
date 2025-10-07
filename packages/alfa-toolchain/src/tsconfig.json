@@ -8,6 +8,7 @@
     "./changeset/changelog-individual.cts",
     "./changeset/get-changeset-details.ts",
     "./changeset/helpers.ts",
+    "./coverage/gather-unit-test-coverage.ts",
     "./create-alfa-package.ts",
     "./dependency-graph/dependency-graph.ts",
     "./dependency-graph/generate-graphs.ts",
