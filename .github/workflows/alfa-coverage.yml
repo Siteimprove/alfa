@@ -31,9 +31,7 @@ jobs:
         # This still generates the individual reports, and we want to go on.
         run: >
           yarn workspaces foreach
-          --all --parallel --no-private
-          --exclude @siteimprove/alfa-test 
-          --exclude @siteimprove/alfa-test-deprecated
+          --all --parallel
           run yarn coverage:package
           || true
 
