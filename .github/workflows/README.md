@@ -1,6 +1,6 @@
 # Alfa actions
 
-The workflows whose name start with `alfa-` are a collection of actions for Alfa operations, mostly geared toward building workflows that need to update content and push it to Github.
+The workflows whose name start with `alfa-` are a collection of actions for Alfa operations, mostly geared toward building workflows that need to update content and push it to git.
 
 ## Assumptions
 
@@ -21,13 +21,13 @@ These workflows are likely to fail on any repository that does not have the same
 
 ## Warning
 
-These actions are meant to push content to the main branch which may trigger other automated workflows (such as `integrate.yml`). Hence, they should always only be called from manual workflow (`workflow_dispatch`) to avoid infinite loops.
+These actions are meant to push content to the main branch which may trigger other automated workflows (such as `integrate.yml`). Hence, they should always only be called from manual workflows (`workflow_dispatch`) to avoid infinite loops.
 
 ## Overview
 
 * [`alfa-wrapper`.yml](alfa-wrapper.yml): a wrapper that can call any of the below actions. This is likely the one to use in your own workflows.
 
-* [`alfa-setup.yml`](alfa-setup.yml): sets up the environment for Alfa operations: checkout, node, yarn, git, build packages. This is a prerequisite for all other actions.
+* [`alfa-setup.yml`](alfa-setup.yml): sets up the environment for Alfa operations: checkout, node, yarn, git, build essential packages. This is a prerequisite for all other actions.
 * [`alfa-version.yml`](alfa-version.yml): creates a new version and update the changelogs.
 * [`alfa-publish.yml`](alfa-publish.yml): publishes packages to the Github registry, and optionally to the NPM one.
 * [`alfa-coverage.yml`](alfa-coverage.yml): updates the coverage reports.
