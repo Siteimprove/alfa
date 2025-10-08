@@ -11,6 +11,8 @@ node_modules
 
 !**/types/**/*.d.ts
 
+!**/docs/coverage/**/*.js
+
 # yarn ignores
 # https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 
@@ -23,5 +25,3 @@ node_modules
 !.yarn/releases/*.cjs
 !.yarn/sdks
 !.yarn/versions
-
-docs/coverage

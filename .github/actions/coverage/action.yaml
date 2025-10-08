@@ -1,0 +1,43 @@
+name: Generate coverage data
+
+runs:
+  using: composite
+  steps:
+    - name: Are we called from `main`?
+      # This should only be called from the main branch of the repo.
+      # If this workflow is somehow called from another branch, crash.
+      if: github.ref_name != 'main'
+      shell: bash
+      run: |
+        echo "This workflow can only be called from the main branch."
+        exit 1
+
+    - name: Build project
+      shell: bash
+      run: yarn build
+
+    - name: Generate global coverage report
+      shell: bash
+      run: yarn coverage
+
+    - name: Generate individual coverage reports
+      shell: bash
+      # This step does fail due to some packages missing tests.
+      # This still generates the individual reports, and we want to go on.
+      run: >
+        yarn workspaces foreach
+        --all --parallel
+        run yarn coverage:package
+        || true
+
+    - name: Consolidate coverage reports
+      shell: bash
+      run: yarn generate-unit-test-report
+
+    - name: Commit and push changes
+      shell: bash
+      run: |
+        git add docs/coverage
+        git commit --message="Update global coverage report"
+        git add **/docs/coverage
+        git commit --message="Update individual coverage reports"

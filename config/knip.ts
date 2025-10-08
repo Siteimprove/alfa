@@ -7,6 +7,8 @@ const config: KnipConfig = {
   // This can be cleaned once we get a better split in the release workflow
   // to let callers do their own local setup.
   ignoreBinaries: ["playwright"],
+  // Use yarn knip --tags +knipignore to override and see if some can be cleaned.
+  tags: ["-knipignore"],
   workspaces: {
     ".": {
       entry: ["scripts/*.mjs"],

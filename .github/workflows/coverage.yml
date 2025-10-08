@@ -1,4 +1,4 @@
-name: Create a new release
+name: Generate coverage data
 
 on:
   # WARNING! This workflow will push back to main and trigger other workflows.
@@ -7,20 +7,15 @@ on:
 
 permissions:
   contents: write
-  packages: write
-  id-token: write
 
 jobs:
-  release:
-    name: Release
-    uses: siteimprove/alfa/.github/actions/wrapper/action.yaml@main
+  coverage:
+    name: Generate coverage data
+    uses: siteimprove/alfa/.github/workflows/alfa-wrapper.yml@main
     with:
       # See https://api.github.com/users/siteimprove-builduser
       user-name: siteimprove-builduser
       user-email: 8577410+siteimprove-builduser@users.noreply.github.com
-      documentation: true
       coverage: true
-      publish: true
-      npm-publish: true
+    secrets:
       token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
-      npm-token: ${{ secrets.NPM_TOKEN }}

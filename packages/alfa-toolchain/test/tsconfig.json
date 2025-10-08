@@ -8,7 +8,8 @@
   },
   "files": [
     "./changeset/build-changelog.spec.tsx",
-    "./changeset/get-changeset-details.spec.tsx"
+    "./changeset/get-changeset-details.spec.tsx",
+    "./coverage/transform-unit-test-coverage-data.spec.ts"
   ],
   "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }
