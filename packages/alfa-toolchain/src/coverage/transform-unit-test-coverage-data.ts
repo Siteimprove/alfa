@@ -7,7 +7,7 @@ type Totals = {
   total: number;
   covered: number;
   skipped: number;
-  // "Unknown" happens for skipped packages.
+  // "Unknown" happens for packages skipped in tests.
   pct: number | "Unknown";
 };
 type Coverage = {
@@ -17,7 +17,7 @@ type Coverage = {
   branches: Totals;
 };
 /**
- * @private
+ * @internal
  */
 export type CoverageSummary = { total: Coverage; [file: string]: Coverage };
 
@@ -30,20 +30,20 @@ type CoverageData = {
 /**
  * Path of the coverage report inside each package.
  *
- * @private
+ * @internal
  */
 export const coveragePath = "docs/coverage";
 /**
  * Path to store the global file once generated.
  *
- * @private
+ * @internal
  */
 export const destinationPath = "docs/coverage";
 
 /**
  * Turn (optional) coverage summary into coverage data.
  *
- * @private
+ * @internal
  */
 export function toCoverageData([pkg, summary]: [
   pkg: Package,
@@ -69,7 +69,8 @@ export function toCoverageData([pkg, summary]: [
  * of the repository. Things are likely to break if this script is invoked from
  * another location.
  *
- * @private
+ * @internal
+ * @knipignore used in tests
  */
 export function toLink(name: string, relativePath: string) {
   // We need to go up the destination path, and then down the relative path before
@@ -87,7 +88,9 @@ export function toLink(name: string, relativePath: string) {
  *
  * @remarks
  * This adds classnames according to watermarks.
- * @private
+ *
+ * @internal
+ * @knipignore used in tests
  */
 export function toTableRow({ name, relativePath, lineCoverage }: CoverageData) {
   const getClass = (coverage: number) =>
@@ -110,7 +113,8 @@ export function toTableRow({ name, relativePath, lineCoverage }: CoverageData) {
 /**
  * Turns an array of coverage data into an HTML table.
  *
- * @private
+ * @internal
+ * @knipignore used in tests
  */
 export function toHtmlTable(data: Array<CoverageData>): string {
   const header = `<table>
@@ -132,7 +136,7 @@ export function toHtmlTable(data: Array<CoverageData>): string {
 /**
  * Turns an array of coverage data into a full HTML document.
  *
- * @private
+ * @internal
  */
 export function toHtml(data: Array<CoverageData>): string {
   // The colors are stolen from Vitest `base.css`.
