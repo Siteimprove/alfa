@@ -68,6 +68,7 @@ export function toCoverageData([pkg, summary]: [
  * The relative path is from where this script is invoked, normally the top-level
  * of the repository. Things are likely to break if this script is invoked from
  * another location.
+ *
  * @private
  */
 export function toLink(name: string, relativePath: string) {

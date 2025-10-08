@@ -47,10 +47,8 @@ export async function generateUnitTestCoverageReport(cwd: string) {
 
 /**
  * Read the coverage summary of an individual package.
- *
- * @private
  */
-export async function loadPackageCoverage(
+async function loadPackageCoverage(
   pkg: Package,
 ): Promise<[Package, CoverageSummary]> {
   const summary = (await import(
