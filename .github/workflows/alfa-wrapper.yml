@@ -57,59 +57,40 @@ defaults:
     shell: bash
 
 jobs:
-  setup:
-    name: Setup Alfa
+  wrapper:
+    name: Alfa operations
     runs-on: ubuntu-latest
-    uses: siteimprove/alfa/.github/workflows/alfa-setup.yml@main
-    with:
-      user-name: ${{ inputs.user-name }}
-      user-email: ${{ inputs.user-email }}
-      setup-playwright: ${{ inputs.setup-playwright }}
-    secrets:
-      token: ${{ secrets.token }}
-
-  coverage:
-    name: Generate coverage data
-    runs-on: ubuntu-latest
-    needs: setup
-    if: inputs.coverage
-    uses: siteimprove/alfa/.github/workflows/alfa-coverage.yml@main
-
-  documentation:
-    name: Generate documentation
-    runs-on: ubuntu-latest
-    needs: setup
-    if: inputs.generate-documentation
-    uses: siteimprove/alfa/.github/workflows/alfa-documentation.yml@main
-
-  version:
-    name: Bump version
-    runs-on: ubuntu-latest
-    needs: setup
-    if: inputs.publish
-    uses: siteimprove/alfa/.github/workflows/alfa-version.yml@main
-
-  push:
-    name: Push changes
-    runs-on: ubuntu-latest
-    needs: [setup, coverage, documentation, version]
-    # when none of the needed jobs fail or are cancelled (skipped or successful jobs are ok).
-    if: ${{ always() && !failure() && !cancelled() }}
     steps:
-      - name: push changes
+      - name: Setup
+        uses:  siteimprove/alfa/.github/workflows/alfa-setup.yml@main
+        with:
+          user-name: ${{ inputs.user-name }}
+          user-email: ${{ inputs.user-email }}
+          setup-playwright: ${{ inputs.setup-playwright }}
+        secrets:
+          token: ${{ secrets.token }}
+
+      - name: Generate coverage data
+        if: inputs.coverage
+        uses: siteimprove/alfa/.github/workflows/alfa-coverage.yml@main
+
+      - name: Generate documentation
+        if: inputs.generate-documentation
+        uses: siteimprove/alfa/.github/workflows/alfa-documentation.yml@main
+
+      - name: Bump version
+        if: inputs.publish
+        uses: siteimprove/alfa/.github/workflows/alfa-version.yml@main
+
+      - name: Push changes
         run: git push --follow-tags
 
-  publish:
-    name: Publish packages
-    runs-on: ubuntu-latest
-    # This is always done last as we do not want to publish in a broken state.
-    # We nonetheless "need" `version` so that we can reuse its output.
-    needs: [version, push]
-    if: inputs.publish
-    uses: siteimprove/alfa/.github/workflows/alfa-publish.yml@main
-    with:
-      version: ${{ needs.version.outputs.version }}
-      public: ${{ inputs.public }}
-      npm-publish: ${{ inputs.npm-publish }}
-    secrets:
-      npm-token: ${{ secrets.npm-token }}
+      - name: Publish packages
+        if: inputs.publish
+        uses: siteimprove/alfa/.github/workflows/alfa-publish.yml@main
+        with:
+          version: ${{ needs.version.outputs.version }}
+          public: ${{ inputs.public }}
+          npm-publish: ${{ inputs.npm-publish }}
+        secrets:
+          npm-token: ${{ secrets.npm-token }}
