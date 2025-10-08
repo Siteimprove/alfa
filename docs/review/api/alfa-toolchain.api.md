@@ -18,6 +18,9 @@ export const changelogFunctions: ChangelogFunctions;
 // @public (undocumented)
 export function generateGraphs(cwd: string): Promise<void>;
 
+// @public
+export function generateUnitTestCoverageReport(cwd: string): Promise<void>;
+
 declare namespace globalChangelog {
     export {
 
