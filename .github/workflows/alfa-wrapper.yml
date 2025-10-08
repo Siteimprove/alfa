@@ -67,7 +67,6 @@ jobs:
           user-name: ${{ inputs.user-name }}
           user-email: ${{ inputs.user-email }}
           setup-playwright: ${{ inputs.setup-playwright }}
-        secrets:
           token: ${{ secrets.token }}
 
       - name: Generate coverage data
