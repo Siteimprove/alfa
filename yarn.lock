@@ -2607,7 +2607,7 @@ __metadata:
     package-dependency-graph: "npm:^1.14.4"
     prettier: "npm:^3.6.2"
     typescript: "npm:^5.9.2"
-    vitest: "npm:3.2.4"
+    vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
 
@@ -7671,7 +7671,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:3.2.4, vitest@npm:^3.2.4":
+"vitest@npm:^3.2.4":
   version: 3.2.4
   resolution: "vitest@npm:3.2.4"
   dependencies:
