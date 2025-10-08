@@ -130,7 +130,6 @@ import Visibility from "./property/visibility.js";
 import WrapAfter from "./property/wrap-after.js";
 import WrapBefore from "./property/wrap-before.js";
 import WrapInside from "./property/wrap-inside.js";
-import WhiteSpace from "./property/white-space.js";
 import WhiteSpaceCollapse from "./property/white-space-collapse.js";
 import WhiteSpaceTrim from "./property/white-space-trim.js";
 import Width from "./property/width.js";
