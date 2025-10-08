@@ -84,7 +84,7 @@ jobs:
           token: ${{ secrets.token }}
       - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: yarn
           registry-url: "https://npm.pkg.github.com"
           scope: "@siteimprove"
