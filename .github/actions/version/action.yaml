@@ -65,7 +65,7 @@ runs:
       run: |
         # Removed individual changesets, all changelog (global and local), all package.json (new version number), lockfile
         git add .changeset/ CHANGELOG.md **/CHANGELOG.md package.json **/package.json yarn.lock
-        git commit -m ${VERSION}
+        git commit -message=${VERSION}
         git tag --annotate ${VERSION} --message=${VERSION}
         git push --follow-tags
       env:

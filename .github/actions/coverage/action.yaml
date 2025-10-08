@@ -32,6 +32,6 @@ runs:
     - name: Commit and push changes
       run: |
         git add docs/coverage
-        git commit -m "Update global coverage report"
+        git commit --message="Update global coverage report"
         git add **/docs/coverage
-        git commit -m "Update individual coverage reports"
+        git commit --message="Update individual coverage reports"
