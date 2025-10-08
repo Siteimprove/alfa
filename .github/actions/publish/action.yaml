@@ -26,6 +26,7 @@ runs:
       # This should only be called from the main branch of the repo.
       # If this workflow is somehow called from another branch, crash.
       if: github.ref_name != 'main'
+      shell: bash
       run: |
         echo "This workflow can only be called from the main branch."
         exit 1
@@ -52,15 +53,18 @@ runs:
         yarn workspaces foreach --all --no-private --topological-dev pack --out ${{ github.workspace }}/artifacts/%s-%v.tgz
 
     - name: Set token for npm publication (Github package registry)
+      shell: bash
       run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
     - name: Make npm release (Github Packages Registry / public)
       if: inputs.public
+      shell: bash
       run: >
         for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
           npm publish ${package} --tolerate-republish --provenance --tag latest;
         done
     - name: Make npm release (Github Packages Registry / private)
       if: ${{ ! inputs.public }}
+      shell: bash
       run: >
         for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
           npm publish ${package} --tolerate-republish --tag latest;
@@ -68,16 +72,19 @@ runs:
 
     - name: Set token for npm publication (npm registry)
       if: inputs.npm-publish
+      shell: bash
       run: npm config set //registry.npmjs.org/:_authToken=${{ inputs.npm-token }}
     - name: Make npm release (npm Packages Registry)
       # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
       if: inputs.npm-publish
+      shell: bash
       run: >
         for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
           npm publish ${package} --tolerate-republish --provenance --tag latest --@siteimprove:registry="https://registry.npmjs.org/";
         done
 
     - name: Make Github release
+      shell: bash
       run: >
         gh release create ${VERSION}
         --prerelease
