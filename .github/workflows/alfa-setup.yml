@@ -25,8 +25,9 @@ on:
         type: boolean
         default: false
     secrets:
-      # A PAT for the user who will commit. Need to have the repo:write permission.
+      secrets:
       token:
+        description: "A PAT for the user who will commit. Need to have the repo:write permission."
         required: true
 
 defaults:

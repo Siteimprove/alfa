@@ -19,8 +19,8 @@ on:
         type: boolean
         default: false
     secrets:
-      # Token for NPM publication, must be set up if inputs.npm-publish is true.
       npm-token:
+        description: "Token for NPM publication, must be set up if inputs.npm-publish is true."
         required: false
 
 defaults:

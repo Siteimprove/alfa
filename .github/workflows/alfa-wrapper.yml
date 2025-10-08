@@ -44,12 +44,12 @@ on:
         required: false
         type: boolean
         default: false
-      secrets:
-      # A PAT for the user who will commit. Need to have the repo:write permission.
+    secrets:
       token:
+        description: "A PAT for the user who will commit. Need to have the repo:write permission."
         required: true
-      # Token for NPM publication, must be set up if inputs.npm-publish is true.
       npm-token:
+        description: "Token for NPM publication, must be set up if inputs.npm-publish is true."
         required: false
 
 defaults:
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses:  siteimprove/alfa/.github/workflows/alfa-setup.yml@main
+        uses: siteimprove/alfa/.github/workflows/alfa-setup.yml@main
         with:
           user-name: ${{ inputs.user-name }}
           user-email: ${{ inputs.user-email }}
