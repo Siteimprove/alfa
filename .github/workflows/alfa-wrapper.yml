@@ -92,5 +92,4 @@ jobs:
           version: ${{ needs.version.outputs.version }}
           public: ${{ inputs.public }}
           npm-publish: ${{ inputs.npm-publish }}
-        secrets:
           npm-token: ${{ secrets.npm-token }}
