@@ -1,0 +1,85 @@
+name: Alfa operations
+description: "Wrapper for Alfa maintenance operations that update git."
+
+inputs:
+  # Authentication of the user who will commit the changes
+  # This user must be able to bypass branch protections as it will commit directly to main.
+  user-name:
+    description: "The git user name to use for commits"
+    required: true
+    type: string
+  user-email:
+    description: "The git user email to use for commits"
+    required: true
+    type: string
+  setup-playwright:
+    description: "Whether to setup Playwright browsers"
+    required: false
+    type: boolean
+    default: false
+  documentation:
+    description: "Whether to generate documentation"
+    required: false
+    type: boolean
+    default: false
+  coverage:
+    description: "Whether to generate coverage reports."
+    required: false
+    type: boolean
+    default: false
+  publish:
+    description: "Whether to create and publish a new version."
+    required: false
+    type: boolean
+    default: false
+  public:
+    description: "Whether the packages are public and require a provenance statement."
+    required: false
+    type: boolean
+    default: true # Most Alfa repos are public.
+  npm-publish:
+    description: "Whether to publish the packages to the npm registry in addition to the Github Packages registry."
+    required: false
+    type: boolean
+    default: false
+  token:
+    description: "A PAT for the user who will commit. Need to have the repo:write permission."
+    required: true
+  npm-token:
+    description: "Token for NPM publication, must be set up if inputs.npm-publish is true."
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Setup
+      uses: siteimprove/alfa/.github/actions/setup/action.yaml@main
+      with:
+        user-name: ${{ inputs.user-name }}
+        user-email: ${{ inputs.user-email }}
+        setup-playwright: ${{ inputs.setup-playwright }}
+        token: ${{ inputs.token }}
+
+    - name: Generate coverage data
+      if: inputs.coverage
+      uses: siteimprove/alfa/.github/actions/coverage/action.yaml@main
+
+    - name: Generate documentation
+      if: inputs.generate-documentation
+      uses: siteimprove/alfa/.github/actions/documentation/action.yaml@main
+
+    - name: Bump version
+      if: inputs.publish
+      uses: siteimprove/alfa/.github/actions/version/action.yaml@main
+
+    - name: Push changes
+      run: git push --follow-tags
+
+    - name: Publish packages
+      if: inputs.publish
+      uses: siteimprove/alfa/.github/actions/publish/action.yaml@main
+      with:
+        version: ${{ needs.version.outputs.version }}
+        public: ${{ inputs.public }}
+        npm-publish: ${{ inputs.npm-publish }}
+        npm-token: ${{ inputs.npm-token }}
