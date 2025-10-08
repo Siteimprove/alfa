@@ -30,7 +30,7 @@
     "browserslist": "^4.26.3"
   },
   "devDependencies": {
-    "@mdn/browser-compat-data": "^6.1.0",
+    "@mdn/browser-compat-data": "^7.1.11",
     "prettier": "^3.6.2"
   },
   "publishConfig": {
