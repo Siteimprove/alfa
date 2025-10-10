@@ -3,43 +3,43 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   "dependency-graph-@siteimprove/alfa-css-feature" [
     style = "invis";
   ];
-  "src/condition/condition.ts";
+  "src/condition/index.ts";
+  "exit_src/supports";
+  "name_src/condition";
   "src/feature.ts";
+  "src/supports/feature/index.ts";
+  "name_src/supports/feature";
+  "exit_src/media";
+  "src/media/query.ts";
+  "src/media/feature/value/bound.ts";
+  "src/media/feature/value/discrete.ts";
+  "src/media/feature/value/range.ts";
+  "src/media/feature/discrete.ts";
+  "src/media/feature/height.ts";
+  "src/media/feature/media.ts";
+  "src/media/feature/scripting.ts";
+  "src/media/feature/width.ts";
+  "src/supports/query.ts";
+  "src/condition/condition.ts";
   "exit_src/condition";
+  "src/media/feature/value/value.ts";
+  "src/media/feature/index.ts";
+  "name_src/media/feature";
+  "src/media/feature/value/index.ts";
+  "src/media/list.ts";
+  "src/media/modifier.ts";
+  "src/media/type.ts";
   "src/condition/and.ts";
   "src/condition/not.ts";
   "src/condition/or.ts";
-  "src/condition/index.ts";
-  "name_src/condition";
+  "src/media/feature/resolver.ts";
+  "name_src/media/feature/value";
   "src/media/index.ts";
   "name_src/media";
   "src/supports/index.ts";
   "name_src/supports";
-  "src/media/feature/media.ts";
-  "src/media/feature/value/index.ts";
-  "name_src/media/feature/value";
-  "src/media/feature/resolver.ts";
-  "src/media/feature/discrete.ts";
-  "src/media/feature/height.ts";
-  "src/media/feature/scripting.ts";
-  "src/media/feature/width.ts";
-  "exit_src/media";
   "src/media/feature/comparison.ts";
-  "src/media/feature/value/value.ts";
-  "src/media/feature/value/bound.ts";
-  "src/media/feature/value/discrete.ts";
-  "src/media/feature/value/range.ts";
-  "src/media/feature/index.ts";
-  "name_src/media/feature";
-  "src/media/list.ts";
-  "src/media/modifier.ts";
-  "src/media/query.ts";
-  "src/media/type.ts";
   "src/supports/feature/property.ts";
-  "exit_src/supports";
-  "src/supports/feature/index.ts";
-  "name_src/supports/feature";
-  "src/supports/query.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
@@ -64,14 +64,281 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
       "exit_src" [
         style = "invis";
       ];
-      "src/feature.ts" [
-        label = "feature.ts";
-      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ffdb00";
         penwidth = 5;
       ];
+      "src/feature.ts" [
+        label = "feature.ts";
+      ];
+      subgraph "cluster_src/supports" {
+        color = "#000000";
+        label = "";
+        "name_src/supports" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "supports";
+        ];
+        "exit_src/supports" [
+          style = "invis";
+        ];
+        "src/supports/query.ts" [
+          label = "query.ts";
+        ];
+        "src/supports/index.ts" [
+          label = "index.ts";
+          color = "#ff0000";
+          penwidth = 5;
+        ];
+        subgraph "cluster_src/supports/feature" {
+          color = "#000000";
+          label = "";
+          "name_src/supports/feature" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#ff00db";
+            label = "feature";
+          ];
+          "exit_src/supports/feature" [
+            style = "invis";
+          ];
+          "src/supports/feature/property.ts" [
+            label = "property.ts";
+          ];
+          "src/supports/feature/index.ts" [
+            label = "index.ts";
+            color = "#ff00db";
+            penwidth = 5;
+          ];
+          "src/supports/feature/property.ts" -> "exit_src/supports/feature" [
+            style = "invis";
+          ];
+          "src/supports/feature/index.ts" -> "exit_src/supports/feature" [
+            style = "invis";
+          ];
+        }
+        "src/supports/query.ts" -> "exit_src/supports" [
+          style = "invis";
+        ];
+        "exit_src/supports/feature" -> "exit_src/supports" [
+          style = "invis";
+        ];
+        "src/supports/index.ts" -> "exit_src/supports" [
+          style = "invis";
+        ];
+        "exit_src/supports/feature" -> "exit_src/supports" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/media" {
+        color = "#000000";
+        label = "";
+        "name_src/media" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#49ff00";
+          label = "media";
+        ];
+        "exit_src/media" [
+          style = "invis";
+        ];
+        "src/media/list.ts" [
+          label = "list.ts";
+        ];
+        "src/media/index.ts" [
+          label = "index.ts";
+          color = "#49ff00";
+          penwidth = 5;
+        ];
+        "src/media/query.ts" [
+          label = "query.ts";
+        ];
+        "src/media/type.ts" [
+          label = "type.ts";
+        ];
+        "src/media/modifier.ts" [
+          label = "modifier.ts";
+        ];
+        subgraph "cluster_src/media/feature" {
+          color = "#000000";
+          label = "";
+          "name_src/media/feature" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#4900ff";
+            label = "feature";
+          ];
+          "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/index.ts" [
+            label = "index.ts";
+            color = "#4900ff";
+            penwidth = 5;
+          ];
+          "src/media/feature/comparison.ts" [
+            label = "comparison.ts";
+          ];
+          "src/media/feature/resolver.ts" [
+            label = "resolver.ts";
+          ];
+          "src/media/feature/height.ts" [
+            label = "height.ts";
+          ];
+          "src/media/feature/width.ts" [
+            label = "width.ts";
+          ];
+          "src/media/feature/scripting.ts" [
+            label = "scripting.ts";
+          ];
+          "src/media/feature/discrete.ts" [
+            label = "discrete.ts";
+          ];
+          "src/media/feature/media.ts" [
+            label = "media.ts";
+          ];
+          subgraph "cluster_src/media/feature/value" {
+            color = "#000000";
+            label = "";
+            "name_src/media/feature/value" [
+              penwidth = 5;
+              shape = "rectangle";
+              color = "#00ff92";
+              label = "value";
+            ];
+            "exit_src/media/feature/value" [
+              style = "invis";
+            ];
+            "src/media/feature/value/value.ts" [
+              label = "value.ts";
+            ];
+            "src/media/feature/value/index.ts" [
+              label = "index.ts";
+              color = "#00ff92";
+              penwidth = 5;
+            ];
+            "src/media/feature/value/discrete.ts" [
+              label = "discrete.ts";
+            ];
+            "src/media/feature/value/bound.ts" [
+              label = "bound.ts";
+            ];
+            "src/media/feature/value/range.ts" [
+              label = "range.ts";
+            ];
+            "src/media/feature/value/value.ts" -> "exit_src/media/feature/value" [
+              style = "invis";
+            ];
+            "src/media/feature/value/index.ts" -> "exit_src/media/feature/value" [
+              style = "invis";
+            ];
+            "src/media/feature/value/discrete.ts" -> "exit_src/media/feature/value" [
+              style = "invis";
+            ];
+            "src/media/feature/value/bound.ts" -> "exit_src/media/feature/value" [
+              style = "invis";
+            ];
+            "src/media/feature/value/range.ts" -> "exit_src/media/feature/value" [
+              style = "invis";
+            ];
+          }
+          "exit_src/media/feature/value" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/index.ts" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "exit_src/media/feature/value" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/comparison.ts" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/resolver.ts" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/height.ts" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/width.ts" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "exit_src/media/feature/value" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "exit_src/media/feature/value" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "exit_src/media/feature/value" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/scripting.ts" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/discrete.ts" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+          "src/media/feature/media.ts" -> "exit_src/media/feature" [
+            style = "invis";
+          ];
+        }
+        "src/media/list.ts" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "src/media/index.ts" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "src/media/query.ts" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "src/media/type.ts" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "exit_src/media/feature" -> "exit_src/media" [
+          style = "invis";
+        ];
+        "src/media/modifier.ts" -> "exit_src/media" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/condition" {
         color = "#000000";
         label = "";
@@ -90,24 +357,21 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
         "src/condition/condition.ts" [
           label = "condition.ts";
         ];
-        "src/condition/index.ts" [
-          label = "index.ts";
-          color = "#0092ff";
-          penwidth = 5;
-        ];
         "src/condition/not.ts" [
           label = "not.ts";
         ];
         "src/condition/or.ts" [
           label = "or.ts";
         ];
+        "src/condition/index.ts" [
+          label = "index.ts";
+          color = "#0092ff";
+          penwidth = 5;
+        ];
         "src/condition/and.ts" -> "exit_src/condition" [
           style = "invis";
         ];
         "src/condition/condition.ts" -> "exit_src/condition" [
-          style = "invis";
-        ];
-        "src/condition/index.ts" -> "exit_src/condition" [
           style = "invis";
         ];
         "src/condition/not.ts" -> "exit_src/condition" [
@@ -116,290 +380,65 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
         "src/condition/or.ts" -> "exit_src/condition" [
           style = "invis";
         ];
-      }
-      subgraph "cluster_src/media" {
-        color = "#000000";
-        label = "";
-        "name_src/media" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#49ff00";
-          label = "media";
-        ];
-        "exit_src/media" [
-          style = "invis";
-        ];
-        "src/media/index.ts" [
-          label = "index.ts";
-          color = "#49ff00";
-          penwidth = 5;
-        ];
-        "src/media/list.ts" [
-          label = "list.ts";
-        ];
-        "src/media/modifier.ts" [
-          label = "modifier.ts";
-        ];
-        "src/media/query.ts" [
-          label = "query.ts";
-        ];
-        "src/media/type.ts" [
-          label = "type.ts";
-        ];
-        subgraph "cluster_src/media/feature" {
-          color = "#000000";
-          label = "";
-          "name_src/media/feature" [
-            penwidth = 5;
-            shape = "rectangle";
-            color = "#4900ff";
-            label = "feature";
-          ];
-          "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "src/media/feature/comparison.ts" [
-            label = "comparison.ts";
-          ];
-          "src/media/feature/discrete.ts" [
-            label = "discrete.ts";
-          ];
-          "src/media/feature/height.ts" [
-            label = "height.ts";
-          ];
-          "src/media/feature/index.ts" [
-            label = "index.ts";
-            color = "#4900ff";
-            penwidth = 5;
-          ];
-          "src/media/feature/media.ts" [
-            label = "media.ts";
-          ];
-          "src/media/feature/resolver.ts" [
-            label = "resolver.ts";
-          ];
-          "src/media/feature/scripting.ts" [
-            label = "scripting.ts";
-          ];
-          "src/media/feature/width.ts" [
-            label = "width.ts";
-          ];
-          subgraph "cluster_src/media/feature/value" {
-            color = "#000000";
-            label = "";
-            "name_src/media/feature/value" [
-              penwidth = 5;
-              shape = "rectangle";
-              color = "#00ff92";
-              label = "value";
-            ];
-            "exit_src/media/feature/value" [
-              style = "invis";
-            ];
-            "src/media/feature/value/bound.ts" [
-              label = "bound.ts";
-            ];
-            "src/media/feature/value/discrete.ts" [
-              label = "discrete.ts";
-            ];
-            "src/media/feature/value/index.ts" [
-              label = "index.ts";
-              color = "#00ff92";
-              penwidth = 5;
-            ];
-            "src/media/feature/value/range.ts" [
-              label = "range.ts";
-            ];
-            "src/media/feature/value/value.ts" [
-              label = "value.ts";
-            ];
-            "src/media/feature/value/bound.ts" -> "exit_src/media/feature/value" [
-              style = "invis";
-            ];
-            "src/media/feature/value/discrete.ts" -> "exit_src/media/feature/value" [
-              style = "invis";
-            ];
-            "src/media/feature/value/index.ts" -> "exit_src/media/feature/value" [
-              style = "invis";
-            ];
-            "src/media/feature/value/range.ts" -> "exit_src/media/feature/value" [
-              style = "invis";
-            ];
-            "src/media/feature/value/value.ts" -> "exit_src/media/feature/value" [
-              style = "invis";
-            ];
-          }
-          "src/media/feature/comparison.ts" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "src/media/feature/discrete.ts" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "src/media/feature/height.ts" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "src/media/feature/index.ts" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "src/media/feature/media.ts" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "src/media/feature/resolver.ts" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "src/media/feature/scripting.ts" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "exit_src/media/feature/value" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "exit_src/media/feature/value" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "exit_src/media/feature/value" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "exit_src/media/feature/value" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "exit_src/media/feature/value" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-          "src/media/feature/width.ts" -> "exit_src/media/feature" [
-            style = "invis";
-          ];
-        }
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "exit_src/media/feature" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "src/media/index.ts" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "src/media/list.ts" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "src/media/modifier.ts" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "src/media/query.ts" -> "exit_src/media" [
-          style = "invis";
-        ];
-        "src/media/type.ts" -> "exit_src/media" [
+        "src/condition/index.ts" -> "exit_src/condition" [
           style = "invis";
         ];
       }
-      subgraph "cluster_src/supports" {
-        color = "#000000";
-        label = "";
-        "name_src/supports" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#ff0000";
-          label = "supports";
-        ];
-        "exit_src/supports" [
-          style = "invis";
-        ];
-        "src/supports/index.ts" [
-          label = "index.ts";
-          color = "#ff0000";
-          penwidth = 5;
-        ];
-        "src/supports/query.ts" [
-          label = "query.ts";
-        ];
-        subgraph "cluster_src/supports/feature" {
-          color = "#000000";
-          label = "";
-          "name_src/supports/feature" [
-            penwidth = 5;
-            shape = "rectangle";
-            color = "#ff00db";
-            label = "feature";
-          ];
-          "exit_src/supports/feature" [
-            style = "invis";
-          ];
-          "src/supports/feature/index.ts" [
-            label = "index.ts";
-            color = "#ff00db";
-            penwidth = 5;
-          ];
-          "src/supports/feature/property.ts" [
-            label = "property.ts";
-          ];
-          "src/supports/feature/index.ts" -> "exit_src/supports/feature" [
-            style = "invis";
-          ];
-          "src/supports/feature/property.ts" -> "exit_src/supports/feature" [
-            style = "invis";
-          ];
-        }
-        "exit_src/supports/feature" -> "exit_src/supports" [
-          style = "invis";
-        ];
-        "exit_src/supports/feature" -> "exit_src/supports" [
-          style = "invis";
-        ];
-        "src/supports/index.ts" -> "exit_src/supports" [
-          style = "invis";
-        ];
-        "src/supports/query.ts" -> "exit_src/supports" [
-          style = "invis";
-        ];
-      }
-      "exit_src/condition" -> "exit_src" [
+      "exit_src/supports" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/supports" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/supports" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/condition" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/condition" -> "exit_src" [
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/condition" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/condition" -> "exit_src" [
         style = "invis";
       ];
-      "src/feature.ts" -> "exit_src" [
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/media" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/condition" -> "exit_src" [
         style = "invis";
       ];
       "src/index.ts" -> "exit_src" [
@@ -411,7 +450,10 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
       "exit_src/media" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/media" -> "exit_src" [
+      "exit_src/condition" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/feature.ts" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/media" -> "exit_src" [
@@ -424,48 +466,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
         style = "invis";
       ];
       "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/media" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/supports" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/supports" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/supports" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/supports" -> "exit_src" [
@@ -563,179 +563,77 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   "exit_src" -> "dependency-graph-@siteimprove/alfa-css-feature" [
     style = "invis";
   ];
-  "src/condition/and.ts" -> "src/condition/condition.ts" [
-    style = "invis";
-  ];
-  "src/condition/and.ts" -> "src/condition/condition.ts" [
-    style = "dotted";
-    ltail = "cluster_src/condition/and.ts";
-    lhead = "cluster_src/condition/condition.ts";
-    color = "black";
-  ];
-  "src/condition/and.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "exit_src/condition" -> "src/feature.ts" [
-    style = "dotted";
-    ltail = "cluster_src/condition";
-    lhead = "cluster_src/feature.ts";
-    color = "#0092ff";
-  ];
-  "src/condition/condition.ts" -> "src/condition/and.ts" [
-    style = "invis";
-  ];
-  "src/condition/condition.ts" -> "src/condition/and.ts" [
+  "exit_src/supports" -> "name_src/condition" [
     style = "solid";
-    ltail = "cluster_src/condition/condition.ts";
-    lhead = "cluster_src/condition/and.ts";
-    color = "black";
-  ];
-  "src/condition/condition.ts" -> "src/condition/not.ts" [
-    style = "invis";
-  ];
-  "src/condition/condition.ts" -> "src/condition/not.ts" [
-    style = "solid";
-    ltail = "cluster_src/condition/condition.ts";
-    lhead = "cluster_src/condition/not.ts";
-    color = "black";
-  ];
-  "src/condition/condition.ts" -> "src/condition/or.ts" [
-    style = "invis";
-  ];
-  "src/condition/condition.ts" -> "src/condition/or.ts" [
-    style = "solid";
-    ltail = "cluster_src/condition/condition.ts";
-    lhead = "cluster_src/condition/or.ts";
-    color = "black";
-  ];
-  "src/condition/condition.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "exit_src/condition" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "src/condition/index.ts" -> "src/condition/and.ts" [
-    style = "invis";
-  ];
-  "src/condition/index.ts" -> "src/condition/and.ts" [
-    style = "solid";
-    ltail = "cluster_src/condition/index.ts";
-    lhead = "cluster_src/condition/and.ts";
-    color = "black";
-  ];
-  "src/condition/index.ts" -> "src/condition/condition.ts" [
-    style = "invis";
-  ];
-  "src/condition/index.ts" -> "src/condition/condition.ts" [
-    style = "solid";
-    ltail = "cluster_src/condition/index.ts";
-    lhead = "cluster_src/condition/condition.ts";
-    color = "black";
-  ];
-  "src/condition/index.ts" -> "src/condition/not.ts" [
-    style = "invis";
-  ];
-  "src/condition/index.ts" -> "src/condition/not.ts" [
-    style = "solid";
-    ltail = "cluster_src/condition/index.ts";
-    lhead = "cluster_src/condition/not.ts";
-    color = "black";
-  ];
-  "src/condition/index.ts" -> "src/condition/or.ts" [
-    style = "invis";
-  ];
-  "src/condition/index.ts" -> "src/condition/or.ts" [
-    style = "solid";
-    ltail = "cluster_src/condition/index.ts";
-    lhead = "cluster_src/condition/or.ts";
-    color = "black";
-  ];
-  "src/condition/not.ts" -> "src/condition/condition.ts" [
-    style = "invis";
-  ];
-  "src/condition/not.ts" -> "src/condition/condition.ts" [
-    style = "dotted";
-    ltail = "cluster_src/condition/not.ts";
-    lhead = "cluster_src/condition/condition.ts";
-    color = "black";
-  ];
-  "src/condition/not.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "exit_src/condition" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "src/condition/or.ts" -> "src/condition/condition.ts" [
-    style = "invis";
-  ];
-  "src/condition/or.ts" -> "src/condition/condition.ts" [
-    style = "dotted";
-    ltail = "cluster_src/condition/or.ts";
-    lhead = "cluster_src/condition/condition.ts";
-    color = "black";
-  ];
-  "src/condition/or.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "exit_src/condition" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "name_src/condition" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
+    ltail = "cluster_src/supports";
     lhead = "cluster_src/condition";
-    color = "#ffdb00";
+    color = "#ff0000";
   ];
-  "src/index.ts" -> "name_src/media" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/media";
-    color = "#ffdb00";
-  ];
-  "src/index.ts" -> "name_src/supports" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/supports";
-    color = "#ffdb00";
-  ];
-  "src/media/feature/discrete.ts" -> "src/media/feature/media.ts" [
+  "src/supports/query.ts" -> "src/feature.ts" [
     style = "invis";
   ];
-  "src/media/feature/discrete.ts" -> "src/media/feature/media.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/discrete.ts";
-    lhead = "cluster_src/media/feature/media.ts";
-    color = "black";
-  ];
-  "src/media/feature/discrete.ts" -> "name_src/media/feature/value" [
+  "exit_src/supports" -> "src/feature.ts" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/discrete.ts";
-    lhead = "cluster_src/media/feature/value";
-    color = "#4900ff";
+    ltail = "cluster_src/supports";
+    lhead = "cluster_src/feature.ts";
+    color = "#ff0000";
   ];
-  "src/media/feature/height.ts" -> "src/media/feature/media.ts" [
+  "src/supports/query.ts" -> "name_src/supports/feature" [
+    style = "solid";
+    ltail = "cluster_src/supports/query.ts";
+    lhead = "cluster_src/supports/feature";
+    color = "#ff0000";
+  ];
+  "src/supports/feature/property.ts" -> "src/feature.ts" [
     style = "invis";
   ];
-  "src/media/feature/height.ts" -> "src/media/feature/media.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/height.ts";
-    lhead = "cluster_src/media/feature/media.ts";
-    color = "black";
-  ];
-  "src/media/feature/height.ts" -> "src/media/feature/resolver.ts" [
+  "exit_src/supports" -> "src/feature.ts" [
     style = "invis";
   ];
-  "src/media/feature/height.ts" -> "src/media/feature/resolver.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/height.ts";
-    lhead = "cluster_src/media/feature/resolver.ts";
-    color = "black";
+  "src/media/list.ts" -> "src/feature.ts" [
+    style = "invis";
   ];
-  "src/media/feature/height.ts" -> "name_src/media/feature/value" [
+  "exit_src/media" -> "src/feature.ts" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/height.ts";
-    lhead = "cluster_src/media/feature/value";
-    color = "#4900ff";
+    ltail = "cluster_src/media";
+    lhead = "cluster_src/feature.ts";
+    color = "#49ff00";
+  ];
+  "src/media/list.ts" -> "src/media/query.ts" [
+    style = "invis";
+  ];
+  "src/media/list.ts" -> "src/media/query.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/list.ts";
+    lhead = "cluster_src/media/query.ts";
+    color = "black";
+  ];
+  "src/media/feature/value/value.ts" -> "src/media/feature/value/bound.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/value/value.ts" -> "src/media/feature/value/bound.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/value/value.ts";
+    lhead = "cluster_src/media/feature/value/bound.ts";
+    color = "black";
+  ];
+  "src/media/feature/value/value.ts" -> "src/media/feature/value/discrete.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/value/value.ts" -> "src/media/feature/value/discrete.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/value/value.ts";
+    lhead = "cluster_src/media/feature/value/discrete.ts";
+    color = "black";
+  ];
+  "src/media/feature/value/value.ts" -> "src/media/feature/value/range.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/value/value.ts" -> "src/media/feature/value/range.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/value/value.ts";
+    lhead = "cluster_src/media/feature/value/range.ts";
+    color = "black";
   ];
   "src/media/feature/index.ts" -> "src/media/feature/discrete.ts" [
     style = "invis";
@@ -782,53 +680,38 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
     lhead = "cluster_src/media/feature/width.ts";
     color = "black";
   ];
-  "src/media/feature/media.ts" -> "src/feature.ts" [
+  "src/supports/index.ts" -> "name_src/supports/feature" [
+    style = "solid";
+    ltail = "cluster_src/supports/index.ts";
+    lhead = "cluster_src/supports/feature";
+    color = "#ff0000";
+  ];
+  "src/supports/index.ts" -> "src/supports/query.ts" [
     style = "invis";
   ];
-  "exit_src/media" -> "src/feature.ts" [
+  "src/supports/index.ts" -> "src/supports/query.ts" [
+    style = "solid";
+    ltail = "cluster_src/supports/index.ts";
+    lhead = "cluster_src/supports/query.ts";
+    color = "black";
+  ];
+  "src/condition/and.ts" -> "src/condition/condition.ts" [
+    style = "invis";
+  ];
+  "src/condition/and.ts" -> "src/condition/condition.ts" [
     style = "dotted";
-    ltail = "cluster_src/media";
+    ltail = "cluster_src/condition/and.ts";
+    lhead = "cluster_src/condition/condition.ts";
+    color = "black";
+  ];
+  "src/condition/and.ts" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "exit_src/condition" -> "src/feature.ts" [
+    style = "dotted";
+    ltail = "cluster_src/condition";
     lhead = "cluster_src/feature.ts";
-    color = "#49ff00";
-  ];
-  "src/media/feature/media.ts" -> "src/media/feature/comparison.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/media.ts" -> "src/media/feature/comparison.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/media.ts";
-    lhead = "cluster_src/media/feature/comparison.ts";
-    color = "black";
-  ];
-  "src/media/feature/media.ts" -> "name_src/media/feature/value" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/media.ts";
-    lhead = "cluster_src/media/feature/value";
-    color = "#4900ff";
-  ];
-  "src/media/feature/scripting.ts" -> "src/media/feature/media.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/scripting.ts" -> "src/media/feature/media.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/scripting.ts";
-    lhead = "cluster_src/media/feature/media.ts";
-    color = "black";
-  ];
-  "src/media/feature/scripting.ts" -> "name_src/media/feature/value" [
-    style = "dotted";
-    ltail = "cluster_src/media/feature/scripting.ts";
-    lhead = "cluster_src/media/feature/value";
-    color = "#4900ff";
-  ];
-  "src/media/feature/value/discrete.ts" -> "src/media/feature/value/value.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/value/discrete.ts" -> "src/media/feature/value/value.ts" [
-    style = "dotted";
-    ltail = "cluster_src/media/feature/value/discrete.ts";
-    lhead = "cluster_src/media/feature/value/value.ts";
-    color = "black";
+    color = "#0092ff";
   ];
   "src/media/feature/value/index.ts" -> "src/media/feature/value/value.ts" [
     style = "invis";
@@ -838,84 +721,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
     ltail = "cluster_src/media/feature/value/index.ts";
     lhead = "cluster_src/media/feature/value/value.ts";
     color = "black";
-  ];
-  "src/media/feature/value/range.ts" -> "src/media/feature/value/bound.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/value/range.ts" -> "src/media/feature/value/bound.ts" [
-    style = "dotted";
-    ltail = "cluster_src/media/feature/value/range.ts";
-    lhead = "cluster_src/media/feature/value/bound.ts";
-    color = "black";
-  ];
-  "src/media/feature/value/range.ts" -> "src/media/feature/value/discrete.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/value/range.ts" -> "src/media/feature/value/discrete.ts" [
-    style = "dotted";
-    ltail = "cluster_src/media/feature/value/range.ts";
-    lhead = "cluster_src/media/feature/value/discrete.ts";
-    color = "black";
-  ];
-  "src/media/feature/value/range.ts" -> "src/media/feature/value/value.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/value/range.ts" -> "src/media/feature/value/value.ts" [
-    style = "dotted";
-    ltail = "cluster_src/media/feature/value/range.ts";
-    lhead = "cluster_src/media/feature/value/value.ts";
-    color = "black";
-  ];
-  "src/media/feature/value/value.ts" -> "src/media/feature/value/bound.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/value/value.ts" -> "src/media/feature/value/bound.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/value/value.ts";
-    lhead = "cluster_src/media/feature/value/bound.ts";
-    color = "black";
-  ];
-  "src/media/feature/value/value.ts" -> "src/media/feature/value/discrete.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/value/value.ts" -> "src/media/feature/value/discrete.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/value/value.ts";
-    lhead = "cluster_src/media/feature/value/discrete.ts";
-    color = "black";
-  ];
-  "src/media/feature/value/value.ts" -> "src/media/feature/value/range.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/value/value.ts" -> "src/media/feature/value/range.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/value/value.ts";
-    lhead = "cluster_src/media/feature/value/range.ts";
-    color = "black";
-  ];
-  "src/media/feature/width.ts" -> "src/media/feature/media.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/width.ts" -> "src/media/feature/media.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/width.ts";
-    lhead = "cluster_src/media/feature/media.ts";
-    color = "black";
-  ];
-  "src/media/feature/width.ts" -> "src/media/feature/resolver.ts" [
-    style = "invis";
-  ];
-  "src/media/feature/width.ts" -> "src/media/feature/resolver.ts" [
-    style = "solid";
-    ltail = "cluster_src/media/feature/width.ts";
-    lhead = "cluster_src/media/feature/resolver.ts";
-    color = "black";
-  ];
-  "src/media/feature/width.ts" -> "name_src/media/feature/value" [
-    style = "dotted";
-    ltail = "cluster_src/media/feature/width.ts";
-    lhead = "cluster_src/media/feature/value";
-    color = "#4900ff";
   ];
   "src/media/index.ts" -> "name_src/media/feature" [
     style = "solid";
@@ -962,20 +767,38 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
     lhead = "cluster_src/media/type.ts";
     color = "black";
   ];
-  "src/media/list.ts" -> "src/feature.ts" [
+  "src/condition/condition.ts" -> "src/condition/and.ts" [
     style = "invis";
   ];
-  "exit_src/media" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "src/media/list.ts" -> "src/media/query.ts" [
-    style = "invis";
-  ];
-  "src/media/list.ts" -> "src/media/query.ts" [
+  "src/condition/condition.ts" -> "src/condition/and.ts" [
     style = "solid";
-    ltail = "cluster_src/media/list.ts";
-    lhead = "cluster_src/media/query.ts";
+    ltail = "cluster_src/condition/condition.ts";
+    lhead = "cluster_src/condition/and.ts";
     color = "black";
+  ];
+  "src/condition/condition.ts" -> "src/condition/not.ts" [
+    style = "invis";
+  ];
+  "src/condition/condition.ts" -> "src/condition/not.ts" [
+    style = "solid";
+    ltail = "cluster_src/condition/condition.ts";
+    lhead = "cluster_src/condition/not.ts";
+    color = "black";
+  ];
+  "src/condition/condition.ts" -> "src/condition/or.ts" [
+    style = "invis";
+  ];
+  "src/condition/condition.ts" -> "src/condition/or.ts" [
+    style = "solid";
+    ltail = "cluster_src/condition/condition.ts";
+    lhead = "cluster_src/condition/or.ts";
+    color = "black";
+  ];
+  "src/condition/condition.ts" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "exit_src/condition" -> "src/feature.ts" [
+    style = "invis";
   ];
   "exit_src/media" -> "name_src/condition" [
     style = "solid";
@@ -1013,11 +836,230 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
     lhead = "cluster_src/media/type.ts";
     color = "black";
   ];
+  "src/condition/not.ts" -> "src/condition/condition.ts" [
+    style = "invis";
+  ];
+  "src/condition/not.ts" -> "src/condition/condition.ts" [
+    style = "dotted";
+    ltail = "cluster_src/condition/not.ts";
+    lhead = "cluster_src/condition/condition.ts";
+    color = "black";
+  ];
+  "src/condition/not.ts" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "exit_src/condition" -> "src/feature.ts" [
+    style = "invis";
+  ];
   "src/media/type.ts" -> "src/feature.ts" [
     style = "invis";
   ];
   "exit_src/media" -> "src/feature.ts" [
     style = "invis";
+  ];
+  "src/media/feature/height.ts" -> "src/media/feature/media.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/height.ts" -> "src/media/feature/media.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/height.ts";
+    lhead = "cluster_src/media/feature/media.ts";
+    color = "black";
+  ];
+  "src/media/feature/height.ts" -> "src/media/feature/resolver.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/height.ts" -> "src/media/feature/resolver.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/height.ts";
+    lhead = "cluster_src/media/feature/resolver.ts";
+    color = "black";
+  ];
+  "src/media/feature/height.ts" -> "name_src/media/feature/value" [
+    style = "dotted";
+    ltail = "cluster_src/media/feature/height.ts";
+    lhead = "cluster_src/media/feature/value";
+    color = "#4900ff";
+  ];
+  "src/media/feature/width.ts" -> "src/media/feature/media.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/width.ts" -> "src/media/feature/media.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/width.ts";
+    lhead = "cluster_src/media/feature/media.ts";
+    color = "black";
+  ];
+  "src/media/feature/width.ts" -> "src/media/feature/resolver.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/width.ts" -> "src/media/feature/resolver.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/width.ts";
+    lhead = "cluster_src/media/feature/resolver.ts";
+    color = "black";
+  ];
+  "src/media/feature/width.ts" -> "name_src/media/feature/value" [
+    style = "dotted";
+    ltail = "cluster_src/media/feature/width.ts";
+    lhead = "cluster_src/media/feature/value";
+    color = "#4900ff";
+  ];
+  "src/media/feature/value/discrete.ts" -> "src/media/feature/value/value.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/value/discrete.ts" -> "src/media/feature/value/value.ts" [
+    style = "dotted";
+    ltail = "cluster_src/media/feature/value/discrete.ts";
+    lhead = "cluster_src/media/feature/value/value.ts";
+    color = "black";
+  ];
+  "src/condition/or.ts" -> "src/condition/condition.ts" [
+    style = "invis";
+  ];
+  "src/condition/or.ts" -> "src/condition/condition.ts" [
+    style = "dotted";
+    ltail = "cluster_src/condition/or.ts";
+    lhead = "cluster_src/condition/condition.ts";
+    color = "black";
+  ];
+  "src/condition/or.ts" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "exit_src/condition" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "name_src/condition" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/condition";
+    color = "#ffdb00";
+  ];
+  "src/index.ts" -> "name_src/media" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/media";
+    color = "#ffdb00";
+  ];
+  "src/index.ts" -> "name_src/supports" [
+    style = "solid";
+    ltail = "cluster_src/index.ts";
+    lhead = "cluster_src/supports";
+    color = "#ffdb00";
+  ];
+  "src/media/feature/value/range.ts" -> "src/media/feature/value/bound.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/value/range.ts" -> "src/media/feature/value/bound.ts" [
+    style = "dotted";
+    ltail = "cluster_src/media/feature/value/range.ts";
+    lhead = "cluster_src/media/feature/value/bound.ts";
+    color = "black";
+  ];
+  "src/media/feature/value/range.ts" -> "src/media/feature/value/discrete.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/value/range.ts" -> "src/media/feature/value/discrete.ts" [
+    style = "dotted";
+    ltail = "cluster_src/media/feature/value/range.ts";
+    lhead = "cluster_src/media/feature/value/discrete.ts";
+    color = "black";
+  ];
+  "src/media/feature/value/range.ts" -> "src/media/feature/value/value.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/value/range.ts" -> "src/media/feature/value/value.ts" [
+    style = "dotted";
+    ltail = "cluster_src/media/feature/value/range.ts";
+    lhead = "cluster_src/media/feature/value/value.ts";
+    color = "black";
+  ];
+  "src/condition/index.ts" -> "src/condition/and.ts" [
+    style = "invis";
+  ];
+  "src/condition/index.ts" -> "src/condition/and.ts" [
+    style = "solid";
+    ltail = "cluster_src/condition/index.ts";
+    lhead = "cluster_src/condition/and.ts";
+    color = "black";
+  ];
+  "src/condition/index.ts" -> "src/condition/condition.ts" [
+    style = "invis";
+  ];
+  "src/condition/index.ts" -> "src/condition/condition.ts" [
+    style = "solid";
+    ltail = "cluster_src/condition/index.ts";
+    lhead = "cluster_src/condition/condition.ts";
+    color = "black";
+  ];
+  "src/condition/index.ts" -> "src/condition/not.ts" [
+    style = "invis";
+  ];
+  "src/condition/index.ts" -> "src/condition/not.ts" [
+    style = "solid";
+    ltail = "cluster_src/condition/index.ts";
+    lhead = "cluster_src/condition/not.ts";
+    color = "black";
+  ];
+  "src/condition/index.ts" -> "src/condition/or.ts" [
+    style = "invis";
+  ];
+  "src/condition/index.ts" -> "src/condition/or.ts" [
+    style = "solid";
+    ltail = "cluster_src/condition/index.ts";
+    lhead = "cluster_src/condition/or.ts";
+    color = "black";
+  ];
+  "src/media/feature/scripting.ts" -> "src/media/feature/media.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/scripting.ts" -> "src/media/feature/media.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/scripting.ts";
+    lhead = "cluster_src/media/feature/media.ts";
+    color = "black";
+  ];
+  "src/media/feature/scripting.ts" -> "name_src/media/feature/value" [
+    style = "dotted";
+    ltail = "cluster_src/media/feature/scripting.ts";
+    lhead = "cluster_src/media/feature/value";
+    color = "#4900ff";
+  ];
+  "src/media/feature/discrete.ts" -> "src/media/feature/media.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/discrete.ts" -> "src/media/feature/media.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/discrete.ts";
+    lhead = "cluster_src/media/feature/media.ts";
+    color = "black";
+  ];
+  "src/media/feature/discrete.ts" -> "name_src/media/feature/value" [
+    style = "dotted";
+    ltail = "cluster_src/media/feature/discrete.ts";
+    lhead = "cluster_src/media/feature/value";
+    color = "#4900ff";
+  ];
+  "src/media/feature/media.ts" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "exit_src/media" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/media.ts" -> "src/media/feature/comparison.ts" [
+    style = "invis";
+  ];
+  "src/media/feature/media.ts" -> "src/media/feature/comparison.ts" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/media.ts";
+    lhead = "cluster_src/media/feature/comparison.ts";
+    color = "black";
+  ];
+  "src/media/feature/media.ts" -> "name_src/media/feature/value" [
+    style = "solid";
+    ltail = "cluster_src/media/feature/media.ts";
+    lhead = "cluster_src/media/feature/value";
+    color = "#4900ff";
   ];
   "src/supports/feature/index.ts" -> "src/supports/feature/property.ts" [
     style = "invis";
@@ -1027,47 +1069,5 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
     ltail = "cluster_src/supports/feature/index.ts";
     lhead = "cluster_src/supports/feature/property.ts";
     color = "black";
-  ];
-  "src/supports/feature/property.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "exit_src/supports" -> "src/feature.ts" [
-    style = "dotted";
-    ltail = "cluster_src/supports";
-    lhead = "cluster_src/feature.ts";
-    color = "#ff0000";
-  ];
-  "src/supports/index.ts" -> "name_src/supports/feature" [
-    style = "solid";
-    ltail = "cluster_src/supports/index.ts";
-    lhead = "cluster_src/supports/feature";
-    color = "#ff0000";
-  ];
-  "src/supports/index.ts" -> "src/supports/query.ts" [
-    style = "invis";
-  ];
-  "src/supports/index.ts" -> "src/supports/query.ts" [
-    style = "solid";
-    ltail = "cluster_src/supports/index.ts";
-    lhead = "cluster_src/supports/query.ts";
-    color = "black";
-  ];
-  "exit_src/supports" -> "name_src/condition" [
-    style = "solid";
-    ltail = "cluster_src/supports";
-    lhead = "cluster_src/condition";
-    color = "#ff0000";
-  ];
-  "src/supports/query.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "exit_src/supports" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "src/supports/query.ts" -> "name_src/supports/feature" [
-    style = "solid";
-    ltail = "cluster_src/supports/query.ts";
-    lhead = "cluster_src/supports/feature";
-    color = "#ff0000";
   ];
 }

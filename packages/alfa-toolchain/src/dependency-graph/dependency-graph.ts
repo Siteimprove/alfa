@@ -45,8 +45,8 @@ import { Rainbow } from "./rainbow.js";
 export class DependencyGraph {
   public static of(
     pkg: Package,
-    modules: { [id: string]: Array<string> },
-    noTypeModules: { [id: string]: Array<string> },
+    modules: Map<string, Array<string>>,
+    noTypeModules: Map<string, Array<string>>,
     circular: Iterable<string>,
   ) {
     return new DependencyGraph(pkg, modules, noTypeModules, circular);
@@ -56,8 +56,8 @@ export class DependencyGraph {
 
   private readonly _graph: gv.RootGraphModel;
 
-  private readonly _modules: { [id: string]: Array<string> };
-  private readonly _noTypeModules: { [id: string]: Array<string> };
+  private readonly _modules: Map<string, Array<string>>;
+  private readonly _noTypeModules: Map<string, Array<string>>;
   private readonly _trueCircular: Set<string>;
 
   private readonly _edges: Array<[string, string]> = [];
@@ -65,8 +65,8 @@ export class DependencyGraph {
 
   protected constructor(
     pkg: Package,
-    modules: { [id: string]: Array<string> },
-    noTypeModules: { [id: string]: Array<string> },
+    modules: Map<string, Array<string>>,
+    noTypeModules: Map<string, Array<string>>,
     circular: Iterable<string>,
   ) {
     this._noTypeModules = noTypeModules;
@@ -91,10 +91,10 @@ export class DependencyGraph {
   private clustersColors(): Array<[string, gv.Color]> {
     let clusters = Set.empty<string>().add("src");
 
-    for (const file of Object.keys(this._modules)) {
-      const path = file.split("/");
-      for (let i = 0; i < path.length - 1; i++) {
-        clusters = clusters.add(path.slice(0, i + 1).join("/"));
+    for (const module of this._modules.keys()) {
+      const clustersList = clusterize(module);
+      for (let i = 0; i < clustersList.length - 1; i++) {
+        clusters = clusters.add(clustersList.slice(0, i + 1).join("/"));
       }
     }
 
@@ -125,8 +125,8 @@ export class DependencyGraph {
    * graph minus the ones in the no-type graph.
    */
   private getTypeDependencies(dep: string): Array<string> {
-    const allDeps = this._modules[dep];
-    const trueDeps = this._noTypeModules[dep];
+    const allDeps = this._modules.get(dep).getOr([]);
+    const trueDeps = this._noTypeModules.get(dep).getOr([]);
 
     return Array.subtract(allDeps, trueDeps);
   }
@@ -227,14 +227,14 @@ export class DependencyGraph {
     ]);
 
     // For each module (file) in the directory
-    for (const id of Object.keys(this._modules)) {
+    for (const id of this._modules.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
       const [cluster, node] = this.createNode(id, srcCluster);
 
       const typeDeps = this.getTypeDependencies(id);
 
       // for each dependency of the file, create an outward edge.
-      for (const depId of this._modules[id]) {
+      for (const depId of this._modules.get(id).getOr([])) {
         // First, make sure the dependency (node) exist
         const dep = this._graph.node(depId);
 
@@ -348,8 +348,8 @@ export namespace DependencyGraph {
 
     return DependencyGraph.of(
       pkg,
-      fullDepTree.obj(),
-      noTypeDepTree.obj(),
+      Map.from(Object.entries(fullDepTree.obj())),
+      Map.from(Object.entries(noTypeDepTree.obj())),
       Array.flatten(noTypeDepTree.circular()),
     );
   }
@@ -404,4 +404,8 @@ export namespace DependencyGraph {
       }
     }
   }
+}
+
+function clusterize(module: string): Array<string> {
+  return module.split("/");
 }
