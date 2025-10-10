@@ -16,35 +16,29 @@ import { Rainbow } from "./rainbow.js";
  *
  * @remarks
  * * Files are grouped by directories and sub-directories. Dependency arrows
- *   are
- *   cut at directory limit, and de-duplicated.
+ *   are cut at directory limit, and de-duplicated.
  *   So, if foo/foo1.ts depends on bar/bar1.ts; and foo/foo2.ts depends on
- *   bar/bar2.ts, there will be only one edge from foo to bar. This de-clutter
+ *   bar/bar2.ts, there will be only one edge from foo to bar. This de-clutters
  *   the graph.
  * * Each directory is also having an "exit" node (invisible). Edges that go
- *   out
- *   of that directory are effectively starting from this exit node (and cut at
- *   the directory limit). Each file within that directory has an invisible
- *   edge
- *   to the exit node.
+ *   out of that directory are effectively starting from this exit node (and
+ *   cut at the directory limit). Each file within that directory has an
+ *   invisible edge to the exit node.
  *   This serves two purpose: (i) the inter-directory edges start from a known
  *   position, not randomly one of the file in it, thus look like they connect
  *   to the cluster at a reasonable position; (ii) the invisible edges rigidify
  *   the structure and give less leeway to graphviz for placing nodes. This
  *   tends to give better visual results globally
  * * Each directory also has a "name" node that is visible and serve as an
- *   entry
- *   point for all edges connecting to that directory. This serves as having
- *   the
- *   inter-directory edges ending in a known position.
+ *   entry point for all edges connecting to that directory. This serves as
+ *   having the inter-directory edges ending in a known position.
  * * Each directory is assigned a random color, evenly spaced on the "rainbow
- *   spectrum". The name node, the common.ts node, and all inter-directory edges
+ *   spectrum". The name node, the index.ts node, and all inter-directory edges
  *   inherit that color, as a visual help.
  * * Type dependencies are dotted.
  * * files forming a circular true dependency are colored in red; these should
  *   probably be investigated and de-entangled. In several case, this might
- *   just
- *   be an improperly stated type dependency.
+ *   just be an improperly stated type dependency.
  *
  * @public
  */
