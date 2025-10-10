@@ -1,6 +1,6 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   compound = true;
-  "dependency-graph-[object Object]" [
+  "dependency-graph-@siteimprove/alfa-css-feature" [
     style = "invis";
   ];
   "src/condition/condition.ts";
@@ -560,7 +560,7 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
+  "exit_src" -> "dependency-graph-@siteimprove/alfa-css-feature" [
     style = "invis";
   ];
   "src/condition/and.ts" -> "src/condition/condition.ts" [

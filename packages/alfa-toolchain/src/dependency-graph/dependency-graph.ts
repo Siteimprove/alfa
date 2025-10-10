@@ -45,19 +45,19 @@ import { Rainbow } from "./rainbow.js";
 export class DependencyGraph {
   public static of(
     pkg: Package,
-    fullDepTree: madge.MadgeInstance,
-    noTypeDepTree: madge.MadgeInstance,
+    modules: { [id: string]: Array<string> },
+    noTypeModules: { [id: string]: Array<string> },
+    circular: Iterable<string>,
   ) {
-    return new DependencyGraph(pkg, fullDepTree, noTypeDepTree);
+    return new DependencyGraph(pkg, modules, noTypeModules, circular);
   }
 
   private readonly _pkg: Package;
 
-  private readonly _full: madge.MadgeInstance;
-  private readonly _noType: madge.MadgeInstance;
   private readonly _graph: gv.RootGraphModel;
 
-  private readonly _modules: madge.MadgeModuleDependencyGraph;
+  private readonly _modules: { [id: string]: Array<string> };
+  private readonly _noTypeModules: { [id: string]: Array<string> };
   private readonly _trueCircular: Set<string>;
 
   private readonly _edges: Array<[string, string]> = [];
@@ -65,17 +65,18 @@ export class DependencyGraph {
 
   protected constructor(
     pkg: Package,
-    fullDepTree: madge.MadgeInstance,
-    noTypeDepTree: madge.MadgeInstance,
+    modules: { [id: string]: Array<string> },
+    noTypeModules: { [id: string]: Array<string> },
+    circular: Iterable<string>,
   ) {
-    this._full = fullDepTree;
-    this._noType = noTypeDepTree;
+    this._noTypeModules = noTypeModules;
 
-    this._modules = this._full.obj();
-    this._trueCircular = Set.from(Array.flatten(this._noType.circular()));
+    this._modules = modules;
+    // console.dir(this._modules);
+    this._trueCircular = Set.from(circular);
 
     this._pkg = pkg;
-    this._graph = gv.digraph(`dependency-graph-${this._pkg}`, {
+    this._graph = gv.digraph(`dependency-graph-${this._pkg.packageJson.name}`, {
       compound: true,
     });
 
@@ -124,8 +125,8 @@ export class DependencyGraph {
    * graph minus the ones in the no-type graph.
    */
   private getTypeDependencies(dep: string): Array<string> {
-    const allDeps = this._full.obj()[dep];
-    const trueDeps = this._noType.obj()[dep];
+    const allDeps = this._modules[dep];
+    const trueDeps = this._noTypeModules[dep];
 
     return Array.subtract(allDeps, trueDeps);
   }
@@ -214,12 +215,13 @@ export class DependencyGraph {
 
     return [cluster, node];
   }
+
   private createGraph() {
     // Create the src cluster to seed the graph.
     const srcCluster = this.createCluster("src", "src", [
       this._graph,
       this._graph.node(
-        `dependency-graph-${this._pkg}`,
+        `dependency-graph-${this._pkg.packageJson.name}`,
         DependencyGraph.Options.Node.invisible,
       ),
     ]);
@@ -326,7 +328,7 @@ export class DependencyGraph {
  * @public
  */
 export namespace DependencyGraph {
-  export async function from(pkg: Package): Promise<DependencyGraph> {
+  export async function fromPackage(pkg: Package): Promise<DependencyGraph> {
     // Exclude files that are not inside the base directory.
     // These are in other packages, which we don't care about here.
     const notPkg = new RegExp(`^../`);
@@ -344,7 +346,12 @@ export namespace DependencyGraph {
       baseDir: pkg.dir,
     });
 
-    return DependencyGraph.of(pkg, fullDepTree, noTypeDepTree);
+    return DependencyGraph.of(
+      pkg,
+      fullDepTree.obj(),
+      noTypeDepTree.obj(),
+      Array.flatten(noTypeDepTree.circular()),
+    );
   }
 
   /**
