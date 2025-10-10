@@ -49,6 +49,8 @@ export class DependencyGraph<C extends string, M extends string> {
     noTypeModules: Map<Module, Array<Module>>,
     circular: Iterable<Module>,
     clusterize: (module: Module) => Set<Cluster>,
+    baseCluster: Cluster,
+    clusterLabel: (cluster: Cluster) => string,
   ): DependencyGraph<Cluster, Module> {
     return new DependencyGraph(
       pkg,
@@ -56,6 +58,8 @@ export class DependencyGraph<C extends string, M extends string> {
       noTypeModules,
       circular,
       clusterize,
+      baseCluster,
+      clusterLabel,
     );
   }
 
@@ -68,6 +72,8 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _trueCircular: Set<M>;
 
   private readonly _clusterize: (module: M) => Set<C>;
+  private readonly _baseCluster: C;
+  private readonly _clusterLabel: (cluster: C) => string;
 
   private readonly _edges: Array<[M, M]> = [];
   private readonly _clusters: Map<C, gv.Color>;
@@ -78,6 +84,8 @@ export class DependencyGraph<C extends string, M extends string> {
     noTypeModules: Map<M, Array<M>>,
     circular: Iterable<M>,
     clusterize: (module: M) => Set<C>,
+    baseCluster: C,
+    clusterLabel: (cluster: C) => string,
   ) {
     this._noTypeModules = noTypeModules;
 
@@ -91,6 +99,8 @@ export class DependencyGraph<C extends string, M extends string> {
     });
 
     this._clusterize = clusterize;
+    this._baseCluster = baseCluster;
+    this._clusterLabel = clusterLabel;
 
     this._clusters = Map.from(this.clustersColors());
 
@@ -101,7 +111,7 @@ export class DependencyGraph<C extends string, M extends string> {
    * Find all directories, and assign a random color to each.
    */
   private clustersColors(): Array<[C, gv.Color]> {
-    let clusters = Set.empty<C>().add("src" as C);
+    let clusters = Set.empty<C>().add(this._baseCluster);
 
     for (const module of this._modules.keys()) {
       clusters = clusters.concat(this._clusterize(module));
@@ -123,10 +133,12 @@ export class DependencyGraph<C extends string, M extends string> {
    * Create the options for the "name" node of a cluster.
    *
    * @param id the full path to this dir (lorem/ispum/dolor)
-   * @param dirname the last bit of the path, used as label (dolor)
    */
-  private nameOptions(id: C, dirname: string): gv.NodeAttributesObject {
-    return DependencyGraph.Options.Node.name(dirname, this.clusterColor(id));
+  private nameOptions(id: C): gv.NodeAttributesObject {
+    return DependencyGraph.Options.Node.name(
+      this._clusterLabel(id),
+      this.clusterColor(id),
+    );
   }
 
   /**
@@ -158,7 +170,6 @@ export class DependencyGraph<C extends string, M extends string> {
    */
   private createCluster(
     id: C,
-    dirname: string,
     [parent, out]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
     const cluster = parent.subgraph(
@@ -166,7 +177,7 @@ export class DependencyGraph<C extends string, M extends string> {
       DependencyGraph.Options.Node.cluster,
     );
 
-    cluster.node(`name_${id}`, this.nameOptions(id, dirname));
+    cluster.node(`name_${id}`, this.nameOptions(id));
     const exit = cluster.node(
       `exit_${id}`,
       DependencyGraph.Options.Node.invisible,
@@ -188,7 +199,7 @@ export class DependencyGraph<C extends string, M extends string> {
     for (let i = 0; i < path.length - 1; i++) {
       const id = path.slice(0, i + 1).join("/") as C;
 
-      [cluster, exit] = this.createCluster(id, path[i], [cluster, exit]);
+      [cluster, exit] = this.createCluster(id, [cluster, exit]);
     }
 
     return [cluster, exit];
@@ -229,7 +240,7 @@ export class DependencyGraph<C extends string, M extends string> {
 
   private createGraph() {
     // Create the src cluster to seed the graph.
-    const srcCluster = this.createCluster("src" as C, "src", [
+    const srcCluster = this.createCluster(this._baseCluster, [
       this._graph,
       this._graph.node(
         `dependency-graph-${this._pkg.packageJson.name}`,
@@ -365,6 +376,8 @@ export namespace DependencyGraph {
       Map.from(Object.entries(noTypeDepTree.obj())),
       Array.flatten(noTypeDepTree.circular()),
       clusterize,
+      "src",
+      clusterLabel,
     );
   }
 
@@ -429,4 +442,9 @@ function clusterize(module: string): Set<string> {
   }
 
   return clusters;
+}
+
+function clusterLabel(cluster: string): string {
+  const parts = cluster.split("/");
+  return parts[parts.length - 1];
 }
