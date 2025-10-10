@@ -42,32 +42,42 @@ import { Rainbow } from "./rainbow.js";
  *
  * @public
  */
-export class DependencyGraph {
-  public static of(
+export class DependencyGraph<C extends string, M extends string> {
+  public static of<Cluster extends string, Module extends string>(
     pkg: Package,
-    modules: Map<string, Array<string>>,
-    noTypeModules: Map<string, Array<string>>,
-    circular: Iterable<string>,
-  ) {
-    return new DependencyGraph(pkg, modules, noTypeModules, circular);
+    modules: Map<Module, Array<Module>>,
+    noTypeModules: Map<Module, Array<Module>>,
+    circular: Iterable<Module>,
+    clusterize: (module: Module) => Set<Cluster>,
+  ): DependencyGraph<Cluster, Module> {
+    return new DependencyGraph(
+      pkg,
+      modules,
+      noTypeModules,
+      circular,
+      clusterize,
+    );
   }
 
   private readonly _pkg: Package;
 
   private readonly _graph: gv.RootGraphModel;
 
-  private readonly _modules: Map<string, Array<string>>;
-  private readonly _noTypeModules: Map<string, Array<string>>;
-  private readonly _trueCircular: Set<string>;
+  private readonly _modules: Map<M, Array<M>>;
+  private readonly _noTypeModules: Map<M, Array<M>>;
+  private readonly _trueCircular: Set<M>;
 
-  private readonly _edges: Array<[string, string]> = [];
-  private readonly _clusters: Map<string, gv.Color>;
+  private readonly _clusterize: (module: M) => Set<C>;
+
+  private readonly _edges: Array<[M, M]> = [];
+  private readonly _clusters: Map<C, gv.Color>;
 
   protected constructor(
     pkg: Package,
-    modules: Map<string, Array<string>>,
-    noTypeModules: Map<string, Array<string>>,
-    circular: Iterable<string>,
+    modules: Map<M, Array<M>>,
+    noTypeModules: Map<M, Array<M>>,
+    circular: Iterable<M>,
+    clusterize: (module: M) => Set<C>,
   ) {
     this._noTypeModules = noTypeModules;
 
@@ -80,6 +90,8 @@ export class DependencyGraph {
       compound: true,
     });
 
+    this._clusterize = clusterize;
+
     this._clusters = Map.from(this.clustersColors());
 
     this.createGraph();
@@ -88,14 +100,11 @@ export class DependencyGraph {
   /**
    * Find all directories, and assign a random color to each.
    */
-  private clustersColors(): Array<[string, gv.Color]> {
-    let clusters = Set.empty<string>().add("src");
+  private clustersColors(): Array<[C, gv.Color]> {
+    let clusters = Set.empty<C>().add("src" as C);
 
     for (const module of this._modules.keys()) {
-      const clustersList = clusterize(module);
-      for (let i = 0; i < clustersList.length - 1; i++) {
-        clusters = clusters.add(clustersList.slice(0, i + 1).join("/"));
-      }
+      clusters = clusters.concat(this._clusterize(module));
     }
 
     const colors = Rainbow.rainbow(clusters.size);
@@ -106,7 +115,7 @@ export class DependencyGraph {
   /**
    * Get the color of a given cluster.
    */
-  private clusterColor(id: string): gv.Color {
+  private clusterColor(id: C): gv.Color {
     return this._clusters.get(id).getOr("black");
   }
 
@@ -116,7 +125,7 @@ export class DependencyGraph {
    * @param id the full path to this dir (lorem/ispum/dolor)
    * @param dirname the last bit of the path, used as label (dolor)
    */
-  private nameOptions(id: string, dirname: string): gv.NodeAttributesObject {
+  private nameOptions(id: C, dirname: string): gv.NodeAttributesObject {
     return DependencyGraph.Options.Node.name(dirname, this.clusterColor(id));
   }
 
@@ -124,7 +133,7 @@ export class DependencyGraph {
    * Get the type dependencies of a module, i.e. its dependencies in the full
    * graph minus the ones in the no-type graph.
    */
-  private getTypeDependencies(dep: string): Array<string> {
+  private getTypeDependencies(dep: M): Array<M> {
     const allDeps = this._modules.get(dep).getOr([]);
     const trueDeps = this._noTypeModules.get(dep).getOr([]);
 
@@ -134,7 +143,7 @@ export class DependencyGraph {
   /**
    * Check if an edge has already been registered.
    */
-  private hasEdge(source: string, destination: string): boolean {
+  private hasEdge(source: M, destination: M): boolean {
     return this._edges.some(([s, d]) => s === source && d === destination);
   }
 
@@ -148,7 +157,7 @@ export class DependencyGraph {
    * @param out the exit node of the parent cluster
    */
   private createCluster(
-    id: string,
+    id: C,
     dirname: string,
     [parent, out]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
@@ -177,7 +186,7 @@ export class DependencyGraph {
     [cluster, exit]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
     for (let i = 0; i < path.length - 1; i++) {
-      const id = path.slice(0, i + 1).join("/");
+      const id = path.slice(0, i + 1).join("/") as C;
 
       [cluster, exit] = this.createCluster(id, path[i], [cluster, exit]);
     }
@@ -190,7 +199,7 @@ export class DependencyGraph {
    * clusters for directories on the path.
    */
   private createNode(
-    id: string,
+    id: M,
     srcCluster: DependencyGraph.Cluster,
   ): [gv.GraphBaseModel, gv.NodeModel] {
     const path = id.split("/");
@@ -202,7 +211,9 @@ export class DependencyGraph {
 
     if (id.endsWith("index.ts")) {
       node.attributes.apply({
-        color: this.clusterColor((cluster.id ?? "src").replace("cluster_", "")),
+        color: this.clusterColor(
+          (cluster.id ?? "src").replace("cluster_", "") as C,
+        ),
         penwidth: 5,
       });
     }
@@ -218,7 +229,7 @@ export class DependencyGraph {
 
   private createGraph() {
     // Create the src cluster to seed the graph.
-    const srcCluster = this.createCluster("src", "src", [
+    const srcCluster = this.createCluster("src" as C, "src", [
       this._graph,
       this._graph.node(
         `dependency-graph-${this._pkg.packageJson.name}`,
@@ -251,8 +262,8 @@ export class DependencyGraph {
         }
 
         // Find the cut points.
-        const tail = path.slice(0, shared + 1).join("/");
-        const head = depPath.slice(0, shared + 1).join("/");
+        const tail = path.slice(0, shared + 1).join("/") as M;
+        const head = depPath.slice(0, shared + 1).join("/") as M;
 
         if (head.endsWith(".ts")) {
           // If the edge ends on an actual file (not a directory), we create an
@@ -294,9 +305,9 @@ export class DependencyGraph {
                   head.endsWith(".ts") && tail.endsWith(".ts")
                     ? "black"
                     : this.clusterColor(
-                        tail.endsWith(".ts")
+                        (tail.endsWith(".ts")
                           ? (cluster.id ?? "src").replace("cluster_", "")
-                          : tail,
+                          : tail) as C,
                       ),
               },
         );
@@ -328,7 +339,9 @@ export class DependencyGraph {
  * @public
  */
 export namespace DependencyGraph {
-  export async function fromPackage(pkg: Package): Promise<DependencyGraph> {
+  export async function fromPackage(
+    pkg: Package,
+  ): Promise<DependencyGraph<string, string>> {
     // Exclude files that are not inside the base directory.
     // These are in other packages, which we don't care about here.
     const notPkg = new RegExp(`^../`);
@@ -351,6 +364,7 @@ export namespace DependencyGraph {
       Map.from(Object.entries(fullDepTree.obj())),
       Map.from(Object.entries(noTypeDepTree.obj())),
       Array.flatten(noTypeDepTree.circular()),
+      clusterize,
     );
   }
 
@@ -406,6 +420,13 @@ export namespace DependencyGraph {
   }
 }
 
-function clusterize(module: string): Array<string> {
-  return module.split("/");
+function clusterize(module: string): Set<string> {
+  const clustersList = module.split("/");
+  let clusters = Set.empty<string>();
+
+  for (let i = 0; i < clustersList.length - 1; i++) {
+    clusters = clusters.add(clustersList.slice(0, i + 1).join("/"));
+  }
+
+  return clusters;
 }
