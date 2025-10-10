@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node: [22, 24]
+        node: [20, 22, 24]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v5
@@ -31,8 +31,8 @@ jobs:
 
       - name: Install Cairo binaries
         # Node 22+ is missing the pre-build for canvas, which requires cairo to be built.
-        if: matrix.os == 'ubuntu-latest'
-        run: apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+        if: matrix.os == 'ubuntu-latest' && matrix.node >= 22
+        run: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
       - run: yarn install --immutable
       - run: yarn dedupe --check
