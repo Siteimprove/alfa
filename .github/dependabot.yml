@@ -63,3 +63,6 @@ updates:
     labels:
       - "actions"
       - "dependencies"
+    allow:
+      # Allow updates for CodeQL Action
+      - dependency-name: "github/codeql-action/*"
