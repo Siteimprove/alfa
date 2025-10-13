@@ -45,8 +45,8 @@ import { Rainbow } from "./rainbow.js";
 export class DependencyGraph<C extends string, M extends string> {
   public static of<Cluster extends string, Module extends string>(
     pkg: Package,
-    modules: Map<Module, Array<Module>>,
-    noTypeModules: Map<Module, Array<Module>>,
+    fullGraph: Map<Module, Array<Module>>,
+    lightGraph: Map<Module, Array<Module>>,
     circular: Iterable<Module>,
     clusterize: (module: Module) => Set<Cluster>,
     baseCluster: Cluster,
@@ -54,8 +54,8 @@ export class DependencyGraph<C extends string, M extends string> {
   ): DependencyGraph<Cluster, Module> {
     return new DependencyGraph(
       pkg,
-      modules,
-      noTypeModules,
+      fullGraph,
+      lightGraph,
       circular,
       clusterize,
       baseCluster,
@@ -67,8 +67,8 @@ export class DependencyGraph<C extends string, M extends string> {
 
   private readonly _graph: gv.RootGraphModel;
 
-  private readonly _modules: Map<M, Array<M>>;
-  private readonly _noTypeModules: Map<M, Array<M>>;
+  private readonly _fullGraph: Map<M, Array<M>>;
+  private readonly _lightGraph: Map<M, Array<M>>;
   private readonly _trueCircular: Set<M>;
 
   private readonly _clusterize: (module: M) => Set<C>;
@@ -80,17 +80,16 @@ export class DependencyGraph<C extends string, M extends string> {
 
   protected constructor(
     pkg: Package,
-    modules: Map<M, Array<M>>,
-    noTypeModules: Map<M, Array<M>>,
+    fullGraph: Map<M, Array<M>>,
+    lightGraph: Map<M, Array<M>>,
     circular: Iterable<M>,
     clusterize: (module: M) => Set<C>,
     baseCluster: C,
     clusterLabel: (cluster: C) => string,
   ) {
-    this._noTypeModules = noTypeModules;
+    this._lightGraph = lightGraph;
 
-    this._modules = modules;
-    // console.dir(this._modules);
+    this._fullGraph = fullGraph;
     this._trueCircular = Set.from(circular);
 
     this._pkg = pkg;
@@ -113,7 +112,7 @@ export class DependencyGraph<C extends string, M extends string> {
   private clustersColors(): Array<[C, gv.Color]> {
     let clusters = Set.empty<C>().add(this._baseCluster);
 
-    for (const module of this._modules.keys()) {
+    for (const module of this._fullGraph.keys()) {
       clusters = clusters.concat(this._clusterize(module));
     }
 
@@ -146,8 +145,8 @@ export class DependencyGraph<C extends string, M extends string> {
    * graph minus the ones in the no-type graph.
    */
   private getTypeDependencies(dep: M): Array<M> {
-    const allDeps = this._modules.get(dep).getOr([]);
-    const trueDeps = this._noTypeModules.get(dep).getOr([]);
+    const allDeps = this._fullGraph.get(dep).getOr([]);
+    const trueDeps = this._lightGraph.get(dep).getOr([]);
 
     return Array.subtract(allDeps, trueDeps);
   }
@@ -249,14 +248,14 @@ export class DependencyGraph<C extends string, M extends string> {
     ]);
 
     // For each module (file) in the directory
-    for (const id of this._modules.keys()) {
+    for (const id of this._fullGraph.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
       const [cluster, node] = this.createNode(id, srcCluster);
 
       const typeDeps = this.getTypeDependencies(id);
 
       // for each dependency of the file, create an outward edge.
-      for (const depId of this._modules.get(id).getOr([])) {
+      for (const depId of this._fullGraph.get(id).getOr([])) {
         // First, make sure the dependency (node) exist
         const dep = this._graph.node(depId);
 
