@@ -78,6 +78,11 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _edges: Array<[M, M]> = [];
   private readonly _clusterColors: Map<C, gv.Color>;
 
+  // Prefixes for GV elements existing on each cluster.
+  private readonly _clusterPrefix = "cluster_";
+  private readonly _namePrefix = "name_";
+  private readonly _exitPrefix = "exit_";
+
   protected constructor(
     graphName: string,
     fullGraph: Map<M, Array<M>>,
@@ -167,16 +172,18 @@ export class DependencyGraph<C extends string, M extends string> {
     cluster: C,
     [parent, out]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
+    const id = clusterId(cluster);
+
     // Fetch or create the cluster as a subgraph of its parent.
     const gvCluster = parent.subgraph(
-      `cluster_${clusterId(cluster)}`,
+      `${this._clusterPrefix}${id}`,
       DependencyGraph.Options.Node.cluster,
     );
 
     // Fetch or create the name and exit nodes for the cluster.
-    gvCluster.node(`name_${cluster}`, this.nameOptions(cluster));
+    gvCluster.node(`${this._namePrefix}${id}`, this.nameOptions(cluster));
     const exit = gvCluster.node(
-      `exit_${cluster}`,
+      `${this._exitPrefix}${id}`,
       DependencyGraph.Options.Node.invisible,
     );
 
@@ -224,7 +231,7 @@ export class DependencyGraph<C extends string, M extends string> {
     if (module.endsWith("index.ts")) {
       node.attributes.apply({
         color: this.clusterColor(
-          (cluster.id ?? "src").replace("cluster_", "") as C,
+          (cluster.id ?? "src").replace(this._clusterPrefix, "") as C,
         ),
         penwidth: 5,
       });
@@ -297,15 +304,19 @@ export class DependencyGraph<C extends string, M extends string> {
         // corresponding clusters (if needed).
         this._graph.createEdge(
           [
-            tail.endsWith(".ts") ? node : this._graph.node(`exit_${tail}`),
-            head.endsWith(".ts") ? dep : this._graph.node(`name_${head}`),
+            tail.endsWith(".ts")
+              ? node
+              : this._graph.node(`${this._exitPrefix}${tail}`),
+            head.endsWith(".ts")
+              ? dep
+              : this._graph.node(`${this._namePrefix}${head}`),
           ],
           invisible
             ? DependencyGraph.Options.Node.invisible
             : {
                 style: lightDeps.includes(depId) ? "dotted" : "solid",
-                ltail: `cluster_${tail}`,
-                lhead: `cluster_${head}`,
+                ltail: `${this._clusterPrefix}${tail}`,
+                lhead: `${this._clusterPrefix}${head}`,
                 color:
                   // If both actual endpoints are files, this is internal
                   // to a given directory and doesn't need color.
@@ -315,7 +326,10 @@ export class DependencyGraph<C extends string, M extends string> {
                     ? "black"
                     : this.clusterColor(
                         (tail.endsWith(".ts")
-                          ? (cluster.id ?? "src").replace("cluster_", "")
+                          ? (cluster.id ?? "src").replace(
+                              this._clusterPrefix,
+                              "",
+                            )
                           : tail) as C,
                       ),
               },
