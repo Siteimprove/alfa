@@ -46,16 +46,16 @@ export class DependencyGraph<C extends string, M extends string> {
   public static of<Cluster extends string, Module extends string>(
     graphName: string,
     fullGraph: Map<Module, Array<Module>>,
-    lightGraph: Map<Module, Array<Module>>,
+    heavyGraph: Map<Module, Array<Module>>,
     circular: Iterable<Module>,
-    clusterize: (module: Module) => Set<Cluster>,
+    clusterize: (module: Module) => Array<Cluster>,
     baseCluster: Cluster,
     clusterLabel: (cluster: Cluster) => string,
   ): DependencyGraph<Cluster, Module> {
     return new DependencyGraph(
       graphName,
       fullGraph,
-      lightGraph,
+      heavyGraph,
       circular,
       clusterize,
       baseCluster,
@@ -68,28 +68,28 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _graph: gv.RootGraphModel;
 
   private readonly _fullGraph: Map<M, Array<M>>;
-  private readonly _lightGraph: Map<M, Array<M>>;
+  private readonly _heavyGraph: Map<M, Array<M>>;
   private readonly _trueCircular: Set<M>;
 
-  private readonly _clusterize: (module: M) => Set<C>;
+  private readonly _clusterize: (module: M) => Array<C>;
   private readonly _baseCluster: C;
   private readonly _clusterLabel: (cluster: C) => string;
 
   private readonly _edges: Array<[M, M]> = [];
-  private readonly _clusters: Map<C, gv.Color>;
+  private readonly _clusterColors: Map<C, gv.Color>;
 
   protected constructor(
     graphName: string,
     fullGraph: Map<M, Array<M>>,
-    lightGraph: Map<M, Array<M>>,
+    heavyGraph: Map<M, Array<M>>,
     circular: Iterable<M>,
-    clusterize: (module: M) => Set<C>,
+    clusterize: (module: M) => Array<C>,
     baseCluster: C,
     clusterLabel: (cluster: C) => string,
   ) {
     this._graphName = `dependency-graph-${graphName}`;
 
-    this._lightGraph = lightGraph;
+    this._heavyGraph = heavyGraph;
 
     this._fullGraph = fullGraph;
     this._trueCircular = Set.from(circular);
@@ -100,13 +100,13 @@ export class DependencyGraph<C extends string, M extends string> {
     this._baseCluster = baseCluster;
     this._clusterLabel = clusterLabel;
 
-    this._clusters = Map.from(this.clustersColors());
+    this._clusterColors = Map.from(this.clustersColors());
 
     this.createGraph();
   }
 
   /**
-   * Find all directories, and assign a random color to each.
+   * Find all clusters, and assign a random color to each.
    */
   private clustersColors(): Array<[C, gv.Color]> {
     let clusters = Set.empty<C>().add(this._baseCluster);
@@ -124,28 +124,26 @@ export class DependencyGraph<C extends string, M extends string> {
    * Get the color of a given cluster.
    */
   private clusterColor(id: C): gv.Color {
-    return this._clusters.get(id).getOr("black");
+    return this._clusterColors.get(id).getOr("black");
   }
 
   /**
    * Create the options for the "name" node of a cluster.
-   *
-   * @param id the full path to this dir (lorem/ispum/dolor)
    */
-  private nameOptions(id: C): gv.NodeAttributesObject {
+  private nameOptions(cluster: C): gv.NodeAttributesObject {
     return DependencyGraph.Options.Node.name(
-      this._clusterLabel(id),
-      this.clusterColor(id),
+      this._clusterLabel(cluster),
+      this.clusterColor(cluster),
     );
   }
 
   /**
-   * Get the type dependencies of a module, i.e. its dependencies in the full
-   * graph minus the ones in the no-type graph.
+   * Get the light dependencies of a module, i.e. its dependencies in the full
+   * graph minus the ones in the heavy graph.
    */
-  private getTypeDependencies(dep: M): Array<M> {
+  private getLightDependencies(dep: M): Array<M> {
     const allDeps = this._fullGraph.get(dep).getOr([]);
-    const trueDeps = this._lightGraph.get(dep).getOr([]);
+    const trueDeps = this._heavyGraph.get(dep).getOr([]);
 
     return Array.subtract(allDeps, trueDeps);
   }
@@ -158,37 +156,42 @@ export class DependencyGraph<C extends string, M extends string> {
   }
 
   /**
-   * Create a new cluster (group of nodes), based on a directory.
+   * Create a new GV cluster, if needed.
    * Returns the cluster and its exit node.
    *
-   * @param id the full path to this dir (lorem/ispum/dolor)
-   * @param dirname the last bit of the path, used as label (dolor)
+   * @param cluster the cluster to create or fetch
    * @param parent the parent cluster
    * @param out the exit node of the parent cluster
    */
   private createCluster(
-    id: C,
+    cluster: C,
     [parent, out]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
-    const cluster = parent.subgraph(
-      `cluster_${id}`,
+    // Fetch or create the cluster as a subgraph of its parent.
+    const gvCluster = parent.subgraph(
+      `cluster_${clusterId(cluster)}`,
       DependencyGraph.Options.Node.cluster,
     );
 
-    cluster.node(`name_${id}`, this.nameOptions(id));
-    const exit = cluster.node(
-      `exit_${id}`,
+    // Fetch or create the name and exit nodes for the cluster.
+    gvCluster.node(`name_${cluster}`, this.nameOptions(cluster));
+    const exit = gvCluster.node(
+      `exit_${cluster}`,
       DependencyGraph.Options.Node.invisible,
     );
 
+    // Create an invisible edge fron the (new) exit node to the (parent) exit node
+    // This rigidifies the graph vertically.
     parent.createEdge([exit, out], DependencyGraph.Options.Node.invisible);
 
-    return [cluster, exit];
+    return [gvCluster, exit];
   }
 
   /**
-   * Creates nested clusters, under the given cluster, for each segment of a
+   * Creates nested GV clusters, under the given cluster, for each segment of a
    * path.
+   *
+   * @todo use cluster list, not path.
    */
   private nestedClusters(
     path: Array<string>,
@@ -204,21 +207,21 @@ export class DependencyGraph<C extends string, M extends string> {
   }
 
   /**
-   * Create a node corresponding (normally) to a file, including all nested
-   * clusters for directories on the path.
+   * Create (or fetch) a GV node corresponding to a module, including all nested
+   * clusters.
    */
   private createNode(
-    id: M,
+    module: M,
     srcCluster: DependencyGraph.Cluster,
   ): [gv.GraphBaseModel, gv.NodeModel] {
-    const path = id.split("/");
+    const path = module.split("/");
 
     const [cluster, exit] = this.nestedClusters(path, srcCluster);
-    const node = cluster.node(id, {
-      label: path[path.length - 1],
+    const node = cluster.node(module, {
+      label: moduleName(module),
     });
 
-    if (id.endsWith("index.ts")) {
+    if (module.endsWith("index.ts")) {
       node.attributes.apply({
         color: this.clusterColor(
           (cluster.id ?? "src").replace("cluster_", "") as C,
@@ -229,7 +232,7 @@ export class DependencyGraph<C extends string, M extends string> {
 
     cluster.createEdge([node, exit], DependencyGraph.Options.Node.invisible);
 
-    if (this._trueCircular.has(id)) {
+    if (this._trueCircular.has(module)) {
       node.attributes.apply(DependencyGraph.Options.Node.circular);
     }
 
@@ -237,8 +240,8 @@ export class DependencyGraph<C extends string, M extends string> {
   }
 
   private createGraph() {
-    // Create the src cluster to seed the graph.
-    const srcCluster = this.createCluster(this._baseCluster, [
+    // Create the base cluster to seed the graph.
+    const baseCluster = this.createCluster(this._baseCluster, [
       this._graph,
       this._graph.node(this._graphName, DependencyGraph.Options.Node.invisible),
     ]);
@@ -246,9 +249,9 @@ export class DependencyGraph<C extends string, M extends string> {
     // For each module (file) in the directory
     for (const id of this._fullGraph.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
-      const [cluster, node] = this.createNode(id, srcCluster);
+      const [cluster, node] = this.createNode(id, baseCluster);
 
-      const typeDeps = this.getTypeDependencies(id);
+      const lightDeps = this.getLightDependencies(id);
 
       // for each dependency of the file, create an outward edge.
       for (const depId of this._fullGraph.get(id).getOr([])) {
@@ -300,7 +303,7 @@ export class DependencyGraph<C extends string, M extends string> {
           invisible
             ? DependencyGraph.Options.Node.invisible
             : {
-                style: typeDeps.includes(depId) ? "dotted" : "solid",
+                style: lightDeps.includes(depId) ? "dotted" : "solid",
                 ltail: `cluster_${tail}`,
                 lhead: `cluster_${head}`,
                 color:
@@ -430,18 +433,27 @@ export namespace DependencyGraph {
   }
 }
 
-function clusterize(module: string): Set<string> {
+function clusterize(module: string): Array<string> {
   const clustersList = module.split("/");
-  let clusters = Set.empty<string>();
+  let clusters: Array<string> = [];
 
   for (let i = 0; i < clustersList.length - 1; i++) {
-    clusters = clusters.add(clustersList.slice(0, i + 1).join("/"));
+    clusters.push(clustersList.slice(0, i + 1).join("/"));
   }
 
   return clusters;
 }
 
+function clusterId(cluster: string): string {
+  return cluster;
+}
+
 function clusterLabel(cluster: string): string {
   const parts = cluster.split("/");
+  return parts[parts.length - 1];
+}
+
+function moduleName(module: string): string {
+  const parts = module.split("/");
   return parts[parts.length - 1];
 }
