@@ -1,5 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Map } from "@siteimprove/alfa-map";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
 
 import type { Package } from "@manypkg/get-packages";
@@ -27,6 +28,7 @@ interface ClusterOptions<C> {
 
 interface ModuleOptions<M> {
   moduleName: (module: M) => string;
+  isEntryPoint: (module: M) => boolean;
 }
 
 /**
@@ -83,6 +85,7 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _clusterLabel: (cluster: C) => string;
 
   private readonly _moduleName: (module: M) => string;
+  private readonly _isEntryPoint: (module: M) => boolean;
 
   private readonly _edges: Array<[M, M]> = [];
   private readonly _clusterColors: Map<C, gv.Color>;
@@ -95,7 +98,7 @@ export class DependencyGraph<C extends string, M extends string> {
   protected constructor(
     { name, fullGraph, heavyGraph, circular, clusterize }: Graph<C, M>,
     { baseCluster, clusterId, clusterLabel }: ClusterOptions<C>,
-    { moduleName }: ModuleOptions<M>,
+    { moduleName, isEntryPoint }: ModuleOptions<M>,
   ) {
     this._name = `dependency-graph-${name}`;
 
@@ -112,6 +115,7 @@ export class DependencyGraph<C extends string, M extends string> {
     this._clusterLabel = clusterLabel;
 
     this._moduleName = moduleName;
+    this._isEntryPoint = isEntryPoint;
 
     this._clusterColors = Map.from(this.clustersColors());
 
@@ -236,7 +240,7 @@ export class DependencyGraph<C extends string, M extends string> {
       label: this._moduleName(module),
     });
 
-    if (module.endsWith("index.ts")) {
+    if (this._isEntryPoint(module)) {
       node.attributes.apply({
         color: this.clusterColor(
           (cluster.id ?? this._baseCluster).replace(
@@ -257,6 +261,29 @@ export class DependencyGraph<C extends string, M extends string> {
     return [cluster, node];
   }
 
+  private firstDifferentClusters(
+    moduleA: M,
+    moduleB: M,
+  ): [Option<C>, Option<C>] {
+    const clustersA = this._clusterize(moduleA);
+    const clustersB = this._clusterize(moduleB);
+
+    let i = 0;
+
+    while (
+      clustersA[i] === clustersB[i] &&
+      i < clustersA.length &&
+      i < clustersB.length
+    ) {
+      i++;
+    }
+
+    const firstA = i === clustersA.length ? None : Option.of(clustersA[i]);
+    const firstB = i === clustersB.length ? None : Option.of(clustersB[i]);
+
+    return [firstA, firstB];
+  }
+
   private createGraph() {
     // Create the base cluster to seed the graph.
     const baseCluster = this.createCluster(this._baseCluster, [
@@ -265,40 +292,52 @@ export class DependencyGraph<C extends string, M extends string> {
     ]);
 
     // For each module (file) in the directory
-    for (const id of this._fullGraph.keys()) {
+    for (const module of this._fullGraph.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
-      const [cluster, node] = this.createNode(id, baseCluster);
+      const [cluster, node] = this.createNode(module, baseCluster);
 
-      const lightDeps = this.getLightDependencies(id);
+      const lightDeps = this.getLightDependencies(module);
 
       // for each dependency of the file, create an outward edge.
-      for (const depId of this._fullGraph.get(id).getOr([])) {
+      for (const dep of this._fullGraph.get(module).getOr([])) {
         // First, make sure the dependency (node) exist
-        const dep = this._graph.node(depId);
+        const GVdep = this._graph.node(dep);
 
         // The actual edge lives in the first common ancestor, and is thus cut
         // at the last different ancestors.
 
         // Find the common ancestor
-        const path = id.split("/");
-        const depPath = depId.split("/");
+        const path = module.split("/");
+        const depPath = dep.split("/");
 
         let shared = 0;
         while (path[shared] === depPath[shared]) {
           shared++;
         }
 
+        const [clusterSource, clusterDestination] = this.firstDifferentClusters(
+          module,
+          dep,
+        );
+
+        const theTail = clusterSource.getOr(module);
+        const theHead = clusterDestination.getOr(dep);
+
+        // console.log(
+        //   `${id} -> ${depId}: ${clusterSource.getOr("none")} -> ${clusterDestination.getOr("none")} / ${shared} / ${path.slice(0, shared + 1).join("/")} / ${depPath.slice(0, shared + 1).join("/")}`,
+        // );
+
         // Find the cut points.
         const tail = path.slice(0, shared + 1).join("/") as M;
         const head = depPath.slice(0, shared + 1).join("/") as M;
 
-        if (head.endsWith(".ts")) {
+        if (clusterDestination.isNone() /*head */) {
           // If the edge ends on an actual file (not a directory), we create an
           // invisible edge for the sake of rigidity, but we don't record it.
           // This notably ensure that when the edge starts from a directory, we
           // keep the true edge which rigidifies the graph inside the cluster.
           this._graph.createEdge(
-            [node, dep],
+            [node, GVdep],
             DependencyGraph.Options.Node.invisible,
           );
         }
@@ -315,17 +354,17 @@ export class DependencyGraph<C extends string, M extends string> {
         // corresponding clusters (if needed).
         this._graph.createEdge(
           [
-            tail.endsWith(".ts")
+            clusterSource.isNone()
               ? node
               : this._graph.node(`${this._exitPrefix}${tail}`),
-            head.endsWith(".ts")
-              ? dep
+            clusterDestination.isNone()
+              ? GVdep
               : this._graph.node(`${this._namePrefix}${head}`),
           ],
           invisible
             ? DependencyGraph.Options.Node.invisible
             : {
-                style: lightDeps.includes(depId) ? "dotted" : "solid",
+                style: lightDeps.includes(dep) ? "dotted" : "solid",
                 ltail: `${this._clusterPrefix}${tail}`,
                 lhead: `${this._clusterPrefix}${head}`,
                 color:
@@ -333,15 +372,15 @@ export class DependencyGraph<C extends string, M extends string> {
                   // to a given directory and doesn't need color.
                   // Otherwise, we grab the color of the (last) cluster containing
                   // the start (tail) of the edge
-                  head.endsWith(".ts") && tail.endsWith(".ts")
+                  clusterDestination.isNone() && clusterSource.isNone()
                     ? "black"
                     : this.clusterColor(
-                        (tail.endsWith(".ts")
-                          ? (cluster.id ?? "src").replace(
-                              this._clusterPrefix,
-                              "",
-                            )
-                          : tail) as C,
+                        clusterSource.getOr(
+                          (cluster.id ?? this._baseCluster).replace(
+                            this._clusterPrefix,
+                            "",
+                          ),
+                        ) as C,
                       ),
               },
         );
@@ -404,7 +443,7 @@ export namespace DependencyGraph {
         clusterize,
       },
       { baseCluster: "src", clusterId, clusterLabel },
-      { moduleName },
+      { moduleName, isEntryPoint },
     );
   }
 
@@ -483,4 +522,8 @@ function clusterLabel(cluster: string): string {
 function moduleName(module: string): string {
   const parts = module.split("/");
   return parts[parts.length - 1];
+}
+
+function isEntryPoint(module: string): boolean {
+  return module.endsWith("index.ts");
 }
