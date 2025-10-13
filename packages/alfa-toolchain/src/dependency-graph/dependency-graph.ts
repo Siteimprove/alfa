@@ -92,8 +92,14 @@ export class DependencyGraph<C extends string, M extends string> {
 
   // Prefixes for GV elements existing on each cluster.
   private readonly _clusterPrefix = "cluster_";
+  private readonly _GVclusterId = (cluster: C) =>
+    `${this._clusterPrefix}${this._clusterId(cluster)}`;
   private readonly _namePrefix = "name_";
+  private readonly _GVnameNodeId = (cluster: C) =>
+    `${this._namePrefix}${this._clusterId(cluster)}`;
   private readonly _exitPrefix = "exit_";
+  private readonly _GVexitNodeId = (cluster: C) =>
+    `${this._exitPrefix}${this._clusterId(cluster)}`;
 
   protected constructor(
     { name, fullGraph, heavyGraph, circular, clusterize }: Graph<C, M>,
@@ -184,18 +190,16 @@ export class DependencyGraph<C extends string, M extends string> {
     cluster: C,
     [parent, out]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
-    const id = this._clusterId(cluster);
-
     // Fetch or create the cluster as a subgraph of its parent.
     const gvCluster = parent.subgraph(
-      `${this._clusterPrefix}${id}`,
+      `${this._GVclusterId(cluster)}`,
       DependencyGraph.Options.Node.cluster,
     );
 
     // Fetch or create the name and exit nodes for the cluster.
-    gvCluster.node(`${this._namePrefix}${id}`, this.nameOptions(cluster));
+    gvCluster.node(`${this._GVnameNodeId(cluster)}`, this.nameOptions(cluster));
     const exit = gvCluster.node(
-      `${this._exitPrefix}${id}`,
+      `${this._GVexitNodeId(cluster)}`,
       DependencyGraph.Options.Node.invisible,
     );
 
@@ -294,7 +298,7 @@ export class DependencyGraph<C extends string, M extends string> {
     // For each module (file) in the directory
     for (const module of this._fullGraph.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
-      const [cluster, node] = this.createNode(module, baseCluster);
+      const [cluster, GVnode] = this.createNode(module, baseCluster);
 
       const lightDeps = this.getLightDependencies(module);
 
@@ -337,7 +341,7 @@ export class DependencyGraph<C extends string, M extends string> {
           // This notably ensure that when the edge starts from a directory, we
           // keep the true edge which rigidifies the graph inside the cluster.
           this._graph.createEdge(
-            [node, GVdep],
+            [GVnode, GVdep],
             DependencyGraph.Options.Node.invisible,
           );
         }
@@ -354,12 +358,14 @@ export class DependencyGraph<C extends string, M extends string> {
         // corresponding clusters (if needed).
         this._graph.createEdge(
           [
-            clusterSource.isNone()
-              ? node
-              : this._graph.node(`${this._exitPrefix}${tail}`),
-            clusterDestination.isNone()
-              ? GVdep
-              : this._graph.node(`${this._namePrefix}${head}`),
+            clusterSource.isSome()
+              ? this._graph.node(`${this._GVexitNodeId(clusterSource.get())}`)
+              : GVnode,
+            clusterDestination.isSome()
+              ? this._graph.node(
+                  `${this._GVnameNodeId(clusterDestination.get())}`,
+                )
+              : GVdep,
           ],
           invisible
             ? DependencyGraph.Options.Node.invisible
