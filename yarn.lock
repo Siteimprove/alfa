@@ -834,27 +834,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdn/browser-compat-data@npm:^7.1.11":
-  version: 7.1.11
-  resolution: "@mdn/browser-compat-data@npm:7.1.11"
-  checksum: 10c0/d6960c1648a028cf4268656ae1cc8212a7a079753763347fbd1df7b2f0036ad5c133dcf2686a502f5590fabcae7590738cf27e679694a61c70aab6865ca3926c
+"@mdn/browser-compat-data@npm:^7.1.12":
+  version: 7.1.12
+  resolution: "@mdn/browser-compat-data@npm:7.1.12"
+  checksum: 10c0/a2ef235cea7d65f1fa99226eadba821bbebba7eb2189e5e14b98eb3f366824f5ee594f43c9e1223727b288b7d383ad449afcea7e18ab66a1bdb0d7ab99d64fe4
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.26.31":
-  version: 7.26.31
-  resolution: "@microsoft/api-documenter@npm:7.26.31"
+"@microsoft/api-documenter@npm:^7.27.1":
+  version: 7.27.1
+  resolution: "@microsoft/api-documenter@npm:7.27.1"
   dependencies:
-    "@microsoft/api-extractor-model": "npm:7.30.7"
+    "@microsoft/api-extractor-model": "npm:7.31.1"
     "@microsoft/tsdoc": "npm:~0.15.1"
-    "@rushstack/node-core-library": "npm:5.14.0"
-    "@rushstack/terminal": "npm:0.15.4"
-    "@rushstack/ts-command-line": "npm:5.0.2"
-    js-yaml: "npm:~3.13.1"
+    "@rushstack/node-core-library": "npm:5.17.0"
+    "@rushstack/terminal": "npm:0.19.1"
+    "@rushstack/ts-command-line": "npm:5.1.1"
+    js-yaml: "npm:~4.1.0"
     resolve: "npm:~1.22.1"
   bin:
     api-documenter: bin/api-documenter
-  checksum: 10c0/e90235b85397a1826b003090bf8d7b518be2d72f26a587f6fcad8afd004b7aba07e162fa0de7080987e9f76db5d3c7474d8b5b7420ed8aa7b2adc151387c7661
+  checksum: 10c0/754fbb43610859a710faf106f3f666834ae6c8301c1abce16b436b5fce684a9873ca7b2911950305a48a8c4e219f53f45634b9f92311ed213b23aa7e387319d8
   languageName: node
   linkType: hard
 
@@ -866,6 +866,17 @@ __metadata:
     "@microsoft/tsdoc-config": "npm:~0.17.1"
     "@rushstack/node-core-library": "npm:5.14.0"
   checksum: 10c0/e6e5d194f79efe0be47655a9f32e18f807ae6cffeddcd59795f442706d16d241e83b186a4943f252d9fa0f927dd431f270645e3f9fcdf978f85769a5314995ca
+  languageName: node
+  linkType: hard
+
+"@microsoft/api-extractor-model@npm:7.31.1":
+  version: 7.31.1
+  resolution: "@microsoft/api-extractor-model@npm:7.31.1"
+  dependencies:
+    "@microsoft/tsdoc": "npm:~0.15.1"
+    "@microsoft/tsdoc-config": "npm:~0.17.1"
+    "@rushstack/node-core-library": "npm:5.17.0"
+  checksum: 10c0/cf3c8fbc808bb088500af50ed0ac50518437e8018bdbe41698b8973a3ef33e2889c795b94da79bb6833f1fe7cafe91bc77ddc6e3a9791f016c2d84eff4794dc3
   languageName: node
   linkType: hard
 
@@ -1113,20 +1124,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@puppeteer/browsers@npm:2.10.10":
-  version: 2.10.10
-  resolution: "@puppeteer/browsers@npm:2.10.10"
+"@puppeteer/browsers@npm:2.10.11":
+  version: 2.10.11
+  resolution: "@puppeteer/browsers@npm:2.10.11"
   dependencies:
     debug: "npm:^4.4.3"
     extract-zip: "npm:^2.0.1"
     progress: "npm:^2.0.3"
     proxy-agent: "npm:^6.5.0"
     semver: "npm:^7.7.2"
-    tar-fs: "npm:^3.1.0"
+    tar-fs: "npm:^3.1.1"
     yargs: "npm:^17.7.2"
   bin:
     browsers: lib/cjs/main-cli.js
-  checksum: 10c0/88dd1f34821d4479eed399ab6095e57e91bd4715134e5706ed86ab11b501402294db9446caf349bdd163ff38805e6a7beaa9eed4ecdeeaf2a43373079f890369
+  checksum: 10c0/0f1338fda88e6324af2ebb3434e7e7c12a990d4575306102b30ee68901fb7d919e93f8e54596a26da797acc10b6562c196b7ad8ebc56a6cf0a91eaeed30048b0
   languageName: node
   linkType: hard
 
@@ -1305,6 +1316,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rushstack/node-core-library@npm:5.17.0":
+  version: 5.17.0
+  resolution: "@rushstack/node-core-library@npm:5.17.0"
+  dependencies:
+    ajv: "npm:~8.13.0"
+    ajv-draft-04: "npm:~1.0.0"
+    ajv-formats: "npm:~3.0.1"
+    fs-extra: "npm:~11.3.0"
+    import-lazy: "npm:~4.0.0"
+    jju: "npm:~1.4.0"
+    resolve: "npm:~1.22.1"
+    semver: "npm:~7.5.4"
+  peerDependencies:
+    "@types/node": "*"
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+  checksum: 10c0/c3761a4ea09c32c94e279eba97ab502b6450ac365ca83ed030471b305a54d5cf6ec8bae66c93680b092fbb326ba03124be1757e54031431f88bef55907a2b2da
+  languageName: node
+  linkType: hard
+
+"@rushstack/problem-matcher@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@rushstack/problem-matcher@npm:0.1.1"
+  peerDependencies:
+    "@types/node": "*"
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+  checksum: 10c0/c847e721d3536ebb316fdd90b3e4033a7d24ff8c70e38e3eaeaadf167c4d14a7f16377ae4af8097532386bcfa81c15cfec7d2da517542c07882d273d56861d78
+  languageName: node
+  linkType: hard
+
 "@rushstack/rig-package@npm:0.5.3":
   version: 0.5.3
   resolution: "@rushstack/rig-package@npm:0.5.3"
@@ -1330,6 +1374,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rushstack/terminal@npm:0.19.1":
+  version: 0.19.1
+  resolution: "@rushstack/terminal@npm:0.19.1"
+  dependencies:
+    "@rushstack/node-core-library": "npm:5.17.0"
+    "@rushstack/problem-matcher": "npm:0.1.1"
+    supports-color: "npm:~8.1.1"
+  peerDependencies:
+    "@types/node": "*"
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+  checksum: 10c0/0ae6330c4889a5a7c299a180bd1defc3c2ac966e27d7b3df17ba77f1a004f0e821292a1a38d6ed5a8b654a36e443fc471c9356108c3f5ca2a39a300eea8a1c82
+  languageName: node
+  linkType: hard
+
 "@rushstack/ts-command-line@npm:5.0.2":
   version: 5.0.2
   resolution: "@rushstack/ts-command-line@npm:5.0.2"
@@ -1339,6 +1399,18 @@ __metadata:
     argparse: "npm:~1.0.9"
     string-argv: "npm:~0.3.1"
   checksum: 10c0/b6c08ec8309164c2fa5b85804d1a23a98ea8f6348499378e0561565f34bdff0ba0d605c8fc5c7ad704b7fc0f28fd3933b226fb6349362b4d8b7d944866c6d874
+  languageName: node
+  linkType: hard
+
+"@rushstack/ts-command-line@npm:5.1.1":
+  version: 5.1.1
+  resolution: "@rushstack/ts-command-line@npm:5.1.1"
+  dependencies:
+    "@rushstack/terminal": "npm:0.19.1"
+    "@types/argparse": "npm:1.0.38"
+    argparse: "npm:~1.0.9"
+    string-argv: "npm:~0.3.1"
+  checksum: 10c0/b72e9118059f6b4bfddda77b5f0265e00cb3b994958aaa4ea4bfa5e8d9b4fc7bb899095cf5d743be840bc9a913136879f078c6b63e55eea11d8d43dda76bd8a1
   languageName: node
   linkType: hard
 
@@ -1425,7 +1497,7 @@ __metadata:
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
     prettier: "npm:^3.6.2"
-    puppeteer: "npm:^24.23.0"
+    puppeteer: "npm:^24.24.0"
   languageName: unknown
   linkType: soft
 
@@ -1559,7 +1631,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
-    "@mdn/browser-compat-data": "npm:^7.1.11"
+    "@mdn/browser-compat-data": "npm:^7.1.12"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
     browserslist: "npm:^4.26.3"
@@ -2566,7 +2638,7 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     prettier: "npm:^3.6.2"
-    puppeteer: "npm:^24.23.0"
+    puppeteer: "npm:^24.24.0"
   languageName: unknown
   linkType: soft
 
@@ -2611,16 +2683,16 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.29.7"
-    "@microsoft/api-documenter": "npm:^7.26.31"
+    "@microsoft/api-documenter": "npm:^7.27.1"
     "@microsoft/api-extractor": "npm:^7.52.10"
     "@siteimprove/alfa-toolchain": "workspace:^0.104.1"
     "@types/node": "npm:^24.7.2"
     "@vitest/coverage-v8": "npm:3.2.4"
-    knip: "npm:^5.64.2"
+    knip: "npm:^5.64.3"
     minimist: "npm:^1.2.6"
     package-dependency-graph: "npm:^1.14.4"
     prettier: "npm:^3.6.2"
-    typescript: "npm:^5.9.2"
+    typescript: "npm:^5.9.3"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
@@ -5282,7 +5354,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^4.1.0":
+"js-yaml@npm:^4.1.0, js-yaml@npm:~4.1.0":
   version: 4.1.0
   resolution: "js-yaml@npm:4.1.0"
   dependencies:
@@ -5290,18 +5362,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: 10c0/184a24b4eaacfce40ad9074c64fd42ac83cf74d8c8cd137718d456ced75051229e5061b8633c3366b8aada17945a7a356b337828c19da92b51ae62126575018f
-  languageName: node
-  linkType: hard
-
-"js-yaml@npm:~3.13.1":
-  version: 3.13.1
-  resolution: "js-yaml@npm:3.13.1"
-  dependencies:
-    argparse: "npm:^1.0.7"
-    esprima: "npm:^4.0.0"
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: 10c0/6a4f78b998d2eb58964cc5e051c031865bf292dc3c156a8057cf468d9e60a8739f4e8f607a267e97f09eb8d08263b8262df57eddb16b920ec5a04a259c3b4960
   languageName: node
   linkType: hard
 
@@ -5400,9 +5460,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.64.2":
-  version: 5.64.2
-  resolution: "knip@npm:5.64.2"
+"knip@npm:^5.64.3":
+  version: 5.64.3
+  resolution: "knip@npm:5.64.3"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -5422,7 +5482,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/53aa2d20a4ca4a764daf231d3ba2d35b7fda5f55cd2e0f1dfc0ed5d8d0481a7d901747e792992bea848177d3c070072cb454dd9a2d412c0b71b28b5a39245998
+  checksum: 10c0/fbc991ef423a05557ed2d1fba47ad78431400f0a6c2acea14d29188f6d580cc2bd82a5412566032f0bd36e1b8dd5578d5caad44553b0e5de275425244493c791
   languageName: node
   linkType: hard
 
@@ -6492,34 +6552,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:24.23.0":
-  version: 24.23.0
-  resolution: "puppeteer-core@npm:24.23.0"
+"puppeteer-core@npm:24.24.0":
+  version: 24.24.0
+  resolution: "puppeteer-core@npm:24.24.0"
   dependencies:
-    "@puppeteer/browsers": "npm:2.10.10"
+    "@puppeteer/browsers": "npm:2.10.11"
     chromium-bidi: "npm:9.1.0"
     debug: "npm:^4.4.3"
     devtools-protocol: "npm:0.0.1508733"
     typed-query-selector: "npm:^2.12.0"
     webdriver-bidi-protocol: "npm:0.3.6"
     ws: "npm:^8.18.3"
-  checksum: 10c0/88d3f901b01330d2f923711ac09d62e76cd9fa1d35b319251800b7d6c018a4c43bb99f9f4c9d9e2fef084b26ea637f3cda4b0cd5135ec96fdfafbf503aefce96
+  checksum: 10c0/5c22c5d5c657dddc6259866dcbbbb3140f509aae550ed51f0816676b0fb5239ba7b880e44f3a2c5322f3f5da9db601c6e267c001bddb98ed933f49746eda0dfb
   languageName: node
   linkType: hard
 
-"puppeteer@npm:^24.23.0":
-  version: 24.23.0
-  resolution: "puppeteer@npm:24.23.0"
+"puppeteer@npm:^24.24.0":
+  version: 24.24.0
+  resolution: "puppeteer@npm:24.24.0"
   dependencies:
-    "@puppeteer/browsers": "npm:2.10.10"
+    "@puppeteer/browsers": "npm:2.10.11"
     chromium-bidi: "npm:9.1.0"
     cosmiconfig: "npm:^9.0.0"
     devtools-protocol: "npm:0.0.1508733"
-    puppeteer-core: "npm:24.23.0"
+    puppeteer-core: "npm:24.24.0"
     typed-query-selector: "npm:^2.12.0"
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: 10c0/b9bd86dceceb9ec83e8c647818fad2325b062941c553f80512cde93c55fa3e1013f92c769b436ebf296997ee775f4ce05bb6c6de87441aae1ebe63994b2aeb36
+  checksum: 10c0/5cc1aa48c074a04234fe8edcbb98049dcf49f253a87c58d95f5c212e230118dcad76c0a733279198fd3809df9ed5bce8a0b8ce4e487bc2beb973810b55ca3cd1
   languageName: node
   linkType: hard
 
@@ -7229,7 +7289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar-fs@npm:^3.1.0":
+"tar-fs@npm:^3.1.1":
   version: 3.1.1
   resolution: "tar-fs@npm:3.1.1"
   dependencies:
@@ -7515,13 +7575,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.4.4, typescript@npm:^5.4.5, typescript@npm:^5.5.4, typescript@npm:^5.9.2":
-  version: 5.9.2
-  resolution: "typescript@npm:5.9.2"
+"typescript@npm:^5.4.4, typescript@npm:^5.4.5, typescript@npm:^5.5.4, typescript@npm:^5.9.3":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/cd635d50f02d6cf98ed42de2f76289701c1ec587a363369255f01ed15aaf22be0813226bff3c53e99d971f9b540e0b3cc7583dbe05faded49b1b0bed2f638a18
+  checksum: 10c0/6bd7552ce39f97e711db5aa048f6f9995b53f1c52f7d8667c1abdc1700c68a76a308f579cd309ce6b53646deb4e9a1be7c813a93baaf0a28ccd536a30270e1c5
   languageName: node
   linkType: hard
 
@@ -7535,13 +7595,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.4.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.4.5#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.5.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.2#optional!builtin<compat/typescript>":
-  version: 5.9.2
-  resolution: "typescript@patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"
+"typescript@patch:typescript@npm%3A^5.4.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.4.5#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.5.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.3#optional!builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/34d2a8e23eb8e0d1875072064d5e1d9c102e0bdce56a10a25c0b917b8aa9001a9cf5c225df12497e99da107dc379360bc138163c66b55b95f5b105b50578067e
+  checksum: 10c0/ad09fdf7a756814dce65bc60c1657b40d44451346858eea230e10f2e95a289d9183b6e32e5c11e95acc0ccc214b4f36289dcad4bf1886b0adb84d711d336a430
   languageName: node
   linkType: hard
 
