@@ -11,6 +11,24 @@ import * as adapter from "@ts-graphviz/adapter";
 
 import { Rainbow } from "./rainbow.js";
 
+interface Graph<C, M> {
+  name: string;
+  fullGraph: Map<M, Array<M>>;
+  heavyGraph: Map<M, Array<M>>;
+  circular: Iterable<M>;
+  clusterize: (module: M) => Array<C>;
+}
+
+interface ClusterOptions<C> {
+  baseCluster: C;
+  clusterId: (cluster: C) => string;
+  clusterLabel: (cluster: C) => string;
+}
+
+interface ModuleOptions<M> {
+  moduleName: (module: M) => string;
+}
+
 /**
  * Build the dependency graph of a module.
  *
@@ -44,36 +62,27 @@ import { Rainbow } from "./rainbow.js";
  */
 export class DependencyGraph<C extends string, M extends string> {
   public static of<Cluster extends string, Module extends string>(
-    graphName: string,
-    fullGraph: Map<Module, Array<Module>>,
-    heavyGraph: Map<Module, Array<Module>>,
-    circular: Iterable<Module>,
-    clusterize: (module: Module) => Array<Cluster>,
-    baseCluster: Cluster,
-    clusterLabel: (cluster: Cluster) => string,
+    graph: Graph<Cluster, Module>,
+    clusterOptions: ClusterOptions<Cluster>,
+    moduleOptions: ModuleOptions<Module>,
   ): DependencyGraph<Cluster, Module> {
-    return new DependencyGraph(
-      graphName,
-      fullGraph,
-      heavyGraph,
-      circular,
-      clusterize,
-      baseCluster,
-      clusterLabel,
-    );
+    return new DependencyGraph(graph, clusterOptions, moduleOptions);
   }
 
-  private readonly _graphName: string;
+  private readonly _name: string;
 
   private readonly _graph: gv.RootGraphModel;
 
   private readonly _fullGraph: Map<M, Array<M>>;
   private readonly _heavyGraph: Map<M, Array<M>>;
   private readonly _trueCircular: Set<M>;
-
   private readonly _clusterize: (module: M) => Array<C>;
+
   private readonly _baseCluster: C;
+  private readonly _clusterId: (cluster: C) => string;
   private readonly _clusterLabel: (cluster: C) => string;
+
+  private readonly _moduleName: (module: M) => string;
 
   private readonly _edges: Array<[M, M]> = [];
   private readonly _clusterColors: Map<C, gv.Color>;
@@ -84,26 +93,25 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _exitPrefix = "exit_";
 
   protected constructor(
-    graphName: string,
-    fullGraph: Map<M, Array<M>>,
-    heavyGraph: Map<M, Array<M>>,
-    circular: Iterable<M>,
-    clusterize: (module: M) => Array<C>,
-    baseCluster: C,
-    clusterLabel: (cluster: C) => string,
+    { name, fullGraph, heavyGraph, circular, clusterize }: Graph<C, M>,
+    { baseCluster, clusterId, clusterLabel }: ClusterOptions<C>,
+    { moduleName }: ModuleOptions<M>,
   ) {
-    this._graphName = `dependency-graph-${graphName}`;
+    this._name = `dependency-graph-${name}`;
 
     this._heavyGraph = heavyGraph;
 
     this._fullGraph = fullGraph;
     this._trueCircular = Set.from(circular);
 
-    this._graph = gv.digraph(this._graphName, { compound: true });
-
+    this._graph = gv.digraph(this._name, { compound: true });
     this._clusterize = clusterize;
+
     this._baseCluster = baseCluster;
+    this._clusterId = clusterId;
     this._clusterLabel = clusterLabel;
+
+    this._moduleName = moduleName;
 
     this._clusterColors = Map.from(this.clustersColors());
 
@@ -172,7 +180,7 @@ export class DependencyGraph<C extends string, M extends string> {
     cluster: C,
     [parent, out]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
-    const id = clusterId(cluster);
+    const id = this._clusterId(cluster);
 
     // Fetch or create the cluster as a subgraph of its parent.
     const gvCluster = parent.subgraph(
@@ -225,13 +233,16 @@ export class DependencyGraph<C extends string, M extends string> {
 
     const [cluster, exit] = this.nestedClusters(path, srcCluster);
     const node = cluster.node(module, {
-      label: moduleName(module),
+      label: this._moduleName(module),
     });
 
     if (module.endsWith("index.ts")) {
       node.attributes.apply({
         color: this.clusterColor(
-          (cluster.id ?? "src").replace(this._clusterPrefix, "") as C,
+          (cluster.id ?? this._baseCluster).replace(
+            this._clusterPrefix,
+            "",
+          ) as C,
         ),
         penwidth: 5,
       });
@@ -250,7 +261,7 @@ export class DependencyGraph<C extends string, M extends string> {
     // Create the base cluster to seed the graph.
     const baseCluster = this.createCluster(this._baseCluster, [
       this._graph,
-      this._graph.node(this._graphName, DependencyGraph.Options.Node.invisible),
+      this._graph.node(this._name, DependencyGraph.Options.Node.invisible),
     ]);
 
     // For each module (file) in the directory
@@ -385,13 +396,15 @@ export namespace DependencyGraph {
     });
 
     return DependencyGraph.of(
-      pkg.packageJson.name,
-      Map.from(Object.entries(fullDepTree.obj())),
-      Map.from(Object.entries(noTypeDepTree.obj())),
-      Array.flatten(noTypeDepTree.circular()),
-      clusterize,
-      "src",
-      clusterLabel,
+      {
+        name: pkg.packageJson.name,
+        fullGraph: Map.from(Object.entries(fullDepTree.obj())),
+        heavyGraph: Map.from(Object.entries(noTypeDepTree.obj())),
+        circular: Array.flatten(noTypeDepTree.circular()),
+        clusterize,
+      },
+      { baseCluster: "src", clusterId, clusterLabel },
+      { moduleName },
     );
   }
 
