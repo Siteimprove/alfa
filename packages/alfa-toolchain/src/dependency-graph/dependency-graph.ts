@@ -44,7 +44,7 @@ import { Rainbow } from "./rainbow.js";
  */
 export class DependencyGraph<C extends string, M extends string> {
   public static of<Cluster extends string, Module extends string>(
-    pkg: Package,
+    graphName: string,
     fullGraph: Map<Module, Array<Module>>,
     lightGraph: Map<Module, Array<Module>>,
     circular: Iterable<Module>,
@@ -53,7 +53,7 @@ export class DependencyGraph<C extends string, M extends string> {
     clusterLabel: (cluster: Cluster) => string,
   ): DependencyGraph<Cluster, Module> {
     return new DependencyGraph(
-      pkg,
+      graphName,
       fullGraph,
       lightGraph,
       circular,
@@ -63,7 +63,7 @@ export class DependencyGraph<C extends string, M extends string> {
     );
   }
 
-  private readonly _pkg: Package;
+  private readonly _graphName: string;
 
   private readonly _graph: gv.RootGraphModel;
 
@@ -79,7 +79,7 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _clusters: Map<C, gv.Color>;
 
   protected constructor(
-    pkg: Package,
+    graphName: string,
     fullGraph: Map<M, Array<M>>,
     lightGraph: Map<M, Array<M>>,
     circular: Iterable<M>,
@@ -87,15 +87,14 @@ export class DependencyGraph<C extends string, M extends string> {
     baseCluster: C,
     clusterLabel: (cluster: C) => string,
   ) {
+    this._graphName = `dependency-graph-${graphName}`;
+
     this._lightGraph = lightGraph;
 
     this._fullGraph = fullGraph;
     this._trueCircular = Set.from(circular);
 
-    this._pkg = pkg;
-    this._graph = gv.digraph(`dependency-graph-${this._pkg.packageJson.name}`, {
-      compound: true,
-    });
+    this._graph = gv.digraph(this._graphName, { compound: true });
 
     this._clusterize = clusterize;
     this._baseCluster = baseCluster;
@@ -241,10 +240,7 @@ export class DependencyGraph<C extends string, M extends string> {
     // Create the src cluster to seed the graph.
     const srcCluster = this.createCluster(this._baseCluster, [
       this._graph,
-      this._graph.node(
-        `dependency-graph-${this._pkg.packageJson.name}`,
-        DependencyGraph.Options.Node.invisible,
-      ),
+      this._graph.node(this._graphName, DependencyGraph.Options.Node.invisible),
     ]);
 
     // For each module (file) in the directory
@@ -328,17 +324,19 @@ export class DependencyGraph<C extends string, M extends string> {
     }
   }
 
-  public save() {
+  public async save(
+    dirname: string,
+    filename: string = "dependency-graph",
+  ): Promise<void> {
     const dot = gv.toDot(this._graph);
-    const docDir = path.join(this._pkg.dir, "docs");
 
-    if (!fs.existsSync(docDir)) {
-      fs.mkdirSync(docDir, { recursive: true });
+    if (!fs.existsSync(dirname)) {
+      fs.mkdirSync(dirname, { recursive: true });
     }
 
-    fs.writeFileSync(path.join(docDir, "dependency-graph.dot"), dot, "utf8");
+    fs.writeFileSync(path.join(dirname, `${filename}.dot`), dot, "utf8");
 
-    return adapter.toFile(dot, path.join(docDir, "dependency-graph.svg"), {
+    return adapter.toFile(dot, path.join(dirname, `${filename}.svg`), {
       ...DependencyGraph.Options.graphviz,
       format: "svg",
     });
@@ -370,7 +368,7 @@ export namespace DependencyGraph {
     });
 
     return DependencyGraph.of(
-      pkg,
+      pkg.packageJson.name,
       Map.from(Object.entries(fullDepTree.obj())),
       Map.from(Object.entries(noTypeDepTree.obj())),
       Array.flatten(noTypeDepTree.circular()),

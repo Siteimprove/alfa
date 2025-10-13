@@ -13,7 +13,7 @@ export async function generateGraphs(cwd: string) {
   const packages = await getPackages(cwd);
   for (const pkg of packages.packages) {
     if (pkg.dir.includes("alfa-css-feature")) {
-      (await DependencyGraph.fromPackage(pkg)).save();
+      await (await DependencyGraph.fromPackage(pkg)).save(`${pkg.dir}/docs`);
     }
   }
 }
