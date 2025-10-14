@@ -12,16 +12,13 @@ inputs:
   user-name:
     description: "The git user name to use for commits"
     required: true
-    type: string
   user-email:
     description: "The git user email to use for commits"
     required: true
-    type: string
   setup-playwright:
     description: "Whether to setup Playwright browsers"
     required: false
-    type: boolean
-    default: false
+    default: "false"
 
 runs:
   using: composite
@@ -55,7 +52,7 @@ runs:
 
     - name: Install Playwright browsers if needed
       # https://playwright.dev/docs/ci-intro
-      if: ${{ inputs.setup-playwright }}
+      if: inputs.setup-playwright == 'true'
       shell: bash
       run: |
         [[ ! -d packages/alfa-playwright ]] || yarn workspace @siteimprove/alfa-playwright playwright install

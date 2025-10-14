@@ -1,7 +1,7 @@
 name: Create a new version
-
-# This workflow creates a new version, update packages and changelogs, and push the changes.
-# It does not actually publish the packages, see .github/actions/publish/action.yml.
+description:
+  "This workflow creates a new version, update packages and changelogs, and push the changes.
+  It does not actually publish the packages, see .github/actions/publish/action.yml."
 
 outputs:
   version:

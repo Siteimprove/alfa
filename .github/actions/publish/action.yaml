@@ -4,17 +4,14 @@ inputs:
   version:
     description: The version to release, e.g. "1.2.3" or "1.2.3-beta.1"
     required: true
-    type: string
   public:
     description: Whether the packages are public and require a provenance statement.
     required: false
-    type: boolean
-    default: true # Most Alfa repos are public.
+    default: "true" # Most Alfa repos are public.
   npm-publish:
     description: Whether to publish the packages to the npm registry in addition to the Github Packages registry.
     required: false
-    type: boolean
-    default: false
+    default: "false"
   npm-token:
     description: "Token for NPM publication, must be set up if inputs.npm-publish is true."
     required: false
@@ -48,6 +45,7 @@ runs:
       # Alternatively, if yarn let us overwrite @siteimprove:registry in the CLI, and generate provenance
       # statements, we could use yarn for the whole process:
       # yarn workspaces foreach <options> run npm publish <options>
+      shell: bash
       run: |
         mkdir ${{ github.workspace }}/artifacts
         yarn workspaces foreach --all --no-private --topological-dev pack --out ${{ github.workspace }}/artifacts/%s-%v.tgz
@@ -56,14 +54,14 @@ runs:
       shell: bash
       run: npm config set //npm.pkg.github.com/:_authToken=${{ github.token }}
     - name: Make npm release (Github Packages Registry / public)
-      if: inputs.public
+      if: inputs.public == 'true'
       shell: bash
       run: >
         for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
           npm publish ${package} --tolerate-republish --provenance --tag latest;
         done
     - name: Make npm release (Github Packages Registry / private)
-      if: ${{ ! inputs.public }}
+      if: inputs.public != 'true'
       shell: bash
       run: >
         for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
@@ -71,12 +69,12 @@ runs:
         done
 
     - name: Set token for npm publication (npm registry)
-      if: inputs.npm-publish
+      if: inputs.npm-publish == 'true'
       shell: bash
       run: npm config set //registry.npmjs.org/:_authToken=${{ inputs.npm-token }}
     - name: Make npm release (npm Packages Registry)
       # Overwrite the registry with a CLI option, thus leaving the package.json files untouched.
-      if: inputs.npm-publish
+      if: inputs.npm-publish == 'true'
       shell: bash
       run: >
         for package in ${{ github.workspace }}/artifacts/@siteimprove-*.tgz; do
