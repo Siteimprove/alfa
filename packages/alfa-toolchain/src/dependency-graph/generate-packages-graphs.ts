@@ -67,6 +67,8 @@ async function fromPackage(
 }
 
 /**
+ * Returns the clusters (directories) a module (file) belongs to.
+ *
  * /foo/bar/baz.ts -> ["/foo", "/foo/bar"]
  */
 function clusterize(module: string): Array<string> {
@@ -80,24 +82,41 @@ function clusterize(module: string): Array<string> {
   return clusters;
 }
 
+/**
+ * Returns the id of a cluster, i.e., its full path.
+ */
 function clusterId(cluster: string): string {
   return cluster;
 }
 
+/**
+ * Returns the label of a cluster, i.e., the last segment of its path.
+ */
 function clusterLabel(cluster: string): string {
   const parts = cluster.split("/");
   return parts[parts.length - 1];
 }
 
+/**
+ * Returns the id of a module, i.e., its full path.
+ */
 function moduleId(module: string): string {
   return module;
 }
 
+/**
+ * Returns the name of a module, i.e., the last segment of its path.
+ */
 function moduleName(module: string): string {
   const parts = module.split("/");
   return parts[parts.length - 1];
 }
 
+/**
+ * Checks if a module is an entry point for its directory.
+ *
+ * These are exactly the "index.ts" files.
+ */
 function isEntryPoint(module: string): boolean {
   return module.endsWith("index.ts");
 }
