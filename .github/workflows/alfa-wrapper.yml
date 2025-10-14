@@ -66,7 +66,7 @@ jobs:
           token: ${{ inputs.token }}
 
       - name: Setup
-        uses: siteimprove/alfa/.github/actions/setup/action.yaml@main
+        uses: siteimprove/alfa/.github/actions/setup@main
         with:
           user-name: ${{ inputs.user-name }}
           user-email: ${{ inputs.user-email }}
@@ -74,15 +74,15 @@ jobs:
 
       - name: Generate coverage data
         if: inputs.coverage
-        uses: siteimprove/alfa/.github/actions/coverage/action.yaml@main
+        uses: siteimprove/alfa/.github/actions/coverage@main
 
       - name: Generate documentation
         if: inputs.generate-documentation
-        uses: siteimprove/alfa/.github/actions/documentation/action.yaml@main
+        uses: siteimprove/alfa/.github/actions/documentation@main
 
       - name: Bump version
         if: inputs.publish
-        uses: siteimprove/alfa/.github/actions/version/action.yaml@main
+        uses: siteimprove/alfa/.github/actions/version@main
 
       - name: Push changes
         shell: bash
@@ -90,7 +90,7 @@ jobs:
 
       - name: Publish packages
         if: inputs.publish
-        uses: siteimprove/alfa/.github/actions/publish/action.yaml@main
+        uses: siteimprove/alfa/.github/actions/publish@main
         with:
           version: ${{ needs.version.outputs.version }}
           public: ${{ inputs.public }}
