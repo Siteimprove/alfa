@@ -1,66 +1,93 @@
+/**
+ * A dependency graph is built from modules (packages, files, …)
+ *
+ * To avoid too many edges between modules, they are grouped into clusters,
+ * typically directories containing the files. Edges are cut at cluster
+ * boundaries, and de-duped if this would result in the same edge.
+ * Otherwise, we would have, e.g., all files in foo/*.ts depending on
+ * utilities/index.ts, making the graph even less readable.
+ * This creates a lot of complexity in building the graph…
+ *
+ * First, we need a way to know which (nested) clusters a module belongs to.
+ * Next, while Graphviz/dot can cut edges at arbitrary clusters, they would
+ * still originate (and go) to the real origin that was defined (the module).
+ * This would result in edges originating and going to random points along the
+ * clusters boundaries. To avoid that, we create abstract "name" and "exit"
+ * nodes in each cluster, corresponding to no module, but used for endpoint of
+ * edges that are cut at that clusters' boundaries.
+ * Lastly, we need to record which cluster-to-cluster edge has been created to
+ * avoid duplicating it.
+ *
+ * We also add a few extra edges between "exit" nodes of a cluster and its
+ * parent in order to rigidify the graph and obtain a nicer visualisation.
+ *
+ * Finally, both the abstract graph (our model) and the Graphviz one share a lot
+ * of common vocabulary (nodes, edges, clusters, …), which makes the code
+ * a bit hard to read. We try to prefix Graphviz-related elements with "gv" to
+ * help a bit.
+ */
+
 import { Array } from "@siteimprove/alfa-array";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
 
+import * as gv from "ts-graphviz";
+import * as adapter from "@ts-graphviz/adapter";
+
+// These are used for reading a package's structure and building its dependency
+// graph.
 import type { Package } from "@manypkg/get-packages";
 import * as fs from "node:fs";
 import madge from "madge";
 import * as path from "node:path";
 
-import * as gv from "ts-graphviz";
-import * as adapter from "@ts-graphviz/adapter";
-
 import { Rainbow } from "./rainbow.js";
 
+/**
+ * Parameters for building a dependency graph.
+ *
+ * @remarks
+ * A graph contains both "light" and "heavy" edges, that are displayed
+ * differently.
+ * Light edges correspond typically to type dependencies and are not used to
+ * detect circular references.
+ */
 interface Graph<C, M> {
   name: string;
+  // The full graph, both light and heavy edges.
   fullGraph: Map<M, Array<M>>;
+  // The heavy graph, without light edges.
   heavyGraph: Map<M, Array<M>>;
+  // The modules that are part of a true circular dependency (in the heavy graph).
   circular: Iterable<M>;
+  // Function to get the clusters a module belongs to, from the outermost to
+  // the innermost.
   clusterize: (module: M) => Array<C>;
 }
 
+/**
+ * Parameters related to clusters in the graph
+ */
 interface ClusterOptions<C> {
+  // The root cluster in which everything else lives.
   baseCluster: C;
+  // Functions to get the id and label (name) of a cluster.
   clusterId: (cluster: C) => string;
   clusterLabel: (cluster: C) => string;
 }
 
 interface ModuleOptions<M> {
+  // Functions to get the id and name of a module
   moduleId: (module: M) => string;
   moduleName: (module: M) => string;
+  // Whether a module is the "entry point" for its cluster. Typically, the
+  // index file of a directory.
   isEntryPoint: (module: M) => boolean;
 }
 
 /**
- * Build the dependency graph of a module.
- *
- * @remarks
- * * Files are grouped by directories and sub-directories. Dependency arrows
- *   are cut at directory limit, and de-duplicated.
- *   So, if foo/foo1.ts depends on bar/bar1.ts; and foo/foo2.ts depends on
- *   bar/bar2.ts, there will be only one edge from foo to bar. This de-clutters
- *   the graph.
- * * Each directory is also having an "exit" node (invisible). Edges that go
- *   out of that directory are effectively starting from this exit node (and
- *   cut at the directory limit). Each file within that directory has an
- *   invisible edge to the exit node.
- *   This serves two purpose: (i) the inter-directory edges start from a known
- *   position, not randomly one of the file in it, thus look like they connect
- *   to the cluster at a reasonable position; (ii) the invisible edges rigidify
- *   the structure and give less leeway to graphviz for placing nodes. This
- *   tends to give better visual results globally
- * * Each directory also has a "name" node that is visible and serve as an
- *   entry point for all edges connecting to that directory. This serves as
- *   having the inter-directory edges ending in a known position.
- * * Each directory is assigned a random color, evenly spaced on the "rainbow
- *   spectrum". The name node, the index.ts node, and all inter-directory edges
- *   inherit that color, as a visual help.
- * * Type dependencies are dotted.
- * * files forming a circular true dependency are colored in red; these should
- *   probably be investigated and de-entangled. In several case, this might
- *   just be an improperly stated type dependency.
+ * Build a Graphviz graph from a dependency graph.
  *
  * @public
  */
@@ -173,6 +200,7 @@ export class DependencyGraph<C, M> {
     };
 
     if (this._isEntryPoint(module)) {
+      // Entry points are highlighted with the color of their cluster.
       options.color = this.clusterColor(
         this._clusterize(module).pop() ?? this._baseCluster,
       );
@@ -235,7 +263,7 @@ export class DependencyGraph<C, M> {
     return [
       cluster,
       parent.subgraph(
-        `${this._gvClusterId(cluster)}`,
+        this._gvClusterId(cluster),
         DependencyGraph.Options.Node.cluster,
       ),
     ];
@@ -249,7 +277,7 @@ export class DependencyGraph<C, M> {
     gvCluster,
   ]: DependencyGraph.Cluster<C>): gv.NodeModel {
     return gvCluster.node(
-      `${this._gvNameNodeId(cluster)}`,
+      this._gvNameNodeId(cluster),
       this.nameOptions(cluster),
     );
   }
@@ -262,7 +290,7 @@ export class DependencyGraph<C, M> {
     gvCluster,
   ]: DependencyGraph.Cluster<C>): gv.NodeModel {
     return gvCluster.node(
-      `${this._gvExitNodeId(cluster)}`,
+      this._gvExitNodeId(cluster),
       DependencyGraph.Options.Node.exit,
     );
   }
@@ -271,9 +299,8 @@ export class DependencyGraph<C, M> {
    * Create a new GV cluster, if needed.
    * Returns the cluster and its exit node.
    *
-   * @param parent the parent cluster
-   * @param out the exit node of the parent cluster
-   * @param cluster the cluster to create or fetch
+   * @remarks
+   * The order of parameters allows for easier Array.reduce.
    */
   private createGVCluster(
     [parent, gvParent]: DependencyGraph.Cluster<C>,
@@ -281,6 +308,7 @@ export class DependencyGraph<C, M> {
   ): DependencyGraph.Cluster<C> {
     const graphCluster = this.getGVCluster(gvParent, cluster);
 
+    // Creates the "name" node.
     this.getNameNode(graphCluster);
 
     const exit = this.getExitNode(graphCluster);
@@ -296,8 +324,7 @@ export class DependencyGraph<C, M> {
   }
 
   /**
-   * Creates nested GV clusters, under the given cluster, for each segment of a
-   * path.
+   * Creates nested GV clusters, under the given cluster.
    */
   private nestedClusters(
     clusters: Array<C>,
@@ -312,11 +339,11 @@ export class DependencyGraph<C, M> {
    */
   private createGVNode(
     module: M,
-    srcCluster: DependencyGraph.Cluster<C>,
+    rootCluster: DependencyGraph.Cluster<C>,
   ): [DependencyGraph.Cluster<C>, node: gv.NodeModel] {
     const [cluster, gvCluster] = this.nestedClusters(
       this._clusterize(module),
-      srcCluster,
+      rootCluster,
     );
     const node = gvCluster.node(
       this._moduleId(module),
@@ -333,6 +360,9 @@ export class DependencyGraph<C, M> {
     return [[cluster, gvCluster], node];
   }
 
+  /**
+   * Find the first different clusters between two modules.
+   */
   private firstDifferentClusters(
     moduleA: M,
     moduleB: M,
@@ -356,6 +386,9 @@ export class DependencyGraph<C, M> {
     return [firstA, firstB];
   }
 
+  /**
+   * Creates the full Graphviz graph.
+   */
   private createGraph() {
     // Create the base cluster to seed the graph.
     const baseCluster: DependencyGraph.Cluster<C> = this.getGVCluster(
@@ -363,20 +396,20 @@ export class DependencyGraph<C, M> {
       this._baseCluster,
     );
 
-    // For each module (file) in the directory
+    // For each module in the graph
     for (const module of this._fullGraph.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
       const [[cluster], gvNode] = this.createGVNode(module, baseCluster);
 
       const lightDeps = this.getLightDependencies(module);
 
-      // for each dependency of the file, create an outward edge.
+      // for each dependency of the module, create an outward edge.
       for (const dep of this._fullGraph.get(module).getOr([])) {
-        // First, make sure the dependency (node) exist
+        // First, make sure the dependency (node) exist in the GV graph.
         const gvDep = this._gvGraph.node(this._moduleId(dep));
 
-        // The actual edge lives in the first common ancestor, and is thus cut
-        // at the last different ancestors. These are called the "true" origin
+        // The actual edge lives in the last common cluster, and is thus cut
+        // at the first different clusters. These are called the "true" origin
         // and destination. They may be clusters, or the modules themselves in
         // case of intra-cluster edges.
 
@@ -388,7 +421,7 @@ export class DependencyGraph<C, M> {
         const trueOrigin = clusterOrigin.getOr(module);
         const trueDestination = clusterDestination.getOr(dep);
 
-        if (clusterDestination.isNone() /*head */) {
+        if (clusterDestination.isNone()) {
           // The destination is inside the last common cluster. So, the edge
           // ends on it, without being cut.
           // This edge might be duplicated if the origin is inside a nested
@@ -409,16 +442,14 @@ export class DependencyGraph<C, M> {
         // inside the last common one, we move the origin of the edge to the
         // exit node of that cluster.
         const gvEdgeOrigin = clusterOrigin.isSome()
-          ? this._gvGraph.node(`${this._gvExitNodeId(clusterOrigin.get())}`)
+          ? this._gvGraph.node(this._gvExitNodeId(clusterOrigin.get()))
           : gvNode;
 
         // If we have a destination cluster, i.e. the dependency is in a nested
         // cluster inside the last common one, we move the destination of the
         // edge to the name node of that cluster.
         const gvEdgeDestination = clusterDestination.isSome()
-          ? this._gvGraph.node(
-              `${this._gvNameNodeId(clusterDestination.get())}`,
-            )
+          ? this._gvGraph.node(this._gvNameNodeId(clusterDestination.get()))
           : gvDep;
 
         let options: gv.EdgeAttributesObject = {
@@ -460,6 +491,9 @@ export class DependencyGraph<C, M> {
     }
   }
 
+  /**
+   * Saves the dependency graph, both as .dot ad .svg files.
+   */
   public async save(
     dirname: string,
     filename: string = "dependency-graph",
