@@ -44,13 +44,12 @@ on:
         required: false
         type: boolean
         default: false
+    secrets:
       token:
         description: "A PAT for the user who will commit. Need to have the repo:write permission."
-        type: string
         required: true
       npm-token:
         description: "Token for NPM publication, must be set up if inputs.npm-publish is true."
-        type: string
         required: false
 
 jobs:
