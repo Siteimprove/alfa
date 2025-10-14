@@ -64,8 +64,8 @@ interface ModuleOptions<M> {
  *
  * @public
  */
-export class DependencyGraph<C extends string, M> {
-  public static of<Cluster extends string, Module>(
+export class DependencyGraph<C, M> {
+  public static of<Cluster, Module>(
     graph: Graph<Cluster, Module>,
     clusterOptions: ClusterOptions<Cluster>,
     moduleOptions: ModuleOptions<Module>,
@@ -174,10 +174,7 @@ export class DependencyGraph<C extends string, M> {
 
     if (this._isEntryPoint(module)) {
       options.color = this.clusterColor(
-        (this._clusterize(module).pop() ?? this._baseCluster).replace(
-          this._clusterPrefix,
-          "",
-        ) as C,
+        this._clusterize(module).pop() ?? this._baseCluster,
       );
       options.penwidth = 5;
     }
