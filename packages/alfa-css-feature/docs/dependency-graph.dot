@@ -565,47 +565,44 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "exit_src/supports" -> "name_src/condition" [
     style = "solid";
-    ltail = "cluster_src/supports";
-    lhead = "cluster_src/condition";
     color = "#ff0000";
+    lhead = "cluster_src/condition";
+    ltail = "cluster_src/supports";
   ];
   "src/supports/query.ts" -> "src/feature.ts" [
     style = "invis";
   ];
   "exit_src/supports" -> "src/feature.ts" [
     style = "dotted";
-    ltail = "cluster_src/supports";
-    lhead = "cluster_src/feature.ts";
     color = "#ff0000";
+    ltail = "cluster_src/supports";
   ];
   "src/supports/query.ts" -> "name_src/supports/feature" [
     style = "solid";
-    ltail = "cluster_src/supports/query.ts";
-    lhead = "cluster_src/supports/feature";
     color = "#ff0000";
+    lhead = "cluster_src/supports/feature";
   ];
   "src/supports/feature/property.ts" -> "src/feature.ts" [
     style = "invis";
   ];
   "exit_src/supports" -> "src/feature.ts" [
     style = "invis";
+    color = "#ff0000";
+    ltail = "cluster_src/supports";
   ];
   "src/media/list.ts" -> "src/feature.ts" [
     style = "invis";
   ];
   "exit_src/media" -> "src/feature.ts" [
     style = "dotted";
-    ltail = "cluster_src/media";
-    lhead = "cluster_src/feature.ts";
     color = "#49ff00";
+    ltail = "cluster_src/media";
   ];
   "src/media/list.ts" -> "src/media/query.ts" [
     style = "invis";
   ];
   "src/media/list.ts" -> "src/media/query.ts" [
     style = "solid";
-    ltail = "cluster_src/media/list.ts";
-    lhead = "cluster_src/media/query.ts";
     color = "black";
   ];
   "src/media/feature/value/value.ts" -> "src/media/feature/value/bound.ts" [
@@ -613,8 +610,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/value/value.ts" -> "src/media/feature/value/bound.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/value/value.ts";
-    lhead = "cluster_src/media/feature/value/bound.ts";
     color = "black";
   ];
   "src/media/feature/value/value.ts" -> "src/media/feature/value/discrete.ts" [
@@ -622,8 +617,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/value/value.ts" -> "src/media/feature/value/discrete.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/value/value.ts";
-    lhead = "cluster_src/media/feature/value/discrete.ts";
     color = "black";
   ];
   "src/media/feature/value/value.ts" -> "src/media/feature/value/range.ts" [
@@ -631,8 +624,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/value/value.ts" -> "src/media/feature/value/range.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/value/value.ts";
-    lhead = "cluster_src/media/feature/value/range.ts";
     color = "black";
   ];
   "src/media/feature/index.ts" -> "src/media/feature/discrete.ts" [
@@ -640,8 +631,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/index.ts" -> "src/media/feature/discrete.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/index.ts";
-    lhead = "cluster_src/media/feature/discrete.ts";
     color = "black";
   ];
   "src/media/feature/index.ts" -> "src/media/feature/height.ts" [
@@ -649,8 +638,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/index.ts" -> "src/media/feature/height.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/index.ts";
-    lhead = "cluster_src/media/feature/height.ts";
     color = "black";
   ];
   "src/media/feature/index.ts" -> "src/media/feature/media.ts" [
@@ -658,8 +645,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/index.ts" -> "src/media/feature/media.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/index.ts";
-    lhead = "cluster_src/media/feature/media.ts";
     color = "black";
   ];
   "src/media/feature/index.ts" -> "src/media/feature/scripting.ts" [
@@ -667,8 +652,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/index.ts" -> "src/media/feature/scripting.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/index.ts";
-    lhead = "cluster_src/media/feature/scripting.ts";
     color = "black";
   ];
   "src/media/feature/index.ts" -> "src/media/feature/width.ts" [
@@ -676,23 +659,18 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/index.ts" -> "src/media/feature/width.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/index.ts";
-    lhead = "cluster_src/media/feature/width.ts";
     color = "black";
   ];
   "src/supports/index.ts" -> "name_src/supports/feature" [
     style = "solid";
-    ltail = "cluster_src/supports/index.ts";
-    lhead = "cluster_src/supports/feature";
     color = "#ff0000";
+    lhead = "cluster_src/supports/feature";
   ];
   "src/supports/index.ts" -> "src/supports/query.ts" [
     style = "invis";
   ];
   "src/supports/index.ts" -> "src/supports/query.ts" [
     style = "solid";
-    ltail = "cluster_src/supports/index.ts";
-    lhead = "cluster_src/supports/query.ts";
     color = "black";
   ];
   "src/condition/and.ts" -> "src/condition/condition.ts" [
@@ -700,8 +678,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/and.ts" -> "src/condition/condition.ts" [
     style = "dotted";
-    ltail = "cluster_src/condition/and.ts";
-    lhead = "cluster_src/condition/condition.ts";
     color = "black";
   ];
   "src/condition/and.ts" -> "src/feature.ts" [
@@ -709,35 +685,31 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "exit_src/condition" -> "src/feature.ts" [
     style = "dotted";
-    ltail = "cluster_src/condition";
-    lhead = "cluster_src/feature.ts";
     color = "#0092ff";
+    ltail = "cluster_src/condition";
   ];
   "src/media/feature/value/index.ts" -> "src/media/feature/value/value.ts" [
     style = "invis";
   ];
   "src/media/feature/value/index.ts" -> "src/media/feature/value/value.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/value/index.ts";
-    lhead = "cluster_src/media/feature/value/value.ts";
     color = "black";
   ];
   "src/media/index.ts" -> "name_src/media/feature" [
     style = "solid";
-    ltail = "cluster_src/media/index.ts";
-    lhead = "cluster_src/media/feature";
     color = "#49ff00";
+    lhead = "cluster_src/media/feature";
   ];
   "src/media/index.ts" -> "name_src/media/feature" [
     style = "invis";
+    color = "#49ff00";
+    lhead = "cluster_src/media/feature";
   ];
   "src/media/index.ts" -> "src/media/list.ts" [
     style = "invis";
   ];
   "src/media/index.ts" -> "src/media/list.ts" [
     style = "solid";
-    ltail = "cluster_src/media/index.ts";
-    lhead = "cluster_src/media/list.ts";
     color = "black";
   ];
   "src/media/index.ts" -> "src/media/modifier.ts" [
@@ -745,8 +717,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/index.ts" -> "src/media/modifier.ts" [
     style = "solid";
-    ltail = "cluster_src/media/index.ts";
-    lhead = "cluster_src/media/modifier.ts";
     color = "black";
   ];
   "src/media/index.ts" -> "src/media/query.ts" [
@@ -754,8 +724,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/index.ts" -> "src/media/query.ts" [
     style = "solid";
-    ltail = "cluster_src/media/index.ts";
-    lhead = "cluster_src/media/query.ts";
     color = "black";
   ];
   "src/media/index.ts" -> "src/media/type.ts" [
@@ -763,8 +731,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/index.ts" -> "src/media/type.ts" [
     style = "solid";
-    ltail = "cluster_src/media/index.ts";
-    lhead = "cluster_src/media/type.ts";
     color = "black";
   ];
   "src/condition/condition.ts" -> "src/condition/and.ts" [
@@ -772,8 +738,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/condition.ts" -> "src/condition/and.ts" [
     style = "solid";
-    ltail = "cluster_src/condition/condition.ts";
-    lhead = "cluster_src/condition/and.ts";
     color = "black";
   ];
   "src/condition/condition.ts" -> "src/condition/not.ts" [
@@ -781,8 +745,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/condition.ts" -> "src/condition/not.ts" [
     style = "solid";
-    ltail = "cluster_src/condition/condition.ts";
-    lhead = "cluster_src/condition/not.ts";
     color = "black";
   ];
   "src/condition/condition.ts" -> "src/condition/or.ts" [
@@ -790,8 +752,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/condition.ts" -> "src/condition/or.ts" [
     style = "solid";
-    ltail = "cluster_src/condition/condition.ts";
-    lhead = "cluster_src/condition/or.ts";
     color = "black";
   ];
   "src/condition/condition.ts" -> "src/feature.ts" [
@@ -799,32 +759,33 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "exit_src/condition" -> "src/feature.ts" [
     style = "invis";
+    color = "#0092ff";
+    ltail = "cluster_src/condition";
   ];
   "exit_src/media" -> "name_src/condition" [
     style = "solid";
-    ltail = "cluster_src/media";
-    lhead = "cluster_src/condition";
     color = "#49ff00";
+    lhead = "cluster_src/condition";
+    ltail = "cluster_src/media";
   ];
   "src/media/query.ts" -> "src/feature.ts" [
     style = "invis";
   ];
   "exit_src/media" -> "src/feature.ts" [
     style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/media";
   ];
   "src/media/query.ts" -> "name_src/media/feature" [
     style = "solid";
-    ltail = "cluster_src/media/query.ts";
-    lhead = "cluster_src/media/feature";
     color = "#49ff00";
+    lhead = "cluster_src/media/feature";
   ];
   "src/media/query.ts" -> "src/media/modifier.ts" [
     style = "invis";
   ];
   "src/media/query.ts" -> "src/media/modifier.ts" [
     style = "solid";
-    ltail = "cluster_src/media/query.ts";
-    lhead = "cluster_src/media/modifier.ts";
     color = "black";
   ];
   "src/media/query.ts" -> "src/media/type.ts" [
@@ -832,8 +793,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/query.ts" -> "src/media/type.ts" [
     style = "solid";
-    ltail = "cluster_src/media/query.ts";
-    lhead = "cluster_src/media/type.ts";
     color = "black";
   ];
   "src/condition/not.ts" -> "src/condition/condition.ts" [
@@ -841,8 +800,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/not.ts" -> "src/condition/condition.ts" [
     style = "dotted";
-    ltail = "cluster_src/condition/not.ts";
-    lhead = "cluster_src/condition/condition.ts";
     color = "black";
   ];
   "src/condition/not.ts" -> "src/feature.ts" [
@@ -850,20 +807,22 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "exit_src/condition" -> "src/feature.ts" [
     style = "invis";
+    color = "#0092ff";
+    ltail = "cluster_src/condition";
   ];
   "src/media/type.ts" -> "src/feature.ts" [
     style = "invis";
   ];
   "exit_src/media" -> "src/feature.ts" [
     style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/media";
   ];
   "src/media/feature/height.ts" -> "src/media/feature/media.ts" [
     style = "invis";
   ];
   "src/media/feature/height.ts" -> "src/media/feature/media.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/height.ts";
-    lhead = "cluster_src/media/feature/media.ts";
     color = "black";
   ];
   "src/media/feature/height.ts" -> "src/media/feature/resolver.ts" [
@@ -871,23 +830,18 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/height.ts" -> "src/media/feature/resolver.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/height.ts";
-    lhead = "cluster_src/media/feature/resolver.ts";
     color = "black";
   ];
   "src/media/feature/height.ts" -> "name_src/media/feature/value" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/height.ts";
-    lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
+    lhead = "cluster_src/media/feature/value";
   ];
   "src/media/feature/width.ts" -> "src/media/feature/media.ts" [
     style = "invis";
   ];
   "src/media/feature/width.ts" -> "src/media/feature/media.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/width.ts";
-    lhead = "cluster_src/media/feature/media.ts";
     color = "black";
   ];
   "src/media/feature/width.ts" -> "src/media/feature/resolver.ts" [
@@ -895,23 +849,18 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/width.ts" -> "src/media/feature/resolver.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/width.ts";
-    lhead = "cluster_src/media/feature/resolver.ts";
     color = "black";
   ];
   "src/media/feature/width.ts" -> "name_src/media/feature/value" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/width.ts";
-    lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
+    lhead = "cluster_src/media/feature/value";
   ];
   "src/media/feature/value/discrete.ts" -> "src/media/feature/value/value.ts" [
     style = "invis";
   ];
   "src/media/feature/value/discrete.ts" -> "src/media/feature/value/value.ts" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/value/discrete.ts";
-    lhead = "cluster_src/media/feature/value/value.ts";
     color = "black";
   ];
   "src/condition/or.ts" -> "src/condition/condition.ts" [
@@ -919,8 +868,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/or.ts" -> "src/condition/condition.ts" [
     style = "dotted";
-    ltail = "cluster_src/condition/or.ts";
-    lhead = "cluster_src/condition/condition.ts";
     color = "black";
   ];
   "src/condition/or.ts" -> "src/feature.ts" [
@@ -928,32 +875,29 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "exit_src/condition" -> "src/feature.ts" [
     style = "invis";
+    color = "#0092ff";
+    ltail = "cluster_src/condition";
   ];
   "src/index.ts" -> "name_src/condition" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/condition";
     color = "#ffdb00";
+    lhead = "cluster_src/condition";
   ];
   "src/index.ts" -> "name_src/media" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/media";
     color = "#ffdb00";
+    lhead = "cluster_src/media";
   ];
   "src/index.ts" -> "name_src/supports" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/supports";
     color = "#ffdb00";
+    lhead = "cluster_src/supports";
   ];
   "src/media/feature/value/range.ts" -> "src/media/feature/value/bound.ts" [
     style = "invis";
   ];
   "src/media/feature/value/range.ts" -> "src/media/feature/value/bound.ts" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/value/range.ts";
-    lhead = "cluster_src/media/feature/value/bound.ts";
     color = "black";
   ];
   "src/media/feature/value/range.ts" -> "src/media/feature/value/discrete.ts" [
@@ -961,8 +905,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/value/range.ts" -> "src/media/feature/value/discrete.ts" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/value/range.ts";
-    lhead = "cluster_src/media/feature/value/discrete.ts";
     color = "black";
   ];
   "src/media/feature/value/range.ts" -> "src/media/feature/value/value.ts" [
@@ -970,8 +912,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/value/range.ts" -> "src/media/feature/value/value.ts" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/value/range.ts";
-    lhead = "cluster_src/media/feature/value/value.ts";
     color = "black";
   ];
   "src/condition/index.ts" -> "src/condition/and.ts" [
@@ -979,8 +919,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/index.ts" -> "src/condition/and.ts" [
     style = "solid";
-    ltail = "cluster_src/condition/index.ts";
-    lhead = "cluster_src/condition/and.ts";
     color = "black";
   ];
   "src/condition/index.ts" -> "src/condition/condition.ts" [
@@ -988,8 +926,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/index.ts" -> "src/condition/condition.ts" [
     style = "solid";
-    ltail = "cluster_src/condition/index.ts";
-    lhead = "cluster_src/condition/condition.ts";
     color = "black";
   ];
   "src/condition/index.ts" -> "src/condition/not.ts" [
@@ -997,8 +933,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/index.ts" -> "src/condition/not.ts" [
     style = "solid";
-    ltail = "cluster_src/condition/index.ts";
-    lhead = "cluster_src/condition/not.ts";
     color = "black";
   ];
   "src/condition/index.ts" -> "src/condition/or.ts" [
@@ -1006,8 +940,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/condition/index.ts" -> "src/condition/or.ts" [
     style = "solid";
-    ltail = "cluster_src/condition/index.ts";
-    lhead = "cluster_src/condition/or.ts";
     color = "black";
   ];
   "src/media/feature/scripting.ts" -> "src/media/feature/media.ts" [
@@ -1015,59 +947,50 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   ];
   "src/media/feature/scripting.ts" -> "src/media/feature/media.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/scripting.ts";
-    lhead = "cluster_src/media/feature/media.ts";
     color = "black";
   ];
   "src/media/feature/scripting.ts" -> "name_src/media/feature/value" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/scripting.ts";
-    lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
+    lhead = "cluster_src/media/feature/value";
   ];
   "src/media/feature/discrete.ts" -> "src/media/feature/media.ts" [
     style = "invis";
   ];
   "src/media/feature/discrete.ts" -> "src/media/feature/media.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/discrete.ts";
-    lhead = "cluster_src/media/feature/media.ts";
     color = "black";
   ];
   "src/media/feature/discrete.ts" -> "name_src/media/feature/value" [
     style = "dotted";
-    ltail = "cluster_src/media/feature/discrete.ts";
-    lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
+    lhead = "cluster_src/media/feature/value";
   ];
   "src/media/feature/media.ts" -> "src/feature.ts" [
     style = "invis";
   ];
   "exit_src/media" -> "src/feature.ts" [
     style = "invis";
+    color = "#49ff00";
+    ltail = "cluster_src/media";
   ];
   "src/media/feature/media.ts" -> "src/media/feature/comparison.ts" [
     style = "invis";
   ];
   "src/media/feature/media.ts" -> "src/media/feature/comparison.ts" [
     style = "solid";
-    ltail = "cluster_src/media/feature/media.ts";
-    lhead = "cluster_src/media/feature/comparison.ts";
     color = "black";
   ];
   "src/media/feature/media.ts" -> "name_src/media/feature/value" [
     style = "solid";
-    ltail = "cluster_src/media/feature/media.ts";
-    lhead = "cluster_src/media/feature/value";
     color = "#4900ff";
+    lhead = "cluster_src/media/feature/value";
   ];
   "src/supports/feature/index.ts" -> "src/supports/feature/property.ts" [
     style = "invis";
   ];
   "src/supports/feature/index.ts" -> "src/supports/feature/property.ts" [
     style = "solid";
-    ltail = "cluster_src/supports/feature/index.ts";
-    lhead = "cluster_src/supports/feature/property.ts";
     color = "black";
   ];
 }
