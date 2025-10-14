@@ -13,7 +13,7 @@ permissions:
 jobs:
   release:
     name: Release
-    uses: siteimprove/alfa/.github/actions/wrapper/action.yaml@main
+    uses: siteimprove/alfa/.github/workflows/alfa-wrapper.yml@main
     with:
       # See https://api.github.com/users/siteimprove-builduser
       user-name: siteimprove-builduser
@@ -22,5 +22,6 @@ jobs:
       coverage: true
       publish: true
       npm-publish: true
+    secrets:
       token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
       npm-token: ${{ secrets.NPM_TOKEN }}
