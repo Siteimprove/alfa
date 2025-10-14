@@ -16,9 +16,7 @@ generatePackagesGraphs(targetPath);
 export async function generatePackagesGraphs(cwd: string) {
   const packages = await getPackages(cwd);
   for (const pkg of packages.packages) {
-    if (pkg.dir.includes("alfa-css-feature")) {
-      await (await fromPackage(pkg)).save(`${pkg.dir}/docs`);
-    }
+    await (await fromPackage(pkg)).save(`${pkg.dir}/docs`);
   }
 }
 
