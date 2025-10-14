@@ -7,7 +7,7 @@ import type { Package } from "@manypkg/get-packages";
 import * as fs from "node:fs";
 import madge from "madge";
 import * as path from "node:path";
-import type { GraphBaseModel } from "ts-graphviz";
+
 import * as gv from "ts-graphviz";
 import * as adapter from "@ts-graphviz/adapter";
 
@@ -28,6 +28,7 @@ interface ClusterOptions<C> {
 }
 
 interface ModuleOptions<M> {
+  moduleId: (module: M) => string;
   moduleName: (module: M) => string;
   isEntryPoint: (module: M) => boolean;
 }
@@ -63,8 +64,8 @@ interface ModuleOptions<M> {
  *
  * @public
  */
-export class DependencyGraph<C extends string, M extends string> {
-  public static of<Cluster extends string, Module extends string>(
+export class DependencyGraph<C extends string, M> {
+  public static of<Cluster extends string, Module>(
     graph: Graph<Cluster, Module>,
     clusterOptions: ClusterOptions<Cluster>,
     moduleOptions: ModuleOptions<Module>,
@@ -85,6 +86,7 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _clusterId: (cluster: C) => string;
   private readonly _clusterLabel: (cluster: C) => string;
 
+  private readonly _moduleId: (module: M) => string;
   private readonly _moduleName: (module: M) => string;
   private readonly _isEntryPoint: (module: M) => boolean;
 
@@ -105,7 +107,7 @@ export class DependencyGraph<C extends string, M extends string> {
   protected constructor(
     { name, fullGraph, heavyGraph, circular, clusterize }: Graph<C, M>,
     { baseCluster, clusterId, clusterLabel }: ClusterOptions<C>,
-    { moduleName, isEntryPoint }: ModuleOptions<M>,
+    { moduleId, moduleName, isEntryPoint }: ModuleOptions<M>,
   ) {
     this._name = `dependency-graph-${name}`;
 
@@ -121,6 +123,7 @@ export class DependencyGraph<C extends string, M extends string> {
     this._clusterId = clusterId;
     this._clusterLabel = clusterLabel;
 
+    this._moduleId = moduleId;
     this._moduleName = moduleName;
     this._isEntryPoint = isEntryPoint;
 
@@ -224,24 +227,43 @@ export class DependencyGraph<C extends string, M extends string> {
     );
   }
 
+  /**
+   * Get or create a GV cluster corresponding to a given cluster, inside the
+   * gvParent.
+   */
   private getGVCluster(
     parent: gv.GraphBaseModel,
     cluster: C,
-  ): gv.SubgraphModel {
-    return parent.subgraph(
-      `${this._gvClusterId(cluster)}`,
-      DependencyGraph.Options.Node.cluster,
-    );
+  ): DependencyGraph.Cluster<C> {
+    return [
+      cluster,
+      parent.subgraph(
+        `${this._gvClusterId(cluster)}`,
+        DependencyGraph.Options.Node.cluster,
+      ),
+    ];
   }
 
-  private getNameNode(cluster: C, gvCluster: gv.GraphBaseModel) {
+  /**
+   * Get or create the "name" node of a cluster.
+   */
+  private getNameNode([
+    cluster,
+    gvCluster,
+  ]: DependencyGraph.Cluster<C>): gv.NodeModel {
     return gvCluster.node(
       `${this._gvNameNodeId(cluster)}`,
       this.nameOptions(cluster),
     );
   }
 
-  private getExitNode(cluster: C, gvCluster: gv.GraphBaseModel) {
+  /**
+   * Get or create the "exit" node of a cluster.
+   */
+  private getExitNode([
+    cluster,
+    gvCluster,
+  ]: DependencyGraph.Cluster<C>): gv.NodeModel {
     return gvCluster.node(
       `${this._gvExitNodeId(cluster)}`,
       DependencyGraph.Options.Node.exit,
@@ -257,20 +279,23 @@ export class DependencyGraph<C extends string, M extends string> {
    * @param cluster the cluster to create or fetch
    */
   private createGVCluster(
-    [, parent, out]: DependencyGraph.Cluster<C>,
+    [parent, gvParent]: DependencyGraph.Cluster<C>,
     cluster: C,
   ): DependencyGraph.Cluster<C> {
-    const gvCluster = this.getGVCluster(parent, cluster);
+    const graphCluster = this.getGVCluster(gvParent, cluster);
 
-    this.getNameNode(cluster, gvCluster);
+    this.getNameNode(graphCluster);
 
-    const exit = this.getExitNode(cluster, gvCluster);
+    const exit = this.getExitNode(graphCluster);
 
     // Create an invisible edge fron the (new) exit node to the (parent) exit node
     // This rigidifies the graph vertically.
-    parent.createEdge([exit, out], DependencyGraph.Options.Node.invisible);
+    gvParent.createEdge(
+      [exit, this.getExitNode([parent, gvParent])],
+      DependencyGraph.Options.Node.invisible,
+    );
 
-    return [cluster, gvCluster, exit];
+    return graphCluster;
   }
 
   /**
@@ -291,21 +316,24 @@ export class DependencyGraph<C extends string, M extends string> {
   private createGVNode(
     module: M,
     srcCluster: DependencyGraph.Cluster<C>,
-  ): DependencyGraph.Cluster<C> {
+  ): [DependencyGraph.Cluster<C>, node: gv.NodeModel] {
     const [cluster, gvCluster] = this.nestedClusters(
       this._clusterize(module),
       srcCluster,
     );
-    const node = gvCluster.node(module, this.moduleOptions(module));
+    const node = gvCluster.node(
+      this._moduleId(module),
+      this.moduleOptions(module),
+    );
 
     // Create an invisible edge from the node to the exit node of its cluster,
     // this rigidifies the graph vertically.
     gvCluster.createEdge(
-      [node, this.getExitNode(cluster, gvCluster)],
+      [node, this.getExitNode([cluster, gvCluster])],
       DependencyGraph.Options.Node.invisible,
     );
 
-    return [cluster, gvCluster, node];
+    return [[cluster, gvCluster], node];
   }
 
   private firstDifferentClusters(
@@ -333,29 +361,22 @@ export class DependencyGraph<C extends string, M extends string> {
 
   private createGraph() {
     // Create the base cluster to seed the graph.
-    const baseCluster = this.createGVCluster(
-      [
-        this._baseCluster,
-        this._gvGraph,
-        this._gvGraph.node(this._name, DependencyGraph.Options.Node.invisible),
-      ],
+    const baseCluster: DependencyGraph.Cluster<C> = this.getGVCluster(
+      this._gvGraph,
       this._baseCluster,
     );
 
     // For each module (file) in the directory
     for (const module of this._fullGraph.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
-      const [cluster, gvCluster, gvNode] = this.createGVNode(
-        module,
-        baseCluster,
-      );
+      const [[cluster], gvNode] = this.createGVNode(module, baseCluster);
 
       const lightDeps = this.getLightDependencies(module);
 
       // for each dependency of the file, create an outward edge.
       for (const dep of this._fullGraph.get(module).getOr([])) {
         // First, make sure the dependency (node) exist
-        const gvDep = this._gvGraph.node(dep);
+        const gvDep = this._gvGraph.node(this._moduleId(dep));
 
         // The actual edge lives in the first common ancestor, and is thus cut
         // at the last different ancestors. These are called the "true" origin
@@ -494,21 +515,14 @@ export namespace DependencyGraph {
         clusterize,
       },
       { baseCluster: "src", clusterId, clusterLabel },
-      { moduleName, isEntryPoint },
+      { moduleId, moduleName, isEntryPoint },
     );
   }
 
   /**
    * @internal
    */
-  export type Cluster<C> = [
-    // The Graph cluster
-    cluster: C,
-    // The corresponding Graphviz cluster
-    gvCluster: gv.GraphBaseModel,
-    // The exit node of the Graphviz cluster
-    exit: gv.NodeModel,
-  ];
+  export type Cluster<C> = [cluster: C, gvCluster: gv.GraphBaseModel];
 
   /**
    * @internal
@@ -577,6 +591,10 @@ function clusterId(cluster: string): string {
 function clusterLabel(cluster: string): string {
   const parts = cluster.split("/");
   return parts[parts.length - 1];
+}
+
+function moduleId(module: string): string {
+  return module;
 }
 
 function moduleName(module: string): string {
