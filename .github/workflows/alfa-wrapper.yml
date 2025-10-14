@@ -18,32 +18,32 @@ on:
         description: "Whether to setup Playwright browsers"
         required: false
         type: boolean
-        default: "false"
+        default: false
       documentation:
         description: "Whether to generate documentation"
         required: false
         type: boolean
-        default: "false"
+        default: false
       coverage:
         description: "Whether to generate coverage reports."
         required: false
         type: boolean
-        default: "false"
+        default: false
       publish:
         description: "Whether to create and publish a new version."
         required: false
         type: boolean
-        default: "false"
+        default: false
       public:
         description: "Whether the packages are public and require a provenance statement."
         required: false
         type: boolean
-        default: "true" # Most Alfa repos are public.
+        default: true # Most Alfa repos are public.
       npm-publish:
         description: "Whether to publish the packages to the npm registry in addition to the Github Packages registry."
         required: false
         type: boolean
-        default: "false"
+        default: false
     secrets:
       token:
         description: "A PAT for the user who will commit. Need to have the repo:write permission."
