@@ -227,13 +227,13 @@ export class DependencyGraph<C extends string, M extends string> {
    * Create a new GV cluster, if needed.
    * Returns the cluster and its exit node.
    *
-   * @param cluster the cluster to create or fetch
    * @param parent the parent cluster
    * @param out the exit node of the parent cluster
+   * @param cluster the cluster to create or fetch
    */
   private createGVCluster(
-    cluster: C,
     [parent, out]: DependencyGraph.Cluster,
+    cluster: C,
   ): DependencyGraph.Cluster {
     // Fetch or create the cluster as a subgraph of its parent.
     const gvCluster = parent.subgraph(
@@ -259,18 +259,12 @@ export class DependencyGraph<C extends string, M extends string> {
   /**
    * Creates nested GV clusters, under the given cluster, for each segment of a
    * path.
-   *
-   * @todo use cluster list, not path.
    */
   private nestedClusters(
     clusters: Array<C>,
-    [gvCluster, exit]: DependencyGraph.Cluster,
+    parent: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
-    for (let i = 0; i < clusters.length; i++) {
-      [gvCluster, exit] = this.createGVCluster(clusters[i], [gvCluster, exit]);
-    }
-
-    return [gvCluster, exit];
+    return Array.reduce(clusters, this.createGVCluster.bind(this), parent);
   }
 
   /**
@@ -281,8 +275,6 @@ export class DependencyGraph<C extends string, M extends string> {
     module: M,
     srcCluster: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
-    const path = module.split("/");
-
     const [cluster, exit] = this.nestedClusters(
       this._clusterize(module),
       srcCluster,
@@ -321,10 +313,13 @@ export class DependencyGraph<C extends string, M extends string> {
 
   private createGraph() {
     // Create the base cluster to seed the graph.
-    const baseCluster = this.createGVCluster(this._baseCluster, [
-      this._gvGraph,
-      this._gvGraph.node(this._name, DependencyGraph.Options.Node.invisible),
-    ]);
+    const baseCluster = this.createGVCluster(
+      [
+        this._gvGraph,
+        this._gvGraph.node(this._name, DependencyGraph.Options.Node.invisible),
+      ],
+      this._baseCluster,
+    );
 
     // For each module (file) in the directory
     for (const module of this._fullGraph.keys()) {
