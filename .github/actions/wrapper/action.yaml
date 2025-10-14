@@ -68,6 +68,7 @@ runs:
       uses: siteimprove/alfa/.github/actions/documentation@main
 
     - name: Bump version
+      id: version
       if: inputs.publish == 'true'
       uses: siteimprove/alfa/.github/actions/version@main
 
@@ -79,7 +80,7 @@ runs:
       if: inputs.publish == 'true'
       uses: siteimprove/alfa/.github/actions/publish@main
       with:
-        version: ${{ needs.version.outputs.version }}
+        version: ${{ steps.version.outputs.version }}
         public: ${{ inputs.public }}
         npm-publish: ${{ inputs.npm-publish }}
         npm-token: ${{ inputs.npm-token }}

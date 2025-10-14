@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Release
-        uses: siteimprove/alfa/.github/workflows/alfa-wrapper.yml@main
+        uses: siteimprove/alfa/.github/actions/wrapper@main
         with:
           # See https://api.github.com/users/siteimprove-builduser
           user-name: siteimprove-builduser
