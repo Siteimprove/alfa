@@ -338,32 +338,17 @@ export class DependencyGraph<C extends string, M extends string> {
         const gvDep = this._gvGraph.node(dep);
 
         // The actual edge lives in the first common ancestor, and is thus cut
-        // at the last different ancestors.
-
-        // Find the common ancestor
-        const path = module.split("/");
-        const depPath = dep.split("/");
-
-        let shared = 0;
-        while (path[shared] === depPath[shared]) {
-          shared++;
-        }
+        // at the last different ancestors. These are called the "true" origin
+        // and destination. They may be clusters, or the modules themselves in
+        // case of intra-cluster edges.
 
         const [clusterOrigin, clusterDestination] = this.firstDifferentClusters(
           module,
           dep,
         );
 
-        const theTail = clusterOrigin.getOr(module);
-        const theHead = clusterDestination.getOr(dep);
-
-        // console.log(
-        //   `${id} -> ${depId}: ${clusterSource.getOr("none")} -> ${clusterDestination.getOr("none")} / ${shared} / ${path.slice(0, shared + 1).join("/")} / ${depPath.slice(0, shared + 1).join("/")}`,
-        // );
-
-        // Find the cut points.
-        const tail = path.slice(0, shared + 1).join("/") as M;
-        const head = depPath.slice(0, shared + 1).join("/") as M;
+        const trueOrigin = clusterOrigin.getOr(module);
+        const trueDestination = clusterDestination.getOr(dep);
 
         if (clusterDestination.isNone() /*head */) {
           // The destination is inside the last common cluster. So, the edge
@@ -401,8 +386,8 @@ export class DependencyGraph<C extends string, M extends string> {
         let options: gv.EdgeAttributesObject = {
           style: lightDeps.includes(dep) ? "dotted" : "solid",
           color:
-            // If both actual endpoints are files, this is internal
-            // to a given directory and doesn't need color.
+            // If both actual endpoints are modules, this is an intra-cluster
+            // edge and doesn't need color.
             // Otherwise, we grab the color of the (last) cluster containing
             // the start (tail) of the edge
             clusterDestination.isNone() && clusterOrigin.isNone()
@@ -417,14 +402,15 @@ export class DependencyGraph<C extends string, M extends string> {
                 ),
         };
 
-        // If there is already an edge between the first different clusters,
+        // If there is already an edge between the true origin and destination,
         // we do not want to duplicate it. We will still create an invisible one
-        // for rigidity. Here, we record that the new edge will be invisible.
-        let invisible = false;
-        if (this.hasGVEdge(theTail, theHead)) {
+        // for rigidity.
+        if (this.hasGVEdge(trueOrigin, trueDestination)) {
           options.style = "invis";
         }
 
+        // If the edge is inter-cluster, we cut it to the edge of the first
+        // different clusters.
         if (clusterDestination.isSome()) {
           options.lhead = this._gvClusterId(clusterDestination.get());
         }
@@ -436,7 +422,7 @@ export class DependencyGraph<C extends string, M extends string> {
         this._gvGraph.createEdge([gvEdgeOrigin, gvEdgeDestination], options);
 
         // Register this edge to avoid duplication.
-        this.addGVEdge(theTail, theHead);
+        this.addGVEdge(trueOrigin, trueDestination);
       }
     }
   }
