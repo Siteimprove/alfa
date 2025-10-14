@@ -16,7 +16,7 @@ import type { Packages } from '@manypkg/get-packages';
 export const changelogFunctions: ChangelogFunctions;
 
 // @public (undocumented)
-export function generateGraphs(cwd: string): Promise<void>;
+export function generatePackagesGraphs(cwd: string): Promise<void>;
 
 declare namespace globalChangelog {
     export {
