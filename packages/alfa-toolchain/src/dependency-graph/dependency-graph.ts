@@ -413,12 +413,7 @@ export class DependencyGraph<C extends string, M extends string> {
             clusterDestination.isNone() && clusterOrigin.isNone()
               ? "black"
               : this.clusterColor(
-                  clusterOrigin.getOr(
-                    (gvCluster.id ?? this._baseCluster).replace(
-                      this._clusterPrefix,
-                      "",
-                    ),
-                  ) as C,
+                  clusterOrigin.getOr(cluster ?? this._baseCluster),
                 ),
         };
 
