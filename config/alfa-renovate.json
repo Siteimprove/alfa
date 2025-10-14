@@ -3,7 +3,9 @@
   "description": [
     "Renovate config for Alfa and related projects",
     "* Automerge minor/patch dependencies that pass tests, weekly",
-    "* Open PR for other dependencies weekly, grouped together"
+    "* Open PR for other dependencies weekly, grouped together",
+    "",
+    "This is not used anymore by this repo, but is used by other Alfa repos, so we need to keep it for a while."
   ],
   "reviewers": ["team:alfa-owners"],
   "dependencyDashboard": true,
