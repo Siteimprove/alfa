@@ -1,8 +1,5 @@
 digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   compound = true;
-  "dependency-graph-@siteimprove/alfa-css-feature" [
-    style = "invis";
-  ];
   "src/condition/index.ts";
   "exit_src/supports";
   "name_src/condition";
@@ -43,12 +40,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ffdb00";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -560,9 +551,6 @@ digraph "dependency-graph-@siteimprove/alfa-css-feature" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-@siteimprove/alfa-css-feature" [
-    style = "invis";
-  ];
   "exit_src/supports" -> "name_src/condition" [
     style = "solid";
     color = "#ff0000";
