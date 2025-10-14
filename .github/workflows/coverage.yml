@@ -10,11 +10,14 @@ permissions:
 
 jobs:
   coverage:
-    name: Generate coverage data
-    uses: siteimprove/alfa/.github/workflows/alfa-wrapper.yml@main
-    with:
-      # See https://api.github.com/users/siteimprove-builduser
-      user-name: siteimprove-builduser
-      user-email: 8577410+siteimprove-builduser@users.noreply.github.com
-      coverage: true
-      token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate coverage data
+        uses: siteimprove/alfa/.github/workflows/alfa-wrapper.yml@main
+        with:
+          # See https://api.github.com/users/siteimprove-builduser
+          user-name: siteimprove-builduser
+          user-email: 8577410+siteimprove-builduser@users.noreply.github.com
+          coverage: true
+          token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
