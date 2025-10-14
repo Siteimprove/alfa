@@ -1,0 +1,89 @@
+import { Array } from "@siteimprove/alfa-array";
+import { Map } from "@siteimprove/alfa-map";
+
+import { getPackages, type Package } from "@manypkg/get-packages";
+import madge from "madge";
+
+import { DependencyGraph } from "./dependency-graph.js";
+
+const targetPath = process.argv[2] ?? ".";
+
+generatePackagesGraphs(targetPath);
+
+/**
+ * @public
+ */
+export async function generatePackagesGraphs(cwd: string) {
+  const packages = await getPackages(cwd);
+  for (const pkg of packages.packages) {
+    if (pkg.dir.includes("alfa-css-feature")) {
+      await (await fromPackage(pkg)).save(`${pkg.dir}/docs`);
+    }
+  }
+}
+
+async function fromPackage(
+  pkg: Package,
+): Promise<DependencyGraph<string, string>> {
+  // Exclude files that are not inside the base directory.
+  // These are in other packages, which we don't care about here.
+  const notPkg = new RegExp(`^../`);
+
+  const fullDepTree = await madge(`${pkg.dir}/src`, {
+    fileExtensions: ["ts", "tsx"],
+    excludeRegExp: [/[.]d[.]ts/, notPkg],
+    baseDir: pkg.dir,
+  });
+
+  const noTypeDepTree = await madge(`${pkg.dir}/src`, {
+    fileExtensions: ["ts", "tsx"],
+    excludeRegExp: [/[.]d[.]ts/, notPkg],
+    detectiveOptions: { ts: { skipTypeImports: true } },
+    baseDir: pkg.dir,
+  });
+
+  return DependencyGraph.of(
+    {
+      name: pkg.packageJson.name,
+      fullGraph: Map.from(Object.entries(fullDepTree.obj())),
+      heavyGraph: Map.from(Object.entries(noTypeDepTree.obj())),
+      circular: Array.flatten(noTypeDepTree.circular()),
+      clusterize,
+    },
+    { baseCluster: "src", clusterId, clusterLabel },
+    { moduleId, moduleName, isEntryPoint },
+  );
+}
+
+function clusterize(module: string): Array<string> {
+  const clustersList = module.split("/");
+  let clusters: Array<string> = [];
+
+  for (let i = 0; i < clustersList.length - 1; i++) {
+    clusters.push(clustersList.slice(0, i + 1).join("/"));
+  }
+
+  return clusters;
+}
+
+function clusterId(cluster: string): string {
+  return cluster;
+}
+
+function clusterLabel(cluster: string): string {
+  const parts = cluster.split("/");
+  return parts[parts.length - 1];
+}
+
+function moduleId(module: string): string {
+  return module;
+}
+
+function moduleName(module: string): string {
+  const parts = module.split("/");
+  return parts[parts.length - 1];
+}
+
+function isEntryPoint(module: string): boolean {
+  return module.endsWith("index.ts");
+}
