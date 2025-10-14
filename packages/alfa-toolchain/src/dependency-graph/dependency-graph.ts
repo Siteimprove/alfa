@@ -73,7 +73,7 @@ export class DependencyGraph<C extends string, M extends string> {
 
   private readonly _name: string;
 
-  private readonly _graph: gv.RootGraphModel;
+  private readonly _gvGraph: gv.RootGraphModel;
 
   private readonly _fullGraph: Map<M, Array<M>>;
   private readonly _heavyGraph: Map<M, Array<M>>;
@@ -87,18 +87,18 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _moduleName: (module: M) => string;
   private readonly _isEntryPoint: (module: M) => boolean;
 
-  private readonly _edges: Array<[M, M]> = [];
+  private _edges: Map<C | M, Set<C | M>> = Map.empty();
   private readonly _clusterColors: Map<C, gv.Color>;
 
   // Prefixes for GV elements existing on each cluster.
   private readonly _clusterPrefix = "cluster_";
-  private readonly _GVclusterId = (cluster: C) =>
+  private readonly _gvClusterId = (cluster: C) =>
     `${this._clusterPrefix}${this._clusterId(cluster)}`;
   private readonly _namePrefix = "name_";
-  private readonly _GVnameNodeId = (cluster: C) =>
+  private readonly _gvNameNodeId = (cluster: C) =>
     `${this._namePrefix}${this._clusterId(cluster)}`;
   private readonly _exitPrefix = "exit_";
-  private readonly _GVexitNodeId = (cluster: C) =>
+  private readonly _gvExitNodeId = (cluster: C) =>
     `${this._exitPrefix}${this._clusterId(cluster)}`;
 
   protected constructor(
@@ -113,7 +113,7 @@ export class DependencyGraph<C extends string, M extends string> {
     this._fullGraph = fullGraph;
     this._trueCircular = Set.from(circular);
 
-    this._graph = gv.digraph(this._name, { compound: true });
+    this._gvGraph = gv.digraph(this._name, { compound: true });
     this._clusterize = clusterize;
 
     this._baseCluster = baseCluster;
@@ -146,8 +146,8 @@ export class DependencyGraph<C extends string, M extends string> {
   /**
    * Get the color of a given cluster.
    */
-  private clusterColor(id: C): gv.Color {
-    return this._clusterColors.get(id).getOr("black");
+  private clusterColor(cluster: C): gv.Color {
+    return this._clusterColors.get(cluster).getOr("black");
   }
 
   /**
@@ -161,21 +161,63 @@ export class DependencyGraph<C extends string, M extends string> {
   }
 
   /**
+   * Create the options for a module node.
+   */
+  private moduleOptions(module: M): gv.NodeAttributesObject {
+    let options: gv.NodeAttributesObject = {
+      label: this._moduleName(module),
+    };
+
+    if (this._isEntryPoint(module)) {
+      options.color = this.clusterColor(
+        (this._clusterize(module).pop() ?? this._baseCluster).replace(
+          this._clusterPrefix,
+          "",
+        ) as C,
+      );
+      options.penwidth = 5;
+    }
+
+    if (this._trueCircular.has(module)) {
+      options = { ...options, ...DependencyGraph.Options.Node.circular };
+    }
+
+    return options;
+  }
+
+  /**
    * Get the light dependencies of a module, i.e. its dependencies in the full
    * graph minus the ones in the heavy graph.
    */
   private getLightDependencies(dep: M): Array<M> {
     const allDeps = this._fullGraph.get(dep).getOr([]);
-    const trueDeps = this._heavyGraph.get(dep).getOr([]);
+    const heavyDeps = this._heavyGraph.get(dep).getOr([]);
 
-    return Array.subtract(allDeps, trueDeps);
+    return Array.subtract(allDeps, heavyDeps);
   }
 
   /**
    * Check if an edge has already been registered.
    */
-  private hasEdge(source: M, destination: M): boolean {
-    return this._edges.some(([s, d]) => s === source && d === destination);
+  private hasEdge(origin: C | M, destination: C | M): boolean {
+    return (
+      this._edges
+        .get(origin)
+        // eta-expansion is needed to avoid binding issues
+        .getOrElse(() => Set.empty())
+        .has(destination)
+    );
+  }
+
+  private addEdge(origin: C | M, destination: C | M): void {
+    this._edges = this._edges.set(
+      origin,
+      this._edges
+        .get(origin)
+        // eta-expansion is needed to avoid binding issues
+        .getOrElse(() => Set.empty<C | M>())
+        .add(destination),
+    );
   }
 
   /**
@@ -186,21 +228,22 @@ export class DependencyGraph<C extends string, M extends string> {
    * @param parent the parent cluster
    * @param out the exit node of the parent cluster
    */
-  private createCluster(
+  private createGVCluster(
     cluster: C,
     [parent, out]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
     // Fetch or create the cluster as a subgraph of its parent.
     const gvCluster = parent.subgraph(
-      `${this._GVclusterId(cluster)}`,
+      `${this._gvClusterId(cluster)}`,
       DependencyGraph.Options.Node.cluster,
     );
 
     // Fetch or create the name and exit nodes for the cluster.
-    gvCluster.node(`${this._GVnameNodeId(cluster)}`, this.nameOptions(cluster));
+    gvCluster.node(`${this._gvNameNodeId(cluster)}`, this.nameOptions(cluster));
+
     const exit = gvCluster.node(
-      `${this._GVexitNodeId(cluster)}`,
-      DependencyGraph.Options.Node.invisible,
+      `${this._gvExitNodeId(cluster)}`,
+      DependencyGraph.Options.Node.exit,
     );
 
     // Create an invisible edge fron the (new) exit node to the (parent) exit node
@@ -223,7 +266,7 @@ export class DependencyGraph<C extends string, M extends string> {
     for (let i = 0; i < path.length - 1; i++) {
       const id = path.slice(0, i + 1).join("/") as C;
 
-      [cluster, exit] = this.createCluster(id, [cluster, exit]);
+      [cluster, exit] = this.createGVCluster(id, [cluster, exit]);
     }
 
     return [cluster, exit];
@@ -233,34 +276,18 @@ export class DependencyGraph<C extends string, M extends string> {
    * Create (or fetch) a GV node corresponding to a module, including all nested
    * clusters.
    */
-  private createNode(
+  private createGVNode(
     module: M,
     srcCluster: DependencyGraph.Cluster,
   ): [gv.GraphBaseModel, gv.NodeModel] {
     const path = module.split("/");
 
     const [cluster, exit] = this.nestedClusters(path, srcCluster);
-    const node = cluster.node(module, {
-      label: this._moduleName(module),
-    });
+    const node = cluster.node(module, this.moduleOptions(module));
 
-    if (this._isEntryPoint(module)) {
-      node.attributes.apply({
-        color: this.clusterColor(
-          (cluster.id ?? this._baseCluster).replace(
-            this._clusterPrefix,
-            "",
-          ) as C,
-        ),
-        penwidth: 5,
-      });
-    }
-
+    // Create an invisible edge from the node to the exit node of its cluster,
+    // this rigidifies the graph vertically.
     cluster.createEdge([node, exit], DependencyGraph.Options.Node.invisible);
-
-    if (this._trueCircular.has(module)) {
-      node.attributes.apply(DependencyGraph.Options.Node.circular);
-    }
 
     return [cluster, node];
   }
@@ -290,22 +317,22 @@ export class DependencyGraph<C extends string, M extends string> {
 
   private createGraph() {
     // Create the base cluster to seed the graph.
-    const baseCluster = this.createCluster(this._baseCluster, [
-      this._graph,
-      this._graph.node(this._name, DependencyGraph.Options.Node.invisible),
+    const baseCluster = this.createGVCluster(this._baseCluster, [
+      this._gvGraph,
+      this._gvGraph.node(this._name, DependencyGraph.Options.Node.invisible),
     ]);
 
     // For each module (file) in the directory
     for (const module of this._fullGraph.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
-      const [cluster, GVnode] = this.createNode(module, baseCluster);
+      const [cluster, gvNode] = this.createGVNode(module, baseCluster);
 
       const lightDeps = this.getLightDependencies(module);
 
       // for each dependency of the file, create an outward edge.
       for (const dep of this._fullGraph.get(module).getOr([])) {
         // First, make sure the dependency (node) exist
-        const GVdep = this._graph.node(dep);
+        const gvDep = this._gvGraph.node(dep);
 
         // The actual edge lives in the first common ancestor, and is thus cut
         // at the last different ancestors.
@@ -319,12 +346,12 @@ export class DependencyGraph<C extends string, M extends string> {
           shared++;
         }
 
-        const [clusterSource, clusterDestination] = this.firstDifferentClusters(
+        const [clusterOrigin, clusterDestination] = this.firstDifferentClusters(
           module,
           dep,
         );
 
-        const theTail = clusterSource.getOr(module);
+        const theTail = clusterOrigin.getOr(module);
         const theHead = clusterDestination.getOr(dep);
 
         // console.log(
@@ -336,36 +363,39 @@ export class DependencyGraph<C extends string, M extends string> {
         const head = depPath.slice(0, shared + 1).join("/") as M;
 
         if (clusterDestination.isNone() /*head */) {
-          // If the edge ends on an actual file (not a directory), we create an
-          // invisible edge for the sake of rigidity, but we don't record it.
-          // This notably ensure that when the edge starts from a directory, we
-          // keep the true edge which rigidifies the graph inside the cluster.
-          this._graph.createEdge(
-            [GVnode, GVdep],
+          // The destination is inside the last common cluster. So, the edge
+          // ends on it, without being cut.
+          // This edge might be duplicated if the origin is inside a nested
+          // cluster. So, we just create an invisible edge for rigidity and
+          // will handle the actual edge later.
+          this._gvGraph.createEdge(
+            [gvNode, gvDep],
             DependencyGraph.Options.Node.invisible,
           );
         }
 
-        // If the edge already exists, create edge for rigidity, but hide it.
+        // If there is already an edge between the first different clusters,
+        // we do not want to duplicate it. We will still create an invisible one
+        // for rigidity. Here, we record that the new edge will be invisible.
         let invisible = false;
         if (this.hasEdge(tail, head)) {
           invisible = true;
         }
 
-        // Create the visible edge, and register it.
+        // Create the edge between the first different clusters, and register it.
         // It's actual start and end point may differ from the true one if it is
         // cut, since we then go from the exit node to the name node of the
         // corresponding clusters (if needed).
-        this._graph.createEdge(
+        this._gvGraph.createEdge(
           [
-            clusterSource.isSome()
-              ? this._graph.node(`${this._GVexitNodeId(clusterSource.get())}`)
-              : GVnode,
+            clusterOrigin.isSome()
+              ? this._gvGraph.node(`${this._gvExitNodeId(clusterOrigin.get())}`)
+              : gvNode,
             clusterDestination.isSome()
-              ? this._graph.node(
-                  `${this._GVnameNodeId(clusterDestination.get())}`,
+              ? this._gvGraph.node(
+                  `${this._gvNameNodeId(clusterDestination.get())}`,
                 )
-              : GVdep,
+              : gvDep,
           ],
           invisible
             ? DependencyGraph.Options.Node.invisible
@@ -378,10 +408,10 @@ export class DependencyGraph<C extends string, M extends string> {
                   // to a given directory and doesn't need color.
                   // Otherwise, we grab the color of the (last) cluster containing
                   // the start (tail) of the edge
-                  clusterDestination.isNone() && clusterSource.isNone()
+                  clusterDestination.isNone() && clusterOrigin.isNone()
                     ? "black"
                     : this.clusterColor(
-                        clusterSource.getOr(
+                        clusterOrigin.getOr(
                           (cluster.id ?? this._baseCluster).replace(
                             this._clusterPrefix,
                             "",
@@ -392,7 +422,7 @@ export class DependencyGraph<C extends string, M extends string> {
         );
 
         // Register this edge to avoid duplication.
-        this._edges.push([tail, head]);
+        this.addEdge(tail, head);
       }
     }
   }
@@ -401,7 +431,7 @@ export class DependencyGraph<C extends string, M extends string> {
     dirname: string,
     filename: string = "dependency-graph",
   ): Promise<void> {
-    const dot = gv.toDot(this._graph);
+    const dot = gv.toDot(this._gvGraph);
 
     if (!fs.existsSync(dirname)) {
       fs.mkdirSync(dirname, { recursive: true });
@@ -494,6 +524,8 @@ export namespace DependencyGraph {
         label: "",
       };
       export const invisible: gv.SubgraphAttributesObject = { style: "invis" };
+
+      export const exit = invisible;
 
       export function name(
         label: string,
