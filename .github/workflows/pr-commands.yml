@@ -25,10 +25,10 @@ jobs:
 
       - name: "Set up Node"
         if: env.PR_COMMAND_WILL_RUN == 'true'
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           # We use version 20 in the integrate workflow
-          node-version: 20
+          node-version: 22
 
       - name: "Install dependencies"
         if: env.PR_COMMAND_WILL_RUN == 'true'
