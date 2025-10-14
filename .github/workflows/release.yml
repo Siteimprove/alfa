@@ -13,6 +13,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+
+    steps:
       - name: Release
         uses: siteimprove/alfa/.github/workflows/alfa-wrapper.yml@main
         with:
