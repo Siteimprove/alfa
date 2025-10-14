@@ -12,16 +12,16 @@ permissions:
 
 jobs:
   release:
-    name: Release
-    uses: siteimprove/alfa/.github/workflows/alfa-wrapper.yml@main
-    with:
-      # See https://api.github.com/users/siteimprove-builduser
-      user-name: siteimprove-builduser
-      user-email: 8577410+siteimprove-builduser@users.noreply.github.com
-      documentation: true
-      coverage: true
-      publish: true
-      npm-publish: true
-    secrets:
-      token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
-      npm-token: ${{ secrets.NPM_TOKEN }}
+    runs-on: ubuntu-latest
+      - name: Release
+        uses: siteimprove/alfa/.github/workflows/alfa-wrapper.yml@main
+        with:
+          # See https://api.github.com/users/siteimprove-builduser
+          user-name: siteimprove-builduser
+          user-email: 8577410+siteimprove-builduser@users.noreply.github.com
+          documentation: true
+          coverage: true
+          publish: true
+          npm-publish: true
+          token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
+          npm-token: ${{ secrets.NPM_TOKEN }}
