@@ -20,6 +20,19 @@ export async function generatePackagesGraphs(cwd: string) {
   }
 }
 
+/**
+ * Generates a dependency graph from a package.
+ *
+ * @remarks
+ * Uses madge to build the actual graph.
+ *
+ * @remarks
+ * Modules are files, identified by their path relative to the package root.
+ * Clusters are directories, identified by their path relative to the package root.
+ * Clusters' and modules' id are the full path, while their name is the last
+ * part of the path. So clusters/module operations are mostly slicing strings
+ * at '/'.
+ */
 async function fromPackage(
   pkg: Package,
 ): Promise<DependencyGraph<string, string>> {
@@ -53,6 +66,9 @@ async function fromPackage(
   );
 }
 
+/**
+ * /foo/bar/baz.ts -> ["/foo", "/foo/bar"]
+ */
 function clusterize(module: string): Array<string> {
   const clustersList = module.split("/");
   let clusters: Array<string> = [];
