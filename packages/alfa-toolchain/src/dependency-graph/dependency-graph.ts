@@ -263,16 +263,14 @@ export class DependencyGraph<C extends string, M extends string> {
    * @todo use cluster list, not path.
    */
   private nestedClusters(
-    path: Array<string>,
-    [cluster, exit]: DependencyGraph.Cluster,
+    clusters: Array<C>,
+    [gvCluster, exit]: DependencyGraph.Cluster,
   ): DependencyGraph.Cluster {
-    for (let i = 0; i < path.length - 1; i++) {
-      const id = path.slice(0, i + 1).join("/") as C;
-
-      [cluster, exit] = this.createGVCluster(id, [cluster, exit]);
+    for (let i = 0; i < clusters.length; i++) {
+      [gvCluster, exit] = this.createGVCluster(clusters[i], [gvCluster, exit]);
     }
 
-    return [cluster, exit];
+    return [gvCluster, exit];
   }
 
   /**
@@ -282,10 +280,13 @@ export class DependencyGraph<C extends string, M extends string> {
   private createGVNode(
     module: M,
     srcCluster: DependencyGraph.Cluster,
-  ): [gv.GraphBaseModel, gv.NodeModel] {
+  ): DependencyGraph.Cluster {
     const path = module.split("/");
 
-    const [cluster, exit] = this.nestedClusters(path, srcCluster);
+    const [cluster, exit] = this.nestedClusters(
+      this._clusterize(module),
+      srcCluster,
+    );
     const node = cluster.node(module, this.moduleOptions(module));
 
     // Create an invisible edge from the node to the exit node of its cluster,
