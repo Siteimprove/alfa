@@ -1,4 +1,4 @@
-# DEPRECATED: Use .github/workflows/alfa-wrapper.yml instead.
+# DEPRECATED: Use .github/actions/wrapper/action.yml instead.
 
 # Create a release for the Alfa repos.
 #
