@@ -87,7 +87,7 @@ export class DependencyGraph<C extends string, M extends string> {
   private readonly _moduleName: (module: M) => string;
   private readonly _isEntryPoint: (module: M) => boolean;
 
-  private _edges: Map<C | M, Set<C | M>> = Map.empty();
+  private _gvEdges: Map<C | M, Set<C | M>> = Map.empty();
   private readonly _clusterColors: Map<C, gv.Color>;
 
   // Prefixes for GV elements existing on each cluster.
@@ -197,11 +197,11 @@ export class DependencyGraph<C extends string, M extends string> {
   }
 
   /**
-   * Check if an edge has already been registered.
+   * Check if an edge has already been registered in the Graphviz graph.
    */
-  private hasEdge(origin: C | M, destination: C | M): boolean {
+  private hasGVEdge(origin: C | M, destination: C | M): boolean {
     return (
-      this._edges
+      this._gvEdges
         .get(origin)
         // eta-expansion is needed to avoid binding issues
         .getOrElse(() => Set.empty())
@@ -209,10 +209,13 @@ export class DependencyGraph<C extends string, M extends string> {
     );
   }
 
-  private addEdge(origin: C | M, destination: C | M): void {
-    this._edges = this._edges.set(
+  /**
+   * Register an edge in the Graphviz graph.
+   */
+  private addGVEdge(origin: C | M, destination: C | M): void {
+    this._gvEdges = this._gvEdges.set(
       origin,
-      this._edges
+      this._gvEdges
         .get(origin)
         // eta-expansion is needed to avoid binding issues
         .getOrElse(() => Set.empty<C | M>())
@@ -325,7 +328,7 @@ export class DependencyGraph<C extends string, M extends string> {
     // For each module (file) in the directory
     for (const module of this._fullGraph.keys()) {
       // Create (or fetch) the corresponding node, including nested clusters.
-      const [cluster, gvNode] = this.createGVNode(module, baseCluster);
+      const [gvCluster, gvNode] = this.createGVNode(module, baseCluster);
 
       const lightDeps = this.getLightDependencies(module);
 
@@ -374,55 +377,66 @@ export class DependencyGraph<C extends string, M extends string> {
           );
         }
 
+        // Moving origin and destination to the exit/name nodes if needed.
+        // This ensures the inter-cluster edges start and end in "good" positions
+        // instead of randomly being the first module that was seen in that
+        // cluster.
+
+        // If we have an origin cluster, i.e. the module is in a nested cluster
+        // inside the last common one, we move the origin of the edge to the
+        // exit node of that cluster.
+        const gvEdgeOrigin = clusterOrigin.isSome()
+          ? this._gvGraph.node(`${this._gvExitNodeId(clusterOrigin.get())}`)
+          : gvNode;
+
+        // If we have a destination cluster, i.e. the dependency is in a nested
+        // cluster inside the last common one, we move the destination of the
+        // edge to the name node of that cluster.
+        const gvEdgeDestination = clusterDestination.isSome()
+          ? this._gvGraph.node(
+              `${this._gvNameNodeId(clusterDestination.get())}`,
+            )
+          : gvDep;
+
+        let options: gv.EdgeAttributesObject = {
+          style: lightDeps.includes(dep) ? "dotted" : "solid",
+          color:
+            // If both actual endpoints are files, this is internal
+            // to a given directory and doesn't need color.
+            // Otherwise, we grab the color of the (last) cluster containing
+            // the start (tail) of the edge
+            clusterDestination.isNone() && clusterOrigin.isNone()
+              ? "black"
+              : this.clusterColor(
+                  clusterOrigin.getOr(
+                    (gvCluster.id ?? this._baseCluster).replace(
+                      this._clusterPrefix,
+                      "",
+                    ),
+                  ) as C,
+                ),
+        };
+
         // If there is already an edge between the first different clusters,
         // we do not want to duplicate it. We will still create an invisible one
         // for rigidity. Here, we record that the new edge will be invisible.
         let invisible = false;
-        if (this.hasEdge(tail, head)) {
-          invisible = true;
+        if (this.hasGVEdge(theTail, theHead)) {
+          options.style = "invis";
         }
 
-        // Create the edge between the first different clusters, and register it.
-        // It's actual start and end point may differ from the true one if it is
-        // cut, since we then go from the exit node to the name node of the
-        // corresponding clusters (if needed).
-        this._gvGraph.createEdge(
-          [
-            clusterOrigin.isSome()
-              ? this._gvGraph.node(`${this._gvExitNodeId(clusterOrigin.get())}`)
-              : gvNode,
-            clusterDestination.isSome()
-              ? this._gvGraph.node(
-                  `${this._gvNameNodeId(clusterDestination.get())}`,
-                )
-              : gvDep,
-          ],
-          invisible
-            ? DependencyGraph.Options.Node.invisible
-            : {
-                style: lightDeps.includes(dep) ? "dotted" : "solid",
-                ltail: `${this._clusterPrefix}${tail}`,
-                lhead: `${this._clusterPrefix}${head}`,
-                color:
-                  // If both actual endpoints are files, this is internal
-                  // to a given directory and doesn't need color.
-                  // Otherwise, we grab the color of the (last) cluster containing
-                  // the start (tail) of the edge
-                  clusterDestination.isNone() && clusterOrigin.isNone()
-                    ? "black"
-                    : this.clusterColor(
-                        clusterOrigin.getOr(
-                          (cluster.id ?? this._baseCluster).replace(
-                            this._clusterPrefix,
-                            "",
-                          ),
-                        ) as C,
-                      ),
-              },
-        );
+        if (clusterDestination.isSome()) {
+          options.lhead = this._gvClusterId(clusterDestination.get());
+        }
+
+        if (clusterOrigin.isSome()) {
+          options.ltail = this._gvClusterId(clusterOrigin.get());
+        }
+
+        this._gvGraph.createEdge([gvEdgeOrigin, gvEdgeDestination], options);
 
         // Register this edge to avoid duplication.
-        this.addEdge(tail, head);
+        this.addGVEdge(theTail, theHead);
       }
     }
   }
