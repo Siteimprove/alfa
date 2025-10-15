@@ -37,7 +37,5 @@ runs:
     - name: Commit and push changes
       shell: bash
       run: |
-        git add docs/coverage
-        git commit --message="Update global coverage report"
-        git add **/docs/coverage
-        git commit --message="Update individual coverage reports"
+        find . -wholename "*docs/coverage" -print0 | xargs -0 git add
+        git commit --message="Update coverage reports"
