@@ -27,7 +27,7 @@ runs:
       run: >
         yarn workspaces foreach
         --all --parallel
-        run yarn coverage:package
+        run coverage:package
         || true
 
     - name: Consolidate coverage reports
