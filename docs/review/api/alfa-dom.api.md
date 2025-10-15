@@ -1416,6 +1416,8 @@ export class Text extends Node<"text"> implements Slotable {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
+    is(predicate: Predicate<string>): boolean;
+    // (undocumented)
     static of(data: string, box?: Option<Rectangle>, device?: Option<Device>, externalId?: string, internalId?: string, extraData?: any): Text;
     // (undocumented)
     toJSON(options: Node.SerializationOptions & {
@@ -1433,6 +1435,8 @@ export namespace Text {
     export function cloneText(device?: Device): (text: Text) => Trampoline<Text>;
     // @internal (undocumented)
     export function fromText(json: JSON, device?: Device): Trampoline<Text>;
+    // (undocumented)
+    export function is(predicate: Predicate<string>): Predicate<Text>;
     // (undocumented)
     export function isText(value: unknown): value is Text;
     // (undocumented)

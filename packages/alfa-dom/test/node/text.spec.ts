@@ -3,8 +3,12 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 import { Option } from "@siteimprove/alfa-option";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
+import { String } from "@siteimprove/alfa-string";
+import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Text } from "../../dist/index.js";
+
+const { not } = Predicate;
 
 const device = Device.standard();
 
@@ -29,4 +33,10 @@ test("#of() handles missing optional parameters", (t) => {
     data: "foo",
     box: null,
   });
+});
+
+test("Text.is detects non-whitespace using not(String.isWhitespace)", (t) => {
+  const whitespace = Text.of(" \t\n\r");
+  const isNotWhitespace = Text.is(not(String.isWhitespace));
+  t.equal(isNotWhitespace(whitespace), false);
 });
