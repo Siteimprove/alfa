@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-act",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.104.1",
+  "version": "0.105.0",
   "license": "MIT",
   "description": "Functionality for implementing rules specified in the ACT Rules Format",
   "repository": {

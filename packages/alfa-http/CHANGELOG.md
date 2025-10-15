@@ -1,5 +1,13 @@
 # @siteimprove/alfa-http
 
+## 0.105.0
+
+### Patch Changes
+
+- **Added:** Test coverage data is now included in all packages, as well as at global level. ([#1878](https://github.com/Siteimprove/alfa/pull/1878))
+
+- **Fixed:** A type incompatibility between `Uint8Array` and `ArrayBuffer` introduced by the TypeScript 5.9 upgrade has been resolved by explicitly accessing the `.buffer` property in `Request#from` and `Response#from`. ([#1850](https://github.com/Siteimprove/alfa/pull/1850))
+
 ## 0.104.1
 
 ## 0.104.0
