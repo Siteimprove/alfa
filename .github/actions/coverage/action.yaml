@@ -38,20 +38,16 @@ runs:
 
     - name: Commit changes
       shell: bash
-      run: >
         # Find in current directory.
-        find . 
-        # If the name is "node_modules", …
-        -name node_modules
-        # …skip it
-        -prune 
+        # If the name is "node_modules", skip it, don't look inside it;
         # or
-        -o 
-        # If the name ends in "docs/coverage", …
-        -wholename "./*docs/coverage"
-        # …print it with \0 separator (shell glob expansion protection)
-        -print0 
+        # If the name ends in "docs/coverage", print it with \0 separator (shell glob expansion protection)
         # Feed that list to git, through xargs to handle the \0 separator.
+      run: >
+        find . 
+        -name node_modules -prune 
+        -o 
+        -wholename "./*docs/coverage" -print0 
         | xargs -0 git add
 
     - name: Push changes
