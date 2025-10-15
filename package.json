@@ -18,7 +18,7 @@
     "coverage": "yarn build && vitest run --coverage.enabled --config ./config/vitest.config.ts",
     "#coverage:package:comment": "Run coverage for a single package. Usage: yarn coverage:package packages/alfa-foo. We don't rebuild the project, so make sure to run `yarn build` first.",
     "#coverage:package:comment-magic": "See https://yarnpkg.com/getting-started/qa/#how-to-share-scripts-between-workspaces for yarn magic. Somehow, --coverage.include only accepts relative paths, so we need some shell magic too, and yarn doesn't accept # parameter expansion so we have to spawn sed and pwd separately…",
-    "coverage:package": "vitest run --coverage.enabled --config ./config/vitest.config.ts --coverage.reportsDirectory ${INIT_CWD}/docs/coverage --coverage.include $(echo ${INIT_CWD} | sed \"s+$(pwd)/++\") ${INIT_CWD}",
+    "coverage:package": "vitest run --coverage.enabled --config ./config/vitest.config.ts --coverage.clean=false --coverage.reportsDirectory ${INIT_CWD}/docs/coverage --coverage.include $(echo ${INIT_CWD} | sed \"s+$(pwd)/++\") ${INIT_CWD}",
     "watch": "node scripts/watch.mjs --pretty",
     "extract": "node scripts/api-extractor.mjs --pretty",
     "extract:self": "CI=false yarn extract ${INIT_CWD}",
