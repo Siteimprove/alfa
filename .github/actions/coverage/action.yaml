@@ -18,7 +18,8 @@ runs:
 
     - name: Generate global coverage report
       shell: bash
-      run: yarn coverage
+      run: |
+        yarn coverage
 
     - name: Generate individual coverage reports
       shell: bash
@@ -27,6 +28,7 @@ runs:
       run: >
         yarn workspaces foreach
         --all --parallel
+        --exclude "@siteimprove/alfa"
         run coverage:package
         || true
 
@@ -34,8 +36,24 @@ runs:
       shell: bash
       run: yarn generate-unit-test-report
 
-    - name: Commit and push changes
+    - name: Commit changes
       shell: bash
-      run: |
-        find . -wholename "*docs/coverage" -print0 | xargs -0 git add
-        git commit --message="Update coverage reports"
+      run: >
+        # Find in current directory.
+        find . 
+        # If the name is "node_modules", …
+        -name node_modules
+        # …skip it
+        -prune 
+        # or
+        -o 
+        # If the name ends in "docs/coverage", …
+        -wholename "./*docs/coverage"
+        # …print it with \0 separator (shell glob expansion protection)
+        -print0 
+        # Feed that list to git, through xargs to handle the \0 separator.
+        | xargs -0 git add
+
+    - name: Push changes
+      shell: bash
+      run: git commit --message="Update coverage reports"
