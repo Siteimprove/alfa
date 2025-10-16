@@ -1,5 +1,17 @@
 # @siteimprove/alfa-toolchain
 
+## 0.105.0
+
+### Minor Changes
+
+- **Added:** A new functionality for gathering unit test coverage data. ([#1878](https://github.com/Siteimprove/alfa/pull/1878))
+
+  The unit test coverage data of each individual package is gather and consolidated into a single file.
+
+### Patch Changes
+
+- **Added:** Test coverage data is now included in all packages, as well as at global level. ([#1878](https://github.com/Siteimprove/alfa/pull/1878))
+
 ## 0.104.1
 
 ## 0.104.0

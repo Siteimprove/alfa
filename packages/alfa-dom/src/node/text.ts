@@ -1,6 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -59,6 +60,10 @@ export class Text extends Node<"text"> implements Slotable {
 
   public getBoundingBox(device: Device): Option<Rectangle> {
     return this._boxes.get(device);
+  }
+
+  public is(predicate: Predicate<string>) {
+    return predicate(this._data);
   }
 
   /**
@@ -138,6 +143,10 @@ export namespace Text {
 
   export function isText(value: unknown): value is Text {
     return value instanceof Text;
+  }
+
+  export function is(predicate: Predicate<string>): Predicate<Text> {
+    return (text) => text.is(predicate);
   }
 
   /**

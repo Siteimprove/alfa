@@ -1,0 +1,4 @@
+{"total": {"lines":{"total":68,"covered":49,"skipped":0,"pct":72.05},"statements":{"total":68,"covered":49,"skipped":0,"pct":72.05},"functions":{"total":14,"covered":6,"skipped":0,"pct":42.85},"branches":{"total":12,"covered":11,"skipped":0,"pct":91.66},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
+,"/home/runner/work/alfa/alfa/packages/alfa-lazy/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
+,"/home/runner/work/alfa/alfa/packages/alfa-lazy/src/lazy.ts": {"lines":{"total":67,"covered":49,"skipped":0,"pct":73.13},"functions":{"total":13,"covered":6,"skipped":0,"pct":46.15},"statements":{"total":67,"covered":49,"skipped":0,"pct":73.13},"branches":{"total":11,"covered":11,"skipped":0,"pct":100}}
+}

@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-toolchain",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.104.1",
+  "version": "0.105.0",
   "license": "MIT",
   "description": "Toolchain for developing Alfa and related projects",
   "repository": {
@@ -29,6 +29,7 @@
     "alfa-changelog": "dist/changeset/changelog-global.js",
     "create-alfa-package": "dist/create-alfa-package.js",
     "generate-packages-dependency-graphs": "dist/dependency-graph/generate-packages-graphs.js",
+    "generate-unit-test-report": "dist/coverage/generate-unit-test-coverage-report.js",
     "validate-structure": "dist/validation/validate-all.js"
   },
   "files": [

@@ -1,5 +1,15 @@
 # @siteimprove/alfa-dom
 
+## 0.105.0
+
+### Minor Changes
+
+- **Added:** `Text.is` predicate is now available. ([#1896](https://github.com/Siteimprove/alfa/pull/1896))
+
+### Patch Changes
+
+- **Added:** Test coverage data is now included in all packages, as well as at global level. ([#1878](https://github.com/Siteimprove/alfa/pull/1878))
+
 ## 0.104.1
 
 ## 0.104.0

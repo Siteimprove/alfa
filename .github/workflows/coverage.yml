@@ -1,0 +1,23 @@
+name: Generate coverage data
+
+on:
+  # WARNING! This workflow will push back to main and trigger other workflows.
+  # WARNING! Only use manual trigger to avoid creating infinite workflow loops.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate coverage data
+        uses: siteimprove/alfa/.github/actions/wrapper@main
+        with:
+          # See https://api.github.com/users/siteimprove-builduser
+          user-name: siteimprove-builduser
+          user-email: 8577410+siteimprove-builduser@users.noreply.github.com
+          coverage: true
+          token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
