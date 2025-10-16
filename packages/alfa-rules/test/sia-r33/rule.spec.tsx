@@ -39,6 +39,38 @@ test(`evaluate() passes when non-streaming video-only elements have all visual i
   );
 });
 
+test(`evaluate() passes when the transcript is accessible but invisible`, async (t) => {
+  const target = <video src="foo.mp4" type="video/mp4" />;
+
+  const transcript = (
+    <span id="transcript" style={{ position: "absolute", top: "-9999px" }}>
+      Transcript
+    </span>
+  );
+
+  const document = h.document([target, transcript]);
+
+  t.deepEqual(
+    await evaluate(
+      R33,
+      { document },
+      oracle({
+        "is-video-streaming": false,
+        "has-audio": false,
+        transcript: Option.of(transcript),
+      }),
+    ),
+    [
+      passed(
+        R33,
+        target,
+        { 1: Outcomes.HasPerceivableTranscript("<video>") },
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
+  );
+});
+
 test(`evaluate() fails when non-streaming video-only elements have no visual information available in a transcript`, async (t) => {
   const target = <video src="foo.mp4" type="video/mp4" />;
 
@@ -60,6 +92,38 @@ test(`evaluate() fails when non-streaming video-only elements have no visual inf
         R33,
         target,
         { 1: Outcomes.HasNoTranscriptLink("<video>") },
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
+  );
+});
+
+test(`evaluate() fails when the transcript is visible but not accessible`, async (t) => {
+  const target = <video src="foo.mp4" type="video/mp4" />;
+
+  const transcript = (
+    <span id="transcript" aria-hidden="true">
+      Transcript
+    </span>
+  );
+
+  const document = h.document([target, transcript]);
+
+  t.deepEqual(
+    await evaluate(
+      R33,
+      { document },
+      oracle({
+        "is-video-streaming": false,
+        "has-audio": false,
+        transcript: Option.of(transcript),
+      }),
+    ),
+    [
+      failed(
+        R33,
+        target,
+        { 1: Outcomes.HasNonPerceivableTranscript("<video>") },
         Outcome.Mode.SemiAuto,
       ),
     ],

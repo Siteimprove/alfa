@@ -28,7 +28,7 @@
   "bin": {
     "alfa-changelog": "dist/changeset/changelog-global.js",
     "create-alfa-package": "dist/create-alfa-package.js",
-    "generate-dependency-graphs": "dist/dependency-graph/generate-graphs.js",
+    "generate-packages-dependency-graphs": "dist/dependency-graph/generate-packages-graphs.js",
     "generate-unit-test-report": "dist/coverage/generate-unit-test-coverage-report.js",
     "validate-structure": "dist/validation/validate-all.js"
   },
@@ -44,7 +44,7 @@
     "executableFiles": [
       "dist/changeset/changelog-global.js",
       "dist/create-alfa-package.js",
-      "dist/dependency-graph/generate-graphs.js",
+      "dist/dependency-graph/generate-packages-graphs.js",
       "dist/validation/validate-all.js"
     ]
   },
