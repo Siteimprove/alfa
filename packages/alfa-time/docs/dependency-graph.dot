@@ -1,19 +1,10 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-time" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/time.ts";
   "src/timeout.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -29,24 +20,24 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
+      "src/timeout.ts" [
+        label = "timeout.ts";
+      ];
+      "src/time.ts" [
+        label = "time.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/time.ts" [
-        label = "time.ts";
-      ];
-      "src/timeout.ts" [
-        label = "timeout.ts";
-      ];
-      "src/index.ts" -> "exit_src" [
+      "src/timeout.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/time.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/timeout.ts" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -60,16 +51,18 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
+  "src/timeout.ts" -> "src/time.ts" [
     style = "invis";
+  ];
+  "src/timeout.ts" -> "src/time.ts" [
+    style = "solid";
+    color = "black";
   ];
   "src/index.ts" -> "src/time.ts" [
     style = "invis";
   ];
   "src/index.ts" -> "src/time.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/time.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/timeout.ts" [
@@ -77,17 +70,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/timeout.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/timeout.ts";
-    color = "black";
-  ];
-  "src/timeout.ts" -> "src/time.ts" [
-    style = "invis";
-  ];
-  "src/timeout.ts" -> "src/time.ts" [
-    style = "solid";
-    ltail = "cluster_src/timeout.ts";
-    lhead = "cluster_src/time.ts";
     color = "black";
   ];
 }

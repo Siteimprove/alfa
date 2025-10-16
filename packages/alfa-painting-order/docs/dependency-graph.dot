@@ -1,20 +1,11 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-painting-order" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/painting-order.ts";
   "src/predicate/creates-stacking-context.ts";
   "name_src/predicate";
+  "src/painting-order.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -30,13 +21,13 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
+      "src/painting-order.ts" [
+        label = "painting-order.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
-      ];
-      "src/painting-order.ts" [
-        label = "painting-order.ts";
       ];
       subgraph "cluster_src/predicate" {
         color = "#000000";
@@ -57,13 +48,13 @@ digraph "dependency-graph-[object Object]" {
           style = "invis";
         ];
       }
-      "src/index.ts" -> "exit_src" [
+      "exit_src/predicate" -> "exit_src" [
         style = "invis";
       ];
       "src/painting-order.ts" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/predicate" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -77,22 +68,16 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/painting-order.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/painting-order.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/painting-order.ts";
-    color = "black";
-  ];
   "src/painting-order.ts" -> "name_src/predicate" [
     style = "solid";
-    ltail = "cluster_src/painting-order.ts";
-    lhead = "cluster_src/predicate";
     color = "#ff0000";
+    lhead = "cluster_src/predicate";
+  ];
+  "src/index.ts" -> "src/painting-order.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/painting-order.ts" [
+    style = "solid";
+    color = "black";
   ];
 }

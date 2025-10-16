@@ -1,19 +1,10 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-array" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/builtin.ts";
   "src/array.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -29,21 +20,21 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
-      "src/array.ts" [
-        label = "array.ts";
-      ];
       "src/builtin.ts" [
         label = "builtin.ts";
+      ];
+      "src/array.ts" [
+        label = "array.ts";
       ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/array.ts" -> "exit_src" [
+      "src/builtin.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/builtin.ts" -> "exit_src" [
+      "src/array.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/index.ts" -> "exit_src" [
@@ -60,16 +51,11 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/array.ts" -> "src/builtin.ts" [
     style = "invis";
   ];
   "src/array.ts" -> "src/builtin.ts" [
     style = "solid";
-    ltail = "cluster_src/array.ts";
-    lhead = "cluster_src/builtin.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/array.ts" [
@@ -77,8 +63,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/array.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/array.ts";
     color = "black";
   ];
 }

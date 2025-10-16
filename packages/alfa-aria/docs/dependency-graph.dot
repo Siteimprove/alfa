@@ -1,13 +1,5 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-aria" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/attribute/data.ts";
-  "name_src/attribute";
-  "src/role.ts";
-  "src/role/data.ts";
-  "name_src/role";
   "src/dom/predicate/has-accessible-name.ts";
   "name_src/dom/predicate";
   "src/dom/predicate/has-explicit-role.ts";
@@ -22,47 +14,46 @@ digraph "dependency-graph-[object Object]" {
   "src/dom/predicate/is-perceivable.ts";
   "src/dom/predicate/is-programmatically-hidden.ts";
   "src/dom/predicate/is-semantically-disabled.ts";
-  "src/name/index.ts";
-  "exit_src/dom";
-  "name_src/name";
   "src/node.ts";
-  "src/node/predicate.ts";
-  "name_src/node";
-  "src/name/predicate/has-value.ts";
-  "src/role/predicate/has-name.ts";
-  "src/index.ts";
+  "exit_src/node";
+  "src/name/index.ts";
+  "name_src/name";
+  "src/role.ts";
+  "exit_src/dom";
+  "exit_src/role";
   "src/attribute.ts";
-  "src/dom/dom.ts";
-  "name_src/dom";
-  "src/feature.ts";
-  "src/node/container.ts";
-  "src/node/element.ts";
-  "src/node/inert.ts";
-  "src/node/text.ts";
+  "src/name/predicate/has-value.ts";
   "src/name/name.ts";
   "src/name/predicate/index.ts";
   "name_src/name/predicate";
   "src/name/source.ts";
   "src/name/state.ts";
+  "src/role/predicate/has-name.ts";
+  "name_src/role";
+  "src/feature.ts";
+  "src/role/data.ts";
+  "src/role/predicate.ts";
+  "src/attribute/data.ts";
+  "name_src/attribute";
   "exit_src/name";
+  "name_src/dom";
+  "src/dom/dom.ts";
+  "src/node/container.ts";
+  "name_src/node";
+  "src/node/element.ts";
+  "src/node/inert.ts";
+  "src/node/text.ts";
   "exit_src/name/predicate";
-  "exit_src/node";
   "src/node/predicate/has-attribute.ts";
   "name_src/node/predicate";
   "src/node/predicate/has-name.ts";
   "src/node/predicate/has-role.ts";
-  "src/role/predicate.ts";
+  "src/node/predicate.ts";
+  "src/index.ts";
   "name_src/role/predicate";
-  "exit_src/role";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -78,13 +69,13 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
-      "src/attribute.ts" [
-        label = "attribute.ts";
+      "src/role.ts" [
+        label = "role.ts";
         fillcolor = "#ff6c60";
         style = "rounded,filled";
       ];
-      "src/feature.ts" [
-        label = "feature.ts";
+      "src/attribute.ts" [
+        label = "attribute.ts";
         fillcolor = "#ff6c60";
         style = "rounded,filled";
       ];
@@ -95,35 +86,16 @@ digraph "dependency-graph-[object Object]" {
         fillcolor = "#ff6c60";
         style = "rounded,filled";
       ];
+      "src/feature.ts" [
+        label = "feature.ts";
+        fillcolor = "#ff6c60";
+        style = "rounded,filled";
+      ];
       "src/node.ts" [
         label = "node.ts";
         fillcolor = "#ff6c60";
         style = "rounded,filled";
       ];
-      "src/role.ts" [
-        label = "role.ts";
-        fillcolor = "#ff6c60";
-        style = "rounded,filled";
-      ];
-      subgraph "cluster_src/attribute" {
-        color = "#000000";
-        label = "";
-        "name_src/attribute" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#ff0099";
-          label = "attribute";
-        ];
-        "exit_src/attribute" [
-          style = "invis";
-        ];
-        "src/attribute/data.ts" [
-          label = "data.ts";
-        ];
-        "src/attribute/data.ts" -> "exit_src/attribute" [
-          style = "invis";
-        ];
-      }
       subgraph "cluster_src/dom" {
         color = "#000000";
         label = "";
@@ -153,84 +125,84 @@ digraph "dependency-graph-[object Object]" {
           "exit_src/dom/predicate" [
             style = "invis";
           ];
+          "src/dom/predicate/is-perceivable.ts" [
+            label = "is-perceivable.ts";
+          ];
+          "src/dom/predicate/is-marked-decorative.ts" [
+            label = "is-marked-decorative.ts";
+          ];
+          "src/dom/predicate/has-non-empty-accessible-name.ts" [
+            label = "has-non-empty-accessible-name.ts";
+          ];
+          "src/dom/predicate/has-incorrect-role-without-name.ts" [
+            label = "has-incorrect-role-without-name.ts";
+          ];
+          "src/dom/predicate/has-role.ts" [
+            label = "has-role.ts";
+          ];
+          "src/dom/predicate/has-heading-level.ts" [
+            label = "has-heading-level.ts";
+          ];
+          "src/dom/predicate/is-programmatically-hidden.ts" [
+            label = "is-programmatically-hidden.ts";
+          ];
+          "src/dom/predicate/has-implicit-role.ts" [
+            label = "has-implicit-role.ts";
+          ];
+          "src/dom/predicate/has-explicit-role.ts" [
+            label = "has-explicit-role.ts";
+          ];
+          "src/dom/predicate/has-non-default-role.ts" [
+            label = "has-non-default-role.ts";
+          ];
           "src/dom/predicate/has-accessible-name.ts" [
             label = "has-accessible-name.ts";
             fillcolor = "#ff6c60";
             style = "rounded,filled";
           ];
-          "src/dom/predicate/has-explicit-role.ts" [
-            label = "has-explicit-role.ts";
-          ];
-          "src/dom/predicate/has-heading-level.ts" [
-            label = "has-heading-level.ts";
-          ];
-          "src/dom/predicate/has-implicit-role.ts" [
-            label = "has-implicit-role.ts";
-          ];
-          "src/dom/predicate/has-incorrect-role-without-name.ts" [
-            label = "has-incorrect-role-without-name.ts";
-          ];
-          "src/dom/predicate/has-non-default-role.ts" [
-            label = "has-non-default-role.ts";
-          ];
-          "src/dom/predicate/has-non-empty-accessible-name.ts" [
-            label = "has-non-empty-accessible-name.ts";
-          ];
-          "src/dom/predicate/has-role.ts" [
-            label = "has-role.ts";
+          "src/dom/predicate/is-semantically-disabled.ts" [
+            label = "is-semantically-disabled.ts";
           ];
           "src/dom/predicate/is-included-accessibility-tree.ts" [
             label = "is-included-accessibility-tree.ts";
           ];
-          "src/dom/predicate/is-marked-decorative.ts" [
-            label = "is-marked-decorative.ts";
-          ];
-          "src/dom/predicate/is-perceivable.ts" [
-            label = "is-perceivable.ts";
-          ];
-          "src/dom/predicate/is-programmatically-hidden.ts" [
-            label = "is-programmatically-hidden.ts";
-          ];
-          "src/dom/predicate/is-semantically-disabled.ts" [
-            label = "is-semantically-disabled.ts";
-          ];
-          "src/dom/predicate/has-accessible-name.ts" -> "exit_src/dom/predicate" [
-            style = "invis";
-          ];
-          "src/dom/predicate/has-explicit-role.ts" -> "exit_src/dom/predicate" [
-            style = "invis";
-          ];
-          "src/dom/predicate/has-heading-level.ts" -> "exit_src/dom/predicate" [
-            style = "invis";
-          ];
-          "src/dom/predicate/has-implicit-role.ts" -> "exit_src/dom/predicate" [
-            style = "invis";
-          ];
-          "src/dom/predicate/has-incorrect-role-without-name.ts" -> "exit_src/dom/predicate" [
-            style = "invis";
-          ];
-          "src/dom/predicate/has-non-default-role.ts" -> "exit_src/dom/predicate" [
-            style = "invis";
-          ];
-          "src/dom/predicate/has-non-empty-accessible-name.ts" -> "exit_src/dom/predicate" [
-            style = "invis";
-          ];
-          "src/dom/predicate/has-role.ts" -> "exit_src/dom/predicate" [
-            style = "invis";
-          ];
-          "src/dom/predicate/is-included-accessibility-tree.ts" -> "exit_src/dom/predicate" [
+          "src/dom/predicate/is-perceivable.ts" -> "exit_src/dom/predicate" [
             style = "invis";
           ];
           "src/dom/predicate/is-marked-decorative.ts" -> "exit_src/dom/predicate" [
             style = "invis";
           ];
-          "src/dom/predicate/is-perceivable.ts" -> "exit_src/dom/predicate" [
+          "src/dom/predicate/has-non-empty-accessible-name.ts" -> "exit_src/dom/predicate" [
+            style = "invis";
+          ];
+          "src/dom/predicate/has-incorrect-role-without-name.ts" -> "exit_src/dom/predicate" [
+            style = "invis";
+          ];
+          "src/dom/predicate/has-role.ts" -> "exit_src/dom/predicate" [
+            style = "invis";
+          ];
+          "src/dom/predicate/has-heading-level.ts" -> "exit_src/dom/predicate" [
             style = "invis";
           ];
           "src/dom/predicate/is-programmatically-hidden.ts" -> "exit_src/dom/predicate" [
             style = "invis";
           ];
+          "src/dom/predicate/has-implicit-role.ts" -> "exit_src/dom/predicate" [
+            style = "invis";
+          ];
+          "src/dom/predicate/has-explicit-role.ts" -> "exit_src/dom/predicate" [
+            style = "invis";
+          ];
+          "src/dom/predicate/has-non-default-role.ts" -> "exit_src/dom/predicate" [
+            style = "invis";
+          ];
+          "src/dom/predicate/has-accessible-name.ts" -> "exit_src/dom/predicate" [
+            style = "invis";
+          ];
           "src/dom/predicate/is-semantically-disabled.ts" -> "exit_src/dom/predicate" [
+            style = "invis";
+          ];
+          "src/dom/predicate/is-included-accessibility-tree.ts" -> "exit_src/dom/predicate" [
             style = "invis";
           ];
         }
@@ -277,82 +249,6 @@ digraph "dependency-graph-[object Object]" {
           style = "invis";
         ];
       }
-      subgraph "cluster_src/name" {
-        color = "#000000";
-        label = "";
-        "name_src/name" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#cc00ff";
-          label = "name";
-        ];
-        "exit_src/name" [
-          style = "invis";
-        ];
-        "src/name/index.ts" [
-          label = "index.ts";
-          color = "#cc00ff";
-          penwidth = 5;
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
-        ];
-        "src/name/name.ts" [
-          label = "name.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
-        ];
-        "src/name/source.ts" [
-          label = "source.ts";
-        ];
-        "src/name/state.ts" [
-          label = "state.ts";
-        ];
-        subgraph "cluster_src/name/predicate" {
-          color = "#000000";
-          label = "";
-          "name_src/name/predicate" [
-            penwidth = 5;
-            shape = "rectangle";
-            color = "#00ff66";
-            label = "predicate";
-          ];
-          "exit_src/name/predicate" [
-            style = "invis";
-          ];
-          "src/name/predicate/has-value.ts" [
-            label = "has-value.ts";
-          ];
-          "src/name/predicate/index.ts" [
-            label = "index.ts";
-            color = "#00ff66";
-            penwidth = 5;
-          ];
-          "src/name/predicate/has-value.ts" -> "exit_src/name/predicate" [
-            style = "invis";
-          ];
-          "src/name/predicate/index.ts" -> "exit_src/name/predicate" [
-            style = "invis";
-          ];
-        }
-        "src/name/index.ts" -> "exit_src/name" [
-          style = "invis";
-        ];
-        "src/name/name.ts" -> "exit_src/name" [
-          style = "invis";
-        ];
-        "exit_src/name/predicate" -> "exit_src/name" [
-          style = "invis";
-        ];
-        "exit_src/name/predicate" -> "exit_src/name" [
-          style = "invis";
-        ];
-        "src/name/source.ts" -> "exit_src/name" [
-          style = "invis";
-        ];
-        "src/name/state.ts" -> "exit_src/name" [
-          style = "invis";
-        ];
-      }
       subgraph "cluster_src/node" {
         color = "#000000";
         label = "";
@@ -365,8 +261,8 @@ digraph "dependency-graph-[object Object]" {
         "exit_src/node" [
           style = "invis";
         ];
-        "src/node/container.ts" [
-          label = "container.ts";
+        "src/node/inert.ts" [
+          label = "inert.ts";
           fillcolor = "#ff6c60";
           style = "rounded,filled";
         ];
@@ -375,18 +271,18 @@ digraph "dependency-graph-[object Object]" {
           fillcolor = "#ff6c60";
           style = "rounded,filled";
         ];
-        "src/node/inert.ts" [
-          label = "inert.ts";
+        "src/node/text.ts" [
+          label = "text.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/node/container.ts" [
+          label = "container.ts";
           fillcolor = "#ff6c60";
           style = "rounded,filled";
         ];
         "src/node/predicate.ts" [
           label = "predicate.ts";
-        ];
-        "src/node/text.ts" [
-          label = "text.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         subgraph "cluster_src/node/predicate" {
           color = "#000000";
@@ -400,17 +296,14 @@ digraph "dependency-graph-[object Object]" {
           "exit_src/node/predicate" [
             style = "invis";
           ];
-          "src/node/predicate/has-attribute.ts" [
-            label = "has-attribute.ts";
-          ];
           "src/node/predicate/has-name.ts" [
             label = "has-name.ts";
           ];
           "src/node/predicate/has-role.ts" [
             label = "has-role.ts";
           ];
-          "src/node/predicate/has-attribute.ts" -> "exit_src/node/predicate" [
-            style = "invis";
+          "src/node/predicate/has-attribute.ts" [
+            label = "has-attribute.ts";
           ];
           "src/node/predicate/has-name.ts" -> "exit_src/node/predicate" [
             style = "invis";
@@ -418,29 +311,32 @@ digraph "dependency-graph-[object Object]" {
           "src/node/predicate/has-role.ts" -> "exit_src/node/predicate" [
             style = "invis";
           ];
+          "src/node/predicate/has-attribute.ts" -> "exit_src/node/predicate" [
+            style = "invis";
+          ];
         }
-        "src/node/container.ts" -> "exit_src/node" [
+        "src/node/inert.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/predicate" -> "exit_src/node" [
           style = "invis";
         ];
         "src/node/element.ts" -> "exit_src/node" [
           style = "invis";
         ];
-        "src/node/inert.ts" -> "exit_src/node" [
+        "src/node/text.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/predicate" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "src/node/container.ts" -> "exit_src/node" [
+          style = "invis";
+        ];
+        "exit_src/node/predicate" -> "exit_src/node" [
           style = "invis";
         ];
         "src/node/predicate.ts" -> "exit_src/node" [
-          style = "invis";
-        ];
-        "exit_src/node/predicate" -> "exit_src/node" [
-          style = "invis";
-        ];
-        "exit_src/node/predicate" -> "exit_src/node" [
-          style = "invis";
-        ];
-        "exit_src/node/predicate" -> "exit_src/node" [
-          style = "invis";
-        ];
-        "src/node/text.ts" -> "exit_src/node" [
           style = "invis";
         ];
       }
@@ -484,104 +380,142 @@ digraph "dependency-graph-[object Object]" {
         "src/role/data.ts" -> "exit_src/role" [
           style = "invis";
         ];
-        "src/role/predicate.ts" -> "exit_src/role" [
-          style = "invis";
-        ];
         "exit_src/role/predicate" -> "exit_src/role" [
           style = "invis";
         ];
+        "src/role/predicate.ts" -> "exit_src/role" [
+          style = "invis";
+        ];
       }
-      "src/attribute.ts" -> "exit_src" [
+      subgraph "cluster_src/name" {
+        color = "#000000";
+        label = "";
+        "name_src/name" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#cc00ff";
+          label = "name";
+        ];
+        "exit_src/name" [
+          style = "invis";
+        ];
+        "src/name/index.ts" [
+          label = "index.ts";
+          color = "#cc00ff";
+          penwidth = 5;
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/name/name.ts" [
+          label = "name.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
+        ];
+        "src/name/source.ts" [
+          label = "source.ts";
+        ];
+        "src/name/state.ts" [
+          label = "state.ts";
+        ];
+        subgraph "cluster_src/name/predicate" {
+          color = "#000000";
+          label = "";
+          "name_src/name/predicate" [
+            penwidth = 5;
+            shape = "rectangle";
+            color = "#00ff66";
+            label = "predicate";
+          ];
+          "exit_src/name/predicate" [
+            style = "invis";
+          ];
+          "src/name/predicate/index.ts" [
+            label = "index.ts";
+            color = "#00ff66";
+            penwidth = 5;
+          ];
+          "src/name/predicate/has-value.ts" [
+            label = "has-value.ts";
+          ];
+          "src/name/predicate/index.ts" -> "exit_src/name/predicate" [
+            style = "invis";
+          ];
+          "src/name/predicate/has-value.ts" -> "exit_src/name/predicate" [
+            style = "invis";
+          ];
+        }
+        "src/name/index.ts" -> "exit_src/name" [
+          style = "invis";
+        ];
+        "exit_src/name/predicate" -> "exit_src/name" [
+          style = "invis";
+        ];
+        "src/name/name.ts" -> "exit_src/name" [
+          style = "invis";
+        ];
+        "src/name/source.ts" -> "exit_src/name" [
+          style = "invis";
+        ];
+        "exit_src/name/predicate" -> "exit_src/name" [
+          style = "invis";
+        ];
+        "src/name/state.ts" -> "exit_src/name" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/attribute" {
+        color = "#000000";
+        label = "";
+        "name_src/attribute" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0099";
+          label = "attribute";
+        ];
+        "exit_src/attribute" [
+          style = "invis";
+        ];
+        "src/attribute/data.ts" [
+          label = "data.ts";
+        ];
+        "src/attribute/data.ts" -> "exit_src/attribute" [
+          style = "invis";
+        ];
+      }
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/role" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/role" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/name" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/attribute" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dom" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/feature.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/index.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/name" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/name" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/name" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/name" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/name" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/name" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/node.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/node" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/node" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/node" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/node" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/node" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/node" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/node" -> "exit_src" [
@@ -593,10 +527,67 @@ digraph "dependency-graph-[object Object]" {
       "src/role.ts" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/role" -> "exit_src" [
+      "exit_src/dom" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/role" -> "exit_src" [
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/attribute.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/name" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/name" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/name" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/name" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/feature.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/name" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/node" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/node.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dom" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/role" -> "exit_src" [
@@ -715,352 +706,369 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/attribute.ts" -> "name_src/attribute" [
-    style = "solid";
-    ltail = "cluster_src/attribute.ts";
-    lhead = "cluster_src/attribute";
-    color = "#ff0000";
-  ];
-  "src/attribute.ts" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "src/attribute.ts" -> "src/role.ts" [
-    style = "solid";
-    ltail = "cluster_src/attribute.ts";
-    lhead = "cluster_src/role.ts";
-    color = "black";
-  ];
-  "src/attribute.ts" -> "name_src/role" [
-    style = "dotted";
-    ltail = "cluster_src/attribute.ts";
-    lhead = "cluster_src/role";
-    color = "#ff0000";
-  ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "solid";
-    ltail = "cluster_src/dom/dom.ts";
+    color = "#33ff00";
     lhead = "cluster_src/dom/predicate";
+  ];
+  "src/dom/dom.ts" -> "name_src/dom/predicate" [
+    style = "invis";
     color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
   "src/dom/dom.ts" -> "name_src/dom/predicate" [
     style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/dom/predicate";
   ];
-  "src/dom/dom.ts" -> "name_src/dom/predicate" [
+  "src/node/inert.ts" -> "src/node.ts" [
     style = "invis";
   ];
-  "exit_src/dom" -> "name_src/name" [
+  "exit_src/node" -> "src/node.ts" [
     style = "solid";
-    ltail = "cluster_src/dom";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "exit_src/node" -> "name_src/name" [
+    style = "solid";
+    color = "#ccff00";
     lhead = "cluster_src/name";
-    color = "#33ff00";
+    ltail = "cluster_src/node";
   ];
-  "src/dom/predicate/has-accessible-name.ts" -> "src/node.ts" [
+  "src/node/predicate/has-name.ts" -> "src/node.ts" [
     style = "invis";
   ];
-  "exit_src/dom" -> "src/node.ts" [
-    style = "solid";
-    ltail = "cluster_src/dom";
-    lhead = "cluster_src/node.ts";
-    color = "#33ff00";
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
   ];
-  "exit_src/dom" -> "name_src/node" [
-    style = "solid";
-    ltail = "cluster_src/dom";
-    lhead = "cluster_src/node";
-    color = "#33ff00";
+  "src/dom/predicate/is-perceivable.ts" -> "src/dom/predicate/is-included-accessibility-tree.ts" [
+    style = "invis";
   ];
-  "src/dom/predicate/has-explicit-role.ts" -> "src/role.ts" [
+  "src/dom/predicate/is-perceivable.ts" -> "src/dom/predicate/is-included-accessibility-tree.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/dom/predicate/is-marked-decorative.ts" -> "src/role.ts" [
     style = "invis";
   ];
   "exit_src/dom" -> "src/role.ts" [
     style = "solid";
-    ltail = "cluster_src/dom";
-    lhead = "cluster_src/role.ts";
     color = "#33ff00";
+    ltail = "cluster_src/dom";
   ];
-  "src/dom/predicate/has-heading-level.ts" -> "src/node.ts" [
+  "src/role/predicate/has-name.ts" -> "src/role.ts" [
     style = "invis";
   ];
-  "exit_src/dom" -> "src/node.ts" [
+  "exit_src/role" -> "src/role.ts" [
+    style = "dotted";
+    color = "#3300ff";
+    ltail = "cluster_src/role";
+  ];
+  "src/node/element.ts" -> "src/attribute.ts" [
     style = "invis";
   ];
-  "src/dom/predicate/has-implicit-role.ts" -> "src/role.ts" [
+  "exit_src/node" -> "src/attribute.ts" [
+    style = "dotted";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "exit_src/node" -> "name_src/name" [
+    style = "invis";
+    color = "#ccff00";
+    lhead = "cluster_src/name";
+    ltail = "cluster_src/node";
+  ];
+  "src/node/element.ts" -> "src/node.ts" [
     style = "invis";
   ];
-  "exit_src/dom" -> "src/role.ts" [
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "src/node/element.ts" -> "src/role.ts" [
     style = "invis";
   ];
-  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
-    style = "invis";
-  ];
-  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
+  "exit_src/node" -> "src/role.ts" [
     style = "solid";
-    ltail = "cluster_src/dom/predicate/has-incorrect-role-without-name.ts";
-    lhead = "cluster_src/dom/predicate/has-accessible-name.ts";
-    color = "black";
-  ];
-  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-explicit-role.ts" [
-    style = "invis";
-  ];
-  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-explicit-role.ts" [
-    style = "solid";
-    ltail = "cluster_src/dom/predicate/has-incorrect-role-without-name.ts";
-    lhead = "cluster_src/dom/predicate/has-explicit-role.ts";
-    color = "black";
-  ];
-  "src/dom/predicate/has-non-default-role.ts" -> "src/dom/predicate/has-explicit-role.ts" [
-    style = "invis";
-  ];
-  "src/dom/predicate/has-non-default-role.ts" -> "src/dom/predicate/has-explicit-role.ts" [
-    style = "solid";
-    ltail = "cluster_src/dom/predicate/has-non-default-role.ts";
-    lhead = "cluster_src/dom/predicate/has-explicit-role.ts";
-    color = "black";
-  ];
-  "src/dom/predicate/has-non-default-role.ts" -> "src/dom/predicate/has-implicit-role.ts" [
-    style = "invis";
-  ];
-  "src/dom/predicate/has-non-default-role.ts" -> "src/dom/predicate/has-implicit-role.ts" [
-    style = "solid";
-    ltail = "cluster_src/dom/predicate/has-non-default-role.ts";
-    lhead = "cluster_src/dom/predicate/has-implicit-role.ts";
-    color = "black";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
   ];
   "src/dom/predicate/has-non-empty-accessible-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
     style = "invis";
   ];
   "src/dom/predicate/has-non-empty-accessible-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
     style = "solid";
-    ltail = "cluster_src/dom/predicate/has-non-empty-accessible-name.ts";
-    lhead = "cluster_src/dom/predicate/has-accessible-name.ts";
     color = "black";
   ];
   "exit_src/dom" -> "name_src/name" [
+    style = "solid";
+    color = "#33ff00";
+    lhead = "cluster_src/name";
+    ltail = "cluster_src/dom";
+  ];
+  "src/name/index.ts" -> "src/name/name.ts" [
     style = "invis";
+  ];
+  "src/name/index.ts" -> "src/name/name.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/name/index.ts" -> "name_src/name/predicate" [
+    style = "solid";
+    color = "#cc00ff";
+    lhead = "cluster_src/name/predicate";
+  ];
+  "src/name/index.ts" -> "src/name/source.ts" [
+    style = "invis";
+  ];
+  "src/name/index.ts" -> "src/name/source.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/name/index.ts" -> "src/name/state.ts" [
+    style = "invis";
+  ];
+  "src/name/index.ts" -> "src/name/state.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
+    style = "invis";
+  ];
+  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-accessible-name.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-explicit-role.ts" [
+    style = "invis";
+  ];
+  "src/dom/predicate/has-incorrect-role-without-name.ts" -> "src/dom/predicate/has-explicit-role.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "exit_src/node" -> "name_src/name" [
+    style = "invis";
+    color = "#ccff00";
+    lhead = "cluster_src/name";
+    ltail = "cluster_src/node";
+  ];
+  "src/node/text.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "src/node/predicate/has-role.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "src/node/predicate/has-role.ts" -> "src/role.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/role.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "exit_src/node" -> "name_src/role" [
+    style = "solid";
+    color = "#ccff00";
+    lhead = "cluster_src/role";
+    ltail = "cluster_src/node";
+  ];
+  "src/role.ts" -> "src/attribute.ts" [
+    style = "invis";
+  ];
+  "src/role.ts" -> "src/attribute.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/role.ts" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "src/role.ts" -> "src/feature.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/role.ts" -> "name_src/role" [
+    style = "solid";
+    color = "#ff0000";
+    lhead = "cluster_src/role";
+  ];
+  "src/role.ts" -> "name_src/role" [
+    style = "invis";
+    color = "#ff0000";
+    lhead = "cluster_src/role";
   ];
   "src/dom/predicate/has-role.ts" -> "src/node.ts" [
     style = "invis";
   ];
   "exit_src/dom" -> "src/node.ts" [
-    style = "invis";
+    style = "solid";
+    color = "#33ff00";
+    ltail = "cluster_src/dom";
   ];
   "src/dom/predicate/has-role.ts" -> "src/role.ts" [
     style = "invis";
   ];
   "exit_src/dom" -> "src/role.ts" [
     style = "invis";
+    color = "#33ff00";
+    ltail = "cluster_src/dom";
   ];
   "exit_src/dom" -> "name_src/role" [
     style = "solid";
-    ltail = "cluster_src/dom";
+    color = "#33ff00";
     lhead = "cluster_src/role";
-    color = "#33ff00";
-  ];
-  "src/dom/predicate/is-included-accessibility-tree.ts" -> "src/index.ts" [
-    style = "invis";
-  ];
-  "exit_src/dom" -> "src/index.ts" [
-    style = "solid";
     ltail = "cluster_src/dom";
-    lhead = "cluster_src/index.ts";
+  ];
+  "src/node/container.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "src/node/container.ts" -> "src/role.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/role.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "src/node/predicate/has-attribute.ts" -> "src/attribute.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/attribute.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "src/node/predicate/has-attribute.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/node" -> "src/node.ts" [
+    style = "invis";
+    color = "#ccff00";
+    ltail = "cluster_src/node";
+  ];
+  "src/attribute.ts" -> "name_src/attribute" [
+    style = "solid";
+    color = "#ff0000";
+    lhead = "cluster_src/attribute";
+  ];
+  "src/attribute.ts" -> "src/role.ts" [
+    style = "invis";
+  ];
+  "src/attribute.ts" -> "src/role.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/attribute.ts" -> "name_src/role" [
+    style = "dotted";
+    color = "#ff0000";
+    lhead = "cluster_src/role";
+  ];
+  "src/dom/predicate/has-heading-level.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/dom" -> "src/node.ts" [
+    style = "invis";
     color = "#33ff00";
+    ltail = "cluster_src/dom";
   ];
-  "src/dom/predicate/is-marked-decorative.ts" -> "src/role.ts" [
+  "src/name/predicate/index.ts" -> "src/name/predicate/has-value.ts" [
     style = "invis";
   ];
-  "exit_src/dom" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "src/dom/predicate/is-perceivable.ts" -> "src/dom/predicate/is-included-accessibility-tree.ts" [
-    style = "invis";
-  ];
-  "src/dom/predicate/is-perceivable.ts" -> "src/dom/predicate/is-included-accessibility-tree.ts" [
+  "src/name/predicate/index.ts" -> "src/name/predicate/has-value.ts" [
     style = "solid";
-    ltail = "cluster_src/dom/predicate/is-perceivable.ts";
-    lhead = "cluster_src/dom/predicate/is-included-accessibility-tree.ts";
-    color = "black";
-  ];
-  "src/feature.ts" -> "src/attribute.ts" [
-    style = "invis";
-  ];
-  "src/feature.ts" -> "src/attribute.ts" [
-    style = "solid";
-    ltail = "cluster_src/feature.ts";
-    lhead = "cluster_src/attribute.ts";
-    color = "black";
-  ];
-  "src/feature.ts" -> "name_src/name" [
-    style = "solid";
-    ltail = "cluster_src/feature.ts";
-    lhead = "cluster_src/name";
-    color = "#ff0000";
-  ];
-  "src/feature.ts" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "src/feature.ts" -> "src/role.ts" [
-    style = "solid";
-    ltail = "cluster_src/feature.ts";
-    lhead = "cluster_src/role.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/attribute.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/attribute.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/attribute.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "name_src/dom" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/dom";
-    color = "#ff0000";
-  ];
-  "src/index.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/feature.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/feature.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "name_src/name" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/name";
-    color = "#ff0000";
-  ];
-  "src/index.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/node.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/node.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "name_src/node" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/node";
-    color = "#ff0000";
-  ];
-  "src/index.ts" -> "name_src/node" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "name_src/node" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "name_src/node" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/role.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/role.ts";
-    color = "black";
-  ];
-  "src/name/index.ts" -> "src/name/name.ts" [
-    style = "invis";
-  ];
-  "src/name/index.ts" -> "src/name/name.ts" [
-    style = "solid";
-    ltail = "cluster_src/name/index.ts";
-    lhead = "cluster_src/name/name.ts";
-    color = "black";
-  ];
-  "src/name/index.ts" -> "name_src/name/predicate" [
-    style = "solid";
-    ltail = "cluster_src/name/index.ts";
-    lhead = "cluster_src/name/predicate";
-    color = "#cc00ff";
-  ];
-  "src/name/index.ts" -> "src/name/source.ts" [
-    style = "invis";
-  ];
-  "src/name/index.ts" -> "src/name/source.ts" [
-    style = "solid";
-    ltail = "cluster_src/name/index.ts";
-    lhead = "cluster_src/name/source.ts";
-    color = "black";
-  ];
-  "src/name/index.ts" -> "src/name/state.ts" [
-    style = "invis";
-  ];
-  "src/name/index.ts" -> "src/name/state.ts" [
-    style = "solid";
-    ltail = "cluster_src/name/index.ts";
-    lhead = "cluster_src/name/state.ts";
     color = "black";
   ];
   "exit_src/name" -> "name_src/dom" [
     style = "solid";
-    ltail = "cluster_src/name";
-    lhead = "cluster_src/dom";
     color = "#cc00ff";
+    lhead = "cluster_src/dom";
+    ltail = "cluster_src/name";
   ];
   "src/name/name.ts" -> "src/feature.ts" [
     style = "invis";
   ];
   "exit_src/name" -> "src/feature.ts" [
     style = "solid";
-    ltail = "cluster_src/name";
-    lhead = "cluster_src/feature.ts";
     color = "#cc00ff";
+    ltail = "cluster_src/name";
   ];
   "src/name/name.ts" -> "name_src/name/predicate" [
     style = "solid";
-    ltail = "cluster_src/name/name.ts";
-    lhead = "cluster_src/name/predicate";
     color = "#cc00ff";
+    lhead = "cluster_src/name/predicate";
   ];
   "src/name/name.ts" -> "src/name/source.ts" [
     style = "invis";
   ];
   "src/name/name.ts" -> "src/name/source.ts" [
     style = "solid";
-    ltail = "cluster_src/name/name.ts";
-    lhead = "cluster_src/name/source.ts";
     color = "black";
   ];
   "src/name/name.ts" -> "src/name/state.ts" [
@@ -1068,8 +1076,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/name/name.ts" -> "src/name/state.ts" [
     style = "solid";
-    ltail = "cluster_src/name/name.ts";
-    lhead = "cluster_src/name/state.ts";
     color = "black";
   ];
   "src/name/name.ts" -> "src/role.ts" [
@@ -1077,44 +1083,171 @@ digraph "dependency-graph-[object Object]" {
   ];
   "exit_src/name" -> "src/role.ts" [
     style = "solid";
-    ltail = "cluster_src/name";
-    lhead = "cluster_src/role.ts";
     color = "#cc00ff";
+    ltail = "cluster_src/name";
+  ];
+  "src/name/source.ts" -> "src/name/name.ts" [
+    style = "invis";
+  ];
+  "src/name/source.ts" -> "src/name/name.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/dom/predicate/has-implicit-role.ts" -> "src/role.ts" [
+    style = "invis";
+  ];
+  "exit_src/dom" -> "src/role.ts" [
+    style = "invis";
+    color = "#33ff00";
+    ltail = "cluster_src/dom";
+  ];
+  "src/index.ts" -> "src/attribute.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/attribute.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/dom" [
+    style = "solid";
+    color = "#ff0000";
+    lhead = "cluster_src/dom";
+  ];
+  "src/index.ts" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/feature.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/name" [
+    style = "solid";
+    color = "#ff0000";
+    lhead = "cluster_src/name";
+  ];
+  "src/index.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/node.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "solid";
+    color = "#ff0000";
+    lhead = "cluster_src/node";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+    color = "#ff0000";
+    lhead = "cluster_src/node";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+    color = "#ff0000";
+    lhead = "cluster_src/node";
+  ];
+  "src/index.ts" -> "name_src/node" [
+    style = "invis";
+    color = "#ff0000";
+    lhead = "cluster_src/node";
+  ];
+  "src/index.ts" -> "src/role.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/role.ts" [
+    style = "solid";
+    color = "black";
   ];
   "src/name/predicate/has-value.ts" -> "src/name/name.ts" [
     style = "invis";
   ];
   "exit_src/name/predicate" -> "src/name/name.ts" [
     style = "dotted";
-    ltail = "cluster_src/name/predicate";
-    lhead = "cluster_src/name/name.ts";
     color = "#00ff66";
+    ltail = "cluster_src/name/predicate";
   ];
-  "src/name/predicate/index.ts" -> "src/name/predicate/has-value.ts" [
+  "src/feature.ts" -> "src/attribute.ts" [
     style = "invis";
   ];
-  "src/name/predicate/index.ts" -> "src/name/predicate/has-value.ts" [
+  "src/feature.ts" -> "src/attribute.ts" [
     style = "solid";
-    ltail = "cluster_src/name/predicate/index.ts";
-    lhead = "cluster_src/name/predicate/has-value.ts";
     color = "black";
   ];
-  "src/name/source.ts" -> "src/name/name.ts" [
+  "src/feature.ts" -> "name_src/name" [
+    style = "solid";
+    color = "#ff0000";
+    lhead = "cluster_src/name";
+  ];
+  "src/feature.ts" -> "src/role.ts" [
     style = "invis";
   ];
-  "src/name/source.ts" -> "src/name/name.ts" [
-    style = "dotted";
-    ltail = "cluster_src/name/source.ts";
-    lhead = "cluster_src/name/name.ts";
+  "src/feature.ts" -> "src/role.ts" [
+    style = "solid";
     color = "black";
+  ];
+  "src/dom/predicate/has-explicit-role.ts" -> "src/role.ts" [
+    style = "invis";
+  ];
+  "exit_src/dom" -> "src/role.ts" [
+    style = "invis";
+    color = "#33ff00";
+    ltail = "cluster_src/dom";
+  ];
+  "src/dom/predicate/has-non-default-role.ts" -> "src/dom/predicate/has-explicit-role.ts" [
+    style = "invis";
+  ];
+  "src/dom/predicate/has-non-default-role.ts" -> "src/dom/predicate/has-explicit-role.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/dom/predicate/has-non-default-role.ts" -> "src/dom/predicate/has-implicit-role.ts" [
+    style = "invis";
+  ];
+  "src/dom/predicate/has-non-default-role.ts" -> "src/dom/predicate/has-implicit-role.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/node/predicate.ts" -> "name_src/node/predicate" [
+    style = "solid";
+    color = "#ccff00";
+    lhead = "cluster_src/node/predicate";
+  ];
+  "src/node/predicate.ts" -> "name_src/node/predicate" [
+    style = "invis";
+    color = "#ccff00";
+    lhead = "cluster_src/node/predicate";
+  ];
+  "src/node/predicate.ts" -> "name_src/node/predicate" [
+    style = "invis";
+    color = "#ccff00";
+    lhead = "cluster_src/node/predicate";
+  ];
+  "exit_src/dom" -> "name_src/name" [
+    style = "invis";
+    color = "#33ff00";
+    lhead = "cluster_src/name";
+    ltail = "cluster_src/dom";
+  ];
+  "src/dom/predicate/has-accessible-name.ts" -> "src/node.ts" [
+    style = "invis";
+  ];
+  "exit_src/dom" -> "src/node.ts" [
+    style = "invis";
+    color = "#33ff00";
+    ltail = "cluster_src/dom";
+  ];
+  "exit_src/dom" -> "name_src/node" [
+    style = "solid";
+    color = "#33ff00";
+    lhead = "cluster_src/node";
+    ltail = "cluster_src/dom";
   ];
   "src/node.ts" -> "src/attribute.ts" [
     style = "invis";
   ];
   "src/node.ts" -> "src/attribute.ts" [
     style = "solid";
-    ltail = "cluster_src/node.ts";
-    lhead = "cluster_src/attribute.ts";
     color = "black";
   ];
   "src/node.ts" -> "src/feature.ts" [
@@ -1122,8 +1255,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/node.ts" -> "src/feature.ts" [
     style = "solid";
-    ltail = "cluster_src/node.ts";
-    lhead = "cluster_src/feature.ts";
     color = "black";
   ];
   "src/node.ts" -> "src/index.ts" [
@@ -1131,182 +1262,36 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/node.ts" -> "src/index.ts" [
     style = "solid";
-    ltail = "cluster_src/node.ts";
-    lhead = "cluster_src/index.ts";
     color = "black";
   ];
   "src/node.ts" -> "name_src/name" [
     style = "solid";
-    ltail = "cluster_src/node.ts";
-    lhead = "cluster_src/name";
     color = "#ff0000";
+    lhead = "cluster_src/name";
   ];
   "src/node.ts" -> "name_src/node" [
     style = "solid";
-    ltail = "cluster_src/node.ts";
+    color = "#ff0000";
     lhead = "cluster_src/node";
-    color = "#ff0000";
   ];
   "src/node.ts" -> "src/role.ts" [
     style = "invis";
   ];
   "src/node.ts" -> "src/role.ts" [
     style = "solid";
-    ltail = "cluster_src/node.ts";
-    lhead = "cluster_src/role.ts";
     color = "black";
   ];
-  "src/node/container.ts" -> "src/node.ts" [
+  "src/dom/predicate/is-included-accessibility-tree.ts" -> "src/index.ts" [
     style = "invis";
   ];
-  "exit_src/node" -> "src/node.ts" [
+  "exit_src/dom" -> "src/index.ts" [
     style = "solid";
-    ltail = "cluster_src/node";
-    lhead = "cluster_src/node.ts";
-    color = "#ccff00";
-  ];
-  "src/node/container.ts" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/role.ts" [
-    style = "dotted";
-    ltail = "cluster_src/node";
-    lhead = "cluster_src/role.ts";
-    color = "#ccff00";
-  ];
-  "src/node/element.ts" -> "src/attribute.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/attribute.ts" [
-    style = "dotted";
-    ltail = "cluster_src/node";
-    lhead = "cluster_src/attribute.ts";
-    color = "#ccff00";
-  ];
-  "exit_src/node" -> "name_src/name" [
-    style = "dotted";
-    ltail = "cluster_src/node";
-    lhead = "cluster_src/name";
-    color = "#ccff00";
-  ];
-  "src/node/element.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "src/node/element.ts" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "src/node/inert.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "src/node/predicate.ts" -> "name_src/node/predicate" [
-    style = "solid";
-    ltail = "cluster_src/node/predicate.ts";
-    lhead = "cluster_src/node/predicate";
-    color = "#ccff00";
-  ];
-  "src/node/predicate.ts" -> "name_src/node/predicate" [
-    style = "invis";
-  ];
-  "src/node/predicate.ts" -> "name_src/node/predicate" [
-    style = "invis";
-  ];
-  "src/node/predicate/has-attribute.ts" -> "src/attribute.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/attribute.ts" [
-    style = "invis";
-  ];
-  "src/node/predicate/has-attribute.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "name_src/name" [
-    style = "invis";
-  ];
-  "src/node/predicate/has-name.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "src/node/predicate/has-role.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "src/node/predicate/has-role.ts" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "name_src/role" [
-    style = "solid";
-    ltail = "cluster_src/node";
-    lhead = "cluster_src/role";
-    color = "#ccff00";
-  ];
-  "exit_src/node" -> "name_src/name" [
-    style = "invis";
-  ];
-  "src/node/text.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "src/role.ts" -> "src/attribute.ts" [
-    style = "invis";
-  ];
-  "src/role.ts" -> "src/attribute.ts" [
-    style = "dotted";
-    ltail = "cluster_src/role.ts";
-    lhead = "cluster_src/attribute.ts";
-    color = "black";
-  ];
-  "src/role.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "src/role.ts" -> "src/feature.ts" [
-    style = "solid";
-    ltail = "cluster_src/role.ts";
-    lhead = "cluster_src/feature.ts";
-    color = "black";
-  ];
-  "src/role.ts" -> "name_src/role" [
-    style = "solid";
-    ltail = "cluster_src/role.ts";
-    lhead = "cluster_src/role";
-    color = "#ff0000";
-  ];
-  "src/role.ts" -> "name_src/role" [
-    style = "invis";
+    color = "#33ff00";
+    ltail = "cluster_src/dom";
   ];
   "src/role/predicate.ts" -> "name_src/role/predicate" [
     style = "solid";
-    ltail = "cluster_src/role/predicate.ts";
+    color = "#3300ff";
     lhead = "cluster_src/role/predicate";
-    color = "#3300ff";
-  ];
-  "src/role/predicate/has-name.ts" -> "src/role.ts" [
-    style = "invis";
-  ];
-  "exit_src/role" -> "src/role.ts" [
-    style = "dotted";
-    ltail = "cluster_src/role";
-    lhead = "cluster_src/role.ts";
-    color = "#3300ff";
   ];
 }

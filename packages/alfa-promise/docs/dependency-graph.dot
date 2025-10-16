@@ -1,19 +1,10 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-promise" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/promise.ts";
   "src/builtin.ts";
+  "src/promise.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -32,21 +23,21 @@ digraph "dependency-graph-[object Object]" {
       "src/builtin.ts" [
         label = "builtin.ts";
       ];
+      "src/promise.ts" [
+        label = "promise.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/promise.ts" [
-        label = "promise.ts";
-      ];
       "src/builtin.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/index.ts" -> "exit_src" [
+      "src/promise.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/promise.ts" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -60,25 +51,18 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
+  "src/promise.ts" -> "src/builtin.ts" [
     style = "invis";
   ];
-  "src/index.ts" -> "src/promise.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/promise.ts" [
+  "src/promise.ts" -> "src/builtin.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/promise.ts";
     color = "black";
   ];
-  "src/promise.ts" -> "src/builtin.ts" [
+  "src/index.ts" -> "src/promise.ts" [
     style = "invis";
   ];
-  "src/promise.ts" -> "src/builtin.ts" [
+  "src/index.ts" -> "src/promise.ts" [
     style = "solid";
-    ltail = "cluster_src/promise.ts";
-    lhead = "cluster_src/builtin.ts";
     color = "black";
   ];
 }

@@ -1,35 +1,29 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-toolchain" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/changeset/get-changeset-details.ts";
-  "src/changeset/helpers.ts";
-  "src/dependency-graph/rainbow.ts";
   "src/dependency-graph/dependency-graph.ts";
-  "src/changeset/build-changelog.ts";
+  "src/dependency-graph/rainbow.ts";
+  "src/coverage/transform-unit-test-coverage-data.ts";
+  "src/changeset/get-changeset-details.ts";
+  "exit_src/validation";
   "name_src/changeset";
-  "src/changeset/changelog-global.ts";
-  "src/changeset/changelog-individual.ts";
-  "src/dependency-graph/generate-graphs.ts";
-  "name_src/dependency-graph";
-  "src/validation/index.ts";
-  "name_src/validation";
+  "src/changeset/helpers.ts";
   "src/validation/has-extractor-config.ts";
   "src/validation/validate-all.ts";
   "src/validation/validate-changesets.ts";
   "src/validation/validate-package-json.ts";
   "src/validation/validate-workspace-tsconfig.ts";
-  "exit_src/validation";
+  "src/changeset/build-changelog.ts";
+  "src/changeset/changelog-global.ts";
+  "src/changeset/changelog-individual.cts";
+  "src/coverage/generate-unit-test-coverage-report.ts";
+  "name_src/coverage";
+  "src/dependency-graph/generate-packages-graphs.ts";
+  "name_src/dependency-graph";
+  "src/validation/index.ts";
+  "name_src/validation";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#00ffff";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -39,24 +33,134 @@ digraph "dependency-graph-[object Object]" {
       "name_src" [
         penwidth = 5;
         shape = "rectangle";
-        color = "#00ffff";
+        color = "#0066ff";
         label = "src";
       ];
       "exit_src" [
         style = "invis";
       ];
+      "src/create-alfa-package.ts" [
+        label = "create-alfa-package.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
-        color = "#00ffff";
+        color = "#0066ff";
         penwidth = 5;
       ];
+      subgraph "cluster_src/dependency-graph" {
+        color = "#000000";
+        label = "";
+        "name_src/dependency-graph" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#00ff66";
+          label = "dependency-graph";
+        ];
+        "exit_src/dependency-graph" [
+          style = "invis";
+        ];
+        "src/dependency-graph/generate-packages-graphs.ts" [
+          label = "generate-packages-graphs.ts";
+        ];
+        "src/dependency-graph/dependency-graph.ts" [
+          label = "dependency-graph.ts";
+        ];
+        "src/dependency-graph/rainbow.ts" [
+          label = "rainbow.ts";
+        ];
+        "src/dependency-graph/generate-packages-graphs.ts" -> "exit_src/dependency-graph" [
+          style = "invis";
+        ];
+        "src/dependency-graph/dependency-graph.ts" -> "exit_src/dependency-graph" [
+          style = "invis";
+        ];
+        "src/dependency-graph/rainbow.ts" -> "exit_src/dependency-graph" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/coverage" {
+        color = "#000000";
+        label = "";
+        "name_src/coverage" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "coverage";
+        ];
+        "exit_src/coverage" [
+          style = "invis";
+        ];
+        "src/coverage/generate-unit-test-coverage-report.ts" [
+          label = "generate-unit-test-coverage-report.ts";
+        ];
+        "src/coverage/transform-unit-test-coverage-data.ts" [
+          label = "transform-unit-test-coverage-data.ts";
+        ];
+        "src/coverage/generate-unit-test-coverage-report.ts" -> "exit_src/coverage" [
+          style = "invis";
+        ];
+        "src/coverage/transform-unit-test-coverage-data.ts" -> "exit_src/coverage" [
+          style = "invis";
+        ];
+      }
+      subgraph "cluster_src/validation" {
+        color = "#000000";
+        label = "";
+        "name_src/validation" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ccff00";
+          label = "validation";
+        ];
+        "exit_src/validation" [
+          style = "invis";
+        ];
+        "src/validation/validate-changesets.ts" [
+          label = "validate-changesets.ts";
+        ];
+        "src/validation/index.ts" [
+          label = "index.ts";
+          color = "#ccff00";
+          penwidth = 5;
+        ];
+        "src/validation/has-extractor-config.ts" [
+          label = "has-extractor-config.ts";
+        ];
+        "src/validation/validate-workspace-tsconfig.ts" [
+          label = "validate-workspace-tsconfig.ts";
+        ];
+        "src/validation/validate-package-json.ts" [
+          label = "validate-package-json.ts";
+        ];
+        "src/validation/validate-all.ts" [
+          label = "validate-all.ts";
+        ];
+        "src/validation/validate-changesets.ts" -> "exit_src/validation" [
+          style = "invis";
+        ];
+        "src/validation/index.ts" -> "exit_src/validation" [
+          style = "invis";
+        ];
+        "src/validation/has-extractor-config.ts" -> "exit_src/validation" [
+          style = "invis";
+        ];
+        "src/validation/validate-workspace-tsconfig.ts" -> "exit_src/validation" [
+          style = "invis";
+        ];
+        "src/validation/validate-package-json.ts" -> "exit_src/validation" [
+          style = "invis";
+        ];
+        "src/validation/validate-all.ts" -> "exit_src/validation" [
+          style = "invis";
+        ];
+      }
       subgraph "cluster_src/changeset" {
         color = "#000000";
         label = "";
         "name_src/changeset" [
           penwidth = 5;
           shape = "rectangle";
-          color = "#8000ff";
+          color = "#cc00ff";
           label = "changeset";
         ];
         "exit_src/changeset" [
@@ -68,11 +172,11 @@ digraph "dependency-graph-[object Object]" {
         "src/changeset/changelog-global.ts" [
           label = "changelog-global.ts";
         ];
-        "src/changeset/changelog-individual.ts" [
-          label = "changelog-individual.ts";
-        ];
         "src/changeset/get-changeset-details.ts" [
           label = "get-changeset-details.ts";
+        ];
+        "src/changeset/changelog-individual.cts" [
+          label = "changelog-individual.cts";
         ];
         "src/changeset/helpers.ts" [
           label = "helpers.ts";
@@ -83,108 +187,38 @@ digraph "dependency-graph-[object Object]" {
         "src/changeset/changelog-global.ts" -> "exit_src/changeset" [
           style = "invis";
         ];
-        "src/changeset/changelog-individual.ts" -> "exit_src/changeset" [
+        "src/changeset/get-changeset-details.ts" -> "exit_src/changeset" [
           style = "invis";
         ];
-        "src/changeset/get-changeset-details.ts" -> "exit_src/changeset" [
+        "src/changeset/changelog-individual.cts" -> "exit_src/changeset" [
           style = "invis";
         ];
         "src/changeset/helpers.ts" -> "exit_src/changeset" [
           style = "invis";
         ];
       }
-      subgraph "cluster_src/dependency-graph" {
-        color = "#000000";
-        label = "";
-        "name_src/dependency-graph" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#80ff00";
-          label = "dependency-graph";
-        ];
-        "exit_src/dependency-graph" [
-          style = "invis";
-        ];
-        "src/dependency-graph/dependency-graph.ts" [
-          label = "dependency-graph.ts";
-        ];
-        "src/dependency-graph/generate-graphs.ts" [
-          label = "generate-graphs.ts";
-        ];
-        "src/dependency-graph/rainbow.ts" [
-          label = "rainbow.ts";
-        ];
-        "src/dependency-graph/dependency-graph.ts" -> "exit_src/dependency-graph" [
-          style = "invis";
-        ];
-        "src/dependency-graph/generate-graphs.ts" -> "exit_src/dependency-graph" [
-          style = "invis";
-        ];
-        "src/dependency-graph/rainbow.ts" -> "exit_src/dependency-graph" [
-          style = "invis";
-        ];
-      }
-      subgraph "cluster_src/validation" {
-        color = "#000000";
-        label = "";
-        "name_src/validation" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#ff0000";
-          label = "validation";
-        ];
-        "exit_src/validation" [
-          style = "invis";
-        ];
-        "src/validation/has-extractor-config.ts" [
-          label = "has-extractor-config.ts";
-        ];
-        "src/validation/index.ts" [
-          label = "index.ts";
-          color = "#ff0000";
-          penwidth = 5;
-        ];
-        "src/validation/validate-all.ts" [
-          label = "validate-all.ts";
-        ];
-        "src/validation/validate-changesets.ts" [
-          label = "validate-changesets.ts";
-        ];
-        "src/validation/validate-package-json.ts" [
-          label = "validate-package-json.ts";
-        ];
-        "src/validation/validate-workspace-tsconfig.ts" [
-          label = "validate-workspace-tsconfig.ts";
-        ];
-        "src/validation/has-extractor-config.ts" -> "exit_src/validation" [
-          style = "invis";
-        ];
-        "src/validation/index.ts" -> "exit_src/validation" [
-          style = "invis";
-        ];
-        "src/validation/validate-all.ts" -> "exit_src/validation" [
-          style = "invis";
-        ];
-        "src/validation/validate-changesets.ts" -> "exit_src/validation" [
-          style = "invis";
-        ];
-        "src/validation/validate-package-json.ts" -> "exit_src/validation" [
-          style = "invis";
-        ];
-        "src/validation/validate-workspace-tsconfig.ts" -> "exit_src/validation" [
-          style = "invis";
-        ];
-      }
-      "exit_src/changeset" -> "exit_src" [
+      "exit_src/dependency-graph" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/create-alfa-package.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/dependency-graph" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/coverage" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/validation" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/changeset" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/changeset" -> "exit_src" [
+      "exit_src/validation" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/changeset" -> "exit_src" [
+      "exit_src/validation" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/changeset" -> "exit_src" [
@@ -193,16 +227,16 @@ digraph "dependency-graph-[object Object]" {
       "exit_src/dependency-graph" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/dependency-graph" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/dependency-graph" -> "exit_src" [
+      "exit_src/validation" -> "exit_src" [
         style = "invis";
       ];
       "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/validation" -> "exit_src" [
+      "exit_src/changeset" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/changeset" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/validation" -> "exit_src" [
@@ -211,13 +245,10 @@ digraph "dependency-graph-[object Object]" {
       "exit_src/validation" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/validation" -> "exit_src" [
+      "exit_src/coverage" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/validation" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/validation" -> "exit_src" [
+      "exit_src/changeset" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -266,35 +297,21 @@ digraph "dependency-graph-[object Object]" {
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
+  "src/dependency-graph/generate-packages-graphs.ts" -> "src/dependency-graph/dependency-graph.ts" [
     style = "invis";
   ];
-  "src/changeset/build-changelog.ts" -> "src/changeset/get-changeset-details.ts" [
-    style = "invis";
-  ];
-  "src/changeset/build-changelog.ts" -> "src/changeset/get-changeset-details.ts" [
+  "src/dependency-graph/generate-packages-graphs.ts" -> "src/dependency-graph/dependency-graph.ts" [
     style = "solid";
-    ltail = "cluster_src/changeset/build-changelog.ts";
-    lhead = "cluster_src/changeset/get-changeset-details.ts";
-    color = "black";
-  ];
-  "src/changeset/build-changelog.ts" -> "src/changeset/helpers.ts" [
-    style = "invis";
-  ];
-  "src/changeset/build-changelog.ts" -> "src/changeset/helpers.ts" [
-    style = "solid";
-    ltail = "cluster_src/changeset/build-changelog.ts";
-    lhead = "cluster_src/changeset/helpers.ts";
-    color = "black";
-  ];
-  "src/changeset/changelog-global.ts" -> "src/changeset/helpers.ts" [
-    style = "invis";
-  ];
-  "src/changeset/changelog-global.ts" -> "src/changeset/helpers.ts" [
-    style = "solid";
-    ltail = "cluster_src/changeset/changelog-global.ts";
-    lhead = "cluster_src/changeset/helpers.ts";
     color = "black";
   ];
   "src/dependency-graph/dependency-graph.ts" -> "src/dependency-graph/rainbow.ts" [
@@ -302,128 +319,133 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/dependency-graph/dependency-graph.ts" -> "src/dependency-graph/rainbow.ts" [
     style = "solid";
-    ltail = "cluster_src/dependency-graph/dependency-graph.ts";
-    lhead = "cluster_src/dependency-graph/rainbow.ts";
     color = "black";
   ];
-  "src/dependency-graph/generate-graphs.ts" -> "src/dependency-graph/dependency-graph.ts" [
+  "src/coverage/generate-unit-test-coverage-report.ts" -> "src/coverage/transform-unit-test-coverage-data.ts" [
     style = "invis";
   ];
-  "src/dependency-graph/generate-graphs.ts" -> "src/dependency-graph/dependency-graph.ts" [
+  "src/coverage/generate-unit-test-coverage-report.ts" -> "src/coverage/transform-unit-test-coverage-data.ts" [
     style = "solid";
-    ltail = "cluster_src/dependency-graph/generate-graphs.ts";
-    lhead = "cluster_src/dependency-graph/dependency-graph.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "name_src/changeset" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/changeset";
-    color = "#00ffff";
-  ];
-  "src/index.ts" -> "name_src/changeset" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "name_src/changeset" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "name_src/dependency-graph" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/dependency-graph";
-    color = "#00ffff";
-  ];
-  "src/index.ts" -> "name_src/validation" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/validation";
-    color = "#00ffff";
-  ];
-  "src/validation/index.ts" -> "src/validation/has-extractor-config.ts" [
-    style = "invis";
-  ];
-  "src/validation/index.ts" -> "src/validation/has-extractor-config.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/index.ts";
-    lhead = "cluster_src/validation/has-extractor-config.ts";
-    color = "black";
-  ];
-  "src/validation/index.ts" -> "src/validation/validate-all.ts" [
-    style = "invis";
-  ];
-  "src/validation/index.ts" -> "src/validation/validate-all.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/index.ts";
-    lhead = "cluster_src/validation/validate-all.ts";
-    color = "black";
-  ];
-  "src/validation/index.ts" -> "src/validation/validate-changesets.ts" [
-    style = "invis";
-  ];
-  "src/validation/index.ts" -> "src/validation/validate-changesets.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/index.ts";
-    lhead = "cluster_src/validation/validate-changesets.ts";
-    color = "black";
-  ];
-  "src/validation/index.ts" -> "src/validation/validate-package-json.ts" [
-    style = "invis";
-  ];
-  "src/validation/index.ts" -> "src/validation/validate-package-json.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/index.ts";
-    lhead = "cluster_src/validation/validate-package-json.ts";
-    color = "black";
-  ];
-  "src/validation/index.ts" -> "src/validation/validate-workspace-tsconfig.ts" [
-    style = "invis";
-  ];
-  "src/validation/index.ts" -> "src/validation/validate-workspace-tsconfig.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/index.ts";
-    lhead = "cluster_src/validation/validate-workspace-tsconfig.ts";
-    color = "black";
-  ];
-  "src/validation/validate-all.ts" -> "src/validation/has-extractor-config.ts" [
-    style = "invis";
-  ];
-  "src/validation/validate-all.ts" -> "src/validation/has-extractor-config.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/validate-all.ts";
-    lhead = "cluster_src/validation/has-extractor-config.ts";
-    color = "black";
-  ];
-  "src/validation/validate-all.ts" -> "src/validation/validate-changesets.ts" [
-    style = "invis";
-  ];
-  "src/validation/validate-all.ts" -> "src/validation/validate-changesets.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/validate-all.ts";
-    lhead = "cluster_src/validation/validate-changesets.ts";
-    color = "black";
-  ];
-  "src/validation/validate-all.ts" -> "src/validation/validate-package-json.ts" [
-    style = "invis";
-  ];
-  "src/validation/validate-all.ts" -> "src/validation/validate-package-json.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/validate-all.ts";
-    lhead = "cluster_src/validation/validate-package-json.ts";
-    color = "black";
-  ];
-  "src/validation/validate-all.ts" -> "src/validation/validate-workspace-tsconfig.ts" [
-    style = "invis";
-  ];
-  "src/validation/validate-all.ts" -> "src/validation/validate-workspace-tsconfig.ts" [
-    style = "solid";
-    ltail = "cluster_src/validation/validate-all.ts";
-    lhead = "cluster_src/validation/validate-workspace-tsconfig.ts";
     color = "black";
   ];
   "exit_src/validation" -> "name_src/changeset" [
     style = "solid";
-    ltail = "cluster_src/validation";
+    color = "#ccff00";
     lhead = "cluster_src/changeset";
-    color = "#ff0000";
+    ltail = "cluster_src/validation";
+  ];
+  "src/changeset/build-changelog.ts" -> "src/changeset/get-changeset-details.ts" [
+    style = "invis";
+  ];
+  "src/changeset/build-changelog.ts" -> "src/changeset/get-changeset-details.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/changeset/build-changelog.ts" -> "src/changeset/helpers.ts" [
+    style = "invis";
+  ];
+  "src/changeset/build-changelog.ts" -> "src/changeset/helpers.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/validation/index.ts" -> "src/validation/has-extractor-config.ts" [
+    style = "invis";
+  ];
+  "src/validation/index.ts" -> "src/validation/has-extractor-config.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/validation/index.ts" -> "src/validation/validate-all.ts" [
+    style = "invis";
+  ];
+  "src/validation/index.ts" -> "src/validation/validate-all.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/validation/index.ts" -> "src/validation/validate-changesets.ts" [
+    style = "invis";
+  ];
+  "src/validation/index.ts" -> "src/validation/validate-changesets.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/validation/index.ts" -> "src/validation/validate-package-json.ts" [
+    style = "invis";
+  ];
+  "src/validation/index.ts" -> "src/validation/validate-package-json.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/validation/index.ts" -> "src/validation/validate-workspace-tsconfig.ts" [
+    style = "invis";
+  ];
+  "src/validation/index.ts" -> "src/validation/validate-workspace-tsconfig.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/changeset/changelog-global.ts" -> "src/changeset/helpers.ts" [
+    style = "invis";
+  ];
+  "src/changeset/changelog-global.ts" -> "src/changeset/helpers.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "name_src/changeset" [
+    style = "solid";
+    color = "#0066ff";
+    lhead = "cluster_src/changeset";
+  ];
+  "src/index.ts" -> "name_src/changeset" [
+    style = "invis";
+    color = "#0066ff";
+    lhead = "cluster_src/changeset";
+  ];
+  "src/index.ts" -> "name_src/changeset" [
+    style = "invis";
+    color = "#0066ff";
+    lhead = "cluster_src/changeset";
+  ];
+  "src/index.ts" -> "name_src/coverage" [
+    style = "solid";
+    color = "#0066ff";
+    lhead = "cluster_src/coverage";
+  ];
+  "src/index.ts" -> "name_src/dependency-graph" [
+    style = "solid";
+    color = "#0066ff";
+    lhead = "cluster_src/dependency-graph";
+  ];
+  "src/index.ts" -> "name_src/validation" [
+    style = "solid";
+    color = "#0066ff";
+    lhead = "cluster_src/validation";
+  ];
+  "src/validation/validate-all.ts" -> "src/validation/has-extractor-config.ts" [
+    style = "invis";
+  ];
+  "src/validation/validate-all.ts" -> "src/validation/has-extractor-config.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/validation/validate-all.ts" -> "src/validation/validate-changesets.ts" [
+    style = "invis";
+  ];
+  "src/validation/validate-all.ts" -> "src/validation/validate-changesets.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/validation/validate-all.ts" -> "src/validation/validate-package-json.ts" [
+    style = "invis";
+  ];
+  "src/validation/validate-all.ts" -> "src/validation/validate-package-json.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/validation/validate-all.ts" -> "src/validation/validate-workspace-tsconfig.ts" [
+    style = "invis";
+  ];
+  "src/validation/validate-all.ts" -> "src/validation/validate-workspace-tsconfig.ts" [
+    style = "solid";
+    color = "black";
   ];
 }

@@ -1,20 +1,11 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-iana" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/language.ts";
   "src/language/data.ts";
   "name_src/language";
+  "src/language.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#00ffff";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -30,13 +21,13 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
+      "src/language.ts" [
+        label = "language.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#00ffff";
         penwidth = 5;
-      ];
-      "src/language.ts" [
-        label = "language.ts";
       ];
       subgraph "cluster_src/language" {
         color = "#000000";
@@ -57,10 +48,10 @@ digraph "dependency-graph-[object Object]" {
           style = "invis";
         ];
       }
-      "src/index.ts" -> "exit_src" [
+      "src/language.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/language.ts" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/language" -> "exit_src" [
@@ -77,22 +68,16 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/language.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/language.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/language.ts";
-    color = "black";
-  ];
   "src/language.ts" -> "name_src/language" [
     style = "solid";
-    ltail = "cluster_src/language.ts";
-    lhead = "cluster_src/language";
     color = "#00ffff";
+    lhead = "cluster_src/language";
+  ];
+  "src/index.ts" -> "src/language.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/language.ts" [
+    style = "solid";
+    color = "black";
   ];
 }

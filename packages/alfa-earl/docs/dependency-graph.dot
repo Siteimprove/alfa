@@ -1,19 +1,10 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-earl" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/earl.ts";
   "src/serializable.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -32,21 +23,21 @@ digraph "dependency-graph-[object Object]" {
       "src/earl.ts" [
         label = "earl.ts";
       ];
+      "src/serializable.ts" [
+        label = "serializable.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/serializable.ts" [
-        label = "serializable.ts";
-      ];
       "src/earl.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/index.ts" -> "exit_src" [
+      "src/serializable.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/serializable.ts" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -60,34 +51,25 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/earl.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/earl.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/earl.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/serializable.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/serializable.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/serializable.ts";
-    color = "black";
-  ];
   "src/serializable.ts" -> "src/earl.ts" [
     style = "invis";
   ];
   "src/serializable.ts" -> "src/earl.ts" [
     style = "dotted";
-    ltail = "cluster_src/serializable.ts";
-    lhead = "cluster_src/earl.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/earl.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/earl.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/serializable.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/serializable.ts" [
+    style = "solid";
     color = "black";
   ];
 }

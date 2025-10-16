@@ -1,20 +1,11 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-either" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/left.ts";
   "src/right.ts";
   "src/either.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -33,13 +24,13 @@ digraph "dependency-graph-[object Object]" {
       "src/either.ts" [
         label = "either.ts";
       ];
+      "src/left.ts" [
+        label = "left.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
-      ];
-      "src/left.ts" [
-        label = "left.ts";
       ];
       "src/right.ts" [
         label = "right.ts";
@@ -47,10 +38,10 @@ digraph "dependency-graph-[object Object]" {
       "src/either.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/index.ts" -> "exit_src" [
+      "src/left.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/left.ts" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/right.ts" -> "exit_src" [
@@ -70,16 +61,11 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/either.ts" -> "src/left.ts" [
     style = "invis";
   ];
   "src/either.ts" -> "src/left.ts" [
     style = "solid";
-    ltail = "cluster_src/either.ts";
-    lhead = "cluster_src/left.ts";
     color = "black";
   ];
   "src/either.ts" -> "src/right.ts" [
@@ -87,35 +73,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/either.ts" -> "src/right.ts" [
     style = "solid";
-    ltail = "cluster_src/either.ts";
-    lhead = "cluster_src/right.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/either.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/either.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/either.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/left.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/left.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/left.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/right.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/right.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/right.ts";
     color = "black";
   ];
   "src/left.ts" -> "src/either.ts" [
@@ -123,8 +80,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/left.ts" -> "src/either.ts" [
     style = "dotted";
-    ltail = "cluster_src/left.ts";
-    lhead = "cluster_src/either.ts";
     color = "black";
   ];
   "src/left.ts" -> "src/right.ts" [
@@ -132,8 +87,27 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/left.ts" -> "src/right.ts" [
     style = "dotted";
-    ltail = "cluster_src/left.ts";
-    lhead = "cluster_src/right.ts";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/either.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/either.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/left.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/left.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/right.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/right.ts" [
+    style = "solid";
     color = "black";
   ];
   "src/right.ts" -> "src/either.ts" [
@@ -141,8 +115,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/right.ts" -> "src/either.ts" [
     style = "dotted";
-    ltail = "cluster_src/right.ts";
-    lhead = "cluster_src/either.ts";
     color = "black";
   ];
   "src/right.ts" -> "src/left.ts" [
@@ -150,8 +122,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/right.ts" -> "src/left.ts" [
     style = "dotted";
-    ltail = "cluster_src/right.ts";
-    lhead = "cluster_src/left.ts";
     color = "black";
   ];
 }

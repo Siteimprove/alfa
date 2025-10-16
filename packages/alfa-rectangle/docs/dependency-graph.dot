@@ -1,18 +1,9 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-rectangle" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/rectangle.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -28,18 +19,18 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
+      "src/rectangle.ts" [
+        label = "rectangle.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/rectangle.ts" [
-        label = "rectangle.ts";
-      ];
-      "src/index.ts" -> "exit_src" [
+      "src/rectangle.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/rectangle.ts" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -50,16 +41,11 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/index.ts" -> "src/rectangle.ts" [
     style = "invis";
   ];
   "src/index.ts" -> "src/rectangle.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/rectangle.ts";
     color = "black";
   ];
 }
