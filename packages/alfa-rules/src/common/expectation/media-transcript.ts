@@ -5,6 +5,7 @@ import type { Node } from "@siteimprove/alfa-dom";
 import { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
 import type * as act from "@siteimprove/alfa-act";
@@ -12,9 +13,8 @@ import type * as act from "@siteimprove/alfa-act";
 import { expectation } from "../act/expectation.js";
 import { Question } from "../act/question.js";
 
-const { isPerceivableForAll } = DOM;
 const { isElement } = Element;
-const { and } = Predicate;
+const { and } = Refinement;
 
 function mediaTranscript(
   transcript: act.Question<
@@ -33,8 +33,8 @@ function mediaTranscript(
     Option<Node>,
     "transcript-link"
   >,
-  device: Device,
   kind: "<audio>" | "<video>",
+  transcriptCheck: Predicate<Element>,
 ) {
   return {
     1: transcript.map((transcript) => {
@@ -44,11 +44,7 @@ function mediaTranscript(
             return Option.of(Outcomes.HasNoTranscriptLink(kind));
           }
 
-          if (
-            transcriptLink
-              .filter(and(isElement, isPerceivableForAll(device)))
-              .isNone()
-          ) {
+          if (transcriptLink.filter(and(isElement, transcriptCheck)).isNone()) {
             return Option.of(Outcomes.HasNonPerceivableLink(kind));
           }
 
@@ -57,7 +53,7 @@ function mediaTranscript(
       }
 
       return expectation(
-        transcript.some(and(isElement, isPerceivableForAll(device))),
+        transcript.some(and(isElement, transcriptCheck)),
         () => Outcomes.HasPerceivableTranscript(kind),
         () => Outcomes.HasNonPerceivableTranscript(kind),
       );
@@ -65,7 +61,10 @@ function mediaTranscript(
   };
 }
 
-export function audioTranscript(target: Element, device: Device) {
+export function audioTranscript(
+  target: Element,
+  transcriptCheck: Predicate<Element>,
+) {
   const alt = Question.of(
     "transcript",
     target,
@@ -78,10 +77,13 @@ export function audioTranscript(target: Element, device: Device) {
     `Where is the link pointing to a perceivable transcript that describes the content of the \`<audio>\` element?`,
   );
 
-  return mediaTranscript(alt, label, device, "<audio>");
+  return mediaTranscript(alt, label, "<audio>", transcriptCheck);
 }
 
-export function videoTranscript(target: Element, device: Device) {
+export function videoTranscript(
+  target: Element,
+  transcriptCheck: Predicate<Element>,
+) {
   const alt = Question.of(
     "transcript",
     target,
@@ -94,7 +96,7 @@ export function videoTranscript(target: Element, device: Device) {
     `Where is the link pointing to a perceivable transcript that describes the content of the \`<video>\` element?`,
   );
 
-  return mediaTranscript(alt, label, device, "<video>");
+  return mediaTranscript(alt, label, "<video>", transcriptCheck);
 }
 
 /**
