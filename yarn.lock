@@ -1750,10 +1750,7 @@ __metadata:
   resolution: "@siteimprove/alfa-eaa@workspace:packages/alfa-eaa"
   dependencies:
     "@siteimprove/alfa-act": "workspace:^"
-    "@siteimprove/alfa-branched": "workspace:^"
     "@siteimprove/alfa-option": "workspace:^"
-    "@siteimprove/alfa-predicate": "workspace:^"
-    "@siteimprove/alfa-refinement": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
   linkType: soft
