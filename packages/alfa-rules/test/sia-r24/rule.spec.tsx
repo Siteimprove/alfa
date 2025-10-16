@@ -47,6 +47,45 @@ test(`evaluate() passes when non-streaming video elements have all audio and
   );
 });
 
+test(`evaluate() passes when the transcript is accessible but invisible`, async (t) => {
+  const target = (
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
+    </video>
+  );
+
+  const transcript = (
+    <span id="transcript" style={{ position: "absolute", top: "-9999px" }}>
+      Transcript
+    </span>
+  );
+
+  const document = h.document([target, transcript]);
+
+  t.deepEqual(
+    await evaluate(
+      R24,
+      { document },
+      oracle({
+        "is-video-streaming": false,
+        "has-audio": true,
+        transcript: Option.of(transcript),
+      }),
+    ),
+    [
+      passed(
+        R24,
+        target,
+        {
+          1: Outcomes.HasPerceivableTranscript("<video>"),
+        },
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
+  );
+});
+
 test(`evaluate() fails when non-streaming video elements have no audio and
       visual information available in a transcript`, async (t) => {
   const target = (
@@ -75,6 +114,45 @@ test(`evaluate() fails when non-streaming video elements have no audio and
         target,
         {
           1: Outcomes.HasNoTranscriptLink("<video>"),
+        },
+        Outcome.Mode.SemiAuto,
+      ),
+    ],
+  );
+});
+
+test(`evaluate() fails when the transcript is visible but not accessible`, async (t) => {
+  const target = (
+    <video controls>
+      <source src="foo.mp4" type="video/mp4" />
+      <source src="foo.webm" type="video/webm" />
+    </video>
+  );
+
+  const transcript = (
+    <span id="transcript" aria-hidden="true">
+      Transcript
+    </span>
+  );
+
+  const document = h.document([target, transcript]);
+
+  t.deepEqual(
+    await evaluate(
+      R24,
+      { document },
+      oracle({
+        "is-video-streaming": false,
+        "has-audio": true,
+        transcript: Option.of(transcript),
+      }),
+    ),
+    [
+      failed(
+        R24,
+        target,
+        {
+          1: Outcomes.HasNonPerceivableTranscript("<video>"),
         },
         Outcome.Mode.SemiAuto,
       ),
