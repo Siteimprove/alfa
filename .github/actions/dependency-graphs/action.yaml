@@ -16,7 +16,7 @@ runs:
 
     - name: Generate package dependency graphs
       shell: bash
-      run: yarn  generate-packages-dependency-graphs
+      run: yarn generate-packages-dependency-graphs
 
     - name: Stage changes
       shell: bash
