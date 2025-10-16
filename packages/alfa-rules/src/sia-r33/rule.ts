@@ -25,6 +25,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
       expectations(target) {
         return videoTranscript(target, (transcript) =>
           transcript
+            // The transcript element itself might be a container,
+            // e.g. a <span> with accessible text
             .inclusiveDescendants()
             .some(isIncludedInTheAccessibilityTree(device)),
         );
