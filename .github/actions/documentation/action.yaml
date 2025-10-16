@@ -1,0 +1,29 @@
+name: Generate documentation
+description: This re-generates the API documentation and pushes it.
+
+runs:
+  using: composite
+
+  steps:
+    - name: Are we called from `main`?
+      # This should only be called from the main branch of the repo.
+      # If this workflow is somehow called from another branch, crash.
+      if: github.ref_name != 'main'
+      shell: bash
+      run: |
+        echo "This workflow can only be called from the main branch."
+        exit 1
+
+    - name: Extract API documentation
+      shell: bash
+      run: yarn extract
+
+    - name: Generate text documentation
+      shell: bash
+      run: yarn document
+
+    - name: Stage and commit changes
+      shell: bash
+      run: |
+        git add docs/api
+        git commit --message="Update API documentation"

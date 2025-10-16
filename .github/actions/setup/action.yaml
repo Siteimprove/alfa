@@ -1,0 +1,72 @@
+name: Setup Alfa
+description: "Setup Alfa for other actions to act."
+
+# This workflow sets up Alfa in a ready-to-use state.
+#
+# A token with repo:write permissions must be provided to the workflow since the intended
+# usage is to push to git. The token is already needed at  checkout time.
+
+inputs:
+  # Authentication of the user who will commit the changes
+  # This user must be able to bypass branch protections as it will commit directly to main.
+  user-name:
+    description: "The git user name to use for commits"
+    required: true
+  user-email:
+    description: "The git user email to use for commits"
+    required: true
+  setup-playwright:
+    description: "Whether to setup Playwright browsers"
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Are we called from `main`?
+      # This should only be called from the main branch of the repo.
+      # If this workflow is somehow called from another branch, crash.
+      if: github.ref_name != 'main'
+      shell: bash
+      run: |
+        echo "This workflow can only be called from the main branch."
+        exit 1
+
+    - uses: actions/setup-node@v5
+      with:
+        node-version: 20
+        cache: yarn
+        registry-url: "https://npm.pkg.github.com"
+        scope: "@siteimprove"
+
+    - name: Configure token for Alfa packages
+      shell: bash
+      run: >
+        yarn config set
+        npmScopes.siteimprove.npmAuthToken
+        ${{ github.token }}
+
+    - name: Install dependencies
+      shell: bash
+      run: yarn install --immutable
+
+    - name: Install Playwright browsers if needed
+      # https://playwright.dev/docs/ci-intro
+      if: inputs.setup-playwright == 'true'
+      shell: bash
+      run: |
+        [[ ! -d packages/alfa-playwright ]] || yarn workspace @siteimprove/alfa-playwright playwright install
+        yarn playwright install || true
+
+    - name: Build toolchain if needed
+      shell: bash
+      run: |
+        [[ ! -d packages/alfa-toolchain ]] || yarn build packages/alfa-toolchain
+
+    - name: Set up git config
+      shell: bash
+      # We need a user able to bypass branch protection (i.e. admin on the repo).
+      run: |
+        git config --local core.filemode false
+        git config --local user.name "${{ inputs.user-name }}"
+        git config --local user.email "${{ inputs.user-email }}"

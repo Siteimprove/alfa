@@ -1,0 +1,55 @@
+name: Generate coverage data
+
+runs:
+  using: composite
+  steps:
+    - name: Are we called from `main`?
+      # This should only be called from the main branch of the repo.
+      # If this workflow is somehow called from another branch, crash.
+      if: github.ref_name != 'main'
+      shell: bash
+      run: |
+        echo "This workflow can only be called from the main branch."
+        exit 1
+
+    - name: Build project
+      shell: bash
+      run: yarn build
+
+    - name: Generate global coverage report
+      shell: bash
+      run: |
+        yarn coverage
+
+    - name: Generate individual coverage reports
+      shell: bash
+      # This step does fail due to some packages missing tests.
+      # This still generates the individual reports, and we want to go on.
+      run: >
+        yarn workspaces foreach
+        --all --parallel
+        --exclude "@siteimprove/alfa"
+        run coverage:package
+        || true
+
+    - name: Consolidate coverage reports
+      shell: bash
+      run: yarn generate-unit-test-report
+
+    - name: Stage changes
+      shell: bash
+      # Find in current directory.
+      # If the name is "node_modules", skip it, don't look inside it;
+      # or
+      # If the name ends in "docs/coverage", print it with \0 separator (shell glob expansion protection)
+      # Feed that list to git, through xargs to handle the \0 separator.
+      run: >
+        find . 
+        -name node_modules -prune 
+        -o 
+        -wholename "./*docs/coverage" -print0 
+        | xargs -0 git add
+
+    - name: Commit changes
+      shell: bash
+      run: git commit --message="Update coverage reports"

@@ -14,12 +14,17 @@
     "build": "node --max-old-space-size=8192 scripts/build.mjs --pretty",
     "clean": "node scripts/clean.mjs --pretty",
     "test": "yarn build && vitest run --config ./config/vitest.config.ts",
-    "coverage": "yarn build && vitest run --coverage --config ./config/vitest.config.ts",
+    "#coverage:comment": "We use --coverage.enabled instead of --coverage to allow overriding options in the CLI. See warning at https://vitest.dev/config/#coverage",
+    "coverage": "yarn build && vitest run --coverage.enabled --config ./config/vitest.config.ts",
+    "#coverage:package:comment": "Run coverage for a single package. Usage: yarn coverage:package packages/alfa-foo. We don't rebuild the project, so make sure to run `yarn build` first.",
+    "#coverage:package:comment-magic": "See https://yarnpkg.com/getting-started/qa/#how-to-share-scripts-between-workspaces for yarn magic. Somehow, --coverage.include only accepts relative paths, so we need some shell magic too, and yarn doesn't accept # parameter expansion so we have to spawn sed and pwd separately…",
+    "coverage:package": "vitest run --coverage.enabled --config ./config/vitest.config.ts --coverage.reportsDirectory ${INIT_CWD}/docs/coverage --coverage.include $(echo ${INIT_CWD} | sed \"s+$(pwd)/++\") ${INIT_CWD}",
     "watch": "node scripts/watch.mjs --pretty",
     "extract": "node scripts/api-extractor.mjs --pretty",
+    "extract:self": "CI=false yarn extract ${INIT_CWD}",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
     "dependency-graph": "package-dependency-graph --config config/package-dependency-graph.ts --exclude-node_modules --graphviz --dot docs/dependency-graph.dot --png docs/dependency-graph.png",
-    "knip": "knip --config config/knip.ts"
+    "knip": "knip --config config/knip.ts --no-config-hints"
   },
   "engines": {
     "node": ">=20.0.0"
@@ -29,18 +34,18 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.29.5",
-    "@microsoft/api-documenter": "^7.26.31",
+    "@changesets/cli": "^2.29.7",
+    "@microsoft/api-documenter": "^7.27.1",
     "@microsoft/api-extractor": "^7.52.10",
-    "@siteimprove/alfa-toolchain": "workspace:^0.104.1",
-    "@types/node": "^24.2.0",
+    "@siteimprove/alfa-toolchain": "workspace:^0.105.0",
+    "@types/node": "^24.7.2",
     "@vitest/coverage-v8": "3.2.4",
-    "knip": "^5.62.0",
+    "knip": "^5.65.0",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "prettier": "^3.6.2",
-    "typescript": "^5.9.2",
-    "vitest": "3.2.4"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
   },
   "packageManager": "yarn@4.10.3"
 }

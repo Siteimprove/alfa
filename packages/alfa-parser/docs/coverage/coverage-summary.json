@@ -1,0 +1,4 @@
+{"total": {"lines":{"total":282,"covered":0,"skipped":0,"pct":0},"statements":{"total":282,"covered":0,"skipped":0,"pct":0},"functions":{"total":2,"covered":0,"skipped":0,"pct":0},"branches":{"total":2,"covered":0,"skipped":0,"pct":0},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
+,"/home/runner/work/alfa/alfa/packages/alfa-parser/src/index.ts": {"lines":{"total":1,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":1,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
+,"/home/runner/work/alfa/alfa/packages/alfa-parser/src/parser.ts": {"lines":{"total":281,"covered":0,"skipped":0,"pct":0},"functions":{"total":1,"covered":0,"skipped":0,"pct":0},"statements":{"total":281,"covered":0,"skipped":0,"pct":0},"branches":{"total":1,"covered":0,"skipped":0,"pct":0}}
+}

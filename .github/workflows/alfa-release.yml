@@ -1,3 +1,5 @@
+# DEPRECATED: Use .github/actions/wrapper/action.yml instead.
+
 # Create a release for the Alfa repos.
 #
 # WARNING! This workflow pushes to main which **does** trigger other workflow (build, scan, …)
@@ -55,11 +57,11 @@ on:
         type: boolean
         default: false
     secrets:
-      # A PAT for the user who will commit. Need to have the repo:write permission.
       token:
+        description: "A PAT for the user who will commit. Need to have the repo:write permission."
         required: true
-      # Token for NPM publication, must be set up if inputs.npm-publish is true.
       npm-token:
+        description: "Token for NPM publication, must be set up if inputs.npm-publish is true."
         required: false
 
 defaults:
