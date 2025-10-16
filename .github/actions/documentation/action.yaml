@@ -22,9 +22,8 @@ runs:
       shell: bash
       run: yarn document
 
-    - name: Commit and push changes
+    - name: Stage and commit changes
       shell: bash
       run: |
         git add docs/api
         git commit --message="Update API documentation"
-        git push

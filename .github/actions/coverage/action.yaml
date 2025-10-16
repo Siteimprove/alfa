@@ -36,13 +36,13 @@ runs:
       shell: bash
       run: yarn generate-unit-test-report
 
-    - name: Commit changes
+    - name: Stage changes
       shell: bash
-        # Find in current directory.
-        # If the name is "node_modules", skip it, don't look inside it;
-        # or
-        # If the name ends in "docs/coverage", print it with \0 separator (shell glob expansion protection)
-        # Feed that list to git, through xargs to handle the \0 separator.
+      # Find in current directory.
+      # If the name is "node_modules", skip it, don't look inside it;
+      # or
+      # If the name ends in "docs/coverage", print it with \0 separator (shell glob expansion protection)
+      # Feed that list to git, through xargs to handle the \0 separator.
       run: >
         find . 
         -name node_modules -prune 
@@ -50,6 +50,6 @@ runs:
         -wholename "./*docs/coverage" -print0 
         | xargs -0 git add
 
-    - name: Push changes
+    - name: Commit changes
       shell: bash
       run: git commit --message="Update coverage reports"

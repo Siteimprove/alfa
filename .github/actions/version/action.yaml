@@ -67,13 +67,31 @@ runs:
       shell: bash
       run: yarn build && yarn test
 
-    - name: Commit changes
+    - name: Stage individual files
       shell: bash
-      # If we made it thus far, we can commit the changes
-      # We need to take care to **not** commit .yarnrc.yml which has been updated with a token.
+      run: git add .changeset/ CHANGELOG.md package.json yarn.lock
+
+    - name: Stage package files
+      # Find in current directory.
+      # If the name is "node_modules", skip it, don't look inside it;
+      # or
+      # If the name is "CHANGELOG.md", print it with \0 separator (shell glob expansion protection)
+      # or
+      # If the name is "package.json", print it with \0 separator (shell glob expansion protection)
+      # Feed that list to git, through xargs to handle the \0 separator.
+      shell: bash
+      run: >
+        find . 
+        -name node_modules -prune 
+        -o 
+        -name "CHANGELOG.md" -print0
+        -o
+        -name "package.json" -print0
+        | xargs -0 git add
+
+    - name: Commit and tag changes
+      shell: bash
       run: |
-        # Removed individual changesets, all changelog (global and local), all package.json (new version number), lockfile
-        git add .changeset/ CHANGELOG.md **/CHANGELOG.md package.json **/package.json yarn.lock
         git commit -message=${VERSION}
         git tag --annotate ${VERSION} --message=${VERSION}
       env:

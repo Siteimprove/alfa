@@ -74,6 +74,7 @@ runs:
 
     - name: Push changes
       shell: bash
+      # "version" may create a new tag, so we need to push tags too.
       run: git push --follow-tags
 
     - name: Publish packages
