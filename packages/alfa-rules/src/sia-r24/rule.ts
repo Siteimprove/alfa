@@ -10,7 +10,7 @@ import type { Question } from "../common/act/question.js";
 
 import { Scope, Stability } from "../tags/index.js";
 
-const { isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
+const { isIncludedInTheAccessibilityTree } = DOM;
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r24",
@@ -23,7 +23,11 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
       },
 
       expectations(target) {
-        return videoTranscript(target, isPerceivableForAll(device));
+        return videoTranscript(target, (transcript) =>
+          transcript
+            .inclusiveDescendants()
+            .some(isIncludedInTheAccessibilityTree(device)),
+        );
       },
     };
   },
