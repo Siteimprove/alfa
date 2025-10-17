@@ -16,6 +16,7 @@
     "./dependency-graph/rainbow.ts",
     "./validation/has-extractor-config.ts",
     "./validation/index.ts",
+    "./validation/is-in-clusters.ts",
     "./validation/validate-all.ts",
     "./validation/validate-changesets.ts",
     "./validation/validate-package-json.ts",
