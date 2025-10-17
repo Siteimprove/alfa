@@ -14,7 +14,7 @@ type Module = { id: string; clusters: Array<string> };
 
 const targetPath = process.argv[2] ?? ".";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
-const destinationPath = path.join(targetPath, "docs");
+const destinationPath = "docs";
 
 generateGlobalGraph(targetPath);
 
@@ -92,5 +92,5 @@ export async function generateGlobalGraph(rootDir: string) {
     { name: "Alfa", fullGraph, heavyGraph, circular, clusterize },
     { baseCluster, clusterId, clusterLabel },
     { moduleId, moduleName, isEntryPoint },
-  ).save(rootDir);
+  ).save(path.join(rootDir, destinationPath));
 }
