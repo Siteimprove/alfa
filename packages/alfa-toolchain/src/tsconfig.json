@@ -12,6 +12,7 @@
     "./coverage/transform-unit-test-coverage-data.ts",
     "./create-alfa-package.ts",
     "./dependency-graph/dependency-graph.ts",
+    "./dependency-graph/generate-global-graph.ts",
     "./dependency-graph/generate-packages-graphs.ts",
     "./dependency-graph/rainbow.ts",
     "./validation/has-extractor-config.ts",
