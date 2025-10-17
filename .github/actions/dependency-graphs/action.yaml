@@ -16,7 +16,11 @@ runs:
 
     - name: Generate package dependency graphs
       shell: bash
-      run: yarn generate-packages-dependency-graphs
+      run: yarn generate-packages-dependency-graphs ${{ github.workspace }}
+
+    - name: Generate global dependency graph
+      shell: bash
+      run: yarn generate-global-dependency-graph ${{ github.workspace }}
 
     - name: Stage changes
       shell: bash
@@ -26,11 +30,11 @@ runs:
       # If the name is "dependency-graph.dot" or "dependency-graph.svg", print it with \0 separator (shell glob expansion protection)
       # Feed that list to git, through xargs to handle the \0 separator.
       run: >
-        find . 
-        -name node_modules -prune 
-        -o 
-        -name "dependency-graph.dot" -print0 
-        -o 
+        find .
+        -name node_modules -prune
+        -o
+        -name "dependency-graph.dot" -print0
+        -o
         -name "dependency-graph.svg" -print0
         | xargs -0 git add
 

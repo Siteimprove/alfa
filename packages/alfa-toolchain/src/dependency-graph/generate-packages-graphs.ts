@@ -13,8 +13,8 @@ generatePackagesGraphs(targetPath);
 /**
  * @public
  */
-export async function generatePackagesGraphs(cwd: string) {
-  const packages = await getPackages(cwd);
+export async function generatePackagesGraphs(rootDir: string) {
+  const packages = await getPackages(rootDir);
   for (const pkg of packages.packages) {
     await (await fromPackage(pkg)).save(`${pkg.dir}/docs`);
   }
