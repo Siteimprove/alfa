@@ -1,8 +1,8 @@
 import { Array } from "@siteimprove/alfa-array";
 
 import { getPackages, type Package } from "@manypkg/get-packages";
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import {
   coveragePath,

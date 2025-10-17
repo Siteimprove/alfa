@@ -1,6 +1,6 @@
 import axios from "axios";
 import { simpleGit } from "simple-git";
-import * as path from "path";
+import * as path from "node:path";
 
 const url = process.env.COVERAGE_API_URL;
 const apiKey = process.env.COVERAGE_API_KEY;

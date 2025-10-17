@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Option } from "@siteimprove/alfa-option";
 
 import type { Package } from "@manypkg/get-packages";
-import * as path from "path";
+import * as path from "node:path";
 
 type Totals = {
   total: number;
