@@ -13,6 +13,14 @@ const git = simpleGit(targetPath);
 
 await uploadCoverageReport(targetPath);
 
+/**
+ * Upload coverage report to the specified URL with the provided API key.
+ *
+ * @remarks
+ * This uses custom Siteimprove reporting format, likely unusable elsewhere.
+ *
+ * @internal
+ */
 export async function uploadCoverageReport(rootDir: string) {
   const config = (
     await import(`${rootDir}/${configFile}`, {
