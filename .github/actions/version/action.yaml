@@ -92,7 +92,7 @@ runs:
     - name: Commit and tag changes
       shell: bash
       run: |
-        git commit -message=${VERSION}
+        git commit --message=${VERSION}
         git tag --annotate ${VERSION} --message=${VERSION}
       env:
         # Passing it as a variable rather than inline hardens against script injection.

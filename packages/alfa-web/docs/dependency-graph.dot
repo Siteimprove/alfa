@@ -1,21 +1,12 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-web" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/page.ts";
   "src/resource.ts";
+  "src/page.ts";
   "src/site.ts";
   "src/index.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -31,28 +22,22 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
-      "src/index.ts" [
-        label = "index.ts";
-        color = "#ff0000";
-        penwidth = 5;
-      ];
-      "src/native.ts" [
-        label = "native.ts";
-      ];
       "src/page.ts" [
         label = "page.ts";
       ];
       "src/resource.ts" [
         label = "resource.ts";
       ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#ff0000";
+        penwidth = 5;
+      ];
       "src/site.ts" [
         label = "site.ts";
       ];
-      "src/index.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/native.ts" -> "exit_src" [
-        style = "invis";
+      "src/native.ts" [
+        label = "native.ts";
       ];
       "src/page.ts" -> "exit_src" [
         style = "invis";
@@ -60,7 +45,13 @@ digraph "dependency-graph-[object Object]" {
       "src/resource.ts" -> "exit_src" [
         style = "invis";
       ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
       "src/site.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/native.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -80,16 +71,18 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
+  "src/page.ts" -> "src/resource.ts" [
     style = "invis";
+  ];
+  "src/page.ts" -> "src/resource.ts" [
+    style = "dotted";
+    color = "black";
   ];
   "src/index.ts" -> "src/page.ts" [
     style = "invis";
   ];
   "src/index.ts" -> "src/page.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/page.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/resource.ts" [
@@ -97,8 +90,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/resource.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/resource.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/site.ts" [
@@ -106,26 +97,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/site.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/site.ts";
-    color = "black";
-  ];
-  "src/native.ts" -> "src/index.ts" [
-    style = "invis";
-  ];
-  "src/native.ts" -> "src/index.ts" [
-    style = "dotted";
-    ltail = "cluster_src/native.ts";
-    lhead = "cluster_src/index.ts";
-    color = "black";
-  ];
-  "src/page.ts" -> "src/resource.ts" [
-    style = "invis";
-  ];
-  "src/page.ts" -> "src/resource.ts" [
-    style = "dotted";
-    ltail = "cluster_src/page.ts";
-    lhead = "cluster_src/resource.ts";
     color = "black";
   ];
   "src/site.ts" -> "src/resource.ts" [
@@ -133,8 +104,13 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/site.ts" -> "src/resource.ts" [
     style = "dotted";
-    ltail = "cluster_src/site.ts";
-    lhead = "cluster_src/resource.ts";
+    color = "black";
+  ];
+  "src/native.ts" -> "src/index.ts" [
+    style = "invis";
+  ];
+  "src/native.ts" -> "src/index.ts" [
+    style = "dotted";
     color = "black";
   ];
 }

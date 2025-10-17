@@ -1,0 +1,39 @@
+name: Generate dependency graphs
+description: This re-generates the dependency graphs of each package
+
+runs:
+  using: composite
+
+  steps:
+    - name: Are we called from `main`?
+      # This should only be called from the main branch of the repo.
+      # If this workflow is somehow called from another branch, crash.
+      if: github.ref_name != 'main'
+      shell: bash
+      run: |
+        echo "This workflow can only be called from the main branch."
+        exit 1
+
+    - name: Generate package dependency graphs
+      shell: bash
+      run: yarn generate-packages-dependency-graphs
+
+    - name: Stage changes
+      shell: bash
+      # Find in current directory.
+      # If the name is "node_modules", skip it, don't look inside it;
+      # or
+      # If the name is "dependency-graph.dot" or "dependency-graph.svg", print it with \0 separator (shell glob expansion protection)
+      # Feed that list to git, through xargs to handle the \0 separator.
+      run: >
+        find . 
+        -name node_modules -prune 
+        -o 
+        -name "dependency-graph.dot" -print0 
+        -o 
+        -name "dependency-graph.svg" -print0
+        | xargs -0 git add
+
+    - name: Commit changes
+      shell: bash
+      run: git commit --message="Update dependency graphs"

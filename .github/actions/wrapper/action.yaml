@@ -18,6 +18,10 @@ inputs:
     description: "Whether to generate documentation"
     required: false
     default: "false"
+  dependency-graphs:
+    description: "Whether to generate dependency graphs"
+    required: false
+    default: "false"
   coverage:
     description: "Whether to generate coverage reports."
     required: false

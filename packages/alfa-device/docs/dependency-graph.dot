@@ -1,8 +1,5 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-device" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/display.ts";
   "src/preference.ts";
   "src/scripting.ts";
@@ -12,12 +9,6 @@ digraph "dependency-graph-[object Object]" {
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -33,48 +24,48 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
+      "src/display.ts" [
+        label = "display.ts";
+      ];
       "src/device.ts" [
         label = "device.ts";
       ];
-      "src/display.ts" [
-        label = "display.ts";
+      "src/preference.ts" [
+        label = "preference.ts";
       ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/native.ts" [
-        label = "native.ts";
-      ];
-      "src/preference.ts" [
-        label = "preference.ts";
+      "src/viewport.ts" [
+        label = "viewport.ts";
       ];
       "src/scripting.ts" [
         label = "scripting.ts";
       ];
-      "src/viewport.ts" [
-        label = "viewport.ts";
-      ];
-      "src/device.ts" -> "exit_src" [
-        style = "invis";
+      "src/native.ts" [
+        label = "native.ts";
       ];
       "src/display.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/index.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/native.ts" -> "exit_src" [
+      "src/device.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/preference.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/scripting.ts" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/viewport.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/scripting.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/native.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -100,16 +91,11 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/device.ts" -> "src/display.ts" [
     style = "invis";
   ];
   "src/device.ts" -> "src/display.ts" [
     style = "solid";
-    ltail = "cluster_src/device.ts";
-    lhead = "cluster_src/display.ts";
     color = "black";
   ];
   "src/device.ts" -> "src/preference.ts" [
@@ -117,8 +103,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/device.ts" -> "src/preference.ts" [
     style = "solid";
-    ltail = "cluster_src/device.ts";
-    lhead = "cluster_src/preference.ts";
     color = "black";
   ];
   "src/device.ts" -> "src/scripting.ts" [
@@ -126,8 +110,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/device.ts" -> "src/scripting.ts" [
     style = "solid";
-    ltail = "cluster_src/device.ts";
-    lhead = "cluster_src/scripting.ts";
     color = "black";
   ];
   "src/device.ts" -> "src/viewport.ts" [
@@ -135,8 +117,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/device.ts" -> "src/viewport.ts" [
     style = "solid";
-    ltail = "cluster_src/device.ts";
-    lhead = "cluster_src/viewport.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/device.ts" [
@@ -144,8 +124,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/device.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/device.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/display.ts" [
@@ -153,8 +131,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/display.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/display.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/preference.ts" [
@@ -162,8 +138,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/preference.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/preference.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/scripting.ts" [
@@ -171,8 +145,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/scripting.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/scripting.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/viewport.ts" [
@@ -180,8 +152,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/viewport.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/viewport.ts";
     color = "black";
   ];
   "src/native.ts" -> "src/index.ts" [
@@ -189,8 +159,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/native.ts" -> "src/index.ts" [
     style = "dotted";
-    ltail = "cluster_src/native.ts";
-    lhead = "cluster_src/index.ts";
     color = "black";
   ];
 }

@@ -1,19 +1,10 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-hash" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/hashable.ts";
   "src/hash.ts";
+  "src/hashable.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -29,9 +20,6 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
-      "src/hash.ts" [
-        label = "hash.ts";
-      ];
       "src/hashable.ts" [
         label = "hashable.ts";
       ];
@@ -40,13 +28,16 @@ digraph "dependency-graph-[object Object]" {
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/hash.ts" -> "exit_src" [
-        style = "invis";
+      "src/hash.ts" [
+        label = "hash.ts";
       ];
       "src/hashable.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/hash.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -60,25 +51,11 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/hash.ts" -> "src/hashable.ts" [
-    style = "invis";
-  ];
-  "src/hash.ts" -> "src/hashable.ts" [
-    style = "solid";
-    ltail = "cluster_src/hash.ts";
-    lhead = "cluster_src/hashable.ts";
-    color = "black";
-  ];
   "src/hashable.ts" -> "src/hash.ts" [
     style = "invis";
   ];
   "src/hashable.ts" -> "src/hash.ts" [
     style = "dotted";
-    ltail = "cluster_src/hashable.ts";
-    lhead = "cluster_src/hash.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/hash.ts" [
@@ -86,8 +63,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/hash.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/hash.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/hashable.ts" [
@@ -95,8 +70,13 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/hashable.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/hashable.ts";
+    color = "black";
+  ];
+  "src/hash.ts" -> "src/hashable.ts" [
+    style = "invis";
+  ];
+  "src/hash.ts" -> "src/hashable.ts" [
+    style = "solid";
     color = "black";
   ];
 }

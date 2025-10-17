@@ -1,20 +1,11 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-map" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/map.ts";
   "src/node.ts";
+  "src/map.ts";
   "src/status.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -30,30 +21,30 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
+      "src/status.ts" [
+        label = "status.ts";
+      ];
+      "src/map.ts" [
+        label = "map.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/map.ts" [
-        label = "map.ts";
-      ];
       "src/node.ts" [
         label = "node.ts";
       ];
-      "src/status.ts" [
-        label = "status.ts";
-      ];
-      "src/index.ts" -> "exit_src" [
+      "src/status.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/map.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/node.ts" -> "exit_src" [
+      "src/index.ts" -> "exit_src" [
         style = "invis";
       ];
-      "src/status.ts" -> "exit_src" [
+      "src/node.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -70,16 +61,18 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
+  "src/map.ts" -> "src/node.ts" [
     style = "invis";
+  ];
+  "src/map.ts" -> "src/node.ts" [
+    style = "solid";
+    color = "black";
   ];
   "src/index.ts" -> "src/map.ts" [
     style = "invis";
   ];
   "src/index.ts" -> "src/map.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/map.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/node.ts" [
@@ -87,17 +80,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/node.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/node.ts";
-    color = "black";
-  ];
-  "src/map.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "src/map.ts" -> "src/node.ts" [
-    style = "solid";
-    ltail = "cluster_src/map.ts";
-    lhead = "cluster_src/node.ts";
     color = "black";
   ];
   "src/node.ts" -> "src/status.ts" [
@@ -105,8 +87,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/node.ts" -> "src/status.ts" [
     style = "solid";
-    ltail = "cluster_src/node.ts";
-    lhead = "cluster_src/status.ts";
     color = "black";
   ];
 }

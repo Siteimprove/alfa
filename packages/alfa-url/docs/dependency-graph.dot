@@ -1,19 +1,10 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-url" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/url.ts";
   "src/builtin.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -60,16 +51,11 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/index.ts" -> "src/url.ts" [
     style = "invis";
   ];
   "src/index.ts" -> "src/url.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/url.ts";
     color = "black";
   ];
   "src/url.ts" -> "src/builtin.ts" [
@@ -77,8 +63,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/url.ts" -> "src/builtin.ts" [
     style = "solid";
-    ltail = "cluster_src/url.ts";
-    lhead = "cluster_src/builtin.ts";
     color = "black";
   ];
 }

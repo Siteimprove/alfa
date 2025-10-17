@@ -1,20 +1,11 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-result" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/result.ts";
   "src/err.ts";
   "src/ok.ts";
+  "src/result.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -30,6 +21,9 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
+      "src/result.ts" [
+        label = "result.ts";
+      ];
       "src/err.ts" [
         label = "err.ts";
       ];
@@ -41,8 +35,8 @@ digraph "dependency-graph-[object Object]" {
       "src/ok.ts" [
         label = "ok.ts";
       ];
-      "src/result.ts" [
-        label = "result.ts";
+      "src/result.ts" -> "exit_src" [
+        style = "invis";
       ];
       "src/err.ts" -> "exit_src" [
         style = "invis";
@@ -51,9 +45,6 @@ digraph "dependency-graph-[object Object]" {
         style = "invis";
       ];
       "src/ok.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/result.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -70,70 +61,11 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/err.ts" -> "src/result.ts" [
-    style = "invis";
-  ];
-  "src/err.ts" -> "src/result.ts" [
-    style = "dotted";
-    ltail = "cluster_src/err.ts";
-    lhead = "cluster_src/result.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/err.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/err.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/err.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/ok.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/ok.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/ok.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/result.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/result.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/result.ts";
-    color = "black";
-  ];
-  "src/ok.ts" -> "src/err.ts" [
-    style = "invis";
-  ];
-  "src/ok.ts" -> "src/err.ts" [
-    style = "solid";
-    ltail = "cluster_src/ok.ts";
-    lhead = "cluster_src/err.ts";
-    color = "black";
-  ];
-  "src/ok.ts" -> "src/result.ts" [
-    style = "invis";
-  ];
-  "src/ok.ts" -> "src/result.ts" [
-    style = "dotted";
-    ltail = "cluster_src/ok.ts";
-    lhead = "cluster_src/result.ts";
-    color = "black";
-  ];
   "src/result.ts" -> "src/err.ts" [
     style = "invis";
   ];
   "src/result.ts" -> "src/err.ts" [
     style = "solid";
-    ltail = "cluster_src/result.ts";
-    lhead = "cluster_src/err.ts";
     color = "black";
   ];
   "src/result.ts" -> "src/ok.ts" [
@@ -141,8 +73,41 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/result.ts" -> "src/ok.ts" [
     style = "solid";
-    ltail = "cluster_src/result.ts";
-    lhead = "cluster_src/ok.ts";
+    color = "black";
+  ];
+  "src/err.ts" -> "src/result.ts" [
+    style = "invis";
+  ];
+  "src/err.ts" -> "src/result.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/err.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/err.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/ok.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/ok.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/result.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/result.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/ok.ts" -> "src/result.ts" [
+    style = "invis";
+  ];
+  "src/ok.ts" -> "src/result.ts" [
+    style = "dotted";
     color = "black";
   ];
 }

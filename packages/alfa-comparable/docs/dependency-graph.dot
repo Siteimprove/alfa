@@ -1,20 +1,11 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-comparable" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/comparer.ts";
   "src/comparison.ts";
+  "src/comparer.ts";
   "src/comparable.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -30,27 +21,27 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
-      "src/comparable.ts" [
-        label = "comparable.ts";
-      ];
       "src/comparer.ts" [
         label = "comparer.ts";
       ];
       "src/comparison.ts" [
         label = "comparison.ts";
       ];
+      "src/comparable.ts" [
+        label = "comparable.ts";
+      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/comparable.ts" -> "exit_src" [
-        style = "invis";
-      ];
       "src/comparer.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/comparison.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/comparable.ts" -> "exit_src" [
         style = "invis";
       ];
       "src/index.ts" -> "exit_src" [
@@ -70,16 +61,18 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
+  "src/comparer.ts" -> "src/comparison.ts" [
     style = "invis";
+  ];
+  "src/comparer.ts" -> "src/comparison.ts" [
+    style = "dotted";
+    color = "black";
   ];
   "src/comparable.ts" -> "src/comparer.ts" [
     style = "invis";
   ];
   "src/comparable.ts" -> "src/comparer.ts" [
     style = "dotted";
-    ltail = "cluster_src/comparable.ts";
-    lhead = "cluster_src/comparer.ts";
     color = "black";
   ];
   "src/comparable.ts" -> "src/comparison.ts" [
@@ -87,17 +80,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/comparable.ts" -> "src/comparison.ts" [
     style = "solid";
-    ltail = "cluster_src/comparable.ts";
-    lhead = "cluster_src/comparison.ts";
-    color = "black";
-  ];
-  "src/comparer.ts" -> "src/comparison.ts" [
-    style = "invis";
-  ];
-  "src/comparer.ts" -> "src/comparison.ts" [
-    style = "dotted";
-    ltail = "cluster_src/comparer.ts";
-    lhead = "cluster_src/comparison.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/comparable.ts" [
@@ -105,8 +87,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/comparable.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/comparable.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/comparer.ts" [
@@ -114,8 +94,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/comparer.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/comparer.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/comparison.ts" [
@@ -123,8 +101,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/comparison.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/comparison.ts";
     color = "black";
   ];
 }

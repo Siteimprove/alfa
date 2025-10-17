@@ -1,18 +1,9 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-collection" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/collection.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#ff0000";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -28,18 +19,18 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
-      "src/collection.ts" [
-        label = "collection.ts";
-      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#ff0000";
         penwidth = 5;
       ];
-      "src/collection.ts" -> "exit_src" [
-        style = "invis";
+      "src/collection.ts" [
+        label = "collection.ts";
       ];
       "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/collection.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -50,16 +41,11 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/index.ts" -> "src/collection.ts" [
     style = "invis";
   ];
   "src/index.ts" -> "src/collection.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/collection.ts";
+    style = "dotted";
     color = "black";
   ];
 }

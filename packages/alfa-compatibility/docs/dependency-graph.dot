@@ -1,23 +1,14 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-compatibility" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/browser/data.ts";
   "name_src/browser";
   "src/browser.ts";
+  "src/feature.ts";
   "src/feature/data.ts";
   "name_src/feature";
-  "src/feature.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#00ff00";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -36,33 +27,14 @@ digraph "dependency-graph-[object Object]" {
       "src/browser.ts" [
         label = "browser.ts";
       ];
-      "src/feature.ts" [
-        label = "feature.ts";
-      ];
       "src/index.ts" [
         label = "index.ts";
         color = "#00ff00";
         penwidth = 5;
       ];
-      subgraph "cluster_src/browser" {
-        color = "#000000";
-        label = "";
-        "name_src/browser" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#0000ff";
-          label = "browser";
-        ];
-        "exit_src/browser" [
-          style = "invis";
-        ];
-        "src/browser/data.ts" [
-          label = "data.ts";
-        ];
-        "src/browser/data.ts" -> "exit_src/browser" [
-          style = "invis";
-        ];
-      }
+      "src/feature.ts" [
+        label = "feature.ts";
+      ];
       subgraph "cluster_src/feature" {
         color = "#000000";
         label = "";
@@ -82,19 +54,38 @@ digraph "dependency-graph-[object Object]" {
           style = "invis";
         ];
       }
+      subgraph "cluster_src/browser" {
+        color = "#000000";
+        label = "";
+        "name_src/browser" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#0000ff";
+          label = "browser";
+        ];
+        "exit_src/browser" [
+          style = "invis";
+        ];
+        "src/browser/data.ts" [
+          label = "data.ts";
+        ];
+        "src/browser/data.ts" -> "exit_src/browser" [
+          style = "invis";
+        ];
+      }
       "src/browser.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/browser" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/feature.ts" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/feature" -> "exit_src" [
         style = "invis";
       ];
       "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/feature.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/browser" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -114,46 +105,35 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
   "src/browser.ts" -> "name_src/browser" [
     style = "solid";
-    ltail = "cluster_src/browser.ts";
-    lhead = "cluster_src/browser";
     color = "#00ff00";
+    lhead = "cluster_src/browser";
+  ];
+  "src/index.ts" -> "src/browser.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/browser.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/index.ts" -> "src/feature.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/feature.ts" [
+    style = "solid";
+    color = "black";
   ];
   "src/feature.ts" -> "src/browser.ts" [
     style = "invis";
   ];
   "src/feature.ts" -> "src/browser.ts" [
     style = "solid";
-    ltail = "cluster_src/feature.ts";
-    lhead = "cluster_src/browser.ts";
     color = "black";
   ];
   "src/feature.ts" -> "name_src/feature" [
     style = "solid";
-    ltail = "cluster_src/feature.ts";
-    lhead = "cluster_src/feature";
     color = "#00ff00";
-  ];
-  "src/index.ts" -> "src/browser.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/browser.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/browser.ts";
-    color = "black";
-  ];
-  "src/index.ts" -> "src/feature.ts" [
-    style = "invis";
-  ];
-  "src/index.ts" -> "src/feature.ts" [
-    style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/feature.ts";
-    color = "black";
+    lhead = "cluster_src/feature";
   ];
 }

@@ -1,24 +1,15 @@
-digraph "dependency-graph-[object Object]" {
+digraph "dependency-graph-@siteimprove/alfa-wcag" {
   compound = true;
-  "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/criterion.ts";
+  "src/technique/data.ts";
+  "name_src/technique";
   "src/criterion/data.ts";
   "name_src/criterion";
   "src/conformance.ts";
+  "src/criterion.ts";
   "src/technique.ts";
-  "src/technique/data.ts";
-  "name_src/technique";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
-    "name_src" [
-      penwidth = 5;
-      shape = "rectangle";
-      color = "#00ff00";
-      label = "src";
-    ];
     "exit_src" [
       style = "invis";
     ];
@@ -34,8 +25,8 @@ digraph "dependency-graph-[object Object]" {
       "exit_src" [
         style = "invis";
       ];
-      "src/conformance.ts" [
-        label = "conformance.ts";
+      "src/technique.ts" [
+        label = "technique.ts";
       ];
       "src/criterion.ts" [
         label = "criterion.ts";
@@ -45,28 +36,9 @@ digraph "dependency-graph-[object Object]" {
         color = "#00ff00";
         penwidth = 5;
       ];
-      "src/technique.ts" [
-        label = "technique.ts";
+      "src/conformance.ts" [
+        label = "conformance.ts";
       ];
-      subgraph "cluster_src/criterion" {
-        color = "#000000";
-        label = "";
-        "name_src/criterion" [
-          penwidth = 5;
-          shape = "rectangle";
-          color = "#ff0000";
-          label = "criterion";
-        ];
-        "exit_src/criterion" [
-          style = "invis";
-        ];
-        "src/criterion/data.ts" [
-          label = "data.ts";
-        ];
-        "src/criterion/data.ts" -> "exit_src/criterion" [
-          style = "invis";
-        ];
-      }
       subgraph "cluster_src/technique" {
         color = "#000000";
         label = "";
@@ -86,22 +58,41 @@ digraph "dependency-graph-[object Object]" {
           style = "invis";
         ];
       }
-      "src/conformance.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/criterion.ts" -> "exit_src" [
-        style = "invis";
-      ];
-      "exit_src/criterion" -> "exit_src" [
-        style = "invis";
-      ];
-      "src/index.ts" -> "exit_src" [
+      subgraph "cluster_src/criterion" {
+        color = "#000000";
+        label = "";
+        "name_src/criterion" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "criterion";
+        ];
+        "exit_src/criterion" [
+          style = "invis";
+        ];
+        "src/criterion/data.ts" [
+          label = "data.ts";
+        ];
+        "src/criterion/data.ts" -> "exit_src/criterion" [
+          style = "invis";
+        ];
+      }
+      "exit_src/technique" -> "exit_src" [
         style = "invis";
       ];
       "src/technique.ts" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/technique" -> "exit_src" [
+      "src/criterion.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/criterion" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/conformance.ts" -> "exit_src" [
         style = "invis";
       ];
     }
@@ -124,31 +115,21 @@ digraph "dependency-graph-[object Object]" {
       style = "invis";
     ];
   }
-  "exit_src" -> "dependency-graph-[object Object]" [
-    style = "invis";
-  ];
-  "src/conformance.ts" -> "src/criterion.ts" [
-    style = "invis";
-  ];
-  "src/conformance.ts" -> "src/criterion.ts" [
+  "src/technique.ts" -> "name_src/technique" [
     style = "solid";
-    ltail = "cluster_src/conformance.ts";
-    lhead = "cluster_src/criterion.ts";
-    color = "black";
+    color = "#00ff00";
+    lhead = "cluster_src/technique";
   ];
   "src/criterion.ts" -> "name_src/criterion" [
     style = "solid";
-    ltail = "cluster_src/criterion.ts";
+    color = "#00ff00";
     lhead = "cluster_src/criterion";
-    color = "#00ff00";
   ];
   "src/index.ts" -> "src/conformance.ts" [
     style = "invis";
   ];
   "src/index.ts" -> "src/conformance.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/conformance.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/criterion.ts" [
@@ -156,8 +137,6 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/criterion.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/criterion.ts";
     color = "black";
   ];
   "src/index.ts" -> "src/technique.ts" [
@@ -165,14 +144,13 @@ digraph "dependency-graph-[object Object]" {
   ];
   "src/index.ts" -> "src/technique.ts" [
     style = "solid";
-    ltail = "cluster_src/index.ts";
-    lhead = "cluster_src/technique.ts";
     color = "black";
   ];
-  "src/technique.ts" -> "name_src/technique" [
+  "src/conformance.ts" -> "src/criterion.ts" [
+    style = "invis";
+  ];
+  "src/conformance.ts" -> "src/criterion.ts" [
     style = "solid";
-    ltail = "cluster_src/technique.ts";
-    lhead = "cluster_src/technique";
-    color = "#00ff00";
+    color = "black";
   ];
 }
