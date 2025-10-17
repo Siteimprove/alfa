@@ -1,11 +1,12 @@
 import axios from "axios";
 import { simpleGit } from "simple-git";
+import * as path from "path";
 
 const url = process.env.COVERAGE_API_URL;
 const apiKey = process.env.COVERAGE_API_KEY;
 
-const configFile = "config/upload-coverage-report.json";
-const summaryFile = "docs/coverage/coverage-summary.json";
+const configFile = path.join("config", "upload-coverage-report.json");
+const summaryFile = path.join("docs", "coverage/coverage-summary.json");
 
 const targetPath = process.argv[2] ?? ".";
 
@@ -24,13 +25,13 @@ await uploadCoverageReport(targetPath);
  */
 export async function uploadCoverageReport(rootDir: string) {
   const config = (
-    await import(`${rootDir}/${configFile}`, {
+    await import(path.join(rootDir, configFile), {
       with: { type: "json" },
     })
   ).default;
 
   const summary = (
-    await import(`${rootDir}/${summaryFile}`, {
+    await import(path.join(rootDir, summaryFile), {
       with: { type: "json" },
     })
   ).default;
