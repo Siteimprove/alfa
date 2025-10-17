@@ -1,7 +1,12 @@
 [
   {
     "name": "Accessibility Conformance Testing",
-    "children": ["@siteimprove/alfa-act", "@siteimprove/alfa-wcag"]
+    "children": [
+      "@siteimprove/alfa-act",
+      "@siteimprove/alfa-eaa",
+      "@siteimprove/alfa-rules",
+      "@siteimprove/alfa-wcag"
+    ]
   },
   {
     "name": "Alternatives",
@@ -113,8 +118,10 @@
       "@siteimprove/alfa-math",
       "@siteimprove/alfa-parser",
       "@siteimprove/alfa-rectangle",
+      "@siteimprove/alfa-rng",
       "@siteimprove/alfa-string",
       "@siteimprove/alfa-test",
+      "@siteimprove/alfa-test-deprecated",
       "@siteimprove/alfa-time"
     ]
   },
@@ -141,6 +148,7 @@
         "name": "CSS",
         "children": [
           "@siteimprove/alfa-cascade",
+          "@siteimprove/alfa-painting-order",
           "@siteimprove/alfa-selector",
           "@siteimprove/alfa-style"
         ]
