@@ -80,7 +80,7 @@ export async function generateGlobalGraph(rootDir: string) {
 
   const baseCluster = "Alfa";
   const clusterize = (module: string) =>
-    modules.find((m) => m.id === module)?.clusters || [];
+    modules.find((m) => m.id === module)?.clusters ?? [];
   const clusterId = (cluster: string) => cluster;
   const clusterLabel = (cluster: string) => cluster;
 
