@@ -34,12 +34,8 @@ export async function uploadCoverageReport(rootDir: string) {
     })
   ).default;
 
-  // console.dir(config);
-  // console.dir(summary);
-
   const git_sha = (await git.revparse(["HEAD"])).trim();
 
-  // Add lines_rate, lines_covered, lines_valid, timestamp (in seconds), and git_sha to payload
   const payload = {
     ...config,
     line_rate: summary.total.lines.pct / 100,
@@ -50,7 +46,9 @@ export async function uploadCoverageReport(rootDir: string) {
   };
 
   if (!url || !apiKey) {
-    throw new Error("API_URL and API_KEY must be set in environment variables");
+    throw new Error(
+      "COVERAGE_API_URL and COVERAGE_API_KEY must be set in the environment.",
+    );
   }
 
   const response = await axios.post(url, payload, {
