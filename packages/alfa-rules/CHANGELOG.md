@@ -1,5 +1,17 @@
 # @siteimprove/alfa-rules
 
+## 0.106.0
+
+### Minor Changes
+
+- **Added:** New `@siteimprove/alfa-eaa` package added and corresponding `EAA` requirement references added to relevant rules. ([#1898](https://github.com/Siteimprove/alfa/pull/1898))
+
+### Patch Changes
+
+- **Changed:** SIA-R24 and SIA-R33 (and SIA-R35, SIA-R38) now pass on invisible but accessible transcripts. ([#1899](https://github.com/Siteimprove/alfa/pull/1899))
+
+  This follows a clarification in WCAG and ACT rules.
+
 ## 0.105.0
 
 ### Patch Changes

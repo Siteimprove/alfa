@@ -1,5 +1,13 @@
 # @siteimprove/alfa-toolchain
 
+## 0.106.0
+
+### Patch Changes
+
+- **Changed:** Dependency graph generation is now more modular. ([#1893](https://github.com/Siteimprove/alfa/pull/1893))
+
+  This makes it easier to reuse it for something else than the inter-files dependencies in a package.
+
 ## 0.105.0
 
 ### Minor Changes
