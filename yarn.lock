@@ -2537,6 +2537,7 @@ __metadata:
     "@svitejs/changesets-changelog-github-compact": "npm:^1.1.0"
     "@ts-graphviz/adapter": "npm:^3.0.2"
     "@types/madge": "npm:^5.0.3"
+    axios: "npm:^1.12.2"
     chalk: "npm:^5.6.2"
     json-stringify-pretty-compact: "npm:^4.0.0"
     madge: "npm:^8.0.0"
@@ -2548,6 +2549,7 @@ __metadata:
     create-alfa-package: dist/create-alfa-package.js
     generate-packages-dependency-graphs: dist/dependency-graph/generate-packages-graphs.js
     generate-unit-test-report: dist/coverage/generate-unit-test-coverage-report.js
+    upload-coverage-report: dist/coverage/upload-coverage-report.js
     validate-structure: dist/validation/validate-all.js
   languageName: unknown
   linkType: soft

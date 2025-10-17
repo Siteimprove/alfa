@@ -21,6 +21,7 @@
         "@manypkg/get-packages",
         "@ts-graphviz/adapter",
         "@svitejs/changesets-changelog-github-compact",
+        "axios",
         "chalk",
         "json-stringify-pretty-compact",
         "madge",
