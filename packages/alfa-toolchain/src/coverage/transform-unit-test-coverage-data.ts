@@ -76,12 +76,16 @@ export function toCoverageData([pkg, summary]: [
 export function toLink(name: string, relativePath: string) {
   // We need to go up the destination path, and then down the relative path before
   // finally finding the report.
-  return `<a href="${destinationPath
-    .split("/")
+  const upPath = destinationPath
+    .split(path.sep)
     .map(() => "..")
-    .join(
-      "/",
-    )}/${relativePath}/${coveragePath}/index.html" target="_blank" rel="noopener noreferrer">${name}</a>`;
+    .join("/");
+
+  // Note that the paths may have been built with any separator, but URLs always
+  // use forward slashes, so we need to rewrite paths.
+  const toUrlPath = (p: string) => p.split(path.sep).join("/");
+
+  return `<a href="${upPath}/${toUrlPath(relativePath)}/${toUrlPath(coveragePath)}/index.html" target="_blank" rel="noopener noreferrer">${name}</a>`;
 }
 
 /**
