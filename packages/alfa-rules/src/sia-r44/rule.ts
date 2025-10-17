@@ -5,6 +5,7 @@ import type { Feature } from "@siteimprove/alfa-css-feature";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import type { Declaration } from "@siteimprove/alfa-dom";
 import { Element, MediaRule, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -27,7 +28,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r44",
-  requirements: [Criterion.of("1.3.4")],
+  requirements: [Criterion.of("1.3.4"), EAA.of("9.1.3.4")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     let landscape: Device;

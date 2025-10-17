@@ -1,5 +1,6 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -22,6 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r95",
   requirements: [
     Criterion.of("2.1.1"),
+    EAA.of("9.2.1.1"),
     // The 2.1.3 secondary mapping is missing in ACT rules
     // https://github.com/act-rules/act-rules.github.io/issues/2026
     // Commenting it out as it would otherwise invalidate our implementation

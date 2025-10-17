@@ -1745,6 +1745,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@siteimprove/alfa-eaa@workspace:^, @siteimprove/alfa-eaa@workspace:packages/alfa-eaa":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-eaa@workspace:packages/alfa-eaa"
+  dependencies:
+    "@siteimprove/alfa-act": "workspace:^"
+    "@siteimprove/alfa-option": "workspace:^"
+    "@siteimprove/alfa-test": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "@siteimprove/alfa-earl@workspace:^, @siteimprove/alfa-earl@workspace:packages/alfa-earl":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-earl@workspace:packages/alfa-earl"
@@ -2246,6 +2256,7 @@ __metadata:
     "@siteimprove/alfa-css-feature": "workspace:^"
     "@siteimprove/alfa-device": "workspace:^"
     "@siteimprove/alfa-dom": "workspace:^"
+    "@siteimprove/alfa-eaa": "workspace:^"
     "@siteimprove/alfa-earl": "workspace:^"
     "@siteimprove/alfa-either": "workspace:^"
     "@siteimprove/alfa-equatable": "workspace:^"

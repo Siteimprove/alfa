@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Map } from "@siteimprove/alfa-map";
 import { Real } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -21,6 +22,7 @@ export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r47",
   requirements: [
     Criterion.of("1.4.4"),
+    EAA.of("9.1.4.4"),
     // The 1.4.10 secondary mapping is missing in ACT rules
     // https://github.com/act-rules/act-rules.github.io/issues/2025
     // Commenting it out as it would otherwise invalidate our implementation

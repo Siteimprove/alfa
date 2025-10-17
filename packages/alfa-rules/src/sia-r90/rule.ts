@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -19,7 +20,7 @@ const { isTabbable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r90",
-  requirements: [Criterion.of("4.1.2")],
+  requirements: [Criterion.of("4.1.2"), EAA.of("9.4.1.2")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {

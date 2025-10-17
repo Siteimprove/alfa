@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -22,7 +23,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",
-  requirements: [Criterion.of("2.5.3"), Technique.of("G208")],
+  requirements: [Criterion.of("2.5.3"), EAA.of("9.2.5.3"), Technique.of("G208")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
