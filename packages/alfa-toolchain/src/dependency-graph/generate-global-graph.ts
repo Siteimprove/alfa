@@ -14,7 +14,7 @@ type Module = { id: string; clusters: Array<string> };
 
 const targetPath = process.argv[2] ?? ".";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
-const destinationPath = "docs";
+const destinationPath = path.join(targetPath, "docs");
 
 generateGlobalGraph(targetPath);
 
