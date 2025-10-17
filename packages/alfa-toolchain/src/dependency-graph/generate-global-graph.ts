@@ -14,10 +14,23 @@ type Module = { id: string; clusters: Array<string> };
 
 const targetPath = process.argv[2] ?? ".";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
+const destinationPath = path.join(targetPath, "docs");
 
 generateGlobalGraph(targetPath);
 
 /**
+ * Generate the global dependency graph between all packages in the monorepo.
+ *
+ * @remarks
+ * * Modules are packages, identified by their name, clusters are defined in and
+ * adhoc way.
+ * * Clusterization is pre-built by parsing the clusters definition file.
+ * * Clusters' id and name are the one set in the clusters definition file.
+ * * Modules' id is the package name, and their name is the package name stripped
+ * of the `@siteimprove/` scope.
+ * * There should be no circular dependencies ar these are caught by TypeScript.
+ * * No module is specifically considered an entry point for its cluster.
+ *
  * @public
  */
 export async function generateGlobalGraph(rootDir: string) {

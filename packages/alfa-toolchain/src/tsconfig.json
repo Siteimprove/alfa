@@ -14,6 +14,7 @@
     "./dependency-graph/dependency-graph.ts",
     "./dependency-graph/generate-global-graph.ts",
     "./dependency-graph/generate-packages-graphs.ts",
+    "./dependency-graph/index.ts",
     "./dependency-graph/rainbow.ts",
     "./validation/has-extractor-config.ts",
     "./validation/index.ts",
