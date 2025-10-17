@@ -35,9 +35,7 @@ import { Set } from "@siteimprove/alfa-set";
 import * as gv from "ts-graphviz";
 import * as adapter from "@ts-graphviz/adapter";
 
-import type { Package } from "@manypkg/get-packages";
 import * as fs from "node:fs";
-import madge from "madge";
 import * as path from "node:path";
 
 import { Rainbow } from "./rainbow.js";

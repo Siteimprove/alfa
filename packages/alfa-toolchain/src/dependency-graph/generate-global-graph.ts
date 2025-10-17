@@ -1,121 +1,83 @@
+import { getPackages } from "@manypkg/get-packages";
 import { Array } from "@siteimprove/alfa-array";
 import { Map } from "@siteimprove/alfa-map";
 
-import { getPackages, type Package } from "@manypkg/get-packages";
+import * as path from "node:path";
 
 import { DependencyGraph } from "./dependency-graph.js";
 
-const targetPath = process.argv[2] ?? ".";
+type ClusterDefinition =
+  | string
+  | { name: string; children: Array<ClusterDefinition> };
 
-generatePackagesGraphs(targetPath);
+type Module = { id: string; clusters: Array<string> };
+
+const targetPath = process.argv[2] ?? ".";
+const clustersDefinitionPath = path.join("config", "package-clusters.json");
+
+generateGlobalGraph(targetPath);
 
 /**
  * @public
  */
-export async function generatePackagesGraphs(cwd: string) {
-  const packages = await getPackages(cwd);
+export async function generateGlobalGraph(rootDir: string) {
+  const packages = await getPackages(rootDir);
+
+  let fullGraph = Map.empty<string, Array<string>>();
+  let heavyGraph = Map.empty<string, Array<string>>();
+
   for (const pkg of packages.packages) {
-    await (await fromPackage(pkg)).save(`${pkg.dir}/docs`);
+    fullGraph = fullGraph.set(
+      pkg.packageJson.name,
+      Object.keys(pkg.packageJson.dependencies ?? {})
+        .concat(Object.keys(pkg.packageJson.devDependencies ?? {}))
+        .filter((dep) => dep.startsWith("@siteimprove")),
+    );
+
+    heavyGraph = fullGraph.set(
+      pkg.packageJson.name,
+      Object.keys(pkg.packageJson.dependencies ?? {}).filter((dep) =>
+        dep.startsWith("@siteimprove"),
+      ),
+    );
   }
-}
 
-/**
- * Generates a dependency graph from a package.
- *
- * @remarks
- * Uses madge to build the actual graph.
- *
- * @remarks
- * Modules are files, identified by their path relative to the package root.
- * Clusters are directories, identified by their path relative to the package root.
- * Clusters' and modules' id are the full path, while their name is the last
- * part of the path. So clusters/module operations are mostly slicing strings
- * at '/'.
- */
-async function fromPackage(
-  pkg: Package,
-): Promise<DependencyGraph<string, string>> {
-  // Exclude files that are not inside the base directory.
-  // These are in other packages, which we don't care about here.
-  const notPkg = new RegExp(`^../`);
+  const clusters = (
+    await import(path.join(rootDir, clustersDefinitionPath), {
+      with: { type: "json" },
+    })
+  ).default as Array<ClusterDefinition>;
 
-  const fullDepTree = await madge(`${pkg.dir}/src`, {
-    fileExtensions: ["ts", "tsx"],
-    excludeRegExp: [/[.]d[.]ts/, notPkg],
-    baseDir: pkg.dir,
-  });
+  function* getClusters(
+    clusters: Array<ClusterDefinition>,
+    acc: Array<string>,
+  ): Iterable<Module> {
+    for (const cluster of clusters) {
+      if (typeof cluster === "string") {
+        yield { id: cluster, clusters: acc };
+      } else {
+        yield* getClusters(cluster.children, [...acc, cluster.name]);
+      }
+    }
+  }
 
-  const noTypeDepTree = await madge(`${pkg.dir}/src`, {
-    fileExtensions: ["ts", "tsx"],
-    excludeRegExp: [/[.]d[.]ts/, notPkg],
-    detectiveOptions: { ts: { skipTypeImports: true } },
-    baseDir: pkg.dir,
-  });
+  const modules = [...getClusters(clusters, [])];
 
-  return DependencyGraph.of(
-    {
-      name: pkg.packageJson.name,
-      fullGraph: Map.from(Object.entries(fullDepTree.obj())),
-      heavyGraph: Map.from(Object.entries(noTypeDepTree.obj())),
-      circular: Array.flatten(noTypeDepTree.circular()),
-      clusterize,
-    },
-    { baseCluster: "src", clusterId, clusterLabel },
+  const circular: Array<string> = [];
+
+  const baseCluster = "Alfa";
+  const clusterize = (module: string) =>
+    modules.find((m) => m.id === module)?.clusters || [];
+  const clusterId = (cluster: string) => cluster;
+  const clusterLabel = (cluster: string) => cluster;
+
+  const moduleId = (module: string) => module;
+  const moduleName = (module: string) => module.replace("@siteimprove/", "");
+  const isEntryPoint = () => false;
+
+  await DependencyGraph.of<string, string>(
+    { name: "Alfa", fullGraph, heavyGraph, circular, clusterize },
+    { baseCluster, clusterId, clusterLabel },
     { moduleId, moduleName, isEntryPoint },
-  );
-}
-
-/**
- * Returns the clusters (directories) a module (file) belongs to.
- *
- * /foo/bar/baz.ts -> ["/foo", "/foo/bar"]
- */
-function clusterize(module: string): Array<string> {
-  const clustersList = module.split("/");
-  let clusters: Array<string> = [];
-
-  for (let i = 0; i < clustersList.length - 1; i++) {
-    clusters.push(clustersList.slice(0, i + 1).join("/"));
-  }
-
-  return clusters;
-}
-
-/**
- * Returns the id of a cluster, i.e., its full path.
- */
-function clusterId(cluster: string): string {
-  return cluster;
-}
-
-/**
- * Returns the label of a cluster, i.e., the last segment of its path.
- */
-function clusterLabel(cluster: string): string {
-  const parts = cluster.split("/");
-  return parts[parts.length - 1];
-}
-
-/**
- * Returns the id of a module, i.e., its full path.
- */
-function moduleId(module: string): string {
-  return module;
-}
-
-/**
- * Returns the name of a module, i.e., the last segment of its path.
- */
-function moduleName(module: string): string {
-  const parts = module.split("/");
-  return parts[parts.length - 1];
-}
-
-/**
- * Checks if a module is an entry point for its directory.
- *
- * These are exactly the "index.ts" files.
- */
-function isEntryPoint(module: string): boolean {
-  return module.endsWith("index.ts");
+  ).save(rootDir);
 }
