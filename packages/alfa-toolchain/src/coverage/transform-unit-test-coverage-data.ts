@@ -191,20 +191,20 @@ export function toHtml(data: Array<CoverageData>): string {
 
   const disclaimer = `<div class="disclaimer">
   <p class="warning">
-    This is for internal documentation only, 
+    This is for internal documentation only,
     see <a href="./index.html">the global coverage report</a>.
   </p>
   <p>
-    Some packages, <i>e.g.</i> <code>alfa-option</code>, are foundational 
-    and used a lot by other packages, <i>e.g.</i> <code>alfa-rules</code>. 
-    Thus, any test in <code>alfa-rules</code> will effectively also test 
-    parts of <code>alfa-option</code> (as integration test). This is 
-    reflected in <a href="./index.html">the global coverage report</a> who 
-    takes all tests into account, and this is sufficient to give a good 
-    measure of security to the codebase. However, foundational packages 
-    should also have specific unit tests, checking that the minutiae of 
-    each function works as intended. This report shows the coverage by 
-    unit tests inside each package. We should ultimately aim at getting 
+    Some packages, <i>e.g.</i> <code>alfa-option</code>, are foundational
+    and used a lot by other packages, <i>e.g.</i> <code>alfa-rules</code>.
+    Thus, any test in <code>alfa-rules</code> will effectively also test
+    parts of <code>alfa-option</code> (as integration test). This is
+    reflected in <a href="./index.html">the global coverage report</a> who
+    takes all tests into account, and this is sufficient to give a good
+    measure of security to the codebase. However, foundational packages
+    should also have specific unit tests, checking that the minutiae of
+    each function works as intended. This report shows the coverage by
+    unit tests inside each package. We should ultimately aim at getting
     these numbers as high as possible.
   </p>
 </div>`;
