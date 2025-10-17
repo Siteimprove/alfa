@@ -2,11 +2,15 @@ import changelogFunctions from "./changeset/build-changelog.js";
 import * as globalChangelog from "./changeset/changelog-global.js";
 import * as individualChangelog from "./changeset/changelog-individual.cjs";
 import { generateUnitTestCoverageReport } from "./coverage/generate-unit-test-coverage-report.js";
-import { generatePackagesGraphs } from "./dependency-graph/generate-packages-graphs.js";
+import {
+  generateGlobalGraph,
+  generatePackagesGraphs,
+} from "./dependency-graph/index.js";
 import * as Validation from "./validation/index.js";
 
 export {
   changelogFunctions,
+  generateGlobalGraph,
   generatePackagesGraphs,
   generateUnitTestCoverageReport,
   globalChangelog,

@@ -34,7 +34,8 @@ runs:
 
     - uses: actions/setup-node@v5
       with:
-        node-version: 20
+        # 24 is Active from October 2025 to October 2026.
+        node-version: 24
         cache: yarn
         registry-url: "https://npm.pkg.github.com"
         scope: "@siteimprove"

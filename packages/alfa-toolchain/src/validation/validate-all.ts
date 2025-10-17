@@ -3,6 +3,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 
 import { hasExtractorConfig } from "./has-extractor-config.js";
+import { isInClusters } from "./is-in-clusters.js";
 import { validateChangesets } from "./validate-changesets.js";
 import { validatePackageJson } from "./validate-package-json.js";
 import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig.js";
@@ -14,21 +15,20 @@ validate(targetPath);
 /**
  * @public
  */
-export async function validate(cwd: string) {
+export async function validate(rootDir: string) {
   const errors: Array<string> = [];
 
-  const config = JSON.parse(
-    fs.readFileSync(
-      path.join(cwd, "config", "validate-structure.json"),
-      "utf-8",
-    ),
-  );
+  const config = (
+    await import(path.join(rootDir, "config", "validate-structure.json"), {
+      with: { type: "json" },
+    })
+  ).default;
 
-  const packages = await getPackages(cwd);
+  const packages = await getPackages(rootDir);
 
   if (config["validate-changesets"] ?? false) {
     errors.push(
-      ...(await validateChangesets(cwd, config["forbid-major"] ?? false)),
+      ...(await validateChangesets(rootDir, config["forbid-major"] ?? false)),
     );
   }
 
@@ -48,6 +48,28 @@ export async function validate(cwd: string) {
     for (const pkg of packages.packages) {
       errors.push(...validateWorkspaceTsconfig(pkg));
     }
+  }
+
+  if (config["is-in-clusters"] ?? false) {
+    let clustersDefinitionPath = path.join(
+      rootDir,
+      "config",
+      "package-clusters.json",
+    );
+
+    const clusters = (
+      await import(clustersDefinitionPath, {
+        with: { type: "json" },
+      })
+    ).default;
+
+    errors.push(
+      ...isInClusters(
+        packages.packages.map((pkg) => pkg.packageJson.name),
+        clusters,
+        clustersDefinitionPath,
+      ),
+    );
   }
 
   for (const error of errors) {

@@ -15,6 +15,9 @@ import type { Packages } from '@manypkg/get-packages';
 // @public (undocumented)
 export const changelogFunctions: ChangelogFunctions;
 
+// @public
+export function generateGlobalGraph(rootDir: string): Promise<void>;
+
 // @public (undocumented)
 export function generatePackagesGraphs(cwd: string): Promise<void>;
 
@@ -39,7 +42,7 @@ declare namespace individualChangelog {
 export { individualChangelog }
 
 // @public (undocumented)
-function validate(cwd: string): Promise<void>;
+function validate(rootDir: string): Promise<void>;
 
 // @public
 function validateChangesets(cwd: string, forbidMajor?: boolean): Promise<Array_2<string>>;

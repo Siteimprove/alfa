@@ -30,5 +30,6 @@
       ]
     }
   },
-  "validate-workspace-tsconfig": true
+  "validate-workspace-tsconfig": true,
+  "is-in-clusters": true
 }
