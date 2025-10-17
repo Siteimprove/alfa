@@ -20,4 +20,6 @@ jobs:
           user-name: siteimprove-builduser
           user-email: 8577410+siteimprove-builduser@users.noreply.github.com
           coverage: true
+          coverage-url: ${{ secrets.COVERAGE_API_URL }}
+          coverage-api-key: ${{ secrets.COVERAGE_API_KEY }}
           token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}

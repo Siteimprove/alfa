@@ -2,6 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Option } from "@siteimprove/alfa-option";
 
 import type { Package } from "@manypkg/get-packages";
+import * as path from "node:path";
 
 type Totals = {
   total: number;
@@ -32,13 +33,13 @@ type CoverageData = {
  *
  * @internal
  */
-export const coveragePath = "docs/coverage";
+export const coveragePath = path.join("docs", "coverage");
 /**
  * Path to store the global file once generated.
  *
  * @internal
  */
-export const destinationPath = "docs/coverage";
+export const destinationPath = path.join("docs", "coverage");
 
 /**
  * Turn (optional) coverage summary into coverage data.
@@ -75,12 +76,16 @@ export function toCoverageData([pkg, summary]: [
 export function toLink(name: string, relativePath: string) {
   // We need to go up the destination path, and then down the relative path before
   // finally finding the report.
-  return `<a href="${destinationPath
-    .split("/")
+  const upPath = destinationPath
+    .split(path.sep)
     .map(() => "..")
-    .join(
-      "/",
-    )}/${relativePath}/${coveragePath}/index.html" target="_blank" rel="noopener noreferrer">${name}</a>`;
+    .join("/");
+
+  // Note that the paths may have been built with any separator, but URLs always
+  // use forward slashes, so we need to rewrite paths.
+  const toUrlPath = (p: string) => p.split(path.sep).join("/");
+
+  return `<a href="${upPath}/${toUrlPath(relativePath)}/${toUrlPath(coveragePath)}/index.html" target="_blank" rel="noopener noreferrer">${name}</a>`;
 }
 
 /**
@@ -190,20 +195,20 @@ export function toHtml(data: Array<CoverageData>): string {
 
   const disclaimer = `<div class="disclaimer">
   <p class="warning">
-    This is for internal documentation only, 
+    This is for internal documentation only,
     see <a href="./index.html">the global coverage report</a>.
   </p>
   <p>
-    Some packages, <i>e.g.</i> <code>alfa-option</code>, are foundational 
-    and used a lot by other packages, <i>e.g.</i> <code>alfa-rules</code>. 
-    Thus, any test in <code>alfa-rules</code> will effectively also test 
-    parts of <code>alfa-option</code> (as integration test). This is 
-    reflected in <a href="./index.html">the global coverage report</a> who 
-    takes all tests into account, and this is sufficient to give a good 
-    measure of security to the codebase. However, foundational packages 
-    should also have specific unit tests, checking that the minutiae of 
-    each function works as intended. This report shows the coverage by 
-    unit tests inside each package. We should ultimately aim at getting 
+    Some packages, <i>e.g.</i> <code>alfa-option</code>, are foundational
+    and used a lot by other packages, <i>e.g.</i> <code>alfa-rules</code>.
+    Thus, any test in <code>alfa-rules</code> will effectively also test
+    parts of <code>alfa-option</code> (as integration test). This is
+    reflected in <a href="./index.html">the global coverage report</a> who
+    takes all tests into account, and this is sufficient to give a good
+    measure of security to the codebase. However, foundational packages
+    should also have specific unit tests, checking that the minutiae of
+    each function works as intended. This report shows the coverage by
+    unit tests inside each package. We should ultimately aim at getting
     these numbers as high as possible.
   </p>
 </div>`;
