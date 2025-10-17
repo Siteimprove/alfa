@@ -27,8 +27,8 @@ jobs:
         if: env.PR_COMMAND_WILL_RUN == 'true'
         uses: actions/setup-node@v5
         with:
-          # We use version 20 in the integrate workflow
-          node-version: 20
+          # 24 is Active from October 2025 to October 2026.
+          node-version: 24
 
       - name: "Install dependencies"
         if: env.PR_COMMAND_WILL_RUN == 'true'
