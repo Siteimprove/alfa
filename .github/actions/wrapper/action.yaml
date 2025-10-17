@@ -26,6 +26,12 @@ inputs:
     description: "Whether to generate coverage reports."
     required: false
     default: "false"
+  coverage-url:
+    description: "The URL of the coverage API endpoint"
+    required: false
+  coverage-api-key:
+    description: "The API key to authenticate with the coverage API"
+    required: false
   publish:
     description: "Whether to create and publish a new version."
     required: false
