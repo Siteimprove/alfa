@@ -20,6 +20,7 @@ await uploadCoverageReport(targetPath);
  * This uses custom Siteimprove reporting format, likely unusable elsewhere.
  *
  * @internal
+ * @knipignore Used in workflows
  */
 export async function uploadCoverageReport(rootDir: string) {
   const config = (
