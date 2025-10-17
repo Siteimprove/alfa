@@ -1,5 +1,17 @@
 # Alfa changelog
 
+## [0.106.0](../../compare/v0.105.0...v0.106.0) (2025-10-17)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01060), [@siteimprove/alfa-eaa](packages/alfa-eaa/CHANGELOG.md#01060): New `@siteimprove/alfa-eaa` package added and corresponding `EAA` requirement references added to relevant rules. ([#1898](https://github.com/Siteimprove/alfa/pull/1898))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01060): SIA-R24 and SIA-R33 (and SIA-R35, SIA-R38) now pass on invisible but accessible transcripts. ([#1899](https://github.com/Siteimprove/alfa/pull/1899))
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01060): Dependency graph generation is now more modular. ([#1893](https://github.com/Siteimprove/alfa/pull/1893))
+
 ## [0.105.0](../../compare/v0.104.1...v0.105.0) (2025-10-15)
 
 ### Added

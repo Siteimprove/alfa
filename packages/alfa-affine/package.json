@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-affine",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.105.0",
+  "version": "0.106.0",
   "license": "MIT",
   "description": "Functionality for working with affine transformations",
   "repository": {
