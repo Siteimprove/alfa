@@ -2,6 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Option } from "@siteimprove/alfa-option";
 
 import type { Package } from "@manypkg/get-packages";
+import * as path from "path";
 
 type Totals = {
   total: number;
@@ -32,13 +33,13 @@ type CoverageData = {
  *
  * @internal
  */
-export const coveragePath = "docs/coverage";
+export const coveragePath = path.join("docs", "coverage");
 /**
  * Path to store the global file once generated.
  *
  * @internal
  */
-export const destinationPath = "docs/coverage";
+export const destinationPath = path.join("docs", "coverage");
 
 /**
  * Turn (optional) coverage summary into coverage data.

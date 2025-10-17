@@ -2,6 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 
 import { getPackages, type Package } from "@manypkg/get-packages";
 import * as fs from "fs";
+import * as path from "path";
 
 import {
   coveragePath,
@@ -36,12 +37,12 @@ export async function generateUnitTestCoverageReport(cwd: string) {
   }
 
   fs.writeFileSync(
-    `${destinationPath}/unit-test-coverage.html`,
+    path.join(destinationPath, "unit-test-coverage.html"),
     coverageReport,
   );
 
   console.log(
-    `Wrote unit test coverage report for ${coverages.length} packages to ${destinationPath}/unit-test-coverage.html`,
+    `Wrote unit test coverage report for ${coverages.length} packages to ${path.join(destinationPath, "unit-test-coverage.html")}`,
   );
 }
 
@@ -52,7 +53,7 @@ async function loadPackageCoverage(
   pkg: Package,
 ): Promise<[Package, CoverageSummary]> {
   const summary = (await import(
-    `${pkg.dir}/${coveragePath}/coverage-summary.json`,
+    path.join(pkg.dir, coveragePath, "coverage-summary.json"),
     {
       with: { type: "json" },
     }
