@@ -42,6 +42,7 @@
     "@siteimprove/alfa-css-feature": "workspace:^",
     "@siteimprove/alfa-device": "workspace:^",
     "@siteimprove/alfa-dom": "workspace:^",
+    "@siteimprove/alfa-eaa": "workspace:^",
     "@siteimprove/alfa-earl": "workspace:^",
     "@siteimprove/alfa-either": "workspace:^",
     "@siteimprove/alfa-equatable": "workspace:^",

@@ -5,6 +5,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Color, Keyword } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
@@ -53,7 +54,7 @@ let distinguishingProperties: Map<
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
-  requirements: [Criterion.of("1.4.1")],
+  requirements: [Criterion.of("1.4.1"), EAA.of("9.1.4.1")],
   tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     // Contains links (key) and their containing paragraph (value)

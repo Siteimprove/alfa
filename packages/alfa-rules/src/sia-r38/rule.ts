@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Element } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Trilean } from "@siteimprove/alfa-trilean";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
@@ -21,6 +22,8 @@ export default Rule.Composite.of<Page, Element, Question.Metadata>({
     Criterion.of("1.2.3"),
     Criterion.of("1.2.5"),
     Criterion.of("1.2.8"),
+    EAA.of("9.1.2.3"),
+    EAA.of("9.1.2.5"),
     Technique.of("G8"),
     Technique.of("G69"),
     Technique.of("G78"),

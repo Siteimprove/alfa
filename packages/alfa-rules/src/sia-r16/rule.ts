@@ -4,6 +4,7 @@ import { DOM } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -30,6 +31,8 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [
     Criterion.of("1.3.1"),
     Criterion.of("4.1.2"),
+    EAA.of("9.1.3.1"),
+    EAA.of("9.4.1.2"),
     Technique.of("ARIA5"),
   ],
   tags: [Scope.Component, Stability.Stable],

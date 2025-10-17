@@ -2,6 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { EAA } from "@siteimprove/alfa-eaa";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -30,7 +31,7 @@ const { getElementDescendants, getElementIdMap } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r81",
-  requirements: [Criterion.of("2.4.4"), Criterion.of("2.4.9")],
+  requirements: [Criterion.of("2.4.4"), Criterion.of("2.4.9"), EAA.of("9.2.4.4")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document, response }) {
     return {
