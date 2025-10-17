@@ -30,7 +30,7 @@ runs:
 
     - name: Upload global coverage report
       shell: bash
-      run: yarn upload-coverage-report "$(pwd)"
+      run: yarn upload-coverage-report ${{ github.workspace }}
       env:
         COVERAGE_API_URL: ${{ inputs.url }}
         COVERAGE_API_KEY: ${{ inputs.api-key }}
