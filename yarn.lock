@@ -2527,7 +2527,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-toolchain@workspace:^0.106.0, @siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain":
+"@siteimprove/alfa-toolchain@workspace:^0.106.1, @siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain"
   dependencies:
@@ -2697,7 +2697,7 @@ __metadata:
     "@changesets/cli": "npm:^2.29.7"
     "@microsoft/api-documenter": "npm:^7.27.1"
     "@microsoft/api-extractor": "npm:^7.52.10"
-    "@siteimprove/alfa-toolchain": "workspace:^0.106.0"
+    "@siteimprove/alfa-toolchain": "workspace:^0.106.1"
     "@types/node": "npm:^24.8.1"
     "@vitest/coverage-v8": "npm:3.2.4"
     knip: "npm:^5.66.1"
