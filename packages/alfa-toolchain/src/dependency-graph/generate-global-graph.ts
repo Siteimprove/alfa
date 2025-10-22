@@ -52,20 +52,31 @@ export async function generateGlobalGraph(rootDir: string) {
 
   const packages = await getPackages(rootDir);
 
-  let fullGraph = Map.empty<string, Array<string>>();
-  let heavyGraph = Map.empty<string, Array<string>>();
+  const fullGraph = Map.from(
+    packages.packages.map(({ packageJson }) => [
+      packageJson.name,
+      getAllScopedDependencies(packageJson, scope),
+    ]),
+  );
 
-  for (const pkg of packages.packages) {
-    fullGraph = fullGraph.set(
-      pkg.packageJson.name,
-      getAllScopedDependencies(pkg.packageJson, scope),
-    );
+  const heavyGraph = Map.from(
+    packages.packages.map(({ packageJson }) => [
+      packageJson.name,
+      getScopedProdDependencies(packageJson, scope),
+    ]),
+  );
 
-    heavyGraph = fullGraph.set(
-      pkg.packageJson.name,
-      getScopedProdDependencies(pkg.packageJson, scope),
-    );
-  }
+  // for (const pkg of packages.packages) {
+  //   // fullGraph = fullGraph.set(
+  //   //   pkg.packageJson.name,
+  //   //   getAllScopedDependencies(pkg.packageJson, scope),
+  //   // );
+  //
+  //   heavyGraph = fullGraph.set(
+  //     pkg.packageJson.name,
+  //     getScopedProdDependencies(pkg.packageJson, scope),
+  //   );
+  // }
 
   const modules = [...getClusters(clusters)];
 
