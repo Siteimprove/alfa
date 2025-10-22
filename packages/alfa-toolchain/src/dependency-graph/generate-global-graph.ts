@@ -18,10 +18,11 @@ const targetPath = process.argv[2] ?? ".";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
 const destinationPath = path.join(targetPath, "docs");
 
-await generateGlobalGraph(targetPath);
+await generateGlobalGraph(targetPath, "@siteimprove");
 
 /**
- * Generate the global dependency graph between all packages in the monorepo.
+ * Generate the global dependency graph between all packages in the monorepo
+ * with a given scope.
  *
  * @remarks
  * * Modules are packages, identified by their name, clusters are defined in an
@@ -36,7 +37,7 @@ await generateGlobalGraph(targetPath);
  *
  * @public
  */
-export async function generateGlobalGraph(rootDir: string) {
+export async function generateGlobalGraph(rootDir: string, scope: string) {
   const packages = await getPackages(rootDir);
 
   let fullGraph = Map.empty<string, Array<string>>();
@@ -45,12 +46,12 @@ export async function generateGlobalGraph(rootDir: string) {
   for (const pkg of packages.packages) {
     fullGraph = fullGraph.set(
       pkg.packageJson.name,
-      getAllSIDependencies(pkg.packageJson),
+      getAllScopedDependencies(pkg.packageJson, scope),
     );
 
     heavyGraph = fullGraph.set(
       pkg.packageJson.name,
-      getSIProdDependencies(pkg.packageJson),
+      getScopedProdDependencies(pkg.packageJson, scope),
     );
   }
 
@@ -100,20 +101,26 @@ export function* getClusters(
 }
 
 /** @internal */
-function getAllSIDependencies(pkg: {
-  dependencies?: { [key: string]: string };
-  devDependencies?: { [key: string]: string };
-}): Array<string> {
+function getAllScopedDependencies(
+  pkg: {
+    dependencies?: { [key: string]: string };
+    devDependencies?: { [key: string]: string };
+  },
+  scope: string,
+): Array<string> {
   return Object.keys(pkg.dependencies ?? {})
     .concat(Object.keys(pkg.devDependencies ?? {}))
-    .filter((dep) => dep.startsWith("@siteimprove"));
+    .filter((dep) => dep.startsWith(scope));
 }
 
 /** @internal */
-function getSIProdDependencies(pkg: {
-  dependencies?: { [key: string]: string };
-}): Array<string> {
+function getScopedProdDependencies(
+  pkg: {
+    dependencies?: { [key: string]: string };
+  },
+  scope: string,
+): Array<string> {
   return Object.keys(pkg.dependencies ?? {}).filter((dep) =>
-    dep.startsWith("@siteimprove"),
+    dep.startsWith(scope),
   );
 }
