@@ -6,7 +6,10 @@ import * as path from "node:path";
 
 import { DependencyGraph } from "./dependency-graph.js";
 
-type ClusterDefinition =
+/**
+ * @internal
+ */
+export type ClusterDefinition =
   | string
   | { name: string; children: Array<ClusterDefinition> };
 
@@ -22,14 +25,15 @@ generateGlobalGraph(targetPath);
  * Generate the global dependency graph between all packages in the monorepo.
  *
  * @remarks
- * * Modules are packages, identified by their name, clusters are defined in and
- * adhoc way.
+ * * Modules are packages, identified by their name, clusters are defined in an
+ *   adhoc way.
  * * Clusterization is pre-built by parsing the clusters definition file.
  * * Clusters' id and name are the one set in the clusters definition file.
  * * Modules' id is the package name, and their name is the package name stripped
- * of the `@siteimprove/` scope.
- * * There should be no circular dependencies ar these are caught by TypeScript.
+ *   of the `@siteimprove/` scope.
+ * * There should be no circular dependencies as these are caught by TypeScript.
  * * No module is specifically considered an entry point for its cluster.
+ * * "light" edges are dev dependencies.
  *
  * @public
  */
