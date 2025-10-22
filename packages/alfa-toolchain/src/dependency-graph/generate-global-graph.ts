@@ -18,7 +18,7 @@ const targetPath = process.argv[2] ?? ".";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
 const destinationPath = path.join(targetPath, "docs");
 
-await generateGlobalGraph(targetPath, "@siteimprove");
+await generateGlobalGraph(targetPath);
 
 /**
  * Generate the global dependency graph between all packages in the monorepo
@@ -37,7 +37,17 @@ await generateGlobalGraph(targetPath, "@siteimprove");
  *
  * @public
  */
-export async function generateGlobalGraph(rootDir: string, scope: string) {
+export async function generateGlobalGraph(rootDir: string) {
+  const { name, scope, clusters } = (
+    await import(path.join(rootDir, clustersDefinitionPath), {
+      with: { type: "json" },
+    })
+  ).default as {
+    name: string;
+    scope: string;
+    clusters: Array<ClusterDefinition>;
+  };
+
   const packages = await getPackages(rootDir);
 
   let fullGraph = Map.empty<string, Array<string>>();
@@ -55,29 +65,22 @@ export async function generateGlobalGraph(rootDir: string, scope: string) {
     );
   }
 
-  const clusters = (
-    await import(path.join(rootDir, clustersDefinitionPath), {
-      with: { type: "json" },
-    })
-  ).default as Array<ClusterDefinition>;
-
   const modules = [...getClusters(clusters)];
 
   const circular: Array<string> = [];
 
-  const baseCluster = "Alfa";
   const clusterize = (module: string) =>
     modules.find((m) => m.id === module)?.clusters ?? [];
   const clusterId = (cluster: string) => cluster;
   const clusterLabel = (cluster: string) => cluster;
 
   const moduleId = (module: string) => module;
-  const moduleName = (module: string) => module.replace("@siteimprove/", "");
+  const moduleName = (module: string) => module.replace(scope, "");
   const isEntryPoint = () => false;
 
   await DependencyGraph.of<string, string>(
-    { name: "Alfa", fullGraph, heavyGraph, circular, clusterize },
-    { baseCluster, clusterId, clusterLabel },
+    { name, fullGraph, heavyGraph, circular, clusterize },
+    { baseCluster: name, clusterId, clusterLabel },
     { moduleId, moduleName, isEntryPoint },
   ).save(path.join(rootDir, destinationPath));
 }
@@ -101,7 +104,7 @@ export function* getClusters(
 }
 
 /** @internal */
-function getAllScopedDependencies(
+export function getAllScopedDependencies(
   pkg: {
     dependencies?: { [key: string]: string };
     devDependencies?: { [key: string]: string };
@@ -114,7 +117,7 @@ function getAllScopedDependencies(
 }
 
 /** @internal */
-function getScopedProdDependencies(
+export function getScopedProdDependencies(
   pkg: {
     dependencies?: { [key: string]: string };
   },
