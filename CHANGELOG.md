@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.106.1](../../compare/v0.106.0...v0.106.1) (2025-10-22)
+
+### Fixed
+
+- [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md#01061): Test release to check new flow.
+
 ## [0.106.0](../../compare/v0.105.0...v0.106.0) (2025-10-17)
 
 ### Added

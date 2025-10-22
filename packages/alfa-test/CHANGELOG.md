@@ -1,5 +1,11 @@
 # @siteimprove/alfa-test
 
+## 0.106.1
+
+### Patch Changes
+
+- **Fixed:** Test release to check new flow. ([`4533733`](https://github.com/Siteimprove/alfa/commit/4533733d9a6c9bd94d4a700f3500c60ad9cd4c07))
+
 ## 0.106.0
 
 ## 0.105.0

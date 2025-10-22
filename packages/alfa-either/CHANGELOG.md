@@ -1,5 +1,7 @@
 # @siteimprove/alfa-either
 
+## 0.106.1
+
 ## 0.106.0
 
 ## 0.105.0
