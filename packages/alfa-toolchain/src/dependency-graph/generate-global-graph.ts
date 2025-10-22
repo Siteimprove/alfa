@@ -48,8 +48,6 @@ export async function generateGlobalGraph(rootDir: string) {
     clusters: Array<ClusterDefinition>;
   };
 
-  console.dir(clusters);
-
   const packages = await getPackages(rootDir);
 
   const fullGraph = Map.from(
@@ -65,18 +63,6 @@ export async function generateGlobalGraph(rootDir: string) {
       getScopedProdDependencies(packageJson, scope),
     ]),
   );
-
-  // for (const pkg of packages.packages) {
-  //   // fullGraph = fullGraph.set(
-  //   //   pkg.packageJson.name,
-  //   //   getAllScopedDependencies(pkg.packageJson, scope),
-  //   // );
-  //
-  //   heavyGraph = fullGraph.set(
-  //     pkg.packageJson.name,
-  //     getScopedProdDependencies(pkg.packageJson, scope),
-  //   );
-  // }
 
   const modules = [...getClusters(clusters)];
 
