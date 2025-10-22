@@ -6,20 +6,19 @@ import * as path from "node:path";
 
 import { DependencyGraph } from "./dependency-graph.js";
 
-/**
- * @internal
- */
+/** @internal */
 export type ClusterDefinition =
   | string
   | { name: string; children: Array<ClusterDefinition> };
 
-type Module = { id: string; clusters: Array<string> };
+/** @internal */
+export type Module = { id: string; clusters: Array<string> };
 
 const targetPath = process.argv[2] ?? ".";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
 const destinationPath = path.join(targetPath, "docs");
 
-generateGlobalGraph(targetPath);
+await generateGlobalGraph(targetPath);
 
 /**
  * Generate the global dependency graph between all packages in the monorepo.
@@ -46,16 +45,12 @@ export async function generateGlobalGraph(rootDir: string) {
   for (const pkg of packages.packages) {
     fullGraph = fullGraph.set(
       pkg.packageJson.name,
-      Object.keys(pkg.packageJson.dependencies ?? {})
-        .concat(Object.keys(pkg.packageJson.devDependencies ?? {}))
-        .filter((dep) => dep.startsWith("@siteimprove")),
+      getAllSIDependencies(pkg.packageJson),
     );
 
     heavyGraph = fullGraph.set(
       pkg.packageJson.name,
-      Object.keys(pkg.packageJson.dependencies ?? {}).filter((dep) =>
-        dep.startsWith("@siteimprove"),
-      ),
+      getSIProdDependencies(pkg.packageJson),
     );
   }
 
@@ -65,20 +60,7 @@ export async function generateGlobalGraph(rootDir: string) {
     })
   ).default as Array<ClusterDefinition>;
 
-  function* getClusters(
-    clusters: Array<ClusterDefinition>,
-    acc: Array<string>,
-  ): Iterable<Module> {
-    for (const cluster of clusters) {
-      if (typeof cluster === "string") {
-        yield { id: cluster, clusters: acc };
-      } else {
-        yield* getClusters(cluster.children, [...acc, cluster.name]);
-      }
-    }
-  }
-
-  const modules = [...getClusters(clusters, [])];
+  const modules = [...getClusters(clusters)];
 
   const circular: Array<string> = [];
 
@@ -97,4 +79,41 @@ export async function generateGlobalGraph(rootDir: string) {
     { baseCluster, clusterId, clusterLabel },
     { moduleId, moduleName, isEntryPoint },
   ).save(path.join(rootDir, destinationPath));
+}
+
+/**
+ * Get a list of modules, with their clusters, from the clusters definition.
+ *
+ * @internal
+ */
+export function* getClusters(
+  clusters: Array<ClusterDefinition>,
+  acc: Array<string> = [],
+): Iterable<Module> {
+  for (const cluster of clusters) {
+    if (typeof cluster === "string") {
+      yield { id: cluster, clusters: acc };
+    } else {
+      yield* getClusters(cluster.children, [...acc, cluster.name]);
+    }
+  }
+}
+
+/** @internal */
+function getAllSIDependencies(pkg: {
+  dependencies?: { [key: string]: string };
+  devDependencies?: { [key: string]: string };
+}): Array<string> {
+  return Object.keys(pkg.dependencies ?? {})
+    .concat(Object.keys(pkg.devDependencies ?? {}))
+    .filter((dep) => dep.startsWith("@siteimprove"));
+}
+
+/** @internal */
+function getSIProdDependencies(pkg: {
+  dependencies?: { [key: string]: string };
+}): Array<string> {
+  return Object.keys(pkg.dependencies ?? {}).filter((dep) =>
+    dep.startsWith("@siteimprove"),
+  );
 }
