@@ -23,7 +23,6 @@
     "extract": "node scripts/api-extractor.mjs --pretty",
     "extract:self": "CI=false yarn extract ${INIT_CWD}",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
-    "dependency-graph": "package-dependency-graph --config config/package-dependency-graph.ts --exclude-node_modules --graphviz --dot docs/dependency-graph.dot --png docs/dependency-graph.png",
     "knip": "knip --config config/knip.ts --no-config-hints"
   },
   "engines": {
