@@ -1,5 +1,7 @@
 # @siteimprove/alfa-eaa
 
+## 0.106.1
+
 ## 0.106.0
 
 ### Minor Changes
