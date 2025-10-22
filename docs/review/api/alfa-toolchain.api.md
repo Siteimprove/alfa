@@ -19,7 +19,7 @@ export const changelogFunctions: ChangelogFunctions;
 export function generateGlobalGraph(rootDir: string): Promise<void>;
 
 // @public (undocumented)
-export function generatePackagesGraphs(cwd: string): Promise<void>;
+export function generatePackagesGraphs(rootDir: string): Promise<void>;
 
 // @public
 export function generateUnitTestCoverageReport(cwd: string): Promise<void>;
