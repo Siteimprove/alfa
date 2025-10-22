@@ -30,6 +30,7 @@
     "create-alfa-package": "dist/create-alfa-package.js",
     "generate-packages-dependency-graphs": "dist/dependency-graph/generate-packages-graphs.js",
     "generate-unit-test-report": "dist/coverage/generate-unit-test-coverage-report.js",
+    "upload-coverage-report": "dist/coverage/upload-coverage-report.js",
     "validate-structure": "dist/validation/validate-all.js"
   },
   "files": [
@@ -43,6 +44,8 @@
     "registry": "https://npm.pkg.github.com/",
     "executableFiles": [
       "dist/changeset/changelog-global.js",
+      "dist/coverage/generate-unit-test-coverage-report.js",
+      "dist/coverage/upload-coverage-report.js",
       "dist/create-alfa-package.js",
       "dist/dependency-graph/generate-packages-graphs.js",
       "dist/validation/validate-all.js"
@@ -63,6 +66,7 @@
     "@siteimprove/alfa-string": "workspace:^",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@ts-graphviz/adapter": "^3.0.3",
+    "axios": "^1.12.2",
     "chalk": "^5.6.2",
     "json-stringify-pretty-compact": "^4.0.0",
     "madge": "^8.0.0",

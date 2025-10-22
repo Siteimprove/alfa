@@ -3,6 +3,7 @@ import { Map } from "@siteimprove/alfa-map";
 
 import { getPackages, type Package } from "@manypkg/get-packages";
 import madge from "madge";
+import * as path from "node:path";
 
 import { DependencyGraph } from "./dependency-graph.js";
 
@@ -16,7 +17,7 @@ generatePackagesGraphs(targetPath);
 export async function generatePackagesGraphs(cwd: string) {
   const packages = await getPackages(cwd);
   for (const pkg of packages.packages) {
-    await (await fromPackage(pkg)).save(`${pkg.dir}/docs`);
+    await (await fromPackage(pkg)).save(path.join(pkg.dir, "docs"));
   }
 }
 
@@ -40,13 +41,13 @@ async function fromPackage(
   // These are in other packages, which we don't care about here.
   const notPkg = new RegExp(`^../`);
 
-  const fullDepTree = await madge(`${pkg.dir}/src`, {
+  const fullDepTree = await madge(path.join(pkg.dir, "src"), {
     fileExtensions: ["ts", "tsx"],
     excludeRegExp: [/[.]d[.]ts/, notPkg],
     baseDir: pkg.dir,
   });
 
-  const noTypeDepTree = await madge(`${pkg.dir}/src`, {
+  const noTypeDepTree = await madge(path.join(pkg.dir, "src"), {
     fileExtensions: ["ts", "tsx"],
     excludeRegExp: [/[.]d[.]ts/, notPkg],
     detectiveOptions: { ts: { skipTypeImports: true } },
@@ -72,11 +73,11 @@ async function fromPackage(
  * /foo/bar/baz.ts -> ["/foo", "/foo/bar"]
  */
 function clusterize(module: string): Array<string> {
-  const clustersList = module.split("/");
+  const clustersList = module.split(path.sep);
   let clusters: Array<string> = [];
 
   for (let i = 0; i < clustersList.length - 1; i++) {
-    clusters.push(clustersList.slice(0, i + 1).join("/"));
+    clusters.push(clustersList.slice(0, i + 1).join(path.sep));
   }
 
   return clusters;
@@ -93,7 +94,7 @@ function clusterId(cluster: string): string {
  * Returns the label of a cluster, i.e., the last segment of its path.
  */
 function clusterLabel(cluster: string): string {
-  const parts = cluster.split("/");
+  const parts = cluster.split(path.sep);
   return parts[parts.length - 1];
 }
 
@@ -108,7 +109,7 @@ function moduleId(module: string): string {
  * Returns the name of a module, i.e., the last segment of its path.
  */
 function moduleName(module: string): string {
-  const parts = module.split("/");
+  const parts = module.split(path.sep);
   return parts[parts.length - 1];
 }
 
