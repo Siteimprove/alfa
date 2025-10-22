@@ -16,7 +16,7 @@ export type Module = { id: string; clusters: Array<string> };
 
 const targetPath = process.argv[2] ?? ".";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
-const destinationPath = path.join(targetPath, "docs");
+const destinationPath = "docs";
 
 await generateGlobalGraph(targetPath);
 
@@ -74,8 +74,10 @@ export async function generateGlobalGraph(rootDir: string) {
   const clusterLabel = (cluster: string) => cluster;
 
   const moduleId = (module: string) => module;
-  const moduleName = (module: string) => module.replace(scope, "");
+  const moduleName = (module: string) => module.replace(scope + "/", "");
   const isEntryPoint = () => false;
+
+  console.log(path.join(rootDir, destinationPath));
 
   await DependencyGraph.of<string, string>(
     { name, fullGraph, heavyGraph, circular, clusterize },

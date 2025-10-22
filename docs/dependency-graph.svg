@@ -128,7 +128,7 @@
 <!-- exit_Comparison&#45;&gt;name_other -->
 <g id="edge181" class="edge">
 <title>exit_Comparison&#45;&gt;name_other</title>
-<path fill="none" stroke="#e8ff00" d="M1238,-316.18C1259.17,-326.66 1282.86,-336.23 1306,-342 1344.99,-351.72 1998.36,-336 2029,-362 2055.75,-384.7 2044,-404.42 2044,-439.5 2044,-500.5 2044,-500.5 2044,-500.5 2044,-526.7 2034.96,-541.46 2019.59,-553.05"/>
+<path fill="none" stroke="#e8ff00" stroke-dasharray="1,5" d="M1238,-316.18C1259.17,-326.66 1282.86,-336.23 1306,-342 1344.99,-351.72 1998.36,-336 2029,-362 2055.75,-384.7 2044,-404.42 2044,-439.5 2044,-500.5 2044,-500.5 2044,-500.5 2044,-526.7 2034.96,-541.46 2019.59,-553.05"/>
 <polygon fill="#e8ff00" stroke="#e8ff00" points="2017.32,-550.37 2011,-558.87 2021.24,-556.16 2017.32,-550.37"/>
 </g>
 <!-- exit_Comparison&#45;&gt;name_other -->
@@ -173,7 +173,7 @@
 <!-- exit_Alternatives&#45;&gt;name_other -->
 <g id="edge194" class="edge">
 <title>exit_Alternatives&#45;&gt;name_other</title>
-<path fill="none" stroke="#ff8b00" d="M1463,-571.95C1463.9,-573.9 1464.9,-575.92 1466,-578 1470.33,-586.2 1476.87,-593.95 1484.31,-600.31"/>
+<path fill="none" stroke="#ff8b00" stroke-dasharray="1,5" d="M1463,-571.95C1463.9,-573.9 1464.9,-575.92 1466,-578 1470.33,-586.2 1476.87,-593.95 1484.31,-600.31"/>
 <polygon fill="#ff8b00" stroke="#ff8b00" points="1477.26,-594.38 1485,-601.62 1483.46,-591.14 1477.26,-594.38"/>
 </g>
 <!-- exit_Alternatives&#45;&gt;name_other -->
@@ -433,7 +433,7 @@
 <!-- exit_Logic&#45;&gt;name_other -->
 <g id="edge197" class="edge">
 <title>exit_Logic&#45;&gt;name_other</title>
-<path fill="none" stroke="#0074ff" d="M872,-218.5C969.1,-225.33 1166.14,-203.76 1234,-244 1248.1,-252.36 1243.07,-262.77 1254,-275 1285.36,-310.09 1291.9,-325.57 1336,-342 1372.77,-355.7 2011.03,-337.9 2042,-362 2070.26,-383.99 2064,-403.69 2064,-439.5 2064,-500.5 2064,-500.5 2064,-500.5 2064,-537.78 2048.45,-552.98 2019.85,-569.7"/>
+<path fill="none" stroke="#0074ff" stroke-dasharray="1,5" d="M872,-218.5C969.1,-225.33 1166.14,-203.76 1234,-244 1248.1,-252.36 1243.07,-262.77 1254,-275 1285.36,-310.09 1291.9,-325.57 1336,-342 1372.77,-355.7 2011.03,-337.9 2042,-362 2070.26,-383.99 2064,-403.69 2064,-439.5 2064,-500.5 2064,-500.5 2064,-500.5 2064,-537.78 2048.45,-552.98 2019.85,-569.7"/>
 <polygon fill="#0074ff" stroke="#0074ff" points="2017.97,-566.74 2011,-574.71 2021.42,-572.82 2017.97,-566.74"/>
 </g>
 <!-- exit_Logic&#45;&gt;name_other -->
@@ -757,7 +757,7 @@
 <!-- exit_Understanding the web&#45;&gt;name_other -->
 <g id="edge333" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_other</title>
-<path fill="none" stroke="#ff4600" d="M698.42,-834C733.29,-828.87 760.18,-822.33 769,-814 820.13,-765.69 738.51,-705.98 789,-657 804.35,-642.11 1159,-620.21 1482.54,-618.59"/>
+<path fill="none" stroke="#ff4600" stroke-dasharray="1,5" d="M698.42,-834C733.29,-828.87 760.18,-822.33 769,-814 820.13,-765.69 738.51,-705.98 789,-657 804.35,-642.11 1159,-620.21 1482.54,-618.59"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="1475.06,-622.23 1485,-618.55 1474.94,-615.23 1475.06,-622.23"/>
 </g>
 <!-- exit_Understanding the web&#45;&gt;name_other -->
@@ -1083,7 +1083,7 @@
 <!-- exit_Collections&#45;&gt;name_other -->
 <g id="edge454" class="edge">
 <title>exit_Collections&#45;&gt;name_other</title>
-<path fill="none" stroke="#a2ff00" d="M1028,-492.31C1064.3,-526.89 1084.84,-552.7 1149,-578 1256.71,-620.47 1294.94,-581.06 1408,-606 1419.7,-608.58 1433.16,-614.04 1482.84,-615.88"/>
+<path fill="none" stroke="#a2ff00" stroke-dasharray="1,5" d="M1028,-492.31C1064.3,-526.89 1084.84,-552.7 1149,-578 1256.71,-620.47 1294.94,-581.06 1408,-606 1419.7,-608.58 1433.16,-614.04 1482.84,-615.88"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="1474.61,-618.24 1485,-616.19 1475.6,-611.31 1474.61,-618.24"/>
 </g>
 <!-- exit_Collections&#45;&gt;name_other -->
@@ -1488,7 +1488,7 @@
 <!-- @siteimprove/alfa&#45;string&#45;&gt;@siteimprove/alfa&#45;test -->
 <g id="edge486" class="edge">
 <title>@siteimprove/alfa&#45;string&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" d="M1761.13,-546.78C1770.4,-538.9 1781.61,-527.99 1790.09,-518.75"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1761.13,-546.78C1770.4,-538.9 1781.61,-527.99 1790.09,-518.75"/>
 <polygon fill="black" stroke="black" points="1792.78,-521 1796.73,-511.17 1787.51,-516.39 1792.78,-521"/>
 </g>
 <!-- @siteimprove/alfa&#45;string&#45;&gt;exit_other -->
@@ -1515,7 +1515,7 @@
 <!-- exit_Type definitions&#45;&gt;name_other -->
 <g id="edge261" class="edge">
 <title>exit_Type definitions&#45;&gt;name_other</title>
-<path fill="none" stroke="#ff008b" d="M2010,-332.02C2011.71,-335.23 2014,-338.53 2017,-342 2044.93,-374.31 2079.8,-332.83 2111,-362 2137.15,-386.46 2133,-403.69 2133,-439.5 2133,-500.5 2133,-500.5 2133,-500.5 2133,-554.3 2089.89,-557.86 2040,-578 2035.89,-579.66 2029.41,-581.28 2020.95,-582.88"/>
+<path fill="none" stroke="#ff008b" stroke-dasharray="1,5" d="M2010,-332.02C2011.71,-335.23 2014,-338.53 2017,-342 2044.93,-374.31 2079.8,-332.83 2111,-362 2137.15,-386.46 2133,-403.69 2133,-439.5 2133,-500.5 2133,-500.5 2133,-500.5 2133,-554.3 2089.89,-557.86 2040,-578 2035.89,-579.66 2029.41,-581.28 2020.95,-582.88"/>
 <polygon fill="#ff008b" stroke="#ff008b" points="2020.26,-579.44 2011,-584.59 2021.44,-586.34 2020.26,-579.44"/>
 </g>
 <!-- exit_Type definitions&#45;&gt;name_other -->
@@ -1540,7 +1540,7 @@
 <!-- exit_Performance measurements&#45;&gt;name_other -->
 <g id="edge296" class="edge">
 <title>exit_Performance measurements&#45;&gt;name_other</title>
-<path fill="none" stroke="#002eff" d="M1894.2,-657C1835.23,-650.93 1769.54,-644.17 1709.86,-638.03"/>
+<path fill="none" stroke="#002eff" stroke-dasharray="1,5" d="M1894.2,-657C1835.23,-650.93 1769.54,-644.17 1709.86,-638.03"/>
 <polygon fill="#002eff" stroke="#002eff" points="1710.07,-634.54 1699.77,-637 1709.35,-641.5 1710.07,-634.54"/>
 </g>
 <!-- exit_Performance measurements&#45;&gt;name_Type definitions -->
@@ -1595,7 +1595,7 @@
 <!-- exit_Computations&#45;&gt;name_other -->
 <g id="edge326" class="edge">
 <title>exit_Computations&#45;&gt;name_other</title>
-<path fill="none" stroke="#a200ff" d="M1279.05,-657C1343.78,-644.74 1431.84,-629.64 1482.63,-622.55"/>
+<path fill="none" stroke="#a200ff" stroke-dasharray="1,5" d="M1279.05,-657C1343.78,-644.74 1431.84,-629.64 1482.63,-622.55"/>
 <polygon fill="#a200ff" stroke="#a200ff" points="1475.7,-627.24 1485,-622.15 1474.56,-620.33 1475.7,-627.24"/>
 </g>
 <!-- exit_Computations&#45;&gt;name_other -->
@@ -1724,7 +1724,7 @@
 <!-- @siteimprove/alfa&#45;cache&#45;&gt;@siteimprove/alfa&#45;test -->
 <g id="edge210" class="edge">
 <title>@siteimprove/alfa&#45;cache&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" d="M1682.81,-546.91C1708.67,-537.87 1743.97,-524.79 1769.5,-514.82"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1682.81,-546.91C1708.67,-537.87 1743.97,-524.79 1769.5,-514.82"/>
 <polygon fill="black" stroke="black" points="1771.09,-517.96 1779.11,-511.03 1768.52,-511.45 1771.09,-517.96"/>
 </g>
 <!-- @siteimprove/alfa&#45;cache&#45;&gt;exit_other -->
@@ -1753,7 +1753,7 @@
 <!-- @siteimprove/alfa&#45;math&#45;&gt;@siteimprove/alfa&#45;test -->
 <g id="edge278" class="edge">
 <title>@siteimprove/alfa&#45;math&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" d="M1852.88,-546.78C1846.32,-538.66 1835.48,-527.33 1825.38,-517.92"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1852.88,-546.78C1846.32,-538.66 1835.48,-527.33 1825.38,-517.92"/>
 <polygon fill="black" stroke="black" points="1827.66,-515.26 1817.89,-511.17 1822.98,-520.46 1827.66,-515.26"/>
 </g>
 <!-- @siteimprove/alfa&#45;math&#45;&gt;exit_other -->
@@ -1761,7 +1761,7 @@
 <!-- exit_Graphs&#45;&gt;name_other -->
 <g id="edge354" class="edge">
 <title>exit_Graphs&#45;&gt;name_other</title>
-<path fill="none" stroke="#ff0046" d="M342.56,-834C341.93,-803.6 352.43,-743.67 391,-716 448.11,-675.02 954.61,-704.25 1023,-688 1055.71,-680.23 1059.48,-665.54 1092,-657 1232.07,-620.2 1406.48,-617.31 1482.22,-617.88"/>
+<path fill="none" stroke="#ff0046" stroke-dasharray="1,5" d="M342.56,-834C341.93,-803.6 352.43,-743.67 391,-716 448.11,-675.02 954.61,-704.25 1023,-688 1055.71,-680.23 1059.48,-665.54 1092,-657 1232.07,-620.2 1406.48,-617.31 1482.22,-617.88"/>
 <polygon fill="#ff0046" stroke="#ff0046" points="1474.87,-621.1 1485,-617.98 1475.14,-614.1 1474.87,-621.1"/>
 </g>
 <!-- exit_Graphs&#45;&gt;name_other -->
@@ -1878,7 +1878,7 @@
 <!-- exit_Hash tables&#45;&gt;name_other -->
 <g id="edge373" class="edge">
 <title>exit_Hash tables&#45;&gt;name_other</title>
-<path fill="none" stroke="#ffd100" d="M350,-153.82C361.98,-154.98 374.35,-156.09 386,-157 611.88,-174.61 669.79,-160.27 895,-185 914.98,-187.19 1238.77,-228.87 1252,-244 1270.14,-264.75 1263.81,-328.16 1254,-342 1238.47,-363.9 1212.53,-340.1 1197,-362 1140.29,-442 1166.36,-515.6 1242,-578 1277.94,-607.65 1415.36,-614.49 1482.56,-616.05"/>
+<path fill="none" stroke="#ffd100" stroke-dasharray="1,5" d="M350,-153.82C361.98,-154.98 374.35,-156.09 386,-157 611.88,-174.61 669.79,-160.27 895,-185 914.98,-187.19 1238.77,-228.87 1252,-244 1270.14,-264.75 1263.81,-328.16 1254,-342 1238.47,-363.9 1212.53,-340.1 1197,-362 1140.29,-442 1166.36,-515.6 1242,-578 1277.94,-607.65 1415.36,-614.49 1482.56,-616.05"/>
 <polygon fill="#ffd100" stroke="#ffd100" points="1474.74,-618.89 1485,-616.26 1475.33,-611.92 1474.74,-618.89"/>
 </g>
 <!-- exit_Hash tables&#45;&gt;name_Comparison -->
@@ -2037,7 +2037,7 @@
 <!-- @siteimprove/alfa&#45;rectangle&#45;&gt;@siteimprove/alfa&#45;test -->
 <g id="edge782" class="edge">
 <title>@siteimprove/alfa&#45;rectangle&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" d="M1591.02,-547.9C1639.57,-537.69 1713.02,-521.6 1759.27,-511.05"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1591.02,-547.9C1639.57,-537.69 1713.02,-521.6 1759.27,-511.05"/>
 <polygon fill="black" stroke="black" points="1760.31,-514.4 1769.27,-508.75 1758.74,-507.58 1760.31,-514.4"/>
 </g>
 <!-- @siteimprove/alfa&#45;rectangle&#45;&gt;exit_other -->
@@ -2200,7 +2200,7 @@
 <!-- @siteimprove/alfa&#45;affine&#45;&gt;@siteimprove/alfa&#45;test -->
 <g id="edge422" class="edge">
 <title>@siteimprove/alfa&#45;affine&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" d="M1847.26,-605.7C1838.55,-599.01 1827.3,-589.51 1821,-578 1811.42,-560.5 1809.54,-537.53 1807.98,-521.15"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1847.26,-605.7C1838.55,-599.01 1827.3,-589.51 1821,-578 1811.42,-560.5 1809.54,-537.53 1807.98,-521.15"/>
 <polygon fill="black" stroke="black" points="1811.43,-520.57 1806.85,-511.01 1804.48,-521.34 1811.43,-520.57"/>
 </g>
 <!-- @siteimprove/alfa&#45;affine&#45;&gt;exit_other -->
@@ -2316,7 +2316,7 @@
 <!-- @siteimprove/alfa&#45;time&#45;&gt;@siteimprove/alfa&#45;test -->
 <g id="edge199" class="edge">
 <title>@siteimprove/alfa&#45;time&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" d="M1926.27,-546.91C1904.53,-537.79 1870.82,-524.56 1843.92,-514.56"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1926.27,-546.91C1904.53,-537.79 1870.82,-524.56 1843.92,-514.56"/>
 <polygon fill="black" stroke="black" points="1844.95,-511.21 1834.35,-511.03 1842.52,-517.77 1844.95,-511.21"/>
 </g>
 <!-- @siteimprove/alfa&#45;time&#45;&gt;exit_other -->

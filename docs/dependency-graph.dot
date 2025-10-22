@@ -1170,7 +1170,7 @@ digraph "dependency-graph-Alfa" {
     ];
   }
   "exit_Comparison" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#e8ff00";
     lhead = "cluster_other";
     ltail = "cluster_Comparison";
@@ -1248,7 +1248,7 @@ digraph "dependency-graph-Alfa" {
     ltail = "cluster_Alternatives";
   ];
   "exit_Alternatives" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#ff8b00";
     lhead = "cluster_other";
     ltail = "cluster_Alternatives";
@@ -1266,7 +1266,7 @@ digraph "dependency-graph-Alfa" {
     ltail = "cluster_Logic";
   ];
   "exit_Logic" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#0074ff";
     lhead = "cluster_other";
     ltail = "cluster_Logic";
@@ -1275,7 +1275,7 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
   ];
   "@siteimprove/alfa-time" -> "@siteimprove/alfa-test" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "@siteimprove/alfa-wcag" -> "@siteimprove/alfa-act" [
@@ -1331,7 +1331,7 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
   ];
   "@siteimprove/alfa-cache" -> "@siteimprove/alfa-test" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "exit_Understanding the web" -> "name_Comparison" [
@@ -1623,7 +1623,7 @@ digraph "dependency-graph-Alfa" {
     color = "black";
   ];
   "exit_Type definitions" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#ff008b";
     lhead = "cluster_other";
     ltail = "cluster_Type definitions";
@@ -1717,7 +1717,7 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
   ];
   "@siteimprove/alfa-math" -> "@siteimprove/alfa-test" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "exit_Alternatives" -> "name_Type definitions" [
@@ -1818,7 +1818,7 @@ digraph "dependency-graph-Alfa" {
     ltail = "cluster_Performance measurements";
   ];
   "exit_Performance measurements" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#002eff";
     lhead = "cluster_other";
     ltail = "cluster_Performance measurements";
@@ -1981,7 +1981,7 @@ digraph "dependency-graph-Alfa" {
     color = "black";
   ];
   "exit_Computations" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#a200ff";
     lhead = "cluster_other";
     ltail = "cluster_Computations";
@@ -2023,7 +2023,7 @@ digraph "dependency-graph-Alfa" {
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#ff4600";
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
@@ -2144,7 +2144,7 @@ digraph "dependency-graph-Alfa" {
     ltail = "cluster_Graphs";
   ];
   "exit_Graphs" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#ff0046";
     lhead = "cluster_other";
     ltail = "cluster_Graphs";
@@ -2239,7 +2239,7 @@ digraph "dependency-graph-Alfa" {
     color = "black";
   ];
   "exit_Hash tables" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#ffd100";
     lhead = "cluster_other";
     ltail = "cluster_Hash tables";
@@ -2515,7 +2515,7 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
   ];
   "@siteimprove/alfa-affine" -> "@siteimprove/alfa-test" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "exit_other" -> "name_Collections" [
@@ -2683,7 +2683,7 @@ digraph "dependency-graph-Alfa" {
     color = "black";
   ];
   "exit_Collections" -> "name_other" [
-    style = "solid";
+    style = "dotted";
     color = "#a2ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
@@ -2857,7 +2857,7 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
   ];
   "@siteimprove/alfa-string" -> "@siteimprove/alfa-test" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "exit_Serialization" -> "name_Alternatives" [
@@ -4466,7 +4466,7 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
   ];
   "@siteimprove/alfa-rectangle" -> "@siteimprove/alfa-test" [
-    style = "solid";
+    style = "dotted";
     color = "black";
   ];
   "@siteimprove/alfa-json-ld" -> "@siteimprove/alfa-json" [
