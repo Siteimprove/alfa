@@ -48,6 +48,8 @@ export async function generateGlobalGraph(rootDir: string) {
     clusters: Array<ClusterDefinition>;
   };
 
+  console.dir(clusters);
+
   const packages = await getPackages(rootDir);
 
   let fullGraph = Map.empty<string, Array<string>>();
