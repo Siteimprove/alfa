@@ -35,16 +35,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@asamuzakjp/dom-selector@npm:^6.5.4":
-  version: 6.6.1
-  resolution: "@asamuzakjp/dom-selector@npm:6.6.1"
+"@asamuzakjp/dom-selector@npm:^6.7.2":
+  version: 6.7.2
+  resolution: "@asamuzakjp/dom-selector@npm:6.7.2"
   dependencies:
     "@asamuzakjp/nwsapi": "npm:^2.3.9"
     bidi-js: "npm:^1.0.3"
     css-tree: "npm:^3.1.0"
     is-potential-custom-element-name: "npm:^1.0.1"
     lru-cache: "npm:^11.2.2"
-  checksum: 10c0/a781a4f4ea667a755c823e551de9aa431adcd49efb70a3644128a3ac0c7ac350313a829a9da519bbf8982fb1db8989ffaaeda6f7f8c6f4d3fa6708ba04dcae68
+  checksum: 10c0/b0cb6a5540dc70c9ace3fa91bdd84cf12be7817451d8522d8aaa19f806edc52f500647055ac2b806a93213b9756cd8cae9958fac8dcffbaecaef5dadabf1674f
   languageName: node
   linkType: hard
 
@@ -834,10 +834,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdn/browser-compat-data@npm:^7.1.12":
-  version: 7.1.12
-  resolution: "@mdn/browser-compat-data@npm:7.1.12"
-  checksum: 10c0/a2ef235cea7d65f1fa99226eadba821bbebba7eb2189e5e14b98eb3f366824f5ee594f43c9e1223727b288b7d383ad449afcea7e18ab66a1bdb0d7ab99d64fe4
+"@mdn/browser-compat-data@npm:^7.1.14":
+  version: 7.1.14
+  resolution: "@mdn/browser-compat-data@npm:7.1.14"
+  checksum: 10c0/f20506ef33eeeefde5462a5365f488d6a727c7ec1abfe7fbdb13bddc63c406b726e6ebca2bd371ff3f84960813b4fc6ae166911351a1adc57ca33405f79293f4
   languageName: node
   linkType: hard
 
@@ -1497,7 +1497,7 @@ __metadata:
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
     prettier: "npm:^3.6.2"
-    puppeteer: "npm:^24.24.1"
+    puppeteer: "npm:^24.25.0"
   languageName: unknown
   linkType: soft
 
@@ -1631,7 +1631,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
-    "@mdn/browser-compat-data": "npm:^7.1.12"
+    "@mdn/browser-compat-data": "npm:^7.1.14"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
     browserslist: "npm:^4.26.3"
@@ -1741,7 +1741,7 @@ __metadata:
     "@siteimprove/alfa-trampoline": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
     "@types/jsdom": "npm:^27.0.0"
-    jsdom: "npm:^27.0.0"
+    jsdom: "npm:^27.0.1"
   languageName: unknown
   linkType: soft
 
@@ -2481,7 +2481,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-test-deprecated@workspace:packages/alfa-test-deprecated"
   dependencies:
-    "@types/node": "npm:^24.7.2"
+    "@types/node": "npm:^24.8.1"
     chalk: "npm:^5.6.2"
   languageName: unknown
   linkType: soft
@@ -2491,7 +2491,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^24.7.2"
+    "@types/node": "npm:^24.8.1"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
@@ -2546,7 +2546,7 @@ __metadata:
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@svitejs/changesets-changelog-github-compact": "npm:^1.1.0"
-    "@ts-graphviz/adapter": "npm:^3.0.2"
+    "@ts-graphviz/adapter": "npm:^3.0.3"
     "@types/madge": "npm:^5.0.3"
     axios: "npm:^1.12.2"
     chalk: "npm:^5.6.2"
@@ -2554,7 +2554,7 @@ __metadata:
     madge: "npm:^8.0.0"
     resolve-from: "npm:^5.0.0"
     simple-git: "npm:^3.28.0"
-    ts-graphviz: "npm:^3.0.2"
+    ts-graphviz: "npm:^3.0.4"
   bin:
     alfa-changelog: dist/changeset/changelog-global.js
     create-alfa-package: dist/create-alfa-package.js
@@ -2652,7 +2652,7 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     prettier: "npm:^3.6.2"
-    puppeteer: "npm:^24.24.1"
+    puppeteer: "npm:^24.25.0"
   languageName: unknown
   linkType: soft
 
@@ -2700,9 +2700,9 @@ __metadata:
     "@microsoft/api-documenter": "npm:^7.27.1"
     "@microsoft/api-extractor": "npm:^7.52.10"
     "@siteimprove/alfa-toolchain": "workspace:^0.106.0"
-    "@types/node": "npm:^24.7.2"
+    "@types/node": "npm:^24.8.1"
     "@vitest/coverage-v8": "npm:3.2.4"
-    knip: "npm:^5.65.0"
+    knip: "npm:^5.66.1"
     minimist: "npm:^1.2.6"
     package-dependency-graph: "npm:^1.14.4"
     prettier: "npm:^3.6.2"
@@ -2737,12 +2737,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/adapter@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@ts-graphviz/adapter@npm:3.0.2"
+"@ts-graphviz/adapter@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@ts-graphviz/adapter@npm:3.0.3"
   dependencies:
-    "@ts-graphviz/common": "npm:^3.0.2"
-  checksum: 10c0/70df2fc8962d2f2f8d977cba500de01b6095a6f991273dd8385f03534026e34f9026ca7e1021b179d0c40fa87ea35008e1ca2f195aac99b247c72e94815d4765
+    "@ts-graphviz/common": "npm:^3.0.3"
+  checksum: 10c0/79f07eed0e54ab60e128a707f6f829b9bdbd12aa92a62128b604a6bb7a0c9b895861678f7922e52cf41d7176c5d4fa8adc979dad04b9722ad989b1b02c0191d7
   languageName: node
   linkType: hard
 
@@ -2755,12 +2755,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/ast@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@ts-graphviz/ast@npm:3.0.2"
+"@ts-graphviz/ast@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@ts-graphviz/ast@npm:3.0.3"
   dependencies:
-    "@ts-graphviz/common": "npm:^3.0.2"
-  checksum: 10c0/2875e79da8e2d5158029e6b494002271723bdf2b6bfd919939b60feec974a0d98817e4fbfb07a64dc2be70d367ee8b2227a55b19eb324795562d2f28a5068061
+    "@ts-graphviz/common": "npm:^3.0.3"
+  checksum: 10c0/4d707d9711436405076429de96db10209fea21413f044d29c4d593cba00e3566a71cca1d3a685e29250f1fd951e2e1f4c5d5e5447369678e0b8bb4e622030d37
   languageName: node
   linkType: hard
 
@@ -2771,10 +2771,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/common@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@ts-graphviz/common@npm:3.0.2"
-  checksum: 10c0/f0412f88c20e2af041c1fb2070efaf10843ddc70f2f23a609ab3d6e1b71ab995ce26a38d218137c68245b734146e0201b2f6a752e19fc9ecf81e20eff8d5b81a
+"@ts-graphviz/common@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@ts-graphviz/common@npm:3.0.3"
+  checksum: 10c0/84974ed54a7dcab77b6f29a7a6732efa5b5d7bb80ec5e9317a13ccd31c630a3da30459205459824dc4effe3df34200deebc5fe18fbf8757ee14e53361fb0e9ba
   languageName: node
   linkType: hard
 
@@ -2788,13 +2788,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/core@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@ts-graphviz/core@npm:3.0.2"
+"@ts-graphviz/core@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@ts-graphviz/core@npm:3.0.4"
   dependencies:
-    "@ts-graphviz/ast": "npm:^3.0.2"
-    "@ts-graphviz/common": "npm:^3.0.2"
-  checksum: 10c0/27c5ebe7540047471a86339783fd8baad37ac5f88ba4d5c6c8aa5a47b0f06fad0b68eae5aa67e5740ef861360083ea65ae2b09a2a010bc493b11b00886b9b426
+    "@ts-graphviz/ast": "npm:^3.0.3"
+    "@ts-graphviz/common": "npm:^3.0.3"
+  checksum: 10c0/9f21ee57f13adf88d58ce0a302ec3011bb2c6fdfb0297ba83dd88bf22b19eade1d6a4e69614860fcd477c258c04c36034c322d88fc5c38ab69f148504b930717
   languageName: node
   linkType: hard
 
@@ -2885,12 +2885,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^24.7.2":
-  version: 24.7.2
-  resolution: "@types/node@npm:24.7.2"
+"@types/node@npm:*, @types/node@npm:^24.8.1":
+  version: 24.8.1
+  resolution: "@types/node@npm:24.8.1"
   dependencies:
     undici-types: "npm:~7.14.0"
-  checksum: 10c0/03f662f10e4b89bc97016e067101cbabe55025b54c24afb581fb50992d5eeaaf417bdae34bbc668ae8759d3cdbbbadf35fc8b9b29d26f52ede2525d48e919e49
+  checksum: 10c0/d185f2f14aa26cc2b482aa730bfc452943f9636df37aad6ceed80aa397f1278f894043336bd72f74c47b3dbef23e772ac9b1a256168984aa8aee26836132d290
   languageName: node
   linkType: hard
 
@@ -3852,7 +3852,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssstyle@npm:^5.3.0":
+"cssstyle@npm:^5.3.1":
   version: 5.3.1
   resolution: "cssstyle@npm:5.3.1"
   dependencies:
@@ -3939,10 +3939,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"decimal.js@npm:^10.5.0":
-  version: 10.5.0
-  resolution: "decimal.js@npm:10.5.0"
-  checksum: 10c0/785c35279df32762143914668df35948920b6c1c259b933e0519a69b7003fc0a5ed2a766b1e1dda02574450c566b21738a45f15e274b47c2ac02072c0d1f3ac3
+"decimal.js@npm:^10.6.0":
+  version: 10.6.0
+  resolution: "decimal.js@npm:10.6.0"
+  checksum: 10c0/07d69fbcc54167a340d2d97de95f546f9ff1f69d2b45a02fd7a5292412df3cd9eb7e23065e532a318f5474a2e1bccf8392fdf0443ef467f97f3bf8cb0477e5aa
   languageName: node
   linkType: hard
 
@@ -5386,19 +5386,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^27.0.0":
-  version: 27.0.0
-  resolution: "jsdom@npm:27.0.0"
+"jsdom@npm:^27.0.1":
+  version: 27.0.1
+  resolution: "jsdom@npm:27.0.1"
   dependencies:
-    "@asamuzakjp/dom-selector": "npm:^6.5.4"
-    cssstyle: "npm:^5.3.0"
+    "@asamuzakjp/dom-selector": "npm:^6.7.2"
+    cssstyle: "npm:^5.3.1"
     data-urls: "npm:^6.0.0"
-    decimal.js: "npm:^10.5.0"
+    decimal.js: "npm:^10.6.0"
     html-encoding-sniffer: "npm:^4.0.0"
     http-proxy-agent: "npm:^7.0.2"
     https-proxy-agent: "npm:^7.0.6"
     is-potential-custom-element-name: "npm:^1.0.1"
-    parse5: "npm:^7.3.0"
+    parse5: "npm:^8.0.0"
     rrweb-cssom: "npm:^0.8.0"
     saxes: "npm:^6.0.0"
     symbol-tree: "npm:^3.2.4"
@@ -5407,15 +5407,15 @@ __metadata:
     webidl-conversions: "npm:^8.0.0"
     whatwg-encoding: "npm:^3.1.1"
     whatwg-mimetype: "npm:^4.0.0"
-    whatwg-url: "npm:^15.0.0"
-    ws: "npm:^8.18.2"
+    whatwg-url: "npm:^15.1.0"
+    ws: "npm:^8.18.3"
     xml-name-validator: "npm:^5.0.0"
   peerDependencies:
     canvas: ^3.0.0
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: 10c0/cc977bd0f48f92b275166b3e64622d83c2073dc309b790ed806246365985743295a7735bc8519a186ccffd42d1f2c16a0fa52a4ea79d2b329a948756db64ade1
+  checksum: 10c0/563ff3ebfd9a3dc66082cdf2427198b647993753b4c37b2d0064b5b47cf7be5154c62df10eb8122254f7b89c73ecb6fc870fa038e22ab9975b23079ee62e050e
   languageName: node
   linkType: hard
 
@@ -5474,9 +5474,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.65.0":
-  version: 5.65.0
-  resolution: "knip@npm:5.65.0"
+"knip@npm:^5.66.1":
+  version: 5.66.1
+  resolution: "knip@npm:5.66.1"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -5496,7 +5496,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/d6454eb7112b9268bd9af62373d40643207afe9b86fd0e85cee754cef4d6dc836c6db841450a7c230c971e32a541b0c0b9167e1cef09b74dc7d75bb590420e18
+  checksum: 10c0/c31aa0dfe13096510eede42aa0f25edfbc0777659908f21490e5406a8726282e6f415b9162b926bb22153ff1f5a42ad2a1f1852af7aabbed796bfaa092ead9c2
   languageName: node
   linkType: hard
 
@@ -6316,12 +6316,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parse5@npm:^7.0.0, parse5@npm:^7.3.0":
+"parse5@npm:^7.0.0":
   version: 7.3.0
   resolution: "parse5@npm:7.3.0"
   dependencies:
     entities: "npm:^6.0.0"
   checksum: 10c0/7fd2e4e247e85241d6f2a464d0085eed599a26d7b0a5233790c49f53473232eb85350e8133344d9b3fd58b89339e7ad7270fe1f89d28abe50674ec97b87f80b5
+  languageName: node
+  linkType: hard
+
+"parse5@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "parse5@npm:8.0.0"
+  dependencies:
+    entities: "npm:^6.0.0"
+  checksum: 10c0/8279892dcd77b2f2229707f60eb039e303adf0288812b2a8fd5acf506a4d432da833c6c5d07a6554bef722c2367a81ef4a1f7e9336564379a7dba3e798bf16b3
   languageName: node
   linkType: hard
 
@@ -6566,9 +6575,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:24.24.1":
-  version: 24.24.1
-  resolution: "puppeteer-core@npm:24.24.1"
+"puppeteer-core@npm:24.25.0":
+  version: 24.25.0
+  resolution: "puppeteer-core@npm:24.25.0"
   dependencies:
     "@puppeteer/browsers": "npm:2.10.12"
     chromium-bidi: "npm:9.1.0"
@@ -6577,23 +6586,23 @@ __metadata:
     typed-query-selector: "npm:^2.12.0"
     webdriver-bidi-protocol: "npm:0.3.7"
     ws: "npm:^8.18.3"
-  checksum: 10c0/e8b9420f1129610d91faaa2ad3cce78e567f75d11c2d77a36bc47437fcb70de5b4df5da0e2a3a909422da61daf32bb445d37613945d854a6a37d1d75300ec0a4
+  checksum: 10c0/4c001bd333e7efc4748a6f0ed271d37343708f31237ba48a0b96cb498edd805ff4a1a46fb05aecc8f0b5829518e79a7f056774837148b37898a191bec98d8e73
   languageName: node
   linkType: hard
 
-"puppeteer@npm:^24.24.1":
-  version: 24.24.1
-  resolution: "puppeteer@npm:24.24.1"
+"puppeteer@npm:^24.25.0":
+  version: 24.25.0
+  resolution: "puppeteer@npm:24.25.0"
   dependencies:
     "@puppeteer/browsers": "npm:2.10.12"
     chromium-bidi: "npm:9.1.0"
     cosmiconfig: "npm:^9.0.0"
     devtools-protocol: "npm:0.0.1508733"
-    puppeteer-core: "npm:24.24.1"
+    puppeteer-core: "npm:24.25.0"
     typed-query-selector: "npm:^2.12.0"
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: 10c0/fe68b1221eba4ad6acd5f069ad6f40255534f4d07afe0e9987e9f9fca8473b0ab85971aa6314d95c335d9b2d73c686295c96bc51a69ecf8a1d91554141375fc1
+  checksum: 10c0/1eb541860646819317e5c6f406ce664ddc6663339fef3029bed000b145cb8097625e48dce5a81e7f15a93ab48a86c9659544b773110080e409a28a8a41e20e95
   languageName: node
   linkType: hard
 
@@ -7504,15 +7513,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-graphviz@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "ts-graphviz@npm:3.0.2"
+"ts-graphviz@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "ts-graphviz@npm:3.0.4"
   dependencies:
-    "@ts-graphviz/adapter": "npm:^3.0.2"
-    "@ts-graphviz/ast": "npm:^3.0.2"
-    "@ts-graphviz/common": "npm:^3.0.2"
-    "@ts-graphviz/core": "npm:^3.0.2"
-  checksum: 10c0/067a96bf471edec654e09f5f700b2564c7bb8b31a647e4c3bad3f0c0aa2312ff42c15e61b86d5828529e8ff80e37c6bdbb10cfa6c2cd7396f88db2952aba75af
+    "@ts-graphviz/adapter": "npm:^3.0.3"
+    "@ts-graphviz/ast": "npm:^3.0.3"
+    "@ts-graphviz/common": "npm:^3.0.3"
+    "@ts-graphviz/core": "npm:^3.0.4"
+  checksum: 10c0/a311473f2792817c0c5ade891a076ded83d2613730f17cfd6dca34c5f8bb2876eb791d72bffff2bfdf538606c1cb9bddf531ba3f138954e961cdaaf2b67c88bd
   languageName: node
   linkType: hard
 
@@ -7711,8 +7720,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^5.0.0 || ^6.0.0 || ^7.0.0-0":
-  version: 7.1.9
-  resolution: "vite@npm:7.1.9"
+  version: 7.1.11
+  resolution: "vite@npm:7.1.11"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.5.0"
@@ -7761,7 +7770,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/f628f903a137c1410232558bde99c223ea00a090bda6af77752c61f912955f0050aac12d3cfe024d08a0f150ff6fab61b3d0be75d634a59b94d49f525392e1f7
+  checksum: 10c0/c4aa7f47b1fb07f734ed6f4f605d73e5acf7ff9754d75b4adbfbdddf0e520413019834620c1f7b4a207bce7e1d20a2636c584db2b1b17f5a3ba2cd23d47e50ab
   languageName: node
   linkType: hard
 
@@ -7890,7 +7899,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"whatwg-url@npm:^15.0.0":
+"whatwg-url@npm:^15.0.0, whatwg-url@npm:^15.1.0":
   version: 15.1.0
   resolution: "whatwg-url@npm:15.1.0"
   dependencies:
@@ -7982,7 +7991,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.18.2, ws@npm:^8.18.3":
+"ws@npm:^8.18.3":
   version: 8.18.3
   resolution: "ws@npm:8.18.3"
   peerDependencies:
