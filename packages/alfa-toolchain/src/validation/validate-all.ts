@@ -1,5 +1,9 @@
+/*
+ The "." default directory is relative to this file for dynamic imports, not
+ to the shell invocation directory. So it is always safer to pass the actual
+ directory as CLI option, typically using "$(pwd)" to let the shell handle it
+ */
 import { getPackages } from "@manypkg/get-packages";
-import * as fs from "node:fs";
 import * as path from "node:path";
 
 import { hasExtractorConfig } from "./has-extractor-config.js";
@@ -57,7 +61,7 @@ export async function validate(rootDir: string) {
       "package-clusters.json",
     );
 
-    const clusters = (
+    const { clusters } = (
       await import(clustersDefinitionPath, {
         with: { type: "json" },
       })

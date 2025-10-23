@@ -2513,8 +2513,7 @@ __metadata:
   bin:
     alfa-changelog: dist/changeset/changelog-global.js
     create-alfa-package: dist/create-alfa-package.js
-    generate-global-dependency-graph: dist/dependency-graph/generate-global-graph.js
-    generate-packages-dependency-graphs: dist/dependency-graph/generate-packages-graphs.js
+    generate-dependency-graphs: dist/dependency-graph/generate-graphs.js
     generate-unit-test-report: dist/coverage/generate-unit-test-coverage-report.js
     upload-coverage-report: dist/coverage/upload-coverage-report.js
     validate-structure: dist/validation/validate-all.js
