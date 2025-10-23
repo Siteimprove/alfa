@@ -2,4 +2,4 @@
 "@siteimprove/alfa-toolchain": minor
 ---
 
-**Added:** A new command for generating the global dependency graph between packages.
+**Changed:** The `generate-packges-graphs` command has been replaced by a `generate-dependency-graphs` command which also generates a global dependency graph between workspaces of the repository.

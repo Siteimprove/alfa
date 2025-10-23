@@ -5,6 +5,7 @@
  */
 import { getPackages } from "@manypkg/get-packages";
 import * as path from "node:path";
+import { loadJSON } from "../common.js";
 
 import { hasExtractorConfig } from "./has-extractor-config.js";
 import { isInClusters } from "./is-in-clusters.js";
@@ -14,7 +15,7 @@ import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig.js";
 
 const targetPath = process.argv[2] ?? ".";
 
-validate(targetPath);
+await validate(targetPath);
 
 /**
  * @public
@@ -22,11 +23,9 @@ validate(targetPath);
 export async function validate(rootDir: string) {
   const errors: Array<string> = [];
 
-  const config = (
-    await import(path.join(rootDir, "config", "validate-structure.json"), {
-      with: { type: "json" },
-    })
-  ).default;
+  const config = await loadJSON(
+    path.join(rootDir, "config", "validate-structure.json"),
+  );
 
   const packages = await getPackages(rootDir);
 
@@ -61,11 +60,7 @@ export async function validate(rootDir: string) {
       "package-clusters.json",
     );
 
-    const { clusters } = (
-      await import(clustersDefinitionPath, {
-        with: { type: "json" },
-      })
-    ).default;
+    const { clusters } = await loadJSON(clustersDefinitionPath);
 
     errors.push(
       ...isInClusters(

@@ -3,6 +3,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { getPackages, type Package } from "@manypkg/get-packages";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { loadJSON } from "../common.js";
 
 import {
   coveragePath,
@@ -52,12 +53,9 @@ export async function generateUnitTestCoverageReport(cwd: string) {
 async function loadPackageCoverage(
   pkg: Package,
 ): Promise<[Package, CoverageSummary]> {
-  const summary = (await import(
+  const summary = await loadJSON<CoverageSummary>(
     path.join(pkg.dir, coveragePath, "coverage-summary.json"),
-    {
-      with: { type: "json" },
-    }
-  )) as { default: CoverageSummary };
+  );
 
-  return [pkg, summary.default] as const;
+  return [pkg, summary] as const;
 }

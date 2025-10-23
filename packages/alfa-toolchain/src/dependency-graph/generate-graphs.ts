@@ -19,6 +19,7 @@ import * as adapter from "@ts-graphviz/adapter";
 
 import * as fs from "node:fs";
 import path from "node:path";
+import { loadJSON } from "../common.js";
 
 import type { DependencyGraph } from "./dependency-graph.js";
 import { GraphFactory } from "./helpers.js";
@@ -58,15 +59,11 @@ export async function generateGraphs(rootDir: string): Promise<void> {
   }
 
   async function createGlobalGraph(): Promise<DependencyGraph<string, string>> {
-    const config = (
-      await import(path.join(rootDir, clustersDefinitionPath), {
-        with: { type: "json" },
-      })
-    ).default as {
+    const config = await loadJSON<{
       name: string;
       scope: string;
       clusters: Array<GraphFactory.Global.ClusterDefinition>;
-    };
+    }>(path.join(rootDir, clustersDefinitionPath));
 
     return GraphFactory.fromPackagesList(packages, config);
   }

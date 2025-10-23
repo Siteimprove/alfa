@@ -8,6 +8,7 @@
     "./changeset/changelog-individual.cts",
     "./changeset/get-changeset-details.ts",
     "./changeset/helpers.ts",
+    "./common.ts",
     "./coverage/generate-unit-test-coverage-report.ts",
     "./coverage/transform-unit-test-coverage-data.ts",
     "./coverage/upload-coverage-report.ts",
