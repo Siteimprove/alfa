@@ -55,6 +55,8 @@ export namespace GraphFactory {
       heavyGraph: Map.from(Object.entries(noTypeDepTree.obj())),
       circular: Array.flatten(noTypeDepTree.circular()),
       baseCluster: "src",
+      clusterLabel: Individual.lastSegment,
+      moduleName: Individual.lastSegment,
     });
   }
 
@@ -117,7 +119,12 @@ export namespace GraphFactory {
     /**
      * Returns the clusters (directories) a module (file) belongs to.
      *
-     * /foo/bar/baz.ts -> ["/foo", "/foo/bar"]
+     * foo/bar/baz.ts -> ["foo", "foo/bar"]
+     *
+     * @remarks
+     * The last segment is normally the filename and is discarded.
+     *
+     * @interal
      */
     export function clusterize(module: string): Array<string> {
       const clustersList = module.split(path.sep);
@@ -132,38 +139,37 @@ export namespace GraphFactory {
 
     /**
      * Returns the id of a cluster, i.e., its full path.
+     *
+     * @internal
      */
     export function clusterId(cluster: string): string {
       return cluster;
     }
 
     /**
-     * Returns the label of a cluster, i.e., the last segment of its path.
+     * Returns the last segment of a path.
+     *
+     * @internal
      */
-    export function clusterLabel(cluster: string): string {
-      const parts = cluster.split(path.sep);
+    export function lastSegment(str: string): string {
+      const parts = str.split(path.sep);
       return parts[parts.length - 1];
     }
 
     /**
      * Returns the id of a module, i.e., its full path.
+     *
+     * @internal
      */
     export function moduleId(module: string): string {
       return module;
     }
 
     /**
-     * Returns the name of a module, i.e., the last segment of its path.
-     */
-    export function moduleName(module: string): string {
-      const parts = module.split(path.sep);
-      return parts[parts.length - 1];
-    }
-
-    /**
-     * Checks if a module is an entry point for its directory.
+     * Checks if a module is an entry point for its directory, i.e. an
+     * "index.ts" file.
      *
-     * These are exactly the "index.ts" files.
+     * @internal
      */
     export function isEntryPoint(module: string): boolean {
       return module.endsWith("index.ts");

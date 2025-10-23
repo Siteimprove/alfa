@@ -1,5 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
+import * as path from "node:path";
+
 import { GraphFactory } from "../../dist/dependency-graph/helpers.js";
 
 const { getAllScopedDependencies, getClusters, getScopedProdDependencies } =
@@ -144,5 +146,25 @@ test("getScopedProdDependencies handles missing devDependencies", async (t) => {
     "@foo/foo1",
     "@foo/foo2",
     "@foo/foo3",
+  ]);
+});
+
+const { clusterize, lastSegment } = GraphFactory.Individual;
+
+test("lastSegment() returns the last segment of a path", (t) => {
+  t.equal(lastSegment(path.join("foo")), "foo");
+  t.equal(lastSegment(path.join("foo", "bar")), "bar");
+  t.equal(lastSegment(path.join("foo", "bar", "baz")), "baz");
+});
+
+test("clusterize() returns the list of path prefixes, except the last", (t) => {
+  t.deepEqual(clusterize(path.join("a")), []);
+  t.deepEqual(clusterize(path.join("a", "b")), ["a"]);
+  t.deepEqual(clusterize(path.join("a", "b", "c")), ["a", path.join("a", "b")]);
+  t.deepEqual(clusterize(path.join("a", "b", "c", "d", "e")), [
+    "a",
+    path.join("a", "b"),
+    path.join("a", "b", "c"),
+    path.join("a", "b", "c", "d"),
   ]);
 });
