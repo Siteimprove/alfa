@@ -2,6 +2,7 @@ import changelogFunctions from "./changeset/build-changelog.js";
 import * as globalChangelog from "./changeset/changelog-global.js";
 import * as individualChangelog from "./changeset/changelog-individual.cjs";
 import { generateUnitTestCoverageReport } from "./coverage/generate-unit-test-coverage-report.js";
+import { uploadCoverageReport } from "./coverage/upload-coverage-report.js";
 import {
   createGlobalGraph,
   generatePackagesGraphs,
@@ -13,6 +14,7 @@ export {
   createGlobalGraph,
   generatePackagesGraphs,
   generateUnitTestCoverageReport,
+  uploadCoverageReport,
   globalChangelog,
   individualChangelog,
   Validation,
