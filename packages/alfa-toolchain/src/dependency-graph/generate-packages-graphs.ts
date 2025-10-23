@@ -18,9 +18,9 @@ generatePackagesGraphs(targetPath);
  *
  * @remarks
  * This requires graphviz to be installed on the OS, even just importing this
- * file requires so as @ts-graphviz/adapter test for presence upon load.
+ * file requires so, as @ts-graphviz/adapter tests for its presence upon load.
  *
- * The "." directory is relative to this file for dynamic import, not to the
+ * The "." directory is relative to this file for dynamic imports, not to the
  * shell invocation directory. So it is always safer to pass the actual root
  * directory as CLI option, typically using "$(pwd)" to let the shell handle it
  *

@@ -14,11 +14,8 @@ export type ClusterDefinition =
 /** @internal */
 export type Module = { id: string; clusters: Array<string> };
 
-const targetPath = process.argv[2] ?? ".";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
 const destinationPath = "docs";
-
-await createGlobalGraph(targetPath);
 
 /**
  * Generate the global dependency graph between all packages in the monorepo
