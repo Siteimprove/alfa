@@ -70,7 +70,7 @@ runs:
       # Otherwise, we need to detect OS from the matrix and act upon it.
       # See https://github.com/ts-graphviz/setup-graphviz/blob/main/src/GraphvizInstaller.ts#L32
       # for the Ubuntu command, and the rest of the repo for OS detection.
-      run: >
+      run: |
         sudo apt-get update
         sudo apt-get install -y graphviz pkg-config
 
