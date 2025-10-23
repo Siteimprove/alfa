@@ -1,12 +1,14 @@
 import { test } from "@siteimprove/alfa-test";
 
+import type {
+  ClusterDefinition,
+  Module,
+} from "../../dist/dependency-graph/dependency-graph.js";
 import {
-  type ClusterDefinition,
   getAllScopedDependencies,
   getClusters,
   getScopedProdDependencies,
-  type Module,
-} from "../../src/dependency-graph/index.js";
+} from "../../dist/dependency-graph/create-global-graph.js";
 
 test("getClusters() parses cluster definitions", async (t) => {
   const definitions: Array<ClusterDefinition> = [
