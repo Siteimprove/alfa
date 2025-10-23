@@ -181,7 +181,7 @@ export class DependencyGraph<C, M> {
    * Create the options for the "name" node of a cluster.
    */
   private nameOptions(cluster: C): gv.NodeAttributesObject {
-    return DependencyGraph.Options.Node.name(
+    return DependencyGraph.Options.name(
       this._clusterLabel(cluster),
       this.clusterColor(cluster),
     );
@@ -204,7 +204,7 @@ export class DependencyGraph<C, M> {
     }
 
     if (this._trueCircular.has(module)) {
-      options = { ...options, ...DependencyGraph.Options.Node.circular };
+      options = { ...options, ...DependencyGraph.Options.circular };
     }
 
     return options;
@@ -260,7 +260,7 @@ export class DependencyGraph<C, M> {
       cluster,
       parent.subgraph(
         this._gvClusterId(cluster),
-        DependencyGraph.Options.Node.cluster,
+        DependencyGraph.Options.cluster,
       ),
     ];
   }
@@ -287,7 +287,7 @@ export class DependencyGraph<C, M> {
   ]: DependencyGraph.Cluster<C>): gv.NodeModel {
     return gvCluster.node(
       this._gvExitNodeId(cluster),
-      DependencyGraph.Options.Node.exit,
+      DependencyGraph.Options.exit,
     );
   }
 
@@ -313,7 +313,7 @@ export class DependencyGraph<C, M> {
     // This rigidifies the graph vertically.
     gvParent.createEdge(
       [exit, this.getExitNode([parent, gvParent])],
-      DependencyGraph.Options.Node.invisible,
+      DependencyGraph.Options.invisible,
     );
 
     return graphCluster;
@@ -350,7 +350,7 @@ export class DependencyGraph<C, M> {
     // this rigidifies the graph vertically.
     gvCluster.createEdge(
       [node, this.getExitNode([cluster, gvCluster])],
-      DependencyGraph.Options.Node.invisible,
+      DependencyGraph.Options.invisible,
     );
 
     return [[cluster, gvCluster], node];
@@ -425,7 +425,7 @@ export class DependencyGraph<C, M> {
           // will handle the actual edge later.
           this._gvGraph.createEdge(
             [gvNode, gvDep],
-            DependencyGraph.Options.Node.invisible,
+            DependencyGraph.Options.invisible,
           );
         }
 
@@ -501,25 +501,23 @@ export namespace DependencyGraph {
    * @internal
    */
   export namespace Options {
-    export namespace Node {
-      export const circular: gv.NodeAttributesObject = {
-        fillcolor: "#ff6c60",
-        style: "rounded,filled",
-      };
-      export const cluster: gv.SubgraphAttributesObject = {
-        color: "#000000",
-        label: "",
-      };
-      export const invisible: gv.SubgraphAttributesObject = { style: "invis" };
+    export const circular: gv.NodeAttributesObject = {
+      fillcolor: "#ff6c60",
+      style: "rounded,filled",
+    };
+    export const cluster: gv.SubgraphAttributesObject = {
+      color: "#000000",
+      label: "",
+    };
+    export const invisible: gv.SubgraphAttributesObject = { style: "invis" };
 
-      export const exit = invisible;
+    export const exit = invisible;
 
-      export function name(
-        label: string,
-        color: gv.Color,
-      ): gv.NodeAttributesObject {
-        return { penwidth: 5, shape: "rectangle", color, label };
-      }
+    export function name(
+      label: string,
+      color: gv.Color,
+    ): gv.NodeAttributesObject {
+      return { penwidth: 5, shape: "rectangle", color, label };
     }
   }
 }
