@@ -14,13 +14,9 @@ runs:
         echo "This workflow can only be called from the main branch."
         exit 1
 
-    - name: Generate package dependency graphs
+    - name: Generate dependency graphs
       shell: bash
-      run: yarn generate-packages-dependency-graphs ${{ github.workspace }}
-
-    - name: Generate global dependency graph
-      shell: bash
-      run: yarn generate-global-dependency-graph ${{ github.workspace }}
+      run: yarn generate-dependency-graphs ${{ github.workspace }}
 
     - name: Stage changes
       shell: bash
