@@ -85,30 +85,30 @@ async function saveGraph<C, M>(
 
   fs.writeFileSync(path.join(dirname, `${filename}.dot`), dot, "utf8");
 
+  const options: adapter.Options = {
+    attributes: {
+      graph: {
+        overlap: false,
+        pad: 0.3,
+        rankdir: "TB",
+        layout: "dot",
+        bgcolor: "#ffffff",
+      },
+      edge: { color: "#151515" },
+      node: {
+        fontname: "Arial",
+        fontsize: 14,
+        color: "#000000",
+        shape: "box",
+        style: "rounded",
+        height: 0,
+        fontcolor: "#000000",
+      },
+    },
+  };
+
   await adapter.toFile(dot, path.join(dirname, `${filename}.svg`), {
-    ...saveOptions,
+    ...options,
     format: "svg",
   });
 }
-
-const saveOptions: adapter.Options = {
-  attributes: {
-    graph: {
-      overlap: false,
-      pad: 0.3,
-      rankdir: "TB",
-      layout: "dot",
-      bgcolor: "#ffffff",
-    },
-    edge: { color: "#151515" },
-    node: {
-      fontname: "Arial",
-      fontsize: 14,
-      color: "#000000",
-      shape: "box",
-      style: "rounded",
-      height: 0,
-      fontcolor: "#000000",
-    },
-  },
-};
