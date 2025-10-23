@@ -33,10 +33,6 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
 
 import * as gv from "ts-graphviz";
-import * as adapter from "@ts-graphviz/adapter";
-
-import * as fs from "node:fs";
-import * as path from "node:path";
 
 import { Rainbow } from "./rainbow.js";
 
@@ -153,6 +149,10 @@ export class DependencyGraph<C, M> {
     this._clusterColors = Map.from(this.clustersColors());
 
     this.createGraph();
+  }
+
+  public get gvGraph(): gv.RootGraphModel {
+    return this._gvGraph;
   }
 
   /**
@@ -486,27 +486,6 @@ export class DependencyGraph<C, M> {
       }
     }
   }
-
-  /**
-   * Saves the dependency graph, both as .dot ad .svg files.
-   */
-  public async save(
-    dirname: string,
-    filename: string = "dependency-graph",
-  ): Promise<void> {
-    const dot = gv.toDot(this._gvGraph);
-
-    if (!fs.existsSync(dirname)) {
-      fs.mkdirSync(dirname, { recursive: true });
-    }
-
-    fs.writeFileSync(path.join(dirname, `${filename}.dot`), dot, "utf8");
-
-    return adapter.toFile(dot, path.join(dirname, `${filename}.svg`), {
-      ...DependencyGraph.Options.graphviz,
-      format: "svg",
-    });
-  }
 }
 
 /**
@@ -522,28 +501,6 @@ export namespace DependencyGraph {
    * @internal
    */
   export namespace Options {
-    export const graphviz: adapter.Options = {
-      attributes: {
-        graph: {
-          overlap: false,
-          pad: 0.3,
-          rankdir: "TB",
-          layout: "dot",
-          bgcolor: "#ffffff",
-        },
-        edge: { color: "#151515" },
-        node: {
-          fontname: "Arial",
-          fontsize: 14,
-          color: "#000000",
-          shape: "box",
-          style: "rounded",
-          height: 0,
-          fontcolor: "#000000",
-        },
-      },
-    };
-
     export namespace Node {
       export const circular: gv.NodeAttributesObject = {
         fillcolor: "#ff6c60",

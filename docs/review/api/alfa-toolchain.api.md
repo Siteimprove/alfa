@@ -16,7 +16,7 @@ import type { Packages } from '@manypkg/get-packages';
 export const changelogFunctions: ChangelogFunctions;
 
 // @public
-export function generateGlobalGraph(rootDir: string): Promise<void>;
+export function createGlobalGraph(rootDir: string): Promise<void>;
 
 // @public (undocumented)
 export function generatePackagesGraphs(rootDir: string): Promise<void>;

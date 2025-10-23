@@ -5,18 +5,30 @@ import { getPackages, type Package } from "@manypkg/get-packages";
 import madge from "madge";
 
 import { DependencyGraph } from "./dependency-graph.js";
+import { saveGraph } from "./save-graph.js";
 
 const targetPath = process.argv[2] ?? ".";
 
 generatePackagesGraphs(targetPath);
 
 /**
+ * Generates and saves internal dependency graphs for each workspace in the
+ * directory.
+ *
+ * @remarks
+ * This requires graphviz to be installed on the OS, even just importing this
+ * file requires so as @ts-graphviz/adapter test for presence upon load.
+ *
+ * The "." directory is relative to this file for dynamic import, not to the
+ * shell invocation directory. So it is always safer to pass the actual root
+ * directory as CLI option, typically using "$(pwd)" to let the shell handle it
+ *
  * @public
  */
 export async function generatePackagesGraphs(rootDir: string) {
   const packages = await getPackages(rootDir);
   for (const pkg of packages.packages) {
-    await (await fromPackage(pkg)).save(`${pkg.dir}/docs`);
+    await saveGraph(await fromPackage(pkg), `${pkg.dir}/docs`);
   }
 }
 

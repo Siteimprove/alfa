@@ -1,2 +1,2 @@
 export * from "./generate-packages-graphs.js";
-export * from "./generate-global-graph.js";
+export * from "./create-global-graph.js";
