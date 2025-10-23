@@ -17,7 +17,6 @@
     "./dependency-graph/helpers.ts",
     "./dependency-graph/index.ts",
     "./dependency-graph/rainbow.ts",
-    "./dependency-graph/save-graph.ts",
     "./validation/has-extractor-config.ts",
     "./validation/index.ts",
     "./validation/is-in-clusters.ts",

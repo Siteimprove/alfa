@@ -1,12 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 
-import {
-  type ClusterDefinition,
-  getAllScopedDependencies,
-  getClusters,
-  getScopedProdDependencies,
-  type Module,
-} from "../../dist/dependency-graph/create-global-graph.js";
+import { GraphFactory } from "../../dist/dependency-graph/helpers.js";
+
+const { getAllScopedDependencies, getClusters, getScopedProdDependencies } =
+  GraphFactory.Global;
+
+type ClusterDefinition = GraphFactory.Global.ClusterDefinition;
+type Module = GraphFactory.Global.Module;
 
 test("getClusters() parses cluster definitions", async (t) => {
   const definitions: Array<ClusterDefinition> = [
