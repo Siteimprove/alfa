@@ -68,6 +68,8 @@ runs:
         user-name: ${{ inputs.user-name }}
         user-email: ${{ inputs.user-email }}
         setup-playwright: ${{ inputs.setup-playwright }}
+        # We only need graphviz to generate dependency graphs
+        setup-graphviz: ${{ inputs.dependency-graphs }}
 
     - name: Generate coverage data
       if: inputs.coverage == 'true'
