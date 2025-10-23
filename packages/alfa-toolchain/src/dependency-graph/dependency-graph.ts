@@ -45,7 +45,7 @@ import { Rainbow } from "./rainbow.js";
  * Light edges correspond typically to type dependencies and are not used to
  * detect circular references.
  */
-interface Graph<C, M> {
+interface GraphParameters<C, M> {
   name: string;
   // The full graph, both light and heavy edges.
   fullGraph: Map<M, Array<M>>;
@@ -56,20 +56,11 @@ interface Graph<C, M> {
   // Function to get the clusters a module belongs to, from the outermost to
   // the innermost.
   clusterize: (module: M) => Array<C>;
-}
-
-/**
- * Parameters related to clusters in the graph
- */
-interface ClusterOptions<C> {
   // The root cluster in which everything else lives.
   baseCluster: C;
   // Functions to get the id and label (name) of a cluster.
   clusterId: (cluster: C) => string;
   clusterLabel: (cluster: C) => string;
-}
-
-interface ModuleOptions<M> {
   // Functions to get the id and name of a module
   moduleId: (module: M) => string;
   moduleName: (module: M) => string;
@@ -85,11 +76,9 @@ interface ModuleOptions<M> {
  */
 export class DependencyGraph<C, M> {
   public static of<Cluster, Module>(
-    graph: Graph<Cluster, Module>,
-    clusterOptions: ClusterOptions<Cluster>,
-    moduleOptions: ModuleOptions<Module>,
+    graph: GraphParameters<Cluster, Module>,
   ): DependencyGraph<Cluster, Module> {
-    return new DependencyGraph(graph, clusterOptions, moduleOptions);
+    return new DependencyGraph(graph);
   }
 
   private readonly _name: string;
@@ -123,11 +112,19 @@ export class DependencyGraph<C, M> {
   private readonly _gvExitNodeId = (cluster: C) =>
     `${this._exitPrefix}${this._clusterId(cluster)}`;
 
-  protected constructor(
-    { name, fullGraph, heavyGraph, circular, clusterize }: Graph<C, M>,
-    { baseCluster, clusterId, clusterLabel }: ClusterOptions<C>,
-    { moduleId, moduleName, isEntryPoint }: ModuleOptions<M>,
-  ) {
+  protected constructor({
+    name,
+    fullGraph,
+    heavyGraph,
+    circular,
+    clusterize,
+    baseCluster,
+    clusterId,
+    clusterLabel,
+    moduleId,
+    moduleName,
+    isEntryPoint,
+  }: GraphParameters<C, M>) {
     this._name = `dependency-graph-${name}`;
 
     this._heavyGraph = heavyGraph;

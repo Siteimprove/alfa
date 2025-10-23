@@ -10,7 +10,7 @@
     "./changeset/build-changelog.spec.tsx",
     "./changeset/get-changeset-details.spec.tsx",
     "./coverage/transform-unit-test-coverage-data.spec.ts",
-    "./dependency-graph/create-global-graph.spec.ts"
+    "./dependency-graph/helpers.spec.ts"
   ],
   "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
 }

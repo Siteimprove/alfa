@@ -1,2 +1,2 @@
-export * from "./generate-packages-graphs.js";
-export * from "./create-global-graph.js";
+export * from "./dependency-graph.js";
+export * from "./generate-graphs.js";
