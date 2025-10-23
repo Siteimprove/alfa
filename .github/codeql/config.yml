@@ -10,3 +10,4 @@ paths-ignore:
   - "**/node_modules"
   - "**/*.spec.js"
   - "**/dist/**"
+  - "**/docs/**"

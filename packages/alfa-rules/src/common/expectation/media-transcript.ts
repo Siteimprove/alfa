@@ -1,5 +1,4 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Node } from "@siteimprove/alfa-dom";
 import { Element } from "@siteimprove/alfa-dom";
