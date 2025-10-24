@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.74% </span>
+                <span class="strong">46.15% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/39</span>
+                <span class='fraction'>18/39</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.74% </span>
+                <span class="strong">46.15% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>35/39</span>
+                <span class='fraction'>18/39</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -137,35 +137,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -198,36 +198,36 @@ import { Rule } from "../rule.js";
  * @public
  */
 export class FontFaceRule extends Rule&lt;"font-face"&gt; {
-  public static of(declarations: Iterable&lt;Declaration&gt;): FontFaceRule {
-    return new FontFaceRule(Array.from(declarations));
-  }
+  public static <span class="fstat-no" title="function not covered" >of(declarations: Iterable&lt;Declaration&gt;): FontFaceRule {</span>
+<span class="cstat-no" title="statement not covered" >    return new FontFaceRule(Array.from(declarations));</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  private readonly _style: Block;
+  private readonly <span class="fstat-no" title="function not covered" >_style:</span> Block;
 &nbsp;
-  protected constructor(declarations: Array&lt;Declaration&gt;) {
-    super("font-face");
+<span class="fstat-no" title="function not covered" >  protected constructor(declarations: Array&lt;Declaration&gt;) {</span>
+<span class="cstat-no" title="statement not covered" >    super("font-face");</span>
 &nbsp;
-    this._style = Block.of(
-      declarations.filter((declaration) =&gt; declaration._attachParent(this)),
-    );
-  }
+<span class="cstat-no" title="statement not covered" >    this._style = Block.of(</span>
+<span class="cstat-no" title="statement not covered" >      declarations.filter((declaration) =&gt; declaration._attachParent(this)),</span>
+<span class="cstat-no" title="statement not covered" >    );</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public get style(): Block {
-    return this._style;
-  }
+<span class="fstat-no" title="function not covered" >  public get style(): Block {</span>
+<span class="cstat-no" title="statement not covered" >    return this._style;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toJSON(): FontFaceRule.JSON {
-    return {
-      ...super.toJSON(),
-      style: this._style.toJSON(),
-    };
-  }
+  public <span class="fstat-no" title="function not covered" >toJSON(): FontFaceRule.JSON {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >      ...super.toJSON(),</span>
+<span class="cstat-no" title="statement not covered" >      style: this._style.toJSON(),</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toString(): string {
-    const style = this._style.toString();
+  public <span class="fstat-no" title="function not covered" >toString(): string {</span>
+<span class="cstat-no" title="statement not covered" >    const style = this._style.toString();</span>
 &nbsp;
-    return `@font-face {${style === "" ? "" : `\n${String.indent(style)}\n`}}`;
-  }
+<span class="cstat-no" title="statement not covered" >    return `@font-face {${style === "" ? "" : `\n${String.indent(style)}\n`}}`;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
 /**
@@ -256,7 +256,7 @@ export namespace FontFaceRule {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-22T10:52:33.618Z
+                at 2025-10-24T11:31:27.539Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

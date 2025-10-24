@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">43.75% </span>
+                <span class="strong">36.8% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>63/144</span>
+                <span class='fraction'>53/144</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/5</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5% </span>
+                <span class="strong">4% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/20</span>
+                <span class='fraction'>1/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">43.75% </span>
+                <span class="strong">36.8% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>63/144</span>
+                <span class='fraction'>53/144</span>
             </div>
         
             
@@ -278,22 +278,22 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -473,25 +473,25 @@ import { Expression } from "./expression.js";
 export class Builder&lt;T extends Expression = Expression&gt;
   implements Equatable, Serializable
 {
-  public readonly expression: T;
+  public readonly <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >expression:</span></span> T;
 &nbsp;
-  public constructor(expression: T) {
-    this.expression = expression;
-  }
+<span class="fstat-no" title="function not covered" >  public constructor(expression: T) {</span>
+<span class="cstat-no" title="statement not covered" >    this.expression = expression;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public equals(value: unknown): value is this {
-    return value instanceof Builder &amp;&amp; value.expression.equals(this.expression);
-  }
+  public <span class="fstat-no" title="function not covered" >equals(value: unknown): value is this {</span>
+<span class="cstat-no" title="statement not covered" >    return value instanceof Builder &amp;&amp; value.expression.equals(this.expression);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toJSON(): Builder.JSON {
-    return {
-      expression: this.expression.toJSON(),
-    };
-  }
+  public <span class="fstat-no" title="function not covered" >toJSON(): Builder.JSON {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >      expression: this.expression.toJSON(),</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toString(): string {
-    return `${this.expression}`;
-  }
+  public <span class="fstat-no" title="function not covered" >toString(): string {</span>
+<span class="cstat-no" title="statement not covered" >    return `${this.expression}`;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
 /**
@@ -664,7 +664,7 @@ export<span class="fstat-no" title="function not covered" > function nth(i: numb
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-22T10:55:51.870Z
+                at 2025-10-24T11:34:41.178Z
             </div>
         <script src="../prettify.js"></script>
         <script>

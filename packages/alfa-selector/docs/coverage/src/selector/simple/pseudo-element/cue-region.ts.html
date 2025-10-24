@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">62.26% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>53/53</span>
+                <span class='fraction'>33/53</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">12.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>1/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">62.26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>53/53</span>
+                <span class='fraction'>33/53</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -165,44 +165,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
@@ -246,45 +246,45 @@ const { either, map, right, take } = Parser;
  * {@link https://w3c.github.io/webvtt/#the-cue-region-pseudo-element}
  */
 export class CueRegion extends PseudoElementSelector&lt;"cue-region"&gt; {
-  public static of(selector?: Selector): CueRegion {
-    return new CueRegion(Option.from(selector));
-  }
+  public static <span class="fstat-no" title="function not covered" >of(selector?: Selector): CueRegion {</span>
+<span class="cstat-no" title="statement not covered" >    return new CueRegion(Option.from(selector));</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  private readonly _selector: Option&lt;Selector&gt;;
+  private readonly <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >_selector:</span></span> Option&lt;Selector&gt;;
 &nbsp;
-  protected constructor(selector: Option&lt;Selector&gt;) {
-    super("cue-region");
-    this._selector = selector;
-  }
+<span class="fstat-no" title="function not covered" >  protected constructor(selector: Option&lt;Selector&gt;) {</span>
+<span class="cstat-no" title="statement not covered" >    super("cue-region");</span>
+<span class="cstat-no" title="statement not covered" >    this._selector = selector;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public get selector(): Option&lt;Selector&gt; {
-    return this._selector;
-  }
+<span class="fstat-no" title="function not covered" >  public get selector(): Option&lt;Selector&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return this._selector;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
   public *[Symbol.iterator](): Iterator&lt;CueRegion&gt; {
-    yield this;
-  }
+<span class="cstat-no" title="statement not covered" >    yield this;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
   public equals(value: CueRegion): boolean;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public equals(value: unknown): boolean {
-    return value instanceof CueRegion &amp;&amp; value.selector.equals(this.selector);
-  }
+  public <span class="fstat-no" title="function not covered" >equals(value: unknown): boolean {</span>
+<span class="cstat-no" title="statement not covered" >    return value instanceof CueRegion &amp;&amp; value.selector.equals(this.selector);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toJSON(): CueRegion.JSON {
-    return {
-      ...super.toJSON(),
-      selector: this._selector.toJSON(),
-    };
-  }
+  public <span class="fstat-no" title="function not covered" >toJSON(): CueRegion.JSON {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >      ...super.toJSON(),</span>
+<span class="cstat-no" title="statement not covered" >      selector: this._selector.toJSON(),</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toString(): string {
-    return `::${this.name}` + this._selector.isSome()
-      ? `(${this._selector})`
-      : "";
-  }
+  public <span class="fstat-no" title="function not covered" >toString(): string {</span>
+<span class="cstat-no" title="statement not covered" >    return `::${this.name}` + this._selector.isSome()</span>
+<span class="cstat-no" title="statement not covered" >      ? `(${this._selector})`</span>
+<span class="cstat-no" title="statement not covered" >      : "";</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
 export namespace CueRegion {
@@ -316,7 +316,7 @@ export namespace CueRegion {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-22T10:53:56.505Z
+                at 2025-10-24T11:32:46.920Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

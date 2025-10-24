@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.36% </span>
+                <span class="strong">43.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/41</span>
+                <span class='fraction'>18/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>1/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.36% </span>
+                <span class="strong">43.9% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>35/41</span>
+                <span class='fraction'>18/41</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -137,35 +137,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -199,36 +199,36 @@ import { GroupingRule } from "./grouping.js";
  * @public
  */
 export class KeyframesRule extends GroupingRule&lt;"keyframes"&gt; {
-  public static of(name: string, rules: Iterable&lt;Rule&gt;): KeyframesRule {
-    return new KeyframesRule(name, Array.from(rules));
-  }
+  public static <span class="fstat-no" title="function not covered" >of(name: string, rules: Iterable&lt;Rule&gt;): KeyframesRule {</span>
+<span class="cstat-no" title="statement not covered" >    return new KeyframesRule(name, Array.from(rules));</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  private readonly _name: string;
+  private readonly <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >_name:</span></span> string;
 &nbsp;
-  protected constructor(name: string, rules: Array&lt;Rule&gt;) {
-    super("keyframes", rules);
+<span class="fstat-no" title="function not covered" >  protected constructor(name: string, rules: Array&lt;Rule&gt;) {</span>
+<span class="cstat-no" title="statement not covered" >    super("keyframes", rules);</span>
 &nbsp;
-    this._name = name;
-  }
+<span class="cstat-no" title="statement not covered" >    this._name = name;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public get name(): string {
-    return this._name;
-  }
+<span class="fstat-no" title="function not covered" >  public get name(): string {</span>
+<span class="cstat-no" title="statement not covered" >    return this._name;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toJSON(): KeyframesRule.JSON {
-    return {
-      ...super.toJSON(),
-      name: this._name,
-    };
-  }
+  public <span class="fstat-no" title="function not covered" >toJSON(): KeyframesRule.JSON {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >      ...super.toJSON(),</span>
+<span class="cstat-no" title="statement not covered" >      name: this._name,</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toString(): string {
-    const rules = this._rules
-      .map((rule) =&gt; String.indent(rule.toString()))
-      .join("\n\n");
+  public <span class="fstat-no" title="function not covered" >toString(): string {</span>
+<span class="cstat-no" title="statement not covered" >    const rules = this._rules</span>
+<span class="cstat-no" title="statement not covered" >      .map((rule) =&gt; String.indent(rule.toString()))</span>
+<span class="cstat-no" title="statement not covered" >      .join("\n\n");</span>
 &nbsp;
-    return `@keyframes ${this._name} {${rules === "" ? "" : `\n${rules}\n`}}`;
-  }
+<span class="cstat-no" title="statement not covered" >    return `@keyframes ${this._name} {${rules === "" ? "" : `\n${rules}\n`}}`;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
 /**
@@ -259,7 +259,7 @@ export namespace KeyframesRule {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-22T10:51:40.077Z
+                at 2025-10-24T11:30:33.044Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

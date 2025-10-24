@@ -124,20 +124,11 @@
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -149,6 +140,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -181,16 +182,15 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { Array } from "@siteimprove/alfa-array";<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >import { getPackages, type Package } from "@manypkg/get-packages";</span>
-<span class="cstat-no" title="statement not covered" >import * as fs from "fs";</span>
+<span class="cstat-no" title="statement not covered" >import * as fs from "node:fs";</span>
+<span class="cstat-no" title="statement not covered" >import * as path from "node:path";</span>
+<span class="cstat-no" title="statement not covered" >import { loadJSON } from "../common.js";</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >import {</span>
   coveragePath,
@@ -225,12 +225,12 @@
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  fs.writeFileSync(</span>
-<span class="cstat-no" title="statement not covered" >    `${destinationPath}/unit-test-coverage.html`,</span>
+<span class="cstat-no" title="statement not covered" >    path.join(destinationPath, "unit-test-coverage.html"),</span>
 <span class="cstat-no" title="statement not covered" >    coverageReport,</span>
 <span class="cstat-no" title="statement not covered" >  );</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  console.log(</span>
-<span class="cstat-no" title="statement not covered" >    `Wrote unit test coverage report for ${coverages.length} packages to ${destinationPath}/unit-test-coverage.html`,</span>
+<span class="cstat-no" title="statement not covered" >    `Wrote unit test coverage report for ${coverages.length} packages to ${path.join(destinationPath, "unit-test-coverage.html")}`,</span>
 <span class="cstat-no" title="statement not covered" >  );</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
@@ -240,14 +240,11 @@
 <span class="cstat-no" title="statement not covered" >async function loadPackageCoverage(</span>
 <span class="cstat-no" title="statement not covered" >  pkg: Package,</span>
 <span class="cstat-no" title="statement not covered" >): Promise&lt;[Package, CoverageSummary]&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  const summary = (await import(</span>
-<span class="cstat-no" title="statement not covered" >    `${pkg.dir}/${coveragePath}/coverage-summary.json`,</span>
-<span class="cstat-no" title="statement not covered" >    {</span>
-<span class="cstat-no" title="statement not covered" >      with: { type: "json" },</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-  )) as { default: CoverageSummary };
+<span class="cstat-no" title="statement not covered" >  const summary = await loadJSON&lt;CoverageSummary&gt;(</span>
+<span class="cstat-no" title="statement not covered" >    path.join(pkg.dir, coveragePath, "coverage-summary.json"),</span>
+<span class="cstat-no" title="statement not covered" >  );</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return [pkg, summary.default] as const;</span>
+<span class="cstat-no" title="statement not covered" >  return [pkg, summary] as const;</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
 
@@ -256,7 +253,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-22T10:51:40.077Z
+                at 2025-10-24T11:30:33.044Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

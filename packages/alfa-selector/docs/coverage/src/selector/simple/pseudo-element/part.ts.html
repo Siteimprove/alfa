@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>42/42</span>
+                <span class='fraction'>24/42</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>1/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>42/42</span>
+                <span class='fraction'>24/42</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -140,42 +140,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
@@ -203,43 +203,43 @@ const { map, separatedList } = Parser;
  * {@link https://drafts.csswg.org/css-shadow-parts-1/#part}
  */
 export class Part extends PseudoElementSelector&lt;"part"&gt; {
-  public static of(idents: Iterable&lt;Token.Ident&gt;): Part {
-    return new Part(Array.from(idents));
-  }
+  public static <span class="fstat-no" title="function not covered" >of(idents: Iterable&lt;Token.Ident&gt;): Part {</span>
+<span class="cstat-no" title="statement not covered" >    return new Part(Array.from(idents));</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  private readonly _idents: ReadonlyArray&lt;Token.Ident&gt;;
+  private readonly <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >_idents:</span></span> ReadonlyArray&lt;Token.Ident&gt;;
 &nbsp;
-  protected constructor(idents: Array&lt;Token.Ident&gt;) {
-    super("part");
-    this._idents = idents;
-  }
+<span class="fstat-no" title="function not covered" >  protected constructor(idents: Array&lt;Token.Ident&gt;) {</span>
+<span class="cstat-no" title="statement not covered" >    super("part");</span>
+<span class="cstat-no" title="statement not covered" >    this._idents = idents;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public get idents(): Iterable&lt;Token.Ident&gt; {
-    return this._idents;
-  }
+<span class="fstat-no" title="function not covered" >  public get idents(): Iterable&lt;Token.Ident&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return this._idents;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
   public *[Symbol.iterator](): Iterator&lt;Part&gt; {
-    yield this;
-  }
+<span class="cstat-no" title="statement not covered" >    yield this;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
   public equals(value: Part): boolean;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public equals(value: unknown): boolean {
-    return value instanceof Part &amp;&amp; Array.equals(value._idents, this._idents);
-  }
+  public <span class="fstat-no" title="function not covered" >equals(value: unknown): boolean {</span>
+<span class="cstat-no" title="statement not covered" >    return value instanceof Part &amp;&amp; Array.equals(value._idents, this._idents);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toJSON(): Part.JSON {
-    return {
-      ...super.toJSON(),
-      idents: Array.toJSON(this._idents),
-    };
-  }
+  public <span class="fstat-no" title="function not covered" >toJSON(): Part.JSON {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >      ...super.toJSON(),</span>
+<span class="cstat-no" title="statement not covered" >      idents: Array.toJSON(this._idents),</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toString(): string {
-    return `::${this.name}(${this._idents})`;
-  }
+  public <span class="fstat-no" title="function not covered" >toString(): string {</span>
+<span class="cstat-no" title="statement not covered" >    return `::${this.name}(${this._idents})`;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
 export namespace Part {
@@ -262,7 +262,7 @@ export namespace Part {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-22T10:53:56.505Z
+                at 2025-10-24T11:32:46.920Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

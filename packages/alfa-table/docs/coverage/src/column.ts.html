@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.76% </span>
+                <span class="strong">60.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>67/84</span>
+                <span class='fraction'>51/84</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">72.72% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>8/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.45% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/11</span>
+                <span class='fraction'>6/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.76% </span>
+                <span class="strong">60.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>67/84</span>
+                <span class='fraction'>51/84</span>
             </div>
         
             
@@ -221,40 +221,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -361,41 +361,41 @@ import { Slot } from "./slot.js";
  * @public
  */
 export class Column implements Anchored, Equatable, Serializable&lt;Column.JSON&gt; {
-  public static of(x: number): Column {
-    return new Column(x);
-  }
+  public static <span class="fstat-no" title="function not covered" >of(x: number): Column {</span>
+<span class="cstat-no" title="statement not covered" >    return new Column(x);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  private readonly _x: number;
+  private readonly <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >_x:</span></span> number;
 &nbsp;
-  protected constructor(x: number) {
-    this._x = x;
-  }
+<span class="fstat-no" title="function not covered" >  protected constructor(x: number) {</span>
+<span class="cstat-no" title="statement not covered" >    this._x = x;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public get x(): number {
-    return this._x;
-  }
+<span class="fstat-no" title="function not covered" >  public get x(): number {</span>
+<span class="cstat-no" title="statement not covered" >    return this._x;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public get anchor(): Slot {
-    return Slot.of(this._x, 0);
-  }
+<span class="fstat-no" title="function not covered" >  public get anchor(): Slot {</span>
+<span class="cstat-no" title="statement not covered" >    return Slot.of(this._x, 0);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public compare(anchored: Anchored): Comparison {
-    return Anchored.compare(this, anchored);
-  }
+  public <span class="fstat-no" title="function not covered" >compare(anchored: Anchored): Comparison {</span>
+<span class="cstat-no" title="statement not covered" >    return Anchored.compare(this, anchored);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
   public equals(column: Column): boolean;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public equals(value: unknown): boolean {
-    return value instanceof Column &amp;&amp; value._x === this._x;
-  }
+  public <span class="fstat-no" title="function not covered" >equals(value: unknown): boolean {</span>
+<span class="cstat-no" title="statement not covered" >    return value instanceof Column &amp;&amp; value._x === this._x;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public toJSON(): Column.JSON {
-    return {
-      x: this._x,
-    };
-  }
+  public <span class="fstat-no" title="function not covered" >toJSON(): Column.JSON {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >      x: this._x,</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
 /**
@@ -493,7 +493,7 @@ export namespace Column {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-22T10:55:26.826Z
+                at 2025-10-24T11:34:16.855Z
             </div>
         <script src="../prettify.js"></script>
         <script>

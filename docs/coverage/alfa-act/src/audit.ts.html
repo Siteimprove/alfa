@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">38.7% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/31</span>
+                <span class='fraction'>12/31</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">38.7% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/31</span>
+                <span class='fraction'>12/31</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -158,36 +158,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Future } from "@siteimprove/alfa-future";
 import type { Hashable } from "@siteimprove/alfa-hash";
@@ -215,42 +215,42 @@ export class Audit&lt;
   Q extends Question.Metadata = {},
   S = T,
 &gt; {
-  public static of&lt;
+  public static <span class="fstat-no" title="function not covered" >of&lt;</span>
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
     S = T,
   &gt;(
-    input: I,
-    rules: Iterable&lt;Rule&lt;I, T, Q, S&gt;&gt;,
-    oracle: Oracle&lt;I, T, Q, S&gt; = () =&gt; Future.now(None),
+<span class="cstat-no" title="statement not covered" >    input: I,</span>
+<span class="cstat-no" title="statement not covered" >    rules: Iterable&lt;Rule&lt;I, T, Q, S&gt;&gt;,</span>
+<span class="cstat-no" title="statement not covered" >    oracle: Oracle&lt;I, T, Q, S&gt; = () =&gt; Future.now(None),</span>
   ): Audit&lt;I, T, Q, S&gt; {
-    return new Audit(input, List.from(rules), oracle);
-  }
+<span class="cstat-no" title="statement not covered" >    return new Audit(input, List.from(rules), oracle);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  private readonly _input: I;
-  private readonly _rules: List&lt;Rule&lt;I, T, Q, S&gt;&gt;;
+  private readonly <span class="fstat-no" title="function not covered" >_input: I;</span>
+<span class="cstat-no" title="statement not covered" >  private readonly _rules: List&lt;Rule&lt;I, T, Q, S&gt;&gt;;</span>
   private readonly _oracle: Oracle&lt;I, T, Q, S&gt;;
 &nbsp;
-  protected constructor(
-    input: I,
-    rules: List&lt;Rule&lt;I, T, Q, S&gt;&gt;,
-    oracle: Oracle&lt;I, T, Q, S&gt;,
+<span class="fstat-no" title="function not covered" >  protected constructor(</span>
+<span class="cstat-no" title="statement not covered" >    input: I,</span>
+<span class="cstat-no" title="statement not covered" >    rules: List&lt;Rule&lt;I, T, Q, S&gt;&gt;,</span>
+<span class="cstat-no" title="statement not covered" >    oracle: Oracle&lt;I, T, Q, S&gt;,</span>
   ) {
-    this._input = input;
-    this._rules = rules;
-    this._oracle = oracle;
-  }
+<span class="cstat-no" title="statement not covered" >    this._input = input;</span>
+<span class="cstat-no" title="statement not covered" >    this._rules = rules;</span>
+<span class="cstat-no" title="statement not covered" >    this._oracle = oracle;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  public evaluate(
-    performance?: Performance&lt;Rule.Event&lt;I, T, Q, S&gt;&gt;,
+  public <span class="fstat-no" title="function not covered" >evaluate(</span>
+<span class="cstat-no" title="statement not covered" >    performance?: Performance&lt;Rule.Event&lt;I, T, Q, S&gt;&gt;,</span>
   ): Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt; {
-    const outcomes = Cache.empty();
+<span class="cstat-no" title="statement not covered" >    const outcomes = Cache.empty();</span>
 &nbsp;
-    return Future.traverse(this._rules, (rule) =&gt;
-      rule.evaluate(this._input, this._oracle, outcomes, performance),
-    ).map(Iterable.flatten);
-  }
+<span class="cstat-no" title="statement not covered" >    return Future.traverse(this._rules, (rule) =&gt;</span>
+<span class="cstat-no" title="statement not covered" >      rule.evaluate(this._input, this._oracle, outcomes, performance),</span>
+<span class="cstat-no" title="statement not covered" >    ).map(Iterable.flatten);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -259,7 +259,7 @@ export class Audit&lt;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-22T10:51:40.077Z
+                at 2025-10-24T11:30:33.044Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
