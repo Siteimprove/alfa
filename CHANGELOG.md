@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.107.0](../../compare/v0.106.1...v0.107.0) (2025-10-24)
+
+### Changed
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01070): The `generate-packges-graphs` command has been replaced by a `generate-dependency-graphs` command which also generates a global dependency graph between workspaces of the repository. ([#1902](https://github.com/Siteimprove/alfa/pull/1902))
+
 ## [0.106.1](../../compare/v0.106.0...v0.106.1) (2025-10-22)
 
 ### Fixed

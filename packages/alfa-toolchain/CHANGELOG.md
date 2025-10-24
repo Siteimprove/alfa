@@ -1,5 +1,11 @@
 # @siteimprove/alfa-toolchain
 
+## 0.107.0
+
+### Minor Changes
+
+- **Changed:** The `generate-packges-graphs` command has been replaced by a `generate-dependency-graphs` command which also generates a global dependency graph between workspaces of the repository. ([#1902](https://github.com/Siteimprove/alfa/pull/1902))
+
 ## 0.106.1
 
 ## 0.106.0

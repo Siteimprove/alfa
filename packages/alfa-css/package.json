@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-css",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.106.1",
+  "version": "0.107.0",
   "license": "MIT",
   "description": "Implementations of the core CSS syntax and value types",
   "repository": {

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-test
 
+## 0.107.0
+
 ## 0.106.1
 
 ### Patch Changes
