@@ -1,0 +1,83 @@
+digraph "dependency-graph-@siteimprove/alfa-eaa" {
+  compound = true;
+  "src/eaa.ts";
+  "src/criterion/data.ts";
+  "name_src/criterion";
+  subgraph "cluster_src" {
+    color = "#000000";
+    label = "";
+    "exit_src" [
+      style = "invis";
+    ];
+    subgraph "cluster_src" {
+      color = "#000000";
+      label = "";
+      "name_src" [
+        penwidth = 5;
+        shape = "rectangle";
+        color = "#00ffff";
+        label = "src";
+      ];
+      "exit_src" [
+        style = "invis";
+      ];
+      "src/index.ts" [
+        label = "index.ts";
+        color = "#00ffff";
+        penwidth = 5;
+      ];
+      "src/eaa.ts" [
+        label = "eaa.ts";
+      ];
+      subgraph "cluster_src/criterion" {
+        color = "#000000";
+        label = "";
+        "name_src/criterion" [
+          penwidth = 5;
+          shape = "rectangle";
+          color = "#ff0000";
+          label = "criterion";
+        ];
+        "exit_src/criterion" [
+          style = "invis";
+        ];
+        "src/criterion/data.ts" [
+          label = "data.ts";
+        ];
+        "src/criterion/data.ts" -> "exit_src/criterion" [
+          style = "invis";
+        ];
+      }
+      "src/index.ts" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/criterion" -> "exit_src" [
+        style = "invis";
+      ];
+      "src/eaa.ts" -> "exit_src" [
+        style = "invis";
+      ];
+    }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+  }
+  "src/index.ts" -> "src/eaa.ts" [
+    style = "invis";
+  ];
+  "src/index.ts" -> "src/eaa.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/eaa.ts" -> "name_src/criterion" [
+    style = "solid";
+    color = "#00ffff";
+    lhead = "cluster_src/criterion";
+  ];
+}

@@ -1,34 +1,37 @@
+/*
+ The "." default directory is relative to this file for dynamic imports, not
+ to the shell invocation directory. So it is always safer to pass the actual
+ directory as CLI option, typically using "$(pwd)" to let the shell handle it
+ */
 import { getPackages } from "@manypkg/get-packages";
-import * as fs from "node:fs";
 import * as path from "node:path";
+import { loadJSON } from "../common.js";
 
 import { hasExtractorConfig } from "./has-extractor-config.js";
+import { isInClusters } from "./is-in-clusters.js";
 import { validateChangesets } from "./validate-changesets.js";
 import { validatePackageJson } from "./validate-package-json.js";
 import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig.js";
 
 const targetPath = process.argv[2] ?? ".";
 
-validate(targetPath);
+await validate(targetPath);
 
 /**
  * @public
  */
-export async function validate(cwd: string) {
+export async function validate(rootDir: string) {
   const errors: Array<string> = [];
 
-  const config = JSON.parse(
-    fs.readFileSync(
-      path.join(cwd, "config", "validate-structure.json"),
-      "utf-8",
-    ),
+  const config = await loadJSON(
+    path.join(rootDir, "config", "validate-structure.json"),
   );
 
-  const packages = await getPackages(cwd);
+  const packages = await getPackages(rootDir);
 
   if (config["validate-changesets"] ?? false) {
     errors.push(
-      ...(await validateChangesets(cwd, config["forbid-major"] ?? false)),
+      ...(await validateChangesets(rootDir, config["forbid-major"] ?? false)),
     );
   }
 
@@ -48,6 +51,24 @@ export async function validate(cwd: string) {
     for (const pkg of packages.packages) {
       errors.push(...validateWorkspaceTsconfig(pkg));
     }
+  }
+
+  if (config["is-in-clusters"] ?? false) {
+    let clustersDefinitionPath = path.join(
+      rootDir,
+      "config",
+      "package-clusters.json",
+    );
+
+    const { clusters } = await loadJSON(clustersDefinitionPath);
+
+    errors.push(
+      ...isInClusters(
+        packages.packages.map((pkg) => pkg.packageJson.name),
+        clusters,
+        clustersDefinitionPath,
+      ),
+    );
   }
 
   for (const error of errors) {

@@ -15,8 +15,8 @@ import type { Packages } from '@manypkg/get-packages';
 // @public (undocumented)
 export const changelogFunctions: ChangelogFunctions;
 
-// @public (undocumented)
-export function generatePackagesGraphs(cwd: string): Promise<void>;
+// @public
+export function generateGraphs(rootDir: string): Promise<void>;
 
 // @public
 export function generateUnitTestCoverageReport(cwd: string): Promise<void>;
@@ -44,7 +44,7 @@ export { individualChangelog }
 export function uploadCoverageReport(rootDir: string): Promise<any>;
 
 // @public (undocumented)
-function validate(cwd: string): Promise<void>;
+function validate(rootDir: string): Promise<void>;
 
 // @public
 function validateChangesets(cwd: string, forbidMajor?: boolean): Promise<Array_2<string>>;

@@ -33,11 +33,6 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
 
 import * as gv from "ts-graphviz";
-import * as adapter from "@ts-graphviz/adapter";
-
-import type { Package } from "@manypkg/get-packages";
-import * as fs from "node:fs";
-import * as path from "node:path";
 
 import { Rainbow } from "./rainbow.js";
 
@@ -50,7 +45,7 @@ import { Rainbow } from "./rainbow.js";
  * Light edges correspond typically to type dependencies and are not used to
  * detect circular references.
  */
-interface Graph<C, M> {
+interface GraphParameters<C, M> {
   name: string;
   // The full graph, both light and heavy edges.
   fullGraph: Map<M, Array<M>>;
@@ -61,20 +56,11 @@ interface Graph<C, M> {
   // Function to get the clusters a module belongs to, from the outermost to
   // the innermost.
   clusterize: (module: M) => Array<C>;
-}
-
-/**
- * Parameters related to clusters in the graph
- */
-interface ClusterOptions<C> {
   // The root cluster in which everything else lives.
   baseCluster: C;
   // Functions to get the id and label (name) of a cluster.
   clusterId: (cluster: C) => string;
   clusterLabel: (cluster: C) => string;
-}
-
-interface ModuleOptions<M> {
   // Functions to get the id and name of a module
   moduleId: (module: M) => string;
   moduleName: (module: M) => string;
@@ -90,11 +76,9 @@ interface ModuleOptions<M> {
  */
 export class DependencyGraph<C, M> {
   public static of<Cluster, Module>(
-    graph: Graph<Cluster, Module>,
-    clusterOptions: ClusterOptions<Cluster>,
-    moduleOptions: ModuleOptions<Module>,
+    graph: GraphParameters<Cluster, Module>,
   ): DependencyGraph<Cluster, Module> {
-    return new DependencyGraph(graph, clusterOptions, moduleOptions);
+    return new DependencyGraph(graph);
   }
 
   private readonly _name: string;
@@ -128,11 +112,19 @@ export class DependencyGraph<C, M> {
   private readonly _gvExitNodeId = (cluster: C) =>
     `${this._exitPrefix}${this._clusterId(cluster)}`;
 
-  protected constructor(
-    { name, fullGraph, heavyGraph, circular, clusterize }: Graph<C, M>,
-    { baseCluster, clusterId, clusterLabel }: ClusterOptions<C>,
-    { moduleId, moduleName, isEntryPoint }: ModuleOptions<M>,
-  ) {
+  protected constructor({
+    name,
+    fullGraph,
+    heavyGraph,
+    circular,
+    clusterize,
+    baseCluster,
+    clusterId,
+    clusterLabel,
+    moduleId,
+    moduleName,
+    isEntryPoint,
+  }: GraphParameters<C, M>) {
     this._name = `dependency-graph-${name}`;
 
     this._heavyGraph = heavyGraph;
@@ -154,6 +146,10 @@ export class DependencyGraph<C, M> {
     this._clusterColors = Map.from(this.clustersColors());
 
     this.createGraph();
+  }
+
+  public get gvGraph(): gv.RootGraphModel {
+    return this._gvGraph;
   }
 
   /**
@@ -182,7 +178,7 @@ export class DependencyGraph<C, M> {
    * Create the options for the "name" node of a cluster.
    */
   private nameOptions(cluster: C): gv.NodeAttributesObject {
-    return DependencyGraph.Options.Node.name(
+    return DependencyGraph.Options.name(
       this._clusterLabel(cluster),
       this.clusterColor(cluster),
     );
@@ -205,7 +201,7 @@ export class DependencyGraph<C, M> {
     }
 
     if (this._trueCircular.has(module)) {
-      options = { ...options, ...DependencyGraph.Options.Node.circular };
+      options = { ...options, ...DependencyGraph.Options.circular };
     }
 
     return options;
@@ -261,7 +257,7 @@ export class DependencyGraph<C, M> {
       cluster,
       parent.subgraph(
         this._gvClusterId(cluster),
-        DependencyGraph.Options.Node.cluster,
+        DependencyGraph.Options.cluster,
       ),
     ];
   }
@@ -288,7 +284,7 @@ export class DependencyGraph<C, M> {
   ]: DependencyGraph.Cluster<C>): gv.NodeModel {
     return gvCluster.node(
       this._gvExitNodeId(cluster),
-      DependencyGraph.Options.Node.exit,
+      DependencyGraph.Options.exit,
     );
   }
 
@@ -314,7 +310,7 @@ export class DependencyGraph<C, M> {
     // This rigidifies the graph vertically.
     gvParent.createEdge(
       [exit, this.getExitNode([parent, gvParent])],
-      DependencyGraph.Options.Node.invisible,
+      DependencyGraph.Options.invisible,
     );
 
     return graphCluster;
@@ -351,7 +347,7 @@ export class DependencyGraph<C, M> {
     // this rigidifies the graph vertically.
     gvCluster.createEdge(
       [node, this.getExitNode([cluster, gvCluster])],
-      DependencyGraph.Options.Node.invisible,
+      DependencyGraph.Options.invisible,
     );
 
     return [[cluster, gvCluster], node];
@@ -426,7 +422,7 @@ export class DependencyGraph<C, M> {
           // will handle the actual edge later.
           this._gvGraph.createEdge(
             [gvNode, gvDep],
-            DependencyGraph.Options.Node.invisible,
+            DependencyGraph.Options.invisible,
           );
         }
 
@@ -487,27 +483,6 @@ export class DependencyGraph<C, M> {
       }
     }
   }
-
-  /**
-   * Saves the dependency graph, both as .dot ad .svg files.
-   */
-  public async save(
-    dirname: string,
-    filename: string = "dependency-graph",
-  ): Promise<void> {
-    const dot = gv.toDot(this._gvGraph);
-
-    if (!fs.existsSync(dirname)) {
-      fs.mkdirSync(dirname, { recursive: true });
-    }
-
-    fs.writeFileSync(path.join(dirname, `${filename}.dot`), dot, "utf8");
-
-    return adapter.toFile(dot, path.join(dirname, `${filename}.svg`), {
-      ...DependencyGraph.Options.graphviz,
-      format: "svg",
-    });
-  }
 }
 
 /**
@@ -523,47 +498,23 @@ export namespace DependencyGraph {
    * @internal
    */
   export namespace Options {
-    export const graphviz: adapter.Options = {
-      attributes: {
-        graph: {
-          overlap: false,
-          pad: 0.3,
-          rankdir: "TB",
-          layout: "dot",
-          bgcolor: "#ffffff",
-        },
-        edge: { color: "#151515" },
-        node: {
-          fontname: "Arial",
-          fontsize: 14,
-          color: "#000000",
-          shape: "box",
-          style: "rounded",
-          height: 0,
-          fontcolor: "#000000",
-        },
-      },
+    export const circular: gv.NodeAttributesObject = {
+      fillcolor: "#ff6c60",
+      style: "rounded,filled",
     };
+    export const cluster: gv.SubgraphAttributesObject = {
+      color: "#000000",
+      label: "",
+    };
+    export const invisible: gv.SubgraphAttributesObject = { style: "invis" };
 
-    export namespace Node {
-      export const circular: gv.NodeAttributesObject = {
-        fillcolor: "#ff6c60",
-        style: "rounded,filled",
-      };
-      export const cluster: gv.SubgraphAttributesObject = {
-        color: "#000000",
-        label: "",
-      };
-      export const invisible: gv.SubgraphAttributesObject = { style: "invis" };
+    export const exit = invisible;
 
-      export const exit = invisible;
-
-      export function name(
-        label: string,
-        color: gv.Color,
-      ): gv.NodeAttributesObject {
-        return { penwidth: 5, shape: "rectangle", color, label };
-      }
+    export function name(
+      label: string,
+      color: gv.Color,
+    ): gv.NodeAttributesObject {
+      return { penwidth: 5, shape: "rectangle", color, label };
     }
   }
 }
