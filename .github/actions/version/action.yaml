@@ -81,9 +81,9 @@ runs:
       # Feed that list to git, through xargs to handle the \0 separator.
       shell: bash
       run: >
-        find . 
-        -name node_modules -prune 
-        -o 
+        find .
+        -name node_modules -prune
+        -o
         -name "CHANGELOG.md" -print0
         -o
         -name "package.json" -print0
@@ -91,6 +91,8 @@ runs:
 
     - name: Commit and tag changes
       shell: bash
+      # If the version has changed, there is something to commit. Otherwise, changeset should have failed.
+      # So we do not allow empty commit and fail if one happens.
       run: |
         git commit --message=${VERSION}
         git tag --annotate ${VERSION} --message=${VERSION}

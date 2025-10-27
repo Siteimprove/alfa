@@ -58,12 +58,14 @@ runs:
       # If the name ends in "docs/coverage", print it with \0 separator (shell glob expansion protection)
       # Feed that list to git, through xargs to handle the \0 separator.
       run: >
-        find . 
-        -name node_modules -prune 
-        -o 
-        -wholename "./*docs/coverage" -print0 
+        find .
+        -name node_modules -prune
+        -o
+        -wholename "./*docs/coverage" -print0
         | xargs -0 git add
 
     - name: Commit changes
       shell: bash
+      # Since coverage reports contain a timestamp, something should have changed.
+      # Hence, we do not allow empty commit and fail if one happens.
       run: git commit --message="Update coverage reports"
