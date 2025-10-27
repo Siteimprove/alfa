@@ -18,8 +18,8 @@ export default defineConfig({
         // as situation improves.
         branches: [80, 90],
         functions: [65, 85],
-        lines: [80, 85],
-        statements: [80, 85],
+        lines: [75, 85],
+        statements: [75, 85],
       },
       reportsDirectory: "./docs/coverage",
       include: ["packages/alfa-*/**/*.{js,jsx,ts,tsx}"],
