@@ -27,10 +27,10 @@
   "dependencies": {
     "@siteimprove/alfa-iterable": "workspace:^",
     "@siteimprove/alfa-json": "workspace:^",
-    "browserslist": "^4.26.3"
+    "browserslist": "^4.27.0"
   },
   "devDependencies": {
-    "@mdn/browser-compat-data": "^7.1.14",
+    "@mdn/browser-compat-data": "^7.1.16",
     "prettier": "^3.6.2"
   },
   "publishConfig": {
