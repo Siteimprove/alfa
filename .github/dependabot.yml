@@ -33,6 +33,12 @@ updates:
           - "patch"
         # TODO: consider adding custom commit-message.
 
+      vitest:
+        # These two packages must be kept at the same version.
+        patterns: ["vitest", "@vitest/coverage-v8"]
+        applies-to: version-updates
+
+
       # Other dependencies will be in separate PRs (one for each) as we may need to look into them in more detail.
 
   - package-ecosystem: "npm" # Security updates (patch/minor), apply asap.
