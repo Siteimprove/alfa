@@ -22,7 +22,7 @@ export default defineConfig({
         statements: [80, 85],
       },
       reportsDirectory: "./docs/coverage",
-      include: ["packages/alfa-*/**"],
+      include: ["packages/alfa-*/**/*.ts?(x)", "packages/alfa-*/**/*.js?(x)"],
       exclude: [
         "packages/alfa-test*/**",
         "**/config/**",
