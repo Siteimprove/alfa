@@ -24,7 +24,7 @@
   "dependencies": {
     "@siteimprove/alfa-rng": "workspace:^",
     "@types/node": "^24.9.1",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.4"
   },
   "publishConfig": {
     "access": "public",
