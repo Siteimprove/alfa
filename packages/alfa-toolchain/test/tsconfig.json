@@ -3,7 +3,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "lib": ["dom"],
+    "lib": ["DOM", "ESNext"],
     "types": ["node"]
   },
   "files": [
