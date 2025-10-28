@@ -22,8 +22,22 @@ runs:
       shell: bash
       run: yarn document
 
-    - name: Stage and commit changes
+    - name: Stage changes
       shell: bash
-      run: |
-        git add docs/api
-        git commit --message="Update API documentation"
+      # Find in current directory.
+      # If the name is "node_modules", skip it, don't look inside it;
+      # or
+      # If the name contains "docs/api", print it with \0 separator (shell glob expansion protection)
+      # Feed that list to git, through xargs to handle the \0 separator.
+      run: >
+        find .
+        -name node_modules -prune
+        -o
+        -wholename "./*docs/api/*" -print0
+        | xargs -0 git add
+
+
+    - name: Commit changes
+      shell: bash
+      # Documentation may stay stable for internal changes, so we allow empty commit.
+      run: git commit --message="Update API documentation" --allow-empty
