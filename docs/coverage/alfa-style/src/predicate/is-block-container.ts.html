@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">42.85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/20</span>
+                <span class='fraction'>3/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">21.42% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>3/14</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/20</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
@@ -113,7 +113,6 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -128,18 +127,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">736x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">736x</span>
-<span class="cline-any cline-yes">736x</span>
-<span class="cline-any cline-yes">736x</span>
-<span class="cline-any cline-yes">264x</span>
-<span class="cline-any cline-yes">264x</span>
-<span class="cline-any cline-yes">736x</span>
-<span class="cline-any cline-yes">736x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,16 +141,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Style } from "../style.js";
 &nbsp;
 /**
@@ -177,13 +177,13 @@
  * @internal
  */
 export function isBlockContainer(style: Style): boolean {
-  const [outside, inside] = style.computed("display").value.values;
+  const [outside, inside] = <span class="cstat-no" title="statement not covered" >style.computed("display").value.values;</span>
 &nbsp;
   return (
     // block
     outside.is("block") ||
     // inline-block
-    (outside.is("inline") &amp;&amp; (inside?.is("flow-root")<span class="branch-0 cbranch-no" title="branch not covered" > ?? false)</span>)
+    (outside.is("inline") &amp;&amp; (inside?.is("flow-root") ?? <span class="branch-3 cbranch-no" title="branch not covered" >false)</span>)
   );
 }
 &nbsp;
@@ -197,16 +197,16 @@ export function isBlockContainer(style: Style): boolean {
  *
  * @internal
  */
-export<span class="fstat-no" title="function not covered" > <span class="fstat-no" title="function not covered" >function isBlockContainerWithInlineFormattingContext(</span></span>
-<span class="cstat-no" title="statement not covered" >  style: Style,</span>
-<span class="cstat-no" title="statement not covered" >): boolean {</span>
-<span class="cstat-no" title="statement not covered" >  const [outside, inside] = style.computed("display").value.values;</span>
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isBlockContainerWithInlineFormattingContext(</span></span>
+  style: Style,
+): boolean {
+  const [outside, inside] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >style.computed("display").value.values;</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  // Inline blocks are not block containers</span>
-<span class="cstat-no" title="statement not covered" >  // The exact rules for when block containers generate inline formatting</span>
-<span class="cstat-no" title="statement not covered" >  // contexts are not clear.</span>
+  // Inline blocks are not block containers
+  // The exact rules for when block containers generate inline formatting
+  // contexts are not clear.
 <span class="cstat-no" title="statement not covered" >  return outside.is("block") &amp;&amp; (inside?.is("flow") ?? false);</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -214,7 +214,7 @@ export<span class="fstat-no" title="function not covered" > <span class="fstat-n
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

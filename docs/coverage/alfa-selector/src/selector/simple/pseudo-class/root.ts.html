@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.69% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/26</span>
+                <span class='fraction'>4/9</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.69% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/26</span>
+                <span class='fraction'>4/9</span>
             </div>
         
             
@@ -102,45 +102,45 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">199x</span>
+<span class="cline-any cline-yes">199x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">199x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">199x</span>
-<span class="cline-any cline-yes">199x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 &nbsp;
@@ -153,33 +153,33 @@ const { not } = Predicate;
  * {@link https://drafts.csswg.org/selectors/#root-pseudo}
  */
 export class Root extends PseudoClassSelector&lt;"root"&gt; {
-  public static <span class="fstat-no" title="function not covered" >of(): Root {</span>
+  public static of(): Root {
 <span class="cstat-no" title="statement not covered" >    return new Root();</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  protected constructor() {</span>
 <span class="cstat-no" title="statement not covered" >    super("root");</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-  public *[Symbol.iterator](): Iterator&lt;Root&gt; {
+  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;Root&gt; {
 <span class="cstat-no" title="statement not covered" >    yield this;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >matches(element: Element): boolean {</span>
-<span class="cstat-no" title="statement not covered" >    // The root element is the element whose parent is NOT itself an element.</span>
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element): boolean {
+    // The root element is the element whose parent is NOT itself an element.
 <span class="cstat-no" title="statement not covered" >    return element.parent().every(not(isElement));</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(): Root.JSON {</span>
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Root.JSON {
 <span class="cstat-no" title="statement not covered" >    return super.toJSON();</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 }
 &nbsp;
-export namespace Root {
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Root {</span>
   export interface JSON extends PseudoClassSelector.JSON&lt;"root"&gt; {}
 &nbsp;
   export const parse = PseudoClassSelector.parseNonFunctional("root", Root.of);
-<span class="branch-0 cbranch-no" title="branch not covered" >}</span>
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -187,7 +187,7 @@ export namespace Root {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

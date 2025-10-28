@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.76% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.76% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/13</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -91,30 +91,30 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Style } from "../style.js";
 &nbsp;
 /**
@@ -122,25 +122,25 @@
  *
  * @internal
  */
-export<span class="fstat-no" title="function not covered" > <span class="fstat-no" title="function not covered" >function isInlineBox(style: Style): boolean {</span></span>
-<span class="cstat-no" title="statement not covered" >  const [outside, inside] = style.computed("display").value.values;</span>
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isInlineBox(</span>s</span>tyle: Style): boolean {
+  const [outside, inside] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >style.computed("display").value.values;</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
-<span class="cstat-no" title="statement not covered" >    // inline-flow</span>
-<span class="cstat-no" title="statement not covered" >    outside.is("inline") &amp;&amp; (inside?.is("flow") ?? false)</span>
-<span class="cstat-no" title="statement not covered" >  );</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >  return (</span></span>
+    // inline-flow
+    outside.is("inline") &amp;&amp; (inside?.is("flow") ?? false)
+  );
+}
 &nbsp;
 /**
  * {@link https://drafts.csswg.org/css-display-4/#inline-level}
  *
  * @internal
  */
-export<span class="fstat-no" title="function not covered" > <span class="fstat-no" title="function not covered" >function isInlineLevelBox(style: Style): boolean {</span></span>
-<span class="cstat-no" title="statement not covered" >  const [outside] = style.computed("display").value.values;</span>
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isInlineLevelBox(</span>s</span>tyle: Style): boolean {
+  const [outside] = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >style.computed("display").value.values;</span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return outside.is("inline");</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -148,7 +148,7 @@ export<span class="fstat-no" title="function not covered" > <span class="fstat-n
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

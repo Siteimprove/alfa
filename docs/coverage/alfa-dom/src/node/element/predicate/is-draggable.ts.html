@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/24</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/24</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
@@ -100,39 +100,39 @@
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Element } from "../../element.js";
 &nbsp;
 /**
@@ -140,34 +140,34 @@
  *
  * @public
  */
-export<span class="fstat-no" title="function not covered" > function isDraggable(element: Element): boolean {</span>
+export function <span class="fstat-no" title="function not covered" >isDraggable(</span>element: Element): boolean {
 <span class="cstat-no" title="statement not covered" >  return element</span>
-<span class="cstat-no" title="statement not covered" >    .attribute("draggable")</span>
-<span class="cstat-no" title="statement not covered" >    .map((attribute) =&gt;</span>
+    .attribute("draggable")
+    .map(<span class="fstat-no" title="function not covered" >(a</span>ttribute) =&gt;
 <span class="cstat-no" title="statement not covered" >      attribute.enumerate("true", "false", "auto").getOr("auto"),</span>
     )
-<span class="cstat-no" title="statement not covered" >    .some((draggable) =&gt; {</span>
+    .some(<span class="fstat-no" title="function not covered" >(d</span>raggable) =&gt; {
 <span class="cstat-no" title="statement not covered" >      switch (draggable) {</span>
-<span class="cstat-no" title="statement not covered" >        case "true":</span>
+        case "true":
 <span class="cstat-no" title="statement not covered" >          return true;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        case "false":</span>
+        case "false":
 <span class="cstat-no" title="statement not covered" >          return false;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        case "auto":</span>
+        case "auto":
 <span class="cstat-no" title="statement not covered" >          switch (element.name) {</span>
-<span class="cstat-no" title="statement not covered" >            case "img":</span>
+            case "img":
 <span class="cstat-no" title="statement not covered" >              return true;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            case "a":</span>
+            case "a":
 <span class="cstat-no" title="statement not covered" >              return element.attribute("href").isSome();</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            default:</span>
+            default:
 <span class="cstat-no" title="statement not covered" >              return false;</span>
-<span class="cstat-no" title="statement not covered" >          }</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+          }
+      }
+    });
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -175,7 +175,7 @@ export<span class="fstat-no" title="function not covered" > function isDraggable
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

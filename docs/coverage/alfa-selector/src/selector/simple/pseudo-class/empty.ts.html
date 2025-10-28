@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.33% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/24</span>
+                <span class='fraction'>2/7</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.33% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/24</span>
+                <span class='fraction'>2/7</span>
             </div>
         
             
@@ -100,41 +100,41 @@
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">199x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">199x</span>
-<span class="cline-any cline-yes">199x</span>
-<span class="cline-any cline-yes">199x</span>
-<span class="cline-any cline-yes">199x</span>
-<span class="cline-any cline-yes">199x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Element } from "@siteimprove/alfa-dom";
 import { PseudoClassSelector } from "./pseudo-class.js";
 &nbsp;
@@ -142,35 +142,35 @@ import { PseudoClassSelector } from "./pseudo-class.js";
  * {@link https://drafts.csswg.org/selectors/#empty-pseudo}
  */
 export class Empty extends PseudoClassSelector&lt;"empty"&gt; {
-  public static <span class="fstat-no" title="function not covered" >of(): Empty {</span>
+  public static of(): Empty {
 <span class="cstat-no" title="statement not covered" >    return new Empty();</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  protected constructor() {</span>
 <span class="cstat-no" title="statement not covered" >    super("empty");</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-  public *[Symbol.iterator](): Iterator&lt;Empty&gt; {
+  public *[<span class="fstat-no" title="function not covered" >Symbol.iterator]</span>(): Iterator&lt;Empty&gt; {
 <span class="cstat-no" title="statement not covered" >    yield this;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >matches(element: Element): boolean {</span>
+  public <span class="fstat-no" title="function not covered" >matches(</span>element: Element): boolean {
 <span class="cstat-no" title="statement not covered" >    return element.children().isEmpty();</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(): Empty.JSON {</span>
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Empty.JSON {
 <span class="cstat-no" title="statement not covered" >    return super.toJSON();</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 }
 &nbsp;
-export namespace Empty {
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Empty {</span>
   export interface JSON extends PseudoClassSelector.JSON&lt;"empty"&gt; {}
 &nbsp;
   export const parse = PseudoClassSelector.parseNonFunctional(
     "empty",
     Empty.of,
   );
-<span class="branch-0 cbranch-no" title="branch not covered" >}</span>
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -178,7 +178,7 @@ export namespace Empty {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
@@ -89,51 +89,51 @@
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/// &lt;reference lib="dom" /&gt;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >import { Request, Response } from "@siteimprove/alfa-http";</span>
+import { Request, Response } from "@siteimprove/alfa-http";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >import * as device from "@siteimprove/alfa-device/native";</span>
-<span class="cstat-no" title="statement not covered" >import * as dom from "@siteimprove/alfa-dom/native";</span>
+import * as device from "@siteimprove/alfa-device/native";
+import * as dom from "@siteimprove/alfa-dom/native";
 &nbsp;
 import type { Page } from "./index.js";
 &nbsp;
 /**
  * @internal
  */
-<span class="cstat-no" title="statement not covered" >export namespace Native {</span>
-<span class="cstat-no" title="statement not covered" >  export async function fromDocument(</span>
-<span class="cstat-no" title="statement not covered" >    document: globalThis.Document,</span>
-<span class="cstat-no" title="statement not covered" >  ): Promise&lt;Page.JSON&gt; {</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export <span class="fstat-no" title="function not covered" ></span>namespace <span class="cstat-no" title="statement not covered" >N</span>ative {</span></span>
+<span class="cstat-no" title="statement not covered" >  export async function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >fromDocument(</span></span></span></span>
+    document: globalThis.Document,
+  ): Promise&lt;Page.JSON&gt; {
 <span class="cstat-no" title="statement not covered" >    return {</span>
-<span class="cstat-no" title="statement not covered" >      request: Request.empty().toJSON(),</span>
-<span class="cstat-no" title="statement not covered" >      response: Response.empty().toJSON(),</span>
-<span class="cstat-no" title="statement not covered" >      document: await dom.Native.fromNode(document),</span>
-<span class="cstat-no" title="statement not covered" >      device: device.Native.fromWindow(document.defaultView ?? window),</span>
-<span class="cstat-no" title="statement not covered" >    };</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+      request: Request.empty().toJSON(),
+      response: Response.empty().toJSON(),
+      document: await dom.Native.fromNode(document),
+      device: device.Native.fromWindow(document.defaultView ?? window),
+    };
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -142,7 +142,7 @@ import type { Page } from "./index.js";
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

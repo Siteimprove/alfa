@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.17% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/17</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">25% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">41.17% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/17</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -113,33 +113,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -165,25 +165,25 @@ import type { Resource } from "./resource.js";
 export class Site&lt;R extends Resource = Resource&gt;
   implements json.Serializable&lt;Site.JSON&lt;R&gt;&gt;
 {
-  public static <span class="fstat-no" title="function not covered" >of&lt;R extends Resource&gt;(resources: Graph&lt;R&gt;): Site&lt;R&gt; {</span>
+  public static of&lt;R extends Resource&gt;(resources: Graph&lt;R&gt;): Site&lt;R&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Site(resources);</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-  private readonly <span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >_resources:</span></span> Graph&lt;R&gt;;
+  private readonly _resources: Graph&lt;R&gt;;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  protected constructor(resources: Graph&lt;R&gt;) {</span>
+<span class="fstat-no" title="function not covered" >  protected constructor(r</span>esources: Graph&lt;R&gt;) {
 <span class="cstat-no" title="statement not covered" >    this._resources = resources;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  public get resources(): Graph&lt;R&gt; {</span>
+  public get <span class="fstat-no" title="function not covered" >resources(</span>): Graph&lt;R&gt; {
 <span class="cstat-no" title="statement not covered" >    return this._resources;</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(): Site.JSON&lt;R&gt; {</span>
+  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Site.JSON&lt;R&gt; {
 <span class="cstat-no" title="statement not covered" >    return {</span>
-<span class="cstat-no" title="statement not covered" >      resources: this._resources.toJSON(),</span>
-<span class="cstat-no" title="statement not covered" >    };</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+      resources: this._resources.toJSON(),
+    };
+  }
 }
 &nbsp;
 /**
@@ -202,7 +202,7 @@ export namespace Site {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

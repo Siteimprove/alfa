@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
@@ -98,61 +98,61 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">type Cluster = string | { name: string; children: Array&lt;Cluster&gt; };
 &nbsp;
 /**
  * @internal
  */
-<span class="cstat-no" title="statement not covered" >export function isInClusters(</span>
-<span class="cstat-no" title="statement not covered" >  names: Array&lt;string&gt;,</span>
-<span class="cstat-no" title="statement not covered" >  clusters: Array&lt;Cluster&gt;,</span>
-<span class="cstat-no" title="statement not covered" >  filePath: string,</span>
-<span class="cstat-no" title="statement not covered" >): Array&lt;string&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  const errors: Array&lt;string&gt; = [];</span>
+export function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >isInClusters(</span></span>
+  names: Array&lt;string&gt;,
+  clusters: Array&lt;Cluster&gt;,
+  filePath: string,
+): Array&lt;string&gt; {
+  const errors: Array&lt;string&gt; = <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >[];</span></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  function search(name: string, clusters: Array&lt;Cluster&gt;): boolean {</span>
-<span class="cstat-no" title="statement not covered" >    return clusters.some((cluster) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      typeof cluster === "string"</span>
-<span class="cstat-no" title="statement not covered" >        ? cluster === name</span>
-<span class="cstat-no" title="statement not covered" >        : search(name, cluster.children),</span>
-<span class="cstat-no" title="statement not covered" >    );</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >search(</span>n</span>ame: string, clusters: Array&lt;Cluster&gt;): boolean {
+<span class="cstat-no" title="statement not covered" >    return clusters.some(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>luster) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      typeof cluster === "string"</span></span>
+        ? cluster === name
+        : search(name, cluster.children),
+    );
+  }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  for (const name of names) {</span>
 <span class="cstat-no" title="statement not covered" >    if (!search(name, clusters)) {</span>
 <span class="cstat-no" title="statement not covered" >      errors.push(</span>
-<span class="cstat-no" title="statement not covered" >        `Name "${name}" is not in any cluster defined in ${filePath}`,</span>
-<span class="cstat-no" title="statement not covered" >      );</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+        `Name "${name}" is not in any cluster defined in ${filePath}`,
+      );
+    }
+  }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return errors;</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -160,7 +160,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

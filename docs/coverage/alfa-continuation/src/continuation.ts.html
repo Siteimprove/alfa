@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/23</span>
+                <span class='fraction'>0/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/23</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -121,29 +121,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Callback } from "@siteimprove/alfa-callback";
 import type { Mapper } from "@siteimprove/alfa-mapper";
@@ -160,31 +160,31 @@ export type Continuation&lt;T, R = void, A extends Array&lt;unknown&gt; = []&gt;
 /**
  * @public
  */
-<span class="cstat-no" title="statement not covered" >export namespace Continuation {</span>
-<span class="cstat-no" title="statement not covered" >  export function of&lt;T, R = void, A extends Array&lt;unknown&gt; = []&gt;(</span>
-<span class="cstat-no" title="statement not covered" >    value: T,</span>
-<span class="cstat-no" title="statement not covered" >  ): Continuation&lt;T, R, A&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return (callback, ..._) =&gt; callback(value);</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export <span class="fstat-no" title="function not covered" ></span>namespace <span class="cstat-no" title="statement not covered" >C</span>ontinuation {</span></span>
+  export <span class="cstat-no" title="statement not covered" >function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >of&lt;</span>T, R = void, A extends Array&lt;unknown&gt; = []&gt;(</span></span></span>
+    value: T,
+  ): Continuation&lt;T, R, A&gt; {
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>allback, ..._) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >callback(value);</span></span></span>
+  }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  export function map&lt;T, U, R = void, A extends Array&lt;unknown&gt; = []&gt;(</span>
-<span class="cstat-no" title="statement not covered" >    continuation: Continuation&lt;T, R, A&gt;,</span>
-<span class="cstat-no" title="statement not covered" >    mapper: Mapper&lt;T, U&gt;,</span>
-<span class="cstat-no" title="statement not covered" >  ): Continuation&lt;U, R, A&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return (callback, ...args) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      continuation(</span>
-<span class="cstat-no" title="statement not covered" >        (value, ...args) =&gt; callback(mapper(value), ...args),</span>
-<span class="cstat-no" title="statement not covered" >        ...args,</span>
-<span class="cstat-no" title="statement not covered" >      );</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  export <span class="cstat-no" title="statement not covered" >function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >map&lt;</span>T, U, R = void, A extends Array&lt;unknown&gt; = []&gt;(</span></span></span>
+    continuation: Continuation&lt;T, R, A&gt;,
+    mapper: Mapper&lt;T, U&gt;,
+  ): Continuation&lt;U, R, A&gt; {
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>allback, ...args) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      continuation(</span></span>
+<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >        (v</span></span>alue, ...args) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >callback(mapper(value), ...args),</span></span>
+        ...args,
+      );
+  }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  export function flatMap&lt;T, U, R = void, A extends Array&lt;unknown&gt; = []&gt;(</span>
-<span class="cstat-no" title="statement not covered" >    continuation: Continuation&lt;T, R, A&gt;,</span>
-<span class="cstat-no" title="statement not covered" >    mapper: Mapper&lt;T, Continuation&lt;U, R, A&gt;&gt;,</span>
-<span class="cstat-no" title="statement not covered" >  ): Continuation&lt;U, R, A&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return (callback, ...args) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      continuation((value) =&gt; mapper(value)(callback, ...args), ...args);</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  export <span class="cstat-no" title="statement not covered" >function <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >flatMap&lt;</span>T, U, R = void, A extends Array&lt;unknown&gt; = []&gt;(</span></span></span>
+    continuation: Continuation&lt;T, R, A&gt;,
+    mapper: Mapper&lt;T, Continuation&lt;U, R, A&gt;&gt;,
+  ): Continuation&lt;U, R, A&gt; {
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(c</span></span>allback, ...args) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      continuation(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >mapper(value)(callback, ...args),</span> .</span>..args);</span></span>
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -193,7 +193,7 @@ export type Continuation&lt;T, R = void, A extends Array&lt;unknown&gt; = []&gt;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-24T11:30:33.044Z
+                at 2025-10-28T11:02:49.095Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
