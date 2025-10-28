@@ -98,6 +98,10 @@ ${description}
       extends: "../tsconfig.json",
       compilerOptions: {
         noEmit: true,
+        // DOM and ESNext are needed by Vitest.
+        // Since this is only in the test tsconfig, it shouldn't creep in the
+        // distributed packages.
+        lib: ["DOM", "ESNext"],
       },
       files: [],
       references: [{ path: "../src" }],
