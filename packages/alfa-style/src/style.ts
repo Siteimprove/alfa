@@ -15,7 +15,7 @@ import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type * as json from "@siteimprove/alfa-json";
 import type { Serializable } from "@siteimprove/alfa-json";
-import { Map } from "@siteimprove/alfa-map";
+import { ValueMap } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
@@ -72,7 +72,7 @@ export class Style implements Serializable<Style.JSON> {
     // the parent ones, this will effectively resolve variable inheritance.
     const cascadedVariables = parent
       .map((parent) => parent.variables)
-      .getOr(Map.empty<string, Value<Slice<Token>>>())
+      .getOr(ValueMap.empty<string, Value<Slice<Token>>>())
       .concat(declaredVariables);
 
     // Third step: pre-substitute the resolved cascading variables from above,
@@ -90,7 +90,7 @@ export class Style implements Serializable<Style.JSON> {
      * one for the cascaded value.
      */
 
-    let properties = Map.empty<Name, Value>();
+    let properties = ValueMap.empty<Name, Value>();
     // Since we effectively only handle User-Agent and Author origins, we can
     // go for a simple version of `revert`. We don't use it in the User Agent
     // style sheet, and will simply skip all author origin declarations.
@@ -169,8 +169,8 @@ export class Style implements Serializable<Style.JSON> {
     None,
     Device.standard(),
     None,
-    Map.empty(),
-    Map.empty(),
+    ValueMap.empty(),
+    ValueMap.empty(),
   );
 
   public static empty(): Style {
@@ -180,21 +180,21 @@ export class Style implements Serializable<Style.JSON> {
   private readonly _owner: Option<Element>;
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
-  private readonly _variables: Map<string, Value<Slice<Token>>>;
-  private readonly _properties: Map<Name, Value>;
+  private readonly _variables: ValueMap<string, Value<Slice<Token>>>;
+  private readonly _properties: ValueMap<Name, Value>;
 
   // We cache computed values but not specified values, as these are
   // inexpensive to resolve from cascaded and computed values;
   // nor used values, as in our case they are inexpensive to resolve
   // from computed values.
-  private _computed = Map.empty<Name, Value>();
+  private _computed = ValueMap.empty<Name, Value>();
 
   protected constructor(
     owner: Option<Element>,
     device: Device,
     parent: Option<Style>,
-    variables: Map<string, Value<Slice<Token>>>,
-    properties: Map<Name, Value>,
+    variables: ValueMap<string, Value<Slice<Token>>>,
+    properties: ValueMap<Name, Value>,
   ) {
     this._owner = owner;
     this._device = device;
@@ -215,11 +215,11 @@ export class Style implements Serializable<Style.JSON> {
     return this._parent.getOrElse(() => Style._empty);
   }
 
-  public get variables(): Map<string, Value<Slice<Token>>> {
+  public get variables(): ValueMap<string, Value<Slice<Token>>> {
     return this._variables;
   }
 
-  public get properties(): Map<string, Value> {
+  public get properties(): ValueMap<string, Value> {
     return this._properties;
   }
 
@@ -496,7 +496,7 @@ export namespace Style {
 function parseLonghand<N extends Longhands.PropName>(
   property: Longhands.Property[N],
   value: string,
-  variables: Map<string, Value<Slice<Token>>>,
+  variables: ValueMap<string, Value<Slice<Token>>>,
 ): Result<Style.Declared<N>, string> {
   const substitution = Variable.substitute(Lexer.lex(value), variables);
 
@@ -520,7 +520,7 @@ function parseLonghand<N extends Longhands.PropName>(
 function parseShorthand<N extends Shorthands.Name>(
   shorthand: Shorthands.Property[N],
   value: string,
-  variables: Map<string, Value<Slice<Token>>>,
+  variables: ValueMap<string, Value<Slice<Token>>>,
 ): Result<
   Iterable<
     {

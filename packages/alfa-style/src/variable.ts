@@ -2,7 +2,7 @@ import type { Array } from "@siteimprove/alfa-array";
 import { Component, Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import type { Declaration } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Map } from "@siteimprove/alfa-map";
+import { ValueMap } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Set } from "@siteimprove/alfa-set";
@@ -23,7 +23,7 @@ export namespace Variable {
    *
    * @internal
    */
-  export type DefinitionMap = Map<string, Value<Slice<Token>>>;
+  export type DefinitionMap = ValueMap<string, Value<Slice<Token>>>;
 
   /**
    * Gather variables that are declared on the declarations.
@@ -37,7 +37,7 @@ export namespace Variable {
    * i.e. "--foo: lorem ipsum" becomes "foo => [lorem, ipsum]"
    **/
   export function gather(declarations: Array<Declaration>): DefinitionMap {
-    let currentVariables: DefinitionMap = Map.empty();
+    let currentVariables: DefinitionMap = ValueMap.empty();
 
     for (const declaration of declarations.filter((declaration) =>
       declaration.name.startsWith("--"),

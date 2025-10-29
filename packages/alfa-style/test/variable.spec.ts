@@ -36,17 +36,17 @@ test("gather() gather all declaration starting with --", (t) => {
 
   t.deepEqual(actual.toJSON(), [
     [
-      "--bar",
-      {
-        value: [{ type: "ident", value: "bar" }],
-        source: { name: "--bar", value: "bar", important: false },
-      },
-    ],
-    [
       "--foo",
       {
         value: [{ type: "ident", value: "foo" }],
         source: { name: "--foo", value: "foo", important: false },
+      },
+    ],
+    [
+      "--bar",
+      {
+        value: [{ type: "ident", value: "bar" }],
+        source: { name: "--bar", value: "bar", important: false },
       },
     ],
   ]);
@@ -62,17 +62,17 @@ test("gather() prefers the first declaration", (t) => {
 
   t.deepEqual(actual.toJSON(), [
     [
-      "--bar",
-      {
-        value: [{ type: "ident", value: "bar" }],
-        source: { name: "--bar", value: "bar", important: true },
-      },
-    ],
-    [
       "--foo",
       {
         value: [{ type: "ident", value: "foo" }],
         source: { name: "--foo", value: "foo", important: false },
+      },
+    ],
+    [
+      "--bar",
+      {
+        value: [{ type: "ident", value: "bar" }],
+        source: { name: "--bar", value: "bar", important: true },
       },
     ],
   ]);
@@ -98,17 +98,17 @@ test("flatten() expands variable definitions", (t) => {
 
   t.deepEqual(Variable.flatten(map).toJSON(), [
     [
-      "--bar",
-      {
-        value: [{ type: "ident", value: "hello" }],
-        source: { name: "--bar", value: "hello", important: false },
-      },
-    ],
-    [
       "--foo",
       {
         value: [{ type: "ident", value: "hello" }],
         source: { name: "--foo", value: "var(--bar)", important: false },
+      },
+    ],
+    [
+      "--bar",
+      {
+        value: [{ type: "ident", value: "hello" }],
+        source: { name: "--bar", value: "hello", important: false },
       },
     ],
   ]);
