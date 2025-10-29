@@ -5,7 +5,7 @@
     "noEmit": true,
     "lib": ["DOM", "ESNext"]
   },
-  "files": ["./map.spec.ts", "./property.spec.ts"],
+  "files": ["./map.spec.ts", "mutable-map.spec.ts", "./property.spec.ts"],
   "references": [
     { "path": "../src" },
     { "path": "../../alfa-rng" },

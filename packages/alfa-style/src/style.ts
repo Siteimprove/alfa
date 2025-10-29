@@ -15,7 +15,7 @@ import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type * as json from "@siteimprove/alfa-json";
 import type { Serializable } from "@siteimprove/alfa-json";
-import { Map } from "@siteimprove/alfa-map";
+import { Map, MutableMap } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
@@ -187,7 +187,7 @@ export class Style implements Serializable<Style.JSON> {
   // inexpensive to resolve from cascaded and computed values;
   // nor used values, as in our case they are inexpensive to resolve
   // from computed values.
-  private _computed = Map.empty<Name, Value>();
+  private _computed = MutableMap.empty<Name, Value>();
 
   protected constructor(
     owner: Option<Element>,
