@@ -6,7 +6,7 @@ const url = process.env.COVERAGE_API_URL;
 const apiKey = process.env.COVERAGE_API_KEY;
 
 const configFile = path.join("config", "upload-coverage-report.json");
-const summaryFile = path.join("docs", "coverage/coverage-summary.json");
+const summaryFile = path.join("docs", "coverage", "coverage-summary.json");
 
 const targetPath = process.argv[2] ?? ".";
 
