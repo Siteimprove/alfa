@@ -1,5 +1,5 @@
 import { RNG } from "@siteimprove/alfa-rng";
-import { assert, it } from "vitest";
+import { assert, it, type TestOptions } from "vitest";
 
 import type { Assertions } from "./types.js";
 
@@ -17,30 +17,19 @@ export async function test<T = number>(
     ...controller,
   } as Controller<T>;
 
-  return it(
-    name,
-    async () => {
-      for (let i = 0; i < fullController.iterations; i++) {
-        await assertion(assert, fullController.rng);
-      }
-    },
-    fullController?.timeout,
-  );
+  return it(name, fullController, async () => {
+    for (let i = 0; i < fullController.iterations; i++) {
+      await assertion(assert, fullController.rng);
+    }
+  });
 }
 
 /**
  * @public
  */
-export interface Controller<T = number> {
+export interface Controller<T = number> extends TestOptions {
   rng: RNG<T>;
   iterations: number;
-  // This interface should instead extend Vitest's TestOptions.
-  // However, doing so causes Vitest to be transitively included everywhere,
-  // thus triggering https://github.com/vitejs/vite/issues/9813
-  // Having one vitest.d.ts file in this package is OK, requiring one in every
-  // dependent is not.
-  // So, we just hardcode the property we need, until Vitest bug is fixed.
-  timeout?: number;
 }
 
 function defaultController(): Controller<number> {
