@@ -68,7 +68,7 @@ export async function uploadCoverageReport(rootDir: string) {
 
   if (webHookUrl) {
     const response = await axios.post(
-      `${webHookUrl}?external_kind=test_coverage_push_data`,
+      webHookUrl,
       {
         service_alias: config.service_alias,
         coverage: summary.total.lines.covered,
