@@ -32,6 +32,9 @@ inputs:
   coverage-api-key:
     description: "The API key to authenticate with the coverage API"
     required: false
+  coverage-webhook-url:
+    description: "The webhook URL to notify with the coverage number"
+    required: false
   publish:
     description: "Whether to create and publish a new version."
     required: false
@@ -77,6 +80,7 @@ runs:
       with:
         url: ${{ inputs.coverage-url }}
         api-key: ${{ inputs.coverage-api-key }}
+        webhook-url: ${{ inputs.coverage-webhook-url }}
 
     - name: Generate documentation
       if: inputs.generate-documentation == 'true'

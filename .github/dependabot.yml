@@ -12,6 +12,11 @@ updates:
       - "dependencies"
 
     groups:
+      vitest:
+        # These two packages must be kept at the same version.
+        patterns: [ "vitest", "@vitest/coverage-v8" ]
+        applies-to: version-updates
+
       production-patch: # Patch updates to production packages. Low risk.
         # This group could be auto-merge, this need a separate action. Maybe acting on a label that would be set here?
         # We might want to run that for some time before actually enabling auto merging.
@@ -32,12 +37,6 @@ updates:
           - "minor"
           - "patch"
         # TODO: consider adding custom commit-message.
-
-      vitest:
-        # These two packages must be kept at the same version.
-        patterns: ["vitest", "@vitest/coverage-v8"]
-        applies-to: version-updates
-
 
       # Other dependencies will be in separate PRs (one for each) as we may need to look into them in more detail.
 

@@ -41,7 +41,7 @@ export { individualChangelog }
 // Warning: (ae-internal-missing-underscore) The name "uploadCoverageReport" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export function uploadCoverageReport(rootDir: string): Promise<any>;
+export function uploadCoverageReport(rootDir: string): Promise<void>;
 
 // @public (undocumented)
 function validate(rootDir: string): Promise<void>;

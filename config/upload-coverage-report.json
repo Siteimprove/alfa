@@ -4,5 +4,6 @@
   "teamName": "A11yance",
   "domain": "accessibility",
   "component": "Alfa",
+  "service_alias": "alfa",
   "system": "a11y"
 }
