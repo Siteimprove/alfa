@@ -23,8 +23,8 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-rng": "workspace:^",
-    "@types/node": "^24.9.1",
-    "vitest": "^4.0.4"
+    "@types/node": "^24.9.2",
+    "vitest": "^4.0.6"
   },
   "publishConfig": {
     "access": "public",
