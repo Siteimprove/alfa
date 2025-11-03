@@ -47,7 +47,7 @@ export async function uploadCoverageReport(rootDir: string) {
     git_sha,
   };
 
-  if (!url || !apiKey) {
+  if ((url ?? "") === "" || (apiKey ?? "") === "") {
     console.group("Upload Coverage Report - Missing Configuration");
     console.warn(
       "COVERAGE_API_URL and COVERAGE_API_KEY must be set in the environment.",
@@ -55,7 +55,8 @@ export async function uploadCoverageReport(rootDir: string) {
     console.warn("Skipping API upload.");
     console.groupEnd();
   } else {
-    const response = await axios.post(url, payload, {
+    // url cannot be undefined as it would have defaulted to "" in the test.
+    const response = await axios.post(url!, payload, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
@@ -66,9 +67,10 @@ export async function uploadCoverageReport(rootDir: string) {
     console.groupEnd();
   }
 
-  if (webHookUrl) {
+  if (webHookUrl ?? "" !== "") {
     const response = await axios.post(
-      webHookUrl,
+      // webHookUrl cannot be undefined as it would have defaulted to "" in the test.
+      webHookUrl!,
       {
         service_alias: config.service_alias,
         coverage: summary.total.lines.covered,
