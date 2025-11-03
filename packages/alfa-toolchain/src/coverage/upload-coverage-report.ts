@@ -4,6 +4,7 @@ import * as path from "node:path";
 
 const url = process.env.COVERAGE_API_URL;
 const apiKey = process.env.COVERAGE_API_KEY;
+const webHookUrl = process.env.COVERAGE_WEBHOOK_URL;
 
 const configFile = path.join("config", "upload-coverage-report.json");
 const summaryFile = path.join("docs", "coverage", "coverage-summary.json");
@@ -47,17 +48,44 @@ export async function uploadCoverageReport(rootDir: string) {
   };
 
   if (!url || !apiKey) {
-    throw new Error(
+    console.group("Upload Coverage Report - Missing Configuration");
+    console.warn(
       "COVERAGE_API_URL and COVERAGE_API_KEY must be set in the environment.",
     );
+    console.warn("Skipping API upload.");
+    console.groupEnd();
+  } else {
+    const response = await axios.post(url, payload, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+    console.group("Upload Coverage Report - API Response");
+    console.dir(response.data);
+    console.groupEnd();
   }
 
-  const response = await axios.post(url, payload, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-  });
-
-  return response.data;
+  if (webHookUrl) {
+    const response = await axios.post(
+      `${webHookUrl}?external_kind=test_coverage_push_data`,
+      {
+        service_alias: config.service_alias,
+        coverage: summary.total.lines.covered,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    console.group("Upload Coverage Report - Webhook Response");
+    console.dir(response.data);
+    console.groupEnd();
+  } else {
+    console.group("Upload Coverage Report - Missing Webhook Configuration");
+    console.warn("COVERAGE_WEBHOOK_URL is not set in the environment.");
+    console.warn("Skipping webhook notification.");
+    console.groupEnd();
+  }
 }
