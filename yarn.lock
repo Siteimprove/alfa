@@ -5,6 +5,13 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@acemir/cssom@npm:^0.9.19":
+  version: 0.9.19
+  resolution: "@acemir/cssom@npm:0.9.19"
+  checksum: 10c0/baef216086b4c6d32ac02fff6621e5343969710d8262be3a84494564754424f60d3add8313c05a76465310e02bf72faa65abcb9febee15c2dc01d9b08c044d5a
+  languageName: node
+  linkType: hard
+
 "@asamuzakjp/css-color@npm:^4.0.3":
   version: 4.0.5
   resolution: "@asamuzakjp/css-color@npm:4.0.5"
@@ -18,16 +25,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@asamuzakjp/dom-selector@npm:^6.7.2":
-  version: 6.7.2
-  resolution: "@asamuzakjp/dom-selector@npm:6.7.2"
+"@asamuzakjp/dom-selector@npm:^6.7.3":
+  version: 6.7.4
+  resolution: "@asamuzakjp/dom-selector@npm:6.7.4"
   dependencies:
     "@asamuzakjp/nwsapi": "npm:^2.3.9"
     bidi-js: "npm:^1.0.3"
     css-tree: "npm:^3.1.0"
     is-potential-custom-element-name: "npm:^1.0.1"
     lru-cache: "npm:^11.2.2"
-  checksum: 10c0/b0cb6a5540dc70c9ace3fa91bdd84cf12be7817451d8522d8aaa19f806edc52f500647055ac2b806a93213b9756cd8cae9958fac8dcffbaecaef5dadabf1674f
+  checksum: 10c0/73e70d8d660a0d7257828064f83772c6773ed9688186590eefc1a8320a0af9cce74e966d4d4c4cc451481f5fd5c8ca429c6e01c1383106eed64c0a2b1b7ab36e
   languageName: node
   linkType: hard
 
@@ -762,10 +769,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdn/browser-compat-data@npm:^7.1.16":
-  version: 7.1.16
-  resolution: "@mdn/browser-compat-data@npm:7.1.16"
-  checksum: 10c0/ac2d64012296e900aeb51560b506465b28c3f3105db20f40c35a6f9705d84eda9b7b42600cab7cd66d92f701a99daac4eea3f478abe0d67fb16752c57244415e
+"@mdn/browser-compat-data@npm:^7.1.18":
+  version: 7.1.18
+  resolution: "@mdn/browser-compat-data@npm:7.1.18"
+  checksum: 10c0/6af2981218758acab60e7500e5d48ae63a9cae0e72777804d05819ecc5140cff98170a9eea2ae97d3691afc3686e218877d50e9758db8031c6a04e670579c65a
   languageName: node
   linkType: hard
 
@@ -1425,7 +1432,7 @@ __metadata:
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
     prettier: "npm:^3.6.2"
-    puppeteer: "npm:^24.26.1"
+    puppeteer: "npm:^24.27.0"
   languageName: unknown
   linkType: soft
 
@@ -1559,7 +1566,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
-    "@mdn/browser-compat-data": "npm:^7.1.16"
+    "@mdn/browser-compat-data": "npm:^7.1.18"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
     browserslist: "npm:^4.27.0"
@@ -1669,7 +1676,7 @@ __metadata:
     "@siteimprove/alfa-trampoline": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
     "@types/jsdom": "npm:^27.0.0"
-    jsdom: "npm:^27.0.1"
+    jsdom: "npm:^27.1.0"
   languageName: unknown
   linkType: soft
 
@@ -2580,7 +2587,7 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     prettier: "npm:^3.6.2"
-    puppeteer: "npm:^24.26.1"
+    puppeteer: "npm:^24.27.0"
   languageName: unknown
   linkType: soft
 
@@ -2629,8 +2636,8 @@ __metadata:
     "@microsoft/api-extractor": "npm:^7.52.10"
     "@siteimprove/alfa-toolchain": "workspace:^0.107.0"
     "@types/node": "npm:^24.9.1"
-    "@vitest/coverage-v8": "npm:^4.0.4"
-    knip: "npm:^5.66.4"
+    "@vitest/coverage-v8": "npm:^4.0.6"
+    knip: "npm:^5.67.0"
     minimist: "npm:^1.2.6"
     prettier: "npm:^3.6.2"
     typescript: "npm:^5.9.3"
@@ -2866,12 +2873,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-v8@npm:^4.0.4":
-  version: 4.0.4
-  resolution: "@vitest/coverage-v8@npm:4.0.4"
+"@vitest/coverage-v8@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/coverage-v8@npm:4.0.6"
   dependencies:
     "@bcoe/v8-coverage": "npm:^1.0.2"
-    "@vitest/utils": "npm:4.0.4"
+    "@vitest/utils": "npm:4.0.6"
     ast-v8-to-istanbul: "npm:^0.3.5"
     debug: "npm:^4.4.3"
     istanbul-lib-coverage: "npm:^3.2.2"
@@ -2882,12 +2889,12 @@ __metadata:
     std-env: "npm:^3.9.0"
     tinyrainbow: "npm:^3.0.3"
   peerDependencies:
-    "@vitest/browser": 4.0.4
-    vitest: 4.0.4
+    "@vitest/browser": 4.0.6
+    vitest: 4.0.6
   peerDependenciesMeta:
     "@vitest/browser":
       optional: true
-  checksum: 10c0/cebddeeccc137c6e676e8a5e4c403b302ef355af4cce1ff2288e96005b48c39f799777e40464dc6ffbf141b6b05f412d1b015faa33b7dfa6b8b255a51c0f0afc
+  checksum: 10c0/10ffd4ad00cb81a780a3500be1160afcca804ece5630563ff0ba0bf57830a610cf95a8a8b1c56fe581c264a23d8d3e0c0c084cf17da69d18bac022f1b0bb8cf4
   languageName: node
   linkType: hard
 
@@ -2933,6 +2940,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vitest/pretty-format@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/pretty-format@npm:4.0.6"
+  dependencies:
+    tinyrainbow: "npm:^3.0.3"
+  checksum: 10c0/e7dba3ca676d3a14d9c8bf8042c3cf40d1f77060dfe0426dfd6ed531416b7a85dfc97326d1d475b44718899f96352b4014ec85cb6ea72415fcd157ccea680286
+  languageName: node
+  linkType: hard
+
 "@vitest/runner@npm:4.0.4":
   version: 4.0.4
   resolution: "@vitest/runner@npm:4.0.4"
@@ -2968,6 +2984,16 @@ __metadata:
     "@vitest/pretty-format": "npm:4.0.4"
     tinyrainbow: "npm:^3.0.3"
   checksum: 10c0/62d864bd3568cd7fedf857ecba3fc84b1d08657bdb545e09b601b6d21dd38733ec0a207880990876250b3c66c79b440287981936ba8d8e52986669c35eb21096
+  languageName: node
+  linkType: hard
+
+"@vitest/utils@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/utils@npm:4.0.6"
+  dependencies:
+    "@vitest/pretty-format": "npm:4.0.6"
+    tinyrainbow: "npm:^3.0.3"
+  checksum: 10c0/3a981e8af8ab280f226ff420bf3a7cb00540dc78c048acc1b2b257285d9604682f8668c3750a64cdb7018a433cdedee389def1cebeafa1f0cb56e0f2cdc343cc
   languageName: node
   linkType: hard
 
@@ -3626,14 +3652,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssstyle@npm:^5.3.1":
-  version: 5.3.1
-  resolution: "cssstyle@npm:5.3.1"
+"cssstyle@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "cssstyle@npm:5.3.2"
   dependencies:
     "@asamuzakjp/css-color": "npm:^4.0.3"
     "@csstools/css-syntax-patches-for-csstree": "npm:^1.0.14"
     css-tree: "npm:^3.1.0"
-  checksum: 10c0/41c93a6816337403f6107adb76d06989155523842a6c1c070436af13e9ff2bc72031cf469cd1d86ca1b9e1edacbe07b1c2dea5aaf5b530b982878844ba7f2b25
+  checksum: 10c0/513f0bd5d80fa91beadd24a9f4d4705f1f7e783acd90049ba6ceaf452101326208dd0d1d088d3565c4df94e4730582bf3857ea0fd3e733d10b6141be6eb68e40
   languageName: node
   linkType: hard
 
@@ -3837,10 +3863,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devtools-protocol@npm:0.0.1508733":
-  version: 0.0.1508733
-  resolution: "devtools-protocol@npm:0.0.1508733"
-  checksum: 10c0/d8d15e0a79b7343b9fe165fca70fabb77da29f7e3d72aa38b2776de795f8a24a3ea592da7b4edd9bf86344114e1431b0dd1b663c8c4efcd7f130db42d5360d88
+"devtools-protocol@npm:0.0.1521046":
+  version: 0.0.1521046
+  resolution: "devtools-protocol@npm:0.0.1521046"
+  checksum: 10c0/ba4b83a94e2b9c26772b22a8f6029ff296976a72db8e4567c9076393fccc39a452f6c0530869eebe2e1ad483db0e6233cd6b7b723ce466a05660c758f5e06db0
   languageName: node
   linkType: hard
 
@@ -5005,12 +5031,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^27.0.1":
-  version: 27.0.1
-  resolution: "jsdom@npm:27.0.1"
+"jsdom@npm:^27.1.0":
+  version: 27.1.0
+  resolution: "jsdom@npm:27.1.0"
   dependencies:
-    "@asamuzakjp/dom-selector": "npm:^6.7.2"
-    cssstyle: "npm:^5.3.1"
+    "@acemir/cssom": "npm:^0.9.19"
+    "@asamuzakjp/dom-selector": "npm:^6.7.3"
+    cssstyle: "npm:^5.3.2"
     data-urls: "npm:^6.0.0"
     decimal.js: "npm:^10.6.0"
     html-encoding-sniffer: "npm:^4.0.0"
@@ -5018,7 +5045,6 @@ __metadata:
     https-proxy-agent: "npm:^7.0.6"
     is-potential-custom-element-name: "npm:^1.0.1"
     parse5: "npm:^8.0.0"
-    rrweb-cssom: "npm:^0.8.0"
     saxes: "npm:^6.0.0"
     symbol-tree: "npm:^3.2.4"
     tough-cookie: "npm:^6.0.0"
@@ -5034,7 +5060,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: 10c0/563ff3ebfd9a3dc66082cdf2427198b647993753b4c37b2d0064b5b47cf7be5154c62df10eb8122254f7b89c73ecb6fc870fa038e22ab9975b23079ee62e050e
+  checksum: 10c0/b3da39ab7c858df28a2300362924925327f5bff5727371523b99cac7f51bc2891c4b8516205c9acbd34430819f7e69f7790a2092a965359ed65d8111b3a79507
   languageName: node
   linkType: hard
 
@@ -5093,9 +5119,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.66.4":
-  version: 5.66.4
-  resolution: "knip@npm:5.66.4"
+"knip@npm:^5.67.0":
+  version: 5.67.0
+  resolution: "knip@npm:5.67.0"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -5115,7 +5141,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/ef52bd1058deb9897e96412ea36c3323b5949aefc53417ed2486680288928f63bc432aae32b0750d2f54229ca420e64700d5d6227da4c83ec5ab77cb7f5c10a8
+  checksum: 10c0/000fd892dc9868fe7c6be9db58e5201219f17c6a4f386a98fc8ab374ecec0239978d044b4fd4b5f5a12199c62d2dc437123637697e35b5c3a50f7dbba635e337
   languageName: node
   linkType: hard
 
@@ -6045,34 +6071,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:24.26.1":
-  version: 24.26.1
-  resolution: "puppeteer-core@npm:24.26.1"
+"puppeteer-core@npm:24.27.0":
+  version: 24.27.0
+  resolution: "puppeteer-core@npm:24.27.0"
   dependencies:
     "@puppeteer/browsers": "npm:2.10.12"
     chromium-bidi: "npm:10.5.1"
     debug: "npm:^4.4.3"
-    devtools-protocol: "npm:0.0.1508733"
+    devtools-protocol: "npm:0.0.1521046"
     typed-query-selector: "npm:^2.12.0"
     webdriver-bidi-protocol: "npm:0.3.8"
     ws: "npm:^8.18.3"
-  checksum: 10c0/30e6424dc48862ca325bd16f1af09220441e23aeaf13ae4fec06aae13abd8a864160e17686967e26fa087694ea74fa06d43915ab3467a3f1873b90dac036e76f
+  checksum: 10c0/1b9bba7a730d64257bca208f0a02979b60bb48bed334207c9bdf2b68e57e1a2a0902ab1f476c9360001c84a6fb1c8b42118fa8f7c5f99cd783ceff5368c1691b
   languageName: node
   linkType: hard
 
-"puppeteer@npm:^24.26.1":
-  version: 24.26.1
-  resolution: "puppeteer@npm:24.26.1"
+"puppeteer@npm:^24.27.0":
+  version: 24.27.0
+  resolution: "puppeteer@npm:24.27.0"
   dependencies:
     "@puppeteer/browsers": "npm:2.10.12"
     chromium-bidi: "npm:10.5.1"
     cosmiconfig: "npm:^9.0.0"
-    devtools-protocol: "npm:0.0.1508733"
-    puppeteer-core: "npm:24.26.1"
+    devtools-protocol: "npm:0.0.1521046"
+    puppeteer-core: "npm:24.27.0"
     typed-query-selector: "npm:^2.12.0"
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: 10c0/da339d917ea02de1b751e98f724b795746f203e20da57acc34841dd2eef29b8ba457b82f16b18ee291f0dbee5e83a8f583dc0cd0082ad635a30a2fd82d7c63d0
+  checksum: 10c0/4d64e4635e118bef521afb2bb0ef409fb5158a58e3b38154c11110c5de79eb9d173ac550f422d2fe4d466871531f79d9b0c71ef93dab021b1556f6c2f9569f60
   languageName: node
   linkType: hard
 
@@ -6335,13 +6361,6 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 10c0/aaec0f57e887d4fb37d152f93cf7133954eec79d11643e95de768ec9a377f08793b1745c648ca65a0dcc6c795c4d9ca398724d013e5745de270e88a543782aea
-  languageName: node
-  linkType: hard
-
-"rrweb-cssom@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "rrweb-cssom@npm:0.8.0"
-  checksum: 10c0/56f2bfd56733adb92c0b56e274c43f864b8dd48784d6fe946ef5ff8d438234015e59ad837fc2ad54714b6421384141c1add4eb569e72054e350d1f8a50b8ac7b
   languageName: node
   linkType: hard
 
