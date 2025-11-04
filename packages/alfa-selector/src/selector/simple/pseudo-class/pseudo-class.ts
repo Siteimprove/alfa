@@ -10,7 +10,7 @@ import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "../../index.js";
+import type { Absolute, Selector } from "../../index.js";
 import { Specificity } from "../../../specificity.js";
 
 import { WithName } from "../../selector.js";
@@ -150,7 +150,7 @@ export namespace WithIndex {
  */
 export abstract class WithSelector<
   N extends string = string,
-  S extends Absolute = Absolute,
+  S extends Selector = Absolute,
 > extends PseudoClassSelector<N> {
   protected readonly _selector: S;
 
@@ -191,7 +191,7 @@ export abstract class WithSelector<
 export namespace WithSelector {
   export interface JSON<
     N extends string = string,
-    S extends Absolute = Absolute,
+    S extends Selector = Absolute,
   > extends PseudoClassSelector.JSON<N> {
     selector: Serializable.ToJSON<S>;
   }
@@ -204,7 +204,7 @@ export namespace WithSelector {
    * different type of parameter (namely, no "name" or "of").
    */
   export function parseWithSelector<
-    S extends Absolute,
+    S extends Selector,
     N extends string,
     T extends WithSelector<N, S>,
   >(
