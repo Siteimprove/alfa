@@ -1,8 +1,15 @@
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Parser } from "@siteimprove/alfa-parser";
+import type { Thunk } from "@siteimprove/alfa-thunk";
+
+import type { Absolute } from "./index.js";
 import { Combinator } from "./combinator.js";
-import type { Complex } from "./complex.js";
+import { Complex } from "./complex.js";
 import type { Compound } from "./compound.js";
 import { Selector } from "./selector.js";
 import type { Simple } from "./simple/index.js";
+
+const { map, pair } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#relative-selector}
@@ -81,13 +88,17 @@ export namespace Relative {
     combinator: string;
     selector: Simple.JSON | Compound.JSON | Complex.JSON;
   }
+
+  /**
+   * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
+   */
+  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+    map(
+      pair(Combinator.parseCombinator, Complex.parseComplex(parseSelector)),
+      (result) => {
+        const [combinator, selector] = result;
+
+        return Relative.of(combinator, selector);
+      },
+    );
 }
-
-/**
- * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
- */
-// const parseRelative = map(pair(parseCombinator, parseComplex), (result) => {
-//   const [combinator, selector] = result;
-
-//   return Relative.of(combinator, selector);
-// });
