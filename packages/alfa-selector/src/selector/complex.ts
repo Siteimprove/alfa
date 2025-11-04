@@ -15,9 +15,10 @@ import { Combinator } from "./combinator.js";
 import { Compound } from "./compound.js";
 import { Selector } from "./selector.js";
 import type { Class, Id, Simple, Type } from "./simple/index.js";
-import { Host } from "./simple/pseudo-class/host.js";
-import { HostContext } from "./simple/pseudo-class/host-context.js";
-import { Slotted } from "./simple/pseudo-element/slotted.js";
+
+import { Host } from "./pseudo/pseudo-class/host.js";
+import { HostContext } from "./pseudo/pseudo-class/host-context.js";
+import { Slotted } from "./pseudo/pseudo-element/slotted.js";
 
 const { isElement } = Element;
 const { map, pair, zeroOrMore } = Parser;

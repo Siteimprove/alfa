@@ -3,7 +3,7 @@ import type { Element } from "@siteimprove/alfa-dom";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context.js";
-import type { Absolute } from "../../../selector/index.js";
+import type { Absolute } from "../../index.js";
 import { Specificity } from "../../../specificity.js";
 
 import { WithSelector } from "./pseudo-class.js";

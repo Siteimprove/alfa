@@ -9,8 +9,8 @@ import type { Absolute } from "../index.js";
 import { Attribute } from "./attribute.js";
 import { Class } from "./class.js";
 import { Id } from "./id.js";
-import { PseudoClass } from "./pseudo-class/index.js";
-import { PseudoElement } from "./pseudo-element/index.js";
+import { PseudoClass } from "../pseudo/pseudo-class/index.js";
+import { PseudoElement } from "../pseudo/pseudo-element/index.js";
 import { Type } from "./type.js";
 import { Universal } from "./universal.js";
 
@@ -18,8 +18,8 @@ import { Universal } from "./universal.js";
 export * from "./attribute.js";
 export * from "./class.js";
 export * from "./id.js";
-export * from "./pseudo-class/index.js";
-export * from "./pseudo-element/index.js";
+export * from "../pseudo/pseudo-class/index.js";
+export * from "../pseudo/pseudo-element/index.js";
 export * from "./type.js";
 export * from "./universal.js";
 

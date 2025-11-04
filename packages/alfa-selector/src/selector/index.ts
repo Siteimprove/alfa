@@ -10,9 +10,10 @@ import { Compound } from "./compound.js";
 import { List } from "./list.js";
 import type { Relative } from "./relative.js";
 import type { Simple } from "./simple/index.js";
-import { Host } from "./simple/pseudo-class/host.js";
-import { HostContext } from "./simple/pseudo-class/host-context.js";
-import { Slotted } from "./simple/pseudo-element/slotted.js";
+
+import { Host } from "./pseudo/pseudo-class/host.js";
+import { HostContext } from "./pseudo/pseudo-class/host-context.js";
+import { Slotted } from "./pseudo/pseudo-element/slotted.js";
 
 // Re-export for further users
 export * from "./combinator.js";
