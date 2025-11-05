@@ -35,6 +35,7 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
   "src/selector/pseudo/pseudo-class/host-context.ts";
   "name_src/selector/pseudo";
   "src/selector/pseudo/pseudo-class/host.ts";
+  "src/selector/simple/universal.ts";
   "name_src/selector";
   "src/selector/pseudo/pseudo-class/active.ts";
   "src/selector/pseudo/pseudo-class/any-link.ts";
@@ -72,7 +73,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
   "src/selector/simple/class.ts";
   "src/selector/simple/id.ts";
   "src/selector/simple/type.ts";
-  "src/selector/simple/universal.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
@@ -116,13 +116,9 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
         ];
         "src/selector/compound.ts" [
           label = "compound.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/selector/complex.ts" [
           label = "complex.ts";
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/selector/combinator.ts" [
           label = "combinator.ts";
@@ -131,8 +127,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
           label = "index.ts";
           color = "#4900ff";
           penwidth = 5;
-          fillcolor = "#ff6c60";
-          style = "rounded,filled";
         ];
         "src/selector/list.ts" [
           label = "list.ts";
@@ -205,8 +199,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
             ];
             "src/selector/pseudo/pseudo-class/nth-last-child.ts" [
               label = "nth-last-child.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/selector/pseudo/pseudo-class/active.ts" [
               label = "active.ts";
@@ -233,8 +225,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
               label = "index.ts";
               color = "#ff00db";
               penwidth = 5;
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/selector/pseudo/pseudo-class/nth-of-type.ts" [
               label = "nth-of-type.ts";
@@ -253,8 +243,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
             ];
             "src/selector/pseudo/pseudo-class/nth-child.ts" [
               label = "nth-child.ts";
-              fillcolor = "#ff6c60";
-              style = "rounded,filled";
             ];
             "src/selector/pseudo/pseudo-class/pseudo-class.ts" [
               label = "pseudo-class.ts";
@@ -667,8 +655,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
             label = "index.ts";
             color = "#ff0000";
             penwidth = 5;
-            fillcolor = "#ff6c60";
-            style = "rounded,filled";
           ];
           "src/selector/simple/class.ts" -> "exit_src/selector/simple" [
             style = "invis";
@@ -1954,6 +1940,12 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "solid";
     color = "black";
   ];
+  "exit_src/selector/pseudo" -> "name_src/selector/simple" [
+    style = "invis";
+    color = "#ffdb00";
+    lhead = "cluster_src/selector/simple";
+    ltail = "cluster_src/selector/pseudo";
+  ];
   "src/selector/pseudo/pseudo-class/active.ts" -> "src/context.ts" [
     style = "invis";
   ];
@@ -2706,6 +2698,12 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
   "src/selector/pseudo/pseudo-class/nth-child.ts" -> "src/selector/pseudo/pseudo-class/pseudo-class.ts" [
     style = "solid";
     color = "black";
+  ];
+  "exit_src/selector/pseudo" -> "name_src/selector/simple" [
+    style = "invis";
+    color = "#ffdb00";
+    lhead = "cluster_src/selector/simple";
+    ltail = "cluster_src/selector/pseudo";
   ];
   "src/selector/pseudo/pseudo-class/pseudo-class.ts" -> "src/selector/index.ts" [
     style = "invis";

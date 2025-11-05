@@ -5,7 +5,7 @@ import { Maybe, None, Option } from "@siteimprove/alfa-option";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context.js";
-import { Universal } from "../../index.js";
+import { Universal } from "../../simple/universal.js";
 
 import type { Absolute } from "../../index.js";
 
