@@ -28,7 +28,13 @@ export abstract class PseudoClassSelector<
   // to (0, 1, 0) for all and must allow for overwriting it.
   // https://www.w3.org/TR/selectors/#specificity
   protected constructor(name: N, specificity?: Specificity) {
-    super("pseudo-class", name, specificity ?? Specificity.of(0, 1, 0));
+    super(
+      "pseudo-class",
+      name,
+      specificity ?? Specificity.of(0, 1, 0),
+      false,
+      true,
+    );
   }
 
   public equals(value: PseudoClassSelector): boolean;

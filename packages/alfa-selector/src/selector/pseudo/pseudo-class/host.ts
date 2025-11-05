@@ -15,7 +15,7 @@ import type { Compound, Simple } from "../../index.js";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
 
-const { either, map, right } = Parser;
+const { either, map, right, tee } = Parser;
 const { parseColon } = Token;
 
 /**

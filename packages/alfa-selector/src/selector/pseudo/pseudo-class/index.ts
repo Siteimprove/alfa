@@ -4,8 +4,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { type Absolute, Simple } from "../../index.js";
-import { Compound } from "../../compound.js";
+import { type Absolute } from "../../index.js";
 
 import { Active } from "./active.js";
 import { AnyLink } from "./any-link.js";
@@ -38,6 +37,7 @@ import { Visited } from "./visited.js";
 import { Where } from "./where.js";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
+import { Selector } from "../../selector.js";
 
 const { either, filter } = Parser;
 const { or } = Refinement;
@@ -138,14 +138,14 @@ export namespace PseudoClass {
       Host.parse(() =>
         filter(
           parseSelector(),
-          or(Compound.isCompound, Simple.isSimple),
+          or(Selector.isCompound, Selector.isSimple),
           () => ":host() only accepts compound selectors",
         ),
       ),
       HostContext.parse(() =>
         filter(
           parseSelector(),
-          or(Compound.isCompound, Simple.isSimple),
+          or(Selector.isCompound, Selector.isSimple),
           () => ":host-context() only accepts compound selectors",
         ),
       ),

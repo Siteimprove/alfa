@@ -52,18 +52,6 @@ export namespace Simple {
     | PseudoClass.JSON
     | PseudoElement.JSON;
 
-  export function isSimple(value: unknown): value is Simple {
-    return (
-      Type.isType(value) ||
-      Universal.isUniversal(value) ||
-      Attribute.isAttribute(value) ||
-      Class.isClass(value) ||
-      Id.isId(value) ||
-      PseudoClass.isPseudoClass(value) ||
-      PseudoElement.isPseudoElement(value)
-    );
-  }
-
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-simple-selector}
    *

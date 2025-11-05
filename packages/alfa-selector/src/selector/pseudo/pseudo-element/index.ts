@@ -4,7 +4,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import { type Absolute, Compound, Simple } from "../../index.js";
+import { type Absolute } from "../../index.js";
 import { After } from "./after.js";
 import { Backdrop } from "./backdrop.js";
 import { Before } from "./before.js";
@@ -23,6 +23,7 @@ import { SpellingError } from "./spelling-error.js";
 import { TargetText } from "./target-text.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
+import { Selector } from "../../selector.js";
 
 const { either, filter } = Parser;
 const { or } = Refinement;
@@ -83,7 +84,7 @@ export namespace PseudoElement {
       Slotted.parse(() =>
         filter(
           parseSelector(),
-          or(Compound.isCompound, Simple.isSimple),
+          or(Selector.isCompound, Selector.isSimple),
           () => "::slotted() only accepts compound selectors",
         ),
       ),
