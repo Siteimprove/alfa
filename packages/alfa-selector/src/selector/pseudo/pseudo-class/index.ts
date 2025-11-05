@@ -1,6 +1,5 @@
 import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
@@ -37,10 +36,8 @@ import { Visited } from "./visited.js";
 import { Where } from "./where.js";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
-import { Selector } from "../../selector.js";
 
-const { either, filter } = Parser;
-const { or } = Refinement;
+const { either } = Parser;
 
 /**
  * @public
@@ -136,13 +133,7 @@ export namespace PseudoClass {
       FocusVisible.parse,
       FocusWithin.parse,
       Host.parse(parseSelector),
-      HostContext.parse(() =>
-        filter(
-          parseSelector(),
-          or(Selector.isCompound, Selector.isSimple),
-          () => ":host-context() only accepts compound selectors",
-        ),
-      ),
+      HostContext.parse(parseSelector),
       Hover.parse,
       LastChild.parse,
       LastOfType.parse,

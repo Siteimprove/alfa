@@ -6,16 +6,20 @@ import {
 import type { Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";
 
 import type { Compound } from "../../compound.js";
+import type { Absolute } from "../../index.js";
+import { Selector } from "../../selector.js";
 import type { Simple } from "../../simple/index.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
 
-const { map, right, take } = Parser;
+const { filter, map, right, take } = Parser;
+const { or } = Refinement;
 
 /**
  * {@link https://drafts.csswg.org/css-scoping/#slotted-pseudo}
@@ -155,12 +159,18 @@ export namespace Slotted {
   }
 
   export function parse(
-    parseSelector: Thunk<CSSParser<Compound | Simple>>,
+    parseSelector: Thunk<CSSParser<Absolute>>,
   ): CSSParser<Slotted> {
     return map(
       right(
         take(Token.parseColon, 2),
-        Function.parse("slotted", parseSelector),
+        Function.parse("slotted", () =>
+          filter(
+            parseSelector(),
+            or(Selector.isCompound, Selector.isSimple),
+            () => "::slotted() only accepts compound selectors",
+          ),
+        ),
       ),
       ([_, selector]) => Slotted.of(selector),
     );

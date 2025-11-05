@@ -1,6 +1,5 @@
 import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
@@ -23,10 +22,8 @@ import { SpellingError } from "./spelling-error.js";
 import { TargetText } from "./target-text.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
-import { Selector } from "../../selector.js";
 
-const { either, filter } = Parser;
-const { or } = Refinement;
+const { either } = Parser;
 
 /**
  * @public
@@ -81,13 +78,7 @@ export namespace PseudoElement {
       Part.parse,
       Placeholder.parse,
       Selection.parse,
-      Slotted.parse(() =>
-        filter(
-          parseSelector(),
-          or(Selector.isCompound, Selector.isSimple),
-          () => "::slotted() only accepts compound selectors",
-        ),
-      ),
+      Slotted.parse(parseSelector),
       SpellingError.parse,
       TargetText.parse,
     );
