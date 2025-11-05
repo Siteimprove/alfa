@@ -6,16 +6,19 @@ import {
 import type { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";
 
-import type { Compound, Simple } from "../../index.js";
+import type { Absolute, Compound, Simple } from "../../index.js";
+import { Selector } from "../../selector.js";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
 
-const { either, map, right, tee } = Parser;
+const { either, filter, map, right } = Parser;
+const { or } = Refinement;
 const { parseColon } = Token;
 
 /**
@@ -115,12 +118,21 @@ export namespace Host {
     return value instanceof Host;
   }
 
-  export const parse = (parseSelector: Thunk<CSSParser<Compound | Simple>>) =>
+  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
     either(
       // We need to try the functional variant first to avoid the non-functional
       // greedily passing.
       map(
-        right(parseColon, Function.parse("host", parseSelector)),
+        right(
+          parseColon,
+          Function.parse("host", () =>
+            filter(
+              parseSelector(),
+              or(Selector.isCompound, Selector.isSimple),
+              () => ":host() only accepts compound selectors",
+            ),
+          ),
+        ),
         ([, selector]) => Host.of(selector),
       ),
       PseudoClassSelector.parseNonFunctional("host", Host.of),

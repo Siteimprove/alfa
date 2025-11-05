@@ -135,13 +135,7 @@ export namespace PseudoClass {
       Focus.parse,
       FocusVisible.parse,
       FocusWithin.parse,
-      Host.parse(() =>
-        filter(
-          parseSelector(),
-          or(Selector.isCompound, Selector.isSimple),
-          () => ":host() only accepts compound selectors",
-        ),
-      ),
+      Host.parse(parseSelector),
       HostContext.parse(() =>
         filter(
           parseSelector(),

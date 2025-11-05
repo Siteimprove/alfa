@@ -15,7 +15,7 @@ export abstract class PseudoElementSelector<
     name: N,
     specificity: Specificity = Specificity.of(0, 0, 1),
   ) {
-    super("pseudo-element", name, specificity, true);
+    super("pseudo-element", name, specificity);
   }
 
   public equals(value: PseudoElementSelector): boolean;

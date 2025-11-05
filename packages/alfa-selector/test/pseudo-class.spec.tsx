@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Context } from "../dist/index.js";
 
-import { parse, serialize } from "./parser.js";
+import { parse, parseErr, serialize } from "./parser.js";
 
 test(".parse() parses a named pseudo-class selector", (t) => {
   t.deepEqual(serialize(":hover"), {
@@ -33,6 +33,12 @@ test(".parse() parses :host functional pseudo-class selector", (t) => {
     },
     specificity: { a: 0, b: 1, c: 1 },
   });
+});
+
+test(".parse() doesn't parse :host with an invalid selector", (t) => {
+  t(parseErr(":host(div span").isErr());
+  t(parseErr(":host(::after").isErr());
+  // t(parseErr(":host(div::after").isErr());
 });
 
 test(".parse() parses a functional pseudo-class selector", (t) => {
