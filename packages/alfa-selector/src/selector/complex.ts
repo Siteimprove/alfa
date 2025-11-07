@@ -112,7 +112,7 @@ export class Complex extends Selector<"complex"> {
 
     if (
       Slotted.isSlotted(this._right) ||
-      (Selector.isCompound(this._right) &&
+      (Compound.isCompound(this._right) &&
         Iterable.some(this._right.selectors, Slotted.isSlotted))
     ) {
       // The right side of the selector contains a ::slotted pseudo-element.

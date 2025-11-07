@@ -22,7 +22,7 @@ export class Id extends WithName<"id"> {
   protected readonly _key: Option<Id>;
 
   protected constructor(name: string) {
-    super("id", name, Specificity.of(1, 0, 0), false, true);
+    super("id", name, Specificity.of(1, 0, 0));
 
     this._key = Option.of(this);
   }

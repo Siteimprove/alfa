@@ -1,7 +1,6 @@
 import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../../../context.js";
@@ -12,7 +11,6 @@ import { Selector } from "../../selector.js";
 import { WithSelector } from "./pseudo-class.js";
 
 const { filter } = Parser;
-const { or } = Refinement;
 
 /**
  * {@link https://drafts.csswg.org/css-scoping-1/#selectordef-host-context}
@@ -102,7 +100,7 @@ export namespace HostContext {
       () =>
         filter(
           parseSelector(),
-          or(Selector.isCompound, Selector.isSimple),
+          Selector.hasCompoundType,
           () => ":host-context() only accepts compound selectors",
         ),
       HostContext.of,

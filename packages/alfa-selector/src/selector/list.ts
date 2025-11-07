@@ -91,6 +91,10 @@ export namespace List {
     selectors: Array<Serializable.ToJSON<T>>;
   }
 
+  export function isList(value: unknown): value is List {
+    return value instanceof List;
+  }
+
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-selector-list}
    *

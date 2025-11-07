@@ -27,37 +27,6 @@ export abstract class Selector<T extends string = string>
   private readonly _type: T;
   private readonly _specificity: Specificity;
 
-  // Several selector contexts (e.g., arguments of pseudo-classes),
-  // have conditions on selectors, such as only accepting compound selectors.
-  // While we could use usual `Foo.isFoo` type guards, this often creates
-  // circular dependencies such has `:host` needing to test `isCompound`, but
-  // being, itself, a compound selector. Additionally, if we want to collapse
-  // selectors to their simple form, we need simples selectors to match
-  // `isCompound`, or to remember to always use `or(isCompound, isSimple)`.
-  //
-  // To simplify the situation, we instead use getters for these properties.
-  // These are further wrapped in class methods for convenience of use.
-  /**
-   * Whether the selector is simple. Use Selector.isSimple instead.
-   *
-   * @remarks
-   * {@link https://drafts.csswg.org/selectors/#simple}
-   * {@link https://drafts.csswg.org/selectors/#typedef-simple-selector}
-   *
-   * @internal
-   */
-  private readonly _isSimple: boolean;
-  /**
-   * Whether the selector is compound. Use Selector.isCompound instead.
-   *
-   * @remarks
-   * {@link https://drafts.csswg.org/selectors/#compound}
-   * {@link https://drafts.csswg.org/selectors/#typedef-compound-selector}
-   *
-   * @internal
-   */
-  private readonly _isCompound: boolean;
-
   /**
    * The key selector is used to optimise matching of complex (and compound)
    * selectors.
@@ -89,17 +58,9 @@ export abstract class Selector<T extends string = string>
    */
   protected readonly _key: Option<Id | Class | Type> = None;
 
-  protected constructor(
-    type: T,
-    specificity: Specificity,
-    isCompound: boolean = false,
-    isSimple: boolean = false,
-  ) {
+  protected constructor(type: T, specificity: Specificity) {
     this._type = type;
     this._specificity = specificity;
-
-    this._isCompound = isCompound;
-    this._isSimple = isSimple;
   }
 
   public get type(): T {
@@ -114,12 +75,27 @@ export abstract class Selector<T extends string = string>
     return this._key;
   }
 
-  public static isSimple(value: unknown): value is Simple {
-    return value instanceof Selector && value._isSimple;
-  }
-
-  public static isCompound(value: unknown): value is Compound {
-    return value instanceof Selector && value._isCompound;
+  /**
+   * Whether the selector fits in a Compound context.
+   *
+   * @remarks
+   * Simple selectors are also (degenerate) compound selectors with a single
+   * item in the list.
+   *
+   * @internal
+   */
+  public static hasCompoundType(
+    selector: Selector,
+  ): selector is Compound | Simple {
+    return [
+      "compound",
+      "type",
+      "id",
+      "class",
+      "attribute",
+      "universal",
+      "pseudo-class",
+    ].includes(selector.type);
   }
 
   /**
@@ -180,14 +156,8 @@ export abstract class WithName<
   N extends string = string,
 > extends Selector<T> {
   protected readonly _name: N;
-  protected constructor(
-    type: T,
-    name: N,
-    specificity: Specificity,
-    isCompound: boolean = false,
-    isSimple: boolean = false,
-  ) {
-    super(type, specificity, isCompound, isSimple);
+  protected constructor(type: T, name: N, specificity: Specificity) {
+    super(type, specificity);
     this._name = name;
   }
 

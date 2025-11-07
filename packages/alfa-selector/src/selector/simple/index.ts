@@ -4,6 +4,7 @@ import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute } from "../index.js";
+import { Selector } from "../selector.js";
 
 // Import the various simple selectors for use in that file.
 import { Attribute } from "./attribute.js";
@@ -51,6 +52,17 @@ export namespace Simple {
     | Id.JSON
     | PseudoClass.JSON
     | PseudoElement.JSON;
+
+  export function isSimple(value: unknown): value is Simple {
+    return (
+      Type.isType(value) ||
+      Universal.isUniversal(value) ||
+      Attribute.isAttribute(value) ||
+      Class.isClass(value) ||
+      Id.isId(value) ||
+      PseudoClass.isPseudoClass(value)
+    );
+  }
 
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-simple-selector}

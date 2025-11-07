@@ -34,7 +34,6 @@ export class Compound extends Selector<"compound"> {
     super(
       "compound",
       Specificity.sum(...selectors.map((selector) => selector.specificity)),
-      true,
     );
     this._selectors = selectors;
     this._length = selectors.length;
@@ -89,6 +88,10 @@ export class Compound extends Selector<"compound"> {
 export namespace Compound {
   export interface JSON extends Selector.JSON<"compound"> {
     selectors: Array<Simple.JSON>;
+  }
+
+  export function isCompound(value: unknown): value is Compound {
+    return value instanceof Compound;
   }
 
   /**

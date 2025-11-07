@@ -43,7 +43,7 @@ export class Attribute extends WithName<"attribute"> {
     matcher: Option<Attribute.Matcher>,
     modifier: Option<Attribute.Modifier>,
   ) {
-    super("attribute", name, Specificity.of(0, 1, 0), false, true);
+    super("attribute", name, Specificity.of(0, 1, 0));
     this._namespace = namespace;
     this._value = value;
     this._matcher = matcher;

@@ -6,7 +6,6 @@ import {
 import type { Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";
@@ -19,7 +18,6 @@ import type { Simple } from "../../simple/index.js";
 import { PseudoElementSelector } from "./pseudo-element.js";
 
 const { filter, map, right, take } = Parser;
-const { or } = Refinement;
 
 /**
  * {@link https://drafts.csswg.org/css-scoping/#slotted-pseudo}
@@ -167,7 +165,7 @@ export namespace Slotted {
         Function.parse("slotted", () =>
           filter(
             parseSelector(),
-            or(Selector.isCompound, Selector.isSimple),
+            Selector.hasCompoundType,
             () => "::slotted() only accepts compound selectors",
           ),
         ),

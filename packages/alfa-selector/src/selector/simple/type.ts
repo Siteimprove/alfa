@@ -24,7 +24,7 @@ export class Type extends WithName<"type"> {
   protected readonly _key: Option<Type>;
 
   protected constructor(namespace: Option<string>, name: string) {
-    super("type", name, Specificity.of(0, 0, 1), false, true);
+    super("type", name, Specificity.of(0, 0, 1));
     this._namespace = namespace;
 
     this._key = Option.of(this);

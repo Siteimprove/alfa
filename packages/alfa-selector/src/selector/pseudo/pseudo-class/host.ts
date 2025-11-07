@@ -6,7 +6,6 @@ import {
 import type { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../../../context.js";
@@ -18,7 +17,6 @@ import { Selector } from "../../selector.js";
 import { PseudoClassSelector } from "./pseudo-class.js";
 
 const { either, filter, map, right } = Parser;
-const { or } = Refinement;
 const { parseColon } = Token;
 
 /**
@@ -128,7 +126,7 @@ export namespace Host {
           Function.parse("host", () =>
             filter(
               parseSelector(),
-              or(Selector.isCompound, Selector.isSimple),
+              Selector.hasCompoundType,
               () => ":host() only accepts compound selectors",
             ),
           ),
