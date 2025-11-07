@@ -94,7 +94,7 @@ export namespace HostContext {
     return value instanceof HostContext;
   }
 
-  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parse = (parseSelector: Selector.ComponentParser) =>
     WithSelector.parseWithSelector(
       "host-context",
       () =>

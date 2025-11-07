@@ -105,4 +105,12 @@ export namespace List {
       separatedList(Complex.parseComplex(parseSelector), Comma.parse),
       (result) => List.of(...result),
     );
+
+  export function parse2<T extends Item = Item>(
+    parseSelector: Selector.ComponentParser<T>,
+  ): CSSParser<List<T>> {
+    return map(separatedList(parseSelector(), Comma.parse), (result) =>
+      List.of(...result),
+    );
+  }
 }

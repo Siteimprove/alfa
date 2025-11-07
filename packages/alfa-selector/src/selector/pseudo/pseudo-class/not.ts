@@ -4,6 +4,7 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context.js";
 import type { Absolute } from "../../index.js";
+import { Selector } from "../../selector.js";
 
 import { WithSelector } from "./pseudo-class.js";
 
@@ -45,6 +46,7 @@ export class Not extends WithSelector<"not"> {
 export namespace Not {
   export interface JSON extends WithSelector.JSON<"not"> {}
 
-  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parse = (parseSelector: Selector.ComponentParser) =>
+    // @ts-ignore
     WithSelector.parseWithSelector("not", parseSelector, Not.of);
 }

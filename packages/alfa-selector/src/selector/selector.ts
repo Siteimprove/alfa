@@ -1,3 +1,4 @@
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Iterable } from "@siteimprove/alfa-iterable";
@@ -6,6 +7,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 import type * as json from "@siteimprove/alfa-json";
 import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../context.js";
 import type { Specificity } from "../specificity.js";
@@ -140,6 +142,10 @@ export namespace Selector {
     // string representation to avoid infinite recursion.
     key?: string;
   }
+
+  export type ComponentParser<T extends Selector = Selector> = Thunk<
+    CSSParser<T>
+  >;
 }
 
 /**

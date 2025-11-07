@@ -116,7 +116,7 @@ export namespace Host {
     return value instanceof Host;
   }
 
-  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parse = (parseSelector: Selector.ComponentParser) =>
     either(
       // We need to try the functional variant first to avoid the non-functional
       // greedily passing.

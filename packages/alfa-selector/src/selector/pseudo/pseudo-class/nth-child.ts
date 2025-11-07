@@ -5,6 +5,7 @@ import { Maybe, None, Option } from "@siteimprove/alfa-option";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context.js";
+import { Selector } from "../../selector.js";
 import { Universal } from "../../simple/universal.js";
 
 import type { Absolute } from "../../index.js";
@@ -69,9 +70,10 @@ export class NthChild extends WithIndexAndSelector<"nth-child"> {
 export namespace NthChild {
   export interface JSON extends WithIndexAndSelector.JSON<"nth-child"> {}
 
-  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parse = (parseSelector: Selector.ComponentParser) =>
     WithIndexAndSelector.parseWithIndexAndSelector(
       "nth-child",
+      // @ts-ignore
       parseSelector,
       NthChild.of,
     );

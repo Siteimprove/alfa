@@ -5,6 +5,7 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 import type { Context } from "../../../context.js";
 import type { Absolute } from "../../index.js";
 import { Specificity } from "../../../specificity.js";
+import { Selector } from "../../selector.js";
 
 import { WithSelector } from "./pseudo-class.js";
 
@@ -46,6 +47,7 @@ export class Where extends WithSelector<"where"> {
 export namespace Where {
   export interface JSON extends WithSelector.JSON<"where"> {}
 
-  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parse = (parseSelector: Selector.ComponentParser) =>
+    // @ts-ignore
     WithSelector.parseWithSelector("where", parseSelector, Where.of);
 }

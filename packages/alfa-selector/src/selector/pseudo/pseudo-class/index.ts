@@ -4,6 +4,7 @@ import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { type Absolute } from "../../index.js";
+import { Selector } from "../../selector.js";
 
 import { Active } from "./active.js";
 import { AnyLink } from "./any-link.js";
@@ -118,7 +119,7 @@ export namespace PseudoClass {
   export const { isHost } = Host;
 
   export function parse(
-    parseSelector: Thunk<CSSParser<Absolute>>,
+    parseSelector: Selector.ComponentParser,
   ): CSSParser<PseudoClass> {
     return either<Slice<Token>, PseudoClass, string>(
       Active.parse,
