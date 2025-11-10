@@ -10,6 +10,7 @@ import { Compound } from "./compound.js";
 import { List } from "./list.js";
 import { Relative } from "./relative.js";
 import type { Simple } from "./simple/index.js";
+import type { Selector as BaseType } from "./selector.js";
 
 import { Host } from "./pseudo/pseudo-class/host.js";
 import { HostContext } from "./pseudo/pseudo-class/host-context.js";
@@ -24,7 +25,7 @@ export * from "./relative.js";
 export * from "./simple/index.js";
 
 const { end, filter, left, map } = Parser;
-const { and, or, test } = Refinement;
+const { and, or, not, test } = Refinement;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector}
@@ -137,7 +138,9 @@ export namespace Selector {
   }
 
   /**
-   * Parsers for Selectors
+   * Parses a (list of) complex selector.
+   *
+   * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
    *
    * @remarks
    * Even simple selectors like `:is()` can include any other selector.
@@ -151,18 +154,14 @@ export namespace Selector {
    *
    * That is, the extra `()` "parameter" is needed!
    */
-  function parseSelector(): CSSParser<Selector> {
+  function parseSelector(): CSSParser<Absolute> {
     return left(
-      map(List.parse(parseSelector), (list) =>
+      map(List.parseComplex(parseSelector), (list) =>
         list.length === 1 ? Iterable.first(list.selectors).getUnsafe() : list,
       ),
       end((token) => `Unexpected token ${token}`),
     );
   }
 
-  export const parse = filter(
-    parseSelector(),
-    Absolute.isAbsolute,
-    () => "Relative selectors are forbidden in this context.",
-  );
+  export const parse = parseSelector();
 }

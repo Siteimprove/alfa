@@ -4,8 +4,6 @@ import type { Element } from "@siteimprove/alfa-dom";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Refinement } from "@siteimprove/alfa-refinement";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../context.js";
 import { Specificity } from "../specificity.js";
@@ -20,15 +18,13 @@ import type { Simple } from "./simple/index.js";
 
 const { map, separatedList } = Parser;
 
-type Item = Simple | Compound | Complex | Relative;
-
 /**
  * {@link https://drafts.csswg.org/selectors/#selector-list}
  *
  * @public
  */
-export class List<T extends Item = Item> extends Selector<"list"> {
-  public static of<T extends Item>(...selectors: Array<T>): List<T> {
+export class List<T extends List.Item = List.Item> extends Selector<"list"> {
+  public static of<T extends List.Item>(...selectors: Array<T>): List<T> {
     return new List(selectors);
   }
 
@@ -92,29 +88,34 @@ export namespace List {
     selectors: Array<Serializable.ToJSON<T>>;
   }
 
+  /** @internal */
+  export type Item = Simple | Compound | Complex | Relative;
+
   export function isList(value: unknown): value is List {
     return value instanceof List;
   }
 
   /**
-   * {@link https://drafts.csswg.org/selectors/#typedef-selector-list}
+   * {@link https://www.w3.org/TR/selectors/#typedef-selector-list}
+   * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
+   * {@link https://www.w3.org/TR/selectors/#typedef-compound-selector-list}
+   * {@link https://www.w3.org/TR/selectors/#typedef-simple-selector-list}
+   * {@link https://www.w3.org/TR/selectors/#typedef-relative-selector-list}
+   */
+  function parse<T extends Item>(
+    parseSelector: Selector.ComponentParser<T>,
+  ): CSSParser<List<T>> {
+    return map(separatedList(parseSelector(), Comma.parse), (result) =>
+      List.of(...result),
+    );
+  }
+
+  /**
+   * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
    *
    * @internal
    */
-  export const parseList = (
-    parseSelector: Selector.ComponentParser<SelectorType>,
-  ) =>
-    map(
-      separatedList(Complex.parseComplex(parseSelector), Comma.parse),
-      (result) => List.of(...result),
-    );
-
-  export const parse = parseList;
-
-  // export const parse = (
-  //   parseSelector: Selector.ComponentParser<SelectorType>,
-  // ) =>
-  //   map(separatedList(parseSelector(), Comma.parse), (result) =>
-  //     List.of(...result),
-  //   );
+  export const parseComplex = (
+    parseSelector: Selector.ComponentParser<Absolute>,
+  ) => parse(() => Complex.parseComplex(parseSelector));
 }
