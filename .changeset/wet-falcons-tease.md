@@ -2,4 +2,4 @@
 "@siteimprove/alfa-parser": minor
 ---
 
-**Added:** Parser combinator `skip` ad `skipUntil` are now available.
+**Added:** Parser combinator `skip`, `skipUntil` and `final` are now available.
