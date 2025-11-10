@@ -39,7 +39,7 @@ export namespace Combinator {
    *
    * @internal
    */
-  export const parseCombinator: CSSParser<Combinator> = either(
+  export const parse: CSSParser<Combinator> = either(
     delimited(
       option(Token.parseWhitespace),
       either(

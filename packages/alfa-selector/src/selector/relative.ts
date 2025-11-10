@@ -97,12 +97,9 @@ export namespace Relative {
    * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
    */
   export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
-    map(
-      pair(Combinator.parseCombinator, Complex.parseComplex(parseSelector)),
-      (result) => {
-        const [combinator, selector] = result;
+    map(pair(Combinator.parse, Complex.parse(parseSelector)), (result) => {
+      const [combinator, selector] = result;
 
-        return Relative.of(combinator, selector);
-      },
-    );
+      return Relative.of(combinator, selector);
+    });
 }

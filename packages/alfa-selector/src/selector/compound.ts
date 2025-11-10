@@ -99,7 +99,7 @@ export namespace Compound {
    *
    * @internal
    */
-  export const parseCompound = (
+  export const parse = (
     parseSelector: Selector.ComponentParser<SelectorType>,
   ) =>
     map(oneOrMore(Simple.parse(parseSelector)), (result) =>

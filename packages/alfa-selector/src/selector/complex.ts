@@ -256,18 +256,13 @@ export namespace Complex {
    *
    * @internal
    */
-  export const parseComplex = (
+  export const parse = (
     parseSelector: Selector.ComponentParser<SelectorType>,
   ) =>
     map(
       pair(
-        Compound.parseCompound(parseSelector),
-        zeroOrMore(
-          pair(
-            Combinator.parseCombinator,
-            Compound.parseCompound(parseSelector),
-          ),
-        ),
+        Compound.parse(parseSelector),
+        zeroOrMore(pair(Combinator.parse, Compound.parse(parseSelector))),
       ),
       (result) => {
         const [left, selectors] = result;

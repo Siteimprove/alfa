@@ -1,5 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Comma, type Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Comma, type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -11,12 +11,12 @@ import { Specificity } from "../specificity.js";
 import { Complex } from "./complex.js";
 import type { Compound } from "./compound.js";
 
-import type { Absolute, Selector as SelectorType } from "./index.js";
-import type { Relative } from "./relative.js";
+import type { Absolute } from "./index.js";
+import { Relative } from "./relative.js";
 import { Selector } from "./selector.js";
 import type { Simple } from "./simple/index.js";
 
-const { map, separatedList } = Parser;
+const { either, map, separatedList } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector-list}
@@ -104,18 +104,36 @@ export namespace List {
    */
   function parse<T extends Item>(
     parseSelector: Selector.ComponentParser<T>,
+    forgiving: boolean = false,
   ): CSSParser<List<T>> {
-    return map(separatedList(parseSelector(), Comma.parse), (result) =>
-      List.of(...result),
+    const parser = forgiving
+      ? // In a forgiving context, if the parser errors, we discard all tokens
+        // until the next comma (included).
+        either(parseSelector(), Token.skipUntil(Comma.parse))
+      : parseSelector();
+    return map(separatedList(parser, Comma.parse), (result) =>
+      List.of(...result.filter((result) => result !== undefined)),
     );
   }
 
   /**
+   * {@link https://www.w3.org/TR/selectors/#typedef-selector-list}
    * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
    *
    * @internal
    */
   export const parseComplex = (
     parseSelector: Selector.ComponentParser<Absolute>,
-  ) => parse(() => Complex.parseComplex(parseSelector));
+    forgiving: boolean = false,
+  ) => parse(() => Complex.parse(parseSelector), forgiving);
+
+  /**
+   * {@link https://www.w3.org/TR/selectors/#typedef-relative-selector-list}
+   *
+   * @internal
+   */
+  export const parseRelative = (
+    parseSelector: Selector.ComponentParser<Absolute>,
+    forgiving: boolean = false,
+  ) => parse(() => Relative.parse(parseSelector), forgiving);
 }
