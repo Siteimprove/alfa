@@ -156,12 +156,16 @@ export namespace Selector {
    */
   function parseSelector(): CSSParser<Absolute> {
     return left(
-      map(List.parseComplex(parseSelector), (list) =>
-        list.length === 1 ? Iterable.first(list.selectors).getUnsafe() : list,
-      ),
+      List.parseComplex(parseSelector),
       end((token) => `Unexpected token ${token}`),
     );
   }
 
+  /**
+   * Parses a (list of) complex selector.
+   *
+   * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
+   * If the list contains a single selector, it is simplified out.
+   */
   export const parse = parseSelector();
 }

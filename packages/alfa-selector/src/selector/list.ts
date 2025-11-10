@@ -54,6 +54,19 @@ export class List<T extends List.Item = List.Item> extends Selector<"list"> {
     );
   }
 
+  /**
+   * Returns either the list or its unique item if it contains only one.
+   *
+   * @internal
+   */
+  public simplify(): T | this {
+    if (this._selectors.length === 1) {
+      return this._selectors[0];
+    }
+
+    return this;
+  }
+
   public equals(value: List): boolean;
 
   public equals(value: unknown): value is this;
@@ -101,18 +114,24 @@ export namespace List {
    * {@link https://www.w3.org/TR/selectors/#typedef-compound-selector-list}
    * {@link https://www.w3.org/TR/selectors/#typedef-simple-selector-list}
    * {@link https://www.w3.org/TR/selectors/#typedef-relative-selector-list}
+   *
+   * {@link https://www.w3.org/TR/selectors/#forgiving-selector}
+   *
+   * @remarks
+   * We automatically simplify lists of 1 item as a way to speed up a bit
+   * matching. Thus, we do not need to unwrap a 1-item list at every match.
    */
   function parse<T extends Item>(
     parseSelector: Selector.ComponentParser<T>,
     forgiving: boolean = false,
-  ): CSSParser<List<T>> {
+  ): CSSParser<T | List<T>> {
     const parser = forgiving
       ? // In a forgiving context, if the parser errors, we discard all tokens
         // until the next comma (included).
         either(parseSelector(), Token.skipUntil(Comma.parse))
       : parseSelector();
     return map(separatedList(parser, Comma.parse), (result) =>
-      List.of(...result.filter((result) => result !== undefined)),
+      List.of(...result.filter((result) => result !== undefined)).simplify(),
     );
   }
 
