@@ -8,7 +8,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../context.js";
-import type { Absolute } from "./index.js";
+import type { Absolute, Selector as SelectorType } from "./index.js";
 import { Specificity } from "../specificity.js";
 
 import { Combinator } from "./combinator.js";
@@ -256,7 +256,9 @@ export namespace Complex {
    *
    * @internal
    */
-  export const parseComplex = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parseComplex = (
+    parseSelector: Selector.ComponentParser<SelectorType>,
+  ) =>
     map(
       pair(
         Compound.parseCompound(parseSelector),

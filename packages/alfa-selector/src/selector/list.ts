@@ -4,15 +4,16 @@ import type { Element } from "@siteimprove/alfa-dom";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../context.js";
 import { Specificity } from "../specificity.js";
 
-import type { Absolute } from "./index.js";
-
 import { Complex } from "./complex.js";
 import type { Compound } from "./compound.js";
+
+import type { Absolute, Selector as SelectorType } from "./index.js";
 import type { Relative } from "./relative.js";
 import { Selector } from "./selector.js";
 import type { Simple } from "./simple/index.js";
@@ -100,17 +101,20 @@ export namespace List {
    *
    * @internal
    */
-  export const parseList = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parseList = (
+    parseSelector: Selector.ComponentParser<SelectorType>,
+  ) =>
     map(
       separatedList(Complex.parseComplex(parseSelector), Comma.parse),
       (result) => List.of(...result),
     );
 
-  export function parse2<T extends Item = Item>(
-    parseSelector: Selector.ComponentParser<T>,
-  ): CSSParser<List<T>> {
-    return map(separatedList(parseSelector(), Comma.parse), (result) =>
-      List.of(...result),
-    );
-  }
+  export const parse = parseList;
+
+  // export const parse = (
+  //   parseSelector: Selector.ComponentParser<SelectorType>,
+  // ) =>
+  //   map(separatedList(parseSelector(), Comma.parse), (result) =>
+  //     List.of(...result),
+  //   );
 }

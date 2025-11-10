@@ -7,6 +7,8 @@ import type { Serializable } from "@siteimprove/alfa-json";
 import type * as json from "@siteimprove/alfa-json";
 import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../context.js";
@@ -16,6 +18,8 @@ import type { Complex } from "./complex.js";
 import type { Compound } from "./compound.js";
 import type { Relative } from "./relative.js";
 import type { Class, Id, Simple, Type } from "./simple/index.js";
+
+const { filter } = Parser;
 
 /**
  * @internal
@@ -146,6 +150,17 @@ export namespace Selector {
   export type ComponentParser<T extends Selector = Selector> = Thunk<
     CSSParser<T>
   >;
+
+  export function parseComponent<
+    T extends Selector = Selector,
+    U extends T = T,
+  >(
+    parseSelector: ComponentParser<T>,
+    refinement: Refinement<T, U>,
+    ifError: Thunk<string>,
+  ): ComponentParser<U> {
+    return () => filter(parseSelector(), refinement, ifError);
+  }
 }
 
 /**

@@ -9,7 +9,7 @@ import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Context } from "../context.js";
 import { Specificity } from "../specificity.js";
-import type { Absolute } from "./index.js";
+import type { Absolute, Selector as SelectorType } from "./index.js";
 
 import { Selector } from "./selector.js";
 import { type Class, type Id, Simple, type Type } from "./simple/index.js";
@@ -100,7 +100,7 @@ export namespace Compound {
    * @internal
    */
   export const parseCompound = (
-    parseSelector: () => Parser<Slice<Token>, Absolute, string>,
+    parseSelector: Selector.ComponentParser<SelectorType>,
   ) =>
     map(oneOrMore(Simple.parse(parseSelector)), (result) =>
       result.length === 1 ? result[0] : Compound.of(...result),

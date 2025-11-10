@@ -6,12 +6,11 @@ import {
 import type { Element } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";
 
 import type { Compound } from "../../compound.js";
-import type { Absolute } from "../../index.js";
+import { Selector as SelectorType } from "../../selector.js";
 import { Selector } from "../../selector.js";
 import type { Simple } from "../../simple/index.js";
 
@@ -157,7 +156,7 @@ export namespace Slotted {
   }
 
   export function parse(
-    parseSelector: Thunk<CSSParser<Absolute>>,
+    parseSelector: Selector.ComponentParser<SelectorType>,
   ): CSSParser<Slotted> {
     return map(
       right(

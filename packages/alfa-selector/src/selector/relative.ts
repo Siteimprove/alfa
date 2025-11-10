@@ -89,6 +89,10 @@ export namespace Relative {
     selector: Simple.JSON | Compound.JSON | Complex.JSON;
   }
 
+  export function isRelative(value: unknown): value is Relative {
+    return value instanceof Relative;
+  }
+
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
    */

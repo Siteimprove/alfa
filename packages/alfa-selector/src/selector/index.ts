@@ -1,4 +1,4 @@
-import type { Parser as CSSParser } from "@siteimprove/alfa-css";
+import { type Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -8,7 +8,7 @@ import { Context } from "../context.js";
 import { Complex } from "./complex.js";
 import { Compound } from "./compound.js";
 import { List } from "./list.js";
-import type { Relative } from "./relative.js";
+import { Relative } from "./relative.js";
 import type { Simple } from "./simple/index.js";
 
 import { Host } from "./pseudo/pseudo-class/host.js";
@@ -23,7 +23,7 @@ export * from "./list.js";
 export * from "./relative.js";
 export * from "./simple/index.js";
 
-const { end, left, map } = Parser;
+const { end, filter, left, map } = Parser;
 const { and, or, test } = Refinement;
 
 /**
@@ -53,6 +53,10 @@ export namespace Absolute {
     | Compound.JSON
     | Complex.JSON
     | List.JSON<Simple | Compound | Complex>;
+
+  export function isAbsolute(value: Selector): value is Absolute {
+    return !Relative.isRelative(value);
+  }
 }
 
 /**
@@ -147,14 +151,18 @@ export namespace Selector {
    *
    * That is, the extra `()` "parameter" is needed!
    */
-  function parseSelector(): CSSParser<Absolute> {
+  function parseSelector(): CSSParser<Selector> {
     return left(
-      map(List.parseList(parseSelector), (list) =>
+      map(List.parse(parseSelector), (list) =>
         list.length === 1 ? Iterable.first(list.selectors).getUnsafe() : list,
       ),
       end((token) => `Unexpected token ${token}`),
     );
   }
 
-  export const parse = parseSelector();
+  export const parse = filter(
+    parseSelector(),
+    Absolute.isAbsolute,
+    () => "Relative selectors are forbidden in this context.",
+  );
 }
