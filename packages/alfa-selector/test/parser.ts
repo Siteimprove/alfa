@@ -1,18 +1,37 @@
-import { Lexer } from "@siteimprove/alfa-css";
+import { Lexer, type Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import { Selector } from "../dist/index.js";
 
-/**
- * @internal
- */
-export function parseErr(input: string) {
-  return Selector.parse(Lexer.lex(input)).map(([, selector]) => selector);
+const { final } = Parser;
+
+/** @internal */
+export function parseErr(
+  input: string,
+  parser: CSSParser<Selector> = Selector.parse,
+) {
+  return final(
+    parser,
+    (token) => `Expected end of input, got ${token}`,
+  )(Lexer.lex(input)).map(([, selector]) => selector);
 }
 
-export function parse(input: string) {
-  return Selector.parse(Lexer.lex(input)).getUnsafe()[1];
+/** @internal */
+export function parse(
+  input: string,
+  parser: CSSParser<Selector> = Selector.parse,
+) {
+  const parsed = final(
+    parser,
+    (token) => `Expected end of input, got ${token}`,
+  )(Lexer.lex(input));
+  return parsed.getUnsafe(parsed.err().toString())[1];
 }
 
-export function serialize(input: string) {
-  return parse(input).toJSON();
+/** @internal */
+export function serialize(
+  input: string,
+  parser: CSSParser<Selector> = Selector.parse,
+) {
+  return parse(input, parser).toJSON();
 }

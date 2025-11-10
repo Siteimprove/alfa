@@ -153,8 +153,12 @@ export namespace Selector {
    * actual parser upon need.
    *
    * That is, the extra `()` "parameter" is needed!
+   *
+   * @internal
    */
-  function parseSelector(forgiving: boolean = false): CSSParser<Absolute> {
+  export function parseSelector(
+    forgiving: boolean = false,
+  ): CSSParser<Absolute> {
     return left(
       List.parseComplex(parseSelector, forgiving),
       end((token) => `Unexpected token ${token}`),
