@@ -66,6 +66,10 @@ export namespace Parser {
     export function separated<I, T, U, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, right: Parser<I, U, E, A>): Parser<I, [T, U], E, A>;
     export function separatedList<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, lower?: number, upper?: number): Parser<I, [T, ...Array_2<T>], E, A>;
     // (undocumented)
+    export function skip<I, E, A extends Array_2<unknown> = []>(parser: Parser<I, unknown, E, A>): Parser<I, undefined, E, A>;
+    // (undocumented)
+    export function skipUntil<I, E, A extends Array_2<unknown> = []>(parser: Parser<I, unknown, E, A>, delimiter: Parser<I, unknown, E, A>): Parser<I, undefined, E, A>;
+    // (undocumented)
     export function take<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, count: number): Parser<I, Array_2<T>, E, A>;
     // (undocumented)
     export function takeAtLeast<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, lower: number): Parser<I, Array_2<T>, E, A>;
