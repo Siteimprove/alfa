@@ -16,7 +16,7 @@ import { Relative } from "./relative.js";
 import { Selector } from "./selector.js";
 import type { Simple } from "./simple/index.js";
 
-const { either, map, separatedList } = Parser;
+const { either, end, map, separatedList, skip } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector-list}
@@ -109,17 +109,27 @@ export namespace List {
   }
 
   /**
-   * {@link https://www.w3.org/TR/selectors/#typedef-selector-list}
-   * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
-   * {@link https://www.w3.org/TR/selectors/#typedef-compound-selector-list}
-   * {@link https://www.w3.org/TR/selectors/#typedef-simple-selector-list}
-   * {@link https://www.w3.org/TR/selectors/#typedef-relative-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-compound-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-simple-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector-list}
    *
-   * {@link https://www.w3.org/TR/selectors/#forgiving-selector}
+   * {@link https://drafts.csswg.org/selectors/#forgiving-selector}
    *
    * @remarks
    * We automatically simplify lists of 1 item as a way to speed up a bit
    * matching. Thus, we do not need to unwrap a 1-item list at every match.
+   * List may end up totally empty, in the case of forgiving lists containing
+   * only invalid selectors. This is expected by CSS syntax. In that case, we
+   * keep the list. It is up to the wrapper to decide whether to match an empty
+   * list.
+   *
+   * Only the top-level list needs to know whether it is forgiving or not. Inner
+   * list depend on their contexts.
+   * E.g., `:is(###, div)` is valid (forgiving list for `:is`), but
+   * `:is(:not(###, div))` is not (non-forgiving list for `:not`, even in a
+   * forgiving context).
    */
   function parse<T extends Item>(
     parseSelector: Selector.ComponentParser<T>,
@@ -128,16 +138,27 @@ export namespace List {
     const parser = forgiving
       ? // In a forgiving context, if the parser errors, we discard all tokens
         // until the next comma (included).
-        either(parseSelector(), Token.skipUntil(Comma.parse))
-      : parseSelector();
+        either(
+          parseSelector(forgiving),
+          Token.skipUntil(
+            either(
+              Comma.parse,
+              end((token) => `Unexpected token ${token}`),
+            ),
+          ),
+        )
+      : parseSelector(forgiving);
     return map(separatedList(parser, Comma.parse), (result) =>
       List.of(...result.filter((result) => result !== undefined)).simplify(),
     );
   }
 
   /**
-   * {@link https://www.w3.org/TR/selectors/#typedef-selector-list}
-   * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector-list}
+   *
+   * @remarks
+   * Nèote
    *
    * @internal
    */
@@ -147,7 +168,7 @@ export namespace List {
   ) => parse(() => Complex.parse(parseSelector), forgiving);
 
   /**
-   * {@link https://www.w3.org/TR/selectors/#typedef-relative-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector-list}
    *
    * @internal
    */

@@ -195,14 +195,14 @@ export namespace Parser {
 
   export function skip<I, E, A extends Array<unknown> = []>(
     parser: Parser<I, unknown, E, A>,
-  ): Parser<I, undefined, E, A> {
+  ): Parser<I, void, E, A> {
     return map(parser, () => undefined);
   }
 
   export function skipUntil<I, E, A extends Array<unknown> = []>(
     parser: Parser<I, unknown, E, A>,
     delimiter: Parser<I, unknown, E, A>,
-  ): Parser<I, undefined, E, A> {
+  ): Parser<I, void, E, A> {
     return skip(takeUntil(parser, delimiter));
   }
 

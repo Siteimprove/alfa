@@ -140,7 +140,7 @@ export namespace Selector {
   /**
    * Parses a (list of) complex selector.
    *
-   * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector-list}
    *
    * @remarks
    * Even simple selectors like `:is()` can include any other selector.
@@ -154,9 +154,9 @@ export namespace Selector {
    *
    * That is, the extra `()` "parameter" is needed!
    */
-  function parseSelector(): CSSParser<Absolute> {
+  function parseSelector(forgiving: boolean = false): CSSParser<Absolute> {
     return left(
-      List.parseComplex(parseSelector),
+      List.parseComplex(parseSelector, forgiving),
       end((token) => `Unexpected token ${token}`),
     );
   }
@@ -164,7 +164,7 @@ export namespace Selector {
   /**
    * Parses a (list of) complex selector.
    *
-   * {@link https://www.w3.org/TR/selectors/#typedef-complex-selector-list}
+   * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector-list}
    * If the list contains a single selector, it is simplified out.
    */
   export const parse = parseSelector();

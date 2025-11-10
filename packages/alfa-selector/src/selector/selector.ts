@@ -147,20 +147,9 @@ export namespace Selector {
     key?: string;
   }
 
-  export type ComponentParser<T extends Selector = Selector> = Thunk<
-    CSSParser<T>
-  >;
-
-  export function parseComponent<
-    T extends Selector = Selector,
-    U extends T = T,
-  >(
-    parseSelector: ComponentParser<T>,
-    refinement: Refinement<T, U>,
-    ifError: Thunk<string>,
-  ): ComponentParser<U> {
-    return () => filter(parseSelector(), refinement, ifError);
-  }
+  export type ComponentParser<T extends Selector = Selector> = (
+    forgiving?: boolean,
+  ) => CSSParser<T>;
 }
 
 /**
