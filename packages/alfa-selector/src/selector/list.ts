@@ -131,23 +131,24 @@ export namespace List {
    * `:is(:not(###, div))` is not (non-forgiving list for `:not`, even in a
    * forgiving context).
    */
-  function parse<T extends Item>(
+  function parseList<T extends Item>(
     parseSelector: Selector.ComponentParser<T>,
-    forgiving: boolean = false,
+    options?: Selector.Options,
   ): CSSParser<T | List<T>> {
-    const parser = forgiving
-      ? // In a forgiving context, if the parser errors, we discard all tokens
-        // until the next comma (included).
-        either(
-          parseSelector(forgiving),
-          Token.skipUntil(
-            either(
-              Comma.parse,
-              end((token) => `Unexpected token ${token}`),
+    const parser =
+      (options?.forgiving ?? false)
+        ? // In a forgiving context, if the parser errors, we discard all tokens
+          // until the next comma (included).
+          either(
+            parseSelector(),
+            Token.skipUntil(
+              either(
+                Comma.parse,
+                end((token) => `Unexpected token ${token}`),
+              ),
             ),
-          ),
-        )
-      : parseSelector(forgiving);
+          )
+        : parseSelector();
     return map(separatedList(parser, Comma.parse), (result) =>
       List.of(...result.filter((result) => result !== undefined)).simplify(),
     );
@@ -157,15 +158,12 @@ export namespace List {
    * {@link https://drafts.csswg.org/selectors/#typedef-selector-list}
    * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector-list}
    *
-   * @remarks
-   * Nèote
-   *
    * @internal
    */
   export const parseComplex = (
     parseSelector: Selector.ComponentParser<Absolute>,
-    forgiving: boolean = false,
-  ) => parse(() => Complex.parse(parseSelector), forgiving);
+    options?: Selector.Options,
+  ) => parseList(() => Complex.parse(parseSelector), options);
 
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector-list}
@@ -174,6 +172,33 @@ export namespace List {
    */
   export const parseRelative = (
     parseSelector: Selector.ComponentParser<Absolute>,
-    forgiving: boolean = false,
-  ) => parse(() => Relative.parse(parseSelector), forgiving);
+    options?: Selector.Options,
+  ) => parseList(() => Relative.parse(parseSelector), options);
+
+  /**
+   * @internal
+   */
+  export function parse(
+    parseSelector: Selector.ComponentParser<Absolute>,
+    options?: Selector.Options & { relative: true },
+  ): CSSParser<Relative | List<Relative>>;
+
+  export function parse(
+    parseSelector: Selector.ComponentParser<Absolute>,
+    options?: Selector.Options & { relative: false },
+  ): CSSParser<Absolute>;
+
+  export function parse(
+    parseSelector: Selector.ComponentParser<Absolute>,
+    options?: Selector.Options,
+  ): CSSParser<Absolute>;
+
+  export function parse(
+    parseSelector: Selector.ComponentParser<Absolute>,
+    options?: Selector.Options,
+  ): CSSParser<Item | List<Item>> {
+    return (options?.relative ?? false)
+      ? parseRelative(parseSelector, options)
+      : parseComplex(parseSelector, options);
+  }
 }

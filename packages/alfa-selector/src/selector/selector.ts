@@ -148,8 +148,13 @@ export namespace Selector {
   }
 
   export type ComponentParser<T extends Selector = Selector> = (
-    forgiving?: boolean,
+    options?: Options,
   ) => CSSParser<T>;
+
+  export interface Options {
+    forgiving?: boolean;
+    relative?: boolean;
+  }
 }
 
 /**

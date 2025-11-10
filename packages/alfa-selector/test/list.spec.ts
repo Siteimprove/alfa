@@ -2,10 +2,13 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Combinator } from "../dist/index.js";
 import { List, Selector } from "../src/index.js";
+import type { Selector as BaseType } from "../src/selector/selector.js";
 import { parseErr, serialize as baseSerialize } from "./parser.js";
 
-const serialize = (input: string, forgiving: boolean = false) =>
-  baseSerialize(input, List.parseComplex(Selector.parseSelector, forgiving));
+const serialize = (
+  input: string,
+  options: BaseType.Options = { forgiving: false, relative: false },
+) => baseSerialize(input, List.parseComplex(Selector.parseSelector, options));
 
 test(".parseComplex() parses a list of simple selectors", (t) => {
   t.deepEqual(serialize(".foo, .bar, .baz"), {
@@ -206,7 +209,7 @@ test(".parseComplex() refuses to parse a list with invalid selectors by default"
 });
 
 test(".parseComplex() can parse a list with invalid selectors when forgiving", (t) => {
-  t.deepEqual(serialize("div, ###, span", true), {
+  t.deepEqual(serialize("div, ###, span", { forgiving: true }), {
     type: "list",
     selectors: [
       {
@@ -229,7 +232,7 @@ test(".parseComplex() can parse a list with invalid selectors when forgiving", (
 });
 
 test(".parseComplex() simplifies a forgiving list with a single valid selector", (t) => {
-  t.deepEqual(serialize("###, .foo, $$$", true), {
+  t.deepEqual(serialize("###, .foo, $$$", { forgiving: true }), {
     type: "class",
     name: "foo",
     specificity: { a: 0, b: 1, c: 0 },
@@ -238,13 +241,13 @@ test(".parseComplex() simplifies a forgiving list with a single valid selector",
 });
 
 test(".parseComplex() accepts forgiving lists that are entirely invalid", (t) => {
-  t.deepEqual(serialize("###, $$$", true), {
+  t.deepEqual(serialize("###, $$$", { forgiving: true }), {
     type: "list",
     selectors: [],
     specificity: { a: 0, b: 0, c: 0 },
   });
 
-  t.deepEqual(serialize("", true), {
+  t.deepEqual(serialize("", { forgiving: true }), {
     type: "list",
     selectors: [],
     specificity: { a: 0, b: 0, c: 0 },

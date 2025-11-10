@@ -24,8 +24,8 @@ export * from "./list.js";
 export * from "./relative.js";
 export * from "./simple/index.js";
 
-const { end, filter, left, map } = Parser;
-const { and, or, not, test } = Refinement;
+const { end, left } = Parser;
+const { and, or, test } = Refinement;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#selector}
@@ -157,10 +157,22 @@ export namespace Selector {
    * @internal
    */
   export function parseSelector(
-    forgiving: boolean = false,
-  ): CSSParser<Absolute> {
+    options: BaseType.Options & { relative: true },
+  ): CSSParser<Relative | List<Relative>>;
+
+  export function parseSelector(
+    options: BaseType.Options & { relative: false },
+  ): CSSParser<Absolute>;
+
+  export function parseSelector(
+    options?: BaseType.Options,
+  ): CSSParser<Absolute>;
+
+  export function parseSelector(
+    options?: BaseType.Options,
+  ): CSSParser<List.Item | List<List.Item>> {
     return left(
-      List.parseComplex(parseSelector, forgiving),
+      List.parse(parseSelector as BaseType.ComponentParser<Absolute>, options),
       end((token) => `Unexpected token ${token}`),
     );
   }
