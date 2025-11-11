@@ -44,6 +44,9 @@ export namespace Is {
   export interface JSON extends WithSelector.JSON<"is"> {}
 
   export const parse = (parseSelector: Selector.Parser.Component) =>
-    // @ts-ignore
-    WithSelector.parseWithSelector("is", parseSelector, Is.of);
+    WithSelector.parseWithSelector(
+      "is",
+      () => parseSelector({ forgiving: true }),
+      Is.of,
+    );
 }

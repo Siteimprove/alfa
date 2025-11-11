@@ -71,7 +71,6 @@ export namespace NthLastChild {
   export const parse = (parseSelector: Selector.Parser.Component) =>
     WithIndexAndSelector.parseWithIndexAndSelector(
       "nth-last-child",
-      // @ts-ignore
       parseSelector,
       NthLastChild.of,
     );

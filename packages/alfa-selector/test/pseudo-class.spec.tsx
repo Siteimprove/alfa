@@ -55,6 +55,41 @@ test(".parse() parses a functional pseudo-class selector", (t) => {
   });
 });
 
+test(".parse() parsers :is and :where as forgiving lists", (t) => {
+  for (const sel of ["is", "where"] as const) {
+    for (const list of [
+      ".foo, #bar",
+      ".foo, #bar, ###",
+      "###, .foo, #bar",
+      "###, .foo, $$$, #bar",
+    ]) {
+      t.deepEqual(serialize(`:${sel}(${list})`), {
+        type: "pseudo-class",
+        name: sel,
+        selector: {
+          type: "list",
+          selectors: [
+            {
+              type: "class",
+              name: "foo",
+              specificity: { a: 0, b: 1, c: 0 },
+              key: ".foo",
+            },
+            {
+              type: "id",
+              name: "bar",
+              specificity: { a: 1, b: 0, c: 0 },
+              key: "#bar",
+            },
+          ],
+          specificity: { a: 1, b: 0, c: 0 },
+        },
+        specificity: sel === "is" ? { a: 1, b: 0, c: 0 } : { a: 0, b: 0, c: 0 },
+      });
+    }
+  }
+});
+
 test("#matches() checks if an element matches a :first-child selector", (t) => {
   const selector = parse(":first-child");
 

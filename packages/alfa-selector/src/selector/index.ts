@@ -10,7 +10,6 @@ import { Compound } from "./compound.js";
 import { List } from "./list.js";
 import { Relative } from "./relative.js";
 import type { Simple } from "./simple/index.js";
-import type { BaseSelector } from "./selector.js";
 
 import { Host } from "./pseudo/pseudo-class/host.js";
 import { HostContext } from "./pseudo/pseudo-class/host-context.js";
