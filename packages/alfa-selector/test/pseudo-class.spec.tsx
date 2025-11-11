@@ -90,6 +90,42 @@ test(".parse() parsers :is and :where as forgiving lists", (t) => {
   }
 });
 
+test(".parse() parses :has as relative selectors list", (t) => {
+  t.deepEqual(serialize(":has(.foo, > #bar)"), {
+    type: "pseudo-class",
+    name: "has",
+    selector: {
+      type: "list",
+      selectors: [
+        {
+          type: "relative",
+          combinator: " ",
+          selector: {
+            type: "class",
+            name: "foo",
+            specificity: { a: 0, b: 1, c: 0 },
+            key: ".foo",
+          },
+          specificity: { a: 0, b: 1, c: 0 },
+        },
+        {
+          type: "relative",
+          combinator: ">",
+          selector: {
+            type: "id",
+            name: "bar",
+            specificity: { a: 1, b: 0, c: 0 },
+            key: "#bar",
+          },
+          specificity: { a: 1, b: 0, c: 0 },
+        },
+      ],
+      specificity: { a: 1, b: 0, c: 0 },
+    },
+    specificity: { a: 1, b: 0, c: 0 },
+  });
+});
+
 test("#matches() checks if an element matches a :first-child selector", (t) => {
   const selector = parse(":first-child");
 

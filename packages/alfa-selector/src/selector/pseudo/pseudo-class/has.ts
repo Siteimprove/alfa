@@ -1,16 +1,16 @@
-import type { Absolute, Selector } from "../../index.js";
+import type { Relative, Selector } from "../../index.js";
 
 import { WithSelector } from "./pseudo-class.js";
 
 /**
  * {@link https://drafts.csswg.org/selectors/#has-pseudo}
  */
-export class Has extends WithSelector<"has"> {
-  public static of(selector: Absolute): Has {
+export class Has extends WithSelector<"has", Relative> {
+  public static of(selector: Relative): Has {
     return new Has(selector);
   }
 
-  protected constructor(selector: Absolute) {
+  protected constructor(selector: Relative) {
     super("has", selector, selector.specificity);
   }
 
@@ -27,17 +27,17 @@ export class Has extends WithSelector<"has"> {
   }
 
   public toJSON(): Has.JSON {
-    return {
-      ...super.toJSON(),
-    };
+    return super.toJSON();
   }
 }
 
 export namespace Has {
-  export interface JSON extends WithSelector.JSON<"has"> {}
+  export interface JSON extends WithSelector.JSON<"has", Relative> {}
 
-  // :has() normally only accepts relative selectors, we currently
-  // accept only non-relative ones…
   export const parse = (parseSelector: Selector.Parser.Component) =>
-    WithSelector.parseWithSelector("has", parseSelector, Has.of);
+    WithSelector.parseWithSelector(
+      "has",
+      () => parseSelector({ relative: true }),
+      Has.of,
+    );
 }

@@ -1,13 +1,13 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Absolute, Selector } from "./index.js";
+import type { Selector } from "./index.js";
 import { Combinator } from "./combinator.js";
 import { Complex } from "./complex.js";
 import type { Compound } from "./compound.js";
 import { BaseSelector } from "./selector.js";
 import type { Simple } from "./simple/index.js";
 
-const { map, pair } = Parser;
+const { either, map, pair } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#relative-selector}
@@ -95,9 +95,23 @@ export namespace Relative {
    * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
    */
   export const parse = (parseSelector: Selector.Parser.Component) =>
-    map(pair(Combinator.parse, Complex.parse(parseSelector)), (result) => {
-      const [combinator, selector] = result;
+    map(
+      either(
+        pair(Combinator.parse, Complex.parse(parseSelector)),
+        // Absolute selectors can also be parsed as relative with an implied
+        // descendant combinator, e.g. in `:has(h1)`. In this case the
+        // whitespace that usually represents the descendant combinator in
+        // complex selectors is omitted. We cannot handle that in Combinator.parse
+        // as it would turn it into a "catch all" parser.
+        map(
+          Complex.parse(parseSelector),
+          (selector) => [Combinator.Descendant, selector] as const,
+        ),
+      ),
+      (result) => {
+        const [combinator, selector] = result;
 
-      return Relative.of(combinator, selector);
-    });
+        return Relative.of(combinator, selector);
+      },
+    );
 }

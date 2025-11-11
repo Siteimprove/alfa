@@ -12,8 +12,8 @@ import { Specificity } from "../specificity.js";
 import { Complex } from "./complex.js";
 import type { Compound } from "./compound.js";
 
-import type { Absolute, Selector } from "./index.js";
-import { Relative } from "./relative.js";
+import type { Absolute, Relative, Selector } from "./index.js";
+import { Relative as BaseRelative } from "./relative.js";
 import { BaseSelector } from "./selector.js";
 import type { Simple } from "./simple/index.js";
 
@@ -106,7 +106,7 @@ export namespace List {
   }
 
   /** @internal */
-  export type Item = Simple | Compound | Complex | Relative;
+  export type Item = Simple | Compound | Complex | BaseRelative;
 
   export function isList(value: unknown): value is List {
     return value instanceof List;
@@ -177,7 +177,7 @@ export namespace List {
   export const parseRelative = (
     parseSelector: Selector.Parser.Component,
     options?: Selector.Parser.Options,
-  ) => parseList(() => Relative.parse(parseSelector), options);
+  ) => parseList(() => BaseRelative.parse(parseSelector), options);
 
   /**
    * @internal
@@ -185,7 +185,7 @@ export namespace List {
   export function parse(
     parseSelector: Selector.Parser.Component,
     options?: Selector.Parser.Options & { relative: true },
-  ): CSSParser<Relative | List<Relative>>;
+  ): CSSParser<Relative>;
 
   export function parse(
     parseSelector: Selector.Parser.Component,

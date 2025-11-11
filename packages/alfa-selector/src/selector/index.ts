@@ -8,7 +8,7 @@ import { Context } from "../context.js";
 import { Complex } from "./complex.js";
 import { Compound } from "./compound.js";
 import { List } from "./list.js";
-import { Relative } from "./relative.js";
+import { Relative as BaseRelative } from "./relative.js";
 import type { Simple } from "./simple/index.js";
 
 import { Host } from "./pseudo/pseudo-class/host.js";
@@ -31,7 +31,7 @@ const { and, or, test } = Refinement;
  *
  * @public
  */
-export type Selector = Simple | Compound | Complex | Relative | List;
+export type Selector = Simple | Compound | Complex | BaseRelative | List;
 
 /**
  * Non-relative selectors for contexts that do not allow them
@@ -44,19 +44,21 @@ export type Absolute =
   | Complex
   | List<Simple | Compound | Complex>;
 
-/**
- * @internal
- */
+/** @internal */
 export namespace Absolute {
   export type JSON =
     | Simple.JSON
     | Compound.JSON
     | Complex.JSON
     | List.JSON<Simple | Compound | Complex>;
+}
 
-  export function isAbsolute(value: Selector): value is Absolute {
-    return !Relative.isRelative(value);
-  }
+/** @internal */
+export type Relative = BaseRelative | List<BaseRelative>;
+
+/** @internal */
+export namespace Relative {
+  export type JSON = BaseRelative.JSON | List.JSON<BaseRelative>;
 }
 
 /**
@@ -143,9 +145,7 @@ export namespace Selector {
     }
 
     export interface Component {
-      (
-        options: Options & { relative: true },
-      ): CSSParser<Relative | List<Relative>>;
+      (options: Options & { relative: true }): CSSParser<Relative>;
       (options: Options & { relative: false }): CSSParser<Absolute>;
       (options?: Options): CSSParser<Absolute>;
     }
@@ -172,7 +172,7 @@ export namespace Selector {
    */
   export function parseSelector(
     options: Parser.Options & { relative: true },
-  ): CSSParser<Relative | List<Relative>>;
+  ): CSSParser<Relative>;
 
   export function parseSelector(
     options: Parser.Options & { relative: false },
