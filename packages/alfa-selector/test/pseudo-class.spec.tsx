@@ -352,7 +352,7 @@ test("#matches() checks if an element matches a :link selector", (t) => {
 
   // These elements aren't links
   for (const element of [<a />, <p />]) {
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
 });
 
@@ -365,19 +365,15 @@ test("#matches() checks if an element matches a :visited selector", (t) => {
     <area href="#" />,
     <link href="#" />,
   ]) {
-    t.equal(
-      selector.matches(element, Context.visit(element)),
-      true,
-      element.toString(),
-    );
+    t(selector.matches(element, Context.visit(element)), element.toString());
 
     // Only visited links match :link
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
 
   // These elements aren't links
   for (const element of [<a />, <p />]) {
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
 });
 
@@ -391,18 +387,14 @@ test("#matches() checks if an element matches a :any-link selector", (t) => {
     <link href="#" />,
   ]) {
     // Matches both visited and non-visited links
-    t.equal(
-      selector.matches(element, Context.visit(element)),
-      true,
-      element.toString(),
-    );
+    t(selector.matches(element, Context.visit(element)), element.toString());
 
-    t.equal(selector.matches(element), true, element.toString());
+    t(selector.matches(element), element.toString());
   }
 
   // These elements aren't links
   for (const element of [<a />, <p />]) {
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
 });
 
@@ -414,7 +406,7 @@ test("#matches() checks if an element matches a :checked selector", (t) => {
     <input type="radio" checked />,
     <option selected />,
   ]) {
-    t.equal(selector.matches(element), true, element.toString());
+    t(selector.matches(element), element.toString());
   }
 
   for (const element of [
@@ -423,6 +415,20 @@ test("#matches() checks if an element matches a :checked selector", (t) => {
     <input />,
     <option />,
   ]) {
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
+});
+
+test("#matches() checks if an element matches a :has selector", (t) => {
+  const a = <span></span>;
+  const b = <div></div>;
+  const c = <span></span>;
+  const inner = <div>{c}</div>;
+  const parent = (
+    <div class="parent">
+      {a}
+      {b}
+      {inner}
+    </div>
+  );
 });
