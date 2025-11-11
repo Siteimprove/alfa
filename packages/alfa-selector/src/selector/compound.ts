@@ -97,7 +97,7 @@ export namespace Compound {
    *
    * @internal
    */
-  export const parse = (parseSelector: Selector.Parser.Component<Selector>) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     map(oneOrMore(Simple.parse(parseSelector)), (result) =>
       result.length === 1 ? result[0] : Compound.of(...result),
     );

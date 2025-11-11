@@ -63,7 +63,7 @@ export namespace CueRegion {
   }
 
   export function parse(
-    parseSelector: Selector.Parser.Component<Selector>,
+    parseSelector: Selector.Parser.Component,
   ): CSSParser<CueRegion> {
     return right(
       take(Token.parseColon, 2),

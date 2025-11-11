@@ -94,7 +94,7 @@ export namespace Relative {
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
    */
-  export const parse = (parseSelector: Selector.Parser.Component<Absolute>) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     map(pair(Combinator.parse, Complex.parse(parseSelector)), (result) => {
       const [combinator, selector] = result;
 

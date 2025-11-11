@@ -138,13 +138,17 @@ export namespace Selector {
   }
 
   export namespace Parser {
-    export type Component<T extends BaseSelector = BaseSelector> = (
-      options?: Options,
-    ) => CSSParser<T>;
-
     export interface Options {
       forgiving?: boolean;
       relative?: boolean;
+    }
+
+    export interface Component {
+      (
+        options: Options & { relative: true },
+      ): CSSParser<Relative | List<Relative>>;
+      (options: Options & { relative: false }): CSSParser<Absolute>;
+      (options?: Options): CSSParser<Absolute>;
     }
   }
 
@@ -154,16 +158,16 @@ export namespace Selector {
    * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector-list}
    *
    * @remarks
-   * Even simple selectors like `:is()` can include any other selector.
-   * This creates circular dependencies, especially in the parsers.
-   * To break it, we use dependency injection and inject the top-level
-   * selector parser into each of the individual ones.
+   * To break circular dependencies between parsers, the top-level parser is
+   * injected into the sub-parsers. Because each context knows which parser to
+   * use (relative/forgiving), we must pass the full parser with options to
+   * parametrize it. It is up for each context to call it with the relevant
+   * options.
    *
-   * In order to avoid an infinite recursion, this means that we must actually
-   * inject a continuation wrapping the parser, and only resolve it to an
-   * actual parser upon need.
-   *
-   * That is, the extra `()` "parameter" is needed!
+   * We cannot really use the `Parser.Component` type here, e.g.
+   * `const parseSelector: Parser.Component = (options) => ...` because this
+   * wouldn't break down `options` into its different overloads, so we need to
+   * repeat the overload.
    *
    * @internal
    */
@@ -181,7 +185,7 @@ export namespace Selector {
     options?: Parser.Options,
   ): CSSParser<List.Item | List<List.Item>> {
     return left(
-      List.parse(parseSelector as Parser.Component<Absolute>, options),
+      List.parse(parseSelector, options),
       end((token) => `Unexpected token ${token}`),
     );
   }
