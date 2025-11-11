@@ -68,7 +68,7 @@ export class NthLastChild extends WithIndexAndSelector<"nth-last-child"> {
 export namespace NthLastChild {
   export interface JSON extends WithIndexAndSelector.JSON<"nth-last-child"> {}
 
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     WithIndexAndSelector.parseWithIndexAndSelector(
       "nth-last-child",
       // @ts-ignore

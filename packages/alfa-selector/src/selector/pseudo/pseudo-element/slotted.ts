@@ -156,7 +156,7 @@ export namespace Slotted {
   }
 
   export function parse(
-    parseSelector: Selector.ComponentParser<Selector>,
+    parseSelector: Selector.Parser.Component<Selector>,
   ): CSSParser<Slotted> {
     return map(
       right(

@@ -111,7 +111,7 @@ export namespace Host {
     return value instanceof Host;
   }
 
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     either(
       // We need to try the functional variant first to avoid the non-functional
       // greedily passing.

@@ -44,7 +44,7 @@ export class Where extends WithSelector<"where"> {
 export namespace Where {
   export interface JSON extends WithSelector.JSON<"where"> {}
 
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     // @ts-ignore
     WithSelector.parseWithSelector("where", parseSelector, Where.of);
 }

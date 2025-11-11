@@ -117,7 +117,7 @@ export namespace PseudoClass {
   export const { isHost } = Host;
 
   export function parse(
-    parseSelector: Selector.ComponentParser,
+    parseSelector: Selector.Parser.Component,
   ): CSSParser<PseudoClass> {
     return either<Slice<Token>, PseudoClass, string>(
       Active.parse,

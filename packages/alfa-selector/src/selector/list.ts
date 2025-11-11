@@ -135,8 +135,8 @@ export namespace List {
    * forgiving context).
    */
   function parseList<T extends Item>(
-    parseSelector: Selector.ComponentParser<T>,
-    options?: Selector.Options,
+    parseSelector: Selector.Parser.Component<T>,
+    options?: Selector.Parser.Options,
   ): CSSParser<T | List<T>> {
     const parser =
       (options?.forgiving ?? false)
@@ -164,8 +164,8 @@ export namespace List {
    * @internal
    */
   export const parseComplex = (
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options,
+    parseSelector: Selector.Parser.Component<Absolute>,
+    options?: Selector.Parser.Options,
   ) => parseList(() => Complex.parse(parseSelector), options);
 
   /**
@@ -174,31 +174,31 @@ export namespace List {
    * @internal
    */
   export const parseRelative = (
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options,
+    parseSelector: Selector.Parser.Component<Absolute>,
+    options?: Selector.Parser.Options,
   ) => parseList(() => Relative.parse(parseSelector), options);
 
   /**
    * @internal
    */
   export function parse(
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options & { relative: true },
+    parseSelector: Selector.Parser.Component<Absolute>,
+    options?: Selector.Parser.Options & { relative: true },
   ): CSSParser<Relative | List<Relative>>;
 
   export function parse(
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options & { relative: false },
+    parseSelector: Selector.Parser.Component<Absolute>,
+    options?: Selector.Parser.Options & { relative: false },
   ): CSSParser<Absolute>;
 
   export function parse(
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options,
+    parseSelector: Selector.Parser.Component<Absolute>,
+    options?: Selector.Parser.Options,
   ): CSSParser<Absolute>;
 
   export function parse(
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options,
+    parseSelector: Selector.Parser.Component<Absolute>,
+    options?: Selector.Parser.Options,
   ): CSSParser<Item | List<Item>> {
     return (options?.relative ?? false)
       ? parseRelative(parseSelector, options)

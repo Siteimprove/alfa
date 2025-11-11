@@ -67,7 +67,7 @@ export namespace Simple {
    *
    * @internal
    */
-  export const parse = (parseSelector: Selector.ComponentParser<Selector>) =>
+  export const parse = (parseSelector: Selector.Parser.Component<Selector>) =>
     either<Slice<Token>, Simple, string>(
       Class.parse,
       Type.parse,

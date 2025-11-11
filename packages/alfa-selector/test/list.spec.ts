@@ -6,7 +6,7 @@ import { parseErr, serialize as baseSerialize } from "./parser.js";
 
 const serialize = (
   input: string,
-  options: Selector.Options = { forgiving: false, relative: false },
+  options: Selector.Parser.Options = { forgiving: false, relative: false },
 ) => baseSerialize(input, List.parseComplex(Selector.parseSelector, options));
 
 test(".parseComplex() parses a list of simple selectors", (t) => {

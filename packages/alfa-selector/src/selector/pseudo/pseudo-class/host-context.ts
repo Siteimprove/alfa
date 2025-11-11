@@ -92,7 +92,7 @@ export namespace HostContext {
     return value instanceof HostContext;
   }
 
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     WithSelector.parseWithSelector(
       "host-context",
       () =>

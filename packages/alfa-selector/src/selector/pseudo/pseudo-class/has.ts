@@ -38,7 +38,7 @@ export namespace Has {
 
   // :has() normally only accepts relative selectors, we currently
   // accept only non-relative ones…
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     // @ts-ignore
     WithSelector.parseWithSelector("has", parseSelector, Has.of);
 }

@@ -61,7 +61,7 @@ export namespace PseudoElement {
   }
 
   export function parse(
-    parseSelector: Selector.ComponentParser<Selector>,
+    parseSelector: Selector.Parser.Component<Selector>,
   ): CSSParser<PseudoElement> {
     return either<Slice<Token>, PseudoElement, string>(
       After.parse,

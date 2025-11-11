@@ -137,13 +137,15 @@ export namespace Selector {
     );
   }
 
-  export type ComponentParser<T extends BaseSelector = BaseSelector> = (
-    options?: Options,
-  ) => CSSParser<T>;
+  export namespace Parser {
+    export type Component<T extends BaseSelector = BaseSelector> = (
+      options?: Options,
+    ) => CSSParser<T>;
 
-  export interface Options {
-    forgiving?: boolean;
-    relative?: boolean;
+    export interface Options {
+      forgiving?: boolean;
+      relative?: boolean;
+    }
   }
 
   /**
@@ -166,20 +168,20 @@ export namespace Selector {
    * @internal
    */
   export function parseSelector(
-    options: Options & { relative: true },
+    options: Parser.Options & { relative: true },
   ): CSSParser<Relative | List<Relative>>;
 
   export function parseSelector(
-    options: Options & { relative: false },
+    options: Parser.Options & { relative: false },
   ): CSSParser<Absolute>;
 
-  export function parseSelector(options?: Options): CSSParser<Absolute>;
+  export function parseSelector(options?: Parser.Options): CSSParser<Absolute>;
 
   export function parseSelector(
-    options?: Options,
+    options?: Parser.Options,
   ): CSSParser<List.Item | List<List.Item>> {
     return left(
-      List.parse(parseSelector as ComponentParser<Absolute>, options),
+      List.parse(parseSelector as Parser.Component<Absolute>, options),
       end((token) => `Unexpected token ${token}`),
     );
   }
