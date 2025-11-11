@@ -423,12 +423,33 @@ test("#matches() checks if an element matches a :has selector", (t) => {
   const a = <span></span>;
   const b = <div></div>;
   const c = <span></span>;
-  const inner = <div>{c}</div>;
+  const inner = (
+    <div>
+      <div>{c}</div>
+    </div>
+  );
   const parent = (
-    <div class="parent">
+    <div>
       {a}
       {b}
       {inner}
+      <span></span>
     </div>
   );
+
+  t(parse(":has(span)").matches(parent), "Descendant, parent");
+  t(parse(":has(span)").matches(inner), "Descendant, inner");
+  t(!parse(":has(span)").matches(a), "Descendant, a");
+
+  t(parse(":has(> span)").matches(parent), "Direct descendant, parent");
+  t(!parse(":has(> span)").matches(inner), "Direct descendant, inner");
+  t(!parse(":has(> span)").matches(a), "Direct descendant, a");
+
+  t(!parse(":has(~ span)").matches(parent), "Sibling, parent");
+  t(parse(":has(~ span)").matches(inner), "Sibling, inner");
+  t(parse(":has(~ span)").matches(a), "Sibling, a");
+
+  t(!parse(":has(+ span)").matches(parent), "Direct sibling, parent");
+  t(parse(":has(+ span)").matches(inner), "Direct sibling, inner");
+  t(!parse(":has(+ span)").matches(a), "Direct sibling, a");
 });

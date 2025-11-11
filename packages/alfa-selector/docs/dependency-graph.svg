@@ -186,13 +186,13 @@
 <path fill="none" stroke="#000000" d="M4247.33,-702.42C4247.33,-702.42 4152.67,-702.42 4152.67,-702.42 4148.83,-702.42 4145,-698.59 4145,-694.75 4145,-694.75 4145,-687.09 4145,-687.09 4145,-683.25 4148.83,-679.42 4152.67,-679.42 4152.67,-679.42 4247.33,-679.42 4247.33,-679.42 4251.17,-679.42 4255,-683.25 4255,-687.09 4255,-687.09 4255,-694.75 4255,-694.75 4255,-698.59 4251.17,-702.42 4247.33,-702.42"/>
 <text text-anchor="middle" x="4200" y="-687.22" font-family="Arial" font-size="14.00" fill="#000000">pseudo&#45;class.ts</text>
 </g>
-<!-- src/selector/selector.ts -->
+<!-- src/selector/selector.tsx -->
 <g id="node6" class="node">
-<title>src/selector/selector.ts</title>
+<title>src/selector/selector.tsx</title>
 <path fill="none" stroke="#000000" d="M817.83,-643.42C817.83,-643.42 756.17,-643.42 756.17,-643.42 752.33,-643.42 748.5,-639.59 748.5,-635.75 748.5,-635.75 748.5,-628.09 748.5,-628.09 748.5,-624.25 752.33,-620.42 756.17,-620.42 756.17,-620.42 817.83,-620.42 817.83,-620.42 821.67,-620.42 825.5,-624.25 825.5,-628.09 825.5,-628.09 825.5,-635.75 825.5,-635.75 825.5,-639.59 821.67,-643.42 817.83,-643.42"/>
-<text text-anchor="middle" x="787" y="-628.22" font-family="Arial" font-size="14.00" fill="#000000">selector.ts</text>
+<text text-anchor="middle" x="787" y="-628.22" font-family="Arial" font-size="14.00" fill="#000000">selector.tsx</text>
 </g>
-<!-- src/selector/pseudo/pseudo&#45;class/pseudo&#45;class.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/pseudo/pseudo&#45;class/pseudo&#45;class.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/pseudo/pseudo&#45;class/pseudo&#45;class.ts&#45;&gt;src/specificity.ts -->
 <!-- src/selector/index.ts -->
 <g id="node11" class="node">
@@ -211,18 +211,18 @@
 </g>
 <!-- exit_src/common -->
 <!-- src/common/is&#45;link.ts&#45;&gt;exit_src/common -->
-<!-- src/selector/selector.ts&#45;&gt;src/context.ts -->
-<!-- src/selector/selector.ts&#45;&gt;exit_src/selector -->
-<!-- src/selector/selector.ts&#45;&gt;src/specificity.ts -->
+<!-- src/selector/selector.tsx&#45;&gt;src/context.ts -->
+<!-- src/selector/selector.tsx&#45;&gt;exit_src/selector -->
+<!-- src/selector/selector.tsx&#45;&gt;src/specificity.ts -->
 <!-- name_src/selector/simple -->
 <g id="node13" class="node">
 <title>name_src/selector/simple</title>
 <path fill="none" stroke="#ff0000" stroke-width="5" d="M724.33,-761.42C724.33,-761.42 683.67,-761.42 683.67,-761.42 679.83,-761.42 676,-757.59 676,-753.75 676,-753.75 676,-746.09 676,-746.09 676,-742.25 679.83,-738.42 683.67,-738.42 683.67,-738.42 724.33,-738.42 724.33,-738.42 728.17,-738.42 732,-742.25 732,-746.09 732,-746.09 732,-753.75 732,-753.75 732,-757.59 728.17,-761.42 724.33,-761.42"/>
 <text text-anchor="middle" x="704" y="-746.22" font-family="Arial" font-size="14.00" fill="#000000">simple</text>
 </g>
-<!-- src/selector/selector.ts&#45;&gt;name_src/selector/simple -->
+<!-- src/selector/selector.tsx&#45;&gt;name_src/selector/simple -->
 <g id="edge671" class="edge">
-<title>src/selector/selector.ts&#45;&gt;name_src/selector/simple</title>
+<title>src/selector/selector.tsx&#45;&gt;name_src/selector/simple</title>
 <path fill="none" stroke="#4900ff" stroke-dasharray="1,5" d="M780.42,-643.47C772.82,-655.54 759.67,-676.03 745.92,-695.52"/>
 <polygon fill="#4900ff" stroke="#4900ff" points="742.97,-693.62 740,-703.79 748.67,-697.69 742.97,-693.62"/>
 </g>
@@ -232,10 +232,10 @@
 <path fill="none" stroke="#000000" d="M935.83,-584.42C935.83,-584.42 856.17,-584.42 856.17,-584.42 852.33,-584.42 848.5,-580.59 848.5,-576.75 848.5,-576.75 848.5,-569.09 848.5,-569.09 848.5,-565.25 852.33,-561.42 856.17,-561.42 856.17,-561.42 935.83,-561.42 935.83,-561.42 939.67,-561.42 943.5,-565.25 943.5,-569.09 943.5,-569.09 943.5,-576.75 943.5,-576.75 943.5,-580.59 939.67,-584.42 935.83,-584.42"/>
 <text text-anchor="middle" x="896" y="-569.22" font-family="Arial" font-size="14.00" fill="#000000">compound.ts</text>
 </g>
-<!-- src/selector/selector.ts&#45;&gt;src/selector/compound.ts -->
-<!-- src/selector/selector.ts&#45;&gt;src/selector/compound.ts -->
+<!-- src/selector/selector.tsx&#45;&gt;src/selector/compound.ts -->
+<!-- src/selector/selector.tsx&#45;&gt;src/selector/compound.ts -->
 <g id="edge668" class="edge">
-<title>src/selector/selector.ts&#45;&gt;src/selector/compound.ts</title>
+<title>src/selector/selector.tsx&#45;&gt;src/selector/compound.ts</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M823.41,-620.33C844.14,-611.85 867.93,-599.82 883.48,-590.13"/>
 <polygon fill="black" stroke="black" points="885.62,-592.91 892,-584.45 881.73,-587.08 885.62,-592.91"/>
 </g>
@@ -245,10 +245,10 @@
 <path fill="none" stroke="#000000" d="M1065.33,-348.42C1065.33,-348.42 998.67,-348.42 998.67,-348.42 994.83,-348.42 991,-344.59 991,-340.75 991,-340.75 991,-333.09 991,-333.09 991,-329.25 994.83,-325.42 998.67,-325.42 998.67,-325.42 1065.33,-325.42 1065.33,-325.42 1069.17,-325.42 1073,-329.25 1073,-333.09 1073,-333.09 1073,-340.75 1073,-340.75 1073,-344.59 1069.17,-348.42 1065.33,-348.42"/>
 <text text-anchor="middle" x="1032" y="-333.22" font-family="Arial" font-size="14.00" fill="#000000">complex.ts</text>
 </g>
-<!-- src/selector/selector.ts&#45;&gt;src/selector/complex.ts -->
-<!-- src/selector/selector.ts&#45;&gt;src/selector/complex.ts -->
+<!-- src/selector/selector.tsx&#45;&gt;src/selector/complex.ts -->
+<!-- src/selector/selector.tsx&#45;&gt;src/selector/complex.ts -->
 <g id="edge666" class="edge">
-<title>src/selector/selector.ts&#45;&gt;src/selector/complex.ts</title>
+<title>src/selector/selector.tsx&#45;&gt;src/selector/complex.ts</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M803.37,-620.2C810.59,-605.08 808.41,-576.71 814,-553.42 825.52,-505.45 906.6,-392.4 917,-384.42 937.35,-368.8 963.16,-358.31 985.62,-351.32"/>
 <polygon fill="black" stroke="black" points="986.75,-354.64 995.35,-348.44 984.76,-347.92 986.75,-354.64"/>
 </g>
@@ -258,10 +258,10 @@
 <path fill="none" stroke="#000000" d="M965.33,-407.42C965.33,-407.42 906.67,-407.42 906.67,-407.42 902.83,-407.42 899,-403.59 899,-399.75 899,-399.75 899,-392.09 899,-392.09 899,-388.25 902.83,-384.42 906.67,-384.42 906.67,-384.42 965.33,-384.42 965.33,-384.42 969.17,-384.42 973,-388.25 973,-392.09 973,-392.09 973,-399.75 973,-399.75 973,-403.59 969.17,-407.42 965.33,-407.42"/>
 <text text-anchor="middle" x="936" y="-392.22" font-family="Arial" font-size="14.00" fill="#000000">relative.ts</text>
 </g>
-<!-- src/selector/selector.ts&#45;&gt;src/selector/relative.ts -->
-<!-- src/selector/selector.ts&#45;&gt;src/selector/relative.ts -->
+<!-- src/selector/selector.tsx&#45;&gt;src/selector/relative.ts -->
+<!-- src/selector/selector.tsx&#45;&gt;src/selector/relative.ts -->
 <g id="edge670" class="edge">
-<title>src/selector/selector.ts&#45;&gt;src/selector/relative.ts</title>
+<title>src/selector/selector.tsx&#45;&gt;src/selector/relative.ts</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M804.87,-620.4C814.99,-605.02 817.75,-575.79 828,-553.42 854.58,-495.38 909.41,-442.44 931.33,-415.53"/>
 <polygon fill="black" stroke="black" points="934.2,-417.53 937.41,-407.43 928.61,-413.32 934.2,-417.53"/>
 </g>
@@ -273,16 +273,16 @@
 <!-- exit_src/selector/simple&#45;&gt;exit_src/selector -->
 <!-- exit_src/selector/simple&#45;&gt;exit_src/selector -->
 <!-- exit_src/selector/simple&#45;&gt;exit_src/selector -->
-<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.ts -->
+<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.tsx -->
 <g id="edge314" class="edge">
-<title>exit_src/selector/simple&#45;&gt;src/selector/selector.ts</title>
+<title>exit_src/selector/simple&#45;&gt;src/selector/selector.tsx</title>
 <path fill="none" stroke="#ff0000" d="M740,-623.94C742.08,-624.59 744.16,-625.24 746.24,-625.89"/>
 <polygon fill="#ff0000" stroke="#ff0000" points="737.74,-626.9 748.33,-626.54 739.83,-620.22 737.74,-626.9"/>
 </g>
-<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.ts -->
-<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.ts -->
-<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.ts -->
-<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.ts -->
+<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.tsx -->
+<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.tsx -->
+<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.tsx -->
+<!-- exit_src/selector/simple&#45;&gt;src/selector/selector.tsx -->
 <!-- exit_src/selector/simple&#45;&gt;src/selector/index.ts -->
 <g id="edge645" class="edge">
 <title>exit_src/selector/simple&#45;&gt;src/selector/index.ts</title>
@@ -316,7 +316,7 @@
 <path fill="none" stroke="#000000" d="M2002.33,-702.42C2002.33,-702.42 1889.67,-702.42 1889.67,-702.42 1885.83,-702.42 1882,-698.59 1882,-694.75 1882,-694.75 1882,-687.09 1882,-687.09 1882,-683.25 1885.83,-679.42 1889.67,-679.42 1889.67,-679.42 2002.33,-679.42 2002.33,-679.42 2006.17,-679.42 2010,-683.25 2010,-687.09 2010,-687.09 2010,-694.75 2010,-694.75 2010,-698.59 2006.17,-702.42 2002.33,-702.42"/>
 <text text-anchor="middle" x="1946" y="-687.22" font-family="Arial" font-size="14.00" fill="#000000">pseudo&#45;element.ts</text>
 </g>
-<!-- src/selector/pseudo/pseudo&#45;element/pseudo&#45;element.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/pseudo/pseudo&#45;element/pseudo&#45;element.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/pseudo/pseudo&#45;element/pseudo&#45;element.ts&#45;&gt;src/specificity.ts -->
 <!-- exit_src/selector/pseudo/pseudo&#45;element -->
 <!-- src/selector/pseudo/pseudo&#45;element/pseudo&#45;element.ts&#45;&gt;exit_src/selector/pseudo/pseudo&#45;element -->
@@ -506,15 +506,15 @@
 <!-- exit_src/selector/pseudo&#45;&gt;exit_src/selector -->
 <!-- exit_src/selector/pseudo&#45;&gt;exit_src/selector -->
 <!-- exit_src/selector/pseudo&#45;&gt;exit_src/selector -->
-<!-- exit_src/selector/pseudo&#45;&gt;src/selector/selector.ts -->
+<!-- exit_src/selector/pseudo&#45;&gt;src/selector/selector.tsx -->
 <g id="edge345" class="edge">
-<title>exit_src/selector/pseudo&#45;&gt;src/selector/selector.ts</title>
+<title>exit_src/selector/pseudo&#45;&gt;src/selector/selector.tsx</title>
 <path fill="none" stroke="#ffdb00" d="M1136,-599.84C1014.94,-611.05 899.36,-620.48 835.8,-625.92"/>
 <polygon fill="#ffdb00" stroke="#ffdb00" points="835.41,-622.44 825.75,-626.78 836.01,-629.41 835.41,-622.44"/>
 </g>
-<!-- exit_src/selector/pseudo&#45;&gt;src/selector/selector.ts -->
-<!-- exit_src/selector/pseudo&#45;&gt;src/selector/selector.ts -->
-<!-- exit_src/selector/pseudo&#45;&gt;src/selector/selector.ts -->
+<!-- exit_src/selector/pseudo&#45;&gt;src/selector/selector.tsx -->
+<!-- exit_src/selector/pseudo&#45;&gt;src/selector/selector.tsx -->
+<!-- exit_src/selector/pseudo&#45;&gt;src/selector/selector.tsx -->
 <!-- exit_src/selector/pseudo&#45;&gt;src/selector/index.ts -->
 <g id="edge339" class="edge">
 <title>exit_src/selector/pseudo&#45;&gt;src/selector/index.ts</title>
@@ -779,10 +779,10 @@
 <!-- src/selector/combinator.ts&#45;&gt;exit_src/selector -->
 <!-- src/selector/compound.ts&#45;&gt;src/context.ts -->
 <!-- src/selector/compound.ts&#45;&gt;exit_src/selector -->
-<!-- src/selector/compound.ts&#45;&gt;src/selector/selector.ts -->
-<!-- src/selector/compound.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/compound.ts&#45;&gt;src/selector/selector.tsx -->
+<!-- src/selector/compound.ts&#45;&gt;src/selector/selector.tsx -->
 <g id="edge332" class="edge">
-<title>src/selector/compound.ts&#45;&gt;src/selector/selector.ts</title>
+<title>src/selector/compound.ts&#45;&gt;src/selector/selector.tsx</title>
 <path fill="none" stroke="black" d="M881.24,-584.45C865.95,-593.27 841.88,-605.97 821.81,-615.87"/>
 <polygon fill="black" stroke="black" points="820.1,-612.81 812.63,-620.33 823.16,-619.11 820.1,-612.81"/>
 </g>
@@ -834,7 +834,7 @@
 <!-- src/selector/pseudo/pseudo&#45;class/host.ts&#45;&gt;src/specificity.ts -->
 <!-- src/selector/pseudo/pseudo&#45;class/host.ts&#45;&gt;src/selector/index.ts -->
 <!-- src/selector/pseudo/pseudo&#45;class/host.ts&#45;&gt;exit_src/selector/pseudo/pseudo&#45;class -->
-<!-- src/selector/simple/universal.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/simple/universal.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/simple/universal.ts&#45;&gt;exit_src/selector/simple -->
 <!-- src/selector/simple/universal.ts&#45;&gt;src/specificity.ts -->
 <!-- src/selector/simple/universal.ts&#45;&gt;src/selector/simple/parser.ts -->
@@ -1251,10 +1251,10 @@
 <!-- src/selector/pseudo/pseudo&#45;class/where.ts&#45;&gt;exit_src/selector/pseudo/pseudo&#45;class -->
 <!-- src/selector/complex.ts&#45;&gt;src/context.ts -->
 <!-- src/selector/complex.ts&#45;&gt;exit_src/selector -->
-<!-- src/selector/complex.ts&#45;&gt;src/selector/selector.ts -->
-<!-- src/selector/complex.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/complex.ts&#45;&gt;src/selector/selector.tsx -->
+<!-- src/selector/complex.ts&#45;&gt;src/selector/selector.tsx -->
 <g id="edge402" class="edge">
-<title>src/selector/complex.ts&#45;&gt;src/selector/selector.ts</title>
+<title>src/selector/complex.ts&#45;&gt;src/selector/selector.tsx</title>
 <path fill="none" stroke="black" d="M990.89,-345.48C962.79,-351.95 926.06,-363.65 899,-384.42 888.6,-392.4 807.52,-505.45 796,-553.42 791.5,-572.16 792.03,-594.19 791.8,-609.96"/>
 <polygon fill="black" stroke="black" points="788.3,-610.08 791.42,-620.2 795.29,-610.34 788.3,-610.08"/>
 </g>
@@ -1296,10 +1296,10 @@
 <!-- src/selector/complex.ts&#45;&gt;name_src/selector/pseudo -->
 <!-- src/selector/list.ts&#45;&gt;src/context.ts -->
 <!-- src/selector/list.ts&#45;&gt;exit_src/selector -->
-<!-- src/selector/list.ts&#45;&gt;src/selector/selector.ts -->
-<!-- src/selector/list.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/list.ts&#45;&gt;src/selector/selector.tsx -->
+<!-- src/selector/list.ts&#45;&gt;src/selector/selector.tsx -->
 <g id="edge617" class="edge">
-<title>src/selector/list.ts&#45;&gt;src/selector/selector.ts</title>
+<title>src/selector/list.ts&#45;&gt;src/selector/selector.tsx</title>
 <path fill="none" stroke="black" d="M925.88,-466.56C905.53,-482.91 861.24,-516.27 833,-553.42 819.48,-571.21 809.1,-594.74 801.02,-611.18"/>
 <polygon fill="black" stroke="black" points="797.75,-609.9 796.28,-620.39 803.97,-613.1 797.75,-609.9"/>
 </g>
@@ -1339,10 +1339,10 @@
 <polygon fill="black" stroke="black" points="945.98,-417.15 941.4,-407.59 939.03,-417.92 945.98,-417.15"/>
 </g>
 <!-- src/selector/relative.ts&#45;&gt;exit_src/selector -->
-<!-- src/selector/relative.ts&#45;&gt;src/selector/selector.ts -->
-<!-- src/selector/relative.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/relative.ts&#45;&gt;src/selector/selector.tsx -->
+<!-- src/selector/relative.ts&#45;&gt;src/selector/selector.tsx -->
 <g id="edge638" class="edge">
-<title>src/selector/relative.ts&#45;&gt;src/selector/selector.ts</title>
+<title>src/selector/relative.ts&#45;&gt;src/selector/selector.tsx</title>
 <path fill="none" stroke="black" d="M927.74,-407.43C904.16,-430.53 839.58,-488.82 810,-553.42 801.67,-571.6 798.29,-594.3 795.24,-610.42"/>
 <polygon fill="black" stroke="black" points="791.78,-609.89 793.13,-620.4 798.63,-611.34 791.78,-609.89"/>
 </g>
@@ -1393,7 +1393,7 @@
 <path fill="none" stroke="black" d="M4345.14,-804.03C4304.22,-798.79 4236.94,-787.9 4220,-769.42 4206.14,-754.3 4204.8,-730.07 4204.19,-712.72"/>
 <polygon fill="black" stroke="black" points="4207.68,-712.34 4203.77,-702.49 4200.68,-712.62 4207.68,-712.34"/>
 </g>
-<!-- src/selector/pseudo/pseudo&#45;class/index.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/pseudo/pseudo&#45;class/index.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/pseudo/pseudo&#45;class/index.ts&#45;&gt;src/selector/index.ts -->
 <!-- src/selector/pseudo/pseudo&#45;class/index.ts&#45;&gt;src/selector/pseudo/pseudo&#45;class/host&#45;context.ts -->
 <!-- src/selector/pseudo/pseudo&#45;class/index.ts&#45;&gt;src/selector/pseudo/pseudo&#45;class/host&#45;context.ts -->
@@ -1605,7 +1605,7 @@
 <path fill="none" stroke="#49ff00" stroke-width="5" d="M2048.83,-820.42C2048.83,-820.42 2001.17,-820.42 2001.17,-820.42 1997.33,-820.42 1993.5,-816.59 1993.5,-812.75 1993.5,-812.75 1993.5,-805.09 1993.5,-805.09 1993.5,-801.25 1997.33,-797.42 2001.17,-797.42 2001.17,-797.42 2048.83,-797.42 2048.83,-797.42 2052.67,-797.42 2056.5,-801.25 2056.5,-805.09 2056.5,-805.09 2056.5,-812.75 2056.5,-812.75 2056.5,-816.59 2052.67,-820.42 2048.83,-820.42"/>
 <text text-anchor="middle" x="2025" y="-805.22" font-family="Arial" font-size="14.00" fill="#000000">index.ts</text>
 </g>
-<!-- src/selector/pseudo/pseudo&#45;element/index.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/pseudo/pseudo&#45;element/index.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/pseudo/pseudo&#45;element/index.ts&#45;&gt;src/selector/pseudo/pseudo&#45;element/pseudo&#45;element.ts -->
 <!-- src/selector/pseudo/pseudo&#45;element/index.ts&#45;&gt;src/selector/pseudo/pseudo&#45;element/pseudo&#45;element.ts -->
 <g id="edge377" class="edge">
@@ -1727,7 +1727,7 @@
 <polygon fill="black" stroke="black" points="2633.43,-767.99 2641.78,-761.46 2631.19,-761.36 2633.43,-767.99"/>
 </g>
 <!-- src/selector/pseudo/pseudo&#45;element/index.ts&#45;&gt;exit_src/selector/pseudo/pseudo&#45;element -->
-<!-- src/selector/simple/attribute.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/simple/attribute.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/simple/attribute.ts&#45;&gt;exit_src/selector/simple -->
 <!-- src/selector/simple/attribute.ts&#45;&gt;src/specificity.ts -->
 <!-- src/selector/simple/attribute.ts&#45;&gt;src/selector/simple/parser.ts -->
@@ -1737,13 +1737,13 @@
 <path fill="none" stroke="black" d="M471.41,-679.2C472.67,-672.03 473.04,-662.37 472.53,-653.73"/>
 <polygon fill="black" stroke="black" points="475.98,-653.15 471.4,-643.59 469.03,-653.92 475.98,-653.15"/>
 </g>
-<!-- src/selector/simple/class.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/simple/class.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/simple/class.ts&#45;&gt;exit_src/selector/simple -->
 <!-- src/selector/simple/class.ts&#45;&gt;src/specificity.ts -->
-<!-- src/selector/simple/id.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/simple/id.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/simple/id.ts&#45;&gt;exit_src/selector/simple -->
 <!-- src/selector/simple/id.ts&#45;&gt;src/specificity.ts -->
-<!-- src/selector/simple/type.ts&#45;&gt;src/selector/selector.ts -->
+<!-- src/selector/simple/type.ts&#45;&gt;src/selector/selector.tsx -->
 <!-- src/selector/simple/type.ts&#45;&gt;exit_src/selector/simple -->
 <!-- src/selector/simple/type.ts&#45;&gt;src/specificity.ts -->
 <!-- src/selector/simple/type.ts&#45;&gt;src/selector/simple/parser.ts -->

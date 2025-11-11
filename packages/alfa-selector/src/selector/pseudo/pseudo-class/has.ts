@@ -1,4 +1,9 @@
-import type { Relative, Selector } from "../../index.js";
+/// <reference lib="dom" />
+import { Cache } from "@siteimprove/alfa-cache";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { Context } from "../../../context.js";
+import { Combinator, type Relative, type Selector } from "../../index.js";
 
 import { WithSelector } from "./pseudo-class.js";
 
@@ -12,6 +17,67 @@ export class Has extends WithSelector<"has", Relative> {
 
   protected constructor(selector: Relative) {
     super("has", selector, selector.specificity);
+  }
+
+  public matches(element: Element, context?: Context): boolean {
+    return this._matches(element, context ?? Context.empty());
+  }
+
+  /**
+   * Whether an element match.
+   *
+   * @remarks
+   * This method is further cached because it rebuilds new anchored selectors
+   * on each call, so it wouldn't be able to use other caches, notably for
+   * ancestors/descendants matching which can be expensive.
+   *
+   * Given that `@Cache.memoize` doesn't work with optional parameters (even
+   * with defaults), we need a wrapper to keep make the context optional at
+   * call sites.
+   */
+  // @Cache.memoize
+  private _matches(element: Element, context: Context): boolean {
+    console.log(`Checking ${this.toString()} for ${element.internalId}`);
+
+    const selectors = Iterable.map(this._selector, (selector) =>
+      selector.anchoredAt(element),
+    );
+
+    return Iterable.some(selectors, (selector) => {
+      let candidates: Iterable<Node>;
+
+      // While the relative match could theoretically happen anywhere in the
+      // DOM tree, we optimize the search based on the anchor and combinator.
+      switch (selector.combinator) {
+        case Combinator.Descendant:
+          candidates = Query.getElementDescendants(element);
+          break;
+
+        case Combinator.DirectDescendant:
+          candidates = element.children();
+          break;
+
+        case Combinator.Sibling:
+          candidates = element
+            .inclusiveSiblings()
+            .skipUntil((elt) => elt === element)
+            .skip(1);
+          break;
+
+        case Combinator.DirectSibling:
+          candidates = element
+            .inclusiveSiblings()
+            .skipUntil((elt) => elt === element)
+            .skip(1)
+            .first();
+          break;
+      }
+
+      return Iterable.some(
+        Iterable.filter(candidates, Element.isElement),
+        (candidate) => selector.matches(candidate, context),
+      );
+    });
   }
 
   public *[Symbol.iterator](): Iterator<Has> {
