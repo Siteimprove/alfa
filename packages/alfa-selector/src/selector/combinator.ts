@@ -4,16 +4,16 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Complex } from "./complex.js";
 
 import { Compound } from "./compound.js";
+import { BaseSelector } from "./selector.js";
 
 import { Context } from "../context.js";
 
 import { Host } from "./pseudo/pseudo-class/host.js";
 import { HostContext } from "./pseudo/pseudo-class/host-context.js";
 import { Slotted } from "./pseudo/pseudo-element/slotted.js";
-import type { Simple } from "./simple/index.js";
+import type { Selector } from "./index.js";
 
 const { isElement } = Element;
 const { delimited, either, map, option } = Parser;
@@ -89,11 +89,11 @@ export namespace Combinator {
    * it until we see it.
    */
   export function matcher(
-    left: Simple | Compound | Complex,
+    left: BaseSelector,
     combinator: Combinator,
-    right: Simple | Compound,
+    right: Selector,
     element: Element,
-    context?: Context,
+    context: Context = Context.empty(),
   ): boolean {
     let traversal = Node.Traversal.empty;
     let rightMatches = false;
@@ -163,12 +163,8 @@ export namespace Combinator {
     return false;
   }
 
-  const _ancestorMatchCache = Cache.empty<
-    Element,
-    Cache<Context, Cache<Simple | Compound | Complex, boolean>>
-  >();
   /**
-   * Checks if a (strict) ancestor of element matches.
+   * Checks if a (strict) ancestor of element matches `left`.
    *
    * @remarks
    * The result is cached, so that when matching `div.foo li`, we do not waste
@@ -176,25 +172,20 @@ export namespace Combinator {
    * the first ancestor already encountered, e.g., the common parent `<ul>` of
    * a bunch of siblings `<li>`.
    */
-  function ancestorMatchesLeft(
+  const ancestorMatchesLeft = Cache.memoize(function (
     element: Element,
-    context: Context = Context.empty(),
-    left: Simple | Compound | Complex,
+    context: Context,
+    left: BaseSelector,
   ): boolean {
-    return _ancestorMatchCache
-      .get(element, Cache.empty)
-      .get(context, Cache.empty)
-      .get(left, () =>
-        element
-          .parent()
-          .filter(isElement)
-          .some(
-            (parent) =>
-              left.matches(parent, context) ||
-              ancestorMatchesLeft(parent, context, left),
-          ),
+    return element
+      .parent()
+      .filter(isElement)
+      .some(
+        (parent) =>
+          left.matches(parent, context) ||
+          ancestorMatchesLeft(parent, context, left),
       );
-  }
+  });
 
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-combinator}

@@ -152,12 +152,12 @@ export enum Combinator {
 
 // @public (undocumented)
 export namespace Combinator {
+    // Warning: (ae-forgotten-export) The symbol "BaseSelector" needs to be exported by the entry point index.d.ts
+    export function matcher(left: BaseSelector, combinator: Combinator, right: Selector, element: Element, context?: Context): boolean;
     const // @internal (undocumented)
     parse: Parser_2<Combinator>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "BaseSelector" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export class Complex extends BaseSelector<"complex"> {
     // (undocumented)
@@ -173,6 +173,7 @@ export class Complex extends BaseSelector<"complex"> {
     protected readonly _key: Option<Id | Class | Type>;
     // (undocumented)
     get left(): Simple | Compound | Complex;
+    // (undocumented)
     matches(element: Element, context?: Context): boolean;
     // (undocumented)
     static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
@@ -198,7 +199,7 @@ export namespace Complex {
         right: Simple.JSON | Compound.JSON;
     }
     const // @internal (undocumented)
-    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple | Compound | Complex, string, []>;
+    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Complex | Compound | Simple, string, []>;
 }
 
 // @public (undocumented)
@@ -236,7 +237,7 @@ export namespace Compound {
         selectors: Array_2<Simple.JSON>;
     }
     const // @internal (undocumented)
-    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple | Compound, string, []>;
+    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Compound | Simple, string, []>;
 }
 
 // @public (undocumented)
@@ -374,7 +375,7 @@ export namespace List {
         selectors: Array_2<Serializable.ToJSON<T>>;
     }
     const // @internal (undocumented)
-    parseComplex: (parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options) => Parser_2<Simple | Compound | Complex | List<Simple | Compound | Complex>>;
+    parseComplex: (parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options) => Parser_2<Complex | Compound | Simple | List<Complex | Compound | Simple>>;
     const // @internal (undocumented)
     parseRelative: (parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options) => Parser_2<Relative_2 | List<Relative_2>>;
     // @internal (undocumented)

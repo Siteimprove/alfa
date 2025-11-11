@@ -1,4 +1,9 @@
+import { Element } from "@siteimprove/alfa-dom";
+import { Maybe, None, type Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import type { Context } from "../context.js";
+
+import { Specificity } from "../specificity.js";
 
 import type { Selector } from "./index.js";
 import { Combinator } from "./combinator.js";
@@ -24,14 +29,17 @@ export class Relative extends BaseSelector<"relative"> {
 
   private readonly _combinator: Combinator;
   private readonly _selector: Simple | Compound | Complex;
+  private readonly _anchor: Option<Exact>;
 
   protected constructor(
     combinator: Combinator,
     selector: Simple | Compound | Complex,
+    anchor: Maybe<Exact> = None,
   ) {
     super("relative", selector.specificity);
     this._combinator = combinator;
     this._selector = selector;
+    this._anchor = Maybe.toOption(anchor);
   }
 
   public get combinator(): Combinator {
@@ -42,8 +50,24 @@ export class Relative extends BaseSelector<"relative"> {
     return this._selector;
   }
 
-  public matches(): boolean {
-    return false;
+  public get anchor(): Option<Exact> {
+    return this._anchor;
+  }
+
+  public matches(element: Element, context?: Context): boolean {
+    return this._anchor.some((anchor) =>
+      Combinator.matcher(
+        anchor,
+        this._combinator,
+        this._selector,
+        element,
+        context,
+      ),
+    );
+  }
+
+  public anchoredAt(anchor: Element): Relative {
+    return new Relative(this._combinator, this._selector, Exact.of(anchor));
   }
 
   public equals(value: Relative): boolean;
@@ -114,4 +138,29 @@ export namespace Relative {
         return Relative.of(combinator, selector);
       },
     );
+}
+
+/**
+ * Fake selector to match the anchor of relative selector, thus allowing to
+ * match an anchored relative selector as a complex one.
+ */
+class Exact extends BaseSelector<"exact"> {
+  public static of(anchor: Element): Exact {
+    return new Exact(anchor);
+  }
+
+  private readonly _anchor: Element;
+
+  protected constructor(anchor: Element) {
+    super("exact", Specificity.empty());
+    this._anchor = anchor;
+  }
+
+  public matches(element: Element, _: any): boolean {
+    return element === this._anchor;
+  }
+
+  public *[Symbol.iterator](): Iterator<never> {
+    return;
+  }
 }
