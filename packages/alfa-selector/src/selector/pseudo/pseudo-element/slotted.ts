@@ -10,8 +10,8 @@ import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";
 
 import type { Compound } from "../../compound.js";
-import { Selector as SelectorType } from "../../selector.js";
-import { Selector } from "../../selector.js";
+import type { Selector } from "../../index.js";
+import { BaseSelector } from "../../selector.js";
 import type { Simple } from "../../simple/index.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
@@ -156,7 +156,7 @@ export namespace Slotted {
   }
 
   export function parse(
-    parseSelector: Selector.ComponentParser<SelectorType>,
+    parseSelector: BaseSelector.ComponentParser<Selector>,
   ): CSSParser<Slotted> {
     return map(
       right(
@@ -164,7 +164,7 @@ export namespace Slotted {
         Function.parse("slotted", () =>
           filter(
             parseSelector(),
-            Selector.hasCompoundType,
+            BaseSelector.hasCompoundType,
             () => "::slotted() only accepts compound selectors",
           ),
         ),

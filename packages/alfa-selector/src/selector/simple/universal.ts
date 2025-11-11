@@ -5,7 +5,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Specificity } from "../../specificity.js";
 
-import { Selector } from "../selector.js";
+import { BaseSelector } from "../selector.js";
 
 import { parseNamespace } from "./parser.js";
 
@@ -16,7 +16,7 @@ const { left, map, option } = Parser;
  *
  * @public
  */
-export class Universal extends Selector<"universal"> {
+export class Universal extends BaseSelector<"universal"> {
   public static of(namespace: Option<string>): Universal {
     return new Universal(namespace);
   }
@@ -80,7 +80,7 @@ export class Universal extends Selector<"universal"> {
  * @public
  */
 export namespace Universal {
-  export interface JSON extends Selector.JSON<"universal"> {
+  export interface JSON extends BaseSelector.JSON<"universal"> {
     namespace: string | null;
   }
 

@@ -13,7 +13,7 @@ import type { Compound } from "./compound.js";
 
 import type { Absolute } from "./index.js";
 import { Relative } from "./relative.js";
-import { Selector } from "./selector.js";
+import { BaseSelector } from "./selector.js";
 import type { Simple } from "./simple/index.js";
 
 const { either, end, map, separatedList, skip } = Parser;
@@ -23,7 +23,9 @@ const { either, end, map, separatedList, skip } = Parser;
  *
  * @public
  */
-export class List<T extends List.Item = List.Item> extends Selector<"list"> {
+export class List<
+  T extends List.Item = List.Item,
+> extends BaseSelector<"list"> {
   public static of<T extends List.Item>(...selectors: Array<T>): List<T> {
     return new List(selectors);
   }
@@ -97,7 +99,8 @@ export class List<T extends List.Item = List.Item> extends Selector<"list"> {
  * @public
  */
 export namespace List {
-  export interface JSON<T extends Item = Item> extends Selector.JSON<"list"> {
+  export interface JSON<T extends Item = Item>
+    extends BaseSelector.JSON<"list"> {
     selectors: Array<Serializable.ToJSON<T>>;
   }
 
@@ -132,8 +135,8 @@ export namespace List {
    * forgiving context).
    */
   function parseList<T extends Item>(
-    parseSelector: Selector.ComponentParser<T>,
-    options?: Selector.Options,
+    parseSelector: BaseSelector.ComponentParser<T>,
+    options?: BaseSelector.Options,
   ): CSSParser<T | List<T>> {
     const parser =
       (options?.forgiving ?? false)
@@ -161,8 +164,8 @@ export namespace List {
    * @internal
    */
   export const parseComplex = (
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options,
+    parseSelector: BaseSelector.ComponentParser<Absolute>,
+    options?: BaseSelector.Options,
   ) => parseList(() => Complex.parse(parseSelector), options);
 
   /**
@@ -171,31 +174,31 @@ export namespace List {
    * @internal
    */
   export const parseRelative = (
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options,
+    parseSelector: BaseSelector.ComponentParser<Absolute>,
+    options?: BaseSelector.Options,
   ) => parseList(() => Relative.parse(parseSelector), options);
 
   /**
    * @internal
    */
   export function parse(
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options & { relative: true },
+    parseSelector: BaseSelector.ComponentParser<Absolute>,
+    options?: BaseSelector.Options & { relative: true },
   ): CSSParser<Relative | List<Relative>>;
 
   export function parse(
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options & { relative: false },
+    parseSelector: BaseSelector.ComponentParser<Absolute>,
+    options?: BaseSelector.Options & { relative: false },
   ): CSSParser<Absolute>;
 
   export function parse(
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options,
+    parseSelector: BaseSelector.ComponentParser<Absolute>,
+    options?: BaseSelector.Options,
   ): CSSParser<Absolute>;
 
   export function parse(
-    parseSelector: Selector.ComponentParser<Absolute>,
-    options?: Selector.Options,
+    parseSelector: BaseSelector.ComponentParser<Absolute>,
+    options?: BaseSelector.Options,
   ): CSSParser<Item | List<Item>> {
     return (options?.relative ?? false)
       ? parseRelative(parseSelector, options)

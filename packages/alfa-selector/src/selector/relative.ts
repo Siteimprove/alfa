@@ -6,7 +6,7 @@ import type { Absolute } from "./index.js";
 import { Combinator } from "./combinator.js";
 import { Complex } from "./complex.js";
 import type { Compound } from "./compound.js";
-import { Selector } from "./selector.js";
+import { BaseSelector } from "./selector.js";
 import type { Simple } from "./simple/index.js";
 
 const { map, pair } = Parser;
@@ -16,7 +16,7 @@ const { map, pair } = Parser;
  *
  * @public
  */
-export class Relative extends Selector<"relative"> {
+export class Relative extends BaseSelector<"relative"> {
   public static of(
     combinator: Combinator,
     selector: Simple | Compound | Complex,
@@ -84,7 +84,7 @@ export class Relative extends Selector<"relative"> {
  * @public
  */
 export namespace Relative {
-  export interface JSON extends Selector.JSON<"relative"> {
+  export interface JSON extends BaseSelector.JSON<"relative"> {
     combinator: string;
     selector: Simple.JSON | Compound.JSON | Complex.JSON;
   }
@@ -96,7 +96,9 @@ export namespace Relative {
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
    */
-  export const parse = (parseSelector: Selector.ComponentParser<Absolute>) =>
+  export const parse = (
+    parseSelector: BaseSelector.ComponentParser<Absolute>,
+  ) =>
     map(pair(Combinator.parse, Complex.parse(parseSelector)), (result) => {
       const [combinator, selector] = result;
 

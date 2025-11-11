@@ -1,19 +1,17 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../context.js";
-import type { Absolute, Selector as SelectorType } from "./index.js";
+import type { Selector } from "./index.js";
 import { Specificity } from "../specificity.js";
 
 import { Combinator } from "./combinator.js";
 import { Compound } from "./compound.js";
-import { Selector } from "./selector.js";
+import { BaseSelector } from "./selector.js";
 import type { Class, Id, Simple, Type } from "./simple/index.js";
 
 import { Host } from "./pseudo/pseudo-class/host.js";
@@ -29,7 +27,7 @@ const { and } = Refinement;
  *
  * @public
  */
-export class Complex extends Selector<"complex"> {
+export class Complex extends BaseSelector<"complex"> {
   public static of(
     combinator: Combinator,
     left: Simple | Compound | Complex,
@@ -241,7 +239,7 @@ export class Complex extends Selector<"complex"> {
  * @public
  */
 export namespace Complex {
-  export interface JSON extends Selector.JSON<"complex"> {
+  export interface JSON extends BaseSelector.JSON<"complex"> {
     combinator: Combinator;
     left: Simple.JSON | Compound.JSON | Complex.JSON;
     right: Simple.JSON | Compound.JSON;
@@ -257,7 +255,7 @@ export namespace Complex {
    * @internal
    */
   export const parse = (
-    parseSelector: Selector.ComponentParser<SelectorType>,
+    parseSelector: BaseSelector.ComponentParser<Selector>,
   ) =>
     map(
       pair(

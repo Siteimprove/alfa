@@ -1,10 +1,9 @@
-import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import type { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute, Selector as SelectorType } from "../index.js";
-import { Selector } from "../selector.js";
+import type { Selector } from "../index.js";
+import { BaseSelector } from "../selector.js";
 
 // Import the various simple selectors for use in that file.
 import { Attribute } from "./attribute.js";
@@ -70,7 +69,7 @@ export namespace Simple {
    * @internal
    */
   export const parse = (
-    parseSelector: Selector.ComponentParser<SelectorType>,
+    parseSelector: BaseSelector.ComponentParser<Selector>,
   ) =>
     either<Slice<Token>, Simple, string>(
       Class.parse,

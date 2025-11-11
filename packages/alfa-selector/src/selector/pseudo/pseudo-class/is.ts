@@ -2,7 +2,7 @@ import type { Element } from "@siteimprove/alfa-dom";
 
 import type { Context } from "../../../context.js";
 import type { Absolute } from "../../index.js";
-import { Selector } from "../../selector.js";
+import { BaseSelector } from "../../selector.js";
 
 import { WithSelector } from "./pseudo-class.js";
 
@@ -44,7 +44,7 @@ export class Is extends WithSelector<"is"> {
 export namespace Is {
   export interface JSON extends WithSelector.JSON<"is"> {}
 
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: BaseSelector.ComponentParser) =>
     // @ts-ignore
     WithSelector.parseWithSelector("is", parseSelector, Is.of);
 }

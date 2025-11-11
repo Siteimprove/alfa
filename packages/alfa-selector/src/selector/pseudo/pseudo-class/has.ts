@@ -2,7 +2,7 @@ import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute } from "../../index.js";
-import { Selector } from "../../selector.js";
+import { BaseSelector } from "../../selector.js";
 
 import { WithSelector } from "./pseudo-class.js";
 
@@ -42,7 +42,7 @@ export namespace Has {
 
   // :has() normally only accepts relative selectors, we currently
   // accept only non-relative ones…
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: BaseSelector.ComponentParser) =>
     // @ts-ignore
     WithSelector.parseWithSelector("has", parseSelector, Has.of);
 }

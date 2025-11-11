@@ -6,7 +6,7 @@ import type { Thunk } from "@siteimprove/alfa-thunk";
 import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";
 import type { Absolute, Compound, Simple } from "../../index.js";
-import { Selector } from "../../selector.js";
+import { BaseSelector } from "../../selector.js";
 
 import { WithSelector } from "./pseudo-class.js";
 
@@ -94,13 +94,13 @@ export namespace HostContext {
     return value instanceof HostContext;
   }
 
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: BaseSelector.ComponentParser) =>
     WithSelector.parseWithSelector(
       "host-context",
       () =>
         filter(
           parseSelector(),
-          Selector.hasCompoundType,
+          BaseSelector.hasCompoundType,
           () => ":host-context() only accepts compound selectors",
         ),
       HostContext.of,

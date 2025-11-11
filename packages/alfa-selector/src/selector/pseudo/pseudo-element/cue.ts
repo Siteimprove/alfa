@@ -6,8 +6,8 @@ import {
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Selector as SelectorType } from "../../index.js";
-import type { Selector } from "../../selector.js";
+import type { Selector } from "../../index.js";
+import type { BaseSelector } from "../../selector.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
 
@@ -17,18 +17,18 @@ const { either, map, right, take } = Parser;
  * {@link https://w3c.github.io/webvtt/#the-cue-pseudo-element}
  */
 export class Cue extends PseudoElementSelector<"cue"> {
-  public static of(selector?: Selector): Cue {
+  public static of(selector?: BaseSelector): Cue {
     return new Cue(Option.from(selector));
   }
 
-  private readonly _selector: Option<Selector>;
+  private readonly _selector: Option<BaseSelector>;
 
-  protected constructor(selector: Option<Selector>) {
+  protected constructor(selector: Option<BaseSelector>) {
     super("cue");
     this._selector = selector;
   }
 
-  public get selector(): Option<Selector> {
+  public get selector(): Option<BaseSelector> {
     return this._selector;
   }
 
@@ -60,11 +60,11 @@ export class Cue extends PseudoElementSelector<"cue"> {
 
 export namespace Cue {
   export interface JSON extends PseudoElementSelector.JSON<"cue"> {
-    selector: Option.JSON<Selector>;
+    selector: Option.JSON<BaseSelector>;
   }
 
   export function parse(
-    parseSelector: Selector.ComponentParser<SelectorType>,
+    parseSelector: BaseSelector.ComponentParser<Selector>,
   ): CSSParser<Cue> {
     return right(
       take(Token.parseColon, 2),

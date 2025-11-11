@@ -6,8 +6,8 @@ import {
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import type { Selector as SelectorType } from "../../index.js";
-import type { Selector } from "../../selector.js";
+import type { Selector } from "../../index.js";
+import type { BaseSelector } from "../../selector.js";
 import { PseudoElementSelector } from "./pseudo-element.js";
 
 const { either, map, right, take } = Parser;
@@ -16,18 +16,18 @@ const { either, map, right, take } = Parser;
  * {@link https://w3c.github.io/webvtt/#the-cue-region-pseudo-element}
  */
 export class CueRegion extends PseudoElementSelector<"cue-region"> {
-  public static of(selector?: Selector): CueRegion {
+  public static of(selector?: BaseSelector): CueRegion {
     return new CueRegion(Option.from(selector));
   }
 
-  private readonly _selector: Option<Selector>;
+  private readonly _selector: Option<BaseSelector>;
 
-  protected constructor(selector: Option<Selector>) {
+  protected constructor(selector: Option<BaseSelector>) {
     super("cue-region");
     this._selector = selector;
   }
 
-  public get selector(): Option<Selector> {
+  public get selector(): Option<BaseSelector> {
     return this._selector;
   }
 
@@ -59,11 +59,11 @@ export class CueRegion extends PseudoElementSelector<"cue-region"> {
 
 export namespace CueRegion {
   export interface JSON extends PseudoElementSelector.JSON<"cue-region"> {
-    selector: Option.JSON<Selector>;
+    selector: Option.JSON<BaseSelector>;
   }
 
   export function parse(
-    parseSelector: Selector.ComponentParser<SelectorType>,
+    parseSelector: BaseSelector.ComponentParser<Selector>,
   ): CSSParser<CueRegion> {
     return right(
       take(Token.parseColon, 2),

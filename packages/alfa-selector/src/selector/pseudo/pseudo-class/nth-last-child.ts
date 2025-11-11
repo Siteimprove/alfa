@@ -5,7 +5,7 @@ import { Maybe, None, Option } from "@siteimprove/alfa-option";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context.js";
-import { Selector } from "../../selector.js";
+import { BaseSelector } from "../../selector.js";
 import { Universal } from "../../simple/universal.js";
 
 import type { Absolute } from "../../index.js";
@@ -71,7 +71,7 @@ export class NthLastChild extends WithIndexAndSelector<"nth-last-child"> {
 export namespace NthLastChild {
   export interface JSON extends WithIndexAndSelector.JSON<"nth-last-child"> {}
 
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: BaseSelector.ComponentParser) =>
     WithIndexAndSelector.parseWithIndexAndSelector(
       "nth-last-child",
       // @ts-ignore

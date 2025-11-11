@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Combinator } from "../dist/index.js";
 import { List, Selector } from "../src/index.js";
-import type { Selector as BaseType } from "../src/selector/selector.js";
+import type { BaseSelector as BaseType } from "../src/selector/selector.js";
 import { parseErr, serialize as baseSerialize } from "./parser.js";
 
 const serialize = (

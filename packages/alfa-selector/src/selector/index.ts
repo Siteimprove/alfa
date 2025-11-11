@@ -10,7 +10,7 @@ import { Compound } from "./compound.js";
 import { List } from "./list.js";
 import { Relative } from "./relative.js";
 import type { Simple } from "./simple/index.js";
-import type { Selector as BaseType } from "./selector.js";
+import type { BaseSelector } from "./selector.js";
 
 import { Host } from "./pseudo/pseudo-class/host.js";
 import { HostContext } from "./pseudo/pseudo-class/host-context.js";
@@ -157,22 +157,25 @@ export namespace Selector {
    * @internal
    */
   export function parseSelector(
-    options: BaseType.Options & { relative: true },
+    options: BaseSelector.Options & { relative: true },
   ): CSSParser<Relative | List<Relative>>;
 
   export function parseSelector(
-    options: BaseType.Options & { relative: false },
+    options: BaseSelector.Options & { relative: false },
   ): CSSParser<Absolute>;
 
   export function parseSelector(
-    options?: BaseType.Options,
+    options?: BaseSelector.Options,
   ): CSSParser<Absolute>;
 
   export function parseSelector(
-    options?: BaseType.Options,
+    options?: BaseSelector.Options,
   ): CSSParser<List.Item | List<List.Item>> {
     return left(
-      List.parse(parseSelector as BaseType.ComponentParser<Absolute>, options),
+      List.parse(
+        parseSelector as BaseSelector.ComponentParser<Absolute>,
+        options,
+      ),
       end((token) => `Unexpected token ${token}`),
     );
   }

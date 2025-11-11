@@ -2,8 +2,8 @@ import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Selector as SelectorType } from "../../index.js";
-import { Selector } from "../../selector.js";
+import type { Selector } from "../../index.js";
+import { BaseSelector } from "../../selector.js";
 import { After } from "./after.js";
 import { Backdrop } from "./backdrop.js";
 import { Before } from "./before.js";
@@ -62,7 +62,7 @@ export namespace PseudoElement {
   }
 
   export function parse(
-    parseSelector: Selector.ComponentParser<SelectorType>,
+    parseSelector: BaseSelector.ComponentParser<Selector>,
   ): CSSParser<PseudoElement> {
     return either<Slice<Token>, PseudoElement, string>(
       After.parse,

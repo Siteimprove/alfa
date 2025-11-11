@@ -7,9 +7,6 @@ import type { Serializable } from "@siteimprove/alfa-json";
 import type * as json from "@siteimprove/alfa-json";
 import type { Option } from "@siteimprove/alfa-option";
 import { None } from "@siteimprove/alfa-option";
-import { Parser } from "@siteimprove/alfa-parser";
-import type { Refinement } from "@siteimprove/alfa-refinement";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../context.js";
 import type { Specificity } from "../specificity.js";
@@ -19,12 +16,10 @@ import type { Compound } from "./compound.js";
 import type { Relative } from "./relative.js";
 import type { Class, Id, Simple, Type } from "./simple/index.js";
 
-const { filter } = Parser;
-
 /**
  * @internal
  */
-export abstract class Selector<T extends string = string>
+export abstract class BaseSelector<T extends string = string>
   implements
     Iterable<Simple | Compound | Complex | Relative>,
     Equatable,
@@ -91,7 +86,7 @@ export abstract class Selector<T extends string = string>
    * @internal
    */
   public static hasCompoundType(
-    selector: Selector,
+    selector: BaseSelector,
   ): selector is Compound | Simple {
     return [
       "compound",
@@ -109,13 +104,13 @@ export abstract class Selector<T extends string = string>
    */
   public abstract matches(element: Element, context?: Context): boolean;
 
-  public equals(value: Selector): boolean;
+  public equals(value: BaseSelector): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
     return (
-      value instanceof Selector &&
+      value instanceof BaseSelector &&
       value._type === this._type &&
       value._specificity.equals(this._specificity)
     );
@@ -125,7 +120,7 @@ export abstract class Selector<T extends string = string>
     Simple | Compound | Complex | Relative
   >;
 
-  public toJSON(): Selector.JSON<T> {
+  public toJSON(): BaseSelector.JSON<T> {
     return {
       type: this._type,
       specificity: this._specificity.toJSON(),
@@ -136,7 +131,7 @@ export abstract class Selector<T extends string = string>
   }
 }
 
-export namespace Selector {
+export namespace BaseSelector {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON | undefined;
 
@@ -147,7 +142,7 @@ export namespace Selector {
     key?: string;
   }
 
-  export type ComponentParser<T extends Selector = Selector> = (
+  export type ComponentParser<T extends BaseSelector = BaseSelector> = (
     options?: Options,
   ) => CSSParser<T>;
 
@@ -169,7 +164,7 @@ export namespace Selector {
 export abstract class WithName<
   T extends string = string,
   N extends string = string,
-> extends Selector<T> {
+> extends BaseSelector<T> {
   protected readonly _name: N;
   protected constructor(type: T, name: N, specificity: Specificity) {
     super(type, specificity);
@@ -206,7 +201,7 @@ export abstract class WithName<
 
 export namespace WithName {
   export interface JSON<T extends string = string, N extends string = string>
-    extends Selector.JSON<T> {
+    extends BaseSelector.JSON<T> {
     name: N;
   }
 }

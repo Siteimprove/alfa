@@ -12,7 +12,7 @@ import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";
 
 import type { Absolute, Compound, Simple } from "../../index.js";
-import { Selector } from "../../selector.js";
+import { BaseSelector } from "../../selector.js";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
 
@@ -116,7 +116,7 @@ export namespace Host {
     return value instanceof Host;
   }
 
-  export const parse = (parseSelector: Selector.ComponentParser) =>
+  export const parse = (parseSelector: BaseSelector.ComponentParser) =>
     either(
       // We need to try the functional variant first to avoid the non-functional
       // greedily passing.
@@ -126,7 +126,7 @@ export namespace Host {
           Function.parse("host", () =>
             filter(
               parseSelector(),
-              Selector.hasCompoundType,
+              BaseSelector.hasCompoundType,
               () => ":host() only accepts compound selectors",
             ),
           ),
