@@ -1,11 +1,9 @@
-import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Context } from "../../../context.js";
 import { Specificity } from "../../../specificity.js";
-import type { Absolute, Compound, Simple } from "../../index.js";
+import type { Compound, Selector, Simple } from "../../index.js";
 import { BaseSelector } from "../../selector.js";
 
 import { WithSelector } from "./pseudo-class.js";
@@ -94,7 +92,7 @@ export namespace HostContext {
     return value instanceof HostContext;
   }
 
-  export const parse = (parseSelector: BaseSelector.ComponentParser) =>
+  export const parse = (parseSelector: Selector.ComponentParser) =>
     WithSelector.parseWithSelector(
       "host-context",
       () =>

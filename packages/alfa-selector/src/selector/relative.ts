@@ -1,8 +1,6 @@
-import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "./index.js";
+import type { Absolute, Selector } from "./index.js";
 import { Combinator } from "./combinator.js";
 import { Complex } from "./complex.js";
 import type { Compound } from "./compound.js";
@@ -96,9 +94,7 @@ export namespace Relative {
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-relative-selector}
    */
-  export const parse = (
-    parseSelector: BaseSelector.ComponentParser<Absolute>,
-  ) =>
+  export const parse = (parseSelector: Selector.ComponentParser<Absolute>) =>
     map(pair(Combinator.parse, Complex.parse(parseSelector)), (result) => {
       const [combinator, selector] = result;
 

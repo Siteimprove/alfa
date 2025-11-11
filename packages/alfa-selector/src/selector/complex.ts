@@ -254,9 +254,7 @@ export namespace Complex {
    *
    * @internal
    */
-  export const parse = (
-    parseSelector: BaseSelector.ComponentParser<Selector>,
-  ) =>
+  export const parse = (parseSelector: Selector.ComponentParser<Selector>) =>
     map(
       pair(
         Compound.parse(parseSelector),

@@ -137,6 +137,15 @@ export namespace Selector {
     );
   }
 
+  export type ComponentParser<T extends BaseSelector = BaseSelector> = (
+    options?: Options,
+  ) => CSSParser<T>;
+
+  export interface Options {
+    forgiving?: boolean;
+    relative?: boolean;
+  }
+
   /**
    * Parses a (list of) complex selector.
    *
@@ -157,25 +166,20 @@ export namespace Selector {
    * @internal
    */
   export function parseSelector(
-    options: BaseSelector.Options & { relative: true },
+    options: Options & { relative: true },
   ): CSSParser<Relative | List<Relative>>;
 
   export function parseSelector(
-    options: BaseSelector.Options & { relative: false },
+    options: Options & { relative: false },
   ): CSSParser<Absolute>;
 
-  export function parseSelector(
-    options?: BaseSelector.Options,
-  ): CSSParser<Absolute>;
+  export function parseSelector(options?: Options): CSSParser<Absolute>;
 
   export function parseSelector(
-    options?: BaseSelector.Options,
+    options?: Options,
   ): CSSParser<List.Item | List<List.Item>> {
     return left(
-      List.parse(
-        parseSelector as BaseSelector.ComponentParser<Absolute>,
-        options,
-      ),
+      List.parse(parseSelector as ComponentParser<Absolute>, options),
       end((token) => `Unexpected token ${token}`),
     );
   }

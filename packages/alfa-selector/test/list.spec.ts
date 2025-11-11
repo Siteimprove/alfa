@@ -2,12 +2,11 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Combinator } from "../dist/index.js";
 import { List, Selector } from "../src/index.js";
-import type { BaseSelector as BaseType } from "../src/selector/selector.js";
 import { parseErr, serialize as baseSerialize } from "./parser.js";
 
 const serialize = (
   input: string,
-  options: BaseType.Options = { forgiving: false, relative: false },
+  options: Selector.Options = { forgiving: false, relative: false },
 ) => baseSerialize(input, List.parseComplex(Selector.parseSelector, options));
 
 test(".parseComplex() parses a list of simple selectors", (t) => {

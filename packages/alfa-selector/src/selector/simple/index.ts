@@ -3,7 +3,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Selector } from "../index.js";
-import { BaseSelector } from "../selector.js";
 
 // Import the various simple selectors for use in that file.
 import { Attribute } from "./attribute.js";
@@ -68,9 +67,7 @@ export namespace Simple {
    *
    * @internal
    */
-  export const parse = (
-    parseSelector: BaseSelector.ComponentParser<Selector>,
-  ) =>
+  export const parse = (parseSelector: Selector.ComponentParser<Selector>) =>
     either<Slice<Token>, Simple, string>(
       Class.parse,
       Type.parse,

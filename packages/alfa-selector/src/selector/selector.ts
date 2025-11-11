@@ -141,15 +141,6 @@ export namespace BaseSelector {
     // string representation to avoid infinite recursion.
     key?: string;
   }
-
-  export type ComponentParser<T extends BaseSelector = BaseSelector> = (
-    options?: Options,
-  ) => CSSParser<T>;
-
-  export interface Options {
-    forgiving?: boolean;
-    relative?: boolean;
-  }
 }
 
 /**
