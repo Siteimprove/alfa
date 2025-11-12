@@ -189,9 +189,6 @@ test("@memoize caches values of a binary method", (t) => {
 });
 
 test("@memoize caches values at the instance level", (t) => {
-  // Here also, we test the return values of `doStuffA` / `doStuffB` to ensure
-  // that we didn't retrieve the wrong cache entry.
-
   class MyClass {
     public called: number;
     public secret: number;
