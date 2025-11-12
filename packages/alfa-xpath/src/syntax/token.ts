@@ -11,7 +11,7 @@ import type * as json from "@siteimprove/alfa-json";
 
 const { fromCharCode } = String;
 const { and } = Refinement;
-const { parseIf } = Parser;
+const { filter } = Parser;
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#terminal-symbols}
@@ -49,7 +49,7 @@ export namespace Token {
       .getOr(Err.of("No token left"));
 
   function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
-    return parseIf(refinement, parseFirst, () => "Mismatching token");
+    return filter(parseFirst, refinement, () => "Mismatching token");
   }
 
   export class Integer implements Equatable, Serializable<Integer.JSON> {

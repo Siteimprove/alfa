@@ -361,41 +361,6 @@ export namespace Parser {
   }
 
   /**
-   * Parse if the result satisfies the predicate or refinement.
-   */
-  export function parseIf<
-    I,
-    T,
-    E,
-    U extends T = T,
-    A extends Array<unknown> = [],
-  >(
-    refinement: Refinement<T, U>,
-    parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>,
-  ): Parser<I, U, E, A>;
-
-  export function parseIf<I, T, E, A extends Array<unknown> = []>(
-    predicate: Predicate<T>,
-    parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>,
-  ): Parser<I, T, E, A>;
-
-  export function parseIf<
-    I,
-    T,
-    E,
-    U extends T = T,
-    A extends Array<unknown> = [],
-  >(
-    refinement: Refinement<T, U> | Predicate<T>,
-    parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>,
-  ): Parser<I, U, E, A> | Parser<I, T, E, A> {
-    return filter(parser, refinement, ifError);
-  }
-
-  /**
    * {@link https://drafts.csswg.org/css-values-4/#comb-any}
    * Turns `[Parser<A>, Parser<B>, Parser<C>]` into `Parser<A || B || C>`
    *
