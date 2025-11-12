@@ -116,17 +116,23 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
         ];
         "src/selector/compound.ts" [
           label = "compound.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
         ];
         "src/selector/complex.ts" [
           label = "complex.ts";
         ];
         "src/selector/combinator.ts" [
           label = "combinator.ts";
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
         ];
         "src/selector/index.ts" [
           label = "index.ts";
           color = "#4900ff";
           penwidth = 5;
+          fillcolor = "#ff6c60";
+          style = "rounded,filled";
         ];
         "src/selector/list.ts" [
           label = "list.ts";
@@ -187,6 +193,8 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
             ];
             "src/selector/pseudo/pseudo-class/has.ts" [
               label = "has.ts";
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
             ];
             "src/selector/pseudo/pseudo-class/only-child.ts" [
               label = "only-child.ts";
@@ -225,6 +233,8 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
               label = "index.ts";
               color = "#ff00db";
               penwidth = 5;
+              fillcolor = "#ff6c60";
+              style = "rounded,filled";
             ];
             "src/selector/pseudo/pseudo-class/nth-of-type.ts" [
               label = "nth-of-type.ts";
@@ -655,6 +665,8 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
             label = "index.ts";
             color = "#ff0000";
             penwidth = 5;
+            fillcolor = "#ff6c60";
+            style = "rounded,filled";
           ];
           "src/selector/simple/class.ts" -> "exit_src/selector/simple" [
             style = "invis";
@@ -1595,14 +1607,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "solid";
     color = "black";
   ];
-  "src/selector/pseudo/pseudo-element/index.ts" -> "src/selector/selector.ts" [
-    style = "invis";
-  ];
-  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
-    style = "invis";
-    color = "#ffdb00";
-    ltail = "cluster_src/selector/pseudo";
-  ];
   "src/selector/pseudo/pseudo-element/part.ts" -> "src/selector/pseudo/pseudo-element/pseudo-element.ts" [
     style = "invis";
   ];
@@ -1638,21 +1642,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
   "src/selector/complex.ts" -> "src/selector/index.ts" [
     style = "dotted";
     color = "black";
-  ];
-  "src/selector/complex.ts" -> "name_src/selector/pseudo" [
-    style = "solid";
-    color = "#4900ff";
-    lhead = "cluster_src/selector/pseudo";
-  ];
-  "src/selector/complex.ts" -> "name_src/selector/pseudo" [
-    style = "invis";
-    color = "#4900ff";
-    lhead = "cluster_src/selector/pseudo";
-  ];
-  "src/selector/complex.ts" -> "name_src/selector/pseudo" [
-    style = "invis";
-    color = "#4900ff";
-    lhead = "cluster_src/selector/pseudo";
   ];
   "src/selector/complex.ts" -> "src/selector/selector.ts" [
     style = "invis";
@@ -1696,6 +1685,14 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
   "src/selector/pseudo/pseudo-class/host-context.ts" -> "src/selector/pseudo/pseudo-class/pseudo-class.ts" [
     style = "solid";
     color = "black";
+  ];
+  "src/selector/pseudo/pseudo-class/host-context.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
+    style = "invis";
+    color = "#ffdb00";
+    ltail = "cluster_src/selector/pseudo";
   ];
   "src/selector/pseudo/pseudo-class/host-context.ts" -> "src/specificity.ts" [
     style = "invis";
@@ -1747,6 +1744,14 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "solid";
     color = "black";
   ];
+  "src/selector/pseudo/pseudo-element/cue.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
+    style = "invis";
+    color = "#ffdb00";
+    ltail = "cluster_src/selector/pseudo";
+  ];
   "src/selector/simple/attribute.ts" -> "src/selector/selector.ts" [
     style = "invis";
   ];
@@ -1793,12 +1798,28 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     color = "#ffdb00";
     ltail = "cluster_src/selector/pseudo";
   ];
+  "src/selector/pseudo/pseudo-element/slotted.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/pseudo" -> "src/selector/index.ts" [
+    style = "invis";
+    color = "#ffdb00";
+    ltail = "cluster_src/selector/pseudo";
+  ];
   "src/selector/pseudo/pseudo-element/slotted.ts" -> "src/selector/pseudo/pseudo-element/pseudo-element.ts" [
     style = "invis";
   ];
   "src/selector/pseudo/pseudo-element/slotted.ts" -> "src/selector/pseudo/pseudo-element/pseudo-element.ts" [
     style = "solid";
     color = "black";
+  ];
+  "src/selector/pseudo/pseudo-element/slotted.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
+    style = "invis";
+    color = "#ffdb00";
+    ltail = "cluster_src/selector/pseudo";
   ];
   "exit_src/selector/pseudo" -> "name_src/selector/simple" [
     style = "dotted";
@@ -1827,6 +1848,14 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
   "src/selector/pseudo/pseudo-class/empty.ts" -> "src/selector/pseudo/pseudo-class/pseudo-class.ts" [
     style = "solid";
     color = "black";
+  ];
+  "src/selector/pseudo/pseudo-class/has.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+    color = "#4900ff";
+    ltail = "cluster_src/selector";
   ];
   "src/selector/pseudo/pseudo-class/has.ts" -> "src/selector/index.ts" [
     style = "invis";
@@ -1861,6 +1890,50 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "invis";
   ];
   "src/selector/pseudo/pseudo-element/after.ts" -> "src/selector/pseudo/pseudo-element/pseudo-element.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/selector/combinator.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+    color = "#4900ff";
+    ltail = "cluster_src/selector";
+  ];
+  "src/selector/combinator.ts" -> "src/selector/compound.ts" [
+    style = "invis";
+  ];
+  "src/selector/combinator.ts" -> "src/selector/compound.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/selector/combinator.ts" -> "src/selector/index.ts" [
+    style = "invis";
+  ];
+  "src/selector/combinator.ts" -> "src/selector/index.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/selector/combinator.ts" -> "name_src/selector/pseudo" [
+    style = "solid";
+    color = "#4900ff";
+    lhead = "cluster_src/selector/pseudo";
+  ];
+  "src/selector/combinator.ts" -> "name_src/selector/pseudo" [
+    style = "invis";
+    color = "#4900ff";
+    lhead = "cluster_src/selector/pseudo";
+  ];
+  "src/selector/combinator.ts" -> "name_src/selector/pseudo" [
+    style = "invis";
+    color = "#4900ff";
+    lhead = "cluster_src/selector/pseudo";
+  ];
+  "src/selector/combinator.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "src/selector/combinator.ts" -> "src/selector/selector.ts" [
     style = "solid";
     color = "black";
   ];
@@ -1976,6 +2049,14 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "solid";
     color = "black";
   ];
+  "src/selector/pseudo/pseudo-element/cue-region.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
+    style = "invis";
+    color = "#ffdb00";
+    ltail = "cluster_src/selector/pseudo";
+  ];
   "src/selector/pseudo/pseudo-class/host.ts" -> "src/context.ts" [
     style = "invis";
   ];
@@ -1998,6 +2079,14 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
   "src/selector/pseudo/pseudo-class/host.ts" -> "src/selector/pseudo/pseudo-class/pseudo-class.ts" [
     style = "solid";
     color = "black";
+  ];
+  "src/selector/pseudo/pseudo-class/host.ts" -> "src/selector/selector.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
+    style = "invis";
+    color = "#ffdb00";
+    ltail = "cluster_src/selector/pseudo";
   ];
   "src/selector/pseudo/pseudo-class/host.ts" -> "src/specificity.ts" [
     style = "invis";
@@ -2332,14 +2421,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "solid";
     color = "black";
   ];
-  "src/selector/pseudo/pseudo-class/index.ts" -> "src/selector/selector.ts" [
-    style = "invis";
-  ];
-  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
-    style = "invis";
-    color = "#ffdb00";
-    ltail = "cluster_src/selector/pseudo";
-  ];
   "src/selector/index.ts" -> "src/context.ts" [
     style = "invis";
   ];
@@ -2450,7 +2531,7 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "invis";
   ];
   "src/selector/list.ts" -> "src/selector/relative.ts" [
-    style = "dotted";
+    style = "solid";
     color = "black";
   ];
   "src/selector/list.ts" -> "src/selector/selector.ts" [
@@ -2503,6 +2584,14 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "solid";
     color = "black";
   ];
+  "src/selector/relative.ts" -> "src/context.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/context.ts" [
+    style = "invis";
+    color = "#4900ff";
+    ltail = "cluster_src/selector";
+  ];
   "src/selector/relative.ts" -> "src/selector/combinator.ts" [
     style = "invis";
   ];
@@ -2542,6 +2631,14 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "dotted";
     color = "#4900ff";
     lhead = "cluster_src/selector/simple";
+  ];
+  "src/selector/relative.ts" -> "src/specificity.ts" [
+    style = "invis";
+  ];
+  "exit_src/selector" -> "src/specificity.ts" [
+    style = "invis";
+    color = "#4900ff";
+    ltail = "cluster_src/selector";
   ];
   "src/selector/pseudo/pseudo-class/hover.ts" -> "src/context.ts" [
     style = "invis";
