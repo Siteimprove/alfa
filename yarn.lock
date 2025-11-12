@@ -1489,6 +1489,7 @@ __metadata:
     "@siteimprove/alfa-mapper": "workspace:^"
     "@siteimprove/alfa-option": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
+    "@siteimprove/alfa-thunk": "workspace:^"
   languageName: unknown
   linkType: soft
 
