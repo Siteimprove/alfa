@@ -39,7 +39,7 @@ await generateGraphs(targetPath);
 export async function generateGraphs(rootDir: string): Promise<void> {
   const packages = await getPackages(rootDir);
 
-  // await generateGlobalGraph();
+  await generateGlobalGraph();
   await generatePackagesGraphs();
 
   async function generateGlobalGraph() {
@@ -50,9 +50,7 @@ export async function generateGraphs(rootDir: string): Promise<void> {
   }
 
   async function generatePackagesGraphs() {
-    for (const pkg of packages.packages.filter((pkg) =>
-      pkg.packageJson.name.includes("alfa-selector"),
-    )) {
+    for (const pkg of packages.packages) {
       await saveGraph(
         await GraphFactory.fromPackage(pkg),
         path.join(pkg.dir, destinationPath),
