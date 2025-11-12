@@ -188,6 +188,45 @@ test("@memoize caches values of a binary method", (t) => {
   t.equal(instance.called, 7);
 });
 
+test("@memoize caches values at the instance level", (t) => {
+  class MyClass {
+    public called: number;
+    public secret: number;
+
+    public constructor(secret: number) {
+      this.called = 0;
+      this.secret = secret;
+    }
+
+    @Cache.memoize
+    public doStuff(foo: Foo, bar: Bar): number {
+      this.called++;
+
+      return this.secret + foo.x + bar.y.length;
+    }
+  }
+
+  const instanceA = new MyClass(1);
+  const instanceB = new MyClass(10);
+
+  // instanceA
+  t.equal(instanceA.called, 0);
+  t.equal(instanceA.doStuff(zero, a), 2); // Initial call, miss
+  t.equal(instanceA.called, 1);
+  t.equal(instanceA.doStuff(zero, a), 2); // hit
+  t.equal(instanceA.called, 1);
+  // An extra call to make the number different from B after first call.
+  t.equal(instanceA.doStuff(one, a), 3); // miss
+  t.equal(instanceA.called, 2);
+
+  // instanceB
+  t.equal(instanceB.called, 0);
+  t.equal(instanceB.doStuff(zero, a), 11); // Initial call, miss
+  t.equal(instanceB.called, 1);
+  t.equal(instanceB.doStuff(zero, a), 11); // hit
+  t.equal(instanceB.called, 1);
+});
+
 test("memoize() caches a recursive function when used correctly", (t) => {
   type Foo = { x: number; y: Foo | undefined };
   const zero: Foo = { x: 0, y: undefined };

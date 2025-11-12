@@ -6,6 +6,7 @@
   "references": [
     { "path": "../../alfa-iterable" },
     { "path": "../../alfa-mapper" },
-    { "path": "../../alfa-option" }
+    { "path": "../../alfa-option" },
+    { "path": "../../alfa-thunk" }
   ]
 }
