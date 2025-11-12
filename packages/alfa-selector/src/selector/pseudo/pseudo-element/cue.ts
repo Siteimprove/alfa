@@ -7,7 +7,6 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import type { Selector } from "../../index.js";
-import type { BaseSelector } from "../../selector.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
 
@@ -17,18 +16,18 @@ const { either, map, right, take } = Parser;
  * {@link https://w3c.github.io/webvtt/#the-cue-pseudo-element}
  */
 export class Cue extends PseudoElementSelector<"cue"> {
-  public static of(selector?: BaseSelector): Cue {
+  public static of(selector?: Selector): Cue {
     return new Cue(Option.from(selector));
   }
 
-  private readonly _selector: Option<BaseSelector>;
+  private readonly _selector: Option<Selector>;
 
-  protected constructor(selector: Option<BaseSelector>) {
+  protected constructor(selector: Option<Selector>) {
     super("cue");
     this._selector = selector;
   }
 
-  public get selector(): Option<BaseSelector> {
+  public get selector(): Option<Selector> {
     return this._selector;
   }
 
@@ -60,7 +59,7 @@ export class Cue extends PseudoElementSelector<"cue"> {
 
 export namespace Cue {
   export interface JSON extends PseudoElementSelector.JSON<"cue"> {
-    selector: Option.JSON<BaseSelector>;
+    selector: Option.JSON<Selector>;
   }
 
   export function parse(

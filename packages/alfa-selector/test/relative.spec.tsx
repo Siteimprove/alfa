@@ -48,8 +48,8 @@ test("Loose selectors don't match anything", (t) => {
   for (const selector of ["div", "span", "> span", "+ div", "~ div"]) {
     const relative = parse(selector, parser);
 
-    t(!relative.matches(a), `Selector "${selector}" should not match <span>`);
-    t(!relative.matches(b), `Selector "${selector}" should not match <div>`);
+    t(!relative.matches(a), `Loose "${selector}" should not match <span>`);
+    t(!relative.matches(b), `Loose "${selector}" should not match <div>`);
   }
 });
 

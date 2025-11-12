@@ -289,7 +289,7 @@ export namespace WithIndexAndSelector {
    */
   export function parseWithIndexAndSelector<T extends WithIndex>(
     name: string,
-    parseSelector: Thunk<CSSParser<Absolute>>,
+    parseSelector: Selector.Parser.Component,
     of: (nth: Nth, selector: Option<Absolute>) => T,
   ): CSSParser<T> {
     return map(

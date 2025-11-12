@@ -141,7 +141,7 @@ export namespace Relative {
 }
 
 /**
- * Fake selector to match the anchor of relative selector, thus allowing to
+ * Fake selector to match the anchor of a relative selector, thus allowing to
  * match an anchored relative selector as a complex one.
  */
 class Exact extends BaseSelector<"exact"> {

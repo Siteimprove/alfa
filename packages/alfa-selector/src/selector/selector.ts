@@ -124,8 +124,6 @@ export abstract class BaseSelector<T extends string = string>
     return {
       type: this._type,
       specificity: this._specificity.toJSON(),
-      // simple: this._isSimple,
-      // compound: this._isCompound,
       ...(this._key.isSome() ? { key: `${this._key.get()}` } : {}),
     };
   }

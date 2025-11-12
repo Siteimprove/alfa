@@ -3,6 +3,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Maybe, None, Option } from "@siteimprove/alfa-option";
 
 import type { Context } from "../../../context.js";
+// We cannot simplify that import as it would create a circular dependency
 import { Universal } from "../../simple/universal.js";
 
 import type { Absolute, Selector } from "../../index.js";

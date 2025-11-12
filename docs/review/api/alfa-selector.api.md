@@ -382,15 +382,11 @@ export namespace List {
     export function parse(parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options & {
         relative: true;
     }): Parser_2<Relative>;
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
-    //
-    // (undocumented)
+    // @internal (undocumented)
     export function parse(parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options & {
         relative: false;
     }): Parser_2<Absolute>;
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
-    //
-    // (undocumented)
+    // @internal (undocumented)
     export function parse(parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options): Parser_2<Absolute>;
 }
 

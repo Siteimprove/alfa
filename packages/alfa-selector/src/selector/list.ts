@@ -130,7 +130,7 @@ export namespace List {
    * list.
    *
    * Only the top-level list needs to know whether it is forgiving or not. Inner
-   * list depend on their contexts.
+   * lists parsing depend on their contexts.
    * E.g., `:is(###, div)` is valid (forgiving list for `:is`), but
    * `:is(:not(###, div))` is not (non-forgiving list for `:not`, even in a
    * forgiving context).
@@ -142,7 +142,7 @@ export namespace List {
     const parser =
       (options?.forgiving ?? false)
         ? // In a forgiving context, if the parser errors, we discard all tokens
-          // until the next comma (included).
+          // until the next comma.
           either(
             parseSelector(),
             Token.skipUntil(
@@ -179,24 +179,25 @@ export namespace List {
     options?: Selector.Parser.Options,
   ) => parseList(() => BaseRelative.parse(parseSelector), options);
 
-  /**
-   * @internal
-   */
+  /** @internal */
   export function parse(
     parseSelector: Selector.Parser.Component,
     options?: Selector.Parser.Options & { relative: true },
   ): CSSParser<Relative>;
 
+  /** @internal */
   export function parse(
     parseSelector: Selector.Parser.Component,
     options?: Selector.Parser.Options & { relative: false },
   ): CSSParser<Absolute>;
 
+  /** @internal */
   export function parse(
     parseSelector: Selector.Parser.Component,
     options?: Selector.Parser.Options,
   ): CSSParser<Absolute>;
 
+  /** @internal */
   export function parse(
     parseSelector: Selector.Parser.Component,
     options?: Selector.Parser.Options,

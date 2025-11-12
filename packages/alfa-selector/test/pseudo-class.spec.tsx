@@ -38,7 +38,11 @@ test(".parse() parses :host functional pseudo-class selector", (t) => {
 test(".parse() doesn't parse :host with an invalid selector", (t) => {
   t(parseErr(":host(div span").isErr());
   t(parseErr(":host(::after").isErr());
-  // t(parseErr(":host(div::after").isErr());
+
+  // pseudo-elements are only accepted in the pseudo-compound part of a complex
+  // selector, not in compound selectors. We do not check that currently.
+  // TODO: check that browsers correctly reject this before doing so ourselves.
+  t(!parseErr(":host(div::after").isErr());
 });
 
 test(".parse() parses a functional pseudo-class selector", (t) => {
@@ -84,7 +88,9 @@ test(".parse() parsers :is and :where as forgiving lists", (t) => {
           ],
           specificity: { a: 1, b: 0, c: 0 },
         },
-        specificity: sel === "is" ? { a: 1, b: 0, c: 0 } : { a: 0, b: 0, c: 0 },
+        // `:where` specifically nukes specificity.
+        specificity:
+          sel === "where" ? { a: 0, b: 0, c: 0 } : { a: 1, b: 0, c: 0 },
       });
     }
   }
