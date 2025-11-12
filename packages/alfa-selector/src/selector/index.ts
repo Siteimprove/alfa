@@ -8,11 +8,12 @@ import { Context } from "../context.js";
 import { Complex } from "./complex.js";
 import { Compound } from "./compound.js";
 import { List } from "./list.js";
-import type { Relative } from "./relative.js";
+import { Relative as BaseRelative } from "./relative.js";
 import type { Simple } from "./simple/index.js";
-import { Host } from "./simple/pseudo-class/host.js";
-import { HostContext } from "./simple/pseudo-class/host-context.js";
-import { Slotted } from "./simple/pseudo-element/slotted.js";
+
+import { Host } from "./pseudo/pseudo-class/host.js";
+import { HostContext } from "./pseudo/pseudo-class/host-context.js";
+import { Slotted } from "./pseudo/pseudo-element/slotted.js";
 
 // Re-export for further users
 export * from "./combinator.js";
@@ -22,7 +23,7 @@ export * from "./list.js";
 export * from "./relative.js";
 export * from "./simple/index.js";
 
-const { end, left, map } = Parser;
+const { end, left } = Parser;
 const { and, or, test } = Refinement;
 
 /**
@@ -30,7 +31,7 @@ const { and, or, test } = Refinement;
  *
  * @public
  */
-export type Selector = Simple | Compound | Complex | Relative | List;
+export type Selector = Simple | Compound | Complex | BaseRelative | List;
 
 /**
  * Non-relative selectors for contexts that do not allow them
@@ -43,15 +44,21 @@ export type Absolute =
   | Complex
   | List<Simple | Compound | Complex>;
 
-/**
- * @internal
- */
+/** @internal */
 export namespace Absolute {
   export type JSON =
     | Simple.JSON
     | Compound.JSON
     | Complex.JSON
     | List.JSON<Simple | Compound | Complex>;
+}
+
+/** @internal */
+export type Relative = BaseRelative | List<BaseRelative>;
+
+/** @internal */
+export namespace Relative {
+  export type JSON = BaseRelative.JSON | List.JSON<BaseRelative>;
 }
 
 /**
@@ -131,29 +138,62 @@ export namespace Selector {
     );
   }
 
+  export namespace Parser {
+    export interface Options {
+      forgiving?: boolean;
+      relative?: boolean;
+    }
+
+    export interface Component {
+      (options: Options & { relative: true }): CSSParser<Relative>;
+      (options: Options & { relative: false }): CSSParser<Absolute>;
+      (options?: Options): CSSParser<Absolute>;
+    }
+  }
+
   /**
-   * Parsers for Selectors
+   * Parses a (list of) complex selector.
+   *
+   * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector-list}
    *
    * @remarks
-   * Even simple selectors like `:is()` can include any other selector.
-   * This creates circular dependencies, especially in the parsers.
-   * To break it, we use dependency injection and inject the top-level
-   * selector parser into each of the individual ones.
+   * To break circular dependencies between parsers, the top-level parser is
+   * injected into the sub-parsers. Because each context knows which parser to
+   * use (relative/forgiving), we must pass the full parser with options to
+   * parametrize it. It is up for each context to call it with the relevant
+   * options.
    *
-   * In order to avoid an infinite recursion, this means that we must actually
-   * inject a continuation wrapping the parser, and only resolve it to an
-   * actual parser upon need.
+   * We cannot really use the `Parser.Component` type here, e.g.
+   * `const parseSelector: Parser.Component = (options) => ...` because this
+   * wouldn't break down `options` into its different overloads, so we need to
+   * repeat the overload.
    *
-   * That is, the extra `()` "parameter" is needed!
+   * @internal
    */
-  function parseSelector(): CSSParser<Absolute> {
+  export function parseSelector(
+    options: Parser.Options & { relative: true },
+  ): CSSParser<Relative>;
+
+  export function parseSelector(
+    options: Parser.Options & { relative: false },
+  ): CSSParser<Absolute>;
+
+  export function parseSelector(options?: Parser.Options): CSSParser<Absolute>;
+
+  export function parseSelector(
+    options?: Parser.Options,
+  ): CSSParser<List.Item | List<List.Item>> {
     return left(
-      map(List.parseList(parseSelector), (list) =>
-        list.length === 1 ? Iterable.first(list.selectors).getUnsafe() : list,
-      ),
+      List.parse(parseSelector, options),
       end((token) => `Unexpected token ${token}`),
     );
   }
 
+  /**
+   * Parses a (list of) complex selector.
+   *
+   * {@link https://drafts.csswg.org/selectors/#typedef-complex-selector-list}
+   * If the list contains a single selector, it is simplified out.
+   */
   export const parse = parseSelector();
 }

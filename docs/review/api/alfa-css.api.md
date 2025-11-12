@@ -2526,9 +2526,6 @@ export namespace Token {
         // (undocumented)
         get type(): "bad-url";
     }
-    const // (undocumented)
-    ident: typeof Ident.of, // (undocumented)
-    isIdent: typeof Ident.isIdent;
     // (undocumented)
     export namespace BadURL {
         // (undocumented)
@@ -2539,6 +2536,9 @@ export namespace Token {
             type: "bad-url";
         }
     }
+    const // (undocumented)
+    ident: typeof Ident.of, // (undocumented)
+    isIdent: typeof Ident.isIdent;
     // (undocumented)
     export class CloseComment implements Equatable, Serializable<CloseComment.JSON> {
         // (undocumented)
@@ -2564,9 +2564,6 @@ export namespace Token {
             type: "close-comment";
         }
     }
-    const // (undocumented)
-    func: typeof Function.of, // (undocumented)
-    isFunction: typeof Function.isFunction;
     // (undocumented)
     export class CloseCurlyBracket implements Equatable, Serializable<CloseCurlyBracket.JSON> {
         // (undocumented)
@@ -2582,6 +2579,9 @@ export namespace Token {
         // (undocumented)
         get type(): "close-curly-bracket";
     }
+    const // (undocumented)
+    func: typeof Function.of, // (undocumented)
+    isFunction: typeof Function.isFunction;
     // (undocumented)
     export namespace CloseCurlyBracket {
         // (undocumented)
@@ -2609,8 +2609,6 @@ export namespace Token {
         // (undocumented)
         get type(): "close-parenthesis";
     }
-    const // (undocumented)
-    atKeyword: typeof AtKeyword.of;
     // (undocumented)
     export namespace CloseParenthesis {
         // (undocumented)
@@ -2623,6 +2621,8 @@ export namespace Token {
             type: "close-parenthesis";
         }
     }
+    const // (undocumented)
+    atKeyword: typeof AtKeyword.of;
     // (undocumented)
     export class CloseSquareBracket implements Equatable, Serializable<CloseSquareBracket.JSON> {
         // (undocumented)
@@ -2638,9 +2638,6 @@ export namespace Token {
         // (undocumented)
         get type(): "close-square-bracket";
     }
-    const // (undocumented)
-    hash: typeof Hash.of, // (undocumented)
-    isHash: typeof Hash.isHash;
     // (undocumented)
     export namespace CloseSquareBracket {
         // (undocumented)
@@ -2653,6 +2650,9 @@ export namespace Token {
             type: "close-square-bracket";
         }
     }
+    const // (undocumented)
+    hash: typeof Hash.of, // (undocumented)
+    isHash: typeof Hash.isHash;
     // (undocumented)
     export class Colon implements Equatable, Serializable<Colon.JSON> {
         // (undocumented)
@@ -2678,9 +2678,6 @@ export namespace Token {
             type: "colon";
         }
     }
-    const // (undocumented)
-    string: typeof String.of, // (undocumented)
-    isString: typeof String.isString;
     // (undocumented)
     export class Comma implements Equatable, Serializable<Comma.JSON> {
         // (undocumented)
@@ -2694,6 +2691,9 @@ export namespace Token {
         // (undocumented)
         get type(): "comma";
     }
+    const // (undocumented)
+    string: typeof String.of, // (undocumented)
+    isString: typeof String.isString;
     // (undocumented)
     export namespace Comma {
         // (undocumented)
@@ -2722,9 +2722,6 @@ export namespace Token {
         // (undocumented)
         get value(): number;
     }
-    const // (undocumented)
-    url: typeof URL.of, // (undocumented)
-    isURL: typeof URL.isURL;
     // (undocumented)
     export namespace Delim {
         // (undocumented)
@@ -2739,6 +2736,9 @@ export namespace Token {
             value: number;
         }
     }
+    const // (undocumented)
+    url: typeof URL.of, // (undocumented)
+    isURL: typeof URL.isURL;
     // (undocumented)
     export class Dimension implements Equatable, Serializable<Dimension.JSON> {
         protected constructor(value: number, unit: string, isInteger: boolean, isSigned: boolean);
@@ -2781,8 +2781,6 @@ export namespace Token {
             value: number;
         }
     }
-    const // (undocumented)
-    badURL: typeof BadURL.of;
     // (undocumented)
     export class Function implements Equatable, Serializable<Function.JSON> {
         protected constructor(value: string);
@@ -2801,6 +2799,8 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
+    const // (undocumented)
+    badURL: typeof BadURL.of;
     // (undocumented)
     export namespace Function {
         // (undocumented)
@@ -2815,9 +2815,6 @@ export namespace Token {
             value: string;
         }
     }
-    const // (undocumented)
-    delim: typeof Delim.of, // (undocumented)
-    isDelim: typeof Delim.isDelim;
     // (undocumented)
     export class Hash implements Equatable, Serializable<Hash.JSON> {
         protected constructor(value: string, isIdentifier: boolean);
@@ -2836,6 +2833,9 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
+    const // (undocumented)
+    delim: typeof Delim.of, // (undocumented)
+    isDelim: typeof Delim.isDelim;
     // (undocumented)
     export namespace Hash {
         // (undocumented)
@@ -2868,9 +2868,6 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
-    const // (undocumented)
-    number: typeof Number.of, // (undocumented)
-    isNumber: typeof Number.isNumber;
     // (undocumented)
     export namespace Ident {
         // (undocumented)
@@ -2885,6 +2882,9 @@ export namespace Token {
             value: string;
         }
     }
+    const // (undocumented)
+    number: typeof Number.of, // (undocumented)
+    isNumber: typeof Number.isNumber;
     // (undocumented)
     export type JSON = Ident.JSON | Function.JSON | AtKeyword.JSON | Hash.JSON | String.JSON | URL.JSON | BadURL.JSON | Delim.JSON | Number.JSON | Percentage.JSON | Dimension.JSON | Whitespace.JSON | Colon.JSON | Semicolon.JSON | Comma.JSON | OpenParenthesis.JSON | CloseParenthesis.JSON | OpenSquareBracket.JSON | CloseSquareBracket.JSON | OpenCurlyBracket.JSON | CloseCurlyBracket.JSON | OpenComment.JSON | CloseComment.JSON;
     // (undocumented)
@@ -2907,9 +2907,6 @@ export namespace Token {
         // (undocumented)
         get value(): number;
     }
-    const // (undocumented)
-    percentage: typeof Percentage.of, // (undocumented)
-    isPercentage: typeof Percentage.isPercentage;
     // (undocumented)
     export namespace Number {
         // (undocumented)
@@ -2928,6 +2925,9 @@ export namespace Token {
             value: number;
         }
     }
+    const // (undocumented)
+    percentage: typeof Percentage.of, // (undocumented)
+    isPercentage: typeof Percentage.isPercentage;
     // (undocumented)
     export class OpenComment implements Equatable, Serializable<OpenComment.JSON> {
         // (undocumented)
@@ -2953,9 +2953,6 @@ export namespace Token {
             type: "open-comment";
         }
     }
-    const // (undocumented)
-    dimension: typeof Dimension.of, // (undocumented)
-    isDimension: typeof Dimension.isDimension;
     // (undocumented)
     export class OpenCurlyBracket implements Equatable, Serializable<OpenCurlyBracket.JSON> {
         // (undocumented)
@@ -2971,6 +2968,9 @@ export namespace Token {
         // (undocumented)
         get type(): "open-curly-bracket";
     }
+    const // (undocumented)
+    dimension: typeof Dimension.of, // (undocumented)
+    isDimension: typeof Dimension.isDimension;
     // (undocumented)
     export namespace OpenCurlyBracket {
         // (undocumented)
@@ -2998,11 +2998,6 @@ export namespace Token {
         // (undocumented)
         get type(): "open-parenthesis";
     }
-    const // (undocumented)
-    whitespace: typeof Whitespace.of, // (undocumented)
-    isWhitespace: typeof Whitespace.isWhitespace;
-    const // (undocumented)
-    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export namespace OpenParenthesis {
         // (undocumented)
@@ -3015,6 +3010,11 @@ export namespace Token {
             type: "open-parenthesis";
         }
     }
+    const // (undocumented)
+    whitespace: typeof Whitespace.of, // (undocumented)
+    isWhitespace: typeof Whitespace.isWhitespace;
+    const // (undocumented)
+    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export class OpenSquareBracket implements Equatable, Serializable<OpenSquareBracket.JSON> {
         // (undocumented)
@@ -3030,11 +3030,6 @@ export namespace Token {
         // (undocumented)
         get type(): "open-square-bracket";
     }
-    const // (undocumented)
-    colon: typeof Colon.of, // (undocumented)
-    isColon: typeof Colon.isColon;
-    const // (undocumented)
-    parseColon: Parser_2<Slice<Token>, Colon, string, []>;
     // (undocumented)
     export namespace OpenSquareBracket {
         // (undocumented)
@@ -3047,49 +3042,49 @@ export namespace Token {
             type: "open-square-bracket";
         }
     }
+    const // (undocumented)
+    colon: typeof Colon.of, // (undocumented)
+    isColon: typeof Colon.isColon;
+    const // (undocumented)
+    parseColon: Parser_2<Slice<Token>, Colon, string, []>;
     // (undocumented)
     export function parseDelim(query?: string | number | Predicate<Delim>): Parser_2<Slice<Token>, Delim, string, []>;
+    // (undocumented)
+    export function parseDimension(predicate?: Predicate<Dimension>): Parser_2<Slice<Token>, Dimension, string, []>;
     const // (undocumented)
     semicolon: typeof Semicolon.of, // (undocumented)
     isSemicolon: typeof Semicolon.isSemicolon;
     const // (undocumented)
     parseSemicolon: Parser_2<Slice<Token>, Semicolon, string, []>;
     // (undocumented)
-    export function parseDimension(predicate?: Predicate<Dimension>): Parser_2<Slice<Token>, Dimension, string, []>;
-    // (undocumented)
     export function parseFunction(query?: string | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
+    // (undocumented)
+    export function parseHash(predicate?: Predicate<Hash>): Parser_2<Slice<Token>, Hash, string, []>;
     const // (undocumented)
     comma: typeof Comma.of, // (undocumented)
     isComma: typeof Comma.isComma;
     const // (undocumented)
     parseComma: Parser_2<Slice<Token>, Comma, string, []>;
     // (undocumented)
-    export function parseHash(predicate?: Predicate<Hash>): Parser_2<Slice<Token>, Hash, string, []>;
-    // (undocumented)
     export function parseIdent(query?: string | Predicate<Ident>): Parser_2<Slice<Token>, Ident, string, []>;
+    // (undocumented)
+    export function parseNumber(predicate?: Predicate<Number>): Parser_2<Slice<Token>, Number, string, []>;
     const // (undocumented)
     openParenthesis: typeof OpenParenthesis.of, // (undocumented)
     isOpenParenthesis: typeof OpenParenthesis.isOpenParenthesis;
     const // (undocumented)
     parseOpenParenthesis: Parser_2<Slice<Token>, OpenParenthesis, string, []>;
     // (undocumented)
-    export function parseNumber(predicate?: Predicate<Number>): Parser_2<Slice<Token>, Number, string, []>;
-    // (undocumented)
     export function parsePercentage(predicate?: Predicate<Percentage>): Parser_2<Slice<Token>, Percentage, string, []>;
+    // (undocumented)
+    export function parseString(predicate?: Predicate<String>): Parser_2<Slice<Token>, String, string, []>;
     const // (undocumented)
     closeParenthesis: typeof CloseParenthesis.of, // (undocumented)
     isCloseParenthesis: typeof CloseParenthesis.isCloseParenthesis;
     const // (undocumented)
     parseCloseParenthesis: Parser_2<Slice<Token>, CloseParenthesis, string, []>;
     // (undocumented)
-    export function parseString(predicate?: Predicate<String>): Parser_2<Slice<Token>, String, string, []>;
-    // (undocumented)
     export function parseURL(predicate?: Predicate<URL>): Parser_2<Slice<Token>, URL, string, []>;
-    const // (undocumented)
-    openSquareBracket: typeof OpenSquareBracket.of, // (undocumented)
-    isOpenSquareBracket: typeof OpenSquareBracket.isOpenSquareBracket;
-    const // (undocumented)
-    parseOpenSquareBracket: Parser_2<Slice<Token>, OpenSquareBracket, string, []>;
     // (undocumented)
     export class Percentage implements Equatable, Serializable<Percentage.JSON> {
         protected constructor(value: number, isInteger: boolean);
@@ -3108,6 +3103,11 @@ export namespace Token {
         // (undocumented)
         get value(): number;
     }
+    const // (undocumented)
+    openSquareBracket: typeof OpenSquareBracket.of, // (undocumented)
+    isOpenSquareBracket: typeof OpenSquareBracket.isOpenSquareBracket;
+    const // (undocumented)
+    parseOpenSquareBracket: Parser_2<Slice<Token>, OpenSquareBracket, string, []>;
     // (undocumented)
     export namespace Percentage {
         // (undocumented)
@@ -3124,11 +3124,6 @@ export namespace Token {
             value: number;
         }
     }
-    const // (undocumented)
-    closeSquareBracket: typeof CloseSquareBracket.of, // (undocumented)
-    isCloseSquareBracket: typeof CloseSquareBracket.isCloseSquareBracket;
-    const // (undocumented)
-    parseCloseSquareBracket: Parser_2<Slice<Token>, CloseSquareBracket, string, []>;
     // (undocumented)
     export class Semicolon implements Equatable, Serializable<Semicolon.JSON> {
         // (undocumented)
@@ -3142,6 +3137,11 @@ export namespace Token {
         // (undocumented)
         get type(): "semicolon";
     }
+    const // (undocumented)
+    closeSquareBracket: typeof CloseSquareBracket.of, // (undocumented)
+    isCloseSquareBracket: typeof CloseSquareBracket.isCloseSquareBracket;
+    const // (undocumented)
+    parseCloseSquareBracket: Parser_2<Slice<Token>, CloseSquareBracket, string, []>;
     // (undocumented)
     export namespace Semicolon {
         // (undocumented)
@@ -3154,6 +3154,8 @@ export namespace Token {
             type: "semicolon";
         }
     }
+    // (undocumented)
+    export function skipUntil(delimiter: Parser<unknown>): Parser<void>;
     const // (undocumented)
     openCurlyBracket: typeof OpenCurlyBracket.of, // (undocumented)
     isOpenCurlyBracket: typeof OpenCurlyBracket.isOpenCurlyBracket;

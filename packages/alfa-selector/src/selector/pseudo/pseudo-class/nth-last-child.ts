@@ -1,13 +1,12 @@
-import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Nth } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Maybe, None, Option } from "@siteimprove/alfa-option";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Context } from "../../../context.js";
-import { Universal } from "../../index.js";
+// We cannot simplify that import as it would create a circular dependency
+import { Universal } from "../../simple/universal.js";
 
-import type { Absolute } from "../../index.js";
+import type { Absolute, Selector } from "../../index.js";
 
 import { WithIndexAndSelector } from "./pseudo-class.js";
 
@@ -70,7 +69,7 @@ export class NthLastChild extends WithIndexAndSelector<"nth-last-child"> {
 export namespace NthLastChild {
   export interface JSON extends WithIndexAndSelector.JSON<"nth-last-child"> {}
 
-  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     WithIndexAndSelector.parseWithIndexAndSelector(
       "nth-last-child",
       parseSelector,

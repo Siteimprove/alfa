@@ -1,16 +1,15 @@
-import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+import type { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Absolute } from "../index.js";
+import type { Selector } from "../index.js";
 
 // Import the various simple selectors for use in that file.
 import { Attribute } from "./attribute.js";
 import { Class } from "./class.js";
 import { Id } from "./id.js";
-import { PseudoClass } from "./pseudo-class/index.js";
-import { PseudoElement } from "./pseudo-element/index.js";
+import { PseudoClass } from "../pseudo/pseudo-class/index.js";
+import { PseudoElement } from "../pseudo/pseudo-element/index.js";
 import { Type } from "./type.js";
 import { Universal } from "./universal.js";
 
@@ -18,8 +17,8 @@ import { Universal } from "./universal.js";
 export * from "./attribute.js";
 export * from "./class.js";
 export * from "./id.js";
-export * from "./pseudo-class/index.js";
-export * from "./pseudo-element/index.js";
+export * from "../pseudo/pseudo-class/index.js";
+export * from "../pseudo/pseudo-element/index.js";
 export * from "./type.js";
 export * from "./universal.js";
 
@@ -59,8 +58,7 @@ export namespace Simple {
       Attribute.isAttribute(value) ||
       Class.isClass(value) ||
       Id.isId(value) ||
-      PseudoClass.isPseudoClass(value) ||
-      PseudoElement.isPseudoElement(value)
+      PseudoClass.isPseudoClass(value)
     );
   }
 
@@ -69,7 +67,7 @@ export namespace Simple {
    *
    * @internal
    */
-  export const parse = (parseSelector: Thunk<CSSParser<Absolute>>) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     either<Slice<Token>, Simple, string>(
       Class.parse,
       Type.parse,
