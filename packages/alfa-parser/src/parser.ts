@@ -392,12 +392,7 @@ export namespace Parser {
     parser: Parser<I, T, E, A>,
     ifError: Mapper<T, E>,
   ): Parser<I, U, E, A> | Parser<I, T, E, A> {
-    return (input, ...args) =>
-      parser(input, ...args).flatMap(([rest, result]) =>
-        refinement(result)
-          ? Ok.of<[I, T]>([rest, result])
-          : Err.of(ifError(result)),
-      );
+    return filter(parser, refinement, ifError);
   }
 
   /**
