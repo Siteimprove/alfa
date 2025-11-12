@@ -1,6 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Option, None } from "@siteimprove/alfa-option";
 import type { Mapper } from "@siteimprove/alfa-mapper";
+import { None, Option } from "@siteimprove/alfa-option";
+import type { Thunk } from "@siteimprove/alfa-thunk";
 
 /**
  * Caches are wrapper around Javascript's `WeakMap` to store transient values.
@@ -131,6 +132,11 @@ export namespace Cache {
     : T;
 
   /**
+   * Empty object constant, used to memoize functions that are not methods.
+   */
+  const emptyObj: Key = {};
+
+  /**
    * Memoizes a method.
    */
   export function memoize<This, Args extends Array<Key>, Return>(
@@ -156,7 +162,12 @@ export namespace Cache {
     target: (this: This, ...args: Args) => Return,
   ): (this: This, ...args: Args) => Return {
     // First, we create the cache.
-    const cache = Cache.empty() as ToCache<Args, Return>;
+    // Because, for methods, we run the decorator at the class level, we need
+    // to add an extra layer of cache for the instances.
+    // For functions, this will be a useless layer and we need to make sure
+    // to always unwrap it with the same object to avoid creating one entry
+    // per call.
+    const cache = Cache.empty<Key, ToCache<Args, Return>>();
 
     // Next, we create the memoized function. Since the cache is scoped to the
     // decorator, it cannot be accessed from outside and won't be tampered with.
@@ -216,7 +227,15 @@ export namespace Cache {
         return memoized(next, ...tail);
       }
 
-      return memoized(cache, ...args);
+      // Finally, we can call the recursive memoized function, starting by
+      // unwrapping the instance layer of the cache.
+      // At this point, `this` is the instance on which the (new) method is added.
+      const instanceCache = cache.get(
+        typeof this === "object" && this !== null ? this : emptyObj,
+        Cache.empty as Thunk<ToCache<Args, Return>>,
+      );
+
+      return memoized(instanceCache, ...args);
     };
   }
 }
