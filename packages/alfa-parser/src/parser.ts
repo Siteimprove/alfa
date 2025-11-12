@@ -501,9 +501,4 @@ export namespace Parser {
       return Result.of([input, undefined]);
     };
   }
-
-  /**
-   * @deprecated Use `end()`
-   */
-  export const eof = end;
 }
