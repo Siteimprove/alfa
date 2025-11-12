@@ -81,9 +81,7 @@ export namespace Token {
     return parseIf(refinement, parseFirst, () => "Mismatching token");
   }
 
-  export function skipUntil(
-    delimiter: CSSParser<unknown>,
-  ): CSSParser<undefined> {
+  export function skipUntil(delimiter: CSSParser<unknown>): CSSParser<void> {
     return Parser.skipUntil(parseFirst, delimiter);
   }
 

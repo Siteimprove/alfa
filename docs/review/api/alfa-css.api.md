@@ -3155,7 +3155,7 @@ export namespace Token {
         }
     }
     // (undocumented)
-    export function skipUntil(delimiter: Parser<unknown>): Parser<undefined>;
+    export function skipUntil(delimiter: Parser<unknown>): Parser<void>;
     const // (undocumented)
     openCurlyBracket: typeof OpenCurlyBracket.of, // (undocumented)
     isOpenCurlyBracket: typeof OpenCurlyBracket.isOpenCurlyBracket;
