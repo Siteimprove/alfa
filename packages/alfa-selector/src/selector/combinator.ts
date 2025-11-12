@@ -51,7 +51,10 @@ export enum Combinator {
  */
 export namespace Combinator {
   /**
-   * Does the element match?
+   * Does the element match the combinator, with left and right selectors?
+   *
+   * This is used both for Complex selectors matching and for Relative selectors
+   * matching, hence it is defined here to re-use code.
    *
    * @remarks
    * This gets pretty hairy when shadow selectors (:host, :host-context,

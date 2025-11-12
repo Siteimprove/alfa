@@ -1,4 +1,4 @@
-import { type Parser as CSSParser } from "@siteimprove/alfa-css";
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";

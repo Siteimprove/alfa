@@ -1,5 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Element, Node, Query } from "@siteimprove/alfa-dom";
+import { Element, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Context } from "../../../context.js";
 import { Combinator, type Relative, type Selector } from "../../index.js";

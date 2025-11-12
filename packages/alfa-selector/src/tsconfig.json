@@ -86,6 +86,7 @@
     { "path": "../../alfa-parser" },
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
+    { "path": "../../alfa-result" },
     { "path": "../../alfa-sequence" },
     { "path": "../../alfa-slice" },
     { "path": "../../alfa-thunk" }
