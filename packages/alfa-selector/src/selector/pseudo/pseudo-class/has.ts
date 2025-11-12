@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -37,14 +36,12 @@ export class Has extends WithSelector<"has", Relative> {
    */
   // @Cache.memoize
   private _matches(element: Element, context: Context): boolean {
-    console.log(`Checking ${this.toString()} for ${element.internalId}`);
-
     const selectors = Iterable.map(this._selector, (selector) =>
       selector.anchoredAt(element),
     );
 
     return Iterable.some(selectors, (selector) => {
-      let candidates: Iterable<Node>;
+      let candidates: Iterable<Element>;
 
       // While the relative match could theoretically happen anywhere in the
       // DOM tree, we optimize the search based on the anchor and combinator.
@@ -54,14 +51,15 @@ export class Has extends WithSelector<"has", Relative> {
           break;
 
         case Combinator.DirectDescendant:
-          candidates = element.children();
+          candidates = element.children().filter(Element.isElement);
           break;
 
         case Combinator.Sibling:
           candidates = element
             .inclusiveSiblings()
             .skipUntil((elt) => elt === element)
-            .skip(1);
+            .skip(1)
+            .filter(Element.isElement);
           break;
 
         case Combinator.DirectSibling:
@@ -69,13 +67,13 @@ export class Has extends WithSelector<"has", Relative> {
             .inclusiveSiblings()
             .skipUntil((elt) => elt === element)
             .skip(1)
-            .first();
+            .first()
+            .filter(Element.isElement);
           break;
       }
 
-      return Iterable.some(
-        Iterable.filter(candidates, Element.isElement),
-        (candidate) => selector.matches(candidate, context),
+      return Iterable.some(candidates, (candidate) =>
+        selector.matches(candidate, context),
       );
     });
   }
