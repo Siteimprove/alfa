@@ -34,7 +34,7 @@ export class Has extends WithSelector<"has", Relative> {
    * with defaults), we need a wrapper to keep make the context optional at
    * call sites.
    */
-  // @Cache.memoize
+  @Cache.memoize
   private _matches(element: Element, context: Context): boolean {
     const selectors = Iterable.map(this._selector, (selector) =>
       selector.anchoredAt(element),
