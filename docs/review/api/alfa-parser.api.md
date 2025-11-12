@@ -27,11 +27,13 @@ export namespace Parser {
     // (undocumented)
     export function either<I, T, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, T, E, A>, ...rest: Array_2<Parser<I, T, E, A>>): Parser<I, T, E, A>;
     // (undocumented)
-    export function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E>;
+    export function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E, Array_2<any>>;
     // (undocumented)
     export function filter<I, T, U extends T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, refinement: Refinement<T, U>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
     // (undocumented)
     export function filter<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, predicate: Predicate<T>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
+    // (undocumented)
+    export function final<I extends Iterable<unknown>, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, T, E, A>;
     // (undocumented)
     export function flatMap<I, T, U, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, Parser<I, U, E, A>>): Parser<I, U, E, A>;
     // (undocumented)
@@ -66,9 +68,9 @@ export namespace Parser {
     export function separated<I, T, U, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, right: Parser<I, U, E, A>): Parser<I, [T, U], E, A>;
     export function separatedList<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, lower?: number, upper?: number): Parser<I, [T, ...Array_2<T>], E, A>;
     // (undocumented)
-    export function skip<I, E, A extends Array_2<unknown> = []>(parser: Parser<I, unknown, E, A>): Parser<I, undefined, E, A>;
+    export function skip<I, E, A extends Array_2<unknown> = []>(parser: Parser<I, unknown, E, A>): Parser<I, void, E, A>;
     // (undocumented)
-    export function skipUntil<I, E, A extends Array_2<unknown> = []>(parser: Parser<I, unknown, E, A>, delimiter: Parser<I, unknown, E, A>): Parser<I, undefined, E, A>;
+    export function skipUntil<I, E, A extends Array_2<unknown> = []>(parser: Parser<I, unknown, E, A>, delimiter: Parser<I, unknown, E, A>): Parser<I, void, E, A>;
     // (undocumented)
     export function take<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, count: number): Parser<I, Array_2<T>, E, A>;
     // (undocumented)

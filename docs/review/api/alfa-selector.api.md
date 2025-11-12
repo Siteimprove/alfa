@@ -199,7 +199,7 @@ export namespace Complex {
         right: Simple.JSON | Compound.JSON;
     }
     const // @internal (undocumented)
-    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Complex | Compound | Simple, string, []>;
+    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple | Compound | Complex, string, []>;
 }
 
 // @public (undocumented)
@@ -237,7 +237,7 @@ export namespace Compound {
         selectors: Array_2<Simple.JSON>;
     }
     const // @internal (undocumented)
-    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Compound | Simple, string, []>;
+    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple | Compound, string, []>;
 }
 
 // @public (undocumented)
@@ -375,7 +375,7 @@ export namespace List {
         selectors: Array_2<Serializable.ToJSON<T>>;
     }
     const // @internal (undocumented)
-    parseComplex: (parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options) => Parser_2<Complex | Compound | Simple | List<Complex | Compound | Simple>>;
+    parseComplex: (parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options) => Parser_2<Simple | Compound | Complex | List<Simple | Compound | Complex>>;
     const // @internal (undocumented)
     parseRelative: (parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options) => Parser_2<Relative_2 | List<Relative_2>>;
     // @internal (undocumented)
