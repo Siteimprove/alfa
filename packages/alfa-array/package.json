@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-fnv": "workspace:^",
+    "@siteimprove/alfa-test": "workspace:^",
     "vitest": "^4.0.8"
   }
 }
