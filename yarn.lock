@@ -1452,6 +1452,7 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-reducer": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
+    vitest: "npm:^4.0.8"
   languageName: unknown
   linkType: soft
 
