@@ -40,6 +40,7 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
+    "@siteimprove/alfa-fnv": "workspace:^",
     "vitest": "^4.0.8"
   }
 }

@@ -1444,6 +1444,7 @@ __metadata:
     "@siteimprove/alfa-clone": "workspace:^"
     "@siteimprove/alfa-comparable": "workspace:^"
     "@siteimprove/alfa-equatable": "workspace:^"
+    "@siteimprove/alfa-fnv": "workspace:^"
     "@siteimprove/alfa-hash": "workspace:^"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
