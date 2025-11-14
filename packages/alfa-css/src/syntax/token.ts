@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -197,10 +198,14 @@ export namespace Token {
   export const { of: func, isFunction } = Function;
 
   export function parseFunction(
-    query: string | Predicate<Function> = () => true,
+    query: string | Array<string> | Predicate<Function> = () => true,
   ) {
     const predicate: Predicate<Function> =
-      typeof query === "function" ? query : (ident) => ident.value === query;
+      typeof query === "function"
+        ? query
+        : Array.isArray(query)
+          ? (ident) => query.includes(ident.value)
+          : (ident) => ident.value === query;
 
     return parseToken(and(isFunction, predicate));
   }
