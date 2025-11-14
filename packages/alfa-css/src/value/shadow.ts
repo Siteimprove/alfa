@@ -11,7 +11,7 @@ import { Length } from "./numeric/index.js";
 import type { Resolvable } from "./resolvable.js";
 import { Value } from "./value.js";
 
-const { parseIf, separatedList } = Parser;
+const { filter, separatedList } = Parser;
 
 /**
  * @public
@@ -187,9 +187,9 @@ export namespace Shadow {
   }
 
   function parseLengths<N extends 3 | 4>(max: N): CSSParser<Sized<Length, N>> {
-    return parseIf(
-      checkLength<Length, N>(max),
+    return filter(
       separatedList(Length.parse, Token.parseWhitespace),
+      checkLength<Length, N>(max),
       () => `Shadows must have between 2 and ${max} lengths`,
     );
   }

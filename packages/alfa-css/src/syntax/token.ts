@@ -10,7 +10,7 @@ import type * as json from "@siteimprove/alfa-json";
 
 import type { Parser as CSSParser } from "./parser.js";
 
-const { map, oneOrMore, parseIf } = Parser;
+const { filter, map, oneOrMore } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 
@@ -78,7 +78,7 @@ export namespace Token {
       .getOr(Err.of("No token left"));
 
   function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
-    return parseIf(refinement, parseFirst, () => "Mismatching token");
+    return filter(parseFirst, refinement, () => "Mismatching token");
   }
 
   export class Ident implements Equatable, Serializable<Ident.JSON> {

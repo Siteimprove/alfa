@@ -4,13 +4,12 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Array } from "@siteimprove/alfa-array";
 import { Err, Ok } from "@siteimprove/alfa-result";
 
-const { either, end, option, right, parseIf } = Parser;
+const { either, end, filter, option, right } = Parser;
 
 /**
  * @public
  */
 export namespace Autocomplete {
-
   /**
    * Autofill detail tokens from steps 2-4 of the list in {@link https://html.spec.whatwg.org/multipage/#autofill-detail-tokens}.
    */
@@ -104,7 +103,7 @@ export namespace Autocomplete {
     );
 
     return parse(Slice.of(tokenize(autocomplete))).isOk();
-  }
+  };
 
   export function tokenize(autocomplete: string): Array<string> {
     return Array.from(autocomplete.toLowerCase().trim().split(/\s+/));
@@ -121,18 +120,18 @@ export namespace Autocomplete {
   function parserOf(
     tokens: Array<string>,
   ): Parser<Slice<string>, string, string> {
-    return parseIf(
-      (token): token is string => tokens.includes(token),
+    return filter(
       parseFirst,
+      (token): token is string => tokens.includes(token),
       (token) => `Expected valid token, but got ${token}`,
     );
   }
 
   const addressType = parserOf(AutofillDetailTokens.addressTypes);
   const unmodifiable = parserOf(AutofillDetailTokens.unmodifiables);
-  const section: Parser<Slice<string>, string, string> = parseIf(
-    (token): token is string => token.startsWith("section-"),
+  const section: Parser<Slice<string>, string, string> = filter(
     parseFirst,
+    (token): token is string => token.startsWith("section-"),
     (token) => `Expected token beginning with \`section-\`, but got ${token}`,
   );
   const modifiable = parserOf(AutofillDetailTokens.modifiables);
