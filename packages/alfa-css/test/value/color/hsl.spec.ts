@@ -67,22 +67,22 @@ test("parse() rejects numbers for saturation and lightness", (t) => {
 });
 
 test("parse() accepts `none` in modern syntax", (t) => {
-  const expected = {
+  const expected = (type: "number" | "percentage") => ({
     type: "color",
     format: "hsl",
     hue: { type: "number", value: 0 },
     saturation: { type: "percentage", value: 1 },
     lightness: { type: "percentage", value: 0 },
-    alpha: { type: "percentage", value: 0 },
-  };
+    alpha: { type, value: 0 },
+  });
 
-  for (const actual of [
-    parse("hsl(0 100% 0% / 0%)"),
-    parse("hsla(0 100% 0% / none)"),
-    parse("hsl(none 100% 0% / 0%)"),
-    parse("hsla(0 100% none / none)"),
+  for (const [actual, type] of [
+    [parse("hsl(0 100% 0% / 0%)"), "percentage"],
+    [parse("hsla(0 100% 0% / none)"), "number"],
+    [parse("hsl(none 100% 0% / 0%)"), "percentage"],
+    [parse("hsla(0 100% none / none)"), "number"],
   ] as const) {
-    t.deepEqual(actual.toJSON(), expected);
+    t.deepEqual(actual.toJSON(), expected(type));
   }
 });
 

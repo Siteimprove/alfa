@@ -103,10 +103,10 @@ test("parse() accepts `none` in modern syntax", (t) => {
   const expected = (type: "number" | "percentage") => ({
     type: "color",
     format: "rgb",
-    red: { type: type, value: 0 },
-    green: { type: type, value: type === "number" ? 255 : 1 },
-    blue: { type: type, value: 0 },
-    alpha: { type: "percentage", value: 0 },
+    red: { type, value: 0 },
+    green: { type, value: type === "number" ? 255 : 1 },
+    blue: { type, value: 0 },
+    alpha: { type, value: 0 },
   });
 
   for (const [actual, type] of [

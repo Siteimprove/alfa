@@ -203,24 +203,21 @@ export namespace HSL {
       map(Keyword.parse("none"), () => Percentage.of<"percentage">(0)),
     );
 
-  const parseTriplet = (
-    separator: CSSParser<any>,
-    acceptNone: boolean = false,
-  ) =>
+  const parseTriplet = (separator: CSSParser<any>, legacy: boolean = false) =>
     map(
       pair(
-        acceptNone
-          ? either(
+        legacy
+          ? parseHue
+          : either(
               parseHue,
               map(Keyword.parse("none"), () => Number.of(0)),
-            )
-          : parseHue,
+            ),
         take(
           right(
             separator,
-            acceptNone
-              ? orNone(Percentage.parse<"percentage">)
-              : Percentage.parse<"percentage">,
+            legacy
+              ? Percentage.parse<"percentage">
+              : orNone(Percentage.parse<"percentage">),
           ),
           2,
         ),
@@ -236,41 +233,26 @@ export namespace HSL {
    * Look at what is done for RGB parser if need be.
    */
   const parseModern = pair(
-    parseTriplet(option(Token.parseWhitespace), true),
-    option(
-      right(
-        delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-        orNone(parseAlpha),
-      ),
-    ),
+    parseTriplet(option(Token.parseWhitespace)),
+    Triplet.parseAlpha,
   );
 
   const parseLegacy = pair(
-    parseTriplet(delimited(option(Token.parseWhitespace), Token.parseComma)),
-    option(
-      right(
-        delimited(option(Token.parseWhitespace), Token.parseComma),
-        parseAlpha,
-      ),
+    parseTriplet(
+      delimited(option(Token.parseWhitespace), Token.parseComma),
+      true,
     ),
+    Triplet.parseAlphaLegacy,
   );
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
   export const parse: CSSParser<HSL> = map(
-    Function.parse(
-      (fn) => fn.value === "hsl" || fn.value === "hsla",
-      either(parseLegacy, parseModern),
-    ),
+    Function.parse(["hsl", "hsla"], either(parseLegacy, parseModern)),
     (result) => {
       const [, [[hue, saturation, lightness], alpha]] = result;
 
-      return HSL.of(
-        hue,
-        saturation,
-        lightness,
-        alpha.getOrElse(() => Number.of(1)),
-      );
+      return HSL.of(hue, saturation, lightness, alpha);
     },
   );
 }

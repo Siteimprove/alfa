@@ -154,39 +154,6 @@ export namespace RGB {
   }
 
   /**
-   * @remarks
-   * While the three R, G, B components must be either all numbers or all
-   * percentage, the alpha component can be either independently.
-   *
-   * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
-   */
-  const parseAlphaLegacy = either(Number.parse, Percentage.parse<"percentage">);
-  const parseAlphaModern = either<
-    Slice<Token>,
-    Number | Percentage<"percentage">,
-    string
-  >(
-    Number.parse,
-    Percentage.parse<"percentage">,
-    map(Keyword.parse("none"), () => Percentage.of<"percentage">(0)),
-  );
-
-  /**
-   * Parses either a number/percentage or the keyword "none", reduces "none" to
-   * the correct type, or fails if it is not allowed.
-   */
-  const parseItem = <C extends Number | Percentage<"percentage">>(
-    parser: CSSParser<C>,
-    ifNone?: C,
-  ) =>
-    either(
-      parser,
-      ifNone !== undefined
-        ? map(Keyword.parse("none"), () => ifNone)
-        : () => Err.of("none is not accepted in legacy rbg syntax"),
-    );
-
-  /**
    * Parses 3 items.
    * In legacy syntax, they must be separated by a comma, in modern syntax by
    * whitespace.
@@ -194,12 +161,12 @@ export namespace RGB {
   const parseTriplet = <C extends Number | Percentage<"percentage">>(
     parser: CSSParser<C>,
     separator: CSSParser<any>,
-    ifNone?: C,
+    legacy: boolean = false,
   ) =>
     map(
       pair(
-        parseItem(parser, ifNone),
-        take(right(separator, parseItem(parser, ifNone)), 2),
+        Triplet.parseComponent(parser, legacy),
+        take(right(separator, Triplet.parseComponent(parser, legacy)), 2),
       ),
       ([r, [g, b]]) => [r, g, b] as const,
     );
@@ -210,6 +177,7 @@ export namespace RGB {
     parseTriplet(
       parser,
       delimited(option(Token.parseWhitespace), Token.parseComma),
+      true,
     );
 
   const parseLegacy = pair(
@@ -217,49 +185,30 @@ export namespace RGB {
       parseLegacyTriplet(Percentage.parse<"percentage">),
       parseLegacyTriplet(Number.parse),
     ),
-    option(
-      right(
-        delimited(option(Token.parseWhitespace), Token.parseComma),
-        parseAlphaLegacy,
-      ),
-    ),
+    Triplet.parseAlphaLegacy,
   );
 
   const parseModernTriplet = <C extends Number | Percentage<"percentage">>(
     parser: CSSParser<C>,
-    ifNone: C,
-  ) => parseTriplet(parser, option(Token.parseWhitespace), ifNone);
+  ) => parseTriplet(parser, option(Token.parseWhitespace));
 
   const parseModern = pair(
     either(
-      parseModernTriplet(Percentage.parse, Percentage.of<"percentage">(0)),
-      parseModernTriplet(Number.parse, Number.of(0)),
+      parseModernTriplet(Percentage.parse),
+      parseModernTriplet(Number.parse),
     ),
-    option(
-      right(
-        delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-        parseAlphaModern,
-      ),
-    ),
+    Triplet.parseAlpha,
   );
 
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
   export const parse: CSSParser<RGB> = map(
-    Function.parse(
-      (fn) => fn.value === "rgb" || fn.value === "rgba",
-      either(parseLegacy, parseModern),
-    ),
+    Function.parse(["rgb", "rgba"], either(parseLegacy, parseModern)),
     (result) => {
       const [, [[red, green, blue], alpha]] = result;
 
-      return RGB.of(
-        red,
-        green,
-        blue,
-        alpha.getOrElse(() => Number.of(1)),
-      );
+      return RGB.of(red, green, blue, alpha);
     },
   );
 }
