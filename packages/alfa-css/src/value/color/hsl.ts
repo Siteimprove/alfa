@@ -2,12 +2,7 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import {
-  Function,
-  type Parser as CSSParser,
-  Token,
-} from "../../syntax/index.js";
-import { Keyword } from "../textual/keyword.js";
+import { Function, type Parser as CSSParser } from "../../syntax/index.js";
 
 import { Angle, Number, Percentage } from "../numeric/index.js";
 
@@ -192,50 +187,21 @@ export namespace HSL {
    */
   const parseHue = either(Number.parse, Angle.parse);
 
-  const parseTriplet = (separator: CSSParser<any>, legacy: boolean = false) =>
-    map(
-      pair(
-        Triplet.parseComponent(parseHue, legacy),
-        take(
-          right(
-            separator,
-            Triplet.parseComponent(Percentage.parse<"percentage">, legacy),
-          ),
-          2,
-        ),
-      ),
-      ([h, [s, l]]) => [h, s, l] as const,
-    );
-
-  /**
-   * @remarks
-   * Modern syntax is supposed to accept numbers in addition to percentages
-   * for saturation and lightness. This seems to have poor browser support
-   * currently, so we ignore it until we encounter it in the wild.
-   * Look at what is done for RGB parser if need be.
-   */
-  const parseModern = pair(
-    parseTriplet(option(Token.parseWhitespace)),
-    Triplet.parseAlpha,
-  );
-
-  const parseLegacy = pair(
-    parseTriplet(
-      delimited(option(Token.parseWhitespace), Token.parseComma),
-      true,
-    ),
-    Triplet.parseAlphaLegacy,
-  );
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
   export const parse: CSSParser<HSL> = map(
-    Function.parse(["hsl", "hsla"], either(parseLegacy, parseModern)),
-    (result) => {
-      const [, [[hue, saturation, lightness], alpha]] = result;
-
-      return HSL.of(hue, saturation, lightness, alpha);
-    },
+    Function.parse(
+      ["hsl", "hsla"],
+      either(
+        // Legacy syntax
+        Triplet.parseTriplet([parseHue, Percentage.parse<"percentage">], true),
+        // Modern syntax
+        Triplet.parseTriplet([parseHue, Percentage.parse<"percentage">]),
+      ),
+    ),
+    ([, [hue, saturation, lightness, alpha]]) =>
+      HSL.of(hue, saturation, lightness, alpha),
   );
 }
 

@@ -1,14 +1,7 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err } from "@siteimprove/alfa-result";
-import type { Slice } from "@siteimprove/alfa-slice";
 
-import {
-  Function,
-  type Parser as CSSParser,
-  Token,
-} from "../../syntax/index.js";
-import { Keyword } from "../textual/keyword.js";
+import { Function, type Parser as CSSParser } from "../../syntax/index.js";
 
 import { Number, Percentage } from "../numeric/index.js";
 
@@ -153,35 +146,21 @@ export namespace RGB {
     return value instanceof RGB;
   }
 
-  const parseLegacy = pair(
-    either(
-      Triplet.parseTriplet(
-        Percentage.parse<"percentage">,
-        Percentage.parse<"percentage">,
-        Percentage.parse<"percentage">,
-        true,
-      ),
-      Triplet.parseTriplet(Number.parse, Number.parse, Number.parse, true),
-    ),
-    Triplet.parseAlphaLegacy,
-  );
-
-  const parseComponent = either(Percentage.parse, Number.parse);
-
-  const parseModern = pair(
-    Triplet.parseTriplet(parseComponent, parseComponent, parseComponent),
-    Triplet.parseAlpha,
-  );
-
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
   export const parse: CSSParser<RGB> = map(
-    Function.parse(["rgb", "rgba"], either(parseLegacy, parseModern)),
-    (result) => {
-      const [, [[red, green, blue], alpha]] = result;
-
-      return RGB.of(red, green, blue, alpha);
-    },
+    Function.parse(
+      ["rgb", "rgba"],
+      either(
+        // Legacy syntax with percentage
+        Triplet.parseTriplet([Percentage.parse<"percentage">], true),
+        // Legacy syntax with number
+        Triplet.parseTriplet([Number.parse], true),
+        // Modern syntax
+        Triplet.parseTriplet([either(Percentage.parse, Number.parse)]),
+      ),
+    ),
+    ([, [red, green, blue, alpha]]) => RGB.of(red, green, blue, alpha),
   );
 }

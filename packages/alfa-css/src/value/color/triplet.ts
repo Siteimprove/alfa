@@ -1,7 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
-import type { Slice } from "@siteimprove/alfa-slice";
 
 import {
   Function,
@@ -14,13 +13,12 @@ import {
   type Angle,
   type Length,
   Number,
-  type Numeric,
   Percentage,
 } from "../numeric/index.js";
 import { Keyword } from "../textual/index.js";
 import { Format } from "./format.js";
 
-const { pair, map, either, option, right, take, delimited } = Parser;
+const { array, pair, map, either, option, right, take, delimited } = Parser;
 
 /**
  * Format for colors defined by a functional triplet with an optional alpha
@@ -77,9 +75,8 @@ export namespace Triplet {
    * Parses either a component or the keyword "none", reduces "none" to
    * the correct type, or fails if it is not allowed.
    *
-   * todo: no export?
    */
-  export const parseComponent = <C extends Component>(
+  const parseComponent = <C extends Component>(
     parser: CSSParser<C>,
     // In legacy mode, "none" is not accepted.
     legacy: boolean = false,
@@ -117,15 +114,13 @@ export namespace Triplet {
   /**
    * Parses an optional alpha component, preceded by a '/' delimiter.
    */
-  // todo: no export?
-  export const parseAlpha = alphaParser(Token.parseDelim("/"));
+  const parseAlpha = alphaParser(Token.parseDelim("/"));
 
   /**
    * Parses an optional alpha component in legacy syntax: "none" is forbidden,
    * and separator is a comma.
    */
-  // todo: no export?
-  export const parseAlphaLegacy = alphaParser(Token.parseComma, true);
+  const parseAlphaLegacy = alphaParser(Token.parseComma, true);
 
   const parseSeparator = (legacy: boolean): CSSParser<any> =>
     legacy
@@ -133,32 +128,66 @@ export namespace Triplet {
       : option(Token.parseWhitespace);
 
   /**
-   * Parses 3 items.
-   * In legacy syntax, they must be separated by a comma, in modern syntax by
-   * whitespace.
+   * Parses 3 different colors components.
+   *
+   * @internal
    */
-  //todo: no export?
-  export const parseTriplet = <
+  export function parseTriplet<
     C1 extends Component,
     C2 extends Component,
     C3 extends Component,
   >(
-    parser1: CSSParser<C1>,
-    parser2: CSSParser<C2>,
-    parser3: CSSParser<C3>,
+    [parser1, parser2, parser3]: [CSSParser<C1>, CSSParser<C2>, CSSParser<C3>],
+    legacy?: boolean,
+  ): CSSParser<[C1, C2, C3, Number | Percentage<"percentage">]>;
+
+  /**
+   * Parses 3 colors components of two kinds (A, B, B).
+   *
+   * @internal
+   */
+  export function parseTriplet<C1 extends Component, C2 extends Component>(
+    [parser1, parser2]: [CSSParser<C1>, CSSParser<C2>],
+    legacy?: boolean,
+  ): CSSParser<[C1, C2, C2, Number | Percentage<"percentage">]>;
+
+  /**
+   * Parses 3 colors components of the same kind.
+   *
+   * @internal
+   */
+  export function parseTriplet<C extends Component>(
+    [parser]: [CSSParser<C>],
+    legacy?: boolean,
+  ): CSSParser<[C, C, C, Number | Percentage<"percentage">]>;
+
+  export function parseTriplet<
+    C1 extends Component,
+    C2 extends Component,
+    C3 extends Component,
+  >(
+    parsers: Array<CSSParser<C1 | C2 | C3>>,
     legacy: boolean = false,
-  ) =>
-    map(
-      pair(
-        parseComponent(parser1, legacy),
-        right(
-          parseSeparator(legacy),
-          pair(
-            parseComponent(parser2, legacy),
-            right(parseSeparator(legacy), parseComponent(parser3, legacy)),
-          ),
-        ),
-      ),
-      ([c1, [c2, c3]]) => [c1, c2, c3] as const,
+  ): CSSParser<
+    [
+      C1 | C2 | C3,
+      C1 | C2 | C3,
+      C1 | C2 | C3,
+      Number | Percentage<"percentage">,
+    ]
+  > {
+    const [parser1, parser2 = parser1, parser3 = parser2] = parsers;
+
+    const parser: CSSParser<[C1 | C2 | C3, C1 | C2 | C3, C1 | C2 | C3]> = array(
+      parseSeparator(legacy),
+      parseComponent(parser1, legacy),
+      parseComponent(parser2, legacy),
+      parseComponent(parser3, legacy),
     );
+
+    return map(
+      pair(parser, legacy ? parseAlphaLegacy : parseAlpha),
+      ([[a, b, c], alpha]) => [a, b, c, alpha],
+    );
+  }
 }
