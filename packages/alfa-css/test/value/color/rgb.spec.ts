@@ -88,34 +88,46 @@ test("parse() accepts modern syntax with percentage", (t) => {
   }
 });
 
-test("parse() refuses mixing numbers and percentages", (t) => {
-  for (const str of [
-    "rgba(100 255 100%)",
-    "rgba(100% 255 100%)",
-    "rgba(100%, 255, 100)",
-    "rgba(100, 255, 100%)",
-  ]) {
+test("parse() accepts mixing numbers and percentages", (t) => {
+  for (const [str, type] of [
+    ["rgba(100 255 100%)", "number"],
+    ["rgba(100% 255 100%)", "percentage"],
+  ] as const) {
+    t.deepEqual(parse(str).toJSON(), {
+      type: "color",
+      format: "rgb",
+      red: { type, value: type === "number" ? 100 : 1 },
+      green: { type: "number", value: 255 },
+      blue: { type: "percentage", value: 1 },
+      alpha: { type: "number", value: 1 },
+    });
+  }
+});
+
+test("parse() refuses mixing numbers and percentages in legacy syntax", (t) => {
+  for (const str of ["rgba(100%, 255, 100)", "rgba(100, 255, 100%)"]) {
     t.deepEqual(parseErr(str).isErr(), true);
   }
 });
 
 test("parse() accepts `none` in modern syntax", (t) => {
-  const expected = (type: "number" | "percentage") => ({
+  type Type = "number" | "percentage";
+  const expected = (red: Type, green: Type, blue: Type, alpha: Type) => ({
     type: "color",
     format: "rgb",
-    red: { type, value: 0 },
-    green: { type, value: type === "number" ? 255 : 1 },
-    blue: { type, value: 0 },
-    alpha: { type, value: 0 },
+    red: { type: red, value: 0 },
+    green: { type: green, value: green === "number" ? 255 : 1 },
+    blue: { type: blue, value: 0 },
+    alpha: { type: alpha, value: 0 },
   });
 
-  for (const [actual, type] of [
+  for (const [actual, red, green = red, blue = green, alpha = blue] of [
     [parse("rgb(0% 100% 0% / 0%)"), "percentage"],
     [parse("rgba(0 255 0 / none)"), "number"],
-    [parse("rgb(none 100% 0% / 0%)"), "percentage"],
+    [parse("rgb(none 100% 0% / 0%)"), "number", "percentage"],
     [parse("rgba(0 255 none/ none)"), "number"],
   ] as const) {
-    t.deepEqual(actual.toJSON(), expected(type));
+    t.deepEqual(actual.toJSON(), expected(red, green, blue, alpha));
   }
 });
 

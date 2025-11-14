@@ -153,50 +153,23 @@ export namespace RGB {
     return value instanceof RGB;
   }
 
-  /**
-   * Parses 3 items.
-   * In legacy syntax, they must be separated by a comma, in modern syntax by
-   * whitespace.
-   */
-  const parseTriplet = <C extends Number | Percentage<"percentage">>(
-    parser: CSSParser<C>,
-    separator: CSSParser<any>,
-    legacy: boolean = false,
-  ) =>
-    map(
-      pair(
-        Triplet.parseComponent(parser, legacy),
-        take(right(separator, Triplet.parseComponent(parser, legacy)), 2),
-      ),
-      ([r, [g, b]]) => [r, g, b] as const,
-    );
-
-  const parseLegacyTriplet = <C extends Number | Percentage<"percentage">>(
-    parser: CSSParser<C>,
-  ) =>
-    parseTriplet(
-      parser,
-      delimited(option(Token.parseWhitespace), Token.parseComma),
-      true,
-    );
-
   const parseLegacy = pair(
     either(
-      parseLegacyTriplet(Percentage.parse<"percentage">),
-      parseLegacyTriplet(Number.parse),
+      Triplet.parseTriplet(
+        Percentage.parse<"percentage">,
+        Percentage.parse<"percentage">,
+        Percentage.parse<"percentage">,
+        true,
+      ),
+      Triplet.parseTriplet(Number.parse, Number.parse, Number.parse, true),
     ),
     Triplet.parseAlphaLegacy,
   );
 
-  const parseModernTriplet = <C extends Number | Percentage<"percentage">>(
-    parser: CSSParser<C>,
-  ) => parseTriplet(parser, option(Token.parseWhitespace));
+  const parseComponent = either(Percentage.parse, Number.parse);
 
   const parseModern = pair(
-    either(
-      parseModernTriplet(Percentage.parse),
-      parseModernTriplet(Number.parse),
-    ),
+    Triplet.parseTriplet(parseComponent, parseComponent, parseComponent),
     Triplet.parseAlpha,
   );
 

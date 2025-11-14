@@ -188,36 +188,18 @@ export namespace HSL {
   }
 
   /**
-   * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
-   */
-  const parseAlpha = either(Number.parse, Percentage.parse<"percentage">);
-
-  /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hue}
    */
   const parseHue = either(Number.parse, Angle.parse);
 
-  const orNone = <T>(parser: CSSParser<T>) =>
-    either(
-      parser,
-      map(Keyword.parse("none"), () => Percentage.of<"percentage">(0)),
-    );
-
   const parseTriplet = (separator: CSSParser<any>, legacy: boolean = false) =>
     map(
       pair(
-        legacy
-          ? parseHue
-          : either(
-              parseHue,
-              map(Keyword.parse("none"), () => Number.of(0)),
-            ),
+        Triplet.parseComponent(parseHue, legacy),
         take(
           right(
             separator,
-            legacy
-              ? Percentage.parse<"percentage">
-              : orNone(Percentage.parse<"percentage">),
+            Triplet.parseComponent(Percentage.parse<"percentage">, legacy),
           ),
           2,
         ),

@@ -62,15 +62,16 @@ export namespace Triplet {
     alpha: Number.Fixed.JSON | Percentage.Fixed.JSON;
   }
 
+  type Component = Angle | Length | Number | Percentage;
+
   // Pre-lex all possible 0s once.
   const lexed0 = ["0", "0%", "0deg", "0px"].map(Lexer.lex);
 
   // Make a parsed 0 of the correct type. Length always accept raw 0s as 0px, but
   // Angle and Percentage do not in general, but often do in colors (this is then
   // handled in the component parser).
-  const make0 = <C extends Angle | Length | Number | Percentage>(
-    parser: CSSParser<C>,
-  ) => Array.collectFirst(lexed0, (value) => parser(value).ok()).getUnsafe()[1];
+  const make0 = <C extends Component>(parser: CSSParser<C>) =>
+    Array.collectFirst(lexed0, (value) => parser(value).ok()).getUnsafe()[1];
 
   /**
    * Parses either a component or the keyword "none", reduces "none" to
@@ -78,9 +79,7 @@ export namespace Triplet {
    *
    * todo: no export?
    */
-  export const parseComponent = <
-    C extends Angle | Length | Number | Percentage,
-  >(
+  export const parseComponent = <C extends Component>(
     parser: CSSParser<C>,
     // In legacy mode, "none" is not accepted.
     legacy: boolean = false,
@@ -91,6 +90,11 @@ export namespace Triplet {
         ? () => Err.of("none is not accepted in legacy color syntax")
         : map(Keyword.parse("none"), () => make0(parser)),
     );
+
+  /**
+   * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
+   */
+  const parseAlphaValue = either(Number.parse, Percentage.parse<"percentage">);
 
   /**
    * Parses an optional alpha component, preceded by the given delimiter, possibly
@@ -104,10 +108,7 @@ export namespace Triplet {
       option(
         right(
           delimited(option(Token.parseWhitespace), delimiter),
-          parseComponent(
-            either(Number.parse, Percentage.parse<"percentage">),
-            legacy,
-          ),
+          parseComponent(parseAlphaValue, legacy),
         ),
       ),
       (alpha) => alpha.getOrElse(() => Number.of(1)),
@@ -126,5 +127,38 @@ export namespace Triplet {
   // todo: no export?
   export const parseAlphaLegacy = alphaParser(Token.parseComma, true);
 
-  // const
+  const parseSeparator = (legacy: boolean): CSSParser<any> =>
+    legacy
+      ? delimited(option(Token.parseWhitespace), Token.parseComma)
+      : option(Token.parseWhitespace);
+
+  /**
+   * Parses 3 items.
+   * In legacy syntax, they must be separated by a comma, in modern syntax by
+   * whitespace.
+   */
+  //todo: no export?
+  export const parseTriplet = <
+    C1 extends Component,
+    C2 extends Component,
+    C3 extends Component,
+  >(
+    parser1: CSSParser<C1>,
+    parser2: CSSParser<C2>,
+    parser3: CSSParser<C3>,
+    legacy: boolean = false,
+  ) =>
+    map(
+      pair(
+        parseComponent(parser1, legacy),
+        right(
+          parseSeparator(legacy),
+          pair(
+            parseComponent(parser2, legacy),
+            right(parseSeparator(legacy), parseComponent(parser3, legacy)),
+          ),
+        ),
+      ),
+      ([c1, [c2, c3]]) => [c1, c2, c3] as const,
+    );
 }
