@@ -400,6 +400,9 @@ export namespace Parser {
       );
   }
 
+  /**
+   * Turns `[Parser<A>, Parser<B>, Parser<C>]` into `Parser<[A,  B,  C]>`
+   */
   export function array<
     I,
     T extends Array<unknown>,
