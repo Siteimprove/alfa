@@ -38,5 +38,10 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-fnv": "workspace:^",
+    "@siteimprove/alfa-test": "workspace:^",
+    "vitest": "^4.0.8"
   }
 }
