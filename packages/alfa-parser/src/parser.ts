@@ -400,6 +400,38 @@ export namespace Parser {
       );
   }
 
+  export function array<
+    I,
+    T extends Array<unknown>,
+    E,
+    A extends Array<unknown> = [],
+  >(
+    separator: Parser<I, any, E, A>,
+    ...parsers: ToParsers<I, T, E, A>
+  ): Parser<I, T, E, A> {
+    return (input, ...args) => {
+      const result: Array<any> = [];
+
+      for (const parser of parsers) {
+        // Skip trailing separators
+        for (const [remainder] of separator(input, ...args)) {
+          input = remainder;
+        }
+
+        const parsed = parser(input, ...args);
+        if (parsed.isErr()) {
+          return parsed;
+        }
+
+        const [next, value] = parsed.getUnsafe();
+        input = next;
+        result.push(value);
+      }
+
+      return Result.of([input, result as T]);
+    };
+  }
+
   /**
    * {@link https://drafts.csswg.org/css-values-4/#comb-any}
    * Turns `[Parser<A>, Parser<B>, Parser<C>]` into `Parser<A || B || C>`
