@@ -46,6 +46,7 @@
     "./value/color/named.ts",
     "./value/color/rgb.ts",
     "./value/color/system.ts",
+    "./value/color/triplet.ts",
     "./value/flags/contain.ts",
     "./value/flags/index.ts",
     "./value/flags/trim.ts",

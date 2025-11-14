@@ -13,6 +13,7 @@ import { Angle, Number, Percentage } from "../numeric/index.js";
 
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
+import { Triplet } from "./triplet.js";
 
 const { pair, map, either, option, right, take, delimited } = Parser;
 
@@ -35,7 +36,7 @@ export class HSL<
   A extends Number.Fixed | Percentage.Fixed<"percentage"> =
     | Number.Fixed
     | Percentage.Fixed<"percentage">,
-> extends Format<"hsl"> {
+> extends Triplet<"hsl", A> {
   public static of<
     H extends Number.Canonical | Angle.Canonical,
     A extends Number.Canonical | Percentage.Canonical,
@@ -80,7 +81,6 @@ export class HSL<
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
-  private readonly _alpha: A;
 
   protected constructor(
     hue: H,
@@ -88,11 +88,10 @@ export class HSL<
     lightness: Percentage.Canonical,
     alpha: A,
   ) {
-    super("hsl");
+    super("hsl", alpha);
     this._hue = hue;
     this._saturation = saturation;
     this._lightness = lightness;
-    this._alpha = alpha;
 
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
@@ -131,10 +130,6 @@ export class HSL<
     return this._blue;
   }
 
-  public get alpha(): A {
-    return this._alpha;
-  }
-
   public resolve(): RGB.Canonical {
     return RGB.of(
       ...Format.resolve(this.red, this.green, this.blue, this.alpha),
@@ -165,7 +160,6 @@ export class HSL<
       hue: this._hue.toJSON(),
       saturation: this._saturation.toJSON(),
       lightness: this._lightness.toJSON(),
-      alpha: this._alpha.toJSON(),
     };
   }
 
@@ -180,11 +174,10 @@ export class HSL<
  * @public
  */
 export namespace HSL {
-  export interface JSON extends Format.JSON<"hsl"> {
+  export interface JSON extends Triplet.JSON<"hsl"> {
     hue: Number.Fixed.JSON | Angle.Fixed.JSON;
     saturation: Percentage.Fixed.JSON;
     lightness: Percentage.Fixed.JSON;
-    alpha: Number.Fixed.JSON | Percentage.Fixed.JSON;
   }
 
   export function isHSL<

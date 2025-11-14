@@ -13,6 +13,7 @@ import { Keyword } from "../textual/keyword.js";
 import { Number, Percentage } from "../numeric/index.js";
 
 import { Format } from "./format.js";
+import { Triplet } from "./triplet.js";
 
 const { pair, map, either, option, right, take, delimited } = Parser;
 
@@ -47,7 +48,7 @@ export class RGB<
   A extends Number.Canonical | Percentage.Canonical =
     | Number.Canonical
     | Percentage.Fixed<"percentage">,
-> extends Format<"rgb"> {
+> extends Triplet<"rgb", A> {
   public static of<
     C extends Number.Canonical | Percentage.Canonical,
     A extends Number.Canonical | Percentage.Canonical,
@@ -73,14 +74,12 @@ export class RGB<
   private readonly _red: C;
   private readonly _green: C;
   private readonly _blue: C;
-  private readonly _alpha: A;
 
   protected constructor(red: C, green: C, blue: C, alpha: A) {
-    super("rgb");
+    super("rgb", alpha);
     this._red = red;
     this._green = green;
     this._blue = blue;
-    this._alpha = alpha;
   }
 
   public get red(): C {
@@ -93,10 +92,6 @@ export class RGB<
 
   public get blue(): C {
     return this._blue;
-  }
-
-  public get alpha(): A {
-    return this._alpha;
   }
 
   public resolve(): RGB.Canonical {
@@ -129,7 +124,6 @@ export class RGB<
       red: this._red.toJSON(),
       green: this._green.toJSON(),
       blue: this._blue.toJSON(),
-      alpha: this._alpha.toJSON(),
     };
   }
 
@@ -146,11 +140,10 @@ export class RGB<
 export namespace RGB {
   export type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
 
-  export interface JSON extends Format.JSON<"rgb"> {
+  export interface JSON extends Triplet.JSON<"rgb"> {
     red: Number.Fixed.JSON | Percentage.Fixed.JSON;
     green: Number.Fixed.JSON | Percentage.Fixed.JSON;
     blue: Number.Fixed.JSON | Percentage.Fixed.JSON;
-    alpha: Number.Fixed.JSON | Percentage.Fixed.JSON;
   }
 
   export function isRGB<
