@@ -19,6 +19,8 @@ type ToCanonical<T extends Number | Percentage<"percentage">> = T extends Number
     : Number.Canonical | Percentage.Canonical;
 
 /**
+ * {@link https://drafts.csswg.org/css-color/#rgb-functions}
+ *
  * @public
  */
 export class RGB<
