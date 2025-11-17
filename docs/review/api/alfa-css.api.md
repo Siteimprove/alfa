@@ -310,7 +310,7 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = Hex | Named | HSL | RGB | Current | System;
+export type Color = Hex | Named | HSL | HWB | RGB | Current | System;
 
 // @public (undocumented)
 export namespace Color {
@@ -323,9 +323,11 @@ export namespace Color {
     // (undocumented)
     export function hsl<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(hue: H, saturation: Percentage<"percentage">, lightness: Percentage<"percentage">, alpha: A): HSL<H, A>;
     // (undocumented)
+    export function hwb<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(hue: H, whiteness: Percentage<"percentage">, blackness: Percentage<"percentage">, alpha: A): HWB<H, A>;
+    // (undocumented)
     export function isTransparent(color: Color): boolean;
     // (undocumented)
-    export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
+    export type JSON = Hex.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
     // (undocumented)
     export function named<C extends Named.Color>(color: C): Named<C>;
     // (undocumented)
@@ -738,7 +740,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Function_2>;
     const // (undocumented)
-    parse: <T>(query?: string | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(query?: string | Array<string> | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 
@@ -809,11 +811,11 @@ export namespace Hex {
     parse: Parser<Hex>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "Triplet" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed<"percentage"> = Number_2.Fixed | Percentage.Fixed<"percentage">> extends Format<"hsl"> {
+export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed<"percentage"> = Number_2.Fixed | Percentage.Fixed<"percentage">> extends Triplet<"hsl", A> {
     protected constructor(hue: H, saturation: Percentage.Canonical, lightness: Percentage.Canonical, alpha: A);
-    // (undocumented)
-    get alpha(): A;
     // (undocumented)
     get blue(): Percentage.Canonical;
     // (undocumented)
@@ -849,9 +851,7 @@ export namespace HSL {
     // (undocumented)
     export function isHSL<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(value: unknown): value is HSL<H, A>;
     // (undocumented)
-    export interface JSON extends Format.JSON<"hsl"> {
-        // (undocumented)
-        alpha: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+    export interface JSON extends Triplet.JSON<"hsl"> {
         // (undocumented)
         hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
         // (undocumented)
@@ -861,6 +861,56 @@ export namespace HSL {
     }
     const // (undocumented)
     parse: Parser<HSL>;
+}
+
+// @public (undocumented)
+export class HWB<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed<"percentage"> = Number_2.Fixed | Percentage.Fixed<"percentage">> extends Triplet<"hwb", A> {
+    protected constructor(hue: H, whiteness: Percentage.Canonical, blackness: Percentage.Canonical, alpha: A);
+    // (undocumented)
+    get blackness(): Percentage.Canonical;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get hue(): H;
+    // (undocumented)
+    static of<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical, W extends Percentage<"percentage">, B extends Percentage<"percentage">>(hue: H, whiteness: W, blackness: B, alpha: A): HWB<H, A>;
+    // Warning: (ae-forgotten-export) The symbol "ToCanonical_3" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    static of<H extends Number_2 | Angle, A extends Number_2 | Percentage<"percentage">, W extends Percentage<"percentage">, B extends Percentage<"percentage">>(hue: H, whiteness: W, blackness: B, alpha: A): HWB<ToCanonical_3<H>, ToCanonical_3<A>>;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): HWB.JSON;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    get whiteness(): Percentage.Canonical;
+}
+
+// @public (undocumented)
+export namespace HWB {
+    // (undocumented)
+    export function isHWB<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(value: unknown): value is HWB<H, A>;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"hwb"> {
+        // (undocumented)
+        blackness: Percentage.Fixed.JSON;
+        // (undocumented)
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
+        // (undocumented)
+        whiteness: Percentage.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<HWB>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Ident" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2102,10 +2152,8 @@ export namespace Resolvable {
 }
 
 // @public (undocumented)
-export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, A extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">> extends Format<"rgb"> {
+export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, A extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">> extends Triplet<"rgb", A> {
     protected constructor(red: C, green: C, blue: C, alpha: A);
-    // (undocumented)
-    get alpha(): A;
     // (undocumented)
     get blue(): C;
     // (undocumented)
@@ -2137,9 +2185,7 @@ export namespace RGB {
     // (undocumented)
     export function isRGB<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(value: unknown): value is RGB<C, A>;
     // (undocumented)
-    export interface JSON extends Format.JSON<"rgb"> {
-        // (undocumented)
-        alpha: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+    export interface JSON extends Triplet.JSON<"rgb"> {
         // (undocumented)
         blue: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
@@ -2212,21 +2258,21 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     get kind(): "scale";
     // (undocumented)
     static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y): Scale<X, Y, never>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical_3" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ToCanonical_4" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">>(x: X, y: Y): Scale<ToCanonical_3<X>, ToCanonical_3<Y>>;
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">>(x: X, y: Y): Scale<ToCanonical_4<X>, ToCanonical_4<Y>>;
     // (undocumented)
     static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical, Z extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y, z: Z): Scale<X, Y, Z>;
     // (undocumented)
-    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z: Z): Scale<ToCanonical_3<X>, ToCanonical_3<Y>, ToCanonical_3<Z>>;
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z: Z): Scale<ToCanonical_4<X>, ToCanonical_4<Y>, ToCanonical_4<Z>>;
     // (undocumented)
     resolve(): Scale.Canonical;
     // (undocumented)
     toJSON(): {
-        z?: Number_2.Fixed.JSON | Percentage.Fixed.JSON | undefined;
-        x: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
-        y: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        z?: Percentage.Fixed.JSON | Number_2.Fixed.JSON | undefined;
+        x: Percentage.Fixed.JSON | Number_2.Fixed.JSON;
+        y: Percentage.Fixed.JSON | Number_2.Fixed.JSON;
         kind: "scale";
         type: "transform";
     };
@@ -3057,7 +3103,7 @@ export namespace Token {
     // (undocumented)
     export function parseDimension(predicate?: Predicate<Dimension>): Parser_2<Slice<Token>, Dimension, string, []>;
     // (undocumented)
-    export function parseFunction(query?: string | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
+    export function parseFunction(query?: string | Array_2<string> | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
     const // (undocumented)
     comma: typeof Comma.of, // (undocumented)
     isComma: typeof Comma.isComma;
@@ -3348,7 +3394,7 @@ export namespace Translate {
     const // (undocumented)
     parse: Parser<Translate>;
     const // (undocumented)
-    parseProp: Parser_2<Slice<Token_2>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>;
+    parseProp: Parser_2<Slice<Token_2>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "TrimFlags" is marked as @public, but its signature references "Resolvable" which is marked as @internal

@@ -9,6 +9,7 @@ import type { Angle, Number, Percentage } from "../numeric/index.js";
 import { Current } from "./current.js";
 import { Hex } from "./hex.js";
 import { HSL } from "./hsl.js";
+import { HWB } from "./hwb.js";
 import { Named } from "./named.js";
 import { RGB } from "./rgb.js";
 import { System } from "./system.js";
@@ -18,7 +19,7 @@ const { either } = Parser;
 /**
  * @public
  */
-export type Color = Hex | Named | HSL | RGB | Current | System;
+export type Color = Hex | Named | HSL | HWB | RGB | Current | System;
 
 /**
  * @public
@@ -26,7 +27,13 @@ export type Color = Hex | Named | HSL | RGB | Current | System;
 export namespace Color {
   export type Canonical = Current | System | RGB.Canonical;
 
-  export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
+  export type JSON =
+    | Hex.JSON
+    | Named.JSON
+    | HSL.JSON
+    | HWB.JSON
+    | RGB.JSON
+    | Keyword.JSON;
 
   export const current: Current = Keyword.of("currentcolor");
 
@@ -44,6 +51,18 @@ export namespace Color {
     alpha: A,
   ): HSL<H, A> {
     return HSL.of(hue, saturation, lightness, alpha);
+  }
+
+  export function hwb<
+    H extends Number.Canonical | Angle.Canonical,
+    A extends Number.Canonical | Percentage.Canonical,
+  >(
+    hue: H,
+    whiteness: Percentage<"percentage">,
+    blackness: Percentage<"percentage">,
+    alpha: A,
+  ): HWB<H, A> {
+    return HWB.of(hue, whiteness, blackness, alpha);
   }
 
   export function named<C extends Named.Color>(color: C): Named<C> {
@@ -69,6 +88,7 @@ export namespace Color {
     Named.parse,
     RGB.parse,
     HSL.parse,
+    HWB.parse,
     Current.parse,
     System.parse,
   );

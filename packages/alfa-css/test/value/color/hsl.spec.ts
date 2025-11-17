@@ -98,18 +98,17 @@ test("parse() rejects `none` in legacy syntax", (t) => {
 });
 
 test("parse() accepts calculations", (t) => {
-  const expected = (type: "number" | "angle") =>
-    ({
-      type: "color",
-      format: "hsl",
-      hue:
-        type === "angle"
-          ? { type: "angle", value: 0, unit: "deg" }
-          : { type: "number", value: 0 },
-      saturation: { type: "percentage", value: 1 },
-      lightness: { type: "percentage", value: 0 },
-      alpha: { type: "number", value: 0 },
-    }) as HSL.JSON;
+  const expected = (type: "number" | "angle"): HSL.JSON => ({
+    type: "color",
+    format: "hsl",
+    hue:
+      type === "angle"
+        ? { type: "angle", value: 0, unit: "deg" }
+        : { type: "number", value: 0 },
+    saturation: { type: "percentage", value: 1 },
+    lightness: { type: "percentage", value: 0 },
+    alpha: { type: "number", value: 0 },
+  });
 
   for (const [actual, type] of [
     [parse("hsl(0 100% 0% / 0)"), "number"],

@@ -21,6 +21,7 @@
     "./value/color/converters.spec.ts",
     "./value/color/hex.spec.ts",
     "./value/color/hsl.spec.ts",
+    "./value/color/hwb.spec.ts",
     "./value/color/rgb.spec.ts",
     "./value/color/named.spec.ts",
     "./value/image/image.spec.ts",

@@ -1,11 +1,9 @@
-import { Real } from "@siteimprove/alfa-math";
-
 /**
  * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
  *
- * @privateRemarks
- * We store saturation and lightness as percentages in HSL, so there is no need
- * to normalize them.
+ * @param hue - The hue component, in degrees, as a number between 0 and 360.
+ * @param saturation - The saturation component, as a number between 0 and 1.
+ * @param lightness - The lightness component, as a number between 0 and 1.
  *
  * @internal
  */
@@ -26,6 +24,10 @@ export function hslToRgb(
 /**
  * {@link https://drafts.csswg.org/css-color/#hwb-to-rgb}
  *
+ * @param hue - The hue component, in degrees, as a number between 0 and 360.
+ * @param whiteness - The whiteness component, as a number between 0 and 1.
+ * @param blackness - The blackness component, as a number between 0 and 1.
+ *
  * @internal
  */
 export function hwbToRgb(
@@ -37,29 +39,10 @@ export function hwbToRgb(
     let gray = whiteness / (whiteness + blackness);
     return [gray, gray, gray];
   }
-  let rgb = hslToRgb(hue, 100, 50);
+  let rgb = hslToRgb(hue, 1, 0.5);
   for (let i = 0; i < 3; i++) {
     rgb[i] *= 1 - whiteness - blackness;
     rgb[i] += whiteness;
   }
   return rgb;
-}
-
-/**
- * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
- */
-function hueToRgb(t1: number, t2: number, hue: number): number {
-  if (hue < 1) {
-    return t1 + (t2 - t1) * hue;
-  }
-
-  if (hue < 3) {
-    return t2;
-  }
-
-  if (hue < 4) {
-    return t1 + (t2 - t1) * (4 - hue);
-  }
-
-  return t1;
 }
