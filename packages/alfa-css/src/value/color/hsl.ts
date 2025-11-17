@@ -6,6 +6,7 @@ import { Function, type Parser as CSSParser } from "../../syntax/index.js";
 
 import { Angle, Number, Percentage } from "../numeric/index.js";
 
+import { hslToRgb } from "./converters.js";
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
 import { Triplet } from "./triplet.js";
@@ -24,6 +25,8 @@ type ToCanonical<T extends Angle | Number | Percentage<"percentage">> =
         : Angle.Canonical | Number.Canonical | Percentage.Canonical;
 
 /**
+ * {@link https://drafts.csswg.org/css-color/#the-hsl-notation}
+ *
  * @public
  */
 export class HSL<
@@ -91,7 +94,7 @@ export class HSL<
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
     const [red, green, blue] = hslToRgb(
-      Real.modulo(degrees, 360) / 60,
+      Real.modulo(degrees, 360),
       Real.clamp(saturation.value, 0, 1),
       Real.clamp(lightness.value, 0, 1),
     );
@@ -203,45 +206,4 @@ export namespace HSL {
     ([, [hue, saturation, lightness, alpha]]) =>
       HSL.of(hue, saturation, lightness, alpha),
   );
-}
-
-/**
- * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
- */
-function hslToRgb(
-  hue: number,
-  saturation: number,
-  lightness: number,
-): [number, number, number] {
-  const t2 =
-    lightness <= 0.5
-      ? lightness * (saturation + 1)
-      : lightness + saturation - lightness * saturation;
-
-  const t1 = lightness * 2 - t2;
-
-  return [
-    hueToRgb(t1, t2, Real.modulo(hue + 2, 6)),
-    hueToRgb(t1, t2, hue),
-    hueToRgb(t1, t2, Real.modulo(hue - 2, 6)),
-  ];
-}
-
-/**
- * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
- */
-function hueToRgb(t1: number, t2: number, hue: number): number {
-  if (hue < 1) {
-    return t1 + (t2 - t1) * hue;
-  }
-
-  if (hue < 3) {
-    return t2;
-  }
-
-  if (hue < 4) {
-    return t1 + (t2 - t1) * (4 - hue);
-  }
-
-  return t1;
 }
