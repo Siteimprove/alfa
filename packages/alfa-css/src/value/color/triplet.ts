@@ -18,11 +18,11 @@ import {
 import { Keyword } from "../textual/index.js";
 import { Format } from "./format.js";
 
-const { array, pair, map, either, option, right, take, delimited } = Parser;
+const { array, pair, map, either, option, right, delimited } = Parser;
 
 /**
  * Format for colors defined by a functional triplet with an optional alpha
- * channel.
+ * channel, e.g. RGB, HSL, …
  *
  * @internal
  */
@@ -69,7 +69,10 @@ export namespace Triplet {
   // Angle and Percentage do not in general, but often do in colors (this is then
   // handled in the component parser).
   const make0 = <C extends Component>(parser: CSSParser<C>) =>
-    Array.collectFirst(lexed0, (value) => parser(value).ok()).getUnsafe()[1];
+    Array.collectFirst(lexed0, (value) => parser(value).ok())
+      // The parser will parse at least one of the 0s since these are all the 0
+      // for the allowed component types.
+      .getUnsafe()[1];
 
   /**
    * Parses either a component or the keyword "none", reduces "none" to
@@ -94,17 +97,22 @@ export namespace Triplet {
   const parseAlphaValue = either(Number.parse, Percentage.parse<"percentage">);
 
   /**
-   * Parses an optional alpha component, preceded by the given delimiter, possibly
+   * Parses the delimiter for Alpha value, "," or "/" depending on legacy mode.
+   */
+  const parseAlphaDelim = (legacy: boolean): CSSParser<any> =>
+    legacy ? Token.parseComma : Token.parseDelim("/");
+
+  /**
+   * Parses an optional alpha component, preceded by the correct delimiter, possibly
    * accepting "none" as a value.
    */
-  const alphaParser = (
-    delimiter: CSSParser<any>,
+  const parseAlpha = (
     legacy: boolean = false,
   ): CSSParser<Number | Percentage<"percentage">> =>
     map(
       option(
         right(
-          delimited(option(Token.parseWhitespace), delimiter),
+          delimited(option(Token.parseWhitespace), parseAlphaDelim(legacy)),
           parseComponent(parseAlphaValue, legacy),
         ),
       ),
@@ -112,16 +120,9 @@ export namespace Triplet {
     );
 
   /**
-   * Parses an optional alpha component, preceded by a '/' delimiter.
+   * Parses the separator between components, "," in legacy mode, whitespace
+   * otherwise.
    */
-  const parseAlpha = alphaParser(Token.parseDelim("/"));
-
-  /**
-   * Parses an optional alpha component in legacy syntax: "none" is forbidden,
-   * and separator is a comma.
-   */
-  const parseAlphaLegacy = alphaParser(Token.parseComma, true);
-
   const parseSeparator = (legacy: boolean): CSSParser<any> =>
     legacy
       ? delimited(option(Token.parseWhitespace), Token.parseComma)
@@ -185,9 +186,11 @@ export namespace Triplet {
       parseComponent(parser3, legacy),
     );
 
-    return map(
-      pair(parser, legacy ? parseAlphaLegacy : parseAlpha),
-      ([[a, b, c], alpha]) => [a, b, c, alpha],
-    );
+    return map(pair(parser, parseAlpha(legacy)), ([[a, b, c], alpha]) => [
+      a,
+      b,
+      c,
+      alpha,
+    ]);
   }
 }
