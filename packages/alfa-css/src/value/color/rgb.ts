@@ -8,7 +8,7 @@ import { Number, Percentage } from "../numeric/index.js";
 import { Format } from "./format.js";
 import { Triplet } from "./triplet.js";
 
-const { pair, map, either, option, right, take, delimited } = Parser;
+const { map, either } = Parser;
 
 // We cannot easily use Resolvable.Resolved because Percentage may resolve to
 // anything depending on the base, here we want to keep them as percentages.

@@ -2,12 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 
-import {
-  Function,
-  Lexer,
-  type Parser as CSSParser,
-  Token,
-} from "../../syntax/index.js";
+import { Lexer, type Parser as CSSParser, Token } from "../../syntax/index.js";
 
 import {
   type Angle,
@@ -162,6 +157,15 @@ export namespace Triplet {
     legacy?: boolean,
   ): CSSParser<[C, C, C, Number | Percentage<"percentage">]>;
 
+  /**
+   * Parses a triplet of values and an optional alpha channel.
+   *
+   * @privateRemarks
+   * This cannot be called simply `parse` as it would clash with the `parse`
+   * in the inherited classes.
+   *
+   * @internal
+   */
   export function parseTriplet<
     C1 extends Component,
     C2 extends Component,
