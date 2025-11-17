@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Context } from "../dist/index.js";
 
-import { parse, serialize } from "./parser.js";
+import { parse, parseErr, serialize } from "./parser.js";
 
 test(".parse() parses a named pseudo-class selector", (t) => {
   t.deepEqual(serialize(":hover"), {
@@ -35,6 +35,16 @@ test(".parse() parses :host functional pseudo-class selector", (t) => {
   });
 });
 
+test(".parse() doesn't parse :host with an invalid selector", (t) => {
+  t(parseErr(":host(div span").isErr());
+  t(parseErr(":host(::after").isErr());
+
+  // pseudo-elements are only accepted in the pseudo-compound part of a complex
+  // selector, not in compound selectors. We do not check that currently.
+  // TODO: check that browsers correctly reject this before doing so ourselves.
+  t(!parseErr(":host(div::after").isErr());
+});
+
 test(".parse() parses a functional pseudo-class selector", (t) => {
   t.deepEqual(serialize(":not(.foo)"), {
     type: "pseudo-class",
@@ -46,6 +56,79 @@ test(".parse() parses a functional pseudo-class selector", (t) => {
       key: ".foo",
     },
     specificity: { a: 0, b: 1, c: 0 },
+  });
+});
+
+test(".parse() parsers :is and :where as forgiving lists", (t) => {
+  for (const sel of ["is", "where"] as const) {
+    for (const list of [
+      ".foo, #bar",
+      ".foo, #bar, ###",
+      "###, .foo, #bar",
+      "###, .foo, $$$, #bar",
+    ]) {
+      t.deepEqual(serialize(`:${sel}(${list})`), {
+        type: "pseudo-class",
+        name: sel,
+        selector: {
+          type: "list",
+          selectors: [
+            {
+              type: "class",
+              name: "foo",
+              specificity: { a: 0, b: 1, c: 0 },
+              key: ".foo",
+            },
+            {
+              type: "id",
+              name: "bar",
+              specificity: { a: 1, b: 0, c: 0 },
+              key: "#bar",
+            },
+          ],
+          specificity: { a: 1, b: 0, c: 0 },
+        },
+        // `:where` specifically nukes specificity.
+        specificity:
+          sel === "where" ? { a: 0, b: 0, c: 0 } : { a: 1, b: 0, c: 0 },
+      });
+    }
+  }
+});
+
+test(".parse() parses :has as relative selectors list", (t) => {
+  t.deepEqual(serialize(":has(.foo, > #bar)"), {
+    type: "pseudo-class",
+    name: "has",
+    selector: {
+      type: "list",
+      selectors: [
+        {
+          type: "relative",
+          combinator: " ",
+          selector: {
+            type: "class",
+            name: "foo",
+            specificity: { a: 0, b: 1, c: 0 },
+            key: ".foo",
+          },
+          specificity: { a: 0, b: 1, c: 0 },
+        },
+        {
+          type: "relative",
+          combinator: ">",
+          selector: {
+            type: "id",
+            name: "bar",
+            specificity: { a: 1, b: 0, c: 0 },
+            key: "#bar",
+          },
+          specificity: { a: 1, b: 0, c: 0 },
+        },
+      ],
+      specificity: { a: 1, b: 0, c: 0 },
+    },
+    specificity: { a: 1, b: 0, c: 0 },
   });
 });
 
@@ -275,7 +358,7 @@ test("#matches() checks if an element matches a :link selector", (t) => {
 
   // These elements aren't links
   for (const element of [<a />, <p />]) {
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
 });
 
@@ -288,19 +371,15 @@ test("#matches() checks if an element matches a :visited selector", (t) => {
     <area href="#" />,
     <link href="#" />,
   ]) {
-    t.equal(
-      selector.matches(element, Context.visit(element)),
-      true,
-      element.toString(),
-    );
+    t(selector.matches(element, Context.visit(element)), element.toString());
 
     // Only visited links match :link
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
 
   // These elements aren't links
   for (const element of [<a />, <p />]) {
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
 });
 
@@ -314,18 +393,14 @@ test("#matches() checks if an element matches a :any-link selector", (t) => {
     <link href="#" />,
   ]) {
     // Matches both visited and non-visited links
-    t.equal(
-      selector.matches(element, Context.visit(element)),
-      true,
-      element.toString(),
-    );
+    t(selector.matches(element, Context.visit(element)), element.toString());
 
-    t.equal(selector.matches(element), true, element.toString());
+    t(selector.matches(element), element.toString());
   }
 
   // These elements aren't links
   for (const element of [<a />, <p />]) {
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
 });
 
@@ -337,7 +412,7 @@ test("#matches() checks if an element matches a :checked selector", (t) => {
     <input type="radio" checked />,
     <option selected />,
   ]) {
-    t.equal(selector.matches(element), true, element.toString());
+    t(selector.matches(element), element.toString());
   }
 
   for (const element of [
@@ -346,6 +421,41 @@ test("#matches() checks if an element matches a :checked selector", (t) => {
     <input />,
     <option />,
   ]) {
-    t.equal(selector.matches(element), false, element.toString());
+    t(!selector.matches(element), element.toString());
   }
+});
+
+test("#matches() checks if an element matches a :has selector", (t) => {
+  const a = <span></span>;
+  const b = <div></div>;
+  const c = <span></span>;
+  const inner = (
+    <div>
+      <div>{c}</div>
+    </div>
+  );
+  const parent = (
+    <div>
+      {a}
+      {b}
+      {inner}
+      <span></span>
+    </div>
+  );
+
+  t(parse(":has(span)").matches(parent), "Descendant, parent");
+  t(parse(":has(span)").matches(inner), "Descendant, inner");
+  t(!parse(":has(span)").matches(a), "Descendant, a");
+
+  t(parse(":has(> span)").matches(parent), "Direct descendant, parent");
+  t(!parse(":has(> span)").matches(inner), "Direct descendant, inner");
+  t(!parse(":has(> span)").matches(a), "Direct descendant, a");
+
+  t(!parse(":has(~ span)").matches(parent), "Sibling, parent");
+  t(parse(":has(~ span)").matches(inner), "Sibling, inner");
+  t(parse(":has(~ span)").matches(a), "Sibling, a");
+
+  t(!parse(":has(+ span)").matches(parent), "Direct sibling, parent");
+  t(parse(":has(+ span)").matches(inner), "Direct sibling, inner");
+  t(!parse(":has(+ span)").matches(a), "Direct sibling, a");
 });

@@ -16,6 +16,7 @@
     "./nth-[last]-child.spec.tsx",
     "./pseudo-class.spec.tsx",
     "./pseudo-element.spec.tsx",
+    "./relative.spec.tsx",
     "./shadow.spec.tsx",
     "./specificity.spec.ts"
   ],

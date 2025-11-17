@@ -2278,6 +2278,7 @@ __metadata:
     "@siteimprove/alfa-parser": "workspace:^"
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
+    "@siteimprove/alfa-result": "workspace:^"
     "@siteimprove/alfa-rng": "workspace:^"
     "@siteimprove/alfa-sequence": "workspace:^"
     "@siteimprove/alfa-slice": "workspace:^"
