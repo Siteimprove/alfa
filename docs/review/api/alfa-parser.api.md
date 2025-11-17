@@ -51,9 +51,6 @@ export namespace Parser {
     export function option<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Option<T>, E, A>;
     // (undocumented)
     export function pair<I, T, U, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, [T, U], E, A>;
-    export function parseIf<I, T, E, U extends T = T, A extends Array_2<unknown> = []>(refinement: Refinement<T, U>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
-    // (undocumented)
-    export function parseIf<I, T, E, A extends Array_2<unknown> = []>(predicate: Predicate<T>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
     // (undocumented)
     export function peek<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
     // (undocumented)
@@ -90,8 +87,6 @@ export namespace Parser {
     export type ToParsers<I, T extends Array_2<unknown>, E, A extends Array_2<unknown> = []> = T extends [infer Head, ...infer Tail] ? [Parser<I, Head, E, A>, ...ToParsers<I, Tail, E, A>] : [];
     // (undocumented)
     export function zeroOrMore<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Array_2<T>, E, A>;
-    const // @deprecated (undocumented)
-    eof: typeof end;
         {};
 }
 
