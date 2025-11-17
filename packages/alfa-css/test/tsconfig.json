@@ -18,6 +18,7 @@
     "./calculation/math-functions.spec.ts",
     "./value/collection/list.spec.ts",
     "./value/collection/tuple.spec.ts",
+    "./value/color/converters.spec.ts",
     "./value/color/hex.spec.ts",
     "./value/color/hsl.spec.ts",
     "./value/color/rgb.spec.ts",
