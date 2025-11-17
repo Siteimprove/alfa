@@ -361,46 +361,6 @@ export namespace Parser {
   }
 
   /**
-   * Parse if the result satisfies the predicate or refinement.
-   */
-  export function parseIf<
-    I,
-    T,
-    E,
-    U extends T = T,
-    A extends Array<unknown> = [],
-  >(
-    refinement: Refinement<T, U>,
-    parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>,
-  ): Parser<I, U, E, A>;
-
-  export function parseIf<I, T, E, A extends Array<unknown> = []>(
-    predicate: Predicate<T>,
-    parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>,
-  ): Parser<I, T, E, A>;
-
-  export function parseIf<
-    I,
-    T,
-    E,
-    U extends T = T,
-    A extends Array<unknown> = [],
-  >(
-    refinement: Refinement<T, U> | Predicate<T>,
-    parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>,
-  ): Parser<I, U, E, A> | Parser<I, T, E, A> {
-    return (input, ...args) =>
-      parser(input, ...args).flatMap(([rest, result]) =>
-        refinement(result)
-          ? Ok.of<[I, T]>([rest, result])
-          : Err.of(ifError(result)),
-      );
-  }
-
-  /**
    * Turns `[Parser<A>, Parser<B>, Parser<C>]` into `Parser<[A,  B,  C]>`
    */
   export function array<
@@ -416,7 +376,7 @@ export namespace Parser {
       const result: Array<any> = [];
 
       for (const parser of parsers) {
-        // Skip trailing separators
+        // Skip leading separators
         for (const [remainder] of separator(input, ...args)) {
           input = remainder;
         }
@@ -536,9 +496,4 @@ export namespace Parser {
       return Result.of([input, undefined]);
     };
   }
-
-  /**
-   * @deprecated Use `end()`
-   */
-  export const eof = end;
 }

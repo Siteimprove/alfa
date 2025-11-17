@@ -367,15 +367,15 @@ export namespace Array {
   }
 
   export function get<T>(array: ReadonlyArray<T>, index: number): Option<T> {
-    return index < array.length ? Option.of(array[index]) : None;
+    return 0 <= index && index < array.length ? Option.of(array[index]) : None;
   }
 
   export function has<T>(array: ReadonlyArray<T>, index: number): boolean {
-    return index < array.length;
+    return 0 <= index && index < array.length;
   }
 
   export function set<T>(array: Array<T>, index: number, value: T): Array<T> {
-    if (index < array.length) {
+    if (0 <= index && index < array.length) {
       array[index] = value;
     }
 
@@ -387,7 +387,7 @@ export namespace Array {
     index: number,
     value: T,
   ): Array<T> {
-    if (index <= array.length) {
+    if (0 <= index && index <= array.length) {
       array.splice(index, 0, value);
     }
 

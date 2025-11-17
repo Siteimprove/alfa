@@ -14,7 +14,7 @@ import { Value } from "../value.js";
 
 import { Function } from "./function.js";
 
-const { map, either, parseIf } = Parser;
+const { either, filter, map } = Parser;
 
 /**
  * @public
@@ -195,16 +195,16 @@ export namespace Translate {
   const parseTranslate3d = map(
     CSSFunction.parse(
       "translate3d",
-      parseIf(
-        (values: ReadonlyArray<LengthPercentage>) => Length.isLength(values[2]),
+      filter(
         map(
           List.parseCommaSeparated(LengthPercentage.parse, 3, 3),
           (list) => list.values,
         ),
+        (values: ReadonlyArray<LengthPercentage>) => Length.isLength(values[2]),
         () => "The z component of translate3d must be a length",
       ),
     ),
-    // The type of z is ensured by parseIf.
+    // The type of z is ensured by filter.
     ([_, [x, y, z]]) => Translate.of(x, y, z as Length),
   );
 
@@ -225,15 +225,15 @@ export namespace Translate {
   );
 
   const parseTranslate3dProp = map(
-    parseIf(
-      (values: ReadonlyArray<LengthPercentage>) => Length.isLength(values[2]),
+    filter(
       map(
         List.parseSpaceSeparated(LengthPercentage.parse, 3, 3),
         (list) => list.values,
       ),
+      (values: ReadonlyArray<LengthPercentage>) => Length.isLength(values[2]),
       () => "The z component of translate3d must be a length",
     ),
-    // The type of z is ensured by parseIf.
+    // The type of z is ensured by filter.
     ([x, y, z]) => Translate.of(x, y, z as Length),
   );
 
