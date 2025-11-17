@@ -4,7 +4,6 @@ import type { Slice } from "@siteimprove/alfa-slice";
 import type { Token } from "../../syntax/index.js";
 
 import { Keyword } from "../textual/keyword.js";
-import type { Angle, Number, Percentage } from "../numeric/index.js";
 
 import { Current } from "./current.js";
 import { Hex } from "./hex.js";
@@ -37,48 +36,17 @@ export namespace Color {
 
   export const current: Current = Keyword.of("currentcolor");
 
-  export function hex(value: number): Hex {
-    return Hex.of(value);
-  }
+  export const hex = Hex.of;
 
-  export function hsl<
-    H extends Number.Canonical | Angle.Canonical,
-    A extends Number.Canonical | Percentage.Canonical,
-  >(
-    hue: H,
-    saturation: Percentage<"percentage">,
-    lightness: Percentage<"percentage">,
-    alpha: A,
-  ): HSL<H, A> {
-    return HSL.of(hue, saturation, lightness, alpha);
-  }
+  export const hsl = HSL.of;
 
-  export function hwb<
-    H extends Number.Canonical | Angle.Canonical,
-    A extends Number.Canonical | Percentage.Canonical,
-  >(
-    hue: H,
-    whiteness: Percentage<"percentage">,
-    blackness: Percentage<"percentage">,
-    alpha: A,
-  ): HWB<H, A> {
-    return HWB.of(hue, whiteness, blackness, alpha);
-  }
+  export const hwb = HWB.of;
 
-  export function named<C extends Named.Color>(color: C): Named<C> {
-    return Named.of(color);
-  }
+  export const named = Named.of;
 
-  export function rgb<
-    C extends Number.Canonical | Percentage.Canonical,
-    A extends Number.Canonical | Percentage.Canonical,
-  >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
-    return RGB.of(red, green, blue, alpha);
-  }
+  export const rgb = RGB.of;
 
-  export function system(keyword: System.Keyword): System {
-    return Keyword.of(keyword);
-  }
+  export const system = Keyword.of;
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}

@@ -13,78 +13,38 @@ import { Triplet } from "./triplet.js";
 
 const { map, either } = Parser;
 
-// We cannot easily use Resolvable.Resolved because Percentage may resolve to
-// anything depending on the base, here we want to keep them as percentages.
-type ToCanonical<T extends Angle | Number | Percentage<"percentage">> =
-  T extends Angle
-    ? Angle.Canonical
-    : T extends Number
-      ? Number.Canonical
-      : T extends Percentage
-        ? Percentage.Canonical
-        : Angle.Canonical | Number.Canonical | Percentage.Canonical;
-
 /**
  * {@link https://drafts.csswg.org/css-color/#the-hsl-notation}
  *
  * @public
  */
-export class HSL<
-  H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
-  A extends Number.Fixed | Percentage.Fixed<"percentage"> =
-    | Number.Fixed
-    | Percentage.Fixed<"percentage">,
-> extends Triplet<"hsl", A> {
-  public static of<
-    H extends Number.Canonical | Angle.Canonical,
-    A extends Number.Canonical | Percentage.Canonical,
-    S extends Percentage<"percentage">,
-    L extends Percentage<"percentage">,
-  >(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
-
-  public static of<
-    H extends Number | Angle,
-    A extends Number | Percentage<"percentage">,
-    S extends Percentage<"percentage">,
-    L extends Percentage<"percentage">,
-  >(
-    hue: H,
-    saturation: S,
-    lightness: L,
-    alpha: A,
-  ): HSL<ToCanonical<H>, ToCanonical<A>>;
-
-  public static of<
-    H extends Number | Angle,
-    A extends Number | Percentage<"percentage">,
-    S extends Percentage<"percentage">,
-    L extends Percentage<"percentage">,
-  >(
-    hue: H,
-    saturation: S,
-    lightness: L,
-    alpha: A,
-  ): HSL<ToCanonical<H>, ToCanonical<A>> {
+export class HSL extends Triplet<"hsl"> {
+  public static of(
+    hue: Number | Angle,
+    saturation: Percentage<"percentage">,
+    lightness: Percentage<"percentage">,
+    alpha: Number | Percentage<"percentage">,
+  ): HSL {
     return new HSL(
-      hue.resolve() as ToCanonical<H>,
+      hue.resolve(),
       saturation.resolve(),
       lightness.resolve(),
-      alpha.resolve() as ToCanonical<A>,
+      alpha.resolve(),
     );
   }
 
-  private readonly _hue: H;
-  private readonly _saturation: Percentage.Canonical;
-  private readonly _lightness: Percentage.Canonical;
+  private readonly _hue: HSL.Hue;
+  private readonly _saturation: HSL.Component;
+  private readonly _lightness: HSL.Component;
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
 
   protected constructor(
-    hue: H,
-    saturation: Percentage.Canonical,
-    lightness: Percentage.Canonical,
-    alpha: A,
+    hue: HSL.Hue,
+    saturation: HSL.Component,
+    lightness: HSL.Component,
+    alpha: Triplet.Alpha,
   ) {
     super("hsl", alpha);
     this._hue = hue;
@@ -104,15 +64,15 @@ export class HSL<
     this._blue = Percentage.of<"percentage">(blue);
   }
 
-  public get hue(): H {
+  public get hue(): HSL.Hue {
     return this._hue;
   }
 
-  public get saturation(): Percentage.Canonical {
+  public get saturation(): HSL.Component {
     return this._saturation;
   }
 
-  public get lightness(): Percentage.Canonical {
+  public get lightness(): HSL.Component {
     return this._lightness;
   }
 
@@ -178,10 +138,12 @@ export namespace HSL {
     lightness: Percentage.Fixed.JSON;
   }
 
-  export function isHSL<
-    H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage.Fixed,
-  >(value: unknown): value is HSL<H, A> {
+  /** @internal */
+  export type Hue = Number.Canonical | Angle.Canonical;
+  /** @internal */
+  export type Component = Percentage.Canonical;
+
+  export function isHSL(value: unknown): value is HSL {
     return value instanceof HSL;
   }
 

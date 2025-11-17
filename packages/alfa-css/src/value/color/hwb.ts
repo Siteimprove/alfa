@@ -13,78 +13,38 @@ import { Triplet } from "./triplet.js";
 
 const { map, either } = Parser;
 
-// We cannot easily use Resolvable.Resolved because Percentage may resolve to
-// anything depending on the base, here we want to keep them as percentages.
-type ToCanonical<T extends Angle | Number | Percentage<"percentage">> =
-  T extends Angle
-    ? Angle.Canonical
-    : T extends Number
-      ? Number.Canonical
-      : T extends Percentage
-        ? Percentage.Canonical
-        : Angle.Canonical | Number.Canonical | Percentage.Canonical;
-
 /**
  * {@link https://drafts.csswg.org/css-color/#the-hwb-notation}
  *
  * @public
  */
-export class HWB<
-  H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
-  A extends Number.Fixed | Percentage.Fixed<"percentage"> =
-    | Number.Fixed
-    | Percentage.Fixed<"percentage">,
-> extends Triplet<"hwb", A> {
-  public static of<
-    H extends Number.Canonical | Angle.Canonical,
-    A extends Number.Canonical | Percentage.Canonical,
-    W extends Percentage<"percentage">,
-    B extends Percentage<"percentage">,
-  >(hue: H, whiteness: W, blackness: B, alpha: A): HWB<H, A>;
-
-  public static of<
-    H extends Number | Angle,
-    A extends Number | Percentage<"percentage">,
-    W extends Percentage<"percentage">,
-    B extends Percentage<"percentage">,
-  >(
-    hue: H,
-    whiteness: W,
-    blackness: B,
-    alpha: A,
-  ): HWB<ToCanonical<H>, ToCanonical<A>>;
-
-  public static of<
-    H extends Number | Angle,
-    A extends Number | Percentage<"percentage">,
-    W extends Percentage<"percentage">,
-    B extends Percentage<"percentage">,
-  >(
-    hue: H,
-    whiteness: W,
-    blackness: B,
-    alpha: A,
-  ): HWB<ToCanonical<H>, ToCanonical<A>> {
+export class HWB extends Triplet<"hwb"> {
+  public static of(
+    hue: Number | Angle,
+    whiteness: Percentage<"percentage">,
+    blackness: Percentage<"percentage">,
+    alpha: Number | Percentage<"percentage">,
+  ): HWB {
     return new HWB(
-      hue.resolve() as ToCanonical<H>,
+      hue.resolve(),
       whiteness.resolve(),
       blackness.resolve(),
-      alpha.resolve() as ToCanonical<A>,
+      alpha.resolve(),
     );
   }
 
-  private readonly _hue: H;
-  private readonly _whiteness: Percentage.Canonical;
-  private readonly _blackness: Percentage.Canonical;
+  private readonly _hue: HWB.Hue;
+  private readonly _whiteness: HWB.Component;
+  private readonly _blackness: HWB.Component;
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
 
   protected constructor(
-    hue: H,
-    whiteness: Percentage.Canonical,
-    blackness: Percentage.Canonical,
-    alpha: A,
+    hue: HWB.Hue,
+    whiteness: HWB.Component,
+    blackness: HWB.Component,
+    alpha: Triplet.Alpha,
   ) {
     super("hwb", alpha);
     this._hue = hue;
@@ -104,15 +64,15 @@ export class HWB<
     this._blue = Percentage.of<"percentage">(blue);
   }
 
-  public get hue(): H {
+  public get hue(): HWB.Hue {
     return this._hue;
   }
 
-  public get whiteness(): Percentage.Canonical {
+  public get whiteness(): HWB.Component {
     return this._whiteness;
   }
 
-  public get blackness(): Percentage.Canonical {
+  public get blackness(): HWB.Component {
     return this._blackness;
   }
 
@@ -178,10 +138,12 @@ export namespace HWB {
     blackness: Percentage.Fixed.JSON;
   }
 
-  export function isHWB<
-    H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage.Fixed,
-  >(value: unknown): value is HWB<H, A> {
+  /** @internal */
+  export type Hue = Number.Canonical | Angle.Canonical;
+  /** @internal */
+  export type Component = Percentage.Canonical;
+
+  export function isHWB(value: unknown): value is HWB {
     return value instanceof HWB;
   }
 

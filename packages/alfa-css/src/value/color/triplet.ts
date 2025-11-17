@@ -21,21 +21,16 @@ const { array, pair, map, either, option, right, delimited } = Parser;
  *
  * @internal
  */
-export abstract class Triplet<
-  F extends string = string,
-  A extends Number.Canonical | Percentage.Canonical =
-    | Number.Canonical
-    | Percentage.Canonical,
-> extends Format<F> {
-  protected readonly _alpha: A;
+export abstract class Triplet<F extends string = string> extends Format<F> {
+  protected readonly _alpha: Triplet.Alpha;
 
-  protected constructor(format: F, alpha: A) {
+  protected constructor(format: F, alpha: Triplet.Alpha) {
     super(format);
 
     this._alpha = alpha;
   }
 
-  public get alpha(): A {
+  public get alpha(): Triplet.Alpha {
     return this._alpha;
   }
 
@@ -54,6 +49,8 @@ export namespace Triplet {
   export interface JSON<F extends string = string> extends Format.JSON<F> {
     alpha: Number.Fixed.JSON | Percentage.Fixed.JSON;
   }
+
+  export type Alpha = Number.Canonical | Percentage.Canonical;
 
   type Component = Angle | Length | Number | Percentage;
 
