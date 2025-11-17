@@ -122,12 +122,31 @@ test("parse() accepts calculations", (t) => {
 });
 
 test("#resolve() returns RBG color in percentages", (t) => {
-  t.deepEqual(parse("hsl(0, 100%, 100%)").resolve().toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 1 },
-    green: { type: "percentage", value: 1 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  for (const [h, s, l, r, g, b] of [
+    ["0", "100%", "100%", 1, 1, 1],
+    ["0deg", "100%", "50%", 1, 0, 0],
+    ["120", "100%", "50%", 0, 1, 0],
+    ["240", "100%", "50%", 0, 0, 1],
+    ["60deg", "100%", "50%", 1, 1, 0],
+    [".5turn", "100%", "50%", 0, 1, 1],
+    ["300", "100%", "50%", 1, 0, 1],
+    ["0rad", "0%", "0%", 0, 0, 0],
+    ["0", "0%", "50%", 0.5, 0.5, 0.5],
+    ["0", "0%", "100%", 1, 1, 1],
+  ] as const) {
+    const source = `hsl(${h}, ${s}, ${l})`;
+
+    t.deepEqual(
+      parse(source).resolve().toJSON(),
+      {
+        type: "color",
+        format: "rgb",
+        red: { type: "percentage", value: r },
+        green: { type: "percentage", value: g },
+        blue: { type: "percentage", value: b },
+        alpha: { type: "percentage", value: 1 },
+      },
+      `Failed to convert ${source} to RGB (${r}, ${g}, ${b})`,
+    );
+  }
 });
