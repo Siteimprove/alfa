@@ -101,8 +101,8 @@ const whitepoints = {
   },
 } as const;
 
-const colorSpaces = ["sRGB", "display-p3", "prophoto-rgb"] as const;
-// | "rec2020";"a98-rgb"
+const colorSpaces = ["a98-rgb", "display-p3", "prophoto-rgb", "sRGB"] as const;
+// | "rec2020";
 /** @internal */
 export type ColorSpace = (typeof colorSpaces)[number];
 
@@ -176,52 +176,43 @@ export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
 }
 
 const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
-  sRGB: {
-    space: "sRGB",
+  "a98-rgb": {
+    space: "a98-rgb",
     whitepoint: "D65",
 
     /**
-     * Convert a sRGB color component to sRGB-linear (undo gamma encoding).
-     * {@link https://en.wikipedia.org/wiki/SRGB}
+     * Convert a color component in a98-rgb form to a98-rgb-linear
+     * (undo gamma encoding).
      *
-     * @remarks
-     * Extended transfer function:
-     * for negative values, linear portion is extended on reflection of axis,
-     * then reflected power function is used.
-     *
-     * @param value - A sRGB color component in the range 0.0-1.0
+     * @param value - A a98-rgb color component in the range 0.0-1.0
      */
-    gammaDecoding,
+    gammaDecoding: gammaCorrection(563 / 256),
 
     /**
-     * Convert a sRGB-linear color component to sRGB (apply gamma encoding).
-     * {@link https://en.wikipedia.org/wiki/SRGB}
+     * Convert a color component in a98-rgb-linear form to a98-rgb
+     * (appliy gamma encoding).
      *
-     * @remarks
-     * Extended transfer function:
-     * For negative values, linear portion extends on reflection of axis, then
-     * uses reflected pow below that
-     *
-     * @param value - A sRGB-linear color component in the range 0.0-1.0
+     * @param value - A a98-rgb-linear color component in the range 0.0-1.0
      */
-    gammaEncoding,
+    gammaEncoding: gammaCorrection(256 / 563),
 
     /**
-     * Matrix for converting sRGB-linear to CIE XYZ (no chromatic adaptation).
+     * Matrix for converting a98-rgb-linear to CIE XYZ
+     * (no chromatic adaptation).
      */
     toXYZ: Matrix.transpose([
-      [506752 / 1228815, 87881 / 245763, 12673 / 70218],
-      [87098 / 409605, 175762 / 245763, 12673 / 175545],
-      [7918 / 409605, 87881 / 737289, 1001167 / 1053270],
+      [573536 / 994567, 263643 / 1420810, 187206 / 994567],
+      [591459 / 1989134, 6239551 / 9945670, 374412 / 4972835],
+      [53769 / 1989134, 351524 / 4972835, 4929758 / 4972835],
     ]),
 
     /**
-     * Matrix for converting XYZ to sRGB-linear (no chromatic adaptation).
+     * Matrix for converting XYZ to a98-rgb-linear (no chromatic adaptation).
      */
     fromXYZ: Matrix.transpose([
-      [12831 / 3959, -329 / 214, -1974 / 3959],
+      [1829569 / 896150, -506331 / 896150, -308931 / 896150],
       [-851781 / 878810, 1648619 / 878810, 36519 / 878810],
-      [705 / 12673, -2585 / 12673, 705 / 667],
+      [16779 / 1248040, -147721 / 1248040, 1266979 / 1248040],
     ]),
   },
 
@@ -317,29 +308,54 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
     ]),
   },
 
-  // "a98-rgb": {
-  //   space: "a98-rgb",
-  //   whitepoint: "D65",
-  //
-  //   /**
-  //    * Convert a color component in a98-rgb form to a98-rgb-linear
-  //    * (undo gamma encoding).
-  //    *
-  //    * @param value - A a98-rgb color component in the range 0.0-1.0
-  //    */
-  //   gammaDecoding(value: number): number {
-  //     let sign = value < 0 ? -1 : 1;
-  //     let abs = Math.abs(value);
-  //
-  //     return sign * Math.pow(abs, 563 / 256);
-  //   },
-  //
-  //   gammaEncoding,
-  //
-  //   toXYZ: Matrix.transpose([]),
-  //
-  //   fromXYZ: Matrix.transpose([]),
-  // },
+  sRGB: {
+    space: "sRGB",
+    whitepoint: "D65",
+
+    /**
+     * Convert a sRGB color component to sRGB-linear (undo gamma encoding).
+     * {@link https://en.wikipedia.org/wiki/SRGB}
+     *
+     * @remarks
+     * Extended transfer function:
+     * for negative values, linear portion is extended on reflection of axis,
+     * then reflected power function is used.
+     *
+     * @param value - A sRGB color component in the range 0.0-1.0
+     */
+    gammaDecoding,
+
+    /**
+     * Convert a sRGB-linear color component to sRGB (apply gamma encoding).
+     * {@link https://en.wikipedia.org/wiki/SRGB}
+     *
+     * @remarks
+     * Extended transfer function:
+     * For negative values, linear portion extends on reflection of axis, then
+     * uses reflected pow below that
+     *
+     * @param value - A sRGB-linear color component in the range 0.0-1.0
+     */
+    gammaEncoding,
+
+    /**
+     * Matrix for converting sRGB-linear to CIE XYZ (no chromatic adaptation).
+     */
+    toXYZ: Matrix.transpose([
+      [506752 / 1228815, 87881 / 245763, 12673 / 70218],
+      [87098 / 409605, 175762 / 245763, 12673 / 175545],
+      [7918 / 409605, 87881 / 737289, 1001167 / 1053270],
+    ]),
+
+    /**
+     * Matrix for converting XYZ to sRGB-linear (no chromatic adaptation).
+     */
+    fromXYZ: Matrix.transpose([
+      [12831 / 3959, -329 / 214, -1974 / 3959],
+      [-851781 / 878810, 1648619 / 878810, 36519 / 878810],
+      [705 / 12673, -2585 / 12673, 705 / 667],
+    ]),
+  },
 };
 
 /**
@@ -394,30 +410,6 @@ const RGBLinearConverters = colorSpaces.reduce(
 };
 
 // a98-rgb functions
-
-function lin_a98rgb(RGB: Vector): Vector {
-  // convert an array of a98-rgb values in the range 0.0 - 1.0
-  // to linear light (un-companded) form.
-  // negative values are also now accepted
-  return RGB.map(function (val) {
-    let sign = val < 0 ? -1 : 1;
-    let abs = Math.abs(val);
-
-    return sign * Math.pow(abs, 563 / 256);
-  });
-}
-
-function gam_a98rgb(RGB: Vector): Vector {
-  // convert an array of linear-light a98-rgb  in the range 0.0-1.0
-  // to gamma corrected form
-  // negative values are also now accepted
-  return RGB.map(function (val) {
-    let sign = val < 0 ? -1 : 1;
-    let abs = Math.abs(val);
-
-    return sign * Math.pow(abs, 256 / 563);
-  });
-}
 
 // function lin_a98rgb_to_XYZ(rgb: Vector): Vector {
 //   // convert an array of linear-light a98-rgb values to CIE XYZ
