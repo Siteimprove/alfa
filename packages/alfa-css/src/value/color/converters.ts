@@ -66,14 +66,41 @@ export function hwbToRgb(
  * in the CSS specs in this file, making it easier to fix.
  */
 
-// standard white points, defined by 4-figure CIE x,y chromaticities
-const whitepoints: { [key: string]: Vector } = {
-  D50: [0.3457 / 0.3585, 1.0, (1.0 - 0.3457 - 0.3585) / 0.3585],
-  D65: [0.3127 / 0.329, 1.0, (1.0 - 0.3127 - 0.329) / 0.329],
-};
+/**
+ * Standard white points, defined by 4-figure CIE x,y chromaticities
+ *
+ * @remarks
+ * Since only two are used, we can have a simple conversion matrix for each,
+ * there is only one destination.
+ */
+const whitepoints = {
+  D50: {
+    value: [0.3457 / 0.3585, 1.0, (1.0 - 0.3457 - 0.3585) / 0.3585],
+    // Bradford chromatic adaptation from D50 to D65
+    // See https://github.com/LeaVerou/color.js/pull/360/files
+    convert: Matrix.transpose([
+      [0.955473421488075, -0.02309845494876471, 0.06325924320057072],
+      [-0.0283697093338637, 1.0099953980813041, 0.021041441191917323],
+      [0.012314014864481998, -0.020507649298898964, 1.330365926242124],
+    ]),
+  },
+  D65: {
+    value: [0.3127 / 0.329, 1.0, (1.0 - 0.3127 - 0.329) / 0.329],
+    // Bradford chromatic adaptation from D65 to D50
+    // The matrix below is the result of three operations:
+    // - convert from XYZ to retinal cone domain
+    // - scale components from one reference white to another
+    // - convert back to XYZ
+    // see https://github.com/LeaVerou/color.js/pull/354/files
+    convert: Matrix.transpose([
+      [1.0479297925449969, 0.022946870601609652, -0.05019226628920524],
+      [0.02962780877005599, 0.9904344267538799, -0.017073799063418826],
+      [-0.009243040646204504, 0.015055191490298152, 0.7518742814281371],
+    ]),
+  },
+} as const;
 
-const colorSpaces = ["sRGB", "display-p3"] as const;
-// | "prophoto-rgb"
+const colorSpaces = ["sRGB", "display-p3", "prophoto-rgb"] as const;
 // | "a98-rgb"
 // | "rec2020";
 /** @internal */
@@ -131,7 +158,7 @@ export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
   // These are all linear transformations, so we can do them in one go.
   const destLinear: Vector = multiply(
     sourceLinear,
-    converters[source.space][
+    RGBLinearConverters[source.space][
       // The conversion is safe because we already checked that
       // source.space !== destination.space
       destination.space as unknown as Exclude<ColorSpace, SRC>
@@ -237,6 +264,80 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
       [11844 / 330415, -50337 / 660830, 316169 / 330415],
     ]),
   },
+
+  "prophoto-rgb": {
+    space: "prophoto-rgb",
+    whitepoint: "D50",
+
+    /**
+     * Convert a color component in prophoto-rgb form to prophoto-rgb-linear
+     * (undo gamma encoding).
+     *
+     * @remarks
+     * Transfer curve is gamma 1.8 with a small linear portion extended
+     * transfer function.
+     *
+     * @param value - A prophoto-rgb color component in the range 0.0-1.0
+     */
+    gammaDecoding(value: number): number {
+      const Et2 = 16 / 512;
+
+      let sign = value < 0 ? -1 : 1;
+      let abs = Math.abs(value);
+
+      if (abs <= Et2) {
+        return value / 16;
+      }
+
+      return sign * Math.pow(abs, 1.8);
+    },
+
+    /**
+     * Convert a color component in prophoto-rgb-linear form to prophoto-rgb
+     * (apply gamma encoding).
+     *
+     * @remarks
+     * Transfer curve is gamma 1.8 with a small linear portion.
+     *
+     * @param value - A prophoto-rgb-linear color component in the range 0.0-1.0
+     */
+    gammaEncoding(value: number): number {
+      const Et = 1 / 512;
+
+      let sign = value < 0 ? -1 : 1;
+      let abs = Math.abs(value);
+
+      if (abs >= Et) {
+        return sign * Math.pow(abs, 1 / 1.8);
+      }
+
+      return 16 * value;
+    },
+
+    /**
+     * Matrix for converting prophoto-rgb-linear to CIE XYZ
+     * (no chromatic adaptation).
+     *
+     * @remarks
+     * The matrix cannot be expressed in rational form, but is calculated to
+     * 64 bits accuracy.
+     * {@link https://github.com/w3c/csswg-drafts/issues/7675}
+     */
+    toXYZ: Matrix.transpose([
+      [0.7977666449006423, 0.13518129740053308, 0.0313477341283922],
+      [0.2880748288194013, 0.711835234241873, 0.00008993693872564],
+      [0.0, 0.0, 0.8251046025104602],
+    ]),
+
+    /**
+     * Matrix for converting XYZ to prophoto-rgb-linear (no chromatic adaptation).
+     */
+    fromXYZ: Matrix.transpose([
+      [1.3457868816471583, -0.25557208737979464, -0.05110186497554526],
+      [-0.5446307051249019, 1.5082477428451468, 0.02052744743642139],
+      [0.0, 0.0, 1.2119675456389452],
+    ]),
+  },
 };
 
 /**
@@ -251,10 +352,7 @@ function linearConverter(source: ColorSpace, destination: ColorSpace): Matrix {
   let mat: Matrix = srcSpace.toXYZ;
   // 3. adjust whitepoint if needed (chromatic adaptation)
   if (srcSpace.whitepoint !== destSpace.whitepoint) {
-    mat = Matrix.multiply(
-      mat,
-      srcSpace.whitepoint === "D50" ? D50_to_D65 : D65_to_D50,
-    );
+    mat = Matrix.multiply(mat, whitepoints[srcSpace.whitepoint].convert);
   }
   // 4. from XYZ to destination space
   mat = Matrix.multiply(mat, destSpace.fromXYZ);
@@ -262,7 +360,10 @@ function linearConverter(source: ColorSpace, destination: ColorSpace): Matrix {
   return mat;
 }
 
-const converters = colorSpaces.reduce(
+/**
+ * Matrices for converting between RGB color spaces in linear-light form.
+ */
+const RGBLinearConverters = colorSpaces.reduce(
   // We can't really be clever with types here because the objects are built
   // piece by piece, so the accumulators can only have the partial types, and
   // that becomes a total mess that TS cannot handle anyway…
@@ -289,70 +390,6 @@ const converters = colorSpaces.reduce(
     [destination in Exclude<ColorSpace, source>]: Matrix;
   };
 };
-
-// prophoto-rgb functions
-
-function lin_ProPhoto(RGB: Vector): Vector {
-  // convert an array of prophoto-rgb values
-  // where in-gamut colors are in the range [0.0 - 1.0]
-  // to linear light (un-companded) form.
-  // Transfer curve is gamma 1.8 with a small linear portion
-  // Extended transfer function
-  const Et2 = 16 / 512;
-
-  return RGB.map(function (val) {
-    let sign = val < 0 ? -1 : 1;
-    let abs = Math.abs(val);
-
-    if (abs <= Et2) {
-      return val / 16;
-    }
-
-    return sign * Math.pow(abs, 1.8);
-  });
-}
-
-function gam_ProPhoto(RGB: Vector): Vector {
-  // convert an array of linear-light prophoto-rgb  in the range 0.0-1.0
-  // to gamma corrected form
-  // Transfer curve is gamma 1.8 with a small linear portion
-  // TODO for negative values, extend linear portion on reflection of axis, then add pow below that
-  const Et = 1 / 512;
-  return RGB.map(function (val) {
-    let sign = val < 0 ? -1 : 1;
-    let abs = Math.abs(val);
-
-    if (abs >= Et) {
-      return sign * Math.pow(abs, 1 / 1.8);
-    }
-
-    return 16 * val;
-  });
-}
-
-// function lin_ProPhoto_to_XYZ(rgb: Vector): Vector {
-//   // convert an array of linear-light prophoto-rgb values to CIE D50 XYZ
-//   // matrix cannot be expressed in rational form, but is calculated to 64 bit accuracy
-//   // see https://github.com/w3c/csswg-drafts/issues/7675
-//   const M: Matrix = [
-//     [0.7977666449006423, 0.13518129740053308, 0.0313477341283922],
-//     [0.2880748288194013, 0.711835234241873, 0.00008993693872564],
-//     [0.0, 0.0, 0.8251046025104602],
-//   ];
-//
-//   return multiply(M, rgb);
-// }
-//
-// function XYZ_to_lin_ProPhoto(XYZ: Vector): Vector {
-//   // convert D50 XYZ to linear-light prophoto-rgb
-//   const M: Matrix = [
-//     [1.3457868816471583, -0.25557208737979464, -0.05110186497554526],
-//     [-0.5446307051249019, 1.5082477428451468, 0.02052744743642139],
-//     [0.0, 0.0, 1.2119675456389452],
-//   ];
-//
-//   return multiply(M, XYZ);
-// }
 
 // a98-rgb functions
 
@@ -471,19 +508,19 @@ function gam_2020(RGB: Vector): Vector {
 // - convert back to XYZ
 // see https://github.com/LeaVerou/color.js/pull/354/files
 
-const D65_to_D50: Matrix = [
+const D65_to_D50 = Matrix.transpose([
   [1.0479297925449969, 0.022946870601609652, -0.05019226628920524],
   [0.02962780877005599, 0.9904344267538799, -0.017073799063418826],
   [-0.009243040646204504, 0.015055191490298152, 0.7518742814281371],
-];
+]);
 
 // Bradford chromatic adaptation from D50 to D65
 // See https://github.com/LeaVerou/color.js/pull/360/files
-const D50_to_D65: Matrix = [
+const D50_to_D65 = Matrix.transpose([
   [0.955473421488075, -0.02309845494876471, 0.06325924320057072],
   [-0.0283697093338637, 1.0099953980813041, 0.021041441191917323],
   [0.012314014864481998, -0.020507649298898964, 1.330365926242124],
-];
+]);
 
 // CIE Lab and LCH
 
@@ -494,7 +531,7 @@ function XYZ_to_Lab(XYZ: Vector): Vector {
   const kappa = 24389 / 27; // 29^3/3^3
 
   // compute xyz, which is XYZ scaled relative to reference white
-  const xyz = XYZ.map((value, i) => value / whitepoints.D50[i]);
+  const xyz = XYZ.map((value, i) => value / whitepoints.D50.value[i]);
 
   // now compute f
   const f = xyz.map((value) =>
@@ -531,7 +568,7 @@ function Lab_to_XYZ(Lab: Vector): Vector {
   ];
 
   // Compute XYZ by scaling xyz by reference white
-  return xyz.map((value, i) => value * whitepoints.D50[i]);
+  return xyz.map((value, i) => value * whitepoints.D50.value[i]);
 }
 
 function Lab_to_LCH(Lab: Vector): Vector {
