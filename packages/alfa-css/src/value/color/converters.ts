@@ -8,6 +8,7 @@
 
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Matrix, type Vector } from "@siteimprove/alfa-math";
+import type { Predicate } from "@siteimprove/alfa-predicate";
 
 /**
  * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
@@ -101,8 +102,7 @@ const whitepoints = {
 } as const;
 
 const colorSpaces = ["sRGB", "display-p3", "prophoto-rgb"] as const;
-// | "a98-rgb"
-// | "rec2020";
+// | "rec2020";"a98-rgb"
 /** @internal */
 export type ColorSpace = (typeof colorSpaces)[number];
 
@@ -252,7 +252,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
     toXYZ: Matrix.transpose([
       [608311 / 1250200, 189793 / 714400, 198249 / 1000160],
       [35783 / 156275, 247089 / 357200, 198249 / 2500400],
-      [0 / 1, 32229 / 714400, 5220557 / 5000800],
+      [0, 32229 / 714400, 5220557 / 5000800],
     ]),
 
     /**
@@ -279,18 +279,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      *
      * @param value - A prophoto-rgb color component in the range 0.0-1.0
      */
-    gammaDecoding(value: number): number {
-      const Et2 = 16 / 512;
-
-      let sign = value < 0 ? -1 : 1;
-      let abs = Math.abs(value);
-
-      if (abs <= Et2) {
-        return value / 16;
-      }
-
-      return sign * Math.pow(abs, 1.8);
-    },
+    gammaDecoding: gammaCorrection(1.8, (value) => value <= 16 / 512, 1 / 16),
 
     /**
      * Convert a color component in prophoto-rgb-linear form to prophoto-rgb
@@ -301,18 +290,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      *
      * @param value - A prophoto-rgb-linear color component in the range 0.0-1.0
      */
-    gammaEncoding(value: number): number {
-      const Et = 1 / 512;
-
-      let sign = value < 0 ? -1 : 1;
-      let abs = Math.abs(value);
-
-      if (abs >= Et) {
-        return sign * Math.pow(abs, 1 / 1.8);
-      }
-
-      return 16 * value;
-    },
+    gammaEncoding: gammaCorrection(1 / 1.8, (value) => value < 1 / 512, 16),
 
     /**
      * Matrix for converting prophoto-rgb-linear to CIE XYZ
@@ -338,6 +316,30 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
       [0.0, 0.0, 1.2119675456389452],
     ]),
   },
+
+  // "a98-rgb": {
+  //   space: "a98-rgb",
+  //   whitepoint: "D65",
+  //
+  //   /**
+  //    * Convert a color component in a98-rgb form to a98-rgb-linear
+  //    * (undo gamma encoding).
+  //    *
+  //    * @param value - A a98-rgb color component in the range 0.0-1.0
+  //    */
+  //   gammaDecoding(value: number): number {
+  //     let sign = value < 0 ? -1 : 1;
+  //     let abs = Math.abs(value);
+  //
+  //     return sign * Math.pow(abs, 563 / 256);
+  //   },
+  //
+  //   gammaEncoding,
+  //
+  //   toXYZ: Matrix.transpose([]),
+  //
+  //   fromXYZ: Matrix.transpose([]),
+  // },
 };
 
 /**
@@ -697,6 +699,10 @@ function multiply(v: Vector, m: Matrix): Vector {
 
 /**
  * Gamma decoding for sRBG and display-p3 color spaces.
+ *
+ * @privateRemarks
+ * This does some linear correction before the power-law, so it's not a regular
+ * gamma correction.
  */
 function gammaDecoding(value: number): number {
   let sign = value < 0 ? -1 : 1;
@@ -711,6 +717,10 @@ function gammaDecoding(value: number): number {
 
 /**
  * Gamma encoding for sRBG and display-p3 color spaces.
+ *
+ * @privateRemarks
+ * This does some linear correction after the power-law, so it's not a regular
+ * gamma correction.
  */
 function gammaEncoding(value: number): number {
   let sign = value < 0 ? -1 : 1;
@@ -721,4 +731,32 @@ function gammaEncoding(value: number): number {
   }
 
   return 12.92 * value;
+}
+
+/**
+ * Computes gamma correction, as a power-law function with optional linear
+ * portion.
+ * {@link https://en.wikipedia.org/wiki/Gamma_correction}
+ *
+ * @param gamma - The gamma value to use for the correction.
+ * @param linearRange - Whether a value is in the linear range
+ * @param linearCoefficient - The coefficient to apply in the linear range
+ *
+ * @returns A function that applies gamma correction to a value.
+ */
+function gammaCorrection(
+  gamma: number,
+  linearRange: Predicate<number> = () => false,
+  linearCoefficient: number = 1,
+): Mapper<number> {
+  return function (value: number): number {
+    let sign = value < 0 ? -1 : 1;
+    let abs = Math.abs(value);
+
+    if (linearRange(abs)) {
+      return linearCoefficient * value;
+    }
+
+    return sign * Math.pow(abs, gamma);
+  };
 }
