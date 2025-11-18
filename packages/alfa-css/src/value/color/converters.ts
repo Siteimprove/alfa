@@ -101,8 +101,13 @@ const whitepoints = {
   },
 } as const;
 
-const colorSpaces = ["a98-rgb", "display-p3", "prophoto-rgb", "sRGB"] as const;
-// | "rec2020";
+const colorSpaces = [
+  "a98-rgb",
+  "display-p3",
+  "prophoto-rgb",
+  "rec2020",
+  "sRGB",
+] as const;
 /** @internal */
 export type ColorSpace = (typeof colorSpaces)[number];
 
@@ -190,7 +195,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
 
     /**
      * Convert a color component in a98-rgb-linear form to a98-rgb
-     * (appliy gamma encoding).
+     * (apply gamma encoding).
      *
      * @param value - A a98-rgb-linear color component in the range 0.0-1.0
      */
@@ -308,6 +313,45 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
     ]),
   },
 
+  rec2020: {
+    space: "rec2020",
+    whitepoint: "D65",
+
+    /**
+     * Convert a color component in rec2020 form to rec2020-linear
+     * (undo gamma encoding).
+     *
+     * @param value - A rec2020 color component in the range 0.0-1.0
+     */
+    gammaDecoding: gammaCorrection(2.4),
+
+    /**
+     * Convert a color component in rec2020-linear form to rec2020
+     * (apply gamma encoding).
+     *
+     * @param value - A rec2020-linear color component in the range 0.0-1.0
+     */
+    gammaEncoding: gammaCorrection(1 / 2.4),
+
+    /**
+     * Matrix for converting rec2020-linear to CIE XYZ (no chromatic adaptation).
+     */
+    toXYZ: Matrix.transpose([
+      [63426534 / 99577255, 20160776 / 139408157, 47086771 / 278816314],
+      [26158966 / 99577255, 472592308 / 697040785, 8267143 / 139408157],
+      [0, 19567812 / 697040785, 295819943 / 278816314],
+    ]),
+
+    /**
+     * Matrix for converting XYZ to rec2020-linear (no chromatic adaptation).
+     */
+    fromXYZ: Matrix.transpose([
+      [30757411 / 17917100, -6372589 / 17917100, -4539589 / 17917100],
+      [-19765991 / 29648200, 47925759 / 29648200, 467509 / 29648200],
+      [792561 / 44930125, -1921689 / 44930125, 42328811 / 44930125],
+    ]),
+  },
+
   sRGB: {
     space: "sRGB",
     whitepoint: "D65",
@@ -408,113 +452,6 @@ const RGBLinearConverters = colorSpaces.reduce(
     [destination in Exclude<ColorSpace, source>]: Matrix;
   };
 };
-
-// a98-rgb functions
-
-// function lin_a98rgb_to_XYZ(rgb: Vector): Vector {
-//   // convert an array of linear-light a98-rgb values to CIE XYZ
-//   // http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
-//   // has greater numerical precision than section 4.3.5.3 of
-//   // https://www.adobe.com/digitalimag/pdfs/AdobeRGB1998.pdf
-//   // but the values below were calculated from first principles
-//   // from the chromaticity coordinates of R G B W
-//   // see matrixmaker.html
-//   const M: Matrix = [
-//     [573536 / 994567, 263643 / 1420810, 187206 / 994567],
-//     [591459 / 1989134, 6239551 / 9945670, 374412 / 4972835],
-//     [53769 / 1989134, 351524 / 4972835, 4929758 / 4972835],
-//   ];
-//
-//   return multiply(M, rgb);
-// }
-//
-// function XYZ_to_lin_a98rgb(XYZ: Vector): Vector {
-//   // convert XYZ to linear-light a98-rgb
-//   const M: Matrix = [
-//     [1829569 / 896150, -506331 / 896150, -308931 / 896150],
-//     [-851781 / 878810, 1648619 / 878810, 36519 / 878810],
-//     [16779 / 1248040, -147721 / 1248040, 1266979 / 1248040],
-//   ];
-//
-//   return multiply(M, XYZ);
-// }
-
-//Rec. 2020-related functions
-
-function lin_2020(RGB: Vector): Vector {
-  // convert an array of rec2020 RGB values in the range 0.0 - 1.0
-  // to linear light (un-companded) form.
-  //  Reference electro-optical transfer function from Rec. ITU-R BT.1886 Annex 1
-  //  with b (black lift) = 0 and a (user gain) = 1
-  //  defined over the extended range, not clamped
-
-  return RGB.map(function (val) {
-    let sign = val < 0 ? -1 : 1;
-    let abs = Math.abs(val);
-    return sign * Math.pow(abs, 2.4);
-  });
-}
-
-function gam_2020(RGB: Vector): Vector {
-  // convert an array of linear-light rec2020 RGB  in the range 0.0-1.0
-  // to gamma corrected form
-  //  Reference electro-optical transfer function from Rec. ITU-R BT.1886 Annex 1
-  //  with b (black lift) = 0 and a (user gain) = 1
-  //  defined over the extended range, not clamped
-
-  return RGB.map(function (val) {
-    let sign = val < 0 ? -1 : 1;
-    let abs = Math.abs(val);
-    return sign * Math.pow(abs, 1 / 2.4);
-  });
-}
-
-// function lin_2020_to_XYZ(rgb: Vector): Vector {
-//   // convert an array of linear-light rec2020 values to CIE XYZ
-//   // using  D65 (no chromatic adaptation)
-//   const M: Matrix = [
-//     [63426534 / 99577255, 20160776 / 139408157, 47086771 / 278816314],
-//     [26158966 / 99577255, 472592308 / 697040785, 8267143 / 139408157],
-//     [0 / 1, 19567812 / 697040785, 295819943 / 278816314],
-//   ];
-//   // 0 is actually calculated as  4.994106574466076e-17
-//
-//   return multiply(M, rgb);
-// }
-//
-// function XYZ_to_lin_2020(XYZ: Vector): Vector {
-//   // convert XYZ to linear-light rec2020
-//   const M: Matrix = [
-//     [30757411 / 17917100, -6372589 / 17917100, -4539589 / 17917100],
-//     [-19765991 / 29648200, 47925759 / 29648200, 467509 / 29648200],
-//     [792561 / 44930125, -1921689 / 44930125, 42328811 / 44930125],
-//   ];
-//
-//   return multiply(M, XYZ);
-// }
-
-// Chromatic adaptation
-
-// Bradford chromatic adaptation from D65 to D50
-// The matrix below is the result of three operations:
-// - convert from XYZ to retinal cone domain
-// - scale components from one reference white to another
-// - convert back to XYZ
-// see https://github.com/LeaVerou/color.js/pull/354/files
-
-const D65_to_D50 = Matrix.transpose([
-  [1.0479297925449969, 0.022946870601609652, -0.05019226628920524],
-  [0.02962780877005599, 0.9904344267538799, -0.017073799063418826],
-  [-0.009243040646204504, 0.015055191490298152, 0.7518742814281371],
-]);
-
-// Bradford chromatic adaptation from D50 to D65
-// See https://github.com/LeaVerou/color.js/pull/360/files
-const D50_to_D65 = Matrix.transpose([
-  [0.955473421488075, -0.02309845494876471, 0.06325924320057072],
-  [-0.0283697093338637, 1.0099953980813041, 0.021041441191917323],
-  [0.012314014864481998, -0.020507649298898964, 1.330365926242124],
-]);
 
 // CIE Lab and LCH
 
