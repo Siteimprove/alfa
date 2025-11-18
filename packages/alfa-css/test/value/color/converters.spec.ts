@@ -133,56 +133,67 @@ test("convertRGB() converts between RGB color spaces", (t) => {
   // Since (de-)linearization is tested separately, we only convert between
   // linear colors.
   // Since we need to use the matrices, we can only test colors with 3 components.
-  const cases: Array<[ColorSpace, ColorSpace, Vector, Vector]> = [
+  const cases: Array<[ColorSpace, Vector, Vector, Vector]> = [
     [
       "sRGB",
-      "display-p3",
       [0.1, 0.2, 0.3],
       [0.11775380312856379, 0.1966805801149038, 0.28934372978937967],
+      [],
     ],
     [
       "sRGB",
-      "display-p3",
       [0.4, 0.5, 0.6],
       [0.4177538031285638, 0.49668058011490374, 0.5893437297893798],
+      [],
     ],
     [
       "sRGB",
-      "display-p3",
       [0.7, 0.8, 0.9],
       [0.7177538031285637, 0.7966805801149037, 0.8893437297893797],
+      [],
     ],
     [
       "display-p3",
-      "sRGB",
-      [0.1, 0.2, 0.3],
       [0.07750598237194398, 0.20420569547096884, 0.3117911154731301],
+      [0.1, 0.2, 0.3],
+      [],
     ],
     [
       "display-p3",
-      "sRGB",
-      [0.4, 0.5, 0.6],
       [0.3775059823719439, 0.5042056954709688, 0.6117911154731301],
+      [0.4, 0.5, 0.6],
+      [],
     ],
     [
       "display-p3",
-      "sRGB",
-      [0.7, 0.8, 0.9],
       [0.6775059823719438, 0.804205695470969, 0.9117911154731301],
+      [0.7, 0.8, 0.9],
+      [],
     ],
   ];
 
-  for (const [src, dest, source, destination] of cases) {
+  for (const [source, sRGB, displayP3, prophoto] of cases) {
+    const values = {
+      sRGB,
+      "display-p3": displayP3,
+      "prophoto-rgb": prophoto,
+    } as const;
+
     const sourceColor = {
-      space: src,
+      space: source,
       linear: true,
-      components: source,
+      components: values[source],
     };
 
-    t.deepEqual(
-      convertRGB(sourceColor, { space: dest, linear: true }),
-      { space: dest, linear: true, components: destination },
-      `Failed to convert ${src}(${source}) linear to ${dest} linear.`,
-    );
+    for (const dest of /*Object.keys(values) as ColorSpace[]*/ [
+      "sRGB",
+      "display-p3",
+    ] as const) {
+      t.deepEqual(
+        convertRGB(sourceColor, { space: dest, linear: true }),
+        { space: dest, linear: true, components: values[dest] },
+        `Failed to convert ${source}(${source}) linear to ${dest} linear.`,
+      );
+    }
   }
 });
