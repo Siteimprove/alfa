@@ -322,6 +322,16 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      * (undo gamma encoding).
      *
      * @param value - A rec2020 color component in the range 0.0-1.0
+     *
+     * @privateRemarks
+     * There is some discussion and inconsistency about the exact transfer
+     * function for rec2020. The one used here is the one from the CSS
+     * Color Module Level 4, October 2025.
+     * {@link https://drafts.csswg.org/css-color/#predefined-rec2020}
+     * It seems vendors are not all using it, and online converters also give
+     * various results.
+     * {@link https://github.com/w3c/csswg-drafts/issues/12574}
+     * If this causes problems, we will need to revisit this.
      */
     gammaDecoding: gammaCorrection(2.4),
 
@@ -330,6 +340,16 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      * (apply gamma encoding).
      *
      * @param value - A rec2020-linear color component in the range 0.0-1.0
+     *
+     * @privateRemarks
+     * There is some discussion and inconsistency about the exact transfer
+     * function for rec2020. The one used here is the one from the CSS
+     * Color Module Level 4, October 2025.
+     * {@link https://drafts.csswg.org/css-color/#predefined-rec2020}
+     * It seems vendors are not all using it, and online converters also give
+     * various results.
+     * {@link https://github.com/w3c/csswg-drafts/issues/12574}
+     * If this causes problems, we will need to revisit this.
      */
     gammaEncoding: gammaCorrection(1 / 2.4),
 
