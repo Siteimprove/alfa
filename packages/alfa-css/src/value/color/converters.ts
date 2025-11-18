@@ -7,6 +7,7 @@
  */
 
 import { Matrix, type Vector } from "@siteimprove/alfa-math";
+import type { Mapper } from "@siteimprove/alfa-mapper";
 
 /**
  * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
@@ -87,8 +88,8 @@ export type RGB<S extends ColorSpace> = {
 interface RGBColorSpace<S extends ColorSpace> {
   space: S;
   whitepoint: keyof typeof whitepoints;
-  gammaEncoding: (value: number) => number;
-  gammaDecoding: (value: number) => number;
+  gammaEncoding: Mapper<number>;
+  gammaDecoding: Mapper<number>;
   toXYZ: Matrix;
   fromXYZ: Matrix;
 }
@@ -128,21 +129,19 @@ export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
   // 2., 3., 4. convert to XYZ, adjust whitepoint, convert to destination space
   // We pile up the matrix multiplications to limit the Vector <-> Matrix
   // conversions.
-  // WARNING! Due to column-major order, we need to apply the matrices in
-  // reverse order.
   // 2. to XYZ
   let mat: Matrix = srcSpace.toXYZ;
-  // 3. adjust whitepoint if needed
+  // 3. adjust whitepoint if needed (chromatic adaptation)
   if (srcSpace.whitepoint !== destSpace.whitepoint) {
     mat = Matrix.multiply(
-      srcSpace.whitepoint === "D50" ? D50_to_D65 : D65_to_D50,
       mat,
+      srcSpace.whitepoint === "D50" ? D50_to_D65 : D65_to_D50,
     );
   }
   // 4. from XYZ to destination space
-  mat = Matrix.multiply(destSpace.fromXYZ, mat);
+  mat = Matrix.multiply(mat, destSpace.fromXYZ);
 
-  const destLinear: Vector = multiply(mat, sourceLinear);
+  const destLinear: Vector = multiply(sourceLinear, mat);
 
   return {
     space: destination.space,
@@ -159,7 +158,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
     whitepoint: "D65",
 
     /**
-     * Convert a sRGB color to sRGB-linear (undo gamma encoding).
+     * Convert a sRGB color component to sRGB-linear (undo gamma encoding).
      * {@link https://en.wikipedia.org/wiki/SRGB}
      *
      * @remarks
@@ -167,7 +166,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      * for negative values, linear portion is extended on reflection of axis,
      * then reflected power function is used.
      *
-     * @param RGB - A sRGB color as a Vector of 3 components in the range 0.0-1.0
+     * @param value - A sRGB color component in the range 0.0-1.0
      */
     gammaDecoding(value: number): number {
       let sign = value < 0 ? -1 : 1;
@@ -181,7 +180,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
     },
 
     /**
-     * Convert a sRGB-linear color to sRGB (apply gamma encoding).
+     * Convert a sRGB-linear color component to sRGB (apply gamma encoding).
      * {@link https://en.wikipedia.org/wiki/SRGB}
      *
      * @remarks
@@ -189,7 +188,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      * For negative values, linear portion extends on reflection of axis, then
      * uses reflected pow below that
      *
-     * @param RGB - A sRGB-linear color as a Vector of 3 components in the range 0.0-1.0
+     * @param value - A sRGB-linear color component in the range 0.0-1.0
      */
     gammaEncoding(value: number): number {
       let sign = value < 0 ? -1 : 1;
@@ -203,27 +202,22 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
     },
 
     /**
-     * Convert a sRGB-linear values to CIE XYZ, using sRGB's own white, D65
-     * (no chromatic adaptation)
-     *
-     * @param RGB - A sRGB-linear color as a vector of 3 components in the range 0.0-1.0
+     * Matrix for converting sRGB-linear to CIE XYZ (no chromatic adaptation).
      */
-    toXYZ: [
+    toXYZ: Matrix.transpose([
       [506752 / 1228815, 87881 / 245763, 12673 / 70218],
       [87098 / 409605, 175762 / 245763, 12673 / 175545],
       [7918 / 409605, 87881 / 737289, 1001167 / 1053270],
-    ],
+    ]),
 
     /**
-     * Convert XYZ to sRGB-linear.
-     *
-     * @param XYZ - A CIE XYZ color as a vector of 3 components.
+     * Matrix for converting XYZ to sRGB-linear (no chromatic adaptation).
      */
-    fromXYZ: [
+    fromXYZ: Matrix.transpose([
       [12831 / 3959, -329 / 214, -1974 / 3959],
       [-851781 / 878810, 1648619 / 878810, 36519 / 878810],
       [705 / 12673, -2585 / 12673, 705 / 667],
-    ],
+    ]),
   },
 
   "display-p3": {
@@ -231,10 +225,10 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
     whitepoint: "D65",
 
     /**
-     * Convert a color in display-p3 RGB form to display-p3-linear
+     * Convert a color component in display-p3 RGB form to display-p3-linear
      * (undo gamma encoding).
      *
-     * @param RGB - A display-p3 color as a Vector of 3 components in the range 0.0-1.0
+     * @param value - A display-p3 color component in the range 0.0-1.0
      */
     gammaDecoding(value: number): number {
       let sign = value < 0 ? -1 : 1;
@@ -248,9 +242,10 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
     },
 
     /**
-     * Convert a color in display-p3-linear form to display-p3 (apply gamma encoding).
+     * Convert a color component in display-p3-linear form to display-p3
+     * (apply gamma encoding).
      *
-     * @param RGB - A display-p3-linear color as a Vector of 3 components in the range 0.0-1.0
+     * @param value - A display-p3-linear color component in the range 0.0-1.0
      */
     gammaEncoding(value: number): number {
       let sign = value < 0 ? -1 : 1;
@@ -263,17 +258,24 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
       return 12.92 * value;
     },
 
-    toXYZ: [
+    /**
+     * Matrix for converting display-p3-linear to CIE XYZ
+     * (no chromatic adaptation).
+     */
+    toXYZ: Matrix.transpose([
       [608311 / 1250200, 189793 / 714400, 198249 / 1000160],
       [35783 / 156275, 247089 / 357200, 198249 / 2500400],
       [0 / 1, 32229 / 714400, 5220557 / 5000800],
-    ],
+    ]),
 
-    fromXYZ: [
+    /**
+     * Matrix for converting XYZ to display-p3-linear (no chromatic adaptation).
+     */
+    fromXYZ: Matrix.transpose([
       [446124 / 178915, -333277 / 357830, -72051 / 178915],
       [-14852 / 17905, 63121 / 35810, 423 / 17905],
       [11844 / 330415, -50337 / 660830, 316169 / 330415],
-    ],
+    ]),
   },
 };
 
@@ -317,29 +319,29 @@ function gam_ProPhoto(RGB: Vector): Vector {
   });
 }
 
-function lin_ProPhoto_to_XYZ(rgb: Vector): Vector {
-  // convert an array of linear-light prophoto-rgb values to CIE D50 XYZ
-  // matrix cannot be expressed in rational form, but is calculated to 64 bit accuracy
-  // see https://github.com/w3c/csswg-drafts/issues/7675
-  const M: Matrix = [
-    [0.7977666449006423, 0.13518129740053308, 0.0313477341283922],
-    [0.2880748288194013, 0.711835234241873, 0.00008993693872564],
-    [0.0, 0.0, 0.8251046025104602],
-  ];
-
-  return multiply(M, rgb);
-}
-
-function XYZ_to_lin_ProPhoto(XYZ: Vector): Vector {
-  // convert D50 XYZ to linear-light prophoto-rgb
-  const M: Matrix = [
-    [1.3457868816471583, -0.25557208737979464, -0.05110186497554526],
-    [-0.5446307051249019, 1.5082477428451468, 0.02052744743642139],
-    [0.0, 0.0, 1.2119675456389452],
-  ];
-
-  return multiply(M, XYZ);
-}
+// function lin_ProPhoto_to_XYZ(rgb: Vector): Vector {
+//   // convert an array of linear-light prophoto-rgb values to CIE D50 XYZ
+//   // matrix cannot be expressed in rational form, but is calculated to 64 bit accuracy
+//   // see https://github.com/w3c/csswg-drafts/issues/7675
+//   const M: Matrix = [
+//     [0.7977666449006423, 0.13518129740053308, 0.0313477341283922],
+//     [0.2880748288194013, 0.711835234241873, 0.00008993693872564],
+//     [0.0, 0.0, 0.8251046025104602],
+//   ];
+//
+//   return multiply(M, rgb);
+// }
+//
+// function XYZ_to_lin_ProPhoto(XYZ: Vector): Vector {
+//   // convert D50 XYZ to linear-light prophoto-rgb
+//   const M: Matrix = [
+//     [1.3457868816471583, -0.25557208737979464, -0.05110186497554526],
+//     [-0.5446307051249019, 1.5082477428451468, 0.02052744743642139],
+//     [0.0, 0.0, 1.2119675456389452],
+//   ];
+//
+//   return multiply(M, XYZ);
+// }
 
 // a98-rgb functions
 
@@ -367,33 +369,33 @@ function gam_a98rgb(RGB: Vector): Vector {
   });
 }
 
-function lin_a98rgb_to_XYZ(rgb: Vector): Vector {
-  // convert an array of linear-light a98-rgb values to CIE XYZ
-  // http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
-  // has greater numerical precision than section 4.3.5.3 of
-  // https://www.adobe.com/digitalimag/pdfs/AdobeRGB1998.pdf
-  // but the values below were calculated from first principles
-  // from the chromaticity coordinates of R G B W
-  // see matrixmaker.html
-  const M: Matrix = [
-    [573536 / 994567, 263643 / 1420810, 187206 / 994567],
-    [591459 / 1989134, 6239551 / 9945670, 374412 / 4972835],
-    [53769 / 1989134, 351524 / 4972835, 4929758 / 4972835],
-  ];
-
-  return multiply(M, rgb);
-}
-
-function XYZ_to_lin_a98rgb(XYZ: Vector): Vector {
-  // convert XYZ to linear-light a98-rgb
-  const M: Matrix = [
-    [1829569 / 896150, -506331 / 896150, -308931 / 896150],
-    [-851781 / 878810, 1648619 / 878810, 36519 / 878810],
-    [16779 / 1248040, -147721 / 1248040, 1266979 / 1248040],
-  ];
-
-  return multiply(M, XYZ);
-}
+// function lin_a98rgb_to_XYZ(rgb: Vector): Vector {
+//   // convert an array of linear-light a98-rgb values to CIE XYZ
+//   // http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
+//   // has greater numerical precision than section 4.3.5.3 of
+//   // https://www.adobe.com/digitalimag/pdfs/AdobeRGB1998.pdf
+//   // but the values below were calculated from first principles
+//   // from the chromaticity coordinates of R G B W
+//   // see matrixmaker.html
+//   const M: Matrix = [
+//     [573536 / 994567, 263643 / 1420810, 187206 / 994567],
+//     [591459 / 1989134, 6239551 / 9945670, 374412 / 4972835],
+//     [53769 / 1989134, 351524 / 4972835, 4929758 / 4972835],
+//   ];
+//
+//   return multiply(M, rgb);
+// }
+//
+// function XYZ_to_lin_a98rgb(XYZ: Vector): Vector {
+//   // convert XYZ to linear-light a98-rgb
+//   const M: Matrix = [
+//     [1829569 / 896150, -506331 / 896150, -308931 / 896150],
+//     [-851781 / 878810, 1648619 / 878810, 36519 / 878810],
+//     [16779 / 1248040, -147721 / 1248040, 1266979 / 1248040],
+//   ];
+//
+//   return multiply(M, XYZ);
+// }
 
 //Rec. 2020-related functions
 
@@ -425,29 +427,29 @@ function gam_2020(RGB: Vector): Vector {
   });
 }
 
-function lin_2020_to_XYZ(rgb: Vector): Vector {
-  // convert an array of linear-light rec2020 values to CIE XYZ
-  // using  D65 (no chromatic adaptation)
-  const M: Matrix = [
-    [63426534 / 99577255, 20160776 / 139408157, 47086771 / 278816314],
-    [26158966 / 99577255, 472592308 / 697040785, 8267143 / 139408157],
-    [0 / 1, 19567812 / 697040785, 295819943 / 278816314],
-  ];
-  // 0 is actually calculated as  4.994106574466076e-17
-
-  return multiply(M, rgb);
-}
-
-function XYZ_to_lin_2020(XYZ: Vector): Vector {
-  // convert XYZ to linear-light rec2020
-  const M: Matrix = [
-    [30757411 / 17917100, -6372589 / 17917100, -4539589 / 17917100],
-    [-19765991 / 29648200, 47925759 / 29648200, 467509 / 29648200],
-    [792561 / 44930125, -1921689 / 44930125, 42328811 / 44930125],
-  ];
-
-  return multiply(M, XYZ);
-}
+// function lin_2020_to_XYZ(rgb: Vector): Vector {
+//   // convert an array of linear-light rec2020 values to CIE XYZ
+//   // using  D65 (no chromatic adaptation)
+//   const M: Matrix = [
+//     [63426534 / 99577255, 20160776 / 139408157, 47086771 / 278816314],
+//     [26158966 / 99577255, 472592308 / 697040785, 8267143 / 139408157],
+//     [0 / 1, 19567812 / 697040785, 295819943 / 278816314],
+//   ];
+//   // 0 is actually calculated as  4.994106574466076e-17
+//
+//   return multiply(M, rgb);
+// }
+//
+// function XYZ_to_lin_2020(XYZ: Vector): Vector {
+//   // convert XYZ to linear-light rec2020
+//   const M: Matrix = [
+//     [30757411 / 17917100, -6372589 / 17917100, -4539589 / 17917100],
+//     [-19765991 / 29648200, 47925759 / 29648200, 467509 / 29648200],
+//     [792561 / 44930125, -1921689 / 44930125, 42328811 / 44930125],
+//   ];
+//
+//   return multiply(M, XYZ);
+// }
 
 // Chromatic adaptation
 
@@ -558,50 +560,50 @@ function LCH_to_Lab(LCH: Vector): Vector {
 // recalculated for 64bit precision
 // see https://github.com/color-js/color.js/pull/357
 
-function XYZ_to_OKLab(XYZ: Vector): Vector {
-  // Given XYZ relative to D65, convert to OKLab
-  const XYZtoLMS: Matrix = [
-    [0.819022437996703, 0.3619062600528904, -0.1288737815209879],
-    [0.0329836539323885, 0.9292868615863434, 0.0361446663506424],
-    [0.0481771893596242, 0.2642395317527308, 0.6335478284694309],
-  ];
-  const LMStoOKLab: Matrix = [
-    [0.210454268309314, 0.7936177747023054, -0.0040720430116193],
-    [1.9779985324311684, -2.4285922420485799, 0.450593709617411],
-    [0.0259040424655478, 0.7827717124575296, -0.8086757549230774],
-  ];
-
-  const LMS = multiply(XYZtoLMS, XYZ);
-  // JavaScript Math.cbrt returns a sign-matched cube root
-  // beware if porting to other languages
-  // especially if tempted to use a general power function
-
-  return multiply(
-    LMStoOKLab,
-    LMS.map((c) => Math.cbrt(c)),
-  );
-  // L in range [0,1]. For use in CSS, multiply by 100 and add a percent
-}
-
-function OKLab_to_XYZ(OKLab: Vector): Vector {
-  // Given OKLab, convert to XYZ relative to D65
-  const LMStoXYZ: Matrix = [
-    [1.2268798758459243, -0.5578149944602171, 0.2813910456659647],
-    [-0.0405757452148008, 1.112286803280317, -0.0717110580655164],
-    [-0.0763729366746601, -0.4214933324022432, 1.5869240198367816],
-  ];
-  const OKLabtoLMS = [
-    [1.0, 0.3963377773761749, 0.2158037573099136],
-    [1.0, -0.1055613458156586, -0.0638541728258133],
-    [1.0, -0.0894841775298119, -1.2914855480194092],
-  ];
-
-  const LMSnl = multiply(OKLabtoLMS, OKLab);
-  return multiply(
-    LMStoXYZ,
-    LMSnl.map((c) => c ** 3),
-  );
-}
+// function XYZ_to_OKLab(XYZ: Vector): Vector {
+//   // Given XYZ relative to D65, convert to OKLab
+//   const XYZtoLMS: Matrix = [
+//     [0.819022437996703, 0.3619062600528904, -0.1288737815209879],
+//     [0.0329836539323885, 0.9292868615863434, 0.0361446663506424],
+//     [0.0481771893596242, 0.2642395317527308, 0.6335478284694309],
+//   ];
+//   const LMStoOKLab: Matrix = [
+//     [0.210454268309314, 0.7936177747023054, -0.0040720430116193],
+//     [1.9779985324311684, -2.4285922420485799, 0.450593709617411],
+//     [0.0259040424655478, 0.7827717124575296, -0.8086757549230774],
+//   ];
+//
+//   const LMS = multiply(XYZtoLMS, XYZ);
+//   // JavaScript Math.cbrt returns a sign-matched cube root
+//   // beware if porting to other languages
+//   // especially if tempted to use a general power function
+//
+//   return multiply(
+//     LMStoOKLab,
+//     LMS.map((c) => Math.cbrt(c)),
+//   );
+//   // L in range [0,1]. For use in CSS, multiply by 100 and add a percent
+// }
+//
+// function OKLab_to_XYZ(OKLab: Vector): Vector {
+//   // Given OKLab, convert to XYZ relative to D65
+//   const LMStoXYZ: Matrix = [
+//     [1.2268798758459243, -0.5578149944602171, 0.2813910456659647],
+//     [-0.0405757452148008, 1.112286803280317, -0.0717110580655164],
+//     [-0.0763729366746601, -0.4214933324022432, 1.5869240198367816],
+//   ];
+//   const OKLabtoLMS = [
+//     [1.0, 0.3963377773761749, 0.2158037573099136],
+//     [1.0, -0.1055613458156586, -0.0638541728258133],
+//     [1.0, -0.0894841775298119, -1.2914855480194092],
+//   ];
+//
+//   const LMSnl = multiply(OKLabtoLMS, OKLab);
+//   return multiply(
+//     LMStoXYZ,
+//     LMSnl.map((c) => c ** 3),
+//   );
+// }
 
 function OKLab_to_OKLCH(OKLab: Vector): Vector {
   const epsilon = 0.000004;
@@ -632,15 +634,15 @@ function OKLCH_to_OKLab(OKLCH: Vector): Vector {
 }
 
 /**
- * Return the first column of a matrix as a vector.
+ * Return the first row of a matrix as a vector.
  */
-function toVector(M: Matrix): Vector {
-  return M.map((row) => row[0]);
+function toVector(m: Matrix): Vector {
+  return m[0];
 }
 
 /**
- * Multiply a matrix by a vector.
+ * Multiply a vector by a matrix.
  */
-function multiply(M: Matrix, v: Vector): Vector {
-  return toVector(Matrix.multiply(M, v));
+function multiply(v: Vector, m: Matrix): Vector {
+  return toVector(Matrix.multiply(v, m));
 }
