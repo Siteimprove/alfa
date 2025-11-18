@@ -6,8 +6,8 @@
  * {@link https://drafts.csswg.org/css-color/#hwb-to-rgb}
  */
 
-import { Matrix, type Vector } from "@siteimprove/alfa-math";
 import type { Mapper } from "@siteimprove/alfa-mapper";
+import { Matrix, type Vector } from "@siteimprove/alfa-math";
 
 /**
  * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
@@ -72,11 +72,12 @@ const whitepoints: { [key: string]: Vector } = {
   D65: [0.3127 / 0.329, 1.0, (1.0 - 0.3127 - 0.329) / 0.329],
 };
 
-/** @internal */
-export type ColorSpace = "sRGB" | "display-p3";
+const colorSpaces = ["sRGB", "display-p3"] as const;
 // | "prophoto-rgb"
 // | "a98-rgb"
 // | "rec2020";
+/** @internal */
+export type ColorSpace = (typeof colorSpaces)[number];
 
 /** internal */
 export type RGB<S extends ColorSpace> = {
@@ -127,25 +128,20 @@ export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
     : source.components.map(srcSpace.gammaDecoding);
 
   // 2., 3., 4. convert to XYZ, adjust whitepoint, convert to destination space
-  // We pile up the matrix multiplications to limit the Vector <-> Matrix
-  // conversions.
-  // 2. to XYZ
-  let mat: Matrix = srcSpace.toXYZ;
-  // 3. adjust whitepoint if needed (chromatic adaptation)
-  if (srcSpace.whitepoint !== destSpace.whitepoint) {
-    mat = Matrix.multiply(
-      mat,
-      srcSpace.whitepoint === "D50" ? D50_to_D65 : D65_to_D50,
-    );
-  }
-  // 4. from XYZ to destination space
-  mat = Matrix.multiply(mat, destSpace.fromXYZ);
-
-  const destLinear: Vector = multiply(sourceLinear, mat);
+  // These are all linear transformations, so we can do them in one go.
+  const destLinear: Vector = multiply(
+    sourceLinear,
+    converters[source.space][
+      // The conversion is safe because we already checked that
+      // source.space !== destination.space
+      destination.space as unknown as Exclude<ColorSpace, SRC>
+    ] as Matrix,
+  );
 
   return {
     space: destination.space,
     linear: destination.linear,
+    // 5. Apply gamma encoding, if needed.
     components: destination.linear
       ? destLinear
       : destLinear.map(destSpace.gammaEncoding),
@@ -168,16 +164,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      *
      * @param value - A sRGB color component in the range 0.0-1.0
      */
-    gammaDecoding(value: number): number {
-      let sign = value < 0 ? -1 : 1;
-      let abs = Math.abs(value);
-
-      if (abs <= 0.04045) {
-        return value / 12.92;
-      }
-
-      return sign * Math.pow((abs + 0.055) / 1.055, 2.4);
-    },
+    gammaDecoding,
 
     /**
      * Convert a sRGB-linear color component to sRGB (apply gamma encoding).
@@ -190,16 +177,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      *
      * @param value - A sRGB-linear color component in the range 0.0-1.0
      */
-    gammaEncoding(value: number): number {
-      let sign = value < 0 ? -1 : 1;
-      let abs = Math.abs(value);
-
-      if (abs > 0.0031308) {
-        return sign * (1.055 * Math.pow(abs, 1 / 2.4) - 0.055);
-      }
-
-      return 12.92 * value;
-    },
+    gammaEncoding,
 
     /**
      * Matrix for converting sRGB-linear to CIE XYZ (no chromatic adaptation).
@@ -230,16 +208,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      *
      * @param value - A display-p3 color component in the range 0.0-1.0
      */
-    gammaDecoding(value: number): number {
-      let sign = value < 0 ? -1 : 1;
-      let abs = Math.abs(value);
-
-      if (abs <= 0.04045) {
-        return value / 12.92;
-      }
-
-      return sign * Math.pow((abs + 0.055) / 1.055, 2.4);
-    },
+    gammaDecoding,
 
     /**
      * Convert a color component in display-p3-linear form to display-p3
@@ -247,16 +216,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      *
      * @param value - A display-p3-linear color component in the range 0.0-1.0
      */
-    gammaEncoding(value: number): number {
-      let sign = value < 0 ? -1 : 1;
-      let abs = Math.abs(value);
-
-      if (abs > 0.0031308) {
-        return sign * (1.055 * Math.pow(abs, 1 / 2.4) - 0.055);
-      }
-
-      return 12.92 * value;
-    },
+    gammaEncoding,
 
     /**
      * Matrix for converting display-p3-linear to CIE XYZ
@@ -277,6 +237,57 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
       [11844 / 330415, -50337 / 660830, 316169 / 330415],
     ]),
   },
+};
+
+/**
+ * Pre-compute the linear conversion matrix between two RGB color spaces.
+ */
+function linearConverter(source: ColorSpace, destination: ColorSpace): Matrix {
+  const srcSpace = spaces[source];
+  const destSpace = spaces[destination];
+
+  // 2., 3., 4. convert to XYZ, adjust whitepoint, convert to destination space
+  // 2. to XYZ
+  let mat: Matrix = srcSpace.toXYZ;
+  // 3. adjust whitepoint if needed (chromatic adaptation)
+  if (srcSpace.whitepoint !== destSpace.whitepoint) {
+    mat = Matrix.multiply(
+      mat,
+      srcSpace.whitepoint === "D50" ? D50_to_D65 : D65_to_D50,
+    );
+  }
+  // 4. from XYZ to destination space
+  mat = Matrix.multiply(mat, destSpace.fromXYZ);
+
+  return mat;
+}
+
+const converters = colorSpaces.reduce(
+  // We can't really be clever with types here because the objects are built
+  // piece by piece, so the accumulators can only have the partial types, and
+  // that becomes a total mess that TS cannot handle anyway…
+  // So we build them ignoring the types of keys and then assert the type.
+  (acc: { [source: string]: { [destination: string]: Matrix } }, source) => {
+    acc[source] = colorSpaces.reduce(
+      (acc: { [destination: string]: Matrix }, dest) => {
+        if (source !== dest) {
+          acc[dest] = linearConverter(
+            source,
+            dest as Exclude<ColorSpace, typeof source>,
+          );
+        }
+        return acc;
+      },
+      {},
+    );
+
+    return acc;
+  },
+  {},
+) as {
+  [source in ColorSpace]: {
+    [destination in Exclude<ColorSpace, source>]: Matrix;
+  };
 };
 
 // prophoto-rgb functions
@@ -645,4 +656,32 @@ function toVector(m: Matrix): Vector {
  */
 function multiply(v: Vector, m: Matrix): Vector {
   return toVector(Matrix.multiply(v, m));
+}
+
+/**
+ * Gamma decoding for sRBG and display-p3 color spaces.
+ */
+function gammaDecoding(value: number): number {
+  let sign = value < 0 ? -1 : 1;
+  let abs = Math.abs(value);
+
+  if (abs <= 0.04045) {
+    return value / 12.92;
+  }
+
+  return sign * Math.pow((abs + 0.055) / 1.055, 2.4);
+}
+
+/**
+ * Gamma encoding for sRBG and display-p3 color spaces.
+ */
+function gammaEncoding(value: number): number {
+  let sign = value < 0 ? -1 : 1;
+  let abs = Math.abs(value);
+
+  if (abs > 0.0031308) {
+    return sign * (1.055 * Math.pow(abs, 1 / 2.4) - 0.055);
+  }
+
+  return 12.92 * value;
 }
