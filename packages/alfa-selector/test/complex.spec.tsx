@@ -177,10 +177,10 @@ test(".parse() parses a compound selector relative to a class selector", (t) => 
         },
       ],
       specificity: { a: 0, b: 1, c: 1 },
-      key: "div",
+      key: ".bar",
     },
     specificity: { a: 0, b: 2, c: 1 },
-    key: "div",
+    key: ".bar",
   });
 });
 
@@ -206,7 +206,7 @@ test(".parse() parses a compound selector relative to a compound selector", (t) 
         },
       ],
       specificity: { a: 0, b: 1, c: 1 },
-      key: "span",
+      key: ".foo",
     },
     right: {
       type: "compound",
@@ -226,10 +226,10 @@ test(".parse() parses a compound selector relative to a compound selector", (t) 
         },
       ],
       specificity: { a: 0, b: 1, c: 1 },
-      key: "div",
+      key: ".bar",
     },
     specificity: { a: 0, b: 2, c: 2 },
-    key: "div",
+    key: ".bar",
   });
 });
 
@@ -451,10 +451,10 @@ test(".parse() parses a compound type, class, and pseudo-class selector relative
         },
       ],
       specificity: { a: 0, b: 2, c: 1 },
-      key: "div",
+      key: ".bar",
     },
     specificity: { a: 0, b: 3, c: 1 },
-    key: "div",
+    key: ".bar",
   });
 });
 
@@ -486,10 +486,10 @@ test(".parse() parses a simple selector relative to a compound selector", (t) =>
         },
       ],
       specificity: { a: 0, b: 1, c: 1 },
-      key: "div",
+      key: ".bar",
     },
     specificity: { a: 0, b: 2, c: 1 },
-    key: "div",
+    key: ".bar",
   });
 });
 
@@ -533,10 +533,10 @@ test(".parse() parses a relative selector relative to a compound selector", (t) 
         },
       ],
       specificity: { a: 0, b: 1, c: 1 },
-      key: "div",
+      key: ".baz",
     },
     specificity: { a: 0, b: 3, c: 1 },
-    key: "div",
+    key: ".baz",
   });
 });
 
