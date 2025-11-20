@@ -1,17 +1,15 @@
 import { Array } from "@siteimprove/alfa-array";
-import type { Token } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Context } from "../context.js";
 import { Specificity } from "../specificity.js";
-import type { Absolute } from "./index.js";
+import type { Selector } from "./index.js";
 
-import { Selector } from "./selector.js";
+import { BaseSelector } from "./selector.js";
 import {
   Class,
   Id,
@@ -32,7 +30,7 @@ const hasKey = or(Id.isId, Class.isClass, Type.isType);
  *
  * @public
  */
-export class Compound extends Selector<"compound"> {
+export class Compound extends BaseSelector<"compound"> {
   public static of(...selectors: Array<Simple>): Compound {
     return new Compound(selectors);
   }
@@ -126,7 +124,7 @@ export class Compound extends Selector<"compound"> {
  * @public
  */
 export namespace Compound {
-  export interface JSON extends Selector.JSON<"compound"> {
+  export interface JSON extends BaseSelector.JSON<"compound"> {
     selectors: Array<Simple.JSON>;
   }
 
@@ -139,9 +137,7 @@ export namespace Compound {
    *
    * @internal
    */
-  export const parseCompound = (
-    parseSelector: () => Parser<Slice<Token>, Absolute, string>,
-  ) =>
+  export const parse = (parseSelector: Selector.Parser.Component) =>
     map(oneOrMore(Simple.parse(parseSelector)), (result) =>
       result.length === 1 ? result[0] : Compound.of(...result),
     );

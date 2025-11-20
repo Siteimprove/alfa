@@ -5,10 +5,8 @@ import {
 } from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 
-import type { Selector } from "../../../selector/index.js";
-import { type Absolute } from "../../../selector/index.js";
+import type { Selector } from "../../index.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
 
@@ -65,7 +63,7 @@ export namespace Cue {
   }
 
   export function parse(
-    parseSelector: Thunk<CSSParser<Absolute>>,
+    parseSelector: Selector.Parser.Component,
   ): CSSParser<Cue> {
     return right(
       take(Token.parseColon, 2),
