@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import {
   Function,
   type Parser as CSSParser,
@@ -66,6 +67,13 @@ export class Host extends PseudoClassSelector<"host"> {
     return false;
   }
 
+  @Cache.memoize
+  private _matchHost(element: Element, context: Context): boolean {
+    return this._selector.every((selector) =>
+      selector.matches(element, context),
+    );
+  }
+
   /**
    * Checks whether a shadow host matches.
    *
@@ -77,9 +85,7 @@ export class Host extends PseudoClassSelector<"host"> {
     element: Element,
     context: Context = Context.empty(),
   ): boolean {
-    return this._selector.every((selector) =>
-      selector.matches(element, context),
-    );
+    return this._matchHost(element, context);
   }
 
   public *[Symbol.iterator](): Iterator<Host> {
