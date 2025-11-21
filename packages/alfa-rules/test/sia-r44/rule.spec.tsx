@@ -1,10 +1,13 @@
+import { Cascade } from "@siteimprove/alfa-cascade";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
+
+import { expect, vitest } from "vitest";
 
 import R44, { Outcomes } from "../../dist/sia-r44/rule.js";
 
 import { evaluate } from "../common/evaluate.js";
-import { passed, failed, inapplicable } from "../common/outcome.js";
+import { failed, inapplicable, passed } from "../common/outcome.js";
 
 test("evaluate() passes a page with conditional rotation (transform) that does not restrict orientation", async (t) => {
   const target = <div>Hello</div>;
@@ -191,4 +194,61 @@ test("evaluate() is inapplicable when `transform` doesn't rotate content", async
   );
 
   t.deepEqual(await evaluate(R44, { document }), [inapplicable(R44)]);
+});
+
+test("evaluate() builds a Cascade when `transform` depends on orientation", async (t) => {
+  using cascade = vitest.spyOn(Cascade, "from");
+
+  const document = h.document(
+    [<div>Hello</div>],
+    [
+      h.sheet([
+        h.rule.media("(orientation: portrait)", [
+          h.rule.style("div", { transform: "rotateZ(1turn)" }),
+        ]),
+      ]),
+    ],
+  );
+
+  await evaluate(R44, { document });
+
+  expect(cascade).toHaveBeenCalled();
+});
+
+test("evaluate() does not build a Cascade when `transform` doesn't depend on orientation", async (t) => {
+  using cascade = vitest.spyOn(Cascade, "from");
+
+  const document = h.document(
+    [<div>Hello</div>],
+    [
+      h.sheet([
+        h.rule.media("(min-width: 100px)", [
+          h.rule.style("div", { transform: "rotateZ(1turn)" }),
+        ]),
+      ]),
+    ],
+  );
+
+  await evaluate(R44, { document });
+
+  expect(cascade).not.toHaveBeenCalled();
+});
+
+test("evaluate() does not build a Cascade when orientation controls no rotation property", async (t) => {
+  using cascade = vitest.spyOn(Cascade, "from");
+
+  const document = h.document(
+    [<div>Hello</div>],
+    [
+      h.sheet([
+        h.rule.media("(orientation: portrait)", [
+          h.rule.style("div", { fontSize: "larger" }),
+        ]),
+      ]),
+    ],
+  );
+
+  await evaluate(R44, { document });
+
+  expect(cascade).not.toHaveBeenCalled();
 });
