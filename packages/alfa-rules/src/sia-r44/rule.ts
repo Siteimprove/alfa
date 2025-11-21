@@ -71,8 +71,9 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         // We first go through all the style rules to see if any of them
         // is orientation-conditional. If there are no orientation media
-        // query at all, we can bail out early and avoid paying the price of
-        // resolving the cascade with a different device.
+        // query at all, or none that control one of the target properties,
+        // we can bail out early and avoid paying the price of resolving the
+        // cascade with a different device.
         const orientationRules = getMediaRules(document).filter((rule) =>
           some(rule.queries.queries, (query) =>
             query.condition.some(hasOrientationCondition),
