@@ -34,15 +34,19 @@ export abstract class BaseSelector<T extends string = string>
    *
    * @remarks
    * The key selector is the rightmost simple selector in a complex selector,
-   * or the leftmost simple selector in a compound selector. In order for an
-   * element to match a complex selector, it must match the key selector.
+   * or the rightmost non-pseudo- selector in a compound selector. In order for
+   * an element to match a selector, it must match the key selector.
    *
    * For example, consider selector `main .foo + div`. Any element matching it
    * must necessarily be a `<div>`, and for other elements there is no need to
    * waste time traversing the DOM tree to check siblings or ancestors.
    *
    * For compound selectors, e.g. `.foo.bar`, any part could be taken, and we
-   * arbitrarily pick the leftmost.
+   * pick the rightmost non-pseudo-. This is done under the assumption that the
+   * class selectors are usually piled up from more generic to more precise,
+   * especially in the context of nesting selectors. We do not take the pseudo-*
+   * selectors as they often depend on context, or match stuff that doesn't
+   * really exist.
    *
    * Conversely, an `<img id="image" class="foo bar">` can only match selectors
    * whose key selector is `img`, `#image`, `.foo`, or `.bar`. So we can

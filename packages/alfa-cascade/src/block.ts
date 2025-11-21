@@ -1,14 +1,8 @@
 import { Array } from "@siteimprove/alfa-array";
 import { type Comparer } from "@siteimprove/alfa-comparable";
 import { Lexer } from "@siteimprove/alfa-css";
-import type {
-  Declaration,
-  Rule,
-  StyleRule} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  h
-} from "@siteimprove/alfa-dom";
+import type { Declaration, Rule, StyleRule } from "@siteimprove/alfa-dom";
+import { Element, h } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -33,7 +27,7 @@ import { UserAgent } from "./user-agent.js";
  * about Cascade Sorting Precedence.
  *
  * @remarks
- * Blocks imply coupling between the different parts and are thus grouped into
+ * Blocks simply couple between the different parts and are thus grouped into
  * a single structure.
  *
  * Blocks form the data stored in the rule tree and selector map. Upon building the

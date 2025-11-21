@@ -76,7 +76,7 @@ test(".parseComplex() parses a list of simple and compound selectors", (t) => {
           },
         ],
         specificity: { a: 1, b: 1, c: 0 },
-        key: "#bar",
+        key: ".baz",
       },
     ],
     specificity: { a: 1, b: 1, c: 0 },

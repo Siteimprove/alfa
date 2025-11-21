@@ -20,7 +20,7 @@ test(".parse() parses a compound selector", (t) => {
       },
     ],
     specificity: { a: 1, b: 1, c: 0 },
-    key: "#foo",
+    key: ".bar",
   });
 });
 
@@ -43,7 +43,7 @@ test(".parse() parses a compound selector with a type in prefix position", (t) =
       },
     ],
     specificity: { a: 0, b: 1, c: 1 },
-    key: "div",
+    key: ".foo",
   });
 });
 

@@ -2,10 +2,7 @@ import type { Array } from "@siteimprove/alfa-array";
 import { Lexer } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Device } from "@siteimprove/alfa-device";
-import type {
-  Element,
-  Rule,
-  Sheet} from "@siteimprove/alfa-dom";
+import type { Element, Rule, Sheet } from "@siteimprove/alfa-dom";
 import {
   ImportRule,
   Layer as LayerRules,
@@ -19,13 +16,8 @@ import { Maybe, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
-import type {
-  Context} from "@siteimprove/alfa-selector";
-import {
-  Combinator,
-  Complex,
-  Selector,
-} from "@siteimprove/alfa-selector";
+import type { Context } from "@siteimprove/alfa-selector";
+import { Combinator, Complex, Selector } from "@siteimprove/alfa-selector";
 
 import type * as json from "@siteimprove/alfa-json";
 

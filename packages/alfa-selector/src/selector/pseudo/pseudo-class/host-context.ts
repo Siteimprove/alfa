@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -50,21 +51,26 @@ export class HostContext extends WithSelector<
     return false;
   }
 
-  public matchHost(
-    /**
-     * Checks whether a shadow host matches.
-     *
-     * @remarks
-     * This must be called with `element` being the shadow host of
-     * the Document that defines the selector.
-     */
-    element: Element,
-    context: Context = Context.empty(),
-  ): boolean {
+  @Cache.memoize
+  private _matchHost(element: Element, context: Context): boolean {
     return element
       .inclusiveAncestors(Node.Traversal.of(Node.Traversal.composed))
       .filter(Element.isElement)
       .some((ancestor) => this._selector.matches(ancestor, context));
+  }
+
+  /**
+   * Checks whether a shadow host matches.
+   *
+   * @remarks
+   * This must be called with `element` being the shadow host of
+   * the Document that defines the selector.
+   */
+  public matchHost(
+    element: Element,
+    context: Context = Context.empty(),
+  ): boolean {
+    return this._matchHost(element, context);
   }
 
   public equals(value: HostContext): boolean;
