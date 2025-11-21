@@ -3,7 +3,7 @@ import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
 import type { Feature } from "@siteimprove/alfa-css-feature";
 import { Device, Viewport } from "@siteimprove/alfa-device";
-import type { Declaration } from "@siteimprove/alfa-dom";
+import { type Declaration, StyleRule } from "@siteimprove/alfa-dom";
 import { Element, MediaRule, Node, Query } from "@siteimprove/alfa-dom";
 import { EAA } from "@siteimprove/alfa-eaa";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -18,6 +18,7 @@ import type { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { isElement } = Element;
 const { filter, flatMap, none, some } = Iterable;
@@ -64,18 +65,32 @@ export default Rule.Atomic.of<Page, Element>({
         // is orientation-conditional. If there are no orientation media
         // query at all, we can bail out early and avoid paying the price of
         // resolving the cascade with a different device.
-        if (
-          none(
-            filter(
-              flatMap(document.style, (sheet) => sheet.descendants()),
-              MediaRule.isMediaRule,
-            ),
-            (rule) =>
-              some(rule.queries.queries, (query) =>
-                query.condition.some(hasOrientationCondition),
-              ),
-          )
-        ) {
+        const mediaRules = Sequence.from(
+          flatMap(document.style, (sheet) => sheet.descendants()),
+        ).filter(MediaRule.isMediaRule);
+
+        const orientationRules = mediaRules.filter((rule) =>
+          some(rule.queries.queries, (query) =>
+            query.condition.some(hasOrientationCondition),
+          ),
+        );
+
+        if (orientationRules.isEmpty()) {
+          return [];
+        }
+
+        const rotationRules = orientationRules
+          .flatMap((rule) => Sequence.from(rule.descendants()))
+          .filter(StyleRule.isStyleRule)
+          .filter((rule) =>
+            rule.style
+              .declaration((declaration) =>
+                ["rotate", "transform"].includes(declaration.name),
+              )
+              .isSome(),
+          );
+
+        if (rotationRules.isEmpty()) {
           return [];
         }
 
