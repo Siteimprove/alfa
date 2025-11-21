@@ -3,14 +3,23 @@ import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
 import type { Feature } from "@siteimprove/alfa-css-feature";
 import { Device, Viewport } from "@siteimprove/alfa-device";
-import { type Declaration, StyleRule } from "@siteimprove/alfa-dom";
-import { Element, MediaRule, Node, Query } from "@siteimprove/alfa-dom";
+import {
+  type Declaration,
+  Document,
+  Element,
+  MediaRule,
+  Node,
+  Query,
+  Shadow,
+  StyleRule,
+} from "@siteimprove/alfa-dom";
 import { EAA } from "@siteimprove/alfa-eaa";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
@@ -18,10 +27,9 @@ import type { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/index.js";
 
 import { Scope, Stability } from "../tags/index.js";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { isElement } = Element;
-const { filter, flatMap, none, some } = Iterable;
+const { flatMap, some } = Iterable;
 const { abs, acos, PI } = Math;
 const { or } = Predicate;
 const { hasComputedStyle, isVisible } = Style;
@@ -65,11 +73,7 @@ export default Rule.Atomic.of<Page, Element>({
         // is orientation-conditional. If there are no orientation media
         // query at all, we can bail out early and avoid paying the price of
         // resolving the cascade with a different device.
-        const mediaRules = Sequence.from(
-          flatMap(document.style, (sheet) => sheet.descendants()),
-        ).filter(MediaRule.isMediaRule);
-
-        const orientationRules = mediaRules.filter((rule) =>
+        const orientationRules = getMediaRules(document).filter((rule) =>
           some(rule.queries.queries, (query) =>
             query.condition.some(hasOrientationCondition),
           ),
@@ -276,4 +280,27 @@ function getRelativeRotation(
       Real.modulo(abs(left - right), 360),
     ),
   );
+}
+
+function getMediaRules(node: Node): Sequence<MediaRule> {
+  return Sequence.from(
+    flatMap(
+      flatMap(roots(node), (document) => document.style),
+      (sheet) => sheet.descendants(),
+    ),
+  ).filter(MediaRule.isMediaRule);
+}
+
+function* roots(node: Node): Iterable<Document | Shadow> {
+  if (Document.isDocument(node) || Shadow.isShadow(node)) {
+    yield node;
+  }
+
+  if (Element.isElement(node)) {
+    yield* node.shadow.map(roots).getOrElse(Sequence.empty);
+
+    yield* node.content.map(roots).getOrElse(Sequence.empty);
+  }
+
+  yield* flatMap(node.children(), roots);
 }

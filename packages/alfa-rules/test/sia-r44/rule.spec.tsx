@@ -85,6 +85,27 @@ test("evaluate() passes a page with conditional rotation (rotate) not around the
   ]);
 });
 
+test("evaluate() passes() a page with conditional rotation in the shadow DOM", async (t) => {
+  const target = <div>Hello</div>;
+
+  const shadow = h.shadow(
+    [target],
+    [
+      h.sheet([
+        h.rule.media("(orientation: portrait)", [
+          h.rule.style("div", { transform: "rotateZ(1turn)" }),
+        ]),
+      ]),
+    ],
+  );
+
+  const document = h.document([<div>{shadow}</div>]);
+
+  t.deepEqual(await evaluate(R44, { document }), [
+    passed(R44, target, { 1: Outcomes.RotationNotLocked }),
+  ]);
+});
+
 test("evaluate() fails a page with conditional matrix that restricts orientation", async (t) => {
   const target = <div>Hello</div>;
 
