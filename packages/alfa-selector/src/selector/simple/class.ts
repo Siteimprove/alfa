@@ -22,7 +22,7 @@ export class Class extends WithName<"class"> {
 
   protected readonly _key: Option<Class>;
   protected constructor(name: string) {
-    super("class", name, Specificity.of(0, 1, 0));
+    super("class", name, Specificity.of(0, 1, 0), false);
 
     this._key = Option.of(this);
   }

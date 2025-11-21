@@ -13,7 +13,7 @@ export class OnlyOfType extends PseudoClassSelector<"only-of-type"> {
   }
 
   protected constructor() {
-    super("only-of-type");
+    super("only-of-type", false);
   }
 
   public *[Symbol.iterator](): Iterator<OnlyOfType> {

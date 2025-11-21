@@ -15,11 +15,15 @@ export class Has extends WithSelector<"has", Relative> {
   }
 
   protected constructor(selector: Relative) {
-    super("has", selector, selector.specificity);
+    super("has", selector, selector.specificity, selector.useContext);
   }
 
   public matches(element: Element, context?: Context): boolean {
-    return this._matches(element, context ?? Context.empty());
+    return this.useContext
+      ? this._matches(element, context ?? Context.empty())
+      : // If context is irrelevant, use the empty context to increase cache hit
+        // chances.
+        this._matches(element, Context.empty());
   }
 
   /**
@@ -29,10 +33,6 @@ export class Has extends WithSelector<"has", Relative> {
    * This method is further cached because it rebuilds new anchored selectors
    * on each call, so it wouldn't be able to use other caches, notably for
    * ancestors/descendants matching which can be expensive.
-   *
-   * Given that `@Cache.memoize` doesn't work with optional parameters (even
-   * with defaults), we need a wrapper to keep make the context optional at
-   * call sites.
    */
   @Cache.memoize
   private _matches(element: Element, context: Context): boolean {

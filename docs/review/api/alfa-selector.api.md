@@ -571,6 +571,8 @@ export class Specificity implements Serializable<Specificity.JSON>, Equatable, H
     // (undocumented)
     static of(a: number, b: number, c: number): Specificity;
     // (undocumented)
+    static pseudoClass(): Specificity;
+    // (undocumented)
     toJSON(): Specificity.JSON;
     // (undocumented)
     toString(): string;

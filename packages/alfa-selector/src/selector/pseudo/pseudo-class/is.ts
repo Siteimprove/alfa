@@ -14,7 +14,7 @@ export class Is extends WithSelector<"is"> {
   }
 
   protected constructor(selector: Absolute) {
-    super("is", selector, selector.specificity);
+    super("is", selector, selector.specificity, selector.useContext);
   }
 
   public *[Symbol.iterator](): Iterator<Is> {

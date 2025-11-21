@@ -13,7 +13,7 @@ export class FirstOfType extends PseudoClassSelector<"first-of-type"> {
   }
 
   protected constructor() {
-    super("first-of-type");
+    super("first-of-type", false);
   }
 
   public *[Symbol.iterator](): Iterator<FirstOfType> {

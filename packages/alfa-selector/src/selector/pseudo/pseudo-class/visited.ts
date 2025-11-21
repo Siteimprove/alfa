@@ -14,7 +14,7 @@ export class Visited extends PseudoClassSelector<"visited"> {
   }
 
   protected constructor() {
-    super("visited");
+    super("visited", true);
   }
 
   public *[Symbol.iterator](): Iterator<Visited> {

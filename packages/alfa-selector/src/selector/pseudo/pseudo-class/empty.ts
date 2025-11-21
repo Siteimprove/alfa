@@ -10,7 +10,7 @@ export class Empty extends PseudoClassSelector<"empty"> {
   }
 
   protected constructor() {
-    super("empty");
+    super("empty", false);
   }
 
   public *[Symbol.iterator](): Iterator<Empty> {

@@ -14,7 +14,7 @@ export class Link extends PseudoClassSelector<"link"> {
   }
 
   protected constructor() {
-    super("link");
+    super("link", true);
   }
 
   public *[Symbol.iterator](): Iterator<Link> {

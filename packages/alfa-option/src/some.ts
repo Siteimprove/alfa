@@ -46,6 +46,10 @@ export class Some<T> implements Option<T> {
     return new Some(mapper(this._value));
   }
 
+  public getter<K extends keyof T>(key: K): Some<T[K]> {
+    return new Some(this._value[key]);
+  }
+
   public forEach(mapper: Mapper<T, void>): void {
     mapper(this._value);
   }

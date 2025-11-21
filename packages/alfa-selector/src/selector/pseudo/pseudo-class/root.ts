@@ -15,7 +15,7 @@ export class Root extends PseudoClassSelector<"root"> {
   }
 
   protected constructor() {
-    super("root");
+    super("root", false);
   }
 
   public *[Symbol.iterator](): Iterator<Root> {

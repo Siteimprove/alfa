@@ -36,7 +36,7 @@ export class Relative extends BaseSelector<"relative"> {
     selector: Simple | Compound | Complex,
     anchor: Maybe<Exact> = None,
   ) {
-    super("relative", selector.specificity);
+    super("relative", selector.specificity, selector.useContext);
     this._combinator = combinator;
     this._selector = selector;
     this._anchor = Maybe.toOption(anchor);
@@ -152,7 +152,7 @@ class Exact extends BaseSelector<"exact"> {
   private readonly _anchor: Element;
 
   protected constructor(anchor: Element) {
-    super("exact", Specificity.empty());
+    super("exact", Specificity.empty(), false);
     this._anchor = anchor;
   }
 

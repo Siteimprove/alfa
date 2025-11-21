@@ -141,7 +141,11 @@ export namespace Combinator {
                 .ancestors(traversal)
                 .filter(filter)
                 .some((element) => leftMatches(element, context))
-            : ancestorMatchesLeft(element, context, left);
+            : left.useContext
+              ? ancestorMatchesLeft(element, context, left)
+              : // If context is not relevant, use an empty one to increase cache
+                // hit chances.
+                ancestorMatchesLeft(element, Context.empty(), left);
 
         case Combinator.DirectDescendant:
           return element
