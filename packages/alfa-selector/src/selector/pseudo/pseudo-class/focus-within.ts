@@ -17,7 +17,7 @@ export class FocusWithin extends PseudoClassSelector<"focus-within"> {
   }
 
   protected constructor() {
-    super("focus-within");
+    super("focus-within", true);
   }
 
   private static _cache = Cache.empty<Element, Cache<Context, boolean>>();

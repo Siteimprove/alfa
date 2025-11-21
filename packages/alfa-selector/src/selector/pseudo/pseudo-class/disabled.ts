@@ -14,7 +14,7 @@ export class Disabled extends PseudoClassSelector<"disabled"> {
   }
 
   protected constructor() {
-    super("disabled");
+    super("disabled", true);
   }
 
   public *[Symbol.iterator](): Iterator<Disabled> {

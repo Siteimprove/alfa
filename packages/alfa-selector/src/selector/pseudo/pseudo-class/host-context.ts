@@ -36,6 +36,7 @@ export class HostContext extends WithSelector<
       "host-context",
       selector,
       Specificity.sum(selector.specificity, Specificity.of(0, 1, 0)),
+      selector.useContext,
     );
   }
 

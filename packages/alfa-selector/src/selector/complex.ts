@@ -38,7 +38,11 @@ export class Complex extends BaseSelector<"complex"> {
     left: Simple | Compound | Complex,
     right: Simple | Compound,
   ) {
-    super("complex", Specificity.sum(left.specificity, right.specificity));
+    super(
+      "complex",
+      Specificity.sum(left.specificity, right.specificity),
+      left.useContext || right.useContext,
+    );
     this._combinator = combinator;
     this._left = left;
     this._right = right;

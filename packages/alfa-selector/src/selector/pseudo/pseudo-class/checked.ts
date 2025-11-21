@@ -15,7 +15,7 @@ export class Checked extends PseudoClassSelector<"checked"> {
   }
 
   protected constructor() {
-    super("checked");
+    super("checked", true);
   }
 
   public *[Symbol.iterator](): Iterator<Checked> {

@@ -40,6 +40,7 @@ export class Host extends PseudoClassSelector<"host"> {
   protected constructor(selector: Option<Compound | Simple>) {
     super(
       "host",
+      selector.map((selector) => selector.useContext).getOr(false),
       Specificity.sum(
         selector
           .map((selector) => selector.specificity)

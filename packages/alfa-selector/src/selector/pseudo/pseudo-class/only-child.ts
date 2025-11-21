@@ -13,7 +13,7 @@ export class OnlyChild extends PseudoClassSelector<"only-child"> {
   }
 
   protected constructor() {
-    super("only-child");
+    super("only-child", false);
   }
 
   public *[Symbol.iterator](): Iterator<OnlyChild> {

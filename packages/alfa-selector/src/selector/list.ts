@@ -38,6 +38,7 @@ export class List<
     super(
       "list",
       Specificity.max(...selectors.map((selector) => selector.specificity)),
+      selectors.some(selector => selector.useContext)
     );
     this._selectors = selectors;
     this._length = selectors.length;

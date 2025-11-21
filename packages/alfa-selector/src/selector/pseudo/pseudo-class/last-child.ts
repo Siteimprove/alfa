@@ -13,7 +13,7 @@ export class LastChild extends PseudoClassSelector<"last-child"> {
   }
 
   protected constructor() {
-    super("last-child");
+    super("last-child", false);
   }
 
   public *[Symbol.iterator](): Iterator<LastChild> {
