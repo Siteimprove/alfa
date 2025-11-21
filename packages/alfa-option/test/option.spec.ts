@@ -52,3 +52,12 @@ test("#flatMap() satisfies associativity", (t) => {
 test("#flatten() unwraps a nested option", (t) => {
   t.deepEqual(Option.of(Option.of(1)).flatten(), Some.of(1));
 });
+
+test("#getter gets a property from the contained value", (t) => {
+  const option = Some.of({ a: 1, b: "foo" });
+
+  t.deepEqual(option.getter("a"), Some.of(1));
+  t.deepEqual(option.getter("b"), Some.of("foo"));
+
+  t.deepEqual(None.getter("a"), None);
+});

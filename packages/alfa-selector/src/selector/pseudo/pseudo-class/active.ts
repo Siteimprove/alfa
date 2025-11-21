@@ -13,7 +13,7 @@ export class Active extends PseudoClassSelector<"active"> {
   }
 
   protected constructor() {
-    super("active");
+    super("active", true);
   }
 
   public *[Symbol.iterator](): Iterator<Active> {

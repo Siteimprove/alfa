@@ -15,7 +15,7 @@ export class Where extends WithSelector<"where"> {
   }
 
   protected constructor(selector: Absolute) {
-    super("where", selector, Specificity.of(0, 0, 0));
+    super("where", selector, Specificity.of(0, 0, 0), selector.useContext);
   }
 
   public *[Symbol.iterator](): Iterator<Where> {

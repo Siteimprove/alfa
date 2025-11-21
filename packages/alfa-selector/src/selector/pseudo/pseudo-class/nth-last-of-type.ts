@@ -14,7 +14,7 @@ export class NthLastOfType extends WithIndex<"nth-last-of-type"> {
   }
 
   protected constructor(index: Nth) {
-    super("nth-last-of-type", index);
+    super("nth-last-of-type", index, false);
   }
 
   public *[Symbol.iterator](): Iterator<NthLastOfType> {

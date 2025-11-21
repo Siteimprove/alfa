@@ -28,6 +28,7 @@ export interface Option<T>
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
+  getter<K extends keyof T>(key: K): Option<T[K]>;
   forEach(mapper: Mapper<T, void>): void;
   apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;

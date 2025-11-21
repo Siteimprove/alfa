@@ -27,8 +27,12 @@ export abstract class PseudoClassSelector<
   // Some pseudo-class manipulate specificity, so we cannot just set it
   // to (0, 1, 0) for all and must allow for overwriting it.
   // https://www.w3.org/TR/selectors/#specificity
-  protected constructor(name: N, specificity?: Specificity) {
-    super("pseudo-class", name, specificity ?? Specificity.of(0, 1, 0));
+  protected constructor(
+    name: N,
+    useContext: boolean,
+    specificity: Specificity = Specificity.pseudoClass(),
+  ) {
+    super("pseudo-class", name, specificity, useContext);
   }
 
   public equals(value: PseudoClassSelector): boolean;
@@ -88,8 +92,13 @@ export abstract class WithIndex<
 
   protected readonly _index: Nth;
 
-  protected constructor(name: N, nth: Nth, specificity?: Specificity) {
-    super(name, specificity);
+  protected constructor(
+    name: N,
+    nth: Nth,
+    useContext: boolean,
+    specificity?: Specificity,
+  ) {
+    super(name, useContext, specificity);
 
     this._index = nth;
   }
@@ -154,8 +163,13 @@ export abstract class WithSelector<
 > extends PseudoClassSelector<N> {
   protected readonly _selector: S;
 
-  protected constructor(name: N, selector: S, specificity: Specificity) {
-    super(name, specificity);
+  protected constructor(
+    name: N,
+    selector: S,
+    specificity: Specificity,
+    useContext: boolean,
+  ) {
+    super(name, useContext, specificity);
     this._selector = selector;
   }
 
@@ -231,13 +245,14 @@ export abstract class WithIndexAndSelector<
     name: N,
     nth: Nth,
     selector: Option<Absolute>,
+    useContext: boolean,
     // Both :nth-child and :nth-last-child have this specificity
     specificity: Specificity = Specificity.sum(
       Specificity.of(0, 1, 0),
       selector.map((s) => s.specificity).getOr(Specificity.of(0, 0, 0)),
     ),
   ) {
-    super(name, nth, specificity);
+    super(name, nth, useContext, specificity);
 
     this._selector = selector;
   }

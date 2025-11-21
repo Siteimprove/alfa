@@ -13,7 +13,7 @@ export class FirstChild extends PseudoClassSelector<"first-child"> {
   }
 
   protected constructor() {
-    super("first-child");
+    super("first-child", false);
   }
 
   public *[Symbol.iterator](): Iterator<FirstChild> {

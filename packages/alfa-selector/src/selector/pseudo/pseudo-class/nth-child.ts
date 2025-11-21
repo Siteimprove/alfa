@@ -23,7 +23,12 @@ export class NthChild extends WithIndexAndSelector<"nth-child"> {
   private readonly _indices = new WeakMap<Element, number>();
 
   protected constructor(index: Nth, selector: Option<Absolute>) {
-    super("nth-child", index, selector);
+    super(
+      "nth-child",
+      index,
+      selector,
+      selector.getter("useContext").getOr(false),
+    );
   }
 
   public *[Symbol.iterator](): Iterator<NthChild> {

@@ -13,7 +13,7 @@ export class Focus extends PseudoClassSelector<"focus"> {
   }
 
   protected constructor() {
-    super("focus");
+    super("focus", true);
   }
 
   public *[Symbol.iterator](): Iterator<Focus> {

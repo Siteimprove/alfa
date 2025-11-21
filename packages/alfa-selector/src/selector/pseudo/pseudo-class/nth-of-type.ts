@@ -14,7 +14,7 @@ export class NthOfType extends WithIndex<"nth-of-type"> {
   }
 
   protected constructor(index: Nth) {
-    super("nth-of-type", index);
+    super("nth-of-type", index, false);
   }
 
   public *[Symbol.iterator](): Iterator<NthOfType> {

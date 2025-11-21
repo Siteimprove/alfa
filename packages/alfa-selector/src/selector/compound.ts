@@ -45,6 +45,7 @@ export class Compound extends BaseSelector<"compound"> {
     super(
       "compound",
       Specificity.sum(...selectors.map((selector) => selector.specificity)),
+      selectors.some((selector) => selector.useContext),
     );
     this._selectors = selectors;
     this._length = selectors.length;

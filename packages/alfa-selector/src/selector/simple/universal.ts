@@ -30,7 +30,7 @@ export class Universal extends BaseSelector<"universal"> {
   private readonly _namespace: Option<string>;
 
   protected constructor(namespace: Option<string>) {
-    super("universal", Specificity.empty());
+    super("universal", Specificity.empty(), false);
     this._namespace = namespace;
   }
 

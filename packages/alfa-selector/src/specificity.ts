@@ -41,6 +41,12 @@ export class Specificity
     return Specificity._empty;
   }
 
+  private static _pseudoClass = Specificity.of(0, 1, 0);
+
+  public static pseudoClass(): Specificity {
+    return Specificity._pseudoClass;
+  }
+
   private readonly _a: number;
   private readonly _b: number;
   private readonly _c: number;

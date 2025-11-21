@@ -14,8 +14,9 @@ export abstract class PseudoElementSelector<
   protected constructor(
     name: N,
     specificity: Specificity = Specificity.of(0, 0, 1),
+    useContext: boolean = false,
   ) {
-    super("pseudo-element", name, specificity);
+    super("pseudo-element", name, specificity, useContext);
   }
 
   public equals(value: PseudoElementSelector): boolean;

@@ -13,7 +13,7 @@ export class LastOfType extends PseudoClassSelector<"last-of-type"> {
   }
 
   protected constructor() {
-    super("last-of-type");
+    super("last-of-type", false);
   }
 
   public *[Symbol.iterator](): Iterator<LastOfType> {

@@ -80,6 +80,8 @@ export interface Option<T> extends Monad<T>, Foldable<T>, Iterable<T>, Equatable
     getOr<U>(value: U): T | U;
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): T | U;
+    // (undocumented)
+    getter<K extends keyof T>(key: K): Option<T[K]>;
     // @internal
     getUnsafe(message?: string): T;
     // (undocumented)
@@ -179,6 +181,8 @@ export class Some<T> implements Option<T> {
     getOr(): T;
     // (undocumented)
     getOrElse(): T;
+    // (undocumented)
+    getter<K extends keyof T>(key: K): Some<T[K]>;
     // @internal (undocumented)
     getUnsafe(): T;
     // (undocumented)

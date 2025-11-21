@@ -27,6 +27,7 @@ export abstract class BaseSelector<T extends string = string>
 {
   private readonly _type: T;
   private readonly _specificity: Specificity;
+  private readonly _useContext: boolean;
 
   /**
    * The key selector is used to optimise matching of complex (and compound)
@@ -63,9 +64,14 @@ export abstract class BaseSelector<T extends string = string>
    */
   protected readonly _key: Option<Id | Class | Type> = None;
 
-  protected constructor(type: T, specificity: Specificity) {
+  protected constructor(
+    type: T,
+    specificity: Specificity,
+    useContext: boolean,
+  ) {
     this._type = type;
     this._specificity = specificity;
+    this._useContext = useContext;
   }
 
   public get type(): T {
@@ -74,6 +80,10 @@ export abstract class BaseSelector<T extends string = string>
 
   public get specificity(): Specificity {
     return this._specificity;
+  }
+
+  public get useContext(): boolean {
+    return this._useContext;
   }
 
   public get key(): Option<Id | Class | Type> {
@@ -159,8 +169,13 @@ export abstract class WithName<
   N extends string = string,
 > extends BaseSelector<T> {
   protected readonly _name: N;
-  protected constructor(type: T, name: N, specificity: Specificity) {
-    super(type, specificity);
+  protected constructor(
+    type: T,
+    name: N,
+    specificity: Specificity,
+    useContext: boolean,
+  ) {
+    super(type, specificity, useContext);
     this._name = name;
   }
 

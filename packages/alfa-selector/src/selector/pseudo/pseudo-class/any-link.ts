@@ -13,7 +13,7 @@ export class AnyLink extends PseudoClassSelector<"any-link"> {
   }
 
   protected constructor() {
-    super("any-link");
+    super("any-link", false);
   }
 
   public *[Symbol.iterator](): Iterator<AnyLink> {

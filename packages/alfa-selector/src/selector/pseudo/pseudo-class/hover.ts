@@ -17,7 +17,7 @@ export class Hover extends PseudoClassSelector<"hover"> {
   }
 
   protected constructor() {
-    super("hover");
+    super("hover", true);
   }
 
   private static _cache = Cache.empty<Element, Cache<Context, boolean>>();
