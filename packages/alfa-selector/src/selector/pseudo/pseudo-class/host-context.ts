@@ -52,6 +52,13 @@ export class HostContext extends WithSelector<
     return false;
   }
 
+  /**
+   * Whether an element (shadow host) has an ancestor matching the selector.
+   *
+   * @privateRemarks
+   * CSS calls the selector "context" which clashes with our use of `Context`
+   * as the "state of the page".
+   */
   @Cache.memoize
   private _matchHost(element: Element, context: Context): boolean {
     return element
@@ -71,7 +78,11 @@ export class HostContext extends WithSelector<
     element: Element,
     context: Context = Context.empty(),
   ): boolean {
-    return this._matchHost(element, context);
+    return this.useContext
+      ? this._matchHost(element, context)
+      : // If context is not relevant, use an empty one to increase cache hit
+        // chances.
+        this._matchHost(element, Context.empty());
   }
 
   public equals(value: HostContext): boolean;

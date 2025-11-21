@@ -19,7 +19,11 @@ export class Has extends WithSelector<"has", Relative> {
   }
 
   public matches(element: Element, context?: Context): boolean {
-    return this._matches(element, context ?? Context.empty());
+    return this.useContext
+      ? this._matches(element, context ?? Context.empty())
+      : // If context is irrelevant, use the empty context to increase cache hit
+        // chances.
+        this._matches(element, Context.empty());
   }
 
   /**
