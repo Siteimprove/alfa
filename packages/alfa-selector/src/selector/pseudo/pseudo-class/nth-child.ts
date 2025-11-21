@@ -27,7 +27,7 @@ export class NthChild extends WithIndexAndSelector<"nth-child"> {
       "nth-child",
       index,
       selector,
-      selector.map((selector) => selector.useContext).getOr(false),
+      selector.getter("useContext").getOr(false),
     );
   }
 
