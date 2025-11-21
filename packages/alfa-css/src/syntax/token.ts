@@ -77,8 +77,29 @@ export namespace Token {
       .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
       .getOr(Err.of("No token left"));
 
-  function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
-    return filter(parseFirst, refinement, () => "Mismatching token");
+  /**
+   * @remarks
+   * This function is a hot path and is therefore implemented
+   * without using other parser combinators to avoid the extra overhead.
+   * Any changes to this function should be benchmarked.
+   */
+  function parseToken<T extends Token>(
+    refinement: Refinement<Token, T>,
+  ): CSSParser<T> {
+    return (input) => {
+      if (input.isEmpty()) {
+        return Err.of("No token left");
+      }
+
+      // We know input is not empty, so this is safe.
+      const val = input.getUnsafe(0);
+
+      if (refinement(val)) {
+        return Ok.of<[Slice<Token>, T]>([input.rest(), val]);
+      }
+
+      return Err.of("Mismatching token");
+    };
   }
 
   export function skipUntil(delimiter: CSSParser<unknown>): CSSParser<void> {

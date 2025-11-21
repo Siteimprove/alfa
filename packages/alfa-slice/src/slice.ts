@@ -195,8 +195,22 @@ export class Slice<T> implements Collection.Indexed<T> {
     return Option.of(this._array[this._offset + index]);
   }
 
+  /** 
+   * This may throw an exception. Use only when you can provide an external
+   * guarantee that the index is valid. E.g. after calling `has()` or `isEmpty()` (document it!).
+   * 
+   * @internal
+   */
+  public getUnsafe(index: number, message = "Index out of bounds"): T {
+    if (index < 0 || index >= this._length) {
+      throw new Error(message);
+    }
+
+    return this._array[this._offset + index];
+  }
+
   public has(index: number): boolean {
-    return index < 0 || index >= this._length;
+    return index >= 0 && index < this._length;
   }
 
   public set(index: number, value: T): Slice<T> {
