@@ -84,18 +84,16 @@ export default Rule.Atomic.of<Page, Element>({
           return [];
         }
 
-        const rotationRules = orientationRules
+        const rotationRulesDeclarations = orientationRules
           .flatMap((rule) => Sequence.from(rule.descendants()))
           .filter(StyleRule.isStyleRule)
-          .filter((rule) =>
-            rule.style
-              .declaration((declaration) =>
-                ["rotate", "transform"].includes(declaration.name),
-              )
-              .isSome(),
+          .collect((rule) =>
+            rule.style.declaration((declaration) =>
+              ["rotate", "transform"].includes(declaration.name),
+            ),
           );
 
-        if (rotationRules.isEmpty()) {
+        if (rotationRulesDeclarations.isEmpty()) {
           return [];
         }
 
