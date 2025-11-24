@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-rng": "workspace:^",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.13"
   },
   "devDependencies": {
     "@types/node": "^24.10.1"
