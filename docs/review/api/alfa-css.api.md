@@ -317,25 +317,25 @@ export namespace Color {
     // (undocumented)
     export type Canonical = Current | System | RGB.Canonical;
     // (undocumented)
-    export function hex(value: number): Hex;
+    export function isTransparent(color: Color): boolean;
     const // (undocumented)
     current: Current;
-    // (undocumented)
-    export function hsl<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(hue: H, saturation: Percentage<"percentage">, lightness: Percentage<"percentage">, alpha: A): HSL<H, A>;
-    // (undocumented)
-    export function hwb<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(hue: H, whiteness: Percentage<"percentage">, blackness: Percentage<"percentage">, alpha: A): HWB<H, A>;
-    // (undocumented)
-    export function isTransparent(color: Color): boolean;
-    // (undocumented)
-    export type JSON = Hex.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
-    // (undocumented)
-    export function named<C extends Named.Color>(color: C): Named<C>;
-    // (undocumented)
-    export function rgb<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+    const // (undocumented)
+    hex: typeof Hex.of;
+    const // (undocumented)
+    hsl: typeof HSL.of;
+    const // (undocumented)
+    hwb: typeof HWB.of;
+    const // (undocumented)
+    named: typeof Named.of;
+    const // (undocumented)
+    rgb: typeof RGB.of;
+    const // (undocumented)
+    system: typeof Keyword.of;
     const // (undocumented)
     parse: Parser_2<Slice<Token>, Color, string, []>;
     // (undocumented)
-    export function system(keyword: System.Keyword): System;
+    export type JSON = Hex.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
 }
 
 // @public (undocumented)
@@ -814,8 +814,8 @@ export namespace Hex {
 // Warning: (ae-forgotten-export) The symbol "Triplet" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed<"percentage"> = Number_2.Fixed | Percentage.Fixed<"percentage">> extends Triplet<"hsl", A> {
-    protected constructor(hue: H, saturation: Percentage.Canonical, lightness: Percentage.Canonical, alpha: A);
+export class HSL extends Triplet<"hsl"> {
+    protected constructor(hue: HSL.Hue, saturation: HSL.Component, lightness: HSL.Component, alpha: Triplet.Alpha);
     // (undocumented)
     get blue(): Percentage.Canonical;
     // (undocumented)
@@ -825,21 +825,17 @@ export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get hue(): H;
+    get hue(): HSL.Hue;
     // (undocumented)
-    get lightness(): Percentage.Canonical;
+    get lightness(): HSL.Component;
     // (undocumented)
-    static of<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical, S extends Percentage<"percentage">, L extends Percentage<"percentage">>(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical_2" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    static of<H extends Number_2 | Angle, A extends Number_2 | Percentage<"percentage">, S extends Percentage<"percentage">, L extends Percentage<"percentage">>(hue: H, saturation: S, lightness: L, alpha: A): HSL<ToCanonical_2<H>, ToCanonical_2<A>>;
+    static of(hue: Number_2 | Angle, saturation: Percentage<"percentage">, lightness: Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HSL;
     // (undocumented)
     get red(): Percentage.Canonical;
     // (undocumented)
     resolve(): RGB.Canonical;
     // (undocumented)
-    get saturation(): Percentage.Canonical;
+    get saturation(): HSL.Component;
     // (undocumented)
     toJSON(): HSL.JSON;
     // (undocumented)
@@ -848,8 +844,12 @@ export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle
 
 // @public (undocumented)
 export namespace HSL {
+    // @internal (undocumented)
+    export type Component = Percentage.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
     // (undocumented)
-    export function isHSL<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(value: unknown): value is HSL<H, A>;
+    export function isHSL(value: unknown): value is HSL;
     // (undocumented)
     export interface JSON extends Triplet.JSON<"hsl"> {
         // (undocumented)
@@ -864,10 +864,10 @@ export namespace HSL {
 }
 
 // @public (undocumented)
-export class HWB<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed<"percentage"> = Number_2.Fixed | Percentage.Fixed<"percentage">> extends Triplet<"hwb", A> {
-    protected constructor(hue: H, whiteness: Percentage.Canonical, blackness: Percentage.Canonical, alpha: A);
+export class HWB extends Triplet<"hwb"> {
+    protected constructor(hue: HWB.Hue, whiteness: HWB.Component, blackness: HWB.Component, alpha: Triplet.Alpha);
     // (undocumented)
-    get blackness(): Percentage.Canonical;
+    get blackness(): HWB.Component;
     // (undocumented)
     get blue(): Percentage.Canonical;
     // (undocumented)
@@ -877,13 +877,9 @@ export class HWB<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get hue(): H;
+    get hue(): HWB.Hue;
     // (undocumented)
-    static of<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical, W extends Percentage<"percentage">, B extends Percentage<"percentage">>(hue: H, whiteness: W, blackness: B, alpha: A): HWB<H, A>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical_3" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    static of<H extends Number_2 | Angle, A extends Number_2 | Percentage<"percentage">, W extends Percentage<"percentage">, B extends Percentage<"percentage">>(hue: H, whiteness: W, blackness: B, alpha: A): HWB<ToCanonical_3<H>, ToCanonical_3<A>>;
+    static of(hue: Number_2 | Angle, whiteness: Percentage<"percentage">, blackness: Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HWB;
     // (undocumented)
     get red(): Percentage.Canonical;
     // (undocumented)
@@ -893,13 +889,17 @@ export class HWB<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get whiteness(): Percentage.Canonical;
+    get whiteness(): HWB.Component;
 }
 
 // @public (undocumented)
 export namespace HWB {
+    // @internal (undocumented)
+    export type Component = Percentage.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
     // (undocumented)
-    export function isHWB<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(value: unknown): value is HWB<H, A>;
+    export function isHWB(value: unknown): value is HWB;
     // (undocumented)
     export interface JSON extends Triplet.JSON<"hwb"> {
         // (undocumented)
@@ -2152,24 +2152,20 @@ export namespace Resolvable {
 }
 
 // @public (undocumented)
-export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, A extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">> extends Triplet<"rgb", A> {
-    protected constructor(red: C, green: C, blue: C, alpha: A);
+export class RGB extends Triplet<"rgb"> {
+    protected constructor(red: RGB.Component, green: RGB.Component, blue: RGB.Component, alpha: Triplet.Alpha);
     // (undocumented)
-    get blue(): C;
+    get blue(): RGB.Component;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get green(): C;
+    get green(): RGB.Component;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical" needs to be exported by the entry point index.d.ts
-    //
+    static of(red: Number_2 | Percentage<"percentage">, green: Number_2 | Percentage<"percentage">, blue: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): RGB;
     // (undocumented)
-    static of<C extends Number_2 | Percentage<"percentage">, A extends Number_2 | Percentage<"percentage">>(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
-    // (undocumented)
-    get red(): C;
+    get red(): RGB.Component;
     // (undocumented)
     resolve(): RGB.Canonical;
     // (undocumented)
@@ -2181,9 +2177,11 @@ export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.
 // @public (undocumented)
 export namespace RGB {
     // (undocumented)
-    export type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
+    export type Canonical = RGB;
+    // @internal (undocumented)
+    export type Component = Number_2.Canonical | Percentage.Canonical;
     // (undocumented)
-    export function isRGB<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(value: unknown): value is RGB<C, A>;
+    export function isRGB(value: unknown): value is RGB;
     // (undocumented)
     export interface JSON extends Triplet.JSON<"rgb"> {
         // (undocumented)
@@ -2258,14 +2256,14 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     get kind(): "scale";
     // (undocumented)
     static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y): Scale<X, Y, never>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical_4" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ToCanonical" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">>(x: X, y: Y): Scale<ToCanonical_4<X>, ToCanonical_4<Y>>;
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">>(x: X, y: Y): Scale<ToCanonical<X>, ToCanonical<Y>>;
     // (undocumented)
     static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical, Z extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y, z: Z): Scale<X, Y, Z>;
     // (undocumented)
-    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z: Z): Scale<ToCanonical_4<X>, ToCanonical_4<Y>, ToCanonical_4<Z>>;
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z: Z): Scale<ToCanonical<X>, ToCanonical<Y>, ToCanonical<Z>>;
     // (undocumented)
     resolve(): Scale.Canonical;
     // (undocumented)
@@ -3103,7 +3101,7 @@ export namespace Token {
     const // (undocumented)
     parseSemicolon: Parser_2<Slice<Token>, Semicolon, string, []>;
     // (undocumented)
-    export function parseFunction(query?: string | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
+    export function parseFunction(query?: string | Array_2<string> | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
     // (undocumented)
     export function parseHash(predicate?: Predicate<Hash>): Parser_2<Slice<Token>, Hash, string, []>;
     const // (undocumented)
@@ -3396,7 +3394,7 @@ export namespace Translate {
     const // (undocumented)
     parse: Parser<Translate>;
     const // (undocumented)
-    parseProp: Parser_2<Slice<Token_2>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">>, string, []>;
+    parseProp: Parser_2<Slice<Token_2>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "TrimFlags" is marked as @public, but its signature references "Resolvable" which is marked as @internal
