@@ -1,6 +1,5 @@
-import type { Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
-import type { Slice } from "@siteimprove/alfa-slice";
+import { Token, type Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Err } from "@siteimprove/alfa-result";
 
 import type { Selector } from "../index.js";
 
@@ -21,8 +20,6 @@ export * from "../pseudo/pseudo-class/index.js";
 export * from "../pseudo/pseudo-element/index.js";
 export * from "./type.js";
 export * from "./universal.js";
-
-const { either } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/selectors/#simple}
@@ -65,16 +62,107 @@ export namespace Simple {
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-simple-selector}
    *
+   * @remarks
+   * This function is a hot path and uses token lookahead instead
+   * of the `either` parser combinator to avoid backtracking. Any changes to
+   * this function should be benchmarked.
+   *
    * @internal
    */
-  export const parse = (parseSelector: Selector.Parser.Component) =>
-    either<Slice<Token>, Simple, string>(
-      Class.parse,
-      Type.parse,
-      Attribute.parse,
-      Id.parse,
-      Universal.parse,
-      PseudoClass.parse(parseSelector),
-      PseudoElement.parse(parseSelector),
-    );
+  export const parse = (
+    parseSelector: Selector.Parser.Component,
+  ): CSSParser<Simple> => {
+    return (input) => {
+      if (input.isEmpty()) {
+        return Err.of("Unexpected end of input");
+      }
+
+      const token = input.getUnsafe(0);
+
+      if (Token.isDelim(token) && token.value === 0x2e /* '.' */) {
+        return Class.parse(input);
+      }
+
+      if (Token.isHash(token)) {
+        return Id.parse(input);
+      }
+
+      if (Token.isOpenSquareBracket(token)) {
+        return Attribute.parse(input);
+      }
+
+      // Note: Single ':' can be either pseudo-class or legacy pseudo-element
+      if (Token.isColon(token)) {
+        if (input.has(1)) {
+          const second = input.getUnsafe(1);
+          if (Token.isColon(second)) {
+            // Double colon: definitely a pseudo-element
+            return PseudoElement.parse(parseSelector)(input);
+          }
+          // Single colon: check if it's a legacy pseudo-element name
+          // Legacy pseudo-elements: before, after, first-line, first-letter
+          if (Token.isIdent(second)) {
+            const name = second.value.toLowerCase();
+            if (
+              name === "before" ||
+              name === "after" ||
+              name === "first-line" ||
+              name === "first-letter"
+            ) {
+              return PseudoElement.parse(parseSelector)(input);
+            }
+          }
+        }
+        // Single colon with non-legacy name: pseudo-class
+        return PseudoClass.parse(parseSelector)(input);
+      }
+
+      // For ident, '*', or '|': could be Type or Universal selector
+      // Check second token to distinguish:
+      // - '*|...' is Type with universal namespace
+      // - '*' alone (or with namespace) is Universal
+      // - ident is Type (or ident|* is Universal with namespace)
+      if (Token.isIdent(token)) {
+        // Starts with ident: Type or Universal with namespace
+        return Type.parse(input);
+      }
+
+      if (Token.isDelim(token) && token.value === 0x2a) {
+        // Starts with '*': could be '*|name' (Type) or '*|*' or '*' (Universal)
+        if (input.has(1)) {
+          const second = input.getUnsafe(1);
+          if (Token.isDelim(second) && second.value === 0x7c) {
+            // '*|...': check third token
+            if (input.has(2)) {
+              const third = input.getUnsafe(2);
+              if (Token.isDelim(third) && third.value === 0x2a) {
+                // '*|*' is Universal with universal namespace
+                return Universal.parse(input);
+              }
+            }
+            // '*|name' is a Type selector with universal namespace
+            return Type.parse(input);
+          }
+        }
+        // '*' alone is Universal
+        return Universal.parse(input);
+      }
+
+      if (Token.isDelim(token) && token.value === 0x7c) {
+        // Starts with '|': this is Type or Universal with empty namespace
+        // Check second token: '|*' is Universal, '|name' is Type
+        if (input.has(1)) {
+          const second = input.getUnsafe(1);
+          if (Token.isDelim(second) && second.value === 0x2a) {
+            // '|*' is Universal with empty namespace
+            return Universal.parse(input);
+          }
+        }
+        // '|name' is Type with empty namespace
+        return Type.parse(input);
+      }
+
+      return Err.of(`Unexpected token: ${token.type}`);
+    };
+  };
 }

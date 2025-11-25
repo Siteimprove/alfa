@@ -1,6 +1,5 @@
-import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
-import type { Slice } from "@siteimprove/alfa-slice";
+import { Token, type Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Err } from "@siteimprove/alfa-result";
 
 import { type Selector } from "../../index.js";
 
@@ -35,8 +34,6 @@ import { Visited } from "./visited.js";
 import { Where } from "./where.js";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
-
-const { either } = Parser;
 
 /**
  * @public
@@ -116,39 +113,105 @@ export namespace PseudoClass {
 
   export const { isHost } = Host;
 
+  /**
+   * @remarks
+   * This function is a hot path and uses token lookahead instead
+   * of the `either` parser combinator to avoid backtracking. Any changes to
+   * this function should be benchmarked.
+   */
   export function parse(
     parseSelector: Selector.Parser.Component,
   ): CSSParser<PseudoClass> {
-    return either<Slice<Token>, PseudoClass, string>(
-      Active.parse,
-      AnyLink.parse,
-      Checked.parse,
-      Disabled.parse,
-      Empty.parse,
-      Enabled.parse,
-      FirstChild.parse,
-      FirstOfType.parse,
-      Focus.parse,
-      FocusVisible.parse,
-      FocusWithin.parse,
-      Host.parse(parseSelector),
-      HostContext.parse(parseSelector),
-      Hover.parse,
-      LastChild.parse,
-      LastOfType.parse,
-      Link.parse,
-      OnlyChild.parse,
-      OnlyOfType.parse,
-      Root.parse,
-      Visited.parse,
-      NthChild.parse(parseSelector),
-      NthLastChild.parse(parseSelector),
-      NthLastOfType.parse,
-      NthOfType.parse,
-      Has.parse(parseSelector),
-      Is.parse(parseSelector),
-      Not.parse(parseSelector),
-      Where.parse(parseSelector),
-    );
+    return (input) => {
+      if (input.length < 2) {
+        return Err.of("Unexpected end of input");
+      }
+
+      const first = input.getUnsafe(0);
+      if (!Token.isColon(first)) {
+        return Err.of("Expected colon");
+      }
+
+      const second = input.getUnsafe(1);
+
+      // Check for function pseudo-classes
+      if (Token.isFunction(second)) {
+        const name = second.value.toLowerCase();
+        switch (name) {
+          case "has":
+            return Has.parse(parseSelector)(input);
+          case "host":
+            return Host.parse(parseSelector)(input);
+          case "host-context":
+            return HostContext.parse(parseSelector)(input);
+          case "is":
+            return Is.parse(parseSelector)(input);
+          case "not":
+            return Not.parse(parseSelector)(input);
+          case "nth-child":
+            return NthChild.parse(parseSelector)(input);
+          case "nth-last-child":
+            return NthLastChild.parse(parseSelector)(input);
+          case "nth-last-of-type":
+            return NthLastOfType.parse(input);
+          case "nth-of-type":
+            return NthOfType.parse(input);
+          case "where":
+            return Where.parse(parseSelector)(input);
+        }
+        return Err.of(`Unknown pseudo-class function: ${name}`);
+      }
+
+      // Check for non-functional pseudo-classes
+      if (Token.isIdent(second)) {
+        const name = second.value.toLowerCase();
+        switch (name) {
+          case "active":
+            return Active.parse(input);
+          case "any-link":
+            return AnyLink.parse(input);
+          case "checked":
+            return Checked.parse(input);
+          case "disabled":
+            return Disabled.parse(input);
+          case "empty":
+            return Empty.parse(input);
+          case "enabled":
+            return Enabled.parse(input);
+          case "first-child":
+            return FirstChild.parse(input);
+          case "first-of-type":
+            return FirstOfType.parse(input);
+          case "focus":
+            return Focus.parse(input);
+          case "focus-visible":
+            return FocusVisible.parse(input);
+          case "focus-within":
+            return FocusWithin.parse(input);
+          case "host":
+            // :host can be either :host or :host(selector)
+            return Host.parse(parseSelector)(input);
+          case "hover":
+            return Hover.parse(input);
+          case "last-child":
+            return LastChild.parse(input);
+          case "last-of-type":
+            return LastOfType.parse(input);
+          case "link":
+            return Link.parse(input);
+          case "only-child":
+            return OnlyChild.parse(input);
+          case "only-of-type":
+            return OnlyOfType.parse(input);
+          case "root":
+            return Root.parse(input);
+          case "visited":
+            return Visited.parse(input);
+        }
+        return Err.of(`Unknown pseudo-class: ${name}`);
+      }
+
+      return Err.of("Expected ident or function after colon");
+    };
   }
 }
