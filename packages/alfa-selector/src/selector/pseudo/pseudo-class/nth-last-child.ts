@@ -1,0 +1,83 @@
+import type { Nth } from "@siteimprove/alfa-css";
+import { Element } from "@siteimprove/alfa-dom";
+import { Maybe, None, Option } from "@siteimprove/alfa-option";
+
+import type { Context } from "../../../context.js";
+// We cannot simplify that import as it would create a circular dependency
+import { Universal } from "../../simple/universal.js";
+
+import type { Absolute, Selector } from "../../index.js";
+
+import { WithIndexAndSelector } from "./pseudo-class.js";
+
+const { isElement } = Element;
+
+/**
+ * {@link https://drafts.csswg.org/selectors/#nth-last-child-pseudo}
+ */
+export class NthLastChild extends WithIndexAndSelector<"nth-last-child"> {
+  public static of(index: Nth, selector: Maybe<Absolute> = None): NthLastChild {
+    return new NthLastChild(index, Maybe.toOption(selector));
+  }
+
+  private readonly _indices = new WeakMap<Element, number>();
+
+  protected constructor(nth: Nth, selector: Option<Absolute>) {
+    super(
+      "nth-last-child",
+      nth,
+      selector,
+      selector.getter("useContext").getOr(false),
+    );
+  }
+
+  public *[Symbol.iterator](): Iterator<NthLastChild> {
+    yield this;
+  }
+
+  public matches(element: Element, context?: Context): boolean {
+    if (!this._indices.has(element)) {
+      element
+        .inclusiveSiblings()
+        .filter(isElement)
+        .filter((element) =>
+          this._selector
+            .getOr(Universal.of(Option.of("*")))
+            .matches(element, context),
+        )
+        .reverse()
+        .forEach((element, i) => {
+          this._indices.set(element, i + 1);
+        });
+    }
+
+    if (!this._indices.has(element)) {
+      return false;
+    }
+
+    return this._index.matches(this._indices.get(element)!);
+  }
+
+  public equals(value: NthLastChild): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return value instanceof NthLastChild && super.equals(value);
+  }
+
+  public toJSON(): NthLastChild.JSON {
+    return super.toJSON();
+  }
+}
+
+export namespace NthLastChild {
+  export interface JSON extends WithIndexAndSelector.JSON<"nth-last-child"> {}
+
+  export const parse = (parseSelector: Selector.Parser.Component) =>
+    WithIndexAndSelector.parseWithIndexAndSelector(
+      "nth-last-child",
+      parseSelector,
+      NthLastChild.of,
+    );
+}

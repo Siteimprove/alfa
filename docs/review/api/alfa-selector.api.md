@@ -152,14 +152,14 @@ export enum Combinator {
 
 // @public (undocumented)
 export namespace Combinator {
+    // Warning: (ae-forgotten-export) The symbol "BaseSelector" needs to be exported by the entry point index.d.ts
+    export function matcher(left: BaseSelector, combinator: Combinator, right: Selector, element: Element, context?: Context): boolean;
     const // @internal (undocumented)
-    parseCombinator: Parser_2<Combinator>;
+    parse: Parser_2<Combinator>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Selector_2" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export class Complex extends Selector_2<"complex"> {
+export class Complex extends BaseSelector<"complex"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Complex>;
     protected constructor(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound);
@@ -173,6 +173,7 @@ export class Complex extends Selector_2<"complex"> {
     protected readonly _key: Option<Id | Class | Type>;
     // (undocumented)
     get left(): Simple | Compound | Complex;
+    // (undocumented)
     matches(element: Element, context?: Context): boolean;
     // (undocumented)
     static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
@@ -189,7 +190,7 @@ export namespace Complex {
     // (undocumented)
     export function isComplex(value: unknown): value is Complex;
     // (undocumented)
-    export interface JSON extends Selector_2.JSON<"complex"> {
+    export interface JSON extends BaseSelector.JSON<"complex"> {
         // (undocumented)
         combinator: Combinator;
         // (undocumented)
@@ -198,11 +199,11 @@ export namespace Complex {
         right: Simple.JSON | Compound.JSON;
     }
     const // @internal (undocumented)
-    parseComplex: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Simple | Compound | Complex, string, []>;
+    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple | Compound | Complex, string, []>;
 }
 
 // @public (undocumented)
-export class Compound extends Selector_2<"compound"> {
+export class Compound extends BaseSelector<"compound"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Compound>;
     protected constructor(selectors: Array_2<Simple>);
@@ -231,12 +232,12 @@ export namespace Compound {
     // (undocumented)
     export function isCompound(value: unknown): value is Compound;
     // (undocumented)
-    export interface JSON extends Selector_2.JSON<"compound"> {
+    export interface JSON extends BaseSelector.JSON<"compound"> {
         // (undocumented)
         selectors: Array_2<Simple.JSON>;
     }
     const // @internal (undocumented)
-    parseCompound: (parseSelector: () => Parser<Slice<Token>, Absolute, string>) => Parser<Slice<Token>, Simple | Compound, string, []>;
+    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple | Compound, string, []>;
 }
 
 // @public (undocumented)
@@ -333,10 +334,8 @@ export namespace Id {
     parse: Parser<Slice<Token>, Id, string, []>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Item" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export class List<T extends Item = Item> extends Selector_2<"list"> {
+export class List<T extends List.Item = List.Item> extends BaseSelector<"list"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     protected constructor(selectors: Array_2<T>);
@@ -349,9 +348,11 @@ export class List<T extends Item = Item> extends Selector_2<"list"> {
     // (undocumented)
     matches(element: Element, context?: Context): boolean;
     // (undocumented)
-    static of<T extends Item>(...selectors: Array_2<T>): List<T>;
+    static of<T extends List.Item>(...selectors: Array_2<T>): List<T>;
     // (undocumented)
     get selectors(): Iterable_2<T>;
+    // @internal
+    simplify(): T | this;
     // (undocumented)
     toJSON(): List.JSON<T>;
     // (undocumented)
@@ -361,12 +362,32 @@ export class List<T extends Item = Item> extends Selector_2<"list"> {
 // @public (undocumented)
 export namespace List {
     // (undocumented)
-    export interface JSON<T extends Item = Item> extends Selector_2.JSON<"list"> {
+    export function isList(value: unknown): value is List;
+    // Warning: (ae-forgotten-export) The symbol "Relative_2" needs to be exported by the entry point index.d.ts
+    //
+    // @internal (undocumented)
+    export type Item = Simple | Compound | Complex | Relative_2;
+    // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "List" which is marked as @internal
+    //
+    // (undocumented)
+    export interface JSON<T extends Item = Item> extends BaseSelector.JSON<"list"> {
         // (undocumented)
         selectors: Array_2<Serializable.ToJSON<T>>;
     }
     const // @internal (undocumented)
-    parseList: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, List<Simple | Compound | Complex>, string, []>;
+    parseComplex: (parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options) => Parser_2<Simple | Compound | Complex | List<Simple | Compound | Complex>>;
+    const // @internal (undocumented)
+    parseRelative: (parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options) => Parser_2<Relative_2 | List<Relative_2>>;
+    // @internal (undocumented)
+    export function parse(parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options & {
+        relative: true;
+    }): Parser_2<Relative>;
+    // @internal (undocumented)
+    export function parse(parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options & {
+        relative: false;
+    }): Parser_2<Absolute>;
+    // @internal (undocumented)
+    export function parse(parseSelector: Selector.Parser.Component, options?: Selector.Parser.Options): Parser_2<Absolute>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Active" needs to be exported by the entry point index.d.ts
@@ -410,10 +431,8 @@ export namespace PseudoClass {
     export type JSON = Active.JSON | AnyLink.JSON | Checked.JSON | Disabled.JSON | Empty.JSON | Enabled.JSON | FirstChild.JSON | FirstOfType.JSON | Focus.JSON | FocusVisible.JSON | FocusWithin.JSON | Has.JSON | Host.JSON | HostContext.JSON | Hover.JSON | Is.JSON | LastChild.JSON | LastOfType.JSON | Link.JSON | Not.JSON | NthChild.JSON | NthLastChild.JSON | NthLastOfType.JSON | NthOfType.JSON | OnlyChild.JSON | OnlyOfType.JSON | Root.JSON | Visited.JSON | Where.JSON;
     const // (undocumented)
     isHost: typeof Host.isHost;
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
-    //
     // (undocumented)
-    export function parse(parseSelector: Thunk<Parser_2<Absolute>>): Parser_2<PseudoClass>;
+    export function parse(parseSelector: Selector.Parser.Component): Parser_2<PseudoClass>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "After" needs to be exported by the entry point index.d.ts
@@ -444,60 +463,78 @@ export namespace PseudoElement {
     //
     // (undocumented)
     export type JSON = PseudoElementSelector.JSON;
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
-    //
     // (undocumented)
-    export function parse(parseSelector: Thunk<Parser_2<Absolute>>): Parser_2<PseudoElement>;
+    export function parse(parseSelector: Selector.Parser.Component): Parser_2<PseudoElement>;
 }
 
-// @public (undocumented)
-export class Relative extends Selector_2<"relative"> {
-    // (undocumented)
-    [Symbol.iterator](): Iterator<Relative>;
-    protected constructor(combinator: Combinator, selector: Simple | Compound | Complex);
-    // (undocumented)
-    get combinator(): Combinator;
-    // (undocumented)
-    equals(value: Relative): boolean;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    matches(): boolean;
-    // (undocumented)
-    static of(combinator: Combinator, selector: Simple | Compound | Complex): Relative;
-    // (undocumented)
-    get selector(): Simple | Compound | Complex;
-    // (undocumented)
-    toJSON(): Relative.JSON;
-    // (undocumented)
-    toString(): string;
-}
+// Warning: (ae-internal-missing-underscore) The name "Relative" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type Relative = Relative_2 | List<Relative_2>;
 
-// @public (undocumented)
+// @internal (undocumented)
 export namespace Relative {
     // (undocumented)
-    export interface JSON extends Selector_2.JSON<"relative"> {
-        // (undocumented)
-        combinator: string;
-        // (undocumented)
-        selector: Simple.JSON | Compound.JSON | Complex.JSON;
-    }
+    export type JSON = Relative_2.JSON | List.JSON<Relative_2>;
 }
 
 // @public (undocumented)
-export type Selector = Simple | Compound | Complex | Relative | List;
+export type Selector = Simple | Compound | Complex | Relative_2 | List;
 
 // @public (undocumented)
 export namespace Selector {
     export function hasSlotted(selector: Selector): boolean;
+    // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Relative" which is marked as @internal
+    //
     // (undocumented)
     export type JSON = Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | List.JSON;
     const isHostSelector: Refinement<unknown, Host | HostContext, []>;
     const isShadow: Refinement<Selector, Selector, []>;
     export function matchSlotted(selector: Selector, slotted: Element, context?: Context): boolean;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
+    // (undocumented)
+    export namespace Parser {
+        // (undocumented)
+        export interface Component {
+            // Warning: (ae-incompatible-release-tags) The symbol "__call" is marked as @public, but its signature references "Relative" which is marked as @internal
+            //
+            // (undocumented)
+            (options: Options & {
+                relative: true;
+            }): Parser_2<Relative>;
+            // Warning: (ae-incompatible-release-tags) The symbol "__call" is marked as @public, but its signature references "Absolute" which is marked as @internal
+            //
+            // (undocumented)
+            (options: Options & {
+                relative: false;
+            }): Parser_2<Absolute>;
+            // Warning: (ae-incompatible-release-tags) The symbol "__call" is marked as @public, but its signature references "Absolute" which is marked as @internal
+            //
+            // (undocumented)
+            (options?: Options): Parser_2<Absolute>;
+        }
+        // (undocumented)
+        export interface Options {
+            // (undocumented)
+            forgiving?: boolean;
+            // (undocumented)
+            relative?: boolean;
+        }
+    }
+    // @internal
+    export function parseSelector(options: Parser.Options & {
+        relative: true;
+    }): Parser_2<Relative>;
+    // Warning: (ae-incompatible-release-tags) The symbol "parseSelector" is marked as @public, but its signature references "Absolute" which is marked as @internal
     //
     // (undocumented)
+    export function parseSelector(options: Parser.Options & {
+        relative: false;
+    }): Parser_2<Absolute>;
+    // Warning: (ae-incompatible-release-tags) The symbol "parseSelector" is marked as @public, but its signature references "Absolute" which is marked as @internal
+    //
+    // (undocumented)
+    export function parseSelector(options?: Parser.Options): Parser_2<Absolute>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Absolute" which is marked as @internal
     parse: Parser_2<Absolute>;
 }
 
@@ -511,7 +548,7 @@ export namespace Simple {
     // (undocumented)
     export type JSON = Type.JSON | Universal.JSON | Attribute.JSON | Class.JSON | Id.JSON | PseudoClass.JSON | PseudoElement.JSON;
     const // @internal (undocumented)
-    parse: (parseSelector: Thunk<Parser_2<Absolute>>) => Parser<Slice<Token>, Simple, string, []>;
+    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple, string, []>;
 }
 
 // @public (undocumented)
@@ -533,6 +570,8 @@ export class Specificity implements Serializable<Specificity.JSON>, Equatable, H
     hash(hash: Hash): void;
     // (undocumented)
     static of(a: number, b: number, c: number): Specificity;
+    // (undocumented)
+    static pseudoClass(): Specificity;
     // (undocumented)
     toJSON(): Specificity.JSON;
     // (undocumented)
@@ -601,7 +640,7 @@ export namespace Type {
 }
 
 // @public (undocumented)
-export class Universal extends Selector_2<"universal"> {
+export class Universal extends BaseSelector<"universal"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Universal>;
     protected constructor(namespace: Option<string>);
@@ -628,7 +667,7 @@ export namespace Universal {
     // (undocumented)
     export function isUniversal(value: unknown): value is Universal;
     // (undocumented)
-    export interface JSON extends Selector_2.JSON<"universal"> {
+    export interface JSON extends BaseSelector.JSON<"universal"> {
         // (undocumented)
         namespace: string | null;
     }

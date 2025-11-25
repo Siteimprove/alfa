@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-dom",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.107.0",
+  "version": "0.108.0",
   "license": "MIT",
   "description": "Implementations of the core DOM and CSSOM node types",
   "repository": {
@@ -65,7 +65,7 @@
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^",
     "@types/jsdom": "^27.0.0",
-    "jsdom": "^27.1.0"
+    "jsdom": "^27.2.0"
   },
   "publishConfig": {
     "access": "public",

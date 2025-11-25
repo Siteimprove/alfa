@@ -1,5 +1,16 @@
 # @siteimprove/alfa-parser
 
+## 0.108.0
+
+### Minor Changes
+
+- **Breaking:** `Parser.parseIf` has been removed in favor of `Parser.filter`. ([#1932](https://github.com/Siteimprove/alfa/pull/1932))
+
+  Both functions were doing the same thing.
+  Migration: replace `Parser.parseIf(refinement, parser, ifError)` with `Parser.filter(parser, refinement, ifError)`.
+
+- **Added:** Parser combinator `skip`, `skipUntil` and `final` are now available. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
 ## 0.107.0
 
 ## 0.106.1

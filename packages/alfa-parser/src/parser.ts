@@ -4,7 +4,7 @@ import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 
 const { not } = Predicate;
 
@@ -191,6 +191,19 @@ export namespace Parser {
         }
       }
     };
+  }
+
+  export function skip<I, E, A extends Array<unknown> = []>(
+    parser: Parser<I, unknown, E, A>,
+  ): Parser<I, void, E, A> {
+    return map(parser, () => undefined);
+  }
+
+  export function skipUntil<I, E, A extends Array<unknown> = []>(
+    parser: Parser<I, unknown, E, A>,
+    delimiter: Parser<I, unknown, E, A>,
+  ): Parser<I, void, E, A> {
+    return skip(takeUntil(parser, delimiter));
   }
 
   export function peek<I, T, E, A extends Array<unknown> = []>(
@@ -487,7 +500,7 @@ export namespace Parser {
 
   export function end<I extends Iterable<unknown>, E>(
     ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>,
-  ): Parser<I, void, E> {
+  ): Parser<I, void, E, Array<any>> {
     return (input) => {
       for (const value of input) {
         return Err.of(ifError(value as any));
@@ -495,5 +508,17 @@ export namespace Parser {
 
       return Result.of([input, undefined]);
     };
+  }
+
+  export function final<
+    I extends Iterable<unknown>,
+    T,
+    E,
+    A extends Array<unknown> = [],
+  >(
+    parser: Parser<I, T, E, A>,
+    ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>,
+  ): Parser<I, T, E, A> {
+    return left(parser, end<I, E>(ifError));
   }
 }

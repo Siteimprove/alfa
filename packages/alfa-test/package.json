@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-test",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.107.0",
+  "version": "0.108.0",
   "license": "MIT",
   "description": "A simple test library sitting on top of vitest",
   "repository": {
@@ -23,10 +23,10 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-rng": "workspace:^",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.13"
   },
   "devDependencies": {
-    "@types/node": "^24.10.0"
+    "@types/node": "^24.10.1"
   },
   "publishConfig": {
     "access": "public",

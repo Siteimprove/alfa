@@ -82,6 +82,10 @@ export namespace Token {
     return filter(parseFirst, refinement, () => "Mismatching token");
   }
 
+  export function skipUntil(delimiter: CSSParser<unknown>): CSSParser<void> {
+    return Parser.skipUntil(parseFirst, delimiter);
+  }
+
   export class Ident implements Equatable, Serializable<Ident.JSON> {
     public static of(value: string): Ident {
       return new Ident(value);

@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-selector",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.107.0",
+  "version": "0.108.0",
   "license": "MIT",
   "description": "Functionality for working with CSS selectors and individual selector matching",
   "repository": {
@@ -36,6 +36,7 @@
     "@siteimprove/alfa-parser": "workspace:^",
     "@siteimprove/alfa-predicate": "workspace:^",
     "@siteimprove/alfa-refinement": "workspace:^",
+    "@siteimprove/alfa-result": "workspace:^",
     "@siteimprove/alfa-sequence": "workspace:^",
     "@siteimprove/alfa-slice": "workspace:^",
     "@siteimprove/alfa-thunk": "workspace:^"

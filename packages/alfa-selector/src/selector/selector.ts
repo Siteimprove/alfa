@@ -1,3 +1,4 @@
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Iterable } from "@siteimprove/alfa-iterable";
@@ -18,7 +19,7 @@ import type { Class, Id, Simple, Type } from "./simple/index.js";
 /**
  * @internal
  */
-export abstract class Selector<T extends string = string>
+export abstract class BaseSelector<T extends string = string>
   implements
     Iterable<Simple | Compound | Complex | Relative>,
     Equatable,
@@ -26,6 +27,7 @@ export abstract class Selector<T extends string = string>
 {
   private readonly _type: T;
   private readonly _specificity: Specificity;
+  private readonly _useContext: boolean;
 
   /**
    * The key selector is used to optimise matching of complex (and compound)
@@ -33,15 +35,19 @@ export abstract class Selector<T extends string = string>
    *
    * @remarks
    * The key selector is the rightmost simple selector in a complex selector,
-   * or the leftmost simple selector in a compound selector. In order for an
-   * element to match a complex selector, it must match the key selector.
+   * or the rightmost non-pseudo- selector in a compound selector. In order for
+   * an element to match a selector, it must match the key selector.
    *
    * For example, consider selector `main .foo + div`. Any element matching it
    * must necessarily be a `<div>`, and for other elements there is no need to
    * waste time traversing the DOM tree to check siblings or ancestors.
    *
    * For compound selectors, e.g. `.foo.bar`, any part could be taken, and we
-   * arbitrarily pick the leftmost.
+   * pick the rightmost non-pseudo-. This is done under the assumption that the
+   * class selectors are usually piled up from more generic to more precise,
+   * especially in the context of nesting selectors. We do not take the pseudo-*
+   * selectors as they often depend on context, or match stuff that doesn't
+   * really exist.
    *
    * Conversely, an `<img id="image" class="foo bar">` can only match selectors
    * whose key selector is `img`, `#image`, `.foo`, or `.bar`. So we can
@@ -58,9 +64,14 @@ export abstract class Selector<T extends string = string>
    */
   protected readonly _key: Option<Id | Class | Type> = None;
 
-  protected constructor(type: T, specificity: Specificity) {
+  protected constructor(
+    type: T,
+    specificity: Specificity,
+    useContext: boolean,
+  ) {
     this._type = type;
     this._specificity = specificity;
+    this._useContext = useContext;
   }
 
   public get type(): T {
@@ -71,8 +82,35 @@ export abstract class Selector<T extends string = string>
     return this._specificity;
   }
 
+  public get useContext(): boolean {
+    return this._useContext;
+  }
+
   public get key(): Option<Id | Class | Type> {
     return this._key;
+  }
+
+  /**
+   * Whether the selector fits in a Compound context.
+   *
+   * @remarks
+   * Simple selectors are also (degenerate) compound selectors with a single
+   * item in the list.
+   *
+   * @internal
+   */
+  public static hasCompoundType(
+    selector: BaseSelector,
+  ): selector is Compound | Simple {
+    return [
+      "compound",
+      "type",
+      "id",
+      "class",
+      "attribute",
+      "universal",
+      "pseudo-class",
+    ].includes(selector.type);
   }
 
   /**
@@ -80,13 +118,13 @@ export abstract class Selector<T extends string = string>
    */
   public abstract matches(element: Element, context?: Context): boolean;
 
-  public equals(value: Selector): boolean;
+  public equals(value: BaseSelector): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
     return (
-      value instanceof Selector &&
+      value instanceof BaseSelector &&
       value._type === this._type &&
       value._specificity.equals(this._specificity)
     );
@@ -96,7 +134,7 @@ export abstract class Selector<T extends string = string>
     Simple | Compound | Complex | Relative
   >;
 
-  public toJSON(): Selector.JSON<T> {
+  public toJSON(): BaseSelector.JSON<T> {
     return {
       type: this._type,
       specificity: this._specificity.toJSON(),
@@ -105,7 +143,7 @@ export abstract class Selector<T extends string = string>
   }
 }
 
-export namespace Selector {
+export namespace BaseSelector {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON | undefined;
 
@@ -129,10 +167,15 @@ export namespace Selector {
 export abstract class WithName<
   T extends string = string,
   N extends string = string,
-> extends Selector<T> {
+> extends BaseSelector<T> {
   protected readonly _name: N;
-  protected constructor(type: T, name: N, specificity: Specificity) {
-    super(type, specificity);
+  protected constructor(
+    type: T,
+    name: N,
+    specificity: Specificity,
+    useContext: boolean,
+  ) {
+    super(type, specificity, useContext);
     this._name = name;
   }
 
@@ -166,7 +209,7 @@ export abstract class WithName<
 
 export namespace WithName {
   export interface JSON<T extends string = string, N extends string = string>
-    extends Selector.JSON<T> {
+    extends BaseSelector.JSON<T> {
     name: N;
   }
 }

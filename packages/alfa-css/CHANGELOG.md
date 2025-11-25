@@ -1,5 +1,11 @@
 # @siteimprove/alfa-css
 
+## 0.108.0
+
+### Minor Changes
+
+- **Added:** a `Token.skipUntil` parser is now available. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
 ## 0.107.0
 
 ## 0.106.1
