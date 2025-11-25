@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-aria",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.107.0",
+  "version": "0.108.0",
   "license": "MIT",
   "description": "Functionality for working with ARIA and the accessibility tree",
   "repository": {
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^",
     "prettier": "^3.6.2",
-    "puppeteer": "^24.29.1"
+    "puppeteer": "^24.31.0"
   },
   "publishConfig": {
     "access": "public",

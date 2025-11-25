@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-array",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.107.0",
+  "version": "0.108.0",
   "license": "MIT",
   "description": "Functionality for working with arrays",
   "repository": {
@@ -42,6 +42,6 @@
   "devDependencies": {
     "@siteimprove/alfa-fnv": "workspace:^",
     "@siteimprove/alfa-test": "workspace:^",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.13"
   }
 }

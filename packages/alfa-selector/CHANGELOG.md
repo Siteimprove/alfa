@@ -1,5 +1,33 @@
 # @siteimprove/alfa-selector
 
+## 0.108.0
+
+### Minor Changes
+
+- **Breaking:** The key selector of compound selectors is now the last id/class/type in it instead of the first. ([#1937](https://github.com/Siteimprove/alfa/pull/1937))
+
+  This improves cascade build time, where they are bucketed according to the key selectors, since the components in a compound are usually ordered from most generic to most precise, so this results in smaller buckets on average.
+
+- **Added:** Relative selectors can now be anchored with `Relative#anchoredAt`. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+### Patch Changes
+
+- **Changed:** Selectors who do not depend on context for matching are now matched with a more aggressive cache strategy. ([#1938](https://github.com/Siteimprove/alfa/pull/1938))
+
+- **Added:** Selectors now have a `useContext` property telling whether the matching depends on context (`:focus`, `:hover`, …) or is purely structural (type or class selector, …) ([#1938](https://github.com/Siteimprove/alfa/pull/1938))
+
+- **Fixed:** `:is` and `:where` now correctly parse their argument as a forgiving list. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+- **Fixed:** Anchored relative selectors are now correctly matched. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+- **Changed:** Selector matching for `:host` and `:host-context` is now cached, improving performances for pages using them a lot. ([#1937](https://github.com/Siteimprove/alfa/pull/1937))
+
+- **Changed:** The non-pseudo- selectors of a compound selector are now matched right to left. ([#1937](https://github.com/Siteimprove/alfa/pull/1937))
+
+  This improves performances under the assumption that the most precise selectors are usually written last, thus increasing the probability of an early mismatch.
+
+- **Fixed:** `:has` pseudo-class is now correctly matched. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
 ## 0.107.0
 
 ## 0.106.1
