@@ -1,5 +1,43 @@
 # Alfa changelog
 
+## [0.108.0](../../compare/v0.107.0...v0.108.0) (2025-11-25)
+
+### Breaking
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): The key selector of compound selectors is now the last id/class/type in it instead of the first. ([#1937](https://github.com/Siteimprove/alfa/pull/1937))
+
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md#01080): `Parser.parseIf` has been removed in favor of `Parser.filter`. ([#1932](https://github.com/Siteimprove/alfa/pull/1932))
+
+### Added
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): Selectors now have a `useContext` property telling whether the matching depends on context (`:focus`, `:hover`, …) or is purely structural (type or class selector, …). ([#1938](https://github.com/Siteimprove/alfa/pull/1938))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01080): a `Token.skipUntil` parser is now available. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): Relative selectors can now be anchored with `Relative#anchoredAt`. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+- [@siteimprove/alfa-option](packages/alfa-option/CHANGELOG.md#01080): An `Option.getter` method is now available, returning an option of the value associated with the key in the original object. ([#1938](https://github.com/Siteimprove/alfa/pull/1938))
+
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md#01080): Parser combinator `skip`, `skipUntil` and `final` are now available. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+### Changed
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): Selectors who do not depend on context for matching are now matched with a more aggressive cache strategy. ([#1938](https://github.com/Siteimprove/alfa/pull/1938))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): Selector matching for `:host` and `:host-context` is now cached, improving performances for pages using them a lot. ([#1937](https://github.com/Siteimprove/alfa/pull/1937))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): The non-pseudo- selectors of a compound selector are now matched right to left. ([#1937](https://github.com/Siteimprove/alfa/pull/1937))
+
+### Fixed
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): `:is` and `:where` now correctly parse their argument as a forgiving list. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): Anchored relative selectors are now correctly matched. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01080): `:has` pseudo-class is now correctly matched. ([#1930](https://github.com/Siteimprove/alfa/pull/1930))
+
+- [@siteimprove/alfa-cache](packages/alfa-cache/CHANGELOG.md#01080): The `@Cache.memoize` decorator now correctly caches results of each instance separately. ([#1931](https://github.com/Siteimprove/alfa/pull/1931))
+
 ## [0.107.0](../../compare/v0.106.1...v0.107.0) (2025-10-24)
 
 ### Changed

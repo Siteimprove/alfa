@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-web",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.107.0",
+  "version": "0.108.0",
   "license": "MIT",
   "description": "Types for modelling web resources, such as individual web pages and entire web sites",
   "repository": {
