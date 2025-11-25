@@ -1,5 +1,13 @@
 # @siteimprove/alfa-option
 
+## 0.108.0
+
+### Minor Changes
+
+- **Added:** An `Option.getter` method is now available, returning an option of the value associated with the key in the original object. ([#1938](https://github.com/Siteimprove/alfa/pull/1938))
+
+  That is, `option.getter("foo")` is the same as `option.map(value => value.foo)`.
+
 ## 0.107.0
 
 ## 0.106.1

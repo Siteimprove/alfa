@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">81.81% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>9/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/9</span>
+                <span class='fraction'>4/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -143,9 +143,7 @@
 <a name='L78'></a><a href='#L78'>78</a>
 <a name='L79'></a><a href='#L79'>79</a>
 <a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L81'></a><a href='#L81'>81</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,8 +167,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -188,8 +186,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -198,9 +196,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -214,10 +212,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">260x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">144x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -225,21 +223,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
-import type { Thunk } from "@siteimprove/alfa-thunk";
 &nbsp;
-import type { Absolute } from "../index.js";
+import type { Selector } from "../index.js";
 &nbsp;
 // Import the various simple selectors for use in that file.
 import { Attribute } from "./attribute.js";
 import { Class } from "./class.js";
 import { Id } from "./id.js";
-import { PseudoClass } from "./pseudo-class/index.js";
-import { PseudoElement } from "./pseudo-element/index.js";
+import { PseudoClass } from "../pseudo/pseudo-class/index.js";
+import { PseudoElement } from "../pseudo/pseudo-element/index.js";
 import { Type } from "./type.js";
 import { Universal } from "./universal.js";
 &nbsp;
@@ -247,8 +242,8 @@ import { Universal } from "./universal.js";
 export * from "./attribute.js";
 export * from "./class.js";
 export * from "./id.js";
-export * from "./pseudo-class/index.js";
-export * from "./pseudo-element/index.js";
+export * from "../pseudo/pseudo-class/index.js";
+export * from "../pseudo/pseudo-element/index.js";
 export * from "./type.js";
 export * from "./universal.js";
 &nbsp;
@@ -282,14 +277,13 @@ export namespace Simple {
     | PseudoElement.JSON;
 &nbsp;
   export function isSimple(value: unknown): value is Simple {
-    return (
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       Type.isType(value) ||
       Universal.isUniversal(value) ||
       Attribute.isAttribute(value) ||
       Class.isClass(value) ||
-<span class="branch-4 cbranch-no" title="branch not covered" >      Id.isId(value) </span>||
-<span class="branch-5 cbranch-no" title="branch not covered" >      PseudoClass.isPseudoClass(value) </span>||
-<span class="branch-6 cbranch-no" title="branch not covered" >      PseudoElement.isPseudoElement(value)</span>
+      Id.isId(value) ||
+      PseudoClass.isPseudoClass(value)
     );
   }
 &nbsp;
@@ -298,7 +292,7 @@ export namespace Simple {
    *
    * @internal
    */
-  export const parse = (parseSelector: Thunk&lt;CSSParser&lt;Absolute&gt;&gt;) =&gt;
+  export const parse = (parseSelector: Selector.Parser.Component) =&gt;
     either&lt;Slice&lt;Token&gt;, Simple, string&gt;(
       Class.parse,
       Type.parse,
@@ -316,7 +310,7 @@ export namespace Simple {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-28T11:03:57.513Z
+                at 2025-11-25T08:34:19.057Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
