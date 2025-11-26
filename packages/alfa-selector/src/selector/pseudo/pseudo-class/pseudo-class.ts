@@ -8,6 +8,8 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
 import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err } from "@siteimprove/alfa-result";
+import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute, Selector } from "../../index.js";
@@ -64,16 +66,35 @@ export namespace PseudoClassSelector {
   /**
    * Parses a non-functional pseudo-class (`:<name>`)
    */
-  export function parseNonFunctional<T extends PseudoClassSelector>(
+  export function parseNonFunctional<T>(
     name: string,
-    of: Thunk<T>,
+    constructors: Record<string, Thunk<T>> | Thunk<T>,
   ): CSSParser<T> {
-    return map(
-      right(parseColon, parseIdent(name)),
-      // We explicitly need to discard the parsed identifier and not pass it
-      // to a function that may use it (but was super-typed as a Thunk).
-      () => of(),
-    );
+    return (input: Slice<Token>) => {
+      const constructor =
+        typeof constructors === "function" ? constructors : constructors[name];
+      if (constructor === undefined) {
+        return Err.of(`Unknown pseudo-class: ${name}`);
+      }
+      // We need to eta-expand in order to discard the result of parseIdent.
+      return map(right(parseColon, parseIdent(name)), () => constructor())(
+        input,
+      );
+    };
+  }
+
+  /**
+   * Parses a functional pseudo-class (`:<name>(...)`)
+   */
+  export function parseFunctional<T>(
+    name: string,
+    parsers: Record<string, CSSParser<T>>,
+  ): CSSParser<T> {
+    const parser = parsers[name];
+    if (parser === undefined) {
+      return () => Err.of(`Unknown pseudo-class function: ${name}`);
+    }
+    return parser;
   }
 }
 

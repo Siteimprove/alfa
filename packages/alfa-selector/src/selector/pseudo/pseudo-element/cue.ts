@@ -62,6 +62,17 @@ export namespace Cue {
     selector: Option.JSON<Selector>;
   }
 
+  export function parseFunction(
+    parseSelector: Selector.Parser.Component,
+  ): CSSParser<Cue> {
+    return right(
+      take(Token.parseColon, 2),
+      map(Function.parse("cue", parseSelector), ([_, selector]) =>
+        Cue.of(selector),
+      ),
+    );
+  }
+
   export function parse(
     parseSelector: Selector.Parser.Component,
   ): CSSParser<Cue> {

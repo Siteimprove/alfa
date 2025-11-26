@@ -85,7 +85,6 @@ export namespace Component {
       return map(Block.consume, (value) => Component.of(value))(input);
     }
 
-    // Single token case
     return Result.of<[Slice<Token>, Component], string>([
       input.rest(),
       Component.of([first]),

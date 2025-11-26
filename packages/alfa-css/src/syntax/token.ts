@@ -10,7 +10,7 @@ import type * as json from "@siteimprove/alfa-json";
 
 import type { Parser as CSSParser } from "./parser.js";
 
-const { filter, map, oneOrMore } = Parser;
+const { map, oneOrMore } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 

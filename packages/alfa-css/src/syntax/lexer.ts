@@ -133,7 +133,8 @@ export namespace Lexer {
 /**
  * {@link https://drafts.csswg.org/css-syntax/#digit}
  */
-const isDigit: Predicate<number> = (code) => code >= CHAR_ZERO && code <= CHAR_NINE;
+const isDigit: Predicate<number> = (code) =>
+  code >= CHAR_ZERO && code <= CHAR_NINE;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#hex-digit}
@@ -142,13 +143,6 @@ const isHexDigit: Predicate<number> = (code) =>
   isDigit(code) ||
   (code >= CHAR_UPPER_A && code <= CHAR_UPPER_F) ||
   (code >= CHAR_LOWER_A && code <= CHAR_LOWER_F);
-
-const hexDigit: Parser<[string, number], number, string> = ([input, i]) => {
-  const code = input.charCodeAt(i);
-  return isHexDigit(code)
-    ? Result.of([[input, i + 1], code])
-    : Err.of("Expected a hex digit");
-};
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#uppercase-letter}
@@ -323,7 +317,6 @@ const consumeEscapedCodePoint: Parser.Infallible<[string, number], number> = ([
   if (isHexDigit(byte)) {
     let code = 0;
     let count = 0;
-    const maxCount = 6;
 
     // Convert first hex digit
     if (isDigit(byte)) {
@@ -341,7 +334,7 @@ const consumeEscapedCodePoint: Parser.Infallible<[string, number], number> = ([
       if (!isHexDigit(nextByte)) {
         break;
       }
-      
+
       let digit: number;
       if (isDigit(nextByte)) {
         digit = nextByte - CHAR_ZERO;
@@ -350,7 +343,7 @@ const consumeEscapedCodePoint: Parser.Infallible<[string, number], number> = ([
       } else {
         digit = nextByte - CHAR_UPPER_A + 10;
       }
-      
+
       code = CHAR_HEX_BASE * code + digit;
       count++;
     }
@@ -392,10 +385,7 @@ const consumeNumber: Parser.Infallible<[string, number], Token.Number> = ([
     ++i;
   }
 
-  if (
-    input.charCodeAt(i) === CHAR_DOT &&
-    isDigit(input.charCodeAt(i + 1))
-  ) {
+  if (input.charCodeAt(i) === CHAR_DOT && isDigit(input.charCodeAt(i + 1))) {
     i += 2;
     isInteger = false;
 
@@ -554,7 +544,7 @@ const consumeURL: Parser.Infallible<
   Token.URL | Token.BadURL
 > = ([input, i]) => {
   const n = input.length;
-  
+
   while (isWhitespace(input.charCodeAt(i))) {
     i++;
   }
@@ -574,7 +564,7 @@ const consumeURL: Parser.Infallible<
 
     if (isWhitespace(code)) {
       value += input.slice(segmentStart, i);
-      
+
       while (isWhitespace(input.charCodeAt(i))) {
         i++;
       }
@@ -646,7 +636,7 @@ const consumeToken: Parser.Infallible<[string, number], Token | null> = ([
   i,
 ]) => {
   const n = input.length;
-  
+
   // https://drafts.csswg.org/css-syntax/#consume-comments
   while (i < n) {
     const first = input.charCodeAt(i);
@@ -654,7 +644,10 @@ const consumeToken: Parser.Infallible<[string, number], Token | null> = ([
       i += 2;
 
       while (i < n) {
-        if (input.charCodeAt(i) === CHAR_ASTERISK && input.charCodeAt(i + 1) === CHAR_SLASH) {
+        if (
+          input.charCodeAt(i) === CHAR_ASTERISK &&
+          input.charCodeAt(i + 1) === CHAR_SLASH
+        ) {
           i += 2;
           break;
         }
@@ -737,7 +730,10 @@ const consumeToken: Parser.Infallible<[string, number], Token | null> = ([
         return consumeNumeric([input, i]);
       }
       const next1 = input.charCodeAt(i + 1);
-      if (next1 === CHAR_MINUS && input.charCodeAt(i + 2) === CHAR_GREATER_THAN) {
+      if (
+        next1 === CHAR_MINUS &&
+        input.charCodeAt(i + 2) === CHAR_GREATER_THAN
+      ) {
         return [[input, i + 3], Token.closeComment()];
       }
       if (startsIdentifier([input, i])) {

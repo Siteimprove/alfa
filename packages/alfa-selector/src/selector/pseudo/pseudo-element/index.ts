@@ -2,6 +2,7 @@ import { Token, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Err } from "@siteimprove/alfa-result";
 
 import type { Selector } from "../../index.js";
+
 import { After } from "./after.js";
 import { Backdrop } from "./backdrop.js";
 import { Before } from "./before.js";
@@ -20,6 +21,8 @@ import { SpellingError } from "./spelling-error.js";
 import { TargetText } from "./target-text.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
+
+const { parseLegacy, parseNonLegacy, parseFunctional } = PseudoElementSelector;
 
 /**
  * @public
@@ -57,6 +60,39 @@ export namespace PseudoElement {
     return value instanceof PseudoElementSelector;
   }
 
+  const legacyConstructors: Record<string, () => PseudoElement> = {
+    after: After.of,
+    before: Before.of,
+    "first-letter": FirstLetter.of,
+    "first-line": FirstLine.of,
+  };
+
+  const nonLegacyConstructors: Record<string, () => PseudoElement> = {
+    after: After.of,
+    backdrop: Backdrop.of,
+    before: Before.of,
+    cue: Cue.of,
+    "file-selector-button": FileSelectorButton.of,
+    "first-letter": FirstLetter.of,
+    "first-line": FirstLine.of,
+    "grammar-error": GrammarError.of,
+    marker: Marker.of,
+    placeholder: Placeholder.of,
+    selection: Selection.of,
+    "spelling-error": SpellingError.of,
+    "target-text": TargetText.of,
+  };
+
+  const functionalParsers = (
+    parseSelector: Selector.Parser.Component,
+  ): Record<string, CSSParser<PseudoElement>> => {
+    return {
+      cue: Cue.parseFunction(parseSelector),
+      "cue-region": CueRegion.parse(parseSelector),
+      slotted: Slotted.parse(parseSelector),
+    };
+  };
+
   /**
    * @remarks
    * This function is a hot path and uses token lookahead instead
@@ -67,20 +103,17 @@ export namespace PseudoElement {
     parseSelector: Selector.Parser.Component,
   ): CSSParser<PseudoElement> {
     return (input) => {
-      if (input.length < 2) {
+      if (!input.has(1)) {
         return Err.of("Unexpected end of input");
       }
 
       const first = input.getUnsafe(0);
       const second = input.getUnsafe(1);
 
-      // All pseudo-elements require at least one colon
       if (!Token.isColon(first)) {
         return Err.of("Expected colon");
       }
 
-      // Check if it's a double colon (most pseudo-elements)
-      // or single colon (legacy pseudo-elements)
       const isDoubleColon = Token.isColon(second);
       const nameIndex = isDoubleColon ? 2 : 1;
 
@@ -90,71 +123,23 @@ export namespace PseudoElement {
 
       const nameToken = input.getUnsafe(nameIndex);
 
-      // Check for function pseudo-elements
+      // Function pseudo-elements must be checked first. If we checked for
+      // ident tokens first, function tokens would never be reached since
+      // Token.isIdent would also match the beginning of function tokens.
       if (Token.isFunction(nameToken)) {
         const name = nameToken.value.toLowerCase();
-        switch (name) {
-          case "cue":
-            return Cue.parse(parseSelector)(input);
-          case "cue-region":
-            return CueRegion.parse(parseSelector)(input);
-          case "slotted":
-            return Slotted.parse(parseSelector)(input);
-        }
-        return Err.of(`Unknown pseudo-element function: ${name}`);
+        return parseFunctional(name, functionalParsers(parseSelector))(input);
       }
 
-      // Check for non-functional pseudo-elements
+      // Non-functional pseudo-elements
       if (Token.isIdent(nameToken)) {
         const name = nameToken.value.toLowerCase();
 
-        // Legacy pseudo-elements can use single colon
-        if (!isDoubleColon) {
-          switch (name) {
-            case "after":
-              return After.parse(input);
-            case "before":
-              return Before.parse(input);
-            case "first-letter":
-              return FirstLetter.parse(input);
-            case "first-line":
-              return FirstLine.parse(input);
-          }
-          return Err.of(`Unknown legacy pseudo-element: ${name}`);
-        }
+        const parser = isDoubleColon
+          ? parseNonLegacy(name, nonLegacyConstructors)
+          : parseLegacy(name, legacyConstructors);
 
-        // Double colon pseudo-elements (includes legacy ones)
-        switch (name) {
-          case "after":
-            return After.parse(input);
-          case "backdrop":
-            return Backdrop.parse(input);
-          case "before":
-            return Before.parse(input);
-          case "cue":
-            return Cue.parse(parseSelector)(input);
-          case "file-selector-button":
-            return FileSelectorButton.parse(input);
-          case "first-letter":
-            return FirstLetter.parse(input);
-          case "first-line":
-            return FirstLine.parse(input);
-          case "grammar-error":
-            return GrammarError.parse(input);
-          case "marker":
-            return Marker.parse(input);
-          case "part":
-            return Part.parse(input);
-          case "placeholder":
-            return Placeholder.parse(input);
-          case "selection":
-            return Selection.parse(input);
-          case "spelling-error":
-            return SpellingError.parse(input);
-          case "target-text":
-            return TargetText.parse(input);
-        }
-        return Err.of(`Unknown pseudo-element: ${name}`);
+        return parser(input);
       }
 
       return Err.of("Expected ident or function after colons");
