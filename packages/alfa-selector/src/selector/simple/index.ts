@@ -98,7 +98,10 @@ export namespace Simple {
         if (input.has(1) && Token.isColon(input.getUnsafe(1))) {
           return PseudoElement.parse(parseSelector)(input);
         }
-        return PseudoClass.parse(parseSelector)(input);
+        return either<Slice<CSSToken>, Simple, string>(
+          PseudoElement.parse(parseSelector),
+          PseudoClass.parse(parseSelector),
+        )(input);
       }
 
       return either<Slice<CSSToken>, Simple, string>(
