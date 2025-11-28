@@ -7,10 +7,11 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Token } from "../../syntax/index.js";
+import type { Parser as CSSParser, Token } from "../../syntax/index.js";
 
 import { Keyword } from "../textual/keyword.js";
 
+import { ColorFunction } from "./color-function.js";
 import { Current } from "./current.js";
 import { Hex } from "./hex.js";
 import { HSL } from "./hsl.js";
@@ -24,7 +25,15 @@ const { either } = Parser;
 /**
  * @public
  */
-export type Color = Hex | Named | HSL | HWB | RGB | Current | System;
+export type Color =
+  | ColorFunction
+  | Hex
+  | Named
+  | HSL
+  | HWB
+  | RGB
+  | Current
+  | System;
 
 /**
  * @public
@@ -33,6 +42,7 @@ export namespace Color {
   export type Canonical = Current | System | RGB.Canonical;
 
   export type JSON =
+    | ColorFunction.JSON
     | Hex.JSON
     | Named.JSON
     | HSL.JSON
@@ -57,7 +67,8 @@ export namespace Color {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
    */
-  export const parse = either<Slice<Token>, Color, string>(
+  export const parse: CSSParser<Color> = either<Slice<Token>, Color, string>(
+    ColorFunction.parse,
     Hex.parse,
     Named.parse,
     RGB.parse,

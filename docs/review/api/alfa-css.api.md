@@ -311,7 +311,7 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = Hex | Named | HSL | HWB | RGB | Current | System;
+export type Color = ColorFunction | Hex | Named | HSL | HWB | RGB | Current | System;
 
 // @public (undocumented)
 export namespace Color {
@@ -334,10 +334,66 @@ export namespace Color {
     const // (undocumented)
     system: typeof Keyword.of;
     const // (undocumented)
-    parse: Parser_2<Slice<Token>, Color, string, []>;
+    parse: Parser<Color>;
     // (undocumented)
-    export type JSON = Hex.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
+    export type JSON = ColorFunction.JSON | Hex.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
 }
+
+// Warning: (ae-forgotten-export) The symbol "Space" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Triplet" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class ColorFunction<N extends Space = Space> extends Triplet<N> {
+    protected constructor(name: N, c1: ColorFunction.Component, c2: ColorFunction.Component, c3: ColorFunction.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    get components(): [
+    ColorFunction.Component,
+    ColorFunction.Component,
+    ColorFunction.Component
+    ];
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of<N extends Space>(name: N, c1: Number_2 | Percentage<"percentage">, c2: Number_2 | Percentage<"percentage">, c3: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): ColorFunction<N>;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): ColorFunction.JSON<N>;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace ColorFunction {
+    // @internal (undocumented)
+    export type Component = Number_2.Canonical | Percentage.Canonical;
+    // (undocumented)
+    export function isColorFunction(value: unknown): value is ColorFunction;
+    // (undocumented)
+    export interface JSON<N extends Space = Space> extends Triplet.JSON<N> {
+        // (undocumented)
+        c1: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        // (undocumented)
+        c2: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        // (undocumented)
+        c3: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<ColorFunction>;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "ColorSpaces" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const ColorSpaces: Array<Space>;
 
 // @public (undocumented)
 export namespace Comma {
@@ -812,8 +868,6 @@ export namespace Hex {
     parse: Parser<Hex>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Triplet" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export class HSL extends Triplet<"hsl"> {
     protected constructor(hue: HSL.Hue, saturation: HSL.Component, lightness: HSL.Component, alpha: Triplet.Alpha);

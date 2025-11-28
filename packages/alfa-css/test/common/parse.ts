@@ -20,7 +20,7 @@ export function parser<T>(
 export function parserUnsafe<T>(
   parse: Parser<Slice<Token>, T, string>,
 ): (input: string) => T {
-  return (input) => parser(parse)(input).getUnsafe();
+  return (input) => parser(parse)(input).getUnsafe(`Failed to parse ${input}`);
 }
 
 /**

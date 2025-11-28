@@ -10,22 +10,24 @@ import {
 
 import { Number, Percentage } from "../numeric/index.js";
 
-import { type ColorSpace, convertRGB } from "./converters.js";
+import { colorSpaces, type ColorSpace, convertRGB } from "./converters.js";
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
 import { Triplet } from "./triplet.js";
 
 const { either, map, pair } = Parser;
 
+type Space = ColorSpace | "sRGB-linear";
+/** @internal */
+export const ColorSpaces: Array<Space> = ["sRGB-linear", ...colorSpaces];
+
 /**
  * {@link https://drafts.csswg.org/css-color/#the-hsl-notation}
  *
  * @public
  */
-export class ColorFunction<
-  N extends ColorSpace | "sRGB-linear",
-> extends Triplet<N> {
-  public static of<N extends ColorSpace | "sRGB-linear">(
+export class ColorFunction<N extends Space = Space> extends Triplet<N> {
+  public static of<N extends Space>(
     name: N,
     c1: Number | Percentage<"percentage">,
     c2: Number | Percentage<"percentage">,
@@ -141,8 +143,7 @@ export class ColorFunction<
  * @public
  */
 export namespace ColorFunction {
-  export interface JSON<N extends ColorSpace | "sRGB-linear">
-    extends Triplet.JSON<N> {
+  export interface JSON<N extends Space = Space> extends Triplet.JSON<N> {
     c1: Number.Fixed.JSON | Percentage.Fixed.JSON;
     c2: Number.Fixed.JSON | Percentage.Fixed.JSON;
     c3: Number.Fixed.JSON | Percentage.Fixed.JSON;
@@ -151,9 +152,7 @@ export namespace ColorFunction {
   /** @internal */
   export type Component = Number.Canonical | Percentage.Canonical;
 
-  export function isColorFunction<N extends ColorSpace | "sRGB-linear">(
-    value: unknown,
-  ): value is ColorFunction<N> {
+  export function isColorFunction(value: unknown): value is ColorFunction {
     return value instanceof ColorFunction;
   }
 
@@ -165,12 +164,15 @@ export namespace ColorFunction {
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
-  // export const parse: CSSParser<ColorFunction> = map(
-  //   Function.parse(
-  //     ["color"],
-  //     pair(Token.parseIdent(), Triplet.parseTriplet([parseComponent])),
-  //   ),
-  //   ([, [colorSpace, [c1, c2, c3, alpha]]]) =>
-  //     ColorFunction.of(colorSpace, c1, c2, c3, alpha),
-  // );
+  export const parse: CSSParser<ColorFunction> = map(
+    Function.parse(
+      "color",
+      pair(
+        Token.parseIdent(ColorSpaces),
+        Triplet.parseTriplet([parseComponent]),
+      ),
+    ),
+    ([, [colorSpace, [c1, c2, c3, alpha]]]) =>
+      ColorFunction.of(colorSpace.value, c1, c2, c3, alpha),
+  );
 }

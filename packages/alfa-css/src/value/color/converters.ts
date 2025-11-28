@@ -101,7 +101,8 @@ const whitepoints = {
   },
 } as const;
 
-const colorSpaces = [
+/** @internal */
+export const colorSpaces = [
   "a98-rgb",
   "display-p3",
   "prophoto-rgb",

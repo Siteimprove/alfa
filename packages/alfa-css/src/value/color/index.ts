@@ -1,4 +1,5 @@
 export * from "./color.js";
+export * from "./color-function.js";
 export * from "./current.js";
 export * from "./hex.js";
 export * from "./hsl.js";
