@@ -1,13 +1,12 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Equatable } from "@siteimprove/alfa-equatable";
+import type * as json from "@siteimprove/alfa-json";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
-
-import type * as json from "@siteimprove/alfa-json";
 
 import type { Parser as CSSParser } from "./parser.js";
 
@@ -138,22 +137,22 @@ export namespace Token {
   export const { of: ident, isIdent } = Ident;
 
   export function parseIdent<N extends string>(
-    query: N | Refinement<Ident, Ident<N>>,
+    query: N | Array<N> | Refinement<Ident, Ident<N>>,
   ): CSSParser<Ident<N>>;
 
   export function parseIdent(query?: Predicate<Ident>): CSSParser<Ident>;
 
   export function parseIdent<N extends string>(
-    query?: N | Predicate<Ident>,
+    query?: N | Array<N> | Predicate<Ident>,
   ): CSSParser<Ident> {
     let predicate: Predicate<Ident> = () => true;
 
     if (typeof query === "function") {
       predicate = query;
     } else if (typeof query === "string") {
-      const value = query;
-
-      predicate = (ident) => ident.value === value;
+      predicate = (ident) => ident.value === query;
+    } else if (Array.isArray(query)) {
+      predicate = (ident) => (query as Array<string>).includes(ident.value);
     }
 
     return parseToken(and(isIdent, predicate));

@@ -26,6 +26,7 @@ import { Position as Position_3 } from '../index.js';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
+import { Refinement } from '@siteimprove/alfa-refinement';
 import { Result } from '@siteimprove/alfa-result';
 import type { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
@@ -2268,9 +2269,9 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     resolve(): Scale.Canonical;
     // (undocumented)
     toJSON(): {
-        z?: Percentage.Fixed.JSON | Number_2.Fixed.JSON | undefined;
-        x: Percentage.Fixed.JSON | Number_2.Fixed.JSON;
-        y: Percentage.Fixed.JSON | Number_2.Fixed.JSON;
+        z?: Number_2.Fixed.JSON | Percentage.Fixed.JSON | undefined;
+        x: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        y: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         kind: "scale";
         type: "transform";
     };
@@ -2623,9 +2624,6 @@ export namespace Token {
         // (undocumented)
         get type(): "close-curly-bracket";
     }
-    const // (undocumented)
-    func: typeof Function.of, // (undocumented)
-    isFunction: typeof Function.isFunction;
     // (undocumented)
     export namespace CloseCurlyBracket {
         // (undocumented)
@@ -2638,6 +2636,9 @@ export namespace Token {
             type: "close-curly-bracket";
         }
     }
+    const // (undocumented)
+    func: typeof Function.of, // (undocumented)
+    isFunction: typeof Function.isFunction;
     // (undocumented)
     export class CloseParenthesis implements Equatable, Serializable<CloseParenthesis.JSON> {
         // (undocumented)
@@ -2665,8 +2666,6 @@ export namespace Token {
             type: "close-parenthesis";
         }
     }
-    const // (undocumented)
-    atKeyword: typeof AtKeyword.of;
     // (undocumented)
     export class CloseSquareBracket implements Equatable, Serializable<CloseSquareBracket.JSON> {
         // (undocumented)
@@ -2682,6 +2681,8 @@ export namespace Token {
         // (undocumented)
         get type(): "close-square-bracket";
     }
+    const // (undocumented)
+    atKeyword: typeof AtKeyword.of;
     // (undocumented)
     export namespace CloseSquareBracket {
         // (undocumented)
@@ -2694,9 +2695,6 @@ export namespace Token {
             type: "close-square-bracket";
         }
     }
-    const // (undocumented)
-    hash: typeof Hash.of, // (undocumented)
-    isHash: typeof Hash.isHash;
     // (undocumented)
     export class Colon implements Equatable, Serializable<Colon.JSON> {
         // (undocumented)
@@ -2710,6 +2708,9 @@ export namespace Token {
         // (undocumented)
         get type(): "colon";
     }
+    const // (undocumented)
+    hash: typeof Hash.of, // (undocumented)
+    isHash: typeof Hash.isHash;
     // (undocumented)
     export namespace Colon {
         // (undocumented)
@@ -2735,9 +2736,6 @@ export namespace Token {
         // (undocumented)
         get type(): "comma";
     }
-    const // (undocumented)
-    string: typeof String.of, // (undocumented)
-    isString: typeof String.isString;
     // (undocumented)
     export namespace Comma {
         // (undocumented)
@@ -2750,6 +2748,9 @@ export namespace Token {
             type: "comma";
         }
     }
+    const // (undocumented)
+    string: typeof String.of, // (undocumented)
+    isString: typeof String.isString;
     // (undocumented)
     export class Delim implements Equatable, Serializable<Delim.JSON> {
         protected constructor(value: number);
@@ -2780,9 +2781,6 @@ export namespace Token {
             value: number;
         }
     }
-    const // (undocumented)
-    url: typeof URL.of, // (undocumented)
-    isURL: typeof URL.isURL;
     // (undocumented)
     export class Dimension implements Equatable, Serializable<Dimension.JSON> {
         protected constructor(value: number, unit: string, isInteger: boolean, isSigned: boolean);
@@ -2805,6 +2803,9 @@ export namespace Token {
         // (undocumented)
         get value(): number;
     }
+    const // (undocumented)
+    url: typeof URL.of, // (undocumented)
+    isURL: typeof URL.isURL;
     // (undocumented)
     export namespace Dimension {
         // (undocumented)
@@ -2843,8 +2844,6 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
-    const // (undocumented)
-    badURL: typeof BadURL.of;
     // (undocumented)
     export namespace Function {
         // (undocumented)
@@ -2859,6 +2858,8 @@ export namespace Token {
             value: string;
         }
     }
+    const // (undocumented)
+    badURL: typeof BadURL.of;
     // (undocumented)
     export class Hash implements Equatable, Serializable<Hash.JSON> {
         protected constructor(value: string, isIdentifier: boolean);
@@ -2877,9 +2878,6 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
-    const // (undocumented)
-    delim: typeof Delim.of, // (undocumented)
-    isDelim: typeof Delim.isDelim;
     // (undocumented)
     export namespace Hash {
         // (undocumented)
@@ -2896,41 +2894,44 @@ export namespace Token {
             value: string;
         }
     }
+    const // (undocumented)
+    delim: typeof Delim.of, // (undocumented)
+    isDelim: typeof Delim.isDelim;
     // (undocumented)
-    export class Ident implements Equatable, Serializable<Ident.JSON> {
-        protected constructor(value: string);
+    export class Ident<N extends string = string> implements Equatable, Serializable<Ident.JSON<N>> {
+        protected constructor(value: N);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(value: string): Ident;
+        static of<N extends string>(value: N): Ident<N>;
         // (undocumented)
-        toJSON(): Ident.JSON;
+        toJSON(): Ident.JSON<N>;
         // (undocumented)
         toString(): string;
         // (undocumented)
         get type(): "ident";
         // (undocumented)
-        get value(): string;
+        get value(): N;
     }
     // (undocumented)
     export namespace Ident {
         // (undocumented)
         export function isIdent(value: unknown): value is Ident;
         // (undocumented)
-        export interface JSON {
+        export interface JSON<N extends string = string> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
             type: "ident";
             // (undocumented)
-            value: string;
+            value: N;
         }
     }
+    // (undocumented)
+    export type JSON = Ident.JSON | Function.JSON | AtKeyword.JSON | Hash.JSON | String.JSON | URL.JSON | BadURL.JSON | Delim.JSON | Number.JSON | Percentage.JSON | Dimension.JSON | Whitespace.JSON | Colon.JSON | Semicolon.JSON | Comma.JSON | OpenParenthesis.JSON | CloseParenthesis.JSON | OpenSquareBracket.JSON | CloseSquareBracket.JSON | OpenCurlyBracket.JSON | CloseCurlyBracket.JSON | OpenComment.JSON | CloseComment.JSON;
     const // (undocumented)
     number: typeof Number.of, // (undocumented)
     isNumber: typeof Number.isNumber;
-    // (undocumented)
-    export type JSON = Ident.JSON | Function.JSON | AtKeyword.JSON | Hash.JSON | String.JSON | URL.JSON | BadURL.JSON | Delim.JSON | Number.JSON | Percentage.JSON | Dimension.JSON | Whitespace.JSON | Colon.JSON | Semicolon.JSON | Comma.JSON | OpenParenthesis.JSON | CloseParenthesis.JSON | OpenSquareBracket.JSON | CloseSquareBracket.JSON | OpenCurlyBracket.JSON | CloseCurlyBracket.JSON | OpenComment.JSON | CloseComment.JSON;
     // (undocumented)
     export class Number implements Equatable, Serializable<Number.JSON> {
         protected constructor(value: number, isInteger: boolean, isSigned: boolean);
@@ -2969,9 +2970,6 @@ export namespace Token {
             value: number;
         }
     }
-    const // (undocumented)
-    percentage: typeof Percentage.of, // (undocumented)
-    isPercentage: typeof Percentage.isPercentage;
     // (undocumented)
     export class OpenComment implements Equatable, Serializable<OpenComment.JSON> {
         // (undocumented)
@@ -2985,6 +2983,9 @@ export namespace Token {
         // (undocumented)
         get type(): "open-comment";
     }
+    const // (undocumented)
+    percentage: typeof Percentage.of, // (undocumented)
+    isPercentage: typeof Percentage.isPercentage;
     // (undocumented)
     export namespace OpenComment {
         // (undocumented)
@@ -3012,9 +3013,6 @@ export namespace Token {
         // (undocumented)
         get type(): "open-curly-bracket";
     }
-    const // (undocumented)
-    dimension: typeof Dimension.of, // (undocumented)
-    isDimension: typeof Dimension.isDimension;
     // (undocumented)
     export namespace OpenCurlyBracket {
         // (undocumented)
@@ -3027,6 +3025,9 @@ export namespace Token {
             type: "open-curly-bracket";
         }
     }
+    const // (undocumented)
+    dimension: typeof Dimension.of, // (undocumented)
+    isDimension: typeof Dimension.isDimension;
     // (undocumented)
     export class OpenParenthesis implements Equatable, Serializable<OpenParenthesis.JSON> {
         // (undocumented)
@@ -3054,11 +3055,6 @@ export namespace Token {
             type: "open-parenthesis";
         }
     }
-    const // (undocumented)
-    whitespace: typeof Whitespace.of, // (undocumented)
-    isWhitespace: typeof Whitespace.isWhitespace;
-    const // (undocumented)
-    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export class OpenSquareBracket implements Equatable, Serializable<OpenSquareBracket.JSON> {
         // (undocumented)
@@ -3074,6 +3070,11 @@ export namespace Token {
         // (undocumented)
         get type(): "open-square-bracket";
     }
+    const // (undocumented)
+    whitespace: typeof Whitespace.of, // (undocumented)
+    isWhitespace: typeof Whitespace.isWhitespace;
+    const // (undocumented)
+    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export namespace OpenSquareBracket {
         // (undocumented)
@@ -3086,31 +3087,33 @@ export namespace Token {
             type: "open-square-bracket";
         }
     }
+    // (undocumented)
+    export function parseDelim(query?: string | number | Predicate<Delim>): Parser_2<Slice<Token>, Delim, string, []>;
     const // (undocumented)
     colon: typeof Colon.of, // (undocumented)
     isColon: typeof Colon.isColon;
     const // (undocumented)
     parseColon: Parser_2<Slice<Token>, Colon, string, []>;
     // (undocumented)
-    export function parseDelim(query?: string | number | Predicate<Delim>): Parser_2<Slice<Token>, Delim, string, []>;
-    // (undocumented)
     export function parseDimension(predicate?: Predicate<Dimension>): Parser_2<Slice<Token>, Dimension, string, []>;
+    // (undocumented)
+    export function parseFunction(query?: string | Array_2<string> | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
     const // (undocumented)
     semicolon: typeof Semicolon.of, // (undocumented)
     isSemicolon: typeof Semicolon.isSemicolon;
     const // (undocumented)
     parseSemicolon: Parser_2<Slice<Token>, Semicolon, string, []>;
     // (undocumented)
-    export function parseFunction(query?: string | Array_2<string> | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
-    // (undocumented)
     export function parseHash(predicate?: Predicate<Hash>): Parser_2<Slice<Token>, Hash, string, []>;
+    // (undocumented)
+    export function parseIdent<N extends string>(query: N | Array_2<N> | Refinement<Ident, Ident<N>>): Parser<Ident<N>>;
     const // (undocumented)
     comma: typeof Comma.of, // (undocumented)
     isComma: typeof Comma.isComma;
     const // (undocumented)
     parseComma: Parser_2<Slice<Token>, Comma, string, []>;
     // (undocumented)
-    export function parseIdent(query?: string | Predicate<Ident>): Parser_2<Slice<Token>, Ident, string, []>;
+    export function parseIdent(query?: Predicate<Ident>): Parser<Ident>;
     // (undocumented)
     export function parseNumber(predicate?: Predicate<Number>): Parser_2<Slice<Token>, Number, string, []>;
     const // (undocumented)
