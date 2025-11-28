@@ -4,4 +4,4 @@
 "@siteimprove/alfa-slice": patch
 ---
 
-**Changed:** Lexing and parsing hot paths have been optimized.
+**Changed:** CSS lexing and parsing performance improvements.
