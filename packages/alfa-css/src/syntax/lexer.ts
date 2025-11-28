@@ -1,6 +1,5 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "./token.js";
@@ -64,12 +63,6 @@ const CHAR_UPPER_A = 0x41;
 const CHAR_UPPER_E = 0x45;
 /** `F` */
 const CHAR_UPPER_F = 0x46;
-/** `L` */
-const CHAR_UPPER_L = 0x4c;
-/** `R` */
-const CHAR_UPPER_R = 0x52;
-/** `U` */
-const CHAR_UPPER_U = 0x55;
 /** `Z` */
 const CHAR_UPPER_Z = 0x5a;
 /** `[` */
@@ -86,12 +79,6 @@ const CHAR_LOWER_A = 0x61;
 const CHAR_LOWER_E = 0x65;
 /** `f` */
 const CHAR_LOWER_F = 0x66;
-/** `l` */
-const CHAR_LOWER_L = 0x6c;
-/** `r` */
-const CHAR_LOWER_R = 0x72;
-/** `u` */
-const CHAR_LOWER_U = 0x75;
 /** `z` */
 const CHAR_LOWER_Z = 0x7a;
 /** `{` */
@@ -464,40 +451,30 @@ const consumeIdentifierLike: Parser.Infallible<
 
   const code = input.charCodeAt(i);
 
-  if (code === CHAR_OPEN_PAREN && string.length === 3) {
-    const first = string.charCodeAt(0);
-    const second = string.charCodeAt(1);
-    const third = string.charCodeAt(2);
+  if (code === CHAR_OPEN_PAREN && string.toLowerCase() === "url") {
+    i++;
 
-    if (
-      (first === CHAR_LOWER_U || first === CHAR_UPPER_U) &&
-      (second === CHAR_LOWER_R || second === CHAR_UPPER_R) &&
-      (third === CHAR_LOWER_L || third === CHAR_UPPER_L)
+    // Skip consecutive whitespace
+    while (
+      isWhitespace(input.charCodeAt(i)) &&
+      isWhitespace(input.charCodeAt(i + 1))
     ) {
       i++;
-
-      // Skip consecutive whitespace
-      while (
-        isWhitespace(input.charCodeAt(i)) &&
-        isWhitespace(input.charCodeAt(i + 1))
-      ) {
-        i++;
-      }
-
-      let next = input.charCodeAt(i);
-      const nextNext = input.charCodeAt(i + 1);
-
-      if (
-        next === CHAR_DOUBLE_QUOTE ||
-        next === CHAR_SINGLE_QUOTE ||
-        (isWhitespace(next) &&
-          (nextNext === CHAR_DOUBLE_QUOTE || nextNext === CHAR_SINGLE_QUOTE))
-      ) {
-        return [[input, i], Token.func(string)];
-      }
-
-      return consumeURL([input, i]);
     }
+
+    let next = input.charCodeAt(i);
+    const nextNext = input.charCodeAt(i + 1);
+
+    if (
+      next === CHAR_DOUBLE_QUOTE ||
+      next === CHAR_SINGLE_QUOTE ||
+      (isWhitespace(next) &&
+        (nextNext === CHAR_DOUBLE_QUOTE || nextNext === CHAR_SINGLE_QUOTE))
+    ) {
+      return [[input, i], Token.func(string)];
+    }
+
+    return consumeURL([input, i]);
   }
 
   if (code === CHAR_OPEN_PAREN) {
@@ -729,9 +706,8 @@ const consumeToken: Parser.Infallible<[string, number], Token | null> = ([
       if (startsNumber([input, i])) {
         return consumeNumeric([input, i]);
       }
-      const next1 = input.charCodeAt(i + 1);
       if (
-        next1 === CHAR_MINUS &&
+        input.charCodeAt(i + 1) === CHAR_MINUS &&
         input.charCodeAt(i + 2) === CHAR_GREATER_THAN
       ) {
         return [[input, i + 3], Token.closeComment()];
