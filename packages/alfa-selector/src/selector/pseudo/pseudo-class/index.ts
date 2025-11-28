@@ -1,6 +1,5 @@
-import type { Parser as CSSParser, Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
-import type { Slice } from "@siteimprove/alfa-slice";
+import { Token, type Parser as CSSParser } from "@siteimprove/alfa-css";
+import { Err } from "@siteimprove/alfa-result";
 
 import { type Selector } from "../../index.js";
 
@@ -36,7 +35,7 @@ import { Where } from "./where.js";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
 
-const { either } = Parser;
+const { parseNonFunctional, parseFunctional } = PseudoClassSelector;
 
 /**
  * @public
@@ -116,39 +115,84 @@ export namespace PseudoClass {
 
   export const { isHost } = Host;
 
+  const nonFunctionalConstructors: Record<string, () => PseudoClass> = {
+    active: Active.of,
+    "any-link": AnyLink.of,
+    checked: Checked.of,
+    disabled: Disabled.of,
+    empty: Empty.of,
+    enabled: Enabled.of,
+    "first-child": FirstChild.of,
+    "first-of-type": FirstOfType.of,
+    focus: Focus.of,
+    "focus-visible": FocusVisible.of,
+    "focus-within": FocusWithin.of,
+    host: Host.of,
+    hover: Hover.of,
+    "last-child": LastChild.of,
+    "last-of-type": LastOfType.of,
+    link: Link.of,
+    "only-child": OnlyChild.of,
+    "only-of-type": OnlyOfType.of,
+    root: Root.of,
+    visited: Visited.of,
+  };
+
+  const functionalParsers = (
+    parseSelector: Selector.Parser.Component,
+  ): Record<string, CSSParser<PseudoClass>> => {
+    return {
+      has: Has.parse(parseSelector),
+      host: Host.parseFunction(parseSelector),
+      "host-context": HostContext.parse(parseSelector),
+      is: Is.parse(parseSelector),
+      not: Not.parse(parseSelector),
+      "nth-child": NthChild.parse(parseSelector),
+      "nth-last-child": NthLastChild.parse(parseSelector),
+      "nth-last-of-type": NthLastOfType.parse,
+      "nth-of-type": NthOfType.parse,
+      where: Where.parse(parseSelector),
+    };
+  };
+
+  /**
+   * @privateRemarks
+   * This function is a hot path and uses token lookahead instead
+   * of the `either` parser combinator to avoid backtracking. Any changes to
+   * this function should be benchmarked.
+   */
   export function parse(
     parseSelector: Selector.Parser.Component,
   ): CSSParser<PseudoClass> {
-    return either<Slice<Token>, PseudoClass, string>(
-      Active.parse,
-      AnyLink.parse,
-      Checked.parse,
-      Disabled.parse,
-      Empty.parse,
-      Enabled.parse,
-      FirstChild.parse,
-      FirstOfType.parse,
-      Focus.parse,
-      FocusVisible.parse,
-      FocusWithin.parse,
-      Host.parse(parseSelector),
-      HostContext.parse(parseSelector),
-      Hover.parse,
-      LastChild.parse,
-      LastOfType.parse,
-      Link.parse,
-      OnlyChild.parse,
-      OnlyOfType.parse,
-      Root.parse,
-      Visited.parse,
-      NthChild.parse(parseSelector),
-      NthLastChild.parse(parseSelector),
-      NthLastOfType.parse,
-      NthOfType.parse,
-      Has.parse(parseSelector),
-      Is.parse(parseSelector),
-      Not.parse(parseSelector),
-      Where.parse(parseSelector),
-    );
+    return (input) => {
+      if (!input.has(1)) {
+        return Err.of("Unexpected end of input");
+      }
+
+      const first = input.getUnsafe(0);
+      const second = input.getUnsafe(1);
+
+      if (!Token.isColon(first)) {
+        return Err.of("Expected colon");
+      }
+
+      // Function pseudo-classes must be checked first. If we checked for
+      // ident tokens first, function tokens would never be reached since
+      // Token.isIdent would also match the beginning of function tokens.
+      if (Token.isFunction(second)) {
+        const name = second.value.toLowerCase();
+        functionalParsers(parseSelector)[name];
+        return parseFunctional(name, functionalParsers(parseSelector))(input);
+      }
+
+      // Non-functional pseudo-classes
+      if (Token.isIdent(second)) {
+        const name = second.value.toLowerCase();
+
+        return parseNonFunctional(name, nonFunctionalConstructors)(input);
+      }
+
+      return Err.of("Expected ident or function after colon");
+    };
   }
 }

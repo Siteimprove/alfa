@@ -68,6 +68,8 @@ export class Slice<T> implements Collection.Indexed<T> {
     forEach(callback: Callback<T, void, [index: number]>): void;
     // (undocumented)
     get(index: number): Option<T>;
+    // @internal
+    getUnsafe(index: number): T;
     // (undocumented)
     has(index: number): boolean;
     // (undocumented)

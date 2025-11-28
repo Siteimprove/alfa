@@ -3046,45 +3046,45 @@ export namespace Token {
     colon: typeof Colon.of, // (undocumented)
     isColon: typeof Colon.isColon;
     const // (undocumented)
-    parseColon: Parser_2<Slice<Token>, Colon, string, []>;
+    parseColon: Parser<Colon>;
     // (undocumented)
-    export function parseDelim(query?: string | number | Predicate<Delim>): Parser_2<Slice<Token>, Delim, string, []>;
+    export function parseDelim(query?: string | number | Predicate<Delim>): Parser<Delim>;
     // (undocumented)
-    export function parseDimension(predicate?: Predicate<Dimension>): Parser_2<Slice<Token>, Dimension, string, []>;
+    export function parseDimension(predicate?: Predicate<Dimension>): Parser<Dimension>;
     const // (undocumented)
     semicolon: typeof Semicolon.of, // (undocumented)
     isSemicolon: typeof Semicolon.isSemicolon;
     const // (undocumented)
-    parseSemicolon: Parser_2<Slice<Token>, Semicolon, string, []>;
+    parseSemicolon: Parser<Semicolon>;
     // (undocumented)
-    export function parseFunction(query?: string | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
+    export function parseFunction(query?: string | Predicate<Function>): Parser<Function>;
     // (undocumented)
-    export function parseHash(predicate?: Predicate<Hash>): Parser_2<Slice<Token>, Hash, string, []>;
+    export function parseHash(predicate?: Predicate<Hash>): Parser<Hash>;
     const // (undocumented)
     comma: typeof Comma.of, // (undocumented)
     isComma: typeof Comma.isComma;
     const // (undocumented)
-    parseComma: Parser_2<Slice<Token>, Comma, string, []>;
+    parseComma: Parser<Comma>;
     // (undocumented)
-    export function parseIdent(query?: string | Predicate<Ident>): Parser_2<Slice<Token>, Ident, string, []>;
+    export function parseIdent(query?: string | Predicate<Ident>): Parser<Ident>;
     // (undocumented)
-    export function parseNumber(predicate?: Predicate<Number>): Parser_2<Slice<Token>, Number, string, []>;
+    export function parseNumber(predicate?: Predicate<Number>): Parser<Number>;
     const // (undocumented)
     openParenthesis: typeof OpenParenthesis.of, // (undocumented)
     isOpenParenthesis: typeof OpenParenthesis.isOpenParenthesis;
     const // (undocumented)
-    parseOpenParenthesis: Parser_2<Slice<Token>, OpenParenthesis, string, []>;
+    parseOpenParenthesis: Parser<OpenParenthesis>;
     // (undocumented)
-    export function parsePercentage(predicate?: Predicate<Percentage>): Parser_2<Slice<Token>, Percentage, string, []>;
+    export function parsePercentage(predicate?: Predicate<Percentage>): Parser<Percentage>;
     // (undocumented)
-    export function parseString(predicate?: Predicate<String>): Parser_2<Slice<Token>, String, string, []>;
+    export function parseString(predicate?: Predicate<String>): Parser<String>;
     const // (undocumented)
     closeParenthesis: typeof CloseParenthesis.of, // (undocumented)
     isCloseParenthesis: typeof CloseParenthesis.isCloseParenthesis;
     const // (undocumented)
-    parseCloseParenthesis: Parser_2<Slice<Token>, CloseParenthesis, string, []>;
+    parseCloseParenthesis: Parser<CloseParenthesis>;
     // (undocumented)
-    export function parseURL(predicate?: Predicate<URL>): Parser_2<Slice<Token>, URL, string, []>;
+    export function parseURL(predicate?: Predicate<URL>): Parser<URL>;
     // (undocumented)
     export class Percentage implements Equatable, Serializable<Percentage.JSON> {
         protected constructor(value: number, isInteger: boolean);
@@ -3107,7 +3107,7 @@ export namespace Token {
     openSquareBracket: typeof OpenSquareBracket.of, // (undocumented)
     isOpenSquareBracket: typeof OpenSquareBracket.isOpenSquareBracket;
     const // (undocumented)
-    parseOpenSquareBracket: Parser_2<Slice<Token>, OpenSquareBracket, string, []>;
+    parseOpenSquareBracket: Parser<OpenSquareBracket>;
     // (undocumented)
     export namespace Percentage {
         // (undocumented)
@@ -3141,7 +3141,7 @@ export namespace Token {
     closeSquareBracket: typeof CloseSquareBracket.of, // (undocumented)
     isCloseSquareBracket: typeof CloseSquareBracket.isCloseSquareBracket;
     const // (undocumented)
-    parseCloseSquareBracket: Parser_2<Slice<Token>, CloseSquareBracket, string, []>;
+    parseCloseSquareBracket: Parser<CloseSquareBracket>;
     // (undocumented)
     export namespace Semicolon {
         // (undocumented)
@@ -3160,7 +3160,7 @@ export namespace Token {
     openCurlyBracket: typeof OpenCurlyBracket.of, // (undocumented)
     isOpenCurlyBracket: typeof OpenCurlyBracket.isOpenCurlyBracket;
     const // (undocumented)
-    parseOpenCurlyBracket: Parser_2<Slice<Token>, OpenCurlyBracket, string, []>;
+    parseOpenCurlyBracket: Parser<OpenCurlyBracket>;
     // (undocumented)
     export class String implements Equatable, Serializable<String.JSON> {
         protected constructor(value: string);
@@ -3195,7 +3195,7 @@ export namespace Token {
     closeCurlyBracket: typeof CloseCurlyBracket.of, // (undocumented)
     isCloseCurlyBracket: typeof CloseCurlyBracket.isCloseCurlyBracket;
     const // (undocumented)
-    parseCloseCurlyBracket: Parser_2<Slice<Token>, CloseCurlyBracket, string, []>;
+    parseCloseCurlyBracket: Parser<CloseCurlyBracket>;
     // (undocumented)
     export class URL implements Equatable, Serializable<URL.JSON> {
         protected constructor(value: string);
@@ -3230,7 +3230,7 @@ export namespace Token {
     openComment: typeof OpenComment.of, // (undocumented)
     isOpenComment: typeof OpenComment.isOpenComment;
     const // (undocumented)
-    parseOpenComment: Parser_2<Slice<Token>, OpenComment, string, []>;
+    parseOpenComment: Parser<OpenComment>;
     // (undocumented)
     export class Whitespace implements Equatable, Serializable<Whitespace.JSON> {
         // (undocumented)
@@ -3260,7 +3260,7 @@ export namespace Token {
     closeComment: typeof CloseComment.of, // (undocumented)
     isCloseComment: typeof CloseComment.isCloseComment;
     const // (undocumented)
-    parseCloseComment: Parser_2<Slice<Token>, CloseComment, string, []>;
+    parseCloseComment: Parser<CloseComment>;
 }
 
 // @public (undocumented)

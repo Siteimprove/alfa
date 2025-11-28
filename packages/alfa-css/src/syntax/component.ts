@@ -9,7 +9,7 @@ import { Function } from "./function.js";
 import type { Parser as CSSParser } from "./parser.js";
 import { Token } from "./token.js";
 
-const { delimited, option, either, map } = Parser;
+const { delimited, option, map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#component-value}
@@ -60,23 +60,36 @@ export namespace Component {
 
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-component-value}
+   *
+   * @privateRemarks
+   * This function is a hot path and is therefore implemented without using
+   * the `either` parser combinator using token lookahead instead.
+   * Any changes to this function should be benchmarked.
    */
-  export const consume: CSSParser<Component> = (input) =>
-    // eta expansion is necessary for `this` binding to resolve correctly
-    either(
-      map(Block.consume, (value) => Component.of(value)),
-      map(Function.consume, (value) => Component.of(value)),
-      (input) =>
-        input
-          .first()
-          .map((token) =>
-            Result.of<[Slice<Token>, Component], string>([
-              input.rest(),
-              Component.of([token]),
-            ]),
-          )
-          .getOr(Err.of("Unexpected end of file")),
-    )(input);
+  export const consume: CSSParser<Component> = (input) => {
+    if (input.isEmpty()) {
+      return Err.of("Unexpected end of file");
+    }
+
+    const first = input.getUnsafe(0);
+
+    if (Token.isFunction(first)) {
+      return map(Function.consume, (value) => Component.of(value))(input);
+    }
+
+    if (
+      Token.isOpenParenthesis(first) ||
+      Token.isOpenSquareBracket(first) ||
+      Token.isOpenCurlyBracket(first)
+    ) {
+      return map(Block.consume, (value) => Component.of(value))(input);
+    }
+
+    return Result.of<[Slice<Token>, Component], string>([
+      input.rest(),
+      Component.of([first]),
+    ]);
+  };
 
   /**
    * {@link https://drafts.csswg.org/css-syntax/#parse-component-value}
