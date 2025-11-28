@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import type { Functor } from "@siteimprove/alfa-functor";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 
@@ -61,6 +62,18 @@ export class RNGFactory<T = number> implements Functor<T> {
       }
 
       return group;
+    });
+  }
+
+  public zip<U, V>(
+    this: RNGFactory<Array<U>>,
+    other: RNGFactory<Array<V>>,
+  ): RNGFactory<Array<[U, V]>> {
+    return new RNGFactory(this._seed, () => {
+      const arrayA = this._rng();
+      const arrayB = other._rng();
+
+      return Array.zip(arrayA, arrayB);
     });
   }
 

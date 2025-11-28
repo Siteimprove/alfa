@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import type { Functor } from '@siteimprove/alfa-functor';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 
@@ -29,11 +30,13 @@ export class RNGFactory<T = number> implements Functor<T> {
     // (undocumented)
     create(): RNG<T>;
     // (undocumented)
-    group(size: number): RNGFactory<Array<T>>;
+    group(size: number): RNGFactory<Array_2<T>>;
     // (undocumented)
     map<U>(mapper: Mapper<T, U>): RNGFactory<U>;
     static of(seed?: number): RNGFactory;
     get seed(): number;
+    // (undocumented)
+    zip<U, V>(this: RNGFactory<Array_2<U>>, other: RNGFactory<Array_2<V>>): RNGFactory<Array_2<[U, V]>>;
 }
 
 // (No @packageDocumentation comment for this package)

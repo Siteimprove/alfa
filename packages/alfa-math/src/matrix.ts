@@ -1,4 +1,5 @@
 import { Real } from "./real.js";
+import { Vector } from "./vector.js";
 
 /**
  * {@link https://en.wikipedia.org/wiki/Matrix_(mathematics)}
@@ -78,12 +79,22 @@ export namespace Matrix {
   /**
    * {@link https://en.wikipedia.org/wiki/Matrix_multiplication}
    */
-  export function multiply(m: Matrix, n: number | Matrix): Matrix {
-    return typeof n === "number"
-      ? m.map((r) => r.map((v) => v * n))
-      : m.map((r, i) =>
-          n[0].map((_, j) =>
-            r.reduce((s, _, k) => s + m[i][k] * n?.[k]?.[j], 0),
+  export function multiply(
+    m: Matrix | Vector,
+    n: number | Matrix | Vector,
+  ): Matrix {
+    // If m is a vector, treat it as a single row matrix.
+    // [a, b, c]  =>  [[a, b, c]]
+    const left: Matrix = Vector.isVector(m) ? [m] : m;
+    // If n is a vector, treat it as a single column matrix.
+    // [a, b, c]  =>  [[a], [b], [c]]
+    const right: number | Matrix = Vector.isVector(n) ? n.map((x) => [x]) : n;
+
+    return typeof right === "number"
+      ? left.map((r) => r.map((v) => v * right))
+      : left.map((r, i) =>
+          right[0].map((_, j) =>
+            r.reduce((s, _, k) => s + left[i][k] * right?.[k]?.[j], 0),
           ),
         );
   }
