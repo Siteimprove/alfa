@@ -548,7 +548,7 @@ export namespace Simple {
     // (undocumented)
     export type JSON = Type.JSON | Universal.JSON | Attribute.JSON | Class.JSON | Id.JSON | PseudoClass.JSON | PseudoElement.JSON;
     const // @internal (undocumented)
-    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple, string, []>;
+    parse: (parseSelector: Selector.Parser.Component) => Parser<Slice<Token>, Simple, string>;
 }
 
 // @public (undocumented)
