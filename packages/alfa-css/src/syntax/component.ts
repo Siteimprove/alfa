@@ -61,7 +61,7 @@ export namespace Component {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-component-value}
    *
-   * @remarks
+   * @privateRemarks
    * This function is a hot path and is therefore implemented without using
    * the `either` parser combinator using token lookahead instead.
    * Any changes to this function should be benchmarked.

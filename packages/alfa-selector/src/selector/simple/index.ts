@@ -66,7 +66,7 @@ export namespace Simple {
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-simple-selector}
    *
-   * @remarks
+   * @privateRemarks
    * This function is a hot path and uses token lookahead for simple cases
    * to avoid backtracking. Any changes to this function should be benchmarked.
    *

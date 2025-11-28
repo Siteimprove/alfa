@@ -156,7 +156,7 @@ export namespace PseudoClass {
   };
 
   /**
-   * @remarks
+   * @privateRemarks
    * This function is a hot path and uses token lookahead instead
    * of the `either` parser combinator to avoid backtracking. Any changes to
    * this function should be benchmarked.

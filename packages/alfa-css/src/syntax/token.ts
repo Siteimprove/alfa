@@ -78,7 +78,7 @@ export namespace Token {
       .getOr(Err.of("No token left"));
 
   /**
-   * @remarks
+   * @privateRemarks
    * This function is a hot path and is therefore implemented
    * without using other parser combinators to avoid the extra overhead.
    * Any changes to this function should be benchmarked.
