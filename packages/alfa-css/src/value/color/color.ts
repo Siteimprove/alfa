@@ -1,8 +1,8 @@
-/**
- * This file denines the final `Color` type, grouping all the individual
+/*
+ * This file defines the final `Color` type, grouping all the individual
  * formats.
  * For the `color()` function specifying colors by color space, see
- * `color/color-space.ts`.
+ * `color/color-function.ts`.
  */
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";

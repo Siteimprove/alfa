@@ -10,7 +10,6 @@ import {
   Number,
   Percentage,
 } from "../numeric/index.js";
-import { Keyword } from "../textual/index.js";
 import { Format } from "./format.js";
 
 const { array, pair, map, either, option, right, delimited } = Parser;
@@ -80,7 +79,7 @@ export namespace Triplet {
       parser,
       legacy
         ? () => Err.of("none is not accepted in legacy color syntax")
-        : map(Keyword.parse("none"), () => make0(parser)),
+        : map(Token.parseIdent("none"), () => make0(parser)),
     );
 
   /**

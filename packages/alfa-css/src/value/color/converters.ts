@@ -1,4 +1,4 @@
-/**
+/*
  * Most code here is taken directly from the CSS Color Module Level 4
  * specification, with adjustments for our representations.
  * {@link https://drafts.csswg.org/css-color-4/#color-conversion-code}
@@ -62,7 +62,7 @@ export function hwbToRgb(
 /*
  * Matrices are in column-major order in the CSS specifications.
  * This is a bit awkward to work with, notably due to the multiplication order
- * when piling up transformation, so we use them in row-major order here.
+ * when piling up transformations, so we use them in row-major order here.
  * All matrices are transposed once at load-time, so we can keep them same as
  * in the CSS specs in this file, making it easier to compare.
  */
@@ -70,7 +70,7 @@ export function hwbToRgb(
 /**
  * Standard white points, defined by 4-figure CIE x,y chromaticities
  *
- * @remarks
+ * @privateRemarks
  * Since only two are used, we can have a simple conversion matrix for each,
  * there is only one destination.
  */
