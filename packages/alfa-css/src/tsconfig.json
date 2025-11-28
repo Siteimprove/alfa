@@ -38,6 +38,7 @@
     "./value/collection/list.ts",
     "./value/collection/tuple.ts",
     "./value/color/color.ts",
+    "./value/color/color-rgb.ts",
     "./value/color/converters.ts",
     "./value/color/current.ts",
     "./value/color/format.ts",

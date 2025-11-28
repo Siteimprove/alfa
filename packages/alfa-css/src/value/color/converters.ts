@@ -64,7 +64,7 @@ export function hwbToRgb(
  * This is a bit awkward to work with, notably due to the multiplication order
  * when piling up transformation, so we use them in row-major order here.
  * All matrices are transposed once at load-time, so we can keep them same as
- * in the CSS specs in this file, making it easier to fix.
+ * in the CSS specs in this file, making it easier to compare.
  */
 
 /**
@@ -155,6 +155,7 @@ export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
   }
 
   // 1. Undo gamma encoding, if needed.
+  // This is a pointwise operation on the components.
   const sourceLinear: Vector = source.linear
     ? source.components
     : source.components.map(srcSpace.gammaDecoding);
@@ -174,6 +175,7 @@ export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
     space: destination.space,
     linear: destination.linear,
     // 5. Apply gamma encoding, if needed.
+    // This is a pointwise operation on the components.
     components: destination.linear
       ? destLinear
       : destLinear.map(destSpace.gammaEncoding),
@@ -324,7 +326,7 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
      * @param value - A rec2020 color component in the range 0.0-1.0
      *
      * @privateRemarks
-     * There is some discussion and inconsistency about the exact transfer
+     * There is some discussions and inconsistencies about the exact transfer
      * function for rec2020. The one used here is the one from the CSS
      * Color Module Level 4, October 2025.
      * {@link https://drafts.csswg.org/css-color/#predefined-rec2020}
