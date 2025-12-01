@@ -8,7 +8,6 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
 import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 

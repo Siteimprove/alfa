@@ -95,13 +95,14 @@ export namespace Simple {
       }
 
       if (Token.isColon(first)) {
+        let isDoubleColon = false;
         input = input.rest();
         if (!input.isEmpty() && Token.isColon(input.getUnsafe(0))) {
           input = input.rest();
-          return PseudoElement.parseWithoutColon(parseSelector, true)(input);
+          isDoubleColon = true;
         }
         return either<Slice<CSSToken>, Simple, string>(
-          PseudoElement.parseWithoutColon(parseSelector, false),
+          PseudoElement.parseWithoutColon(parseSelector, isDoubleColon),
           PseudoClass.parseWithoutColon(parseSelector),
         )(input);
       }
