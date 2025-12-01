@@ -61,14 +61,21 @@ test(
 );
 
 test("parse() accepts exceeding whitespace", (t) => {
-  t.deepEqual(parse("rgba(  255,   255  , 255,     1)").toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "number", value: 255 },
-    green: { type: "number", value: 255 },
-    blue: { type: "number", value: 255 },
-    alpha: { type: "number", value: 1 },
-  });
+  for (const actual of [
+    "rgba(  255,   255  , 255,     1)",
+    "rgb(  255,   255  , 255,     1)",
+    "rgba(  255   255   255 /     1)",
+    "rgb(  255   255   255    /  1)",
+  ]) {
+    t.deepEqual(parse(actual).toJSON(), {
+      type: "color",
+      format: "rgb",
+      red: { type: "number", value: 255 },
+      green: { type: "number", value: 255 },
+      blue: { type: "number", value: 255 },
+      alpha: { type: "number", value: 1 },
+    });
+  }
 });
 
 test(

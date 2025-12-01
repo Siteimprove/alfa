@@ -21,14 +21,17 @@ const { map, either } = Parser;
 export class HSL extends Triplet<"hsl"> {
   public static of(
     hue: Number | Angle,
-    saturation: Percentage<"percentage">,
-    lightness: Percentage<"percentage">,
+    saturation: Number | Percentage<"percentage">,
+    lightness: Number | Percentage<"percentage">,
     alpha: Number | Percentage<"percentage">,
   ): HSL {
+    const s = saturation.resolve();
+    const l = lightness.resolve();
+
     return new HSL(
       hue.resolve(),
-      saturation.resolve(),
-      lightness.resolve(),
+      Number.isNumber(s) ? Percentage.of<"percentage">(s.value / 100) : s,
+      Number.isNumber(l) ? Percentage.of<"percentage">(l.value / 100) : l,
       alpha.resolve(),
     );
   }
@@ -162,7 +165,10 @@ export namespace HSL {
         // Legacy syntax
         Triplet.parseTriplet([parseHue, Percentage.parse<"percentage">], true),
         // Modern syntax
-        Triplet.parseTriplet([parseHue, Percentage.parse<"percentage">]),
+        Triplet.parseTriplet([
+          parseHue,
+          either(Percentage.parse<"percentage">, Number.parse),
+        ]),
       ),
     ),
     ([, [hue, saturation, lightness, alpha]]) =>
