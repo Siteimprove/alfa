@@ -1,5 +1,7 @@
 # @siteimprove/alfa-json-ld
 
+## 0.108.1
+
 ## 0.108.0
 
 ## 0.107.0

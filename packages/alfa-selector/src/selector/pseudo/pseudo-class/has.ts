@@ -98,10 +98,14 @@ export class Has extends WithSelector<"has", Relative> {
 export namespace Has {
   export interface JSON extends WithSelector.JSON<"has", Relative> {}
 
-  export const parse = (parseSelector: Selector.Parser.Component) =>
+  export const parse = (
+    parseSelector: Selector.Parser.Component,
+    withColon = true,
+  ) =>
     WithSelector.parseWithSelector(
       "has",
       () => parseSelector({ relative: true }),
       Has.of,
+      withColon,
     );
 }

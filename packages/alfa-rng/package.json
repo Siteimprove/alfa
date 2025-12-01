@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-rng",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.108.0",
+  "version": "0.108.1",
   "license": "MIT",
   "description": "A simple RNG and functionalities around it.",
   "repository": {
@@ -26,7 +26,7 @@
     "@siteimprove/alfa-mapper": "workspace:^"
   },
   "devDependencies": {
-    "vitest": "^4.0.13"
+    "vitest": "^4.0.14"
   },
   "publishConfig": {
     "access": "public",
