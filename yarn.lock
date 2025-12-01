@@ -235,6 +235,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@changesets/get-github-info@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@changesets/get-github-info@npm:0.7.0"
+  dependencies:
+    dataloader: "npm:^1.4.0"
+    node-fetch: "npm:^2.5.0"
+  checksum: 10c0/3a4e497a0d05ea9cb1a17d2193f13d865d2dab8dc6e9162c63c2ffa2719338c27bfa897481feed9abf484075a27284e8c050210cff7b7dedde6a18303440e4d8
+  languageName: node
+  linkType: hard
+
 "@changesets/get-release-plan@npm:^4.0.13":
   version: 4.0.13
   resolution: "@changesets/get-release-plan@npm:4.0.13"
@@ -2493,7 +2503,7 @@ __metadata:
   dependencies:
     "@changesets/assemble-release-plan": "npm:^6.0.9"
     "@changesets/config": "npm:^3.1.1"
-    "@changesets/get-github-info": "npm:^0.6.0"
+    "@changesets/get-github-info": "npm:^0.7.0"
     "@changesets/git": "npm:^3.0.4"
     "@changesets/read": "npm:^0.6.5"
     "@changesets/types": "npm:^6.1.0"
