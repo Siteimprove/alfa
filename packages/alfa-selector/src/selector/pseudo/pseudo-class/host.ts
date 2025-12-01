@@ -118,23 +118,27 @@ export namespace Host {
     return value instanceof Host;
   }
 
+  export const parseFunctional = (
+    parseSelector: Selector.Parser.Component,
+    withColon = true,
+  ) => {
+    const parse = Function.parse("host", () =>
+      filter(
+        parseSelector(),
+        BaseSelector.hasCompoundType,
+        () => ":host() only accepts compound selectors",
+      ),
+    );
+    return map(withColon ? right(parseColon, parse) : parse, ([, selector]) =>
+      Host.of(selector),
+    );
+  };
+
   export const parse = (parseSelector: Selector.Parser.Component) =>
     either(
       // We need to try the functional variant first to avoid the non-functional
       // greedily passing.
-      map(
-        right(
-          parseColon,
-          Function.parse("host", () =>
-            filter(
-              parseSelector(),
-              BaseSelector.hasCompoundType,
-              () => ":host() only accepts compound selectors",
-            ),
-          ),
-        ),
-        ([, selector]) => Host.of(selector),
-      ),
+      parseFunctional(parseSelector),
       PseudoClassSelector.parseNonFunctional("host", Host.of),
     );
 }

@@ -56,8 +56,6 @@ export class NthLastOfType extends WithIndex<"nth-last-of-type"> {
 export namespace NthLastOfType {
   export interface JSON extends WithIndex.JSON<"nth-last-of-type"> {}
 
-  export const parse = WithIndex.parseWithIndex(
-    "nth-last-of-type",
-    NthLastOfType.of,
-  );
+  export const parse = (withColon = true) =>
+    WithIndex.parseWithIndex("nth-last-of-type", NthLastOfType.of, withColon);
 }

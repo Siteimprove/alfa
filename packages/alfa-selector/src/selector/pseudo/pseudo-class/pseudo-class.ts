@@ -8,6 +8,7 @@ import type { Element } from "@siteimprove/alfa-dom";
 import { Serializable } from "@siteimprove/alfa-json";
 import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
 import type { Absolute, Selector } from "../../index.js";
@@ -64,16 +65,19 @@ export namespace PseudoClassSelector {
   /**
    * Parses a non-functional pseudo-class (`:<name>`)
    */
-  export function parseNonFunctional<T extends PseudoClassSelector>(
+  export function parseNonFunctional<T>(
     name: string,
     of: Thunk<T>,
+    withColon = true,
   ): CSSParser<T> {
-    return map(
-      right(parseColon, parseIdent(name)),
-      // We explicitly need to discard the parsed identifier and not pass it
-      // to a function that may use it (but was super-typed as a Thunk).
-      () => of(),
-    );
+    return (input: Slice<Token>) => {
+      const parser = withColon
+        ? right(parseColon, parseIdent(name))
+        : parseIdent(name);
+
+      // We need to eta-expand in order to discard the result of parseIdent.
+      return map(parser, () => of())(input);
+    };
   }
 }
 
@@ -147,8 +151,10 @@ export namespace WithIndex {
   export function parseWithIndex<T extends WithIndex>(
     name: string,
     of: (nth: Nth) => T,
+    withColon = true,
   ): CSSParser<T> {
-    return map(right(parseColon, Function.parse(name, parseNth)), ([, nth]) =>
+    const parser = Function.parse(name, parseNth);
+    return map(withColon ? right(parseColon, parser) : parser, ([, nth]) =>
       of(nth),
     );
   }
@@ -225,10 +231,11 @@ export namespace WithSelector {
     name: string,
     parseSelector: Thunk<CSSParser<S>>,
     of: (selector: S) => T,
+    withColon = true,
   ): CSSParser<T> {
-    return map(
-      right(parseColon, Function.parse(name, parseSelector)),
-      ([, selector]) => of(selector),
+    const parser = Function.parse(name, parseSelector);
+    return map(withColon ? right(parseColon, parser) : parser, ([, selector]) =>
+      of(selector),
     );
   }
 }
@@ -306,22 +313,18 @@ export namespace WithIndexAndSelector {
     name: string,
     parseSelector: Selector.Parser.Component,
     of: (nth: Nth, selector: Option<Absolute>) => T,
+    withColon = true,
   ): CSSParser<T> {
-    return map(
-      right(
-        parseColon,
-        Function.parse(name, () =>
-          pair(
-            Nth.parse,
-            option(
-              right(
-                delimited(parseWhitespace, parseIdent("of")),
-                parseSelector(),
-              ),
-            ),
-          ),
+    const parser = Function.parse(name, () =>
+      pair(
+        Nth.parse,
+        option(
+          right(delimited(parseWhitespace, parseIdent("of")), parseSelector()),
         ),
       ),
+    );
+    return map(
+      withColon ? right(parseColon, parser) : parser,
       ([, [nth, selector]]) => of(nth, selector),
     );
   }

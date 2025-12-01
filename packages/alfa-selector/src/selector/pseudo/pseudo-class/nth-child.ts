@@ -73,10 +73,14 @@ export class NthChild extends WithIndexAndSelector<"nth-child"> {
 export namespace NthChild {
   export interface JSON extends WithIndexAndSelector.JSON<"nth-child"> {}
 
-  export const parse = (parseSelector: Selector.Parser.Component) =>
+  export const parse = (
+    parseSelector: Selector.Parser.Component,
+    withColon = true,
+  ) =>
     WithIndexAndSelector.parseWithIndexAndSelector(
       "nth-child",
       parseSelector,
       NthChild.of,
+      withColon,
     );
 }

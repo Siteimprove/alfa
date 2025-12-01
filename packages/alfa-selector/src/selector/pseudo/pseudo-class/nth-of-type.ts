@@ -55,5 +55,6 @@ export class NthOfType extends WithIndex<"nth-of-type"> {
 export namespace NthOfType {
   export interface JSON extends WithIndex.JSON<"nth-of-type"> {}
 
-  export const parse = WithIndex.parseWithIndex("nth-of-type", NthOfType.of);
+  export const parse = (withColon = true) =>
+    WithIndex.parseWithIndex("nth-of-type", NthOfType.of, withColon);
 }

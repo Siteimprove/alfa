@@ -43,6 +43,9 @@ export class Not extends WithSelector<"not"> {
 export namespace Not {
   export interface JSON extends WithSelector.JSON<"not"> {}
 
-  export const parse = (parseSelector: Selector.Parser.Component) =>
-    WithSelector.parseWithSelector("not", parseSelector, Not.of);
+  export const parse = (
+    parseSelector: Selector.Parser.Component,
+    withColon = true,
+  ) =>
+    WithSelector.parseWithSelector("not", parseSelector, Not.of, withColon);
 }
