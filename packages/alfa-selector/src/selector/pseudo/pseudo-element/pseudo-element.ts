@@ -1,5 +1,4 @@
 import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
-import { Err } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -49,17 +48,16 @@ export namespace PseudoElementSelector {
    */
   export function parseNonLegacy<T>(
     name: string,
-    constructors: Record<string, Thunk<T>> | Thunk<T>,
+    of: Thunk<T>,
+    withColon = true,
   ): CSSParser<T> {
     return (input: Slice<Token>) => {
-      const constructor =
-        typeof constructors === "function" ? constructors : constructors[name];
-      if (constructor === undefined) {
-        return Err.of(`Unknown pseudo-element: ${name}`);
-      }
-      // We need to eta-expand in order to discard the result of parseIdent.
-      return map(right(take(Token.parseColon, 2), Token.parseIdent(name)), () =>
-        constructor(),
+      return map(
+        withColon
+          ? right(take(Token.parseColon, 2), Token.parseIdent(name))
+          : Token.parseIdent(name),
+        // We need to eta-expand in order to discard the result of parseIdent.
+        () => of(),
       )(input);
     };
   }
@@ -69,33 +67,17 @@ export namespace PseudoElementSelector {
    */
   export function parseLegacy<T>(
     name: string,
-    constructors: Record<string, Thunk<T>> | Thunk<T>,
+    of: Thunk<T>,
+    withColon = true,
   ): CSSParser<T> {
     return (input: Slice<Token>) => {
-      const constructor =
-        typeof constructors === "function" ? constructors : constructors[name];
-      if (constructor === undefined) {
-        return Err.of(`Unknown legacy pseudo-element: ${name}`);
-      }
-      // We need to eta-expand in order to discard the result of parseIdent.
       return map(
-        right(takeBetween(Token.parseColon, 1, 2), Token.parseIdent(name)),
-        () => constructor(),
+        withColon
+          ? right(takeBetween(Token.parseColon, 1, 2), Token.parseIdent(name))
+          : Token.parseIdent(name),
+        // We need to eta-expand in order to discard the result of parseIdent.
+        () => of(),
       )(input);
     };
-  }
-
-  /**
-   * Parses a functional pseudo-element (`::<name>(...)`)
-   */
-  export function parseFunctional<T>(
-    name: string,
-    parsers: Record<string, CSSParser<T>>,
-  ): CSSParser<T> {
-    const parser = parsers[name];
-    if (parser === undefined) {
-      return () => Err.of(`Unknown pseudo-element function: ${name}`);
-    }
-    return parser;
   }
 }

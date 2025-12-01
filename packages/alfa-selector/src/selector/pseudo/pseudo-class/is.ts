@@ -43,10 +43,14 @@ export class Is extends WithSelector<"is"> {
 export namespace Is {
   export interface JSON extends WithSelector.JSON<"is"> {}
 
-  export const parse = (parseSelector: Selector.Parser.Component) =>
+  export const parse = (
+    parseSelector: Selector.Parser.Component,
+    withColon = true,
+  ) =>
     WithSelector.parseWithSelector(
       "is",
       () => parseSelector({ forgiving: true }),
       Is.of,
+      withColon,
     );
 }

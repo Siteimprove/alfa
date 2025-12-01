@@ -157,18 +157,17 @@ export namespace Slotted {
 
   export function parse(
     parseSelector: Selector.Parser.Component,
+    withColon = true,
   ): CSSParser<Slotted> {
-    return map(
-      right(
-        take(Token.parseColon, 2),
-        Function.parse("slotted", () =>
-          filter(
-            parseSelector(),
-            BaseSelector.hasCompoundType,
-            () => "::slotted() only accepts compound selectors",
-          ),
-        ),
+    const parser = Function.parse("slotted", () =>
+      filter(
+        parseSelector(),
+        BaseSelector.hasCompoundType,
+        () => "::slotted() only accepts compound selectors",
       ),
+    );
+    return map(
+      withColon ? right(take(Token.parseColon, 2), parser) : parser,
       ([_, selector]) => Slotted.of(selector),
     );
   }

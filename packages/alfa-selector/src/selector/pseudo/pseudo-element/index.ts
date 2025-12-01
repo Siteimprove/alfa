@@ -1,5 +1,6 @@
 import { Token, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Err } from "@siteimprove/alfa-result";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import type { Selector } from "../../index.js";
 
@@ -22,7 +23,8 @@ import { TargetText } from "./target-text.js";
 
 import { PseudoElementSelector } from "./pseudo-element.js";
 
-const { parseLegacy, parseNonLegacy, parseFunctional } = PseudoElementSelector;
+const { right } = Parser;
+const { parseLegacy, parseNonLegacy } = PseudoElementSelector;
 
 /**
  * @public
@@ -87,62 +89,74 @@ export namespace PseudoElement {
     parseSelector: Selector.Parser.Component,
   ): Record<string, CSSParser<PseudoElement>> => {
     return {
-      cue: Cue.parseFunction(parseSelector),
-      "cue-region": CueRegion.parse(parseSelector),
-      slotted: Slotted.parse(parseSelector),
+      cue: Cue.parseFunctional(parseSelector, false),
+      "cue-region": CueRegion.parse(parseSelector, false),
+      slotted: Slotted.parse(parseSelector, false),
     };
   };
 
   /**
-   * @remarks
+   * @privateRemarks
    * This function is a hot path and uses token lookahead instead
    * of the `either` parser combinator to avoid backtracking. Any changes to
    * this function should be benchmarked.
    */
-  export function parse(
+  export function parseWithoutColon(
     parseSelector: Selector.Parser.Component,
+    isDoubleColon: boolean,
   ): CSSParser<PseudoElement> {
     return (input) => {
-      if (!input.has(1)) {
+      if (input.isEmpty()) {
         return Err.of("Unexpected end of input");
       }
 
-      const first = input.getUnsafe(0);
-      const second = input.getUnsafe(1);
-
-      if (!Token.isColon(first)) {
-        return Err.of("Expected colon");
-      }
-
-      const isDoubleColon = Token.isColon(second);
-      const nameIndex = isDoubleColon ? 2 : 1;
-
-      if (!input.has(nameIndex)) {
-        return Err.of("Unexpected end of input");
-      }
-
-      const nameToken = input.getUnsafe(nameIndex);
+      const funcOrIdent = input.getUnsafe(0);
 
       // Function pseudo-elements must be checked first. If we checked for
       // ident tokens first, function tokens would never be reached since
       // Token.isIdent would also match the beginning of function tokens.
-      if (Token.isFunction(nameToken)) {
-        const name = nameToken.value.toLowerCase();
-        return parseFunctional(name, functionalParsers(parseSelector))(input);
+      if (Token.isFunction(funcOrIdent)) {
+        const name = funcOrIdent.value.toLowerCase();
+        const parser = functionalParsers(parseSelector)[name];
+        return parser !== undefined
+          ? parser(input)
+          : Err.of(`Unknown pseudo-element: ${name}`);
       }
 
       // Non-functional pseudo-elements
-      if (Token.isIdent(nameToken)) {
-        const name = nameToken.value.toLowerCase();
-
+      if (Token.isIdent(funcOrIdent)) {
+        const name = funcOrIdent.value.toLowerCase();
+        const of = isDoubleColon
+          ? nonLegacyConstructors[name]
+          : legacyConstructors[name];
+        if (of === undefined) {
+          return Err.of(`Unknown pseudo-element: ${name}`);
+        }
         const parser = isDoubleColon
-          ? parseNonLegacy(name, nonLegacyConstructors)
-          : parseLegacy(name, legacyConstructors);
+          ? parseNonLegacy(name, of, false)
+          : parseLegacy(name, of, false);
 
         return parser(input);
       }
 
       return Err.of("Expected ident or function after colons");
     };
+  }
+
+  export function parse(
+    parseSelector: Selector.Parser.Component,
+  ): CSSParser<PseudoElement> {
+    return right(Token.parseColon, (input) => {
+      if (input.isEmpty()) {
+        return Err.of("Unexpected end of input");
+      }
+
+      const isDoubleColon = Token.isColon(input.getUnsafe(0));
+      if (isDoubleColon) {
+        input = input.rest();
+      }
+
+      return parseWithoutColon(parseSelector, isDoubleColon)(input);
+    });
   }
 }

@@ -80,7 +80,7 @@ export namespace Simple {
         return Err.of("Unexpected end of input");
       }
 
-      const first = input.getUnsafe(0);
+      const first = input.getUnsafe(0); // Safe due to emptiness check above
 
       if (Token.isDelim(first) && first.value === 0x2e /* . */) {
         return Class.parse(input);
@@ -95,12 +95,14 @@ export namespace Simple {
       }
 
       if (Token.isColon(first)) {
-        if (input.has(1) && Token.isColon(input.getUnsafe(1))) {
-          return PseudoElement.parse(parseSelector)(input);
+        input = input.rest();
+        if (!input.isEmpty() && Token.isColon(input.getUnsafe(0))) {
+          input = input.rest();
+          return PseudoElement.parseWithoutColon(parseSelector, true)(input);
         }
         return either<Slice<CSSToken>, Simple, string>(
-          PseudoElement.parse(parseSelector),
-          PseudoClass.parse(parseSelector),
+          PseudoElement.parseWithoutColon(parseSelector, false),
+          PseudoClass.parseWithoutColon(parseSelector),
         )(input);
       }
 

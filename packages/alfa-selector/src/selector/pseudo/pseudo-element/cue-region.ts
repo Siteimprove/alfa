@@ -64,18 +64,17 @@ export namespace CueRegion {
 
   export function parse(
     parseSelector: Selector.Parser.Component,
+    withColon = true,
   ): CSSParser<CueRegion> {
-    return right(
-      take(Token.parseColon, 2),
-      // We need to try and fail the functional notation first to avoid accepting
-      // the `::cue-region` prefix of a `::cue-region(selector)`.
-      either(
-        map(Function.parse("cue-region", parseSelector), ([_, selector]) =>
-          CueRegion.of(selector),
-        ),
-        // We need to eta-expand in order to discard the result of parseIdent.
-        map(Token.parseIdent("cue-region"), () => CueRegion.of()),
+    // We need to try and fail the functional notation first to avoid accepting
+    // the `::cue-region` prefix of a `::cue-region(selector)`.
+    const parser = either(
+      map(Function.parse("cue-region", parseSelector), ([_, selector]) =>
+        CueRegion.of(selector),
       ),
+      // We need to eta-expand in order to discard the result of parseIdent.
+      map(Token.parseIdent("cue-region"), () => CueRegion.of()),
     );
+    return withColon ? right(take(Token.parseColon, 2), parser) : parser;
   }
 }

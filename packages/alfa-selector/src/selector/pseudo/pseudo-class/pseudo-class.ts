@@ -68,33 +68,17 @@ export namespace PseudoClassSelector {
    */
   export function parseNonFunctional<T>(
     name: string,
-    constructors: Record<string, Thunk<T>> | Thunk<T>,
+    of: Thunk<T>,
+    withColon = true,
   ): CSSParser<T> {
     return (input: Slice<Token>) => {
-      const constructor =
-        typeof constructors === "function" ? constructors : constructors[name];
-      if (constructor === undefined) {
-        return Err.of(`Unknown pseudo-class: ${name}`);
-      }
-      // We need to eta-expand in order to discard the result of parseIdent.
-      return map(right(parseColon, parseIdent(name)), () => constructor())(
-        input,
-      );
-    };
-  }
+      const parser = withColon
+        ? right(parseColon, parseIdent(name))
+        : parseIdent(name);
 
-  /**
-   * Parses a functional pseudo-class (`:<name>(...)`)
-   */
-  export function parseFunctional<T>(
-    name: string,
-    parsers: Record<string, CSSParser<T>>,
-  ): CSSParser<T> {
-    const parser = parsers[name];
-    if (parser === undefined) {
-      return () => Err.of(`Unknown pseudo-class function: ${name}`);
-    }
-    return parser;
+      // We need to eta-expand in order to discard the result of parseIdent.
+      return map(parser, () => of())(input);
+    };
   }
 }
 
@@ -168,8 +152,10 @@ export namespace WithIndex {
   export function parseWithIndex<T extends WithIndex>(
     name: string,
     of: (nth: Nth) => T,
+    withColon = true,
   ): CSSParser<T> {
-    return map(right(parseColon, Function.parse(name, parseNth)), ([, nth]) =>
+    const parser = Function.parse(name, parseNth);
+    return map(withColon ? right(parseColon, parser) : parser, ([, nth]) =>
       of(nth),
     );
   }
@@ -246,10 +232,11 @@ export namespace WithSelector {
     name: string,
     parseSelector: Thunk<CSSParser<S>>,
     of: (selector: S) => T,
+    withColon = true,
   ): CSSParser<T> {
-    return map(
-      right(parseColon, Function.parse(name, parseSelector)),
-      ([, selector]) => of(selector),
+    const parser = Function.parse(name, parseSelector);
+    return map(withColon ? right(parseColon, parser) : parser, ([, selector]) =>
+      of(selector),
     );
   }
 }
@@ -327,22 +314,18 @@ export namespace WithIndexAndSelector {
     name: string,
     parseSelector: Selector.Parser.Component,
     of: (nth: Nth, selector: Option<Absolute>) => T,
+    withColon = true,
   ): CSSParser<T> {
-    return map(
-      right(
-        parseColon,
-        Function.parse(name, () =>
-          pair(
-            Nth.parse,
-            option(
-              right(
-                delimited(parseWhitespace, parseIdent("of")),
-                parseSelector(),
-              ),
-            ),
-          ),
+    const parser = Function.parse(name, () =>
+      pair(
+        Nth.parse,
+        option(
+          right(delimited(parseWhitespace, parseIdent("of")), parseSelector()),
         ),
       ),
+    );
+    return map(
+      withColon ? right(parseColon, parser) : parser,
       ([, [nth, selector]]) => of(nth, selector),
     );
   }

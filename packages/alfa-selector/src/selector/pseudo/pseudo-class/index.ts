@@ -1,5 +1,6 @@
 import { Token, type Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Err } from "@siteimprove/alfa-result";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import { type Selector } from "../../index.js";
 
@@ -35,7 +36,8 @@ import { Where } from "./where.js";
 
 import { PseudoClassSelector } from "./pseudo-class.js";
 
-const { parseNonFunctional, parseFunctional } = PseudoClassSelector;
+const { right } = Parser;
+const { parseNonFunctional } = PseudoClassSelector;
 
 /**
  * @public
@@ -142,16 +144,16 @@ export namespace PseudoClass {
     parseSelector: Selector.Parser.Component,
   ): Record<string, CSSParser<PseudoClass>> => {
     return {
-      has: Has.parse(parseSelector),
-      host: Host.parseFunction(parseSelector),
-      "host-context": HostContext.parse(parseSelector),
-      is: Is.parse(parseSelector),
-      not: Not.parse(parseSelector),
-      "nth-child": NthChild.parse(parseSelector),
-      "nth-last-child": NthLastChild.parse(parseSelector),
-      "nth-last-of-type": NthLastOfType.parse,
-      "nth-of-type": NthOfType.parse,
-      where: Where.parse(parseSelector),
+      has: Has.parse(parseSelector, false),
+      host: Host.parseFunctional(parseSelector, false),
+      "host-context": HostContext.parse(parseSelector, false),
+      is: Is.parse(parseSelector, false),
+      not: Not.parse(parseSelector, false),
+      "nth-child": NthChild.parse(parseSelector, false),
+      "nth-last-child": NthLastChild.parse(parseSelector, false),
+      "nth-last-of-type": NthLastOfType.parse(false),
+      "nth-of-type": NthOfType.parse(false),
+      where: Where.parse(parseSelector, false),
     };
   };
 
@@ -161,38 +163,42 @@ export namespace PseudoClass {
    * of the `either` parser combinator to avoid backtracking. Any changes to
    * this function should be benchmarked.
    */
-  export function parse(
+  export function parseWithoutColon(
     parseSelector: Selector.Parser.Component,
   ): CSSParser<PseudoClass> {
     return (input) => {
-      if (!input.has(1)) {
+      if (input.isEmpty()) {
         return Err.of("Unexpected end of input");
       }
-
-      const first = input.getUnsafe(0);
-      const second = input.getUnsafe(1);
-
-      if (!Token.isColon(first)) {
-        return Err.of("Expected colon");
-      }
+      const funcOrIdent = input.getUnsafe(0); // Safe due to emptiness check above
 
       // Function pseudo-classes must be checked first. If we checked for
       // ident tokens first, function tokens would never be reached since
       // Token.isIdent would also match the beginning of function tokens.
-      if (Token.isFunction(second)) {
-        const name = second.value.toLowerCase();
-        functionalParsers(parseSelector)[name];
-        return parseFunctional(name, functionalParsers(parseSelector))(input);
+      if (Token.isFunction(funcOrIdent)) {
+        const name = funcOrIdent.value.toLowerCase();
+        const parser = functionalParsers(parseSelector)[name];
+        return parser !== undefined
+          ? parser(input)
+          : Err.of(`Unknown pseudo-class function: ${name}`);
       }
 
       // Non-functional pseudo-classes
-      if (Token.isIdent(second)) {
-        const name = second.value.toLowerCase();
-
-        return parseNonFunctional(name, nonFunctionalConstructors)(input);
+      if (Token.isIdent(funcOrIdent)) {
+        const name = funcOrIdent.value.toLowerCase();
+        const of = nonFunctionalConstructors[name];
+        return of !== undefined
+          ? parseNonFunctional(name, of, false)(input)
+          : Err.of(`Unknown pseudo-class: ${name}`);
       }
 
       return Err.of("Expected ident or function after colon");
     };
+  }
+
+  export function parse(
+    parseSelector: Selector.Parser.Component,
+  ): CSSParser<PseudoClass> {
+    return right(Token.parseColon, parseWithoutColon(parseSelector));
   }
 }
