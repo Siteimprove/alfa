@@ -71,6 +71,8 @@ export namespace Component {
   export const toHueString = toAngleNumberString;
   export const toSaturationString = toPercentageFakePercentageString;
   export const toLightnessString = toPercentageFakePercentageString;
+  export const toWhitenessString = toPercentageFakePercentageString;
+  export const toBlacknessString = toPercentageFakePercentageString;
 
   export function toNumberPercentageJSON([value, type]: Component):
     | Num.Fixed.JSON
@@ -109,4 +111,6 @@ export namespace Component {
   export const toHueJSON = toAngleNumberJSON;
   export const toSaturationJSON = toPercentageFakePercentageJSON;
   export const toLightnessJSON = toPercentageFakePercentageJSON;
+  export const toWhitenessJSON = toPercentageFakePercentageJSON;
+  export const toBlacknessJSON = toPercentageFakePercentageJSON;
 }

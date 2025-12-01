@@ -21,14 +21,17 @@ const { map, either } = Parser;
 export class HWB extends Triplet<"hwb"> {
   public static of(
     hue: Number | Angle,
-    whiteness: Percentage<"percentage">,
-    blackness: Percentage<"percentage">,
+    whiteness: Number | Percentage<"percentage">,
+    blackness: Number | Percentage<"percentage">,
     alpha: Number | Percentage<"percentage">,
   ): HWB {
+    const w = whiteness.resolve();
+    const b = blackness.resolve();
+
     return new HWB(
       hue.resolve(),
-      whiteness.resolve(),
-      blackness.resolve(),
+      Number.isNumber(w) ? Percentage.of<"percentage">(w.value / 100) : w,
+      Number.isNumber(b) ? Percentage.of<"percentage">(b.value / 100) : b,
       alpha.resolve(),
     );
   }
@@ -158,7 +161,10 @@ export namespace HWB {
   export const parse: CSSParser<HWB> = map(
     Function.parse(
       "hwb",
-      Triplet.parseTriplet([parseHue, Percentage.parse<"percentage">]),
+      Triplet.parseTriplet([
+        parseHue,
+        either(Percentage.parse<"percentage">, Number.parse),
+      ]),
     ),
     ([, [hue, whiteness, blackness, alpha]]) =>
       HWB.of(hue, whiteness, blackness, alpha),

@@ -4,64 +4,67 @@ import { HWB } from "../../../dist/index.js";
 
 import { parser, parserUnsafe } from "../../common/parse.js";
 
+import { Component, rng } from "./common.js";
+
 const parse = parserUnsafe(HWB.parse);
 const parseErr = parser(HWB.parse);
 
-test("parse() parses an HWB color", (t) => {
-  const expected = (type: "angle" | "number"): HWB.JSON => ({
-    type: "color",
-    format: "hwb",
-    hue:
-      type === "angle"
-        ? { type: "angle", value: 0, unit: "deg" }
-        : { type: "number", value: 0 },
-    whiteness: { type: "percentage", value: 1 },
-    blackness: { type: "percentage", value: 1 },
-    alpha: { type: "number", value: 1 },
-  });
+const {
+  toBlacknessJSON,
+  toBlacknessString,
+  toHueJSON,
+  toHueString,
+  toJSON,
+  toString,
+  toWhitenessJSON,
+  toWhitenessString,
+} = Component;
 
-  for (const [actual, type] of [
-    [parse("hwb(0 100% 100%)"), "number"],
-    [parse("hwb(0deg 100% 100%)"), "angle"],
-    [parse("hwb(0deg 100% 100% / 1)"), "angle"],
-    [parse("hwb(0 100% 100%/  1)"), "number"],
-  ] as const) {
-    t.deepEqual(actual.toJSON(), expected(type));
-  }
-});
+test(
+  "parse() accepts modern syntax with number/percentage/none and no alpha",
+  (t, rng) => {
+    const [hue, whiteness, blackness] = rng.rand();
 
-test("parse() rejects numbers for whiteness and blackness", (t) => {
-  for (const color of [
-    "hwb(0 100% 1)",
-    "hwb(0 100% 0 / 1)",
-    "hwb(0 0 100%)",
-    "hwb(0, 1, 100%)",
-    "hwb(0, 0, 100%)",
-    "hwb(0, 100%, 1, 1)",
-  ]) {
-    t.deepEqual(parseErr(color).isErr(), true);
-  }
-});
+    const actual = `hwb(${toHueString(hue)} ${toWhitenessString(whiteness)} ${toBlacknessString(blackness)})`;
 
-test("parse() accepts `none`", (t) => {
-  const expected = (type: "number" | "percentage") => ({
-    type: "color",
-    format: "hwb",
-    hue: { type: "number", value: 0 },
-    whiteness: { type: "percentage", value: 1 },
-    blackness: { type: "percentage", value: 0 },
-    alpha: { type, value: 0 },
-  });
+    t.deepEqual(
+      parse(actual).toJSON(),
+      {
+        type: "color",
+        format: "hwb",
+        hue: toHueJSON(hue),
+        whiteness: toWhitenessJSON(whiteness),
+        blackness: toBlacknessJSON(blackness),
+        alpha: { type: "number", value: 1 },
+      },
+      `Failed to parse hwb color ${actual} with seed ${rng.seed} at iteration ${rng.iterations}`,
+    );
+  },
+  { rng: rng(0.1, 0.5), iterations: 10 },
+);
 
-  for (const [actual, type] of [
-    [parse("hwb(0 100% 0% / 0%)"), "percentage"],
-    [parse("hwb(0 100% 0% / none)"), "number"],
-    [parse("hwb(none 100% 0% / 0%)"), "percentage"],
-    [parse("hwb(0 100% none / none)"), "number"],
-  ] as const) {
-    t.deepEqual(actual.toJSON(), expected(type));
-  }
-});
+test(
+  "parse() accepts modern syntax with number/percentage/none and alpha",
+  (t, rng) => {
+    const [hue, whiteness, blackness, alpha] = rng.rand();
+
+    const actual = `hwb(${toHueString(hue)} ${toWhitenessString(whiteness)} ${toBlacknessString(blackness)} / ${toString(alpha)})`;
+
+    t.deepEqual(
+      parse(actual).toJSON(),
+      {
+        type: "color",
+        format: "hwb",
+        hue: toHueJSON(hue),
+        whiteness: toWhitenessJSON(whiteness),
+        blackness: toBlacknessJSON(blackness),
+        alpha: toJSON(alpha),
+      },
+      `Failed to parse hwb color ${actual} with seed ${rng.seed} at iteration ${rng.iterations}`,
+    );
+  },
+  { rng: rng(0.1, 0.5), iterations: 10 },
+);
 
 test("parse() accepts calculations", (t) => {
   const expected = (type: "number" | "angle"): HWB.JSON => ({
