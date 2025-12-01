@@ -884,7 +884,7 @@ export class HSL extends Triplet<"hsl"> {
     // (undocumented)
     get lightness(): HSL.Component;
     // (undocumented)
-    static of(hue: Number_2 | Angle, saturation: Percentage<"percentage">, lightness: Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HSL;
+    static of(hue: Number_2 | Angle, saturation: Number_2 | Percentage<"percentage">, lightness: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HSL;
     // (undocumented)
     get red(): Percentage.Canonical;
     // (undocumented)
@@ -934,7 +934,7 @@ export class HWB extends Triplet<"hwb"> {
     // (undocumented)
     get hue(): HWB.Hue;
     // (undocumented)
-    static of(hue: Number_2 | Angle, whiteness: Percentage<"percentage">, blackness: Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HWB;
+    static of(hue: Number_2 | Angle, whiteness: Number_2 | Percentage<"percentage">, blackness: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HWB;
     // (undocumented)
     get red(): Percentage.Canonical;
     // (undocumented)
@@ -3142,32 +3142,32 @@ export namespace Token {
         }
     }
     // (undocumented)
-    export function parseDelim(query?: string | number | Predicate<Delim>): Parser_2<Slice<Token>, Delim, string, []>;
+    export function parseDelim(query?: string | number | Predicate<Delim>): Parser<Delim>;
     const // (undocumented)
     colon: typeof Colon.of, // (undocumented)
     isColon: typeof Colon.isColon;
     const // (undocumented)
     parseColon: Parser<Colon>;
     // (undocumented)
-    export function parseDelim(query?: string | number | Predicate<Delim>): Parser<Delim>;
-    // (undocumented)
     export function parseDimension(predicate?: Predicate<Dimension>): Parser<Dimension>;
+    // (undocumented)
+    export function parseFunction(query?: string | Array_2<string> | Predicate<Function>): Parser<Function>;
     const // (undocumented)
     semicolon: typeof Semicolon.of, // (undocumented)
     isSemicolon: typeof Semicolon.isSemicolon;
     const // (undocumented)
     parseSemicolon: Parser<Semicolon>;
     // (undocumented)
-    export function parseFunction(query?: string | Predicate<Function>): Parser<Function>;
-    // (undocumented)
     export function parseHash(predicate?: Predicate<Hash>): Parser<Hash>;
+    // (undocumented)
+    export function parseIdent<N extends string>(query: N | Array_2<N> | Refinement<Ident, Ident<N>>): Parser<Ident<N>>;
     const // (undocumented)
     comma: typeof Comma.of, // (undocumented)
     isComma: typeof Comma.isComma;
     const // (undocumented)
     parseComma: Parser<Comma>;
     // (undocumented)
-    export function parseIdent(query?: string | Predicate<Ident>): Parser<Ident>;
+    export function parseIdent(query?: Predicate<Ident>): Parser<Ident>;
     // (undocumented)
     export function parseNumber(predicate?: Predicate<Number>): Parser<Number>;
     const // (undocumented)
