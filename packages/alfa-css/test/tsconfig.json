@@ -19,6 +19,7 @@
     "./value/collection/list.spec.ts",
     "./value/collection/tuple.spec.ts",
     "./value/color/color-function.spec.ts",
+    "./value/color/common.ts",
     "./value/color/converters.spec.ts",
     "./value/color/hex.spec.ts",
     "./value/color/hsl.spec.ts",
