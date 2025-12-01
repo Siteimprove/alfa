@@ -433,6 +433,8 @@ export namespace PseudoClass {
     isHost: typeof Host.isHost;
     // (undocumented)
     export function parse(parseSelector: Selector.Parser.Component): Parser_2<PseudoClass>;
+    // (undocumented)
+    export function parseWithoutColon(parseSelector: Selector.Parser.Component): Parser_2<PseudoClass>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "After" needs to be exported by the entry point index.d.ts
@@ -465,6 +467,8 @@ export namespace PseudoElement {
     export type JSON = PseudoElementSelector.JSON;
     // (undocumented)
     export function parse(parseSelector: Selector.Parser.Component): Parser_2<PseudoElement>;
+    // (undocumented)
+    export function parseWithoutColon(parseSelector: Selector.Parser.Component, isDoubleColon: boolean): Parser_2<PseudoElement>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "Relative" should be prefixed with an underscore because the declaration is marked as @internal
