@@ -30,8 +30,8 @@
     "browserslist": "^4.28.0"
   },
   "devDependencies": {
-    "@mdn/browser-compat-data": "^7.1.22",
-    "prettier": "^3.6.2"
+    "@mdn/browser-compat-data": "^7.1.23",
+    "prettier": "^3.7.3"
   },
   "publishConfig": {
     "access": "public",
