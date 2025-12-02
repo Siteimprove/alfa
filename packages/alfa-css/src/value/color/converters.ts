@@ -478,81 +478,81 @@ const RGBLinearConverters = colorSpaces.reduce(
 
 // CIE Lab and LCH
 
-function XYZ_to_Lab(XYZ: Vector): Vector {
-  // Assuming XYZ is relative to D50, convert to CIE Lab
-  // from CIE standard, which now defines these as a rational fraction
-  const epsilon = 216 / 24389; // 6^3/29^3
-  const kappa = 24389 / 27; // 29^3/3^3
+// function XYZ_to_Lab(XYZ: Vector): Vector {
+//   // Assuming XYZ is relative to D50, convert to CIE Lab
+//   // from CIE standard, which now defines these as a rational fraction
+//   const epsilon = 216 / 24389; // 6^3/29^3
+//   const kappa = 24389 / 27; // 29^3/3^3
+//
+//   // compute xyz, which is XYZ scaled relative to reference white
+//   const xyz = XYZ.map((value, i) => value / whitepoints.D50.value[i]);
+//
+//   // now compute f
+//   const f = xyz.map((value) =>
+//     value > epsilon ? Math.cbrt(value) : (kappa * value + 16) / 116,
+//   );
+//
+//   return [
+//     116 * f[1] - 16, // L
+//     500 * (f[0] - f[1]), // a
+//     200 * (f[1] - f[2]), // b
+//   ];
+//   // L in range [0,100]. For use in CSS, add a percent
+// }
+//
+// function Lab_to_XYZ(Lab: Vector): Vector {
+//   // Convert Lab to D50-adapted XYZ
+//   // http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
+//   const kappa = 24389 / 27; // 29^3/3^3
+//   const epsilon = 216 / 24389; // 6^3/29^3
+//   const f = [];
+//
+//   // compute f, starting with the luminance-related term
+//   f[1] = (Lab[0] + 16) / 116;
+//   f[0] = Lab[1] / 500 + f[1];
+//   f[2] = f[1] - Lab[2] / 200;
+//
+//   // compute xyz
+//   const xyz = [
+//     Math.pow(f[0], 3) > epsilon ? Math.pow(f[0], 3) : (116 * f[0] - 16) / kappa,
+//     Lab[0] > kappa * epsilon
+//       ? Math.pow((Lab[0] + 16) / 116, 3)
+//       : Lab[0] / kappa,
+//     Math.pow(f[2], 3) > epsilon ? Math.pow(f[2], 3) : (116 * f[2] - 16) / kappa,
+//   ];
+//
+//   // Compute XYZ by scaling xyz by reference white
+//   return xyz.map((value, i) => value * whitepoints.D50.value[i]);
+// }
 
-  // compute xyz, which is XYZ scaled relative to reference white
-  const xyz = XYZ.map((value, i) => value / whitepoints.D50.value[i]);
-
-  // now compute f
-  const f = xyz.map((value) =>
-    value > epsilon ? Math.cbrt(value) : (kappa * value + 16) / 116,
-  );
-
-  return [
-    116 * f[1] - 16, // L
-    500 * (f[0] - f[1]), // a
-    200 * (f[1] - f[2]), // b
-  ];
-  // L in range [0,100]. For use in CSS, add a percent
-}
-
-function Lab_to_XYZ(Lab: Vector): Vector {
-  // Convert Lab to D50-adapted XYZ
-  // http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
-  const kappa = 24389 / 27; // 29^3/3^3
-  const epsilon = 216 / 24389; // 6^3/29^3
-  const f = [];
-
-  // compute f, starting with the luminance-related term
-  f[1] = (Lab[0] + 16) / 116;
-  f[0] = Lab[1] / 500 + f[1];
-  f[2] = f[1] - Lab[2] / 200;
-
-  // compute xyz
-  const xyz = [
-    Math.pow(f[0], 3) > epsilon ? Math.pow(f[0], 3) : (116 * f[0] - 16) / kappa,
-    Lab[0] > kappa * epsilon
-      ? Math.pow((Lab[0] + 16) / 116, 3)
-      : Lab[0] / kappa,
-    Math.pow(f[2], 3) > epsilon ? Math.pow(f[2], 3) : (116 * f[2] - 16) / kappa,
-  ];
-
-  // Compute XYZ by scaling xyz by reference white
-  return xyz.map((value, i) => value * whitepoints.D50.value[i]);
-}
-
-function Lab_to_LCH(Lab: Vector): Vector {
-  const epsilon = 0.0015;
-  const chroma = Math.sqrt(Math.pow(Lab[1], 2) + Math.pow(Lab[2], 2)); // Chroma
-  let hue = (Math.atan2(Lab[2], Lab[1]) * 180) / Math.PI;
-
-  if (hue < 0) {
-    hue = hue + 360;
-  }
-
-  if (chroma <= epsilon) {
-    hue = NaN;
-  }
-
-  return [
-    Lab[0], // L is still L
-    chroma, // Chroma
-    hue, // Hue, in degrees [0 to 360)
-  ];
-}
-
-function LCH_to_Lab(LCH: Vector): Vector {
-  // Convert from polar form
-  return [
-    LCH[0], // L is still L
-    LCH[1] * Math.cos((LCH[2] * Math.PI) / 180), // a
-    LCH[1] * Math.sin((LCH[2] * Math.PI) / 180), // b
-  ];
-}
+// function Lab_to_LCH(Lab: Vector): Vector {
+//   const epsilon = 0.0015;
+//   const chroma = Math.sqrt(Math.pow(Lab[1], 2) + Math.pow(Lab[2], 2)); // Chroma
+//   let hue = (Math.atan2(Lab[2], Lab[1]) * 180) / Math.PI;
+//
+//   if (hue < 0) {
+//     hue = hue + 360;
+//   }
+//
+//   if (chroma <= epsilon) {
+//     hue = NaN;
+//   }
+//
+//   return [
+//     Lab[0], // L is still L
+//     chroma, // Chroma
+//     hue, // Hue, in degrees [0 to 360)
+//   ];
+// }
+//
+// function LCH_to_Lab(LCH: Vector): Vector {
+//   // Convert from polar form
+//   return [
+//     LCH[0], // L is still L
+//     LCH[1] * Math.cos((LCH[2] * Math.PI) / 180), // a
+//     LCH[1] * Math.sin((LCH[2] * Math.PI) / 180), // b
+//   ];
+// }
 
 // OKLab and OKLCH
 // https://bottosson.github.io/posts/oklab/
@@ -607,33 +607,33 @@ function LCH_to_Lab(LCH: Vector): Vector {
 //   );
 // }
 
-function OKLab_to_OKLCH(OKLab: Vector): Vector {
-  const epsilon = 0.000004;
-  let hue = (Math.atan2(OKLab[2], OKLab[1]) * 180) / Math.PI;
-  const chroma = Math.sqrt(OKLab[1] ** 2 + OKLab[2] ** 2);
-
-  if (hue < 0) {
-    hue = hue + 360;
-  }
-
-  if (chroma <= epsilon) {
-    hue = NaN;
-  }
-
-  return [
-    OKLab[0], // L is still L
-    chroma,
-    hue,
-  ];
-}
-
-function OKLCH_to_OKLab(OKLCH: Vector): Vector {
-  return [
-    OKLCH[0], // L is still L
-    OKLCH[1] * Math.cos((OKLCH[2] * Math.PI) / 180), // a
-    OKLCH[1] * Math.sin((OKLCH[2] * Math.PI) / 180), // b
-  ];
-}
+// function OKLab_to_OKLCH(OKLab: Vector): Vector {
+//   const epsilon = 0.000004;
+//   let hue = (Math.atan2(OKLab[2], OKLab[1]) * 180) / Math.PI;
+//   const chroma = Math.sqrt(OKLab[1] ** 2 + OKLab[2] ** 2);
+//
+//   if (hue < 0) {
+//     hue = hue + 360;
+//   }
+//
+//   if (chroma <= epsilon) {
+//     hue = NaN;
+//   }
+//
+//   return [
+//     OKLab[0], // L is still L
+//     chroma,
+//     hue,
+//   ];
+// }
+//
+// function OKLCH_to_OKLab(OKLCH: Vector): Vector {
+//   return [
+//     OKLCH[0], // L is still L
+//     OKLCH[1] * Math.cos((OKLCH[2] * Math.PI) / 180), // a
+//     OKLCH[1] * Math.sin((OKLCH[2] * Math.PI) / 180), // b
+//   ];
+// }
 
 /**
  * Return the first row of a matrix as a vector.
