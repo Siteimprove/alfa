@@ -68,7 +68,6 @@ export namespace Triplet {
   /**
    * Parses either a component or the keyword "none", reduces "none" to
    * the correct type, or fails if it is not allowed.
-   *
    */
   const parseComponent = <C extends Component>(
     parser: CSSParser<C>,

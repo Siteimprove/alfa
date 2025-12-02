@@ -23,7 +23,7 @@ function roundOrNone(noneChance: number = 0): (num: number) => number | "none" {
   return (num) => {
     const x = Real.round(num * (1 + noneChance), 3);
 
-    return x > 1 ? "none" : Real.round(x, 3);
+    return x > 1 ? "none" : x;
   };
 }
 

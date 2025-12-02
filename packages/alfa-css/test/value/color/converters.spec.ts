@@ -1,4 +1,4 @@
-import type { Vector } from "@siteimprove/alfa-math";
+import { Real, type Vector } from "@siteimprove/alfa-math";
 import { test } from "@siteimprove/alfa-test";
 
 import {
@@ -6,7 +6,18 @@ import {
   convertRGB,
   hslToRgb,
   hwbToRgb,
+  type RGB,
 } from "../../../src/value/color/converters.js";
+
+// Floating point arithmetic being what it is, we round numbers at 5 decimals
+// to stabilize tests.
+function roundRGB<S extends ColorSpace>(value: RGB<S>): RGB<S> {
+  return {
+    space: value.space,
+    linear: value.linear,
+    components: value.components.map((c) => Real.round(c, 5)),
+  };
+}
 
 test("hslToRgb() converts HSL color to RGB", (t) => {
   for (const [h, s, l, r, g, b] of [
@@ -107,8 +118,8 @@ test("convertRGB() linearize RGB colors", (t) => {
     };
 
     t.deepEqual(
-      convertRGB(source, { space, linear: true }),
-      { space, linear: true, components: expected },
+      roundRGB(convertRGB(source, { space, linear: true })),
+      roundRGB({ space, linear: true, components: expected }),
       `Failed to linearize RGB color ${space}.`,
     );
   }
@@ -170,8 +181,8 @@ test("convertRGB() de-linearize RGB colors", (t) => {
     };
 
     t.deepEqual(
-      convertRGB(source, { space, linear: false }),
-      { space, linear: false, components: expected },
+      roundRGB(convertRGB(source, { space, linear: false })),
+      roundRGB({ space, linear: false, components: expected }),
       `Failed to de-linearize RGB-linear color ${space}-linear.`,
     );
   }
@@ -184,8 +195,8 @@ test("convertRGB() converts between RGB color spaces", (t) => {
   // Note that each component actually depends on all 3, so the regularity in
   // the tests cases is probably bad for entropy. This is likely good enough
   // given that we only test some linear transformations, so the chances of
-  // only getting the right result on a few points are low, especially since
-  // the 3 input vectors form a basis of the space.
+  // only getting the right result only on a few points are low, especially
+  // since the 3 input vectors form a basis of the space.
   const cases: Array<
     [
       source: ColorSpace,
@@ -335,8 +346,8 @@ test("convertRGB() converts between RGB color spaces", (t) => {
 
     for (const dest of Object.keys(values) as ColorSpace[]) {
       t.deepEqual(
-        convertRGB(sourceColor, { space: dest, linear: true }),
-        { space: dest, linear: true, components: values[dest] },
+        roundRGB(convertRGB(sourceColor, { space: dest, linear: true })),
+        roundRGB({ space: dest, linear: true, components: values[dest] }),
         `Failed to convert ${source}(${values[source]}) linear to ${dest} linear.`,
       );
     }

@@ -1,6 +1,7 @@
 /*
  * Most code here is taken directly from the CSS Color Module Level 4
- * specification, with adjustments for our representations.
+ * specification, with adjustments for our representations. Many comments
+ * also come from there, as is.
  * {@link https://drafts.csswg.org/css-color-4/#color-conversion-code}
  * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
  * {@link https://drafts.csswg.org/css-color/#hwb-to-rgb}
