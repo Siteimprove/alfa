@@ -21,6 +21,7 @@
     "./value/color/color-function.spec.ts",
     "./value/color/common.ts",
     "./value/color/converters.spec.ts",
+    "./value/color/format.spec.ts",
     "./value/color/hex.spec.ts",
     "./value/color/hsl.spec.ts",
     "./value/color/hwb.spec.ts",

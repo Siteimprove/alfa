@@ -22,7 +22,6 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-array": "workspace:^",
     "@siteimprove/alfa-functor": "workspace:^",
     "@siteimprove/alfa-mapper": "workspace:^"
   },

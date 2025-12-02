@@ -44,9 +44,9 @@ export class ColorFunction<N extends Space = Space> extends Triplet<N> {
   }
 
   // The three input components
-  private readonly _c1: ColorFunction.Component;
-  private readonly _c2: ColorFunction.Component;
-  private readonly _c3: ColorFunction.Component;
+  private readonly _c1: ColorFunction.Channel;
+  private readonly _c2: ColorFunction.Channel;
+  private readonly _c3: ColorFunction.Channel;
   // The RGB value, in the default sRBG colorspace (aka rgb() CSS function)
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
@@ -54,9 +54,9 @@ export class ColorFunction<N extends Space = Space> extends Triplet<N> {
 
   protected constructor(
     name: N,
-    c1: ColorFunction.Component,
-    c2: ColorFunction.Component,
-    c3: ColorFunction.Component,
+    c1: ColorFunction.Channel,
+    c2: ColorFunction.Channel,
+    c3: ColorFunction.Channel,
     alpha: Triplet.Alpha,
   ) {
     super(name, alpha);
@@ -79,9 +79,9 @@ export class ColorFunction<N extends Space = Space> extends Triplet<N> {
   }
 
   public get components(): [
-    ColorFunction.Component,
-    ColorFunction.Component,
-    ColorFunction.Component,
+    ColorFunction.Channel,
+    ColorFunction.Channel,
+    ColorFunction.Channel,
   ] {
     return [this._c1, this._c2, this._c3];
   }
@@ -150,7 +150,7 @@ export namespace ColorFunction {
   }
 
   /** @internal */
-  export type Component = Number.Canonical | Percentage.Canonical;
+  export type Channel = Number.Canonical | Percentage.Canonical;
 
   export function isColorFunction(value: unknown): value is ColorFunction {
     return value instanceof ColorFunction;
@@ -159,7 +159,7 @@ export namespace ColorFunction {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hue}
    */
-  const parseComponent = either(Number.parse, Percentage.parse<"percentage">);
+  const parseChannel = either(Number.parse, Percentage.parse<"percentage">);
 
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
@@ -167,10 +167,7 @@ export namespace ColorFunction {
   export const parse: CSSParser<ColorFunction> = map(
     Function.parse(
       "color",
-      pair(
-        Token.parseIdent(ColorSpaces),
-        Triplet.parseTriplet([parseComponent]),
-      ),
+      pair(Token.parseIdent(ColorSpaces), Triplet.parseTriplet([parseChannel])),
     ),
     ([, [colorSpace, [c1, c2, c3, alpha]]]) =>
       ColorFunction.of(colorSpace.value, c1, c2, c3, alpha),

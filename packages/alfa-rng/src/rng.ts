@@ -1,4 +1,3 @@
-import { Array } from "@siteimprove/alfa-array";
 import type { Functor } from "@siteimprove/alfa-functor";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 
@@ -73,7 +72,15 @@ export class RNGFactory<T = number> implements Functor<T> {
       const arrayA = this._rng();
       const arrayB = other._rng();
 
-      return Array.zip(arrayA, arrayB);
+      const result: Array<[U, V]> = [];
+
+      // We can't use Array.zip here as it would prevent us from using the RNG
+      // in alfa-array tests…
+      for (let i = 0; i < Math.min(arrayA.length, arrayB.length); i++) {
+        result.push([arrayA[i], arrayB[i]]);
+      }
+
+      return result;
     });
   }
 

@@ -21,7 +21,7 @@ const parseErr = parser(RGB.parse);
 const { toJSON, toString } = Component;
 
 test(
-  "parse() accepts legacy syntax with numbers and no alpha",
+  ".parse() accepts legacy syntax with numbers and no alpha",
   (t, rng) => {
     for (const rgb of ["rgb", "rgba"]) {
       const [red, green, blue] = rng.rand();
@@ -46,7 +46,7 @@ test(
 );
 
 test(
-  "parse() accepts legacy syntax with numbers and alpha",
+  ".parse() accepts legacy syntax with numbers and alpha",
   (t, rng) => {
     for (const rgb of ["rgb", "rgba"]) {
       const [red, green, blue, alpha] = rng.rand();
@@ -70,26 +70,8 @@ test(
   { rng: rgbRNG(0, 1), iterations: 10 },
 );
 
-test("parse() accepts exceeding whitespace", (t) => {
-  for (const actual of [
-    "rgba(  255,   255  , 255,     1)",
-    "rgb(  255,   255  , 255,     1)",
-    "rgba(  255   255   255 /     1)",
-    "rgb(  255   255   255    /  1)",
-  ]) {
-    t.deepEqual(parse(actual).toJSON(), {
-      type: "color",
-      format: "rgb",
-      red: { type: "number", value: 255 },
-      green: { type: "number", value: 255 },
-      blue: { type: "number", value: 255 },
-      alpha: { type: "number", value: 1 },
-    });
-  }
-});
-
 test(
-  "parse() accepts legacy syntax with percentages and no alpha",
+  ".parse() accepts legacy syntax with percentages and no alpha",
   (t, rng) => {
     for (const rgb of ["rgb", "rgba"]) {
       const [red, green, blue] = rng.rand();
@@ -114,7 +96,7 @@ test(
 );
 
 test(
-  "parse() accepts legacy syntax with percentages and alpha",
+  ".parse() accepts legacy syntax with percentages and alpha",
   (t, rng) => {
     for (const rgb of ["rgb", "rgba"]) {
       const [red, green, blue, alpha] = rng.rand();
@@ -139,7 +121,7 @@ test(
 );
 
 test(
-  "parse() accepts modern syntax with numbers/percentage/none and no alpha",
+  ".parse() accepts modern syntax with numbers/percentage/none and no alpha",
   (t, rng) => {
     for (const rgb of ["rgb", "rgba"]) {
       const [red, green, blue] = rng.rand();
@@ -164,7 +146,7 @@ test(
 );
 
 test(
-  "parse() accepts modern syntax with numbers/percentage/none and alpha",
+  ".parse() accepts modern syntax with numbers/percentage/none and alpha",
   (t, rng) => {
     for (const rgb of ["rgb", "rgba"]) {
       const [red, green, blue, alpha] = rng.rand();
@@ -188,17 +170,35 @@ test(
   { rng: rgbRNG(0.1, 0.5), iterations: 10 },
 );
 
-test("parse() refuses mixing numbers and percentages in legacy syntax", (t) => {
+test(".parse() accepts exceeding whitespace", (t) => {
+  for (const actual of [
+    "rgba(  255,   255  , 255,     1)",
+    "rgb(  255,   255  , 255,     1)",
+    "rgba(  255   255   255 /     1)",
+    "rgb(  255   255   255    /  1)",
+  ]) {
+    t.deepEqual(parse(actual).toJSON(), {
+      type: "color",
+      format: "rgb",
+      red: { type: "number", value: 255 },
+      green: { type: "number", value: 255 },
+      blue: { type: "number", value: 255 },
+      alpha: { type: "number", value: 1 },
+    });
+  }
+});
+
+test(".parse() refuses mixing numbers and percentages in legacy syntax", (t) => {
   for (const str of ["rgba(100%, 255, 100)", "rgba(100, 255, 100%)"]) {
     t.deepEqual(parseErr(str).isErr(), true);
   }
 });
 
-test("parse() rejects `none` in legacy syntax", (t) => {
+test(".parse() rejects `none` in legacy syntax", (t) => {
   for (const str of [
     "rgba(none, 255, 100)",
-    "rgba(100, 255, none)",
-    "rgba(100, none, 0)",
+    "rgb(100, 255, none)",
+    "rgb(100, none, 0)",
     "rgba(100, 255, 255, none)",
   ]) {
     t.deepEqual(parseErr(str).isErr(), true);
@@ -231,7 +231,7 @@ test("#resolve() returns percentages", (t) => {
   }
 });
 
-test("parse() accepts calculations", (t) => {
+test(".parse() accepts calculations", (t) => {
   const expected = (type: "number" | "percentage") =>
     ({
       type: "color",
