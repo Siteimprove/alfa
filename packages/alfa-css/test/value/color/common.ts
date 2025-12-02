@@ -64,8 +64,6 @@ export namespace Component {
           : [value, type];
 
   export const numberScaler = scaler("number");
-  export const angleScaler = scaler("other");
-  export const percentageScaler = scaler("other");
 
   export const toNumberPercentageString = ([value, type]: Component) =>
     value === "none"
