@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../dist" },
+  "files": ["./index.ts", "./visible-content.ts"],
+  "references": [
+    { "path": "../../alfa-aria" },
+    { "path": "../../alfa-cache" },
+    { "path": "../../alfa-device" },
+    { "path": "../../alfa-dom" },
+    { "path": "../../alfa-equatable" },
+    { "path": "../../alfa-json" },
+    { "path": "../../alfa-map" },
+    { "path": "../../alfa-predicate" },
+    { "path": "../../alfa-sequence" },
+    { "path": "../../alfa-style" }
+  ]
+}

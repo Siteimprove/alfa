@@ -159,7 +159,8 @@
             "@siteimprove/alfa-cascade",
             "@siteimprove/alfa-painting-order",
             "@siteimprove/alfa-selector",
-            "@siteimprove/alfa-style"
+            "@siteimprove/alfa-style",
+            "@siteimprove/alfa-visible-content"
           ]
         },
         "@siteimprove/alfa-aria",

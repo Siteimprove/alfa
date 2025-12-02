@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-content",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.108.0",
+  "license": "MIT",
+  "description": "Package for working with HTML content",
+  "repository": {
+    "type": "git",
+    "url": "github:Siteimprove/alfa",
+    "directory": "packages/alfa-content"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-aria": "workspace:^",
+    "@siteimprove/alfa-cache": "workspace:^",
+    "@siteimprove/alfa-device": "workspace:^",
+    "@siteimprove/alfa-dom": "workspace:^",
+    "@siteimprove/alfa-equatable": "workspace:^",
+    "@siteimprove/alfa-json": "workspace:^",
+    "@siteimprove/alfa-map": "workspace:^",
+    "@siteimprove/alfa-predicate": "workspace:^",
+    "@siteimprove/alfa-sequence": "workspace:^",
+    "@siteimprove/alfa-style": "workspace:^"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}
