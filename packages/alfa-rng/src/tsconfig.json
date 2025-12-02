@@ -4,6 +4,7 @@
   "compilerOptions": { "outDir": "../dist" },
   "include": ["./index.ts", "rng.ts"],
   "references": [
+    { "path": "../../alfa-array" },
     { "path": "../../alfa-functor" },
     { "path": "../../alfa-mapper" }
   ]
