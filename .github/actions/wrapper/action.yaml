@@ -86,6 +86,10 @@ runs:
       if: inputs.generate-documentation == 'true'
       uses: siteimprove/alfa/.github/actions/documentation@main
 
+    - name: Generate dependency graphs
+      if: inputs.dependency-graphs == 'true'
+      uses: siteimprove/alfa/.github/actions/dependency-graphs@main
+
     - name: Bump version
       id: version
       if: inputs.publish == 'true'
