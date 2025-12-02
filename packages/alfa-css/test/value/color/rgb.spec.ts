@@ -5,6 +5,16 @@ import { RGB } from "../../../dist/index.js";
 import { parser, parserUnsafe } from "../../common/parse.js";
 import { Component, rng } from "./common.js";
 
+const rgbMapper = Component.numberScaler(0, 255);
+// R, G, B components between 0-255 (numbers) or 0-1 (percentages),
+// alpha between 0-1
+const rgbRNG = rng(([r, g, b, a]) => [
+  rgbMapper(r),
+  rgbMapper(g),
+  rgbMapper(b),
+  a,
+]);
+
 const parse = parserUnsafe(RGB.parse);
 const parseErr = parser(RGB.parse);
 
@@ -32,7 +42,7 @@ test(
       );
     }
   },
-  { rng: rng(0, 1), iterations: 10 },
+  { rng: rgbRNG(0, 1), iterations: 10 },
 );
 
 test(
@@ -57,7 +67,7 @@ test(
       );
     }
   },
-  { rng: rng(0, 1), iterations: 10 },
+  { rng: rgbRNG(0, 1), iterations: 10 },
 );
 
 test("parse() accepts exceeding whitespace", (t) => {
@@ -100,7 +110,7 @@ test(
       );
     }
   },
-  { rng: rng(0, 0), iterations: 10 },
+  { rng: rgbRNG(0, 0), iterations: 10 },
 );
 
 test(
@@ -125,7 +135,7 @@ test(
       );
     }
   },
-  { rng: rng(0, 0), iterations: 10 },
+  { rng: rgbRNG(0, 0), iterations: 10 },
 );
 
 test(
@@ -150,7 +160,7 @@ test(
       );
     }
   },
-  { rng: rng(0.1, 0.5), iterations: 10 },
+  { rng: rgbRNG(0.1, 0.5), iterations: 10 },
 );
 
 test(
@@ -175,7 +185,7 @@ test(
       );
     }
   },
-  { rng: rng(0.1, 0.5), iterations: 10 },
+  { rng: rgbRNG(0.1, 0.5), iterations: 10 },
 );
 
 test("parse() refuses mixing numbers and percentages in legacy syntax", (t) => {

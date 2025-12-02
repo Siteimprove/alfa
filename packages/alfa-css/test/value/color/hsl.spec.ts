@@ -5,6 +5,8 @@ import { HSL } from "../../../dist/index.js";
 import { parser, parserUnsafe } from "../../common/parse.js";
 import { Component, rng } from "./common.js";
 
+const hslRNG = rng();
+
 const {
   toHueJSON,
   toHueString,
@@ -41,7 +43,7 @@ test(
       );
     }
   },
-  { rng: rng(0, 0), iterations: 10 },
+  { rng: hslRNG(0, 0), iterations: 10 },
 );
 
 test(
@@ -66,7 +68,7 @@ test(
       );
     }
   },
-  { rng: rng(0, 0), iterations: 10 },
+  { rng: hslRNG(0, 0), iterations: 10 },
 );
 
 test("parse() accepts legacy syntax with no angle unit", (t) => {
@@ -111,7 +113,7 @@ test(
       );
     }
   },
-  { rng: rng(0.1, 0.5), iterations: 10 },
+  { rng: hslRNG(0.1, 0.5), iterations: 10 },
 );
 
 test(
@@ -136,7 +138,7 @@ test(
       );
     }
   },
-  { rng: rng(0.1, 0.5), iterations: 10 },
+  { rng: hslRNG(0.1, 0.5), iterations: 10 },
 );
 
 test("parse() rejects numbers for saturation and lightness in legacy syntax", (t) => {

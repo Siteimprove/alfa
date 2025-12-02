@@ -1,3 +1,4 @@
+import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Real } from "@siteimprove/alfa-math";
 import { RNGFactory } from "@siteimprove/alfa-rng";
 
@@ -7,7 +8,8 @@ import {
   type Percentage,
 } from "../../../src/index.js";
 
-type Component = [number | "none", "number" | "other"];
+/** @internal */
+export type Component = [number | "none", "number" | "other"];
 
 /**
  * Generates a random number between 0-1, rounded to 3 decimal places, with
@@ -25,27 +27,46 @@ function roundOrNone(noneChance: number = 0): (num: number) => number | "none" {
   };
 }
 
-/** @internal */
-export const colorRNG = (noneChance?: number, seed?: number) =>
+const colorRNG = (noneChance?: number, seed?: number) =>
   RNGFactory.of(seed).map(roundOrNone(noneChance)).group(4);
-/** @internal */
-export const typeRNG = (numChance: number = 0.5) =>
+
+const typeRNG = (numChance: number = 0.5) =>
   RNGFactory.of()
     // "other" may mean percentage or angle, but we group by 4 and at most one
     // is an angle, so we only switch at print-time.
     .map((x) => (x < numChance ? "number" : "other"))
     .group(4);
 /**
- * Generates 4 component, with (approx) noneChance of each of them being "none",
- * and (exactly) numChance of each of them being a number (else, percentage).
+ * Generates 4 components between 0 and 1, with (approx) noneChance of each of
+ * them being "none", and (exactly) numChance of each of them being a "number"
+ * (else, "other"").
  *
  * @internal
  */
-export const rng = (noneChance?: number, numChance?: number, seed?: number) =>
-  colorRNG(noneChance, seed).zip(typeRNG(numChance)).create();
+export const rng =
+  (componentMapper: Mapper<Array<Component>> = (c) => c) =>
+  (noneChance?: number, numChance?: number, seed?: number) =>
+    colorRNG(noneChance, seed)
+      .zip(typeRNG(numChance))
+      .map(componentMapper)
+      .create();
 
 /** @internal */
 export namespace Component {
+  const scaler =
+    (kind: "number" | "other") =>
+    (min: number, max: number) =>
+    ([value, type]: Component): Component =>
+      value === "none"
+        ? ["none", type]
+        : type === kind
+          ? [Real.round(value * (max - min) + min), type]
+          : [value, type];
+
+  export const numberScaler = scaler("number");
+  export const angleScaler = scaler("other");
+  export const percentageScaler = scaler("other");
+
   export const toNumberPercentageString = ([value, type]: Component) =>
     value === "none"
       ? "none"

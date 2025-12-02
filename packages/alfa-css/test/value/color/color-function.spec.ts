@@ -2,13 +2,13 @@ import { test } from "@siteimprove/alfa-test";
 
 import { ColorFunction, ColorSpaces } from "../../../dist/index.js";
 
-import { parser, parserUnsafe } from "../../common/parse.js";
+import { parserUnsafe } from "../../common/parse.js";
 import { Component, rng } from "./common.js";
 
+const colorRNG = rng();
 const { toJSON, toString } = Component;
 
 const parse = parserUnsafe(ColorFunction.parse);
-const parseErr = parser(ColorFunction.parse);
 
 test(
   "parse() accepts RGB color spaces with number or percentages and an Alpha value",
@@ -32,7 +32,7 @@ test(
       );
     }
   },
-  { rng: rng(0.1), iterations: 10 },
+  { rng: colorRNG(0.1), iterations: 10 },
 );
 
 test(
@@ -57,5 +57,5 @@ test(
       );
     }
   },
-  { rng: rng(0.1), iterations: 10 },
+  { rng: colorRNG(0.1), iterations: 10 },
 );

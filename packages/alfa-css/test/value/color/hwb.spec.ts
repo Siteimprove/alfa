@@ -2,12 +2,13 @@ import { test } from "@siteimprove/alfa-test";
 
 import { HWB } from "../../../dist/index.js";
 
-import { parser, parserUnsafe } from "../../common/parse.js";
+import { parserUnsafe } from "../../common/parse.js";
 
 import { Component, rng } from "./common.js";
 
 const parse = parserUnsafe(HWB.parse);
-const parseErr = parser(HWB.parse);
+
+const hwbRNG = rng();
 
 const {
   toBlacknessJSON,
@@ -21,7 +22,7 @@ const {
 } = Component;
 
 test(
-  "parse() accepts modern syntax with number/percentage/none and no alpha",
+  "parse() accepts number/percentage/none and no alpha",
   (t, rng) => {
     const [hue, whiteness, blackness] = rng.rand();
 
@@ -40,11 +41,11 @@ test(
       `Failed to parse hwb color ${actual} with seed ${rng.seed} at iteration ${rng.iterations}`,
     );
   },
-  { rng: rng(0.1, 0.5), iterations: 10 },
+  { rng: hwbRNG(0.1, 0.5), iterations: 10 },
 );
 
 test(
-  "parse() accepts modern syntax with number/percentage/none and alpha",
+  "parse() accepts number/percentage/none and alpha",
   (t, rng) => {
     const [hue, whiteness, blackness, alpha] = rng.rand();
 
@@ -63,7 +64,7 @@ test(
       `Failed to parse hwb color ${actual} with seed ${rng.seed} at iteration ${rng.iterations}`,
     );
   },
-  { rng: rng(0.1, 0.5), iterations: 10 },
+  { rng: hwbRNG(0.1, 0.5), iterations: 10 },
 );
 
 test("parse() accepts calculations", (t) => {
