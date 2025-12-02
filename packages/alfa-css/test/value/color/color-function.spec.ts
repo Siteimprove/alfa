@@ -59,3 +59,21 @@ test(
   },
   { rng: colorRNG(0.1), iterations: 10 },
 );
+
+test("#resolve() returns RBG color in percentages", (t) => {
+  for (const format of ColorSpaces) {
+    // We take totally out-of-gamut colors to ensure the result will be white.
+    // Actual conversions are tested in converters.spec.ts, this only tests the
+    // output format.
+    const actual = `color(${format} 1000 1000 1000)`;
+
+    t.deepEqual(parse(actual).resolve().toJSON(), {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 1 },
+      green: { type: "percentage", value: 1 },
+      blue: { type: "percentage", value: 1 },
+      alpha: { type: "percentage", value: 1 },
+    });
+  }
+});

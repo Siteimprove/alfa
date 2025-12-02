@@ -77,16 +77,16 @@ export namespace Component {
   export const toAngleNumberString = ([value, type]: Component) =>
     value === "none"
       ? "none"
-      : type === "other"
-        ? `${value}turn`
-        : `${Real.round(value * 360)}`;
+      : type === "number"
+        ? `${Real.round(value * 360)}`
+        : `${value}turn`;
 
   export const toPercentageFakePercentageString = ([value, type]: Component) =>
     value === "none"
       ? "none"
-      : type === "other"
-        ? `${value * 100}%`
-        : `${value * 100}`;
+      : type === "number"
+        ? `${value * 100}`
+        : `${value * 100}%`;
 
   export const toString = toNumberPercentageString;
   export const toHueString = toAngleNumberString;
