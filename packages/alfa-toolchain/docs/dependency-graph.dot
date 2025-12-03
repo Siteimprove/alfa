@@ -1,12 +1,15 @@
 digraph "dependency-graph-@siteimprove/alfa-toolchain" {
   compound = true;
   "src/dependency-graph/rainbow.ts";
+  "src/common.ts";
+  "exit_src/coverage";
   "src/coverage/transform-unit-test-coverage-data.ts";
   "src/dependency-graph/dependency-graph.ts";
   "src/dependency-graph/generate-graphs.ts";
   "src/changeset/get-changeset-details.ts";
   "exit_src/validation";
   "name_src/changeset";
+  "exit_src/dependency-graph";
   "src/dependency-graph/helpers.ts";
   "src/changeset/helpers.ts";
   "src/validation/has-extractor-config.ts";
@@ -45,6 +48,9 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
       ];
       "src/create-alfa-package.ts" [
         label = "create-alfa-package.ts";
+      ];
+      "src/common.ts" [
+        label = "common.ts";
       ];
       "src/index.ts" [
         label = "index.ts";
@@ -230,6 +236,9 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
       "src/create-alfa-package.ts" -> "exit_src" [
         style = "invis";
       ];
+      "src/common.ts" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/dependency-graph" -> "exit_src" [
         style = "invis";
       ];
@@ -360,6 +369,9 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
   }
   "src/dependency-graph/dependency-graph.ts" -> "src/dependency-graph/rainbow.ts" [
     style = "invis";
@@ -367,6 +379,14 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
   "src/dependency-graph/dependency-graph.ts" -> "src/dependency-graph/rainbow.ts" [
     style = "solid";
     color = "black";
+  ];
+  "src/coverage/generate-unit-test-coverage-report.ts" -> "src/common.ts" [
+    style = "invis";
+  ];
+  "exit_src/coverage" -> "src/common.ts" [
+    style = "solid";
+    color = "#ff0000";
+    ltail = "cluster_src/coverage";
   ];
   "src/coverage/generate-unit-test-coverage-report.ts" -> "src/coverage/transform-unit-test-coverage-data.ts" [
     style = "invis";
@@ -394,6 +414,14 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
     color = "#ccff00";
     lhead = "cluster_src/changeset";
     ltail = "cluster_src/validation";
+  ];
+  "src/dependency-graph/generate-graphs.ts" -> "src/common.ts" [
+    style = "invis";
+  ];
+  "exit_src/dependency-graph" -> "src/common.ts" [
+    style = "solid";
+    color = "#00ff66";
+    ltail = "cluster_src/dependency-graph";
   ];
   "src/dependency-graph/generate-graphs.ts" -> "src/dependency-graph/dependency-graph.ts" [
     style = "invis";
@@ -506,6 +534,14 @@ digraph "dependency-graph-@siteimprove/alfa-toolchain" {
   "src/dependency-graph/helpers.ts" -> "src/dependency-graph/dependency-graph.ts" [
     style = "solid";
     color = "black";
+  ];
+  "src/validation/validate-all.ts" -> "src/common.ts" [
+    style = "invis";
+  ];
+  "exit_src/validation" -> "src/common.ts" [
+    style = "solid";
+    color = "#ccff00";
+    ltail = "cluster_src/validation";
   ];
   "src/validation/validate-all.ts" -> "src/validation/has-extractor-config.ts" [
     style = "invis";

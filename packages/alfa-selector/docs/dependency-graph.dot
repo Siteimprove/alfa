@@ -1744,14 +1744,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
     style = "solid";
     color = "black";
   ];
-  "src/selector/pseudo/pseudo-element/cue.ts" -> "src/selector/selector.ts" [
-    style = "invis";
-  ];
-  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
-    style = "invis";
-    color = "#ffdb00";
-    ltail = "cluster_src/selector/pseudo";
-  ];
   "src/selector/simple/attribute.ts" -> "src/selector/selector.ts" [
     style = "invis";
   ];
@@ -2048,14 +2040,6 @@ digraph "dependency-graph-@siteimprove/alfa-selector" {
   "src/selector/pseudo/pseudo-element/cue-region.ts" -> "src/selector/pseudo/pseudo-element/pseudo-element.ts" [
     style = "solid";
     color = "black";
-  ];
-  "src/selector/pseudo/pseudo-element/cue-region.ts" -> "src/selector/selector.ts" [
-    style = "invis";
-  ];
-  "exit_src/selector/pseudo" -> "src/selector/selector.ts" [
-    style = "invis";
-    color = "#ffdb00";
-    ltail = "cluster_src/selector/pseudo";
   ];
   "src/selector/pseudo/pseudo-class/host.ts" -> "src/context.ts" [
     style = "invis";
