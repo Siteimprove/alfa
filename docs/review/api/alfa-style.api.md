@@ -245,10 +245,10 @@ export namespace Longhands {
         "letter-spacing": Longhand<Length | Keyword<"normal">, Length>;
         "line-break": Longhand<Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">, Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">>;
         "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed>;
-        "margin-bottom": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-left": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-right": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-top": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-bottom": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-left": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-right": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-top": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "mask-clip": Longhand<List<Specified_17.Item>, List<Specified_17.Item>>;
         "mask-composite": Longhand<List<Specified_18.Item>, List<Specified_18.Item>>;
         "mask-image": Longhand<List<Specified_19.Item>, List<Specified_19.Item>>;
@@ -257,8 +257,8 @@ export namespace Longhands {
         "mask-position": Longhand<List<Specified_21.Item>, List<Specified_21.Item>>;
         "mask-repeat": Longhand<List<Specified_22.Item>, List<Tuple<[Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">, Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">]>>>;
         "mask-size": Longhand<List<Specified_23.Item>, List<Specified_23.Item>>;
-        "min-height": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
-        "min-width": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
+        "min-height": Longhand<Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
+        "min-width": Longhand<Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
         "mix-blend-mode": Longhand<Keyword.ToKeywords<"screen" | "color" | "hue" | "saturation" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "luminosity" | "plus-darker" | "plus-lighter">, Keyword.ToKeywords<"screen" | "color" | "hue" | "saturation" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "luminosity" | "plus-darker" | "plus-lighter">>;
         opacity: Longhand<Number_2 | Percentage<"percentage">, Number_2.Fixed>;
         "outline-color": Longhand<Color | Keyword<"invert">, Color.Canonical | Keyword<"invert">>;

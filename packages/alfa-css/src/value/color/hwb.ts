@@ -5,8 +5,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Function, type Parser as CSSParser } from "../../syntax/index.js";
 
 import { Angle, Number, Percentage } from "../numeric/index.js";
+import { hwbToRgb } from "./converters.js";
 
-import { hslToRgb } from "./converters.js";
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
 import { Triplet } from "./triplet.js";
@@ -14,52 +14,52 @@ import { Triplet } from "./triplet.js";
 const { map, either } = Parser;
 
 /**
- * {@link https://drafts.csswg.org/css-color/#the-hsl-notation}
+ * {@link https://drafts.csswg.org/css-color/#the-hwb-notation}
  *
  * @public
  */
-export class HSL extends Triplet<"hsl"> {
+export class HWB extends Triplet<"hwb"> {
   public static of(
     hue: Number | Angle,
-    saturation: Number | Percentage<"percentage">,
-    lightness: Number | Percentage<"percentage">,
+    whiteness: Number | Percentage<"percentage">,
+    blackness: Number | Percentage<"percentage">,
     alpha: Number | Percentage<"percentage">,
-  ): HSL {
-    const s = saturation.resolve();
-    const l = lightness.resolve();
+  ): HWB {
+    const w = whiteness.resolve();
+    const b = blackness.resolve();
 
-    return new HSL(
+    return new HWB(
       hue.resolve(),
-      Number.isNumber(s) ? Percentage.of<"percentage">(s.value / 100) : s,
-      Number.isNumber(l) ? Percentage.of<"percentage">(l.value / 100) : l,
+      Number.isNumber(w) ? Percentage.of<"percentage">(w.value / 100) : w,
+      Number.isNumber(b) ? Percentage.of<"percentage">(b.value / 100) : b,
       alpha.resolve(),
     );
   }
 
-  private readonly _hue: HSL.Hue;
-  private readonly _saturation: HSL.Component;
-  private readonly _lightness: HSL.Component;
+  private readonly _hue: HWB.Hue;
+  private readonly _whiteness: HWB.Component;
+  private readonly _blackness: HWB.Component;
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
 
   protected constructor(
-    hue: HSL.Hue,
-    saturation: HSL.Component,
-    lightness: HSL.Component,
+    hue: HWB.Hue,
+    whiteness: HWB.Component,
+    blackness: HWB.Component,
     alpha: Triplet.Alpha,
   ) {
-    super("hsl", alpha);
+    super("hwb", alpha);
     this._hue = hue;
-    this._saturation = saturation;
-    this._lightness = lightness;
+    this._whiteness = whiteness;
+    this._blackness = blackness;
 
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
-    const [red, green, blue] = hslToRgb(
+    const [red, green, blue] = hwbToRgb(
       Real.modulo(degrees, 360),
-      Real.clamp(saturation.value, 0, 1),
-      Real.clamp(lightness.value, 0, 1),
+      whiteness.value,
+      blackness.value,
     );
 
     this._red = Percentage.of<"percentage">(red);
@@ -67,16 +67,16 @@ export class HSL extends Triplet<"hsl"> {
     this._blue = Percentage.of<"percentage">(blue);
   }
 
-  public get hue(): HSL.Hue {
+  public get hue(): HWB.Hue {
     return this._hue;
   }
 
-  public get saturation(): HSL.Component {
-    return this._saturation;
+  public get whiteness(): HWB.Component {
+    return this._whiteness;
   }
 
-  public get lightness(): HSL.Component {
-    return this._lightness;
+  public get blackness(): HWB.Component {
+    return this._blackness;
   }
 
   public get red(): Percentage.Canonical {
@@ -99,10 +99,10 @@ export class HSL extends Triplet<"hsl"> {
 
   public equals(value: unknown): value is this {
     return (
-      value instanceof HSL &&
+      value instanceof HWB &&
       value._hue.equals(this._hue) &&
-      value._saturation.equals(this._saturation) &&
-      value._lightness.equals(this._lightness) &&
+      value._whiteness.equals(this._whiteness) &&
+      value._blackness.equals(this._blackness) &&
       value._alpha.equals(this._alpha)
     );
   }
@@ -110,22 +110,22 @@ export class HSL extends Triplet<"hsl"> {
   public hash(hash: Hash): void {
     hash
       .writeHashable(this._hue)
-      .writeHashable(this._saturation)
-      .writeHashable(this._lightness)
+      .writeHashable(this._whiteness)
+      .writeHashable(this._blackness)
       .writeHashable(this._alpha);
   }
 
-  public toJSON(): HSL.JSON {
+  public toJSON(): HWB.JSON {
     return {
       ...super.toJSON(),
       hue: this._hue.toJSON(),
-      saturation: this._saturation.toJSON(),
-      lightness: this._lightness.toJSON(),
+      whiteness: this._whiteness.toJSON(),
+      blackness: this._blackness.toJSON(),
     };
   }
 
   public toString(): string {
-    return `hsl(${this._hue} ${this._saturation} ${this._lightness}${
+    return `hsl(${this._hue} ${this._whiteness} ${this._blackness}${
       this._alpha.value === 1 ? "" : ` / ${this._alpha}`
     })`;
   }
@@ -134,11 +134,11 @@ export class HSL extends Triplet<"hsl"> {
 /**
  * @public
  */
-export namespace HSL {
-  export interface JSON extends Triplet.JSON<"hsl"> {
+export namespace HWB {
+  export interface JSON extends Triplet.JSON<"hwb"> {
     hue: Number.Fixed.JSON | Angle.Fixed.JSON;
-    saturation: Percentage.Fixed.JSON;
-    lightness: Percentage.Fixed.JSON;
+    whiteness: Percentage.Fixed.JSON;
+    blackness: Percentage.Fixed.JSON;
   }
 
   /** @internal */
@@ -146,8 +146,8 @@ export namespace HSL {
   /** @internal */
   export type Component = Percentage.Canonical;
 
-  export function isHSL(value: unknown): value is HSL {
-    return value instanceof HSL;
+  export function isHWB(value: unknown): value is HWB {
+    return value instanceof HWB;
   }
 
   /**
@@ -158,20 +158,15 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
-  export const parse: CSSParser<HSL> = map(
+  export const parse: CSSParser<HWB> = map(
     Function.parse(
-      ["hsl", "hsla"],
-      either(
-        // Legacy syntax
-        Triplet.parseTriplet([parseHue, Percentage.parse<"percentage">], true),
-        // Modern syntax
-        Triplet.parseTriplet([
-          parseHue,
-          either(Percentage.parse<"percentage">, Number.parse),
-        ]),
-      ),
+      "hwb",
+      Triplet.parseTriplet([
+        parseHue,
+        either(Percentage.parse<"percentage">, Number.parse),
+      ]),
     ),
-    ([, [hue, saturation, lightness, alpha]]) =>
-      HSL.of(hue, saturation, lightness, alpha),
+    ([, [hue, whiteness, blackness, alpha]]) =>
+      HWB.of(hue, whiteness, blackness, alpha),
   );
 }

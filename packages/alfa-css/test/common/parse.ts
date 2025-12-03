@@ -5,27 +5,21 @@ import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Lexer, type Token } from "../../dist/index.js";
 
-/**
- * @internal
- */
+/** @internal */
 export function parser<T>(
   parse: Parser<Slice<Token>, T, string>,
 ): (input: string) => Result<T, string> {
   return (input) => parse(Lexer.lex(input)).map(([, value]) => value);
 }
 
-/**
- * @internal
- */
+/** @internal */
 export function parserUnsafe<T>(
   parse: Parser<Slice<Token>, T, string>,
 ): (input: string) => T {
-  return (input) => parser(parse)(input).getUnsafe();
+  return (input) => parser(parse)(input).getUnsafe(`Failed to parse ${input}`);
 }
 
-/**
- * @internal
- */
+/** @internal */
 export function serializer<T extends Serializable>(
   parse: Parser<Slice<Token>, T, string>,
 ): (input: string) => Serializable.ToJSON<T> {

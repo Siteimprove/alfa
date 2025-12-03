@@ -64,6 +64,26 @@ export class RNGFactory<T = number> implements Functor<T> {
     });
   }
 
+  public zip<U, V>(
+    this: RNGFactory<Array<U>>,
+    other: RNGFactory<Array<V>>,
+  ): RNGFactory<Array<[U, V]>> {
+    return new RNGFactory(this._seed, () => {
+      const arrayA = this._rng();
+      const arrayB = other._rng();
+
+      const result: Array<[U, V]> = [];
+
+      // We can't use Array.zip here as it would prevent us from using the RNG
+      // in alfa-array tests…
+      for (let i = 0; i < Math.min(arrayA.length, arrayB.length); i++) {
+        result.push([arrayA[i], arrayB[i]]);
+      }
+
+      return result;
+    });
+  }
+
   public create(): RNG<T> {
     return RNG.of(this._seed, this._rng);
   }
