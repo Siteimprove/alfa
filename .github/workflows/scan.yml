@@ -23,18 +23,26 @@ permissions:
 
 jobs:
   analyze:
-    name: Analyze
+    name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: javascript-typescript
+          - language: actions
+
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
         with:
-          node-version: 24
-          cache: yarn
-      - run: yarn install --immutable
-      - run: yarn build --quiet
-      - uses: github/codeql-action/init@v4
-        with:
-          languages: javascript
+          languages: ${{ matrix.language }}
           config-file: .github/codeql/config.yml
-      - uses: github/codeql-action/analyze@v4
+          build-mode: none
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
