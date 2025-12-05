@@ -24,11 +24,28 @@ import { loadJSON } from "../common.js";
 import type { DependencyGraph } from "./dependency-graph.js";
 import { GraphFactory } from "./helpers.js";
 
+/*
+  Usage:
+  `yarn generate-dependency-graphs [targetPath] [targetGraph]`
+  - targetPath: Path to the root directory of the monorepo. Default: ".",
+    prefer explicitly using `$(pwd)`
+  - targetGraph: Type of graph to generate. Default: "all". Can be "all",
+    "global", or (part of) a package name.
+
+  E.g.:
+  `yarn generate-dependency-graphs $(pwd) all`
+  `yarn generate-dependency-graphs $(pwd) global`
+  `yarn generate-dependency-graphs $(pwd) @siteimprove/alfa-toolchain`
+ `yarn generate-dependency-graphs $(pwd) alfa-toolchain`
+
+ */
+
 const targetPath = process.argv[2] ?? ".";
+const targetGraph = process.argv[3] ?? "all";
 const destinationPath = "docs";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
 
-await generateGraphs(targetPath);
+await generateGraphs(targetPath, targetGraph);
 
 /**
  * Generates and saves both the global dependency graph (between packages of
@@ -36,11 +53,18 @@ await generateGraphs(targetPath);
  *
  * @public
  */
-export async function generateGraphs(rootDir: string): Promise<void> {
+export async function generateGraphs(
+  rootDir: string,
+  target: string,
+): Promise<void> {
   const packages = await getPackages(rootDir);
 
-  await generateGlobalGraph();
-  await generatePackagesGraphs();
+  if (target === "all" || target === "global") {
+    await generateGlobalGraph();
+  }
+  if (target !== "global") {
+    await generatePackagesGraphs();
+  }
 
   async function generateGlobalGraph() {
     await saveGraph(
@@ -51,10 +75,12 @@ export async function generateGraphs(rootDir: string): Promise<void> {
 
   async function generatePackagesGraphs() {
     for (const pkg of packages.packages) {
-      await saveGraph(
-        await GraphFactory.fromPackage(pkg),
-        path.join(pkg.dir, destinationPath),
-      );
+      if (pkg.packageJson.name.includes(target)) {
+        await saveGraph(
+          await GraphFactory.fromPackage(pkg),
+          path.join(pkg.dir, destinationPath),
+        );
+      }
     }
   }
 
@@ -108,4 +134,6 @@ async function saveGraph<C, M>(
     ...options,
     format: "svg",
   });
+
+  console.info(`Graph saved to ${dirname}`);
 }
