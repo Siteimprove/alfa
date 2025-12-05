@@ -1,4 +1,4 @@
-/// <reference lib="dom" />
+/// <reference lib="dom" preserve="true" />
 
 /**
  * The function defined in this file is destined to be injected into a browser
