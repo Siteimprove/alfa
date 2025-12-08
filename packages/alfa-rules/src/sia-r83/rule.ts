@@ -2,7 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { RuleTree } from "@siteimprove/alfa-cascade";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Length } from "@siteimprove/alfa-css";
+import { Keyword, Length } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Rule as CSSRule } from "@siteimprove/alfa-dom";
@@ -380,6 +380,39 @@ namespace ClippingAncestor {
         // The element is a wrapping flex container, children will wrap
         // It may still overflow if individual children are too big, but we
         // assume this won't happen; this only creates false negatives.
+        return Overflow.Handle;
+      }
+
+      // Inline-level containers with inner formatting context (inline-flex,
+      // inline-block, inline-grid) expand horizontally with their content
+      // unless constrained by width. They should not be treated as clipping
+      // containers if unconstrained.
+      if (
+        and(
+          hasComputedStyle(
+            "display",
+            (value) => {
+              const [outside, inside] = value.values;
+              return (
+                outside.is("inline") &&
+                inside !== undefined &&
+                inside.is("flex", "grid", "flow-root")
+              );
+            },
+            device,
+          ),
+          hasComputedStyle(
+            "width",
+            (width) => Keyword.isKeyword(width) && width.is("auto"),
+            device,
+          ),
+          hasComputedStyle(
+            "max-width",
+            (maxWidth) => Keyword.isKeyword(maxWidth) && maxWidth.is("none"),
+            device,
+          ),
+        )(ancestor)
+      ) {
         return Overflow.Handle;
       }
 

@@ -94,6 +94,8 @@ import MaskOrigin from "./property/mask-origin.js";
 import MaskPosition from "./property/mask-position.js";
 import MaskRepeat from "./property/mask-repeat.js";
 import MaskSize from "./property/mask-size.js";
+import MaxHeight from "./property/max-height.js";
+import MaxWidth from "./property/max-width.js";
 import MinHeight from "./property/min-height.js";
 import MinWidth from "./property/min-width.js";
 import MixBlendMode from "./property/mix-blend-mode.js";
@@ -315,6 +317,8 @@ export namespace Longhands {
     "mask-position": MaskPosition,
     "mask-repeat": MaskRepeat,
     "mask-size": MaskSize,
+    "max-height": MaxHeight,
+    "max-width": MaxWidth,
     "min-height": MinHeight,
     "min-width": MinWidth,
     "mix-blend-mode": MixBlendMode,
