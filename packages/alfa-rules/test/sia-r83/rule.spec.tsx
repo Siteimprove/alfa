@@ -1398,20 +1398,31 @@ test("evaluate() passes on small text nodes that add up into a short line", asyn
   ]);
 });
 
-test("evaluate() passes inline-flex container with overflow hidden but no width constraint", async (t) => {
+test("evaluate() passes flex-item container with overflow hidden", async (t) => {
   const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
   const document = h.document(
-    [<body>{container}</body>],
+    [
+      <body>
+        <div
+          class="flex-container"
+          box={{ device, x: 0, y: 0, width: 200, height: 100 }}
+        >
+          <span
+            class="flex-item"
+            box={{ device, x: 0, y: 0, width: 55, height: 40 }}
+          >
+            {target}
+          </span>
+        </div>
+      </body>,
+    ],
     [
       h.sheet([
-        h.rule.style(".container", {
+        h.rule.style(".flex-container", {
+          display: "flex",
+          flexWrap: "wrap",
+        }),
+        h.rule.style(".flex-item", {
           display: "inline-flex",
           overflow: "hidden",
         }),
@@ -1422,236 +1433,6 @@ test("evaluate() passes inline-flex container with overflow hidden but no width 
   t.deepEqual(await evaluate(R83, { document }), [
     passed(R83, target, {
       1: Outcomes.WrapsText,
-    }),
-  ]);
-});
-
-test("evaluate() fails inline-flex container with overflow hidden and width constraint", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
-  const document = h.document(
-    [<body>{container}</body>],
-    [
-      h.sheet([
-        h.rule.style(".container", {
-          display: "inline-flex",
-          overflow: "hidden",
-          width: "55px",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    failed(R83, target, {
-      1: Outcomes.ClipsText(Option.of(container), None),
-    }),
-  ]);
-});
-
-test("evaluate() fails inline-flex container with overflow hidden and max-width constraint", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
-  const document = h.document(
-    [<body>{container}</body>],
-    [
-      h.sheet([
-        h.rule.style(".container", {
-          display: "inline-flex",
-          overflow: "hidden",
-          maxWidth: "55px",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    failed(R83, target, {
-      1: Outcomes.ClipsText(Option.of(container), None),
-    }),
-  ]);
-});
-
-test("evaluate() passes inline-block container with overflow hidden but no width constraint", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
-  const document = h.document(
-    [<body>{container}</body>],
-    [
-      h.sheet([
-        h.rule.style(".container", {
-          display: "inline-block",
-          overflow: "hidden",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    passed(R83, target, {
-      1: Outcomes.WrapsText,
-    }),
-  ]);
-});
-
-test("evaluate() fails inline-block container with overflow hidden and width constraint", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
-  const document = h.document(
-    [<body>{container}</body>],
-    [
-      h.sheet([
-        h.rule.style(".container", {
-          display: "inline-block",
-          overflow: "hidden",
-          width: "55px",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    failed(R83, target, {
-      1: Outcomes.ClipsText(Option.of(container), None),
-    }),
-  ]);
-});
-
-test("evaluate() fails inline-block container with overflow hidden and max-width constraint", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
-  const document = h.document(
-    [<body>{container}</body>],
-    [
-      h.sheet([
-        h.rule.style(".container", {
-          display: "inline-block",
-          overflow: "hidden",
-          maxWidth: "55px",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    failed(R83, target, {
-      1: Outcomes.ClipsText(Option.of(container), None),
-    }),
-  ]);
-});
-
-test("evaluate() passes inline-grid container with overflow hidden but no width constraint", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
-  const document = h.document(
-    [<body>{container}</body>],
-    [
-      h.sheet([
-        h.rule.style(".container", {
-          display: "inline-grid",
-          overflow: "hidden",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    passed(R83, target, {
-      1: Outcomes.WrapsText,
-    }),
-  ]);
-});
-
-test("evaluate() fails inline-grid container with overflow hidden and width constraint", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
-  const document = h.document(
-    [<body>{container}</body>],
-    [
-      h.sheet([
-        h.rule.style(".container", {
-          display: "inline-grid",
-          overflow: "hidden",
-          width: "55px",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    failed(R83, target, {
-      1: Outcomes.ClipsText(Option.of(container), None),
-    }),
-  ]);
-});
-
-test("evaluate() fails inline-grid container with overflow hidden and max-width constraint", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
-
-  const container = (
-    <span class="container" box={{ device, x: 0, y: 0, width: 55, height: 40 }}>
-      {target}
-    </span>
-  );
-
-  const document = h.document(
-    [<body>{container}</body>],
-    [
-      h.sheet([
-        h.rule.style(".container", {
-          display: "inline-grid",
-          overflow: "hidden",
-          maxWidth: "55px",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(await evaluate(R83, { document }), [
-    failed(R83, target, {
-      1: Outcomes.ClipsText(Option.of(container), None),
     }),
   ]);
 });

@@ -370,49 +370,21 @@ namespace ClippingAncestor {
         return Overflow.Handle;
       }
 
-      if (
-        hasUsedStyle(
-          "flex-wrap",
-          (value) => !value.is("nowrap"),
-          device,
-        )(ancestor)
-      ) {
-        // The element is a wrapping flex container, children will wrap
+      const isWrappingFlexContainer = hasUsedStyle(
+        "flex-wrap",
+        (value) => !value.is("nowrap"),
+        device,
+      );
+      const isFlexItem = (ancestor: Element) =>
+        ancestor
+          .parent(Node.fullTree)
+          .filter(isElement)
+          .some(isWrappingFlexContainer);
+      if (test(or(isWrappingFlexContainer, isFlexItem), ancestor)) {
+        // The element is a wrapping flex container or a flex item
+        // in a wrapping flex container, children will wrap
         // It may still overflow if individual children are too big, but we
         // assume this won't happen; this only creates false negatives.
-        return Overflow.Handle;
-      }
-
-      // Inline-level containers with inner formatting context (inline-flex,
-      // inline-block, inline-grid) expand horizontally with their content
-      // unless constrained by width. They should not be treated as clipping
-      // containers if unconstrained.
-      if (
-        and(
-          hasComputedStyle(
-            "display",
-            (value) => {
-              const [outside, inside] = value.values;
-              return (
-                outside.is("inline") &&
-                inside !== undefined &&
-                inside.is("flex", "grid", "flow-root")
-              );
-            },
-            device,
-          ),
-          hasComputedStyle(
-            "width",
-            (width) => Keyword.isKeyword(width) && width.is("auto"),
-            device,
-          ),
-          hasComputedStyle(
-            "max-width",
-            (maxWidth) => Keyword.isKeyword(maxWidth) && maxWidth.is("none"),
-            device,
-          ),
-        )(ancestor)
-      ) {
         return Overflow.Handle;
       }
 
