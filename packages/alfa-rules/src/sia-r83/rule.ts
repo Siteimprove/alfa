@@ -2,7 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { RuleTree } from "@siteimprove/alfa-cascade";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Keyword, Length } from "@siteimprove/alfa-css";
+import { Length } from "@siteimprove/alfa-css";
 import { Feature } from "@siteimprove/alfa-css-feature";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Rule as CSSRule } from "@siteimprove/alfa-dom";
