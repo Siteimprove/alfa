@@ -3,7 +3,6 @@
   "extends": "../tsconfig.json",
   "compilerOptions": { "outDir": "../dist" },
   "files": [
-    "native.ts",
     "./device.ts",
     "./display.ts",
     "./index.ts",

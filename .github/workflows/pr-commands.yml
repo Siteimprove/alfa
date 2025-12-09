@@ -6,6 +6,10 @@ name: PR commands
 #
 # See https://github.com/Siteimprove/pr-command
 
+permissions:
+  contents: write # Need to push back to the repository.
+  pull-requests: write # Need to react to comment.
+
 on:
   issue_comment:
     types: [created]
