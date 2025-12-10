@@ -4,8 +4,11 @@ import * as path from "node:path";
 
 import { GraphFactory } from "../../dist/dependency-graph/helpers.js";
 
-const { getAllScopedDependencies, getClusters, getScopedProdDependencies } =
-  GraphFactory.Global;
+const {
+  getAllWorkspaceDependencies,
+  getClusters,
+  getWorkspaceProdDependencies,
+} = GraphFactory.Global;
 
 type ClusterDefinition = GraphFactory.Global.ClusterDefinition;
 type Module = GraphFactory.Global.Module;
@@ -42,111 +45,98 @@ test("getClusters() parses cluster definitions", async (t) => {
   t.deepEqual([...getClusters(definitions)], modules);
 });
 
-test("getAllScopedDependencies grabs both production and development dependencies", async (t) => {
+test("getAllWorkspaceDependencies grabs both production and development dependencies", async (t) => {
   const pkg = {
     dependencies: {
-      "@foo/foo1": "1",
-      "@foo/foo2": "1",
+      "@foo/foo1": "workspace: 1",
+      "@foo/foo2": "workspace: 1",
       "@foo/foo3": "1",
-      "@bar/foo4": "1",
+      "@bar/foo4": "workspace: 1",
     },
     devDependencies: {
       "@foo/dev1": "1",
-      "@foo/dev2": "1",
+      "@foo/dev2": "workspace: 1",
       "@bar/dev3": "1",
     },
   };
 
-  t.deepEqual(getAllScopedDependencies(pkg, "@foo"), [
+  t.deepEqual(getAllWorkspaceDependencies(pkg), [
     "@foo/foo1",
     "@foo/foo2",
-    "@foo/foo3",
-    "@foo/dev1",
+    "@bar/foo4",
     "@foo/dev2",
   ]);
 });
 
-test("getAllScopedDependencies handles missing dependencies", async (t) => {
+test("getAllWorkspaceDependencies handles missing dependencies", async (t) => {
   const pkg = {
     devDependencies: {
-      "@foo/dev1": "1",
+      "@foo/dev1": "workspace: 1",
       "@foo/dev2": "1",
       "@bar/dev3": "1",
     },
   };
 
-  t.deepEqual(getAllScopedDependencies(pkg, "@foo"), [
-    "@foo/dev1",
-    "@foo/dev2",
-  ]);
+  t.deepEqual(getAllWorkspaceDependencies(pkg), ["@foo/dev1"]);
 });
 
-test("getAllScopedDependencies handles missing devDependencies", async (t) => {
+test("getAllWorkspaceDependencies handles missing devDependencies", async (t) => {
   const pkg = {
     dependencies: {
       "@foo/foo1": "1",
-      "@foo/foo2": "1",
-      "@foo/foo3": "1",
+      "@foo/foo2": "workspace: 1",
+      "@foo/foo3": "workspace: 1",
       "@bar/foo4": "1",
     },
   };
 
-  t.deepEqual(getAllScopedDependencies(pkg, "@foo"), [
-    "@foo/foo1",
-    "@foo/foo2",
-    "@foo/foo3",
-  ]);
+  t.deepEqual(getAllWorkspaceDependencies(pkg), ["@foo/foo2", "@foo/foo3"]);
 });
 
-test("getScopedProdDependencies grabs only production dependencies", async (t) => {
+test("getWorkspaceProdDependencies grabs only production dependencies", async (t) => {
   const pkg = {
     dependencies: {
-      "@foo/foo1": "1",
+      "@foo/foo1": "workspace: 1",
       "@foo/foo2": "1",
-      "@foo/foo3": "1",
+      "@foo/foo3": "workspace: 1",
       "@bar/foo4": "1",
     },
     devDependencies: {
-      "@foo/dev1": "1",
+      "@foo/dev1": "workspace: 1",
       "@foo/dev2": "1",
       "@bar/dev3": "1",
     },
   };
 
-  t.deepEqual(getScopedProdDependencies(pkg, "@foo"), [
-    "@foo/foo1",
-    "@foo/foo2",
-    "@foo/foo3",
-  ]);
+  t.deepEqual(getWorkspaceProdDependencies(pkg), ["@foo/foo1", "@foo/foo3"]);
 });
 
-test("getScopedProdDependencies handles missing dependencies", async (t) => {
-  const pkg = {
+test("getWorkspaceProdDependencies handles missing dependencies", async (t) => {
+  const pkg: {
+    dependencies?: { [key: string]: string };
+    devDependencies: any;
+  } = {
     devDependencies: {
-      "@foo/dev1": "1",
+      "@foo/dev1": "workspace: 1",
       "@foo/dev2": "1",
       "@bar/dev3": "1",
     },
-  } as { dependencies?: { [key: string]: string } };
+  };
 
-  t.deepEqual(getScopedProdDependencies(pkg, "@foo"), []);
+  t.deepEqual(getWorkspaceProdDependencies(pkg), []);
 });
 
-test("getScopedProdDependencies handles missing devDependencies", async (t) => {
+test("getWorkspaceProdDependencies handles missing devDependencies", async (t) => {
   const pkg = {
     dependencies: {
-      "@foo/foo1": "1",
-      "@foo/foo2": "1",
+      "@foo/foo1": "workspace: 1",
+      "@foo/foo2": "workspace: 1",
       "@foo/foo3": "1",
       "@bar/foo4": "1",
     },
   };
 
-  t.deepEqual(getScopedProdDependencies(pkg, "@foo"), [
-    "@foo/foo1",
-    "@foo/foo2",
-    "@foo/foo3",
-  ]);
+  t.deepEqual(getWorkspaceProdDependencies(pkg), ["@foo/foo1", "@foo/foo2"]);
 });
 
 const { clusterize, lastSegment } = GraphFactory.Individual;
