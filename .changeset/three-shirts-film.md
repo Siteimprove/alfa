@@ -7,5 +7,5 @@
 E.g.:
 
 - `yarn generate-dependency-graphs $(pwd) all` to generate all graphs.
-- `yarn generate-dependency-graphs $(pwd) global` to generate all graphsonly the global graph.
-- `yarn generate-dependency-graphs $(pwd) alfa-css` to generate all graphonly the graphs for packages containing `alfa-css` in their name.
+- `yarn generate-dependency-graphs $(pwd) global` to generate all only the global graph.
+- `yarn generate-dependency-graphs $(pwd) alfa-css` to generate only the graphs for packages containing `alfa-css` in their name.
