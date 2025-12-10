@@ -75,7 +75,7 @@ export async function generateGraphs(
 
   async function generatePackagesGraphs() {
     for (const pkg of packages.packages) {
-      if (pkg.packageJson.name.includes(target)) {
+      if (target === "all" || pkg.packageJson.name.includes(target)) {
         await saveGraph(
           await GraphFactory.fromPackage(pkg),
           path.join(pkg.dir, destinationPath),
