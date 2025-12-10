@@ -2,7 +2,7 @@
 "@siteimprove/alfa-toolchain": patch
 ---
 
-**Added:** `yarn generate-dependency-graph` can now generate only somem of the graphs.
+**Added:** `yarn generate-dependency-graph` can now generate only some of the graphs.
 
 E.g.:
 
