@@ -451,8 +451,9 @@ export class Element<N extends string = string>
 export namespace Element {
   export interface MinimalJSON extends Node.JSON<"element"> {}
 
-  export interface JSON<N extends string = string>
-    extends Node.JSON<"element"> {
+  export interface JSON<
+    N extends string = string,
+  > extends Node.JSON<"element"> {
     namespace: string | null;
     prefix: string | null;
     name: N;
