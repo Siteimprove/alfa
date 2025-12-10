@@ -37,9 +37,9 @@ import { UserAgent } from "./user-agent.js";
  * @internal
  */
 export class Block<
-    S extends Element | Block.Source = Element | Block.Source,
-    LAYERED extends boolean = boolean,
-  >
+  S extends Element | Block.Source = Element | Block.Source,
+  LAYERED extends boolean = boolean,
+>
   implements Equatable, Serializable<Block.JSON<S>>
 {
   /**
