@@ -1,5 +1,7 @@
 # @siteimprove/alfa-toolchain
 
+## 0.108.2
+
 ## 0.108.1
 
 ## 0.108.0

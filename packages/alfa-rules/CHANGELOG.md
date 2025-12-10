@@ -1,5 +1,7 @@
 # @siteimprove/alfa-rules
 
+## 0.108.2
+
 ## 0.108.1
 
 ### Patch Changes
