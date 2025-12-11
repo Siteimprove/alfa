@@ -370,14 +370,19 @@ namespace ClippingAncestor {
         return Overflow.Handle;
       }
 
-      if (
-        hasUsedStyle(
-          "flex-wrap",
-          (value) => !value.is("nowrap"),
-          device,
-        )(ancestor)
-      ) {
-        // The element is a wrapping flex container, children will wrap
+      const isWrappingFlexContainer = hasUsedStyle(
+        "flex-wrap",
+        (value) => !value.is("nowrap"),
+        device,
+      );
+      const isFlexItem = (ancestor: Element) =>
+        ancestor
+          .parent(Node.fullTree)
+          .filter(isElement)
+          .some(isWrappingFlexContainer);
+      if (test(or(isWrappingFlexContainer, isFlexItem), ancestor)) {
+        // The element is a wrapping flex container or a flex item
+        // in a wrapping flex container, children will wrap
         // It may still overflow if individual children are too big, but we
         // assume this won't happen; this only creates false negatives.
         return Overflow.Handle;

@@ -169,6 +169,8 @@
     "./property/margin-left.ts",
     "./property/margin-right.ts",
     "./property/margin-top.ts",
+    "./property/max-height.ts",
+    "./property/max-width.ts",
     "./property/min-height.ts",
     "./property/min-width.ts",
     "./property/mix-blend-mode.ts",

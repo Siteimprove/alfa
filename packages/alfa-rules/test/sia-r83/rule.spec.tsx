@@ -1397,3 +1397,42 @@ test("evaluate() passes on small text nodes that add up into a short line", asyn
     passed(R83, target2, { 1: Outcomes.WrapsText }),
   ]);
 });
+
+test("evaluate() passes flex-item container with overflow hidden", async (t) => {
+  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
+  const document = h.document(
+    [
+      <body>
+        <div
+          class="flex-container"
+          box={{ device, x: 0, y: 0, width: 200, height: 100 }}
+        >
+          <span
+            class="flex-item"
+            box={{ device, x: 0, y: 0, width: 55, height: 40 }}
+          >
+            {target}
+          </span>
+        </div>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".flex-container", {
+          display: "flex",
+          flexWrap: "wrap",
+        }),
+        h.rule.style(".flex-item", {
+          display: "inline-flex",
+          overflow: "hidden",
+        }),
+      ]),
+    ],
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, {
+      1: Outcomes.WrapsText,
+    }),
+  ]);
+});
