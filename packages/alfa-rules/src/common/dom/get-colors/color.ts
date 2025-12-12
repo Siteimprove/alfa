@@ -8,7 +8,7 @@ import type { Style } from "@siteimprove/alfa-style";
 export namespace Color {
   export type Computed = CSSColor.Canonical;
 
-  export type Resolved = RGB<Percentage.Canonical, Percentage.Canonical>;
+  export type Resolved = RGB.Canonical;
 
   export function resolve(color: Computed, style: Style): Option<Resolved> {
     switch (color.type) {
