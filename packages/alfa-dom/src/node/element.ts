@@ -268,6 +268,25 @@ export class Element<N extends string = string>
     return None;
   }
 
+  /**
+   * {@link https://html.spec.whatwg.org/#inert}
+   */
+  public isInert(): boolean {
+    if (this._isInert === undefined) {
+      if (this.attribute("inert").isSome()) {
+        this._isInert = true;
+      } else if (this.name === "dialog" && this.attribute("open").isSome()) {
+        this._isInert = false;
+      } else {
+        this._isInert = this.ancestors(Node.flatTree)
+          .find(Element.isElement)
+          .map((parent) => parent.isInert())
+          .getOr(false);
+      }
+    }
+    return this._isInert;
+  }
+
   /*
    * This collects caches for methods that are specific to some kind of elements.
    * The actual methods are declared in element/augment.ts to de-clutter this
@@ -279,6 +298,7 @@ export class Element<N extends string = string>
   protected _inputType: helpers.InputType | undefined;
   protected _displaySize: number | undefined;
   protected _optionsList: Sequence<Element<"option">> | undefined;
+  private _isInert: boolean | undefined;
 
   /*
    * End of caches for methods specific to some kind of elements.
