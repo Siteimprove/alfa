@@ -275,7 +275,7 @@ export namespace Node {
   }
 
   class State {
-    private static _empty = new State(false, true);
+    private static _empty = new State(false, true, false);
 
     public static empty(): State {
       return this._empty;
@@ -283,10 +283,16 @@ export namespace Node {
 
     private readonly _isPresentational: boolean;
     private readonly _isVisible: boolean;
+    private readonly _isInert: boolean;
 
-    protected constructor(isPresentational: boolean, isVisible: boolean) {
+    protected constructor(
+      isPresentational: boolean,
+      isVisible: boolean,
+      isInert: boolean,
+    ) {
       this._isPresentational = isPresentational;
       this._isVisible = isVisible;
+      this._isInert = isInert;
     }
 
     public get isPresentational(): boolean {
@@ -297,12 +303,16 @@ export namespace Node {
       return this._isVisible;
     }
 
+    public get isInert(): boolean {
+      return this._isInert;
+    }
+
     public presentational(isPresentational: boolean): State {
       if (this._isPresentational === isPresentational) {
         return this;
       }
 
-      return new State(isPresentational, this._isVisible);
+      return new State(isPresentational, this._isVisible, this._isInert);
     }
 
     public visible(isVisible: boolean): State {
@@ -310,7 +320,15 @@ export namespace Node {
         return this;
       }
 
-      return new State(this._isPresentational, isVisible);
+      return new State(this._isPresentational, isVisible, this._isInert);
+    }
+
+    public inert(isInert: boolean): State {
+      if (this._isInert === isInert) {
+        return this;
+      }
+
+      return new State(this._isPresentational, this._isVisible, isInert);
     }
   }
 
@@ -385,17 +403,50 @@ export namespace Node {
             .concat(explicit)
             .map((child) => fromNode(child, device, claimed, owned, state));
 
-        // Elements that are not visible by means of `visibility: hidden` or
-        // `visibility: collapse`, are exposed in the accessibility tree as
-        // containers as they may contain visible descendants.
-        //
-        // Since `visibility` is inherited, this correctly affects DOM descendants
-        // even if `aria-owns` is used to rewrite the tree.
-        if (style.computed("visibility").value.value !== "visible") {
+        // Check for visibility: hidden/collapse separately from inert attribute
+        const isInvisible = Style.hasComputedStyle(
+          "visibility",
+          (specified) =>
+            specified.value === "hidden" || specified.value === "collapse",
+          device,
+        )(node);
+
+        // Elements with visibility: hidden are exposed as containers with no role
+        // as they may contain visible descendants.
+        if (isInvisible) {
           return Container.of(node, children(state.visible(false)));
         }
 
         state = state.visible(true);
+
+        // Check if this specific element has the inert attribute or is inert
+        // from an ancestor.
+        const elementIsInert = Style.isInert(device)(node);
+
+        // Check if this element escapes inertness (dialog[open] inside inert parent)
+        const escapesInertness = state.isInert && !elementIsInert;
+
+        // If we're in an inert context but this element escapes (dialog[open]),
+        // clear the inert state for descendants.
+        if (escapesInertness) {
+          state = state.inert(false);
+        }
+
+        // If this element is inert (either directly or from state), make it inert.
+        // Elements with the inert attribute directly become containers with children.
+        if (elementIsInert && !state.isInert) {
+          // This element starts the inert context
+          return Container.of(
+            node,
+            children(state.inert(true)),
+            Option.of(Role.of("generic")),
+          );
+        }
+
+        // If we're in an inert context and haven't escaped, this element is inert
+        if (state.isInert && !escapesInertness) {
+          return Inert.of(node);
+        }
 
         const role = Role.fromExplicit(node).orElse(() =>
           // If the element has no explicit role and instead inherits a
@@ -464,12 +515,16 @@ export namespace Node {
         // nor a tabindex, it is not itself interesting for accessibility
         // purposes. It is therefore exposed as a container.
         // Some elements (mostly embedded content) are always exposed.
+        // However, if the element is inert, it becomes an Inert node instead.
         if (
           attributes.isEmpty() &&
           role.every(Role.hasName("generic")) &&
           node.tabIndex().isNone() &&
           !test(alwaysExpose, node)
         ) {
+          if (state.isInert) {
+            return Inert.of(node);
+          }
           return Container.of(node, children(state), role);
         }
 
@@ -489,12 +544,12 @@ export namespace Node {
       }
 
       if (dom.Text.isText(node)) {
-        // As elements with `visibility: hidden` are exposed as containers for
-        // other elements that _might_ be visible, we need to check the
-        // visibility of the parent element before deciding to expose the text
-        // node. If the parent element isn't visible, the text node instead
-        // becomes inert.
-        if (!state.isVisible) {
+        // As elements with `visibility: hidden` or inert are exposed as
+        // containers for other elements that _might_ be visible or escape
+        // inertness, we need to check the state before deciding to expose
+        // the text node. If the parent element isn't visible or is inert,
+        // the text node becomes inert.
+        if (!state.isVisible || state.isInert) {
           return Inert.of(node);
         }
 
