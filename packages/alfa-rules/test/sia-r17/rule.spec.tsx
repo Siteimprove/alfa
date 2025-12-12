@@ -143,3 +143,50 @@ test(`evaluate() is inapplicable when aria-hidden has incorrect value`, async (t
 
   t.deepEqual(await evaluate(R17, { document }), [inapplicable(R17)]);
 });
+
+test(`evaluate() passes an element with inert descendants`, async (t) => {
+  const target = (
+    <div aria-hidden="true" inert>
+      <input />
+      <button>Click me</button>
+    </div>
+  );
+
+  const document = h.document([target]);
+
+  // This test currently fails - the rule incorrectly reports the input and
+  // button as tabbable, but they should not be because their parent has the
+  // inert attribute which makes all descendants inert.
+  t.deepEqual(await evaluate(R17, { document }), [
+    passed(R17, target, {
+      1: Outcomes.IsNotTabbable,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an element with a descendant that escapes inertness`, async (t) => {
+  const popup = <div>I'm in a popup dialog</div>;
+  const error = <button>Click me in popup</button>;
+
+  const target = (
+    <div aria-hidden="true" inert>
+      <input />
+      <button>Hidden button</button>
+      {/* The dialog element escapes inertness when it has the open attribute */}
+      <dialog open>
+        {popup}
+        {error}
+      </dialog>
+    </div>
+  );
+
+  const document = h.document([target]);
+
+  // The button inside the open dialog should be tabbable because open dialogs
+  // escape the inertness of their ancestors
+  t.deepEqual(await evaluate(R17, { document }), [
+    failed(R17, target, {
+      1: Outcomes.IsTabbable([error]),
+    }),
+  ]);
+});
