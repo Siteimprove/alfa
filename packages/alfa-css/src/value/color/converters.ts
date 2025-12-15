@@ -185,6 +185,9 @@ export namespace ColorSpace {
     "prophoto-rgb",
     "rec2020",
     "sRGB",
+    "xyz",
+    "xyz-d50",
+    "xyz-d65",
   ] as const;
   /** @internal */
   export type ColorSpace = (typeof colorSpaces)[number];
@@ -497,6 +500,54 @@ export namespace ColorSpace {
         [-851781 / 878810, 1648619 / 878810, 36519 / 878810],
         [705 / 12673, -2585 / 12673, 705 / 667],
       ]),
+    },
+
+    xyz: {
+      whitepoint: "D65",
+      gammaDecoding: Gamma.xyz,
+      gammaEncoding: Gamma.xyz,
+      toXYZ: [
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+      ],
+      fromXYZ: [
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+      ],
+    },
+
+    "xyz-d50": {
+      whitepoint: "D50",
+      gammaDecoding: Gamma.xyz,
+      gammaEncoding: Gamma.xyz,
+      toXYZ: [
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+      ],
+      fromXYZ: [
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+      ],
+    },
+
+    "xyz-d65": {
+      whitepoint: "D65",
+      gammaDecoding: Gamma.xyz,
+      gammaEncoding: Gamma.xyz,
+      toXYZ: [
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+      ],
+      fromXYZ: [
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+      ],
     },
   };
 
