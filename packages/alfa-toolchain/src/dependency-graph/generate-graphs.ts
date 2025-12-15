@@ -63,8 +63,9 @@ export async function generateGraphs(
     await generateGlobalGraph(rootDir, packages);
   }
   if (target !== "global") {
-    await generatePackagesGraphs(packages);
+    await generatePackagesGraphs(packages, target);
   }
+}
 
 async function generateGlobalGraph(rootDir: string, packages: Packages) {
   try {
@@ -78,23 +79,24 @@ async function generateGlobalGraph(rootDir: string, packages: Packages) {
   }
 }
 
-async function generatePackagesGraphs(packages: Packages) {
+async function generatePackagesGraphs(packages: Packages, target: string) {
   for (const pkg of packages.packages) {
     if (target === "all" || pkg.packageJson.name.includes(target)) {
-    try {
-      console.log("Generating graph for package:", pkg.packageJson.name);
+      try {
+        console.log("Generating graph for package:", pkg.packageJson.name);
 
-      await saveGraph(
-        await GraphFactory.fromPackage(pkg),
-        path.join(pkg.dir, destinationPath),
-      );
-    } catch (error) {
-      console.log(
-        `Failed at graph generation for package ${pkg.packageJson.name}:`,
-      );
-      throw error;
+        await saveGraph(
+          await GraphFactory.fromPackage(pkg),
+          path.join(pkg.dir, destinationPath),
+        );
+      } catch (error) {
+        console.log(
+          `Failed at graph generation for package ${pkg.packageJson.name}:`,
+        );
+        throw error;
+      }
     }
-  }}
+  }
 }
 
 async function createGlobalGraph(
