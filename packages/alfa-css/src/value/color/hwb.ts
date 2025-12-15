@@ -5,7 +5,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Function, type Parser as CSSParser } from "../../syntax/index.js";
 
 import { Angle, Number, Percentage } from "../numeric/index.js";
-import { hwbToRgb } from "./converters.js";
+import { Cylindrical } from "./converters.js";
 
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
@@ -56,7 +56,7 @@ export class HWB extends Triplet<"hwb"> {
 
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
-    const [red, green, blue] = hwbToRgb(
+    const [red, green, blue] = Cylindrical.hwbToRgb(
       Real.modulo(degrees, 360),
       whiteness.value,
       blackness.value,

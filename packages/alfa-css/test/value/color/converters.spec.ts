@@ -2,16 +2,15 @@ import { Real, type Vector } from "@siteimprove/alfa-math";
 import { test } from "@siteimprove/alfa-test";
 
 import {
-  type ColorSpace,
-  convertRGB,
-  hslToRgb,
-  hwbToRgb,
-  type RGB,
+  ColorSpace,
+  Cylindrical,
 } from "../../../src/value/color/converters.js";
 
 // Floating point arithmetic being what it is, we round numbers at 5 decimals
 // to stabilize tests.
-function roundRGB<S extends ColorSpace>(value: RGB<S>): RGB<S> {
+function roundRGB<S extends ColorSpace.ColorSpace>(
+  value: ColorSpace.RGB<S>,
+): ColorSpace.RGB<S> {
   return {
     space: value.space,
     linear: value.linear,
@@ -35,7 +34,7 @@ test("hslToRgb() converts HSL color to RGB", (t) => {
     const source = `hsl(${h}, ${s * 100}%, ${l * 100}%)`;
 
     t.deepEqual(
-      hslToRgb(h, s, l),
+      Cylindrical.hslToRgb(h, s, l),
       [r, g, b],
       `Failed to convert ${source} to RGB (${r}, ${g}, ${b})`,
     );
@@ -57,7 +56,7 @@ test("hwbToRgb() converts HWB color to RGB", (t) => {
     const source = `hwb(${h}, ${w * 100}%, ${b * 100}%)`;
 
     t.deepEqual(
-      hwbToRgb(h, w, b),
+      Cylindrical.hwbToRgb(h, w, b),
       [r, g, bl],
       `Failed to convert ${source} to RGB (${r}, ${g}, ${bl})`,
     );
@@ -67,7 +66,7 @@ test("hwbToRgb() converts HWB color to RGB", (t) => {
 test("convertRGB() linearize RGB colors", (t) => {
   // Since convertRGB doesn't check the number of components, we can test a
   // bunch of values in one go when we don't use the matrices…
-  const cases: Array<[ColorSpace, Vector]> = [
+  const cases: Array<[ColorSpace.ColorSpace, Vector]> = [
     [
       "a98-rgb",
       [
@@ -118,7 +117,7 @@ test("convertRGB() linearize RGB colors", (t) => {
     };
 
     t.deepEqual(
-      roundRGB(convertRGB(source, { space, linear: true })),
+      roundRGB(ColorSpace.convertRGB(source, { space, linear: true })),
       roundRGB({ space, linear: true, components: expected }),
       `Failed to linearize RGB color ${space}.`,
     );
@@ -128,7 +127,7 @@ test("convertRGB() linearize RGB colors", (t) => {
 test("convertRGB() de-linearize RGB colors", (t) => {
   // Since convertRGB doesn't check the number of components, we can test a
   // bunch of values in one go when we don't use the matrices…
-  const cases: Array<[ColorSpace, Vector]> = [
+  const cases: Array<[ColorSpace.ColorSpace, Vector]> = [
     [
       "a98-rgb",
       [
@@ -181,7 +180,7 @@ test("convertRGB() de-linearize RGB colors", (t) => {
     };
 
     t.deepEqual(
-      roundRGB(convertRGB(source, { space, linear: false })),
+      roundRGB(ColorSpace.convertRGB(source, { space, linear: false })),
       roundRGB({ space, linear: false, components: expected }),
       `Failed to de-linearize RGB-linear color ${space}-linear.`,
     );
@@ -199,7 +198,7 @@ test("convertRGB() converts between RGB color spaces", (t) => {
   // since the 3 input vectors form a basis of the space.
   const cases: Array<
     [
-      source: ColorSpace,
+      source: ColorSpace.ColorSpace,
       a98: Vector,
       displayP3: Vector,
       prophoto: Vector,
@@ -344,9 +343,11 @@ test("convertRGB() converts between RGB color spaces", (t) => {
       components: values[source],
     };
 
-    for (const dest of Object.keys(values) as ColorSpace[]) {
+    for (const dest of Object.keys(values) as Array<ColorSpace.ColorSpace>) {
       t.deepEqual(
-        roundRGB(convertRGB(sourceColor, { space: dest, linear: true })),
+        roundRGB(
+          ColorSpace.convertRGB(sourceColor, { space: dest, linear: true }),
+        ),
         roundRGB({ space: dest, linear: true, components: values[dest] }),
         `Failed to convert ${source}(${values[source]}) linear to ${dest} linear.`,
       );

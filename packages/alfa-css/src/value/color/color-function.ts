@@ -10,16 +10,19 @@ import {
 
 import { Number, Percentage } from "../numeric/index.js";
 
-import { colorSpaces, type ColorSpace, convertRGB } from "./converters.js";
+import { ColorSpace } from "./converters.js";
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
 import { Triplet } from "./triplet.js";
 
 const { either, map, pair } = Parser;
 
-type Space = ColorSpace | "sRGB-linear";
+type Space = ColorSpace.ColorSpace | "sRGB-linear";
 /** @internal */
-export const ColorSpaces: Array<Space> = ["sRGB-linear", ...colorSpaces];
+export const ColorSpaces: Array<Space> = [
+  "sRGB-linear",
+  ...ColorSpace.colorSpaces,
+];
 
 /**
  * {@link https://drafts.csswg.org/css-color/#the-hsl-notation}
@@ -64,7 +67,7 @@ export class ColorFunction<N extends Space = Space> extends Triplet<N> {
     this._c2 = c2;
     this._c3 = c3;
 
-    [this._red, this._green, this._blue] = convertRGB(
+    [this._red, this._green, this._blue] = ColorSpace.convertRGB(
       {
         space: name === "sRGB-linear" ? "sRGB" : name,
         linear: name === "sRGB-linear",
