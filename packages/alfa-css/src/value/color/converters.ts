@@ -122,7 +122,6 @@ export type RGB<S extends ColorSpace> = {
 };
 
 interface RGBColorSpace<S extends ColorSpace> {
-  space: S;
   whitepoint: keyof typeof whitepoints;
   gammaEncoding: Mapper<number>;
   gammaDecoding: Mapper<number>;
@@ -185,7 +184,7 @@ export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
   };
 }
 
-const spaces: { [key in ColorSpace]: Omit<RGBColorSpace<key>, "space"> } = {
+const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
   "a98-rgb": {
     whitepoint: "D65",
 
