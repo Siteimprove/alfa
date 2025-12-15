@@ -17,9 +17,10 @@ import { Triplet } from "./triplet.js";
 
 const { either, map, pair } = Parser;
 
-type Space = ColorSpace.ColorSpace | "sRGB-linear";
+type Space = ColorSpace.ColorSpace | "display-p3-linear" | "sRGB-linear";
 /** @internal */
 export const ColorSpaces: Array<Space> = [
+  "display-p3-linear",
   "sRGB-linear",
   ...ColorSpace.colorSpaces,
 ];
@@ -69,8 +70,13 @@ export class ColorFunction<N extends Space = Space> extends Triplet<N> {
 
     [this._red, this._green, this._blue] = ColorSpace.convertRGB(
       {
-        space: name === "sRGB-linear" ? "sRGB" : name,
-        linear: name === "sRGB-linear",
+        space:
+          name === "sRGB-linear"
+            ? "sRGB"
+            : name === "display-p3-linear"
+              ? "display-p3"
+              : name,
+        linear: name === "sRGB-linear" || name === "display-p3-linear",
         components: [
           Real.clamp(c1.value, 0, 1),
           Real.clamp(c2.value, 0, 1),
