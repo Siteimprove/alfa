@@ -103,6 +103,7 @@ const whitepoints = {
 } as const;
 
 /** @internal */
+
 export const colorSpaces = [
   "a98-rgb",
   "display-p3",
@@ -184,9 +185,8 @@ export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
   };
 }
 
-const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
+const spaces: { [key in ColorSpace]: Omit<RGBColorSpace<key>, "space"> } = {
   "a98-rgb": {
-    space: "a98-rgb",
     whitepoint: "D65",
 
     /**
@@ -226,7 +226,6 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
   },
 
   "display-p3": {
-    space: "display-p3",
     whitepoint: "D65",
 
     /**
@@ -266,7 +265,6 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
   },
 
   "prophoto-rgb": {
-    space: "prophoto-rgb",
     whitepoint: "D50",
 
     /**
@@ -318,7 +316,6 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
   },
 
   rec2020: {
-    space: "rec2020",
     whitepoint: "D65",
 
     /**
@@ -377,7 +374,6 @@ const spaces: { [key in ColorSpace]: RGBColorSpace<key> } = {
   },
 
   sRGB: {
-    space: "sRGB",
     whitepoint: "D65",
 
     /**
