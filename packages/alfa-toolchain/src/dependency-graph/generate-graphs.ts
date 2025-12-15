@@ -13,7 +13,7 @@
   to the shell invocation directory. So it is always safer to pass the actual
   directory as CLI option, typically using "$(pwd)" to let the shell handle it
  */
-import { getPackages } from "@manypkg/get-packages";
+import { getPackages, type Packages } from "@manypkg/get-packages";
 import * as gv from "ts-graphviz";
 import * as adapter from "@ts-graphviz/adapter";
 
@@ -60,39 +60,54 @@ export async function generateGraphs(
   const packages = await getPackages(rootDir);
 
   if (target === "all" || target === "global") {
-    await generateGlobalGraph();
+    await generateGlobalGraph(rootDir, packages);
   }
   if (target !== "global") {
-    await generatePackagesGraphs();
+    await generatePackagesGraphs(packages);
   }
 
-  async function generateGlobalGraph() {
+async function generateGlobalGraph(rootDir: string, packages: Packages) {
+  try {
     await saveGraph(
-      await createGlobalGraph(),
+      await createGlobalGraph(rootDir, packages),
       path.join(rootDir, destinationPath),
     );
+  } catch (error) {
+    console.log("Failed at main graph generation:");
+    throw error;
   }
+}
 
-  async function generatePackagesGraphs() {
-    for (const pkg of packages.packages) {
-      if (target === "all" || pkg.packageJson.name.includes(target)) {
-        await saveGraph(
-          await GraphFactory.fromPackage(pkg),
-          path.join(pkg.dir, destinationPath),
-        );
-      }
+async function generatePackagesGraphs(packages: Packages) {
+  for (const pkg of packages.packages) {
+    if (target === "all" || pkg.packageJson.name.includes(target)) {
+    try {
+      console.log("Generating graph for package:", pkg.packageJson.name);
+
+      await saveGraph(
+        await GraphFactory.fromPackage(pkg),
+        path.join(pkg.dir, destinationPath),
+      );
+    } catch (error) {
+      console.log(
+        `Failed at graph generation for package ${pkg.packageJson.name}:`,
+      );
+      throw error;
     }
-  }
+  }}
+}
 
-  async function createGlobalGraph(): Promise<DependencyGraph<string, string>> {
-    const config = await loadJSON<{
-      name: string;
-      scope: string;
-      clusters: Array<GraphFactory.Global.ClusterDefinition>;
-    }>(path.join(rootDir, clustersDefinitionPath));
+async function createGlobalGraph(
+  rootDir: string,
+  packages: Packages,
+): Promise<DependencyGraph<string, string>> {
+  const config = await loadJSON<{
+    name: string;
+    scope: string;
+    clusters: Array<GraphFactory.Global.ClusterDefinition>;
+  }>(path.join(rootDir, clustersDefinitionPath));
 
-    return GraphFactory.fromPackagesList(packages, config);
-  }
+  return GraphFactory.fromPackagesList(packages, config);
 }
 
 async function saveGraph<C, M>(
