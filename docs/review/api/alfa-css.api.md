@@ -33,6 +33,7 @@ import { Slice } from '@siteimprove/alfa-slice';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token as Token_2 } from '../../syntax/token.js';
 import { Unit as Unit_2 } from '../../index.js';
+import { Vector } from '@siteimprove/alfa-math';
 
 // @public (undocumented)
 export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
@@ -2323,9 +2324,9 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     resolve(): Scale.Canonical;
     // (undocumented)
     toJSON(): {
-        z?: Number_2.Fixed.JSON | Percentage.Fixed.JSON | undefined;
-        x: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
-        y: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        z?: Percentage.Fixed.JSON | Number_2.Fixed.JSON | undefined;
+        x: Percentage.Fixed.JSON | Number_2.Fixed.JSON;
+        y: Percentage.Fixed.JSON | Number_2.Fixed.JSON;
         kind: "scale";
         type: "transform";
     };
