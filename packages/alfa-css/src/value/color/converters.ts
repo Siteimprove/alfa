@@ -210,6 +210,11 @@ export namespace ColorSpace {
   /**
    * Convert an RGB color from one color space to another.
    * {@link https://drafts.csswg.org/css-color/#predefined-to-predefined}
+   *
+   * @remarks
+   * This does not perform gamut mapping. Colors that are out of gamut in the
+   * destination color space may produce negative component values or values
+   * greater than 1.0.
    */
   export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
     source: RGB<SRC>,

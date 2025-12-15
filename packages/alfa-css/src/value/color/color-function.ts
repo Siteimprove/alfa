@@ -77,14 +77,16 @@ export class ColorFunction<N extends Space = Space> extends Triplet<N> {
               ? "display-p3"
               : name,
         linear: name === "sRGB-linear" || name === "display-p3-linear",
-        components: [
-          Real.clamp(c1.value, 0, 1),
-          Real.clamp(c2.value, 0, 1),
-          Real.clamp(c3.value, 0, 1),
-        ],
+        components: [c1.value, c2.value, c3.value],
       },
       { space: "sRGB", linear: false },
-    ).components.map((c) => Percentage.of<"percentage">(c));
+    ).components.map(
+      // We do some crude gamut mapping by clamping the values to [0, 1].
+      // This is effectively our used value in computations like contrast, …
+      // This is not fully on-par with CSS specs where the computed value should
+      // stay in the same color space.
+      (c) => Percentage.of<"percentage">(Real.clamp(c, 0, 1)),
+    );
   }
 
   public get components(): [

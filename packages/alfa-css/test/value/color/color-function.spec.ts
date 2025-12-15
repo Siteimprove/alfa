@@ -67,13 +67,17 @@ test("#resolve() returns RBG color in percentages", (t) => {
     // output format.
     const actual = `color(${format} 1000 1000 1000)`;
 
-    t.deepEqual(parse(actual).resolve().toJSON(), {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 1 },
-      green: { type: "percentage", value: 1 },
-      blue: { type: "percentage", value: 1 },
-      alpha: { type: "percentage", value: 1 },
-    });
+    t.deepEqual(
+      parse(actual).resolve().toJSON(),
+      {
+        type: "color",
+        format: "rgb",
+        red: { type: "percentage", value: 1 },
+        green: { type: "percentage", value: 1 },
+        blue: { type: "percentage", value: 1 },
+        alpha: { type: "percentage", value: 1 },
+      },
+      `Failed to resolve color function ${actual}`,
+    );
   }
 });
