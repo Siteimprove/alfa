@@ -47,6 +47,7 @@
     "./value/color/hwb.ts",
     "./value/color/index.ts",
     "./value/color/lab.ts",
+    "./value/color/oklab.ts",
     "./value/color/named.ts",
     "./value/color/rgb.ts",
     "./value/color/system.ts",

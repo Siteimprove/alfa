@@ -312,7 +312,7 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = ColorFunction | Hex | Lab | Named | HSL | HWB | RGB | Current | System;
+export type Color = ColorFunction | Current | Hex | HSL | HWB | Lab | Named | Oklab | RGB | System;
 
 // @public (undocumented)
 export namespace Color {
@@ -333,13 +333,15 @@ export namespace Color {
     const // (undocumented)
     named: typeof Named.of;
     const // (undocumented)
+    oklab: typeof Oklab.of;
+    const // (undocumented)
     rgb: typeof RGB.of;
     const // (undocumented)
     system: typeof Keyword.of;
     const // (undocumented)
     parse: Parser<Color>;
     // (undocumented)
-    export type JSON = ColorFunction.JSON | Hex.JSON | Lab.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
+    export type JSON = ColorFunction.JSON | Hex.JSON | HSL.JSON | HWB.JSON | Lab.JSON | Named.JSON | Oklab.JSON | RGB.JSON | Keyword.JSON;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Space" needs to be exported by the entry point index.d.ts
@@ -1863,6 +1865,54 @@ export namespace Numeric {
     export type ToMath<T extends Type> = Math_2<T extends Numeric_2.Scalar ? "number" : T>;
     // (undocumented)
     export type Type = Numeric_2.Type | `${Numeric_2.Dimension}-percentage`;
+}
+
+// @public (undocumented)
+export class Oklab extends Triplet<"oklab"> {
+    protected constructor(lightness: Oklab.Component, a: Oklab.Component, b: Oklab.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get a(): Oklab.Component;
+    // (undocumented)
+    get b(): Oklab.Component;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get lightness(): Oklab.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, a: Number_2 | Percentage<"number">, b: Number_2 | Percentage<"number">, alpha: Number_2 | Percentage<"percentage">): Oklab;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): Oklab.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace Oklab {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // (undocumented)
+    export function isLab(value: unknown): value is Oklab;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"oklab"> {
+        // (undocumented)
+        a: Number_2.Fixed.JSON;
+        // (undocumented)
+        b: Number_2.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<Oklab>;
 }
 
 // @public (undocumented)

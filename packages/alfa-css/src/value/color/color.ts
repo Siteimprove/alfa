@@ -18,6 +18,7 @@ import { HSL } from "./hsl.js";
 import { HWB } from "./hwb.js";
 import { Lab } from "./lab.js";
 import { Named } from "./named.js";
+import { Oklab } from "./oklab.js";
 import { RGB } from "./rgb.js";
 import { System } from "./system.js";
 
@@ -28,13 +29,14 @@ const { either } = Parser;
  */
 export type Color =
   | ColorFunction
+  | Current
   | Hex
-  | Lab
-  | Named
   | HSL
   | HWB
+  | Lab
+  | Named
+  | Oklab
   | RGB
-  | Current
   | System;
 
 /**
@@ -46,10 +48,11 @@ export namespace Color {
   export type JSON =
     | ColorFunction.JSON
     | Hex.JSON
-    | Lab.JSON
-    | Named.JSON
     | HSL.JSON
     | HWB.JSON
+    | Lab.JSON
+    | Named.JSON
+    | Oklab.JSON
     | RGB.JSON
     | Keyword.JSON;
 
@@ -65,6 +68,8 @@ export namespace Color {
 
   export const named = Named.of;
 
+  export const oklab = Oklab.of;
+
   export const rgb = RGB.of;
 
   export const system = Keyword.of;
@@ -74,13 +79,14 @@ export namespace Color {
    */
   export const parse: CSSParser<Color> = either<Slice<Token>, Color, string>(
     ColorFunction.parse,
+    Current.parse,
     Hex.parse,
-    Lab.parse,
-    Named.parse,
-    RGB.parse,
     HSL.parse,
     HWB.parse,
-    Current.parse,
+    Lab.parse,
+    Named.parse,
+    Oklab.parse,
+    RGB.parse,
     System.parse,
   );
 
