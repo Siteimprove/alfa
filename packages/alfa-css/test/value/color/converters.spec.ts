@@ -13,7 +13,7 @@ function round(x: number): number {
   const y = Real.round(x, 5);
   // Chai, that Vitest uses, considers -0 and +0 as different. JS doesn't.
   // See https://github.com/chaijs/chai/issues/223
-  return y === 0 ? 0 : y;
+  return y === 0 /* matches -0 */ ? 0 : y;
 }
 
 function roundVector(value: Vector): Vector {

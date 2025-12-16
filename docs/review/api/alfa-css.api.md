@@ -312,7 +312,7 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = ColorFunction | Hex | Named | HSL | HWB | RGB | Current | System;
+export type Color = ColorFunction | Hex | Lab | Named | HSL | HWB | RGB | Current | System;
 
 // @public (undocumented)
 export namespace Color {
@@ -329,6 +329,8 @@ export namespace Color {
     const // (undocumented)
     hwb: typeof HWB.of;
     const // (undocumented)
+    lab: typeof Lab.of;
+    const // (undocumented)
     named: typeof Named.of;
     const // (undocumented)
     rgb: typeof RGB.of;
@@ -337,7 +339,7 @@ export namespace Color {
     const // (undocumented)
     parse: Parser<Color>;
     // (undocumented)
-    export type JSON = ColorFunction.JSON | Hex.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
+    export type JSON = ColorFunction.JSON | Hex.JSON | Lab.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Space" needs to be exported by the entry point index.d.ts
@@ -1213,6 +1215,54 @@ export namespace Keyword {
     export type ToKeywords<Words extends string> = {
         [K in Words]: Keyword<K>;
     }[Words];
+}
+
+// @public (undocumented)
+export class Lab extends Triplet<"lab"> {
+    protected constructor(lightness: Lab.Component, a: Lab.Component, b: Lab.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get a(): Lab.Component;
+    // (undocumented)
+    get b(): Lab.Component;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get lightness(): Lab.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, a: Number_2 | Percentage<"number">, b: Number_2 | Percentage<"number">, alpha: Number_2 | Percentage<"percentage">): Lab;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): Lab.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace Lab {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // (undocumented)
+    export function isLab(value: unknown): value is Lab;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"lab"> {
+        // (undocumented)
+        a: Number_2.Fixed.JSON;
+        // (undocumented)
+        b: Number_2.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<Lab>;
 }
 
 // @public (undocumented)
