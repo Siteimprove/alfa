@@ -1398,41 +1398,71 @@ test("evaluate() passes on small text nodes that add up into a short line", asyn
   ]);
 });
 
-test("evaluate() passes flex-item container with overflow hidden", async (t) => {
-  const target = h.text("foo", Rectangle.of(0, 0, 50, 40));
+test("evaluate() passes text in flex items within wrapping flex container with a clipping ancestor", async (t) => {
+  const target1 = h.text("hello", Rectangle.of(8, 8, 38, 23), device);
+  const target2 = h.text("world", Rectangle.of(46, 8, 45, 23), device);
+  const target3 = h.text("foo", Rectangle.of(91, 8, 24, 23), device);
+  const target4 = h.text("bar", Rectangle.of(116, 8, 26, 23), device);
+
+  const clipping1 = (
+    <span class="clip" box={{ device, x: 8, y: 8, width: 38, height: 23 }}>
+      {target1}
+    </span>
+  );
+  const clipping2 = (
+    <span class="clip" box={{ device, x: 46, y: 8, width: 45, height: 23 }}>
+      {target2}
+    </span>
+  );
+  const clipping3 = (
+    <span class="clip" box={{ device, x: 91, y: 8, width: 24, height: 23 }}>
+      {target3}
+    </span>
+  );
+  const clipping4 = (
+    <span class="clip" box={{ device, x: 116, y: 8, width: 26, height: 23 }}>
+      {target4}
+    </span>
+  );
+
+  const flexContainer = (
+    <div
+      class="flex-container"
+      box={{ device, x: 8, y: 8, width: 250, height: 23 }}
+    >
+      {clipping1}
+      {clipping2}
+      {clipping3}
+      {clipping4}
+    </div>
+  );
+
+  const body = (
+    <body box={{ device, x: 8, y: 8, width: 250, height: 23 }}>
+      {flexContainer}
+    </body>
+  );
   const document = h.document(
-    [
-      <body>
-        <div
-          class="flex-container"
-          box={{ device, x: 0, y: 0, width: 200, height: 100 }}
-        >
-          <span
-            class="flex-item"
-            box={{ device, x: 0, y: 0, width: 55, height: 40 }}
-          >
-            {target}
-          </span>
-        </div>
-      </body>,
-    ],
+    [body],
     [
       h.sheet([
+        h.rule.style("body", {
+          width: "250px",
+        }),
+        h.rule.style(".clip", { overflow: "hidden", display: "inline-flex" }),
         h.rule.style(".flex-container", {
           display: "flex",
           flexWrap: "wrap",
-        }),
-        h.rule.style(".flex-item", {
-          display: "inline-flex",
-          overflow: "hidden",
+          flexDirection: "row",
         }),
       ]),
     ],
   );
 
-  t.deepEqual(await evaluate(R83, { document }), [
-    passed(R83, target, {
-      1: Outcomes.WrapsText,
-    }),
+  t.deepEqual(await evaluate(R83, { document, device }), [
+    passed(R83, target1, { 1: Outcomes.WrapsText }),
+    passed(R83, target2, { 1: Outcomes.WrapsText }),
+    passed(R83, target3, { 1: Outcomes.WrapsText }),
+    passed(R83, target4, { 1: Outcomes.WrapsText }),
   ]);
 });

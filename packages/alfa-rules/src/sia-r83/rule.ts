@@ -194,10 +194,16 @@ function textBox(text: Text, device: Device): Option<Rectangle> {
   );
 }
 
+const isWrappingFlexContainer = (device: Device) =>
+  hasUsedStyle("flex-wrap", (value) => !value.is("nowrap"), device);
+
 /**
  * Return the convex hull of all the text boxes in a line.
  *
  * @remarks
+ * Here, the line of a text node is considered as the collection of
+ * text node descendants of the nearest ancestor which is either
+ * a block container or a flex item in a flex container that wraps its children.
  * This essentially considers that the line cannot wrap, which is correct in our
  * use case since we only call that when we have clipping ancestors. If the line
  * wraps, this will still return the correct box (because each individual box is
@@ -205,16 +211,20 @@ function textBox(text: Text, device: Device): Option<Rectangle> {
  * case becomes a bit dubious.
  */
 function lineBox(text: Text, device: Device): Rectangle {
+  const isBlockContainer = (element: Element) =>
+    Style.isBlockContainer(Style.from(element, device));
+  const hasFlexWrapParent = (element: Element) =>
+    element
+      .parent(Node.fullTree)
+      .filter(Element.isElement)
+      .some(isWrappingFlexContainer(device));
+
   return Rectangle.union(
     ...text
       .ancestors(Node.fullTree)
-      .find(
-        and(isElement, (element) =>
-          Style.isBlockContainer(Style.from(element, device)),
-        ),
-      )
-      .map((blockAncestor) =>
-        Query.getDescendants(isText)(blockAncestor, Node.fullTree),
+      .find(and(isElement, or(isBlockContainer, hasFlexWrapParent)))
+      .map((lineContainer) =>
+        Query.getDescendants(isText)(lineContainer, Node.fullTree),
       )
       .getOrElse(Sequence.empty)
       .collect((text) => textBox(text, device)),
@@ -370,19 +380,8 @@ namespace ClippingAncestor {
         return Overflow.Handle;
       }
 
-      const isWrappingFlexContainer = hasUsedStyle(
-        "flex-wrap",
-        (value) => !value.is("nowrap"),
-        device,
-      );
-      const isFlexItem = (ancestor: Element) =>
-        ancestor
-          .parent(Node.fullTree)
-          .filter(isElement)
-          .some(isWrappingFlexContainer);
-      if (test(or(isWrappingFlexContainer, isFlexItem), ancestor)) {
-        // The element is a wrapping flex container or a flex item
-        // in a wrapping flex container, children will wrap
+      if (isWrappingFlexContainer(device)(ancestor)) {
+        // The element is a wrapping flex container, children will wrap.
         // It may still overflow if individual children are too big, but we
         // assume this won't happen; this only creates false negatives.
         return Overflow.Handle;
