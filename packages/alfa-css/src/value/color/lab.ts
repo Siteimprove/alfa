@@ -4,9 +4,9 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Function, type Parser as CSSParser } from "../../syntax/index.js";
 
-import { Angle, Number, Percentage } from "../numeric/index.js";
+import { Number, Percentage } from "../numeric/index.js";
 
-import { CIE, Cylindrical } from "./converters.js";
+import { CIE } from "./converters.js";
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
 import { Triplet } from "./triplet.js";
@@ -30,7 +30,11 @@ export class Lab extends Triplet<"lab"> {
     const bb = b.resolve({ percentageBase: Number.of(125) });
 
     return new Lab(
-      Number.isNumber(l) ? l : Number.of(l.value * 100),
+      Number.of(
+        // Lightness clamping happens at parse time, we can't do it until we've
+        // resolved calculations.
+        Real.clamp(Number.isNumber(l) ? l.value : l.value * 100, 0, 100),
+      ),
       Number.isNumber(aa) ? aa : Number.of(aa.value * 125),
       Number.isNumber(bb) ? bb : Number.of(bb.value * 125),
       alpha.resolve(),
