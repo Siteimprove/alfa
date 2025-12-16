@@ -2,23 +2,33 @@ import { Real, type Vector } from "@siteimprove/alfa-math";
 import { test } from "@siteimprove/alfa-test";
 
 import {
+  CIE,
   ColorSpace,
   Cylindrical,
 } from "../../../src/value/color/converters.js";
 
 // Floating point arithmetic being what it is, we round numbers at 5 decimals
 // to stabilize tests.
-function roundRGB<S extends ColorSpace.ColorSpace>(
-  value: ColorSpace.RGB<S>,
-): ColorSpace.RGB<S> {
-  return {
-    space: value.space,
-    linear: value.linear,
-    components: value.components.map((c) => Real.round(c, 5)),
-  };
+function round(x: number): number {
+  const y = Real.round(x, 5);
+  // Chai, that Vitest uses, considers -0 and +0 as different. JS doesn't.
+  // See https://github.com/chaijs/chai/issues/223
+  return y === 0 ? 0 : y;
 }
 
-test("hslToRgb() converts HSL color to RGB", (t) => {
+function roundVector(value: Vector): Vector {
+  return value.map(round);
+}
+
+function roundRGB<S extends ColorSpace.ColorSpace>({
+  space,
+  linear,
+  components,
+}: ColorSpace.RGB<S>): ColorSpace.RGB<S> {
+  return { space, linear, components: roundVector(components) };
+}
+
+test("Cylindrical.hslToRgb() converts HSL color to RGB", (t) => {
   for (const [h, s, l, r, g, b] of [
     [0, 1, 1, 1, 1, 1],
     [0, 1, 0.5, 1, 0, 0],
@@ -41,7 +51,7 @@ test("hslToRgb() converts HSL color to RGB", (t) => {
   }
 });
 
-test("hwbToRgb() converts HWB color to RGB", (t) => {
+test("Cylindrical.hwbToRgb() converts HWB color to RGB", (t) => {
   for (const [h, w, b, r, g, bl] of [
     [0, 0, 0, 1, 0, 0],
     [120, 0, 0, 0, 1, 0],
@@ -63,7 +73,7 @@ test("hwbToRgb() converts HWB color to RGB", (t) => {
   }
 });
 
-test("convertRGB() linearize RGB colors", (t) => {
+test("ColorSpace.convert() linearize RGB colors", (t) => {
   // Since convertRGB doesn't check the number of components, we can test a
   // bunch of values in one go when we don't use the matrices…
   const cases: Array<[ColorSpace.ColorSpace, Vector]> = [
@@ -117,14 +127,14 @@ test("convertRGB() linearize RGB colors", (t) => {
     };
 
     t.deepEqual(
-      roundRGB(ColorSpace.convertRGB(source, { space, linear: true })),
+      roundRGB(ColorSpace.convert(source, { space, linear: true })),
       roundRGB({ space, linear: true, components: expected }),
       `Failed to linearize RGB color ${space}.`,
     );
   }
 });
 
-test("convertRGB() de-linearize RGB colors", (t) => {
+test("ColorSpace.convert() de-linearize RGB colors", (t) => {
   // Since convertRGB doesn't check the number of components, we can test a
   // bunch of values in one go when we don't use the matrices…
   const cases: Array<[ColorSpace.ColorSpace, Vector]> = [
@@ -180,14 +190,14 @@ test("convertRGB() de-linearize RGB colors", (t) => {
     };
 
     t.deepEqual(
-      roundRGB(ColorSpace.convertRGB(source, { space, linear: false })),
+      roundRGB(ColorSpace.convert(source, { space, linear: false })),
       roundRGB({ space, linear: false, components: expected }),
       `Failed to de-linearize RGB-linear color ${space}-linear.`,
     );
   }
 });
 
-test("convertRGB() converts between RGB color spaces", (t) => {
+test("ColorSpace.convert() converts between color spaces", (t) => {
   // Since (de-)linearization is tested separately, we only convert between
   // linear colors.
   // Since we need to use the matrices, we can only test colors with 3 components.
@@ -506,11 +516,230 @@ test("convertRGB() converts between RGB color spaces", (t) => {
     for (const dest of Object.keys(values) as Array<ColorSpace.ColorSpace>) {
       t.deepEqual(
         roundRGB(
-          ColorSpace.convertRGB(sourceColor, { space: dest, linear: true }),
+          ColorSpace.convert(sourceColor, { space: dest, linear: true }),
         ),
         roundRGB({ space: dest, linear: true, components: values[dest] }),
         `Failed to convert ${source}(${values[source]}) (linear) to ${dest} (linear).`,
       );
     }
+  }
+});
+
+test("CIE.toRectangular() returns rectangular coordinates of a cylindrical vector", (t) => {
+  // LCH => L is the depth axis, C the radius, H the angle in degrees.
+  // Lab => L is the depth axis, a the horizontal axis, b the vertical axis.
+  const cases: Array<[input: Vector, expected: Vector]> = [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [1, 0, 0],
+      [1, 0, 0],
+    ],
+    [
+      [1, 1, 90],
+      [1, 0, 1],
+    ],
+    [
+      [1, 1, 180],
+      [1, -1, 0],
+    ],
+    [
+      [1, 1, 270],
+      [1, 0, -1],
+    ],
+  ];
+
+  for (const [input, expected] of cases) {
+    t.deepEqual(
+      roundVector(CIE.toRectangular(input)),
+      roundVector(expected),
+      `CIE.toRectangular(${input}) should be ${expected}.`,
+    );
+  }
+});
+
+test("CIE.Lab_to_XYZ() converts Lab to XYZ (D50)", (t) => {
+  // Lab ranges are 0 to 100, -125 to 125, -125 to 125.
+  const cases: Array<[input: Vector, expected: Vector]> = [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [20, -50, -50],
+      [0.008974406368922863, 0.029890524416745258, 0.14516941004681613],
+    ],
+    [
+      [0, -100, 50],
+      [-0.024766690381544193, 0, -0.02648968402827875],
+    ],
+    [
+      [90, 125, 0],
+      [1.5199788934659306, 0.7630335397105253, 0.6295824854850025],
+    ],
+    [
+      [70, 15, -80],
+      [0.4426028214953779, 0.40749415720201737, 1.2268712719963786],
+    ],
+  ];
+
+  for (const [input, expected] of cases) {
+    t.deepEqual(
+      roundVector(CIE.Lab_to_XYZ(input)),
+      roundVector(expected),
+      `CIE.Lab_to_XYZ(${input}) should be ${expected}.`,
+    );
+  }
+});
+
+test("CIE.OKLab_to_XYZ() converts OKLab to XYZ (D65)", (t) => {
+  // OKLab ranges are 0 to 1, -0.4 to 0.4, -0.4 to 0.4.
+  const cases: Array<[input: Vector, expected: Vector]> = [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [0.7, 0.15, -0.4],
+      [0.6649022777985775, 0.2603305006997577, 2.59004090607435],
+    ],
+    [
+      [0, -0.2, -0.1],
+      [-0.00037527904787034024, -0.00016325996445355564, 0.005115140336459943],
+    ],
+    [
+      [0.3, 0.1, -0.19],
+      [0.060811606966486326, 0.018357297952295945, 0.23137072591112418],
+    ],
+    [
+      [0.2, 0.3, 0.05],
+      [0.04181496295151696, 0.0034632745138551556, -0.0026036365387530785],
+    ],
+  ];
+
+  for (const [input, expected] of cases) {
+    t.deepEqual(
+      roundVector(CIE.OKLab_to_XYZ(input)),
+      roundVector(expected),
+      `CIE.OKLab_to_XYZ(${input}) should be ${expected}.`,
+    );
+  }
+});
+
+test("CIE.labToRgb() converts Lab to (non-linear) sRGB", (t) => {
+  const cases: Array<[input: Vector, expected: Vector]> = [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [20, 30, -100],
+      [-0.3659760614049923, 0.16809013213773122, 0.8058097787558194],
+    ],
+    [
+      [24, 12, 25],
+      [0.3152491126933031, 0.19480069407795825, 0.07366916929490208],
+    ],
+    [
+      [74, -12, 25],
+      [0.6781626550998123, 0.736288433309383, 0.529401587777184],
+    ],
+  ];
+
+  for (const [input, expected] of cases) {
+    t.deepEqual(
+      roundVector(CIE.labToRgb(input)),
+      roundVector(expected),
+      `CIE.labToRgb(${input}) should be ${expected}.`,
+    );
+  }
+});
+
+test("CIE.lchToRgb() converts LCH to (non-linear) sRGB", (t) => {
+  const cases: Array<[input: Vector, expected: Vector]> = [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [74, 27, 116],
+      [0.6780064059774704, 0.7360279802406238, 0.5348604476205586],
+    ],
+    [
+      [10, 127, 200],
+      [-0.3690291479947043, 0.22778147534330478, 0.34191387408151414],
+    ],
+    [
+      [80, 127, 200],
+      [-0.8866206295928502, 0.9662144544844397, 1.0859484162391564],
+    ],
+  ];
+
+  for (const [input, expected] of cases) {
+    t.deepEqual(
+      roundVector(CIE.lchToRgb(input)),
+      roundVector(expected),
+      `CIE.lchToRgb(${input}) should be ${expected}.`,
+    );
+  }
+});
+
+test("CIE.oklabToRgb() converts OKLab to (non-linear) sRGB", (t) => {
+  const cases: Array<[input: Vector, expected: Vector]> = [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [0.8, -0.3, -0.1],
+      [-0.7831234032600852, 0.9424302403519121, 1.0329998650700118],
+    ],
+    [
+      [0.3, 0.3, -0.1],
+      [0.48695510747446397, -0.24185569653122824, 0.3429577677399445],
+    ],
+    [
+      [0.4, 0.15, 0.06],
+      [0.5416271209964951, -0.0028096982890449215, 0.10783236696278195],
+    ],
+  ];
+
+  for (const [input, expected] of cases) {
+    t.deepEqual(
+      roundVector(CIE.oklabToRgb(input)),
+      roundVector(expected),
+      `CIE.oklabToRgb(${input}) should be ${expected}.`,
+    );
+  }
+});
+
+test("CIE.oklchToRgb() converts OKLCH to (non-linear) sRGB", (t) => {
+  const cases: Array<[input: Vector, expected: Vector]> = [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [0.4, 0.16, 20],
+      [0.5389880578251218, 0.0037642450970776804, 0.12622895312826882],
+    ],
+    [
+      [0.8, 0.39, 120],
+      [0.6488237359245501, 0.8398440607758373, -0.5528981025386281],
+    ],
+    [
+      [0.2, 0.1, 270],
+      [0.029884937489540873, 0.0457766312392, 0.25931484315883074],
+    ],
+  ];
+
+  for (const [input, expected] of cases) {
+    t.deepEqual(
+      roundVector(CIE.oklchToRgb(input)),
+      roundVector(expected),
+      `CIE.oklchToRgb(${input}) should be ${expected}.`,
+    );
   }
 });

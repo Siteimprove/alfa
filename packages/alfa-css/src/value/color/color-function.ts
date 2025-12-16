@@ -68,7 +68,7 @@ export class ColorFunction<N extends Space = Space> extends Triplet<N> {
     this._c2 = c2;
     this._c3 = c3;
 
-    [this._red, this._green, this._blue] = ColorSpace.convertRGB(
+    [this._red, this._green, this._blue] = ColorSpace.convert(
       {
         space:
           name === "sRGB-linear"

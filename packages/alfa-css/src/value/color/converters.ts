@@ -7,11 +7,23 @@
  * {@link https://drafts.csswg.org/css-color/#hwb-to-rgb}
  */
 
+/*
+ * Matrices are in column-major order in the CSS specifications.
+ * This is a bit awkward to work with, notably due to the multiplication order
+ * when piling up transformations, so we use them in row-major order here.
+ * All matrices are transposed once at load-time, so we can keep them same as
+ * in the CSS specs in this file, making it easier to compare.
+ */
+
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Matrix, type Vector } from "@siteimprove/alfa-math";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 
-/** @internal */
+/**
+ * Handling the cylindrical RGB colors (HSL and HWB)
+ *
+ *  @internal
+ */
 export namespace Cylindrical {
   /**
    * {@link https://drafts.csswg.org/css-color/#hsl-to-rgb}
@@ -135,50 +147,51 @@ namespace Gamma {
   }
 }
 
-/** @internal */
+/**
+ * Standard white points, defined by 4-figure CIE x,y chromaticities
+ *
+ * @privateRemarks
+ * Since only two are used, we can have a simple conversion matrix for each,
+ * there is only one destination.
+ */
+const whitepoints = {
+  D50: {
+    value: [0.3457 / 0.3585, 1.0, (1.0 - 0.3457 - 0.3585) / 0.3585],
+    // Bradford chromatic adaptation from D50 to D65
+    // See https://github.com/LeaVerou/color.js/pull/360/files
+    convert: Matrix.transpose([
+      [0.955473421488075, -0.02309845494876471, 0.06325924320057072],
+      [-0.0283697093338637, 1.0099953980813041, 0.021041441191917323],
+      [0.012314014864481998, -0.020507649298898964, 1.330365926242124],
+    ]),
+  },
+  D65: {
+    value: [0.3127 / 0.329, 1.0, (1.0 - 0.3127 - 0.329) / 0.329],
+    // Bradford chromatic adaptation from D65 to D50
+    // The matrix below is the result of three operations:
+    // - convert from XYZ to retinal cone domain
+    // - scale components from one reference white to another
+    // - convert back to XYZ
+    // see https://github.com/LeaVerou/color.js/pull/354/files
+    convert: Matrix.transpose([
+      [1.0479297925449969, 0.022946870601609652, -0.05019226628920524],
+      [0.02962780877005599, 0.9904344267538799, -0.017073799063418826],
+      [-0.009243040646204504, 0.015055191490298152, 0.7518742814281371],
+    ]),
+  },
+} as const;
+
+/**
+ * Handling the various color spaces of the CSS `color` function.
+ *
+ * @privateRemarks
+ * Although we only care about converting to RGB, our canonical representation,
+ * we have all conversions here as things are very symmetrical, and it is more
+ * streamlined this way.
+ *
+ * @internal
+ */
 export namespace ColorSpace {
-  /*
-   * Matrices are in column-major order in the CSS specifications.
-   * This is a bit awkward to work with, notably due to the multiplication order
-   * when piling up transformations, so we use them in row-major order here.
-   * All matrices are transposed once at load-time, so we can keep them same as
-   * in the CSS specs in this file, making it easier to compare.
-   */
-
-  /**
-   * Standard white points, defined by 4-figure CIE x,y chromaticities
-   *
-   * @privateRemarks
-   * Since only two are used, we can have a simple conversion matrix for each,
-   * there is only one destination.
-   */
-  const whitepoints = {
-    D50: {
-      value: [0.3457 / 0.3585, 1.0, (1.0 - 0.3457 - 0.3585) / 0.3585],
-      // Bradford chromatic adaptation from D50 to D65
-      // See https://github.com/LeaVerou/color.js/pull/360/files
-      convert: Matrix.transpose([
-        [0.955473421488075, -0.02309845494876471, 0.06325924320057072],
-        [-0.0283697093338637, 1.0099953980813041, 0.021041441191917323],
-        [0.012314014864481998, -0.020507649298898964, 1.330365926242124],
-      ]),
-    },
-    D65: {
-      value: [0.3127 / 0.329, 1.0, (1.0 - 0.3127 - 0.329) / 0.329],
-      // Bradford chromatic adaptation from D65 to D50
-      // The matrix below is the result of three operations:
-      // - convert from XYZ to retinal cone domain
-      // - scale components from one reference white to another
-      // - convert back to XYZ
-      // see https://github.com/LeaVerou/color.js/pull/354/files
-      convert: Matrix.transpose([
-        [1.0479297925449969, 0.022946870601609652, -0.05019226628920524],
-        [0.02962780877005599, 0.9904344267538799, -0.017073799063418826],
-        [-0.009243040646204504, 0.015055191490298152, 0.7518742814281371],
-      ]),
-    },
-  } as const;
-
   export const colorSpaces = [
     "a98-rgb",
     "display-p3",
@@ -199,6 +212,7 @@ export namespace ColorSpace {
     components: Vector; // RGB components in the range 0.0-1.0
   };
 
+  // This is somewhat ill-named as we also represent the XYZ spaces that way…
   interface RGBColorSpace {
     whitepoint: keyof typeof whitepoints;
     gammaEncoding: Mapper<number>;
@@ -208,7 +222,7 @@ export namespace ColorSpace {
   }
 
   /**
-   * Convert an RGB color from one color space to another.
+   * Convert a color from one color space to another.
    * {@link https://drafts.csswg.org/css-color/#predefined-to-predefined}
    *
    * @remarks
@@ -216,7 +230,7 @@ export namespace ColorSpace {
    * destination color space may produce negative component values or values
    * greater than 1.0.
    */
-  export function convertRGB<SRC extends ColorSpace, DEST extends ColorSpace>(
+  export function convert<SRC extends ColorSpace, DEST extends ColorSpace>(
     source: RGB<SRC>,
     destination: { space: DEST; linear: boolean },
   ): RGB<DEST> {
@@ -610,164 +624,102 @@ export namespace ColorSpace {
     };
   };
 }
-// CIE Lab and LCH
 
-// function XYZ_to_Lab(XYZ: Vector): Vector {
-//   // Assuming XYZ is relative to D50, convert to CIE Lab
-//   // from CIE standard, which now defines these as a rational fraction
-//   const epsilon = 216 / 24389; // 6^3/29^3
-//   const kappa = 24389 / 27; // 29^3/3^3
-//
-//   // compute xyz, which is XYZ scaled relative to reference white
-//   const xyz = XYZ.map((value, i) => value / whitepoints.D50.value[i]);
-//
-//   // now compute f
-//   const f = xyz.map((value) =>
-//     value > epsilon ? Math.cbrt(value) : (kappa * value + 16) / 116,
-//   );
-//
-//   return [
-//     116 * f[1] - 16, // L
-//     500 * (f[0] - f[1]), // a
-//     200 * (f[1] - f[2]), // b
-//   ];
-//   // L in range [0,100]. For use in CSS, add a percent
-// }
-//
-// function Lab_to_XYZ(Lab: Vector): Vector {
-//   // Convert Lab to D50-adapted XYZ
-//   // http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
-//   const kappa = 24389 / 27; // 29^3/3^3
-//   const epsilon = 216 / 24389; // 6^3/29^3
-//   const f = [];
-//
-//   // compute f, starting with the luminance-related term
-//   f[1] = (Lab[0] + 16) / 116;
-//   f[0] = Lab[1] / 500 + f[1];
-//   f[2] = f[1] - Lab[2] / 200;
-//
-//   // compute xyz
-//   const xyz = [
-//     Math.pow(f[0], 3) > epsilon ? Math.pow(f[0], 3) : (116 * f[0] - 16) / kappa,
-//     Lab[0] > kappa * epsilon
-//       ? Math.pow((Lab[0] + 16) / 116, 3)
-//       : Lab[0] / kappa,
-//     Math.pow(f[2], 3) > epsilon ? Math.pow(f[2], 3) : (116 * f[2] - 16) / kappa,
-//   ];
-//
-//   // Compute XYZ by scaling xyz by reference white
-//   return xyz.map((value, i) => value * whitepoints.D50.value[i]);
-// }
+/**
+ * Handling CIE color spaces ((ok)lab and (ok)lch)).
+ *
+ * @privateRemarks
+ * Since we only care about converting them to RGB, our canonical representation,
+ * we only have these conversions. The reverse conversions are significantly
+ * different and make no sense to have for now. If needed, copy them from the
+ * CSS specification.
+ *
+ *  @internal
+ */
+export namespace CIE {
+  /**
+   * Convert a polar (ok)lch color to its rectangular (ok)lab form.
+   */
+  export function toRectangular([lightness, chroma, hue]: Vector): Vector {
+    const a = chroma * Math.cos((hue * Math.PI) / 180);
+    const b = chroma * Math.sin((hue * Math.PI) / 180);
+    return [lightness, a, b];
+  }
 
-// function Lab_to_LCH(Lab: Vector): Vector {
-//   const epsilon = 0.0015;
-//   const chroma = Math.sqrt(Math.pow(Lab[1], 2) + Math.pow(Lab[2], 2)); // Chroma
-//   let hue = (Math.atan2(Lab[2], Lab[1]) * 180) / Math.PI;
-//
-//   if (hue < 0) {
-//     hue = hue + 360;
-//   }
-//
-//   if (chroma <= epsilon) {
-//     hue = NaN;
-//   }
-//
-//   return [
-//     Lab[0], // L is still L
-//     chroma, // Chroma
-//     hue, // Hue, in degrees [0 to 360)
-//   ];
-// }
-//
-// function LCH_to_Lab(LCH: Vector): Vector {
-//   // Convert from polar form
-//   return [
-//     LCH[0], // L is still L
-//     LCH[1] * Math.cos((LCH[2] * Math.PI) / 180), // a
-//     LCH[1] * Math.sin((LCH[2] * Math.PI) / 180), // b
-//   ];
-// }
+  /**
+   * Convert Lab to D50-adapted XYZ
+   * {@link http://www.brucelindbloom.com/index.html?Eqn_Lab_to_XYZ.html}
+   */
+  export function Lab_to_XYZ(Lab: Vector): Vector {
+    const kappa = 24389 / 27; // 29^3/3^3
+    const epsilon = 216 / 24389; // 6^3/29^3
+    const f = [];
 
-// OKLab and OKLCH
-// https://bottosson.github.io/posts/oklab/
+    // compute f, starting with the luminance-related term
+    f[1] = (Lab[0] + 16) / 116;
+    f[0] = Lab[1] / 500 + f[1];
+    f[2] = f[1] - Lab[2] / 200;
 
-// XYZ <-> LMS matrices recalculated for consistent reference white
-// see https://github.com/w3c/csswg-drafts/issues/6642#issuecomment-943521484
-// recalculated for 64bit precision
-// see https://github.com/color-js/color.js/pull/357
+    // compute xyz
+    const xyz: Vector = [
+      Math.pow(f[0], 3) > epsilon
+        ? Math.pow(f[0], 3)
+        : (116 * f[0] - 16) / kappa,
+      Lab[0] > kappa * epsilon
+        ? Math.pow((Lab[0] + 16) / 116, 3)
+        : Lab[0] / kappa,
+      Math.pow(f[2], 3) > epsilon
+        ? Math.pow(f[2], 3)
+        : (116 * f[2] - 16) / kappa,
+    ];
 
-// function XYZ_to_OKLab(XYZ: Vector): Vector {
-//   // Given XYZ relative to D65, convert to OKLab
-//   const XYZtoLMS: Matrix = [
-//     [0.819022437996703, 0.3619062600528904, -0.1288737815209879],
-//     [0.0329836539323885, 0.9292868615863434, 0.0361446663506424],
-//     [0.0481771893596242, 0.2642395317527308, 0.6335478284694309],
-//   ];
-//   const LMStoOKLab: Matrix = [
-//     [0.210454268309314, 0.7936177747023054, -0.0040720430116193],
-//     [1.9779985324311684, -2.4285922420485799, 0.450593709617411],
-//     [0.0259040424655478, 0.7827717124575296, -0.8086757549230774],
-//   ];
-//
-//   const LMS = multiply(XYZtoLMS, XYZ);
-//   // JavaScript Math.cbrt returns a sign-matched cube root
-//   // beware if porting to other languages
-//   // especially if tempted to use a general power function
-//
-//   return multiply(
-//     LMStoOKLab,
-//     LMS.map((c) => Math.cbrt(c)),
-//   );
-//   // L in range [0,1]. For use in CSS, multiply by 100 and add a percent
-// }
-//
-// function OKLab_to_XYZ(OKLab: Vector): Vector {
-//   // Given OKLab, convert to XYZ relative to D65
-//   const LMStoXYZ: Matrix = [
-//     [1.2268798758459243, -0.5578149944602171, 0.2813910456659647],
-//     [-0.0405757452148008, 1.112286803280317, -0.0717110580655164],
-//     [-0.0763729366746601, -0.4214933324022432, 1.5869240198367816],
-//   ];
-//   const OKLabtoLMS = [
-//     [1.0, 0.3963377773761749, 0.2158037573099136],
-//     [1.0, -0.1055613458156586, -0.0638541728258133],
-//     [1.0, -0.0894841775298119, -1.2914855480194092],
-//   ];
-//
-//   const LMSnl = multiply(OKLabtoLMS, OKLab);
-//   return multiply(
-//     LMStoXYZ,
-//     LMSnl.map((c) => c ** 3),
-//   );
-// }
+    // Compute XYZ by scaling xyz by reference white
+    return xyz.map((value, i) => value * whitepoints.D50.value[i]);
+  }
 
-// function OKLab_to_OKLCH(OKLab: Vector): Vector {
-//   const epsilon = 0.000004;
-//   let hue = (Math.atan2(OKLab[2], OKLab[1]) * 180) / Math.PI;
-//   const chroma = Math.sqrt(OKLab[1] ** 2 + OKLab[2] ** 2);
-//
-//   if (hue < 0) {
-//     hue = hue + 360;
-//   }
-//
-//   if (chroma <= epsilon) {
-//     hue = NaN;
-//   }
-//
-//   return [
-//     OKLab[0], // L is still L
-//     chroma,
-//     hue,
-//   ];
-// }
-//
-// function OKLCH_to_OKLab(OKLCH: Vector): Vector {
-//   return [
-//     OKLCH[0], // L is still L
-//     OKLCH[1] * Math.cos((OKLCH[2] * Math.PI) / 180), // a
-//     OKLCH[1] * Math.sin((OKLCH[2] * Math.PI) / 180), // b
-//   ];
-// }
+  const OKLabToLMS = Matrix.transpose([
+    [1.0, 0.3963377773761749, 0.2158037573099136],
+    [1.0, -0.1055613458156586, -0.0638541728258133],
+    [1.0, -0.0894841775298119, -1.2914855480194092],
+  ]);
+
+  const LMStoXYZ: Matrix = Matrix.transpose([
+    [1.2268798758459243, -0.5578149944602171, 0.2813910456659647],
+    [-0.0405757452148008, 1.112286803280317, -0.0717110580655164],
+    [-0.0763729366746601, -0.4214933324022432, 1.5869240198367816],
+  ]);
+
+  /**
+   * Given OKLab, convert to XYZ relative to D65
+   */
+  export function OKLab_to_XYZ(OKLab: Vector): Vector {
+    const LMSnl = multiply(OKLab, OKLabToLMS);
+    return multiply(
+      LMSnl.map((c) => c ** 3),
+      LMStoXYZ,
+    );
+  }
+
+  function toRGB(
+    polar: boolean,
+    toXYZ: (v: Vector) => Vector,
+    whitepoint: "d50" | "d65",
+  ): (source: Vector) => Vector {
+    return (source) => {
+      const lab = polar ? toRectangular(source) : source;
+      const xyz = toXYZ(lab);
+      return ColorSpace.convert(
+        { space: `xyz-${whitepoint}`, linear: true, components: xyz },
+        { space: "sRGB", linear: false },
+      ).components;
+    };
+  }
+
+  export const labToRgb = toRGB(false, Lab_to_XYZ, "d50");
+  export const lchToRgb = toRGB(true, Lab_to_XYZ, "d50");
+  export const oklabToRgb = toRGB(false, OKLab_to_XYZ, "d65");
+  export const oklchToRgb = toRGB(true, OKLab_to_XYZ, "d65");
+}
 
 /**
  * Return the first row of a matrix as a vector.
