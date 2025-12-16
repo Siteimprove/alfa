@@ -171,7 +171,9 @@ export namespace Component {
   export const toWhitenessJSON = toPercentageFakePercentageJSON;
   export const toBlacknessJSON = toPercentageFakePercentageJSON;
   export const toLabLightnessJSON = toNumberJSON(100);
+  export const toLCHLightnessJSON = toNumberJSON(100);
   export const toLabComponentJSON = toNumberJSON(125);
+  export const toLCHChromaJSON = toNumberJSON(150);
   export const toOklabLightnessJSON = toNumberJSON(1);
   export const toOklabComponentJSON = toNumberJSON(0.4);
 }

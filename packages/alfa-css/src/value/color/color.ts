@@ -17,6 +17,7 @@ import { Hex } from "./hex.js";
 import { HSL } from "./hsl.js";
 import { HWB } from "./hwb.js";
 import { Lab } from "./lab.js";
+import { LCH } from "./lch.js";
 import { Named } from "./named.js";
 import { Oklab } from "./oklab.js";
 import { RGB } from "./rgb.js";
@@ -34,6 +35,7 @@ export type Color =
   | HSL
   | HWB
   | Lab
+  | LCH
   | Named
   | Oklab
   | RGB
@@ -51,6 +53,7 @@ export namespace Color {
     | HSL.JSON
     | HWB.JSON
     | Lab.JSON
+    | LCH.JSON
     | Named.JSON
     | Oklab.JSON
     | RGB.JSON
@@ -66,6 +69,8 @@ export namespace Color {
 
   export const lab = Lab.of;
 
+  export const lch = LCH.of;
+
   export const named = Named.of;
 
   export const oklab = Oklab.of;
@@ -76,6 +81,12 @@ export namespace Color {
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
+   *
+   * @privateRemarks
+   * We could probably get a small performance boost by pre-scanning the first
+   * token and select the correct parser, especially for the many functional
+   * notations. Given that this should only run in a context where a color is
+   * expected, the gain might be minimal.
    */
   export const parse: CSSParser<Color> = either<Slice<Token>, Color, string>(
     ColorFunction.parse,
@@ -84,6 +95,7 @@ export namespace Color {
     HSL.parse,
     HWB.parse,
     Lab.parse,
+    LCH.parse,
     Named.parse,
     Oklab.parse,
     RGB.parse,

@@ -312,7 +312,7 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = ColorFunction | Current | Hex | HSL | HWB | Lab | Named | Oklab | RGB | System;
+export type Color = ColorFunction | Current | Hex | HSL | HWB | Lab | LCH | Named | Oklab | RGB | System;
 
 // @public (undocumented)
 export namespace Color {
@@ -331,6 +331,8 @@ export namespace Color {
     const // (undocumented)
     lab: typeof Lab.of;
     const // (undocumented)
+    lch: typeof LCH.of;
+    const // (undocumented)
     named: typeof Named.of;
     const // (undocumented)
     oklab: typeof Oklab.of;
@@ -341,7 +343,7 @@ export namespace Color {
     const // (undocumented)
     parse: Parser<Color>;
     // (undocumented)
-    export type JSON = ColorFunction.JSON | Hex.JSON | HSL.JSON | HWB.JSON | Lab.JSON | Named.JSON | Oklab.JSON | RGB.JSON | Keyword.JSON;
+    export type JSON = ColorFunction.JSON | Hex.JSON | HSL.JSON | HWB.JSON | Lab.JSON | LCH.JSON | Named.JSON | Oklab.JSON | RGB.JSON | Keyword.JSON;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Space" needs to be exported by the entry point index.d.ts
@@ -1265,6 +1267,56 @@ export namespace Lab {
     }
     const // (undocumented)
     parse: Parser<Lab>;
+}
+
+// @public (undocumented)
+export class LCH extends Triplet<"lch"> {
+    protected constructor(lightness: LCH.Component, chroma: LCH.Component, hue: LCH.Hue, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    get chroma(): LCH.Component;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get hue(): LCH.Hue;
+    // (undocumented)
+    get lightness(): LCH.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, chroma: Number_2 | Percentage<"number">, hue: Number_2 | Angle, alpha: Number_2 | Percentage<"percentage">): LCH;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): LCH.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace LCH {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
+    // (undocumented)
+    export function isLCH(value: unknown): value is LCH;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"lch"> {
+        // (undocumented)
+        chroma: Number_2.Fixed.JSON;
+        // (undocumented)
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<LCH>;
 }
 
 // @public (undocumented)
