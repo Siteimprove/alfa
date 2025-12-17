@@ -10,16 +10,20 @@ import {
 
 import { Number, Percentage } from "../numeric/index.js";
 
-import { colorSpaces, type ColorSpace, convertRGB } from "./converters.js";
+import { ColorSpace } from "./converters.js";
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
 import { Triplet } from "./triplet.js";
 
 const { either, map, pair } = Parser;
 
-type Space = ColorSpace | "sRGB-linear";
+type Space = ColorSpace.ColorSpace | "display-p3-linear" | "sRGB-linear";
 /** @internal */
-export const ColorSpaces: Array<Space> = ["sRGB-linear", ...colorSpaces];
+export const ColorSpaces: Array<Space> = [
+  "display-p3-linear",
+  "sRGB-linear",
+  ...ColorSpace.colorSpaces,
+];
 
 /**
  * {@link https://drafts.csswg.org/css-color/#the-hsl-notation}
@@ -64,18 +68,25 @@ export class ColorFunction<N extends Space = Space> extends Triplet<N> {
     this._c2 = c2;
     this._c3 = c3;
 
-    [this._red, this._green, this._blue] = convertRGB(
+    [this._red, this._green, this._blue] = ColorSpace.convert(
       {
-        space: name === "sRGB-linear" ? "sRGB" : name,
-        linear: name === "sRGB-linear",
-        components: [
-          Real.clamp(c1.value, 0, 1),
-          Real.clamp(c2.value, 0, 1),
-          Real.clamp(c3.value, 0, 1),
-        ],
+        space:
+          name === "sRGB-linear"
+            ? "sRGB"
+            : name === "display-p3-linear"
+              ? "display-p3"
+              : name,
+        linear: name === "sRGB-linear" || name === "display-p3-linear",
+        components: [c1.value, c2.value, c3.value],
       },
       { space: "sRGB", linear: false },
-    ).components.map((c) => Percentage.of<"percentage">(c));
+    ).components.map(
+      // We do some crude gamut mapping by clamping the values to [0, 1].
+      // This is effectively our used value in computations like contrast, …
+      // This is not fully on-par with CSS specs where the computed value should
+      // stay in the same color space.
+      (c) => Percentage.of<"percentage">(Real.clamp(c, 0, 1)),
+    );
   }
 
   public get components(): [

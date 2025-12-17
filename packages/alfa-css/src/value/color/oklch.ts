@@ -5,8 +5,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Function, type Parser as CSSParser } from "../../syntax/index.js";
 
 import { Angle, Number, Percentage } from "../numeric/index.js";
-import { Cylindrical } from "./converters.js";
 
+import { CIE } from "./converters.js";
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
 import { Triplet } from "./triplet.js";
@@ -14,69 +14,75 @@ import { Triplet } from "./triplet.js";
 const { map, either } = Parser;
 
 /**
- * {@link https://drafts.csswg.org/css-color/#the-hwb-notation}
+ * {@link https://drafts.csswg.org/css-color/#specifying-oklab-oklch}
  *
  * @public
  */
-export class HWB extends Triplet<"hwb"> {
+export class OkLCH extends Triplet<"oklch"> {
   public static of(
+    lightness: Number | Percentage<"number">,
+    chroma: Number | Percentage<"number">,
     hue: Number | Angle,
-    whiteness: Number | Percentage<"percentage">,
-    blackness: Number | Percentage<"percentage">,
     alpha: Number | Percentage<"percentage">,
-  ): HWB {
-    const w = whiteness.resolve();
-    const b = blackness.resolve();
+  ): OkLCH {
+    const l = lightness.resolve();
+    const c = chroma.resolve({ percentageBase: Number.of(0.4) });
 
-    return new HWB(
+    return new OkLCH(
+      Number.of(
+        // Lightness clamping happens at parse time, we can't do it until we've
+        // resolved calculations.
+        Real.clamp(l.value, 0, 1),
+      ),
+      Number.of(
+        Real.clamp(Number.isNumber(c) ? c.value : c.value * 0.4, 0, +Infinity),
+      ),
       hue.resolve(),
-      Number.isNumber(w) ? Percentage.of<"percentage">(w.value / 100) : w,
-      Number.isNumber(b) ? Percentage.of<"percentage">(b.value / 100) : b,
       alpha.resolve(),
     );
   }
 
-  private readonly _hue: HWB.Hue;
-  private readonly _whiteness: HWB.Component;
-  private readonly _blackness: HWB.Component;
+  private readonly _lightness: OkLCH.Component;
+  private readonly _chroma: OkLCH.Component;
+  private readonly _hue: OkLCH.Hue;
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
 
   protected constructor(
-    hue: HWB.Hue,
-    whiteness: HWB.Component,
-    blackness: HWB.Component,
+    lightness: OkLCH.Component,
+    chroma: OkLCH.Component,
+    hue: OkLCH.Hue,
     alpha: Triplet.Alpha,
   ) {
-    super("hwb", alpha);
+    super("oklch", alpha);
+    this._lightness = lightness;
+    this._chroma = chroma;
     this._hue = hue;
-    this._whiteness = whiteness;
-    this._blackness = blackness;
 
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
-    const [red, green, blue] = Cylindrical.hwbToRgb(
-      Real.modulo(degrees, 360),
-      whiteness.value,
-      blackness.value,
-    );
+    const [red, green, blue] = CIE.oklchToRgb([
+      lightness.value,
+      chroma.value,
+      degrees,
+    ]);
 
     this._red = Percentage.of<"percentage">(red);
     this._green = Percentage.of<"percentage">(green);
     this._blue = Percentage.of<"percentage">(blue);
   }
 
-  public get hue(): HWB.Hue {
+  public get lightness(): OkLCH.Component {
+    return this._lightness;
+  }
+
+  public get chroma(): OkLCH.Component {
+    return this._chroma;
+  }
+
+  public get hue(): OkLCH.Hue {
     return this._hue;
-  }
-
-  public get whiteness(): HWB.Component {
-    return this._whiteness;
-  }
-
-  public get blackness(): HWB.Component {
-    return this._blackness;
   }
 
   public get red(): Percentage.Canonical {
@@ -99,33 +105,33 @@ export class HWB extends Triplet<"hwb"> {
 
   public equals(value: unknown): value is this {
     return (
-      value instanceof HWB &&
+      value instanceof OkLCH &&
+      value._lightness.equals(this._lightness) &&
+      value._chroma.equals(this._chroma) &&
       value._hue.equals(this._hue) &&
-      value._whiteness.equals(this._whiteness) &&
-      value._blackness.equals(this._blackness) &&
       value._alpha.equals(this._alpha)
     );
   }
 
   public hash(hash: Hash): void {
     hash
+      .writeHashable(this._lightness)
+      .writeHashable(this._chroma)
       .writeHashable(this._hue)
-      .writeHashable(this._whiteness)
-      .writeHashable(this._blackness)
       .writeHashable(this._alpha);
   }
 
-  public toJSON(): HWB.JSON {
+  public toJSON(): OkLCH.JSON {
     return {
       ...super.toJSON(),
+      lightness: this._lightness.toJSON(),
+      chroma: this._chroma.toJSON(),
       hue: this._hue.toJSON(),
-      whiteness: this._whiteness.toJSON(),
-      blackness: this._blackness.toJSON(),
     };
   }
 
   public toString(): string {
-    return `hsl(${this._hue} ${this._whiteness} ${this._blackness}${
+    return `oklch(${this._lightness} ${this._chroma} ${this._hue} ${
       this._alpha.value === 1 ? "" : ` / ${this._alpha}`
     })`;
   }
@@ -134,20 +140,25 @@ export class HWB extends Triplet<"hwb"> {
 /**
  * @public
  */
-export namespace HWB {
-  export interface JSON extends Triplet.JSON<"hwb"> {
+export namespace OkLCH {
+  export interface JSON extends Triplet.JSON<"oklch"> {
+    lightness: Number.Fixed.JSON;
+    chroma: Number.Fixed.JSON;
     hue: Number.Fixed.JSON | Angle.Fixed.JSON;
-    whiteness: Percentage.Fixed.JSON;
-    blackness: Percentage.Fixed.JSON;
   }
 
   /** @internal */
   export type Hue = Number.Canonical | Angle.Canonical;
-  /** @internal */
-  export type Component = Percentage.Canonical;
+  /**
+   * Since the percentages are not 1-based, we rather use numbers to avoid
+   * miss-scaling when we use the values.
+   *
+   * @internal
+   */
+  export type Component = Number.Canonical;
 
-  export function isHWB(value: unknown): value is HWB {
-    return value instanceof HWB;
+  export function isOkLCH(value: unknown): value is OkLCH {
+    return value instanceof OkLCH;
   }
 
   /**
@@ -158,15 +169,16 @@ export namespace HWB {
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
-  export const parse: CSSParser<HWB> = map(
+  export const parse: CSSParser<OkLCH> = map(
     Function.parse(
-      "hwb",
+      "oklch",
       Triplet.parseTriplet([
-        parseHue,
         either(Percentage.parse<"percentage">, Number.parse),
+        either(Percentage.parse<"percentage">, Number.parse),
+        parseHue,
       ]),
     ),
-    ([, [hue, whiteness, blackness, alpha]]) =>
-      HWB.of(hue, whiteness, blackness, alpha),
+    ([, [lightness, chroma, hue, alpha]]) =>
+      OkLCH.of(lightness, chroma, hue, alpha),
   );
 }
