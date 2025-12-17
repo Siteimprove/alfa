@@ -53,6 +53,8 @@ export const rng =
 
 /** @internal */
 export namespace Component {
+  // Chai, which vitest uses, does differentiate +0 and -0, but we do not care,
+  // i.e. lab(+0, +0, +0) is the same as lab(-0, -0, -0), …
   const zeroIsZero = (value: number) =>
     value === 0 /* matches -0 */ ? 0 : value;
 
