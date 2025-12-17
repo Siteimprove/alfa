@@ -2528,9 +2528,9 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     resolve(): Scale.Canonical;
     // (undocumented)
     toJSON(): {
-        z?: Percentage.Fixed.JSON | Number_2.Fixed.JSON | undefined;
-        x: Percentage.Fixed.JSON | Number_2.Fixed.JSON;
-        y: Percentage.Fixed.JSON | Number_2.Fixed.JSON;
+        z?: Number_2.Fixed.JSON | Percentage.Fixed.JSON | undefined;
+        x: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        y: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         kind: "scale";
         type: "transform";
     };
