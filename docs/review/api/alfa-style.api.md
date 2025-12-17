@@ -483,7 +483,7 @@ export namespace Style {
     isFlexOrGridChild: typeof element.isFlexOrGridChild, // (undocumented)
     isFocusable: typeof element.isFocusable, // (undocumented)
     isImportant: typeof element.isImportant, // (undocumented)
-    isInert: typeof element.isInert, // (undocumented)
+    isInert: (device: Device) => Predicate<Element<string>, []>, // (undocumented)
     isPositioned: typeof element.isPositioned, // (undocumented)
     isTabbable: typeof element.isTabbable, // (undocumented)
     isVisibleShadow: typeof element.isVisibleShadow;
