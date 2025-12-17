@@ -357,9 +357,6 @@ digraph "dependency-graph-Alfa" {
       "@siteimprove/alfa-string" [
         label = "alfa-string";
       ];
-      "@siteimprove/alfa-test-deprecated" [
-        label = "alfa-test-deprecated";
-      ];
       "@siteimprove/alfa-rectangle" [
         label = "alfa-rectangle";
       ];
@@ -385,9 +382,6 @@ digraph "dependency-graph-Alfa" {
         style = "invis";
       ];
       "@siteimprove/alfa-string" -> "exit_other" [
-        style = "invis";
-      ];
-      "@siteimprove/alfa-test-deprecated" -> "exit_other" [
         style = "invis";
       ];
       "@siteimprove/alfa-rectangle" -> "exit_other" [
@@ -1115,9 +1109,6 @@ digraph "dependency-graph-Alfa" {
       style = "invis";
     ];
     "exit_Accessibility Conformance Testing" -> "exit_Alfa" [
-      style = "invis";
-    ];
-    "exit_other" -> "exit_Alfa" [
       style = "invis";
     ];
     "exit_Understanding the web" -> "exit_Alfa" [
@@ -2496,6 +2487,12 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
     color = "#ff4600";
     lhead = "cluster_Type definitions";
+    ltail = "cluster_Understanding the web";
+  ];
+  "exit_Understanding the web" -> "name_other" [
+    style = "invis";
+    color = "#ff4600";
+    lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_other" [

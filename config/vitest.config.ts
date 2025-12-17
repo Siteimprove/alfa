@@ -3,7 +3,6 @@ import { coverageConfigDefaults, defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     include: ["packages/alfa-*/test/**/*.spec.ts?(x)"],
-    exclude: ["packages/alfa-test-deprecated"],
     typecheck: {
       enabled: true,
       checker: "tsc",
@@ -24,7 +23,7 @@ export default defineConfig({
       reportsDirectory: "./docs/coverage",
       include: ["packages/alfa-*/**/*.{js,jsx,ts,tsx}"],
       exclude: [
-        "packages/alfa-test*/**",
+        "packages/alfa-test/**",
         "**/config/**",
         "**/docs/**",
         "**/scripts/**",

@@ -2455,15 +2455,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-test-deprecated@workspace:packages/alfa-test-deprecated":
-  version: 0.0.0-use.local
-  resolution: "@siteimprove/alfa-test-deprecated@workspace:packages/alfa-test-deprecated"
-  dependencies:
-    "@types/node": "npm:^25.0.2"
-    chalk: "npm:^5.6.2"
-  languageName: unknown
-  linkType: soft
-
 "@siteimprove/alfa-test@workspace:^, @siteimprove/alfa-test@workspace:packages/alfa-test":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
