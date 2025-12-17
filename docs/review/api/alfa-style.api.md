@@ -245,10 +245,10 @@ export namespace Longhands {
         "letter-spacing": Longhand<Length | Keyword<"normal">, Length>;
         "line-break": Longhand<Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">, Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">>;
         "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed>;
-        "margin-bottom": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-left": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-right": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-top": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-bottom": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-left": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-right": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-top": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "mask-clip": Longhand<List<Specified_17.Item>, List<Specified_17.Item>>;
         "mask-composite": Longhand<List<Specified_18.Item>, List<Specified_18.Item>>;
         "mask-image": Longhand<List<Specified_19.Item>, List<Specified_19.Item>>;

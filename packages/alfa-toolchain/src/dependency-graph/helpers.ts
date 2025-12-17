@@ -75,14 +75,14 @@ export namespace GraphFactory {
     const fullGraph = Map.from(
       packages.packages.map(({ packageJson }) => [
         packageJson.name,
-        Global.getAllScopedDependencies(packageJson, scope),
+        Global.getAllWorkspaceDependencies(packageJson),
       ]),
     );
 
     const heavyGraph = Map.from(
       packages.packages.map(({ packageJson }) => [
         packageJson.name,
-        Global.getScopedProdDependencies(packageJson, scope),
+        Global.getWorkspaceProdDependencies(packageJson),
       ]),
     );
 
@@ -205,28 +205,23 @@ export namespace GraphFactory {
     }
 
     /** @internal */
-    export function getAllScopedDependencies(
-      pkg: {
-        dependencies?: { [key: string]: string };
-        devDependencies?: { [key: string]: string };
-      },
-      scope: string,
-    ): Array<string> {
-      return Object.keys(pkg.dependencies ?? {})
-        .concat(Object.keys(pkg.devDependencies ?? {}))
-        .filter((dep) => dep.startsWith(scope));
+    export function getAllWorkspaceDependencies(pkg: {
+      dependencies?: { [key: string]: string };
+      devDependencies?: { [key: string]: string };
+    }): Array<string> {
+      return Object.entries(pkg.dependencies ?? {})
+        .concat(Object.entries(pkg.devDependencies ?? {}))
+        .filter(([_, descriptor]) => descriptor.includes("workspace"))
+        .map(([name]) => name);
     }
 
     /** @internal */
-    export function getScopedProdDependencies(
-      pkg: {
-        dependencies?: { [key: string]: string };
-      },
-      scope: string,
-    ): Array<string> {
-      return Object.keys(pkg.dependencies ?? {}).filter((dep) =>
-        dep.startsWith(scope),
-      );
+    export function getWorkspaceProdDependencies(pkg: {
+      dependencies?: { [key: string]: string };
+    }): Array<string> {
+      return Object.entries(pkg.dependencies ?? {})
+        .filter(([_, descriptor]) => descriptor.includes("workspace"))
+        .map(([name]) => name);
     }
   }
 }
