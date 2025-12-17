@@ -73,7 +73,7 @@ export async function uploadCoverageReport(rootDir: string) {
       webHookUrl!,
       {
         service_alias: config.service_alias,
-        coverage: summary.total.lines.covered,
+        coverage: summary.total.lines.pct,
       },
       {
         headers: {
