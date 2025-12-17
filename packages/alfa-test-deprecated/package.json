@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-test-deprecated",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.108.1",
+  "license": "MIT",
+  "description": "A simple test library sitting on top of the built-in Node.js assert module",
+  "repository": {
+    "type": "git",
+    "url": "github:Siteimprove/alfa",
+    "directory": "packages/alfa-test-deprecated"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@types/node": "^24.10.1",
+    "chalk": "^5.6.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}
