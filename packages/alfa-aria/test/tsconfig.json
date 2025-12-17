@@ -11,6 +11,7 @@
     "./dom/predicate/has-accessible-name.spec.tsx",
     "./dom/predicate/has-incorrect-role-without-name.spec.tsx",
     "./dom/predicate/has-role.spec.tsx",
+    "./dom/predicate/is-programmatically-hidden.spec.tsx",
     "./name.spec.tsx",
     "./name-testable-statements.spec.tsx",
     "./node.spec.tsx",
