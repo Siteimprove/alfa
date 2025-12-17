@@ -424,18 +424,13 @@ export namespace Node {
         if (hasInertDomAttribute(node)) {
           // Elements with the inert attribute are exposed as containers
           // as they may contain non-inert descendants
-          return Container.of(
-            node,
-            children(state.inert(true)),
-            Option.of(Role.of("generic")),
-          );
+          return Container.of(node, children(state.inert(true)));
         } else if (isOpenDialog(node)) {
           // Open dialogs without the inert attribute escapes inertness
           state = state.inert(false);
         }
 
         if (state.isInert) {
-          // We're in an inert context and haven't escaped, this element is inert
           return Inert.of(node);
         }
 
