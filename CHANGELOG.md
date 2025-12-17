@@ -1,5 +1,11 @@
 # Alfa changelog
 
+## [0.108.2](../../compare/v0.108.1...v0.108.2) (2025-12-10)
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01082): Parsing of some ill-formed CSS blocks no longer throws an exception. ([#1961](https://github.com/Siteimprove/alfa/pull/1961))
+
 ## [0.108.1](../../compare/v0.108.0...v0.108.1) (2025-12-01)
 
 ### Changed
