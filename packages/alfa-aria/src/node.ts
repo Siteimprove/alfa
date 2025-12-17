@@ -275,7 +275,7 @@ export namespace Node {
   }
 
   class State {
-    private static _empty = new State(false, true);
+    private static _empty = new State(false, true, false);
 
     public static empty(): State {
       return this._empty;
@@ -283,10 +283,16 @@ export namespace Node {
 
     private readonly _isPresentational: boolean;
     private readonly _isVisible: boolean;
+    private readonly _isInert: boolean;
 
-    protected constructor(isPresentational: boolean, isVisible: boolean) {
+    protected constructor(
+      isPresentational: boolean,
+      isVisible: boolean,
+      isInert: boolean,
+    ) {
       this._isPresentational = isPresentational;
       this._isVisible = isVisible;
+      this._isInert = isInert;
     }
 
     public get isPresentational(): boolean {
@@ -297,12 +303,16 @@ export namespace Node {
       return this._isVisible;
     }
 
+    public get isInert(): boolean {
+      return this._isInert;
+    }
+
     public presentational(isPresentational: boolean): State {
       if (this._isPresentational === isPresentational) {
         return this;
       }
 
-      return new State(isPresentational, this._isVisible);
+      return new State(isPresentational, this._isVisible, this._isInert);
     }
 
     public visible(isVisible: boolean): State {
@@ -310,9 +320,23 @@ export namespace Node {
         return this;
       }
 
-      return new State(this._isPresentational, isVisible);
+      return new State(this._isPresentational, isVisible, this._isInert);
+    }
+
+    public inert(isInert: boolean): State {
+      if (this._isInert === isInert) {
+        return this;
+      }
+
+      return new State(this._isPresentational, this._isVisible, isInert);
     }
   }
+
+  const hasInertDomAttribute = dom.Element.hasAttribute("inert");
+  const isOpenDialog = and(
+    dom.Element.hasName("dialog"),
+    dom.Element.hasAttribute("open"),
+  );
 
   function fromNode(
     node: dom.Node,
@@ -397,6 +421,24 @@ export namespace Node {
 
         state = state.visible(true);
 
+        if (hasInertDomAttribute(node)) {
+          // Elements with the inert attribute are exposed as containers
+          // as they may contain non-inert descendants
+          return Container.of(
+            node,
+            children(state.inert(true)),
+            Option.of(Role.of("generic")),
+          );
+        } else if (isOpenDialog(node)) {
+          // Open dialogs without the inert attribute escapes inertness
+          state = state.inert(false);
+        }
+
+        if (state.isInert) {
+          // We're in an inert context and haven't escaped, this element is inert
+          return Inert.of(node);
+        }
+
         const role = Role.fromExplicit(node).orElse(() =>
           // If the element has no explicit role and instead inherits a
           // presentational role then use that, otherwise fall back to the
@@ -464,13 +506,16 @@ export namespace Node {
         // nor a tabindex, it is not itself interesting for accessibility
         // purposes. It is therefore exposed as a container.
         // Some elements (mostly embedded content) are always exposed.
+        // However, if the element is inert, it becomes an Inert node instead.
         if (
           attributes.isEmpty() &&
           role.every(Role.hasName("generic")) &&
           node.tabIndex().isNone() &&
           !test(alwaysExpose, node)
         ) {
-          return Container.of(node, children(state), role);
+          return state.isInert
+            ? Inert.of(node)
+            : Container.of(node, children(state), role);
         }
 
         // If the element has a role that designates its children as
@@ -489,12 +534,12 @@ export namespace Node {
       }
 
       if (dom.Text.isText(node)) {
-        // As elements with `visibility: hidden` are exposed as containers for
-        // other elements that _might_ be visible, we need to check the
-        // visibility of the parent element before deciding to expose the text
-        // node. If the parent element isn't visible, the text node instead
-        // becomes inert.
-        if (!state.isVisible) {
+        // As elements with `visibility: hidden` or inert are exposed as
+        // containers for other elements that _might_ be visible or escape
+        // inertness, we need to check the state before deciding to expose
+        // the text node. If the parent element isn't visible or is inert,
+        // the text node becomes inert.
+        if (!state.isVisible || state.isInert) {
           return Inert.of(node);
         }
 
