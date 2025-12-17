@@ -14,55 +14,55 @@ import { Triplet } from "./triplet.js";
 const { map, either } = Parser;
 
 /**
- * {@link https://drafts.csswg.org/css-color/#specifying-Lab-lch}
+ * {@link https://drafts.csswg.org/css-color/#specifying-oklab-oklch}
  *
  * @public
  */
-export class LCH extends Triplet<"lch"> {
+export class OkLCH extends Triplet<"oklch"> {
   public static of(
     lightness: Number | Percentage<"number">,
     chroma: Number | Percentage<"number">,
     hue: Number | Angle,
     alpha: Number | Percentage<"percentage">,
-  ): LCH {
-    const l = lightness.resolve({ percentageBase: Number.of(100) });
-    const c = chroma.resolve({ percentageBase: Number.of(150) });
+  ): OkLCH {
+    const l = lightness.resolve();
+    const c = chroma.resolve({ percentageBase: Number.of(0.4) });
 
-    return new LCH(
+    return new OkLCH(
       Number.of(
         // Lightness clamping happens at parse time, we can't do it until we've
         // resolved calculations.
-        Real.clamp(Number.isNumber(l) ? l.value : l.value * 100, 0, 100),
+        Real.clamp(l.value, 0, 1),
       ),
       Number.of(
-        Real.clamp(Number.isNumber(c) ? c.value : c.value * 150, 0, +Infinity),
+        Real.clamp(Number.isNumber(c) ? c.value : c.value * 0.4, 0, +Infinity),
       ),
       hue.resolve(),
       alpha.resolve(),
     );
   }
 
-  private readonly _lightness: LCH.Component;
-  private readonly _chroma: LCH.Component;
-  private readonly _hue: LCH.Hue;
+  private readonly _lightness: OkLCH.Component;
+  private readonly _chroma: OkLCH.Component;
+  private readonly _hue: OkLCH.Hue;
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
 
   protected constructor(
-    lightness: LCH.Component,
-    chroma: LCH.Component,
-    hue: LCH.Hue,
+    lightness: OkLCH.Component,
+    chroma: OkLCH.Component,
+    hue: OkLCH.Hue,
     alpha: Triplet.Alpha,
   ) {
-    super("lch", alpha);
+    super("oklch", alpha);
     this._lightness = lightness;
     this._chroma = chroma;
     this._hue = hue;
 
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
-    const [red, green, blue] = CIE.lchToRgb([
+    const [red, green, blue] = CIE.oklchToRgb([
       lightness.value,
       chroma.value,
       degrees,
@@ -73,15 +73,15 @@ export class LCH extends Triplet<"lch"> {
     this._blue = Percentage.of<"percentage">(blue);
   }
 
-  public get lightness(): LCH.Component {
+  public get lightness(): OkLCH.Component {
     return this._lightness;
   }
 
-  public get chroma(): LCH.Component {
+  public get chroma(): OkLCH.Component {
     return this._chroma;
   }
 
-  public get hue(): LCH.Hue {
+  public get hue(): OkLCH.Hue {
     return this._hue;
   }
 
@@ -105,7 +105,7 @@ export class LCH extends Triplet<"lch"> {
 
   public equals(value: unknown): value is this {
     return (
-      value instanceof LCH &&
+      value instanceof OkLCH &&
       value._lightness.equals(this._lightness) &&
       value._chroma.equals(this._chroma) &&
       value._hue.equals(this._hue) &&
@@ -121,7 +121,7 @@ export class LCH extends Triplet<"lch"> {
       .writeHashable(this._alpha);
   }
 
-  public toJSON(): LCH.JSON {
+  public toJSON(): OkLCH.JSON {
     return {
       ...super.toJSON(),
       lightness: this._lightness.toJSON(),
@@ -131,7 +131,7 @@ export class LCH extends Triplet<"lch"> {
   }
 
   public toString(): string {
-    return `lch(${this._lightness} ${this._chroma} ${this._hue} ${
+    return `oklch(${this._lightness} ${this._chroma} ${this._hue} ${
       this._alpha.value === 1 ? "" : ` / ${this._alpha}`
     })`;
   }
@@ -140,8 +140,8 @@ export class LCH extends Triplet<"lch"> {
 /**
  * @public
  */
-export namespace LCH {
-  export interface JSON extends Triplet.JSON<"lch"> {
+export namespace OkLCH {
+  export interface JSON extends Triplet.JSON<"oklch"> {
     lightness: Number.Fixed.JSON;
     chroma: Number.Fixed.JSON;
     hue: Number.Fixed.JSON | Angle.Fixed.JSON;
@@ -157,8 +157,8 @@ export namespace LCH {
    */
   export type Component = Number.Canonical;
 
-  export function isLCH(value: unknown): value is LCH {
-    return value instanceof LCH;
+  export function isOkLCH(value: unknown): value is OkLCH {
+    return value instanceof OkLCH;
   }
 
   /**
@@ -169,9 +169,9 @@ export namespace LCH {
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
-  export const parse: CSSParser<LCH> = map(
+  export const parse: CSSParser<OkLCH> = map(
     Function.parse(
-      "lch",
+      "oklch",
       Triplet.parseTriplet([
         either(Percentage.parse<"percentage">, Number.parse),
         either(Percentage.parse<"percentage">, Number.parse),
@@ -179,6 +179,6 @@ export namespace LCH {
       ]),
     ),
     ([, [lightness, chroma, hue, alpha]]) =>
-      LCH.of(lightness, chroma, hue, alpha),
+      OkLCH.of(lightness, chroma, hue, alpha),
   );
 }

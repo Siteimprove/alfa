@@ -155,11 +155,10 @@ export namespace Component {
         value === "none"
           ? 0
           : type === "other"
-            ? // The actual number of significant digits depends on the base, but
-              // should be less than 3 because we round radom numbers to 3 digits.
-              // Given that this is only for correcting small floating point drifts
-              // 3 digits should not be too much and include the drift.
-              Real.round(value * percentageBase, 3)
+            ? // We rounded random numbers to 3 decimals. If the percentage base
+              // is small (0.4 for oklab/oklch), we are adding one significant
+              // digit. Otherwise, we can keep 3 decimals.
+              Real.round(value * percentageBase, percentageBase < 1 ? 4 : 3)
             : value,
     });
   }
@@ -171,9 +170,11 @@ export namespace Component {
   export const toWhitenessJSON = toPercentageFakePercentageJSON;
   export const toBlacknessJSON = toPercentageFakePercentageJSON;
   export const toLabLightnessJSON = toNumberJSON(100);
-  export const toLCHLightnessJSON = toNumberJSON(100);
   export const toLabComponentJSON = toNumberJSON(125);
+  export const toLCHLightnessJSON = toNumberJSON(100);
   export const toLCHChromaJSON = toNumberJSON(150);
   export const toOklabLightnessJSON = toNumberJSON(1);
   export const toOklabComponentJSON = toNumberJSON(0.4);
+  export const toOkLCHLightnessJSON = toNumberJSON(1);
+  export const toOkLCHChromaJSON = toNumberJSON(0.4);
 }

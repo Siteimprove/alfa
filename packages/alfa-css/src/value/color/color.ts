@@ -20,6 +20,7 @@ import { Lab } from "./lab.js";
 import { LCH } from "./lch.js";
 import { Named } from "./named.js";
 import { Oklab } from "./oklab.js";
+import { OkLCH } from "./oklch.js";
 import { RGB } from "./rgb.js";
 import { System } from "./system.js";
 
@@ -38,6 +39,7 @@ export type Color =
   | LCH
   | Named
   | Oklab
+  | OkLCH
   | RGB
   | System;
 
@@ -56,6 +58,7 @@ export namespace Color {
     | LCH.JSON
     | Named.JSON
     | Oklab.JSON
+    | OkLCH.JSON
     | RGB.JSON
     | Keyword.JSON;
 
@@ -74,6 +77,8 @@ export namespace Color {
   export const named = Named.of;
 
   export const oklab = Oklab.of;
+
+  export const oklch = OkLCH.of;
 
   export const rgb = RGB.of;
 
@@ -98,6 +103,7 @@ export namespace Color {
     LCH.parse,
     Named.parse,
     Oklab.parse,
+    OkLCH.parse,
     RGB.parse,
     System.parse,
   );

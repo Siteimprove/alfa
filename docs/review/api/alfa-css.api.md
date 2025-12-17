@@ -312,7 +312,7 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = ColorFunction | Current | Hex | HSL | HWB | Lab | LCH | Named | Oklab | RGB | System;
+export type Color = ColorFunction | Current | Hex | HSL | HWB | Lab | LCH | Named | Oklab | OkLCH | RGB | System;
 
 // @public (undocumented)
 export namespace Color {
@@ -337,13 +337,15 @@ export namespace Color {
     const // (undocumented)
     oklab: typeof Oklab.of;
     const // (undocumented)
+    oklch: typeof OkLCH.of;
+    const // (undocumented)
     rgb: typeof RGB.of;
     const // (undocumented)
     system: typeof Keyword.of;
     const // (undocumented)
     parse: Parser<Color>;
     // (undocumented)
-    export type JSON = ColorFunction.JSON | Hex.JSON | HSL.JSON | HWB.JSON | Lab.JSON | LCH.JSON | Named.JSON | Oklab.JSON | RGB.JSON | Keyword.JSON;
+    export type JSON = ColorFunction.JSON | Hex.JSON | HSL.JSON | HWB.JSON | Lab.JSON | LCH.JSON | Named.JSON | Oklab.JSON | OkLCH.JSON | RGB.JSON | Keyword.JSON;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Space" needs to be exported by the entry point index.d.ts
@@ -1965,6 +1967,56 @@ export namespace Oklab {
     }
     const // (undocumented)
     parse: Parser<Oklab>;
+}
+
+// @public (undocumented)
+export class OkLCH extends Triplet<"oklch"> {
+    protected constructor(lightness: OkLCH.Component, chroma: OkLCH.Component, hue: OkLCH.Hue, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    get chroma(): OkLCH.Component;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get hue(): OkLCH.Hue;
+    // (undocumented)
+    get lightness(): OkLCH.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, chroma: Number_2 | Percentage<"number">, hue: Number_2 | Angle, alpha: Number_2 | Percentage<"percentage">): OkLCH;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): OkLCH.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace OkLCH {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
+    // (undocumented)
+    export function isOkLCH(value: unknown): value is OkLCH;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"oklch"> {
+        // (undocumented)
+        chroma: Number_2.Fixed.JSON;
+        // (undocumented)
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<OkLCH>;
 }
 
 // @public (undocumented)

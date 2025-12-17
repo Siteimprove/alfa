@@ -29,6 +29,7 @@
     "./value/color/lch.spec.ts",
     "./value/color/named.spec.ts",
     "./value/color/oklab.spec.ts",
+    "./value/color/oklch.spec.ts",
     "./value/color/rgb.spec.ts",
     "./value/image/image.spec.ts",
     "./value/image/linear-gradient.spec.ts",

@@ -8,5 +8,6 @@ export * from "./lab.js";
 export * from "./lch.js";
 export * from "./named.js";
 export * from "./oklab.js";
+export * from "./oklch.js";
 export * from "./rgb.js";
 export * from "./system.js";

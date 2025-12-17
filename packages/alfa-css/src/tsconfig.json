@@ -50,6 +50,7 @@
     "./value/color/lch.ts",
     "./value/color/named.ts",
     "./value/color/oklab.ts",
+    "./value/color/oklch.ts",
     "./value/color/rgb.ts",
     "./value/color/system.ts",
     "./value/color/triplet.ts",
