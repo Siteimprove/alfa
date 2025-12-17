@@ -100,23 +100,23 @@
 <!-- @siteimprove/alfa&#45;test -->
 <g id="node1" class="node">
 <title>@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="#000000" d="M1826.83,-511C1826.83,-511 1777.17,-511 1777.17,-511 1773.33,-511 1769.5,-507.17 1769.5,-503.33 1769.5,-503.33 1769.5,-495.67 1769.5,-495.67 1769.5,-491.83 1773.33,-488 1777.17,-488 1777.17,-488 1826.83,-488 1826.83,-488 1830.67,-488 1834.5,-491.83 1834.5,-495.67 1834.5,-495.67 1834.5,-503.33 1834.5,-503.33 1834.5,-507.17 1830.67,-511 1826.83,-511"/>
-<text text-anchor="middle" x="1802" y="-495.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;test</text>
+<path fill="none" stroke="#000000" d="M1698.83,-511C1698.83,-511 1649.17,-511 1649.17,-511 1645.33,-511 1641.5,-507.17 1641.5,-503.33 1641.5,-503.33 1641.5,-495.67 1641.5,-495.67 1641.5,-491.83 1645.33,-488 1649.17,-488 1649.17,-488 1698.83,-488 1698.83,-488 1702.67,-488 1706.5,-491.83 1706.5,-495.67 1706.5,-495.67 1706.5,-503.33 1706.5,-503.33 1706.5,-507.17 1702.67,-511 1698.83,-511"/>
+<text text-anchor="middle" x="1674" y="-495.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;test</text>
 </g>
 <!-- exit_other -->
 <!-- @siteimprove/alfa&#45;test&#45;&gt;exit_other -->
 <!-- @siteimprove/alfa&#45;rng -->
 <g id="node67" class="node">
 <title>@siteimprove/alfa&#45;rng</title>
-<path fill="none" stroke="#000000" d="M1923.33,-452C1923.33,-452 1876.67,-452 1876.67,-452 1872.83,-452 1869,-448.17 1869,-444.33 1869,-444.33 1869,-436.67 1869,-436.67 1869,-432.83 1872.83,-429 1876.67,-429 1876.67,-429 1923.33,-429 1923.33,-429 1927.17,-429 1931,-432.83 1931,-436.67 1931,-436.67 1931,-444.33 1931,-444.33 1931,-448.17 1927.17,-452 1923.33,-452"/>
-<text text-anchor="middle" x="1900" y="-436.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;rng</text>
+<path fill="none" stroke="#000000" d="M1697.33,-452C1697.33,-452 1650.67,-452 1650.67,-452 1646.83,-452 1643,-448.17 1643,-444.33 1643,-444.33 1643,-436.67 1643,-436.67 1643,-432.83 1646.83,-429 1650.67,-429 1650.67,-429 1697.33,-429 1697.33,-429 1701.17,-429 1705,-432.83 1705,-436.67 1705,-436.67 1705,-444.33 1705,-444.33 1705,-448.17 1701.17,-452 1697.33,-452"/>
+<text text-anchor="middle" x="1674" y="-436.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;rng</text>
 </g>
 <!-- @siteimprove/alfa&#45;test&#45;&gt;@siteimprove/alfa&#45;rng -->
 <!-- @siteimprove/alfa&#45;test&#45;&gt;@siteimprove/alfa&#45;rng -->
-<g id="edge359" class="edge">
+<g id="edge357" class="edge">
 <title>@siteimprove/alfa&#45;test&#45;&gt;@siteimprove/alfa&#45;rng</title>
-<path fill="none" stroke="black" d="M1825.59,-487.91C1841.83,-479.35 1863.02,-467.17 1878.73,-457.44"/>
-<polygon fill="black" stroke="black" points="1880.69,-460.34 1887.27,-452.03 1876.95,-454.42 1880.69,-460.34"/>
+<path fill="none" stroke="black" d="M1679.41,-487.78C1680.67,-480.61 1681.04,-470.95 1680.53,-462.31"/>
+<polygon fill="black" stroke="black" points="1683.98,-461.73 1679.4,-452.17 1677.03,-462.5 1683.98,-461.73"/>
 </g>
 <!-- exit_Comparison -->
 <!-- name_other -->
@@ -126,10 +126,10 @@
 <text text-anchor="middle" x="1520" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">other</text>
 </g>
 <!-- exit_Comparison&#45;&gt;name_other -->
-<g id="edge181" class="edge">
+<g id="edge179" class="edge">
 <title>exit_Comparison&#45;&gt;name_other</title>
-<path fill="none" stroke="#e8ff00" stroke-dasharray="1,5" d="M1238,-316.18C1259.17,-326.66 1282.86,-336.23 1306,-342 1344.99,-351.72 1998.36,-336 2029,-362 2055.75,-384.7 2044,-404.42 2044,-439.5 2044,-500.5 2044,-500.5 2044,-500.5 2044,-526.7 2034.96,-541.46 2019.59,-553.05"/>
-<polygon fill="#e8ff00" stroke="#e8ff00" points="2017.32,-550.37 2011,-558.87 2021.24,-556.16 2017.32,-550.37"/>
+<path fill="none" stroke="#e8ff00" stroke-dasharray="1,5" d="M1238,-316.18C1259.17,-326.66 1282.86,-336.23 1306,-342 1344.99,-351.72 1998.36,-336 2029,-362 2055.75,-384.7 2044,-404.42 2044,-439.5 2044,-500.5 2044,-500.5 2044,-500.5 2044,-526.71 2034.97,-541.51 2019.6,-553.11"/>
+<polygon fill="#e8ff00" stroke="#e8ff00" points="2017.32,-550.42 2011,-558.93 2021.24,-556.22 2017.32,-550.42"/>
 </g>
 <!-- exit_Comparison&#45;&gt;name_other -->
 <!-- exit_Comparison&#45;&gt;name_other -->
@@ -140,7 +140,7 @@
 <text text-anchor="middle" x="675" y="-318.8" font-family="Arial" font-size="14.00" fill="#000000">Logic</text>
 </g>
 <!-- exit_Comparison&#45;&gt;name_Logic -->
-<g id="edge433" class="edge">
+<g id="edge432" class="edge">
 <title>exit_Comparison&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#e8ff00" d="M880,-294.88C878,-295.17 876,-295.46 874,-295.76"/>
 <polygon fill="#e8ff00" stroke="#e8ff00" points="881.39,-291.14 872,-296.05 882.4,-298.06 881.39,-291.14"/>
@@ -162,7 +162,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;callback&#45;&gt;@siteimprove/alfa&#45;mapper -->
 <!-- @siteimprove/alfa&#45;callback&#45;&gt;@siteimprove/alfa&#45;mapper -->
-<g id="edge509" class="edge">
+<g id="edge508" class="edge">
 <title>@siteimprove/alfa&#45;callback&#45;&gt;@siteimprove/alfa&#45;mapper</title>
 <path fill="none" stroke="black" d="M1917.61,-192.91C1899,-183.91 1869.99,-170.91 1846.42,-160.95"/>
 <polygon fill="black" stroke="black" points="1847.6,-157.66 1837.03,-157.03 1844.9,-164.11 1847.6,-157.66"/>
@@ -171,7 +171,7 @@
 <!-- @siteimprove/alfa&#45;callback&#45;&gt;exit_Type definitions -->
 <!-- exit_Alternatives -->
 <!-- exit_Alternatives&#45;&gt;name_other -->
-<g id="edge194" class="edge">
+<g id="edge192" class="edge">
 <title>exit_Alternatives&#45;&gt;name_other</title>
 <path fill="none" stroke="#ff8b00" stroke-dasharray="1,5" d="M1463,-571.95C1463.9,-573.9 1464.9,-575.92 1466,-578 1470.33,-586.2 1476.87,-593.95 1484.31,-600.31"/>
 <polygon fill="#ff8b00" stroke="#ff8b00" points="1477.26,-594.38 1485,-601.62 1483.46,-591.14 1477.26,-594.38"/>
@@ -185,7 +185,7 @@
 <text text-anchor="middle" x="1423" y="-318.8" font-family="Arial" font-size="14.00" fill="#000000">Type definitions</text>
 </g>
 <!-- exit_Alternatives&#45;&gt;name_Type definitions -->
-<g id="edge182" class="edge">
+<g id="edge180" class="edge">
 <title>exit_Alternatives&#45;&gt;name_Type definitions</title>
 <path fill="none" stroke="#ff8b00" d="M1259.02,-362C1240.38,-348.51 1275.51,-331.58 1357.82,-325.66"/>
 <polygon fill="#ff8b00" stroke="#ff8b00" points="1358.69,-335.57 1358,-325 1351.94,-333.69 1358.69,-335.57"/>
@@ -220,7 +220,7 @@
 <text text-anchor="middle" x="933" y="-318.8" font-family="Arial" font-size="14.00" fill="#000000">Comparison</text>
 </g>
 <!-- exit_Alternatives&#45;&gt;name_Comparison -->
-<g id="edge183" class="edge">
+<g id="edge181" class="edge">
 <title>exit_Alternatives&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#ff8b00" d="M1246,-372.2C1144.44,-365.24 1019.82,-354.74 961.28,-344.03"/>
 <polygon fill="#ff8b00" stroke="#ff8b00" points="961.49,-340.5 951,-342 960.13,-347.37 961.49,-340.5"/>
@@ -236,7 +236,7 @@
 <text text-anchor="middle" x="298" y="-318.8" font-family="Arial" font-size="14.00" fill="#000000">Hash tables</text>
 </g>
 <!-- exit_Alternatives&#45;&gt;name_Hash tables -->
-<g id="edge186" class="edge">
+<g id="edge184" class="edge">
 <title>exit_Alternatives&#45;&gt;name_Hash tables</title>
 <path fill="none" stroke="#ff8b00" d="M1246,-373.44C1172.74,-369.7 1084.07,-365.23 1005,-362 721.35,-350.42 645.97,-375.52 360.25,-342.01"/>
 <polygon fill="#ff8b00" stroke="#ff8b00" points="360.34,-338.5 350,-340.79 359.52,-345.45 360.34,-338.5"/>
@@ -251,7 +251,7 @@
 <text text-anchor="middle" x="443" y="-318.8" font-family="Arial" font-size="14.00" fill="#000000">Serialization</text>
 </g>
 <!-- exit_Alternatives&#45;&gt;name_Serialization -->
-<g id="edge187" class="edge">
+<g id="edge185" class="edge">
 <title>exit_Alternatives&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#ff8b00" d="M1246,-371.77C1191.7,-368.37 1130.44,-364.65 1075,-362 943.92,-355.72 618.71,-365.77 480.05,-343.72"/>
 <polygon fill="#ff8b00" stroke="#ff8b00" points="480.45,-340.23 470,-342 479.27,-347.13 480.45,-340.23"/>
@@ -260,7 +260,7 @@
 <!-- exit_Alternatives&#45;&gt;name_Serialization -->
 <!-- exit_Alternatives&#45;&gt;name_Serialization -->
 <!-- exit_Alternatives&#45;&gt;name_Logic -->
-<g id="edge190" class="edge">
+<g id="edge188" class="edge">
 <title>exit_Alternatives&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#ff8b00" d="M1246,-372.76C1191.74,-369.3 1131.36,-365.28 1077,-362 914.25,-352.17 869.4,-366.4 712.97,-343.49"/>
 <polygon fill="#ff8b00" stroke="#ff8b00" points="713.41,-340.01 703,-342 712.37,-346.94 713.41,-340.01"/>
@@ -302,7 +302,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;foldable&#45;&gt;@siteimprove/alfa&#45;reducer -->
 <!-- @siteimprove/alfa&#45;foldable&#45;&gt;@siteimprove/alfa&#45;reducer -->
-<g id="edge517" class="edge">
+<g id="edge516" class="edge">
 <title>@siteimprove/alfa&#45;foldable&#45;&gt;@siteimprove/alfa&#45;reducer</title>
 <path fill="none" stroke="black" d="M1444.44,-192.91C1469.99,-183.87 1504.82,-170.79 1530.01,-160.82"/>
 <polygon fill="black" stroke="black" points="1531.5,-164 1539.48,-157.03 1528.9,-157.5 1531.5,-164"/>
@@ -322,7 +322,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;hash&#45;&gt;@siteimprove/alfa&#45;encoding -->
 <!-- @siteimprove/alfa&#45;hash&#45;&gt;@siteimprove/alfa&#45;encoding -->
-<g id="edge649" class="edge">
+<g id="edge648" class="edge">
 <title>@siteimprove/alfa&#45;hash&#45;&gt;@siteimprove/alfa&#45;encoding</title>
 <path fill="none" stroke="black" d="M262.41,-251.78C263.67,-244.61 264.04,-234.95 263.53,-226.31"/>
 <polygon fill="black" stroke="black" points="266.98,-225.73 262.4,-216.17 260.03,-226.5 266.98,-225.73"/>
@@ -346,7 +346,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;mapper -->
 <!-- @siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;mapper -->
-<g id="edge932" class="edge">
+<g id="edge931" class="edge">
 <title>@siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;mapper</title>
 <path fill="none" stroke="black" d="M1789.4,-310.96C1804.91,-303.24 1821.79,-291.26 1830,-275 1847.74,-239.86 1835.03,-192.48 1822.39,-166.17"/>
 <polygon fill="black" stroke="black" points="1825.4,-164.38 1817.62,-157.2 1819.22,-167.67 1825.4,-164.38"/>
@@ -359,7 +359,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;applicative -->
 <!-- @siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;applicative -->
-<g id="edge928" class="edge">
+<g id="edge927" class="edge">
 <title>@siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;applicative</title>
 <path fill="none" stroke="black" d="M1763.41,-310.78C1764.67,-303.61 1765.04,-293.95 1764.53,-285.31"/>
 <polygon fill="black" stroke="black" points="1767.98,-284.73 1763.4,-275.17 1761.03,-285.5 1767.98,-284.73"/>
@@ -372,7 +372,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;functor -->
 <!-- @siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;functor -->
-<g id="edge930" class="edge">
+<g id="edge929" class="edge">
 <title>@siteimprove/alfa&#45;monad&#45;&gt;@siteimprove/alfa&#45;functor</title>
 <path fill="none" stroke="black" d="M1742.38,-310.87C1729.67,-303.11 1713.06,-291.13 1705,-275 1698.84,-262.68 1700.12,-256.89 1705,-244 1707.8,-236.6 1712.74,-229.71 1717.63,-223.86"/>
 <polygon fill="black" stroke="black" points="1720.49,-225.91 1724.49,-216.1 1715.25,-221.27 1720.49,-225.91"/>
@@ -395,7 +395,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;refinement&#45;&gt;@siteimprove/alfa&#45;predicate -->
 <!-- @siteimprove/alfa&#45;refinement&#45;&gt;@siteimprove/alfa&#45;predicate -->
-<g id="edge683" class="edge">
+<g id="edge682" class="edge">
 <title>@siteimprove/alfa&#45;refinement&#45;&gt;@siteimprove/alfa&#45;predicate</title>
 <path fill="none" stroke="black" d="M817.16,-310.78C818.92,-303.61 819.97,-293.95 820.07,-285.31"/>
 <polygon fill="black" stroke="black" points="823.56,-285.02 819.65,-275.17 816.56,-285.31 823.56,-285.02"/>
@@ -409,14 +409,14 @@
 </g>
 <!-- @siteimprove/alfa&#45;thunk&#45;&gt;@siteimprove/alfa&#45;mapper -->
 <!-- @siteimprove/alfa&#45;thunk&#45;&gt;@siteimprove/alfa&#45;mapper -->
-<g id="edge259" class="edge">
+<g id="edge257" class="edge">
 <title>@siteimprove/alfa&#45;thunk&#45;&gt;@siteimprove/alfa&#45;mapper</title>
 <path fill="none" stroke="black" d="M1666.39,-192.92C1673.58,-190.22 1681.04,-187.4 1688,-185 1714.39,-175.89 1744.23,-166.9 1767.65,-159.9"/>
 <polygon fill="black" stroke="black" points="1768.68,-163.24 1777.26,-157.03 1766.68,-156.54 1768.68,-163.24"/>
 </g>
 <!-- @siteimprove/alfa&#45;thunk&#45;&gt;@siteimprove/alfa&#45;reducer -->
 <!-- @siteimprove/alfa&#45;thunk&#45;&gt;@siteimprove/alfa&#45;reducer -->
-<g id="edge261" class="edge">
+<g id="edge259" class="edge">
 <title>@siteimprove/alfa&#45;thunk&#45;&gt;@siteimprove/alfa&#45;reducer</title>
 <path fill="none" stroke="black" d="M1624.24,-192.78C1615.53,-184.5 1601.54,-172.89 1588.93,-163.36"/>
 <polygon fill="black" stroke="black" points="1590.64,-160.28 1580.51,-157.17 1586.5,-165.92 1590.64,-160.28"/>
@@ -431,15 +431,15 @@
 <!-- exit_Built ins -->
 <!-- @siteimprove/alfa&#45;iterable&#45;&gt;exit_Built ins -->
 <!-- exit_Logic&#45;&gt;name_other -->
-<g id="edge197" class="edge">
+<g id="edge195" class="edge">
 <title>exit_Logic&#45;&gt;name_other</title>
-<path fill="none" stroke="#0074ff" stroke-dasharray="1,5" d="M872,-218.5C969.1,-225.33 1166.14,-203.76 1234,-244 1248.1,-252.36 1243.07,-262.77 1254,-275 1285.36,-310.09 1291.9,-325.57 1336,-342 1372.77,-355.7 2011.03,-337.9 2042,-362 2070.26,-383.99 2064,-403.69 2064,-439.5 2064,-500.5 2064,-500.5 2064,-500.5 2064,-537.78 2048.45,-552.98 2019.85,-569.7"/>
-<polygon fill="#0074ff" stroke="#0074ff" points="2017.97,-566.74 2011,-574.71 2021.42,-572.82 2017.97,-566.74"/>
+<path fill="none" stroke="#0074ff" stroke-dasharray="1,5" d="M872,-218.5C969.1,-225.33 1166.14,-203.76 1234,-244 1248.1,-252.36 1243.07,-262.77 1254,-275 1285.36,-310.09 1291.9,-325.57 1336,-342 1372.77,-355.7 2011.03,-337.9 2042,-362 2070.26,-383.99 2064,-403.69 2064,-439.5 2064,-500.5 2064,-500.5 2064,-500.5 2064,-537.78 2048.49,-553.07 2019.86,-569.73"/>
+<polygon fill="#0074ff" stroke="#0074ff" points="2017.99,-566.77 2011,-574.73 2021.43,-572.87 2017.99,-566.77"/>
 </g>
 <!-- exit_Logic&#45;&gt;name_other -->
 <!-- exit_Logic&#45;&gt;name_other -->
 <!-- exit_Logic&#45;&gt;name_Type definitions -->
-<g id="edge196" class="edge">
+<g id="edge194" class="edge">
 <title>exit_Logic&#45;&gt;name_Type definitions</title>
 <path fill="none" stroke="#0074ff" d="M872,-208.21C966.04,-212.95 1167.08,-224.18 1236,-244 1274.34,-255.03 1314.36,-276.07 1348.89,-293.44"/>
 <polygon fill="#0074ff" stroke="#0074ff" points="1347.5,-296.66 1358,-298.01 1350.63,-290.4 1347.5,-296.66"/>
@@ -449,7 +449,7 @@
 <!-- exit_Logic&#45;&gt;name_Type definitions -->
 <!-- exit_Logic&#45;&gt;name_Type definitions -->
 <!-- exit_Logic&#45;&gt;name_Comparison -->
-<g id="edge317" class="edge">
+<g id="edge315" class="edge">
 <title>exit_Logic&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#0074ff" d="M872,-242.99C872.34,-243.33 872.67,-243.66 873,-244 873.15,-244.15 873.29,-244.3 873.44,-244.45"/>
 <polygon fill="#0074ff" stroke="#0074ff" points="870.59,-246.53 880,-251.4 875.68,-241.72 870.59,-246.53"/>
@@ -461,10 +461,10 @@
 <text text-anchor="middle" x="756" y="-790.8" font-family="Arial" font-size="14.00" fill="#000000">Collections</text>
 </g>
 <!-- exit_Logic&#45;&gt;name_Collections -->
-<g id="edge195" class="edge">
+<g id="edge193" class="edge">
 <title>exit_Logic&#45;&gt;name_Collections</title>
-<path fill="none" stroke="#0074ff" d="M872,-213.44C878.37,-214.38 884.84,-215.27 891,-216 929.85,-220.63 1215.46,-215.26 1242,-244 1256.77,-260 1255.01,-324.54 1242,-342 1223.43,-366.92 1198.8,-342.01 1175,-362 1120.99,-407.36 1080.57,-577.18 1033.48,-658.39"/>
-<polygon fill="#0074ff" stroke="#0074ff" points="1030.22,-657.02 1028,-667.38 1036.19,-660.66 1030.22,-657.02"/>
+<path fill="none" stroke="#0074ff" d="M872,-213.44C878.37,-214.38 884.84,-215.27 891,-216 929.85,-220.63 1215.46,-215.26 1242,-244 1256.77,-260 1255.01,-324.54 1242,-342 1223.43,-366.92 1198.15,-341.27 1175,-362 1113.21,-417.32 1089.64,-634.43 1033.69,-721.68"/>
+<polygon fill="#0074ff" stroke="#0074ff" points="1030.79,-719.73 1028,-729.95 1036.55,-723.7 1030.79,-719.73"/>
 </g>
 <!-- exit_Logic&#45;&gt;exit_Alfa -->
 <!-- exit_Logic&#45;&gt;exit_Alfa -->
@@ -492,42 +492,42 @@
 <text text-anchor="middle" x="732" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">Built ins</text>
 </g>
 <!-- @siteimprove/alfa&#45;branched&#45;&gt;name_Built ins -->
-<g id="edge670" class="edge">
+<g id="edge669" class="edge">
 <title>@siteimprove/alfa&#45;branched&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M597.76,-782.93C637.85,-773.72 690.34,-759.85 708,-747 721.46,-737.21 716.45,-726.92 729,-716 750.29,-697.47 771.08,-711.96 786,-688 790.37,-680.99 790.58,-618.01 785,-606 781.31,-598.06 775.54,-590.93 769.15,-584.77"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="771.26,-581.97 761.44,-578 766.64,-587.23 771.26,-581.97"/>
+<path fill="none" stroke="#a2ff00" d="M595.94,-782.96C645.49,-771.77 717.12,-754.67 728,-747 741.6,-737.41 737.39,-727.93 749,-716 763.88,-700.71 778.26,-706.98 788,-688 795.23,-673.9 781.81,-607.57 781,-606 777.04,-598.29 771.29,-591.15 765.1,-584.9"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="767.41,-582.28 757.72,-578 762.63,-587.39 767.41,-582.28"/>
 </g>
 <!-- @siteimprove/alfa&#45;list -->
 <g id="node42" class="node">
 <title>@siteimprove/alfa&#45;list</title>
-<path fill="none" stroke="#000000" d="M789.83,-747C789.83,-747 746.17,-747 746.17,-747 742.33,-747 738.5,-743.17 738.5,-739.33 738.5,-739.33 738.5,-731.67 738.5,-731.67 738.5,-727.83 742.33,-724 746.17,-724 746.17,-724 789.83,-724 789.83,-724 793.67,-724 797.5,-727.83 797.5,-731.67 797.5,-731.67 797.5,-739.33 797.5,-739.33 797.5,-743.17 793.67,-747 789.83,-747"/>
-<text text-anchor="middle" x="768" y="-731.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;list</text>
+<path fill="none" stroke="#000000" d="M809.83,-747C809.83,-747 766.17,-747 766.17,-747 762.33,-747 758.5,-743.17 758.5,-739.33 758.5,-739.33 758.5,-731.67 758.5,-731.67 758.5,-727.83 762.33,-724 766.17,-724 766.17,-724 809.83,-724 809.83,-724 813.67,-724 817.5,-727.83 817.5,-731.67 817.5,-731.67 817.5,-739.33 817.5,-739.33 817.5,-743.17 813.67,-747 809.83,-747"/>
+<text text-anchor="middle" x="788" y="-731.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;list</text>
 </g>
 <!-- @siteimprove/alfa&#45;branched&#45;&gt;@siteimprove/alfa&#45;list -->
 <!-- @siteimprove/alfa&#45;branched&#45;&gt;@siteimprove/alfa&#45;list -->
-<g id="edge673" class="edge">
+<g id="edge672" class="edge">
 <title>@siteimprove/alfa&#45;branched&#45;&gt;@siteimprove/alfa&#45;list</title>
-<path fill="none" stroke="black" d="M593.98,-782.98C633.93,-773.09 691.03,-758.31 728.84,-748.09"/>
-<polygon fill="black" stroke="black" points="729.76,-751.46 738.49,-745.46 727.92,-744.71 729.76,-751.46"/>
+<path fill="none" stroke="black" d="M597.83,-783.36C637.17,-774.48 693.45,-761.16 748.27,-748.12"/>
+<polygon fill="black" stroke="black" points="749.21,-751.5 758.13,-745.78 747.59,-744.69 749.21,-751.5"/>
 </g>
 <!-- @siteimprove/alfa&#45;collection -->
 <g id="node57" class="node">
 <title>@siteimprove/alfa&#45;collection</title>
-<path fill="none" stroke="#000000" d="M554.83,-570C554.83,-570 471.17,-570 471.17,-570 467.33,-570 463.5,-566.17 463.5,-562.33 463.5,-562.33 463.5,-554.67 463.5,-554.67 463.5,-550.83 467.33,-547 471.17,-547 471.17,-547 554.83,-547 554.83,-547 558.67,-547 562.5,-550.83 562.5,-554.67 562.5,-554.67 562.5,-562.33 562.5,-562.33 562.5,-566.17 558.67,-570 554.83,-570"/>
-<text text-anchor="middle" x="513" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;collection</text>
+<path fill="none" stroke="#000000" d="M574.83,-570C574.83,-570 491.17,-570 491.17,-570 487.33,-570 483.5,-566.17 483.5,-562.33 483.5,-562.33 483.5,-554.67 483.5,-554.67 483.5,-550.83 487.33,-547 491.17,-547 491.17,-547 574.83,-547 574.83,-547 578.67,-547 582.5,-550.83 582.5,-554.67 582.5,-554.67 582.5,-562.33 582.5,-562.33 582.5,-566.17 578.67,-570 574.83,-570"/>
+<text text-anchor="middle" x="533" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;collection</text>
 </g>
 <!-- @siteimprove/alfa&#45;branched&#45;&gt;@siteimprove/alfa&#45;collection -->
 <!-- @siteimprove/alfa&#45;branched&#45;&gt;@siteimprove/alfa&#45;collection -->
-<g id="edge667" class="edge">
+<g id="edge666" class="edge">
 <title>@siteimprove/alfa&#45;branched&#45;&gt;@siteimprove/alfa&#45;collection</title>
-<path fill="none" stroke="black" d="M540.69,-782.84C524.01,-765.46 486.4,-728.81 472,-688 458.16,-648.77 486.16,-603.58 502.75,-578.6"/>
-<polygon fill="black" stroke="black" points="505.8,-580.34 508.44,-570.08 499.98,-576.45 505.8,-580.34"/>
+<path fill="none" stroke="black" d="M545.1,-782.91C534.82,-764.76 507.9,-725.97 498,-688 494.96,-676.33 498.2,-610.42 500,-606 504.39,-595.23 512.43,-585.35 519.66,-577.49"/>
+<polygon fill="black" stroke="black" points="522.35,-579.74 526.71,-570.08 517.28,-574.92 522.35,-579.74"/>
 </g>
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_other -->
-<g id="edge254" class="edge">
+<g id="edge252" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_other</title>
-<path fill="none" stroke="#e800ff" d="M1309,-1492.63C1433.63,-1486.47 1582.25,-1476.84 1647,-1463 1743.47,-1442.37 1855,-1484.15 1855,-1385.5 1855,-1385.5 1855,-1385.5 1855,-970.5 1855,-909.75 1887.66,-880.01 1848,-834 1818.69,-800 1783.96,-842.16 1749,-814 1719.32,-790.1 1710.02,-680.48 1680,-657 1671.01,-649.97 1654.62,-644.15 1635.38,-639.35"/>
-<polygon fill="#e800ff" stroke="#e800ff" points="1635.95,-635.88 1625.41,-637 1634.34,-642.7 1635.95,-635.88"/>
+<path fill="none" stroke="#e800ff" d="M1309,-1492.63C1433.63,-1486.47 1582.25,-1476.84 1647,-1463 1743.47,-1442.37 1855,-1484.15 1855,-1385.5 1855,-1385.5 1855,-1385.5 1855,-970.5 1855,-909.75 1887.66,-880.01 1848,-834 1818.69,-800 1783.96,-842.16 1749,-814 1719.32,-790.1 1710.02,-680.48 1680,-657 1641.53,-626.91 1618.72,-643.33 1573.91,-638.4"/>
+<polygon fill="#e800ff" stroke="#e800ff" points="1574.39,-634.93 1564,-637 1573.41,-641.86 1574.39,-634.93"/>
 </g>
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_other -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_other -->
@@ -537,7 +537,7 @@
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_other -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_other -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Type definitions -->
-<g id="edge233" class="edge">
+<g id="edge231" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Type definitions</title>
 <path fill="none" stroke="#e800ff" d="M1309,-1497.81C1534.02,-1492.92 1875.42,-1482.53 1898,-1463 1924.54,-1440.05 1913,-1420.58 1913,-1385.5 1913,-1385.5 1913,-1385.5 1913,-911.5 1913,-876.42 1922.71,-858.91 1898,-834 1866.39,-802.13 1827.43,-848.74 1799,-814 1776.91,-787 1775.72,-682.98 1799,-657 1826.15,-626.7 1947.1,-659.51 1981,-637 2038.85,-598.59 2057,-569.94 2057,-500.5 2057,-500.5 2057,-500.5 2057,-439.5 2057,-403.03 2059.15,-383.93 2030,-362 1999.26,-338.87 1737.57,-343.7 1672.1,-342.35"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="1672.11,-338.85 1662,-342 1671.87,-345.84 1672.11,-338.85"/>
@@ -548,7 +548,7 @@
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Type definitions -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Type definitions -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Comparison -->
-<g id="edge237" class="edge">
+<g id="edge235" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#e800ff" d="M981,-1501.81C793.59,-1501.16 471.9,-1495.4 430,-1463 401.37,-1440.86 405,-1421.69 405,-1385.5 405,-1385.5 405,-1385.5 405,-1029.5 405,-942.56 453.28,-901.11 398,-834 373.05,-803.71 339.23,-842.26 312,-814 287.66,-788.73 297,-771.58 297,-736.5 297,-736.5 297,-736.5 297,-439.5 297,-404.5 284.55,-384.93 311,-362 333.98,-342.08 828.06,-347.3 858,-342 864.83,-340.79 871.97,-338.96 879.12,-336.9"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="875.46,-345.58 880,-336.01 870.48,-340.66 875.46,-345.58"/>
@@ -556,14 +556,14 @@
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Comparison -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Comparison -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Hash tables -->
-<g id="edge240" class="edge">
+<g id="edge238" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Hash tables</title>
 <path fill="none" stroke="#e800ff" d="M981,-1501.35C747.36,-1500.28 283.97,-1494.22 217,-1463 174.66,-1443.26 146,-1432.21 146,-1385.5 146,-1385.5 146,-1385.5 146,-439.5 146,-404.33 137.94,-387.65 162,-362 182.59,-340.05 199.03,-349.29 225.28,-344.39"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="226.13,-347.79 235,-342 224.45,-340.99 226.13,-347.79"/>
 </g>
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Hash tables -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Serialization -->
-<g id="edge235" class="edge">
+<g id="edge233" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#e800ff" d="M981,-1499.52C798.49,-1495.78 485.92,-1485.86 377,-1463 280.86,-1442.82 170,-1483.74 170,-1385.5 170,-1385.5 170,-1385.5 170,-439.5 170,-404.42 159.81,-386.42 185,-362 205.04,-342.57 281.55,-347.06 309,-342 332.77,-337.61 359.96,-331.85 387.61,-327.93"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="380.62,-332.51 390,-327.58 379.59,-325.59 380.62,-332.51"/>
@@ -574,7 +574,7 @@
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Serialization -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Serialization -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Logic -->
-<g id="edge204" class="edge">
+<g id="edge202" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#e800ff" d="M1309,-1499.02C1463.95,-1495.22 1666,-1485.86 1748,-1463 1811.69,-1445.24 1875,-1451.62 1875,-1385.5 1875,-1385.5 1875,-1385.5 1875,-911.5 1875,-876.57 1886.26,-859.13 1862,-834 1831.12,-802.02 1793.13,-847.58 1764,-814 1741.14,-787.65 1739.81,-682.14 1764,-657 1793.13,-626.73 1923.12,-667.51 1952,-637 1993.76,-592.89 1959,-561.25 1959,-500.5 1959,-500.5 1959,-500.5 1959,-439.5 1959,-404.92 1977.35,-385.53 1952,-362 1927.26,-339.03 816.86,-345.98 695.04,-342.51"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="695.16,-339.01 685,-342 694.81,-346 695.16,-339.01"/>
@@ -587,7 +587,7 @@
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Logic -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Logic -->
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Collections -->
-<g id="edge202" class="edge">
+<g id="edge200" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Collections</title>
 <path fill="none" stroke="#e800ff" d="M1032.85,-1483C998,-1460.11 998,-1419.93 998,-1385.5 998,-1385.5 998,-1385.5 998,-911.5 998,-876.92 1015.22,-858.68 991,-834 983.76,-826.62 956.05,-820.47 921.22,-815.4"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="921.62,-811.92 911.23,-814 920.64,-818.85 921.62,-811.92"/>
@@ -612,7 +612,7 @@
 <text text-anchor="middle" x="1298" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">Alternatives</text>
 </g>
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Alternatives -->
-<g id="edge203" class="edge">
+<g id="edge201" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Alternatives</title>
 <path fill="none" stroke="#e800ff" d="M1309,-1497.11C1460.03,-1487.27 1642,-1459.71 1642,-1385.5 1642,-1385.5 1642,-1385.5 1642,-970.5 1642,-892.71 1645,-873.29 1645,-795.5 1645,-795.5 1645,-795.5 1645,-734.5 1645,-717.24 1652.1,-669.31 1640,-657 1601.87,-618.2 1448.5,-651.26 1396,-637 1348.33,-624.05 1297.67,-597.23 1281.35,-578.8"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="1290.41,-580.58 1280.14,-578 1286.56,-586.42 1290.41,-580.58"/>
@@ -631,7 +631,7 @@
 <text text-anchor="middle" x="1185" y="-849.8" font-family="Arial" font-size="14.00" fill="#000000">Computations</text>
 </g>
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Computations -->
-<g id="edge239" class="edge">
+<g id="edge237" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Computations</title>
 <path fill="none" stroke="#e800ff" d="M1113.86,-1483C1117.12,-1460.25 1126,-1420.35 1126,-1385.5 1126,-1385.5 1126,-1385.5 1126,-970.5 1126,-941.56 1139.29,-911.62 1153.4,-889.41"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="1156.38,-891.26 1159.03,-881 1150.56,-887.36 1156.38,-891.26"/>
@@ -644,7 +644,7 @@
 <text text-anchor="middle" x="1951" y="-790.8" font-family="Arial" font-size="14.00" fill="#000000">Performance measurements</text>
 </g>
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Performance measurements -->
-<g id="edge247" class="edge">
+<g id="edge245" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Performance measurements</title>
 <path fill="none" stroke="#e800ff" d="M1309,-1498.7C1551.68,-1494.32 1938.62,-1484.06 1963,-1463 1989.55,-1440.07 1978,-1420.58 1978,-1385.5 1978,-1385.5 1978,-1385.5 1978,-911.5 1978,-877.23 1966.68,-838.71 1958.7,-815.81"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="1966.27,-819.51 1957.22,-814 1960.85,-823.95 1966.27,-819.51"/>
@@ -656,7 +656,7 @@
 <text text-anchor="middle" x="935" y="-1439.8" font-family="Arial" font-size="14.00" fill="#000000">Understanding the web</text>
 </g>
 <!-- exit_Accessibility Conformance Testing&#45;&gt;name_Understanding the web -->
-<g id="edge883" class="edge">
+<g id="edge882" class="edge">
 <title>exit_Accessibility Conformance Testing&#45;&gt;name_Understanding the web</title>
 <path fill="none" stroke="#e800ff" d="M981,-1484.67C956.59,-1479.13 935.14,-1472.88 920.03,-1466.99"/>
 <polygon fill="#e800ff" stroke="#e800ff" points="921.22,-1463.69 910.65,-1463 918.48,-1470.13 921.22,-1463.69"/>
@@ -686,7 +686,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;option&#45;&gt;exit_Alternatives -->
 <!-- exit_other&#45;&gt;name_Type definitions -->
-<g id="edge207" class="edge">
+<g id="edge205" class="edge">
 <title>exit_other&#45;&gt;name_Type definitions</title>
 <path fill="none" stroke="#1700ff" d="M1485,-371.99C1464.25,-365.52 1443.37,-356.3 1428.65,-347.63"/>
 <polygon fill="#1700ff" stroke="#1700ff" points="1430.16,-344.44 1419.85,-342 1426.39,-350.34 1430.16,-344.44"/>
@@ -698,7 +698,7 @@
 <!-- exit_other&#45;&gt;name_Type definitions -->
 <!-- exit_other&#45;&gt;name_Type definitions -->
 <!-- exit_other&#45;&gt;name_Comparison -->
-<g id="edge419" class="edge">
+<g id="edge418" class="edge">
 <title>exit_other&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#1700ff" d="M1485,-370.48C1473.06,-367.19 1460.59,-363.89 1449,-362 1241.66,-328.22 1180.8,-379.74 979.03,-343.84"/>
 <polygon fill="#1700ff" stroke="#1700ff" points="979.47,-340.36 969,-342 978.21,-347.24 979.47,-340.36"/>
@@ -706,21 +706,21 @@
 <!-- exit_other&#45;&gt;name_Comparison -->
 <!-- exit_other&#45;&gt;name_Comparison -->
 <!-- exit_other&#45;&gt;name_Hash tables -->
-<g id="edge780" class="edge">
+<g id="edge779" class="edge">
 <title>exit_other&#45;&gt;name_Hash tables</title>
 <path fill="none" stroke="#1700ff" d="M1485,-367.95C1476.07,-365.53 1466.79,-363.33 1458,-362 1220.43,-326.11 615.73,-369.06 377,-342 371.49,-341.38 365.81,-340.57 360.15,-339.64"/>
 <polygon fill="#1700ff" stroke="#1700ff" points="360.45,-336.14 350,-337.85 359.24,-343.03 360.45,-336.14"/>
 </g>
 <!-- exit_other&#45;&gt;name_Hash tables -->
 <!-- exit_other&#45;&gt;name_Serialization -->
-<g id="edge420" class="edge">
+<g id="edge419" class="edge">
 <title>exit_other&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#1700ff" d="M1485,-367.97C1476.07,-365.54 1466.79,-363.34 1458,-362 1248.08,-330.06 716.71,-378.11 497.87,-343.65"/>
 <polygon fill="#1700ff" stroke="#1700ff" points="498.44,-340.2 488,-342 497.29,-347.1 498.44,-340.2"/>
 </g>
 <!-- exit_other&#45;&gt;name_Serialization -->
 <!-- exit_other&#45;&gt;name_Logic -->
-<g id="edge430" class="edge">
+<g id="edge429" class="edge">
 <title>exit_other&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#1700ff" d="M1485,-370.39C1473.06,-367.09 1460.6,-363.81 1449,-362 1136.53,-313.3 1048.52,-384.42 740.13,-343.38"/>
 <polygon fill="#1700ff" stroke="#1700ff" points="740.38,-339.88 730,-342 739.44,-346.82 740.38,-339.88"/>
@@ -728,7 +728,7 @@
 <!-- exit_other&#45;&gt;name_Logic -->
 <!-- exit_other&#45;&gt;name_Logic -->
 <!-- exit_other&#45;&gt;name_Collections -->
-<g id="edge206" class="edge">
+<g id="edge204" class="edge">
 <title>exit_other&#45;&gt;name_Collections</title>
 <path fill="none" stroke="#1700ff" d="M1485,-387.53C1472.93,-389.35 1460.41,-391.35 1449,-393 1399.13,-400.19 1265.88,-392.99 1224,-421 1185.78,-446.56 1198.14,-472.5 1173,-511 1128.73,-578.8 1104.92,-587.12 1064,-657 1055.13,-672.15 1045.9,-712.33 1033.64,-734.52"/>
 <polygon fill="#1700ff" stroke="#1700ff" points="1030.6,-732.78 1028,-743.05 1036.43,-736.65 1030.6,-732.78"/>
@@ -736,7 +736,7 @@
 <!-- exit_other&#45;&gt;name_Collections -->
 <!-- exit_other&#45;&gt;name_Collections -->
 <!-- exit_other&#45;&gt;name_Alternatives -->
-<g id="edge208" class="edge">
+<g id="edge206" class="edge">
 <title>exit_other&#45;&gt;name_Alternatives</title>
 <path fill="none" stroke="#1700ff" d="M1485,-446.21C1480.04,-455.53 1474.67,-465.09 1468.69,-474.27"/>
 <polygon fill="#1700ff" stroke="#1700ff" points="1465.75,-472.37 1463,-482.6 1471.53,-476.31 1465.75,-472.37"/>
@@ -753,13 +753,12 @@
 <!-- exit_other&#45;&gt;exit_Alfa -->
 <!-- exit_other&#45;&gt;exit_Alfa -->
 <!-- exit_other&#45;&gt;exit_Alfa -->
-<!-- exit_other&#45;&gt;exit_Alfa -->
 <!-- exit_Understanding the web -->
 <!-- exit_Understanding the web&#45;&gt;name_other -->
-<g id="edge336" class="edge">
+<g id="edge334" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_other</title>
-<path fill="none" stroke="#ff4600" stroke-dasharray="1,5" d="M698.42,-834C733.29,-828.87 760.18,-822.33 769,-814 820.13,-765.69 738.51,-705.98 789,-657 804.35,-642.11 1159,-620.21 1482.54,-618.59"/>
-<polygon fill="#ff4600" stroke="#ff4600" points="1475.06,-622.23 1485,-618.55 1474.94,-615.23 1475.06,-622.23"/>
+<path fill="none" stroke="#ff4600" stroke-dasharray="1,5" d="M689.49,-834C724.29,-828.87 751.18,-822.33 760,-814 811.13,-765.69 729.51,-705.98 780,-657 795.36,-642.09 1150.71,-620.16 1482.56,-618.59"/>
+<polygon fill="#ff4600" stroke="#ff4600" points="1475.06,-622.22 1485,-618.55 1474.94,-615.22 1475.06,-622.22"/>
 </g>
 <!-- exit_Understanding the web&#45;&gt;name_other -->
 <!-- exit_Understanding the web&#45;&gt;name_other -->
@@ -798,8 +797,9 @@
 <!-- exit_Understanding the web&#45;&gt;name_other -->
 <!-- exit_Understanding the web&#45;&gt;name_other -->
 <!-- exit_Understanding the web&#45;&gt;name_other -->
+<!-- exit_Understanding the web&#45;&gt;name_other -->
 <!-- exit_Understanding the web&#45;&gt;name_Type definitions -->
-<g id="edge406" class="edge">
+<g id="edge404" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Type definitions</title>
 <path fill="none" stroke="#ff4600" d="M452,-846.82C369.54,-838.7 287.16,-823.67 277,-814 251.15,-789.39 256,-772.19 256,-736.5 256,-736.5 256,-736.5 256,-439.5 256,-399.67 266.72,-382.28 301,-362 341.27,-338.17 1096.3,-344.94 1143,-342 1205.91,-338.04 1280.71,-329.02 1357.53,-325.23"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="1353.52,-334.35 1358,-324.75 1348.51,-329.46 1353.52,-334.35"/>
@@ -816,7 +816,7 @@
 <!-- exit_Understanding the web&#45;&gt;name_Type definitions -->
 <!-- exit_Understanding the web&#45;&gt;name_Type definitions -->
 <!-- exit_Understanding the web&#45;&gt;name_Comparison -->
-<g id="edge212" class="edge">
+<g id="edge210" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#ff4600" d="M452,-849.71C306.65,-842.01 176.59,-820.58 170,-814 145.16,-789.23 155,-771.58 155,-736.5 155,-736.5 155,-736.5 155,-439.5 155,-404.42 143.37,-384.84 170,-362 192.2,-342.96 667.21,-347.12 696,-342 719.28,-337.86 746.16,-326.49 877.9,-323.99"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="870.32,-328.12 880,-323.82 869.75,-321.14 870.32,-328.12"/>
@@ -842,7 +842,7 @@
 <!-- exit_Understanding the web&#45;&gt;name_Comparison -->
 <!-- exit_Understanding the web&#45;&gt;name_Comparison -->
 <!-- exit_Understanding the web&#45;&gt;name_Hash tables -->
-<g id="edge213" class="edge">
+<g id="edge211" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Hash tables</title>
 <path fill="none" stroke="#ff4600" d="M452,-846.21C417.54,-842.54 383.38,-837.9 353,-834 316.15,-829.27 218.93,-833 187,-814 150.7,-792.4 132,-778.74 132,-736.5 132,-736.5 132,-736.5 132,-439.5 132,-404.42 125.08,-389.39 147,-362 151.21,-356.74 161.54,-350.96 175.68,-345.52"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="177.26,-348.67 185.49,-342 174.9,-342.08 177.26,-348.67"/>
@@ -855,7 +855,7 @@
 <!-- exit_Understanding the web&#45;&gt;name_Hash tables -->
 <!-- exit_Understanding the web&#45;&gt;name_Hash tables -->
 <!-- exit_Understanding the web&#45;&gt;name_Serialization -->
-<g id="edge215" class="edge">
+<g id="edge213" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#ff4600" d="M452,-849.49C283.36,-840.44 90.15,-814.14 90,-814 64.51,-789.89 75,-771.58 75,-736.5 75,-736.5 75,-736.5 75,-439.5 75,-404.42 65.54,-387.15 90,-362 93.08,-358.84 229.63,-330.41 387.53,-324.55"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="380.6,-329.08 390,-324.2 379.61,-322.15 380.6,-329.08"/>
@@ -881,7 +881,7 @@
 <!-- exit_Understanding the web&#45;&gt;name_Serialization -->
 <!-- exit_Understanding the web&#45;&gt;name_Serialization -->
 <!-- exit_Understanding the web&#45;&gt;name_Logic -->
-<g id="edge346" class="edge">
+<g id="edge344" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#ff4600" d="M452,-850.51C291.11,-844.32 149.59,-825.09 132,-814 96.27,-791.47 77,-778.74 77,-736.5 77,-736.5 77,-736.5 77,-439.5 77,-404.42 65.66,-385.18 92,-362 118.25,-338.91 371.48,-347.54 406,-342 436.07,-337.17 471.91,-325.22 637.85,-323.67"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="630.14,-327.46 640,-323.59 629.88,-320.46 630.14,-327.46"/>
@@ -909,7 +909,7 @@
 <!-- exit_Understanding the web&#45;&gt;name_Logic -->
 <!-- exit_Understanding the web&#45;&gt;name_Logic -->
 <!-- exit_Understanding the web&#45;&gt;name_Collections -->
-<g id="edge214" class="edge">
+<g id="edge212" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Collections</title>
 <path fill="none" stroke="#ff4600" d="M452,-852.11C134.59,-849.4 211.7,-832.78 273,-814 286.27,-809.93 301.17,-804.42 393.87,-800.47"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="394.15,-803.96 404,-800.06 393.87,-796.97 394.15,-803.96"/>
@@ -963,7 +963,7 @@
 <!-- exit_Understanding the web&#45;&gt;name_Collections -->
 <!-- exit_Understanding the web&#45;&gt;name_Collections -->
 <!-- exit_Understanding the web&#45;&gt;name_Alternatives -->
-<g id="edge333" class="edge">
+<g id="edge331" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Alternatives</title>
 <path fill="none" stroke="#ff4600" d="M673.24,-834C719.94,-828.78 759.37,-822.21 771,-814 802.2,-791.96 810.83,-680.43 841,-657 883.01,-624.38 911.7,-661.33 959,-637 999.27,-616.29 1031.89,-567.41 1244.16,-560.35"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="1236.71,-565.14 1246,-560.05 1235.56,-558.23 1236.71,-565.14"/>
@@ -998,7 +998,7 @@
 <!-- exit_Understanding the web&#45;&gt;name_Alternatives -->
 <!-- exit_Understanding the web&#45;&gt;name_Alternatives -->
 <!-- exit_Understanding the web&#45;&gt;name_Computations -->
-<g id="edge530" class="edge">
+<g id="edge529" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Computations</title>
 <path fill="none" stroke="#ff4600" d="M1104,-849.65C1110.74,-849.92 1117.49,-850.21 1124.24,-850.51"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="1115.44,-851.87 1126,-850.96 1117.18,-845.08 1115.44,-851.87"/>
@@ -1011,7 +1011,7 @@
 <text text-anchor="middle" x="373" y="-967.8" font-family="Arial" font-size="14.00" fill="#000000">Graphs</text>
 </g>
 <!-- exit_Understanding the web&#45;&gt;name_Graphs -->
-<g id="edge366" class="edge">
+<g id="edge364" class="edge">
 <title>exit_Understanding the web&#45;&gt;name_Graphs</title>
 <path fill="none" stroke="#ff4600" d="M452,-887.03C448.56,-888.93 445.22,-890.92 442,-893 434.29,-897.98 426.72,-903.82 419.57,-910.03"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="417.06,-907.58 412,-916.88 421.76,-912.77 417.06,-907.58"/>
@@ -1036,23 +1036,23 @@
 <!-- @siteimprove/alfa&#45;map -->
 <g id="node32" class="node">
 <title>@siteimprove/alfa&#45;map</title>
-<path fill="none" stroke="#000000" d="M702.33,-629C702.33,-629 647.67,-629 647.67,-629 643.83,-629 640,-625.17 640,-621.33 640,-621.33 640,-613.67 640,-613.67 640,-609.83 643.83,-606 647.67,-606 647.67,-606 702.33,-606 702.33,-606 706.17,-606 710,-609.83 710,-613.67 710,-613.67 710,-621.33 710,-621.33 710,-625.17 706.17,-629 702.33,-629"/>
-<text text-anchor="middle" x="675" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;map</text>
+<path fill="none" stroke="#000000" d="M722.33,-629C722.33,-629 667.67,-629 667.67,-629 663.83,-629 660,-625.17 660,-621.33 660,-621.33 660,-613.67 660,-613.67 660,-609.83 663.83,-606 667.67,-606 667.67,-606 722.33,-606 722.33,-606 726.17,-606 730,-609.83 730,-613.67 730,-613.67 730,-621.33 730,-621.33 730,-625.17 726.17,-629 722.33,-629"/>
+<text text-anchor="middle" x="695" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;map</text>
 </g>
 <!-- @siteimprove/alfa&#45;map&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;map&#45;&gt;name_Built ins -->
-<g id="edge851" class="edge">
+<g id="edge850" class="edge">
 <title>@siteimprove/alfa&#45;map&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M680.31,-605.78C685.14,-599.92 692.23,-592.39 699.66,-585.12"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="702.31,-587.43 707.13,-578 697.48,-582.36 702.31,-587.43"/>
+<path fill="none" stroke="#a2ff00" d="M696.55,-605.78C700.21,-598.06 706.78,-587.43 713.4,-578.31"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="709.76,-587.85 713.67,-578 704.47,-583.26 709.76,-587.85"/>
 </g>
 <!-- @siteimprove/alfa&#45;map&#45;&gt;name_Built ins -->
 <!-- @siteimprove/alfa&#45;map&#45;&gt;@siteimprove/alfa&#45;collection -->
 <!-- @siteimprove/alfa&#45;map&#45;&gt;@siteimprove/alfa&#45;collection -->
-<g id="edge856" class="edge">
+<g id="edge855" class="edge">
 <title>@siteimprove/alfa&#45;map&#45;&gt;@siteimprove/alfa&#45;collection</title>
-<path fill="none" stroke="black" d="M650.3,-605.91C625.79,-596.71 587.91,-583.33 558.08,-573.29"/>
-<polygon fill="black" stroke="black" points="558.9,-569.88 548.31,-570.03 556.68,-576.52 558.9,-569.88"/>
+<path fill="none" stroke="black" d="M670.3,-605.91C645.79,-596.71 607.91,-583.33 578.08,-573.29"/>
+<polygon fill="black" stroke="black" points="578.9,-569.88 568.31,-570.03 576.68,-576.52 578.9,-569.88"/>
 </g>
 <!-- @siteimprove/alfa&#45;bits -->
 <g id="node81" class="node">
@@ -1062,28 +1062,28 @@
 </g>
 <!-- @siteimprove/alfa&#45;map&#45;&gt;@siteimprove/alfa&#45;bits -->
 <!-- @siteimprove/alfa&#45;map&#45;&gt;@siteimprove/alfa&#45;bits -->
-<g id="edge853" class="edge">
+<g id="edge852" class="edge">
 <title>@siteimprove/alfa&#45;map&#45;&gt;@siteimprove/alfa&#45;bits</title>
-<path fill="none" stroke="black" d="M710.2,-613.07C751.35,-608.01 820.5,-597.04 877,-578 880.03,-576.98 883.13,-575.77 886.15,-574.46"/>
-<polygon fill="black" stroke="black" points="887.78,-577.56 895.29,-570.09 884.76,-571.25 887.78,-577.56"/>
+<path fill="none" stroke="black" d="M730.1,-612.22C767.53,-606.57 827.62,-595.25 877,-578 880.02,-576.95 883.11,-575.71 886.12,-574.4"/>
+<polygon fill="black" stroke="black" points="887.77,-577.49 895.26,-570 884.73,-571.18 887.77,-577.49"/>
 </g>
 <!-- @siteimprove/alfa&#45;applicative&#45;&gt;@siteimprove/alfa&#45;mapper -->
 <!-- @siteimprove/alfa&#45;applicative&#45;&gt;@siteimprove/alfa&#45;mapper -->
-<g id="edge604" class="edge">
+<g id="edge603" class="edge">
 <title>@siteimprove/alfa&#45;applicative&#45;&gt;@siteimprove/alfa&#45;mapper</title>
 <path fill="none" stroke="black" d="M1776.85,-251.79C1787.21,-243.03 1798.68,-229.85 1805,-216 1811.98,-200.71 1814.92,-181.83 1814.77,-167.61"/>
 <polygon fill="black" stroke="black" points="1818.23,-167.07 1813.99,-157.36 1811.25,-167.59 1818.23,-167.07"/>
 </g>
 <!-- @siteimprove/alfa&#45;applicative&#45;&gt;@siteimprove/alfa&#45;functor -->
 <!-- @siteimprove/alfa&#45;applicative&#45;&gt;@siteimprove/alfa&#45;functor -->
-<g id="edge602" class="edge">
+<g id="edge601" class="edge">
 <title>@siteimprove/alfa&#45;applicative&#45;&gt;@siteimprove/alfa&#45;functor</title>
 <path fill="none" stroke="black" d="M1758.14,-251.78C1755.76,-244.22 1751.02,-233.87 1745.95,-224.88"/>
 <polygon fill="black" stroke="black" points="1748.84,-222.89 1740.65,-216.17 1742.86,-226.53 1748.84,-222.89"/>
 </g>
 <!-- @siteimprove/alfa&#45;applicative&#45;&gt;exit_Type definitions -->
 <!-- exit_Collections&#45;&gt;name_other -->
-<g id="edge277" class="edge">
+<g id="edge275" class="edge">
 <title>exit_Collections&#45;&gt;name_other</title>
 <path fill="none" stroke="#a2ff00" stroke-dasharray="1,5" d="M1028,-500.99C1059.13,-531.3 1081.33,-554.86 1140,-578 1247.71,-620.47 1285.94,-581.06 1399,-606 1410.96,-608.64 1424.75,-614.28 1482.5,-615.99"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="1474.7,-618.73 1485,-616.24 1475.4,-611.77 1474.7,-618.73"/>
@@ -1099,7 +1099,7 @@
 <!-- exit_Collections&#45;&gt;name_other -->
 <!-- exit_Collections&#45;&gt;name_other -->
 <!-- exit_Collections&#45;&gt;name_Type definitions -->
-<g id="edge217" class="edge">
+<g id="edge215" class="edge">
 <title>exit_Collections&#45;&gt;name_Type definitions</title>
 <path fill="none" stroke="#a2ff00" d="M850.09,-362C933.38,-347.03 1159.16,-327.83 1357.86,-324.13"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="1354.5,-333.96 1358,-323.96 1349.03,-329.59 1354.5,-333.96"/>
@@ -1143,7 +1143,7 @@
 <!-- exit_Collections&#45;&gt;name_Type definitions -->
 <!-- exit_Collections&#45;&gt;name_Type definitions -->
 <!-- exit_Collections&#45;&gt;name_Comparison -->
-<g id="edge220" class="edge">
+<g id="edge218" class="edge">
 <title>exit_Collections&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#a2ff00" d="M824.78,-362C807.28,-349.12 824.95,-333.11 877.78,-326.53"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="872.58,-333 880,-325.44 869.48,-326.72 872.58,-333"/>
@@ -1166,7 +1166,7 @@
 <!-- exit_Collections&#45;&gt;name_Comparison -->
 <!-- exit_Collections&#45;&gt;name_Comparison -->
 <!-- exit_Collections&#45;&gt;name_Hash tables -->
-<g id="edge224" class="edge">
+<g id="edge222" class="edge">
 <title>exit_Collections&#45;&gt;name_Hash tables</title>
 <path fill="none" stroke="#a2ff00" d="M765,-362C537.31,-323.27 469.56,-387.31 247.99,-344"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="248.49,-340.54 238,-342 247.12,-347.4 248.49,-340.54"/>
@@ -1184,7 +1184,7 @@
 <!-- exit_Collections&#45;&gt;name_Hash tables -->
 <!-- exit_Collections&#45;&gt;name_Hash tables -->
 <!-- exit_Collections&#45;&gt;name_Serialization -->
-<g id="edge226" class="edge">
+<g id="edge224" class="edge">
 <title>exit_Collections&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#a2ff00" d="M774,-362C612.62,-333.28 564.26,-372.21 407.96,-343.87"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="408.47,-340.4 398,-342 407.18,-347.28 408.47,-340.4"/>
@@ -1201,7 +1201,7 @@
 <!-- exit_Collections&#45;&gt;name_Serialization -->
 <!-- exit_Collections&#45;&gt;name_Serialization -->
 <!-- exit_Collections&#45;&gt;name_Logic -->
-<g id="edge230" class="edge">
+<g id="edge228" class="edge">
 <title>exit_Collections&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#a2ff00" d="M675,-362C620.2,-349.24 605.1,-353.37 550,-342 519.44,-335.7 482.42,-325.07 637.91,-323.66"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="630.13,-327.44 640,-323.58 629.88,-320.45 630.13,-327.44"/>
@@ -1229,7 +1229,7 @@
 <!-- exit_Collections&#45;&gt;name_Logic -->
 <!-- exit_Collections&#45;&gt;name_Logic -->
 <!-- exit_Collections&#45;&gt;name_Alternatives -->
-<g id="edge229" class="edge">
+<g id="edge227" class="edge">
 <title>exit_Collections&#45;&gt;name_Alternatives</title>
 <path fill="none" stroke="#a2ff00" d="M1028,-463.92C1045.17,-478.53 1061.87,-493.61 1093,-511 1129.12,-531.18 1175.7,-548.97 1244.04,-555.17"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="1235.43,-555.32 1246,-556 1238.16,-548.87 1235.43,-555.32"/>
@@ -1246,9 +1246,9 @@
 <!-- exit_Collections&#45;&gt;name_Alternatives -->
 <!-- exit_Collections&#45;&gt;name_Alternatives -->
 <!-- exit_Collections&#45;&gt;name_Computations -->
-<g id="edge463" class="edge">
+<g id="edge462" class="edge">
 <title>exit_Collections&#45;&gt;name_Computations</title>
-<path fill="none" stroke="#a2ff00" d="M404,-442.38C381.25,-452.53 366,-466.64 366,-498.5 366,-736.5 366,-736.5 366,-736.5 366,-773.44 365.83,-792.69 396,-814 427.91,-836.54 1060.27,-828.85 1099,-834 1104.47,-834.73 1110.12,-835.68 1115.8,-836.77"/>
+<path fill="none" stroke="#a2ff00" d="M404,-441.25C381.16,-452.2 366,-466.43 366,-498.5 366,-736.5 366,-736.5 366,-736.5 366,-773.44 365.83,-792.69 396,-814 427.91,-836.54 1060.27,-828.85 1099,-834 1104.47,-834.73 1110.12,-835.68 1115.8,-836.77"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="1115.5,-840.29 1126,-838.87 1116.91,-833.43 1115.5,-840.29"/>
 </g>
 <!-- exit_Collections&#45;&gt;name_Computations -->
@@ -1274,7 +1274,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;array&#45;&gt;@siteimprove/alfa&#45;iterable -->
 <!-- @siteimprove/alfa&#45;array&#45;&gt;@siteimprove/alfa&#45;iterable -->
-<g id="edge269" class="edge">
+<g id="edge267" class="edge">
 <title>@siteimprove/alfa&#45;array&#45;&gt;@siteimprove/alfa&#45;iterable</title>
 <path fill="none" stroke="black" d="M819.33,-546.78C817.08,-539.22 812.52,-528.87 807.61,-519.88"/>
 <polygon fill="black" stroke="black" points="810.56,-518 802.46,-511.17 804.54,-521.56 810.56,-518"/>
@@ -1282,7 +1282,7 @@
 <!-- @siteimprove/alfa&#45;array&#45;&gt;exit_Built ins -->
 <!-- @siteimprove/alfa&#45;functor&#45;&gt;@siteimprove/alfa&#45;mapper -->
 <!-- @siteimprove/alfa&#45;functor&#45;&gt;@siteimprove/alfa&#45;mapper -->
-<g id="edge507" class="edge">
+<g id="edge506" class="edge">
 <title>@siteimprove/alfa&#45;functor&#45;&gt;@siteimprove/alfa&#45;mapper</title>
 <path fill="none" stroke="black" d="M1750.08,-192.78C1762.74,-184.58 1778.72,-173.11 1790.8,-163.64"/>
 <polygon fill="black" stroke="black" points="1793.22,-166.18 1798.8,-157.17 1788.82,-160.74 1793.22,-166.18"/>
@@ -1303,7 +1303,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;earl&#45;&gt;@siteimprove/alfa&#45;json&#45;ld -->
 <!-- @siteimprove/alfa&#45;earl&#45;&gt;@siteimprove/alfa&#45;json&#45;ld -->
-<g id="edge547" class="edge">
+<g id="edge546" class="edge">
 <title>@siteimprove/alfa&#45;earl&#45;&gt;@siteimprove/alfa&#45;json&#45;ld</title>
 <path fill="none" stroke="black" d="M542.34,-310.78C542.21,-303.45 540.66,-293.52 538.4,-284.74"/>
 <polygon fill="black" stroke="black" points="541.74,-283.71 535.46,-275.17 535.05,-285.76 541.74,-283.71"/>
@@ -1317,7 +1317,7 @@
 <!-- @siteimprove/alfa&#45;either&#45;&gt;exit_Alternatives -->
 <!-- @siteimprove/alfa&#45;either&#45;&gt;@siteimprove/alfa&#45;option -->
 <!-- @siteimprove/alfa&#45;either&#45;&gt;@siteimprove/alfa&#45;option -->
-<g id="edge480" class="edge">
+<g id="edge479" class="edge">
 <title>@siteimprove/alfa&#45;either&#45;&gt;@siteimprove/alfa&#45;option</title>
 <path fill="none" stroke="black" d="M1338.51,-487.78C1348.05,-479.9 1359.65,-468.99 1368.45,-459.75"/>
 <polygon fill="black" stroke="black" points="1371.21,-461.92 1375.36,-452.17 1366.03,-457.21 1371.21,-461.92"/>
@@ -1336,7 +1336,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;future&#45;&gt;@siteimprove/alfa&#45;thenable -->
 <!-- @siteimprove/alfa&#45;future&#45;&gt;@siteimprove/alfa&#45;thenable -->
-<g id="edge628" class="edge">
+<g id="edge627" class="edge">
 <title>@siteimprove/alfa&#45;future&#45;&gt;@siteimprove/alfa&#45;thenable</title>
 <path fill="none" stroke="black" d="M1417.85,-841.78C1418.73,-834.61 1418.59,-824.95 1417.62,-816.31"/>
 <polygon fill="black" stroke="black" points="1421.03,-815.48 1415.96,-806.17 1414.12,-816.61 1421.03,-815.48"/>
@@ -1345,45 +1345,45 @@
 <!-- @siteimprove/alfa&#45;future&#45;&gt;exit_Asynchronous -->
 <!-- @siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;map -->
 <!-- @siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;map -->
-<g id="edge449" class="edge">
+<g id="edge448" class="edge">
 <title>@siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;map</title>
-<path fill="none" stroke="black" d="M771.91,-723.87C771.89,-707.82 763.83,-677.15 747,-657 739.1,-647.55 728.26,-639.76 717.32,-633.73"/>
-<polygon fill="black" stroke="black" points="718.66,-630.49 708.16,-629.08 715.49,-636.73 718.66,-630.49"/>
+<path fill="none" stroke="black" d="M758.32,-724.47C740.63,-717.45 719.63,-706.01 708,-688 698.8,-673.76 698.48,-654.26 698.59,-639.54"/>
+<polygon fill="black" stroke="black" points="702.09,-639.39 698.62,-629.38 695.09,-639.37 702.09,-639.39"/>
 </g>
 <!-- @siteimprove/alfa&#45;list&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;list&#45;&gt;name_Built ins -->
-<g id="edge436" class="edge">
+<g id="edge435" class="edge">
 <title>@siteimprove/alfa&#45;list&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M776.13,-723.92C785.39,-715.59 798.87,-702.91 805,-688 818.86,-654.29 823.34,-637.49 805,-606 802.66,-601.98 786.21,-592.35 769.45,-582.9"/>
+<path fill="none" stroke="#a2ff00" d="M788.87,-723.73C793.4,-714.72 801.55,-701.25 805,-688 814.19,-652.73 823.34,-637.49 805,-606 802.66,-601.98 786.21,-592.35 769.45,-582.9"/>
 <polygon fill="#a2ff00" stroke="#a2ff00" points="771.15,-579.84 760.72,-578 767.73,-585.94 771.15,-579.84"/>
 </g>
 <!-- @siteimprove/alfa&#45;list&#45;&gt;name_Built ins -->
 <!-- @siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;collection -->
 <!-- @siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;collection -->
-<g id="edge441" class="edge">
+<g id="edge440" class="edge">
 <title>@siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;collection</title>
-<path fill="none" stroke="black" d="M748.44,-723.93C714.08,-708.48 641.64,-679.17 579,-657 551.31,-647.2 533.35,-660.71 516,-637 504.1,-620.74 508.12,-597.09 511.76,-580.19"/>
-<polygon fill="black" stroke="black" points="515.22,-580.73 513.92,-570.21 508.38,-579.25 515.22,-580.73"/>
+<path fill="none" stroke="black" d="M769.02,-723.96C735.2,-708.43 663.32,-678.87 601,-657 572.48,-646.99 553.96,-661.31 536,-637 524.03,-620.79 528.06,-597.13 531.72,-580.22"/>
+<polygon fill="black" stroke="black" points="535.19,-580.75 533.89,-570.23 528.35,-579.26 535.19,-580.75"/>
 </g>
 <!-- @siteimprove/alfa&#45;set -->
 <g id="node66" class="node">
 <title>@siteimprove/alfa&#45;set</title>
-<path fill="none" stroke="#000000" d="M721.83,-688C721.83,-688 676.17,-688 676.17,-688 672.33,-688 668.5,-684.17 668.5,-680.33 668.5,-680.33 668.5,-672.67 668.5,-672.67 668.5,-668.83 672.33,-665 676.17,-665 676.17,-665 721.83,-665 721.83,-665 725.67,-665 729.5,-668.83 729.5,-672.67 729.5,-672.67 729.5,-680.33 729.5,-680.33 729.5,-684.17 725.67,-688 721.83,-688"/>
-<text text-anchor="middle" x="699" y="-672.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;set</text>
+<path fill="none" stroke="#000000" d="M761.83,-688C761.83,-688 716.17,-688 716.17,-688 712.33,-688 708.5,-684.17 708.5,-680.33 708.5,-680.33 708.5,-672.67 708.5,-672.67 708.5,-668.83 712.33,-665 716.17,-665 716.17,-665 761.83,-665 761.83,-665 765.67,-665 769.5,-668.83 769.5,-672.67 769.5,-672.67 769.5,-680.33 769.5,-680.33 769.5,-684.17 765.67,-688 761.83,-688"/>
+<text text-anchor="middle" x="739" y="-672.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;set</text>
 </g>
 <!-- @siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;set -->
 <!-- @siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;set -->
-<g id="edge456" class="edge">
+<g id="edge455" class="edge">
 <title>@siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;set</title>
-<path fill="none" stroke="black" d="M760.43,-723.78C751.86,-715.5 738.07,-703.89 725.64,-694.36"/>
-<polygon fill="black" stroke="black" points="727.43,-691.34 717.32,-688.17 723.25,-696.95 727.43,-691.34"/>
+<path fill="none" stroke="black" d="M784.19,-723.78C778.75,-715.82 769.56,-704.77 760.77,-695.47"/>
+<polygon fill="black" stroke="black" points="763.09,-692.84 753.58,-688.17 758.11,-697.75 763.09,-692.84"/>
 </g>
 <!-- @siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;bits -->
 <!-- @siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;bits -->
-<g id="edge438" class="edge">
+<g id="edge437" class="edge">
 <title>@siteimprove/alfa&#45;list&#45;&gt;@siteimprove/alfa&#45;bits</title>
-<path fill="none" stroke="black" d="M791.01,-723.86C804.84,-715.12 821.64,-701.96 834,-688 850.09,-669.81 884.96,-611.28 899.9,-579.87"/>
-<polygon fill="black" stroke="black" points="903.27,-580.92 904.15,-570.36 896.88,-578.06 903.27,-580.92"/>
+<path fill="none" stroke="black" d="M817.7,-728.13C858.22,-716.83 928.48,-689.38 958,-637 964.76,-625 963.02,-618.83 958,-606 953.6,-594.75 945.06,-584.6 936.03,-576.67"/>
+<polygon fill="black" stroke="black" points="938.06,-573.81 928.06,-570.3 933.69,-579.28 938.06,-573.81"/>
 </g>
 <!-- @siteimprove/alfa&#45;performance -->
 <g id="node43" class="node">
@@ -1401,7 +1401,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;performance&#45;&gt;@siteimprove/alfa&#45;emitter -->
 <!-- @siteimprove/alfa&#45;performance&#45;&gt;@siteimprove/alfa&#45;emitter -->
-<g id="edge389" class="edge">
+<g id="edge387" class="edge">
 <title>@siteimprove/alfa&#45;performance&#45;&gt;@siteimprove/alfa&#45;emitter</title>
 <path fill="none" stroke="black" d="M2128.41,-782.78C2129.67,-775.61 2130.04,-765.95 2129.53,-757.31"/>
 <polygon fill="black" stroke="black" points="2132.98,-756.73 2128.4,-747.17 2126.03,-757.5 2132.98,-756.73"/>
@@ -1414,17 +1414,17 @@
 </g>
 <!-- @siteimprove/alfa&#45;record&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;record&#45;&gt;name_Built ins -->
-<g id="edge823" class="edge">
+<g id="edge822" class="edge">
 <title>@siteimprove/alfa&#45;record&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M696.73,-782.95C738.37,-771.84 798.03,-754.88 806,-747 825.59,-727.63 820.73,-715.21 825,-688 830.65,-652 844.16,-637 825,-606 823.55,-603.65 802.2,-592.9 780.32,-582.34"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="781.83,-579.18 771.3,-578 778.8,-585.49 781.83,-579.18"/>
+<path fill="none" stroke="#a2ff00" d="M696.76,-783.66C745.76,-771.65 821.99,-752.26 826,-747 841.68,-726.45 879.19,-692.8 825,-606 823.54,-603.66 802.18,-592.91 780.31,-582.34"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="781.81,-579.18 771.28,-578 778.78,-585.49 781.81,-579.18"/>
 </g>
 <!-- @siteimprove/alfa&#45;record&#45;&gt;@siteimprove/alfa&#45;list -->
 <!-- @siteimprove/alfa&#45;record&#45;&gt;@siteimprove/alfa&#45;list -->
-<g id="edge826" class="edge">
+<g id="edge825" class="edge">
 <title>@siteimprove/alfa&#45;record&#45;&gt;@siteimprove/alfa&#45;list</title>
-<path fill="none" stroke="black" d="M682.19,-782.91C700.87,-774.19 725.62,-761.71 743.83,-751.89"/>
-<polygon fill="black" stroke="black" points="745.6,-754.91 752.69,-747.03 742.23,-748.77 745.6,-754.91"/>
+<path fill="none" stroke="black" d="M685.91,-782.91C708.14,-773.99 738.11,-761.14 759.9,-751.22"/>
+<polygon fill="black" stroke="black" points="761.37,-754.4 768.99,-747.03 758.44,-748.04 761.37,-754.4"/>
 </g>
 <!-- @siteimprove/alfa&#45;result -->
 <g id="node46" class="node">
@@ -1435,7 +1435,7 @@
 <!-- @siteimprove/alfa&#45;result&#45;&gt;exit_Alternatives -->
 <!-- @siteimprove/alfa&#45;result&#45;&gt;@siteimprove/alfa&#45;option -->
 <!-- @siteimprove/alfa&#45;result&#45;&gt;@siteimprove/alfa&#45;option -->
-<g id="edge500" class="edge">
+<g id="edge499" class="edge">
 <title>@siteimprove/alfa&#45;result&#45;&gt;@siteimprove/alfa&#45;option</title>
 <path fill="none" stroke="black" d="M1415.64,-487.78C1412.12,-480.06 1405.73,-469.43 1399.27,-460.31"/>
 <polygon fill="black" stroke="black" points="1401.96,-458.06 1393.14,-452.17 1396.36,-462.27 1401.96,-458.06"/>
@@ -1450,50 +1450,50 @@
 <!-- @siteimprove/alfa&#45;sequence -->
 <g id="node48" class="node">
 <title>@siteimprove/alfa&#45;sequence</title>
-<path fill="none" stroke="#000000" d="M691.83,-747C691.83,-747 606.17,-747 606.17,-747 602.33,-747 598.5,-743.17 598.5,-739.33 598.5,-739.33 598.5,-731.67 598.5,-731.67 598.5,-727.83 602.33,-724 606.17,-724 606.17,-724 691.83,-724 691.83,-724 695.67,-724 699.5,-727.83 699.5,-731.67 699.5,-731.67 699.5,-739.33 699.5,-739.33 699.5,-743.17 695.67,-747 691.83,-747"/>
-<text text-anchor="middle" x="649" y="-731.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;sequence</text>
+<path fill="none" stroke="#000000" d="M711.83,-747C711.83,-747 626.17,-747 626.17,-747 622.33,-747 618.5,-743.17 618.5,-739.33 618.5,-739.33 618.5,-731.67 618.5,-731.67 618.5,-727.83 622.33,-724 626.17,-724 626.17,-724 711.83,-724 711.83,-724 715.67,-724 719.5,-727.83 719.5,-731.67 719.5,-731.67 719.5,-739.33 719.5,-739.33 719.5,-743.17 715.67,-747 711.83,-747"/>
+<text text-anchor="middle" x="669" y="-731.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;sequence</text>
 </g>
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;map -->
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;map -->
-<g id="edge561" class="edge">
+<g id="edge560" class="edge">
 <title>@siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;map</title>
-<path fill="none" stroke="black" d="M655.46,-723.8C659.37,-708.68 661.77,-680.33 668,-657 669.63,-650.88 672.02,-644.45 674.1,-638.63"/>
-<polygon fill="black" stroke="black" points="677.46,-639.61 677.26,-629.02 670.81,-637.42 677.46,-639.61"/>
+<path fill="none" stroke="black" d="M676.72,-723.91C682.29,-708.93 687.33,-680.73 693,-657 694.38,-651.23 696.06,-645.03 697.36,-639.33"/>
+<polygon fill="black" stroke="black" points="700.85,-639.69 699.19,-629.22 693.96,-638.43 700.85,-639.69"/>
 </g>
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;name_Built ins -->
-<g id="edge550" class="edge">
+<g id="edge549" class="edge">
 <title>@siteimprove/alfa&#45;sequence&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M676.8,-723.92C709.5,-712.79 759.57,-695.82 765,-688 785.8,-658.07 778.09,-640.01 765,-606 762.2,-598.73 757.68,-591.88 752.82,-585.8"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="755.28,-583.29 746.1,-578 749.97,-587.86 755.28,-583.29"/>
+<path fill="none" stroke="#a2ff00" d="M697.49,-723.99C724.05,-714.81 760.44,-700.96 769,-688 792.13,-652.98 761.24,-604.91 742.98,-578.61"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="752.28,-581.15 742.16,-578 748.11,-586.77 752.28,-581.15"/>
 </g>
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;name_Built ins -->
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;collection -->
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;collection -->
-<g id="edge553" class="edge">
+<g id="edge552" class="edge">
 <title>@siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;collection</title>
-<path fill="none" stroke="black" d="M636.9,-723.86C623.63,-715.22 602.97,-702.19 587,-688 573.56,-676.06 575.96,-666.97 561,-657 536.2,-640.47 514.65,-661.01 497,-637 484.33,-619.77 495.37,-595.83 504.66,-579.14"/>
-<polygon fill="black" stroke="black" points="507.82,-580.67 509.74,-570.25 501.74,-577.2 507.82,-580.67"/>
+<path fill="none" stroke="black" d="M618.45,-725.84C577.7,-718.17 525.25,-705.47 512,-688 487.34,-655.49 511.52,-606.01 525.48,-578.91"/>
+<polygon fill="black" stroke="black" points="528.6,-580.51 530.06,-570.02 522.37,-577.31 528.6,-580.51"/>
 </g>
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;set -->
 <!-- @siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;set -->
-<g id="edge568" class="edge">
+<g id="edge567" class="edge">
 <title>@siteimprove/alfa&#45;sequence&#45;&gt;@siteimprove/alfa&#45;set</title>
-<path fill="none" stroke="black" d="M663.82,-723.78C671.94,-716.06 681.59,-705.43 688.89,-696.31"/>
-<polygon fill="black" stroke="black" points="691.8,-698.26 695.04,-688.17 686.22,-694.04 691.8,-698.26"/>
+<path fill="none" stroke="black" d="M687.58,-723.78C698.98,-715.66 713.17,-704.33 723.89,-694.92"/>
+<polygon fill="black" stroke="black" points="726.26,-697.49 731.3,-688.17 721.54,-692.32 726.26,-697.49"/>
 </g>
 <!-- @siteimprove/alfa&#45;string -->
 <g id="node49" class="node">
 <title>@siteimprove/alfa&#45;string</title>
-<path fill="none" stroke="#000000" d="M1775.33,-570C1775.33,-570 1714.67,-570 1714.67,-570 1710.83,-570 1707,-566.17 1707,-562.33 1707,-562.33 1707,-554.67 1707,-554.67 1707,-550.83 1710.83,-547 1714.67,-547 1714.67,-547 1775.33,-547 1775.33,-547 1779.17,-547 1783,-550.83 1783,-554.67 1783,-554.67 1783,-562.33 1783,-562.33 1783,-566.17 1779.17,-570 1775.33,-570"/>
-<text text-anchor="middle" x="1745" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;string</text>
+<path fill="none" stroke="#000000" d="M1975.33,-570C1975.33,-570 1914.67,-570 1914.67,-570 1910.83,-570 1907,-566.17 1907,-562.33 1907,-562.33 1907,-554.67 1907,-554.67 1907,-550.83 1910.83,-547 1914.67,-547 1914.67,-547 1975.33,-547 1975.33,-547 1979.17,-547 1983,-550.83 1983,-554.67 1983,-554.67 1983,-562.33 1983,-562.33 1983,-566.17 1979.17,-570 1975.33,-570"/>
+<text text-anchor="middle" x="1945" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;string</text>
 </g>
 <!-- @siteimprove/alfa&#45;string&#45;&gt;@siteimprove/alfa&#45;test -->
 <!-- @siteimprove/alfa&#45;string&#45;&gt;@siteimprove/alfa&#45;test -->
-<g id="edge489" class="edge">
+<g id="edge488" class="edge">
 <title>@siteimprove/alfa&#45;string&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1761.13,-546.78C1770.4,-538.9 1781.61,-527.99 1790.09,-518.75"/>
-<polygon fill="black" stroke="black" points="1792.78,-521 1796.73,-511.17 1787.51,-516.39 1792.78,-521"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1906.71,-546.94C1840.68,-532.71 1763.61,-516.88 1716.69,-507.87"/>
+<polygon fill="black" stroke="black" points="1717.06,-504.37 1706.58,-505.94 1715.75,-511.25 1717.06,-504.37"/>
 </g>
 <!-- @siteimprove/alfa&#45;string&#45;&gt;exit_other -->
 <!-- @siteimprove/alfa&#45;trilean -->
@@ -1506,21 +1506,21 @@
 <!-- @siteimprove/alfa&#45;tuple -->
 <g id="node51" class="node">
 <title>@siteimprove/alfa&#45;tuple</title>
-<path fill="none" stroke="#000000" d="M952.33,-629C952.33,-629 895.67,-629 895.67,-629 891.83,-629 888,-625.17 888,-621.33 888,-621.33 888,-613.67 888,-613.67 888,-609.83 891.83,-606 895.67,-606 895.67,-606 952.33,-606 952.33,-606 956.17,-606 960,-609.83 960,-613.67 960,-613.67 960,-621.33 960,-621.33 960,-625.17 956.17,-629 952.33,-629"/>
-<text text-anchor="middle" x="924" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;tuple</text>
+<path fill="none" stroke="#000000" d="M932.33,-629C932.33,-629 875.67,-629 875.67,-629 871.83,-629 868,-625.17 868,-621.33 868,-621.33 868,-613.67 868,-613.67 868,-609.83 871.83,-606 875.67,-606 875.67,-606 932.33,-606 932.33,-606 936.17,-606 940,-609.83 940,-613.67 940,-613.67 940,-621.33 940,-621.33 940,-625.17 936.17,-629 932.33,-629"/>
+<text text-anchor="middle" x="904" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;tuple</text>
 </g>
 <!-- @siteimprove/alfa&#45;tuple&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;tuple&#45;&gt;name_Built ins -->
-<g id="edge870" class="edge">
+<g id="edge869" class="edge">
 <title>@siteimprove/alfa&#45;tuple&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M887.78,-609.13C859.4,-602.95 818.79,-593.22 782.59,-581.26"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="783.59,-577.91 773,-578 781.34,-584.53 783.59,-577.91"/>
+<path fill="none" stroke="#a2ff00" d="M867.98,-607.35C844.12,-600.98 811.94,-591.81 782.76,-581.53"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="783.59,-578.1 773,-578 781.22,-584.69 783.59,-578.1"/>
 </g>
 <!-- exit_Type definitions&#45;&gt;name_other -->
-<g id="edge262" class="edge">
+<g id="edge260" class="edge">
 <title>exit_Type definitions&#45;&gt;name_other</title>
-<path fill="none" stroke="#ff008b" stroke-dasharray="1,5" d="M2010,-332.02C2011.71,-335.23 2014,-338.53 2017,-342 2044.93,-374.31 2079.8,-332.83 2111,-362 2137.15,-386.46 2133,-403.69 2133,-439.5 2133,-500.5 2133,-500.5 2133,-500.5 2133,-554.3 2089.89,-557.86 2040,-578 2035.89,-579.66 2029.41,-581.28 2020.95,-582.88"/>
-<polygon fill="#ff008b" stroke="#ff008b" points="2020.26,-579.44 2011,-584.59 2021.44,-586.34 2020.26,-579.44"/>
+<path fill="none" stroke="#ff008b" stroke-dasharray="1,5" d="M2010,-332.02C2011.71,-335.23 2014,-338.53 2017,-342 2044.93,-374.31 2079.8,-332.83 2111,-362 2137.15,-386.46 2133,-403.69 2133,-439.5 2133,-500.5 2133,-500.5 2133,-500.5 2133,-554.3 2089.96,-558.02 2040,-578 2034.26,-580.3 2027.86,-582.38 2020.87,-584.26"/>
+<polygon fill="#ff008b" stroke="#ff008b" points="2019.86,-580.91 2011,-586.72 2021.55,-587.7 2019.86,-580.91"/>
 </g>
 <!-- exit_Type definitions&#45;&gt;name_other -->
 <!-- exit_Type definitions&#45;&gt;exit_Alfa -->
@@ -1549,20 +1549,20 @@
 </g>
 <!-- @siteimprove/alfa&#45;fnv&#45;&gt;@siteimprove/alfa&#45;hash -->
 <!-- @siteimprove/alfa&#45;fnv&#45;&gt;@siteimprove/alfa&#45;hash -->
-<g id="edge375" class="edge">
+<g id="edge373" class="edge">
 <title>@siteimprove/alfa&#45;fnv&#45;&gt;@siteimprove/alfa&#45;hash</title>
 <path fill="none" stroke="black" d="M220.19,-310.78C228.68,-302.98 238.82,-292.21 246.46,-283.03"/>
 <polygon fill="black" stroke="black" points="249.22,-285.19 252.67,-275.17 243.72,-280.85 249.22,-285.19"/>
 </g>
 <!-- @siteimprove/alfa&#45;fnv&#45;&gt;exit_Hash tables -->
 <!-- exit_Performance measurements&#45;&gt;name_other -->
-<g id="edge299" class="edge">
+<g id="edge297" class="edge">
 <title>exit_Performance measurements&#45;&gt;name_other</title>
-<path fill="none" stroke="#002eff" stroke-dasharray="1,5" d="M1894.2,-657C1835.23,-650.93 1769.54,-644.17 1709.86,-638.03"/>
-<polygon fill="#002eff" stroke="#002eff" points="1710.07,-634.54 1699.77,-637 1709.35,-641.5 1710.07,-634.54"/>
+<path fill="none" stroke="#002eff" stroke-dasharray="1,5" d="M1848,-659.81C1780.45,-654.15 1706.03,-646.98 1637.14,-638.29"/>
+<polygon fill="#002eff" stroke="#002eff" points="1637.36,-634.79 1627,-637 1636.48,-641.74 1637.36,-634.79"/>
 </g>
 <!-- exit_Performance measurements&#45;&gt;name_Type definitions -->
-<g id="edge295" class="edge">
+<g id="edge293" class="edge">
 <title>exit_Performance measurements&#45;&gt;name_Type definitions</title>
 <path fill="none" stroke="#002eff" d="M2054.82,-657C2056.19,-634.89 2077,-596.24 2077,-559.5 2077,-559.5 2077,-559.5 2077,-439.5 2077,-404.42 2088.5,-385 2062,-362 2046.44,-348.5 1735.9,-343.95 1672.26,-342.34"/>
 <polygon fill="#002eff" stroke="#002eff" points="1672.11,-338.83 1662,-342 1671.88,-345.82 1672.11,-338.83"/>
@@ -1573,7 +1573,7 @@
 <!-- exit_Performance measurements&#45;&gt;name_Type definitions -->
 <!-- exit_Performance measurements&#45;&gt;name_Type definitions -->
 <!-- exit_Performance measurements&#45;&gt;name_Serialization -->
-<g id="edge390" class="edge">
+<g id="edge388" class="edge">
 <title>exit_Performance measurements&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#002eff" d="M2065.57,-657C2056.09,-634.46 2042,-594.99 2042,-559.5 2042,-559.5 2042,-559.5 2042,-439.5 2042,-403.03 2044.59,-383.32 2015,-362 1982.06,-338.26 643.65,-348.37 507.27,-342.73"/>
 <polygon fill="#002eff" stroke="#002eff" points="507.22,-339.21 497,-342 506.73,-346.2 507.22,-339.21"/>
@@ -1588,14 +1588,14 @@
 </g>
 <!-- @siteimprove/alfa&#45;continuation&#45;&gt;@siteimprove/alfa&#45;callback -->
 <!-- @siteimprove/alfa&#45;continuation&#45;&gt;@siteimprove/alfa&#45;callback -->
-<g id="edge606" class="edge">
+<g id="edge605" class="edge">
 <title>@siteimprove/alfa&#45;continuation&#45;&gt;@siteimprove/alfa&#45;callback</title>
 <path fill="none" stroke="black" d="M1944.66,-251.78C1945.42,-244.53 1945.1,-234.74 1943.95,-226.02"/>
 <polygon fill="black" stroke="black" points="1947.39,-225.38 1942.15,-216.17 1940.5,-226.64 1947.39,-225.38"/>
 </g>
 <!-- @siteimprove/alfa&#45;continuation&#45;&gt;@siteimprove/alfa&#45;mapper -->
 <!-- @siteimprove/alfa&#45;continuation&#45;&gt;@siteimprove/alfa&#45;mapper -->
-<g id="edge608" class="edge">
+<g id="edge607" class="edge">
 <title>@siteimprove/alfa&#45;continuation&#45;&gt;@siteimprove/alfa&#45;mapper</title>
 <path fill="none" stroke="black" d="M1932.82,-251.78C1922.5,-242.58 1904.78,-228.81 1890,-216 1870.41,-199.02 1849.04,-178.41 1832.77,-164.06"/>
 <polygon fill="black" stroke="black" points="1834.63,-161.05 1824.76,-157.19 1830.07,-166.36 1834.63,-161.05"/>
@@ -1603,15 +1603,15 @@
 <!-- @siteimprove/alfa&#45;continuation&#45;&gt;exit_Type definitions -->
 <!-- @siteimprove/alfa&#45;collection&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;collection&#45;&gt;name_Built ins -->
-<g id="edge218" class="edge">
+<g id="edge216" class="edge">
 <title>@siteimprove/alfa&#45;collection&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M562.62,-552.45C604.98,-548.8 647.35,-549.03 689.72,-553.13"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="681.46,-553.14 692,-554.19 684.41,-546.8 681.46,-553.14"/>
+<path fill="none" stroke="#a2ff00" d="M582.75,-552.03C618.45,-548.94 654.16,-549.17 689.86,-552.74"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="681.5,-552.39 692,-553.84 684.7,-546.16 681.5,-552.39"/>
 </g>
 <!-- @siteimprove/alfa&#45;collection&#45;&gt;name_Built ins -->
 <!-- exit_Computations -->
 <!-- exit_Computations&#45;&gt;name_other -->
-<g id="edge329" class="edge">
+<g id="edge327" class="edge">
 <title>exit_Computations&#45;&gt;name_other</title>
 <path fill="none" stroke="#a200ff" stroke-dasharray="1,5" d="M1279.05,-657C1343.78,-644.74 1431.84,-629.64 1482.63,-622.55"/>
 <polygon fill="#a200ff" stroke="#a200ff" points="1475.7,-627.24 1485,-622.15 1474.56,-620.33 1475.7,-627.24"/>
@@ -1621,7 +1621,7 @@
 <!-- exit_Computations&#45;&gt;name_other -->
 <!-- exit_Computations&#45;&gt;name_other -->
 <!-- exit_Computations&#45;&gt;name_Type definitions -->
-<g id="edge320" class="edge">
+<g id="edge318" class="edge">
 <title>exit_Computations&#45;&gt;name_Type definitions</title>
 <path fill="none" stroke="#a200ff" d="M1126,-665.78C973.13,-623.1 941.16,-450.45 1026,-362 1038.76,-348.7 1174.14,-328.3 1357.68,-324.22"/>
 <polygon fill="#a200ff" stroke="#a200ff" points="1351.57,-332.44 1358,-324.01 1347.72,-326.59 1351.57,-332.44"/>
@@ -1651,25 +1651,25 @@
 <!-- exit_Computations&#45;&gt;name_Type definitions -->
 <!-- exit_Computations&#45;&gt;name_Type definitions -->
 <!-- exit_Computations&#45;&gt;name_Comparison -->
-<g id="edge321" class="edge">
+<g id="edge319" class="edge">
 <title>exit_Computations&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#a200ff" d="M1189.2,-657C1176.16,-634.77 1157,-595.89 1157,-559.5 1157,-559.5 1157,-559.5 1157,-498.5 1157,-435.87 1170.08,-402.13 1122,-362 1078.16,-325.41 1049.45,-352.69 997.07,-344.05"/>
 <polygon fill="#a200ff" stroke="#a200ff" points="997.5,-340.57 987,-342 996.1,-347.43 997.5,-340.57"/>
 </g>
 <!-- exit_Computations&#45;&gt;name_Serialization -->
-<g id="edge323" class="edge">
+<g id="edge321" class="edge">
 <title>exit_Computations&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#a200ff" d="M1163.27,-657C1155,-651.51 1146.96,-644.83 1141,-637 1119.17,-608.3 1117,-595.56 1117,-559.5 1117,-559.5 1117,-559.5 1117,-498.5 1117,-487.21 1117.53,-411.11 1032,-362 982.73,-333.71 592.91,-351.13 507.03,-343.28"/>
 <polygon fill="#a200ff" stroke="#a200ff" points="507.36,-339.8 497,-342 506.48,-346.74 507.36,-339.8"/>
 </g>
 <!-- exit_Computations&#45;&gt;name_Logic -->
-<g id="edge514" class="edge">
+<g id="edge513" class="edge">
 <title>exit_Computations&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#a200ff" d="M1178.61,-657C1172.56,-651.12 1166.46,-644.24 1162,-637 1143.02,-606.18 1137,-595.69 1137,-559.5 1137,-559.5 1137,-559.5 1137,-498.5 1137,-467.19 1126.93,-380.96 1102,-362 1072.6,-339.64 821.42,-346.88 758.05,-342.95"/>
 <polygon fill="#a200ff" stroke="#a200ff" points="758.28,-339.45 748,-342 757.63,-346.42 758.28,-339.45"/>
 </g>
 <!-- exit_Computations&#45;&gt;name_Collections -->
-<g id="edge482" class="edge">
+<g id="edge481" class="edge">
 <title>exit_Computations&#45;&gt;name_Collections</title>
 <path fill="none" stroke="#a200ff" d="M1126,-700.24C1097.84,-712.87 1067.27,-728.31 1037.43,-739.79"/>
 <polygon fill="#a200ff" stroke="#a200ff" points="1036.15,-736.53 1028,-743.29 1038.59,-743.09 1036.15,-736.53"/>
@@ -1693,7 +1693,7 @@
 <!-- exit_Synchronous -->
 <!-- @siteimprove/alfa&#45;trampoline&#45;&gt;exit_Synchronous -->
 <!-- exit_Serialization&#45;&gt;name_Logic -->
-<g id="edge330" class="edge">
+<g id="edge328" class="edge">
 <title>exit_Serialization&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#00ff74" d="M600,-187.47C623.49,-217.71 603.35,-238.88 621,-275 624.19,-281.52 628.38,-288.01 633.16,-293.97"/>
 <polygon fill="#00ff74" stroke="#00ff74" points="630.77,-296.55 640,-301.74 636.02,-291.92 630.77,-296.55"/>
@@ -1701,7 +1701,7 @@
 <!-- exit_Serialization&#45;&gt;name_Logic -->
 <!-- exit_Serialization&#45;&gt;name_Logic -->
 <!-- exit_Serialization&#45;&gt;name_Alternatives -->
-<g id="edge490" class="edge">
+<g id="edge489" class="edge">
 <title>exit_Serialization&#45;&gt;name_Alternatives</title>
 <path fill="none" stroke="#00ff74" d="M600,-158.65C834.82,-181.66 905.24,-135.94 1144,-185 1217.83,-200.17 1259.96,-182.12 1303,-244 1310.87,-255.31 1306.51,-261.68 1303,-275 1300.82,-283.28 1271.61,-336.56 1265,-342 1243.29,-359.86 1221.44,-339.2 1205,-362 1173.68,-405.46 1204.8,-462.42 1239.3,-503.64"/>
 <polygon fill="#00ff74" stroke="#00ff74" points="1236.82,-506.12 1246,-511.4 1242.12,-501.54 1236.82,-506.12"/>
@@ -1714,36 +1714,36 @@
 <!-- @siteimprove/alfa&#45;slice -->
 <g id="node61" class="node">
 <title>@siteimprove/alfa&#45;slice</title>
-<path fill="none" stroke="#000000" d="M594.33,-629C594.33,-629 539.67,-629 539.67,-629 535.83,-629 532,-625.17 532,-621.33 532,-621.33 532,-613.67 532,-613.67 532,-609.83 535.83,-606 539.67,-606 539.67,-606 594.33,-606 594.33,-606 598.17,-606 602,-609.83 602,-613.67 602,-613.67 602,-621.33 602,-621.33 602,-625.17 598.17,-629 594.33,-629"/>
-<text text-anchor="middle" x="567" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;slice</text>
+<path fill="none" stroke="#000000" d="M614.33,-629C614.33,-629 559.67,-629 559.67,-629 555.83,-629 552,-625.17 552,-621.33 552,-621.33 552,-613.67 552,-613.67 552,-609.83 555.83,-606 559.67,-606 559.67,-606 614.33,-606 614.33,-606 618.17,-606 622,-609.83 622,-613.67 622,-613.67 622,-621.33 622,-621.33 622,-625.17 618.17,-629 614.33,-629"/>
+<text text-anchor="middle" x="587" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;slice</text>
 </g>
 <!-- @siteimprove/alfa&#45;slice&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;slice&#45;&gt;name_Built ins -->
-<g id="edge715" class="edge">
+<g id="edge714" class="edge">
 <title>@siteimprove/alfa&#45;slice&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M601.68,-605.94C623.71,-599.73 652.73,-591.14 682.68,-579.57"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="683.99,-582.82 692,-575.88 681.42,-576.31 683.99,-582.82"/>
+<path fill="none" stroke="#a2ff00" d="M613.14,-605.86C631.44,-599.45 656.34,-590.74 682.65,-579.75"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="684.17,-582.9 692,-575.76 681.43,-576.46 684.17,-582.9"/>
 </g>
 <!-- @siteimprove/alfa&#45;slice&#45;&gt;name_Built ins -->
 <!-- @siteimprove/alfa&#45;slice&#45;&gt;@siteimprove/alfa&#45;collection -->
 <!-- @siteimprove/alfa&#45;slice&#45;&gt;@siteimprove/alfa&#45;collection -->
-<g id="edge718" class="edge">
+<g id="edge717" class="edge">
 <title>@siteimprove/alfa&#45;slice&#45;&gt;@siteimprove/alfa&#45;collection</title>
-<path fill="none" stroke="black" d="M562.25,-605.78C556.05,-597.74 545.75,-586.55 536.06,-577.19"/>
-<polygon fill="black" stroke="black" points="538.22,-574.42 528.51,-570.17 533.45,-579.55 538.22,-574.42"/>
+<path fill="none" stroke="black" d="M582.25,-605.78C576.05,-597.74 565.75,-586.55 556.06,-577.19"/>
+<polygon fill="black" stroke="black" points="558.22,-574.42 548.51,-570.17 553.45,-579.55 558.22,-574.42"/>
 </g>
 <!-- @siteimprove/alfa&#45;cache -->
 <g id="node62" class="node">
 <title>@siteimprove/alfa&#45;cache</title>
-<path fill="none" stroke="#000000" d="M1680.83,-570C1680.83,-570 1617.17,-570 1617.17,-570 1613.33,-570 1609.5,-566.17 1609.5,-562.33 1609.5,-562.33 1609.5,-554.67 1609.5,-554.67 1609.5,-550.83 1613.33,-547 1617.17,-547 1617.17,-547 1680.83,-547 1680.83,-547 1684.67,-547 1688.5,-550.83 1688.5,-554.67 1688.5,-554.67 1688.5,-562.33 1688.5,-562.33 1688.5,-566.17 1684.67,-570 1680.83,-570"/>
-<text text-anchor="middle" x="1649" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;cache</text>
+<path fill="none" stroke="#000000" d="M1880.83,-570C1880.83,-570 1817.17,-570 1817.17,-570 1813.33,-570 1809.5,-566.17 1809.5,-562.33 1809.5,-562.33 1809.5,-554.67 1809.5,-554.67 1809.5,-550.83 1813.33,-547 1817.17,-547 1817.17,-547 1880.83,-547 1880.83,-547 1884.67,-547 1888.5,-550.83 1888.5,-554.67 1888.5,-554.67 1888.5,-562.33 1888.5,-562.33 1888.5,-566.17 1884.67,-570 1880.83,-570"/>
+<text text-anchor="middle" x="1849" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;cache</text>
 </g>
 <!-- @siteimprove/alfa&#45;cache&#45;&gt;@siteimprove/alfa&#45;test -->
 <!-- @siteimprove/alfa&#45;cache&#45;&gt;@siteimprove/alfa&#45;test -->
-<g id="edge211" class="edge">
+<g id="edge209" class="edge">
 <title>@siteimprove/alfa&#45;cache&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1682.81,-546.91C1708.67,-537.87 1743.97,-524.79 1769.5,-514.82"/>
-<polygon fill="black" stroke="black" points="1771.09,-517.96 1779.11,-511.03 1768.52,-511.45 1771.09,-517.96"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1821.88,-546.91C1793.61,-537.14 1749.16,-522.64 1716.31,-512.45"/>
+<polygon fill="black" stroke="black" points="1717.1,-509.03 1706.51,-509.44 1715.04,-515.72 1717.1,-509.03"/>
 </g>
 <!-- @siteimprove/alfa&#45;cache&#45;&gt;exit_other -->
 <!-- @siteimprove/alfa&#45;dom -->
@@ -1764,48 +1764,48 @@
 <!-- @siteimprove/alfa&#45;math -->
 <g id="node64" class="node">
 <title>@siteimprove/alfa&#45;math</title>
-<path fill="none" stroke="#000000" d="M1887.33,-570C1887.33,-570 1828.67,-570 1828.67,-570 1824.83,-570 1821,-566.17 1821,-562.33 1821,-562.33 1821,-554.67 1821,-554.67 1821,-550.83 1824.83,-547 1828.67,-547 1828.67,-547 1887.33,-547 1887.33,-547 1891.17,-547 1895,-550.83 1895,-554.67 1895,-554.67 1895,-562.33 1895,-562.33 1895,-566.17 1891.17,-570 1887.33,-570"/>
-<text text-anchor="middle" x="1858" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;math</text>
+<path fill="none" stroke="#000000" d="M1559.33,-570C1559.33,-570 1500.67,-570 1500.67,-570 1496.83,-570 1493,-566.17 1493,-562.33 1493,-562.33 1493,-554.67 1493,-554.67 1493,-550.83 1496.83,-547 1500.67,-547 1500.67,-547 1559.33,-547 1559.33,-547 1563.17,-547 1567,-550.83 1567,-554.67 1567,-554.67 1567,-562.33 1567,-562.33 1567,-566.17 1563.17,-570 1559.33,-570"/>
+<text text-anchor="middle" x="1530" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;math</text>
 </g>
 <!-- @siteimprove/alfa&#45;math&#45;&gt;@siteimprove/alfa&#45;test -->
 <!-- @siteimprove/alfa&#45;math&#45;&gt;@siteimprove/alfa&#45;test -->
-<g id="edge281" class="edge">
+<g id="edge279" class="edge">
 <title>@siteimprove/alfa&#45;math&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1852.88,-546.78C1846.32,-538.66 1835.48,-527.33 1825.38,-517.92"/>
-<polygon fill="black" stroke="black" points="1827.66,-515.26 1817.89,-511.17 1822.98,-520.46 1827.66,-515.26"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1562.14,-546.91C1586.47,-537.91 1619.51,-524.91 1643.45,-514.95"/>
+<polygon fill="black" stroke="black" points="1644.91,-518.13 1652.77,-511.03 1642.2,-511.68 1644.91,-518.13"/>
 </g>
 <!-- @siteimprove/alfa&#45;math&#45;&gt;exit_other -->
 <!-- exit_Graphs -->
 <!-- exit_Graphs&#45;&gt;name_other -->
-<g id="edge357" class="edge">
+<g id="edge355" class="edge">
 <title>exit_Graphs&#45;&gt;name_other</title>
 <path fill="none" stroke="#ff0046" stroke-dasharray="1,5" d="M342.56,-834C341.93,-803.6 352.43,-743.67 391,-716 448.11,-675.02 954.61,-704.25 1023,-688 1055.71,-680.23 1059.48,-665.54 1092,-657 1232.07,-620.2 1406.48,-617.31 1482.22,-617.88"/>
 <polygon fill="#ff0046" stroke="#ff0046" points="1474.87,-621.1 1485,-617.98 1475.14,-614.1 1474.87,-621.1"/>
 </g>
 <!-- exit_Graphs&#45;&gt;name_other -->
 <!-- exit_Graphs&#45;&gt;name_Comparison -->
-<g id="edge350" class="edge">
+<g id="edge348" class="edge">
 <title>exit_Graphs&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#ff0046" d="M316.46,-834C310.38,-828.15 304.78,-821.29 301,-814 284.85,-782.85 286,-771.58 286,-736.5 286,-736.5 286,-736.5 286,-439.5 286,-404.42 274.34,-384.8 301,-362 324.91,-341.55 836.01,-347.47 867,-342 868.06,-341.81 869.13,-341.61 870.21,-341.39"/>
 <polygon fill="#ff0046" stroke="#ff0046" points="871.05,-344.79 880,-339.12 869.47,-337.97 871.05,-344.79"/>
 </g>
 <!-- exit_Graphs&#45;&gt;name_Comparison -->
 <!-- exit_Graphs&#45;&gt;name_Hash tables -->
-<g id="edge351" class="edge">
+<g id="edge349" class="edge">
 <title>exit_Graphs&#45;&gt;name_Hash tables</title>
 <path fill="none" stroke="#ff0046" d="M226.89,-834C205.98,-828.57 188.53,-821.91 181,-814 156.81,-788.59 166,-771.58 166,-736.5 166,-736.5 166,-736.5 166,-439.5 166,-404.42 158.14,-388.61 181,-362 181.91,-360.94 202.84,-353.39 226.79,-345.25"/>
 <polygon fill="#ff0046" stroke="#ff0046" points="228.09,-348.51 236.45,-342 225.85,-341.88 228.09,-348.51"/>
 </g>
 <!-- exit_Graphs&#45;&gt;name_Hash tables -->
 <!-- exit_Graphs&#45;&gt;name_Serialization -->
-<g id="edge353" class="edge">
+<g id="edge351" class="edge">
 <title>exit_Graphs&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#ff0046" d="M266.67,-834C256.87,-828.87 247.91,-822.33 241,-814 218.61,-786.99 226,-771.58 226,-736.5 226,-736.5 226,-736.5 226,-439.5 226,-404.42 216.18,-386.79 241,-362 274.3,-328.74 298.85,-351.23 345,-342 358.82,-339.23 373.83,-336.15 387.9,-333.3"/>
 <polygon fill="#ff0046" stroke="#ff0046" points="382.55,-339.81 390,-332.27 379.48,-333.52 382.55,-339.81"/>
 </g>
 <!-- exit_Graphs&#45;&gt;name_Serialization -->
 <!-- exit_Graphs&#45;&gt;name_Collections -->
-<g id="edge352" class="edge">
+<g id="edge350" class="edge">
 <title>exit_Graphs&#45;&gt;name_Collections</title>
 <path fill="none" stroke="#ff0046" d="M385,-834C495.17,-819.66 528.04,-837.08 632.05,-816.08"/>
 <polygon fill="#ff0046" stroke="#ff0046" points="632.93,-819.47 642,-814 631.5,-812.62 632.93,-819.47"/>
@@ -1821,25 +1821,25 @@
 <!-- exit_Graphs&#45;&gt;exit_Alfa -->
 <!-- @siteimprove/alfa&#45;set&#45;&gt;@siteimprove/alfa&#45;map -->
 <!-- @siteimprove/alfa&#45;set&#45;&gt;@siteimprove/alfa&#45;map -->
-<g id="edge310" class="edge">
+<g id="edge308" class="edge">
 <title>@siteimprove/alfa&#45;set&#45;&gt;@siteimprove/alfa&#45;map</title>
-<path fill="none" stroke="black" d="M699.9,-664.78C698.06,-657.29 694.11,-647.09 689.73,-638.16"/>
-<polygon fill="black" stroke="black" points="692.72,-636.32 684.9,-629.17 686.55,-639.64 692.72,-636.32"/>
+<path fill="none" stroke="black" d="M736.14,-664.78C731.43,-656.9 723.33,-645.99 715.43,-636.75"/>
+<polygon fill="black" stroke="black" points="717.92,-634.28 708.64,-629.17 712.71,-638.96 717.92,-634.28"/>
 </g>
 <!-- @siteimprove/alfa&#45;set&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;set&#45;&gt;name_Built ins -->
-<g id="edge302" class="edge">
+<g id="edge300" class="edge">
 <title>@siteimprove/alfa&#45;set&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M704.89,-664.98C711.53,-658.01 720.7,-648.12 725,-637 731.99,-618.92 730.48,-596.65 729.43,-580.63"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="734.37,-587.05 728.87,-578 727.53,-588.51 734.37,-587.05"/>
+<path fill="none" stroke="#a2ff00" d="M736.87,-664.7C738.96,-657.16 743.17,-646.73 745,-637 747.54,-623.46 748.02,-619.44 745,-606 742.96,-596.91 738.93,-587.51 735.48,-579.56"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="742.79,-584.58 734.49,-578 736.88,-588.32 742.79,-584.58"/>
 </g>
 <!-- @siteimprove/alfa&#45;set&#45;&gt;name_Built ins -->
 <!-- @siteimprove/alfa&#45;set&#45;&gt;@siteimprove/alfa&#45;collection -->
 <!-- @siteimprove/alfa&#45;set&#45;&gt;@siteimprove/alfa&#45;collection -->
-<g id="edge305" class="edge">
+<g id="edge303" class="edge">
 <title>@siteimprove/alfa&#45;set&#45;&gt;@siteimprove/alfa&#45;collection</title>
-<path fill="none" stroke="black" d="M668.15,-669.75C622.36,-661.78 541.38,-647.23 532,-637 518.16,-621.9 517.17,-597.67 516.83,-580.32"/>
-<polygon fill="black" stroke="black" points="520.33,-579.99 516.58,-570.08 513.33,-580.16 520.33,-579.99"/>
+<path fill="none" stroke="black" d="M708.22,-670.66C657.82,-663.2 562.81,-648.55 552,-637 538,-622.05 537.04,-597.79 536.75,-580.39"/>
+<polygon fill="black" stroke="black" points="540.25,-580.04 536.54,-570.12 533.25,-580.19 540.25,-580.04"/>
 </g>
 <!-- @siteimprove/alfa&#45;rng&#45;&gt;exit_other -->
 <!-- @siteimprove/alfa&#45;device&#45;&gt;exit_Understanding the web -->
@@ -1848,7 +1848,7 @@
 <!-- exit_Infrastructure&#45;&gt;exit_Understanding the web -->
 <!-- exit_Infrastructure&#45;&gt;exit_Understanding the web -->
 <!-- exit_Infrastructure&#45;&gt;@siteimprove/alfa&#45;device -->
-<g id="edge362" class="edge">
+<g id="edge360" class="edge">
 <title>exit_Infrastructure&#45;&gt;@siteimprove/alfa&#45;device</title>
 <path fill="none" stroke="#00ff2e" d="M697.66,-1129C705.03,-1123.62 711.75,-1116.99 716,-1109 732.37,-1078.19 731.25,-983.38 716,-952 711.69,-943.14 704.25,-935.71 696.45,-929.82"/>
 <polygon fill="#00ff2e" stroke="#00ff2e" points="698.2,-926.78 687.97,-924.03 694.26,-932.56 698.2,-926.78"/>
@@ -1860,7 +1860,7 @@
 <text text-anchor="middle" x="677" y="-1085.8" font-family="Arial" font-size="14.00" fill="#000000">HTML</text>
 </g>
 <!-- exit_Infrastructure&#45;&gt;name_HTML -->
-<g id="edge363" class="edge">
+<g id="edge361" class="edge">
 <title>exit_Infrastructure&#45;&gt;name_HTML</title>
 <path fill="none" stroke="#00ff2e" d="M664.84,-1129C666.68,-1123.17 668.73,-1116.69 670.61,-1110.74"/>
 <polygon fill="#00ff2e" stroke="#00ff2e" points="669.58,-1119.4 671.63,-1109 663.55,-1115.85 669.58,-1119.4"/>
@@ -1888,31 +1888,31 @@
 </g>
 <!-- @siteimprove/alfa&#45;http&#45;&gt;@siteimprove/alfa&#45;url -->
 <!-- @siteimprove/alfa&#45;http&#45;&gt;@siteimprove/alfa&#45;url -->
-<g id="edge663" class="edge">
+<g id="edge662" class="edge">
 <title>@siteimprove/alfa&#45;http&#45;&gt;@siteimprove/alfa&#45;url</title>
 <path fill="none" stroke="black" d="M673.4,-1254.78C672.63,-1247.45 670.2,-1237.52 667.17,-1228.74"/>
 <polygon fill="black" stroke="black" points="670.32,-1227.19 663.4,-1219.17 663.81,-1229.76 670.32,-1227.19"/>
 </g>
 <!-- exit_Hash tables&#45;&gt;name_other -->
-<g id="edge376" class="edge">
+<g id="edge374" class="edge">
 <title>exit_Hash tables&#45;&gt;name_other</title>
 <path fill="none" stroke="#ffd100" stroke-dasharray="1,5" d="M350,-153.82C361.98,-154.98 374.35,-156.09 386,-157 611.88,-174.61 669.79,-160.27 895,-185 914.98,-187.19 1238.77,-228.87 1252,-244 1270.14,-264.75 1263.81,-328.16 1254,-342 1238.47,-363.9 1212.53,-340.1 1197,-362 1140.29,-442 1166.36,-515.6 1242,-578 1277.94,-607.65 1415.36,-614.49 1482.56,-616.05"/>
 <polygon fill="#ffd100" stroke="#ffd100" points="1474.74,-618.89 1485,-616.26 1475.33,-611.92 1474.74,-618.89"/>
 </g>
 <!-- exit_Hash tables&#45;&gt;name_Comparison -->
-<g id="edge650" class="edge">
+<g id="edge649" class="edge">
 <title>exit_Hash tables&#45;&gt;name_Comparison</title>
 <path fill="none" stroke="#ffd100" d="M350,-153.79C361.99,-154.96 374.35,-156.08 386,-157 440.36,-161.3 831.49,-153.49 876,-185 893.07,-197.09 905.05,-215.3 913.44,-234.51"/>
 <polygon fill="#ffd100" stroke="#ffd100" points="910.29,-236.05 917.28,-244 916.78,-233.42 910.29,-236.05"/>
 </g>
 <!-- exit_Hash tables&#45;&gt;name_Serialization -->
-<g id="edge651" class="edge">
+<g id="edge650" class="edge">
 <title>exit_Hash tables&#45;&gt;name_Serialization</title>
 <path fill="none" stroke="#ffd100" d="M350,-213.74C361.49,-226.29 372.82,-239.03 383.42,-251.14"/>
 <polygon fill="#ffd100" stroke="#ffd100" points="380.79,-253.45 390,-258.69 386.07,-248.86 380.79,-253.45"/>
 </g>
 <!-- exit_Hash tables&#45;&gt;name_Logic -->
-<g id="edge652" class="edge">
+<g id="edge651" class="edge">
 <title>exit_Hash tables&#45;&gt;name_Logic</title>
 <path fill="none" stroke="#ffd100" d="M350,-153.67C443.06,-163.62 599.23,-180.86 604,-185 619.64,-198.56 617.61,-257.1 628,-275 629.65,-277.85 631.53,-280.65 633.55,-283.36"/>
 <polygon fill="#ffd100" stroke="#ffd100" points="630.96,-285.73 640,-291.26 636.38,-281.3 630.96,-285.73"/>
@@ -1923,14 +1923,14 @@
 <!-- @siteimprove/alfa&#45;emitter&#45;&gt;exit_Performance measurements -->
 <!-- exit_Tooling -->
 <!-- exit_Tooling&#45;&gt;name_other -->
-<g id="edge397" class="edge">
+<g id="edge395" class="edge">
 <title>exit_Tooling&#45;&gt;name_other</title>
-<path fill="none" stroke="#00b9ff" d="M1752.39,-834C1748.95,-827.8 1745.96,-820.75 1744,-814 1734.21,-780.22 1748.21,-682.51 1724,-657 1717.46,-650.11 1705.19,-644.44 1689.79,-639.78"/>
-<polygon fill="#00b9ff" stroke="#00b9ff" points="1690.39,-636.31 1679.81,-637 1688.51,-643.05 1690.39,-636.31"/>
+<path fill="none" stroke="#00b9ff" d="M1752.39,-834C1748.95,-827.8 1745.96,-820.75 1744,-814 1734.21,-780.22 1748.21,-682.51 1724,-657 1723.03,-655.98 1676.58,-647.53 1628.21,-638.8"/>
+<polygon fill="#00b9ff" stroke="#00b9ff" points="1628.67,-635.33 1618.2,-637 1627.42,-642.22 1628.67,-635.33"/>
 </g>
 <!-- exit_Tooling&#45;&gt;name_other -->
 <!-- exit_Tooling&#45;&gt;name_Collections -->
-<g id="edge392" class="edge">
+<g id="edge390" class="edge">
 <title>exit_Tooling&#45;&gt;name_Collections</title>
 <path fill="none" stroke="#00b9ff" d="M1717,-841.96C1703.74,-838.86 1689.87,-835.81 1677,-834 1660.95,-831.74 1303.05,-817.45 1038.17,-806.94"/>
 <polygon fill="#00b9ff" stroke="#00b9ff" points="1038.13,-803.44 1028,-806.54 1037.85,-810.43 1038.13,-803.44"/>
@@ -1938,7 +1938,7 @@
 <!-- exit_Tooling&#45;&gt;name_Collections -->
 <!-- exit_Tooling&#45;&gt;name_Collections -->
 <!-- exit_Tooling&#45;&gt;name_Alternatives -->
-<g id="edge394" class="edge">
+<g id="edge392" class="edge">
 <title>exit_Tooling&#45;&gt;name_Alternatives</title>
 <path fill="none" stroke="#00b9ff" d="M1747.79,-834C1743.15,-827.92 1738.91,-820.93 1736,-814 1722.22,-781.17 1730.58,-680.69 1704,-657 1665.37,-622.57 1516.91,-662.7 1472,-637 1457.34,-628.61 1463.91,-615.59 1450,-606 1412.13,-579.89 1392.41,-590.52 1351.87,-580.7"/>
 <polygon fill="#00b9ff" stroke="#00b9ff" points="1352.57,-577.26 1342,-578 1350.72,-584.01 1352.57,-577.26"/>
@@ -1948,28 +1948,28 @@
 <!-- @siteimprove/alfa&#45;flags -->
 <g id="node78" class="node">
 <title>@siteimprove/alfa&#45;flags</title>
-<path fill="none" stroke="#000000" d="M535.83,-688C535.83,-688 480.17,-688 480.17,-688 476.33,-688 472.5,-684.17 472.5,-680.33 472.5,-680.33 472.5,-672.67 472.5,-672.67 472.5,-668.83 476.33,-665 480.17,-665 480.17,-665 535.83,-665 535.83,-665 539.67,-665 543.5,-668.83 543.5,-672.67 543.5,-672.67 543.5,-680.33 543.5,-680.33 543.5,-684.17 539.67,-688 535.83,-688"/>
-<text text-anchor="middle" x="508" y="-672.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;flags</text>
+<path fill="none" stroke="#000000" d="M575.83,-688C575.83,-688 520.17,-688 520.17,-688 516.33,-688 512.5,-684.17 512.5,-680.33 512.5,-680.33 512.5,-672.67 512.5,-672.67 512.5,-668.83 516.33,-665 520.17,-665 520.17,-665 575.83,-665 575.83,-665 579.67,-665 583.5,-668.83 583.5,-672.67 583.5,-672.67 583.5,-680.33 583.5,-680.33 583.5,-684.17 579.67,-688 575.83,-688"/>
+<text text-anchor="middle" x="548" y="-672.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;flags</text>
 </g>
 <!-- @siteimprove/alfa&#45;flags&#45;&gt;@siteimprove/alfa&#45;map -->
 <!-- @siteimprove/alfa&#45;flags&#45;&gt;@siteimprove/alfa&#45;map -->
-<g id="edge755" class="edge">
+<g id="edge754" class="edge">
 <title>@siteimprove/alfa&#45;flags&#45;&gt;@siteimprove/alfa&#45;map</title>
-<path fill="none" stroke="black" d="M543.7,-666.6C569.47,-659.02 604.61,-647.69 635,-637 638.85,-635.65 642.85,-634.2 646.79,-632.73"/>
-<polygon fill="black" stroke="black" points="648.22,-635.93 656.31,-629.09 645.72,-629.39 648.22,-635.93"/>
+<path fill="none" stroke="black" d="M580.69,-664.91C605.5,-655.91 639.23,-642.91 663.69,-632.95"/>
+<polygon fill="black" stroke="black" points="665.3,-636.07 673.22,-629.03 662.64,-629.6 665.3,-636.07"/>
 </g>
 <!-- @siteimprove/alfa&#45;flags&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;flags&#45;&gt;name_Built ins -->
-<g id="edge751" class="edge">
+<g id="edge750" class="edge">
 <title>@siteimprove/alfa&#45;flags&#45;&gt;name_Built ins</title>
-<path fill="none" stroke="#a2ff00" d="M543.76,-668.14C565,-662.4 591.52,-652.68 611,-637 623.77,-626.72 618.48,-616.59 631,-606 652.2,-588.06 664.45,-590.43 686.61,-582"/>
-<polygon fill="#a2ff00" stroke="#a2ff00" points="688.17,-585.14 696,-578 685.43,-578.7 688.17,-585.14"/>
+<path fill="none" stroke="#a2ff00" d="M581.62,-664.88C597.8,-658.6 616.74,-649.41 631,-637 643.37,-626.24 639.11,-617.29 651,-606 657.16,-600.15 671.85,-591.3 687.06,-582.88"/>
+<polygon fill="#a2ff00" stroke="#a2ff00" points="688.91,-585.86 696.01,-578 685.56,-579.71 688.91,-585.86"/>
 </g>
 <!-- @siteimprove/alfa&#45;parser -->
 <g id="node79" class="node">
 <title>@siteimprove/alfa&#45;parser</title>
-<path fill="none" stroke="#000000" d="M1646.83,-452C1646.83,-452 1581.17,-452 1581.17,-452 1577.33,-452 1573.5,-448.17 1573.5,-444.33 1573.5,-444.33 1573.5,-436.67 1573.5,-436.67 1573.5,-432.83 1577.33,-429 1581.17,-429 1581.17,-429 1646.83,-429 1646.83,-429 1650.67,-429 1654.5,-432.83 1654.5,-436.67 1654.5,-436.67 1654.5,-444.33 1654.5,-444.33 1654.5,-448.17 1650.67,-452 1646.83,-452"/>
-<text text-anchor="middle" x="1614" y="-436.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;parser</text>
+<path fill="none" stroke="#000000" d="M1838.83,-452C1838.83,-452 1773.17,-452 1773.17,-452 1769.33,-452 1765.5,-448.17 1765.5,-444.33 1765.5,-444.33 1765.5,-436.67 1765.5,-436.67 1765.5,-432.83 1769.33,-429 1773.17,-429 1773.17,-429 1838.83,-429 1838.83,-429 1842.67,-429 1846.5,-432.83 1846.5,-436.67 1846.5,-436.67 1846.5,-444.33 1846.5,-444.33 1846.5,-448.17 1842.67,-452 1838.83,-452"/>
+<text text-anchor="middle" x="1806" y="-436.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;parser</text>
 </g>
 <!-- @siteimprove/alfa&#45;parser&#45;&gt;exit_other -->
 <!-- @siteimprove/alfa&#45;selective -->
@@ -1981,7 +1981,7 @@
 <!-- @siteimprove/alfa&#45;selective&#45;&gt;exit_Alternatives -->
 <!-- @siteimprove/alfa&#45;selective&#45;&gt;@siteimprove/alfa&#45;either -->
 <!-- @siteimprove/alfa&#45;selective&#45;&gt;@siteimprove/alfa&#45;either -->
-<g id="edge285" class="edge">
+<g id="edge283" class="edge">
 <title>@siteimprove/alfa&#45;selective&#45;&gt;@siteimprove/alfa&#45;either</title>
 <path fill="none" stroke="black" d="M1396.42,-546.78C1385.21,-538.26 1367.49,-526.21 1352.07,-516.55"/>
 <polygon fill="black" stroke="black" points="1353.67,-513.42 1343.32,-511.17 1350.01,-519.39 1353.67,-513.42"/>
@@ -1995,7 +1995,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;lazy&#45;&gt;@siteimprove/alfa&#45;trampoline -->
 <!-- @siteimprove/alfa&#45;lazy&#45;&gt;@siteimprove/alfa&#45;trampoline -->
-<g id="edge328" class="edge">
+<g id="edge326" class="edge">
 <title>@siteimprove/alfa&#45;lazy&#45;&gt;@siteimprove/alfa&#45;trampoline</title>
 <path fill="none" stroke="black" d="M1640.68,-841.78C1631.44,-833.42 1616.64,-821.66 1603.44,-812.09"/>
 <polygon fill="black" stroke="black" points="1605.26,-809.09 1595.07,-806.17 1601.22,-814.8 1605.26,-809.09"/>
@@ -2012,7 +2012,7 @@
 <!-- exit_HTML&#45;&gt;exit_Understanding the web -->
 <!-- exit_HTML&#45;&gt;exit_Understanding the web -->
 <!-- exit_HTML&#45;&gt;@siteimprove/alfa&#45;device -->
-<g id="edge524" class="edge">
+<g id="edge523" class="edge">
 <title>exit_HTML&#45;&gt;@siteimprove/alfa&#45;device</title>
 <path fill="none" stroke="#00ffb9" d="M626.47,-952C633.5,-945.32 641.42,-937.8 648.38,-931.19"/>
 <polygon fill="#00ffb9" stroke="#00ffb9" points="650.93,-933.6 655.77,-924.17 646.1,-928.52 650.93,-933.6"/>
@@ -2024,7 +2024,7 @@
 <text text-anchor="middle" x="904" y="-1026.8" font-family="Arial" font-size="14.00" fill="#000000">CSS syntax</text>
 </g>
 <!-- exit_HTML&#45;&gt;name_CSS syntax -->
-<g id="edge521" class="edge">
+<g id="edge520" class="edge">
 <title>exit_HTML&#45;&gt;name_CSS syntax</title>
 <path fill="none" stroke="#00ffb9" d="M712,-993.91C758.78,-1002.98 811.86,-1013.08 850.37,-1020.2"/>
 <polygon fill="#00ffb9" stroke="#00ffb9" points="841.52,-1019.51 852,-1021.05 844.77,-1013.31 841.52,-1019.51"/>
@@ -2039,7 +2039,7 @@
 <!-- @siteimprove/alfa&#45;css&#45;feature&#45;&gt;@siteimprove/alfa&#45;device -->
 <!-- @siteimprove/alfa&#45;css&#45;feature&#45;&gt;@siteimprove/alfa&#45;css -->
 <!-- @siteimprove/alfa&#45;css&#45;feature&#45;&gt;@siteimprove/alfa&#45;css -->
-<g id="edge633" class="edge">
+<g id="edge632" class="edge">
 <title>@siteimprove/alfa&#45;css&#45;feature&#45;&gt;@siteimprove/alfa&#45;css</title>
 <path fill="none" stroke="black" d="M1016.82,-1018.78C1011.03,-1010.74 1001.32,-999.55 992.13,-990.19"/>
 <polygon fill="black" stroke="black" points="994.55,-987.66 984.95,-983.17 989.65,-992.67 994.55,-987.66"/>
@@ -2048,15 +2048,15 @@
 <!-- @siteimprove/alfa&#45;rectangle -->
 <g id="node87" class="node">
 <title>@siteimprove/alfa&#45;rectangle</title>
-<path fill="none" stroke="#000000" d="M1583.33,-570C1583.33,-570 1500.67,-570 1500.67,-570 1496.83,-570 1493,-566.17 1493,-562.33 1493,-562.33 1493,-554.67 1493,-554.67 1493,-550.83 1496.83,-547 1500.67,-547 1500.67,-547 1583.33,-547 1583.33,-547 1587.17,-547 1591,-550.83 1591,-554.67 1591,-554.67 1591,-562.33 1591,-562.33 1591,-566.17 1587.17,-570 1583.33,-570"/>
-<text text-anchor="middle" x="1542" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;rectangle</text>
+<path fill="none" stroke="#000000" d="M1783.33,-570C1783.33,-570 1700.67,-570 1700.67,-570 1696.83,-570 1693,-566.17 1693,-562.33 1693,-562.33 1693,-554.67 1693,-554.67 1693,-550.83 1696.83,-547 1700.67,-547 1700.67,-547 1783.33,-547 1783.33,-547 1787.17,-547 1791,-550.83 1791,-554.67 1791,-554.67 1791,-562.33 1791,-562.33 1791,-566.17 1787.17,-570 1783.33,-570"/>
+<text text-anchor="middle" x="1742" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;rectangle</text>
 </g>
 <!-- @siteimprove/alfa&#45;rectangle&#45;&gt;@siteimprove/alfa&#45;test -->
 <!-- @siteimprove/alfa&#45;rectangle&#45;&gt;@siteimprove/alfa&#45;test -->
-<g id="edge785" class="edge">
+<g id="edge784" class="edge">
 <title>@siteimprove/alfa&#45;rectangle&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1591.02,-547.9C1639.57,-537.69 1713.02,-521.6 1759.27,-511.05"/>
-<polygon fill="black" stroke="black" points="1760.31,-514.4 1769.27,-508.75 1758.74,-507.58 1760.31,-514.4"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1734.62,-546.78C1726.2,-538.5 1712.61,-526.89 1700.34,-517.36"/>
+<polygon fill="black" stroke="black" points="1702.23,-514.4 1692.14,-511.17 1698.01,-519.99 1702.23,-514.4"/>
 </g>
 <!-- @siteimprove/alfa&#45;rectangle&#45;&gt;exit_other -->
 <!-- @siteimprove/alfa&#45;tree -->
@@ -2068,21 +2068,21 @@
 <!-- @siteimprove/alfa&#45;tree&#45;&gt;exit_Collections -->
 <!-- @siteimprove/alfa&#45;tree&#45;&gt;@siteimprove/alfa&#45;sequence -->
 <!-- @siteimprove/alfa&#45;tree&#45;&gt;@siteimprove/alfa&#45;sequence -->
-<g id="edge469" class="edge">
+<g id="edge468" class="edge">
 <title>@siteimprove/alfa&#45;tree&#45;&gt;@siteimprove/alfa&#45;sequence</title>
-<path fill="none" stroke="black" d="M480.39,-785.45C515.26,-776.21 569.81,-760.91 607.43,-749.87"/>
-<polygon fill="black" stroke="black" points="608.48,-753.21 617.08,-747.02 606.5,-746.5 608.48,-753.21"/>
+<path fill="none" stroke="black" d="M480.27,-786.16C518.46,-776.95 581.04,-760.98 623.64,-749.63"/>
+<polygon fill="black" stroke="black" points="624.72,-752.97 633.48,-747 622.91,-746.2 624.72,-752.97"/>
 </g>
 <!-- @siteimprove/alfa&#45;tree&#45;&gt;@siteimprove/alfa&#45;flags -->
 <!-- @siteimprove/alfa&#45;tree&#45;&gt;@siteimprove/alfa&#45;flags -->
-<g id="edge460" class="edge">
+<g id="edge459" class="edge">
 <title>@siteimprove/alfa&#45;tree&#45;&gt;@siteimprove/alfa&#45;flags</title>
-<path fill="none" stroke="black" d="M456.74,-782.79C469.99,-763.46 491.95,-722.42 502.65,-697.68"/>
-<polygon fill="black" stroke="black" points="505.99,-698.76 506.49,-688.18 499.5,-696.14 505.99,-698.76"/>
+<path fill="none" stroke="black" d="M460.43,-782.79C480.7,-763.11 517.76,-720.95 536.71,-696.37"/>
+<polygon fill="black" stroke="black" points="539.64,-698.29 542.81,-688.18 534.03,-694.11 539.64,-698.29"/>
 </g>
 <!-- @siteimprove/alfa&#45;json&#45;ld&#45;&gt;@siteimprove/alfa&#45;json -->
 <!-- @siteimprove/alfa&#45;json&#45;ld&#45;&gt;@siteimprove/alfa&#45;json -->
-<g id="edge787" class="edge">
+<g id="edge786" class="edge">
 <title>@siteimprove/alfa&#45;json&#45;ld&#45;&gt;@siteimprove/alfa&#45;json</title>
 <path fill="none" stroke="black" d="M535.29,-251.78C537.81,-244.61 539.87,-234.95 540.88,-226.31"/>
 <polygon fill="black" stroke="black" points="544.38,-226.38 541.53,-216.17 537.39,-225.93 544.38,-226.38"/>
@@ -2111,7 +2111,7 @@
 <!-- @siteimprove/alfa&#45;style&#45;&gt;@siteimprove/alfa&#45;device -->
 <!-- @siteimprove/alfa&#45;style&#45;&gt;@siteimprove/alfa&#45;selector -->
 <!-- @siteimprove/alfa&#45;style&#45;&gt;@siteimprove/alfa&#45;selector -->
-<g id="edge815" class="edge">
+<g id="edge814" class="edge">
 <title>@siteimprove/alfa&#45;style&#45;&gt;@siteimprove/alfa&#45;selector</title>
 <path fill="none" stroke="black" d="M931.26,-1313.94C945.7,-1306.01 961.5,-1293.81 969,-1278 977,-1261.15 967.84,-1241.01 956.78,-1226.76"/>
 <polygon fill="black" stroke="black" points="959.36,-1224.39 950.17,-1219.12 954.07,-1228.97 959.36,-1224.39"/>
@@ -2125,7 +2125,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;style&#45;&gt;@siteimprove/alfa&#45;cascade -->
 <!-- @siteimprove/alfa&#45;style&#45;&gt;@siteimprove/alfa&#45;cascade -->
-<g id="edge793" class="edge">
+<g id="edge792" class="edge">
 <title>@siteimprove/alfa&#45;style&#45;&gt;@siteimprove/alfa&#45;cascade</title>
 <path fill="none" stroke="black" d="M908.79,-1313.78C910.3,-1306.61 911.01,-1296.95 910.8,-1288.31"/>
 <polygon fill="black" stroke="black" points="914.27,-1287.88 910.03,-1278.17 907.29,-1288.41 914.27,-1287.88"/>
@@ -2138,7 +2138,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;table&#45;&gt;@siteimprove/alfa&#45;dom -->
 <!-- @siteimprove/alfa&#45;table&#45;&gt;@siteimprove/alfa&#45;dom -->
-<g id="edge341" class="edge">
+<g id="edge339" class="edge">
 <title>@siteimprove/alfa&#45;table&#45;&gt;@siteimprove/alfa&#45;dom</title>
 <path fill="none" stroke="black" d="M604.99,-1077.78C608.67,-1070.53 612.3,-1060.74 614.67,-1052.02"/>
 <polygon fill="black" stroke="black" points="618.1,-1052.69 616.85,-1042.17 611.27,-1051.18 618.1,-1052.69"/>
@@ -2148,7 +2148,7 @@
 <!-- exit_CSS syntax&#45;&gt;exit_Understanding the web -->
 <!-- exit_CSS syntax&#45;&gt;exit_Understanding the web -->
 <!-- exit_CSS syntax&#45;&gt;@siteimprove/alfa&#45;device -->
-<g id="edge635" class="edge">
+<g id="edge634" class="edge">
 <title>exit_CSS syntax&#45;&gt;@siteimprove/alfa&#45;device</title>
 <path fill="none" stroke="#17ff00" d="M852,-941.36C851,-941.59 850,-941.8 849,-942 795.39,-952.69 779.2,-954.56 726,-942 714.85,-939.37 703.41,-934.29 693.6,-929.08"/>
 <polygon fill="#17ff00" stroke="#17ff00" points="695.2,-925.96 684.76,-924.11 691.77,-932.06 695.2,-925.96"/>
@@ -2159,7 +2159,7 @@
 <!-- exit_CSS&#45;&gt;exit_Understanding the web -->
 <!-- exit_CSS&#45;&gt;exit_Understanding the web -->
 <!-- exit_CSS&#45;&gt;@siteimprove/alfa&#45;device -->
-<g id="edge703" class="edge">
+<g id="edge702" class="edge">
 <title>exit_CSS&#45;&gt;@siteimprove/alfa&#45;device</title>
 <path fill="none" stroke="#ff0000" d="M860.73,-1129C853.15,-1123.19 846.22,-1116.36 841,-1109 825.2,-1086.74 790.59,-954.4 788,-952 758.26,-924.44 737.88,-943.5 699,-932 694.71,-930.73 690.25,-929.28 685.97,-927.76"/>
 <polygon fill="#ff0000" stroke="#ff0000" points="687.04,-924.42 676.45,-924.15 684.56,-930.97 687.04,-924.42"/>
@@ -2167,7 +2167,7 @@
 <!-- exit_CSS&#45;&gt;@siteimprove/alfa&#45;device -->
 <!-- exit_CSS&#45;&gt;@siteimprove/alfa&#45;device -->
 <!-- exit_CSS&#45;&gt;name_HTML -->
-<g id="edge704" class="edge">
+<g id="edge703" class="edge">
 <title>exit_CSS&#45;&gt;name_HTML</title>
 <path fill="none" stroke="#ff0000" d="M830,-1139.14C780.79,-1131.97 720.98,-1121.37 690.58,-1112.21"/>
 <polygon fill="#ff0000" stroke="#ff0000" points="691.59,-1108.86 681,-1109 689.37,-1115.5 691.59,-1108.86"/>
@@ -2176,7 +2176,7 @@
 <!-- exit_CSS&#45;&gt;name_HTML -->
 <!-- exit_CSS&#45;&gt;name_HTML -->
 <!-- exit_CSS&#45;&gt;name_CSS syntax -->
-<g id="edge700" class="edge">
+<g id="edge699" class="edge">
 <title>exit_CSS&#45;&gt;name_CSS syntax</title>
 <path fill="none" stroke="#ff0000" d="M883.6,-1129C874.98,-1107.78 874.8,-1073.12 883.07,-1051.35"/>
 <polygon fill="#ff0000" stroke="#ff0000" points="879.47,-1059.29 884.56,-1050 874.79,-1054.09 879.47,-1059.29"/>
@@ -2188,7 +2188,7 @@
 <!-- @siteimprove/alfa&#45;cascade&#45;&gt;@siteimprove/alfa&#45;device -->
 <!-- @siteimprove/alfa&#45;cascade&#45;&gt;@siteimprove/alfa&#45;selector -->
 <!-- @siteimprove/alfa&#45;cascade&#45;&gt;@siteimprove/alfa&#45;selector -->
-<g id="edge713" class="edge">
+<g id="edge712" class="edge">
 <title>@siteimprove/alfa&#45;cascade&#45;&gt;@siteimprove/alfa&#45;selector</title>
 <path fill="none" stroke="black" d="M916.05,-1254.78C921.25,-1247.37 926.9,-1237.3 930.97,-1228.45"/>
 <polygon fill="black" stroke="black" points="934.22,-1229.75 934.79,-1219.17 927.75,-1227.09 934.22,-1229.75"/>
@@ -2197,23 +2197,23 @@
 <!-- @siteimprove/alfa&#45;affine -->
 <g id="node99" class="node">
 <title>@siteimprove/alfa&#45;affine</title>
-<path fill="none" stroke="#000000" d="M1888.33,-629C1888.33,-629 1827.67,-629 1827.67,-629 1823.83,-629 1820,-625.17 1820,-621.33 1820,-621.33 1820,-613.67 1820,-613.67 1820,-609.83 1823.83,-606 1827.67,-606 1827.67,-606 1888.33,-606 1888.33,-606 1892.17,-606 1896,-609.83 1896,-613.67 1896,-613.67 1896,-621.33 1896,-621.33 1896,-625.17 1892.17,-629 1888.33,-629"/>
-<text text-anchor="middle" x="1858" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;affine</text>
+<path fill="none" stroke="#000000" d="M1704.33,-629C1704.33,-629 1643.67,-629 1643.67,-629 1639.83,-629 1636,-625.17 1636,-621.33 1636,-621.33 1636,-613.67 1636,-613.67 1636,-609.83 1639.83,-606 1643.67,-606 1643.67,-606 1704.33,-606 1704.33,-606 1708.17,-606 1712,-609.83 1712,-613.67 1712,-613.67 1712,-621.33 1712,-621.33 1712,-625.17 1708.17,-629 1704.33,-629"/>
+<text text-anchor="middle" x="1674" y="-613.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;affine</text>
 </g>
 <!-- @siteimprove/alfa&#45;affine&#45;&gt;@siteimprove/alfa&#45;test -->
 <!-- @siteimprove/alfa&#45;affine&#45;&gt;@siteimprove/alfa&#45;test -->
-<g id="edge425" class="edge">
+<g id="edge424" class="edge">
 <title>@siteimprove/alfa&#45;affine&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1847.26,-605.7C1838.55,-599.01 1827.3,-589.51 1821,-578 1811.42,-560.5 1809.54,-537.53 1807.98,-521.15"/>
-<polygon fill="black" stroke="black" points="1811.43,-520.57 1806.85,-511.01 1804.48,-521.34 1811.43,-520.57"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1678.11,-605.79C1681.16,-586.63 1681.57,-546.15 1679.33,-521.34"/>
+<polygon fill="black" stroke="black" points="1682.77,-520.69 1678.11,-511.18 1675.82,-521.52 1682.77,-520.69"/>
 </g>
 <!-- @siteimprove/alfa&#45;affine&#45;&gt;exit_other -->
 <!-- @siteimprove/alfa&#45;affine&#45;&gt;@siteimprove/alfa&#45;math -->
 <!-- @siteimprove/alfa&#45;affine&#45;&gt;@siteimprove/alfa&#45;math -->
-<g id="edge422" class="edge">
+<g id="edge421" class="edge">
 <title>@siteimprove/alfa&#45;affine&#45;&gt;@siteimprove/alfa&#45;math</title>
-<path fill="none" stroke="black" d="M1863.41,-605.78C1864.67,-598.61 1865.04,-588.95 1864.53,-580.31"/>
-<polygon fill="black" stroke="black" points="1867.98,-579.73 1863.4,-570.17 1861.03,-580.5 1867.98,-579.73"/>
+<path fill="none" stroke="black" d="M1652.64,-605.91C1631.22,-596.79 1597.97,-583.56 1571.42,-573.56"/>
+<polygon fill="black" stroke="black" points="1572.57,-570.25 1561.98,-570.03 1570.13,-576.81 1572.57,-570.25"/>
 </g>
 <!-- @siteimprove/alfa&#45;aria -->
 <g id="node100" class="node">
@@ -2224,20 +2224,20 @@
 <!-- @siteimprove/alfa&#45;aria&#45;&gt;exit_Understanding the web -->
 <!-- @siteimprove/alfa&#45;aria&#45;&gt;@siteimprove/alfa&#45;device -->
 <!-- @siteimprove/alfa&#45;aria&#45;&gt;@siteimprove/alfa&#45;device -->
-<g id="edge578" class="edge">
+<g id="edge577" class="edge">
 <title>@siteimprove/alfa&#45;aria&#45;&gt;@siteimprove/alfa&#45;device</title>
 <path fill="none" stroke="black" d="M1066.93,-1431.96C1068.55,-1411.61 1064,-1365.46 1064,-1326.5 1064,-1326.5 1064,-1326.5 1064,-1265.5 1064,-1204.75 1092.44,-1178.34 1057,-1129 1001.24,-1051.38 922.18,-1119.9 857,-1050 841.42,-1033.29 843.01,-967.25 826,-952 792.25,-921.74 769.61,-944.35 726,-932 721.22,-930.65 716.26,-929.05 711.3,-927.37"/>
 <polygon fill="black" stroke="black" points="712.44,-924.06 701.85,-924.08 710.14,-930.67 712.44,-924.06"/>
 </g>
 <!-- @siteimprove/alfa&#45;aria&#45;&gt;name_HTML -->
-<g id="edge579" class="edge">
+<g id="edge578" class="edge">
 <title>@siteimprove/alfa&#45;aria&#45;&gt;name_HTML</title>
 <path fill="none" stroke="#ff4600" d="M1030.38,-1436.08C1024.21,-1434.62 1017.9,-1433.16 1012,-1432 913.98,-1412.76 632.85,-1423.44 571,-1345 541.28,-1307.31 542.84,-1167.87 571,-1129 585.58,-1108.87 601.07,-1116.98 622.22,-1112.14"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="623.55,-1115.39 632,-1109 621.41,-1108.72 623.55,-1115.39"/>
 </g>
 <!-- @siteimprove/alfa&#45;aria&#45;&gt;name_HTML -->
 <!-- @siteimprove/alfa&#45;aria&#45;&gt;name_CSS -->
-<g id="edge592" class="edge">
+<g id="edge591" class="edge">
 <title>@siteimprove/alfa&#45;aria&#45;&gt;name_CSS</title>
 <path fill="none" stroke="#ff4600" d="M1047.43,-1431.78C1038.67,-1423.98 1028.16,-1413.21 1020.19,-1404.03"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="1029.92,-1401.17 1019.71,-1404 1029.45,-1408.16 1029.92,-1401.17"/>
@@ -2251,7 +2251,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;eaa&#45;&gt;@siteimprove/alfa&#45;act -->
 <!-- @siteimprove/alfa&#45;eaa&#45;&gt;@siteimprove/alfa&#45;act -->
-<g id="edge694" class="edge">
+<g id="edge693" class="edge">
 <title>@siteimprove/alfa&#45;eaa&#45;&gt;@siteimprove/alfa&#45;act</title>
 <path fill="none" stroke="black" d="M1057.19,-1608.78C1065.68,-1600.98 1075.82,-1590.21 1083.46,-1581.03"/>
 <polygon fill="black" stroke="black" points="1086.22,-1583.19 1089.67,-1573.17 1080.72,-1578.85 1086.22,-1583.19"/>
@@ -2273,7 +2273,7 @@
 <!-- @siteimprove/alfa&#45;painting&#45;order&#45;&gt;@siteimprove/alfa&#45;device -->
 <!-- @siteimprove/alfa&#45;painting&#45;order&#45;&gt;@siteimprove/alfa&#45;style -->
 <!-- @siteimprove/alfa&#45;painting&#45;order&#45;&gt;@siteimprove/alfa&#45;style -->
-<g id="edge776" class="edge">
+<g id="edge775" class="edge">
 <title>@siteimprove/alfa&#45;painting&#45;order&#45;&gt;@siteimprove/alfa&#45;style</title>
 <path fill="none" stroke="black" d="M906.79,-1372.78C908.3,-1365.61 909.01,-1355.95 908.8,-1347.31"/>
 <polygon fill="black" stroke="black" points="912.27,-1346.88 908.03,-1337.17 905.29,-1347.41 912.27,-1346.88"/>
@@ -2287,7 +2287,7 @@
 </g>
 <!-- @siteimprove/alfa&#45;wcag&#45;&gt;@siteimprove/alfa&#45;act -->
 <!-- @siteimprove/alfa&#45;wcag&#45;&gt;@siteimprove/alfa&#45;act -->
-<g id="edge201" class="edge">
+<g id="edge199" class="edge">
 <title>@siteimprove/alfa&#45;wcag&#45;&gt;@siteimprove/alfa&#45;act</title>
 <path fill="none" stroke="black" d="M1144.88,-1608.78C1138.32,-1600.66 1127.48,-1589.33 1117.38,-1579.92"/>
 <polygon fill="black" stroke="black" points="1119.66,-1577.26 1109.89,-1573.17 1114.98,-1582.46 1119.66,-1577.26"/>
@@ -2303,7 +2303,7 @@
 <!-- @siteimprove/alfa&#45;web&#45;&gt;exit_Infrastructure -->
 <!-- @siteimprove/alfa&#45;web&#45;&gt;@siteimprove/alfa&#45;http -->
 <!-- @siteimprove/alfa&#45;web&#45;&gt;@siteimprove/alfa&#45;http -->
-<g id="edge368" class="edge">
+<g id="edge366" class="edge">
 <title>@siteimprove/alfa&#45;web&#45;&gt;@siteimprove/alfa&#45;http</title>
 <path fill="none" stroke="black" d="M732.43,-1313.78C723.86,-1305.5 710.07,-1293.89 697.64,-1284.36"/>
 <polygon fill="black" stroke="black" points="699.43,-1281.34 689.32,-1278.17 695.25,-1286.95 699.43,-1281.34"/>
@@ -2313,39 +2313,32 @@
 <!-- @siteimprove/alfa&#45;time -->
 <g id="node109" class="node">
 <title>@siteimprove/alfa&#45;time</title>
-<path fill="none" stroke="#000000" d="M1974.83,-570C1974.83,-570 1921.17,-570 1921.17,-570 1917.33,-570 1913.5,-566.17 1913.5,-562.33 1913.5,-562.33 1913.5,-554.67 1913.5,-554.67 1913.5,-550.83 1917.33,-547 1921.17,-547 1921.17,-547 1974.83,-547 1974.83,-547 1978.67,-547 1982.5,-550.83 1982.5,-554.67 1982.5,-554.67 1982.5,-562.33 1982.5,-562.33 1982.5,-566.17 1978.67,-570 1974.83,-570"/>
-<text text-anchor="middle" x="1948" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;time</text>
+<path fill="none" stroke="#000000" d="M1646.83,-570C1646.83,-570 1593.17,-570 1593.17,-570 1589.33,-570 1585.5,-566.17 1585.5,-562.33 1585.5,-562.33 1585.5,-554.67 1585.5,-554.67 1585.5,-550.83 1589.33,-547 1593.17,-547 1593.17,-547 1646.83,-547 1646.83,-547 1650.67,-547 1654.5,-550.83 1654.5,-554.67 1654.5,-554.67 1654.5,-562.33 1654.5,-562.33 1654.5,-566.17 1650.67,-570 1646.83,-570"/>
+<text text-anchor="middle" x="1620" y="-554.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;time</text>
 </g>
 <!-- @siteimprove/alfa&#45;time&#45;&gt;@siteimprove/alfa&#45;test -->
 <!-- @siteimprove/alfa&#45;time&#45;&gt;@siteimprove/alfa&#45;test -->
-<g id="edge199" class="edge">
+<g id="edge197" class="edge">
 <title>@siteimprove/alfa&#45;time&#45;&gt;@siteimprove/alfa&#45;test</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1926.27,-546.91C1904.53,-537.79 1870.82,-524.56 1843.92,-514.56"/>
-<polygon fill="black" stroke="black" points="1844.95,-511.21 1834.35,-511.03 1842.52,-517.77 1844.95,-511.21"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1635.57,-546.78C1644.33,-538.98 1654.84,-528.21 1662.81,-519.03"/>
+<polygon fill="black" stroke="black" points="1665.63,-521.12 1669.29,-511.17 1660.23,-516.66 1665.63,-521.12"/>
 </g>
 <!-- @siteimprove/alfa&#45;time&#45;&gt;exit_other -->
-<!-- @siteimprove/alfa&#45;test&#45;deprecated -->
-<g id="node110" class="node">
-<title>@siteimprove/alfa&#45;test&#45;deprecated</title>
-<path fill="none" stroke="#000000" d="M1842.83,-452C1842.83,-452 1721.17,-452 1721.17,-452 1717.33,-452 1713.5,-448.17 1713.5,-444.33 1713.5,-444.33 1713.5,-436.67 1713.5,-436.67 1713.5,-432.83 1717.33,-429 1721.17,-429 1721.17,-429 1842.83,-429 1842.83,-429 1846.67,-429 1850.5,-432.83 1850.5,-436.67 1850.5,-436.67 1850.5,-444.33 1850.5,-444.33 1850.5,-448.17 1846.67,-452 1842.83,-452"/>
-<text text-anchor="middle" x="1782" y="-436.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;test&#45;deprecated</text>
-</g>
-<!-- @siteimprove/alfa&#45;test&#45;deprecated&#45;&gt;exit_other -->
 <!-- name_Accessibility Conformance Testing -->
-<g id="node111" class="node">
+<g id="node110" class="node">
 <title>name_Accessibility Conformance Testing</title>
 <path fill="none" stroke="#e800ff" stroke-width="5" d="M1293.33,-1691C1293.33,-1691 1086.67,-1691 1086.67,-1691 1082.83,-1691 1079,-1687.17 1079,-1683.33 1079,-1683.33 1079,-1675.67 1079,-1675.67 1079,-1671.83 1082.83,-1668 1086.67,-1668 1086.67,-1668 1293.33,-1668 1293.33,-1668 1297.17,-1668 1301,-1671.83 1301,-1675.67 1301,-1675.67 1301,-1683.33 1301,-1683.33 1301,-1687.17 1297.17,-1691 1293.33,-1691"/>
 <text text-anchor="middle" x="1190" y="-1675.8" font-family="Arial" font-size="14.00" fill="#000000">Accessibility Conformance Testing</text>
 </g>
 <!-- @siteimprove/alfa&#45;rules -->
-<g id="node112" class="node">
+<g id="node111" class="node">
 <title>@siteimprove/alfa&#45;rules</title>
 <path fill="none" stroke="#000000" d="M1053.33,-1691C1053.33,-1691 996.67,-1691 996.67,-1691 992.83,-1691 989,-1687.17 989,-1683.33 989,-1683.33 989,-1675.67 989,-1675.67 989,-1671.83 992.83,-1668 996.67,-1668 996.67,-1668 1053.33,-1668 1053.33,-1668 1057.17,-1668 1061,-1671.83 1061,-1675.67 1061,-1675.67 1061,-1683.33 1061,-1683.33 1061,-1687.17 1057.17,-1691 1053.33,-1691"/>
 <text text-anchor="middle" x="1025" y="-1675.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;rules</text>
 </g>
 <!-- @siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;act -->
 <!-- @siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;act -->
-<g id="edge881" class="edge">
+<g id="edge880" class="edge">
 <title>@siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;act</title>
 <path fill="none" stroke="black" d="M1052.19,-1667.96C1066.67,-1659.89 1082.99,-1647.51 1092,-1632 1100.6,-1617.18 1103.08,-1597.74 1102.08,-1583.19"/>
 <polygon fill="black" stroke="black" points="1105.53,-1582.59 1100.69,-1573.17 1098.6,-1583.56 1105.53,-1582.59"/>
@@ -2353,67 +2346,67 @@
 <!-- @siteimprove/alfa&#45;rules&#45;&gt;exit_Accessibility Conformance Testing -->
 <!-- @siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;eaa -->
 <!-- @siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;eaa -->
-<g id="edge893" class="edge">
+<g id="edge892" class="edge">
 <title>@siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;eaa</title>
 <path fill="none" stroke="black" d="M1033.61,-1667.78C1037.04,-1660.53 1040.33,-1650.74 1042.39,-1642.02"/>
 <polygon fill="black" stroke="black" points="1045.83,-1642.64 1044.22,-1632.17 1038.95,-1641.36 1045.83,-1642.64"/>
 </g>
 <!-- @siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;wcag -->
 <!-- @siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;wcag -->
-<g id="edge922" class="edge">
+<g id="edge921" class="edge">
 <title>@siteimprove/alfa&#45;rules&#45;&gt;@siteimprove/alfa&#45;wcag</title>
 <path fill="none" stroke="black" d="M1053.61,-1667.91C1074.56,-1659.07 1102.63,-1646.37 1123.16,-1636.49"/>
 <polygon fill="black" stroke="black" points="1124.83,-1639.56 1132.28,-1632.03 1121.76,-1633.27 1124.83,-1639.56"/>
 </g>
 <!-- @siteimprove/alfa&#45;compatibility -->
-<g id="node113" class="node">
+<g id="node112" class="node">
 <title>@siteimprove/alfa&#45;compatibility</title>
 <path fill="none" stroke="#000000" d="M836.33,-924C836.33,-924 733.67,-924 733.67,-924 729.83,-924 726,-920.17 726,-916.33 726,-916.33 726,-908.67 726,-908.67 726,-904.83 729.83,-901 733.67,-901 733.67,-901 836.33,-901 836.33,-901 840.17,-901 844,-904.83 844,-908.67 844,-908.67 844,-916.33 844,-916.33 844,-920.17 840.17,-924 836.33,-924"/>
 <text text-anchor="middle" x="785" y="-908.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;compatibility</text>
 </g>
 <!-- @siteimprove/alfa&#45;compatibility&#45;&gt;exit_Understanding the web -->
 <!-- @siteimprove/alfa&#45;xpath -->
-<g id="node114" class="node">
+<g id="node113" class="node">
 <title>@siteimprove/alfa&#45;xpath</title>
 <path fill="none" stroke="#000000" d="M548.33,-1160C548.33,-1160 487.67,-1160 487.67,-1160 483.83,-1160 480,-1156.17 480,-1152.33 480,-1152.33 480,-1144.67 480,-1144.67 480,-1140.83 483.83,-1137 487.67,-1137 487.67,-1137 548.33,-1137 548.33,-1137 552.17,-1137 556,-1140.83 556,-1144.67 556,-1144.67 556,-1152.33 556,-1152.33 556,-1156.17 552.17,-1160 548.33,-1160"/>
 <text text-anchor="middle" x="518" y="-1144.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;xpath</text>
 </g>
 <!-- @siteimprove/alfa&#45;xpath&#45;&gt;exit_Understanding the web -->
 <!-- @siteimprove/alfa&#45;xpath&#45;&gt;name_HTML -->
-<g id="edge609" class="edge">
+<g id="edge608" class="edge">
 <title>@siteimprove/alfa&#45;xpath&#45;&gt;name_HTML</title>
 <path fill="none" stroke="#ff4600" d="M546.49,-1136.97C554.1,-1134.27 562.33,-1131.44 570,-1129 597.7,-1120.18 608.11,-1120.71 631.39,-1112.58"/>
 <polygon fill="#ff4600" stroke="#ff4600" points="632.85,-1115.77 641,-1109 630.41,-1109.21 632.85,-1115.77"/>
 </g>
 <!-- name_Infrastructure -->
-<g id="node115" class="node">
+<g id="node114" class="node">
 <title>name_Infrastructure</title>
 <path fill="none" stroke="#00ff2e" stroke-width="5" d="M680.33,-1337C680.33,-1337 599.67,-1337 599.67,-1337 595.83,-1337 592,-1333.17 592,-1329.33 592,-1329.33 592,-1321.67 592,-1321.67 592,-1317.83 595.83,-1314 599.67,-1314 599.67,-1314 680.33,-1314 680.33,-1314 684.17,-1314 688,-1317.83 688,-1321.67 688,-1321.67 688,-1329.33 688,-1329.33 688,-1333.17 684.17,-1337 680.33,-1337"/>
 <text text-anchor="middle" x="640" y="-1321.8" font-family="Arial" font-size="14.00" fill="#000000">Infrastructure</text>
 </g>
 <!-- @siteimprove/alfa&#45;generator -->
-<g id="node116" class="node">
+<g id="node115" class="node">
 <title>@siteimprove/alfa&#45;generator</title>
 <path fill="none" stroke="#000000" d="M1567.83,-216C1567.83,-216 1482.17,-216 1482.17,-216 1478.33,-216 1474.5,-212.17 1474.5,-208.33 1474.5,-208.33 1474.5,-200.67 1474.5,-200.67 1474.5,-196.83 1478.33,-193 1482.17,-193 1482.17,-193 1567.83,-193 1567.83,-193 1571.67,-193 1575.5,-196.83 1575.5,-200.67 1575.5,-200.67 1575.5,-208.33 1575.5,-208.33 1575.5,-212.17 1571.67,-216 1567.83,-216"/>
 <text text-anchor="middle" x="1525" y="-200.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;generator</text>
 </g>
 <!-- @siteimprove/alfa&#45;generator&#45;&gt;@siteimprove/alfa&#45;mapper -->
 <!-- @siteimprove/alfa&#45;generator&#45;&gt;@siteimprove/alfa&#45;mapper -->
-<g id="edge571" class="edge">
+<g id="edge570" class="edge">
 <title>@siteimprove/alfa&#45;generator&#45;&gt;@siteimprove/alfa&#45;mapper</title>
 <path fill="none" stroke="black" d="M1565.19,-192.94C1574.67,-190.12 1584.67,-187.23 1594,-185 1647.77,-172.13 1709.8,-161.77 1753.28,-155.06"/>
 <polygon fill="black" stroke="black" points="1754.01,-158.49 1763.36,-153.51 1752.95,-151.57 1754.01,-158.49"/>
 </g>
 <!-- @siteimprove/alfa&#45;generator&#45;&gt;@siteimprove/alfa&#45;reducer -->
 <!-- @siteimprove/alfa&#45;generator&#45;&gt;@siteimprove/alfa&#45;reducer -->
-<g id="edge573" class="edge">
+<g id="edge572" class="edge">
 <title>@siteimprove/alfa&#45;generator&#45;&gt;@siteimprove/alfa&#45;reducer</title>
 <path fill="none" stroke="black" d="M1537.37,-192.78C1543.54,-185.29 1550.51,-175.09 1555.69,-166.16"/>
 <polygon fill="black" stroke="black" points="1558.87,-167.65 1560.47,-157.17 1552.69,-164.36 1558.87,-167.65"/>
 </g>
 <!-- @siteimprove/alfa&#45;generator&#45;&gt;exit_Type definitions -->
 <!-- name_Synchronous -->
-<g id="node117" class="node">
+<g id="node116" class="node">
 <title>name_Synchronous</title>
 <path fill="none" stroke="#5d00ff" stroke-width="5" d="M1589.83,-865C1589.83,-865 1510.17,-865 1510.17,-865 1506.33,-865 1502.5,-861.17 1502.5,-857.33 1502.5,-857.33 1502.5,-849.67 1502.5,-849.67 1502.5,-845.83 1506.33,-842 1510.17,-842 1510.17,-842 1589.83,-842 1589.83,-842 1593.67,-842 1597.5,-845.83 1597.5,-849.67 1597.5,-849.67 1597.5,-857.33 1597.5,-857.33 1597.5,-861.17 1593.67,-865 1589.83,-865"/>
 <text text-anchor="middle" x="1550" y="-849.8" font-family="Arial" font-size="14.00" fill="#000000">Synchronous</text>
@@ -2421,7 +2414,7 @@
 <!-- exit_Synchronous&#45;&gt;exit_Computations -->
 <!-- exit_Synchronous&#45;&gt;exit_Computations -->
 <!-- name_Asynchronous -->
-<g id="node119" class="node">
+<g id="node118" class="node">
 <title>name_Asynchronous</title>
 <path fill="none" stroke="#00ffff" stroke-width="5" d="M1348.33,-865C1348.33,-865 1261.67,-865 1261.67,-865 1257.83,-865 1254,-861.17 1254,-857.33 1254,-857.33 1254,-849.67 1254,-849.67 1254,-845.83 1257.83,-842 1261.67,-842 1261.67,-842 1348.33,-842 1348.33,-842 1352.17,-842 1356,-845.83 1356,-849.67 1356,-849.67 1356,-857.33 1356,-857.33 1356,-861.17 1352.17,-865 1348.33,-865"/>
 <text text-anchor="middle" x="1305" y="-849.8" font-family="Arial" font-size="14.00" fill="#000000">Asynchronous</text>
@@ -2430,14 +2423,14 @@
 <!-- exit_Asynchronous&#45;&gt;exit_Computations -->
 <!-- exit_Asynchronous&#45;&gt;exit_Computations -->
 <!-- @siteimprove/alfa&#45;promise -->
-<g id="node121" class="node">
+<g id="node120" class="node">
 <title>@siteimprove/alfa&#45;promise</title>
 <path fill="none" stroke="#000000" d="M1336.33,-806C1336.33,-806 1259.67,-806 1259.67,-806 1255.83,-806 1252,-802.17 1252,-798.33 1252,-798.33 1252,-790.67 1252,-790.67 1252,-786.83 1255.83,-783 1259.67,-783 1259.67,-783 1336.33,-783 1336.33,-783 1340.17,-783 1344,-786.83 1344,-790.67 1344,-790.67 1344,-798.33 1344,-798.33 1344,-802.17 1340.17,-806 1336.33,-806"/>
 <text text-anchor="middle" x="1298" y="-790.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;promise</text>
 </g>
 <!-- @siteimprove/alfa&#45;promise&#45;&gt;exit_Asynchronous -->
 <!-- @siteimprove/alfa&#45;network -->
-<g id="node122" class="node">
+<g id="node121" class="node">
 <title>@siteimprove/alfa&#45;network</title>
 <path fill="none" stroke="#000000" d="M316.33,-983C316.33,-983 241.67,-983 241.67,-983 237.83,-983 234,-979.17 234,-975.33 234,-975.33 234,-967.67 234,-967.67 234,-963.83 237.83,-960 241.67,-960 241.67,-960 316.33,-960 316.33,-960 320.17,-960 324,-963.83 324,-967.67 324,-967.67 324,-975.33 324,-975.33 324,-979.17 320.17,-983 316.33,-983"/>
 <text text-anchor="middle" x="279" y="-967.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;network</text>
@@ -2445,19 +2438,19 @@
 <!-- @siteimprove/alfa&#45;network&#45;&gt;exit_Graphs -->
 <!-- @siteimprove/alfa&#45;network&#45;&gt;@siteimprove/alfa&#45;graph -->
 <!-- @siteimprove/alfa&#45;network&#45;&gt;@siteimprove/alfa&#45;graph -->
-<g id="edge379" class="edge">
+<g id="edge377" class="edge">
 <title>@siteimprove/alfa&#45;network&#45;&gt;@siteimprove/alfa&#45;graph</title>
 <path fill="none" stroke="black" d="M295.32,-959.78C304.72,-951.9 316.13,-940.99 324.77,-931.75"/>
 <polygon fill="black" stroke="black" points="327.49,-933.96 331.54,-924.17 322.27,-929.3 327.49,-933.96"/>
 </g>
 <!-- name_Tooling -->
-<g id="node123" class="node">
+<g id="node122" class="node">
 <title>name_Tooling</title>
 <path fill="none" stroke="#00b9ff" stroke-width="5" d="M1890.83,-924C1890.83,-924 1847.17,-924 1847.17,-924 1843.33,-924 1839.5,-920.17 1839.5,-916.33 1839.5,-916.33 1839.5,-908.67 1839.5,-908.67 1839.5,-904.83 1843.33,-901 1847.17,-901 1847.17,-901 1890.83,-901 1890.83,-901 1894.67,-901 1898.5,-904.83 1898.5,-908.67 1898.5,-908.67 1898.5,-916.33 1898.5,-916.33 1898.5,-920.17 1894.67,-924 1890.83,-924"/>
 <text text-anchor="middle" x="1869" y="-908.8" font-family="Arial" font-size="14.00" fill="#000000">Tooling</text>
 </g>
 <!-- @siteimprove/alfa&#45;toolchain -->
-<g id="node124" class="node">
+<g id="node123" class="node">
 <title>@siteimprove/alfa&#45;toolchain</title>
 <path fill="none" stroke="#000000" d="M1813.83,-924C1813.83,-924 1732.17,-924 1732.17,-924 1728.33,-924 1724.5,-920.17 1724.5,-916.33 1724.5,-916.33 1724.5,-908.67 1724.5,-908.67 1724.5,-904.83 1728.33,-901 1732.17,-901 1732.17,-901 1813.83,-901 1813.83,-901 1817.67,-901 1821.5,-904.83 1821.5,-908.67 1821.5,-908.67 1821.5,-916.33 1821.5,-916.33 1821.5,-920.17 1817.67,-924 1813.83,-924"/>
 <text text-anchor="middle" x="1773" y="-908.8" font-family="Arial" font-size="14.00" fill="#000000">alfa&#45;toolchain</text>
