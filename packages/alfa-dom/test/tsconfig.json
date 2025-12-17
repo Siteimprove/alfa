@@ -16,6 +16,7 @@
     "./node/element.spec.tsx",
     "./node/text.spec.ts",
     "./node/predicate/has-tab-index.spec.tsx",
+    "./node/predicate/is-suggested-focusable.spec.tsx",
     "./node/traversal/get-nodes-between.spec.tsx",
     "./node/traversal/lowest-common-ancestor.spec.tsx",
     "./node/query/descendants.spec.tsx",

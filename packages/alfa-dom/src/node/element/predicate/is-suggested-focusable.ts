@@ -12,6 +12,10 @@ import { Element } from "../../element.js";
  * @public
  */
 export function isSuggestedFocusable(element: Element): boolean {
+  if (element.isInert()) {
+    return false;
+  }
+
   switch (element.name) {
     case "a":
     case "link":
