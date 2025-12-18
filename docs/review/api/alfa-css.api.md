@@ -33,6 +33,7 @@ import { Slice } from '@siteimprove/alfa-slice';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token as Token_2 } from '../../syntax/token.js';
 import { Unit as Unit_2 } from '../../index.js';
+import { Vector } from '@siteimprove/alfa-math';
 
 // @public (undocumented)
 export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
@@ -311,7 +312,7 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = ColorFunction | Hex | Named | HSL | HWB | RGB | Current | System;
+export type Color = ColorFunction | Current | Hex | HSL | HWB | Lab | LCH | Named | Oklab | OkLCH | RGB | System;
 
 // @public (undocumented)
 export namespace Color {
@@ -328,7 +329,15 @@ export namespace Color {
     const // (undocumented)
     hwb: typeof HWB.of;
     const // (undocumented)
+    lab: typeof Lab.of;
+    const // (undocumented)
+    lch: typeof LCH.of;
+    const // (undocumented)
     named: typeof Named.of;
+    const // (undocumented)
+    oklab: typeof Oklab.of;
+    const // (undocumented)
+    oklch: typeof OkLCH.of;
     const // (undocumented)
     rgb: typeof RGB.of;
     const // (undocumented)
@@ -336,7 +345,7 @@ export namespace Color {
     const // (undocumented)
     parse: Parser<Color>;
     // (undocumented)
-    export type JSON = ColorFunction.JSON | Hex.JSON | Named.JSON | HSL.JSON | HWB.JSON | RGB.JSON | Keyword.JSON;
+    export type JSON = ColorFunction.JSON | Hex.JSON | HSL.JSON | HWB.JSON | Lab.JSON | LCH.JSON | Named.JSON | Oklab.JSON | OkLCH.JSON | RGB.JSON | Keyword.JSON;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Space" needs to be exported by the entry point index.d.ts
@@ -1215,6 +1224,104 @@ export namespace Keyword {
 }
 
 // @public (undocumented)
+export class Lab extends Triplet<"lab"> {
+    protected constructor(lightness: Lab.Component, a: Lab.Component, b: Lab.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get a(): Lab.Component;
+    // (undocumented)
+    get b(): Lab.Component;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get lightness(): Lab.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, a: Number_2 | Percentage<"number">, b: Number_2 | Percentage<"number">, alpha: Number_2 | Percentage<"percentage">): Lab;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): Lab.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace Lab {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // (undocumented)
+    export function isLab(value: unknown): value is Lab;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"lab"> {
+        // (undocumented)
+        a: Number_2.Fixed.JSON;
+        // (undocumented)
+        b: Number_2.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<Lab>;
+}
+
+// @public (undocumented)
+export class LCH extends Triplet<"lch"> {
+    protected constructor(lightness: LCH.Component, chroma: LCH.Component, hue: LCH.Hue, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    get chroma(): LCH.Component;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get hue(): LCH.Hue;
+    // (undocumented)
+    get lightness(): LCH.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, chroma: Number_2 | Percentage<"number">, hue: Number_2 | Angle, alpha: Number_2 | Percentage<"percentage">): LCH;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): LCH.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace LCH {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
+    // (undocumented)
+    export function isLCH(value: unknown): value is LCH;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"lch"> {
+        // (undocumented)
+        chroma: Number_2.Fixed.JSON;
+        // (undocumented)
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<LCH>;
+}
+
+// @public (undocumented)
 export type Length<U extends Unit.Length = Unit.Length> = Length.Calculated | Length.Fixed<U>;
 
 // @public (undocumented)
@@ -1812,6 +1919,104 @@ export namespace Numeric {
     export type ToMath<T extends Type> = Math_2<T extends Numeric_2.Scalar ? "number" : T>;
     // (undocumented)
     export type Type = Numeric_2.Type | `${Numeric_2.Dimension}-percentage`;
+}
+
+// @public (undocumented)
+export class Oklab extends Triplet<"oklab"> {
+    protected constructor(lightness: Oklab.Component, a: Oklab.Component, b: Oklab.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get a(): Oklab.Component;
+    // (undocumented)
+    get b(): Oklab.Component;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get lightness(): Oklab.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, a: Number_2 | Percentage<"number">, b: Number_2 | Percentage<"number">, alpha: Number_2 | Percentage<"percentage">): Oklab;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): Oklab.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace Oklab {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // (undocumented)
+    export function isLab(value: unknown): value is Oklab;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"oklab"> {
+        // (undocumented)
+        a: Number_2.Fixed.JSON;
+        // (undocumented)
+        b: Number_2.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<Oklab>;
+}
+
+// @public (undocumented)
+export class OkLCH extends Triplet<"oklch"> {
+    protected constructor(lightness: OkLCH.Component, chroma: OkLCH.Component, hue: OkLCH.Hue, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    get chroma(): OkLCH.Component;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get hue(): OkLCH.Hue;
+    // (undocumented)
+    get lightness(): OkLCH.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, chroma: Number_2 | Percentage<"number">, hue: Number_2 | Angle, alpha: Number_2 | Percentage<"percentage">): OkLCH;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): OkLCH.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace OkLCH {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
+    // (undocumented)
+    export function isOkLCH(value: unknown): value is OkLCH;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"oklch"> {
+        // (undocumented)
+        chroma: Number_2.Fixed.JSON;
+        // (undocumented)
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<OkLCH>;
 }
 
 // @public (undocumented)

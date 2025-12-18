@@ -2,4 +2,4 @@
 "@siteimprove/alfa-css": patch
 ---
 
-**Added:** The `color()` CSS function, with RGB color spaces, is now supported.
+**Added:** The `color()` CSS function is now supported.

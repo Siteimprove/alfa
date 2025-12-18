@@ -6,7 +6,7 @@ import { Function, type Parser as CSSParser } from "../../syntax/index.js";
 
 import { Angle, Number, Percentage } from "../numeric/index.js";
 
-import { hslToRgb } from "./converters.js";
+import { Cylindrical } from "./converters.js";
 import { Format } from "./format.js";
 import { RGB } from "./rgb.js";
 import { Triplet } from "./triplet.js";
@@ -56,7 +56,7 @@ export class HSL extends Triplet<"hsl"> {
 
     const degrees = Angle.isAngle(hue) ? hue.withUnit("deg").value : hue.value;
 
-    const [red, green, blue] = hslToRgb(
+    const [red, green, blue] = Cylindrical.hslToRgb(
       Real.modulo(degrees, 360),
       Real.clamp(saturation.value, 0, 1),
       Real.clamp(lightness.value, 0, 1),
