@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-rules",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.108.0",
+  "version": "0.108.2",
   "license": "MIT",
   "description": "Implementations of ACT rules from the Sanshikan repository",
   "repository": {
@@ -77,7 +77,7 @@
     "@siteimprove/alfa-future": "workspace:^",
     "@siteimprove/alfa-http": "workspace:^",
     "@siteimprove/alfa-test": "workspace:^",
-    "vitest": "^4.0.14"
+    "vitest": "^4.0.15"
   },
   "publishConfig": {
     "access": "public",

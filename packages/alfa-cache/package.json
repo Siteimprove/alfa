@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-cache",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.108.0",
+  "version": "0.108.2",
   "license": "MIT",
   "description": "A simple in-memory cache that can be used for various purposes, such as function memoization",
   "repository": {

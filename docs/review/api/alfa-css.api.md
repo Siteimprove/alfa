@@ -26,12 +26,14 @@ import { Position as Position_3 } from '../index.js';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
+import { Refinement } from '@siteimprove/alfa-refinement';
 import { Result } from '@siteimprove/alfa-result';
 import type { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token as Token_2 } from '../../syntax/token.js';
 import { Unit as Unit_2 } from '../../index.js';
+import { Vector } from '@siteimprove/alfa-math';
 
 // @public (undocumented)
 export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
@@ -310,31 +312,97 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = Hex | Named | HSL | RGB | Current | System;
+export type Color = ColorFunction | Current | Hex | HSL | HWB | Lab | LCH | Named | Oklab | OkLCH | RGB | System;
 
 // @public (undocumented)
 export namespace Color {
     // (undocumented)
     export type Canonical = Current | System | RGB.Canonical;
     // (undocumented)
-    export function hex(value: number): Hex;
+    export function isTransparent(color: Color): boolean;
     const // (undocumented)
     current: Current;
-    // (undocumented)
-    export function hsl<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(hue: H, saturation: Percentage<"percentage">, lightness: Percentage<"percentage">, alpha: A): HSL<H, A>;
-    // (undocumented)
-    export function isTransparent(color: Color): boolean;
-    // (undocumented)
-    export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
-    // (undocumented)
-    export function named<C extends Named.Color>(color: C): Named<C>;
-    // (undocumented)
-    export function rgb<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
     const // (undocumented)
-    parse: Parser_2<Slice<Token>, Color, string, []>;
+    hex: typeof Hex.of;
+    const // (undocumented)
+    hsl: typeof HSL.of;
+    const // (undocumented)
+    hwb: typeof HWB.of;
+    const // (undocumented)
+    lab: typeof Lab.of;
+    const // (undocumented)
+    lch: typeof LCH.of;
+    const // (undocumented)
+    named: typeof Named.of;
+    const // (undocumented)
+    oklab: typeof Oklab.of;
+    const // (undocumented)
+    oklch: typeof OkLCH.of;
+    const // (undocumented)
+    rgb: typeof RGB.of;
+    const // (undocumented)
+    system: typeof Keyword.of;
+    const // (undocumented)
+    parse: Parser<Color>;
     // (undocumented)
-    export function system(keyword: System.Keyword): System;
+    export type JSON = ColorFunction.JSON | Hex.JSON | HSL.JSON | HWB.JSON | Lab.JSON | LCH.JSON | Named.JSON | Oklab.JSON | OkLCH.JSON | RGB.JSON | Keyword.JSON;
 }
+
+// Warning: (ae-forgotten-export) The symbol "Space" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Triplet" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class ColorFunction<N extends Space = Space> extends Triplet<N> {
+    protected constructor(name: N, c1: ColorFunction.Component, c2: ColorFunction.Component, c3: ColorFunction.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    get components(): [
+    ColorFunction.Component,
+    ColorFunction.Component,
+    ColorFunction.Component
+    ];
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of<N extends Space>(name: N, c1: Number_2 | Percentage<"percentage">, c2: Number_2 | Percentage<"percentage">, c3: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): ColorFunction<N>;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): ColorFunction.JSON<N>;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace ColorFunction {
+    // @internal (undocumented)
+    export type Component = Number_2.Canonical | Percentage.Canonical;
+    // (undocumented)
+    export function isColorFunction(value: unknown): value is ColorFunction;
+    // (undocumented)
+    export interface JSON<N extends Space = Space> extends Triplet.JSON<N> {
+        // (undocumented)
+        c1: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        // (undocumented)
+        c2: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+        // (undocumented)
+        c3: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<ColorFunction>;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "ColorSpaces" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const ColorSpaces: Array<Space>;
 
 // @public (undocumented)
 export namespace Comma {
@@ -738,7 +806,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Function_2>;
     const // (undocumented)
-    parse: <T>(query?: string | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(query?: string | Array<string> | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 
@@ -810,10 +878,8 @@ export namespace Hex {
 }
 
 // @public (undocumented)
-export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed<"percentage"> = Number_2.Fixed | Percentage.Fixed<"percentage">> extends Format<"hsl"> {
-    protected constructor(hue: H, saturation: Percentage.Canonical, lightness: Percentage.Canonical, alpha: A);
-    // (undocumented)
-    get alpha(): A;
+export class HSL extends Triplet<"hsl"> {
+    protected constructor(hue: HSL.Hue, saturation: HSL.Component, lightness: HSL.Component, alpha: Triplet.Alpha);
     // (undocumented)
     get blue(): Percentage.Canonical;
     // (undocumented)
@@ -823,21 +889,17 @@ export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get hue(): H;
+    get hue(): HSL.Hue;
     // (undocumented)
-    get lightness(): Percentage.Canonical;
+    get lightness(): HSL.Component;
     // (undocumented)
-    static of<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical, S extends Percentage<"percentage">, L extends Percentage<"percentage">>(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical_2" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    static of<H extends Number_2 | Angle, A extends Number_2 | Percentage<"percentage">, S extends Percentage<"percentage">, L extends Percentage<"percentage">>(hue: H, saturation: S, lightness: L, alpha: A): HSL<ToCanonical_2<H>, ToCanonical_2<A>>;
+    static of(hue: Number_2 | Angle, saturation: Number_2 | Percentage<"percentage">, lightness: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HSL;
     // (undocumented)
     get red(): Percentage.Canonical;
     // (undocumented)
     resolve(): RGB.Canonical;
     // (undocumented)
-    get saturation(): Percentage.Canonical;
+    get saturation(): HSL.Component;
     // (undocumented)
     toJSON(): HSL.JSON;
     // (undocumented)
@@ -846,12 +908,14 @@ export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle
 
 // @public (undocumented)
 export namespace HSL {
+    // @internal (undocumented)
+    export type Component = Percentage.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
     // (undocumented)
-    export function isHSL<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(value: unknown): value is HSL<H, A>;
+    export function isHSL(value: unknown): value is HSL;
     // (undocumented)
-    export interface JSON extends Format.JSON<"hsl"> {
-        // (undocumented)
-        alpha: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+    export interface JSON extends Triplet.JSON<"hsl"> {
         // (undocumented)
         hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
         // (undocumented)
@@ -861,6 +925,56 @@ export namespace HSL {
     }
     const // (undocumented)
     parse: Parser<HSL>;
+}
+
+// @public (undocumented)
+export class HWB extends Triplet<"hwb"> {
+    protected constructor(hue: HWB.Hue, whiteness: HWB.Component, blackness: HWB.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blackness(): HWB.Component;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get hue(): HWB.Hue;
+    // (undocumented)
+    static of(hue: Number_2 | Angle, whiteness: Number_2 | Percentage<"percentage">, blackness: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HWB;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): HWB.JSON;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    get whiteness(): HWB.Component;
+}
+
+// @public (undocumented)
+export namespace HWB {
+    // @internal (undocumented)
+    export type Component = Percentage.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
+    // (undocumented)
+    export function isHWB(value: unknown): value is HWB;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"hwb"> {
+        // (undocumented)
+        blackness: Percentage.Fixed.JSON;
+        // (undocumented)
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
+        // (undocumented)
+        whiteness: Percentage.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<HWB>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Ident" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -1107,6 +1221,104 @@ export namespace Keyword {
     export type ToKeywords<Words extends string> = {
         [K in Words]: Keyword<K>;
     }[Words];
+}
+
+// @public (undocumented)
+export class Lab extends Triplet<"lab"> {
+    protected constructor(lightness: Lab.Component, a: Lab.Component, b: Lab.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get a(): Lab.Component;
+    // (undocumented)
+    get b(): Lab.Component;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get lightness(): Lab.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, a: Number_2 | Percentage<"number">, b: Number_2 | Percentage<"number">, alpha: Number_2 | Percentage<"percentage">): Lab;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): Lab.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace Lab {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // (undocumented)
+    export function isLab(value: unknown): value is Lab;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"lab"> {
+        // (undocumented)
+        a: Number_2.Fixed.JSON;
+        // (undocumented)
+        b: Number_2.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<Lab>;
+}
+
+// @public (undocumented)
+export class LCH extends Triplet<"lch"> {
+    protected constructor(lightness: LCH.Component, chroma: LCH.Component, hue: LCH.Hue, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    get chroma(): LCH.Component;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get hue(): LCH.Hue;
+    // (undocumented)
+    get lightness(): LCH.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, chroma: Number_2 | Percentage<"number">, hue: Number_2 | Angle, alpha: Number_2 | Percentage<"percentage">): LCH;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): LCH.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace LCH {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
+    // (undocumented)
+    export function isLCH(value: unknown): value is LCH;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"lch"> {
+        // (undocumented)
+        chroma: Number_2.Fixed.JSON;
+        // (undocumented)
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<LCH>;
 }
 
 // @public (undocumented)
@@ -1710,6 +1922,104 @@ export namespace Numeric {
 }
 
 // @public (undocumented)
+export class Oklab extends Triplet<"oklab"> {
+    protected constructor(lightness: Oklab.Component, a: Oklab.Component, b: Oklab.Component, alpha: Triplet.Alpha);
+    // (undocumented)
+    get a(): Oklab.Component;
+    // (undocumented)
+    get b(): Oklab.Component;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get lightness(): Oklab.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, a: Number_2 | Percentage<"number">, b: Number_2 | Percentage<"number">, alpha: Number_2 | Percentage<"percentage">): Oklab;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): Oklab.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace Oklab {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // (undocumented)
+    export function isLab(value: unknown): value is Oklab;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"oklab"> {
+        // (undocumented)
+        a: Number_2.Fixed.JSON;
+        // (undocumented)
+        b: Number_2.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<Oklab>;
+}
+
+// @public (undocumented)
+export class OkLCH extends Triplet<"oklch"> {
+    protected constructor(lightness: OkLCH.Component, chroma: OkLCH.Component, hue: OkLCH.Hue, alpha: Triplet.Alpha);
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    // (undocumented)
+    get chroma(): OkLCH.Component;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get hue(): OkLCH.Hue;
+    // (undocumented)
+    get lightness(): OkLCH.Component;
+    // (undocumented)
+    static of(lightness: Number_2 | Percentage<"number">, chroma: Number_2 | Percentage<"number">, hue: Number_2 | Angle, alpha: Number_2 | Percentage<"percentage">): OkLCH;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): RGB.Canonical;
+    // (undocumented)
+    toJSON(): OkLCH.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace OkLCH {
+    // @internal
+    export type Component = Number_2.Canonical;
+    // @internal (undocumented)
+    export type Hue = Number_2.Canonical | Angle.Canonical;
+    // (undocumented)
+    export function isOkLCH(value: unknown): value is OkLCH;
+    // (undocumented)
+    export interface JSON extends Triplet.JSON<"oklch"> {
+        // (undocumented)
+        chroma: Number_2.Fixed.JSON;
+        // (undocumented)
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
+        // (undocumented)
+        lightness: Number_2.Fixed.JSON;
+    }
+    const // (undocumented)
+    parse: Parser<OkLCH>;
+}
+
+// @public (undocumented)
 export type Parser<V> = Parser_2<Slice<Token>, V, string>;
 
 // Warning: (ae-internal-missing-underscore) The name "PartiallyResolvable" should be prefixed with an underscore because the declaration is marked as @internal
@@ -2102,26 +2412,20 @@ export namespace Resolvable {
 }
 
 // @public (undocumented)
-export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">, A extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed<"percentage">> extends Format<"rgb"> {
-    protected constructor(red: C, green: C, blue: C, alpha: A);
+export class RGB extends Triplet<"rgb"> {
+    protected constructor(red: RGB.Component, green: RGB.Component, blue: RGB.Component, alpha: Triplet.Alpha);
     // (undocumented)
-    get alpha(): A;
-    // (undocumented)
-    get blue(): C;
+    get blue(): RGB.Component;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get green(): C;
+    get green(): RGB.Component;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical" needs to be exported by the entry point index.d.ts
-    //
+    static of(red: Number_2 | Percentage<"percentage">, green: Number_2 | Percentage<"percentage">, blue: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): RGB;
     // (undocumented)
-    static of<C extends Number_2 | Percentage<"percentage">, A extends Number_2 | Percentage<"percentage">>(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
-    // (undocumented)
-    get red(): C;
+    get red(): RGB.Component;
     // (undocumented)
     resolve(): RGB.Canonical;
     // (undocumented)
@@ -2133,13 +2437,13 @@ export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.
 // @public (undocumented)
 export namespace RGB {
     // (undocumented)
-    export type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
+    export type Canonical = RGB;
+    // @internal (undocumented)
+    export type Component = Number_2.Canonical | Percentage.Canonical;
     // (undocumented)
-    export function isRGB<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(value: unknown): value is RGB<C, A>;
+    export function isRGB(value: unknown): value is RGB;
     // (undocumented)
-    export interface JSON extends Format.JSON<"rgb"> {
-        // (undocumented)
-        alpha: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
+    export interface JSON extends Triplet.JSON<"rgb"> {
         // (undocumented)
         blue: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
@@ -2212,14 +2516,14 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     get kind(): "scale";
     // (undocumented)
     static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y): Scale<X, Y, never>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical_3" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ToCanonical" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">>(x: X, y: Y): Scale<ToCanonical_3<X>, ToCanonical_3<Y>>;
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">>(x: X, y: Y): Scale<ToCanonical<X>, ToCanonical<Y>>;
     // (undocumented)
     static of<X extends Number_2.Canonical | Percentage.Canonical, Y extends Number_2.Canonical | Percentage.Canonical, Z extends Number_2.Canonical | Percentage.Canonical>(x: X, y: Y, z: Z): Scale<X, Y, Z>;
     // (undocumented)
-    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z: Z): Scale<ToCanonical_3<X>, ToCanonical_3<Y>, ToCanonical_3<Z>>;
+    static of<X extends Number_2 | Percentage<"percentage">, Y extends Number_2 | Percentage<"percentage">, Z extends Number_2 | Percentage<"percentage">>(x: X, y: Y, z: Z): Scale<ToCanonical<X>, ToCanonical<Y>, ToCanonical<Z>>;
     // (undocumented)
     resolve(): Scale.Canonical;
     // (undocumented)
@@ -2579,9 +2883,6 @@ export namespace Token {
         // (undocumented)
         get type(): "close-curly-bracket";
     }
-    const // (undocumented)
-    func: typeof Function.of, // (undocumented)
-    isFunction: typeof Function.isFunction;
     // (undocumented)
     export namespace CloseCurlyBracket {
         // (undocumented)
@@ -2594,6 +2895,9 @@ export namespace Token {
             type: "close-curly-bracket";
         }
     }
+    const // (undocumented)
+    func: typeof Function.of, // (undocumented)
+    isFunction: typeof Function.isFunction;
     // (undocumented)
     export class CloseParenthesis implements Equatable, Serializable<CloseParenthesis.JSON> {
         // (undocumented)
@@ -2621,8 +2925,6 @@ export namespace Token {
             type: "close-parenthesis";
         }
     }
-    const // (undocumented)
-    atKeyword: typeof AtKeyword.of;
     // (undocumented)
     export class CloseSquareBracket implements Equatable, Serializable<CloseSquareBracket.JSON> {
         // (undocumented)
@@ -2638,6 +2940,8 @@ export namespace Token {
         // (undocumented)
         get type(): "close-square-bracket";
     }
+    const // (undocumented)
+    atKeyword: typeof AtKeyword.of;
     // (undocumented)
     export namespace CloseSquareBracket {
         // (undocumented)
@@ -2650,9 +2954,6 @@ export namespace Token {
             type: "close-square-bracket";
         }
     }
-    const // (undocumented)
-    hash: typeof Hash.of, // (undocumented)
-    isHash: typeof Hash.isHash;
     // (undocumented)
     export class Colon implements Equatable, Serializable<Colon.JSON> {
         // (undocumented)
@@ -2666,6 +2967,9 @@ export namespace Token {
         // (undocumented)
         get type(): "colon";
     }
+    const // (undocumented)
+    hash: typeof Hash.of, // (undocumented)
+    isHash: typeof Hash.isHash;
     // (undocumented)
     export namespace Colon {
         // (undocumented)
@@ -2691,9 +2995,6 @@ export namespace Token {
         // (undocumented)
         get type(): "comma";
     }
-    const // (undocumented)
-    string: typeof String.of, // (undocumented)
-    isString: typeof String.isString;
     // (undocumented)
     export namespace Comma {
         // (undocumented)
@@ -2706,6 +3007,9 @@ export namespace Token {
             type: "comma";
         }
     }
+    const // (undocumented)
+    string: typeof String.of, // (undocumented)
+    isString: typeof String.isString;
     // (undocumented)
     export class Delim implements Equatable, Serializable<Delim.JSON> {
         protected constructor(value: number);
@@ -2736,9 +3040,6 @@ export namespace Token {
             value: number;
         }
     }
-    const // (undocumented)
-    url: typeof URL.of, // (undocumented)
-    isURL: typeof URL.isURL;
     // (undocumented)
     export class Dimension implements Equatable, Serializable<Dimension.JSON> {
         protected constructor(value: number, unit: string, isInteger: boolean, isSigned: boolean);
@@ -2761,6 +3062,9 @@ export namespace Token {
         // (undocumented)
         get value(): number;
     }
+    const // (undocumented)
+    url: typeof URL.of, // (undocumented)
+    isURL: typeof URL.isURL;
     // (undocumented)
     export namespace Dimension {
         // (undocumented)
@@ -2799,8 +3103,6 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
-    const // (undocumented)
-    badURL: typeof BadURL.of;
     // (undocumented)
     export namespace Function {
         // (undocumented)
@@ -2815,6 +3117,8 @@ export namespace Token {
             value: string;
         }
     }
+    const // (undocumented)
+    badURL: typeof BadURL.of;
     // (undocumented)
     export class Hash implements Equatable, Serializable<Hash.JSON> {
         protected constructor(value: string, isIdentifier: boolean);
@@ -2833,9 +3137,6 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
-    const // (undocumented)
-    delim: typeof Delim.of, // (undocumented)
-    isDelim: typeof Delim.isDelim;
     // (undocumented)
     export namespace Hash {
         // (undocumented)
@@ -2852,41 +3153,44 @@ export namespace Token {
             value: string;
         }
     }
+    const // (undocumented)
+    delim: typeof Delim.of, // (undocumented)
+    isDelim: typeof Delim.isDelim;
     // (undocumented)
-    export class Ident implements Equatable, Serializable<Ident.JSON> {
-        protected constructor(value: string);
+    export class Ident<N extends string = string> implements Equatable, Serializable<Ident.JSON<N>> {
+        protected constructor(value: N);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(value: string): Ident;
+        static of<N extends string>(value: N): Ident<N>;
         // (undocumented)
-        toJSON(): Ident.JSON;
+        toJSON(): Ident.JSON<N>;
         // (undocumented)
         toString(): string;
         // (undocumented)
         get type(): "ident";
         // (undocumented)
-        get value(): string;
+        get value(): N;
     }
     // (undocumented)
     export namespace Ident {
         // (undocumented)
         export function isIdent(value: unknown): value is Ident;
         // (undocumented)
-        export interface JSON {
+        export interface JSON<N extends string = string> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
             type: "ident";
             // (undocumented)
-            value: string;
+            value: N;
         }
     }
+    // (undocumented)
+    export type JSON = Ident.JSON | Function.JSON | AtKeyword.JSON | Hash.JSON | String.JSON | URL.JSON | BadURL.JSON | Delim.JSON | Number.JSON | Percentage.JSON | Dimension.JSON | Whitespace.JSON | Colon.JSON | Semicolon.JSON | Comma.JSON | OpenParenthesis.JSON | CloseParenthesis.JSON | OpenSquareBracket.JSON | CloseSquareBracket.JSON | OpenCurlyBracket.JSON | CloseCurlyBracket.JSON | OpenComment.JSON | CloseComment.JSON;
     const // (undocumented)
     number: typeof Number.of, // (undocumented)
     isNumber: typeof Number.isNumber;
-    // (undocumented)
-    export type JSON = Ident.JSON | Function.JSON | AtKeyword.JSON | Hash.JSON | String.JSON | URL.JSON | BadURL.JSON | Delim.JSON | Number.JSON | Percentage.JSON | Dimension.JSON | Whitespace.JSON | Colon.JSON | Semicolon.JSON | Comma.JSON | OpenParenthesis.JSON | CloseParenthesis.JSON | OpenSquareBracket.JSON | CloseSquareBracket.JSON | OpenCurlyBracket.JSON | CloseCurlyBracket.JSON | OpenComment.JSON | CloseComment.JSON;
     // (undocumented)
     export class Number implements Equatable, Serializable<Number.JSON> {
         protected constructor(value: number, isInteger: boolean, isSigned: boolean);
@@ -2925,9 +3229,6 @@ export namespace Token {
             value: number;
         }
     }
-    const // (undocumented)
-    percentage: typeof Percentage.of, // (undocumented)
-    isPercentage: typeof Percentage.isPercentage;
     // (undocumented)
     export class OpenComment implements Equatable, Serializable<OpenComment.JSON> {
         // (undocumented)
@@ -2941,6 +3242,9 @@ export namespace Token {
         // (undocumented)
         get type(): "open-comment";
     }
+    const // (undocumented)
+    percentage: typeof Percentage.of, // (undocumented)
+    isPercentage: typeof Percentage.isPercentage;
     // (undocumented)
     export namespace OpenComment {
         // (undocumented)
@@ -2968,9 +3272,6 @@ export namespace Token {
         // (undocumented)
         get type(): "open-curly-bracket";
     }
-    const // (undocumented)
-    dimension: typeof Dimension.of, // (undocumented)
-    isDimension: typeof Dimension.isDimension;
     // (undocumented)
     export namespace OpenCurlyBracket {
         // (undocumented)
@@ -2983,6 +3284,9 @@ export namespace Token {
             type: "open-curly-bracket";
         }
     }
+    const // (undocumented)
+    dimension: typeof Dimension.of, // (undocumented)
+    isDimension: typeof Dimension.isDimension;
     // (undocumented)
     export class OpenParenthesis implements Equatable, Serializable<OpenParenthesis.JSON> {
         // (undocumented)
@@ -3010,11 +3314,6 @@ export namespace Token {
             type: "open-parenthesis";
         }
     }
-    const // (undocumented)
-    whitespace: typeof Whitespace.of, // (undocumented)
-    isWhitespace: typeof Whitespace.isWhitespace;
-    const // (undocumented)
-    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export class OpenSquareBracket implements Equatable, Serializable<OpenSquareBracket.JSON> {
         // (undocumented)
@@ -3030,6 +3329,11 @@ export namespace Token {
         // (undocumented)
         get type(): "open-square-bracket";
     }
+    const // (undocumented)
+    whitespace: typeof Whitespace.of, // (undocumented)
+    isWhitespace: typeof Whitespace.isWhitespace;
+    const // (undocumented)
+    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export namespace OpenSquareBracket {
         // (undocumented)
@@ -3042,49 +3346,51 @@ export namespace Token {
             type: "open-square-bracket";
         }
     }
+    // (undocumented)
+    export function parseDelim(query?: string | number | Predicate<Delim>): Parser<Delim>;
     const // (undocumented)
     colon: typeof Colon.of, // (undocumented)
     isColon: typeof Colon.isColon;
     const // (undocumented)
-    parseColon: Parser_2<Slice<Token>, Colon, string, []>;
+    parseColon: Parser<Colon>;
     // (undocumented)
-    export function parseDelim(query?: string | number | Predicate<Delim>): Parser_2<Slice<Token>, Delim, string, []>;
+    export function parseDimension(predicate?: Predicate<Dimension>): Parser<Dimension>;
     // (undocumented)
-    export function parseDimension(predicate?: Predicate<Dimension>): Parser_2<Slice<Token>, Dimension, string, []>;
+    export function parseFunction(query?: string | Array_2<string> | Predicate<Function>): Parser<Function>;
     const // (undocumented)
     semicolon: typeof Semicolon.of, // (undocumented)
     isSemicolon: typeof Semicolon.isSemicolon;
     const // (undocumented)
-    parseSemicolon: Parser_2<Slice<Token>, Semicolon, string, []>;
+    parseSemicolon: Parser<Semicolon>;
     // (undocumented)
-    export function parseFunction(query?: string | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
+    export function parseHash(predicate?: Predicate<Hash>): Parser<Hash>;
     // (undocumented)
-    export function parseHash(predicate?: Predicate<Hash>): Parser_2<Slice<Token>, Hash, string, []>;
+    export function parseIdent<N extends string>(query: N | Array_2<N> | Refinement<Ident, Ident<N>>): Parser<Ident<N>>;
     const // (undocumented)
     comma: typeof Comma.of, // (undocumented)
     isComma: typeof Comma.isComma;
     const // (undocumented)
-    parseComma: Parser_2<Slice<Token>, Comma, string, []>;
+    parseComma: Parser<Comma>;
     // (undocumented)
-    export function parseIdent(query?: string | Predicate<Ident>): Parser_2<Slice<Token>, Ident, string, []>;
+    export function parseIdent(query?: Predicate<Ident>): Parser<Ident>;
     // (undocumented)
-    export function parseNumber(predicate?: Predicate<Number>): Parser_2<Slice<Token>, Number, string, []>;
+    export function parseNumber(predicate?: Predicate<Number>): Parser<Number>;
     const // (undocumented)
     openParenthesis: typeof OpenParenthesis.of, // (undocumented)
     isOpenParenthesis: typeof OpenParenthesis.isOpenParenthesis;
     const // (undocumented)
-    parseOpenParenthesis: Parser_2<Slice<Token>, OpenParenthesis, string, []>;
+    parseOpenParenthesis: Parser<OpenParenthesis>;
     // (undocumented)
-    export function parsePercentage(predicate?: Predicate<Percentage>): Parser_2<Slice<Token>, Percentage, string, []>;
+    export function parsePercentage(predicate?: Predicate<Percentage>): Parser<Percentage>;
     // (undocumented)
-    export function parseString(predicate?: Predicate<String>): Parser_2<Slice<Token>, String, string, []>;
+    export function parseString(predicate?: Predicate<String>): Parser<String>;
     const // (undocumented)
     closeParenthesis: typeof CloseParenthesis.of, // (undocumented)
     isCloseParenthesis: typeof CloseParenthesis.isCloseParenthesis;
     const // (undocumented)
-    parseCloseParenthesis: Parser_2<Slice<Token>, CloseParenthesis, string, []>;
+    parseCloseParenthesis: Parser<CloseParenthesis>;
     // (undocumented)
-    export function parseURL(predicate?: Predicate<URL>): Parser_2<Slice<Token>, URL, string, []>;
+    export function parseURL(predicate?: Predicate<URL>): Parser<URL>;
     // (undocumented)
     export class Percentage implements Equatable, Serializable<Percentage.JSON> {
         protected constructor(value: number, isInteger: boolean);
@@ -3107,7 +3413,7 @@ export namespace Token {
     openSquareBracket: typeof OpenSquareBracket.of, // (undocumented)
     isOpenSquareBracket: typeof OpenSquareBracket.isOpenSquareBracket;
     const // (undocumented)
-    parseOpenSquareBracket: Parser_2<Slice<Token>, OpenSquareBracket, string, []>;
+    parseOpenSquareBracket: Parser<OpenSquareBracket>;
     // (undocumented)
     export namespace Percentage {
         // (undocumented)
@@ -3141,7 +3447,7 @@ export namespace Token {
     closeSquareBracket: typeof CloseSquareBracket.of, // (undocumented)
     isCloseSquareBracket: typeof CloseSquareBracket.isCloseSquareBracket;
     const // (undocumented)
-    parseCloseSquareBracket: Parser_2<Slice<Token>, CloseSquareBracket, string, []>;
+    parseCloseSquareBracket: Parser<CloseSquareBracket>;
     // (undocumented)
     export namespace Semicolon {
         // (undocumented)
@@ -3160,7 +3466,7 @@ export namespace Token {
     openCurlyBracket: typeof OpenCurlyBracket.of, // (undocumented)
     isOpenCurlyBracket: typeof OpenCurlyBracket.isOpenCurlyBracket;
     const // (undocumented)
-    parseOpenCurlyBracket: Parser_2<Slice<Token>, OpenCurlyBracket, string, []>;
+    parseOpenCurlyBracket: Parser<OpenCurlyBracket>;
     // (undocumented)
     export class String implements Equatable, Serializable<String.JSON> {
         protected constructor(value: string);
@@ -3195,7 +3501,7 @@ export namespace Token {
     closeCurlyBracket: typeof CloseCurlyBracket.of, // (undocumented)
     isCloseCurlyBracket: typeof CloseCurlyBracket.isCloseCurlyBracket;
     const // (undocumented)
-    parseCloseCurlyBracket: Parser_2<Slice<Token>, CloseCurlyBracket, string, []>;
+    parseCloseCurlyBracket: Parser<CloseCurlyBracket>;
     // (undocumented)
     export class URL implements Equatable, Serializable<URL.JSON> {
         protected constructor(value: string);
@@ -3230,7 +3536,7 @@ export namespace Token {
     openComment: typeof OpenComment.of, // (undocumented)
     isOpenComment: typeof OpenComment.isOpenComment;
     const // (undocumented)
-    parseOpenComment: Parser_2<Slice<Token>, OpenComment, string, []>;
+    parseOpenComment: Parser<OpenComment>;
     // (undocumented)
     export class Whitespace implements Equatable, Serializable<Whitespace.JSON> {
         // (undocumented)
@@ -3260,7 +3566,7 @@ export namespace Token {
     closeComment: typeof CloseComment.of, // (undocumented)
     isCloseComment: typeof CloseComment.isCloseComment;
     const // (undocumented)
-    parseCloseComment: Parser_2<Slice<Token>, CloseComment, string, []>;
+    parseCloseComment: Parser<CloseComment>;
 }
 
 // @public (undocumented)

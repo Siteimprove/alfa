@@ -1,4 +1,6 @@
+import { Array } from "@siteimprove/alfa-array";
 import type { Equatable } from "@siteimprove/alfa-equatable";
+import type * as json from "@siteimprove/alfa-json";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Predicate } from "@siteimprove/alfa-predicate";
@@ -6,11 +8,9 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type * as json from "@siteimprove/alfa-json";
-
 import type { Parser as CSSParser } from "./parser.js";
 
-const { filter, map, oneOrMore } = Parser;
+const { map, oneOrMore } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 
@@ -77,22 +77,45 @@ export namespace Token {
       .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
       .getOr(Err.of("No token left"));
 
-  function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
-    return filter(parseFirst, refinement, () => "Mismatching token");
+  /**
+   * @privateRemarks
+   * This function is a hot path and is therefore implemented
+   * without using other parser combinators to avoid the extra overhead.
+   * Any changes to this function should be benchmarked.
+   */
+  function parseToken<T extends Token>(
+    refinement: Refinement<Token, T>,
+  ): CSSParser<T> {
+    return (input) => {
+      if (input.isEmpty()) {
+        return Err.of("No token left");
+      }
+
+      // We know input is not empty, so this is safe.
+      const val = input.getUnsafe(0);
+
+      if (refinement(val)) {
+        return Ok.of<[Slice<Token>, T]>([input.rest(), val]);
+      }
+
+      return Err.of("Mismatching token");
+    };
   }
 
   export function skipUntil(delimiter: CSSParser<unknown>): CSSParser<void> {
     return Parser.skipUntil(parseFirst, delimiter);
   }
 
-  export class Ident implements Equatable, Serializable<Ident.JSON> {
-    public static of(value: string): Ident {
+  export class Ident<N extends string = string>
+    implements Equatable, Serializable<Ident.JSON<N>>
+  {
+    public static of<N extends string>(value: N): Ident<N> {
       return new Ident(value);
     }
 
-    private readonly _value: string;
+    private readonly _value: N;
 
-    protected constructor(value: string) {
+    protected constructor(value: N) {
       this._value = value;
     }
 
@@ -100,7 +123,7 @@ export namespace Token {
       return "ident";
     }
 
-    public get value(): string {
+    public get value(): N {
       return this._value;
     }
 
@@ -108,7 +131,7 @@ export namespace Token {
       return value instanceof Ident && value._value === this._value;
     }
 
-    public toJSON(): Ident.JSON {
+    public toJSON(): Ident.JSON<N> {
       return {
         type: "ident",
         value: this._value,
@@ -121,10 +144,10 @@ export namespace Token {
   }
 
   export namespace Ident {
-    export interface JSON {
+    export interface JSON<N extends string = string> {
       [key: string]: json.JSON;
       type: "ident";
-      value: string;
+      value: N;
     }
 
     export function isIdent(value: unknown): value is Ident {
@@ -134,15 +157,23 @@ export namespace Token {
 
   export const { of: ident, isIdent } = Ident;
 
-  export function parseIdent(query: string | Predicate<Ident> = () => true) {
-    let predicate: Predicate<Ident>;
+  export function parseIdent<N extends string>(
+    query: N | Array<N> | Refinement<Ident, Ident<N>>,
+  ): CSSParser<Ident<N>>;
+
+  export function parseIdent(query?: Predicate<Ident>): CSSParser<Ident>;
+
+  export function parseIdent<N extends string>(
+    query?: N | Array<N> | Predicate<Ident>,
+  ): CSSParser<Ident> {
+    let predicate: Predicate<Ident> = () => true;
 
     if (typeof query === "function") {
       predicate = query;
-    } else {
-      const value = query;
-
-      predicate = (ident) => ident.value === value;
+    } else if (typeof query === "string") {
+      predicate = (ident) => ident.value === query;
+    } else if (Array.isArray(query)) {
+      predicate = (ident) => (query as Array<string>).includes(ident.value);
     }
 
     return parseToken(and(isIdent, predicate));
@@ -201,10 +232,14 @@ export namespace Token {
   export const { of: func, isFunction } = Function;
 
   export function parseFunction(
-    query: string | Predicate<Function> = () => true,
+    query: string | Array<string> | Predicate<Function> = () => true,
   ) {
     const predicate: Predicate<Function> =
-      typeof query === "function" ? query : (ident) => ident.value === query;
+      typeof query === "function"
+        ? query
+        : Array.isArray(query)
+          ? (ident) => query.includes(ident.value)
+          : (ident) => ident.value === query;
 
     return parseToken(and(isFunction, predicate));
   }

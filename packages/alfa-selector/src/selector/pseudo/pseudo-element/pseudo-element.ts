@@ -1,12 +1,13 @@
 import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
+import type { Slice } from "@siteimprove/alfa-slice";
 import type { Thunk } from "@siteimprove/alfa-thunk";
+import { Parser } from "@siteimprove/alfa-parser";
+
+const { map, right, take, takeBetween } = Parser;
+
 import { Specificity } from "../../../specificity.js";
 
 import { WithName } from "../../selector.js";
-
-const { map, right, take, takeBetween } = Parser;
-const { parseColon, parseIdent } = Token;
 
 export abstract class PseudoElementSelector<
   N extends string = string,
@@ -45,23 +46,38 @@ export namespace PseudoElementSelector {
   /**
    * Parses a non-functional, non-legacy pseudo-element (`::<name>`)
    */
-  export function parseNonLegacy<T extends PseudoElementSelector>(
+  export function parseNonLegacy<T>(
     name: string,
     of: Thunk<T>,
+    withColon = true,
   ): CSSParser<T> {
-    return map(right(take(parseColon, 2), parseIdent(name)), of);
+    return (input: Slice<Token>) => {
+      return map(
+        withColon
+          ? right(take(Token.parseColon, 2), Token.parseIdent(name))
+          : Token.parseIdent(name),
+        // We need to eta-expand in order to discard the result of parseIdent.
+        () => of(),
+      )(input);
+    };
   }
 
   /**
    * Parses a non-functional, legacy pseudo-element (`::<name>` or `:<name>`)
    */
-  export function parseLegacy<T extends PseudoElementSelector>(
+  export function parseLegacy<T>(
     name: string,
     of: Thunk<T>,
+    withColon = true,
   ): CSSParser<T> {
-    return map(
-      right(takeBetween(Token.parseColon, 1, 2), Token.parseIdent(name)),
-      of,
-    );
+    return (input: Slice<Token>) => {
+      return map(
+        withColon
+          ? right(takeBetween(Token.parseColon, 1, 2), Token.parseIdent(name))
+          : Token.parseIdent(name),
+        // We need to eta-expand in order to discard the result of parseIdent.
+        () => of(),
+      )(input);
+    };
   }
 }

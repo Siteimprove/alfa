@@ -110,7 +110,10 @@ export namespace HostContext {
     return value instanceof HostContext;
   }
 
-  export const parse = (parseSelector: Selector.Parser.Component) =>
+  export const parse = (
+    parseSelector: Selector.Parser.Component,
+    withColon = true,
+  ) =>
     WithSelector.parseWithSelector(
       "host-context",
       () =>
@@ -120,5 +123,6 @@ export namespace HostContext {
           () => ":host-context() only accepts compound selectors",
         ),
       HostContext.of,
+      withColon,
     );
 }

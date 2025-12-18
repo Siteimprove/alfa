@@ -18,7 +18,8 @@ export abstract class Format<F extends string = string>
   extends Value<"color", false>
   implements Resolvable<RGB.Canonical, never>
 {
-  private readonly _format: F;
+  protected readonly _format: F;
+
   protected constructor(format: F) {
     super("color", false);
     this._format = format;

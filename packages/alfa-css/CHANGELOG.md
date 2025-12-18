@@ -1,5 +1,19 @@
 # @siteimprove/alfa-css
 
+## 0.108.2
+
+### Patch Changes
+
+- **Fixed:** Parsing of some ill-formed CSS blocks no longer throws an exception. ([#1961](https://github.com/Siteimprove/alfa/pull/1961))
+
+  (regression was introduced in v0.108.1)
+
+## 0.108.1
+
+### Patch Changes
+
+- **Changed:** CSS lexing and parsing performance improvements. ([#1945](https://github.com/Siteimprove/alfa/pull/1945))
+
 ## 0.108.0
 
 ### Minor Changes

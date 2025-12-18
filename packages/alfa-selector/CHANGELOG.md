@@ -1,5 +1,13 @@
 # @siteimprove/alfa-selector
 
+## 0.108.2
+
+## 0.108.1
+
+### Patch Changes
+
+- **Changed:** CSS lexing and parsing performance improvements. ([#1945](https://github.com/Siteimprove/alfa/pull/1945))
+
 ## 0.108.0
 
 ### Minor Changes

@@ -9,7 +9,7 @@ import { Function } from "./function.js";
 import type { Parser as CSSParser } from "./parser.js";
 import { Token } from "./token.js";
 
-const { delimited, option, either, map } = Parser;
+const { delimited, either, option, map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#component-value}
@@ -60,6 +60,9 @@ export namespace Component {
 
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-component-value}
+   *
+   * @privateRemarks
+   * This function is a hot path. Any changes to it should be benchmarked.
    */
   export const consume: CSSParser<Component> = (input) =>
     // eta expansion is necessary for `this` binding to resolve correctly

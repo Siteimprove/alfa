@@ -95,6 +95,34 @@ describe("RNGFactory#group", () => {
   });
 });
 
+describe("RNGFactory#zip", () => {
+  it("should zip two arrays into an array of tuples", () => {
+    const rngA = RNGFactory.of().group(5);
+    const rngB = RNGFactory.of().group(5);
+    const rng = rngA.zip(rngB).create();
+
+    for (let i = 0; i < 100; i++) {
+      const zipped = rng.rand();
+      assert.equal(
+        zipped.length,
+        5,
+        `Generated zipped array of length ${zipped.length} with seed ${rng.seed} at iteration ${rng.iterations}`,
+      );
+
+      for (const [a, b] of zipped) {
+        assert.isDefined(
+          a,
+          `Generated undefined first element in tuple with seed ${rng.seed} at iteration ${rng.iterations}`,
+        );
+        assert.isDefined(
+          b,
+          `Generated undefined second element in tuple with seed ${rng.seed} at iteration ${rng.iterations}`,
+        );
+      }
+    }
+  });
+});
+
 describe("RNG.integer", () => {
   it("should generate random integers within bounds", () => {
     const rng = RNG.integer(10).create();

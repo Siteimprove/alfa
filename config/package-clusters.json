@@ -130,7 +130,6 @@
         "@siteimprove/alfa-rng",
         "@siteimprove/alfa-string",
         "@siteimprove/alfa-test",
-        "@siteimprove/alfa-test-deprecated",
         "@siteimprove/alfa-time"
       ]
     },

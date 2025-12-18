@@ -18,10 +18,19 @@
     "./calculation/math-functions.spec.ts",
     "./value/collection/list.spec.ts",
     "./value/collection/tuple.spec.ts",
+    "./value/color/color-function.spec.ts",
+    "./value/color/common.ts",
+    "./value/color/converters.spec.ts",
+    "./value/color/format.spec.ts",
     "./value/color/hex.spec.ts",
     "./value/color/hsl.spec.ts",
-    "./value/color/rgb.spec.ts",
+    "./value/color/hwb.spec.ts",
+    "./value/color/lab.spec.ts",
+    "./value/color/lch.spec.ts",
     "./value/color/named.spec.ts",
+    "./value/color/oklab.spec.ts",
+    "./value/color/oklch.spec.ts",
+    "./value/color/rgb.spec.ts",
     "./value/image/image.spec.ts",
     "./value/image/linear-gradient.spec.ts",
     "./value/image/radial-gradient.spec.ts",
@@ -46,5 +55,9 @@
     "./value/transform/skew.spec.ts",
     "./value/transform/translate.spec.ts"
   ],
-  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
+  "references": [
+    { "path": "../src" },
+    { "path": "../../alfa-rng" },
+    { "path": "../../alfa-test" }
+  ]
 }

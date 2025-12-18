@@ -34,6 +34,8 @@ export class RNGFactory<T = number> implements Functor<T> {
     map<U>(mapper: Mapper<T, U>): RNGFactory<U>;
     static of(seed?: number): RNGFactory;
     get seed(): number;
+    // (undocumented)
+    zip<U, V>(this: RNGFactory<Array<U>>, other: RNGFactory<Array<V>>): RNGFactory<Array<[U, V]>>;
 }
 
 // (No @packageDocumentation comment for this package)

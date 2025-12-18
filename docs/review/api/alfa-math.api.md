@@ -28,7 +28,7 @@ export namespace Matrix {
     // (undocumented)
     export function isSquare(m: Matrix): boolean;
     // (undocumented)
-    export function multiply(m: Matrix, n: number | Matrix): Matrix;
+    export function multiply(m: Matrix | Vector, n: number | Matrix | Vector): Matrix;
     // (undocumented)
     export function row(m: Matrix, i: number): Array<number>;
     // (undocumented)

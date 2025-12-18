@@ -1,5 +1,23 @@
 # Alfa changelog
 
+## [0.108.2](../../compare/v0.108.1...v0.108.2) (2025-12-10)
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01082): Parsing of some ill-formed CSS blocks no longer throws an exception. ([#1961](https://github.com/Siteimprove/alfa/pull/1961))
+
+## [0.108.1](../../compare/v0.108.0...v0.108.1) (2025-12-01)
+
+### Changed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01081), [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#01081), [@siteimprove/alfa-slice](packages/alfa-slice/CHANGELOG.md#01081): CSS lexing and parsing performance improvements. ([#1945](https://github.com/Siteimprove/alfa/pull/1945))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01081): SIA-R44 is now more aggressive in detecting inapplicable pages when no orientation media rule controls a rotational property; resulting a much faster audits in these cases. ([#1939](https://github.com/Siteimprove/alfa/pull/1939))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01081): SIA-R44 now correctly detects orientation conditional rotations in shadow DOM and iframes. ([#1939](https://github.com/Siteimprove/alfa/pull/1939))
+
 ## [0.108.0](../../compare/v0.107.0...v0.108.0) (2025-11-25)
 
 ### Breaking

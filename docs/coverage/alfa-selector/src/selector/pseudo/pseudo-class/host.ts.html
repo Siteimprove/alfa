@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.68% </span>
+                <span class="strong">91.11% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/41</span>
+                <span class='fraction'>41/45</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">38.88% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/12</span>
+                <span class='fraction'>7/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.29% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>29/34</span>
+                <span class='fraction'>30/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88% </span>
+                <span class="strong">89.28% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/25</span>
+                <span class='fraction'>25/28</span>
             </div>
         
             
@@ -203,7 +203,11 @@
 <a name='L138'></a><a href='#L138'>138</a>
 <a name='L139'></a><a href='#L139'>139</a>
 <a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -320,25 +324,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">200x</span>
-<span class="cline-any cline-yes">275559x</span>
+<span class="cline-any cline-yes">276161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">202x</span>
-<span class="cline-any cline-yes">26264x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26228x</span>
+<span class="cline-any cline-yes">12899x</span>
+<span class="cline-any cline-yes">12899x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12899x</span>
+<span class="cline-any cline-yes">12899x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26228x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">202x</span>
+<span class="cline-any cline-yes">200x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -463,23 +471,27 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
     return value instanceof Host;
   }
 &nbsp;
-  export const parse = (parseSelector: Selector.Parser.Component) =&gt;
-    either(
+  export const parseFunctional = (
+    parseSelector: Selector.Parser.Component,
+    withColon = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
+  ) =&gt; {
+    const parse = Function.parse("host", () =&gt;
+      filter(
+        parseSelector(),
+        BaseSelector.hasCompoundType,
+        () =&gt; ":host() only accepts compound selectors",
+      ),
+    );
+    return map(withColon ? <span class="branch-0 cbranch-no" title="branch not covered" >right(parseColon, parse) </span>: parse, ([, selector]) =&gt;
+      Host.of(selector),
+    );
+  };
+&nbsp;
+  export const parse = <span class="fstat-no" title="function not covered" >(p</span>arseSelector: Selector.Parser.Component) =&gt;
+<span class="cstat-no" title="statement not covered" >    either(</span>
       // We need to try the functional variant first to avoid the non-functional
       // greedily passing.
-      map(
-        right(
-          parseColon,
-          Function.parse("host", () =&gt;
-            filter(
-              parseSelector(),
-              BaseSelector.hasCompoundType,
-              () =&gt; ":host() only accepts compound selectors",
-            ),
-          ),
-        ),
-        ([, selector]) =&gt; Host.of(selector),
-      ),
+      parseFunctional(parseSelector),
       PseudoClassSelector.parseNonFunctional("host", Host.of),
     );
 }
@@ -490,7 +502,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-25T08:33:12.987Z
+                at 2025-12-10T12:09:13.630Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

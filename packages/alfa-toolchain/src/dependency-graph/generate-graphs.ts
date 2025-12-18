@@ -13,7 +13,7 @@
   to the shell invocation directory. So it is always safer to pass the actual
   directory as CLI option, typically using "$(pwd)" to let the shell handle it
  */
-import { getPackages } from "@manypkg/get-packages";
+import { getPackages, type Packages } from "@manypkg/get-packages";
 import * as gv from "ts-graphviz";
 import * as adapter from "@ts-graphviz/adapter";
 
@@ -24,11 +24,28 @@ import { loadJSON } from "../common.js";
 import type { DependencyGraph } from "./dependency-graph.js";
 import { GraphFactory } from "./helpers.js";
 
+/*
+  Usage:
+  `yarn generate-dependency-graphs [targetPath] [targetGraph]`
+  - targetPath: Path to the root directory of the monorepo. Default: ".",
+    prefer explicitly using `$(pwd)`
+  - targetGraph: Type of graph to generate. Default: "all". Can be "all",
+    "global", or (part of) a package name.
+
+  E.g.:
+  `yarn generate-dependency-graphs $(pwd) all`
+  `yarn generate-dependency-graphs $(pwd) global`
+  `yarn generate-dependency-graphs $(pwd) @siteimprove/alfa-toolchain`
+ `yarn generate-dependency-graphs $(pwd) alfa-toolchain`
+
+ */
+
 const targetPath = process.argv[2] ?? ".";
+const targetGraph = process.argv[3] ?? "all";
 const destinationPath = "docs";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
 
-await generateGraphs(targetPath);
+await generateGraphs(targetPath, targetGraph);
 
 /**
  * Generates and saves both the global dependency graph (between packages of
@@ -36,37 +53,63 @@ await generateGraphs(targetPath);
  *
  * @public
  */
-export async function generateGraphs(rootDir: string): Promise<void> {
+export async function generateGraphs(
+  rootDir: string,
+  target: string,
+): Promise<void> {
   const packages = await getPackages(rootDir);
 
-  await generateGlobalGraph();
-  await generatePackagesGraphs();
+  if (target === "all" || target === "global") {
+    await generateGlobalGraph(rootDir, packages);
+  }
+  if (target !== "global") {
+    await generatePackagesGraphs(packages, target);
+  }
+}
 
-  async function generateGlobalGraph() {
+async function generateGlobalGraph(rootDir: string, packages: Packages) {
+  try {
     await saveGraph(
-      await createGlobalGraph(),
+      await createGlobalGraph(rootDir, packages),
       path.join(rootDir, destinationPath),
     );
+  } catch (error) {
+    console.log("Failed at main graph generation:");
+    throw error;
   }
+}
 
-  async function generatePackagesGraphs() {
-    for (const pkg of packages.packages) {
-      await saveGraph(
-        await GraphFactory.fromPackage(pkg),
-        path.join(pkg.dir, destinationPath),
-      );
+async function generatePackagesGraphs(packages: Packages, target: string) {
+  for (const pkg of packages.packages) {
+    if (target === "all" || pkg.packageJson.name.includes(target)) {
+      try {
+        console.log("Generating graph for package:", pkg.packageJson.name);
+
+        await saveGraph(
+          await GraphFactory.fromPackage(pkg),
+          path.join(pkg.dir, destinationPath),
+        );
+      } catch (error) {
+        console.log(
+          `Failed at graph generation for package ${pkg.packageJson.name}:`,
+        );
+        throw error;
+      }
     }
   }
+}
 
-  async function createGlobalGraph(): Promise<DependencyGraph<string, string>> {
-    const config = await loadJSON<{
-      name: string;
-      scope: string;
-      clusters: Array<GraphFactory.Global.ClusterDefinition>;
-    }>(path.join(rootDir, clustersDefinitionPath));
+async function createGlobalGraph(
+  rootDir: string,
+  packages: Packages,
+): Promise<DependencyGraph<string, string>> {
+  const config = await loadJSON<{
+    name: string;
+    scope: string;
+    clusters: Array<GraphFactory.Global.ClusterDefinition>;
+  }>(path.join(rootDir, clustersDefinitionPath));
 
-    return GraphFactory.fromPackagesList(packages, config);
-  }
+  return GraphFactory.fromPackagesList(packages, config);
 }
 
 async function saveGraph<C, M>(
@@ -108,4 +151,6 @@ async function saveGraph<C, M>(
     ...options,
     format: "svg",
   });
+
+  console.info(`Graph saved to ${dirname}`);
 }

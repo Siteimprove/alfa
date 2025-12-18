@@ -53,6 +53,7 @@ digraph "dependency-graph-Alfa" {
   "@siteimprove/alfa-tuple";
   "exit_Type definitions";
   "@siteimprove/alfa-clone";
+  "@siteimprove/alfa-fnv";
   "exit_Performance measurements";
   "@siteimprove/alfa-continuation";
   "@siteimprove/alfa-collection";
@@ -96,7 +97,6 @@ digraph "dependency-graph-Alfa" {
   "exit_CSS syntax";
   "@siteimprove/alfa-url";
   "exit_CSS";
-  "@siteimprove/alfa-fnv";
   "@siteimprove/alfa-cascade";
   "@siteimprove/alfa-affine";
   "@siteimprove/alfa-aria";
@@ -357,9 +357,6 @@ digraph "dependency-graph-Alfa" {
       "@siteimprove/alfa-string" [
         label = "alfa-string";
       ];
-      "@siteimprove/alfa-test-deprecated" [
-        label = "alfa-test-deprecated";
-      ];
       "@siteimprove/alfa-rectangle" [
         label = "alfa-rectangle";
       ];
@@ -385,9 +382,6 @@ digraph "dependency-graph-Alfa" {
         style = "invis";
       ];
       "@siteimprove/alfa-string" -> "exit_other" [
-        style = "invis";
-      ];
-      "@siteimprove/alfa-test-deprecated" -> "exit_other" [
         style = "invis";
       ];
       "@siteimprove/alfa-rectangle" -> "exit_other" [
@@ -1117,9 +1111,6 @@ digraph "dependency-graph-Alfa" {
     "exit_Accessibility Conformance Testing" -> "exit_Alfa" [
       style = "invis";
     ];
-    "exit_other" -> "exit_Alfa" [
-      style = "invis";
-    ];
     "exit_Understanding the web" -> "exit_Alfa" [
       style = "invis";
     ];
@@ -1325,6 +1316,12 @@ digraph "dependency-graph-Alfa" {
     style = "solid";
     color = "#1700ff";
     lhead = "cluster_Alternatives";
+    ltail = "cluster_other";
+  ];
+  "exit_other" -> "name_Type definitions" [
+    style = "invis";
+    color = "#1700ff";
+    lhead = "cluster_Type definitions";
     ltail = "cluster_other";
   ];
   "@siteimprove/alfa-cache" -> "@siteimprove/alfa-test" [
@@ -1699,6 +1696,18 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
     color = "#a2ff00";
     lhead = "cluster_Logic";
+    ltail = "cluster_Collections";
+  ];
+  "exit_Collections" -> "name_Hash tables" [
+    style = "invis";
+    color = "#a2ff00";
+    lhead = "cluster_Hash tables";
+    ltail = "cluster_Collections";
+  ];
+  "exit_Collections" -> "name_other" [
+    style = "dotted";
+    color = "#a2ff00";
+    lhead = "cluster_other";
     ltail = "cluster_Collections";
   ];
   "exit_other" -> "name_Type definitions" [
@@ -2486,6 +2495,12 @@ digraph "dependency-graph-Alfa" {
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
+  "exit_Understanding the web" -> "name_other" [
+    style = "invis";
+    color = "#ff4600";
+    lhead = "cluster_other";
+    ltail = "cluster_Understanding the web";
+  ];
   "exit_other" -> "name_Comparison" [
     style = "solid";
     color = "#1700ff";
@@ -2683,7 +2698,7 @@ digraph "dependency-graph-Alfa" {
     color = "black";
   ];
   "exit_Collections" -> "name_other" [
-    style = "dotted";
+    style = "invis";
     color = "#a2ff00";
     lhead = "cluster_other";
     ltail = "cluster_Collections";
@@ -4796,6 +4811,12 @@ digraph "dependency-graph-Alfa" {
     style = "invis";
     color = "#ff4600";
     lhead = "cluster_Logic";
+    ltail = "cluster_Understanding the web";
+  ];
+  "exit_Understanding the web" -> "name_Alternatives" [
+    style = "invis";
+    color = "#ff4600";
+    lhead = "cluster_Alternatives";
     ltail = "cluster_Understanding the web";
   ];
   "exit_Understanding the web" -> "name_Collections" [

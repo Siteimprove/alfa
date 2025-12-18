@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.44% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/18</span>
+                <span class='fraction'>10/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/10</span>
+                <span class='fraction'>4/16</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">43.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/15</span>
+                <span class='fraction'>7/16</span>
             </div>
         
             
@@ -143,8 +143,7 @@
 <a name='L78'></a><a href='#L78'>78</a>
 <a name='L79'></a><a href='#L79'>79</a>
 <a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L81'></a><a href='#L81'>81</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -211,18 +210,17 @@
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">260x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">224x</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">89x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
@@ -291,19 +289,18 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
 &nbsp;
   export function parse(
     parseSelector: Selector.Parser.Component,
+    withColon = <span class="branch-0 cbranch-no" title="branch not covered" >true,</span>
   ): CSSParser&lt;CueRegion&gt; {
-    return right(
-      take(Token.parseColon, 2),
-      // We need to try and fail the functional notation first to avoid accepting
-      // the `::cue-region` prefix of a `::cue-region(selector)`.
-      either(
-        map(Function.parse("cue-region", parseSelector), <span class="fstat-no" title="function not covered" >([</span>_, selector]) =&gt;
-<span class="cstat-no" title="statement not covered" >          CueRegion.of(selector),</span>
-        ),
-        // We need to eta-expand in order to discard the result of parseIdent.
-        map(Token.parseIdent("cue-region"), <span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >CueRegion.of())</span>,
+    // We need to try and fail the functional notation first to avoid accepting
+    // the `::cue-region` prefix of a `::cue-region(selector)`.
+    const parser = either(
+      map(Function.parse("cue-region", parseSelector), <span class="fstat-no" title="function not covered" >([</span>_, selector]) =&gt;
+<span class="cstat-no" title="statement not covered" >        CueRegion.of(selector),</span>
       ),
+      // We need to eta-expand in order to discard the result of parseIdent.
+      map(Token.parseIdent("cue-region"), <span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >CueRegion.of())</span>,
     );
+    return withColon ? <span class="branch-0 cbranch-no" title="branch not covered" >right(take(Token.parseColon, 2), parser) </span>: parser;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -313,7 +310,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-25T08:34:19.057Z
+                at 2025-12-10T12:10:17.058Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

@@ -1,5 +1,6 @@
-import type { Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
+import { Token, type Token as CSSToken } from "@siteimprove/alfa-css";
+import { Parser, type Parser as CSSParser } from "@siteimprove/alfa-parser";
+import { Err } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Selector } from "../index.js";
@@ -65,16 +66,51 @@ export namespace Simple {
   /**
    * {@link https://drafts.csswg.org/selectors/#typedef-simple-selector}
    *
+   * @privateRemarks
+   * This function is a hot path and uses token lookahead for simple cases
+   * to avoid backtracking. Any changes to this function should be benchmarked.
+   *
    * @internal
    */
-  export const parse = (parseSelector: Selector.Parser.Component) =>
-    either<Slice<Token>, Simple, string>(
-      Class.parse,
-      Type.parse,
-      Attribute.parse,
-      Id.parse,
-      Universal.parse,
-      PseudoClass.parse(parseSelector),
-      PseudoElement.parse(parseSelector),
-    );
+  export const parse = (
+    parseSelector: Selector.Parser.Component,
+  ): CSSParser<Slice<CSSToken>, Simple, string> => {
+    return (input: Slice<CSSToken>) => {
+      if (input.isEmpty()) {
+        return Err.of("Unexpected end of input");
+      }
+
+      const first = input.getUnsafe(0); // Safe due to emptiness check above
+
+      if (Token.isDelim(first) && first.value === 0x2e /* . */) {
+        return Class.parse(input);
+      }
+
+      if (Token.isHash(first)) {
+        return Id.parse(input);
+      }
+
+      if (Token.isOpenSquareBracket(first)) {
+        return Attribute.parse(input);
+      }
+
+      if (Token.isColon(first)) {
+        let isDoubleColon = false;
+        input = input.rest();
+        if (!input.isEmpty() && Token.isColon(input.getUnsafe(0))) {
+          input = input.rest();
+          isDoubleColon = true;
+        }
+        return either<Slice<CSSToken>, Simple, string>(
+          PseudoElement.parseWithoutColon(parseSelector, isDoubleColon),
+          PseudoClass.parseWithoutColon(parseSelector),
+        )(input);
+      }
+
+      return either<Slice<CSSToken>, Simple, string>(
+        Type.parse,
+        Universal.parse,
+      )(input);
+    };
+  };
 }

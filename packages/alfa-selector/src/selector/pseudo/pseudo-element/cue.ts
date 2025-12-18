@@ -62,20 +62,32 @@ export namespace Cue {
     selector: Option.JSON<Selector>;
   }
 
+  function parseFunc(parseSelector: Selector.Parser.Component) {
+    return map(Function.parse("cue", parseSelector), ([_, selector]) =>
+      Cue.of(selector),
+    );
+  }
+
+  export function parseFunctional(
+    parseSelector: Selector.Parser.Component,
+    withColon = false,
+  ): CSSParser<Cue> {
+    return withColon
+      ? right(take(Token.parseColon, 2), parseFunc(parseSelector))
+      : parseFunc(parseSelector);
+  }
+
   export function parse(
     parseSelector: Selector.Parser.Component,
+    withColon = false,
   ): CSSParser<Cue> {
-    return right(
-      take(Token.parseColon, 2),
-      // We need to try and fail the functional notation first to avoid accepting
-      // the `::cue` prefix of a `::cue(selector)`.
-      either(
-        map(Function.parse("cue", parseSelector), ([_, selector]) =>
-          Cue.of(selector),
-        ),
-        // We need to eta-expand in order to discard the result of parseIdent.
-        map(Token.parseIdent("cue"), () => Cue.of()),
-      ),
+    // We need to try and fail the functional notation first to avoid accepting
+    // the `::cue` prefix of a `::cue(selector)`.
+    const parser = either(
+      parseFunc(parseSelector),
+      // We need to eta-expand in order to discard the result of parseIdent.
+      map(Token.parseIdent("cue"), () => Cue.of()),
     );
+    return withColon ? right(take(Token.parseColon, 2), parser) : parser;
   }
 }
