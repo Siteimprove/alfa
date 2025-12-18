@@ -143,3 +143,52 @@ test(`evaluate() is inapplicable when aria-hidden has incorrect value`, async (t
 
   t.deepEqual(await evaluate(R17, { document }), [inapplicable(R17)]);
 });
+
+test(`evaluate() passes an element with the inert attribute`, async (t) => {
+  const target = (
+    <div aria-hidden="true" inert>
+      <a href="/">Link</a>
+    </div>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R17, { document }), [
+    passed(R17, target, {
+      1: Outcomes.IsNotTabbable,
+    }),
+  ]);
+});
+
+test(`evaluate() passes an element with inert ancestor`, async (t) => {
+  const target = (
+    <div aria-hidden="true">
+      <a href="/">Link</a>
+    </div>
+  );
+
+  const document = h.document([<div inert>{target}</div>]);
+
+  t.deepEqual(await evaluate(R17, { document }), [
+    passed(R17, target, {
+      1: Outcomes.IsNotTabbable,
+    }),
+  ]);
+});
+
+test(`evaluate() fails an inert element with a descendant that escapes inertness`, async (t) => {
+  const button = <button>Click me in popup</button>;
+  const target = (
+    <div aria-hidden="true" inert>
+      <dialog open>{button}</dialog>
+    </div>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R17, { document }), [
+    failed(R17, target, {
+      1: Outcomes.IsTabbable([button]),
+    }),
+  ]);
+});

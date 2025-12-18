@@ -316,6 +316,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     protected _inputType: helpers.InputType | undefined;
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
+    isInert(): boolean;
     // (undocumented)
     isVoid(): boolean;
     // (undocumented)
