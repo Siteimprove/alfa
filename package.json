@@ -38,12 +38,12 @@
     "@microsoft/api-extractor": "^7.52.10",
     "@siteimprove/alfa-toolchain": "workspace:^0.108.2",
     "@types/node": "^25.0.2",
-    "@vitest/coverage-v8": "^4.0.15",
+    "@vitest/coverage-v8": "^4.0.16",
     "knip": "^5.73.4",
     "minimist": "^1.2.6",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.16"
   },
   "packageManager": "yarn@4.12.0"
 }
