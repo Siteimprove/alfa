@@ -2116,6 +2116,7 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     "@siteimprove/alfa-result": "workspace:^"
+    "@siteimprove/alfa-test": "workspace:^"
   languageName: unknown
   linkType: soft
 
