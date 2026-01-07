@@ -1682,6 +1682,7 @@ __metadata:
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-thunk": "workspace:^"
+    colorjs.io: "npm:^0.6.0"
   languageName: unknown
   linkType: soft
 
@@ -3601,6 +3602,13 @@ __metadata:
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: 10c0/a1a3f914156960902f46f7f56bc62effc6c94e84b2cae157a526b1c1f74b677a47ec602bf68a61abfa2b42d15b7c5651c6dbe72a43af720bc588dff885b10f95
+  languageName: node
+  linkType: hard
+
+"colorjs.io@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "colorjs.io@npm:0.6.0"
+  checksum: 10c0/e7393f7c76186428bb3c2b332577389dba5722cdfc43e61c3e2566f1cd76b733e2302e148f52c84763cf59c94acc6babbf0e5bd7e55869ba809c047190b0c677
   languageName: node
   linkType: hard
 

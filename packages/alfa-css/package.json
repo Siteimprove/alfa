@@ -40,7 +40,8 @@
     "@siteimprove/alfa-selective": "workspace:^",
     "@siteimprove/alfa-slice": "workspace:^",
     "@siteimprove/alfa-string": "workspace:^",
-    "@siteimprove/alfa-thunk": "workspace:^"
+    "@siteimprove/alfa-thunk": "workspace:^",
+    "colorjs.io": "^0.6.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-rng": "workspace:^",
