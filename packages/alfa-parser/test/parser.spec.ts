@@ -29,14 +29,7 @@ function makeParser(isValid: Predicate<Token>): BasicParser {
 const parseFoo = makeParser((token) => token === "foo");
 const parseBar = makeParser((token) => token === "bar");
 const parseBaz = makeParser((token) => token === "baz");
-
-const parseAny: BasicParser = (input) => {
-  if (input.length === 0) {
-    return Err.of("empty input");
-  }
-  return Ok.of(makeRes(input.slice(1), input[0]));
-};
-
+const parseAny = makeParser(() => true);
 const noop: BasicParser = (input) => Ok.of(makeRes(input, ""));
 
 test("makeParser works as expected", (t) => {
