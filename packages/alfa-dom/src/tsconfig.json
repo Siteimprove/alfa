@@ -56,6 +56,7 @@
     "./node/type.ts",
     "./node/query/descendants.ts",
     "./node/query/element-id-map.ts",
+    "./node/query/grouped-text.ts",
     "./node/query/index.ts",
     "./style/block.ts",
     "./style/declaration.ts",
