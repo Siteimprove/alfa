@@ -1138,6 +1138,10 @@ export namespace Query {
     getElementIdMap: typeof elementIdMap.getElementIdMap;
     const // (undocumented)
     getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants;
+    const // Warning: (ae-forgotten-export) The symbol "groupedText" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getGroupedText: typeof groupedText.getGroupedText;
 }
 
 // @public (undocumented)
