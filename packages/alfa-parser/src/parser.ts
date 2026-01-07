@@ -283,6 +283,45 @@ export namespace Parser {
     };
   }
 
+  /** @internal */
+  export function exclusivePeek<I, T, E, A extends Array<unknown> = []>(
+    pairs: Array<[Parser<I, unknown, unknown, A>, Parser<I, T, E, A>]>,
+  ): Parser<I, T, E | string, A> {
+    return (input, ...args) => {
+      for (const [peeker, parser] of pairs) {
+        if (peeker(input, ...args).isOk()) {
+          return parser(input, ...args);
+        }
+      }
+
+      return Err.of("no parser matched");
+    };
+  }
+
+  /** @internal */
+  export function exclusivePredicate<I, T, U, E, A extends Array<unknown> = []>(
+    peeker: Parser<I, U, unknown, A>,
+    pairs: Array<[Predicate<U>, Parser<I, T, E, A>]>,
+  ): Parser<I, T, E | string, A> {
+    return (input, ...args) => {
+      const peeked = peeker(input, ...args);
+
+      if (!peeked.isOk()) {
+        return Err.of("peeker failed");
+      }
+
+      const [, value] = peeked.get();
+
+      for (const [predicate, parser] of pairs) {
+        if (predicate(value)) {
+          return parser(input, ...args);
+        }
+      }
+
+      return Err.of("no parser matched");
+    };
+  }
+
   export function pair<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     right: Parser<I, U, E, A>,
