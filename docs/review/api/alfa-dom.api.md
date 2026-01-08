@@ -1132,16 +1132,14 @@ export namespace Query {
     getDescendants: typeof descendants.getDescendants;
     const // (undocumented)
     getElementDescendants: (node: Node_2, options?: Node_2.Traversal) => Sequence<Element_2<string>>;
+    const // (undocumented)
+    getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants;
+    const // (undocumented)
+    getTextDescendants: typeof descendants.getTextDescendants;
     const // Warning: (ae-forgotten-export) The symbol "elementIdMap" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     getElementIdMap: typeof elementIdMap.getElementIdMap;
-    const // (undocumented)
-    getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants;
-    const // Warning: (ae-forgotten-export) The symbol "groupedText" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    getGroupedText: typeof groupedText.getGroupedText;
 }
 
 // @public (undocumented)
