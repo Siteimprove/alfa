@@ -658,3 +658,110 @@ test(`.from() treats second <summary> elements as generic`, (t) => {
     ],
   });
 });
+
+test(`.from() does not expose elements with the inert attribute`, (t) => {
+  const target = <div inert>Hello world</div>;
+
+  t.deepEqual(Node.from(target, device).toJSON(), {
+    type: "container",
+    node: "/div[1]",
+    role: null,
+    children: [
+      {
+        type: "inert",
+        node: "/div[1]/text()[1]",
+      },
+    ],
+  });
+});
+
+test(`.from() does not expose flat tree descendants of elements with the inert attribute`, (t) => {
+  const target = (
+    <div inert>
+      <span>Some text</span>
+    </div>
+  );
+
+  t.deepEqual(Node.from(target, device).toJSON(), {
+    type: "container",
+    node: "/div[1]",
+    role: null,
+    children: [
+      {
+        type: "inert",
+        node: "/div[1]/span[1]",
+      },
+    ],
+  });
+});
+
+test(`.from() exposes descendants that escape inertness via open dialog`, (t) => {
+  const target = (
+    <div inert>
+      <span>Hidden text</span>
+      <dialog open>
+        <div>I'm in a popup dialog</div>
+      </dialog>
+    </div>
+  );
+
+  t.deepEqual(Node.from(target, device).toJSON(), {
+    type: "container",
+    node: "/div[1]",
+    role: null,
+    children: [
+      {
+        type: "inert",
+        node: "/div[1]/span[1]",
+      },
+      {
+        type: "element",
+        node: "/div[1]/dialog[1]",
+        role: "dialog",
+        name: null,
+        attributes: [
+          {
+            name: "aria-expanded",
+            value: "true",
+          },
+        ],
+        children: [
+          {
+            type: "container",
+            node: "/div[1]/dialog[1]/div[1]",
+            role: "generic",
+            children: [
+              {
+                type: "text",
+                node: "/div[1]/dialog[1]/div[1]/text()[1]",
+                name: "I'm in a popup dialog",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+});
+
+test(`.from() does not expose dialog without open attribute inside inert element`, (t) => {
+  const target = (
+    <div inert>
+      <dialog>
+        <button>Can't click me</button>
+      </dialog>
+    </div>
+  );
+
+  t.deepEqual(Node.from(target, device).toJSON(), {
+    type: "container",
+    node: "/div[1]",
+    role: null,
+    children: [
+      {
+        type: "inert",
+        node: "/div[1]/dialog[1]",
+      },
+    ],
+  });
+});
