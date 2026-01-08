@@ -74,7 +74,25 @@ function getLabel(node: Node) {
   return "unknown";
 }
 
-test("#getTextDescendants() groups text by HTML heading levels", (t) => {
+test("#getTextDescendants() returns all text descendants without grouping", (t) => {
+  const text1 = h.text("Hello ");
+  const text2 = h.text("world");
+  const text3 = h.text("!");
+
+  const items = getTextDescendants()(
+    h.document([
+      <div>
+        <p>{text1}</p>
+        <span>{text2}</span>
+        {text3}
+      </div>,
+    ]),
+  );
+
+  t.deepEqual(items.toJSON(), [text1.toJSON(), text2.toJSON(), text3.toJSON()]);
+});
+
+test("#getTextDescendants() groups text by HTML headings", (t) => {
   const before = h.text("before");
   const heading1Text = h.text("H1");
   const heading1 = <h1>{heading1Text}</h1>;
