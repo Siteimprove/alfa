@@ -369,6 +369,143 @@ test("Parser.either() tries parsers in order", (t) => {
   });
 });
 
+test("Parser.exclusivePeek() tries parsers", (t) => {
+  const parser = Parser.exclusive(
+    [
+      [parseFoo, parseFoo],
+      [parseBar, parseBar],
+      [parseBaz, parseBaz],
+    ],
+    () => "no peek",
+  );
+
+  t.deepEqual(parser(["foo", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "foo"],
+  });
+
+  t.deepEqual(parser(["bar", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "bar"],
+  });
+
+  t.deepEqual(parser(["baz", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "baz"],
+  });
+
+  t.deepEqual(parser(["qux"]).toJSON(), {
+    type: "err",
+    error: "no peek",
+  });
+});
+
+test("Parser.exclusivePeek() tries parsers in order", (t) => {
+  const parser = Parser.exclusive(
+    [
+      [parseFoo, parseFoo],
+      [parseBar, parseBar],
+      [parseAny, parseAny],
+    ],
+    () => "no peek",
+  );
+
+  t.deepEqual(parser(["foo", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "foo"],
+  });
+
+  t.deepEqual(parser(["bar", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "bar"],
+  });
+});
+
+test("Parser.exclusivePeek() stops at the first peek match, even in case of failure", (t) => {
+  const parser = Parser.exclusive(
+    [
+      [parseFoo, parseBar],
+      [parseFoo, Parser.map(parseFoo, () => "second match")],
+    ],
+    () => "no peek",
+  );
+
+  t.deepEqual(parser(["foo", "qux"]).toJSON(), {
+    type: "err",
+    error: "invalid token: foo",
+  });
+});
+
+test("Parser.exclusivePredicate() tries parsers", (t) => {
+  const parser = Parser.exclusive(
+    Parser.either(parseFoo, parseBar, parseBaz),
+    [
+      [(text) => text === "foo", parseFoo],
+      [(text) => text === "bar", parseBar],
+    ],
+    () => "no match",
+    () => "no peek",
+  );
+
+  t.deepEqual(parser(["foo", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "foo"],
+  });
+
+  t.deepEqual(parser(["bar", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "bar"],
+  });
+
+  t.deepEqual(parser(["baz", "qux"]).toJSON(), {
+    type: "err",
+    error: "no match",
+  });
+
+  t.deepEqual(parser(["qux"]).toJSON(), {
+    type: "err",
+    error: "no peek",
+  });
+});
+
+test("Parser.exclusivePredicate() tries parsers in order", (t) => {
+  const parser = Parser.exclusive(
+    parseAny,
+    [
+      [(text) => text === "foo", parseFoo],
+      [(text) => text === "bar", parseBar],
+      [() => true, parseAny],
+    ],
+    () => "no match",
+  );
+
+  t.deepEqual(parser(["foo", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "foo"],
+  });
+
+  t.deepEqual(parser(["bar", "qux"]).toJSON(), {
+    type: "ok",
+    value: [["qux"], "bar"],
+  });
+});
+
+test("Parser.exclusivePredicate() stops at the first predicate match, even in case of failure", (t) => {
+  const parser = Parser.exclusive(
+    parseAny,
+    [
+      [(text) => text === "foo", parseBar],
+      [(text) => text === "foo", Parser.map(parseFoo, () => "second match")],
+    ],
+    () => "no match",
+  );
+
+  t.deepEqual(parser(["foo", "qux"]).toJSON(), {
+    type: "err",
+    error: "invalid token: foo",
+  });
+});
+
 test("Parser.pair() parses two values", (t) => {
   const parser = Parser.pair(parseFoo, parseBar);
 
