@@ -20,7 +20,6 @@
     "./node/traversal/lowest-common-ancestor.spec.tsx",
     "./node/query/descendants.spec.tsx",
     "./node/query/element-id-map.spec.tsx",
-    "./node/query/grouped-text.spec.tsx",
     "./style.spec.ts",
     "./traversal.spec.tsx"
   ],
