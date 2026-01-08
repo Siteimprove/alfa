@@ -1,4 +1,4 @@
-import { type Color as CSSColor, Percentage, RGB } from "@siteimprove/alfa-css";
+import { Color as CSSColor, Percentage, RGB } from "@siteimprove/alfa-css";
 import { None, Option } from "@siteimprove/alfa-option";
 import type { Style } from "@siteimprove/alfa-style";
 
@@ -18,7 +18,7 @@ export namespace Color {
 
           if (color.type === "color") {
             return Option.of(
-              RGB.of(
+              CSSColor.rgb(
                 color.red,
                 color.green,
                 color.blue,
@@ -30,7 +30,7 @@ export namespace Color {
 
         if (color.value === "canvastext") {
           return Option.of(
-            RGB.of(
+            CSSColor.rgb(
               Percentage.of(0),
               Percentage.of(0),
               Percentage.of(0),
@@ -43,7 +43,7 @@ export namespace Color {
 
       case "color":
         return Option.of(
-          RGB.of(
+          CSSColor.rgb(
             color.red,
             color.green,
             color.blue,
@@ -75,7 +75,7 @@ export namespace Color {
       [foreground.blue, background.blue],
     ].map(([a, b]) => a.value * foregroundOpacity + b.value * alpha);
 
-    return RGB.of(
+    return CSSColor.rgb(
       Percentage.of(red),
       Percentage.of(green),
       Percentage.of(blue),
