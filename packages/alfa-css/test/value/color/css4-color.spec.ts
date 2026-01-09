@@ -86,6 +86,7 @@ test(".parse() graciously rejects various color formats with incorrect calculati
     "rgb(255, 0, calc(10 + 10%))",
     "hsl(calc(10% - 5) 100% 50%)",
     "color(display-p3 calc(20% + 10) 0 0)",
+    "color(rec2020 calc(20px + 1em) 0 0)",
     "lab(calc(20 * 2 + 1%) 80.10933 67.22006)",
   ]) {
     t(parseErr(color).isErr(), `Expected parsing "${color}" to fail.`);

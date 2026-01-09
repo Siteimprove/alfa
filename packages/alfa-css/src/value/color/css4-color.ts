@@ -129,6 +129,20 @@ export namespace ColorFoo {
 
   export type Canonical = ColorFoo;
 
+  /*
+   * The colorjs.io parser works on strings, but we receive pre-tokenized input.
+   * So, we need to reconstruct strings. Moreover, the colorjs.io expects the
+   * string to end with the end of the color, while we may parse colors as part
+   * of larger inputs. So, we also need to cut the input to the color only.
+   * Finally, the colorjs.io parser may throw an exception, that we need to
+   * catch and use a Result instead.
+   *
+   * The CSS4 colors can either be a hash color (#rrggbb), a named one (red),
+   * or a function (rgb(), hsl(), lab(), …). The various cases are easily
+   * differentiated on the first token, but we still need to handle each case
+   * separately.
+   */
+
   /**
    * Parses the input, stringify the parsed value and send it to colorjs.io.
    */
@@ -150,6 +164,35 @@ export namespace ColorFoo {
     (hash) => `${hash}`,
   );
 
+  /*
+   * colorjs.io doesn't handle calculations, so we have to do it ourselves.’
+   *
+   * Fortunately, the components in CSS colors cannot be "mixed" types, e.g.
+   * there is no <angle-percentage> or the like, hues are <angle> | <number>,
+   * and others are <number> | <percentage>. Hence, we always have "pure"
+   * calculations and never need to interpolate percentages ourselves.
+   *
+   * For example, the `a` component in lab ranges from -125 (-100%) to 125
+   * (100%), but is always expressed as either a number or a percentage, never
+   * a mix. So, we can have "50%" (resolving to 62.5), or "calc(25% + 25%)", or
+   * calc(10 +20), but never "calc(50% + 20)".
+   *
+   * That means, that we do not care about evaluating the percentages.
+   * "calc(30% + 20%)" can be simplified to "50%" and sent to colorjs.io, without
+   * us needing to resolve "50%" to "62.5". Given that each format has different
+   * ranges for its percentages, often on a per-component basis, this saves a
+   * lot of complexity.
+   *
+   * The other good point is that colors don't include lengths, so we do not have
+   * to resolve length which can only happens at compute value time due to relative
+   * units. Hence, we can resolve everything at parse before forwarding it to
+   * colorjs.io.
+   *
+   * This simply tries to parse each of the possible numeric types, resolving
+   * them as needed (takes care of the calculations), or accept the token as-is
+   * (whitespace, "none", format in color(), …) The component is then stringified
+   * for colorjs.io to parse again.
+   */
   const parseComponent = either(
     map(
       either<Slice<Token>, Number | Percentage | Angle, string>(
