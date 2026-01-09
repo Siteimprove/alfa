@@ -75,12 +75,14 @@ test("#getTextDescendants() groups text by HTML headings", (t) => {
   const heading2 = <h2>{heading2Text}</h2>;
   const text2 = h.text("text2");
 
-  const textOptions = {
+  const textOptions: Query.TextGroupOptions<
+    Element<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">
+  > = {
     startsGroup: and(
       Element.isElement,
       Element.hasName("h1", "h2", "h3", "h4", "h5", "h6"),
     ),
-    getLabel(element: Element) {
+    getLabel(element) {
       switch (element.name) {
         case "h1":
           return "heading1";
@@ -95,8 +97,6 @@ test("#getTextDescendants() groups text by HTML headings", (t) => {
         case "h6":
           return "heading6";
       }
-
-      return "unknown";
     },
   };
 
