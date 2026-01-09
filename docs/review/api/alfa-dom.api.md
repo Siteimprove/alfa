@@ -14,7 +14,6 @@ import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
-import { Node as Node_2 } from '../../node.js';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-rectangle';
@@ -1131,7 +1130,7 @@ export namespace Query {
     // (undocumented)
     getDescendants: typeof descendants.getDescendants;
     const // (undocumented)
-    getElementDescendants: (node: Node_2, options?: Node_2.Traversal) => Sequence<Element_2<string>>;
+    getElementDescendants: (node: Node, options?: Node.Traversal) => Sequence<Element_2<string>>;
     const // (undocumented)
     getInclusiveElementDescendants: typeof descendants.getInclusiveElementDescendants;
     const // (undocumented)
@@ -1140,6 +1139,10 @@ export namespace Query {
     //
     // (undocumented)
     getElementIdMap: typeof elementIdMap.getElementIdMap;
+    // (undocumented)
+    export type TextGroup = descendants.TextGroup;
+    // (undocumented)
+    export type TextGroupOptions<N extends Node = Node> = descendants.TextGroupOptions<N>;
 }
 
 // @public (undocumented)
