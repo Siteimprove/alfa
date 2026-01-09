@@ -40,6 +40,7 @@
     "./value/color/color.ts",
     "./value/color/color-function.ts",
     "./value/color/converters.ts",
+    "./value/color/css4-color.ts",
     "./value/color/current.ts",
     "./value/color/format.ts",
     "./value/color/hex.ts",
