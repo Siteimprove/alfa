@@ -71,7 +71,12 @@ export namespace Token {
     | OpenComment.JSON
     | CloseComment.JSON;
 
-  const parseFirst: CSSParser<Token> = (input) =>
+  /**
+   * Parses the first token, whatever it is.
+   *
+   *  @internal
+   */
+  export const parseFirst: CSSParser<Token> = (input) =>
     input
       .first()
       .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))

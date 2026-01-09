@@ -38,11 +38,11 @@ test(".parse() graciously rejects invalid colors", (t) => {
     "color(invalid 1 0 0)",
     "lab(50 0)",
   ]) {
-    t(parseErr(color).isErr(), `Expected parsing "${color}" to fail`);
+    t(parseErr(color).isErr(), `Expected parsing "${color}" to fail.`);
   }
 });
 
-test(".parse()parses various colors format", (t) => {
+test(".parse() parses various color formats", (t) => {
   for (const color of [
     "#f00",
     "red",
@@ -59,6 +59,35 @@ test(".parse()parses various colors format", (t) => {
     "oklab(0.62796 0.22486 0.12558)",
     "oklch(0.62796 0.25619 29.23495)",
   ]) {
-    t(parseErr(color).isOk(), `Expected parsing "${color}" to succeed`);
+    t(parseErr(color).isOk(), `Expected parsing "${color}" to succeed.`);
+  }
+});
+
+test(".parse() parses various color formats with calculations", (t) => {
+  for (const color of [
+    "rgb(255, 0, calc(10 + 10))",
+    "rgba(calc(10% * 2) 0 0% /0.5)",
+    "hsl(calc(10 - 5) 100% 50%)",
+    "hsla(calc(20deg + 1rad) 100% 50% / 0.2)",
+    "color(srgb 1 0 calc(1 / 2) / 0.3)",
+    "color(display-p3 calc(20% + 10%) 0 0)",
+    "color(rec2020 1 0 calc(0 - 0) / 0.8)",
+    "lab(calc(20 * 2) 80.10933 67.22006)",
+    "lch(53.23288 104.5525 calc(10deg + 20deg))",
+  ]) {
+    t(parseErr(color).isOk(), `Expected parsing "${color}" to succeed.`);
+  }
+});
+
+test(".parse() graciously rejects various color formats with incorrect calculations", (t) => {
+  // Mixing types in the calculation, e.g. using an <angle-number> when hue
+  // expects an <angle> | <number>
+  for (const color of [
+    "rgb(255, 0, calc(10 + 10%))",
+    "hsl(calc(10% - 5) 100% 50%)",
+    "color(display-p3 calc(20% + 10) 0 0)",
+    "lab(calc(20 * 2 + 1%) 80.10933 67.22006)",
+  ]) {
+    t(parseErr(color).isErr(), `Expected parsing "${color}" to fail.`);
   }
 });

@@ -30,6 +30,7 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import CSSColor from "colorjs.io";
 
@@ -38,12 +39,12 @@ import {
   type Parser as CSSParser,
   Token,
 } from "../../syntax/index.js";
-import { Number, Percentage } from "../numeric/index.js";
+import { Angle, Number, Percentage } from "../numeric/index.js";
 
 import type { Resolvable } from "../resolvable.js";
 import { Value } from "../value.js";
 
-const { exclusive, map, mapResult } = Parser;
+const { either, map, mapResult, zeroOrMore } = Parser;
 
 export class ColorFoo
   extends Value<"color", false>
@@ -128,46 +129,53 @@ export namespace ColorFoo {
 
   export type Canonical = ColorFoo;
 
-  const parseHash: CSSParser<CSSColor> = mapResult(
+  /**
+   * Parses the input, stringify the parsed value and send it to colorjs.io.
+   */
+  function catcher<T>(
+    parser: CSSParser<T>,
+    stringifier: (parsed: T) => string,
+  ): CSSParser<CSSColor> {
+    return mapResult(parser, (parsed) => {
+      try {
+        return Result.of<CSSColor, string>(new CSSColor(stringifier(parsed)));
+      } catch (e) {
+        return Err.of(`Couldn't parse color: ${stringifier(parsed)} -- ${e}`);
+      }
+    });
+  }
+
+  const parseHash: CSSParser<CSSColor> = catcher(
     Token.parseHash(),
-    (hash) => {
-      try {
-        return Result.of<CSSColor, string>(new CSSColor(`${hash}`));
-      } catch (e) {
-        return Err.of(`Couldn't parse color function: ${hash} -- ${e}`);
-      }
-    },
+    (hash) => `${hash}`,
   );
 
-  const parseFunction: CSSParser<CSSColor> = mapResult(
-    Function.parse(),
-    ([func]) => {
-      try {
-        return Result.of<CSSColor, string>(new CSSColor(func.toString()));
-      } catch (e) {
-        return Err.of(`Couldn't parse color function: ${func} -- ${e}`);
-      }
-    },
+  const parseComponent = either(
+    map(
+      either<Slice<Token>, Number | Percentage | Angle, string>(
+        Number.parse,
+        Percentage.parse,
+        Angle.parse,
+      ),
+      (component) => component.resolve().toString(),
+    ),
+    map(Token.parseFirst, (token) => token.toString()),
   );
 
-  const parseIdent: CSSParser<CSSColor> = mapResult(
+  const parseFunction: CSSParser<CSSColor> = catcher(
+    Function.parse(undefined, zeroOrMore(parseComponent)),
+    ([func, body]) => `${func.name}(${body.join("")})`,
+  );
+
+  const parseIdent: CSSParser<CSSColor> = catcher(
     Token.parseIdent(),
-    (ident) => {
-      try {
-        return Result.of<CSSColor, string>(new CSSColor(ident.value));
-      } catch (e) {
-        return Err.of(`Unknown color keyword: ${ident.value} -- ${e}`);
-      }
-    },
+    (ident) => ident.value,
   );
 
-  const parseColor: CSSParser<CSSColor> = exclusive(
-    [
-      [Token.parseFunction(), parseFunction],
-      [Token.parseHash(), parseHash],
-      [Token.parseIdent(), parseIdent],
-    ],
-    (input) => `${input} is not a valid CSS color`,
+  const parseColor: CSSParser<CSSColor> = either(
+    parseHash,
+    parseIdent,
+    parseFunction,
   );
 
   export const parse: CSSParser<ColorFoo> = map(parseColor, ColorFoo.of);
