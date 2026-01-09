@@ -48,32 +48,6 @@ test(".getDescendants caches calls made with the exact same node and predicate",
   t.deepEqual(cacheMiss, 13); // text child.
 });
 
-const startsGroup = and(
-  Element.isElement,
-  Element.hasName("h1", "h2", "h3", "h4", "h5", "h6"),
-);
-
-function getLabel(node: Node) {
-  if (startsGroup(node)) {
-    switch (node.name) {
-      case "h1":
-        return "heading1";
-      case "h2":
-        return "heading2";
-      case "h3":
-        return "heading3";
-      case "h4":
-        return "heading4";
-      case "h5":
-        return "heading5";
-      case "h6":
-        return "heading6";
-    }
-  }
-
-  return "unknown";
-}
-
 test("#getTextDescendants() returns all text descendants without grouping", (t) => {
   const text1 = h.text("Hello ");
   const text2 = h.text("world");
@@ -101,7 +75,32 @@ test("#getTextDescendants() groups text by HTML headings", (t) => {
   const heading2 = <h2>{heading2Text}</h2>;
   const text2 = h.text("text2");
 
-  const items = getTextDescendants({ startsGroup, getLabel })(
+  const textOptions = {
+    startsGroup: and(
+      Element.isElement,
+      Element.hasName("h1", "h2", "h3", "h4", "h5", "h6"),
+    ),
+    getLabel(element: Element) {
+      switch (element.name) {
+        case "h1":
+          return "heading1";
+        case "h2":
+          return "heading2";
+        case "h3":
+          return "heading3";
+        case "h4":
+          return "heading4";
+        case "h5":
+          return "heading5";
+        case "h6":
+          return "heading6";
+      }
+
+      return "unknown";
+    },
+  };
+
+  const items = getTextDescendants(textOptions)(
     h.document([
       <div>
         {before}

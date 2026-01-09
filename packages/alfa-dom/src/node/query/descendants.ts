@@ -70,7 +70,7 @@ export function getInclusiveElementDescendants(
 }
 
 const _textCache = Cache.empty<
-  TextGroupOptions,
+  TextGroupOptions<any>,
   Cache<Node, Array<Sequence<Text | TextGroup>>>
 >();
 
@@ -89,10 +89,15 @@ export interface TextGroup {
  *
  * @public
  */
-export interface TextGroupOptions {
-  startsGroup: Predicate<Node>;
-  getLabel: (node: Node) => string;
+export interface TextGroupOptions<N extends Node = Node> {
+  startsGroup: Refinement<Node, N>;
+  getLabel: (node: N) => string;
 }
+
+const defaultTextOptions: TextGroupOptions<any> = {
+  startsGroup: (node): node is any => false,
+  getLabel: () => "",
+};
 
 /**
  * Get all text descendants of a node, optionally grouping some into labeled groups.
@@ -107,11 +112,8 @@ export interface TextGroupOptions {
  *
  * @public
  */
-export function getTextDescendants(
-  textOptions: TextGroupOptions = {
-    startsGroup: () => false,
-    getLabel: () => "",
-  },
+export function getTextDescendants<N extends Node = Node>(
+  textOptions: TextGroupOptions<N> = defaultTextOptions,
 ): (node: Node, options?: Node.Traversal) => Sequence<Text | TextGroup> {
   return (node, options = Node.Traversal.empty) => {
     const optionsMap = _textCache
@@ -119,34 +121,33 @@ export function getTextDescendants(
       .get(node, () => []);
 
     if (optionsMap[options.value] === undefined) {
-      const result: Array<Text | TextGroup> = [];
-
-      function visit(node: Node) {
-        const { startsGroup, getLabel } = textOptions;
-
-        for (const child of node.children(options)) {
-          if (startsGroup(child)) {
-            const groupText = child
-              .inclusiveDescendants(options)
-              .filter(Text.isText);
-
-            result.push({
-              label: getLabel(child),
-              text: groupText,
-            });
-          } else if (Text.isText(child)) {
-            result.push(child);
-          } else {
-            visit(child);
-          }
-        }
-      }
-
-      visit(node);
-
-      optionsMap[options.value] = Sequence.from(result);
+      optionsMap[options.value] = Sequence.from(
+        _getTextDescendants(node, textOptions, options),
+      );
     }
 
     return optionsMap[options.value];
   };
+}
+
+function* _getTextDescendants<N extends Node = Node>(
+  node: Node,
+  textOptions: TextGroupOptions<N>,
+  traversalOptions: Node.Traversal,
+): Generator<Text | TextGroup> {
+  const { startsGroup, getLabel } = textOptions;
+
+  for (const child of node.children(traversalOptions)) {
+    if (startsGroup(child)) {
+      const groupText = getDescendants(Text.isText)(child, traversalOptions);
+      yield {
+        label: getLabel(child),
+        text: groupText,
+      };
+    } else if (Text.isText(child)) {
+      yield child;
+    } else {
+      yield* _getTextDescendants(child, textOptions, traversalOptions);
+    }
+  }
 }
