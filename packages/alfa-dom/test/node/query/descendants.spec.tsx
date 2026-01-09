@@ -1,10 +1,10 @@
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { test } from "@siteimprove/alfa-test";
 
-import { Element, Node, Query } from "../../../dist/index.js";
+import { Element, Node, Query, h } from "../../../dist/index.js";
 
-const { tee } = Refinement;
-const { getDescendants, getElementDescendants } = Query;
+const { and, tee } = Refinement;
+const { getDescendants, getElementDescendants, getTextDescendants } = Query;
 
 test(".getElementDescendants() returns descendants non-inclusively", (t) => {
   const foo = <p>foo</p>;
@@ -46,4 +46,77 @@ test(".getDescendants caches calls made with the exact same node and predicate",
 
   getDescendants(predicate1)(<p>foo</p>).toArray(); // new element, miss
   t.deepEqual(cacheMiss, 13); // text child.
+});
+
+test("#getTextDescendants() returns all text descendants without grouping", (t) => {
+  const text1 = h.text("Hello ");
+  const text2 = h.text("world");
+  const text3 = h.text("!");
+
+  const items = getTextDescendants()(
+    h.document([
+      <div>
+        <p>{text1}</p>
+        <span>{text2}</span>
+        {text3}
+      </div>,
+    ]),
+  );
+
+  t.deepEqual(items.toJSON(), [text1.toJSON(), text2.toJSON(), text3.toJSON()]);
+});
+
+test("#getTextDescendants() groups text by HTML headings", (t) => {
+  const before = h.text("before");
+  const heading1Text = h.text("H1");
+  const heading1 = <h1>{heading1Text}</h1>;
+  const text1 = h.text("text1");
+  const heading2Text = h.text("H2");
+  const heading2 = <h2>{heading2Text}</h2>;
+  const text2 = h.text("text2");
+
+  const textOptions: Query.TextGroupOptions<
+    Element<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">
+  > = {
+    startsGroup: and(
+      Element.isElement,
+      Element.hasName("h1", "h2", "h3", "h4", "h5", "h6"),
+    ),
+    getLabel(element) {
+      switch (element.name) {
+        case "h1":
+          return "heading1";
+        case "h2":
+          return "heading2";
+        case "h3":
+          return "heading3";
+        case "h4":
+          return "heading4";
+        case "h5":
+          return "heading5";
+        case "h6":
+          return "heading6";
+      }
+    },
+  };
+
+  const items = getTextDescendants(textOptions)(
+    h.document([
+      <div>
+        {before}
+        {heading1}
+        {text1}
+        {heading2}
+        {text2}
+      </div>,
+    ]),
+  );
+
+  t.deepEqual(items.toJSON(), [
+    before.toJSON(),
+    { label: "heading1", text: [heading1Text.toJSON()] },
+    text1.toJSON(),
+    { label: "heading2", text: [heading2Text.toJSON()] },
+    text2.toJSON(),
+  ]);
 });
