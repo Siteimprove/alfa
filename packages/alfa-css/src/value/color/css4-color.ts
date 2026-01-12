@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 /*
  * This file uses the colorjs.io library to parse CSS4 colors.
  *
@@ -51,8 +50,22 @@ export class CSS4Color
   extends Value<"color", false>
   implements Resolvable<CSS4Color.Canonical, never>
 {
-  public static of(color: Color): CSS4Color {
-    return new CSS4Color(color);
+  public static of(color: Color): CSS4Color;
+
+  public static of(
+    space: string,
+    coords: [number | null, number | null, number | null],
+    alpha?: number | null,
+  ): CSS4Color;
+
+  public static of(
+    spaceOrColor: string | Color,
+    coords: [number | null, number | null, number | null] = [null, null, null],
+    alpha: number | null = 1,
+  ): CSS4Color {
+    return typeof spaceOrColor === "string"
+      ? new CSS4Color(new Color(spaceOrColor, coords, alpha))
+      : new CSS4Color(spaceOrColor);
   }
 
   private readonly _color: Color;
@@ -238,5 +251,10 @@ export namespace CSS4Color {
     parseFunction,
   );
 
-  export const parse: CSSParser<CSS4Color> = map(parseColor, CSS4Color.of);
+  export const parse: CSSParser<CSS4Color> = map<
+    Slice<Token>,
+    Color,
+    CSS4Color,
+    string
+  >(parseColor, CSS4Color.of);
 }

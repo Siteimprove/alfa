@@ -8,6 +8,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Parser as CSSParser, Token } from "../../syntax/index.js";
+import { Number, Percentage } from "../numeric/index.js";
 
 import { Keyword } from "../textual/keyword.js";
 
@@ -64,9 +65,14 @@ export namespace Color {
     // | RGB.JSON
     CSS4Color.JSON | Keyword.JSON;
 
+  function toNumber(x: Number | Percentage, base: number): number {
+    const y = x.resolve();
+    return Number.isNumber(y) ? y.value / base : y.value;
+  }
+
   export const current: Current = Keyword.of("currentcolor");
 
-  export const color = CSS4Color.of;
+  // export const color = CSS4Color.of;
 
   // export const hex = Hex.of;
   //
@@ -85,6 +91,19 @@ export namespace Color {
   // export const oklch = OkLCH.of;
   //
   // export const rgb = RGB.of;
+
+  export function rgb(
+    red: Number | Percentage,
+    green: Number | Percentage,
+    blue: Number | Percentage,
+    alpha: Number | Percentage = Number.of(1),
+  ): CSS4Color {
+    return CSS4Color.of(
+      "srgb",
+      [toNumber(red, 255), toNumber(green, 255), toNumber(blue, 255)],
+      toNumber(alpha, 1),
+    );
+  }
 
   export const system = Keyword.of;
 
