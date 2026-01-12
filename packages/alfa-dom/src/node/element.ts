@@ -284,10 +284,9 @@ export class Element<N extends string = string>
       } else if (this.name === "dialog" && this.attribute("open").isSome()) {
         this._isInert = false;
       } else {
-        this._isInert = this.ancestors(Node.flatTree)
-          .find(Element.isElement)
-          .map((parent) => parent.isInert())
-          .getOr(false);
+        this._isInert = this.parent(Node.flatTree)
+          .filter(Element.isElement)
+          .some((parent) => parent.isInert());
       }
     }
     return this._isInert;
