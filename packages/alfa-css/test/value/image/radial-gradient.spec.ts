@@ -1,10 +1,14 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Gradient } from "../../../dist/index.js";
+import { color } from "../../common/color.js";
 import { parser, serializer } from "../../common/parse.js";
 
 const parseErr = parser(Gradient.Radial.parse);
 const serialize = serializer(Gradient.Radial.parse);
+
+const red = color(1, 0, 0);
+const blue = color(0, 0, 1);
 
 test("parse() parses a radial gradient with no shape or position", (t) => {
   t.deepEqual(serialize("radial-gradient(red, blue)"), {
@@ -17,16 +21,8 @@ test("parse() parses a radial gradient with no shape or position", (t) => {
       vertical: { type: "keyword", value: "center" },
     },
     items: [
-      {
-        type: "stop",
-        color: { type: "color", format: "named", color: "red" },
-        position: null,
-      },
-      {
-        type: "stop",
-        color: { type: "color", format: "named", color: "blue" },
-        position: null,
-      },
+      { type: "stop", color: red, position: null },
+      { type: "stop", color: blue, position: null },
     ],
     repeats: false,
   });
@@ -43,16 +39,8 @@ test("parse() parses a radial gradient with an extent", (t) => {
       vertical: { type: "keyword", value: "center" },
     },
     items: [
-      {
-        type: "stop",
-        color: { type: "color", format: "named", color: "red" },
-        position: null,
-      },
-      {
-        type: "stop",
-        color: { type: "color", format: "named", color: "blue" },
-        position: null,
-      },
+      { type: "stop", color: red, position: null },
+      { type: "stop", color: blue, position: null },
     ],
     repeats: false,
   });
@@ -79,16 +67,8 @@ test("parse() parses a radial gradient with an extent and a position", (t) => {
         },
       },
       items: [
-        {
-          type: "stop",
-          color: { type: "color", format: "named", color: "red" },
-          position: null,
-        },
-        {
-          type: "stop",
-          color: { type: "color", format: "named", color: "blue" },
-          position: null,
-        },
+        { type: "stop", color: red, position: null },
+        { type: "stop", color: blue, position: null },
       ],
       repeats: false,
     },
@@ -112,16 +92,8 @@ test("parse() parses a radial gradient with a circle", (t) => {
           vertical: { type: "keyword", value: "center" },
         },
         items: [
-          {
-            type: "stop",
-            color: { type: "color", format: "named", color: "red" },
-            position: null,
-          },
-          {
-            type: "stop",
-            color: { type: "color", format: "named", color: "blue" },
-            position: null,
-          },
+          { type: "stop", color: red, position: null },
+          { type: "stop", color: blue, position: null },
         ],
         repeats: false,
       },
@@ -171,16 +143,8 @@ test("parse() parses a radial gradient with an ellipse", (t) => {
           vertical: { type: "keyword", value: "center" },
         },
         items: [
-          {
-            type: "stop",
-            color: { type: "color", format: "named", color: "red" },
-            position: null,
-          },
-          {
-            type: "stop",
-            color: { type: "color", format: "named", color: "blue" },
-            position: null,
-          },
+          { type: "stop", color: red, position: null },
+          { type: "stop", color: blue, position: null },
         ],
         repeats: false,
       },
@@ -262,16 +226,8 @@ test("parse() parses a radial gradient with a circular extent", (t) => {
           vertical: { type: "keyword", value: "center" },
         },
         items: [
-          {
-            type: "stop",
-            color: { type: "color", format: "named", color: "red" },
-            position: null,
-          },
-          {
-            type: "stop",
-            color: { type: "color", format: "named", color: "blue" },
-            position: null,
-          },
+          { type: "stop", color: red, position: null },
+          { type: "stop", color: blue, position: null },
         ],
         repeats: false,
       },
@@ -298,16 +254,8 @@ test("parse() parses a radial gradient with an elliptical extent", (t) => {
           vertical: { type: "keyword", value: "center" },
         },
         items: [
-          {
-            type: "stop",
-            color: { type: "color", format: "named", color: "red" },
-            position: null,
-          },
-          {
-            type: "stop",
-            color: { type: "color", format: "named", color: "blue" },
-            position: null,
-          },
+          { type: "stop", color: red, position: null },
+          { type: "stop", color: blue, position: null },
         ],
         repeats: false,
       },

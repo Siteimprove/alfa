@@ -1,9 +1,14 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Image } from "../../../dist/index.js";
+
+import { color } from "../../common/color.js";
 import { serializer } from "../../common/parse.js";
 
 const serialize = serializer(Image.parse);
+
+const red = color(1, 0, 0);
+const blue = color(0, 0, 1);
 
 test("parse() parses an image with relative URL", (t) => {
   t.deepEqual(serialize("url('foo.jpg')"), {
@@ -27,16 +32,8 @@ test("parse() parses a linear gradient", (t) => {
       kind: "linear",
       direction: { type: "side", side: "bottom" },
       items: [
-        {
-          type: "stop",
-          color: { type: "color", format: "named", color: "red" },
-          position: null,
-        },
-        {
-          type: "stop",
-          color: { type: "color", format: "named", color: "blue" },
-          position: null,
-        },
+        { type: "stop", color: red, position: null },
+        { type: "stop", color: blue, position: null },
       ],
       repeats: false,
     },
@@ -56,16 +53,8 @@ test("parse() parses a radial gradient", (t) => {
         vertical: { type: "keyword", value: "center" },
       },
       items: [
-        {
-          type: "stop",
-          color: { type: "color", format: "named", color: "red" },
-          position: null,
-        },
-        {
-          type: "stop",
-          color: { type: "color", format: "named", color: "blue" },
-          position: null,
-        },
+        { type: "stop", color: red, position: null },
+        { type: "stop", color: blue, position: null },
       ],
       repeats: false,
     },

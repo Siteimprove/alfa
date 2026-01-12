@@ -6,6 +6,7 @@
     "lib": ["DOM", "ESNext"]
   },
   "files": [
+    "./common/color.ts",
     "./common/parse.ts",
     "./syntax/block.spec.ts",
     "./syntax/component.spec.ts",

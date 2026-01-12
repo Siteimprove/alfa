@@ -1,16 +1,28 @@
+import type { Result } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import { Color, Length, Lexer, Shadow } from "../../dist/index.js";
+import { Length, Lexer, Shadow } from "../../dist/index.js";
 
-function parse(input: string, options?: Shadow.Options) {
-  return Shadow.parse(options)(Lexer.lex(input))
-    .map(([, shadow]) => shadow)
-    .getUnsafe()
-    .toJSON();
+import { color } from "../common/color.js";
+import { parser, parserUnsafe, serializer } from "../common/parse.js";
+
+function parse(input: string, options?: Shadow.Options): Shadow {
+  return parserUnsafe(Shadow.parse(options))(input);
+}
+
+function serialize(input: string, options?: Shadow.Options): Shadow.JSON {
+  return serializer(Shadow.parse(options))(input);
+}
+
+function parseErr(
+  input: string,
+  options?: Shadow.Options,
+): Result<Shadow, string> {
+  return parser(Shadow.parse(options))(input);
 }
 
 test("parse() accept horizontal and vertical components", (t) => {
-  const actual = parse("1px 2px");
+  const actual = serialize("1px 2px");
 
   t.deepEqual(actual, {
     type: "shadow",
@@ -24,7 +36,7 @@ test("parse() accept horizontal and vertical components", (t) => {
 });
 
 test("parse() accepts blur", (t) => {
-  const actual = parse("1px 2px 3px");
+  const actual = serialize("1px 2px 3px");
 
   t.deepEqual(actual, {
     type: "shadow",
@@ -38,7 +50,7 @@ test("parse() accepts blur", (t) => {
 });
 
 test("parse() accepts spread", (t) => {
-  const actual = parse("1px 2px 3px 4px");
+  const actual = serialize("1px 2px 3px 4px");
 
   t.deepEqual(actual, {
     type: "shadow",
@@ -65,12 +77,7 @@ test("parse() optionally refuses spread", (t) => {
     "red 1px 2px 3px 4px inset",
     "inset 1px 2px 3px 4px red",
   ]) {
-    t.deepEqual(
-      Shadow.parse({ withInset: true, withSpread: false })(
-        Lexer.lex(input),
-      ).isErr(),
-      true,
-    );
+    t(parseErr(input, { withInset: true, withSpread: false }).isErr());
   }
 });
 
@@ -83,7 +90,7 @@ test("parse() accepts inset before or after lengths", (t) => {
     "1px 2px 0px 0px inset",
     "inset 1px 2px 0px 0px",
   ]) {
-    const actual = parse(input);
+    const actual = serialize(input);
 
     t.deepEqual(actual, {
       type: "shadow",
@@ -111,14 +118,11 @@ test("parse() optionally refuses inset", (t) => {
     "red 1px 2px inset",
     "inset 1px 2px 3px 4px red",
   ]) {
-    t.deepEqual(
-      Shadow.parse({ withInset: false, withSpread: true })(
-        Lexer.lex(input),
-      ).isErr(),
-      true,
-    );
+    t(parseErr(input, { withInset: false, withSpread: true }).isErr());
   }
 });
+
+const red = color(1, 0, 0);
 
 test("parse() accepts color before or after lengths", (t) => {
   for (const input of [
@@ -129,7 +133,7 @@ test("parse() accepts color before or after lengths", (t) => {
     "1px 2px 0px 0px red",
     "red 1px 2px 0px 0px",
   ]) {
-    const actual = parse(input);
+    const actual = serialize(input);
 
     t.deepEqual(actual, {
       type: "shadow",
@@ -137,7 +141,7 @@ test("parse() accepts color before or after lengths", (t) => {
       vertical: { type: "length", unit: "px", value: 2 },
       blur: { type: "length", unit: "px", value: 0 },
       spread: { type: "length", unit: "px", value: 0 },
-      color: { type: "color", format: "named", color: "red" },
+      color: red,
       isInset: false,
     });
   }
@@ -157,7 +161,7 @@ test("parse() accepts inset and color before or after lengths", (t) => {
     "1px 2px 0px 0px inset red",
     "1px 2px 0px 0px red inset",
   ]) {
-    const actual = parse(input);
+    const actual = serialize(input);
 
     t.deepEqual(actual, {
       type: "shadow",
@@ -165,7 +169,7 @@ test("parse() accepts inset and color before or after lengths", (t) => {
       vertical: { type: "length", unit: "px", value: 2 },
       blur: { type: "length", unit: "px", value: 0 },
       spread: { type: "length", unit: "px", value: 0 },
-      color: { type: "color", format: "named", color: "red" },
+      color: red,
       isInset: true,
     });
   }
@@ -196,14 +200,7 @@ test("parse() refuses inset or color between lengths", (t) => {
 });
 
 test(".resolve() returns a canonical shadow", (t) => {
-  const actual = Shadow.of(
-    Length.of(1, "px"),
-    Length.of(1, "em"),
-    Length.of(2, "vh"),
-    Length.of(4, "rem"),
-    Color.named("red"),
-    true,
-  ).resolve({
+  const actual = parse("1px 1em 2vh 4rem red inset").resolve({
     length: Length.resolver(
       Length.of(16, "px"),
       Length.of(10, "px"),
@@ -218,14 +215,7 @@ test(".resolve() returns a canonical shadow", (t) => {
     vertical: { type: "length", unit: "px", value: 16 },
     blur: { type: "length", unit: "px", value: 0.4 },
     spread: { type: "length", unit: "px", value: 40 },
-    color: {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 1 },
-      green: { type: "percentage", value: 0 },
-      blue: { type: "percentage", value: 0 },
-      alpha: { type: "percentage", value: 1 },
-    },
+    color: red,
     isInset: true,
   });
 });
@@ -252,14 +242,7 @@ test("parse() accepts calculations", (t) => {
       vertical: { type: "length", unit: "px", value: 2 },
       blur: { type: "length", unit: "px", value: 21 },
       spread: { type: "length", unit: "px", value: 4 },
-      color: {
-        type: "color",
-        format: "rgb",
-        red: { type: "percentage", value: 1 },
-        green: { type: "percentage", value: 0 },
-        blue: { type: "percentage", value: 0 },
-        alpha: { type: "percentage", value: 1 },
-      },
+      color: red,
       isInset: false,
     },
   );
