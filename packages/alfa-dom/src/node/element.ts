@@ -26,7 +26,7 @@ import type * as helpers from "./element/input-type.js";
 import * as predicate from "./element/predicate.js";
 
 const { isEmpty } = Iterable;
-const { not } = Predicate;
+const { and, not, or, test } = Predicate;
 
 /**
  * @public
@@ -279,15 +279,23 @@ export class Element<N extends string = string>
    */
   public isInert(): boolean {
     if (this._isInert === undefined) {
-      if (this.attribute("inert").isSome()) {
-        this._isInert = true;
-      } else if (this.name === "dialog" && this.attribute("open").isSome()) {
-        this._isInert = false;
-      } else {
-        this._isInert = this.parent(Node.flatTree)
-          .filter(Element.isElement)
-          .some((parent) => parent.isInert());
-      }
+      this._isInert = test(
+        or(
+          // Explicitly inert;
+          Element.hasAttribute("inert"),
+          and(
+            // or not an open dialog,
+            not(and(Element.hasName("dialog"), Element.hasAttribute("open"))),
+            // and with an inert ancestor.
+            (element) =>
+              element
+                .parent(Node.flatTree)
+                .filter(Element.isElement)
+                .some((parent) => parent.isInert()),
+          ),
+        ),
+        this,
+      );
     }
     return this._isInert;
   }
