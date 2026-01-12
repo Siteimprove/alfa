@@ -22,7 +22,11 @@ test(".parse() correctly parses basic colors", (t) => {
       type: "color",
       space: "srgb",
       coordinates: [1, 0, 0],
-      sRGB: [1, 0, 0],
+      sRGB: [
+        { type: "percentage", value: 1 },
+        { type: "percentage", value: 0 },
+        { type: "percentage", value: 0 },
+      ],
       alpha: { type: "number", value: 1 },
     });
   }

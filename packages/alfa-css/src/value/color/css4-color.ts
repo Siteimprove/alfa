@@ -27,6 +27,7 @@
  * These can still use colorjs.io functionalities to resolve the colors.
  */
 
+import { Array } from "@siteimprove/alfa-array";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
@@ -56,14 +57,26 @@ export class ColorFoo
 
   private readonly _color: CSSColor;
   // We use the sRGB color space as the canonical representation for colors
-  // for historical reasons.
+  // for historical reasons. We may want to switch to XYZ-D65 at some point, as
+  // it seems to be the root space in colorjs.io. This might however require a
+  // lot of refactoring.
   private readonly _srgb: CSSColor;
+
+  private readonly _red: Percentage.Canonical;
+  private readonly _green: Percentage.Canonical;
+  private readonly _blue: Percentage.Canonical;
+  private readonly _alpha: Number.Canonical;
 
   protected constructor(color: CSSColor) {
     super("color", false);
     this._color = color;
 
     this._srgb = color.to("srgb");
+
+    this._red = Percentage.of<"percentage">(this._srgb.r ?? 0);
+    this._green = Percentage.of<"percentage">(this._srgb.g ?? 0);
+    this._blue = Percentage.of<"percentage">(this._srgb.b ?? 0);
+    this._alpha = Number.of(this._color.alpha ?? 1);
   }
 
   /**
@@ -74,19 +87,19 @@ export class ColorFoo
   }
 
   public get red(): Percentage.Canonical {
-    return Percentage.of<"percentage">(this._srgb.r ?? 0);
+    return this._red;
   }
 
   public get green(): Percentage.Canonical {
-    return Percentage.of<"percentage">(this._srgb.g ?? 0);
+    return this._green;
   }
 
   public get blue(): Percentage.Canonical {
-    return Percentage.of<"percentage">(this._srgb.b ?? 0);
+    return this._blue;
   }
 
   public get alpha(): Number.Canonical {
-    return Number.of(this._color.alpha ?? 1);
+    return this._alpha;
   }
 
   public resolve(): ColorFoo.Canonical {
@@ -109,7 +122,11 @@ export class ColorFoo
       ...super.toJSON(),
       space: this._color.space.id,
       coordinates: this._color.coords,
-      sRGB: [this._srgb.r ?? 0, this._srgb.g ?? 0, this._srgb.b ?? 0],
+      sRGB: Array.toJSON([this._red, this._green, this._blue]) as [
+        Percentage.Fixed.JSON,
+        Percentage.Fixed.JSON,
+        Percentage.Fixed.JSON,
+      ],
       alpha: this.alpha.toJSON(),
     };
   }
@@ -123,7 +140,7 @@ export namespace ColorFoo {
   export interface JSON extends Value.JSON<"color"> {
     space: string;
     coordinates: [number | null, number | null, number | null];
-    sRGB: [number, number, number];
+    sRGB: [Percentage.Fixed.JSON, Percentage.Fixed.JSON, Percentage.Fixed.JSON];
     alpha: Number.Fixed.JSON;
   }
 
@@ -165,7 +182,7 @@ export namespace ColorFoo {
   );
 
   /*
-   * colorjs.io doesn't handle calculations, so we have to do it ourselves.’
+   * colorjs.io doesn't handle calculations, so we have to do it ourselves.
    *
    * Fortunately, the components in CSS colors cannot be "mixed" types, e.g.
    * there is no <angle-percentage> or the like, hues are <angle> | <number>,
@@ -175,7 +192,7 @@ export namespace ColorFoo {
    * For example, the `a` component in lab ranges from -125 (-100%) to 125
    * (100%), but is always expressed as either a number or a percentage, never
    * a mix. So, we can have "50%" (resolving to 62.5), or "calc(25% + 25%)", or
-   * calc(10 +20), but never "calc(50% + 20)".
+   * calc(10 + 20), but never "calc(50% + 20)".
    *
    * That means, that we do not care about evaluating the percentages.
    * "calc(30% + 20%)" can be simplified to "50%" and sent to colorjs.io, without
@@ -185,8 +202,8 @@ export namespace ColorFoo {
    *
    * The other good point is that colors don't include lengths, so we do not have
    * to resolve length which can only happens at compute value time due to relative
-   * units. Hence, we can resolve everything at parse before forwarding it to
-   * colorjs.io.
+   * units. Hence, we can resolve everything at parse time before forwarding it
+   * to colorjs.io.
    *
    * This simply tries to parse each of the possible numeric types, resolving
    * them as needed (takes care of the calculations), or accept the token as-is
