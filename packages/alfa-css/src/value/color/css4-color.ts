@@ -33,7 +33,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import CSSColor from "colorjs.io";
+import Color from "colorjs.io";
 
 import {
   Function,
@@ -47,27 +47,27 @@ import { Value } from "../value.js";
 
 const { either, map, mapResult, zeroOrMore } = Parser;
 
-export class ColorFoo
+export class CSS4Color
   extends Value<"color", false>
-  implements Resolvable<ColorFoo.Canonical, never>
+  implements Resolvable<CSS4Color.Canonical, never>
 {
-  public static of(color: CSSColor): ColorFoo {
-    return new ColorFoo(color);
+  public static of(color: Color): CSS4Color {
+    return new CSS4Color(color);
   }
 
-  private readonly _color: CSSColor;
+  private readonly _color: Color;
   // We use the sRGB color space as the canonical representation for colors
   // for historical reasons. We may want to switch to XYZ-D65 at some point, as
   // it seems to be the root space in colorjs.io. This might however require a
   // lot of refactoring.
-  private readonly _srgb: CSSColor;
+  private readonly _srgb: Color;
 
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
   private readonly _alpha: Number.Canonical;
 
-  protected constructor(color: CSSColor) {
+  protected constructor(color: Color) {
     super("color", false);
     this._color = color;
 
@@ -82,7 +82,7 @@ export class ColorFoo
   /**
    * The underlying colorjs.io color.
    */
-  public get color(): CSSColor {
+  public get color(): Color {
     return this._color;
   }
 
@@ -102,13 +102,13 @@ export class ColorFoo
     return this._alpha;
   }
 
-  public resolve(): ColorFoo.Canonical {
+  public resolve(): CSS4Color.Canonical {
     return this;
   }
 
   public equals(value: unknown): value is this {
     return (
-      value instanceof ColorFoo &&
+      value instanceof CSS4Color &&
       this._color.toString() === value._color.toString()
     );
   }
@@ -117,7 +117,7 @@ export class ColorFoo
     hash.writeString(this._color.toString());
   }
 
-  public toJSON(): ColorFoo.JSON {
+  public toJSON(): CSS4Color.JSON {
     return {
       ...super.toJSON(),
       space: this._color.space.id,
@@ -136,7 +136,7 @@ export class ColorFoo
   }
 }
 
-export namespace ColorFoo {
+export namespace CSS4Color {
   export interface JSON extends Value.JSON<"color"> {
     space: string;
     coordinates: [number | null, number | null, number | null];
@@ -144,7 +144,7 @@ export namespace ColorFoo {
     alpha: Number.Fixed.JSON;
   }
 
-  export type Canonical = ColorFoo;
+  export type Canonical = CSS4Color;
 
   /*
    * The colorjs.io parser works on strings, but we receive pre-tokenized input.
@@ -166,17 +166,17 @@ export namespace ColorFoo {
   function catcher<T>(
     parser: CSSParser<T>,
     stringifier: (parsed: T) => string,
-  ): CSSParser<CSSColor> {
+  ): CSSParser<Color> {
     return mapResult(parser, (parsed) => {
       try {
-        return Result.of<CSSColor, string>(new CSSColor(stringifier(parsed)));
+        return Result.of<Color, string>(new Color(stringifier(parsed)));
       } catch (e) {
         return Err.of(`Couldn't parse color: ${stringifier(parsed)} -- ${e}`);
       }
     });
   }
 
-  const parseHash: CSSParser<CSSColor> = catcher(
+  const parseHash: CSSParser<Color> = catcher(
     Token.parseHash(),
     (hash) => `${hash}`,
   );
@@ -222,21 +222,21 @@ export namespace ColorFoo {
     map(Token.parseFirst, (token) => token.toString()),
   );
 
-  const parseFunction: CSSParser<CSSColor> = catcher(
+  const parseFunction: CSSParser<Color> = catcher(
     Function.parse(undefined, zeroOrMore(parseComponent)),
     ([func, body]) => `${func.name}(${body.join("")})`,
   );
 
-  const parseIdent: CSSParser<CSSColor> = catcher(
+  const parseIdent: CSSParser<Color> = catcher(
     Token.parseIdent(),
     (ident) => ident.value,
   );
 
-  const parseColor: CSSParser<CSSColor> = either(
+  const parseColor: CSSParser<Color> = either(
     parseHash,
     parseIdent,
     parseFunction,
   );
 
-  export const parse: CSSParser<ColorFoo> = map(parseColor, ColorFoo.of);
+  export const parse: CSSParser<CSS4Color> = map(parseColor, CSS4Color.of);
 }

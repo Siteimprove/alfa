@@ -7,15 +7,15 @@
  */
 import { test } from "@siteimprove/alfa-test";
 
-import { ColorFoo } from "../../../dist/value/color/css4-color.js";
+import { CSS4Color } from "../../../dist/value/color/css4-color.js";
 import { Lexer } from "../../../dist/index.js";
 
 import { parser, parserUnsafe } from "../../common/parse.js";
 
-const parse = parserUnsafe(ColorFoo.parse);
-const parseErr = parser(ColorFoo.parse);
+const parse = parserUnsafe(CSS4Color.parse);
+const parseErr = parser(CSS4Color.parse);
 
-const red: ColorFoo.JSON = {
+const red: CSS4Color.JSON = {
   type: "color",
   space: "srgb",
   coordinates: [1, 0, 0],
@@ -37,7 +37,7 @@ test(".parse() correctly parses basic colors", (t) => {
 
 test(".parse() accepts color as part of a larger input", (t) => {
   for (const color of ["#f00 foo", "red foo", "rgb(255, 0, 0) foo"]) {
-    const actual = ColorFoo.parse(Lexer.lex(color));
+    const actual = CSS4Color.parse(Lexer.lex(color));
 
     const [rest, actualColor] = actual.getUnsafe(`Couldn't get ${color}`);
 
