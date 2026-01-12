@@ -12,6 +12,7 @@ import type { Parser as CSSParser, Token } from "../../syntax/index.js";
 import { Keyword } from "../textual/keyword.js";
 
 import { ColorFunction } from "./color-function.js";
+import { CSS4Color } from "./css4-color.js";
 import { Current } from "./current.js";
 import { Hex } from "./hex.js";
 import { HSL } from "./hsl.js";
@@ -30,57 +31,60 @@ const { either } = Parser;
  * @public
  */
 export type Color =
-  | ColorFunction
+  // | ColorFunction
+  | CSS4Color
   | Current
-  | Hex
-  | HSL
-  | HWB
-  | Lab
-  | LCH
-  | Named
-  | Oklab
-  | OkLCH
-  | RGB
+  // | Hex
+  // | HSL
+  // | HWB
+  // | Lab
+  // | LCH
+  // | Named
+  // | Oklab
+  // | OkLCH
+  // | RGB
   | System;
 
 /**
  * @public
  */
 export namespace Color {
-  export type Canonical = Current | System | RGB.Canonical;
+  export type Canonical = Current | System | CSS4Color.Canonical;
 
   export type JSON =
-    | ColorFunction.JSON
-    | Hex.JSON
-    | HSL.JSON
-    | HWB.JSON
-    | Lab.JSON
-    | LCH.JSON
-    | Named.JSON
-    | Oklab.JSON
-    | OkLCH.JSON
-    | RGB.JSON
-    | Keyword.JSON;
+    // | ColorFunction.JSON
+    // | Hex.JSON
+    // | HSL.JSON
+    // | HWB.JSON
+    // | Lab.JSON
+    // | LCH.JSON
+    // | Named.JSON
+    // | Oklab.JSON
+    // | OkLCH.JSON
+    // | RGB.JSON
+    CSS4Color.JSON | Keyword.JSON;
 
   export const current: Current = Keyword.of("currentcolor");
 
-  export const hex = Hex.of;
+  export const color = CSS4Color.of;
 
-  export const hsl = HSL.of;
-
-  export const hwb = HWB.of;
-
-  export const lab = Lab.of;
-
-  export const lch = LCH.of;
-
-  export const named = Named.of;
-
-  export const oklab = Oklab.of;
-
-  export const oklch = OkLCH.of;
-
-  export const rgb = RGB.of;
+  // export const hex = Hex.of;
+  //
+  // export const hsl = HSL.of;
+  //
+  // export const hwb = HWB.of;
+  //
+  // export const lab = Lab.of;
+  //
+  // export const lch = LCH.of;
+  //
+  // export const named = Named.of;
+  //
+  // export const oklab = Oklab.of;
+  //
+  // export const oklch = OkLCH.of;
+  //
+  // export const rgb = RGB.of;
 
   export const system = Keyword.of;
 
@@ -94,17 +98,18 @@ export namespace Color {
    * expected, the gain might be minimal.
    */
   export const parse: CSSParser<Color> = either<Slice<Token>, Color, string>(
-    ColorFunction.parse,
+    // ColorFunction.parse,
+    CSS4Color.parse,
     Current.parse,
-    Hex.parse,
-    HSL.parse,
-    HWB.parse,
-    Lab.parse,
-    LCH.parse,
-    Named.parse,
-    Oklab.parse,
-    OkLCH.parse,
-    RGB.parse,
+    // Hex.parse,
+    // HSL.parse,
+    // HWB.parse,
+    // Lab.parse,
+    // LCH.parse,
+    // Named.parse,
+    // Oklab.parse,
+    // OkLCH.parse,
+    // RGB.parse,
     System.parse,
   );
 
