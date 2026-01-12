@@ -8,27 +8,44 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { ColorFoo } from "../../../dist/value/color/css4-color.js";
+import { Lexer } from "../../../dist/index.js";
 
 import { parser, parserUnsafe } from "../../common/parse.js";
 
 const parse = parserUnsafe(ColorFoo.parse);
 const parseErr = parser(ColorFoo.parse);
 
+const red: ColorFoo.JSON = {
+  type: "color",
+  space: "srgb",
+  coordinates: [1, 0, 0],
+  sRGB: [
+    { type: "percentage", value: 1 },
+    { type: "percentage", value: 0 },
+    { type: "percentage", value: 0 },
+  ],
+  alpha: { type: "number", value: 1 },
+};
+
 test(".parse() correctly parses basic colors", (t) => {
   for (const color of ["#f00", "red", "rgb(255, 0, 0)"]) {
     const actual = parse(color);
 
-    t.deepEqual(actual.toJSON(), {
-      type: "color",
-      space: "srgb",
-      coordinates: [1, 0, 0],
-      sRGB: [
-        { type: "percentage", value: 1 },
-        { type: "percentage", value: 0 },
-        { type: "percentage", value: 0 },
-      ],
-      alpha: { type: "number", value: 1 },
-    });
+    t.deepEqual(actual.toJSON(), red);
+  }
+});
+
+test(".parse() accepts color as part of a larger input", (t) => {
+  for (const color of ["#f00 foo", "red foo", "rgb(255, 0, 0) foo"]) {
+    const actual = ColorFoo.parse(Lexer.lex(color));
+
+    const [rest, actualColor] = actual.getUnsafe(`Couldn't get ${color}`);
+
+    t.deepEqual(actualColor.toJSON(), red);
+    t.deepEqual(rest.toJSON(), [
+      { type: "whitespace" },
+      { type: "ident", value: "foo" },
+    ]);
   }
 });
 
@@ -52,15 +69,15 @@ test(".parse() parses various color formats", (t) => {
     "red",
     "rgb(255, 0, 0)",
     "rgba(100% 0 0% /0.5)",
-    "hsl(0 100% 50%)",
+    "hsl(none 100% 50%)",
     "hsla(0 100% 50% / 0.2)",
-    "color(srgb 1 0 0 / 0.3)",
+    "color(srgb 1 0 none / 0.3)",
     "color(display-p3 1 0 0)",
     "color(rec2020 1 0 0 / 0.8)",
     "color(prophoto-rgb 1 0 0)",
     "lab(53.23288 80.10933 67.22006)",
     "lch(53.23288 104.5525 39.99787)",
-    "oklab(0.62796 0.22486 0.12558)",
+    "oklab(0.62796 0.22486 none)",
     "oklch(0.62796 0.25619 29.23495)",
   ]) {
     t(parseErr(color).isOk(), `Expected parsing "${color}" to succeed.`);
