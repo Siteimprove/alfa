@@ -10,6 +10,7 @@
     "noExternalDeps": true,
     "allowedExternalDeps": {
       "@siteimprove/alfa-compatibility": ["browserslist"],
+      "@siteimprove/alfa-css": ["colorjs.io"],
       "@siteimprove/alfa-test": ["vitest"],
       "@siteimprove/alfa-toolchain": [
         "@changesets/assemble-release-plan",
