@@ -4,9 +4,16 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../dist/style.js";
-import { cascaded } from "../common.js";
+import { cascaded, color } from "../common.js";
 
 const device = Device.standard();
+
+const colors = {
+  red: color(1, 0, 0),
+  lime: color(0, 1, 0),
+  blue: color(0, 0, 1),
+  black: color(0, 0, 0),
+};
 
 for (const side of ["top", "right", "bottom", "left"] as const) {
   const property = `border-${side}-color` as const;
@@ -20,11 +27,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
     );
 
     t.deepEqual(cascaded(element, property), {
-      value: {
-        format: "named",
-        type: "color",
-        color: "red",
-      },
+      value: colors.red,
       source: h.declaration(property, "red").toJSON(),
     });
   });
@@ -40,26 +43,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
     const style = Style.from(element, device);
 
     t.deepEqual(style.computed(property).toJSON(), {
-      value: {
-        type: "color",
-        format: "rgb",
-        red: {
-          type: "percentage",
-          value: 1,
-        },
-        green: {
-          type: "percentage",
-          value: 0,
-        },
-        blue: {
-          type: "percentage",
-          value: 0,
-        },
-        alpha: {
-          type: "percentage",
-          value: 1,
-        },
-      },
+      value: colors.red,
       source: h.declaration(property, "red").toJSON(),
     });
   });
@@ -74,35 +58,27 @@ test(`#cascaded() parses \`border-color: red\``, (t) => {
   for (const side of ["top", "right", "bottom", "left"] as const) {
     const property = `border-${side}-color` as const;
     t.deepEqual(cascaded(element, property), {
-      value: {
-        format: "named",
-        type: "color",
-        color: "red",
-      },
+      value: colors.red,
       source: declaration.toJSON(),
     });
   }
 });
 
-test(`#cascaded() parses \`border-color: red green blue black\``, (t) => {
+test(`#cascaded() parses \`border-color: red lime blue black\``, (t) => {
   const element = <div />;
-  const declaration = h.declaration("border-color", "red green blue black");
+  const declaration = h.declaration("border-color", "red lime blue black");
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
   for (const [side, color] of [
     ["top", "red"],
-    ["right", "green"],
+    ["right", "lime"],
     ["bottom", "blue"],
     ["left", "black"],
   ] as const) {
     const property = `border-${side}-color` as const;
     t.deepEqual(cascaded(element, property), {
-      value: {
-        format: "named",
-        type: "color",
-        color: color,
-      },
+      value: colors[color],
       source: declaration.toJSON(),
     });
   }

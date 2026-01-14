@@ -1,5 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Percentage, RGB } from "@siteimprove/alfa-css";
+import { Percentage, Color as CSSColor } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -100,7 +100,7 @@ export function getBackground(
 // We make the initial backdrop solid white as this can be assumed
 // to be the color of the canvas onto which the other backgrounds
 // are rendered.
-const white = RGB.of(
+const white = CSSColor.rgb(
   Percentage.of(1),
   Percentage.of(1),
   Percentage.of(1),

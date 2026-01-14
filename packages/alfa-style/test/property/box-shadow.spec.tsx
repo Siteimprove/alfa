@@ -1,7 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { cascaded } from "../common.js";
+import { cascaded, color } from "../common.js";
+
+const red = color(1, 0, 0);
 
 test("#cascaded() parses `box-shadow: none`", (t) => {
   const element = <div style={{ boxShadow: "none" }} />;
@@ -141,7 +143,7 @@ test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
           vertical: { type: "length", unit: "px", value: 2 },
           blur: { type: "length", unit: "px", value: 0 },
           spread: { type: "length", unit: "px", value: 0 },
-          color: { type: "color", format: "named", color: "red" },
+          color: red,
           isInset: false,
         },
       ],
@@ -164,7 +166,7 @@ test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
           vertical: { type: "length", unit: "px", value: 2 },
           blur: { type: "length", unit: "px", value: 0 },
           spread: { type: "length", unit: "px", value: 0 },
-          color: { type: "color", format: "named", color: "red" },
+          color: red,
           isInset: false,
         },
       ],
@@ -187,7 +189,7 @@ test("#cascaded() parses `box-shadow: red 1px 2px inset`", (t) => {
           vertical: { type: "length", unit: "px", value: 2 },
           blur: { type: "length", unit: "px", value: 0 },
           spread: { type: "length", unit: "px", value: 0 },
-          color: { type: "color", format: "named", color: "red" },
+          color: red,
           isInset: true,
         },
       ],

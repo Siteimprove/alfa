@@ -9,23 +9,14 @@ import { test } from "@siteimprove/alfa-test";
 
 import { CSS4Color } from "../../../dist/value/color/css4-color.js";
 import { Lexer } from "../../../dist/index.js";
+import { color } from "../../common/color.js";
 
 import { parser, parserUnsafe } from "../../common/parse.js";
 
 const parse = parserUnsafe(CSS4Color.parse);
 const parseErr = parser(CSS4Color.parse);
 
-const red: CSS4Color.JSON = {
-  type: "color",
-  space: "srgb",
-  coordinates: [1, 0, 0],
-  sRGB: [
-    { type: "percentage", value: 1 },
-    { type: "percentage", value: 0 },
-    { type: "percentage", value: 0 },
-  ],
-  alpha: { type: "number", value: 1 },
-};
+const red = color(1, 0, 0);
 
 test(".parse() correctly parses basic colors", (t) => {
   for (const color of ["#f00", "red", "rgb(255, 0, 0)"]) {

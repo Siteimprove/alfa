@@ -1,3 +1,4 @@
+import type { CSS4Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import type { Element } from "@siteimprove/alfa-dom";
 import type { Option } from "@siteimprove/alfa-option";
@@ -52,4 +53,24 @@ export function used<N extends Longhands.Name>(
   context: Context = Context.empty(),
 ): Option.JSON<Value<Style.Computed<N>>> {
   return Style.from(element, device, context).used(name).toJSON();
+}
+
+/** @internal */
+export function color(
+  r: number,
+  g: number,
+  b: number,
+  alpha: number = 1,
+): CSS4Color.JSON {
+  return {
+    type: "color",
+    space: "srgb",
+    coordinates: [r, g, b],
+    sRGB: [
+      { type: "percentage", value: r },
+      { type: "percentage", value: g },
+      { type: "percentage", value: b },
+    ],
+    alpha: { type: "percentage", value: alpha },
+  };
 }

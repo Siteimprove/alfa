@@ -1,13 +1,15 @@
 import { h } from "@siteimprove/alfa-dom";
 import { type Assertions, test } from "@siteimprove/alfa-test";
 
-import { cascaded } from "../common.js";
+import { cascaded, color } from "../common.js";
+
+const colors = { red: color(1, 0, 0) };
 
 function parse(
   t: Assertions,
   value: string,
   box: "block" | "inline",
-  color: string,
+  color: "red", // the only one used in the tests :-/
   style?: "dotted", // the only one used in the tests :-/
   width?: number,
 ): void {
@@ -20,11 +22,7 @@ function parse(
 
   for (const side of ["start", "end"] as const) {
     t.deepEqual(cascaded(element, `${shorthand}-${side}-color` as const), {
-      value: {
-        format: "named",
-        type: "color",
-        color: color,
-      },
+      value: colors[color],
       source: declaration.toJSON(),
     });
 
@@ -39,14 +37,14 @@ function parse(
     t.deepEqual(cascaded(element, `${shorthand}-${side}-width` as const), {
       value: width
         ? {
-          type: "length",
-          value: width,
-          unit: "px",
-        }
+            type: "length",
+            value: width,
+            unit: "px",
+          }
         : {
-          type: "keyword",
-          value: "initial",
-        },
+            type: "keyword",
+            value: "initial",
+          },
       source: declaration.toJSON(),
     });
   }

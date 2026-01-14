@@ -4,9 +4,11 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../dist/style.js";
-import { cascaded } from "../common.js";
+import { cascaded, color } from "../common.js";
 
 const device = Device.standard();
+
+const colors = { red: color(1, 0, 0), blue: color(0, 0, 1) };
 
 for (const box of ["block", "inline"] as const) {
   for (const side of ["start", "end"] as const) {
@@ -21,11 +23,7 @@ for (const box of ["block", "inline"] as const) {
       );
 
       t.deepEqual(cascaded(element, property), {
-        value: {
-          format: "named",
-          type: "color",
-          color: "red",
-        },
+        value: colors.red,
         source: h.declaration(property, "red").toJSON(),
       });
     });
@@ -41,26 +39,7 @@ for (const box of ["block", "inline"] as const) {
       const style = Style.from(element, device);
 
       t.deepEqual(style.computed(property).toJSON(), {
-        value: {
-          type: "color",
-          format: "rgb",
-          red: {
-            type: "percentage",
-            value: 1,
-          },
-          green: {
-            type: "percentage",
-            value: 0,
-          },
-          blue: {
-            type: "percentage",
-            value: 0,
-          },
-          alpha: {
-            type: "percentage",
-            value: 1,
-          },
-        },
+        value: colors.red,
         source: h.declaration(property, "red").toJSON(),
       });
     });
@@ -80,11 +59,7 @@ for (const box of ["block", "inline"] as const) {
       const property = `border-${box}-${side}-color` as const;
 
       t.deepEqual(cascaded(element, property), {
-        value: {
-          type: "color",
-          format: "named",
-          color: "red",
-        },
+        value: colors.red,
         source: declaration.toJSON(),
       });
     }
@@ -103,11 +78,7 @@ for (const box of ["block", "inline"] as const) {
       const property = `border-${box}-${side}-color` as const;
 
       t.deepEqual(cascaded(element, property), {
-        value: {
-          type: "color",
-          format: "named",
-          color: color,
-        },
+        value: colors[color],
         source: declaration.toJSON(),
       });
     }

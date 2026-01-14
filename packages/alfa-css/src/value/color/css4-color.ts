@@ -29,7 +29,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Result } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import Color from "colorjs.io";
@@ -52,20 +52,35 @@ export class CSS4Color
 {
   public static of(color: Color): CSS4Color;
 
+  public static of(color: string): Result<CSS4Color, Error>;
+
   public static of(
     space: string,
     coords: [number | null, number | null, number | null],
     alpha?: number | null,
-  ): CSS4Color;
+  ): Result<CSS4Color, Error>;
 
   public static of(
     spaceOrColor: string | Color,
-    coords: [number | null, number | null, number | null] = [null, null, null],
+    coords?: [number | null, number | null, number | null],
     alpha: number | null = 1,
-  ): CSS4Color {
-    return typeof spaceOrColor === "string"
-      ? new CSS4Color(new Color(spaceOrColor, coords, alpha))
-      : new CSS4Color(spaceOrColor);
+  ): CSS4Color | Result<CSS4Color, Error> {
+    if (typeof spaceOrColor === "string") {
+      // The color string might be invalid, so Color constructor may throw.
+      // The space might not exist, so Color constructor may throw.
+      try {
+        const color =
+          coords === undefined
+            ? new Color(spaceOrColor)
+            : new Color(spaceOrColor, coords, alpha);
+
+        return Ok.of(new CSS4Color(color));
+      } catch (e) {
+        return Err.of(e as Error);
+      }
+    } else {
+      return new CSS4Color(spaceOrColor);
+    }
   }
 
   private readonly _color: Color;
@@ -78,7 +93,7 @@ export class CSS4Color
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
-  private readonly _alpha: Number.Canonical;
+  private readonly _alpha: Percentage.Canonical;
 
   protected constructor(color: Color) {
     super("color", false);
@@ -89,7 +104,7 @@ export class CSS4Color
     this._red = Percentage.of<"percentage">(this._srgb.r ?? 0);
     this._green = Percentage.of<"percentage">(this._srgb.g ?? 0);
     this._blue = Percentage.of<"percentage">(this._srgb.b ?? 0);
-    this._alpha = Number.of(this._color.alpha ?? 1);
+    this._alpha = Percentage.of(this._color.alpha ?? 1);
   }
 
   /**
@@ -111,7 +126,7 @@ export class CSS4Color
     return this._blue;
   }
 
-  public get alpha(): Number.Canonical {
+  public get alpha(): Percentage.Canonical {
     return this._alpha;
   }
 
@@ -122,7 +137,11 @@ export class CSS4Color
   public equals(value: unknown): value is this {
     return (
       value instanceof CSS4Color &&
-      this._color.toString() === value._color.toString()
+      // We consider two colors equals if they have the same sRGB representation.
+      this._red.equals(value._red) &&
+      this._green.equals(value._green) &&
+      this._blue.equals(value._blue) &&
+      this._alpha.equals(value._alpha)
     );
   }
 
@@ -134,7 +153,10 @@ export class CSS4Color
     return {
       ...super.toJSON(),
       space: this._color.space.id,
-      coordinates: this._color.coords,
+      // We round coordinates at the same precision as our other Numeric types.
+      coordinates: this._color.coords.map((c) =>
+        c === null ? null : Number.of(c).value,
+      ) as [number | null, number | null, number | null],
       sRGB: Array.toJSON([this._red, this._green, this._blue]) as [
         Percentage.Fixed.JSON,
         Percentage.Fixed.JSON,
@@ -154,7 +176,7 @@ export namespace CSS4Color {
     space: string;
     coordinates: [number | null, number | null, number | null];
     sRGB: [Percentage.Fixed.JSON, Percentage.Fixed.JSON, Percentage.Fixed.JSON];
-    alpha: Number.Fixed.JSON;
+    alpha: Percentage.Fixed.JSON;
   }
 
   export type Canonical = CSS4Color;

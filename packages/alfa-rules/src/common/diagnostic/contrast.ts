@@ -1,5 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import type { RGB } from "@siteimprove/alfa-css";
+import type { CSS4Color } from "@siteimprove/alfa-css";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import type { Node } from "@siteimprove/alfa-dom";
@@ -102,8 +102,8 @@ export namespace Contrast {
     implements Equatable, Serializable, Hashable, Comparable<Pairing<N>>
   {
     public static of<N extends Name = Name>(
-      color1: [FirstColor<N>, RGB],
-      color2: [SecondColor<N>, RGB],
+      color1: [FirstColor<N>, CSS4Color],
+      color2: [SecondColor<N>, CSS4Color],
       contrast: number,
     ): Pairing<N> {
       return new Pairing(Color.of(...color1), Color.of(...color2), contrast);
@@ -186,15 +186,15 @@ export namespace Contrast {
   {
     public static of<N extends FirstColor<Name> | SecondColor<Name>>(
       name: N,
-      value: RGB,
+      value: CSS4Color,
     ): Color<N> {
       return new Color(name, value);
     }
 
     private readonly _name: N;
-    private readonly _value: RGB;
+    private readonly _value: CSS4Color;
 
-    protected constructor(name: N, value: RGB) {
+    protected constructor(name: N, value: CSS4Color) {
       this._name = name;
       this._value = value;
     }
@@ -207,7 +207,7 @@ export namespace Contrast {
       return this._name;
     }
 
-    public get value(): RGB {
+    public get value(): CSS4Color {
       return this._value;
     }
 
@@ -231,7 +231,7 @@ export namespace Contrast {
     export interface JSON<N extends FirstColor<Name> | SecondColor<Name>> {
       [key: string]: json.JSON;
       name: N;
-      value: RGB.JSON;
+      value: CSS4Color.JSON;
     }
   }
 }

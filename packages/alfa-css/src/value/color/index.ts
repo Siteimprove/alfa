@@ -1,6 +1,6 @@
 export * from "./color.js";
 export * from "./color-function.js";
-// export * from "./css4-color.js";
+export * from "./css4-color.js";
 export * from "./current.js";
 export * from "./hex.js";
 export * from "./hsl.js";

@@ -5,6 +5,7 @@
  * `./color-function.ts`.
  */
 import { Parser } from "@siteimprove/alfa-parser";
+import type { Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Parser as CSSParser, Token } from "../../syntax/index.js";
@@ -92,17 +93,34 @@ export namespace Color {
   //
   // export const rgb = RGB.of;
 
+  /**
+   * Creates a color in the sRGB color space.
+   */
   export function rgb(
     red: Number | Percentage,
     green: Number | Percentage,
     blue: Number | Percentage,
     alpha: Number | Percentage = Number.of(1),
   ): CSS4Color {
-    return CSS4Color.of(
-      "srgb",
-      [toNumber(red, 255), toNumber(green, 255), toNumber(blue, 255)],
-      toNumber(alpha, 1),
+    return (
+      CSS4Color.of(
+        "srgb",
+        [toNumber(red, 255), toNumber(green, 255), toNumber(blue, 255)],
+        toNumber(alpha, 1),
+      )
+        // We are sure that the color space id exists, so we should always get a
+        // correct color.
+        .getUnsafe(
+          `Incorrect sRGB color values: ${red}, ${green}, ${blue}, ${alpha}`,
+        )
     );
+  }
+
+  /**
+   * Creates a color based on its CSS string representation.
+   */
+  export function of(color: string): Result<CSS4Color, Error> {
+    return CSS4Color.of(color);
   }
 
   export const system = Keyword.of;

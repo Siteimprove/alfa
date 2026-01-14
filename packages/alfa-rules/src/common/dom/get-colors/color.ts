@@ -1,4 +1,8 @@
-import { Color as CSSColor, Percentage, RGB } from "@siteimprove/alfa-css";
+import {
+  Color as CSSColor,
+  CSS4Color,
+  Percentage,
+} from "@siteimprove/alfa-css";
 import { None, Option } from "@siteimprove/alfa-option";
 import type { Style } from "@siteimprove/alfa-style";
 
@@ -8,7 +12,7 @@ import type { Style } from "@siteimprove/alfa-style";
 export namespace Color {
   export type Computed = CSSColor.Canonical;
 
-  export type Resolved = RGB.Canonical;
+  export type Resolved = CSS4Color.Canonical;
 
   export function resolve(color: Computed, style: Style): Option<Resolved> {
     switch (color.type) {
@@ -17,14 +21,7 @@ export namespace Color {
           color = style.computed("color").value;
 
           if (color.type === "color") {
-            return Option.of(
-              CSSColor.rgb(
-                color.red,
-                color.green,
-                color.blue,
-                Percentage.of(color.alpha.value),
-              ),
-            );
+            return Option.of(color);
           }
         }
 
@@ -42,14 +39,7 @@ export namespace Color {
         return None;
 
       case "color":
-        return Option.of(
-          CSSColor.rgb(
-            color.red,
-            color.green,
-            color.blue,
-            Percentage.of(color.alpha.value),
-          ),
-        );
+        return Option.of(color);
     }
   }
 

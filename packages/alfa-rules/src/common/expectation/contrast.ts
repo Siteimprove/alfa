@@ -1,5 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import type { RGB } from "@siteimprove/alfa-css";
+import type { CSS4Color } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Text } from "@siteimprove/alfa-dom";
 import { Element, Node } from "@siteimprove/alfa-dom";
@@ -17,7 +17,7 @@ import { isLargeText } from "../predicate.js";
 
 const { isElement } = Element;
 const { flatMap, map, takeWhile } = Iterable;
-const { min, max, round } = Math;
+const { max, round } = Math;
 
 /**
  * @deprecated This is only used in the deprecated R66v1 and R69v1.
@@ -174,14 +174,17 @@ interface Pairings {
   highest: number;
 }
 
-const cache = Cache.empty<Iterable<RGB>, Cache<Iterable<RGB>, Pairings>>();
+const cache = Cache.empty<
+  Iterable<CSS4Color>,
+  Cache<Iterable<CSS4Color>, Pairings>
+>();
 
 /**
  * For each FG and each BG color, compute the contrast and store the pairing
  */
 function getPairings(
-  foregrounds: Iterable<RGB>,
-  backgrounds: Iterable<RGB>,
+  foregrounds: Iterable<CSS4Color>,
+  backgrounds: Iterable<CSS4Color>,
 ): Pairings {
   return cache.get(foregrounds, Cache.empty).get(backgrounds, () => {
     const pairings = [
@@ -206,30 +209,12 @@ function getPairings(
 }
 
 /**
- * {@link https://w3c.github.io/wcag/guidelines/#dfn-relative-luminance}
- */
-function luminance(color: RGB): number {
-  const [red, green, blue] = [color.red, color.green, color.blue].map((c) => {
-    const component = c.type === "number" ? c.value / 0xff : c.value;
-
-    return component <= 0.03928
-      ? component / 12.92
-      : Math.pow((component + 0.055) / 1.055, 2.4);
-  });
-
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-}
-
-/**
  * {@link https://w3c.github.io/wcag/guidelines/#dfn-contrast-ratio}
  *
  * @internal
  */
-export function contrast(foreground: RGB, background: RGB): number {
-  const lf = luminance(foreground);
-  const lb = luminance(background);
-
-  const contrast = (max(lf, lb) + 0.05) / (min(lf, lb) + 0.05);
+export function contrast(foreground: CSS4Color, background: CSS4Color): number {
+  const contrast = foreground.color.contrast(background.color, "WCAG21");
 
   return round(contrast * 100) / 100;
 }

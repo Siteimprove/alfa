@@ -7,15 +7,20 @@ import { h } from "@siteimprove/alfa-dom/h";
 
 import { Style } from "../dist/style.js";
 
-import { cascaded, specified } from "./common.js";
+import { cascaded, color, specified } from "./common.js";
 
 const device = Device.standard();
+
+const red = color(1, 0, 0);
+const lime = color(0, 1, 0);
+const blue = color(0, 0, 1);
+const transparent = color(0, 0, 0, 0);
 
 test("#cascaded() returns the cascaded value of a property", (t) => {
   const element = <div style={{ color: "red" }} />;
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "red" },
+    value: red,
     source: h.declaration("color", "red").toJSON(),
   });
 });
@@ -29,51 +34,51 @@ test("#cascaded() correctly handles duplicate properties", (t) => {
       h.sheet([
         h.rule.style("div", [
           h.declaration("color", "red"),
-          h.declaration("color", "green"),
+          h.declaration("color", "lime"),
         ]),
       ]),
     ],
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "green" },
-    source: h.declaration("color", "green").toJSON(),
+    value: lime,
+    source: h.declaration("color", "lime").toJSON(),
   });
 });
 
 test("#cascaded() returns the most specific property value", (t) => {
-  const element = <div style={{ color: "green !important" }} />;
+  const element = <div style={{ color: "lime!important" }} />;
 
   h.document(
     [],
     [
       h.sheet([
-        h.rule.style("div.foo", { color: "green" }),
+        h.rule.style("div.foo", { color: "lime" }),
         h.rule.style("div", { color: "red" }),
       ]),
     ],
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "green" },
-    source: h.declaration("color", "green", true).toJSON(),
+    value: lime,
+    source: h.declaration("color", "lime", true).toJSON(),
   });
 });
 
 test("#cascaded() correctly handles inline styles overriding the sheet", (t) => {
-  const element = <div style={{ color: "green !important" }} />;
+  const element = <div style={{ color: "lime !important" }} />;
 
   h.document([element], [h.sheet([h.rule.style("div", { color: "red" })])]);
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "green" },
-    source: h.declaration("color", "green", true).toJSON(),
+    value: lime,
+    source: h.declaration("color", "lime", true).toJSON(),
   });
 });
 
 test(`#cascaded() correctly handles an important declaration overriding inline
       styles`, (t) => {
-  const element = <div style={{ color: "green" }} />;
+  const element = <div style={{ color: "lime" }} />;
 
   h.document(
     [element],
@@ -81,14 +86,14 @@ test(`#cascaded() correctly handles an important declaration overriding inline
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "red" },
+    value: red,
     source: h.declaration("color", "red", true).toJSON(),
   });
 });
 
 test(`#cascaded() correctly handles important inline styles overriding an
       important declaration`, (t) => {
-  const element = <div style={{ color: "green !important" }} />;
+  const element = <div style={{ color: "lime !important" }} />;
 
   h.document(
     [element],
@@ -96,8 +101,8 @@ test(`#cascaded() correctly handles important inline styles overriding an
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "green" },
-    source: h.declaration("color", "green", true).toJSON(),
+    value: lime,
+    source: h.declaration("color", "lime", true).toJSON(),
   });
 });
 
@@ -733,12 +738,12 @@ test(`#cascaded() resolves :hover style for an element`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "color", Context.hover(element)), {
-    value: { type: "color", format: "named", color: "blue" },
+    value: blue,
     source: h.declaration("color", "blue").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "red" },
+    value: red,
     source: h.declaration("color", "red").toJSON(),
   });
 });
@@ -762,12 +767,12 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
   );
 
   t.deepEqual(cascaded(element, "color", Context.focus(element)), {
-    value: { type: "color", format: "named", color: "blue" },
+    value: blue,
     source: h.declaration("color", "blue").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "red" },
+    value: red,
     source: h.declaration("color", "red").toJSON(),
   });
 });
@@ -778,14 +783,7 @@ test(`#specified() keeps the !important flag of properties set to initial`, (t) 
   const style = Style.from(element, device);
 
   t.deepEqual(style.specified("background-color").toJSON(), {
-    value: {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 0 },
-      green: { type: "percentage", value: 0 },
-      blue: { type: "percentage", value: 0 },
-      alpha: { type: "percentage", value: 0 },
-    },
+    value: transparent,
     source: { name: "background-color", value: "initial", important: true },
   });
 });
@@ -802,7 +800,7 @@ test("#cascaded() accepts rules from the shadow tree, when relevant", (t) => {
   h.document([element]);
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "red" },
+    value: red,
     source: h.declaration("color", "red").toJSON(),
   });
 });
@@ -832,12 +830,12 @@ test("#cascaded() prefers important declaration from the shadow tree, and normal
   );
 
   t.deepEqual(cascaded(element, "color"), {
-    value: { type: "color", format: "named", color: "red" },
+    value: red,
     source: h.declaration("color", "red", true).toJSON(),
   });
 
   t.deepEqual(cascaded(element, "background-color"), {
-    value: { type: "color", format: "named", color: "blue" },
+    value: blue,
     source: h.declaration("background-color", "blue").toJSON(),
   });
 });
@@ -893,25 +891,11 @@ test("#specified() handles revert on inherited properties", (t) => {
   );
 
   t.deepEqual(specified(target1, "color"), {
-    value: {
-      type: "color",
-      format: "rgb",
-      alpha: { type: "percentage", value: 1 },
-      red: { type: "percentage", value: 1 },
-      green: { type: "percentage", value: 0 },
-      blue: { type: "percentage", value: 0 },
-    },
+    value: red,
     source: h.declaration("color", "red").toJSON(),
   });
   t.deepEqual(specified(target2, "color"), {
-    value: {
-      type: "color",
-      format: "rgb",
-      alpha: { type: "percentage", value: 1 },
-      red: { type: "percentage", value: 0 },
-      green: { type: "percentage", value: 0 },
-      blue: { type: "percentage", value: 1 },
-    },
+    value: blue,
     source: h.declaration("color", "blue").toJSON(),
   });
 });
