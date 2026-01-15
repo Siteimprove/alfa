@@ -1,6 +1,6 @@
 /*
- * Given that the CSS4 color parser mostly uses the colorjs.io library,
- * we mostly have surface level tests that integration works as expected.
+ * Given that the CSS4 color parser uses the colorjs.io library, we mostly have
+ *  surface level tests that integration works as expected.
  *
  * This does not include extensive tests of many scenarios. This does not
  * include extensive tests of the results of parsing, just checking that it works.
@@ -103,4 +103,13 @@ test(".parse() graciously rejects various color formats with incorrect calculati
   ]) {
     t(parseErr(color).isErr(), `Expected parsing "${color}" to fail.`);
   }
+});
+
+test("CSS4Color are immutable", (t) => {
+  const color = parse("rgb(255, 0, 0)");
+  const target = color.color;
+  target.r = 0;
+
+  t.deepEqual(color.toJSON(), red);
+  t.deepEqual(target.r, 0);
 });

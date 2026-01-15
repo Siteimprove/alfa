@@ -84,12 +84,12 @@ export class CSS4Color
   }
 
   private readonly _color: Color;
+
   // We use the sRGB color space as the canonical representation for colors
   // for historical reasons. We may want to switch to XYZ-D65 at some point, as
-  // it seems to be the root space in colorjs.io. This might however require a
-  // lot of refactoring.
+  // it is the root space in colorjs.io. This might however require a lot of
+  // refactoring.
   private readonly _srgb: Color;
-
   private readonly _red: Percentage.Canonical;
   private readonly _green: Percentage.Canonical;
   private readonly _blue: Percentage.Canonical;
@@ -109,9 +109,15 @@ export class CSS4Color
 
   /**
    * The underlying colorjs.io color.
+   *
+   * @remarks
+   * This creates a new Color instance, rather than returning the internal one.
+   * This is because Color instances are mutable, and we want to preserve the
+   * immutability of Alfa values. If we were to return `this._color`, then
+   * alfaColor.color.r = 0; would modify the CSS4Color instance.
    */
   public get color(): Color {
-    return this._color;
+    return new Color(this._color);
   }
 
   public get red(): Percentage.Canonical {
@@ -216,6 +222,11 @@ export namespace CSS4Color {
     (hash) => `${hash}`,
   );
 
+  const parseIdent: CSSParser<Color> = catcher(
+    Token.parseIdent(),
+    (ident) => ident.value,
+  );
+
   /*
    * colorjs.io doesn't handle calculations, so we have to do it ourselves.
    *
@@ -236,7 +247,7 @@ export namespace CSS4Color {
    * lot of complexity.
    *
    * The other good point is that colors don't include lengths, so we do not have
-   * to resolve length which can only happens at compute value time due to relative
+   * to resolve lengths which can only happens at compute value time due to relative
    * units. Hence, we can resolve everything at parse time before forwarding it
    * to colorjs.io.
    *
@@ -260,11 +271,6 @@ export namespace CSS4Color {
   const parseFunction: CSSParser<Color> = catcher(
     Function.parse(undefined, zeroOrMore(parseComponent)),
     ([func, body]) => `${func.name}(${body.join("")})`,
-  );
-
-  const parseIdent: CSSParser<Color> = catcher(
-    Token.parseIdent(),
-    (ident) => ident.value,
   );
 
   const parseColor: CSSParser<Color> = either(

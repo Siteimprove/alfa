@@ -7,7 +7,7 @@ import { serializer } from "../../common/parse.js";
 const serialize = serializer(Gradient.Linear.parse);
 
 const red = color(1, 0, 0);
-const lime = color(0, 1, 0); // green is #008000
+const lime = color(0, 1, 0);
 const blue = color(0, 0, 1);
 const yellow = color(1, 1, 0);
 

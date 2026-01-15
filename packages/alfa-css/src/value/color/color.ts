@@ -69,9 +69,9 @@ export namespace Color {
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
    */
   export const parse: CSSParser<Color> = either<Slice<Token>, Color, string>(
-    CSS4Color.parse,
     Current.parse,
     System.parse,
+    CSS4Color.parse,
   );
 
   export function isTransparent(color: Color): boolean {
