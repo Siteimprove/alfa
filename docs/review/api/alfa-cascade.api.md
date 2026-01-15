@@ -13,12 +13,12 @@ import { Compound } from '@siteimprove/alfa-selector';
 import { Context } from '@siteimprove/alfa-selector';
 import type { Declaration } from '@siteimprove/alfa-dom';
 import type { Device } from '@siteimprove/alfa-device';
-import type { Document } from '@siteimprove/alfa-dom';
-import { Element } from '@siteimprove/alfa-dom';
+import type { Document as Document_2 } from '@siteimprove/alfa-dom';
+import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type * as json from '@siteimprove/alfa-json';
-import { Option } from '@siteimprove/alfa-option';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import type { Rule } from '@siteimprove/alfa-dom';
 import type { Selector } from '@siteimprove/alfa-selector';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -30,10 +30,10 @@ import type { StyleRule } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
 export class Cascade implements Serializable {
-    protected constructor(root: Document | Shadow, device: Device);
+    protected constructor(root: Document_2 | Shadow, device: Device);
     // (undocumented)
-    static from(node: Document | Shadow, device: Device): Cascade;
-    get(element: Element, context?: Context): RuleTree.Node;
+    static from(node: Document_2 | Shadow, device: Device): Cascade;
+    get(element: Element_2, context?: Context): RuleTree.Node;
     // (undocumented)
     toJSON(): Cascade.JSON;
 }
@@ -47,7 +47,7 @@ export namespace Cascade {
         // (undocumented)
         device: Device.JSON;
         // (undocumented)
-        root: Document.JSON | Shadow.JSON;
+        root: Document_2.JSON | Shadow.JSON;
         // (undocumented)
         rules: RuleTree.JSON;
         // Warning: (ae-forgotten-export) The symbol "SelectorMap" needs to be exported by the entry point index.d.ts
@@ -217,7 +217,7 @@ export class RuleTree implements Serializable {
     // Warning: (ae-forgotten-export) The symbol "Block" needs to be exported by the entry point index.d.ts
     //
     // @internal
-    add(rules: Iterable_2<Block<Element | Block.Source, true>>): RuleTree.Node;
+    add(rules: Iterable_2<Block<Element_2 | Block.Source, true>>): RuleTree.Node;
     // (undocumented)
     static empty(): RuleTree;
     // (undocumented)
@@ -230,7 +230,7 @@ export namespace RuleTree {
     export type JSON = Array<Node.JSON>;
     // (undocumented)
     export class Node implements Serializable {
-        protected constructor(block: Block, children: Array<Node>, parent: Option<Node>);
+        protected constructor(block: Block, children: Array<Node>, parent: Option_2<Node>);
         // @internal
         add(block: Block): Node;
         // (undocumented)
@@ -242,9 +242,9 @@ export namespace RuleTree {
         // (undocumented)
         inclusiveAncestors(): Iterable_2<Node>;
         // (undocumented)
-        static of(block: Block, children: Array<Node>, parent: Option<Node>): Node;
+        static of(block: Block, children: Array<Node>, parent: Option_2<Node>): Node;
         // (undocumented)
-        get parent(): Option<Node>;
+        get parent(): Option_2<Node>;
         // (undocumented)
         toJSON(): Node.JSON;
     }

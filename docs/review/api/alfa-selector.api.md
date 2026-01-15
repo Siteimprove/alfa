@@ -6,7 +6,7 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparer } from '@siteimprove/alfa-comparable';
-import { Element } from '@siteimprove/alfa-dom';
+import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
@@ -15,7 +15,7 @@ import type * as json from '@siteimprove/alfa-json';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Maybe } from '@siteimprove/alfa-option';
 import { Nth } from '@siteimprove/alfa-css';
-import { Option } from '@siteimprove/alfa-option';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Parser as Parser_2 } from '@siteimprove/alfa-css';
 import { Predicate } from '@siteimprove/alfa-predicate';
@@ -42,27 +42,27 @@ export namespace Absolute {
 export class Attribute extends WithName<"attribute"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Attribute>;
-    protected constructor(namespace: Option<string>, name: string, value: Option<string>, matcher: Option<Attribute.Matcher>, modifier: Option<Attribute.Modifier>);
+    protected constructor(namespace: Option_2<string>, name: string, value: Option_2<string>, matcher: Option_2<Attribute.Matcher>, modifier: Option_2<Attribute.Modifier>);
     // (undocumented)
     equals(value: Attribute): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get matcher(): Option<Attribute.Matcher>;
+    get matcher(): Option_2<Attribute.Matcher>;
     // (undocumented)
-    matches(element: Element): boolean;
+    matches(element: Element_2): boolean;
     // (undocumented)
-    get modifier(): Option<Attribute.Modifier>;
+    get modifier(): Option_2<Attribute.Modifier>;
     // (undocumented)
-    get namespace(): Option<string>;
+    get namespace(): Option_2<string>;
     // (undocumented)
-    static of(namespace: Option<string>, name: string, value?: Option<string>, matcher?: Option<Attribute.Matcher>, modifier?: Option<Attribute.Modifier>): Attribute;
+    static of(namespace: Option_2<string>, name: string, value?: Option_2<string>, matcher?: Option_2<Attribute.Matcher>, modifier?: Option_2<Attribute.Modifier>): Attribute;
     // (undocumented)
     toJSON(): Attribute.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get value(): Option<string>;
+    get value(): Option_2<string>;
 }
 
 // @public (undocumented)
@@ -116,9 +116,9 @@ export class Class extends WithName<"class"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option<Class>;
+    protected readonly _key: Option_2<Class>;
     // (undocumented)
-    matches(element: Element): boolean;
+    matches(element: Element_2): boolean;
     // (undocumented)
     static of(name: string): Class;
     // (undocumented)
@@ -153,7 +153,7 @@ export enum Combinator {
 // @public (undocumented)
 export namespace Combinator {
     // Warning: (ae-forgotten-export) The symbol "BaseSelector" needs to be exported by the entry point index.d.ts
-    export function matcher(left: BaseSelector, combinator: Combinator, right: Selector, element: Element, context?: Context): boolean;
+    export function matcher(left: BaseSelector, combinator: Combinator, right: Selector, element: Element_2, context?: Context): boolean;
     const // @internal (undocumented)
     parse: Parser_2<Combinator>;
 }
@@ -170,11 +170,11 @@ export class Complex extends BaseSelector<"complex"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option<Id | Class | Type>;
+    protected readonly _key: Option_2<Id | Class | Type>;
     // (undocumented)
     get left(): Simple | Compound | Complex;
     // (undocumented)
-    matches(element: Element, context?: Context): boolean;
+    matches(element: Element_2, context?: Context): boolean;
     // (undocumented)
     static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
     // (undocumented)
@@ -212,11 +212,11 @@ export class Compound extends BaseSelector<"compound"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option<Id | Class | Type>;
+    protected readonly _key: Option_2<Id | Class | Type>;
     // (undocumented)
     get length(): number;
     // (undocumented)
-    matches(element: Element, context?: Context): boolean;
+    matches(element: Element_2, context?: Context): boolean;
     // (undocumented)
     static of(...selectors: Array_2<Simple>): Compound;
     // (undocumented)
@@ -242,47 +242,47 @@ export namespace Compound {
 
 // @public (undocumented)
 export class Context {
-    protected constructor(state: Map_2<Element, Context.State>);
+    protected constructor(state: Map_2<Element_2, Context.State>);
     // (undocumented)
-    active(element: Element): Context;
+    active(element: Element_2): Context;
     // (undocumented)
-    static active(element: Element): Context;
+    static active(element: Element_2): Context;
     // (undocumented)
-    addState(element: Element, state: Context.State): Context;
+    addState(element: Element_2, state: Context.State): Context;
     // (undocumented)
     static empty(): Context;
     // (undocumented)
-    focus(element: Element): Context;
+    focus(element: Element_2): Context;
     // (undocumented)
-    static focus(element: Element): Context;
+    static focus(element: Element_2): Context;
     // (undocumented)
-    getState(element: Element): Context.State;
+    getState(element: Element_2): Context.State;
     // (undocumented)
-    hasState(element: Element, state: Context.State): boolean;
+    hasState(element: Element_2, state: Context.State): boolean;
     // (undocumented)
-    hover(element: Element): Context;
+    hover(element: Element_2): Context;
     // (undocumented)
-    static hover(element: Element): Context;
+    static hover(element: Element_2): Context;
     // (undocumented)
-    isActive(element: Element): boolean;
+    isActive(element: Element_2): boolean;
     // (undocumented)
     isEmpty(): boolean;
     // (undocumented)
-    isFocused(element: Element): boolean;
+    isFocused(element: Element_2): boolean;
     // (undocumented)
-    isHovered(element: Element): boolean;
+    isHovered(element: Element_2): boolean;
     // (undocumented)
-    isVisited(element: Element): boolean;
+    isVisited(element: Element_2): boolean;
     // (undocumented)
-    static of(state: Iterable<[Element, Context.State]>): Context;
+    static of(state: Iterable<[Element_2, Context.State]>): Context;
     // (undocumented)
-    setState(element: Element, state: Context.State): Context;
+    setState(element: Element_2, state: Context.State): Context;
     // (undocumented)
-    visit(element: Element): Context;
+    visit(element: Element_2): Context;
     // (undocumented)
-    static visit(element: Element): Context;
+    static visit(element: Element_2): Context;
     // (undocumented)
-    withState(state: Context.State): Iterable<Element>;
+    withState(state: Context.State): Iterable<Element_2>;
 }
 
 // @public (undocumented)
@@ -312,9 +312,9 @@ export class Id extends WithName<"id"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option<Id>;
+    protected readonly _key: Option_2<Id>;
     // (undocumented)
-    matches(element: Element): boolean;
+    matches(element: Element_2): boolean;
     // (undocumented)
     static of(name: string): Id;
     // (undocumented)
@@ -346,7 +346,7 @@ export class List<T extends List.Item = List.Item> extends BaseSelector<"list"> 
     // (undocumented)
     get length(): number;
     // (undocumented)
-    matches(element: Element, context?: Context): boolean;
+    matches(element: Element_2, context?: Context): boolean;
     // (undocumented)
     static of<T extends List.Item>(...selectors: Array_2<T>): List<T>;
     // (undocumented)
@@ -449,13 +449,13 @@ export namespace PseudoClass {
 // Warning: (ae-forgotten-export) The symbol "Marker" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Part" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Placeholder" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "Selection" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Selection_2" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "Slotted" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "SpellingError" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "TargetText" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export type PseudoElement = After | Backdrop | Before | Cue | CueRegion | FileSelectorButton | FirstLetter | FirstLine | GrammarError | Marker | Part | Placeholder | Selection | Slotted | SpellingError | TargetText;
+export type PseudoElement = After | Backdrop | Before | Cue | CueRegion | FileSelectorButton | FirstLetter | FirstLine | GrammarError | Marker | Part | Placeholder | Selection_2 | Slotted | SpellingError | TargetText;
 
 // @public (undocumented)
 export namespace PseudoElement {
@@ -494,7 +494,7 @@ export namespace Selector {
     export type JSON = Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON | List.JSON;
     const isHostSelector: Refinement<unknown, Host | HostContext, []>;
     const isShadow: Refinement<Selector, Selector, []>;
-    export function matchSlotted(selector: Selector, slotted: Element, context?: Context): boolean;
+    export function matchSlotted(selector: Selector, slotted: Element_2, context?: Context): boolean;
     // (undocumented)
     export namespace Parser {
         // (undocumented)
@@ -611,19 +611,19 @@ export namespace Specificity {
 export class Type extends WithName<"type"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Type>;
-    protected constructor(namespace: Option<string>, name: string);
+    protected constructor(namespace: Option_2<string>, name: string);
     // (undocumented)
     equals(value: Type): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    protected readonly _key: Option<Type>;
+    protected readonly _key: Option_2<Type>;
     // (undocumented)
-    matches(element: Element): boolean;
+    matches(element: Element_2): boolean;
     // (undocumented)
-    get namespace(): Option<string>;
+    get namespace(): Option_2<string>;
     // (undocumented)
-    static of(namespace: Option<string>, name: string): Type;
+    static of(namespace: Option_2<string>, name: string): Type;
     // (undocumented)
     toJSON(): Type.JSON;
     // (undocumented)
@@ -647,7 +647,7 @@ export namespace Type {
 export class Universal extends BaseSelector<"universal"> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Universal>;
-    protected constructor(namespace: Option<string>);
+    protected constructor(namespace: Option_2<string>);
     // (undocumented)
     static empty(): Universal;
     // (undocumented)
@@ -655,11 +655,11 @@ export class Universal extends BaseSelector<"universal"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    matches(element: Element): boolean;
+    matches(element: Element_2): boolean;
     // (undocumented)
-    get namespace(): Option<string>;
+    get namespace(): Option_2<string>;
     // (undocumented)
-    static of(namespace: Option<string>): Universal;
+    static of(namespace: Option_2<string>): Universal;
     // (undocumented)
     toJSON(): Universal.JSON;
     // (undocumented)
