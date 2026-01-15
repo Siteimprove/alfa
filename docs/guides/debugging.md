@@ -48,7 +48,7 @@ const file = "./my-page.json";
 // De-serialize page
 const page = Page.from(JSON.parse(fs.readFileSync(file, "utf-8")));
 
-main();
+await main();
 
 async function main() {
   // Run the rule and sort results.
@@ -93,13 +93,11 @@ Often, the problem is present for one precise element on the page. The full docu
 Getting the element with `id` `my-id`.
 
 ```typescript
-import { Element } from "@siteimprove/alfa-dom";
+import { Query } from "@siteimprove/alfa-dom";
 
-const element = page.document
-  // All nodes in the document.
-  .descendants()
-  // Discard the text nodes and attributes, keep the elements.
-  .filter(Element.isElement)
+const element = Query
+  // All element nodes in the document.
+  .getElementDescendants(page.document)
   // Find the first element with the correct id.
   .find((elt) => elt.id.includes("my-id"))
   // Since we know it exists, we can safely unwrap the Option.
@@ -111,11 +109,9 @@ Getting the second `<button>` element with class `my-button`.
 ```typescript
 import { Element } from "@siteimprove/alfa-dom";
 
-const element = page.document
-  // All nodes in the document.
-  .descendants()
-  // Discard the text nodes and attributes, keep the elements.
-  .filter(Element.isElement)
+const element = Query
+  // All element nodes in the document.
+  .getElementDescendants(page.document)
   // Only keep the buttons
   .filter(Element.hasName("button"))
   // Only keep the ones with the wanted class
