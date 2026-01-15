@@ -120,7 +120,7 @@ export class CSS4Color
    * `alfaColor.color.r = 0` would modify the CSS4Color instance.
    */
   public get color(): Color {
-    return new Color(this._color);
+    return this._color.clone();
   }
 
   public get red(): Percentage.Canonical {
