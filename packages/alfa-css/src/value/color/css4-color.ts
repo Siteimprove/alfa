@@ -46,6 +46,9 @@ import { Value } from "../value.js";
 
 const { either, map, mapResult, zeroOrMore } = Parser;
 
+/**
+ * @public
+ */
 export class CSS4Color
   extends Value<"color", false>
   implements Resolvable<CSS4Color.Canonical, never>
@@ -190,6 +193,9 @@ export class CSS4Color
   }
 }
 
+/**
+ * @public
+ */
 export namespace CSS4Color {
   export interface JSON extends Value.JSON<"color"> {
     space: string;
