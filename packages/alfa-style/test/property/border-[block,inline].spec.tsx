@@ -27,24 +27,14 @@ function parse(
     });
 
     t.deepEqual(cascaded(element, `${shorthand}-${side}-style` as const), {
-      value: {
-        type: "keyword",
-        value: style ?? "initial",
-      },
+      value: { type: "keyword", value: style ?? "initial" },
       source: declaration.toJSON(),
     });
 
     t.deepEqual(cascaded(element, `${shorthand}-${side}-width` as const), {
       value: width
-        ? {
-            type: "length",
-            value: width,
-            unit: "px",
-          }
-        : {
-            type: "keyword",
-            value: "initial",
-          },
+        ? { type: "length", value: width, unit: "px" }
+        : { type: "keyword", value: "initial" },
       source: declaration.toJSON(),
     });
   }

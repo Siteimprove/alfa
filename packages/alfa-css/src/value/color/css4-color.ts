@@ -114,7 +114,7 @@ export class CSS4Color
    * This creates a new Color instance, rather than returning the internal one.
    * This is because Color instances are mutable, and we want to preserve the
    * immutability of Alfa values. If we were to return `this._color`, then
-   * alfaColor.color.r = 0; would modify the CSS4Color instance.
+   * `alfaColor.color.r = 0` would modify the CSS4Color instance.
    */
   public get color(): Color {
     return new Color(this._color);
@@ -138,6 +138,19 @@ export class CSS4Color
 
   public resolve(): CSS4Color.Canonical {
     return this;
+  }
+
+  /**
+   * Computes the contrast between two colors, according to WCAG 2.1 algorithm.
+   *
+   * @privateRemarks
+   * Having it available internally avoids the need to call
+   * `color1.color.contrast(color2.color, "WCAG21")` which would create two new
+   * Color instances. Given that we tend to compute a high number of pairings,
+   * this should help performances.
+   */
+  public contrast(other: CSS4Color): number {
+    return this._color.contrast(other._color, "WCAG21");
   }
 
   public equals(value: unknown): value is this {

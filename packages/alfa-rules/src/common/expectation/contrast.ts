@@ -214,7 +214,7 @@ function getPairings(
  * @internal
  */
 export function contrast(foreground: CSS4Color, background: CSS4Color): number {
-  const contrast = foreground.color.contrast(background.color, "WCAG21");
+  const contrast = foreground.contrast(background);
 
   return round(contrast * 100) / 100;
 }
