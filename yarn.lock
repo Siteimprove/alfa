@@ -1681,7 +1681,7 @@ __metadata:
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-thunk": "workspace:^"
-    colorjs.io: "patch:colorjs.io@npm%3A0.6.0#~/.yarn/patches/colorjs.io-npm-0.6.0-e34d53413e.patch"
+    colorjs.io: "npm:^0.6.1"
   languageName: unknown
   linkType: soft
 
@@ -3605,17 +3605,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colorjs.io@npm:0.6.0":
-  version: 0.6.0
-  resolution: "colorjs.io@npm:0.6.0"
-  checksum: 10c0/e7393f7c76186428bb3c2b332577389dba5722cdfc43e61c3e2566f1cd76b733e2302e148f52c84763cf59c94acc6babbf0e5bd7e55869ba809c047190b0c677
-  languageName: node
-  linkType: hard
-
-"colorjs.io@patch:colorjs.io@npm%3A0.6.0#~/.yarn/patches/colorjs.io-npm-0.6.0-e34d53413e.patch":
-  version: 0.6.0
-  resolution: "colorjs.io@patch:colorjs.io@npm%3A0.6.0#~/.yarn/patches/colorjs.io-npm-0.6.0-e34d53413e.patch::version=0.6.0&hash=913335"
-  checksum: 10c0/1618725b5493154aa6237658eff91516f8b2ae0a1f022c5d8276d9e58af96e7ad9180d7a7646d4da15c3f8a4ce345877d3a4ffbdfdfbe3d17c56d1a66b776a44
+"colorjs.io@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "colorjs.io@npm:0.6.1"
+  checksum: 10c0/972aff12d88e86726898ff110aa15ea57a0348a3b958aeb93f4d6ae2d0ca91e487864e4d0d98b53943cc3ac3f747fb01b5ba3b6d922848d5c6888cb56e470b84
   languageName: node
   linkType: hard
 

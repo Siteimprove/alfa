@@ -41,7 +41,7 @@
     "@siteimprove/alfa-slice": "workspace:^",
     "@siteimprove/alfa-string": "workspace:^",
     "@siteimprove/alfa-thunk": "workspace:^",
-    "colorjs.io": "patch:colorjs.io@npm%3A0.6.0#~/.yarn/patches/colorjs.io-npm-0.6.0-e34d53413e.patch"
+    "colorjs.io": "^0.6.1"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^"
