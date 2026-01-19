@@ -37,13 +37,13 @@
     "@microsoft/api-documenter": "^7.28.2",
     "@microsoft/api-extractor": "^7.52.10",
     "@siteimprove/alfa-toolchain": "workspace:^0.108.2",
-    "@types/node": "^25.0.6",
-    "@vitest/coverage-v8": "^4.0.16",
-    "knip": "^5.80.2",
+    "@types/node": "^25.0.9",
+    "@vitest/coverage-v8": "^4.0.17",
+    "knip": "^5.82.0",
     "minimist": "^1.2.6",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.17"
   },
   "packageManager": "yarn@4.12.0"
 }
