@@ -189,28 +189,37 @@ export namespace Mix {
 
     // 2. Replace unspecified percentage by equal shares of the omitted part.
     // If omitted is 0, this won't be used.
+    // We do not create the intermediate list, just remember the "missing" value.
     const omittedPercentage = Percentage.of((1 - specifiedSum.value) / omitted);
-    const fullySpecified = items.map((item) =>
-      item.hasPercentage() ? item : item.withPercentage(omittedPercentage),
-    );
 
-    // 3. Recompute total. This will be 100% if there were any omission.
-    const total = Iterable.reduce(
-      fullySpecified,
-      (total, item) => sum(total, item.percentage.get()),
-      Percentage.of(0),
-    );
+    // 3. "Recompute" total. This will be 100% if there were any omission, or the
+    // same as the previous total.
+    const total = omitted === 0 ? specifiedSum : Percentage.of(1);
 
     // 4. Normalize percentages, so that total is 100%. For smaller total, only
     // normalize if forced.
-    let normalized = fullySpecified;
-    if (total.value > 1 || (force && total.value > 0)) {
-      normalized = fullySpecified.map((item) =>
-        item.withPercentage(
-          Percentage.of(item.percentage.get().value / total.value),
+
+    // Replace unspecified percentages with the computed omitted percentage.
+    function fallback(item: MixItem<V>): MixItem<V, Some<Percentage.Fixed>> {
+      return item.withPercentage(item.percentage.getOr(omittedPercentage));
+    }
+
+    // Normalize all percentages, replacing unspecified ones as needed, so that
+    // the sum is 100%.
+    function fallbackAndNormalize(
+      item: MixItem<V>,
+    ): MixItem<V, Some<Percentage.Fixed>> {
+      return item.withPercentage(
+        Percentage.of(
+          item.percentage.getOr(omittedPercentage).value / total.value,
         ),
       );
     }
+
+    const normalized =
+      total.value > 1 || (force && total.value > 0)
+        ? items.map(fallbackAndNormalize)
+        : items.map(fallback);
 
     // 5. Compute leftover (unspecified) percentage.
     const leftover =
