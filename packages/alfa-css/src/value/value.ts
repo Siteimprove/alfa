@@ -24,11 +24,11 @@ import type { PartiallyResolvable, Resolvable } from "./resolvable.js";
  * @public
  */
 export abstract class Value<
-    T extends string = string,
-    CALC extends boolean = boolean,
-    R extends string = T,
-    PR extends string = R,
-  >
+  T extends string = string,
+  CALC extends boolean = boolean,
+  R extends string = T,
+  PR extends string = R,
+>
   implements
     Equatable,
     Hashable,
