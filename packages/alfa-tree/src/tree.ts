@@ -382,6 +382,9 @@ export abstract class Node<
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-index}
+   *
+   * @param options - Traversal flags to control tree traversal behavior
+   * @param predicate - Optional predicate to filter siblings when calculating the index
    */
   public index(
     options?: Flags<K, F>,

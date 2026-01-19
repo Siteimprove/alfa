@@ -365,6 +365,13 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  /**
+   * Counts elements in the sequence until a predicate condition is met,
+   * optionally filtering elements to count.
+   *
+   * @param predicate - The stopping condition. Iteration stops when this returns true.
+   * @param filter - Optional predicate to filter which elements are counted. If not provided, all elements before the stopping condition are counted.
+   */
   public countUntil(
     predicate: Predicate<T, [index: number]>,
     filter?: Predicate<T, [index: number]>,
