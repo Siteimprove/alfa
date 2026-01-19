@@ -374,7 +374,7 @@ export class Cons<T> implements Sequence<T> {
    */
   public countUntil(
     predicate: Predicate<T, [index: number]>,
-    filter?: Predicate<T, [index: number]>,
+    filter: Predicate<T, [index: number]> = () => true,
   ): number {
     let next: Cons<T> = this;
     let index = 0;
@@ -385,7 +385,7 @@ export class Cons<T> implements Sequence<T> {
         return count;
       }
 
-      if (filter === undefined || filter(next._head, index)) {
+      if (filter(next._head, index)) {
         count++;
       }
 
