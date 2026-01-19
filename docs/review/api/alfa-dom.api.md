@@ -841,7 +841,7 @@ export interface Node {
     // (undocumented)
     inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    index(options?: Node.Traversal): number;
+    index(options?: Node.Traversal, predicate?: Predicate<Node>): number;
     // (undocumented)
     isAncestorOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)

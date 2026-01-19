@@ -45,6 +45,7 @@ export class Cons<T> implements Sequence<T> {
     concat(iterable: Iterable_2<T>): Cons<T>;
     // (undocumented)
     count(predicate: Predicate<T, [index: number]>): number;
+    countUntil(predicate: Predicate<T, [index: number]>, filter?: Predicate<T, [index: number]>): number;
     // (undocumented)
     distinct(): Sequence<T>;
     // @internal (undocumented)
@@ -224,6 +225,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     concat(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)
     count(predicate: Predicate<T, [index: number]>): number;
+    // (undocumented)
+    countUntil(predicate: Predicate<T, [index: number]>, filter?: Predicate<T, [index: number]>): number;
     // (undocumented)
     distinct(): Sequence<T>;
     // (undocumented)

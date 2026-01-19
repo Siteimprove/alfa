@@ -58,7 +58,7 @@ export abstract class Node<K extends string, F extends Flags.allFlags, T extends
     // (undocumented)
     inclusiveSiblings(options?: Flags<K, F>): Sequence<Node<K, F>>;
     // (undocumented)
-    index(options?: Flags<K, F>): number;
+    index(options?: Flags<K, F>, predicate?: Predicate<Node<K, F>>): number;
     // (undocumented)
     get internalId(): string;
     // (undocumented)
