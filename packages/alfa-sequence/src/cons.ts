@@ -365,6 +365,34 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  public countUntil(
+    predicate: Predicate<T, [index: number]>,
+    filter?: Predicate<T, [index: number]>,
+  ): number {
+    let next: Cons<T> = this;
+    let index = 0;
+    let count = 0;
+
+    while (true) {
+      if (predicate(next._head, index)) {
+        return count;
+      }
+
+      if (filter === undefined || filter(next._head, index)) {
+        count++;
+      }
+
+      index++;
+      const tail = next._tail.force();
+
+      if (Cons.isCons(tail)) {
+        next = tail;
+      } else {
+        return count;
+      }
+    }
+  }
+
   public distinct(): Sequence<T>;
 
   /**

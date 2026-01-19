@@ -49,7 +49,7 @@ export class Comment extends Node<"comment"> {
     path += path === "/" ? "" : "/";
     path += "comment()";
 
-    const index = this.preceding(options).count(Comment.isComment);
+    const index = this.index(options, Comment.isComment);
 
     path += `[${index + 1}]`;
 

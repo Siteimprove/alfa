@@ -37,13 +37,13 @@ const rng = RNG.hexString(32).create();
  * @public
  */
 export abstract class Node<
-    // The kind of Flags that control tree traversal.
-    K extends string,
-    // The list of flags allowed to control tree traversal.
-    F extends Flags.allFlags,
-    // The type
-    T extends string = string,
-  >
+  // The kind of Flags that control tree traversal.
+  K extends string,
+  // The list of flags allowed to control tree traversal.
+  F extends Flags.allFlags,
+  // The type
+  T extends string = string,
+>
   implements
     Iterable<Node<K, F>>,
     Equatable,
@@ -383,8 +383,11 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-index}
    */
-  public index(options?: Flags<K, F>): number {
-    return this.preceding(options).size;
+  public index(
+    options?: Flags<K, F>,
+    predicate?: Predicate<Node<K, F>>,
+  ): number {
+    return this.inclusiveSiblings(options).countUntil(equals(this), predicate);
   }
 
   /**

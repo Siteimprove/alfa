@@ -109,6 +109,10 @@ export const Nil: Nil = new (class Nil {
     return 0;
   }
 
+  public countUntil(): number {
+    return 0;
+  }
+
   public distinct(): Nil {
     return this;
   }

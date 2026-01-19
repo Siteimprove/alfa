@@ -56,6 +56,10 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   none(predicate: Predicate<T, [index: number]>): boolean;
   every(predicate: Predicate<T, [index: number]>): boolean;
   count(predicate: Predicate<T, [index: number]>): number;
+  countUntil(
+    predicate: Predicate<T, [index: number]>,
+    filter?: Predicate<T, [index: number]>,
+  ): number;
   distinct(): Sequence<T>;
   get(index: number): Option<T>;
   has(index: number): boolean;
