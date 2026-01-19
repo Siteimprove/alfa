@@ -46,7 +46,7 @@ export namespace System {
 
   // Retrieved from https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/system-color
   // On January 2026.
-  const computedChrome: { [K in Keyword]: CSS4Color } = {
+  const resolvedChrome: { [K in Keyword]: CSS4Color } = {
     // This is invalid in Chrome, so we use Firefox's values.
     accentcolor: CSS4Color.of("rgb(0, 96, 233)").getUnsafe().resolve(),
     // This is invalid in Chrome, so we use Firefox's values.
@@ -70,7 +70,7 @@ export namespace System {
     visitedtext: CSS4Color.of("rgb(0, 102, 204)").getUnsafe().resolve(),
   };
 
-  export const computed = computedChrome;
+  export const resolve = (system: Keyword) => resolvedChrome[system];
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-system-color}
