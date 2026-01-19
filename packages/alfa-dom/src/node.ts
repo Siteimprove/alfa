@@ -255,13 +255,11 @@ export abstract class Node<T extends string = string>
   // we accept the risk of caching the value assuming that it will only be
   // computed on fully frozen trees.
   public path(options: Node.Traversal = Node.Traversal.empty): string {
-    if (this._path[options.value] !== undefined) {
-      return this._path[options.value];
-    } else {
+    if (this._path[options.value] == undefined) {
       this._path[options.value] = this._internalPath(options);
-
-      return this._internalPath(options);
     }
+
+    return this._path[options.value];
   }
 
   public equals(value: Node): boolean;
