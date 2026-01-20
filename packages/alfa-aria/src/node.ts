@@ -25,7 +25,11 @@ import * as predicate from "./node/predicate.js";
 
 const { and, equals, not, test } = Predicate;
 const { isRendered } = Style;
-const { getElementIdMap, getElementDescendants } = dom.Query;
+const {
+  getElementIdMap,
+  getElementDescendants,
+  getInclusiveElementDescendants,
+} = dom.Query;
 
 /**
  * {@link https://w3c.github.io/aria/#accessibility_tree}
@@ -264,7 +268,9 @@ export namespace Node {
       ],
     );
 
-    fromNode(root, device, claimed, owned, State.empty());
+    const openDialogAncestors = getOpenDialogAncestors(root);
+
+    fromNode(root, device, claimed, owned, openDialogAncestors, State.empty());
 
     return _cache.get(node, () =>
       // If the cache still doesn't hold an entry for the specified node, then
@@ -332,17 +338,25 @@ export namespace Node {
     }
   }
 
-  const hasInertDomAttribute = dom.Element.hasAttribute("inert");
-  const isOpenDialog = and(
-    dom.Element.hasName("dialog"),
-    dom.Element.hasAttribute("open"),
-  );
+  export function getOpenDialogAncestors(root: dom.Node): Set<dom.Node> {
+    const descendants = dom.Element.isElement(root)
+      ? getInclusiveElementDescendants(root)
+      : getElementDescendants(root);
+    return Set.from(
+      descendants
+        .filter(
+          and(dom.Element.hasName("dialog"), dom.Element.hasAttribute("open")),
+        )
+        .flatMap((dialog) => dialog.inclusiveAncestors()),
+    );
+  }
 
   function fromNode(
     node: dom.Node,
     device: Device,
     claimed: Set<dom.Node>,
     owned: Map<dom.Element, Sequence<dom.Node>>,
+    openDialogAncestors: Set<dom.Node>,
     state: State,
   ): Node {
     return cache.get(device, Cache.empty).get(node, () => {
@@ -387,6 +401,14 @@ export namespace Node {
           return Inert.of(node);
         }
 
+        // Elements that are inert due to having, or being a descendant of an element,
+        // with the `inert` attribute, are not exposed in the accessibility tree,
+        // unless they have an open dialog descendant. If they do, they become
+        // containers.
+        if (node.isInert() && !openDialogAncestors.has(node)) {
+          return Inert.of(node);
+        }
+
         let children: (state: State) => Iterable<Node>;
 
         // Get the children explicitly owned by the element. Children can be
@@ -404,10 +426,57 @@ export namespace Node {
 
         // The children implicitly owned by the element come first, then the
         // children explicitly owned by the element.
-        children = (state) =>
+        children = (childState) =>
           implicit
             .concat(explicit)
-            .map((child) => fromNode(child, device, claimed, owned, state));
+            .map((child) =>
+              fromNode(
+                child,
+                device,
+                claimed,
+                owned,
+                openDialogAncestors,
+                childState,
+              ),
+            );
+
+        // Element is inert, but contains an open dialog descendant (by above early return),
+        // so we set inert state and return it as a container.
+        if (node.isInert()) {
+          return Container.of(node, children(state.inert(true)));
+        }
+
+        // export function getOpenDialogAncestors(root: dom.Node): Set<dom.Node> {
+        //   const descendants = dom.Element.isElement(root)
+        //     ? getInclusiveElementDescendants(root)
+        //     : getElementDescendants(root);
+        //   return Set.from(
+        //     descendants
+        //       .filter(
+        //         and(dom.Element.hasName("dialog"), dom.Element.hasAttribute("open")),
+        //       )
+        //       .flatMap((dialog) => dialog.inclusiveAncestors()),
+        //   );
+        // }
+        // If we reached here and state is inert, it means we are in an inert container.
+        // - if element is open dialog without `inert` attribute, reset inert state.
+        // - else if element doesn't have an open dialog descendant, return Inert.
+        if (state.isInert) {
+          if (
+            test(
+              and(
+                dom.Element.hasName("dialog"),
+                dom.Element.hasAttribute("open"),
+                not(dom.Element.hasAttribute("inert")),
+              ),
+              node,
+            )
+          ) {
+            state = state.inert(false);
+          } else if (!openDialogAncestors.has(node)) {
+            return Inert.of(node);
+          }
+        }
 
         // Elements that are not visible by means of `visibility: hidden` or
         // `visibility: collapse`, are exposed in the accessibility tree as
@@ -420,19 +489,6 @@ export namespace Node {
         }
 
         state = state.visible(true);
-
-        if (hasInertDomAttribute(node)) {
-          // Elements with the inert attribute are exposed as containers
-          // as they may contain non-inert descendants
-          return Container.of(node, children(state.inert(true)));
-        } else if (isOpenDialog(node)) {
-          // Open dialogs without the inert attribute escapes inertness
-          state = state.inert(false);
-        }
-
-        if (state.isInert) {
-          return Inert.of(node);
-        }
 
         const role = Role.fromExplicit(node).orElse(() =>
           // If the element has no explicit role and instead inherits a
@@ -501,16 +557,13 @@ export namespace Node {
         // nor a tabindex, it is not itself interesting for accessibility
         // purposes. It is therefore exposed as a container.
         // Some elements (mostly embedded content) are always exposed.
-        // However, if the element is inert, it becomes an Inert node instead.
         if (
           attributes.isEmpty() &&
           role.every(Role.hasName("generic")) &&
           node.tabIndex().isNone() &&
           !test(alwaysExpose, node)
         ) {
-          return state.isInert
-            ? Inert.of(node)
-            : Container.of(node, children(state), role);
+          return Container.of(node, children(state), role);
         }
 
         // If the element has a role that designates its children as
@@ -529,12 +582,12 @@ export namespace Node {
       }
 
       if (dom.Text.isText(node)) {
-        // As elements with `visibility: hidden` or inert are exposed as
-        // containers for other elements that _might_ be visible or escape
-        // inertness, we need to check the state before deciding to expose
-        // the text node. If the parent element isn't visible or is inert,
-        // the text node becomes inert.
-        if (!state.isVisible || state.isInert) {
+        // As elements with `visibility: hidden` are exposed as containers for
+        // other elements that _might_ be visible, we need to check the
+        // visibility of the parent element before deciding to expose the text
+        // node. If the parent element isn't visible, the text node instead
+        // becomes inert.
+        if (!state.isVisible) {
           return Inert.of(node);
         }
 
@@ -546,7 +599,9 @@ export namespace Node {
         node
           .children(dom.Node.flatTree)
           .reject((child) => claimed.has(child))
-          .map((child) => fromNode(child, device, claimed, owned, state)),
+          .map((child) =>
+            fromNode(child, device, claimed, owned, openDialogAncestors, state),
+          ),
       );
     });
   }
