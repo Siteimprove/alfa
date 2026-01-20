@@ -7,9 +7,6 @@ inputs:
   api-key:
     description: "The API key to authenticate with the coverage API"
     required: false
-  webhook-url:
-    description: "The webhook URL to notify with the coverage number"
-    required: false
 
 runs:
   using: composite
@@ -37,7 +34,6 @@ runs:
       env:
         COVERAGE_API_URL: ${{ inputs.url }}
         COVERAGE_API_KEY: ${{ inputs.api-key }}
-        COVERAGE_WEBHOOK_URL: ${{ inputs.webhook-url }}
 
     - name: Generate individual coverage reports
       shell: bash
