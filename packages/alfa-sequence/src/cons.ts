@@ -365,6 +365,41 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  /**
+   * Counts elements in the sequence until a predicate condition is met,
+   * optionally filtering elements to count.
+   *
+   * @param predicate - The stopping condition. Iteration stops when this returns true.
+   * @param filter - Optional predicate to filter which elements are counted. If not provided, all elements before the stopping condition are counted.
+   */
+  public countUntil(
+    predicate: Predicate<T, [index: number]>,
+    filter: Predicate<T, [index: number]> = () => true,
+  ): number {
+    let next: Cons<T> = this;
+    let index = 0;
+    let count = 0;
+
+    while (true) {
+      if (predicate(next._head, index)) {
+        return count;
+      }
+
+      if (filter(next._head, index)) {
+        count++;
+      }
+
+      index++;
+      const tail = next._tail.force();
+
+      if (Cons.isCons(tail)) {
+        next = tail;
+      } else {
+        return count;
+      }
+    }
+  }
+
   public distinct(): Sequence<T>;
 
   /**
