@@ -20,6 +20,7 @@
     "./value/collection/list.spec.ts",
     "./value/collection/tuple.spec.ts",
     "./value/color/css4-color.spec.ts",
+    "./value/color/color-mix.spec.ts",
     "./value/color/mix.spec.ts",
     "./value/image/image.spec.ts",
     "./value/image/linear-gradient.spec.ts",

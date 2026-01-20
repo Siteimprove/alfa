@@ -53,6 +53,10 @@ export class List<V extends Value>
     return Iterable.some(this._values, predicate);
   }
 
+  public none(predicate: Predicate<V, [index: number]>) {
+    return Iterable.none(this._values, predicate);
+  }
+
   public resolve(
     resolver?: Resolvable.Resolver<V>,
   ): List<Resolvable.Resolved<V>> {

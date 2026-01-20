@@ -1,11 +1,22 @@
 import type { Hash } from "@siteimprove/alfa-hash";
-import { List } from "../collection/index.js";
+import type { Option } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Function, Token } from "../../syntax/index.js";
+
+import type { List } from "../collection/index.js";
+import type { Parser as CSSParser } from "../../syntax/parser.js";
+
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
+import { Keyword } from "../textual/index.js";
 import { Value } from "../value.js";
+
 import { CSS4Color } from "./css4-color.js";
-import { Mix, MixItem } from "./mix.js";
+import { Mix, type MixItem } from "./mix.js";
 
 import type { Color } from "./color.js";
+
+const { left, map, mapResult, option, pair, right, separated } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-color-5/#color-mix}
@@ -27,8 +38,8 @@ import type { Color } from "./color.js";
 // resolving to base colors.
 // When `currentcolor` is involved, they are only partially resolved.
 export class ColorMix<
-  S extends ColorMix.InterpolationSpace,
-  H extends ColorMix.HueInterpolationMethod = "shorter",
+  S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace,
+  H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod,
 >
   extends Value<"color-mix", true, "color", "color" | "color-mix">
   implements
@@ -124,7 +135,7 @@ export class ColorMix<
     return {
       ...super.toJSON(),
       space: this._space,
-      hueMethod: this._hueMethod,
+      hueMethod: ColorMix.isPolar(this._space) ? this._hueMethod : null,
       colors: this._colors.toJSON(),
     };
   }
@@ -145,17 +156,21 @@ export namespace ColorMix {
     H extends HueInterpolationMethod,
   > extends Value.JSON<"color-mix"> {
     space: S;
-    hueMethod: H;
+    hueMethod: H | null;
     colors: List.JSON<MixItem<Color>>;
   }
 
+  /**
+   * Resolver for color-mix, must include the resolution for `currentcolor`.
+   */
   export interface Resolver {
     currentColor: CSS4Color.Canonical;
   }
 
   export interface PartialResolver {}
 
-  const interpolationSpaces = [
+  /** @internal */
+  export const rectangularSpaces = [
     "srgb",
     "srgb-linear",
     "display-p3",
@@ -168,21 +183,33 @@ export namespace ColorMix {
     "xyz",
     "xyz-d50",
     "xyz-d65",
-    "hsl",
-    "hwb",
-    "lch",
-    "oklch",
+  ] as const;
+
+  /** @internal */
+  export const polarSpaces = ["hsl", "hwb", "lch", "oklch"] as const;
+
+  export const interpolationSpaces = [
+    ...rectangularSpaces,
+    ...polarSpaces,
   ] as const;
 
   export type InterpolationSpace = (typeof interpolationSpaces)[number];
 
   export function isPolar(space: InterpolationSpace): boolean {
-    return (
-      space === "hsl" || space === "hwb" || space === "lch" || space === "oklch"
-    );
+    return (polarSpaces as ReadonlyArray<string>).includes(space);
   }
 
-  const hueInterpolationMethods = [
+  const parseSpace: CSSParser<InterpolationSpace> = map(
+    separated(
+      Keyword.parse("in"),
+      Token.parseWhitespace,
+      Keyword.parse(...interpolationSpaces),
+    ),
+    ([, space]) => space.value,
+  );
+
+  /** @internal */
+  export const hueInterpolationMethods = [
     "shorter",
     "longer",
     "increasing",
@@ -190,4 +217,64 @@ export namespace ColorMix {
   ] as const;
 
   export type HueInterpolationMethod = (typeof hueInterpolationMethods)[number];
+
+  const parseHueMethod: CSSParser<HueInterpolationMethod> = map(
+    separated(
+      Keyword.parse(...hueInterpolationMethods),
+      Token.parseWhitespace,
+      Keyword.parse("hue"),
+    ),
+    ([hueMethod]) => hueMethod.value,
+  );
+
+  const parseInterpolation: CSSParser<
+    [InterpolationSpace, Option<HueInterpolationMethod>]
+  > = mapResult(
+    pair(parseSpace, option(right(Token.parseWhitespace, parseHueMethod))),
+    ([space, hue]) =>
+      isPolar(space) || hue.isNone()
+        ? Result.of<
+            [InterpolationSpace, Option<HueInterpolationMethod>],
+            string
+          >([space, hue])
+        : Err.of(
+            "Hue interpolation method is forbidden with rectangular color spaces.",
+          ),
+  );
+
+  /**
+   * Parses a `color-mix()` function, according to a basic color parser.
+   *
+   * @param parseColor - A parser for colors used within the color mix.
+   */
+  export function parse(parseColor: CSSParser<Color>): CSSParser<ColorMix> {
+    return map(
+      Function.parse(
+        "color-mix",
+        pair(
+          option(
+            left(
+              parseInterpolation,
+              pair(Token.parseComma, Token.parseWhitespace),
+            ),
+          ),
+          mapResult(Mix.parse(parseColor), (colors) =>
+            colors.none((item) =>
+              item.percentage.some(
+                (percentage) => percentage.value < 0 || percentage.value > 1,
+              ),
+            )
+              ? Result.of(colors)
+              : Err.of("Percentages in color-mix must be between 0 and 100%."),
+          ),
+        ),
+      ),
+      ([, [interpolation, colors]]) =>
+        ColorMix.of(
+          colors,
+          interpolation.map(([space]) => space).getOr("oklab"),
+          interpolation.flatMap(([, hueMethod]) => hueMethod).getOr("shorter"),
+        ),
+    );
+  }
 }
