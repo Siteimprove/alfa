@@ -7,24 +7,24 @@
 import * as act from '@siteimprove/alfa-act';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Attribute } from '@siteimprove/alfa-dom';
-import type { Document } from '@siteimprove/alfa-dom';
+import type { CSS4Color } from '@siteimprove/alfa-css';
+import type { Document as Document_2 } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
-import { Element } from '@siteimprove/alfa-dom';
+import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
-import { Node } from '@siteimprove/alfa-dom';
-import type { Option } from '@siteimprove/alfa-option';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
+import type { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Page } from '@siteimprove/alfa-web';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Requirement } from '@siteimprove/alfa-act';
-import type { RGB } from '@siteimprove/alfa-css';
 import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Tag } from '@siteimprove/alfa-act';
-import { Text } from '@siteimprove/alfa-dom';
+import { Text as Text_2 } from '@siteimprove/alfa-dom';
 
 // @public (undocumented)
 export const alfaVersion = "0.108.2";
@@ -66,40 +66,40 @@ export namespace BestPractice {
 }
 
 // @public (undocumented)
-const _default: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
 // @public (undocumented)
-const _default_10: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_10: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public (undocumented)
-const _default_11: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_11: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public @deprecated (undocumented)
-const _default_12: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+const _default_12: Rule.Atomic<Page, Text_2, Question.Metadata, Text_2>;
 
 // @public @deprecated (undocumented)
-const _default_13: Rule.Atomic<Page, Text, Question.Metadata, Text>;
+const _default_13: Rule.Atomic<Page, Text_2, Question.Metadata, Text_2>;
 
 // @public
-const _default_2: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
+const _default_2: Rule.Atomic<Page, Document_2, Question.Metadata, Element_2<string>>;
 
 // @public
-const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array_2<Node<string>>>;
+const _default_3: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Node_2<string> | Array_2<Node_2<string>>>;
 
 // @public
-const _default_4: Rule.Atomic<Page, Document, Question.Metadata, Document>;
+const _default_4: Rule.Atomic<Page, Document_2, Question.Metadata, Document_2>;
 
 // @public
-const _default_5: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_5: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public
-const _default_6: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_6: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public
-const _default_7: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_7: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 // @public @deprecated (undocumented)
-const _default_8: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_8: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
 // @public @deprecated (undocumented)
 const _default_9: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
@@ -234,13 +234,13 @@ export namespace Question {
     export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, options?: act.Question.Options<Typeof<U>>): act.Question<TypeName<U>, S, C, Typeof<U>, Typeof<U>, U>;
     export interface Type {
         // (undocumented)
-        "color[]": Iterable<RGB>;
+        "color[]": Iterable<CSS4Color>;
         // (undocumented)
-        "node[]": Iterable<Node>;
+        "node[]": Iterable<Node_2>;
         // (undocumented)
         boolean: boolean;
         // (undocumented)
-        node: Option<Node>;
+        node: Option_2<Node_2>;
         // (undocumented)
         string: string;
     }

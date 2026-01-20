@@ -342,9 +342,10 @@ export class Element<N extends string = string>
     path += path === "/" ? "" : "/";
     path += this._name;
 
-    const index = this.preceding(options)
-      .filter(Element.isElement)
-      .count((element) => element._name === this._name);
+    const index = this.index(
+      options,
+      (node: Node) => Element.isElement(node) && node._name === this._name,
+    );
 
     path += `[${index + 1}]`;
 

@@ -124,7 +124,7 @@ export namespace Function {
   export const parse = <T>(
     query?: string | Array<string> | Predicate<Token.Function>,
     body?: CSSParser<T> | Thunk<CSSParser<T>>,
-  ) =>
+  ): CSSParser<[Function, T]> =>
     flatMap(
       right(peek(Token.parseFunction(query)), Function.consume),
       (fn) => (input) => {

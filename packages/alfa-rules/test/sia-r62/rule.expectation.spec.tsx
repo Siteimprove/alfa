@@ -39,7 +39,7 @@ test(`evaluates() passes on link with a different background-image than text`, a
     noDistinguishingProperties
       .withStyle([
         "background",
-        "linear-gradient(to right, rgb(1.56863% 41.96078% 60%) 50%, rgb(0% 0% 0% / 0%) 50%)",
+        "linear-gradient(to right, #046b99 50%, rgb(0% 0% 0% / 0) 50%)",
       ])
       .withDistinguishingProperties(["background"]),
   );
@@ -275,7 +275,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       .withStyle(
         ["border-width", "0px 0px 1px"],
         ["border-style", "none none solid"],
-        ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+        ["border-color", "currentcolor currentcolor #000"],
         ["outline", "0px"],
       )
       .withDistinguishingProperties(["border"]),
@@ -312,7 +312,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     noDistinguishingProperties.withStyle(
       ["border-width", "0px 0px 1px"],
       ["border-style", "none none solid"],
-      ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0%)"],
+      ["border-color", "currentcolor currentcolor rgb(0% 0% 0% / 0)"],
     ),
   );
 
@@ -347,7 +347,7 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     noDistinguishingProperties.withStyle(
       ["border-width", "0px"],
       ["border-style", "none none solid"],
-      ["border-color", "currentcolor currentcolor rgb(0% 0% 0%)"],
+      ["border-color", "currentcolor currentcolor #000"],
     ),
   );
 
@@ -466,7 +466,7 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       [
         ["border-width", "0px"],
         ["font", "16px serif"],
-        ["color", "rgb(0% 0% 93.33333%)"],
+        ["color", "#00e"],
         ["outline", "auto"],
       ],
       defaultContrastPairings,
@@ -563,8 +563,8 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
-        [addCursor(style), addCursor(noStyle)],
-        [addOutline(noStyle), style],
+        [addCursor(noStyle), addCursor(style)],
+        [style, addOutline(noStyle)],
       ),
     }),
   ]);

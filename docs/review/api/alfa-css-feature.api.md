@@ -15,7 +15,7 @@ import { Length } from '@siteimprove/alfa-css';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import { Media } from './media/feature/media.js';
 import { Media as Media_3 } from './feature/media.js';
-import { Option } from '@siteimprove/alfa-option';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Parser as Parser_2 } from '@siteimprove/alfa-css';
 import type { Predicate } from '@siteimprove/alfa-predicate';

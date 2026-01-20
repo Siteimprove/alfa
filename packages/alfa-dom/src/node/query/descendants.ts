@@ -1,10 +1,11 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
-import type { Sequence } from "@siteimprove/alfa-sequence";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Node } from "../../node.js";
 import { Element } from "../element.js";
+import { Text } from "../text.js";
 
 const _descendantsCache = Cache.empty<
   Predicate<Node>,
@@ -66,4 +67,87 @@ export function getInclusiveElementDescendants(
   options: Node.Traversal = Node.Traversal.empty,
 ): Sequence<Element> {
   return getElementDescendants(node, options).prepend(node);
+}
+
+const _textCache = Cache.empty<
+  TextGroupOptions<any>,
+  Cache<Node, Array<Sequence<Text | TextGroup>>>
+>();
+
+/**
+ * A group of text nodes with an associated label.
+ *
+ * @public
+ */
+export interface TextGroup {
+  label: string;
+  text: Sequence<Text>;
+}
+
+/**
+ * Options for grouping text descendants.
+ *
+ * @public
+ */
+export interface TextGroupOptions<N extends Node = Node> {
+  startsGroup: Refinement<Node, N>;
+  getLabel: (node: N) => string;
+}
+
+const defaultTextOptions: TextGroupOptions<any> = {
+  startsGroup: (node): node is any => false,
+  getLabel: () => "",
+};
+
+/**
+ * Get all text descendants of a node, optionally grouping some into labeled groups.
+ *
+ * @remarks
+ * When a descendant matches `startsGroup`, all of its text descendants are collected
+ * into a {@link TextGroup} with a label from `getLabel`. Text nodes outside such
+ * sub-trees are returned as plain {@link Text} nodes.
+ *
+ * Groups are not nested: if a `startsGroup` node contains another `startsGroup` node,
+ * the inner node's text is included in the outer group, not as a separate group.
+ *
+ * @public
+ */
+export function getTextDescendants<N extends Node = Node>(
+  textOptions: TextGroupOptions<N> = defaultTextOptions,
+): (node: Node, options?: Node.Traversal) => Sequence<Text | TextGroup> {
+  return (node, options = Node.Traversal.empty) => {
+    const optionsMap = _textCache
+      .get(textOptions, Cache.empty)
+      .get(node, () => []);
+
+    if (optionsMap[options.value] === undefined) {
+      optionsMap[options.value] = Sequence.from(
+        _getTextDescendants(node, textOptions, options),
+      );
+    }
+
+    return optionsMap[options.value];
+  };
+}
+
+function* _getTextDescendants<N extends Node = Node>(
+  node: Node,
+  textOptions: TextGroupOptions<N>,
+  traversalOptions: Node.Traversal,
+): Generator<Text | TextGroup> {
+  const { startsGroup, getLabel } = textOptions;
+
+  for (const child of node.children(traversalOptions)) {
+    if (startsGroup(child)) {
+      const groupText = getDescendants(Text.isText)(child, traversalOptions);
+      yield {
+        label: getLabel(child),
+        text: groupText,
+      };
+    } else if (Text.isText(child)) {
+      yield child;
+    } else {
+      yield* _getTextDescendants(child, textOptions, traversalOptions);
+    }
+  }
 }

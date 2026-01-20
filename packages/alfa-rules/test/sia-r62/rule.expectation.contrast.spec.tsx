@@ -1,4 +1,4 @@
-import { Percentage, RGB } from "@siteimprove/alfa-css";
+import { Percentage, Color } from "@siteimprove/alfa-css";
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
@@ -17,7 +17,7 @@ const { noDistinguishingProperties, defaultTextColor, defaultLinkColor } =
  ******************************************************************/
 
 // #0000D1 mixed with rgba(255, 255, 255, 0.1)
-const offBlue = RGB.of(
+const offBlue = Color.rgb(
   Percentage.of(0.1),
   Percentage.of(0.1),
   Percentage.of(0.837647),
@@ -25,7 +25,7 @@ const offBlue = RGB.of(
 );
 
 // #000042 mixed with rgba(255, 255, 255, 0.1)
-const offPurple = RGB.of(
+const offPurple = Color.rgb(
   Percentage.of(0.1),
   Percentage.of(0.1),
   Percentage.of(0.3329412),
@@ -33,7 +33,7 @@ const offPurple = RGB.of(
 );
 
 // #F9F9F1 mixed with rgba(255, 255, 255, 0.1)
-const offWhite = RGB.of(
+const offWhite = Color.rgb(
   Percentage.of(0.9788235),
   Percentage.of(0.9788235),
   Percentage.of(0.9505882),
@@ -62,7 +62,7 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
 
   const contrastPairings = [
     makePairing(
-      RGB.of(
+      Color.rgb(
         Percentage.of(0.5803922),
         Percentage.of(0.5803922),
         Percentage.of(0.5803922),
@@ -112,7 +112,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
   );
 
   // red mixed with rgba(255, 255, 255, .5)
-  const offRed = RGB.of(
+  const offRed = Color.rgb(
     Percentage.of(1),
     Percentage.of(1),
     Percentage.of(0.5),
@@ -120,7 +120,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
   );
 
   // yellow mixed with rgba(255, 255, 255, .5)
-  const offYellow = RGB.of(
+  const offYellow = Color.rgb(
     Percentage.of(1),
     Percentage.of(0.5),
     Percentage.of(0.5),
@@ -128,7 +128,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
   );
 
   // orange mixed with rgba(255, 255, 255, .5)
-  const offOrange = RGB.of(
+  const offOrange = Color.rgb(
     Percentage.of(1),
     Percentage.of(0.8235294),
     Percentage.of(0.5),
@@ -145,7 +145,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
     noDistinguishingProperties
       .withStyle([
         "background",
-        "linear-gradient(to right, rgb(100% 0% 0%) 20%, rgb(100% 64.70588000000001% 0%) 40%, rgb(100% 100% 0%) 100%)",
+        "linear-gradient(to right, rgb(100% 0% 0%) 20%, rgb(100% 64.706% 0%) 40%, rgb(100% 100% 0%) 100%)",
       ])
       .withPairings(contrastPairings)
       .withDistinguishingProperties(["contrast"]),
@@ -192,7 +192,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
     noDistinguishingProperties
       .withStyle([
         "background",
-        "linear-gradient(to right, rgb(97.64706% 97.64706% 94.5098%) 50%, rgb(0% 0% 81.96078%) 50%)",
+        "linear-gradient(to right, #f9f9f1 50%, #0000d1 50%)",
       ])
       .withPairings(contrastPairings)
       .withDistinguishingProperties(["contrast"]),
@@ -236,7 +236,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
     noDistinguishingProperties
       .withStyle([
         "background",
-        "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%)",
+        "linear-gradient(to right, #0000d1 50%, #000042 50%)",
       ])
       .withPairings(contrastPairings),
   );
@@ -278,11 +278,8 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
   const noStyle = Err.of(
     noDistinguishingProperties
       .withStyle(
-        [
-          "background",
-          "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%)",
-        ],
-        ["color", "rgb(100% 100% 100% / 10%)"],
+        ["background", "linear-gradient(to right, #0000d1 50%, #000042 50%)"],
+        ["color", "rgba(255, 255, 255, 0.1)"],
       )
       .withPairings(contrastPairings),
   );

@@ -6,33 +6,33 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import type { Device } from '@siteimprove/alfa-device';
-import { Element } from '@siteimprove/alfa-dom';
+import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import type { Hash } from '@siteimprove/alfa-hash';
 import type { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Node } from '@siteimprove/alfa-dom';
-import { Option } from '@siteimprove/alfa-option';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import type { Serializable } from '@siteimprove/alfa-json';
 
 // @public (undocumented)
 export class PaintingOrder implements Equatable, Hashable, Serializable<PaintingOrder.JSON> {
-    protected constructor(elements: Array_2<Element>);
+    protected constructor(elements: Array_2<Element_2>);
     // (undocumented)
-    get elements(): Iterable_2<Element>;
+    get elements(): Iterable_2<Element_2>;
     // (undocumented)
     equals(value: this): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    getElementsAbove(element: Element): Iterable_2<Element>;
+    getElementsAbove(element: Element_2): Iterable_2<Element_2>;
     // (undocumented)
-    getOrderIndex(element: Element): Option<number>;
+    getOrderIndex(element: Element_2): Option_2<number>;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of(elements: Iterable_2<Element>): PaintingOrder;
+    static of(elements: Iterable_2<Element_2>): PaintingOrder;
     // (undocumented)
     toJSON(options?: Serializable.Options): PaintingOrder.JSON;
 }
@@ -45,9 +45,9 @@ export namespace PaintingOrder {
     export type JSON = {
         [key: string]: json.JSON;
         type: "painting-order";
-        elements: Array_2<Element.JSON>;
+        elements: Array_2<Element_2.JSON>;
     };
-    const from: (this: unknown, root: Node<string>, device: Device) => PaintingOrder;
+    const from: (this: unknown, root: Node_2<string>, device: Device) => PaintingOrder;
 }
 
 // (No @packageDocumentation comment for this package)

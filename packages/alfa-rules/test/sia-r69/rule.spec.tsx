@@ -4,7 +4,7 @@ import { Future } from "@siteimprove/alfa-future";
 import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import { Keyword, Percentage, RGB } from "@siteimprove/alfa-css";
+import { Keyword, Percentage, Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Style } from "@siteimprove/alfa-style";
 
@@ -19,7 +19,7 @@ import { ColorError, ColorErrors } from "../../dist/common/dom/get-colors.js";
 import { oracle } from "../common/oracle.js";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
-  RGB.of(
+  Color.rgb(
     Percentage.of(r),
     Percentage.of(g),
     Percentage.of(b),

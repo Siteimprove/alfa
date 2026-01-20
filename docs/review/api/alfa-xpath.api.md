@@ -7,8 +7,8 @@
 import type * as dom from '@siteimprove/alfa-dom';
 import type { Equatable } from '@siteimprove/alfa-equatable';
 import type * as json from '@siteimprove/alfa-json';
-import { Node } from '@siteimprove/alfa-dom';
-import { Option } from '@siteimprove/alfa-option';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import type { Predicate } from '@siteimprove/alfa-predicate';
 import type { Serializable } from '@siteimprove/alfa-json';
@@ -225,12 +225,12 @@ export interface Environment<T extends Item.Value> {
 }
 
 // @public (undocumented)
-export function evaluate(scope: Node, expression: string | Expression | Builder, options?: evaluate.Options): Iterable<Node>;
+export function evaluate(scope: Node_2, expression: string | Expression | Builder, options?: evaluate.Options): Iterable<Node_2>;
 
 // @public (undocumented)
 export namespace evaluate {
     // (undocumented)
-    export interface Options extends Node.Traversal {
+    export interface Options extends Node_2.Traversal {
     }
 }
 
@@ -241,17 +241,17 @@ export type Expression = Expression.Primary | Expression.Path | Expression.Axis 
 export namespace Expression {
     // (undocumented)
     export class Axis implements Equatable, Serializable {
-        protected constructor(axis: Axis.Type, test: Option<Test>, predicates: Array<Expression>);
+        protected constructor(axis: Axis.Type, test: Option_2<Test>, predicates: Array<Expression>);
         // (undocumented)
         get axis(): Axis.Type;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(axis: Axis.Type, test?: Option<Test>, predicates?: Array<Expression>): Axis;
+        static of(axis: Axis.Type, test?: Option_2<Test>, predicates?: Array<Expression>): Axis;
         // (undocumented)
         get predicates(): Iterable<Expression>;
         // (undocumented)
-        get test(): Option<Test>;
+        get test(): Option_2<Test>;
         // (undocumented)
         toJSON(): Axis.JSON;
         // (undocumented)
@@ -388,7 +388,7 @@ export namespace Expression {
     }
     // (undocumented)
     export class FunctionCall implements Equatable, Serializable {
-        protected constructor(prefix: Option<string>, name: string, arity: number, parameters: Array<Expression>);
+        protected constructor(prefix: Option_2<string>, name: string, arity: number, parameters: Array<Expression>);
         // (undocumented)
         get arity(): number;
         // (undocumented)
@@ -396,11 +396,11 @@ export namespace Expression {
         // (undocumented)
         get name(): string;
         // (undocumented)
-        static of(prefix: Option<string>, name: string, arity: number, parameters: Array<Expression>): FunctionCall;
+        static of(prefix: Option_2<string>, name: string, arity: number, parameters: Array<Expression>): FunctionCall;
         // (undocumented)
         get parameters(): Iterable<Expression>;
         // (undocumented)
-        get prefix(): Option<string>;
+        get prefix(): Option_2<string>;
         // (undocumented)
         toJSON(): FunctionCall.JSON;
         // (undocumented)
@@ -550,15 +550,15 @@ export namespace Expression {
     export namespace Test {
         // (undocumented)
         export class Attribute implements Equatable, Serializable {
-            protected constructor(name: Option<string>);
+            protected constructor(name: Option_2<string>);
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
             get kind(): "attribute";
             // (undocumented)
-            get name(): Option<string>;
+            get name(): Option_2<string>;
             // (undocumented)
-            static of(name: Option<string>): Attribute;
+            static of(name: Option_2<string>): Attribute;
             // (undocumented)
             toJSON(): Attribute.JSON;
             // (undocumented)
@@ -636,15 +636,15 @@ export namespace Expression {
         }
         // (undocumented)
         export class Element implements Equatable, Serializable {
-            protected constructor(name: Option<string>);
+            protected constructor(name: Option_2<string>);
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
             get kind(): "element";
             // (undocumented)
-            get name(): Option<string>;
+            get name(): Option_2<string>;
             // (undocumented)
-            static of(name: Option<string>): Element;
+            static of(name: Option_2<string>): Element;
             // (undocumented)
             toJSON(): Element.JSON;
             // (undocumented)
@@ -677,15 +677,15 @@ export namespace Expression {
         }
         // (undocumented)
         export class Name implements Equatable, Serializable {
-            protected constructor(prefix: Option<string>, name: string);
+            protected constructor(prefix: Option_2<string>, name: string);
             // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
             get name(): string;
             // (undocumented)
-            static of(prefix: Option<string>, name: string): Name;
+            static of(prefix: Option_2<string>, name: string): Name;
             // (undocumented)
-            get prefix(): Option<string>;
+            get prefix(): Option_2<string>;
             // (undocumented)
             toJSON(): Name.JSON;
             // (undocumented)
@@ -880,7 +880,7 @@ export function optional<D extends Descriptor>(descriptor: D): Descriptors.Optio
 // @public (undocumented)
 export namespace Parser {
     // (undocumented)
-    export function parse(input: string): Option<Expression>;
+    export function parse(input: string): Option_2<Expression>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "registerFunction" should be prefixed with an underscore because the declaration is marked as @internal
@@ -1076,13 +1076,13 @@ export namespace Token {
     export type JSON = Integer.JSON | Decimal.JSON | Double.JSON | String.JSON | Comment.JSON | Name.JSON | Character.JSON;
     // (undocumented)
     export class Name implements Equatable, Serializable<Name.JSON> {
-        protected constructor(prefix: Option<string>, value: string);
+        protected constructor(prefix: Option_2<string>, value: string);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of(prefix: Option<string>, value: string): Name;
+        static of(prefix: Option_2<string>, value: string): Name;
         // (undocumented)
-        get prefix(): Option<string>;
+        get prefix(): Option_2<string>;
         // (undocumented)
         toJSON(): Name.JSON;
         // (undocumented)
@@ -1156,7 +1156,7 @@ export type Value<T extends Type = Type> = Descriptor.Value<T>;
 // Warning: (ae-internal-missing-underscore) The name "walk" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export function walk(node: Node, axis: Expression.Axis.Type, options: Node.Traversal): Iterable<Node>;
+export function walk(node: Node_2, axis: Expression.Axis.Type, options: Node_2.Traversal): Iterable<Node_2>;
 
 // Warning: (ae-internal-missing-underscore) The name "withFocus" should be prefixed with an underscore because the declaration is marked as @internal
 //

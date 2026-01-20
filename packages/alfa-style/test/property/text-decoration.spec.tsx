@@ -1,7 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { cascaded } from "../common.js";
+import { cascaded, color } from "../common.js";
+
+const red = color(1, 0, 0);
 
 test("#cascaded() parses `text-decoration: underline`", (t) => {
   const element = <div style={{ textDecoration: "underline" }} />;
@@ -9,30 +11,19 @@ test("#cascaded() parses `text-decoration: underline`", (t) => {
   t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
-      values: [
-        {
-          type: "keyword",
-          value: "underline",
-        },
-      ],
+      values: [{ type: "keyword", value: "underline" }],
       separator: " ",
     },
     source: h.declaration("text-decoration", "underline").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-style"), {
-    value: {
-      type: "keyword",
-      value: "initial",
-    },
+    value: { type: "keyword", value: "initial" },
     source: h.declaration("text-decoration", "underline").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-color"), {
-    value: {
-      type: "keyword",
-      value: "initial",
-    },
+    value: { type: "keyword", value: "initial" },
     source: h.declaration("text-decoration", "underline").toJSON(),
   });
 });
@@ -44,14 +35,8 @@ test("#cascaded() parses `text-decoration: underline overline`", (t) => {
     value: {
       type: "list",
       values: [
-        {
-          type: "keyword",
-          value: "underline",
-        },
-        {
-          type: "keyword",
-          value: "overline",
-        },
+        { type: "keyword", value: "underline" },
+        { type: "keyword", value: "overline" },
       ],
       separator: " ",
     },
@@ -65,22 +50,14 @@ test("#cascaded() parses `text-decoration: underline solid`", (t) => {
   t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
-      values: [
-        {
-          type: "keyword",
-          value: "underline",
-        },
-      ],
+      values: [{ type: "keyword", value: "underline" }],
       separator: " ",
     },
     source: h.declaration("text-decoration", "underline solid").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-style"), {
-    value: {
-      type: "keyword",
-      value: "solid",
-    },
+    value: { type: "keyword", value: "solid" },
     source: h.declaration("text-decoration", "underline solid").toJSON(),
   });
 });
@@ -91,23 +68,14 @@ test("#cascaded() parses `text-decoration: underline red`", (t) => {
   t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
-      values: [
-        {
-          type: "keyword",
-          value: "underline",
-        },
-      ],
+      values: [{ type: "keyword", value: "underline" }],
       separator: " ",
     },
     source: h.declaration("text-decoration", "underline red").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
+    value: red,
     source: h.declaration("text-decoration", "underline red").toJSON(),
   });
 });
@@ -118,31 +86,19 @@ test("#cascaded() parses `text-decoration: underline solid red`", (t) => {
   t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
-      values: [
-        {
-          type: "keyword",
-          value: "underline",
-        },
-      ],
+      values: [{ type: "keyword", value: "underline" }],
       separator: " ",
     },
     source: h.declaration("text-decoration", "underline solid red").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-style"), {
-    value: {
-      type: "keyword",
-      value: "solid",
-    },
+    value: { type: "keyword", value: "solid" },
     source: h.declaration("text-decoration", "underline solid red").toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
+    value: red,
     source: h.declaration("text-decoration", "underline solid red").toJSON(),
   });
 });
@@ -158,40 +114,24 @@ test("#cascaded() parses `text-decoration: underline solid red 2px`", (t) => {
   t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
-      values: [
-        {
-          type: "keyword",
-          value: "underline",
-        },
-      ],
+      values: [{ type: "keyword", value: "underline" }],
       separator: " ",
     },
     source: declaration.toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-style"), {
-    value: {
-      type: "keyword",
-      value: "solid",
-    },
+    value: { type: "keyword", value: "solid" },
     source: declaration.toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
+    value: red,
     source: declaration.toJSON(),
   });
 
   t.deepEqual(cascaded(element, "text-decoration-thickness"), {
-    value: {
-      type: "length",
-      value: 2,
-      unit: "px",
-    },
+    value: { type: "length", value: 2, unit: "px" },
     source: declaration.toJSON(),
   });
 });

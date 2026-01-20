@@ -440,12 +440,12 @@ test(`evaluates() only cares about properties values, not sources`, async (t) =>
         // Removing the default focus indicator
         h.rule.style("a:focus", { outline: "none" }),
         // The color is the same, even though it comes from different sources.
-        // Rk: Declaration.equals ignores parent rule alreay, so we need
+        // Rk: Declaration.equals ignores parent rule already, so we need
         // different specified values to test this.
         h.rule.style("a", { color: "red" }),
         h.rule.style("a:focus", { color: "rgb(255,0,0)" }),
         // The background color is the same, even though it comes from different sources.
-        // Rk: Declaration.equals ignores parent rule alreay, so we need
+        // Rk: Declaration.equals ignores parent rule already, so we need
         // different specified values to test this.
         h.rule.style("a", { backgroundColor: "blue" }),
         h.rule.style("a:focus", { backgroundColor: "rgb(0,0,255)" }),

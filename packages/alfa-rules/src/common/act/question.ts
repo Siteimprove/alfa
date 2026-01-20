@@ -1,4 +1,4 @@
-import type { RGB } from "@siteimprove/alfa-css";
+import type { CSS4Color } from "@siteimprove/alfa-css";
 import type { Node } from "@siteimprove/alfa-dom";
 import type { Option } from "@siteimprove/alfa-option";
 
@@ -15,7 +15,7 @@ export namespace Question {
     boolean: boolean;
     node: Option<Node>;
     "node[]": Iterable<Node>;
-    "color[]": Iterable<RGB>;
+    "color[]": Iterable<CSS4Color>;
     string: string;
   }
 
@@ -266,7 +266,8 @@ export namespace Question {
     // R117 (experimental)
     "is-image-accessible-name-descriptive": {
       type: "boolean",
-      message: "Does the accessible name of this element present the same information as the image?",
+      message:
+        "Does the accessible name of this element present the same information as the image?",
     },
   } as const;
 }

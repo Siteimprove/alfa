@@ -1,9 +1,9 @@
-import { h } from "@siteimprove/alfa-dom/h";
-import { test } from "@siteimprove/alfa-test";
-
+import { CSS4Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
+import { h } from "@siteimprove/alfa-dom/h";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
+import { test } from "@siteimprove/alfa-test";
 
 import {
   getBackground,
@@ -11,6 +11,25 @@ import {
 } from "../../../dist/common/dom/get-colors.js";
 
 const device = Device.standard();
+
+function color(r: number, g: number, b: number): CSS4Color.JSON {
+  return {
+    type: "color",
+    space: "srgb",
+    coordinates: [r, g, b],
+    sRGB: [
+      { type: "percentage", value: r },
+      { type: "percentage", value: g },
+      { type: "percentage", value: b },
+    ],
+    alpha: { type: "percentage", value: 1 },
+  };
+}
+
+const red = color(1, 0, 0);
+const blue = color(0, 0, 1);
+const black = color(0, 0, 0);
+const white = color(1, 1, 1);
 
 test("getBackground() handles opacity correctly", (t) => {
   const target = (
@@ -27,14 +46,10 @@ test("getBackground() handles opacity correctly", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.6 },
-    green: { type: "percentage", value: 0.7427451 },
-    blue: { type: "percentage", value: 0.8933333 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    getBackground(target, device).getUnsafe()[0].toJSON(),
+    color(0.6, 0.7427451, 0.8933333),
+  );
 });
 
 test("getBackground() handles mix of opacity and transparency", (t) => {
@@ -56,14 +71,10 @@ test("getBackground() handles mix of opacity and transparency", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.75 },
-    green: { type: "percentage", value: 0 },
-    blue: { type: "percentage", value: 0.25 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    getBackground(target, device).getUnsafe()[0].toJSON(),
+    color(0.75, 0, 0.25),
+  );
 });
 
 test("getBackground() handles linear-gradient background", (t) => {
@@ -84,23 +95,9 @@ test("getBackground() handles linear-gradient background", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 1 },
-    green: { type: "percentage", value: 0 },
-    blue: { type: "percentage", value: 0 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), red);
 
-  t.deepEqual(getBackground(target, device).getUnsafe()[4].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0 },
-    green: { type: "percentage", value: 0 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(getBackground(target, device).getUnsafe()[4].toJSON(), blue);
 });
 
 test("getForeground() handles opacity correctly", (t) => {
@@ -118,14 +115,7 @@ test("getForeground() handles opacity correctly", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 1 },
-    green: { type: "percentage", value: 1 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), white);
 });
 
 test("getForeground() handles mix of opacity and transparency", (t) => {
@@ -147,14 +137,10 @@ test("getForeground() handles mix of opacity and transparency", (t) => {
     </html>,
   ]);
 
-  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.75 },
-    green: { type: "percentage", value: 0.25 },
-    blue: { type: "percentage", value: 0.5 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    getForeground(target, device).getUnsafe()[0].toJSON(),
+    color(0.75, 0.25, 0.5),
+  );
 });
 
 test("getForeground() handles hover context", (t) => {
@@ -175,14 +161,7 @@ test("getForeground() handles hover context", (t) => {
     getForeground(target, device, Context.hover(target))
       .getUnsafe()[0]
       .toJSON(),
-    {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 1 },
-      green: { type: "percentage", value: 0 },
-      blue: { type: "percentage", value: 0 },
-      alpha: { type: "percentage", value: 1 },
-    },
+    red,
   );
 });
 
@@ -204,14 +183,7 @@ test("getForeground() returns the non-hover color", (t) => {
     getForeground(target, device, Context.hover(target))
       .getUnsafe()[0]
       .toJSON(),
-    {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 1 },
-      green: { type: "percentage", value: 0 },
-      blue: { type: "percentage", value: 0 },
-      alpha: { type: "percentage", value: 1 },
-    },
+    red,
   );
 });
 
@@ -239,14 +211,7 @@ test("getForeground() handles hover context with a mix of opacity and transparen
     getForeground(target, device, Context.hover(target))
       .getUnsafe()[0]
       .toJSON(),
-    {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 0.75 },
-      green: { type: "percentage", value: 0.25 },
-      blue: { type: "percentage", value: 0.5 },
-      alpha: { type: "percentage", value: 1 },
-    },
+    color(0.75, 0.25, 0.5),
   );
 });
 
@@ -277,23 +242,15 @@ test("getForeground() handles a mix of opacity and transparency and a linear gra
     ],
   );
 
-  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.5 },
-    green: { type: "percentage", value: 0.25 },
-    blue: { type: "percentage", value: 0.75 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    getForeground(target, device).getUnsafe()[0].toJSON(),
+    color(0.5, 0.25, 0.75),
+  );
 
-  t.deepEqual(getForeground(target, device).getUnsafe()[4].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.25 },
-    green: { type: "percentage", value: 0.25 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    getForeground(target, device).getUnsafe()[4].toJSON(),
+    color(0.25, 0.25, 1),
+  );
 });
 
 test("getForeground() resolves `currentcolor` when color is set on parent", (t) => {
@@ -331,14 +288,7 @@ test("getForeground() resolves `currentcolor` when color is set on parent", (t) 
     ],
   );
 
-  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0 },
-    green: { type: "percentage", value: 0 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), blue);
 });
 
 test("getForeground() resolves `currentcolor` when color is set to initial on parent", (t) => {
@@ -355,14 +305,7 @@ test("getForeground() resolves `currentcolor` when color is set to initial on pa
     ],
   );
 
-  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0 },
-    green: { type: "percentage", value: 0 },
-    blue: { type: "percentage", value: 0 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), black);
 });
 
 test("getForeground() resolves `currentcolor` when color is set with opacity on the parent", (t) => {
@@ -387,14 +330,10 @@ test("getForeground() resolves `currentcolor` when color is set with opacity on 
     ],
   );
 
-  t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 0.5 },
-    green: { type: "percentage", value: 0.5 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(
+    getForeground(target, device).getUnsafe()[0].toJSON(),
+    color(0.5, 0.5, 1),
+  );
 });
 
 test("getColor() can't resolve most system colors", (t) => {
@@ -549,12 +488,12 @@ test("getBackgroundColor() gives up in case of sized background image", (t) => {
   });
 });
 
-test("getBackgroundColor() gives up in case of text shadow", (t) => {
+test("getBackgroundColor() gives up in case of text $dow", (t) => {
   const target = <div>Hello</div>;
 
   h.document(
     [target],
-    [h.sheet([h.rule.style("div", { textShadow: "1px 1px 2px pink" })])],
+    [h.sheet([h.rule.style("div", { textShadow: "1px 1px 2px red" })])],
   );
 
   t.deepEqual(getBackground(target, device).toJSON(), {
@@ -572,48 +511,13 @@ test("getBackgroundColor() gives up in case of text shadow", (t) => {
             type: "list",
             values: [
               {
-                blur: {
-                  type: "length",
-                  unit: "px",
-                  value: 2,
-                },
-                color: {
-                  alpha: {
-                    type: "percentage",
-                    value: 1,
-                  },
-                  blue: {
-                    type: "percentage",
-                    value: 0.7960784,
-                  },
-                  format: "rgb",
-                  green: {
-                    type: "percentage",
-                    value: 0.7529412,
-                  },
-                  red: {
-                    type: "percentage",
-                    value: 1,
-                  },
-                  type: "color",
-                },
-                horizontal: {
-                  type: "length",
-                  unit: "px",
-                  value: 1,
-                },
+                blur: { type: "length", unit: "px", value: 2 },
+                color: red,
+                horizontal: { type: "length", unit: "px", value: 1 },
                 isInset: false,
-                spread: {
-                  type: "length",
-                  unit: "px",
-                  value: 0,
-                },
+                spread: { type: "length", unit: "px", value: 0 },
                 type: "shadow",
-                vertical: {
-                  type: "length",
-                  unit: "px",
-                  value: 1,
-                },
+                vertical: { type: "length", unit: "px", value: 1 },
               },
             ],
             separator: ", ",
@@ -632,14 +536,7 @@ test("getBackgroundColor() ignores `text-shadow: 0px 0px 0px;`", (t) => {
     [h.sheet([h.rule.style("div", { textShadow: "0px 0px 0px" })])],
   );
 
-  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 1 },
-    green: { type: "percentage", value: 1 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), white);
 });
 
 test("getBackgroundColor() ignores transparent text-shadow", (t) => {
@@ -650,14 +547,7 @@ test("getBackgroundColor() ignores transparent text-shadow", (t) => {
     [h.sheet([h.rule.style("div", { textShadow: "1px 2px 3px transparent" })])],
   );
 
-  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 1 },
-    green: { type: "percentage", value: 1 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), white);
 });
 
 test("getBackgroundColor() cannot handle positioned elements", (t) => {
@@ -699,7 +589,7 @@ test("getBackgroundColor() cannot handle positioned elements", (t) => {
 });
 
 test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
-  const target = <div id="debug">Hello</div>;
+  const target = <div>Hello</div>;
 
   h.document(
     [target],
@@ -729,40 +619,11 @@ test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
             values: [
               {
                 image: {
-                  direction: {
-                    side: "bottom",
-                    type: "side",
-                  },
+                  direction: { side: "bottom", type: "side" },
                   items: [
+                    { color: red, position: null, type: "stop" },
                     {
-                      color: {
-                        alpha: {
-                          type: "percentage",
-                          value: 1,
-                        },
-                        blue: {
-                          type: "percentage",
-                          value: 0,
-                        },
-                        format: "rgb",
-                        green: {
-                          type: "percentage",
-                          value: 0,
-                        },
-                        red: {
-                          type: "percentage",
-                          value: 1,
-                        },
-                        type: "color",
-                      },
-                      position: null,
-                      type: "stop",
-                    },
-                    {
-                      color: {
-                        type: "keyword",
-                        value: "highlight",
-                      },
+                      color: { type: "keyword", value: "highlight" },
                       position: null,
                       type: "stop",
                     },
@@ -829,14 +690,7 @@ test("getBackgroundColor() gives up in case of  non-ignored interposed elements"
     getBackground(target, device, undefined, undefined, Set.of(interposed))
       .getUnsafe()[0]
       .toJSON(),
-    {
-      type: "color",
-      format: "rgb",
-      red: { type: "percentage", value: 1 },
-      green: { type: "percentage", value: 1 },
-      blue: { type: "percentage", value: 1 },
-      alpha: { type: "percentage", value: 1 },
-    },
+    white,
   );
 });
 
@@ -849,12 +703,5 @@ test("getBackgroundColor() ignores external background image with invalid URL", 
   );
 
   // We get the default white background
-  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
-    type: "color",
-    format: "rgb",
-    red: { type: "percentage", value: 1 },
-    green: { type: "percentage", value: 1 },
-    blue: { type: "percentage", value: 1 },
-    alpha: { type: "percentage", value: 1 },
-  });
+  t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), white);
 });

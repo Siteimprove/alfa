@@ -23,10 +23,10 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-rng": "workspace:^",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.17"
   },
   "devDependencies": {
-    "@types/node": "^25.0.2"
+    "@types/node": "^25.0.9"
   },
   "publishConfig": {
     "access": "public",

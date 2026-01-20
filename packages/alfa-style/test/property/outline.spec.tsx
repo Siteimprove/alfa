@@ -1,9 +1,9 @@
-import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/h";
-
 import { Device } from "@siteimprove/alfa-device";
+import { h } from "@siteimprove/alfa-dom/h";
+import { test } from "@siteimprove/alfa-test";
 
 import { Style } from "../../dist/style.js";
+import { color } from "../common.js";
 
 const device = Device.standard();
 
@@ -78,26 +78,7 @@ test("#computed() resolves `outline: solid calc(1em + 2px) red`", (t) => {
   });
 
   t.deepEqual(style.computed("outline-color").toJSON(), {
-    value: {
-      type: "color",
-      format: "rgb",
-      red: {
-        type: "percentage",
-        value: 1,
-      },
-      green: {
-        type: "percentage",
-        value: 0,
-      },
-      blue: {
-        type: "percentage",
-        value: 0,
-      },
-      alpha: {
-        type: "percentage",
-        value: 1,
-      },
-    },
+    value: color(1, 0, 0),
     source: h.declaration("outline", "solid calc(1em + 2px) red").toJSON(),
   });
 });

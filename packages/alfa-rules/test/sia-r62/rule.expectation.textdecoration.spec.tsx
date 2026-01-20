@@ -75,7 +75,7 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
-        [hoverStyle, addCursor(noStyle)],
+        [addCursor(noStyle), hoverStyle],
         [focusStyle, noStyle],
       ),
     }),
@@ -147,7 +147,7 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
-        [hoverStyle, addCursor(noStyle)],
+        [addCursor(noStyle), hoverStyle],
         [focusStyle, noStyle],
       ),
     }),
