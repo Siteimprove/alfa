@@ -1,23 +1,21 @@
 import type { Hash } from "@siteimprove/alfa-hash";
-import type { Option } from "@siteimprove/alfa-option";
+import type { Option, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Function, Token } from "../../syntax/index.js";
-
-import BaseColor from "colorjs.io";
+import type { Parser as CSSParser } from "../../syntax/parser.js";
 
 import type { List } from "../collection/index.js";
-import type { Parser as CSSParser } from "../../syntax/parser.js";
 import { Percentage } from "../numeric/index.js";
 
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Keyword } from "../textual/index.js";
 import { Value } from "../value.js";
 
+import type { Color } from "./color.js";
+
 import { CSS4Color } from "./css4-color.js";
 import { Mix, MixItem } from "./mix.js";
-
-import type { Color } from "./color.js";
 
 const { left, map, mapResult, option, pair, right, separated } = Parser;
 
@@ -234,6 +232,29 @@ export namespace ColorMix {
 
   export type HueInterpolationMethod = (typeof hueInterpolationMethods)[number];
 
+  type ColorItem = MixItem<CSS4Color, Some<Percentage.Fixed>>;
+
+  function mixColorItems(
+    space: InterpolationSpace,
+    hue: HueInterpolationMethod,
+  ): (color1: ColorItem, color2: ColorItem) => ColorItem {
+    return (color1, color2) => {
+      const p1 = color1.percentage.get().value;
+      const p2 = color2.percentage.get().value;
+
+      return MixItem.of(
+        CSS4Color.of(
+          color1.value.color.mix(
+            color2.value.color,
+            p2 / (p1 + p2), // this is the proportion of color2 in the mix.
+            { space: spaceId[space], hue },
+          ),
+        ),
+        Percentage.of(p1 + p2),
+      );
+    };
+  }
+
   /**
    * Calculates the result of a color-mix, given that all colors are already
    * resolved to CSS4Color.
@@ -267,12 +288,12 @@ export namespace ColorMix {
     // with a percentage (a or b) of 0, so we can use that directly for our
     // initial accumulator.
     const reduced = normalized.values.reduce(
-      (acc, cur) => acc,
+      mixColorItems(space, hue),
       MixItem.of(transparent, Percentage.of(0)),
     );
 
-    // TODO
-    return reduced.value;
+    // 5., 6.
+    return reduced.value.withAlpha(alphaMult * reduced.value.alpha.value);
   }
 
   const parseSpace: CSSParser<InterpolationSpace> = map(
