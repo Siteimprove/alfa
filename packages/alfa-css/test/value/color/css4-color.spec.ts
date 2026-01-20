@@ -5,10 +5,11 @@
  * This does not include extensive tests of many scenarios. This does not
  * include extensive tests of the results of parsing, just checking that it works.
  */
+import { Real } from "@siteimprove/alfa-math";
 import { test } from "@siteimprove/alfa-test";
+import { Lexer } from "../../../dist/index.js";
 
 import { CSS4Color } from "../../../dist/value/color/css4-color.js";
-import { Lexer } from "../../../dist/index.js";
 import { color } from "../../common/color.js";
 
 import { parser, parserUnsafe } from "../../common/parse.js";
@@ -106,10 +107,41 @@ test(".parse() graciously rejects various color formats with incorrect calculati
 });
 
 test("CSS4Color are immutable", (t) => {
-  const color = parse("rgb(255, 0, 0)");
+  const color = parse("red");
   const target = color.color;
   target.r = 0;
 
   t.deepEqual(color.toJSON(), red);
   t.deepEqual(target.r, 0);
+});
+
+test("#withAlpha returns a new color with the given alpha", (t) => {
+  const color = parse("red");
+  const semiTransparentRed = color.withAlpha(0.5);
+
+  t.deepEqual(semiTransparentRed.toJSON(), {
+    ...red,
+    alpha: { type: "percentage", value: 0.5 },
+  });
+
+  // The initial color hasn't accidentally mutated.
+  t.deepEqual(color.toJSON(), red);
+});
+
+test("#contrast computes the contrast ratio between two colors", (t) => {
+  const red = parse("red");
+  const blue = parse("blue");
+
+  t.equal(Real.round(red.contrast(blue), 2), 2.15);
+});
+
+test("#toSpace converts a color to the given color space", (t) => {
+  const color = parse("red");
+  const redInLab = color.toSpace("lab").getUnsafe();
+
+  t.deepEqual(redInLab.toJSON(), {
+    ...red,
+    space: "lab",
+    coordinates: [54.2905414, 80.8049282, 69.8909648],
+  });
 });

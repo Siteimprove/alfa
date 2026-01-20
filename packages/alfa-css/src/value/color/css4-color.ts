@@ -143,6 +143,13 @@ export class CSS4Color
     return this;
   }
 
+  public withAlpha(alpha: Percentage.Canonical | number): CSS4Color {
+    const clone = this._color.clone();
+    clone.alpha = Percentage.isPercentage(alpha) ? alpha.value : alpha;
+
+    return new CSS4Color(clone);
+  }
+
   /**
    * Computes the contrast between two colors, according to WCAG 2.1 algorithm.
    *
