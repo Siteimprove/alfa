@@ -1,8 +1,10 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import type { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Function, Token } from "../../syntax/index.js";
+
+import BaseColor from "colorjs.io";
 
 import type { List } from "../collection/index.js";
 import type { Parser as CSSParser } from "../../syntax/parser.js";
@@ -168,6 +170,37 @@ export namespace ColorMix {
   }
 
   export interface PartialResolver {}
+
+  /**
+   * Calculates the result of a color-mix, given that all colors are already
+   * resolved to CSS4Color.
+   * {@see https://drafts.csswg.org/css-color-5/#color-mix-result}
+   *
+   * @internal
+   */
+  // export function calculate(
+  //   colors: List<MixItem<CSS4Color>>,
+  //   space: InterpolationSpace,
+  //   hue: HueInterpolationMethod,
+  // ): CSS4Color {
+  //   // 1.
+  //   const [normalized, leftover] = Mix.normalize(colors);
+  //
+  //   // 2.
+  //   if (leftover.value === 1) {
+  //     return CSS4Color.of(new BaseColor("transparent").to(space));
+  //   }
+  //
+  //   // 3.
+  //   const alphaMult = 1 - leftover.value;
+  //
+  //   // 4. is describing a reduce operation. Our list is already in the correct
+  //   // order, so we do not need to reverse it (4.1). Due to the progress
+  //   // percentage in 4.2.2 (a/(a+b) vs b/(a+b)), the neutral element is anything
+  //   // with a percentage (a or b) of 0, so we can use that directly for our
+  //   // initial accumulator.
+  //   const reduced =
+  // }
 
   /** @internal */
   export const rectangularSpaces = [

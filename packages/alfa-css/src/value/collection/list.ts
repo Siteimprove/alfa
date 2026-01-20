@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
@@ -50,11 +51,11 @@ export class List<V extends Value>
   }
 
   public some(predicate: Predicate<V, [index: number]>) {
-    return Iterable.some(this._values, predicate);
+    return Array.some(this._values, predicate);
   }
 
   public none(predicate: Predicate<V, [index: number]>) {
-    return Iterable.none(this._values, predicate);
+    return Array.none(this._values, predicate);
   }
 
   public resolve(
