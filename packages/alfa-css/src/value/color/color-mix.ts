@@ -8,13 +8,14 @@ import BaseColor from "colorjs.io";
 
 import type { List } from "../collection/index.js";
 import type { Parser as CSSParser } from "../../syntax/parser.js";
+import { Percentage } from "../numeric/index.js";
 
 import type { PartiallyResolvable, Resolvable } from "../resolvable.js";
 import { Keyword } from "../textual/index.js";
 import { Value } from "../value.js";
 
 import { CSS4Color } from "./css4-color.js";
-import { Mix, type MixItem } from "./mix.js";
+import { Mix, MixItem } from "./mix.js";
 
 import type { Color } from "./color.js";
 
@@ -171,37 +172,6 @@ export namespace ColorMix {
 
   export interface PartialResolver {}
 
-  /**
-   * Calculates the result of a color-mix, given that all colors are already
-   * resolved to CSS4Color.
-   * {@see https://drafts.csswg.org/css-color-5/#color-mix-result}
-   *
-   * @internal
-   */
-  // export function calculate(
-  //   colors: List<MixItem<CSS4Color>>,
-  //   space: InterpolationSpace,
-  //   hue: HueInterpolationMethod,
-  // ): CSS4Color {
-  //   // 1.
-  //   const [normalized, leftover] = Mix.normalize(colors);
-  //
-  //   // 2.
-  //   if (leftover.value === 1) {
-  //     return CSS4Color.of(new BaseColor("transparent").to(space));
-  //   }
-  //
-  //   // 3.
-  //   const alphaMult = 1 - leftover.value;
-  //
-  //   // 4. is describing a reduce operation. Our list is already in the correct
-  //   // order, so we do not need to reverse it (4.1). Due to the progress
-  //   // percentage in 4.2.2 (a/(a+b) vs b/(a+b)), the neutral element is anything
-  //   // with a percentage (a or b) of 0, so we can use that directly for our
-  //   // initial accumulator.
-  //   const reduced =
-  // }
-
   /** @internal */
   export const rectangularSpaces = [
     "srgb",
@@ -232,14 +202,27 @@ export namespace ColorMix {
     return (polarSpaces as ReadonlyArray<string>).includes(space);
   }
 
-  const parseSpace: CSSParser<InterpolationSpace> = map(
-    separated(
-      Keyword.parse("in"),
-      Token.parseWhitespace,
-      Keyword.parse(...interpolationSpaces),
-    ),
-    ([, space]) => space.value,
-  );
+  /**
+   * Convert CSS color spaces names to ColorJS.io space identifiers.
+   */
+  const spaceId: { [K in InterpolationSpace]: string } = {
+    srgb: "srgb",
+    "srgb-linear": "srgb-linear",
+    "display-p3": "p3",
+    "display-p3-linear": "p3-linear",
+    "a98-rgb": "a98rgb",
+    "prophoto-rgb": "prophoto",
+    rec2020: "rec2020",
+    lab: "lab",
+    oklab: "oklab",
+    xyz: "xyz",
+    "xyz-d50": "xyz-d50",
+    "xyz-d65": "xyz-d65",
+    hsl: "hsl",
+    hwb: "hwb",
+    lch: "lch",
+    oklch: "oklch",
+  };
 
   /** @internal */
   export const hueInterpolationMethods = [
@@ -250,6 +233,56 @@ export namespace ColorMix {
   ] as const;
 
   export type HueInterpolationMethod = (typeof hueInterpolationMethods)[number];
+
+  /**
+   * Calculates the result of a color-mix, given that all colors are already
+   * resolved to CSS4Color.
+   * {@see https://drafts.csswg.org/css-color-5/#color-mix-result}
+   *
+   * @internal
+   */
+  export function calculate(
+    colors: List<MixItem<CSS4Color>>,
+    space: InterpolationSpace,
+    hue: HueInterpolationMethod,
+  ): CSS4Color {
+    const transparent = CSS4Color.of("transparent").getUnsafe();
+
+    // 1.
+    const [normalized, leftover] = Mix.normalize(colors);
+
+    // 2.
+    if (leftover.value === 1) {
+      // Because we restrict the list of allowed spaces, the conversion
+      // should not fail.
+      return transparent.toSpace(spaceId[space]).getUnsafe();
+    }
+
+    // 3.
+    const alphaMult = 1 - leftover.value;
+
+    // 4. is describing a reduce operation. Our list is already in the correct
+    // order, so we do not need to reverse it (4.1). Due to the progress
+    // percentage in 4.2.2 (a/(a+b) vs b/(a+b)), the neutral element is anything
+    // with a percentage (a or b) of 0, so we can use that directly for our
+    // initial accumulator.
+    const reduced = normalized.values.reduce(
+      (acc, cur) => acc,
+      MixItem.of(transparent, Percentage.of(0)),
+    );
+
+    // TODO
+    return reduced.value;
+  }
+
+  const parseSpace: CSSParser<InterpolationSpace> = map(
+    separated(
+      Keyword.parse("in"),
+      Token.parseWhitespace,
+      Keyword.parse(...interpolationSpaces),
+    ),
+    ([, space]) => space.value,
+  );
 
   const parseHueMethod: CSSParser<HueInterpolationMethod> = map(
     separated(

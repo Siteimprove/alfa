@@ -156,6 +156,15 @@ export class CSS4Color
     return this._color.contrast(other._color, "WCAG21");
   }
 
+  public toSpace(space: string): Result<CSS4Color, Error> {
+    try {
+      const converted = this._color.to(space);
+      return Ok.of(new CSS4Color(converted));
+    } catch (e) {
+      return Err.of(e as Error);
+    }
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof CSS4Color &&
