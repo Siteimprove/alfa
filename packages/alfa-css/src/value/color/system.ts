@@ -72,6 +72,13 @@ export namespace System {
 
   export const resolve = (system: Keyword) => resolvedChrome[system];
 
+  export function isSystem(value: unknown): value is Keyword {
+    return (
+      Keyword.isKeyword(value) &&
+      (keywords as ReadonlyArray<string>).includes(value.value)
+    );
+  }
+
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-system-color}
    */

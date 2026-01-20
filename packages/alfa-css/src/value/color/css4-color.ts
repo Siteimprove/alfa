@@ -222,6 +222,10 @@ export namespace CSS4Color {
 
   export type Canonical = CSS4Color;
 
+  export function isCSS4Color(value: unknown): value is CSS4Color {
+    return value instanceof CSS4Color;
+  }
+
   /*
    * The colorjs.io parser works on strings, but we receive pre-tokenized input.
    * So, we need to reconstruct strings. Moreover, the colorjs.io expects the

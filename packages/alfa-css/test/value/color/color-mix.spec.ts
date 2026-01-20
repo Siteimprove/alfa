@@ -156,3 +156,7 @@ test(".parse() uses 'oklab' as default interpolation space", (t) => {
     },
   });
 });
+
+test(".calculate() mixes two colors correctly", (t) => {
+  const mix = parse("color-mix(in oklab, red 25%, blue 75%)");
+});

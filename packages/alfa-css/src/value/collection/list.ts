@@ -51,7 +51,7 @@ export class List<V extends Value>
   }
 
   public some(predicate: Predicate<V, [index: number]>) {
-    return Array.some(this._values, predicate);
+    return this._values.some(predicate);
   }
 
   public none(predicate: Predicate<V, [index: number]>) {

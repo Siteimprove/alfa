@@ -16,6 +16,7 @@ import type { Color } from "./color.js";
 
 import { CSS4Color } from "./css4-color.js";
 import { Mix, MixItem } from "./mix.js";
+import { System } from "./system.js";
 
 const { left, map, mapResult, option, pair, right, separated } = Parser;
 
@@ -110,10 +111,29 @@ export class ColorMix<
     return CSS4Color.of("todo").getUnsafe(); // TODO
   }
 
-  public partiallyResolve(
-    resolver: ColorMix.PartialResolver,
-  ): CSS4Color | ColorMix<S, H> {
-    return CSS4Color.of("todo").getUnsafe(); // TODO
+  public partiallyResolve(): CSS4Color | ColorMix<S, H> {
+    // We can't directly use item.(partially)Resolve because it doesn't work
+    // nicely with keyword colors (`currentcolor` and system colors).
+    // System colors can be resolved now, but `currentcolor` cannot.
+    const resolvedColors = this._colors.map((item) =>
+      MixItem.of(
+        System.isSystem(item.value) ? System.resolve(item.value) : item.value,
+        item.percentage.map((percentage) => percentage.resolve()),
+      ),
+    );
+
+    if (resolvedColors.some((item) => !CSS4Color.isCSS4Color(item.value))) {
+      // If we couldn't resolve everything (i.e. a `currentcolor` is present),
+      // keep the color-mix().
+      return ColorMix.of(resolvedColors, this._space, this._hueMethod);
+    } else {
+      // Otherwise, compute the mix.
+      return ColorMix.calculate(
+        resolvedColors as List<MixItem<CSS4Color>>,
+        this._space,
+        this._hueMethod,
+      );
+    }
   }
 
   public equals(value: unknown): value is this {
