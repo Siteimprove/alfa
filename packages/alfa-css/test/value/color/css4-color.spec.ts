@@ -7,12 +7,11 @@
  */
 import { Real } from "@siteimprove/alfa-math";
 import { test } from "@siteimprove/alfa-test";
-import { Lexer } from "../../../dist/index.js";
 
 import { CSS4Color } from "../../../dist/value/color/css4-color.js";
 import { Lexer } from "../../../dist/index.js";
-import { color } from "../../common/color.js";
 
+import { color } from "../../common/color.js";
 import { parser, parserUnsafe } from "../../common/parse.js";
 
 const parse = parserUnsafe(CSS4Color.parse);
