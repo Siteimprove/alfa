@@ -12,56 +12,56 @@ test("isProgrammaticallyHidden() returns false for visible elements", (t) => {
   const button = <button>Click me</button>;
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), false);
+  t(!isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with display: none", (t) => {
   const button = <button style={{ display: "none" }}>Hidden</button>;
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with visibility: hidden", (t) => {
   const button = <button style={{ visibility: "hidden" }}>Hidden</button>;
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with visibility: collapse", (t) => {
   const button = <button style={{ visibility: "collapse" }}>Hidden</button>;
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns false for elements with visibility: visible", (t) => {
   const button = <button style={{ visibility: "visible" }}>Visible</button>;
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), false);
+  t(!isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with aria-hidden='true'", (t) => {
   const button = <button aria-hidden="true">Hidden</button>;
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns false for elements with aria-hidden='false'", (t) => {
   const button = <button aria-hidden="false">Visible</button>;
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), false);
+  t(!isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for inert elements", (t) => {
   const button = <button inert>Inert</button>;
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements inside inert container", (t) => {
@@ -69,7 +69,7 @@ test("isProgrammaticallyHidden() returns true for elements inside inert containe
   const parent = <div inert>{button}</div>;
   h.document([parent]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with display: none ancestor", (t) => {
@@ -77,7 +77,7 @@ test("isProgrammaticallyHidden() returns true for elements with display: none an
   const parent = <div style={{ display: "none" }}>{button}</div>;
   h.document([parent]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with aria-hidden='true' ancestor", (t) => {
@@ -85,7 +85,7 @@ test("isProgrammaticallyHidden() returns true for elements with aria-hidden='tru
   const parent = <div aria-hidden="true">{button}</div>;
   h.document([parent]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with visibility: hidden ancestor", (t) => {
@@ -93,7 +93,7 @@ test("isProgrammaticallyHidden() returns true for elements with visibility: hidd
   const parent = <div style={{ visibility: "hidden" }}>{button}</div>;
   h.document([parent]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with visibility: collapse ancestor", (t) => {
@@ -101,7 +101,7 @@ test("isProgrammaticallyHidden() returns true for elements with visibility: coll
   const parent = <div style={{ visibility: "collapse" }}>{button}</div>;
   h.document([parent]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for deeply nested hidden elements", (t) => {
@@ -110,7 +110,7 @@ test("isProgrammaticallyHidden() returns true for deeply nested hidden elements"
   const level1 = <div aria-hidden="true">{level2}</div>;
   h.document([level1]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns false for elements inside open dialog within inert container", (t) => {
@@ -119,7 +119,7 @@ test("isProgrammaticallyHidden() returns false for elements inside open dialog w
   const parent = <div inert>{dialog}</div>;
   h.document([parent]);
 
-  t.equal(isProgrammaticallyHidden(button), false);
+  t(!isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with multiple hiding conditions", (t) => {
@@ -130,7 +130,7 @@ test("isProgrammaticallyHidden() returns true for elements with multiple hiding 
   );
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns false for visible elements with visible ancestors", (t) => {
@@ -139,7 +139,7 @@ test("isProgrammaticallyHidden() returns false for visible elements with visible
   const grandparent = <section>{parent}</section>;
   h.document([grandparent]);
 
-  t.equal(isProgrammaticallyHidden(button), false);
+  t(!isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns true for elements with display: none even if aria-hidden='false'", (t) => {
@@ -150,7 +150,7 @@ test("isProgrammaticallyHidden() returns true for elements with display: none ev
   );
   h.document([button]);
 
-  t.equal(isProgrammaticallyHidden(button), true);
+  t(isProgrammaticallyHidden(button));
 });
 
 test("isProgrammaticallyHidden() returns false for elements with display: block", (t) => {
@@ -172,6 +172,6 @@ test("isProgrammaticallyHidden() handles mixed visibility in hierarchy", (t) => 
   );
   h.document([parent]);
 
-  t.equal(isProgrammaticallyHidden(visibleButton), false);
-  t.equal(isProgrammaticallyHidden(hiddenButton), true);
+  t(!isProgrammaticallyHidden(visibleButton));
+  t(isProgrammaticallyHidden(hiddenButton));
 });
