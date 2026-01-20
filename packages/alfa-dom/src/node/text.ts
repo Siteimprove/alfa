@@ -77,7 +77,7 @@ export class Text extends Node<"text"> implements Slotable {
     path += path === "/" ? "" : "/";
     path += "text()";
 
-    const index = this.preceding(options).count(Text.isText);
+    const index = this.index(options, Text.isText);
 
     path += `[${index + 1}]`;
 

@@ -337,7 +337,7 @@ export interface Node {
   last(options?: Node.Traversal): Option<Node>;
   previous(options?: Node.Traversal): Option<Node>;
   next(options?: Node.Traversal): Option<Node>;
-  index(options?: Node.Traversal): number;
+  index(options?: Node.Traversal, predicate?: Predicate<Node>): number;
   closest<T extends Node>(
     refinement: Refinement<Node, T>,
     options?: Node.Traversal,

@@ -844,7 +844,7 @@ interface Node_2 {
     // (undocumented)
     inclusiveSiblings(options?: Node_2.Traversal): Sequence<Node_2>;
     // (undocumented)
-    index(options?: Node_2.Traversal): number;
+    index(options?: Node.Traversal, predicate?: Predicate<Node>): number;
     // (undocumented)
     isAncestorOf(node: Node_2, options?: Node_2.Traversal): boolean;
     // (undocumented)
