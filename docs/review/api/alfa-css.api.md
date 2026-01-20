@@ -5,6 +5,7 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { default as Color_2 } from 'colorjs.io';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import type { Comparison } from '@siteimprove/alfa-comparable';
 import { Component as Component_3 } from '../position/component.js';
@@ -18,7 +19,7 @@ import type * as json from '@siteimprove/alfa-json';
 import { Keywords as Keywords_2 } from '../position/keywords.js';
 import { LengthPercentage as LengthPercentage_2 } from '../index.js';
 import type { Mapper } from '@siteimprove/alfa-mapper';
-import { Option } from '@siteimprove/alfa-option';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Parser as Parser_3 } from '../../index.js';
 import { Parser as Parser_4 } from '../../syntax/parser.js';
@@ -33,7 +34,6 @@ import { Slice } from '@siteimprove/alfa-slice';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token as Token_2 } from '../../syntax/token.js';
 import { Unit as Unit_2 } from '../../index.js';
-import { Vector } from '@siteimprove/alfa-math';
 
 // @public (undocumented)
 export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
@@ -312,97 +312,25 @@ export namespace Circle {
 }
 
 // @public (undocumented)
-export type Color = ColorFunction | Current | Hex | HSL | HWB | Lab | LCH | Named | Oklab | OkLCH | RGB | System;
+export type Color = CSS4Color | Current | System;
 
 // @public (undocumented)
 export namespace Color {
     // (undocumented)
-    export type Canonical = Current | System | RGB.Canonical;
+    export type Canonical = Current | System | CSS4Color.Canonical;
     // (undocumented)
     export function isTransparent(color: Color): boolean;
     const // (undocumented)
     current: Current;
-    const // (undocumented)
-    hex: typeof Hex.of;
-    const // (undocumented)
-    hsl: typeof HSL.of;
-    const // (undocumented)
-    hwb: typeof HWB.of;
-    const // (undocumented)
-    lab: typeof Lab.of;
-    const // (undocumented)
-    lch: typeof LCH.of;
-    const // (undocumented)
-    named: typeof Named.of;
-    const // (undocumented)
-    oklab: typeof Oklab.of;
-    const // (undocumented)
-    oklch: typeof OkLCH.of;
-    const // (undocumented)
-    rgb: typeof RGB.of;
+    // (undocumented)
+    export type JSON = CSS4Color.JSON | Keyword.JSON;
+    export function of(color: string): Result<CSS4Color, Error>;
     const // (undocumented)
     system: typeof Keyword.of;
     const // (undocumented)
     parse: Parser<Color>;
-    // (undocumented)
-    export type JSON = ColorFunction.JSON | Hex.JSON | HSL.JSON | HWB.JSON | Lab.JSON | LCH.JSON | Named.JSON | Oklab.JSON | OkLCH.JSON | RGB.JSON | Keyword.JSON;
+    export function rgb(red: Number_2 | Percentage, green: Number_2 | Percentage, blue: Number_2 | Percentage, alpha?: Number_2 | Percentage): CSS4Color;
 }
-
-// Warning: (ae-forgotten-export) The symbol "Space" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "Triplet" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export class ColorFunction<N extends Space = Space> extends Triplet<N> {
-    protected constructor(name: N, c1: ColorFunction.Component, c2: ColorFunction.Component, c3: ColorFunction.Component, alpha: Triplet.Alpha);
-    // (undocumented)
-    get blue(): Percentage.Canonical;
-    // (undocumented)
-    get components(): [
-    ColorFunction.Component,
-    ColorFunction.Component,
-    ColorFunction.Component
-    ];
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Percentage.Canonical;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    static of<N extends Space>(name: N, c1: Number_2 | Percentage<"percentage">, c2: Number_2 | Percentage<"percentage">, c3: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): ColorFunction<N>;
-    // (undocumented)
-    get red(): Percentage.Canonical;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): ColorFunction.JSON<N>;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace ColorFunction {
-    // @internal (undocumented)
-    export type Component = Number_2.Canonical | Percentage.Canonical;
-    // (undocumented)
-    export function isColorFunction(value: unknown): value is ColorFunction;
-    // (undocumented)
-    export interface JSON<N extends Space = Space> extends Triplet.JSON<N> {
-        // (undocumented)
-        c1: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
-        // (undocumented)
-        c2: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
-        // (undocumented)
-        c3: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
-    }
-    const // (undocumented)
-    parse: Parser<ColorFunction>;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "ColorSpaces" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const ColorSpaces: Array<Space>;
 
 // @public (undocumented)
 export namespace Comma {
@@ -508,6 +436,58 @@ export namespace Converter {
 export interface Convertible<U extends string> {
     // (undocumented)
     withUnit<V extends U>(unit: V): Convertible<V>;
+}
+
+// Warning: (ae-incompatible-release-tags) The symbol "CSS4Color" is marked as @public, but its signature references "Resolvable" which is marked as @internal
+//
+// @public (undocumented)
+export class CSS4Color extends Value<"color", false> implements Resolvable<CSS4Color.Canonical, never> {
+    protected constructor(color: Color_2);
+    // (undocumented)
+    get alpha(): Percentage.Canonical;
+    // (undocumented)
+    get blue(): Percentage.Canonical;
+    get color(): Color_2;
+    contrast(other: CSS4Color): number;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get green(): Percentage.Canonical;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(color: Color_2): CSS4Color;
+    // (undocumented)
+    static of(color: string): Result<CSS4Color, Error>;
+    // (undocumented)
+    static of(space: string, coords: [number | null, number | null, number | null], alpha?: number | null): Result<CSS4Color, Error>;
+    // (undocumented)
+    get red(): Percentage.Canonical;
+    // (undocumented)
+    resolve(): CSS4Color.Canonical;
+    // (undocumented)
+    toJSON(): CSS4Color.JSON;
+    // (undocumented)
+    toString(): string;
+}
+
+// @public (undocumented)
+export namespace CSS4Color {
+    // (undocumented)
+    export type Canonical = CSS4Color;
+    // (undocumented)
+    export interface JSON extends Value.JSON<"color"> {
+        // (undocumented)
+        alpha: Percentage.Fixed.JSON;
+        // (undocumented)
+        coordinates: [number | null, number | null, number | null];
+        // (undocumented)
+        space: string;
+        // (undocumented)
+        sRGB: [Percentage.Fixed.JSON, Percentage.Fixed.JSON, Percentage.Fixed.JSON];
+    }
+    const // (undocumented)
+    parse: Parser<CSS4Color>;
 }
 
 // @public (undocumented)
@@ -806,7 +786,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Function_2>;
     const // (undocumented)
-    parse: <T>(query?: string | Array<string> | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(query?: string | Array<string> | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>) => Parser<[Function_2, T]>;
 }
 export { Function_2 as Function }
 
@@ -833,148 +813,6 @@ export namespace Gradient {
     export type Resolver = Linear.Resolver & Radial.Resolver;
     const // (undocumented)
     parse: Parser<Gradient>;
-}
-
-// Warning: (ae-forgotten-export) The symbol "Format" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-export class Hex extends Format<"hex"> {
-    protected constructor(value: number);
-    // (undocumented)
-    get alpha(): Number_2.Fixed;
-    // (undocumented)
-    get blue(): Number_2.Fixed;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Number_2.Fixed;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    static of(value: number): Hex;
-    // (undocumented)
-    get red(): Number_2.Fixed;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): Hex.JSON;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get value(): number;
-}
-
-// @public (undocumented)
-export namespace Hex {
-    // (undocumented)
-    export function isHex(value: unknown): value is Hex;
-    // (undocumented)
-    export interface JSON extends Format.JSON<"hex"> {
-        // (undocumented)
-        value: number;
-    }
-    const // (undocumented)
-    parse: Parser<Hex>;
-}
-
-// @public (undocumented)
-export class HSL extends Triplet<"hsl"> {
-    protected constructor(hue: HSL.Hue, saturation: HSL.Component, lightness: HSL.Component, alpha: Triplet.Alpha);
-    // (undocumented)
-    get blue(): Percentage.Canonical;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Percentage.Canonical;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    get hue(): HSL.Hue;
-    // (undocumented)
-    get lightness(): HSL.Component;
-    // (undocumented)
-    static of(hue: Number_2 | Angle, saturation: Number_2 | Percentage<"percentage">, lightness: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HSL;
-    // (undocumented)
-    get red(): Percentage.Canonical;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    get saturation(): HSL.Component;
-    // (undocumented)
-    toJSON(): HSL.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace HSL {
-    // @internal (undocumented)
-    export type Component = Percentage.Canonical;
-    // @internal (undocumented)
-    export type Hue = Number_2.Canonical | Angle.Canonical;
-    // (undocumented)
-    export function isHSL(value: unknown): value is HSL;
-    // (undocumented)
-    export interface JSON extends Triplet.JSON<"hsl"> {
-        // (undocumented)
-        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
-        // (undocumented)
-        lightness: Percentage.Fixed.JSON;
-        // (undocumented)
-        saturation: Percentage.Fixed.JSON;
-    }
-    const // (undocumented)
-    parse: Parser<HSL>;
-}
-
-// @public (undocumented)
-export class HWB extends Triplet<"hwb"> {
-    protected constructor(hue: HWB.Hue, whiteness: HWB.Component, blackness: HWB.Component, alpha: Triplet.Alpha);
-    // (undocumented)
-    get blackness(): HWB.Component;
-    // (undocumented)
-    get blue(): Percentage.Canonical;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Percentage.Canonical;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    get hue(): HWB.Hue;
-    // (undocumented)
-    static of(hue: Number_2 | Angle, whiteness: Number_2 | Percentage<"percentage">, blackness: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): HWB;
-    // (undocumented)
-    get red(): Percentage.Canonical;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): HWB.JSON;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get whiteness(): HWB.Component;
-}
-
-// @public (undocumented)
-export namespace HWB {
-    // @internal (undocumented)
-    export type Component = Percentage.Canonical;
-    // @internal (undocumented)
-    export type Hue = Number_2.Canonical | Angle.Canonical;
-    // (undocumented)
-    export function isHWB(value: unknown): value is HWB;
-    // (undocumented)
-    export interface JSON extends Triplet.JSON<"hwb"> {
-        // (undocumented)
-        blackness: Percentage.Fixed.JSON;
-        // (undocumented)
-        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
-        // (undocumented)
-        whiteness: Percentage.Fixed.JSON;
-    }
-    const // (undocumented)
-    parse: Parser<HWB>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Ident" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -1015,7 +853,7 @@ export namespace Ident {
 // Warning: (ae-incompatible-release-tags) The symbol "Image" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal
 //
 // @public (undocumented)
-export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image", Value.HasCalculation<[I]>> implements Resolvable<Image.Canonical, Image.Resolver>, PartiallyResolvable<Image.PartiallyResolved, Image.PartialResolver> {
+class Image_2<I extends URL_2 | Gradient = URL_2 | Gradient> extends Value<"image", Value.HasCalculation<[I]>> implements Resolvable<Image_2.Canonical, Image_2.Resolver>, PartiallyResolvable<Image_2.PartiallyResolved, Image_2.PartialResolver> {
     protected constructor(image: I);
     // (undocumented)
     equals(value: unknown): value is this;
@@ -1024,37 +862,38 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"ima
     // (undocumented)
     get image(): I;
     // (undocumented)
-    static of<I extends URL | Gradient>(image: I): Image<I>;
+    static of<I extends URL_2 | Gradient>(image: I): Image_2<I>;
     // (undocumented)
-    partiallyResolve(resolver: Image.PartialResolver): Image.PartiallyResolved;
+    partiallyResolve(resolver: Image_2.PartialResolver): Image_2.PartiallyResolved;
     // (undocumented)
-    resolve(resolver: Image.Resolver): Image.Canonical;
+    resolve(resolver: Image_2.Resolver): Image_2.Canonical;
     // (undocumented)
-    toJSON(): Image.JSON;
+    toJSON(): Image_2.JSON;
     // (undocumented)
     toString(): string;
 }
 
 // @public (undocumented)
-export namespace Image {
+namespace Image_2 {
     // (undocumented)
-    export type Canonical = Image<URL.Canonical | Gradient.Canonical>;
+    type Canonical = Image_2<URL_2.Canonical | Gradient.Canonical>;
     // (undocumented)
-    export function isImage<I extends URL | Gradient>(value: unknown): value is Image<I>;
+    function isImage<I extends URL_2 | Gradient>(value: unknown): value is Image_2<I>;
     // (undocumented)
-    export interface JSON extends Value.JSON<"image"> {
+    interface JSON extends Value.JSON<"image"> {
         // (undocumented)
-        image: URL.JSON | Gradient.JSON;
+        image: URL_2.JSON | Gradient.JSON;
     }
     // (undocumented)
-    export type PartiallyResolved = Image<URL.Canonical | Gradient.PartiallyResolved>;
+    type PartiallyResolved = Image_2<URL_2.Canonical | Gradient.PartiallyResolved>;
     // (undocumented)
-    export type PartialResolver = URL.Resolver & Gradient.PartialResolver;
+    type PartialResolver = URL_2.Resolver & Gradient.PartialResolver;
     // (undocumented)
-    export type Resolver = URL.Resolver & Gradient.Resolver;
+    type Resolver = URL_2.Resolver & Gradient.Resolver;
     const // (undocumented)
-    parse: Parser<Image>;
+    parse: Parser<Image_2>;
 }
+export { Image_2 as Image }
 
 // Warning: (ae-forgotten-export) The symbol "Corner_2" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "HasCalculation" needs to be exported by the entry point index.d.ts
@@ -1063,15 +902,15 @@ export namespace Image {
 //
 // @public (undocumented)
 export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2> extends BasicShape<"inset", HasCalculation<O, C>> implements Resolvable<Inset.Canonical, Inset.Resolver>, PartiallyResolvable<Inset.PartiallyResolved, Inset.PartialResolver> {
-    protected constructor(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>);
+    protected constructor(offsets: readonly [O, O, O, O], corners: Option_2<readonly [C, C, C, C]>);
     // (undocumented)
     get bottom(): O;
     // (undocumented)
-    get bottomLeft(): Option<C>;
+    get bottomLeft(): Option_2<C>;
     // (undocumented)
-    get bottomRight(): Option<C>;
+    get bottomRight(): Option_2<C>;
     // (undocumented)
-    get corners(): Option<readonly [C, C, C, C]>;
+    get corners(): Option_2<readonly [C, C, C, C]>;
     // (undocumented)
     equals(value: Inset): boolean;
     // (undocumented)
@@ -1081,7 +920,7 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = C
     // (undocumented)
     get left(): O;
     // (undocumented)
-    static of<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2>(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>): Inset<O, C>;
+    static of<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2>(offsets: readonly [O, O, O, O], corners: Option_2<readonly [C, C, C, C]>): Inset<O, C>;
     // (undocumented)
     get offsets(): readonly [O, O, O, O];
     // (undocumented)
@@ -1095,9 +934,9 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = C
     // (undocumented)
     get top(): O;
     // (undocumented)
-    get topLeft(): Option<C>;
+    get topLeft(): Option_2<C>;
     // (undocumented)
-    get topRight(): Option<C>;
+    get topRight(): Option_2<C>;
     // (undocumented)
     toString(): string;
 }
@@ -1111,7 +950,7 @@ export namespace Inset {
     // (undocumented)
     export interface JSON<O extends Offset = Offset, C extends Corner_2 = Corner_2> extends BasicShape.JSON<"inset"> {
         // (undocumented)
-        corners: Option.JSON<readonly [C, C, C, C]>;
+        corners: Option_2.JSON<readonly [C, C, C, C]>;
         // (undocumented)
         offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
     }
@@ -1221,104 +1060,6 @@ export namespace Keyword {
     export type ToKeywords<Words extends string> = {
         [K in Words]: Keyword<K>;
     }[Words];
-}
-
-// @public (undocumented)
-export class Lab extends Triplet<"lab"> {
-    protected constructor(lightness: Lab.Component, a: Lab.Component, b: Lab.Component, alpha: Triplet.Alpha);
-    // (undocumented)
-    get a(): Lab.Component;
-    // (undocumented)
-    get b(): Lab.Component;
-    // (undocumented)
-    get blue(): Percentage.Canonical;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Percentage.Canonical;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    get lightness(): Lab.Component;
-    // (undocumented)
-    static of(lightness: Number_2 | Percentage<"number">, a: Number_2 | Percentage<"number">, b: Number_2 | Percentage<"number">, alpha: Number_2 | Percentage<"percentage">): Lab;
-    // (undocumented)
-    get red(): Percentage.Canonical;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): Lab.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace Lab {
-    // @internal
-    export type Component = Number_2.Canonical;
-    // (undocumented)
-    export function isLab(value: unknown): value is Lab;
-    // (undocumented)
-    export interface JSON extends Triplet.JSON<"lab"> {
-        // (undocumented)
-        a: Number_2.Fixed.JSON;
-        // (undocumented)
-        b: Number_2.Fixed.JSON;
-        // (undocumented)
-        lightness: Number_2.Fixed.JSON;
-    }
-    const // (undocumented)
-    parse: Parser<Lab>;
-}
-
-// @public (undocumented)
-export class LCH extends Triplet<"lch"> {
-    protected constructor(lightness: LCH.Component, chroma: LCH.Component, hue: LCH.Hue, alpha: Triplet.Alpha);
-    // (undocumented)
-    get blue(): Percentage.Canonical;
-    // (undocumented)
-    get chroma(): LCH.Component;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Percentage.Canonical;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    get hue(): LCH.Hue;
-    // (undocumented)
-    get lightness(): LCH.Component;
-    // (undocumented)
-    static of(lightness: Number_2 | Percentage<"number">, chroma: Number_2 | Percentage<"number">, hue: Number_2 | Angle, alpha: Number_2 | Percentage<"percentage">): LCH;
-    // (undocumented)
-    get red(): Percentage.Canonical;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): LCH.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace LCH {
-    // @internal
-    export type Component = Number_2.Canonical;
-    // @internal (undocumented)
-    export type Hue = Number_2.Canonical | Angle.Canonical;
-    // (undocumented)
-    export function isLCH(value: unknown): value is LCH;
-    // (undocumented)
-    export interface JSON extends Triplet.JSON<"lch"> {
-        // (undocumented)
-        chroma: Number_2.Fixed.JSON;
-        // (undocumented)
-        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
-        // (undocumented)
-        lightness: Number_2.Fixed.JSON;
-    }
-    const // (undocumented)
-    parse: Parser<LCH>;
 }
 
 // @public (undocumented)
@@ -1675,50 +1416,6 @@ export namespace Matrix {
 }
 
 // @public (undocumented)
-export class Named<C extends Named.Color = Named.Color> extends Format<"named"> {
-    protected constructor(color: C);
-    // (undocumented)
-    get alpha(): Number_2.Fixed;
-    // (undocumented)
-    get blue(): Number_2.Fixed;
-    // (undocumented)
-    get color(): C;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Number_2.Fixed;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    static of<C extends Named.Color>(color: C): Named<C>;
-    // (undocumented)
-    get red(): Number_2.Fixed;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): Named.JSON;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get value(): number;
-}
-
-// @public (undocumented)
-export namespace Named {
-    // Warning: (ae-forgotten-export) The symbol "Colors" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    export type Color = keyof Colors;
-    // (undocumented)
-    export interface JSON extends Format.JSON<"named"> {
-        // (undocumented)
-        color: string;
-    }
-    const // (undocumented)
-    parse: Parser<Named>;
-}
-
-// @public (undocumented)
 export class Nth implements Iterable<Token>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Token>;
@@ -1922,104 +1619,6 @@ export namespace Numeric {
 }
 
 // @public (undocumented)
-export class Oklab extends Triplet<"oklab"> {
-    protected constructor(lightness: Oklab.Component, a: Oklab.Component, b: Oklab.Component, alpha: Triplet.Alpha);
-    // (undocumented)
-    get a(): Oklab.Component;
-    // (undocumented)
-    get b(): Oklab.Component;
-    // (undocumented)
-    get blue(): Percentage.Canonical;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Percentage.Canonical;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    get lightness(): Oklab.Component;
-    // (undocumented)
-    static of(lightness: Number_2 | Percentage<"number">, a: Number_2 | Percentage<"number">, b: Number_2 | Percentage<"number">, alpha: Number_2 | Percentage<"percentage">): Oklab;
-    // (undocumented)
-    get red(): Percentage.Canonical;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): Oklab.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace Oklab {
-    // @internal
-    export type Component = Number_2.Canonical;
-    // (undocumented)
-    export function isLab(value: unknown): value is Oklab;
-    // (undocumented)
-    export interface JSON extends Triplet.JSON<"oklab"> {
-        // (undocumented)
-        a: Number_2.Fixed.JSON;
-        // (undocumented)
-        b: Number_2.Fixed.JSON;
-        // (undocumented)
-        lightness: Number_2.Fixed.JSON;
-    }
-    const // (undocumented)
-    parse: Parser<Oklab>;
-}
-
-// @public (undocumented)
-export class OkLCH extends Triplet<"oklch"> {
-    protected constructor(lightness: OkLCH.Component, chroma: OkLCH.Component, hue: OkLCH.Hue, alpha: Triplet.Alpha);
-    // (undocumented)
-    get blue(): Percentage.Canonical;
-    // (undocumented)
-    get chroma(): OkLCH.Component;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): Percentage.Canonical;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    get hue(): OkLCH.Hue;
-    // (undocumented)
-    get lightness(): OkLCH.Component;
-    // (undocumented)
-    static of(lightness: Number_2 | Percentage<"number">, chroma: Number_2 | Percentage<"number">, hue: Number_2 | Angle, alpha: Number_2 | Percentage<"percentage">): OkLCH;
-    // (undocumented)
-    get red(): Percentage.Canonical;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): OkLCH.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace OkLCH {
-    // @internal
-    export type Component = Number_2.Canonical;
-    // @internal (undocumented)
-    export type Hue = Number_2.Canonical | Angle.Canonical;
-    // (undocumented)
-    export function isOkLCH(value: unknown): value is OkLCH;
-    // (undocumented)
-    export interface JSON extends Triplet.JSON<"oklch"> {
-        // (undocumented)
-        chroma: Number_2.Fixed.JSON;
-        // (undocumented)
-        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
-        // (undocumented)
-        lightness: Number_2.Fixed.JSON;
-    }
-    const // (undocumented)
-    parse: Parser<OkLCH>;
-}
-
-// @public (undocumented)
 export type Parser<V> = Parser_2<Slice<Token>, V, string>;
 
 // Warning: (ae-internal-missing-underscore) The name "PartiallyResolvable" should be prefixed with an underscore because the declaration is marked as @internal
@@ -2165,17 +1764,17 @@ export namespace Perspective {
 //
 // @public (undocumented)
 export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape<"polygon", Value.HasCalculation<[V]>> implements Resolvable<Polygon.Canonical, Polygon.Resolver>, PartiallyResolvable<Polygon.PartiallyResolved, Polygon.PartialResolver> {
-    protected constructor(fill: Option<F>, vertices: Array_2<Polygon.Vertex<V>>);
+    protected constructor(fill: Option_2<F>, vertices: Array_2<Polygon.Vertex<V>>);
     // (undocumented)
     equals(value: Polygon): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get fill(): Option<F>;
+    get fill(): Option_2<F>;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
+    static of<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage>(fill: Option_2<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
     // (undocumented)
     partiallyResolve(resolver: Polygon.PartialResolver): Polygon.PartiallyResolved;
     // (undocumented)
@@ -2199,7 +1798,7 @@ export namespace Polygon {
     // (undocumented)
     export interface JSON<F extends Fill = Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape.JSON<"polygon"> {
         // (undocumented)
-        fill: Option.JSON<F>;
+        fill: Option_2.JSON<F>;
         // (undocumented)
         vertices: Array_2<Serializable.ToJSON<Vertex<V>>>;
     }
@@ -2411,50 +2010,6 @@ export namespace Resolvable {
         {};
 }
 
-// @public (undocumented)
-export class RGB extends Triplet<"rgb"> {
-    protected constructor(red: RGB.Component, green: RGB.Component, blue: RGB.Component, alpha: Triplet.Alpha);
-    // (undocumented)
-    get blue(): RGB.Component;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get green(): RGB.Component;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    static of(red: Number_2 | Percentage<"percentage">, green: Number_2 | Percentage<"percentage">, blue: Number_2 | Percentage<"percentage">, alpha: Number_2 | Percentage<"percentage">): RGB;
-    // (undocumented)
-    get red(): RGB.Component;
-    // (undocumented)
-    resolve(): RGB.Canonical;
-    // (undocumented)
-    toJSON(): RGB.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace RGB {
-    // (undocumented)
-    export type Canonical = RGB;
-    // @internal (undocumented)
-    export type Component = Number_2.Canonical | Percentage.Canonical;
-    // (undocumented)
-    export function isRGB(value: unknown): value is RGB;
-    // (undocumented)
-    export interface JSON extends Triplet.JSON<"rgb"> {
-        // (undocumented)
-        blue: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
-        // (undocumented)
-        green: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
-        // (undocumented)
-        red: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
-    }
-    const // (undocumented)
-    parse: Parser<RGB>;
-}
-
 // Warning: (ae-incompatible-release-tags) The symbol "Rotate" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
@@ -2541,7 +2096,7 @@ export class Scale<X extends Number_2.Canonical | Percentage.Canonical = Number_
     // (undocumented)
     get y(): Y;
     // (undocumented)
-    get z(): Option<Z>;
+    get z(): Option_2<Z>;
 }
 
 // @public (undocumented)
@@ -2805,6 +2360,8 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
+    const // @internal
+    parseFirst: Parser<Token>;
     // (undocumented)
     export namespace AtKeyword {
         // (undocumented)
@@ -3857,18 +3414,18 @@ export namespace Unit {
 // Warning: (ae-incompatible-release-tags) The symbol "URL" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 //
 // @public (undocumented)
-export class URL extends Value<"url", false> implements Resolvable<URL, never> {
+class URL_2 extends Value<"url", false> implements Resolvable<URL_2, never> {
     protected constructor(url: string);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of(url: string): URL;
+    static of(url: string): URL_2;
     // (undocumented)
-    resolve(): URL;
+    resolve(): URL_2;
     // (undocumented)
-    toJSON(): URL.JSON;
+    toJSON(): URL_2.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -3876,21 +3433,22 @@ export class URL extends Value<"url", false> implements Resolvable<URL, never> {
 }
 
 // @public (undocumented)
-export namespace URL {
+namespace URL_2 {
     // (undocumented)
-    export type Canonical = URL;
+    type Canonical = URL_2;
     // (undocumented)
-    export function isURL(value: unknown): value is URL;
+    function isURL(value: unknown): value is URL_2;
     // (undocumented)
-    export interface JSON extends Value.JSON<"url"> {
+    interface JSON extends Value.JSON<"url"> {
         // (undocumented)
         url: string;
     }
     // (undocumented)
-    export type Resolver = {};
+    type Resolver = {};
     const // (undocumented)
-    parse: Parser<URL>;
+    parse: Parser<URL_2>;
 }
+export { URL_2 as URL }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Value" is marked as @public, but its signature references "Resolvable" which is marked as @internal
 // Warning: (ae-incompatible-release-tags) The symbol "Value" is marked as @public, but its signature references "PartiallyResolvable" which is marked as @internal

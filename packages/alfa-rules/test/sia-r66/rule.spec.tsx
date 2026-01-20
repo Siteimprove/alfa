@@ -2,7 +2,7 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
+import { Color, Keyword, Percentage } from "@siteimprove/alfa-css";
 
 import R66 from "../../dist/sia-r66/rule.js";
 import { Contrast as Diagnostic } from "../../dist/common/diagnostic/contrast.js";
@@ -15,7 +15,7 @@ import { oracle } from "../common/oracle.js";
 import { ColorError, ColorErrors } from "../../dist/common/dom/get-colors.js";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
-  RGB.of(
+  Color.rgb(
     Percentage.of(r),
     Percentage.of(g),
     Percentage.of(b),

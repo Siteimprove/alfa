@@ -14,10 +14,10 @@ import { Context } from '@siteimprove/alfa-selector';
 import { CustomIdent } from '@siteimprove/alfa-css';
 import { Declaration } from '@siteimprove/alfa-dom';
 import { Device } from '@siteimprove/alfa-device';
-import { Element } from '@siteimprove/alfa-dom';
+import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import type { Functor } from '@siteimprove/alfa-functor';
-import { Image } from '@siteimprove/alfa-css';
+import { Image as Image_2 } from '@siteimprove/alfa-css';
 import { Integer } from '@siteimprove/alfa-css';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import type * as json from '@siteimprove/alfa-json';
@@ -29,10 +29,10 @@ import { List } from '@siteimprove/alfa-css';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import type { Mapper } from '@siteimprove/alfa-mapper';
 import type { Monad } from '@siteimprove/alfa-monad';
-import { Node } from '@siteimprove/alfa-dom';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
 import { Numeric } from '@siteimprove/alfa-css/dist/calculation/numeric/numeric.js';
-import { Option } from '@siteimprove/alfa-option';
+import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Origin } from '@siteimprove/alfa-cascade';
 import { Parser } from '@siteimprove/alfa-css';
 import * as parser from '@siteimprove/alfa-parser';
@@ -72,21 +72,21 @@ import { Specified as Specified_7 } from './property/border-top-width.js';
 import { Specified as Specified_8 } from './property/border-image-outset.js';
 import { Specified as Specified_9 } from './property/border-image-repeat.js';
 import { String as String_2 } from '@siteimprove/alfa-css';
-import { Text } from '@siteimprove/alfa-dom';
+import { Text as Text_2 } from '@siteimprove/alfa-dom';
 import { Token } from '@siteimprove/alfa-css';
 import { Transform } from '@siteimprove/alfa-css';
 import { Translate } from '@siteimprove/alfa-css';
 import { TrimFlags } from '@siteimprove/alfa-css';
 import { Tuple } from '@siteimprove/alfa-css';
 import { Unit } from '@siteimprove/alfa-css';
-import { URL } from '@siteimprove/alfa-css';
+import { URL as URL_2 } from '@siteimprove/alfa-css';
 import type { Value as Value_2 } from '@siteimprove/alfa-css';
 
 // Warning: (ae-internal-missing-underscore) The name "Longhand" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
 export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
-    protected constructor(initial: COMPUTED, parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>, compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>, inherits: boolean, use: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>);
+    protected constructor(initial: COMPUTED, parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>, compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>, inherits: boolean, use: Mapper<Value<COMPUTED>, Option_2<Value<COMPUTED>>, [style: Style]>);
     // (undocumented)
     get compute(): Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
     // (undocumented)
@@ -95,7 +95,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
         parse?: parser.Parser<Slice<Token>, SPECIFIED, string>;
         compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
         inherits?: boolean;
-        use?: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>;
+        use?: Mapper<Value<COMPUTED>, Option_2<Value<COMPUTED>>, [style: Style]>;
     }): Longhand<SPECIFIED, COMPUTED>;
     // (undocumented)
     get inherits(): boolean;
@@ -107,7 +107,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     get parse(): Longhand.Parser<SPECIFIED>;
     get parseBase(): parser.Parser<Slice<Token>, SPECIFIED, string>;
     // (undocumented)
-    get use(): Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>;
+    get use(): Mapper<Value<COMPUTED>, Option_2<Value<COMPUTED>>, [style: Style]>;
 }
 
 // @internal (undocumented)
@@ -120,7 +120,7 @@ export namespace Longhand {
         // (undocumented)
         readonly inherits: boolean;
         // (undocumented)
-        readonly use: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [
+        readonly use: Mapper<Value<COMPUTED>, Option_2<Value<COMPUTED>>, [
         style: Style
         ]>;
     }
@@ -167,7 +167,7 @@ export namespace Longhands {
         "background-attachment": Longhand<List<Specified.Item>, List<Specified.Item>>;
         "background-clip": Longhand<List<Box>, List<Box>>;
         "background-color": Longhand<Color, Color.Canonical>;
-        "background-image": Longhand<List<Specified_2.Item>, List<Image.PartiallyResolved | Keyword<"none">>>;
+        "background-image": Longhand<List<Specified_2.Item>, List<Image_2.PartiallyResolved | Keyword<"none">>>;
         "background-origin": Longhand<List<Box>, List<Box>>;
         "background-position-x": Longhand<List<Specified_3.Item>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Horizontal>>>;
         "background-position-y": Longhand<List<Specified_4.Item>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Vertical>>>;
@@ -191,7 +191,7 @@ export namespace Longhands {
         "border-image-outset": Longhand<Specified_8, Tuple<[top: Length | Number_2, right: Length | Number_2, bottom: Length | Number_2, left: Length | Number_2]>>;
         "border-image-repeat": Longhand<Specified_9, Specified_9>;
         "border-image-slice": Longhand<Specified_10, Tuple<[top: Number_2.Fixed | Percentage.Canonical, right: Number_2.Fixed | Percentage.Canonical, bottom: Number_2.Fixed | Percentage.Canonical, left: Number_2.Fixed | Percentage.Canonical]> | Tuple<[top: Number_2.Fixed | Percentage.Canonical, right: Number_2.Fixed | Percentage.Canonical, bottom: Number_2.Fixed | Percentage.Canonical, left: Number_2.Fixed | Percentage.Canonical, fill: Keyword<"fill">]>>;
-        "border-image-source": Longhand<Specified_11, Image.PartiallyResolved | Keyword<"none">>;
+        "border-image-source": Longhand<Specified_11, Image_2.PartiallyResolved | Keyword<"none">>;
         "border-image-width": Longhand<Specified_12, Tuple<[top: Number_2.Fixed | LengthPercentage | Keyword<"auto">, right: Number_2.Fixed | LengthPercentage | Keyword<"auto">, bottom: Number_2.Fixed | LengthPercentage | Keyword<"auto">, left: Number_2.Fixed | LengthPercentage | Keyword<"auto">]>>;
         "border-inline-end-color": Longhand<Color, Color.Canonical>;
         "border-inline-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
@@ -214,12 +214,12 @@ export namespace Longhands {
         "border-top-width": Longhand<Specified_7, Length>;
         bottom: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         "box-shadow": Longhand<Keyword<"none"> | List<Shadow<Length, Length, Length, Length, Color>>, Keyword<"none"> | List<Shadow.Canonical>>;
-        "clip-path": Longhand<URL | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>, URL | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>>;
+        "clip-path": Longhand<URL_2 | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>, URL_2 | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>>;
         clip: Longhand<Keyword<"auto"> | Shape<Rectangle<Length | Rectangle.Auto>, Keyword<"border-box">>, Keyword<"auto"> | Shape<Rectangle<Length | Rectangle.Auto>, Keyword<"border-box">>>;
         color: Longhand<Color, Color.Canonical>;
         contain: Longhand<ContainFlags | Keyword<"none"> | Keyword<"strict"> | Keyword<"content">, ContainFlags | Keyword<"none"> | Keyword<"strict"> | Keyword<"content">>;
         "container-type": Longhand<Keyword.ToKeywords<"size" | "inline-size" | "normal">, Keyword.ToKeywords<"size" | "inline-size" | "normal">>;
-        cursor: Longhand<Tuple<[List<URL | Tuple<[URL, Number_2, Number_2]>>, Keyword<"auto"> | Keyword<"none"> | Keyword<"default"> | Keyword<"context-menu"> | Keyword<"help"> | Keyword<"pointer"> | Keyword<"progress"> | Keyword<"wait"> | Keyword<"cell"> | Keyword<"crosshair"> | Keyword<"text"> | Keyword<"vertical-text"> | Keyword<"alias"> | Keyword<"copy"> | Keyword<"move"> | Keyword<"no-drop"> | Keyword<"not-allowed"> | Keyword<"grab"> | Keyword<"grabbing"> | Keyword<"e-resize"> | Keyword<"n-resize"> | Keyword<"ne-resize"> | Keyword<"nw-resize"> | Keyword<"s-resize"> | Keyword<"se-resize"> | Keyword<"sw-resize"> | Keyword<"w-resize"> | Keyword<"ew-resize"> | Keyword<"ns-resize"> | Keyword<"nesw-resize"> | Keyword<"nwse-resize"> | Keyword<"col-resize"> | Keyword<"row-resize"> | Keyword<"all-scroll"> | Keyword<"zoom-in"> | Keyword<"zoom-out">]>, Tuple<[List<URL | Tuple<[URL, Number_2.Fixed, Number_2.Fixed]>>, Keyword<"auto"> | Keyword<"none"> | Keyword<"default"> | Keyword<"context-menu"> | Keyword<"help"> | Keyword<"pointer"> | Keyword<"progress"> | Keyword<"wait"> | Keyword<"cell"> | Keyword<"crosshair"> | Keyword<"text"> | Keyword<"vertical-text"> | Keyword<"alias"> | Keyword<"copy"> | Keyword<"move"> | Keyword<"no-drop"> | Keyword<"not-allowed"> | Keyword<"grab"> | Keyword<"grabbing"> | Keyword<"e-resize"> | Keyword<"n-resize"> | Keyword<"ne-resize"> | Keyword<"nw-resize"> | Keyword<"s-resize"> | Keyword<"se-resize"> | Keyword<"sw-resize"> | Keyword<"w-resize"> | Keyword<"ew-resize"> | Keyword<"ns-resize"> | Keyword<"nesw-resize"> | Keyword<"nwse-resize"> | Keyword<"col-resize"> | Keyword<"row-resize"> | Keyword<"all-scroll"> | Keyword<"zoom-in"> | Keyword<"zoom-out">]>>;
+        cursor: Longhand<Tuple<[List<URL_2 | Tuple<[URL_2, Number_2, Number_2]>>, Keyword<"auto"> | Keyword<"none"> | Keyword<"default"> | Keyword<"context-menu"> | Keyword<"help"> | Keyword<"pointer"> | Keyword<"progress"> | Keyword<"wait"> | Keyword<"cell"> | Keyword<"crosshair"> | Keyword<"text"> | Keyword<"vertical-text"> | Keyword<"alias"> | Keyword<"copy"> | Keyword<"move"> | Keyword<"no-drop"> | Keyword<"not-allowed"> | Keyword<"grab"> | Keyword<"grabbing"> | Keyword<"e-resize"> | Keyword<"n-resize"> | Keyword<"ne-resize"> | Keyword<"nw-resize"> | Keyword<"s-resize"> | Keyword<"se-resize"> | Keyword<"sw-resize"> | Keyword<"w-resize"> | Keyword<"ew-resize"> | Keyword<"ns-resize"> | Keyword<"nesw-resize"> | Keyword<"nwse-resize"> | Keyword<"col-resize"> | Keyword<"row-resize"> | Keyword<"all-scroll"> | Keyword<"zoom-in"> | Keyword<"zoom-out">]>, Tuple<[List<URL_2 | Tuple<[URL_2, Number_2.Fixed, Number_2.Fixed]>>, Keyword<"auto"> | Keyword<"none"> | Keyword<"default"> | Keyword<"context-menu"> | Keyword<"help"> | Keyword<"pointer"> | Keyword<"progress"> | Keyword<"wait"> | Keyword<"cell"> | Keyword<"crosshair"> | Keyword<"text"> | Keyword<"vertical-text"> | Keyword<"alias"> | Keyword<"copy"> | Keyword<"move"> | Keyword<"no-drop"> | Keyword<"not-allowed"> | Keyword<"grab"> | Keyword<"grabbing"> | Keyword<"e-resize"> | Keyword<"n-resize"> | Keyword<"ne-resize"> | Keyword<"nw-resize"> | Keyword<"s-resize"> | Keyword<"se-resize"> | Keyword<"sw-resize"> | Keyword<"w-resize"> | Keyword<"ew-resize"> | Keyword<"ns-resize"> | Keyword<"nesw-resize"> | Keyword<"nwse-resize"> | Keyword<"col-resize"> | Keyword<"row-resize"> | Keyword<"all-scroll"> | Keyword<"zoom-in"> | Keyword<"zoom-out">]>>;
         display: Longhand<Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">, listitem: Keyword<"list-item">]> | Tuple<[outside: Keyword<"table-row-group"> | Keyword<"table-header-group"> | Keyword<"table-footer-group"> | Keyword<"table-row"> | Keyword<"table-cell"> | Keyword<"table-column-group"> | Keyword<"table-column"> | Keyword<"table-caption"> | Keyword<"ruby-base"> | Keyword<"ruby-text"> | Keyword<"ruby-base-container"> | Keyword<"ruby-text-container">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[Keyword<"none"> | Keyword<"contents">]>, Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">, listitem: Keyword<"list-item">]> | Tuple<[outside: Keyword<"table-row-group"> | Keyword<"table-header-group"> | Keyword<"table-footer-group"> | Keyword<"table-row"> | Keyword<"table-cell"> | Keyword<"table-column-group"> | Keyword<"table-column"> | Keyword<"table-caption"> | Keyword<"ruby-base"> | Keyword<"ruby-text"> | Keyword<"ruby-base-container"> | Keyword<"ruby-text-container">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[Keyword<"none"> | Keyword<"contents">]>>;
         "flex-direction": Longhand<Keyword.ToKeywords<"row" | "row-reverse" | "column" | "column-reverse">, Keyword.ToKeywords<"row" | "row-reverse" | "column" | "column-reverse">>;
         "flex-wrap": Longhand<Keyword.ToKeywords<"nowrap" | "wrap" | "wrap-reverse">, Keyword.ToKeywords<"nowrap" | "wrap" | "wrap-reverse">>;
@@ -245,10 +245,10 @@ export namespace Longhands {
         "letter-spacing": Longhand<Length | Keyword<"normal">, Length>;
         "line-break": Longhand<Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">, Keyword.ToKeywords<"auto" | "strict" | "normal" | "loose" | "anywhere">>;
         "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed>;
-        "margin-bottom": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-left": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-right": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        "margin-top": Longhand<Length | Percentage | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-bottom": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-left": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-right": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
+        "margin-top": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
         "mask-clip": Longhand<List<Specified_17.Item>, List<Specified_17.Item>>;
         "mask-composite": Longhand<List<Specified_18.Item>, List<Specified_18.Item>>;
         "mask-image": Longhand<List<Specified_19.Item>, List<Specified_19.Item>>;
@@ -257,19 +257,19 @@ export namespace Longhands {
         "mask-position": Longhand<List<Specified_21.Item>, List<Specified_21.Item>>;
         "mask-repeat": Longhand<List<Specified_22.Item>, List<Tuple<[Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">, Keyword<"repeat"> | Keyword<"space"> | Keyword<"round"> | Keyword<"no-repeat">]>>>;
         "mask-size": Longhand<List<Specified_23.Item>, List<Specified_23.Item>>;
-        "max-height": Longhand<Length | Percentage | Keyword<"none"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"none"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
-        "max-width": Longhand<Length | Percentage | Keyword<"none"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"none"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
-        "min-height": Longhand<Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
-        "min-width": Longhand<Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
-        "mix-blend-mode": Longhand<Keyword.ToKeywords<"screen" | "color" | "hue" | "saturation" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "luminosity" | "plus-darker" | "plus-lighter">, Keyword.ToKeywords<"screen" | "color" | "hue" | "saturation" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "luminosity" | "plus-darker" | "plus-lighter">>;
+        "max-height": Longhand<Percentage | Length | Keyword<"none"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"none"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
+        "max-width": Longhand<Percentage | Length | Keyword<"none"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"none"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
+        "min-height": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
+        "min-width": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
+        "mix-blend-mode": Longhand<Keyword.ToKeywords<"screen" | "color" | "hue" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "saturation" | "luminosity" | "plus-darker" | "plus-lighter">, Keyword.ToKeywords<"screen" | "color" | "hue" | "normal" | "multiply" | "overlay" | "darken" | "lighten" | "color-dodge" | "color-burn" | "hard-light" | "soft-light" | "difference" | "exclusion" | "saturation" | "luminosity" | "plus-darker" | "plus-lighter">>;
         opacity: Longhand<Number_2 | Percentage<"percentage">, Number_2.Fixed>;
         "outline-color": Longhand<Color | Keyword<"invert">, Color.Canonical | Keyword<"invert">>;
         "outline-offset": Longhand<Length | Length<Unit.Length>, Length>;
         "outline-style": Longhand<Keyword.ToKeywords<"none" | "inset" | "auto" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "inset" | "auto" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         "outline-width": Longhand<Length | Keyword<"thin"> | Keyword<"medium"> | Keyword<"thick">, Length>;
         "overflow-wrap": Longhand<Keyword.ToKeywords<"normal" | "anywhere" | "break-word">, Keyword.ToKeywords<"normal" | "anywhere" | "break-word">>;
-        "overflow-x": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
-        "overflow-y": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
+        "overflow-x": Longhand<Keyword.ToKeywords<"hidden" | "clip" | "auto" | "scroll" | "visible">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"clip"> | Keyword<"visible">>;
+        "overflow-y": Longhand<Keyword.ToKeywords<"hidden" | "clip" | "auto" | "scroll" | "visible">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"clip"> | Keyword<"visible">>;
         perspective: Longhand<Keyword<"none"> | Perspective<Length>, Keyword<"none"> | Perspective<Length>>;
         "pointer-events": Longhand<Keyword.ToKeywords<"none" | "auto">, Keyword.ToKeywords<"none" | "auto">>;
         position: Longhand<Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">, Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">>;
@@ -408,9 +408,9 @@ export namespace Shorthands {
 // @public (undocumented)
 export class Style implements Serializable<Style.JSON> {
     // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
-    protected constructor(owner: Option<Element>, device: Device, parent: Option<Style>, variables: Map_2<string, Value<Slice<Token>>>, properties: Map_2<Name, Value>);
+    protected constructor(owner: Option_2<Element_2>, device: Device, parent: Option_2<Style>, variables: Map_2<string, Value<Slice<Token>>>, properties: Map_2<Name, Value>);
     // (undocumented)
-    cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>>;
+    cascaded<N extends Name>(name: N): Option_2<Value<Style.Cascaded<N>>>;
     // (undocumented)
     computed<N extends Name>(name: N): Value<Style.Computed<N>>;
     // (undocumented)
@@ -420,10 +420,10 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     inherited<N extends Name>(name: N): Value<Style.Inherited<N>>;
     // (undocumented)
-    initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
-    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option<Style>, owner?: Option<Element>): Style;
+    initial<N extends Name>(name: N, source?: Option_2<Declaration>): Value<Style.Initial<N>>;
+    static of(styleDeclarations: Iterable_2<[Declaration, Origin]>, device: Device, parent?: Option_2<Style>, owner?: Option_2<Element_2>): Style;
     // (undocumented)
-    get owner(): Option<Element>;
+    get owner(): Option_2<Element_2>;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
@@ -435,7 +435,7 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     toJSON(): Style.JSON;
     // (undocumented)
-    used<N extends Name>(name: N): Option<Value<Style.Computed<N>>>;
+    used<N extends Name>(name: N): Option_2<Value<Style.Computed<N>>>;
     // (undocumented)
     get variables(): Map_2<string, Value<Slice<Token>>>;
 }
@@ -448,7 +448,7 @@ export namespace Style {
     export type Computed<N extends Name> = Longhands.Computed<N>;
     // (undocumented)
     export type Declared<N extends Name> = Longhands.Declared<N>;
-    export function from(element: Element, device: Device, context?: Context): Style;
+    export function from(element: Element_2, device: Device, context?: Context): Style;
     // (undocumented)
     export type Inherited<N extends Name> = Longhands.Inherited<N>;
     // (undocumented)
@@ -490,7 +490,7 @@ export namespace Style {
     isTabbable: typeof element.isTabbable, // (undocumented)
     isVisibleShadow: typeof element.isVisibleShadow;
     const // (undocumented)
-    innerText: (device: Device, isAcceptable?: (device: Device) => Predicate<Text>) => (element: Element) => string, // Warning: (ae-forgotten-export) The symbol "node" needs to be exported by the entry point index.d.ts
+    innerText: (device: Device, isAcceptable?: (device: Device) => Predicate<Text_2>) => (element: Element_2) => string, // Warning: (ae-forgotten-export) The symbol "node" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     isRendered: typeof node.isRendered, // (undocumented)
@@ -513,7 +513,7 @@ export namespace Style {
 export class Value<T = unknown> implements Functor<T>, Applicative<T>, Monad<T>, Iterable<T>, Equatable, Serializable<Value.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
-    protected constructor(value: T, source: Option<Declaration>);
+    protected constructor(value: T, source: Option_2<Declaration>);
     // (undocumented)
     apply<U>(mapper: Value<Mapper<T, U>>): Value<U>;
     // (undocumented)
@@ -521,23 +521,23 @@ export class Value<T = unknown> implements Functor<T>, Applicative<T>, Monad<T>,
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>): Value<U>;
+    flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option_2<Declaration>]>): Value<U>;
     // (undocumented)
     flatten<T>(this: Value<Value<T>>): Value<T>;
     // (undocumented)
     includes(value: T): boolean;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U, [source: Option<Declaration>]>): Value<U>;
+    map<U>(mapper: Mapper<T, U, [source: Option_2<Declaration>]>): Value<U>;
     // (undocumented)
-    none(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
+    none(predicate: Predicate<T, [source: Option_2<Declaration>]>): boolean;
     // (undocumented)
-    static of<T>(value: T, source?: Option<Declaration>): Value<T>;
+    static of<T>(value: T, source?: Option_2<Declaration>): Value<T>;
     // (undocumented)
     resolve<T extends Value_2>(this: Value<T>, resolver?: Resolvable.Resolver<T>): Value<Resolvable.Resolved<T>>;
     // (undocumented)
-    some(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
+    some(predicate: Predicate<T, [source: Option_2<Declaration>]>): boolean;
     // (undocumented)
-    get source(): Option<Declaration>;
+    get source(): Option_2<Declaration>;
     // (undocumented)
     toJSON(): Value.JSON<T>;
     // (undocumented)

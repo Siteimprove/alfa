@@ -1,0 +1,115 @@
+/*
+ * Given that the CSS4 color parser uses the colorjs.io library, we mostly have
+ *  surface level tests that integration works as expected.
+ *
+ * This does not include extensive tests of many scenarios. This does not
+ * include extensive tests of the results of parsing, just checking that it works.
+ */
+import { test } from "@siteimprove/alfa-test";
+
+import { CSS4Color } from "../../../dist/value/color/css4-color.js";
+import { Lexer } from "../../../dist/index.js";
+import { color } from "../../common/color.js";
+
+import { parser, parserUnsafe } from "../../common/parse.js";
+
+const parse = parserUnsafe(CSS4Color.parse);
+const parseErr = parser(CSS4Color.parse);
+
+const red = color(1, 0, 0);
+
+test(".parse() correctly parses basic colors", (t) => {
+  for (const color of ["#f00", "red", "rgb(255, 0, 0)"]) {
+    const actual = parse(color);
+
+    t.deepEqual(actual.toJSON(), red);
+  }
+});
+
+test(".parse() accepts color as part of a larger input", (t) => {
+  for (const color of ["#f00 foo", "red foo", "rgb(255, 0, 0) foo"]) {
+    const actual = CSS4Color.parse(Lexer.lex(color));
+
+    const [rest, actualColor] = actual.getUnsafe(`Couldn't get ${color}`);
+
+    t.deepEqual(actualColor.toJSON(), red);
+    t.deepEqual(rest.toJSON(), [
+      { type: "whitespace" },
+      { type: "ident", value: "foo" },
+    ]);
+  }
+});
+
+test(".parse() graciously rejects invalid colors", (t) => {
+  for (const color of [
+    "#12",
+    "#12345",
+    "not-a-color",
+    "rgb(300, 0)",
+    "hsl(0 100% 50% 1.5 10)",
+    "color(invalid 1 0 0)",
+    "lab(50 0)",
+  ]) {
+    t(parseErr(color).isErr(), `Expected parsing "${color}" to fail.`);
+  }
+});
+
+test(".parse() parses various color formats", (t) => {
+  for (const color of [
+    "#f00",
+    "red",
+    "rgb(255, 0, 0)",
+    "rgba(100% 0 0% /0.5)",
+    "hsl(none 100% 50%)",
+    "hsla(0 100% 50% / 0.2)",
+    "color(srgb 1 0 none / 0.3)",
+    "color(display-p3 1 0 0)",
+    "color(rec2020 1 0 0 / 0.8)",
+    "color(prophoto-rgb 1 0 0)",
+    "lab(53.23288 80.10933 67.22006)",
+    "lch(53.23288 104.5525 39.99787)",
+    "oklab(0.62796 0.22486 none)",
+    "oklch(0.62796 0.25619 29.23495)",
+  ]) {
+    t(parseErr(color).isOk(), `Expected parsing "${color}" to succeed.`);
+  }
+});
+
+test(".parse() parses various color formats with calculations", (t) => {
+  for (const color of [
+    "rgb(255, 0, calc(10 + 10))",
+    "rgba(calc(10% * 2) 0 0% /0.5)",
+    "hsl(calc(10 - 5) 100% 50%)",
+    "hsla(calc(20deg + 1rad) 100% 50% / 0.2)",
+    "color(srgb 1 0 calc(1 / 2) / 0.3)",
+    "color(display-p3 calc(20% + 10%) 0 0)",
+    "color(rec2020 1 0 calc(0 - 0) / 0.8)",
+    "lab(calc(20 * 2) 80.10933 67.22006)",
+    "lch(53.23288 104.5525 calc(10deg + 20deg))",
+  ]) {
+    t(parseErr(color).isOk(), `Expected parsing "${color}" to succeed.`);
+  }
+});
+
+test(".parse() graciously rejects various color formats with incorrect calculations", (t) => {
+  // Mixing types in the calculation, e.g. using an <angle-number> when hue
+  // expects an <angle> | <number>
+  for (const color of [
+    "rgb(255, 0, calc(10 + 10%))",
+    "hsl(calc(10% - 5) 100% 50%)",
+    "color(display-p3 calc(20% + 10) 0 0)",
+    "color(rec2020 calc(20px + 1em) 0 0)",
+    "lab(calc(20 * 2 + 1%) 80.10933 67.22006)",
+  ]) {
+    t(parseErr(color).isErr(), `Expected parsing "${color}" to fail.`);
+  }
+});
+
+test("CSS4Color are immutable", (t) => {
+  const color = parse("rgb(255, 0, 0)");
+  const target = color.color;
+  target.r = 0;
+
+  t.deepEqual(color.toJSON(), red);
+  t.deepEqual(target.r, 0);
+});

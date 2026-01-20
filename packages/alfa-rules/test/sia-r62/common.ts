@@ -1,4 +1,4 @@
-import { Percentage, RGB } from "@siteimprove/alfa-css";
+import { CSS4Color, Color, Percentage } from "@siteimprove/alfa-css";
 import type { Result } from "@siteimprove/alfa-result";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Contrast } from "../../dist/common/diagnostic/contrast.js";
@@ -24,8 +24,8 @@ export function addOutline(
 }
 
 export function makePairing(
-  container: RGB,
-  link: RGB,
+  container: CSS4Color,
+  link: CSS4Color,
   contrast: number,
 ): Contrast.Pairing<["container", "link"]> {
   return Contrast.Pairing.of<["container", "link"]>(
@@ -46,14 +46,10 @@ export namespace Defaults {
   // initial value. As a consequence, we cannot just override properties since
   // in this case we need to actually *remove* outline-width from the diagnostic!
 
-  export const defaultLinkColor = RGB.of(
-    Percentage.of(0),
-    Percentage.of(0),
-    Percentage.of(0.9333333),
-    Percentage.of(1),
-  );
+  // Taken from the User Agent Stylesheet for `:link`.
+  export const defaultLinkColor = Color.of("#0000ee").getUnsafe();
 
-  export const defaultTextColor = RGB.of(
+  export const defaultTextColor = Color.rgb(
     Percentage.of(0),
     Percentage.of(0),
     Percentage.of(0),
@@ -69,7 +65,7 @@ export namespace Defaults {
     [
       ["border-width", "0px"],
       ["font", "16px serif"],
-      ["color", "rgb(0% 0% 93.33333%)"],
+      ["color", defaultLinkColor.toString()],
       ["outline", "0px"],
     ],
     defaultContrastPairings,

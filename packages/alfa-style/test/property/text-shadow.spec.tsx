@@ -1,8 +1,11 @@
+import { Device } from "@siteimprove/alfa-device";
 import { test } from "@siteimprove/alfa-test";
 
-import { cascaded } from "../common.js";
+import { cascaded, color } from "../common.js";
 import { Style } from "../../dist/index.js";
-import { Device } from "@siteimprove/alfa-device";
+
+const black = color(0, 0, 0);
+const red = color(1, 0, 0);
 
 test(`.cascaded() parses \`text-shadow: 1px 1px 2px black;\``, (t) => {
   const element = (
@@ -18,7 +21,7 @@ test(`.cascaded() parses \`text-shadow: 1px 1px 2px black;\``, (t) => {
         horizontal: { type: "length", value: 1, unit: "px" },
         blur: { type: "length", value: 2, unit: "px" },
         spread: { type: "length", value: 0, unit: "px" },
-        color: { type: "color", format: "named", color: "black" },
+        color: black,
         isInset: false,
       },
     ],
@@ -62,7 +65,7 @@ test(`.cascaded() parses \`text-shadow: 1px 1px black;\``, (t) => {
         horizontal: { type: "length", value: 1, unit: "px" },
         blur: { type: "length", value: 0, unit: "px" },
         spread: { type: "length", value: 0, unit: "px" },
-        color: { type: "color", format: "named", color: "black" },
+        color: black,
         isInset: false,
       },
     ],
@@ -84,7 +87,7 @@ test(`.cascaded() parses \`text-shadow: black 1px 1px;\``, (t) => {
         horizontal: { type: "length", value: 1, unit: "px" },
         blur: { type: "length", value: 0, unit: "px" },
         spread: { type: "length", value: 0, unit: "px" },
-        color: { type: "color", format: "named", color: "black" },
+        color: black,
         isInset: false,
       },
     ],
@@ -108,7 +111,7 @@ test(`.cascaded() accepts list of shadowds`, (t) => {
         horizontal: { type: "length", value: 1, unit: "px" },
         blur: { type: "length", value: 0, unit: "px" },
         spread: { type: "length", value: 0, unit: "px" },
-        color: { type: "color", format: "named", color: "black" },
+        color: black,
         isInset: false,
       },
       {
@@ -117,7 +120,7 @@ test(`.cascaded() accepts list of shadowds`, (t) => {
         horizontal: { type: "length", value: 2, unit: "px" },
         blur: { type: "length", value: 0, unit: "px" },
         spread: { type: "length", value: 0, unit: "px" },
-        color: { type: "color", format: "named", color: "red" },
+        color: red,
         isInset: false,
       },
     ],

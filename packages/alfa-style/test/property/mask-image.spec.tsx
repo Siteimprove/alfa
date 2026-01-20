@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom";
 
-import { computed } from "../common.js";
+import { color, computed } from "../common.js";
 
 test("initial value is none", (t) => {
   t.deepEqual(computed(<div></div>, "mask-image"), {
@@ -51,30 +51,8 @@ test("#computed parses linear-gradient value", (t) => {
               kind: "linear",
               direction: { type: "side", side: "bottom" },
               items: [
-                {
-                  color: {
-                    type: "color",
-                    format: "rgb",
-                    alpha: { type: "percentage", value: 1 },
-                    red: { type: "percentage", value: 1 },
-                    green: { type: "percentage", value: 0 },
-                    blue: { type: "percentage", value: 0 },
-                  },
-                  position: null,
-                  type: "stop",
-                },
-                {
-                  color: {
-                    type: "color",
-                    format: "rgb",
-                    alpha: { type: "percentage", value: 1 },
-                    red: { type: "percentage", value: 0 },
-                    green: { type: "percentage", value: 0 },
-                    blue: { type: "percentage", value: 1 },
-                  },
-                  position: null,
-                  type: "stop",
-                },
+                { color: color(1, 0, 0), position: null, type: "stop" },
+                { color: color(0, 0, 1), position: null, type: "stop" },
               ],
               repeats: false,
             },

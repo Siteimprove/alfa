@@ -94,7 +94,7 @@ export namespace Expression {
    */
 
   /**
-   * Length may appear in any expression if they are cancelled out by division
+   * Length may appear in any expression if they are canceled out by division
    * ("1em / 1px" is a number), so we always accept a length resolver.
    *
    * @internal

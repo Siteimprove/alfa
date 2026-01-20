@@ -1,13 +1,15 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { cascaded } from "../common.js";
+import { cascaded, color } from "../common.js";
+
+const red = color(1, 0, 0);
 
 test("#cascaded() parses `background: red`", (t) => {
   const element = <div style={{ background: `red` }} />;
 
   t.deepEqual(cascaded(element, "background-color"), {
-    value: { type: "color", format: "named", color: "red" },
+    value: red,
     source: h.declaration("background", "red").toJSON(),
   });
 });

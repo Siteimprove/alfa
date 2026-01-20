@@ -1,11 +1,11 @@
-import { Percentage, RGB } from "@siteimprove/alfa-css";
+import { Color, Percentage } from "@siteimprove/alfa-css";
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 import R62, { Outcomes } from "../../dist/sia-r62/rule.js";
 import { evaluate } from "../common/evaluate.js";
 import { inapplicable, passed } from "../common/outcome.js";
-import { Defaults, addCursor, addOutline, makePairing } from "./common.js";
+import { addCursor, addOutline, Defaults, makePairing } from "./common.js";
 
 const {
   defaultStyle,
@@ -228,7 +228,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
     passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style, Err.of(spanStyle)],
-        [addCursor(Ok.of(spanStyle)), addCursor(style)],
+        [addCursor(style), addCursor(Ok.of(spanStyle))],
         [addOutline(style), Err.of(spanStyle)],
       ),
     }),
@@ -332,7 +332,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
   );
 
   // #000000 mixed with rgba(255, 255, 255, 0.1)
-  const offBlack = RGB.of(
+  const offBlack = Color.rgb(
     Percentage.of(0.1),
     Percentage.of(0.1),
     Percentage.of(0.1),
@@ -340,7 +340,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
   );
 
   // #0000EE mixed with rgba(255, 255, 255, 0.1)
-  const offBlue = RGB.of(
+  const offBlue = Color.rgb(
     Percentage.of(0.1),
     Percentage.of(0.1),
     Percentage.of(0.94),
@@ -350,11 +350,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
   const style = Ok.of(
     noDistinguishingProperties
       .withStyle(
-        [
-          "background",
-          "linear-gradient(to right, rgb(0% 0% 0%) 50%, rgb(0% 0% 93.33333%) 50%)",
-        ],
-        ["color", "rgb(100% 100% 100% / 10%)"],
+        ["background", "linear-gradient(to right, #000 50%, #00e 50%)"],
+        ["color", "rgba(255, 255, 255, 0.1)"],
         ["text-decoration", "underline"],
       )
       .withPairings([

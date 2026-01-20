@@ -5,33 +5,33 @@
 ```ts
 
 import { Device } from '@siteimprove/alfa-device';
-import { Document } from '@siteimprove/alfa-dom';
+import { Document as Document_2 } from '@siteimprove/alfa-dom';
 import type * as earl from '@siteimprove/alfa-earl';
 import type { Graph } from '@siteimprove/alfa-graph';
 import type * as json from '@siteimprove/alfa-json';
-import type { Node } from '@siteimprove/alfa-dom';
-import { Request } from '@siteimprove/alfa-http';
-import { Response } from '@siteimprove/alfa-http';
+import type { Node as Node_2 } from '@siteimprove/alfa-dom';
+import { Request as Request_2 } from '@siteimprove/alfa-http';
+import { Response as Response_2 } from '@siteimprove/alfa-http';
 import type { Result } from '@siteimprove/alfa-result';
 import type * as sarif from '@siteimprove/alfa-sarif';
 
 // @public (undocumented)
 export class Page implements Resource, json.Serializable<Page.JSON>, earl.Serializable<Page.EARL>, sarif.Serializable<sarif.Artifact> {
-    protected constructor(request: Request, response: Response, document: Document, device: Device);
+    protected constructor(request: Request_2, response: Response_2, document: Document_2, device: Device);
     // (undocumented)
     get device(): Device;
     // (undocumented)
-    get document(): Document;
+    get document(): Document_2;
     // (undocumented)
-    static of(request: Request, response: Response, document: Document, device: Device): Page;
+    static of(request: Request_2, response: Response_2, document: Document_2, device: Device): Page;
     // (undocumented)
-    get request(): Request;
+    get request(): Request_2;
     // (undocumented)
-    get response(): Response;
+    get response(): Response_2;
     // (undocumented)
     toEARL(): Page.EARL;
     // (undocumented)
-    toJSON(options?: Node.SerializationOptions): Page.JSON;
+    toJSON(options?: Node_2.SerializationOptions): Page.JSON;
     // (undocumented)
     toSARIF(): sarif.Artifact;
 }
@@ -50,7 +50,7 @@ export namespace Page {
         // (undocumented)
         "@type": ["earl:TestSubject"];
         // (undocumented)
-        "dct:hasPart": [Request.EARL, Response.EARL];
+        "dct:hasPart": [Request_2.EARL, Response_2.EARL];
         // (undocumented)
         "dct:source": string;
     }
@@ -65,20 +65,20 @@ export namespace Page {
         // (undocumented)
         device: Device.JSON;
         // (undocumented)
-        document: Document.JSON;
+        document: Document_2.JSON;
         // (undocumented)
-        request: Request.JSON;
+        request: Request_2.JSON;
         // (undocumented)
-        response: Response.JSON;
+        response: Response_2.JSON;
     }
 }
 
 // @public (undocumented)
 export interface Resource {
     // (undocumented)
-    readonly request: Request;
+    readonly request: Request_2;
     // (undocumented)
-    readonly response: Response;
+    readonly response: Response_2;
 }
 
 // @public (undocumented)

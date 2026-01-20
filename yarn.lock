@@ -1676,12 +1676,12 @@ __metadata:
     "@siteimprove/alfa-record": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     "@siteimprove/alfa-result": "workspace:^"
-    "@siteimprove/alfa-rng": "workspace:^"
     "@siteimprove/alfa-selective": "workspace:^"
     "@siteimprove/alfa-slice": "workspace:^"
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-thunk": "workspace:^"
+    colorjs.io: "npm:^0.6.1"
   languageName: unknown
   linkType: soft
 
@@ -3601,6 +3601,13 @@ __metadata:
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: 10c0/a1a3f914156960902f46f7f56bc62effc6c94e84b2cae157a526b1c1f74b677a47ec602bf68a61abfa2b42d15b7c5651c6dbe72a43af720bc588dff885b10f95
+  languageName: node
+  linkType: hard
+
+"colorjs.io@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "colorjs.io@npm:0.6.1"
+  checksum: 10c0/972aff12d88e86726898ff110aa15ea57a0348a3b958aeb93f4d6ae2d0ca91e487864e4d0d98b53943cc3ac3f747fb01b5ba3b6d922848d5c6888cb56e470b84
   languageName: node
   linkType: hard
 
