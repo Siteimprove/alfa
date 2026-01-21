@@ -9,16 +9,16 @@
   actually need it.
  */
 /*
-  The "." default directory is relative to this file for dynamic imports, not
-  to the shell invocation directory. So it is always safer to pass the actual
-  directory as CLI option, typically using "$(pwd)" to let the shell handle it
+ The "." default directory is relative to this file for dynamic imports, not
+ to the shell invocation directory. So it is always safer to pass the actual
+ directory as CLI option, typically using "$(pwd)" to let the shell handle it
  */
 import { getPackages, type Packages } from "@manypkg/get-packages";
-import * as gv from "ts-graphviz";
 import * as adapter from "@ts-graphviz/adapter";
 
 import * as fs from "node:fs";
 import path from "node:path";
+import * as gv from "ts-graphviz";
 import { loadJSON } from "../common.js";
 
 import type { DependencyGraph } from "./dependency-graph.js";
@@ -36,8 +36,7 @@ import { GraphFactory } from "./helpers.js";
   `yarn generate-dependency-graphs $(pwd) all`
   `yarn generate-dependency-graphs $(pwd) global`
   `yarn generate-dependency-graphs $(pwd) @siteimprove/alfa-toolchain`
- `yarn generate-dependency-graphs $(pwd) alfa-toolchain`
-
+  `yarn generate-dependency-graphs $(pwd) alfa-toolchain`
  */
 
 const targetPath = process.argv[2] ?? ".";
