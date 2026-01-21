@@ -40,7 +40,7 @@ runs:
     - name: Generated global dependency graph
       if: inputs.many-graphs == 'true'
       shell: bash
-      run: yarn generate-global-dependency-graph ${{ github.workspace }} global
+      run: yarn generate-dependency-graphs ${{ github.workspace }} global
 
     - name: Stage changes
       shell: bash
