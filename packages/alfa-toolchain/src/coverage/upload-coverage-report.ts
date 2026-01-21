@@ -4,7 +4,6 @@ import * as path from "node:path";
 
 const url = process.env.COVERAGE_API_URL;
 const apiKey = process.env.COVERAGE_API_KEY;
-const webHookUrl = process.env.COVERAGE_WEBHOOK_URL;
 
 const configFile = path.join("config", "upload-coverage-report.json");
 const summaryFile = path.join("docs", "coverage", "coverage-summary.json");
@@ -64,30 +63,6 @@ export async function uploadCoverageReport(rootDir: string) {
     });
     console.group("Upload Coverage Report - API Response");
     console.dir(response.data);
-    console.groupEnd();
-  }
-
-  if (webHookUrl ?? "" !== "") {
-    const response = await axios.post(
-      // webHookUrl cannot be undefined as it would have defaulted to "" in the test.
-      webHookUrl!,
-      {
-        service_alias: config.service_alias,
-        coverage: summary.total.lines.pct,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
-    console.group("Upload Coverage Report - Webhook Response");
-    console.dir(response.data);
-    console.groupEnd();
-  } else {
-    console.group("Upload Coverage Report - Missing Webhook Configuration");
-    console.warn("COVERAGE_WEBHOOK_URL is not set in the environment.");
-    console.warn("Skipping webhook notification.");
     console.groupEnd();
   }
 }
