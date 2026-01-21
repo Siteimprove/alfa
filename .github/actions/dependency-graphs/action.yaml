@@ -1,6 +1,15 @@
 name: Generate dependency graphs
 description: This re-generates the dependency graphs of each package
 
+inputs:
+  many-graphs:
+    # Circumvent https://github.com/ts-graphviz/ts-graphviz/issues/1563
+    # ts-graphivz uses a single `Builder` instance for all graphs generated in a given process,
+    # therefore its max nodes limit is effectively a global limit, not a limit per graph.
+    description: "Whether to generate the packages graphs in a single node process or several"
+    required: false
+    default: "false"
+
 runs:
   using: composite
 
@@ -14,9 +23,24 @@ runs:
         echo "This workflow can only be called from the main branch."
         exit 1
 
-    - name: Generate dependency graphs
+    - name: Generate dependency graphs (all together)
+      if: inputs.many-graphs == 'false'
       shell: bash
       run: yarn generate-dependency-graphs ${{ github.workspace }}
+
+    - name: Generate dependency graphs (one by one)
+      if: inputs.many-graphs == 'true'
+      shell: bash
+      run: >
+        yarn workspaces foreach
+        --all --parallel
+        --exclude "@siteimprove/alfa"
+        run yarn depgraph:self
+
+    - name: Generated global dependency graph
+      if: inputs.many-graphs == 'true'
+      shell: bash
+      run: yarn generate-global-dependency-graph ${{ github.workspace }} global
 
     - name: Stage changes
       shell: bash
