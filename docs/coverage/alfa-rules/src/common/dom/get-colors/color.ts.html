@@ -138,17 +138,11 @@
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,13 +165,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">183x</span>
 <span class="cline-any cline-yes">176x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,13 +180,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">476x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -233,7 +213,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type Color as CSSColor, Percentage, RGB } from "@siteimprove/alfa-css";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+  Color as CSSColor,
+  CSS4Color,
+  Percentage,
+} from "@siteimprove/alfa-css";
 import { None, Option } from "@siteimprove/alfa-option";
 import type { Style } from "@siteimprove/alfa-style";
 &nbsp;
@@ -243,7 +227,7 @@ import type { Style } from "@siteimprove/alfa-style";
 export namespace Color {
   export type Computed = CSSColor.Canonical;
 &nbsp;
-  export type Resolved = RGB&lt;Percentage.Canonical, Percentage.Canonical&gt;;
+  export type Resolved = CSS4Color.Canonical;
 &nbsp;
   export function resolve(color: Computed, style: Style): Option&lt;Resolved&gt; {
     switch (color.type) {
@@ -252,20 +236,13 @@ export namespace Color {
           color = style.computed("color").value;
 &nbsp;
           if (color.type === "color") {
-            return Option.of(
-              RGB.of(
-                color.red,
-                color.green,
-                color.blue,
-                Percentage.of(color.alpha.value),
-              ),
-            );
+            return Option.of(color);
           }
         }
 &nbsp;
         if (color.value === "canvastext") {
           return Option.of(
-            RGB.of(
+            CSSColor.rgb(
               Percentage.of(0),
               Percentage.of(0),
               Percentage.of(0),
@@ -277,14 +254,7 @@ export namespace Color {
         return None;
 &nbsp;
       case "color":
-        return Option.of(
-          RGB.of(
-            color.red,
-            color.green,
-            color.blue,
-            Percentage.of(color.alpha.value),
-          ),
-        );
+        return Option.of(color);
     }
   }
 &nbsp;
@@ -310,7 +280,7 @@ export namespace Color {
       [foreground.blue, background.blue],
     ].map(([a, b]) =&gt; a.value * foregroundOpacity + b.value * alpha);
 &nbsp;
-    return RGB.of(
+    return CSSColor.rgb(
       Percentage.of(red),
       Percentage.of(green),
       Percentage.of(blue),
@@ -325,7 +295,7 @@ export namespace Color {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-10T12:09:13.630Z
+                at 2026-01-21T11:57:48.339Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>
