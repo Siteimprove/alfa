@@ -1,5 +1,13 @@
 # @siteimprove/alfa-dom
 
+## 0.109.0
+
+### Patch Changes
+
+- **Added:** A new function `getTextDescendants` has been added to the `Query` namespace. It retrieves all text descendants of a node, with an option to group text under matching sub-trees into labeled `TextGroup` objects. ([#1972](https://github.com/Siteimprove/alfa/pull/1972))
+
+- **Changed:** The `index()` method on nodes now accepts an optional predicate parameter to filter siblings when calculating the node's index position. ([#1980](https://github.com/Siteimprove/alfa/pull/1980))
+
 ## 0.108.2
 
 ## 0.108.1

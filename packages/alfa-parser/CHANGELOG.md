@@ -1,5 +1,11 @@
 # @siteimprove/alfa-parser
 
+## 0.109.0
+
+### Patch Changes
+
+- **Added:** A new `Parser.array` combinator is available, parsing according to an array of parsers, in order. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
 ## 0.108.2
 
 ## 0.108.1

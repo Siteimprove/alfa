@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-thenable",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.108.2",
+  "version": "0.109.0",
   "license": "MIT",
   "description": "Functionality for working with thenables, which are promise-like structures that can be awaited",
   "repository": {
