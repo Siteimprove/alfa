@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rng
 
+## 0.109.0
+
+### Patch Changes
+
+- **Added:** `RNGFactory#zip` is now available to zip two array factories into an array of tuples factory. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
 ## 0.108.2
 
 ## 0.108.1

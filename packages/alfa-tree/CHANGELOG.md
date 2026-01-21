@@ -1,5 +1,11 @@
 # @siteimprove/alfa-tree
 
+## 0.109.0
+
+### Patch Changes
+
+- **Changed:** The `index()` method on nodes now accepts an optional predicate parameter to filter siblings when calculating the node's index position. ([#1980](https://github.com/Siteimprove/alfa/pull/1980))
+
 ## 0.108.2
 
 ## 0.108.1

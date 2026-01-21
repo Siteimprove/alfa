@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.109.0
+
+### Patch Changes
+
+- **Fixed:** R83 now more accurately computes line boxes for text nodes in clipping flex items in wrapping flex containers. ([#1960](https://github.com/Siteimprove/alfa/pull/1960))
+
 ## 0.108.2
 
 ## 0.108.1

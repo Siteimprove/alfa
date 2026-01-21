@@ -1,5 +1,20 @@
 # @siteimprove/alfa-toolchain
 
+## 0.109.0
+
+### Patch Changes
+
+- **Changed:** Global dependency graph now only includes dependencies in the current workspaces, rather than by scope. ([#1953](https://github.com/Siteimprove/alfa/pull/1953))
+
+  This allows to have several workspaces with the same scope without pulling everything out, typically the situation we have with many `alfa-integrations` packages depending on the main `alfa` packages.
+
+- **Added:** `yarn generate-dependency-graph` can now generate only some of the graphs. ([#1953](https://github.com/Siteimprove/alfa/pull/1953))
+
+  E.g.:
+  - `yarn generate-dependency-graphs $(pwd) all` to generate all graphs.
+  - `yarn generate-dependency-graphs $(pwd) global` to generate all only the global graph.
+  - `yarn generate-dependency-graphs $(pwd) alfa-css` to generate only the graphs for packages containing `alfa-css` in their name.
+
 ## 0.108.2
 
 ## 0.108.1

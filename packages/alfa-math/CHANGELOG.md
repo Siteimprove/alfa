@@ -1,5 +1,11 @@
 # @siteimprove/alfa-math
 
+## 0.109.0
+
+### Patch Changes
+
+- **Added:** `Matrix.multiply` now accepts vectors as the left/right operand, which is turned into a single row/column matrix. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
 ## 0.108.2
 
 ## 0.108.1

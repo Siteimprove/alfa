@@ -1,5 +1,11 @@
 # @siteimprove/alfa-sequence
 
+## 0.109.0
+
+### Patch Changes
+
+- **Added:** `Sequence.countUntil` method, which counts elements in a sequence until a predicate matches, with optional filtering, has been added. ([#1980](https://github.com/Siteimprove/alfa/pull/1980))
+
 ## 0.108.2
 
 ## 0.108.1
