@@ -35,11 +35,6 @@ inputs:
   coverage-webhook-url:
     description: "The webhook URL to notify with the coverage number"
     required: false
-  many-graphs:
-    description: "Whether to generate the packages graphs in a single node process or several"
-    # Circumvent https://github.com/ts-graphviz/ts-graphviz/issues/1563
-    required: false
-    default: "false"
   publish:
     description: "Whether to create and publish a new version."
     required: false
@@ -94,8 +89,6 @@ runs:
     - name: Generate dependency graphs
       if: inputs.dependency-graphs == 'true'
       uses: siteimprove/alfa/.github/actions/dependency-graphs@main
-      with:
-        many-graphs: ${{ inputs.many-graphs }}
 
     - name: Bump version
       id: version

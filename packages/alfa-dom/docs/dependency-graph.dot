@@ -1538,14 +1538,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
     color = "#ff0000";
     ltail = "cluster_src/node/query";
   ];
-  "src/node/query/descendants.ts" -> "src/node/text.ts" [
-    style = "invis";
-  ];
-  "exit_src/node/query" -> "src/node/text.ts" [
-    style = "solid";
-    color = "#ff0000";
-    ltail = "cluster_src/node/query";
-  ];
   "src/node/element/predicate/is-browsing-context-container.ts" -> "src/node/element.ts" [
     style = "invis";
   ];
@@ -1804,14 +1796,6 @@ digraph "dependency-graph-@siteimprove/alfa-dom" {
   "src/node/traversal/get-nodes-between.ts" -> "src/node/traversal/lowest-common-ancestor.ts" [
     style = "solid";
     color = "black";
-  ];
-  "src/node/query/index.ts" -> "src/node.ts" [
-    style = "invis";
-  ];
-  "exit_src/node" -> "src/node.ts" [
-    style = "invis";
-    color = "#00ffb9";
-    ltail = "cluster_src/node";
   ];
   "src/node/query/index.ts" -> "src/node/query/descendants.ts" [
     style = "invis";

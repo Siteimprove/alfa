@@ -2495,6 +2495,12 @@ digraph "dependency-graph-Alfa" {
     lhead = "cluster_other";
     ltail = "cluster_Understanding the web";
   ];
+  "exit_Understanding the web" -> "name_other" [
+    style = "invis";
+    color = "#ff4600";
+    lhead = "cluster_other";
+    ltail = "cluster_Understanding the web";
+  ];
   "exit_other" -> "name_Comparison" [
     style = "solid";
     color = "#1700ff";
@@ -2568,13 +2574,6 @@ digraph "dependency-graph-Alfa" {
     color = "#1700ff";
     lhead = "cluster_Alternatives";
     ltail = "cluster_other";
-  ];
-  "@siteimprove/alfa-parser" -> "@siteimprove/alfa-test" [
-    style = "invis";
-  ];
-  "@siteimprove/alfa-parser" -> "@siteimprove/alfa-test" [
-    style = "dotted";
-    color = "black";
   ];
   "exit_Comparison" -> "name_Logic" [
     style = "solid";

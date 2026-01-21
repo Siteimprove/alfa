@@ -102,8 +102,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
   "src/property/mask-position.ts";
   "src/property/mask-repeat.ts";
   "src/property/mask-size.ts";
-  "src/property/max-height.ts";
-  "src/property/max-width.ts";
   "src/property/min-height.ts";
   "src/property/min-width.ts";
   "src/property/mix-blend-mode.ts";
@@ -426,9 +424,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
         "src/property/bottom.ts" [
           label = "bottom.ts";
         ];
-        "src/property/max-width.ts" [
-          label = "max-width.ts";
-        ];
         "src/property/border-start-start-radius.ts" [
           label = "border-start-start-radius.ts";
         ];
@@ -659,9 +654,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
         ];
         "src/property/border.ts" [
           label = "border.ts";
-        ];
-        "src/property/max-height.ts" [
-          label = "max-height.ts";
         ];
         "src/property/border-block.ts" [
           label = "border-block.ts";
@@ -956,9 +948,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
         "src/property/bottom.ts" -> "exit_src/property" [
           style = "invis";
         ];
-        "src/property/max-width.ts" -> "exit_src/property" [
-          style = "invis";
-        ];
         "src/property/border-start-start-radius.ts" -> "exit_src/property" [
           style = "invis";
         ];
@@ -1188,9 +1177,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
           style = "invis";
         ];
         "src/property/border.ts" -> "exit_src/property" [
-          style = "invis";
-        ];
-        "src/property/max-height.ts" -> "exit_src/property" [
           style = "invis";
         ];
         "src/property/border-block.ts" -> "exit_src/property" [
@@ -2003,9 +1989,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
       "exit_src/property" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/property" -> "exit_src" [
-        style = "invis";
-      ];
       "exit_src/element" -> "exit_src" [
         style = "invis";
       ];
@@ -2288,9 +2271,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
       "exit_src/property" -> "exit_src" [
         style = "invis";
       ];
-      "exit_src/property" -> "exit_src" [
-        style = "invis";
-      ];
       "exit_src/element" -> "exit_src" [
         style = "invis";
       ];
@@ -2526,12 +2506,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
         style = "invis";
       ];
     }
-    "exit_src" -> "exit_src" [
-      style = "invis";
-    ];
-    "exit_src" -> "exit_src" [
-      style = "invis";
-    ];
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
@@ -4149,16 +4123,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
     color = "#e8ff00";
     lhead = "cluster_src/property";
   ];
-  "src/longhands.ts" -> "name_src/property" [
-    style = "invis";
-    color = "#e8ff00";
-    lhead = "cluster_src/property";
-  ];
-  "src/longhands.ts" -> "name_src/property" [
-    style = "invis";
-    color = "#e8ff00";
-    lhead = "cluster_src/property";
-  ];
   "src/property/font-variant-ligatures.ts" -> "src/longhand.ts" [
     style = "invis";
   ];
@@ -4730,21 +4694,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
     style = "invis";
   ];
   "src/property/bottom.ts" -> "src/property/top.ts" [
-    style = "solid";
-    color = "black";
-  ];
-  "src/property/max-width.ts" -> "src/longhand.ts" [
-    style = "invis";
-  ];
-  "exit_src/property" -> "src/longhand.ts" [
-    style = "invis";
-    color = "#ff8b00";
-    ltail = "cluster_src/property";
-  ];
-  "src/property/max-width.ts" -> "src/property/max-height.ts" [
-    style = "invis";
-  ];
-  "src/property/max-width.ts" -> "src/property/max-height.ts" [
     style = "solid";
     color = "black";
   ];
@@ -6519,22 +6468,6 @@ digraph "dependency-graph-@siteimprove/alfa-style" {
     style = "invis";
   ];
   "exit_src/property" -> "src/shorthand.ts" [
-    style = "invis";
-    color = "#ff8b00";
-    ltail = "cluster_src/property";
-  ];
-  "src/property/max-height.ts" -> "src/longhand.ts" [
-    style = "invis";
-  ];
-  "exit_src/property" -> "src/longhand.ts" [
-    style = "invis";
-    color = "#ff8b00";
-    ltail = "cluster_src/property";
-  ];
-  "src/property/max-height.ts" -> "src/resolver.ts" [
-    style = "invis";
-  ];
-  "exit_src/property" -> "src/resolver.ts" [
     style = "invis";
     color = "#ff8b00";
     ltail = "cluster_src/property";

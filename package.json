@@ -17,11 +17,11 @@
     "#coverage:comment": "We use --coverage.enabled instead of --coverage to allow overriding options in the CLI. See warning at https://vitest.dev/config/#coverage",
     "coverage": "yarn build && vitest run --coverage.enabled --config ./config/vitest.config.ts",
     "#coverage:package:comment": "Run coverage for a single package. Usage: yarn workspace @siteimprove/alfa-foo coverage:package. We don't rebuild the project, so make sure to run `yarn build` first.",
+    "#coverage:package:comment-magic": "See https://yarnpkg.com/getting-started/qa/#how-to-share-scripts-between-workspaces for yarn magic. Somehow, --coverage.include only accepts relative paths, so we need some shell magic too, and yarn doesn't accept # parameter expansion so we have to spawn sed and pwd separately…",
     "coverage:package": "vitest run --coverage.enabled --config ./config/vitest.config.ts --coverage.reportsDirectory ${INIT_CWD}/docs/coverage --coverage.include $(echo ${INIT_CWD} | sed \"s+$(pwd)/++\") ${INIT_CWD}",
     "watch": "node scripts/watch.mjs --pretty",
     "extract": "node scripts/api-extractor.mjs --pretty",
     "extract:self": "CI=false yarn extract ${INIT_CWD}",
-    "depgraph:self": "yarn generate-dependency-graphs $(pwd) $(echo ${INIT_CWD} | sed \"s+$(pwd)/packages/++\")",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
     "knip": "knip --config config/knip.ts --no-config-hints"
   },
