@@ -1,4 +1,5 @@
 import { Color, Keyword } from "@siteimprove/alfa-css";
+import { Option } from "@siteimprove/alfa-option";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
@@ -20,4 +21,14 @@ export default Longhand.of<Specified, Computed>(
         ? specified
         : Color.partiallyResolve(specified),
     ),
+  {
+    use: (value, style) =>
+      Option.of(
+        value.map((computed) =>
+          Keyword.isKeyword(computed, "invert")
+            ? computed
+            : Color.resolve(Resolver.color(style))(computed),
+        ),
+      ),
+  },
 );

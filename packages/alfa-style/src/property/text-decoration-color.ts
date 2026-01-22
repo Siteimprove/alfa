@@ -1,4 +1,5 @@
 import { Color } from "@siteimprove/alfa-css";
+import { Option } from "@siteimprove/alfa-option";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
@@ -15,5 +16,9 @@ type Computed = Color.Canonical;
 export default Longhand.of<Specified, Computed>(
   Color.current,
   Color.parse,
-  (value, style) => value.resolve(Resolver.length(style)),
+  (value) => value.map(Color.partiallyResolve),
+  {
+    use: (value, style) =>
+      Option.of(value.map(Color.resolve(Resolver.color(style)))),
+  },
 );
