@@ -1,4 +1,10 @@
-import type { LengthPercentage, Unit, Value } from "@siteimprove/alfa-css";
+import {
+  type Color,
+  CSS4Color,
+  type LengthPercentage,
+  type Unit,
+  type Value,
+} from "@siteimprove/alfa-css";
 import { Length, List } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 
@@ -71,5 +77,17 @@ export namespace Resolver {
   ) {
     return <V extends Value>(value: List<V>): List<V> =>
       value.cutOrExtend(Math.max(style.computed(name).value.size, 1));
+  }
+
+  export function color(style: Style): Color.Resolver {
+    // We should use directly style.used("color"), but it seems to create an
+    // infinite loop. So, we go up the tree manually to find a defined color.
+    const computed = style.computed("color").value;
+
+    if (computed.type === "color") {
+      return { currentColor: computed };
+    } else {
+      return color(style.parent);
+    }
   }
 }

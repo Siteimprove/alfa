@@ -42,7 +42,16 @@ export namespace Color {
       Selective.of(color)
         .if(System.isSystem, System.resolve)
         .if(Current.isCurrent, () => resolver.currentColor)
+        .else((color) => color.resolve())
         .get();
+  }
+
+  export function partiallyResolve(color: Color): Color {
+    return Selective.of(color)
+      .if(System.isSystem, System.resolve)
+      .if(Current.isCurrent, () => color)
+      .else((color) => color) // TODO handle mixes
+      .get();
   }
 
   function toNumber(x: Number | Percentage, base: number): number {

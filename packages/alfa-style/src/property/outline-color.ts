@@ -14,5 +14,10 @@ type Computed = Color.Canonical | Keyword<"invert">;
 export default Longhand.of<Specified, Computed>(
   Keyword.of("invert"),
   Color.parse,
-  (value, style) => value.resolve(Resolver.length(style)),
+  (value) =>
+    value.map((specified) =>
+      Keyword.isKeyword(specified, "invert")
+        ? specified
+        : Color.partiallyResolve(specified),
+    ),
 );

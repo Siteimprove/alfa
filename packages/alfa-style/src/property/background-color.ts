@@ -1,4 +1,5 @@
 import { Color, Percentage } from "@siteimprove/alfa-css";
+import { Option } from "@siteimprove/alfa-option";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
@@ -30,5 +31,9 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(0),
   ),
   parse,
-  (value, style) => value.resolve(Resolver.length(style)),
+  (value) => value.map(Color.partiallyResolve),
+  {
+    use: (value, style) =>
+      Option.of(value.map(Color.resolve(Resolver.color(style)))),
+  },
 );
