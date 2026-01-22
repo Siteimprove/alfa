@@ -2,6 +2,7 @@ import type { Hash } from "@siteimprove/alfa-hash";
 import type { Option, Some } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
+import { Selective } from "@siteimprove/alfa-selective";
 import { Function, Token } from "../../syntax/index.js";
 import type { Parser as CSSParser } from "../../syntax/parser.js";
 
@@ -121,17 +122,15 @@ export class ColorMix<
     color: Color,
     resolver?: Color.Resolver,
   ): CSS4Color | Current {
-    if (System.isSystem(color)) {
-      return System.resolve(color);
-    } else if (Current.isCurrent(color) && resolver !== undefined) {
-      return resolver.currentColor;
-    }
-
-    return color;
+    return Selective.of(color)
+      .if(System.isSystem, System.resolve)
+      .if(Current.isCurrent, (color) =>
+        resolver === undefined ? color : resolver.currentColor,
+      )
+      .get();
   }
 
   public resolve(resolver: Color.Resolver): CSS4Color {
-    // System colors can be resolved now, but `currentcolor` cannot.
     const resolvedColors = this._colors.map((item) =>
       MixItem.of(
         ColorMix.resolveColor(item.value, resolver),
@@ -143,6 +142,7 @@ export class ColorMix<
   }
 
   public partiallyResolve(): CSS4Color | ColorMix<S, H> {
+    // System colors can be resolved now, but `currentcolor` cannot.
     const resolvedColors = this._colors.map((item) =>
       MixItem.of(
         ColorMix.resolveColor(item.value),
