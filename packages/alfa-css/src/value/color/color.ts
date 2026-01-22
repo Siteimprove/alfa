@@ -1,5 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Result } from "@siteimprove/alfa-result";
+import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Parser as CSSParser, Token } from "../../syntax/index.js";
@@ -22,9 +23,27 @@ export type Color = CSS4Color | Current | System;
  * @public
  */
 export namespace Color {
-  export type Canonical = Current | System | CSS4Color.Canonical;
+  export type Canonical = Current | System | CSS4Color.Canonical; // TODO: only CSS4Color
 
   export type JSON = CSS4Color.JSON | Keyword.JSON;
+
+  /**
+   * Resolver for color-mix, must include the resolution for `currentcolor`.
+   */
+  export interface Resolver {
+    currentColor: CSS4Color.Canonical;
+  }
+
+  // TODO: return Canonical
+  export function resolve(
+    resolver: Resolver,
+  ): (color: Color) => CSS4Color.Canonical {
+    return (color) =>
+      Selective.of(color)
+        .if(System.isSystem, System.resolve)
+        .if(Current.isCurrent, () => resolver.currentColor)
+        .get();
+  }
 
   function toNumber(x: Number | Percentage, base: number): number {
     const y = x.resolve();

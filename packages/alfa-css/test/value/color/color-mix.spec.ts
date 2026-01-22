@@ -1,4 +1,3 @@
-import { Real } from "@siteimprove/alfa-math";
 import { RNG } from "@siteimprove/alfa-rng";
 import { test } from "@siteimprove/alfa-test";
 
@@ -296,4 +295,82 @@ test(".calculate() adds transparency when mix percentages do not add up to 100%"
   const result = ColorMix.calculate(mix, "srgb", "shorter");
 
   t.deepEqual(result.toJSON(), mkColor("rgb(75% 0 25% / 80%)").toJSON());
+});
+
+test("#partiallyResolve() resolves fully determined color mixes", (t) => {
+  const mix = parse("color-mix(in srgb, red 50%, blue 50%)").getUnsafe();
+
+  const resolved = mix.partiallyResolve();
+
+  t.deepEqual(resolved.toJSON(), color(0.5, 0, 0.5));
+});
+
+test("#partiallyResolve() resolves system colors", (t) => {
+  // `ButtonText` is black.
+  const mix = parse("color-mix(in srgb, red 50%, ButtonText 50%)").getUnsafe();
+
+  const resolved = mix.partiallyResolve();
+
+  t.deepEqual(resolved.toJSON(), color(0.5, 0, 0));
+});
+
+test("#partiallyResolve() doesn't resolve `currentcolor`", (t) => {
+  const mix = parse(
+    "color-mix(in srgb, red 50%, currentcolor 50%)",
+  ).getUnsafe();
+
+  const resolved = mix.partiallyResolve();
+
+  t.deepEqual(resolved.toJSON(), {
+    type: "color-mix",
+    space: "srgb",
+    hueMethod: null,
+    colors: {
+      type: "list",
+      values: [
+        {
+          type: "mix-item",
+          value: red,
+          percentage: { type: "percentage", value: 0.5 },
+        },
+        {
+          type: "mix-item",
+          value: { type: "keyword", value: "currentcolor" },
+          percentage: { type: "percentage", value: 0.5 },
+        },
+      ],
+      separator: ", ",
+    },
+  });
+});
+
+const resolver = {
+  currentColor: CSS4Color.of("black").getUnsafe(),
+};
+
+test("#resolve() resolves fully determined color mixes", (t) => {
+  const mix = parse("color-mix(in srgb, red 50%, blue 50%)").getUnsafe();
+
+  const resolved = mix.resolve(resolver);
+
+  t.deepEqual(resolved.toJSON(), color(0.5, 0, 0.5));
+});
+
+test("#resolve() resolves system colors", (t) => {
+  // `ButtonText` is black.
+  const mix = parse("color-mix(in srgb, red 50%, ButtonText 50%)").getUnsafe();
+
+  const resolved = mix.resolve(resolver);
+
+  t.deepEqual(resolved.toJSON(), color(0.5, 0, 0));
+});
+
+test("#resolve() resolves `currentcolor`", (t) => {
+  const mix = parse(
+    "color-mix(in srgb, red 50%, currentcolor 50%)",
+  ).getUnsafe();
+
+  const resolved = mix.resolve(resolver);
+
+  t.deepEqual(resolved.toJSON(), color(0.5, 0, 0));
 });

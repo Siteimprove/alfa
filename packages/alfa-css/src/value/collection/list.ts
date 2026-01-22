@@ -5,6 +5,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
 import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
@@ -56,6 +57,16 @@ export class List<V extends Value>
 
   public none(predicate: Predicate<V, [index: number]>) {
     return Array.none(this._values, predicate);
+  }
+
+  public every<U extends V>(
+    refinement: Refinement<V, U, [index: number]>,
+  ): this is List<U>;
+
+  public every(predicate: Predicate<V, [index: number]>): boolean;
+
+  public every(predicate: Predicate<V, [index: number]>): boolean {
+    return this._values.every(predicate);
   }
 
   public resolve(

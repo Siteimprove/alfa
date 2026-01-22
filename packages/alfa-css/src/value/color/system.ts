@@ -70,9 +70,9 @@ export namespace System {
     visitedtext: CSS4Color.of("rgb(0, 102, 204)").getUnsafe().resolve(),
   };
 
-  export const resolve = (system: Keyword) => resolvedChrome[system];
+  export const resolve = (system: System) => resolvedChrome[system.value];
 
-  export function isSystem(value: unknown): value is Keyword {
+  export function isSystem(value: unknown): value is System {
     return (
       Keyword.isKeyword(value) &&
       (keywords as ReadonlyArray<string>).includes(value.value)

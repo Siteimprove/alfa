@@ -15,6 +15,7 @@ import { Value } from "../value.js";
 import type { Color } from "./color.js";
 
 import { CSS4Color } from "./css4-color.js";
+import { Current } from "./current.js";
 import { Mix, MixItem } from "./mix.js";
 import { System } from "./system.js";
 
@@ -45,8 +46,8 @@ export class ColorMix<
 >
   extends Value<"color-mix", true, "color", "color" | "color-mix">
   implements
-    Resolvable<CSS4Color, ColorMix.Resolver>,
-    PartiallyResolvable<CSS4Color | ColorMix<S, H>, ColorMix.PartialResolver>
+    Resolvable<CSS4Color, Color.Resolver>,
+    PartiallyResolvable<CSS4Color | ColorMix<S, H>, never>
 {
   /**
    * Creates a color mix in the default oklab space.
@@ -105,34 +106,58 @@ export class ColorMix<
     return this._hueMethod;
   }
 
-  public resolve(resolver: ColorMix.Resolver): CSS4Color {
-    const resolvedColors = this._colors.map((item) => item.resolve(resolver));
+  // We can't directly use item.(partially)Resolve because it doesn't work
+  // nicely with keyword colors (`currentcolor` and system colors).
+  // We can't directly use Color.(partially)Resolve because it would create
+  // circular dependencies.
+  private static resolveColor(color: Color): CSS4Color | Current;
 
-    return CSS4Color.of("todo").getUnsafe(); // TODO
+  private static resolveColor(
+    color: Color,
+    resolver: Color.Resolver,
+  ): CSS4Color;
+
+  private static resolveColor(
+    color: Color,
+    resolver?: Color.Resolver,
+  ): CSS4Color | Current {
+    if (System.isSystem(color)) {
+      return System.resolve(color);
+    } else if (Current.isCurrent(color) && resolver !== undefined) {
+      return resolver.currentColor;
+    }
+
+    return color;
   }
 
-  public partiallyResolve(): CSS4Color | ColorMix<S, H> {
-    // We can't directly use item.(partially)Resolve because it doesn't work
-    // nicely with keyword colors (`currentcolor` and system colors).
+  public resolve(resolver: Color.Resolver): CSS4Color {
     // System colors can be resolved now, but `currentcolor` cannot.
     const resolvedColors = this._colors.map((item) =>
       MixItem.of(
-        System.isSystem(item.value) ? System.resolve(item.value) : item.value,
+        ColorMix.resolveColor(item.value, resolver),
         item.percentage.map((percentage) => percentage.resolve()),
       ),
     );
 
-    if (resolvedColors.some((item) => !CSS4Color.isCSS4Color(item.value))) {
-      // If we couldn't resolve everything (i.e. a `currentcolor` is present),
-      // keep the color-mix().
-      return ColorMix.of(resolvedColors, this._space, this._hueMethod);
+    return ColorMix.calculate(resolvedColors, this._space, this._hueMethod);
+  }
+
+  public partiallyResolve(): CSS4Color | ColorMix<S, H> {
+    const resolvedColors = this._colors.map((item) =>
+      MixItem.of(
+        ColorMix.resolveColor(item.value),
+        item.percentage.map((percentage) => percentage.resolve()),
+      ),
+    );
+
+    if (
+      resolvedColors.every((item): item is MixItem<CSS4Color> =>
+        CSS4Color.isCSS4Color(item.value),
+      )
+    ) {
+      return ColorMix.calculate(resolvedColors, this._space, this._hueMethod);
     } else {
-      // Otherwise, compute the mix.
-      return ColorMix.calculate(
-        resolvedColors as List<MixItem<CSS4Color>>,
-        this._space,
-        this._hueMethod,
-      );
+      return ColorMix.of(resolvedColors, this._space, this._hueMethod);
     }
   }
 
@@ -180,15 +205,6 @@ export namespace ColorMix {
     hueMethod: H | null;
     colors: List.JSON<MixItem<Color>>;
   }
-
-  /**
-   * Resolver for color-mix, must include the resolution for `currentcolor`.
-   */
-  export interface Resolver {
-    currentColor: CSS4Color.Canonical;
-  }
-
-  export interface PartialResolver {}
 
   /** @internal */
   export const rectangularSpaces = [
