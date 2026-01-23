@@ -1,5 +1,45 @@
 # Alfa changelog
 
+## [0.109.0](../../compare/v0.108.2...v0.109.0) (2026-01-21)
+
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01090): CSS color representation now internally uses the `colorjs.io` library. ([#1975](https://github.com/Siteimprove/alfa/pull/1975))
+
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01090): A new function `getTextDescendants` has been added to the `Query` namespace. It retrieves all text descendants of a node, with an option to group text under matching sub-trees into labeled `TextGroup` objects. ([#1972](https://github.com/Siteimprove/alfa/pull/1972))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01090): `Function.parse` now accepts an array of valid identifiers, for functions with aliases such as rgb/rgba. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md#01090): A new `Parser.array` combinator is available, parsing according to an array of parsers, in order. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
+- [@siteimprove/alfa-rng](packages/alfa-rng/CHANGELOG.md#01090): `RNGFactory#zip` is now available to zip two array factories into an array of tuples factory. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01090): All CSS4 color functions are now supported. ([#1965](https://github.com/Siteimprove/alfa/pull/1965))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01090): `Ident.parse` now accepts an array of acceptable strings as parameter. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence/CHANGELOG.md#01090): `Sequence.countUntil` method, which counts elements in a sequence until a predicate matches, with optional filtering, has been added. ([#1980](https://github.com/Siteimprove/alfa/pull/1980))
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01090): `yarn generate-dependency-graph` can now generate only some of the graphs. ([#1953](https://github.com/Siteimprove/alfa/pull/1953))
+
+- [@siteimprove/alfa-math](packages/alfa-math/CHANGELOG.md#01090): `Matrix.multiply` now accepts vectors as the left/right operand, which is turned into a single row/column matrix. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01090): `Ident.parse` now refines its value if possible. ([#1944](https://github.com/Siteimprove/alfa/pull/1944))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01090): CSS properties `max-width` and `max-height` are now supported. ([#1960](https://github.com/Siteimprove/alfa/pull/1960))
+
+### Changed
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01090), [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#01090): The `index()` method on nodes now accepts an optional predicate parameter to filter siblings when calculating the node's index position. ([#1980](https://github.com/Siteimprove/alfa/pull/1980))
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#01090): Global dependency graph now only includes dependencies in the current workspaces, rather than by scope. ([#1953](https://github.com/Siteimprove/alfa/pull/1953))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01090): R83 now more accurately computes line boxes for text nodes in clipping flex items in wrapping flex containers. ([#1960](https://github.com/Siteimprove/alfa/pull/1960))
+
 ## [0.108.2](../../compare/v0.108.1...v0.108.2) (2025-12-10)
 
 ### Fixed

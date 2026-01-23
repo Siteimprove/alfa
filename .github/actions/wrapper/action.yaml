@@ -32,9 +32,11 @@ inputs:
   coverage-api-key:
     description: "The API key to authenticate with the coverage API"
     required: false
-  coverage-webhook-url:
-    description: "The webhook URL to notify with the coverage number"
+  many-graphs:
+    description: "Whether to generate the packages graphs in a single node process or several"
+    # Circumvent https://github.com/ts-graphviz/ts-graphviz/issues/1563
     required: false
+    default: "false"
   publish:
     description: "Whether to create and publish a new version."
     required: false
@@ -80,7 +82,6 @@ runs:
       with:
         url: ${{ inputs.coverage-url }}
         api-key: ${{ inputs.coverage-api-key }}
-        webhook-url: ${{ inputs.coverage-webhook-url }}
 
     - name: Generate documentation
       if: inputs.generate-documentation == 'true'
@@ -89,6 +90,8 @@ runs:
     - name: Generate dependency graphs
       if: inputs.dependency-graphs == 'true'
       uses: siteimprove/alfa/.github/actions/dependency-graphs@main
+      with:
+        many-graphs: ${{ inputs.many-graphs }}
 
     - name: Bump version
       id: version

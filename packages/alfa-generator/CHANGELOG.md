@@ -1,5 +1,7 @@
 # @siteimprove/alfa-generator
 
+## 0.109.0
+
 ## 0.108.2
 
 ## 0.108.1

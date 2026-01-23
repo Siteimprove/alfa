@@ -1,5 +1,11 @@
 # @siteimprove/alfa-style
 
+## 0.109.0
+
+### Patch Changes
+
+- **Added:** CSS properties `max-width` and `max-height` are now supported. ([#1960](https://github.com/Siteimprove/alfa/pull/1960))
+
 ## 0.108.2
 
 ## 0.108.1
