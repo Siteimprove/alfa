@@ -25,17 +25,6 @@ export namespace Color {
           }
         }
 
-        if (color.value === "canvastext") {
-          return Option.of(
-            CSSColor.rgb(
-              Percentage.of(0),
-              Percentage.of(0),
-              Percentage.of(0),
-              Percentage.of(1),
-            ),
-          );
-        }
-
         return None;
 
       case "color":
