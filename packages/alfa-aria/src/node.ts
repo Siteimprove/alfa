@@ -344,9 +344,7 @@ export namespace Node {
       : getElementDescendants(root);
     return Set.from(
       descendants
-        .filter(
-          and(dom.Element.hasName("dialog"), dom.Element.hasAttribute("open")),
-        )
+        .filter(isOpenDialog)
         .flatMap((dialog) => dialog.inclusiveAncestors()),
     );
   }
@@ -446,29 +444,13 @@ export namespace Node {
           return Container.of(node, children(state.inert(true)));
         }
 
-        // export function getOpenDialogAncestors(root: dom.Node): Set<dom.Node> {
-        //   const descendants = dom.Element.isElement(root)
-        //     ? getInclusiveElementDescendants(root)
-        //     : getElementDescendants(root);
-        //   return Set.from(
-        //     descendants
-        //       .filter(
-        //         and(dom.Element.hasName("dialog"), dom.Element.hasAttribute("open")),
-        //       )
-        //       .flatMap((dialog) => dialog.inclusiveAncestors()),
-        //   );
-        // }
         // If we reached here and state is inert, it means we are in an inert container.
         // - if element is open dialog without `inert` attribute, reset inert state.
         // - else if element doesn't have an open dialog descendant, return Inert.
         if (state.isInert) {
           if (
             test(
-              and(
-                dom.Element.hasName("dialog"),
-                dom.Element.hasAttribute("open"),
-                not(dom.Element.hasAttribute("inert")),
-              ),
+              and(isOpenDialog, not(dom.Element.hasAttribute("inert"))),
               node,
             )
           ) {
@@ -608,6 +590,11 @@ export namespace Node {
 
   export const { hasAttribute, hasName, hasRole } = predicate;
 }
+
+const isOpenDialog = and(
+  dom.Element.hasName("dialog"),
+  dom.Element.hasAttribute("open"),
+);
 
 /**
  * Some elements do not have an ARIA role but are nonetheless always exposed to
