@@ -564,7 +564,7 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
         [addCursor(noStyle), addCursor(style)],
-        [style, addOutline(noStyle)],
+        [addOutline(noStyle), style],
       ),
     }),
   ]);

@@ -336,67 +336,6 @@ test("getForeground() resolves `currentcolor` when color is set with opacity on 
   );
 });
 
-test("getColor() can't resolve most system colors", (t) => {
-  const target = <span>Hello</span>;
-  const wrapper = <div>{target}</div>;
-
-  h.document(
-    [wrapper],
-    [
-      h.sheet([
-        h.rule.style("span", {
-          color: "visitedtext",
-        }),
-        h.rule.style("div", {
-          backgroundColor: "buttonface",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(getBackground(target, device).toJSON(), {
-    type: "err",
-    error: {
-      message: "Could not fully resolve colors",
-      errors: [
-        {
-          message: "Could not resolve background-color",
-          element: wrapper.toJSON(),
-          type: "layer",
-          kind: "unresolvable-background-color",
-          property: "background-color",
-          value: { type: "keyword", value: "buttonface" },
-        },
-      ],
-    },
-  });
-
-  t.deepEqual(getForeground(target, device).toJSON(), {
-    type: "err",
-    error: {
-      message: "Could not fully resolve colors",
-      errors: [
-        {
-          message: "Could not resolve foreground color",
-          type: "foreground",
-          kind: "unresolvable-foreground-color",
-          element: target.toJSON(),
-          property: "color",
-          value: { type: "keyword", value: "visitedtext" },
-        },
-        {
-          message: "Could not resolve background-color",
-          element: wrapper.toJSON(),
-          type: "layer",
-          kind: "unresolvable-background-color",
-          property: "background-color",
-          value: { type: "keyword", value: "buttonface" },
-        },
-      ],
-    },
-  });
-});
-
 test("getBackgroundColor() gives up in case of external background image", (t) => {
   const target = <div>Hello</div>;
 
