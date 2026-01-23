@@ -399,8 +399,8 @@ export namespace Node {
           return Inert.of(node);
         }
 
-        // Elements that are inert due to having, or being a descendant of an element,
-        // with the `inert` attribute, are not exposed in the accessibility tree,
+        // Elements that are inert due to having, or being a descendant of an element with,
+        // the `inert` attribute, are not exposed in the accessibility tree,
         // unless they have an open dialog descendant. If they do, they become
         // containers.
         if (node.isInert() && !openDialogAncestors.has(node)) {
