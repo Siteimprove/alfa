@@ -424,7 +424,7 @@ export namespace Node {
 
         // The children implicitly owned by the element come first, then the
         // children explicitly owned by the element.
-        children = (childState) =>
+        children = (state) =>
           implicit
             .concat(explicit)
             .map((child) =>
@@ -434,7 +434,7 @@ export namespace Node {
                 claimed,
                 owned,
                 openDialogAncestors,
-                childState,
+                state,
               ),
             );
 
