@@ -596,6 +596,44 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
+  public preceding<U extends T>(
+    refinement: Refinement<T, U, [index: number]>,
+  ): Sequence<T>;
+
+  public preceding(predicate: Predicate<T, [index: number]>): Sequence<T>;
+
+  /**
+   * Returns the elements that precede the first element for which the
+   * predicate returns `true`.
+   *
+   * @remarks
+   * The returned sequence is in reverse order relative to the input (nearest-first).
+   */
+  public preceding(predicate: Predicate<T, [index: number]>): Sequence<T> {
+    const preceding: Array<T> = [];
+    let next: Cons<T> = this;
+    let index = 0;
+
+    while (true) {
+      if (predicate(next._head, index++)) {
+        break;
+      }
+
+      preceding.push(next._head);
+
+      const tail = next._tail.force();
+
+      if (Cons.isCons(tail)) {
+        next = tail;
+      } else {
+        break;
+      }
+    }
+
+    preceding.reverse();
+    return Sequence.from(preceding);
+  }
+
   public takeLast(count: number): Sequence<T> {
     return this.skip(this.size - count);
   }
@@ -690,10 +728,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public reverse(): Sequence<T> {
-    return this.reduce<Sequence<T>>(
-      (reversed, value) => new Cons(value, Lazy.force(reversed)),
-      Nil,
-    );
+    return Sequence.from(this.toArray().reverse());
   }
 
   public join(separator: string): string {

@@ -316,9 +316,9 @@ export abstract class Node<
   public preceding(options?: Flags<K, F>): Sequence<Node<K, F>> {
     const value = options?.value ?? 0;
     if (this._preceding[value] === undefined) {
-      this._preceding[value] = this.inclusiveSiblings(options)
-        .takeUntil(equals(this))
-        .reverse();
+      this._preceding[value] = this.inclusiveSiblings(options).preceding(
+        equals(this),
+      );
     }
 
     return this._preceding[value];

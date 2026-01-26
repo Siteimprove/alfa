@@ -189,6 +189,10 @@ export const Nil: Nil = new (class Nil {
     return this;
   }
 
+  public preceding(): Nil {
+    return this;
+  }
+
   public takeLast(): Nil {
     return this;
   }
