@@ -66,7 +66,7 @@
     "@siteimprove/alfa-string": "workspace:^",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "@ts-graphviz/adapter": "^3.0.5",
-    "axios": "^1.13.2",
+    "axios": "^1.13.3",
     "chalk": "^5.6.2",
     "json-stringify-pretty-compact": "^4.0.0",
     "madge": "^8.0.0",
