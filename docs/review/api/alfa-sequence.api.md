@@ -104,9 +104,6 @@ export class Cons<T> implements Sequence<T> {
     none(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     static of<T>(head: T, tail?: Lazy<Sequence<T>>): Cons<T>;
-    // (undocumented)
-    preceding<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<T>;
-    // (undocumented)
     preceding(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
     prepend(value: T): Cons<T>;
@@ -273,8 +270,6 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
     // (undocumented)
     none(predicate: Predicate<T, [index: number]>): boolean;
-    // (undocumented)
-    preceding<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<T>;
     // (undocumented)
     preceding(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
