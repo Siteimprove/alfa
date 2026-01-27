@@ -10,6 +10,7 @@
   "files": [
     "./common.ts",
     "./currentcolor.spec.tsx",
+    "./element/predicate/is-inert.spec.tsx",
     "./node/helpers/inner-text.spec.tsx",
     "./node/predicate/has-transparent-background.spec.tsx",
     "./node/predicate/is-clipped.spec.tsx",
