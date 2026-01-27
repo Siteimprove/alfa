@@ -24,7 +24,6 @@ import { Predicate } from '@siteimprove/alfa-predicate';
 import type { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import type { Serializable } from '@siteimprove/alfa-json';
-import { Set as Set_2 } from '@siteimprove/alfa-set';
 import { Text as Text_3 } from '@siteimprove/alfa-dom';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 import * as tree from '@siteimprove/alfa-tree';
@@ -433,12 +432,12 @@ namespace Node_2 {
         ignored: 1;
     };
     // (undocumented)
-    function getOpenDialogAncestors(root: dom_2.Node): Set_2<dom_2.Node>;
-    // (undocumented)
     interface JSON<T extends string = string> extends tree.Node.JSON<T> {
         // (undocumented)
         node: string;
     }
+    // (undocumented)
+    type Traversal = ReturnType<(typeof Traversal)["of"]>;
     const includeIgnored: {
         has(flag: 0 | 1 | "ignored"): boolean;
         isSet: (flag: 0 | 1 | "ignored") => boolean;
@@ -458,8 +457,6 @@ namespace Node_2 {
     } & {
         ignored: boolean;
     };
-    // (undocumented)
-    type Traversal = ReturnType<(typeof Traversal)["of"]>;
     // (undocumented)
     type TraversalFlags = (typeof Node_2.Traversal.allFlags)[number];
     const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
