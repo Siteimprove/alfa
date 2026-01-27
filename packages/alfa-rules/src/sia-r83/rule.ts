@@ -167,8 +167,8 @@ function overflow(
 ): Overflow {
   return Style.from(element, device)
     .used(`overflow-${dimension}`)
-    .map((overflow) => {
-      switch (overflow.value.value) {
+    .value.map((overflow) => {
+      switch (overflow.value) {
         case "clip":
         case "hidden":
           return Overflow.Clip;
@@ -195,7 +195,11 @@ function textBox(text: Text, device: Device): Option<Rectangle> {
 }
 
 const isWrappingFlexContainer = (device: Device) =>
-  hasUsedStyle("flex-wrap", (value) => !value.is("nowrap"), device);
+  hasUsedStyle(
+    "flex-wrap",
+    (value) => value.some((wrap) => !wrap.is("nowrap")),
+    device,
+  );
 
 /**
  * Return the convex hull of all the text boxes in a line.
@@ -393,7 +397,7 @@ namespace ClippingAncestor {
           inSameBlock &&
           hasUsedStyle(
             "text-overflow",
-            (value) => value.is("ellipsis"),
+            (value) => value.some((overflow) => overflow.is("ellipsis")),
             device,
           )(ancestor)
         ) {
