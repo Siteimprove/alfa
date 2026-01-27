@@ -338,7 +338,7 @@ export namespace Node {
     }
   }
 
-  export function getOpenDialogAncestors(root: dom.Node): Set<dom.Node> {
+  function getOpenDialogAncestors(root: dom.Node): Set<dom.Node> {
     const descendants = dom.Element.isElement(root)
       ? getInclusiveElementDescendants(root)
       : getElementDescendants(root);
