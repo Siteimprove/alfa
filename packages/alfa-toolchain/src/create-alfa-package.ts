@@ -1,7 +1,6 @@
 import type { PackageJSON } from "@changesets/types";
 import { getPackages } from "@manypkg/get-packages";
 import { simpleGit } from "simple-git";
-import chalk from "chalk";
 import stringify from "json-stringify-pretty-compact";
 
 import { String } from "@siteimprove/alfa-string";
@@ -9,6 +8,8 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { stdin as input, stdout as output } from "node:process";
 import { createInterface } from "node:readline/promises";
+
+import { styleText } from "node:util";
 
 const git = simpleGit();
 
@@ -46,7 +47,7 @@ async function questionWithFallback(
   fallback: string,
 ): Promise<string> {
   return String.fallback(fallback)(
-    await rl.question(`${msg} [${chalk.dim(fallback)}]:`),
+    await rl.question(`${msg} [${dim(fallback)}]:`),
   );
 }
 
@@ -153,14 +154,14 @@ for (const subDir of ["config", "dist", "src", "test"]) {
 /*
  * Creating empty files.
  */
-console.log(chalk.dim("Creating empty files..."));
+console.log(dim("Creating empty files..."));
 fs.writeFileSync(path.join(packageDir, "src", "index.ts"), "");
 fs.writeFileSync(path.join(packageDir, "CHANGELOG.md"), "");
 
 /*
  * Copying static templates
  */
-console.log(chalk.dim("Copying static templates..."));
+console.log(dim("Copying static templates..."));
 fs.writeFileSync(
   path.join(packageDir, "config", "api-extractor.json"),
   stringify(Templates.apiExtractor),
@@ -182,7 +183,7 @@ fs.writeFileSync(
 /*
  * Updating intermediate tsconfig.json
  */
-console.log(chalk.dim("Updating intermediate tsconfig.json..."));
+console.log(dim("Updating intermediate tsconfig.json..."));
 // We could use ts.readConfigFile but it somehow seems to be typed as returning
 // `any`, so it brings little value.
 const intermediateTSConfig = JSON.parse(
@@ -200,7 +201,7 @@ fs.writeFileSync(
 /*
  * Creating package.json
  */
-console.log(chalk.dim("Creating package.json..."));
+console.log(dim("Creating package.json..."));
 fs.writeFileSync(
   path.join(packageDir, "package.json"),
   stringify(Templates.packageJSON),
@@ -209,7 +210,7 @@ fs.writeFileSync(
 /*
  * Adding files to git
  */
-console.log(chalk.dim("Staging files..."));
+console.log(dim("Staging files..."));
 git.add([
   path.join(packageDir, "src", "index.ts"),
   path.join(packageDir, "CHANGELOG.md"),
@@ -225,4 +226,8 @@ git.add([
  * Closing
  */
 console.log("\nDone!");
-console.warn(chalk.bold("Check created files and commit changes."));
+console.warn(styleText("bold", "Check created files and commit changes."));
+
+function dim(text: string): string {
+  return styleText("dim", text);
+}
