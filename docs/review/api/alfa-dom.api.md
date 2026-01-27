@@ -317,6 +317,7 @@ class Element<N extends string = string> extends Node_2<"element"> implements Sl
     protected _inputType: helpers.InputType | undefined;
     // @internal (undocumented)
     protected _internalPath(options?: Node_2.Traversal): string;
+    isInert(): boolean;
     // (undocumented)
     isVoid(): boolean;
     // (undocumented)

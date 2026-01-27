@@ -658,3 +658,108 @@ test(`.from() treats second <summary> elements as generic`, (t) => {
     ],
   });
 });
+
+test(`.from() handles dialogs deeply nested in inert ancestor`, (t) => {
+  const inert = (
+    <div inert>
+      <div>
+        <dialog open>Hello</dialog>
+      </div>
+      <div>I'm inert</div>
+    </div>
+  );
+
+  t.deepEqual(Node.from(inert, device).toJSON(), {
+    type: "container",
+    node: "/div[1]",
+    role: null,
+    children: [
+      {
+        type: "container",
+        node: "/div[1]/div[1]",
+        role: null,
+        children: [
+          {
+            type: "element",
+            node: "/div[1]/div[1]/dialog[1]",
+            role: "dialog",
+            attributes: [
+              {
+                name: "aria-expanded",
+                value: "true",
+              },
+            ],
+            children: [
+              {
+                type: "text",
+                node: "/div[1]/div[1]/dialog[1]/text()[1]",
+                name: "Hello",
+              },
+            ],
+            name: null,
+          },
+        ],
+      },
+      {
+        type: "inert",
+        node: "/div[1]/div[2]",
+      },
+    ],
+  });
+});
+
+test(`.from() excludes closed dialog in inert container`, (t) => {
+  const inert = (
+    <div inert>
+      <dialog>Closed dialog content</dialog>
+      <div>Other inert content</div>
+    </div>
+  );
+
+  t.deepEqual(Node.from(inert, device).toJSON(), {
+    type: "inert",
+    node: "/div[1]",
+  });
+});
+
+test(`.from() does not expose open dialog with explicit inert attribute`, (t) => {
+  const container = (
+    <div>
+      <dialog open inert>
+        <button>Should not be exposed</button>
+      </dialog>
+      <div>Regular content</div>
+    </div>
+  );
+
+  t.deepEqual(Node.from(container, device).toJSON(), {
+    type: "container",
+    node: "/div[1]",
+    role: "generic",
+    children: [
+      {
+        type: "container",
+        node: "/div[1]/dialog[1]",
+        role: null,
+        children: [
+          {
+            type: "inert",
+            node: "/div[1]/dialog[1]/button[1]",
+          },
+        ],
+      },
+      {
+        type: "container",
+        node: "/div[1]/div[1]",
+        role: "generic",
+        children: [
+          {
+            type: "text",
+            node: "/div[1]/div[1]/text()[1]",
+            name: "Regular content",
+          },
+        ],
+      },
+    ],
+  });
+});

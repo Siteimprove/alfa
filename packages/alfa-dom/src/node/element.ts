@@ -26,7 +26,7 @@ import type * as helpers from "./element/input-type.js";
 import * as predicate from "./element/predicate.js";
 
 const { isEmpty } = Iterable;
-const { not } = Predicate;
+const { and, not, or, test } = Predicate;
 
 /**
  * @public
@@ -268,6 +268,38 @@ export class Element<N extends string = string>
     return None;
   }
 
+  /**
+   * Computes inertness of an element based on the `inert` attribute.
+   *
+   * {@link https://html.spec.whatwg.org/#the-inert-attribute}
+   *
+   * @privateRemarks
+   * According to {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert}
+   * only open dialogs can escape inertness (except when they have the `inert` attribute).
+   */
+  public isInert(): boolean {
+    if (this._isInert === undefined) {
+      this._isInert = test(
+        or(
+          // Explicitly inert;
+          Element.hasAttribute("inert"),
+          and(
+            // or not an open dialog,
+            not(and(Element.hasName("dialog"), Element.hasAttribute("open"))),
+            // and with an inert ancestor.
+            (element) =>
+              element
+                .parent(Node.flatTree)
+                .filter(Element.isElement)
+                .some((parent) => parent.isInert()),
+          ),
+        ),
+        this,
+      );
+    }
+    return this._isInert;
+  }
+
   /*
    * This collects caches for methods that are specific to some kind of elements.
    * The actual methods are declared in element/augment.ts to de-clutter this
@@ -279,6 +311,7 @@ export class Element<N extends string = string>
   protected _inputType: helpers.InputType | undefined;
   protected _displaySize: number | undefined;
   protected _optionsList: Sequence<Element<"option">> | undefined;
+  private _isInert: boolean | undefined;
 
   /*
    * End of caches for methods specific to some kind of elements.

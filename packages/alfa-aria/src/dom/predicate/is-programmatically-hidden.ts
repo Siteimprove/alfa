@@ -9,7 +9,7 @@ import { Style } from "@siteimprove/alfa-style";
 const { hasAttribute, isElement } = Element;
 const { or, equals } = Predicate;
 const { and } = Refinement;
-const { hasComputedStyle } = Style;
+const { hasComputedStyle, isInert } = Style;
 
 /**
  * Check if an element is programmatically hidden.
@@ -23,15 +23,7 @@ export function isProgrammaticallyHidden(
   device: Device,
   context: Context = Context.empty(),
 ): Predicate<Element> {
-  return or(
-    hasComputedStyle(
-      "visibility",
-      (visibility) => visibility.value !== "visible",
-      device,
-      context,
-    ),
-    hasHiddenAncestors(device, context),
-  );
+  return or(isInert(device), hasHiddenAncestors(device, context));
 }
 
 const hasHiddenAncestors = Cache.memoize(function (
