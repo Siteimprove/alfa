@@ -1,4 +1,4 @@
-import { Color, Percentage } from "@siteimprove/alfa-css";
+import { Color, CSS4Color, Percentage } from "@siteimprove/alfa-css";
 import { Option } from "@siteimprove/alfa-option";
 
 import { Longhand } from "../longhand.js";
@@ -10,6 +10,8 @@ import { Resolver } from "../resolver.js";
 export type Specified = Color;
 
 type Computed = Color.Canonical;
+
+type Used = CSS4Color.Canonical;
 
 /**
  * @remarks
@@ -23,7 +25,7 @@ export const parse = Color.parse;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-color}
  * @internal
  */
-export default Longhand.of<Specified, Computed>(
+export default Longhand.of<Specified, Computed, Used>(
   Color.rgb(
     Percentage.of(0),
     Percentage.of(0),
@@ -33,7 +35,6 @@ export default Longhand.of<Specified, Computed>(
   parse,
   (value) => value.map(Color.partiallyResolve),
   {
-    use: (value, style) =>
-      Option.of(value.map(Color.resolve(Resolver.color(style)))),
+    use: (value, style) => value.map(Color.resolve(Resolver.color(style))),
   },
 );
