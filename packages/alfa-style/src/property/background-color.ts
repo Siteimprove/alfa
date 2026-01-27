@@ -1,5 +1,4 @@
 import { Color, CSS4Color, Percentage } from "@siteimprove/alfa-css";
-import { Option } from "@siteimprove/alfa-option";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";

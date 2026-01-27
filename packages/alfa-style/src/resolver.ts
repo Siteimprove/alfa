@@ -1,6 +1,5 @@
 import {
   type Color,
-  CSS4Color,
   type LengthPercentage,
   type Unit,
   type Value,
