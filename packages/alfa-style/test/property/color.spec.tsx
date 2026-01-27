@@ -41,7 +41,7 @@ test("#used() resolves `currentcolor`", (t) => {
 
   const style = Style.from(element, device);
 
-  t.deepEqual(style.used("color").getUnsafe().toJSON(), {
+  t.deepEqual(style.used("color").toJSON(), {
     value: red,
     source: h.declaration("color", "currentcolor").toJSON(),
   });

@@ -32,7 +32,7 @@ test("`currentcolor` is untouched by #computed, resolved by #used (non-`color` p
     source: h.declaration("background-color", "currentcolor").toJSON(),
   });
 
-  t.deepEqual(style.used("background-color").getUnsafe().toJSON(), {
+  t.deepEqual(style.used("background-color").toJSON(), {
     value: red,
     source: h.declaration("background-color", "currentcolor").toJSON(),
   });
@@ -52,7 +52,7 @@ test("`currentcolor` is untouched by #computed, resolved by #used (`color` prope
     source: h.declaration("color", "currentcolor").toJSON(),
   });
 
-  t.deepEqual(style.used("color").getUnsafe().toJSON(), {
+  t.deepEqual(style.used("color").toJSON(), {
     value: red,
     source: h.declaration("color", "currentcolor").toJSON(),
   });
@@ -69,7 +69,7 @@ test("#use() find the first defined `color`", (t) => {
 
   const style = Style.from(element, device);
 
-  t.deepEqual(style.used("background-color").getUnsafe().toJSON(), {
+  t.deepEqual(style.used("background-color").toJSON(), {
     value: red,
     source: h.declaration("background-color", "currentcolor").toJSON(),
   });
@@ -88,7 +88,7 @@ test("#use() find the first non-`currentcolor` `color`", (t) => {
 
   const style = Style.from(element, device);
 
-  t.deepEqual(style.used("background-color").getUnsafe().toJSON(), {
+  t.deepEqual(style.used("background-color").toJSON(), {
     value: red,
     source: h.declaration("background-color", "currentcolor").toJSON(),
   });
@@ -107,13 +107,13 @@ test("`currentcolor` is correctly inherited in non-`color` properties", (t) => {
   );
 
   const innerStyle = Style.from(inner, device);
-  t.deepEqual(innerStyle.used("background-color").getUnsafe().toJSON(), {
+  t.deepEqual(innerStyle.used("background-color").toJSON(), {
     value: red,
     source: h.declaration("background-color", "currentcolor").toJSON(),
   });
 
   const outerStyle = Style.from(outer, device);
-  t.deepEqual(outerStyle.used("background-color").getUnsafe().toJSON(), {
+  t.deepEqual(outerStyle.used("background-color").toJSON(), {
     value: blue,
     source: h.declaration("background-color", "currentcolor").toJSON(),
   });
