@@ -596,12 +596,6 @@ export class Cons<T> implements Sequence<T> {
     );
   }
 
-  public preceding<U extends T>(
-    refinement: Refinement<T, U, [index: number]>,
-  ): Sequence<T>;
-
-  public preceding(predicate: Predicate<T, [index: number]>): Sequence<T>;
-
   /**
    * Returns the elements that precede the first element for which the
    * predicate returns `true`.
