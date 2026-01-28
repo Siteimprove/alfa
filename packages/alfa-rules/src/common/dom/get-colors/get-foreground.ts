@@ -1,4 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
+import { Color, CSS4Color } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -7,7 +8,6 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
-import { Color } from "./color.js";
 import { ColorError, ColorErrors } from "./color-error.js";
 import { getBackground } from "./get-background.js";
 
@@ -16,7 +16,7 @@ const { isElement } = Element;
 /**
  * @public
  */
-export type Foreground = ReadonlyArray<Color.Resolved>;
+export type Foreground = ReadonlyArray<CSS4Color.Canonical>;
 
 const foregroundCache = Cache.empty<
   Device,
@@ -47,9 +47,7 @@ export function getForeground(
       let error: Option<ColorError<"foreground">> = None;
 
       const style = Style.from(element, device, context);
-
       const color = style.used("color").value;
-
       const opacity = style.computed("opacity").value;
 
       // If the color is not transparent, and the element is fully opaque,

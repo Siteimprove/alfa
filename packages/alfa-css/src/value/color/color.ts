@@ -100,6 +100,47 @@ export namespace Color {
   export const { isSystem } = System;
 
   /**
+   * Composite colors of a graphic element ("foreground") over a backdrop
+   * ("background").
+   * {@link https://drafts.csswg.org/compositing-1/#simplealphacompositing}
+   *
+   * @remarks
+   * The graphic element (foreground) may have a partially transparent color
+   * **and** be part of an HTML element which is itself partially transparent.
+   * Both transparencies need to be merged first.
+   *
+   * @param foreground - The color of the graphic element to combine
+   * @param background - The color of the backdrop to combine into
+   * @param opacity - The opacity of the graphic element, independently of its color.
+   */
+  export function composite(
+    foreground: CSS4Color.Canonical,
+    background: CSS4Color.Canonical,
+    opacity: number,
+  ): CSS4Color.Canonical {
+    const foregroundOpacity = foreground.alpha.value * opacity;
+
+    if (foregroundOpacity === 1) {
+      return foreground;
+    }
+
+    const alpha = background.alpha.value * (1 - foregroundOpacity);
+
+    const [red, green, blue] = [
+      [foreground.red, background.red],
+      [foreground.green, background.green],
+      [foreground.blue, background.blue],
+    ].map(([a, b]) => a.value * foregroundOpacity + b.value * alpha);
+
+    return rgb(
+      Percentage.of(red),
+      Percentage.of(green),
+      Percentage.of(blue),
+      Percentage.of(foregroundOpacity + alpha),
+    );
+  }
+
+  /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
    */
   export const parse: CSSParser<Color> = either<Slice<Token>, Color, string>(
