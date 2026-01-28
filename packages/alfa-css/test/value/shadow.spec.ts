@@ -1,7 +1,7 @@
 import type { Result } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Lexer, Shadow } from "../../dist/index.js";
+import { Color, Length, Lexer, Shadow } from "../../dist/index.js";
 
 import { color } from "../common/color.js";
 import { parser, parserUnsafe, serializer } from "../common/parse.js";
@@ -207,6 +207,7 @@ test(".resolve() returns a canonical shadow", (t) => {
       Length.of(16, "px"),
       Length.of(20, "px"),
     ),
+    currentColor: Color.of("black").getUnsafe(),
   });
 
   t.deepEqual(actual.toJSON(), {
@@ -234,6 +235,7 @@ test("parse() accepts calculations", (t) => {
           Length.of(16, "px"),
           Length.of(20, "px"),
         ),
+        currentColor: Color.of("black").getUnsafe(),
       })
       .toJSON(),
     {

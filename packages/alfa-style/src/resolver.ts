@@ -1,6 +1,7 @@
 import {
   Color,
   type LengthPercentage,
+  Shadow,
   type Unit,
   type Value,
 } from "@siteimprove/alfa-css";
@@ -80,5 +81,9 @@ export namespace Resolver {
 
   export function color(style: Style): Color.Resolver {
     return { currentColor: style.used("color").value };
+  }
+
+  export function shadow(style: Style): Shadow.Resolver {
+    return { ...length(style), ...color(style) };
   }
 }

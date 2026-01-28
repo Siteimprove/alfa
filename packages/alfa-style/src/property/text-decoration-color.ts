@@ -1,13 +1,13 @@
-import { Color, CSS4Color } from "@siteimprove/alfa-css";
+import { Color } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
 type Specified = Color;
 
-type Computed = Color.Canonical;
+type Computed = Color.PartiallyResolved;
 
-type Used = CSS4Color.Canonical;
+type Used = Color.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color}

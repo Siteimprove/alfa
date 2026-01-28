@@ -23,21 +23,22 @@ export type Color = CSS4Color | Current | System;
  * @public
  */
 export namespace Color {
-  export type Canonical = Current | System | CSS4Color.Canonical; // TODO: only CSS4Color
+  export type Canonical = CSS4Color.Canonical;
+
+  export type PartiallyResolved = CSS4Color | Current;
 
   export type JSON = CSS4Color.JSON | Keyword.JSON;
 
   /**
-   * Resolver for color-mix, must include the resolution for `currentcolor`.
+   * Resolver for colors, must include the resolution for `currentcolor`.
    */
   export interface Resolver {
     currentColor: CSS4Color.Canonical;
   }
 
-  // TODO: return Canonical
-  export function resolve(
-    resolver: Resolver,
-  ): (color: Color) => CSS4Color.Canonical {
+  export interface PartialResolver {}
+
+  export function resolve(resolver: Resolver): (color: Color) => Canonical {
     return (color) =>
       Selective.of(color)
         .if(System.isSystem, System.resolve)
@@ -46,11 +47,10 @@ export namespace Color {
         .get();
   }
 
-  export function partiallyResolve(color: Color): Color {
+  export function partiallyResolve(color: Color): PartiallyResolved {
     return Selective.of(color)
       .if(System.isSystem, System.resolve)
-      .if(Current.isCurrent, () => color)
-      .else((color) => color) // TODO handle mixes
+      .else((color) => color)
       .get();
   }
 
@@ -58,10 +58,6 @@ export namespace Color {
     const y = x.resolve();
     return Number.isNumber(y) ? y.value / base : y.value;
   }
-
-  export const current: Current = Keyword.of("currentcolor");
-
-  export const { isCurrent } = Current;
 
   /**
    * Creates a color in the sRGB color space.
@@ -86,14 +82,25 @@ export namespace Color {
     );
   }
 
-  export const { isCSS4Color } = CSS4Color;
-
   /**
    * Creates a color based on its CSS string representation.
    */
   export function of(color: string): Result<CSS4Color, Error> {
     return CSS4Color.of(color);
   }
+
+  export const transparent = rgb(
+    Percentage.of(0),
+    Percentage.of(0),
+    Percentage.of(0),
+    Percentage.of(0),
+  );
+
+  export const { isCSS4Color } = CSS4Color;
+
+  export const current: Current = Keyword.of("currentcolor");
+
+  export const { isCurrent } = Current;
 
   export const system = Keyword.of;
 

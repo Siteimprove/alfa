@@ -1,13 +1,13 @@
-import { Color, CSS4Color, Keyword } from "@siteimprove/alfa-css";
+import { Color, Keyword } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
 
 type Specified = Color | Keyword<"invert">;
 
-type Computed = Color.Canonical | Keyword<"invert">;
+type Computed = Color.PartiallyResolved | Keyword<"invert">;
 
-type Used = CSS4Color.Canonical | Keyword<"invert">;
+type Used = Color.Canonical | Keyword<"invert">;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color}

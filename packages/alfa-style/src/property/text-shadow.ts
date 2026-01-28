@@ -21,6 +21,6 @@ const parseList = List.parseCommaSeparated(
 export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   either(Keyword.parse("none"), parseList),
-  (value, style) => value.resolve(Resolver.length(style)),
+  (value, style) => value.resolve(Resolver.shadow(style)),
   { inherits: true },
 );

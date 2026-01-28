@@ -1,4 +1,4 @@
-import { Color, CSS4Color, System } from "@siteimprove/alfa-css";
+import { Color, System } from "@siteimprove/alfa-css";
 import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand.js";
@@ -7,9 +7,9 @@ import type { Value } from "../value.js";
 
 type Specified = Color;
 
-type Computed = Color.Canonical;
+type Computed = Color.PartiallyResolved;
 
-type Used = CSS4Color.Canonical;
+type Used = Color.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/color}

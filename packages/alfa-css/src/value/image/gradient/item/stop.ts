@@ -15,9 +15,9 @@ const { either, pair, map, left, right } = Parser;
  * {@link https://drafts.csswg.org/css-images/#color-stop}
  */
 export class Stop<
-    C extends Color = Color,
-    P extends LengthPercentage = LengthPercentage,
-  >
+  C extends Color = Color,
+  P extends LengthPercentage = LengthPercentage,
+>
   extends Value<"stop", Value.HasCalculation<[C, P]>>
   implements
     Resolvable<Stop.Canonical, Stop.Resolver>,
@@ -55,7 +55,7 @@ export class Stop<
 
   public resolve(resolver: Stop.Resolver): Stop.Canonical {
     return new Stop(
-      this._color.resolve(),
+      Color.resolve(resolver)(this._color),
       this._position.map(LengthPercentage.resolve(resolver)),
     );
   }
@@ -64,7 +64,7 @@ export class Stop<
     resolver: Stop.PartialResolver,
   ): Stop.PartiallyResolved {
     return new Stop(
-      this._color.resolve(),
+      Color.partiallyResolve(this._color),
       this._position.map(LengthPercentage.partiallyResolve(resolver)),
     );
   }
@@ -100,7 +100,7 @@ export namespace Stop {
   export type Canonical = Stop<Color.Canonical, LengthPercentage.Canonical>;
 
   export type PartiallyResolved = Stop<
-    Color.Canonical,
+    Color.PartiallyResolved,
     LengthPercentage.PartiallyResolved
   >;
 
@@ -109,9 +109,10 @@ export namespace Stop {
     position: LengthPercentage.JSON | null;
   }
 
-  export type Resolver = LengthPercentage.Resolver;
+  export type Resolver = LengthPercentage.Resolver & Color.Resolver;
 
-  export type PartialResolver = LengthPercentage.PartialResolver;
+  export type PartialResolver = LengthPercentage.PartialResolver &
+    Color.PartialResolver;
 
   export function isStop(value: unknown): value is Stop {
     return value instanceof Stop;

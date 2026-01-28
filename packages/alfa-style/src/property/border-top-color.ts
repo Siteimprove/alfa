@@ -1,4 +1,4 @@
-import { Color, CSS4Color } from "@siteimprove/alfa-css";
+import { Color } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
@@ -8,9 +8,9 @@ import { Resolver } from "../resolver.js";
  */
 export type Specified = Color;
 
-type Computed = Color.Canonical;
+type Computed = Color.PartiallyResolved;
 
-type Used = CSS4Color.Canonical;
+type Used = Color.Canonical;
 
 /**
  * @remarks
