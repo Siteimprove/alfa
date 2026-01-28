@@ -26,7 +26,6 @@
     "./common/diagnostic.ts",
     "./common/dom/get-clickable-region.ts",
     "./common/dom/get-colors.ts",
-    "./common/dom/get-colors/color.ts",
     "./common/dom/get-colors/color-error.ts",
     "./common/dom/get-colors/get-background.ts",
     "./common/dom/get-colors/get-foreground.ts",

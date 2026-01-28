@@ -1,5 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Percentage, Color as CSSColor } from "@siteimprove/alfa-css";
+import { Percentage, Color, CSS4Color } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -10,7 +10,6 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
-import type { Color } from "./color.js";
 import { ColorError, ColorErrors } from "./color-error.js";
 import { Layer } from "./get-layers.js";
 
@@ -19,7 +18,7 @@ const { isVisibleShadow } = Style;
 /**
  * @public
  */
-export type Background = ReadonlyArray<Color.Resolved>;
+export type Background = ReadonlyArray<CSS4Color.Canonical>;
 
 const backgroundCacheWithFakeOpacity = Cache.empty<
   Device,
@@ -100,7 +99,7 @@ export function getBackground(
 // We make the initial backdrop solid white as this can be assumed
 // to be the color of the canvas onto which the other backgrounds
 // are rendered.
-const white = CSSColor.rgb(
+const white = Color.rgb(
   Percentage.of(1),
   Percentage.of(1),
   Percentage.of(1),

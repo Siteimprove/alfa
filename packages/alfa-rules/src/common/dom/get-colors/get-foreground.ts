@@ -44,8 +44,6 @@ export function getForeground(
     .get(context, Cache.empty)
     .get(ignoredInterposedDescendants, Cache.empty)
     .get(element, () => {
-      let error: Option<ColorError<"foreground">> = None;
-
       const style = Style.from(element, device, context);
       const color = style.used("color").value;
       const opacity = style.computed("opacity").value;
@@ -108,8 +106,8 @@ export function getForeground(
         // If there is no parent, we just return the colors found so far.
         return colors;
       } else {
-        // We are missing either foreground or background.
-        return Err.of(ColorErrors.prepend(backgroundColors, error));
+        // We are missing  background.
+        return backgroundColors;
       }
     });
 }
