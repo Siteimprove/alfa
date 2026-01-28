@@ -5,15 +5,20 @@ import { Resolver } from "../resolver.js";
 
 type Specified = Color;
 
-type Computed = Color.Canonical;
+type Computed = Color.PartiallyResolved;
+
+type Used = Color.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-color}
  *
  * @internal
  */
-export default Longhand.of<Specified, Computed>(
+export default Longhand.of<Specified, Computed, Used>(
   Color.current,
   Color.parse,
-  (value, style) => value.resolve(Resolver.length(style)),
+  (value) => value.map(Color.partiallyResolve),
+  {
+    use: (value, style) => value.map(Color.resolve(Resolver.color(style))),
+  },
 );

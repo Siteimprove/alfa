@@ -28,6 +28,7 @@
 
 import { Array } from "@siteimprove/alfa-array";
 import type { Hash } from "@siteimprove/alfa-hash";
+import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -59,13 +60,13 @@ export class CSS4Color
 
   public static of(
     space: string,
-    coords: [number | null, number | null, number | null],
+    coordinates: CSS4Color.Coordinates<number | null>,
     alpha?: number | null,
   ): Result<CSS4Color, Error>;
 
   public static of(
     spaceOrColor: string | Color,
-    coords?: [number | null, number | null, number | null],
+    coordinates?: CSS4Color.Coordinates<number | null>,
     alpha: number | null = 1,
   ): CSS4Color | Result<CSS4Color, Error> {
     if (typeof spaceOrColor === "string") {
@@ -73,9 +74,9 @@ export class CSS4Color
       // The space might not exist, so Color constructor may throw.
       try {
         const color =
-          coords === undefined
+          coordinates === undefined
             ? new Color(spaceOrColor)
-            : new Color(spaceOrColor, coords, alpha);
+            : new Color(spaceOrColor, coordinates, alpha);
 
         return Ok.of(new CSS4Color(color));
       } catch (e) {
@@ -98,9 +99,19 @@ export class CSS4Color
   private readonly _blue: Percentage.Canonical;
   private readonly _alpha: Percentage.Canonical;
 
+  // Coordinates in the space and in sRGB, rounded, for introspection with small
+  // wiggle room
+  private readonly _roundedCoordinates: CSS4Color.Coordinates<number | null>;
+  private readonly _roundedRGB: CSS4Color.Coordinates<number>;
+  private readonly _roundedAlpha: number;
+
   protected constructor(color: Color) {
     super("color", false);
     this._color = color;
+
+    this._roundedCoordinates = color.coords.map(round) as CSS4Color.Coordinates<
+      number | null
+    >;
 
     this._srgb = color.to("srgb");
 
@@ -108,6 +119,13 @@ export class CSS4Color
     this._green = Percentage.of<"percentage">(this._srgb.g ?? 0);
     this._blue = Percentage.of<"percentage">(this._srgb.b ?? 0);
     this._alpha = Percentage.of(this._color.alpha ?? 1);
+
+    this._roundedRGB = [
+      round(this._srgb.r, 0),
+      round(this._srgb.g, 0),
+      round(this._srgb.b, 0),
+    ];
+    this._roundedAlpha = round(this._color.alpha, 1);
   }
 
   /**
@@ -143,6 +161,13 @@ export class CSS4Color
     return this;
   }
 
+  public withAlpha(alpha: Percentage.Canonical | number): CSS4Color {
+    const clone = this._color.clone();
+    clone.alpha = Percentage.isPercentage(alpha) ? alpha.value : alpha;
+
+    return new CSS4Color(clone);
+  }
+
   /**
    * Computes the contrast between two colors, according to WCAG 2.1 algorithm.
    *
@@ -156,19 +181,33 @@ export class CSS4Color
     return this._color.contrast(other._color, "WCAG21");
   }
 
+  public toSpace(space: string): Result<CSS4Color, Error> {
+    try {
+      const converted = this._color.to(space);
+      return Ok.of(new CSS4Color(converted));
+    } catch (e) {
+      return Err.of(e as Error);
+    }
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof CSS4Color &&
       // We consider two colors equals if they have the same sRGB representation.
-      this._red.equals(value._red) &&
-      this._green.equals(value._green) &&
-      this._blue.equals(value._blue) &&
-      this._alpha.equals(value._alpha)
+      this._roundedRGB[0] === value._roundedRGB[0] &&
+      this._roundedRGB[1] === value._roundedRGB[1] &&
+      this._roundedRGB[2] === value._roundedRGB[2] &&
+      this._roundedAlpha === value._roundedAlpha
     );
   }
 
   public hash(hash: Hash) {
-    hash.writeString(this._color.toString());
+    hash
+      .writeString(this._color.space.id)
+      .writeUnknown(this._roundedCoordinates[0])
+      .writeUnknown(this._roundedCoordinates[1])
+      .writeUnknown(this._roundedCoordinates[2])
+      .writeNumber(this._color.alpha);
   }
 
   public toJSON(): CSS4Color.JSON {
@@ -197,6 +236,8 @@ export class CSS4Color
  * @public
  */
 export namespace CSS4Color {
+  export type Coordinates<T> = [T, T, T];
+
   export interface JSON extends Value.JSON<"color"> {
     space: string;
     coordinates: [number | null, number | null, number | null];
@@ -205,6 +246,10 @@ export namespace CSS4Color {
   }
 
   export type Canonical = CSS4Color;
+
+  export function isCSS4Color(value: unknown): value is CSS4Color {
+    return value instanceof CSS4Color;
+  }
 
   /*
    * The colorjs.io parser works on strings, but we receive pre-tokenized input.
@@ -304,4 +349,18 @@ export namespace CSS4Color {
     CSS4Color,
     string
   >(parseColor, CSS4Color.of);
+}
+
+const internalPrecision = 5;
+
+function round(value: number | null): number | null;
+
+function round(value: number | null, nullReplacement: number): number;
+
+function round(value: number | null, nullReplacement?: number): number | null {
+  return nullReplacement === undefined
+    ? value === null
+      ? null
+      : Real.round(value, internalPrecision)
+    : Real.round(value ?? nullReplacement, internalPrecision);
 }

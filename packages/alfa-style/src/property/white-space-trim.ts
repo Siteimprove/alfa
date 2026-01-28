@@ -19,19 +19,23 @@ type Specified = Keyword<"none"> | TrimFlags;
 
 type Computed = Specified;
 
+type Used = Option<Computed>;
+
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/contain}
  * @internal
  */
-export default Longhand.of<Specified, Computed>(
+export default Longhand.of<Specified, Computed, Used>(
   Keyword.of("none"),
   either(Keyword.parse("none"), TrimFlags.parse),
   (value) => value,
   {
     inherits: false,
     use: (value, style) =>
-      Option.conditional(value, (_) =>
-        or(isBlockContainer, isInlineBox)(style),
+      value.map((trim) =>
+        Option.conditional(trim, (_) =>
+          or(isBlockContainer, isInlineBox)(style),
+        ),
       ),
   },
 );

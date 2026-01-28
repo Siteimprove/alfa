@@ -37,7 +37,8 @@ export namespace Real {
    *
    * @remarks
    * The modulo operation is different from the remainder operation supported
-   * natively in JavaScript through the % operator.
+   * natively in JavaScript through the `%` operator. The modulo operation
+   * always returns a result with the same sign as the divisor.
    */
   export function modulo(p: number, d: number): number {
     return ((p % d) + d) % d;

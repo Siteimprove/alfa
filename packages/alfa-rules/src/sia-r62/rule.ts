@@ -25,9 +25,9 @@ import type { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation.js";
 
 import { Contrast } from "../common/diagnostic/contrast.js";
-import { contrast } from "../common/expectation/contrast.js";
 
 import { getForeground } from "../common/dom/get-colors.js";
+import { contrast } from "../common/expectation/contrast.js";
 
 import { Scope, Stability, Version } from "../tags/index.js";
 
@@ -207,6 +207,9 @@ export default Rule.Atomic.of<Page, Element>({
                     device,
                     context,
                   )
+                    // We do need to map through the full array as
+                    // `isDistinguishable` has side effect of registering the
+                    // properties (for the diagnostic).
                     .map((isDistinguishable) => isDistinguishable(link))
                     .some((distinguishable) => distinguishable),
               );
@@ -230,27 +233,18 @@ export default Rule.Atomic.of<Page, Element>({
                   .flatMap((elementMap) => elementMap.get(link))
                   .getOrElse(() => List.empty());
 
+              const diagnostic = ElementDistinguishable.from(
+                link,
+                device,
+                target,
+                context,
+                properties,
+                distinguishableContrast,
+              );
+
               return hasDistinguishableStyle
-                ? Ok.of(
-                    ElementDistinguishable.from(
-                      link,
-                      device,
-                      target,
-                      context,
-                      properties,
-                      distinguishableContrast,
-                    ),
-                  )
-                : Err.of(
-                    ElementDistinguishable.from(
-                      link,
-                      device,
-                      target,
-                      context,
-                      properties,
-                      distinguishableContrast,
-                    ),
-                  );
+                ? Ok.of(diagnostic)
+                : Err.of(diagnostic);
             }),
           )
             .toArray()
@@ -530,8 +524,8 @@ namespace Distinguishable {
     context: Context = Context.empty(),
   ): ReadonlyArray<Contrast.Pairing<["container", "link"]>> {
     return getForeground(container, device, context)
-      .map((containerColors) => [
-        ...Array.flatMap(containerColors, (containerColor) =>
+      .map((containerColors) =>
+        Array.flatMap(containerColors, (containerColor) =>
           getForeground(link, device, context)
             .map((linkColors) =>
               Array.map(linkColors, (linkColor) =>
@@ -544,7 +538,7 @@ namespace Distinguishable {
             )
             .getOr([]),
         ),
-      ])
+      )
       .getOr([]);
   }
 

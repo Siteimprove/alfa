@@ -11,8 +11,22 @@ import {
 
 const { or } = Predicate;
 
-const base = Longhand.fromKeywords(
-  { inherits: false },
+type Specified =
+  | Keyword<"visible">
+  | Keyword<"hidden">
+  | Keyword<"clip">
+  | Keyword<"scroll">
+  | Keyword<"auto">;
+
+type Computed = Specified;
+
+type Used = Option<Computed>;
+
+const base = Longhand.fromKeywords<
+  "visible" | "hidden" | "clip" | "scroll" | "auto",
+  Used
+>(
+  { inherits: false, use: (value) => value.map(Option.of) },
   "visible",
   "hidden",
   "clip",
@@ -27,7 +41,7 @@ const isContainer = or(isBlockContainer, isFlexContainer, isGridContainer);
  *
  * @internal
  */
-export default Longhand.extend(base, {
+export default Longhand.extend<Specified, Computed, Used>(base, {
   compute: (overflowX, style) =>
     overflowX.map((x) => {
       if (x.value !== "visible" && x.value !== "clip") {
@@ -42,5 +56,8 @@ export default Longhand.extend(base, {
 
       return x.value === "visible" ? Keyword.of("auto") : Keyword.of("hidden");
     }),
-  use: (value, style) => Option.conditional(value, () => isContainer(style)),
+  use: (value, style) =>
+    value.map((overflow) =>
+      Option.conditional(overflow, () => isContainer(style)),
+    ),
 });

@@ -214,6 +214,13 @@ export namespace Longhands {
   >;
 
   /**
+   * Extract the used type of a named property.
+   *
+   * {@link https://drafts.csswg.org/css-cascade/#used}
+   */
+  export type Used<N extends Name> = Longhand.Used<Property[TrueName<N>]>;
+
+  /**
    * Extract the initial type of a named property.
    */
   export type Initial<N extends Name> = Computed<N>;

@@ -8,19 +8,14 @@ import type { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import type { Style } from "@siteimprove/alfa-style";
 
-import type { Color } from "./color.js";
-
 // Extended diagnostic for getColor
 
 interface ErrorName {
   layer:
-    | "unresolvable-background-color"
-    | "unresolvable-gradient"
     | "background-size"
     | "background-image"
     | "non-static"
     | "interposed-descendant";
-  foreground: "unresolvable-foreground-color";
   background: "text-shadow";
 }
 
@@ -193,7 +188,8 @@ export namespace ColorError {
   export interface JSON<
     T extends keyof ErrorName = keyof ErrorName,
     K extends ErrorName[T] = ErrorName[T],
-  > extends Diagnostic.JSON {
+  >
+    extends Diagnostic.JSON {
     element: Element.JSON;
     type: T;
     kind: K;
@@ -413,13 +409,6 @@ export namespace ColorError {
 
   export const { isWithProperty } = WithProperty;
 
-  export const unresolvableBackgroundColor = WithProperty.from(
-    "layer",
-    "unresolvable-background-color",
-    "background-color",
-    "Could not resolve background-color",
-  );
-
   export const backgroundSize = WithProperty.from(
     "layer",
     "background-size",
@@ -441,111 +430,12 @@ export namespace ColorError {
     "A non-statically positioned element was encountered",
   );
 
-  export const unresolvableForegroundColor = WithProperty.from(
-    "foreground",
-    "unresolvable-foreground-color",
-    "color",
-    "Could not resolve foreground color",
-  );
-
   export const textShadow = WithProperty.from(
     "background",
     "text-shadow",
     "text-shadow",
     "A text-shadow was encountered",
   );
-
-  /**
-   * @public
-   * We want both the value of background-image and the unresolvable stop
-   */
-  export class HasUnresolvableGradientStop extends WithProperty<
-    "layer",
-    "unresolvable-gradient",
-    "background-image"
-  > {
-    public static create(
-      element: Element,
-      value: Style.Computed<"background-image">,
-      color: Color.Computed,
-    ): HasUnresolvableGradientStop {
-      return new HasUnresolvableGradientStop(element, value, color);
-    }
-
-    private readonly _color: Color.Computed;
-
-    protected constructor(
-      element: Element,
-      value: Style.Computed<"background-image">,
-      color: Color.Computed,
-    ) {
-      super(
-        "Could not resolve gradient color stop",
-        "layer",
-        "unresolvable-gradient",
-        element,
-        "background-image",
-        value,
-      );
-      this._color = color;
-    }
-
-    public get color(): Color.Computed {
-      return this._color;
-    }
-
-    public equals(value: HasUnresolvableGradientStop): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return (
-        super.equals(value) &&
-        value instanceof HasUnresolvableGradientStop &&
-        value._color.equals(this._color)
-      );
-    }
-
-    public toJSON(): HasUnresolvableGradientStop.JSON {
-      return {
-        ...super.toJSON(),
-        color: this._color.toJSON(),
-      };
-    }
-  }
-
-  /**
-   * @public
-   */
-  export namespace HasUnresolvableGradientStop {
-    export interface JSON
-      extends WithProperty.JSON<
-        "layer",
-        "unresolvable-gradient",
-        "background-image"
-      > {
-      color: Serializable.ToJSON<Color.Computed>;
-    }
-
-    export function isUnresolvableGradientStop(
-      value: Diagnostic,
-    ): value is HasUnresolvableGradientStop;
-
-    export function isUnresolvableGradientStop(
-      value: unknown,
-    ): value is HasUnresolvableGradientStop;
-
-    export function isUnresolvableGradientStop(
-      value: unknown,
-    ): value is HasUnresolvableGradientStop {
-      return value instanceof HasUnresolvableGradientStop;
-    }
-  }
-
-  export const {
-    create: unresolvableGradientStop,
-    isUnresolvableGradientStop,
-  } = HasUnresolvableGradientStop;
 
   /**
    * @public
@@ -616,8 +506,10 @@ export namespace ColorError {
    * @public
    */
   export namespace HasInterposedDescendants {
-    export interface JSON
-      extends ColorError.JSON<"layer", "interposed-descendant"> {
+    export interface JSON extends ColorError.JSON<
+      "layer",
+      "interposed-descendant"
+    > {
       positionedDescendants: Sequence.JSON<Element>;
     }
 

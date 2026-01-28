@@ -8,7 +8,9 @@ import { Resolver } from "../resolver.js";
  */
 export type Specified = Color;
 
-type Computed = Color.Canonical;
+type Computed = Color.PartiallyResolved;
+
+type Used = Color.Canonical;
 
 /**
  * @remarks
@@ -22,8 +24,11 @@ export const parse = Color.parse;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color}
  * @internal
  */
-export default Longhand.of<Specified, Computed>(
+export default Longhand.of<Specified, Computed, Used>(
   Color.current,
   parse,
-  (value, style) => value.resolve(Resolver.length(style)),
+  (value) => value.map(Color.partiallyResolve),
+  {
+    use: (value, style) => value.map(Color.resolve(Resolver.color(style))),
+  },
 );

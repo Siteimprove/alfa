@@ -1,4 +1,5 @@
-import { CSS4Color } from "@siteimprove/alfa-css";
+import { Array } from "@siteimprove/alfa-array";
+import { Color, CSS4Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom/h";
 import { Context } from "@siteimprove/alfa-selector";
@@ -10,20 +11,12 @@ import {
   getForeground,
 } from "../../../dist/common/dom/get-colors.js";
 
+import { rgb } from "../color.js";
+
 const device = Device.standard();
 
 function color(r: number, g: number, b: number): CSS4Color.JSON {
-  return {
-    type: "color",
-    space: "srgb",
-    coordinates: [r, g, b],
-    sRGB: [
-      { type: "percentage", value: r },
-      { type: "percentage", value: g },
-      { type: "percentage", value: b },
-    ],
-    alpha: { type: "percentage", value: 1 },
-  };
+  return rgb(r, g, b).toJSON();
 }
 
 const red = color(1, 0, 0);
@@ -336,67 +329,6 @@ test("getForeground() resolves `currentcolor` when color is set with opacity on 
   );
 });
 
-test("getColor() can't resolve most system colors", (t) => {
-  const target = <span>Hello</span>;
-  const wrapper = <div>{target}</div>;
-
-  h.document(
-    [wrapper],
-    [
-      h.sheet([
-        h.rule.style("span", {
-          color: "visitedtext",
-        }),
-        h.rule.style("div", {
-          backgroundColor: "buttonface",
-        }),
-      ]),
-    ],
-  );
-
-  t.deepEqual(getBackground(target, device).toJSON(), {
-    type: "err",
-    error: {
-      message: "Could not fully resolve colors",
-      errors: [
-        {
-          message: "Could not resolve background-color",
-          element: wrapper.toJSON(),
-          type: "layer",
-          kind: "unresolvable-background-color",
-          property: "background-color",
-          value: { type: "keyword", value: "buttonface" },
-        },
-      ],
-    },
-  });
-
-  t.deepEqual(getForeground(target, device).toJSON(), {
-    type: "err",
-    error: {
-      message: "Could not fully resolve colors",
-      errors: [
-        {
-          message: "Could not resolve foreground color",
-          type: "foreground",
-          kind: "unresolvable-foreground-color",
-          element: target.toJSON(),
-          property: "color",
-          value: { type: "keyword", value: "visitedtext" },
-        },
-        {
-          message: "Could not resolve background-color",
-          element: wrapper.toJSON(),
-          type: "layer",
-          kind: "unresolvable-background-color",
-          property: "background-color",
-          value: { type: "keyword", value: "buttonface" },
-        },
-      ],
-    },
-  });
-});
-
 test("getBackgroundColor() gives up in case of external background image", (t) => {
   const target = <div>Hello</div>;
 
@@ -588,7 +520,7 @@ test("getBackgroundColor() cannot handle positioned elements", (t) => {
   });
 });
 
-test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
+test("getBackgroundColor() can resolve system colors in gradients", (t) => {
   const target = <div>Hello</div>;
 
   h.document(
@@ -602,45 +534,10 @@ test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
     ],
   );
 
-  t.deepEqual(getBackground(target, device).toJSON(), {
-    type: "err",
-    error: {
-      message: "Could not fully resolve colors",
-      errors: [
-        {
-          message: "Could not resolve gradient color stop",
-          type: "layer",
-          kind: "unresolvable-gradient",
-          element: target.toJSON(),
-          property: "background-image",
-          value: {
-            separator: ", ",
-            type: "list",
-            values: [
-              {
-                image: {
-                  direction: { side: "bottom", type: "side" },
-                  items: [
-                    { color: red, position: null, type: "stop" },
-                    {
-                      color: { type: "keyword", value: "highlight" },
-                      position: null,
-                      type: "stop",
-                    },
-                  ],
-                  kind: "linear",
-                  repeats: false,
-                  type: "gradient",
-                },
-                type: "image",
-              },
-            ],
-          },
-          color: { type: "keyword", value: "highlight" },
-        },
-      ],
-    },
-  });
+  t.deepEqual(Array.toJSON(getBackground(target, device).getUnsafe()), [
+    red,
+    Color.partiallyResolve(Color.system("highlight")).toJSON(),
+  ]);
 });
 
 test("getBackgroundColor() gives up in case of  non-ignored interposed elements", (t) => {

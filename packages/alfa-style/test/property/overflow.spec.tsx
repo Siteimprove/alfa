@@ -16,11 +16,11 @@ test(".used() returns the computed value for a block container", (t) => {
 
     for (const direction of ["x", "y"] as const) {
       t.deepEqual(used(target, `overflow-${direction}`), {
-        type: "some",
         value: {
+          type: "some",
           value: { type: "keyword", value },
-          source: { name: `overflow`, value, important: false },
         },
+        source: { name: `overflow`, value, important: false },
       });
     }
   }
@@ -40,11 +40,12 @@ test(".used() returns the computed value for a flex container", (t) => {
 
       for (const direction of ["x", "y"] as const) {
         t.deepEqual(used(target, `overflow-${direction}`), {
-          type: "some",
           value: {
+            type: "some",
+
             value: { type: "keyword", value },
-            source: { name: `overflow`, value, important: false },
           },
+          source: { name: `overflow`, value, important: false },
         });
       }
     }
@@ -65,11 +66,11 @@ test(".used() returns the computed value for a grid container", (t) => {
 
       for (const direction of ["x", "y"] as const) {
         t.deepEqual(used(target, `overflow-${direction}`), {
-          type: "some",
           value: {
+            type: "some",
             value: { type: "keyword", value },
-            source: { name: `overflow`, value, important: false },
           },
+          source: { name: `overflow`, value, important: false },
         });
       }
     }
@@ -87,7 +88,13 @@ test(".used() returns None for others element", (t) => {
     const target = <span style={{ overflow: value }}></span>;
     h.document([target]);
 
-    t.deepEqual(used(target, "overflow-x"), { type: "none" });
-    t.deepEqual(used(target, "overflow-y"), { type: "none" });
+    t.deepEqual(used(target, "overflow-x"), {
+      value: { type: "none" },
+      source: { name: "overflow", value, important: false },
+    });
+    t.deepEqual(used(target, "overflow-y"), {
+      value: { type: "none" },
+      source: { name: "overflow", value, important: false },
+    });
   }
 });

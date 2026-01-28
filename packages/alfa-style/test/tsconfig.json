@@ -9,6 +9,7 @@
   },
   "files": [
     "./common.ts",
+    "./currentcolor.spec.tsx",
     "./element/predicate/is-inert.spec.tsx",
     "./node/helpers/inner-text.spec.tsx",
     "./node/predicate/has-transparent-background.spec.tsx",
@@ -44,6 +45,7 @@
     "./property/border-image-width.spec.tsx",
     "./property/box-shadow.spec.tsx",
     "./property/clip.spec.tsx",
+    "./property/color.spec.tsx",
     "./property/contain.spec.tsx",
     "./property/container-type.spec.tsx",
     "./property/cursor.spec.tsx",

@@ -9,11 +9,11 @@ test(".used() returns the computed value for a block element", (t) => {
     h.document([target]);
 
     t.deepEqual(used(target, "text-overflow"), {
-      type: "some",
       value: {
+        type: "some",
         value: { type: "keyword", value },
-        source: { name: "text-overflow", value, important: false },
       },
+      source: { name: "text-overflow", value, important: false },
     });
   }
 });
@@ -23,6 +23,9 @@ test(".used() returns None for a line element", (t) => {
     const target = <span style={{ textOverflow: value }}></span>;
     h.document([target]);
 
-    t.deepEqual(used(target, "text-overflow"), { type: "none" });
+    t.deepEqual(used(target, "text-overflow"), {
+      value: { type: "none" },
+      source: { name: "text-overflow", value, important: false },
+    });
   }
 });

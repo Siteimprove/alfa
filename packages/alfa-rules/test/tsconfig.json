@@ -8,6 +8,7 @@
     "lib": ["DOM", "ESNext"]
   },
   "files": [
+    "./common/color.ts",
     "./common/evaluate.ts",
     "./common/oracle.ts",
     "./common/outcome.ts",
@@ -15,11 +16,8 @@
     "./common/predicate/is-at-the-start.spec.tsx",
     "./common/diagnostic/with-bad-elements.spec.tsx",
     "./sia-dr6/rule.spec.tsx",
-    "./sia-dr18/rule.spec.tsx",
     "./sia-dr34/rule.spec.tsx",
     "./sia-dr36/rule.spec.tsx",
-    "./sia-dr66/rule.spec.tsx",
-    "./sia-dr69/rule.spec.tsx",
     "./sia-er8/rule.spec.tsx",
     "./sia-er87/rule.spec.tsx",
     "./sia-r1/rule.spec.tsx",

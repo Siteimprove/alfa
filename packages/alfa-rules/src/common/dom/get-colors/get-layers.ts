@@ -1,5 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
+import { Color, CSS4Color } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Err, Result } from "@siteimprove/alfa-result";
@@ -9,7 +10,6 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { getInterposedDescendant } from "../get-interposed-descendant.js";
 
-import { Color } from "./color.js";
 import { ColorError, ColorErrors } from "./color-error.js";
 
 const { isElement } = Element;
@@ -19,19 +19,25 @@ const { hasTransparentBackground, isPositioned } = Style;
  * @public
  */
 export class Layer {
-  public static of(colors: Iterable<Color.Resolved>, opacity: number): Layer {
+  public static of(
+    colors: Iterable<CSS4Color.Canonical>,
+    opacity: number,
+  ): Layer {
     return new Layer(Array.from(colors), opacity);
   }
 
-  private readonly _colors: ReadonlyArray<Color.Resolved>;
+  private readonly _colors: ReadonlyArray<CSS4Color.Canonical>;
   private readonly _opacity: number;
 
-  protected constructor(colors: ReadonlyArray<Color.Resolved>, opacity: number) {
+  protected constructor(
+    colors: ReadonlyArray<CSS4Color.Canonical>,
+    opacity: number,
+  ) {
     this._colors = colors;
     this._opacity = opacity;
   }
 
-  public get colors(): ReadonlyArray<Color.Resolved> {
+  public get colors(): ReadonlyArray<CSS4Color.Canonical> {
     return this._colors;
   }
 
@@ -172,9 +178,9 @@ export namespace Layer {
    * Merge colors in a layer with colors in an existing backdrop.
    */
   export function merge(
-    backdrops: Array<Color.Resolved>,
+    backdrops: Array<CSS4Color.Canonical>,
     layer: Layer,
-  ): Array<Color.Resolved> {
+  ): Array<CSS4Color.Canonical> {
     return layer.colors.reduce(
       (layers, color) =>
         layers.concat(
@@ -182,7 +188,7 @@ export namespace Layer {
             Color.composite(color, backdrop, layer.opacity),
           ),
         ),
-      [] as Array<Color.Resolved>,
+      [] as Array<CSS4Color.Canonical>,
     );
   }
 
@@ -199,24 +205,16 @@ export namespace Layer {
     opacity?: number,
   ): Result<Array<Layer>, Array<ColorError<"layer">>> {
     const style = Style.from(element, device, context);
-    const backgroundColor = style.computed("background-color").value;
+    const backgroundColor = style.used("background-color").value;
     const backgroundImage = style.computed("background-image").value;
     const backgroundSize = style.computed("background-size").value;
-
-    const color = Color.resolve(backgroundColor, style);
 
     opacity = opacity ?? style.computed("opacity").value.value;
 
     const layers: Array<Layer> = [];
     const errors: Array<ColorError<"layer">> = [];
 
-    if (color.isSome()) {
-      layers.push(Layer.of([color.get()], opacity));
-    } else {
-      errors.push(
-        ColorError.unresolvableBackgroundColor(element, backgroundColor),
-      );
-    }
+    layers.push(Layer.of([backgroundColor], opacity));
 
     for (const image of backgroundImage) {
       if (image.type === "keyword") {
@@ -247,23 +245,15 @@ export namespace Layer {
       // For each gradient, we extract all color stops into a background layer of
       // their own. As gradients need a start and an end point, there will always
       // be at least two color stops.
-      const stops: Array<Color.Resolved> = [];
+      const stops: Array<CSS4Color.Canonical> = [];
 
       for (const item of image.image.items) {
         if (item.type === "stop") {
-          const color = Color.resolve(item.color, style);
-
-          if (color.isSome()) {
-            stops.push(color.get());
-          } else {
-            errors.push(
-              ColorError.unresolvableGradientStop(
-                element,
-                backgroundImage,
-                item.color,
-              ),
-            );
-          }
+          stops.push(
+            Color.resolve({
+              currentColor: style.used("color").value,
+            })(item.color),
+          );
         }
       }
 

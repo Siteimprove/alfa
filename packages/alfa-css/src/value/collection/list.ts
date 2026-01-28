@@ -1,9 +1,11 @@
+import { Array } from "@siteimprove/alfa-array";
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 
 import { type Parser as CSSParser, Token } from "../../syntax/index.js";
 
@@ -50,7 +52,21 @@ export class List<V extends Value>
   }
 
   public some(predicate: Predicate<V, [index: number]>) {
-    return Iterable.some(this._values, predicate);
+    return this._values.some(predicate);
+  }
+
+  public none(predicate: Predicate<V, [index: number]>) {
+    return Array.none(this._values, predicate);
+  }
+
+  public every<U extends V>(
+    refinement: Refinement<V, U, [index: number]>,
+  ): this is List<U>;
+
+  public every(predicate: Predicate<V, [index: number]>): boolean;
+
+  public every(predicate: Predicate<V, [index: number]>): boolean {
+    return this._values.every(predicate);
   }
 
   public resolve(

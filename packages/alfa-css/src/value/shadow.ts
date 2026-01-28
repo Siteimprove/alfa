@@ -17,12 +17,12 @@ const { filter, separatedList } = Parser;
  * @public
  */
 export class Shadow<
-    H extends Length = Length,
-    V extends Length = H,
-    B extends Length = Length,
-    S extends Length = Length,
-    C extends Color = Color,
-  >
+  H extends Length = Length,
+  V extends Length = H,
+  B extends Length = Length,
+  S extends Length = Length,
+  C extends Color = Color,
+>
   extends Value<"shadow", Value.HasCalculation<[H, V, B, S, C]>>
   implements Resolvable<Shadow.Canonical, Shadow.Resolver>
 {
@@ -100,7 +100,7 @@ export class Shadow<
       this._vertical.resolve(resolver),
       this._blur.resolve(resolver),
       this._spread.resolve(resolver),
-      this._color.resolve(),
+      Color.resolve(resolver)(this._color),
       this._isInset,
     );
   }
@@ -173,7 +173,7 @@ export namespace Shadow {
     withSpread: boolean;
   }
 
-  export type Resolver = Length.Resolver;
+  export type Resolver = Length.Resolver & Color.Resolver;
 
   type Sized<T, N extends 3 | 4> = [T, T] | [T, T, T] | N extends 3
     ? never
