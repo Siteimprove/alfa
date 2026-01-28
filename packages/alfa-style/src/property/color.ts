@@ -1,4 +1,5 @@
-import { Color, CSS4Color } from "@siteimprove/alfa-css";
+import { Color, CSS4Color, System } from "@siteimprove/alfa-css";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand.js";
 import { Resolver } from "../resolver.js";
@@ -19,7 +20,16 @@ export default Longhand.of<Specified, Computed, Used>(
   (value) => value.map(Color.partiallyResolve),
   {
     inherits: true,
-    use: (value, style) =>
-      value.map(Color.resolve(Resolver.color(style.parent))),
+    use: (
+      value,
+      style, // TODO: use Color.resolve
+    ) =>
+      value.map((computed) =>
+        Selective.of(computed)
+          .if(Color.isCSS4Color, (color) => color)
+          .if(Color.isSystem, System.resolve)
+          .else(() => Resolver.color(style.parent).currentColor)
+          .get(),
+      ),
   },
 );

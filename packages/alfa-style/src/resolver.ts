@@ -1,11 +1,13 @@
 import {
-  type Color,
+  Color,
   type LengthPercentage,
+  System,
   type Unit,
   type Value,
 } from "@siteimprove/alfa-css";
 import { Length, List } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import type { Style } from "./style.js";
 
@@ -79,14 +81,6 @@ export namespace Resolver {
   }
 
   export function color(style: Style): Color.Resolver {
-    // We should use directly style.used("color"), but it seems to create an
-    // infinite loop. So, we go up the tree manually to find a defined color.
-    const computed = style.computed("color").value;
-
-    if (computed.type === "color") {
-      return { currentColor: computed };
-    } else {
-      return color(style.parent);
-    }
+    return { currentColor: style.used("color").value };
   }
 }

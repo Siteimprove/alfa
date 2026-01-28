@@ -48,33 +48,14 @@ export function getForeground(
 
       const style = Style.from(element, device, context);
 
-      let foregroundColor = style.computed("color").value;
-      let parent = element.parent().filter(isElement);
-
-      const isCurrentColor = (color: Style.Computed<"color">) =>
-        color.type === "keyword" && color.value === "currentcolor";
-
-      while (parent.isSome() && isCurrentColor(foregroundColor)) {
-        foregroundColor = Style.from(parent.get(), device, context).computed(
-          "color",
-        ).value;
-        parent = parent.get().parent().filter(isElement);
-      }
-
-      const color = Color.resolve(foregroundColor, style);
-
-      if (color.isNone()) {
-        error = Option.of(
-          ColorError.unresolvableForegroundColor(element, foregroundColor),
-        );
-      }
+      const color = style.used("color").value;
 
       const opacity = style.computed("opacity").value;
 
       // If the color is not transparent, and the element is fully opaque,
       // then we do not need to dig further
-      if (color.isSome() && color.get().alpha.value * opacity.value === 1) {
-        return Result.of<Foreground, ColorErrors>([color.get()]);
+      if (color.alpha.value * opacity.value === 1) {
+        return Result.of<Foreground, ColorErrors>([color]);
       }
 
       // If the foreground color is (partly) transparent, we need to merge it
@@ -98,14 +79,12 @@ export function getForeground(
       );
 
       // If we have both foreground and background color, we can merge them.
-      if (color.isSome() && backgroundColors.isOk()) {
+      if (backgroundColors.isOk()) {
         // The background color may itself have an alpha channel, independently
         // of the opacity of the element, and this alpha channel needs to be
         // taken into account (as well as the alpha/opacity of all previous layers).
         const colors = backgroundColors.map((background) =>
-          background.map((backdrop) =>
-            Color.composite(color.get(), backdrop, 1),
-          ),
+          background.map((backdrop) => Color.composite(color, backdrop, 1)),
         );
 
         // Finally, we need to merge again, this time using the opacity of the

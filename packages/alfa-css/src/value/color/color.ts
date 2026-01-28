@@ -61,6 +61,8 @@ export namespace Color {
 
   export const current: Current = Keyword.of("currentcolor");
 
+  export const { isCurrent } = Current;
+
   /**
    * Creates a color in the sRGB color space.
    */
@@ -84,6 +86,8 @@ export namespace Color {
     );
   }
 
+  export const { isCSS4Color } = CSS4Color;
+
   /**
    * Creates a color based on its CSS string representation.
    */
@@ -92,6 +96,8 @@ export namespace Color {
   }
 
   export const system = Keyword.of;
+
+  export const { isSystem } = System;
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
