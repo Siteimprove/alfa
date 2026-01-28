@@ -2,7 +2,8 @@ import { Color, CSS4Color, System } from "@siteimprove/alfa-css";
 import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand.js";
-import { Resolver } from "../resolver.js";
+import type { Style } from "../style.js";
+import type { Value } from "../value.js";
 
 type Specified = Color;
 
@@ -20,15 +21,15 @@ export default Longhand.of<Specified, Computed, Used>(
   (value) => value.map(Color.partiallyResolve),
   {
     inherits: true,
-    use: (
-      value,
-      style, // TODO: use Color.resolve
-    ) =>
+    // We need to delay the call to `style.parent` to avoid infinite recursion
+    // at the top of the tree with the empty style. Hence, we break down the
+    // resolution instead of calling `Resolver.color`.
+    use: (value: Value<Computed>, style: Style): Value<Used> =>
       value.map((computed) =>
         Selective.of(computed)
           .if(Color.isCSS4Color, (color) => color)
           .if(Color.isSystem, System.resolve)
-          .else(() => Resolver.color(style.parent).currentColor)
+          .else(() => style.parent.used("color").value)
           .get(),
       ),
   },
