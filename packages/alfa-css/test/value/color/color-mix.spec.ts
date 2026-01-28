@@ -141,7 +141,7 @@ test(".parse() uses 'shorter' as default hue interpolation method", (t) => {
 });
 
 test(".parse() uses 'oklab' as default interpolation space", (t) => {
-  // This is also not currently supported by browsers but specified that way.
+  // This is not currently supported by browsers but specified that way.
   const input = `color-mix(red 50%, blue 50%)`;
   const mix = serialize(input);
 

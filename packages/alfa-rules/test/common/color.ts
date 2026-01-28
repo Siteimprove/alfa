@@ -1,4 +1,4 @@
-import { Color, Keyword, Percentage } from "@siteimprove/alfa-css";
+import { Color, Percentage } from "@siteimprove/alfa-css";
 
 export const rgb = (r: number, g: number, b: number, a: number = 1) =>
   Color.rgb(

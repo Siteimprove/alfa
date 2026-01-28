@@ -187,7 +187,7 @@ export class ColorMix<
   }
 
   public toString(): string {
-    const hue = ColorMix.isPolar(this._space) ? "" : ` ${this._hueMethod} hue`;
+    const hue = ColorMix.isPolar(this._space) ? ` ${this._hueMethod} hue` : "";
 
     return `color-mix(in ${this._space}${hue}, ${this._colors})`;
   }
@@ -342,12 +342,12 @@ export namespace ColorMix {
   );
 
   const parseHueMethod: CSSParser<HueInterpolationMethod> = map(
-    separated(
+    left(
       Keyword.parse(...hueInterpolationMethods),
       Token.parseWhitespace,
       Keyword.parse("hue"),
     ),
-    ([hueMethod]) => hueMethod.value,
+    (hueMethod) => hueMethod.value,
   );
 
   const parseInterpolation: CSSParser<
@@ -376,10 +376,7 @@ export namespace ColorMix {
         "color-mix",
         pair(
           option(
-            left(
-              parseInterpolation,
-              pair(Token.parseComma, Token.parseWhitespace),
-            ),
+            left(parseInterpolation, Token.parseComma, Token.parseWhitespace),
           ),
           mapResult(Mix.parse(parseColor), (colors) =>
             colors.none((item) =>

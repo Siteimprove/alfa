@@ -188,8 +188,8 @@ export namespace Mix {
     );
 
     // 2. Replace unspecified percentage by equal shares of the omitted part.
-    // If omitted is 0, this won't be used.
     // We do not create the intermediate list, just remember the "missing" value.
+    // If omitted is 0, this won't be used, so no creeping Infinity.
     const omittedPercentage = Percentage.of((1 - specifiedSum.value) / omitted);
 
     // 3. "Recompute" total. This will be 100% if there were any omission, or the

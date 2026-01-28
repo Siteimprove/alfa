@@ -1,13 +1,11 @@
 import {
   Color,
   type LengthPercentage,
-  System,
   type Unit,
   type Value,
 } from "@siteimprove/alfa-css";
 import { Length, List } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
-import { Selective } from "@siteimprove/alfa-selective";
 
 import type { Style } from "./style.js";
 

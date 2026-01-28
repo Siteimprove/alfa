@@ -524,23 +524,21 @@ namespace Distinguishable {
     context: Context = Context.empty(),
   ): ReadonlyArray<Contrast.Pairing<["container", "link"]>> {
     return getForeground(container, device, context)
-      .map((containerColors) => {
-        return [
-          ...Array.flatMap(containerColors, (containerColor) =>
-            getForeground(link, device, context)
-              .map((linkColors) =>
-                Array.map(linkColors, (linkColor) =>
-                  Contrast.Pairing.of<["container", "link"]>(
-                    ["container", containerColor],
-                    ["link", linkColor],
-                    contrast(containerColor, linkColor),
-                  ),
+      .map((containerColors) =>
+        Array.flatMap(containerColors, (containerColor) =>
+          getForeground(link, device, context)
+            .map((linkColors) =>
+              Array.map(linkColors, (linkColor) =>
+                Contrast.Pairing.of<["container", "link"]>(
+                  ["container", containerColor],
+                  ["link", linkColor],
+                  contrast(containerColor, linkColor),
                 ),
-              )
-              .getOr([]),
-          ),
-        ];
-      })
+              ),
+            )
+            .getOr([]),
+        ),
+      )
       .getOr([]);
   }
 
