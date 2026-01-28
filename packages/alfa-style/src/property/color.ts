@@ -16,7 +16,7 @@ type Used = CSS4Color.Canonical;
  * @internal
  */
 export default Longhand.of<Specified, Computed, Used>(
-  Color.system("canvastext"),
+  Color.partiallyResolve(Color.system("canvastext")),
   Color.parse,
   (value) => value.map(Color.partiallyResolve),
   {

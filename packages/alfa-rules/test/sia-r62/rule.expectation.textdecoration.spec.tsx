@@ -117,7 +117,6 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
       [
         ["border-width", "0px"],
         ["font", "700 16px serif"],
-        ["color", "rgb(0, 0, 0)"], // TODO: should be auto-simplified
         ["outline", "0px"],
       ],
       [makePairing(defaultTextColor, defaultTextColor, 1)],
