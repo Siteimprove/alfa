@@ -178,7 +178,7 @@ test("Color mixes with only transparent or 0% items are transparent", (t) => {
 test("Color mixes with non-transparent or non-0% items are not transparent", (t) => {
   for (const input of [
     "color-mix(in srgb, currentColor 0%, blue 1%)",
-    "color-mix(in srgb, currentred 0%, currentColor 1%)",
+    "color-mix(in srgb, currentColor 0%, currentColor 1%)",
     "color-mix(in srgb, red 0%, blue)",
     "color-mix(in srgb, red 0%, rgba(0,0,0,0.1) 100%)",
   ]) {
