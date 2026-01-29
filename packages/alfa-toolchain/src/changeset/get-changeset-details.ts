@@ -54,7 +54,7 @@ export namespace Changeset {
 
     if (matches === null) {
       return Err.of(
-        `Changeset doesn't match the required format (${changeset.summary})`,
+        `Changeset ${changeset.id} doesn't match the required format (${changeset.summary})`,
       );
     }
 
