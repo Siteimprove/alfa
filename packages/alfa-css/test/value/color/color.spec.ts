@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Color } from "../../../dist/value/color/color.js";
 
 import { color } from "../../common/color.js";
-import { parser, serializer } from "../../common/parse.js";
+import { parser } from "../../common/parse.js";
 
 const parse = parser(Color.parse);
 

@@ -115,7 +115,7 @@ test("getDetails() rejects a changeset with incorrect header", (t) => {
       }).toJSON(),
       {
         type: "err",
-        error: `Changeset doesn't match the required format (${summary})`,
+        error: `Changeset unused doesn't match the required format (${summary})`,
       },
     );
   }
