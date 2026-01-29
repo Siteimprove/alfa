@@ -71,15 +71,6 @@ const _default: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 // @public (undocumented)
 const _default_10: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
-// @public (undocumented)
-const _default_11: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
-
-// @public @deprecated (undocumented)
-const _default_12: Rule.Atomic<Page, Text_2, Question.Metadata, Text_2>;
-
-// @public @deprecated (undocumented)
-const _default_13: Rule.Atomic<Page, Text_2, Question.Metadata, Text_2>;
-
 // @public
 const _default_2: Rule.Atomic<Page, Document_2, Question.Metadata, Element_2<string>>;
 
@@ -101,17 +92,14 @@ const _default_7: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Elemen
 // @public @deprecated (undocumented)
 const _default_8: Rule.Atomic<Page, Element_2<string>, {}, Element_2<string>>;
 
-// @public @deprecated (undocumented)
-const _default_9: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
+// @public (undocumented)
+const _default_9: Rule.Atomic<Page, Element_2<string>, Question.Metadata, Element_2<string>>;
 
 declare namespace deprecatedRules {
     export {
         _default_8 as DR6,
-        _default_9 as DR18,
-        _default_10 as DR34,
-        _default_11 as DR36,
-        _default_12 as DR66,
-        _default_13 as DR69
+        _default_9 as DR34,
+        _default_10 as DR36
     }
 }
 export { deprecatedRules }

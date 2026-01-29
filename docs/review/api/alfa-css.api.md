@@ -19,6 +19,8 @@ import type * as json from '@siteimprove/alfa-json';
 import { Keywords as Keywords_2 } from '../position/keywords.js';
 import { LengthPercentage as LengthPercentage_2 } from '../index.js';
 import type { Mapper } from '@siteimprove/alfa-mapper';
+import { Maybe } from '@siteimprove/alfa-option';
+import { None } from '@siteimprove/alfa-option';
 import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Parser as Parser_3 } from '../../index.js';
@@ -29,8 +31,9 @@ import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Result } from '@siteimprove/alfa-result';
-import type { Serializable } from '@siteimprove/alfa-json';
+import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
+import { Some } from '@siteimprove/alfa-option';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token as Token_2 } from '../../syntax/token.js';
 import { Unit as Unit_2 } from '../../index.js';
@@ -311,32 +314,50 @@ export namespace Circle {
     parse: Parser<Circle>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "ColorMix" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export type Color = CSS4Color | Current | System;
+export type Color<S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod> = ColorMix<S, H> | CSS4Color | Current | System;
 
 // @public (undocumented)
 export namespace Color {
     // (undocumented)
-    export type Canonical = Current | System | CSS4Color.Canonical;
+    export type Canonical = CSS4Color.Canonical;
+    export function composite(foreground: Color.Canonical, background: Color.Canonical, opacity: number): Color.Canonical;
     // (undocumented)
     export function isTransparent(color: Color): boolean;
+    const // (undocumented)
+    isCSS4Color: typeof CSS4Color.isCSS4Color;
+    const // (undocumented)
+    isCurrent: typeof Current.isCurrent;
+    const // (undocumented)
+    isSystem: typeof System.isSystem;
+    const // (undocumented)
+    isColorMix: typeof ColorMix.isColorMix;
     // (undocumented)
-    export type JSON = CSS4Color.JSON | Keyword.JSON;
+    export type JSON<S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod> = ColorMix.JSON<S, H> | CSS4Color.JSON | Keyword.JSON;
     export function of(color: string): Result<CSS4Color, Error>;
     // (undocumented)
-    export function partiallyResolve(color: Color): Color;
+    export function parse(input: Slice<Token>): Result<[Slice<Token>, Color], string>;
+    // (undocumented)
+    export function partiallyResolve<S extends ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod>(color: Color<S, H>): PartiallyResolved<S, H>;
+    // (undocumented)
+    export type PartiallyResolved<S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod> = ColorMix<S, H> | CSS4Color | Current;
+    // (undocumented)
+    export interface PartialResolver {
+    }
+    const // (undocumented)
+    transparent: CSS4Color;
     const // (undocumented)
     current: Current;
+    const // (undocumented)
+    system: typeof Keyword.of;
     // (undocumented)
-    export function resolve(resolver: Resolver): (color: Color) => CSS4Color.Canonical;
+    export function resolve(resolver: Resolver): (color: Color) => Canonical;
     export interface Resolver {
         // (undocumented)
         currentColor: CSS4Color.Canonical;
     }
-    const // (undocumented)
-    system: typeof Keyword.of;
-    const // (undocumented)
-    parse: Parser<Color>;
     export function rgb(red: Number_2 | Percentage, green: Number_2 | Percentage, blue: Number_2 | Percentage, alpha?: Number_2 | Percentage): CSS4Color;
 }
 
@@ -2208,7 +2229,7 @@ export namespace Shadow {
     // (undocumented)
     export function parse(options?: Options): Parser<Shadow>;
     // (undocumented)
-    export type Resolver = Length.Resolver;
+    export type Resolver = Length.Resolver & Color.Resolver;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Shape" is marked as @public, but its signature references "Resolvable" which is marked as @internal
