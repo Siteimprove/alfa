@@ -234,12 +234,20 @@ test(".calculate() mixes two colors correctly", (t) => {
   t.deepEqual(result.toJSON(), mkColor("rgb(25% 0 75%)").toJSON());
 });
 
-test(".calculate() normalizes percentages", (t) => {
+test(".calculate() normalizes large percentages", (t) => {
   const mix = List.of([mkItem("red", 1), mkItem("blue", 3)]);
 
   const result = ColorMix.calculate(mix, "srgb", "shorter");
 
   t.deepEqual(result.toJSON(), mkColor("rgb(25% 0 75%)").toJSON());
+});
+
+test(".calculate() normalizes small percentages and adds alpha", (t) => {
+  const mix = List.of([mkItem("red", 0.1), mkItem("blue", 0.3)]);
+
+  const result = ColorMix.calculate(mix, "srgb", "shorter");
+
+  t.deepEqual(result.toJSON(), mkColor("rgb(25% 0 75% / .4)").toJSON());
 });
 
 test(".calculate() handles missing percentages", (t) => {

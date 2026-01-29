@@ -320,7 +320,11 @@ export namespace ColorMix {
     const transparent = CSS4Color.of("transparent").getUnsafe();
 
     // 1.
-    const [normalized, leftover] = Mix.normalize(colors);
+    // Note that the `force` parameter is actually powerless here since it
+    // effectively multiplies all percentages by the same value (when the total
+    // is <100%), which does not change their relative weights. We keep it to
+    // stick to the specs.
+    const [normalized, leftover] = Mix.normalize(colors, true);
 
     // 2.
     if (leftover.value === 1) {
