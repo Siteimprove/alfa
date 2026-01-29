@@ -40,7 +40,7 @@ export namespace Parser {
     // (undocumented)
     export type Infallible<I, T, A extends Array_2<unknown> = []> = (input: I, ...args: A) => [I, T];
     // (undocumented)
-    export function left<I, T, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, unknown, E, A>, ...others: Array_2<Parser<I, unknown, E, A>>): Parser<I, T, E, A>;
+    export function left<I, T, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, ...right: Array_2<Parser<I, unknown, E, A>>): Parser<I, T, E, A>;
     // (undocumented)
     export function map<I, T, U, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, U>): Parser<I, U, E, A>;
     // (undocumented)

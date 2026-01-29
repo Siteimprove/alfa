@@ -351,7 +351,7 @@ export namespace Color {
     const // (undocumented)
     current: Current;
     const // (undocumented)
-    system: typeof Keyword.of;
+    system: (value: System.Keyword) => System;
     // (undocumented)
     export function resolve(resolver: Resolver): (color: Color) => Canonical;
     export interface Resolver {
