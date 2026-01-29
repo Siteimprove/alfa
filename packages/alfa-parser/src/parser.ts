@@ -292,8 +292,7 @@ export namespace Parser {
 
   export function left<I, T, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
-    right: Parser<I, unknown, E, A>,
-    ...others: Array<Parser<I, unknown, E, A>>
+    ...right: Array<Parser<I, unknown, E, A>>
   ): Parser<I, T, E, A> {
     return (input, ...args) => {
       const first = left(input, ...args);
@@ -304,9 +303,7 @@ export namespace Parser {
 
       let [remainder, result] = first.get();
 
-      const rightParsers = [right, ...others];
-
-      for (const parser of rightParsers) {
+      for (const parser of right) {
         const next = parser(remainder, ...args);
 
         if (next.isErr()) {
