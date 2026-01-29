@@ -13,6 +13,7 @@ const parse = parser(ColorMix.parse(Color.parse));
 const serialize = serializer(ColorMix.parse(Color.parse));
 
 const red = color(1, 0, 0);
+const lime = color(0, 1, 0);
 const blue = color(0, 0, 1);
 
 function mkColor(text: string): CSS4Color {
@@ -168,6 +169,54 @@ test(".parse() uses 'oklab' as default interpolation space", (t) => {
   });
 });
 
+test(".parse() allows nested color mixes", (t) => {
+  const mix = serialize(
+    "color-mix(in srgb, color-mix(in oklab, red 25%, blue 75%) 60%, lime 40%)",
+  );
+
+  t.deepEqual(mix, {
+    type: "color-mix",
+    space: "srgb",
+    hueMethod: null,
+    colors: {
+      type: "list",
+      values: [
+        {
+          type: "mix-item",
+          value: {
+            type: "color-mix",
+            space: "oklab",
+            hueMethod: null,
+            colors: {
+              type: "list",
+              values: [
+                {
+                  type: "mix-item",
+                  value: red,
+                  percentage: { type: "percentage", value: 0.25 },
+                },
+                {
+                  type: "mix-item",
+                  value: blue,
+                  percentage: { type: "percentage", value: 0.75 },
+                },
+              ],
+              separator: ", ",
+            },
+          },
+          percentage: { type: "percentage", value: 0.6 },
+        },
+        {
+          type: "mix-item",
+          value: lime,
+          percentage: { type: "percentage", value: 0.4 },
+        },
+      ],
+      separator: ", ",
+    },
+  });
+});
+
 /*
  * The output of mix is often a "random" looking number, especially when switching
  * to another interpolation space. Moreover, the results differ after a few decimals
@@ -305,6 +354,16 @@ test("#partiallyResolve() resolves fully determined color mixes", (t) => {
   t.deepEqual(resolved.toJSON(), color(0.5, 0, 0.5));
 });
 
+test("#partiallyResolve() resolves fully determined nested color mixes", (t) => {
+  const mix = parse(
+    "color-mix(in srgb, color-mix(in srgb, red 20%, blue 80%) 60%, lime 40%)",
+  ).getUnsafe();
+
+  const resolved = mix.partiallyResolve();
+
+  t.deepEqual(resolved.toJSON(), color(0.2 * 0.6, 0.4, 0.8 * 0.6));
+});
+
 test("#partiallyResolve() resolves system colors", (t) => {
   // `ButtonText` is black.
   const mix = parse("color-mix(in srgb, red 50%, ButtonText 50%)").getUnsafe();
@@ -337,6 +396,56 @@ test("#partiallyResolve() doesn't resolve `currentcolor`", (t) => {
           type: "mix-item",
           value: { type: "keyword", value: "currentcolor" },
           percentage: { type: "percentage", value: 0.5 },
+        },
+      ],
+      separator: ", ",
+    },
+  });
+});
+
+test(".partiallyResolve() resolves sub-mixes when possible", (t) => {
+  const mix = parse(
+    "color-mix(in srgb, color-mix(in srgb, currentcolor, blue 80%) 60%, color-mix(in srgb, red 30%, lime) 40%)",
+  ).getUnsafe();
+
+  const resolved = mix.partiallyResolve();
+
+  t.deepEqual(resolved.toJSON(), {
+    type: "color-mix",
+    space: "srgb",
+    hueMethod: null,
+    colors: {
+      type: "list",
+      values: [
+        {
+          type: "mix-item",
+          value: {
+            type: "color-mix",
+            space: "srgb",
+            hueMethod: null,
+            colors: {
+              type: "list",
+              values: [
+                {
+                  type: "mix-item",
+                  value: { type: "keyword", value: "currentcolor" },
+                  percentage: null,
+                },
+                {
+                  type: "mix-item",
+                  value: blue,
+                  percentage: { type: "percentage", value: 0.8 },
+                },
+              ],
+              separator: ", ",
+            },
+          },
+          percentage: { type: "percentage", value: 0.6 },
+        },
+        {
+          type: "mix-item",
+          value: color(0.3, 0.7, 0),
+          percentage: { type: "percentage", value: 0.4 },
         },
       ],
       separator: ", ",

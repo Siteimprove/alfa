@@ -4,7 +4,7 @@ import type { Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import type { Parser as CSSParser, Token } from "../../syntax/index.js";
+import type { Token } from "../../syntax/index.js";
 import { Number, Percentage } from "../numeric/index.js";
 
 import { Keyword } from "../textual/keyword.js";
@@ -145,19 +145,21 @@ export namespace Color {
       return foreground;
     }
 
-    const alpha = background.alpha.value * (1 - foregroundOpacity);
+    const backgroundOpacity = background.alpha.value * (1 - foregroundOpacity);
 
     const [red, green, blue] = [
       [foreground.red, background.red],
       [foreground.green, background.green],
       [foreground.blue, background.blue],
-    ].map(([a, b]) => a.value * foregroundOpacity + b.value * alpha);
+    ].map(
+      ([a, b]) => a.value * foregroundOpacity + b.value * backgroundOpacity,
+    );
 
     return rgb(
       Percentage.of(red),
       Percentage.of(green),
       Percentage.of(blue),
-      Percentage.of(foregroundOpacity + alpha),
+      Percentage.of(foregroundOpacity + backgroundOpacity),
     );
   }
 
