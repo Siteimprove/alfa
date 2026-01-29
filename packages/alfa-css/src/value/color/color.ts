@@ -110,15 +110,10 @@ export namespace Color {
     return CSS4Color.of(color);
   }
 
-  export const transparent = rgb(
-    Percentage.of(0),
-    Percentage.of(0),
-    Percentage.of(0),
-    Percentage.of(0),
-  );
+  export const transparent = CSS4Color.of("transparent").getUnsafe();
 
   export const current: Current = Keyword.of("currentcolor");
-  export const system = Keyword.of;
+  export const system = (value: System.Keyword): System => Keyword.of(value);
 
   /**
    * Composite colors of a graphic element ("foreground") over a backdrop
@@ -189,11 +184,10 @@ export namespace Color {
     S extends ColorMix.InterpolationSpace,
     H extends ColorMix.HueInterpolationMethod,
   >(color: ColorMix<S, H>): boolean {
-    // All the non-transparent components have 0% presence in the mix
+    // All the non-transparent components have explicit 0% presence in the mix
     return color.colors.every(
       (item) =>
-        isTransparent(item.value) ||
-        item.percentage.map((p) => p.value).getOr(0) === 0,
+        isTransparent(item.value) || item.percentage.some((p) => p.value === 0),
     );
   }
 }

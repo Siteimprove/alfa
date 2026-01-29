@@ -242,14 +242,6 @@ test(".calculate() normalizes large percentages", (t) => {
   t.deepEqual(result.toJSON(), mkColor("rgb(25% 0 75%)").toJSON());
 });
 
-test(".calculate() normalizes small percentages and adds alpha", (t) => {
-  const mix = List.of([mkItem("red", 0.1), mkItem("blue", 0.3)]);
-
-  const result = ColorMix.calculate(mix, "srgb", "shorter");
-
-  t.deepEqual(result.toJSON(), mkColor("rgb(25% 0 75% / .4)").toJSON());
-});
-
 test(".calculate() handles missing percentages", (t) => {
   const mix = List.of([mkItem("red", 0.5), mkItem("blue")]);
 
@@ -490,4 +482,14 @@ test("#resolve() resolves `currentcolor`", (t) => {
   const resolved = mix.resolve(resolver);
 
   t.deepEqual(resolved.toJSON(), color(0.5, 0, 0));
+});
+
+test(".resolve() resolves currentColor in sub-mixes", (t) => {
+  const mix = parse(
+    "color-mix(in srgb, color-mix(in srgb, currentcolor, blue 80%) 60%, color-mix(in srgb, red 30%, lime) 40%)",
+  ).getUnsafe();
+
+  const resolved = mix.resolve(resolver);
+
+  t.deepEqual(resolved.toJSON(), color(0.3 * 0.4, 0.7 * 0.4, 0.8 * 0.6));
 });

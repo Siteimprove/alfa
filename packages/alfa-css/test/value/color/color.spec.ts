@@ -132,10 +132,10 @@ test(".composite() correctly resolve complex compositions", (t) => {
   t.deepEqual(
     Color.composite(red.withAlpha(0.25), blue.withAlpha(0.5), 0.5).toJSON(),
     color(
-      0.125, // (.25 fg alpha) * (.5 alpha)
+      /* fg alpha */ 0.25 * /* opacity */ 0.5, // 0.125
       0,
-      0.4375, // (.5 bg alpha) * ((1 - .25 * .5) leftover fg alpha = 1 - final fg opacity)
-      0.5625, // sum of final fg and bg opacities
+      /* bg alpha */ 0.5 * (1 - /* fg alpha */ 0.25 * /* opacity */ 0.5), // 0.4375
+      /* final fg opacity */ 0.125 + /* final bg opacity */ 0.4375,
     ),
   );
 });
@@ -167,8 +167,8 @@ test("Non-transparent colors are not transparent", (t) => {
 
 test("Color mixes with only transparent or 0% items are transparent", (t) => {
   for (const input of [
-    "color-mix(in srgb, red 0%, blue 0%)",
-    "color-mix(in srgb, red 0%, rgba(0,0,0,0) 100%)",
+    "color-mix(in srgb, red 0%, currentColor 0%)",
+    "color-mix(in srgb, currentColor 0%, rgba(0,0,0,0) 100%)",
   ]) {
     const color = parse(input).getUnsafe();
     t(Color.isTransparent(color), `Failed to identify ${input} as transparent`);
@@ -177,7 +177,9 @@ test("Color mixes with only transparent or 0% items are transparent", (t) => {
 
 test("Color mixes with non-transparent or non-0% items are not transparent", (t) => {
   for (const input of [
-    "color-mix(in srgb, red 0%, blue 1%)",
+    "color-mix(in srgb, currentColor 0%, blue 1%)",
+    "color-mix(in srgb, currentred 0%, currentColor 1%)",
+    "color-mix(in srgb, red 0%, blue)",
     "color-mix(in srgb, red 0%, rgba(0,0,0,0.1) 100%)",
   ]) {
     const color = parse(input).getUnsafe();
@@ -187,5 +189,3 @@ test("Color mixes with non-transparent or non-0% items are not transparent", (t)
     );
   }
 });
-
-// istransparent
