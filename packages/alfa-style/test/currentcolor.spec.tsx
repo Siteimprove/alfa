@@ -14,7 +14,7 @@ const blue = color(0, 0, 1);
 /*
  * This file uses `background-color` as a proxy for "properties other than
  * `color`, but whose value is a color". This assumes that all these properties
- * use the same `.compute` and `.use` functions.
+ * use similar `.compute` and `.use` functions.
  *
  * A more thorough test would iterate over all such properties, or to include
  * similar test cases in the specific test suites of each of them…

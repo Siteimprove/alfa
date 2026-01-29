@@ -1,4 +1,5 @@
 import { Parser } from "@siteimprove/alfa-parser";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Result } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
@@ -7,17 +8,22 @@ import type { Parser as CSSParser, Token } from "../../syntax/index.js";
 import { Number, Percentage } from "../numeric/index.js";
 
 import { Keyword } from "../textual/keyword.js";
+import { ColorMix } from "./color-mix.js";
 
 import { CSS4Color } from "./css4-color.js";
 import { Current } from "./current.js";
 import { System } from "./system.js";
 
 const { either } = Parser;
+const { or } = Refinement;
 
 /**
  * @public
  */
-export type Color = CSS4Color | Current | System;
+export type Color<
+  S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace,
+  H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod,
+> = ColorMix<S, H> | CSS4Color | Current | System;
 
 /**
  * @public
@@ -25,9 +31,20 @@ export type Color = CSS4Color | Current | System;
 export namespace Color {
   export type Canonical = CSS4Color.Canonical;
 
-  export type PartiallyResolved = CSS4Color | Current;
+  export type PartiallyResolved<
+    S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace,
+    H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod,
+  > = ColorMix<S, H> | CSS4Color | Current;
 
-  export type JSON = CSS4Color.JSON | Keyword.JSON;
+  export type JSON<
+    S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace,
+    H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod,
+  > = ColorMix.JSON<S, H> | CSS4Color.JSON | Keyword.JSON;
+
+  export const { isCSS4Color } = CSS4Color;
+  export const { isCurrent } = Current;
+  export const { isSystem } = System;
+  export const { isColorMix } = ColorMix;
 
   /**
    * Resolver for colors, must include the resolution for `currentcolor`.
@@ -41,15 +58,19 @@ export namespace Color {
   export function resolve(resolver: Resolver): (color: Color) => Canonical {
     return (color) =>
       Selective.of(color)
-        .if(System.isSystem, System.resolve)
-        .if(Current.isCurrent, () => resolver.currentColor)
-        .else((color) => color.resolve())
+        .if(isSystem, System.resolve)
+        .if(isCurrent, () => resolver.currentColor)
+        .else((color) => color.resolve(resolver))
         .get();
   }
 
-  export function partiallyResolve(color: Color): PartiallyResolved {
+  export function partiallyResolve<
+    S extends ColorMix.InterpolationSpace,
+    H extends ColorMix.HueInterpolationMethod,
+  >(color: Color<S, H>): PartiallyResolved<S, H> {
     return Selective.of(color)
-      .if(System.isSystem, System.resolve)
+      .if(isSystem, System.resolve)
+      .if(isColorMix, (color) => color.partiallyResolve())
       .else((color) => color)
       .get();
   }
@@ -96,15 +117,8 @@ export namespace Color {
     Percentage.of(0),
   );
 
-  export const { isCSS4Color } = CSS4Color;
-
   export const current: Current = Keyword.of("currentcolor");
-
-  export const { isCurrent } = Current;
-
   export const system = Keyword.of;
-
-  export const { isSystem } = System;
 
   /**
    * Composite colors of a graphic element ("foreground") over a backdrop
@@ -121,10 +135,10 @@ export namespace Color {
    * @param opacity - The opacity of the graphic element, independently of its color.
    */
   export function composite(
-    foreground: CSS4Color.Canonical,
-    background: CSS4Color.Canonical,
+    foreground: Color.Canonical,
+    background: Color.Canonical,
     opacity: number,
-  ): CSS4Color.Canonical {
+  ): Color.Canonical {
     const foregroundOpacity = foreground.alpha.value * opacity;
 
     if (foregroundOpacity === 1) {
@@ -150,19 +164,34 @@ export namespace Color {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
    */
-  export const parse: CSSParser<Color> = either<Slice<Token>, Color, string>(
-    Current.parse,
-    System.parse,
-    CSS4Color.parse,
-  );
+  export function parse(
+    input: Slice<Token>,
+  ): Result<[Slice<Token>, Color], string> {
+    return either<Slice<Token>, Color, string>(
+      Current.parse,
+      System.parse,
+      CSS4Color.parse,
+      ColorMix.parse(parse),
+    )(input);
+  }
 
   export function isTransparent(color: Color): boolean {
-    switch (color.type) {
-      case "keyword":
-        return false;
+    return Selective.of(color)
+      .if(isCSS4Color, (color) => color.alpha.value === 0)
+      .if(or(isCurrent, isSystem), () => false)
+      .else(isTransparentColorMix)
+      .get();
+  }
 
-      case "color":
-        return color.alpha.value === 0;
-    }
+  function isTransparentColorMix<
+    S extends ColorMix.InterpolationSpace,
+    H extends ColorMix.HueInterpolationMethod,
+  >(color: ColorMix<S, H>): boolean {
+    // All the non-transparent components have 0% presence in the mix
+    return color.colors.every(
+      (item) =>
+        isTransparent(item.value) ||
+        item.percentage.map((p) => p.value).getOr(0) === 0,
+    );
   }
 }

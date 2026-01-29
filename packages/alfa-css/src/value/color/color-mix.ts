@@ -111,21 +111,31 @@ export class ColorMix<
   // nicely with keyword colors (`currentcolor` and system colors).
   // We can't directly use Color.(partially)Resolve because it would create
   // circular dependencies.
-  private static resolveColor(color: Color): CSS4Color | Current;
+  private static resolveColor<
+    S extends ColorMix.InterpolationSpace,
+    H extends ColorMix.HueInterpolationMethod,
+  >(color: Color<S, H>): Color.PartiallyResolved<S, H>;
 
   private static resolveColor(
     color: Color,
     resolver: Color.Resolver,
   ): CSS4Color;
 
-  private static resolveColor(
-    color: Color,
+  private static resolveColor<
+    S extends ColorMix.InterpolationSpace,
+    H extends ColorMix.HueInterpolationMethod,
+  >(
+    color: Color<S, H>,
     resolver?: Color.Resolver,
-  ): CSS4Color | Current {
+  ): Color.PartiallyResolved<S, H> {
     return Selective.of(color)
       .if(System.isSystem, System.resolve)
       .if(Current.isCurrent, (color) =>
         resolver === undefined ? color : resolver.currentColor,
+      )
+      .if(CSS4Color.isCSS4Color, (color) => color)
+      .else((mix) =>
+        resolver === undefined ? mix.partiallyResolve() : mix.resolve(resolver),
       )
       .get();
   }
@@ -204,6 +214,10 @@ export namespace ColorMix {
     space: S;
     hueMethod: H | null;
     colors: List.JSON<MixItem<Color>>;
+  }
+
+  export function isColorMix(value: unknown): value is ColorMix {
+    return value instanceof ColorMix;
   }
 
   /** @internal */
