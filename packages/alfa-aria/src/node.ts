@@ -3,11 +3,11 @@ import type { Device } from "@siteimprove/alfa-device";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Graph } from "@siteimprove/alfa-graph";
 import type { Serializable } from "@siteimprove/alfa-json";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
@@ -93,15 +93,15 @@ export abstract class Node<T extends string = string>
    */
   public children(
     options: Node.Traversal = Node.Traversal.empty,
-  ): Sequence<Node> {
-    const children = Sequence.from(this._children) as Sequence<Node>;
+  ): LazyList<Node> {
+    const children = LazyList.from(this._children) as LazyList<Node>;
 
     if (options.has(Node.Traversal.ignored)) {
       return children;
     }
 
     return children.flatMap((child) =>
-      child.isIgnored() ? child.children(options) : Sequence.of(child),
+      child.isIgnored() ? child.children(options) : LazyList.of(child),
     );
   }
 
@@ -127,20 +127,20 @@ export interface Node {
   root(options?: Node.Traversal): Node;
   isRootOf(node: Node, options?: Node.Traversal): boolean;
   isChildOf(node: Node, options?: Node.Traversal): boolean;
-  descendants(options?: Node.Traversal): Sequence<Node>;
+  descendants(options?: Node.Traversal): LazyList<Node>;
   isDescendantOf(node: Node, options?: Node.Traversal): boolean;
-  inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
+  inclusiveDescendants(options?: Node.Traversal): LazyList<Node>;
   isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
-  ancestors(options?: Node.Traversal): Sequence<Node>;
+  ancestors(options?: Node.Traversal): LazyList<Node>;
   isAncestorOf(node: Node, options?: Node.Traversal): boolean;
-  inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
+  inclusiveAncestors(options?: Node.Traversal): LazyList<Node>;
   isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
-  siblings(options?: Node.Traversal): Sequence<Node>;
+  siblings(options?: Node.Traversal): LazyList<Node>;
   isSiblingOf(node: Node, options?: Node.Traversal): boolean;
-  inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
+  inclusiveSiblings(options?: Node.Traversal): LazyList<Node>;
   isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
-  preceding(options?: Node.Traversal): Sequence<Node>;
-  following(options?: Node.Traversal): Sequence<Node>;
+  preceding(options?: Node.Traversal): LazyList<Node>;
+  following(options?: Node.Traversal): LazyList<Node>;
   first(options?: Node.Traversal): Option<Node>;
   last(options?: Node.Traversal): Option<Node>;
   previous(options?: Node.Traversal): Option<Node>;
@@ -263,7 +263,7 @@ export namespace Node {
       },
       [
         Set.empty<dom.Element>(),
-        Map.empty<dom.Element, Sequence<dom.Element>>(),
+        Map.empty<dom.Element, LazyList<dom.Element>>(),
         Graph.empty<dom.Element>(),
       ],
     );
@@ -353,7 +353,7 @@ export namespace Node {
     node: dom.Node,
     device: Device,
     claimed: Set<dom.Node>,
-    owned: Map<dom.Element, Sequence<dom.Node>>,
+    owned: Map<dom.Element, LazyList<dom.Node>>,
     openDialogAncestors: Set<dom.Node>,
     state: State,
   ): Node {
@@ -413,7 +413,7 @@ export namespace Node {
         // explicitly owned using the `aria-owns` attribute.
         const explicit = owned
           .get(node)
-          .getOrElse(() => Sequence.empty<dom.Node>());
+          .getOrElse(() => LazyList.empty<dom.Node>());
 
         // Get the children implicitly owned by the element. These are the
         // children in the flat tree that are neither claimed already nor

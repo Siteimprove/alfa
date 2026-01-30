@@ -2,7 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import type { Attribute } from "@siteimprove/alfa-dom";
 import { Node, Query } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -22,7 +22,7 @@ export default Rule.Atomic.of<Page, Attribute>({
       applicability() {
         return getElementDescendants(document, Node.composedNested).flatMap(
           (element) =>
-            Sequence.from(element.attributes).filter((attribute) =>
+            LazyList.from(element.attributes).filter((attribute) =>
               attribute.name.startsWith("aria-"),
             ),
         );

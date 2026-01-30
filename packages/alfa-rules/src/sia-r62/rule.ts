@@ -15,7 +15,7 @@ import { Refinement } from "@siteimprove/alfa-refinement";
 import type { Result } from "@siteimprove/alfa-result";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Set } from "@siteimprove/alfa-set";
 import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
@@ -179,7 +179,7 @@ export default Rule.Atomic.of<Page, Element>({
               .inclusiveDescendants(Node.fullTree)
               .filter(and(isElement, hasNonLinkText(device))),
           )
-          .getOrElse<Sequence<Element>>(Sequence.empty);
+          .getOrElse<LazyList<Element>>(LazyList.empty);
 
         const linkElements = target
           // All descendants of the link.
@@ -216,7 +216,7 @@ export default Rule.Atomic.of<Page, Element>({
 
               const distinguishableContrast = Set.from(
                 nonLinkElements.flatMap((container) =>
-                  Sequence.from(
+                  LazyList.from(
                     Distinguishable.getPairwiseContrast(
                       container,
                       link,

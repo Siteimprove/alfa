@@ -8,11 +8,10 @@
     { "path": "../../alfa-flags" },
     { "path": "../../alfa-hash" },
     { "path": "../../alfa-json" },
-    { "path": "../../alfa-lazy" },
+    { "path": "../../alfa-lazy-list" },
     { "path": "../../alfa-option" },
     { "path": "../../alfa-predicate" },
     { "path": "../../alfa-refinement" },
-    { "path": "../../alfa-rng" },
-    { "path": "../../alfa-sequence" }
+    { "path": "../../alfa-rng" }
   ]
 }

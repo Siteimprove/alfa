@@ -3,7 +3,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import type { Document, Element } from "@siteimprove/alfa-dom";
 import type { Iterable } from "@siteimprove/alfa-iterable";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
@@ -47,7 +47,7 @@ export default Rule.Atomic.of<Page, Element>({
                 hasSufficientSize(24, device)(target),
                 () => TargetSize.HasSufficientSize(name, boundingBox),
                 () => {
-                  const tooCloseNeighbors = Sequence.from(
+                  const tooCloseNeighbors = LazyList.from(
                     findElementsWithInsufficientSpacingToTarget(
                       document,
                       device,
@@ -76,7 +76,7 @@ export default Rule.Atomic.of<Page, Element>({
 
 const undersizedCache = Cache.empty<
   Document,
-  Cache<Device, Sequence<Element>>
+  Cache<Device, LazyList<Element>>
 >();
 
 /**

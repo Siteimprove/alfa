@@ -7,7 +7,7 @@ import type { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Set } from "@siteimprove/alfa-set";
 
 import type * as json from "@siteimprove/alfa-json";
@@ -408,10 +408,10 @@ export namespace Role {
    * Get the role explicitly assigned to an element, if any.
    */
   export function fromExplicit(element: Element): Option<Role> {
-    const roles: Sequence<string> = element
+    const roles: LazyList<string> = element
       .attribute("role")
       .map((attribute) => attribute.tokens())
-      .getOrElse(() => Sequence.empty());
+      .getOrElse(() => LazyList.empty());
 
     return (
       roles
@@ -439,7 +439,7 @@ export namespace Role {
   export function fromImplicit(element: Element): Option<Role> {
     return element.namespace.flatMap((namespace) =>
       Feature.from(namespace, element.name).flatMap((feature) =>
-        Sequence.from(feature.role(element))
+        LazyList.from(feature.role(element))
 
           // If the element is not allowed to be presentational, reject all
           // presentational roles.

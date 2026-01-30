@@ -1,14 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import type {
-  Attribute} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-  Text,
-} from "@siteimprove/alfa-dom";
+import type { Attribute } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { EAA } from "@siteimprove/alfa-eaa";
 import { Language } from "@siteimprove/alfa-iana";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -17,7 +10,7 @@ import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { String } from "@siteimprove/alfa-string";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
@@ -76,7 +69,7 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         return getElementDescendants(document, Node.fullTree)
           .filter(and(hasNamespace(Namespace.HTML), hasName("body")))
-          .flatMap((element) => Sequence.from(visit(element, None)))
+          .flatMap((element) => LazyList.from(visit(element, None)))
           .distinct();
       },
 

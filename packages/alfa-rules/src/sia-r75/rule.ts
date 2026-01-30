@@ -7,7 +7,7 @@ import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import type { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Style } from "@siteimprove/alfa-style";
 import type { Page } from "@siteimprove/alfa-web";
 
@@ -29,7 +29,7 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [BestPractice.of("font-size-above-minimum")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
-    const visibleTextCache = Cache.empty<Element<string>, Sequence<Text>>();
+    const visibleTextCache = Cache.empty<Element<string>, LazyList<Text>>();
 
     return {
       applicability() {

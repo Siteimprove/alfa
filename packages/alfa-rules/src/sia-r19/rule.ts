@@ -5,7 +5,7 @@ import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import type { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -33,7 +33,7 @@ export default Rule.Atomic.of<Page, Attribute>({
         return getElementDescendants(document, Node.composedNested)
           .filter(hasNamespace(Namespace.HTML, Namespace.SVG))
           .flatMap((element) =>
-            Sequence.from(element.attributes).filter(
+            LazyList.from(element.attributes).filter(
               and(
                 property("name", aria.Attribute.isName),
                 property("value", not(isEmpty)),

@@ -23,7 +23,7 @@ import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -65,8 +65,8 @@ export default Rule.Atomic.of<Page, Text>({
           )
           .find(and(isElement, hasName("body")))
           .map((body) => body.children())
-          .getOr(Sequence.empty())
-          .flatMap((node) => Sequence.from(visit(node)));
+          .getOr(LazyList.empty<Node<string>>())
+          .flatMap((node) => LazyList.from(visit(node)));
 
         function* visit(node: Node, collect: boolean = false): Iterable<Text> {
           // aria-hidden content is ignored by the rule.
@@ -230,7 +230,7 @@ function lineBox(text: Text, device: Device): Rectangle {
       .map((lineContainer) =>
         Query.getDescendants(isText)(lineContainer, Node.fullTree),
       )
-      .getOrElse(Sequence.empty)
+      .getOrElse(LazyList.empty<Text>)
       .collect((text) => textBox(text, device)),
   );
 }
@@ -608,16 +608,16 @@ namespace Media {
     return usesMediaRule(isFontRelativeMediaRule(predicate), device, context);
   }
 
-  const _mediaRulesCache = Cache.empty<CSSRule, Sequence<MediaRule>>();
-  function ancestorMediaRules(rule: CSSRule | null): Sequence<MediaRule> {
+  const _mediaRulesCache = Cache.empty<CSSRule, LazyList<MediaRule>>();
+  function ancestorMediaRules(rule: CSSRule | null): LazyList<MediaRule> {
     if (rule === null) {
-      return Sequence.empty();
+      return LazyList.empty();
     }
 
     return _mediaRulesCache.get(rule, () => {
       const mediaRules = rule.parent
         .map((parent) => ancestorMediaRules(parent))
-        .getOrElse<Sequence<MediaRule>>(Sequence.empty);
+        .getOrElse<LazyList<MediaRule>>(LazyList.empty);
 
       return MediaRule.isMediaRule(rule)
         ? mediaRules.prepend(rule)
@@ -625,10 +625,10 @@ namespace Media {
     });
   }
 
-  const _ruleTreeCache = Cache.empty<RuleTree.Node, Sequence<RuleTree.Node>>();
-  function ancestorsInRuleTree(rule: RuleTree.Node): Sequence<RuleTree.Node> {
+  const _ruleTreeCache = Cache.empty<RuleTree.Node, LazyList<RuleTree.Node>>();
+  function ancestorsInRuleTree(rule: RuleTree.Node): LazyList<RuleTree.Node> {
     return _ruleTreeCache.get(rule, () =>
-      Sequence.from(rule.inclusiveAncestors()),
+      LazyList.from(rule.inclusiveAncestors()),
     );
   }
 
@@ -636,11 +636,11 @@ namespace Media {
     element: Element,
     device: Device,
     context: Context = Context.empty(),
-  ): Sequence<MediaRule> {
+  ): LazyList<MediaRule> {
     const root = element.root();
 
     if (!Document.isDocument(root)) {
-      return Sequence.empty();
+      return LazyList.empty();
     }
 
     // Get all nodes (style rules) in the RuleTree that affect the element;

@@ -1,17 +1,10 @@
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
-import type {
-  Attribute,
-  Document} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-} from "@siteimprove/alfa-dom";
+import type { Attribute, Document } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import type { Sequence } from "@siteimprove/alfa-sequence";
 
 const { isProgrammaticallyHidden } = DOM;
 const { hasAttribute, hasNamespace } = Element;
@@ -20,7 +13,7 @@ const { getElementDescendants } = Query;
 
 const cache = Cache.empty<
   Document,
-  Cache<Device, Sequence<Attribute<"role">>>
+  Cache<Device, LazyList<Attribute<"role">>>
 >();
 
 /**
@@ -29,7 +22,7 @@ const cache = Cache.empty<
 export function roleAttributes(
   document: Document,
   device: Device,
-): Sequence<Attribute<"role">> {
+): LazyList<Attribute<"role">> {
   return cache.get(document, Cache.empty).get(device, () =>
     getElementDescendants(document, Node.fullTree)
       .filter(

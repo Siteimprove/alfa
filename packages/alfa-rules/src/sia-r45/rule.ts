@@ -1,13 +1,13 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
-import type { Attribute} from "@siteimprove/alfa-dom";
+import type { Attribute } from "@siteimprove/alfa-dom";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { EAA } from "@siteimprove/alfa-eaa";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import type { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   requirements: [Criterion.of("1.3.1"), EAA.of("9.1.3.1"), Technique.of("H43")],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
-    const cellsCache = Cache.empty<Element, Sequence<Element>>();
+    const cellsCache = Cache.empty<Element, LazyList<Element>>();
 
     const headers = getElementDescendants(document)
       .filter(

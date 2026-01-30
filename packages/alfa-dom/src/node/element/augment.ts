@@ -6,9 +6,9 @@
  * {@link https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation
  */
 
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { None, Some } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Element } from "../element.js";
 import type { InputType } from "./input-type.js";
@@ -38,7 +38,7 @@ declare module "../element.js" {
     /**
      * {@link https://html.spec.whatwg.org/multipage/form-elements.html#concept-select-option-list}
      */
-    optionsList(this: Element<"select">): Sequence<Element<"option">>;
+    optionsList(this: Element<"select">): LazyList<Element<"option">>;
 
     /**
      * {@link https://html.spec.whatwg.org/multipage/#summary-for-its-parent-details}
@@ -99,14 +99,14 @@ Element.prototype.displaySize = function (this: Element<"select">): number {
 
 Element.prototype.optionsList = function (
   this: Element<"select">,
-): Sequence<Element<"option">> {
+): LazyList<Element<"option">> {
   if (this._optionsList === undefined) {
     this._optionsList = this.children()
       .filter(isElement)
       .flatMap((child) => {
         switch (child.name) {
           case "option":
-            return Sequence.from([child as Element<"option">]);
+            return LazyList.from([child as Element<"option">]);
 
           case "optgroup":
             return child
@@ -120,7 +120,7 @@ Element.prototype.optionsList = function (
               );
 
           default:
-            return Sequence.empty();
+            return LazyList.empty();
         }
       });
   }

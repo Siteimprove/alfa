@@ -6,7 +6,7 @@ import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
@@ -17,7 +17,7 @@ const { and, test } = Refinement;
 const { isVisible } = Style;
 const { isText } = Text;
 
-const cache = Cache.empty<Document, Cache<Device, Sequence<Text>>>();
+const cache = Cache.empty<Document, Cache<Device, LazyList<Text>>>();
 
 /**
  * Return all text nodes that are neither:
@@ -29,7 +29,7 @@ const cache = Cache.empty<Document, Cache<Device, Sequence<Text>>>();
 export function nonDisabledTexts(
   document: Document,
   device: Device,
-): Sequence<Text> {
+): LazyList<Text> {
   return cache.get(document, Cache.empty).get(device, () => {
     // Gather all text nodes used to name a disabled widget or group
     const disabledWidgetNames: Set<Text> = Set.from(
@@ -42,13 +42,13 @@ export function nonDisabledTexts(
           ariaNode
             .from(element, device)
             .name.map((name) =>
-              Sequence.from(name.sourceNodes()).filter(isText),
+              LazyList.from(name.sourceNodes()).filter(isText),
             )
-            .getOr(Sequence.empty<Text>()),
+            .getOr(LazyList.empty<Text>()),
         ),
     );
 
-    return Sequence.from(visit(document, device, disabledWidgetNames));
+    return LazyList.from(visit(document, device, disabledWidgetNames));
   });
 }
 

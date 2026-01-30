@@ -7,7 +7,7 @@ import type { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import type { Sequence } from "@siteimprove/alfa-sequence";
+import type { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Cell, Table } from "@siteimprove/alfa-table";
 
 import { Attribute } from "./attribute.js";
@@ -150,7 +150,7 @@ const nameFromChild =
 
 const ids = Cache.empty<Node, Map<string, Element>>();
 
-const labels = Cache.empty<Node, Sequence<Element>>();
+const labels = Cache.empty<Node, LazyList<Element>>();
 
 const nameFromLabel = (element: Element, device: Device, state: State) => {
   const root = element.root();

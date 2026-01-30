@@ -7,11 +7,11 @@ import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Style } from "@siteimprove/alfa-style";
 
@@ -172,11 +172,11 @@ export namespace PaintingOrder {
   function paint(
     device: Device,
     element: Element,
-    canvas: Sequence<Element> = Sequence.empty(),
+    canvas: LazyList<Element> = LazyList.empty(),
     options: { defer: boolean } = {
       defer: false,
     },
-  ): Sequence<Element> {
+  ): LazyList<Element> {
     const positionedOrStackingContexts: Array<Element> = [];
     const normalFlow: Array<Element> = [];
     const floats: Array<Element> = [];
@@ -206,7 +206,7 @@ export namespace PaintingOrder {
       } else if (not(isPositioned(device, "static"))(element)) {
         if (hasInitialComputedStyle("z-index", device)(element)) {
           positionedOrStackingContexts.push(
-            ...paint(device, element, Sequence.empty(), {
+            ...paint(device, element, LazyList.empty(), {
               defer: true,
             }),
           );
@@ -214,7 +214,7 @@ export namespace PaintingOrder {
           positionedOrStackingContexts.push(element);
         }
       } else if (not(hasInitialComputedStyle("float", device))(element)) {
-        const temporaryLayer = paint(device, element, Sequence.empty(), {
+        const temporaryLayer = paint(device, element, LazyList.empty(), {
           defer: true,
         });
 
@@ -282,11 +282,11 @@ export namespace PaintingOrder {
    */
   function paintLayer(
     device: Device,
-    canvas: Sequence<Element>,
+    canvas: LazyList<Element>,
     layer: Array<Element>,
     parent: Element,
     options: { defer: boolean },
-  ): Sequence<Element> {
+  ): LazyList<Element> {
     if (options.defer) {
       return canvas.concat(layer);
     }

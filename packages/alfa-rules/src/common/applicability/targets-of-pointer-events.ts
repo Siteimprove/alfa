@@ -6,7 +6,7 @@ import { Element, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Style } from "@siteimprove/alfa-style";
 
 import { getClickableRegion } from "../dom/get-clickable-region.js";
@@ -27,7 +27,7 @@ const { isText } = Text;
 export const getApplicableTargets = Cache.memoize(function (
   document: Document,
   device: Device,
-): Sequence<Element> {
+): LazyList<Element> {
   const isArea = (element: Element) => element.name === "area";
   const isBlock = hasComputedStyle(
     "display",
@@ -40,7 +40,7 @@ export const getApplicableTargets = Cache.memoize(function (
     device,
   );
 
-  let targets = Sequence.empty<Element>();
+  let targets = LazyList.empty<Element>();
 
   function visit(node: Node, lineContainer: Option<Element>): void {
     if (isElement(node)) {
@@ -84,7 +84,7 @@ export const getApplicableTargets = Cache.memoize(function (
  * It's kept here since it's closely related to the applicability.
  */
 export const getAllTargets = Cache.memoize(
-  (document: Document, device: Device): Sequence<Element> =>
+  (document: Document, device: Device): LazyList<Element> =>
     getElementDescendants(document, Node.fullTree).filter(
       and(isTarget(device), hasNonEmptyBoundingBox(device)),
     ),

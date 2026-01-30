@@ -1,7 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import * as json from "@siteimprove/alfa-json";
@@ -125,8 +125,8 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
   /**
    * {@link https://html.spec.whatwg.org/#space-separated-tokens}
    */
-  public tokens(separator: string | RegExp = /\s+/): Sequence<string> {
-    return Sequence.from(
+  public tokens(separator: string | RegExp = /\s+/): LazyList<string> {
+    return LazyList.from(
       this._value.trim().split(separator).filter(not(isEmpty)),
     );
   }
@@ -218,8 +218,9 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
 export namespace Attribute {
   export interface MinimalJSON extends Node.JSON<"attribute"> {}
 
-  export interface JSON<N extends string = string>
-    extends Node.JSON<"attribute"> {
+  export interface JSON<
+    N extends string = string,
+  > extends Node.JSON<"attribute"> {
     namespace: string | null;
     prefix: string | null;
     name: N;

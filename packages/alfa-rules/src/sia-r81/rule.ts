@@ -6,7 +6,7 @@ import { EAA } from "@siteimprove/alfa-eaa";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Set } from "@siteimprove/alfa-set";
 import { String } from "@siteimprove/alfa-string";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -31,7 +31,11 @@ const { getElementDescendants, getElementIdMap } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r81",
-  requirements: [Criterion.of("2.4.4"), Criterion.of("2.4.9"), EAA.of("9.2.4.4")],
+  requirements: [
+    Criterion.of("2.4.4"),
+    Criterion.of("2.4.9"),
+    EAA.of("9.2.4.4"),
+  ],
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document, response }) {
     return {
@@ -60,7 +64,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
           );
 
         // Drop the context and name keys
-        const groups = Sequence.from(
+        const groups = LazyList.from(
           Iterable.flatMap(map.values(), (map) => map.values()),
         );
 

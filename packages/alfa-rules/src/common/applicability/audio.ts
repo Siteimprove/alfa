@@ -2,17 +2,11 @@ import type { Interview } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
-import type {
-  Document} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-} from "@siteimprove/alfa-dom";
+import type { Document } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import type { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import { Question } from "../act/question.js";
@@ -27,14 +21,14 @@ const cache = Cache.empty<
   Document,
   Cache<
     Device,
-    Sequence<Interview<Question.Metadata, Element, Element, Option<Element>>>
+    LazyList<Interview<Question.Metadata, Element, Element, Option<Element>>>
   >
 >();
 
 export function audio(
   document: Document,
   device: Device,
-): Sequence<Interview<Question.Metadata, Element, Element, Option<Element>>> {
+): LazyList<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   return cache.get(document, Cache.empty).get(device, () =>
     getElementDescendants(document, Node.fullTree)
       .filter(

@@ -1,17 +1,11 @@
 import type { Interview } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
-import type {
-  Document} from "@siteimprove/alfa-dom";
-import {
-  Element,
-  Namespace,
-  Node,
-  Query,
-} from "@siteimprove/alfa-dom";
+import type { Document } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import type { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Style } from "@siteimprove/alfa-style";
 
 import { Question } from "../act/question.js";
@@ -21,7 +15,7 @@ const { and } = Predicate;
 const { isVisible } = Style;
 const { getElementDescendants } = Query;
 
-const visibleVideos = Cache.empty<Document, Cache<Device, Sequence<Element>>>();
+const visibleVideos = Cache.empty<Document, Cache<Device, LazyList<Element>>>();
 
 export function video(
   document: Document,

@@ -3,7 +3,7 @@ import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import type { Map } from "@siteimprove/alfa-map";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Style } from "@siteimprove/alfa-style";
 
 const { isElement } = Element;
@@ -20,13 +20,13 @@ const { getOffsetParent, isPositioned, isVisible } = Style;
 // escape document boundaries.
 const cache = Cache.empty<
   Device,
-  Cache<Node, Map<Element, Sequence<Element>>>
+  Cache<Node, Map<Element, LazyList<Element>>>
 >();
 
 export function getInterposedDescendant(
   device: Device,
   element: Element,
-): Sequence<Element> {
+): LazyList<Element> {
   const root = element.root(Node.flatTree);
 
   return cache
@@ -49,5 +49,5 @@ export function getInterposedDescendant(
         .groupBy((element) => getOffsetParent(element, device).getUnsafe()),
     )
     .get(element)
-    .getOr(Sequence.empty());
+    .getOr(LazyList.empty());
 }

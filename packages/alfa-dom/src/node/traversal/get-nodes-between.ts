@@ -1,5 +1,5 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Node } from "../../index.js";
 
 import { lowestCommonAncestor } from "./lowest-common-ancestor.js";
@@ -14,7 +14,7 @@ const { equals, or } = Predicate;
  * When the first node is not included, all its subtree is skipped, that is we
  * start looking after the closing tag, not after the opening one.
  *
- * Returns empty sequence in the corner case where both nodes are the same and
+ * Returns empty collection in the corner case where both nodes are the same and
  * at least one is excluded (i.e. considers that [X,X[ and ]X,X] are empty).
  *
  * Complexity: the size of the subtree anchored at the lowest common ancestor.
@@ -26,7 +26,7 @@ export function getNodesBetween(
   node2: Node,
   includeOptions: Options = { includeFirst: false, includeSecond: false },
   treeOptions: Node.Traversal = Node.fullTree,
-): Sequence<Node> {
+): LazyList<Node> {
   let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
 
   // If somehow there is nothing between them, escape now
@@ -49,7 +49,7 @@ export function getNodesBetween(
       // Skip everything until next.
       .map((next) => between.skipUntil((node) => node.equals(next)))
       // If nothing after the subtree at first, just escape.
-      .getOrElse(Sequence.empty);
+      .getOrElse(LazyList.empty<Node<string>>);
   }
 
   // Do we keep the second node or remove it?
@@ -68,7 +68,7 @@ function getNodesInclusivelyBetween(
   node1: Node,
   node2: Node,
   treeOptions: Node.Traversal,
-): Sequence<Node> {
+): LazyList<Node> {
   const isFrontier = or(equals(node1), equals(node2));
 
   return lowestCommonAncestor(node1, node2, treeOptions)
@@ -78,7 +78,7 @@ function getNodesInclusivelyBetween(
         .skipUntil(isFrontier)
         .skipLastUntil(isFrontier),
     )
-    .getOrElse(Sequence.empty);
+    .getOrElse(LazyList.empty<Node<string>>);
 }
 
 type Options = {

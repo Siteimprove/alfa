@@ -1,10 +1,10 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import type { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -133,8 +133,8 @@ export class Element<N extends string = string>
     );
   }
 
-  public get attributes(): Sequence<Attribute> {
-    return Sequence.from(this._attributes.values());
+  public get attributes(): LazyList<Attribute> {
+    return LazyList.from(this._attributes.values());
   }
 
   public get style(): Option<Block> {
@@ -159,8 +159,8 @@ export class Element<N extends string = string>
   /**
    * {@link https://dom.spec.whatwg.org/#concept-class}
    */
-  public get classes(): Sequence<string> {
-    return Sequence.from(this._classes);
+  public get classes(): LazyList<string> {
+    return LazyList.from(this._classes);
   }
 
   public getBoundingBox(device: Device): Option<Rectangle> {
@@ -169,7 +169,7 @@ export class Element<N extends string = string>
 
   public children(
     options: Node.Traversal = Node.Traversal.empty,
-  ): Sequence<Node> {
+  ): LazyList<Node> {
     const treeChildren = this._children as Array<Node>;
     const children: Array<Node> = [];
 
@@ -179,7 +179,7 @@ export class Element<N extends string = string>
       }
 
       if (Slot.isSlot(this)) {
-        return Sequence.from(this.assignedNodes());
+        return LazyList.from(this.assignedNodes());
       }
 
       for (const child of treeChildren) {
@@ -201,7 +201,7 @@ export class Element<N extends string = string>
       children.push(this._content.get());
     }
 
-    return Sequence.from(children);
+    return LazyList.from(children);
   }
 
   public attribute<A extends string = string>(name: A): Option<Attribute<A>>;
@@ -310,7 +310,7 @@ export class Element<N extends string = string>
 
   protected _inputType: helpers.InputType | undefined;
   protected _displaySize: number | undefined;
-  protected _optionsList: Sequence<Element<"option">> | undefined;
+  protected _optionsList: LazyList<Element<"option">> | undefined;
   private _isInert: boolean | undefined;
 
   /*

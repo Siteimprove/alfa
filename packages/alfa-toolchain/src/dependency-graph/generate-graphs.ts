@@ -26,25 +26,29 @@ import { GraphFactory } from "./helpers.js";
 
 /*
   Usage:
-  `yarn generate-dependency-graphs [targetPath] [targetGraph]`
+  `yarn generate-dependency-graphs [targetPath] [targetGraph] [packageFilters]`
   - targetPath: Path to the root directory of the monorepo. Default: ".",
     prefer explicitly using `$(pwd)`
   - targetGraph: Type of graph to generate. Default: "all". Can be "all",
     "global", or (part of) a package name.
+  - packageFilters: Optional comma-separated list of package filters for global graph.
+    Only packages matching these filters will be included in the global graph.
 
   E.g.:
   `yarn generate-dependency-graphs $(pwd) all`
   `yarn generate-dependency-graphs $(pwd) global`
   `yarn generate-dependency-graphs $(pwd) @siteimprove/alfa-toolchain`
   `yarn generate-dependency-graphs $(pwd) alfa-toolchain`
+  `yarn generate-dependency-graphs $(pwd) global alfa-css,alfa-parser,alfa-rules`
  */
 
 const targetPath = process.argv[2] ?? ".";
 const targetGraph = process.argv[3] ?? "all";
+const packageFilters = process.argv[4]?.split(",").map((f) => f.trim()) ?? [];
 const destinationPath = "docs";
 const clustersDefinitionPath = path.join("config", "package-clusters.json");
 
-await generateGraphs(targetPath, targetGraph);
+await generateGraphs(targetPath, targetGraph, packageFilters);
 
 /**
  * Generates and saves both the global dependency graph (between packages of
@@ -55,21 +59,48 @@ await generateGraphs(targetPath, targetGraph);
 export async function generateGraphs(
   rootDir: string,
   target: string,
+  packageFilters: Array<string> = [],
 ): Promise<void> {
   const packages = await getPackages(rootDir);
 
   if (target === "all" || target === "global") {
-    await generateGlobalGraph(rootDir, packages);
+    await generateGlobalGraph(rootDir, packages, packageFilters);
   }
   if (target !== "global") {
     await generatePackagesGraphs(packages, target);
   }
 }
 
-async function generateGlobalGraph(rootDir: string, packages: Packages) {
+async function generateGlobalGraph(
+  rootDir: string,
+  packages: Packages,
+  packageFilters: Array<string>,
+) {
   try {
+    const filteredPackages =
+      packageFilters.length > 0
+        ? {
+            ...packages,
+            packages: packages.packages.filter((pkg) =>
+              packageFilters.some((filter) => pkg.packageJson.name.includes(filter)),
+            ),
+          }
+        : packages;
+
+    if (filteredPackages.packages.length === 0) {
+      console.log("No packages matched the provided filters.");
+      return;
+    }
+
+    console.log(
+      `Generating global graph with ${filteredPackages.packages.length} package(s)`,
+    );
+    filteredPackages.packages.forEach((pkg) =>
+      console.log(`  - ${pkg.packageJson.name}`),
+    );
+
     await saveGraph(
-      await createGlobalGraph(rootDir, packages),
+      await createGlobalGraph(rootDir, filteredPackages),
       path.join(rootDir, destinationPath),
     );
   } catch (error) {

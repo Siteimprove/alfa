@@ -4,7 +4,7 @@ import type { Attribute } from "@siteimprove/alfa-dom";
 import { Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Technique } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
 
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Attribute>({
         return getElementDescendants(document, Node.fullTree)
           .filter(isIncludedInTheAccessibilityTree(device))
           .flatMap((element) =>
-            Sequence.from(element.attributes).filter(
+            LazyList.from(element.attributes).filter(
               property("name", aria.Attribute.isName),
             ),
           );

@@ -1,7 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { Node } from "../../node.js";
 import { Element } from "../element.js";
@@ -9,7 +9,7 @@ import { Text } from "../text.js";
 
 const _descendantsCache = Cache.empty<
   Predicate<Node>,
-  Cache<Node, Array<Sequence<Node>>>
+  Cache<Node, Array<LazyList<Node>>>
 >();
 
 /**
@@ -23,7 +23,7 @@ const _descendantsCache = Cache.empty<
  */
 export function getDescendants<T extends Node>(
   refinement: Refinement<Node, T>,
-): (node: Node, options?: Node.Traversal) => Sequence<T>;
+): (node: Node, options?: Node.Traversal) => LazyList<T>;
 
 /**
  * Get all descendants of a node that satisfy a given predicate.
@@ -36,11 +36,11 @@ export function getDescendants<T extends Node>(
  */
 export function getDescendants(
   predicate: Predicate<Node>,
-): (node: Node, options?: Node.Traversal) => Sequence<Node>;
+): (node: Node, options?: Node.Traversal) => LazyList<Node>;
 
 export function getDescendants(
   predicate: Predicate<Node>,
-): (node: Node, options?: Node.Traversal) => Sequence<Node> {
+): (node: Node, options?: Node.Traversal) => LazyList<Node> {
   return (node, options = Node.Traversal.empty) => {
     const optionsMap = _descendantsCache
       .get(predicate, Cache.empty)
@@ -65,13 +65,13 @@ export const getElementDescendants = getDescendants(Element.isElement);
 export function getInclusiveElementDescendants(
   node: Element,
   options: Node.Traversal = Node.Traversal.empty,
-): Sequence<Element> {
+): LazyList<Element> {
   return getElementDescendants(node, options).prepend(node);
 }
 
 const _textCache = Cache.empty<
   TextGroupOptions<any>,
-  Cache<Node, Array<Sequence<Text | TextGroup>>>
+  Cache<Node, Array<LazyList<Text | TextGroup>>>
 >();
 
 /**
@@ -81,7 +81,7 @@ const _textCache = Cache.empty<
  */
 export interface TextGroup {
   label: string;
-  text: Sequence<Text>;
+  text: LazyList<Text>;
 }
 
 /**
@@ -114,14 +114,14 @@ const defaultTextOptions: TextGroupOptions<any> = {
  */
 export function getTextDescendants<N extends Node = Node>(
   textOptions: TextGroupOptions<N> = defaultTextOptions,
-): (node: Node, options?: Node.Traversal) => Sequence<Text | TextGroup> {
+): (node: Node, options?: Node.Traversal) => LazyList<Text | TextGroup> {
   return (node, options = Node.Traversal.empty) => {
     const optionsMap = _textCache
       .get(textOptions, Cache.empty)
       .get(node, () => []);
 
     if (optionsMap[options.value] === undefined) {
-      optionsMap[options.value] = Sequence.from(
+      optionsMap[options.value] = LazyList.from(
         _getTextDescendants(node, textOptions, options),
       );
     }

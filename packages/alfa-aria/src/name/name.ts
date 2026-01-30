@@ -6,10 +6,10 @@ import { Element, Node, Query, Text } from "@siteimprove/alfa-dom";
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Iterable } from "@siteimprove/alfa-iterable";
 import type { Serializable } from "@siteimprove/alfa-json";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import type { Thunk } from "@siteimprove/alfa-thunk";
 
@@ -502,7 +502,7 @@ export namespace Name {
       .get(device, Cache.empty)
       .get(state, Cache.empty)
       .get(element, () => {
-        const names: Sequence<Name> = element
+        const names: LazyList<Name> = element
           .children(Node.flatTree)
           .filter(or(isText, isElement))
           .collect((element) =>
@@ -581,7 +581,7 @@ export namespace Name {
             attribute,
             Name.of(
               name.value,
-              names.flatMap((name) => Sequence.from(name.source)),
+              names.flatMap((name) => LazyList.from(name.source)),
               name.spaces,
             ),
           ),

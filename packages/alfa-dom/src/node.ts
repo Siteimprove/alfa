@@ -7,12 +7,11 @@ import {
 import type { Device } from "@siteimprove/alfa-device";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Lazy } from "@siteimprove/alfa-lazy";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Option } from "@siteimprove/alfa-option";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Selective } from "@siteimprove/alfa-selective";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { String } from "@siteimprove/alfa-string";
 import type { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -72,7 +71,7 @@ export abstract class Node<T extends string = string>
    *
    * {@link https://html.spec.whatwg.org/multipage/#tabindex-value}
    */
-  public tabOrder(): Sequence<Element> {
+  public tabOrder(): LazyList<Element> {
     /**
      * Gather candidates for sequential focus navigation.
      *
@@ -86,7 +85,7 @@ export abstract class Node<T extends string = string>
      * too early potentially would mix their elements during sorting of the
      * tabIndexes.
      */
-    function candidates(node: Node): Sequence<[Element, Option<number>]> {
+    function candidates(node: Node): LazyList<[Element, Option<number>]> {
       if (Element.isElement(node)) {
         const element = node;
 
@@ -98,31 +97,32 @@ export abstract class Node<T extends string = string>
           // If the element has a negative tab index and is a shadow host then
           // none of its descendants will be part of the tab order.
           if (tabIndex.some((i) => i < 0)) {
-            return Sequence.empty();
+            return LazyList.empty();
           } else {
-            return Sequence.of([element, tabIndex]);
+            return LazyList.of([element, tabIndex]);
           }
         }
 
         // If the element contains a content document, we record it to later
         // expand its content.
         if (element.content.isSome()) {
-          return Sequence.of([element, tabIndex]);
+          return LazyList.of([element, tabIndex]);
         }
 
         // If the element is a slot, we replace it by its assigned nodes.
         if (Slot.isSlot(element)) {
-          return Sequence.from(element.assignedNodes())
+          return LazyList.from(element.assignedNodes())
             .filter(Element.isElement)
             .map((element) => [element, tabIndex]);
         }
 
         // If the element is keyboard focusable, record it and recurse.
         if (tabIndex.some((i) => i >= 0)) {
-          return Sequence.of(
-            [element, tabIndex],
-            Lazy.of(() => element.children().flatMap(candidates)),
-          );
+          function* gen(): Generator<[Element<string>, Option<number>]> {
+            yield [element, tabIndex];
+            yield* element.children().flatMap(candidates);
+          }
+          return LazyList.from(gen());
         }
       }
 
@@ -172,15 +172,16 @@ export abstract class Node<T extends string = string>
     function expand([element, tabIndex]: [
       Element,
       Option<number>,
-    ]): Sequence<Element> {
+    ]): LazyList<Element> {
       // In case of shadow host, we include it if its sequentially focusable,
       // and always recurse into the shadow tree.
       for (const shadow of element.shadow) {
         if (tabIndex.some((i) => i >= 0)) {
-          return Sequence.of(
-            element,
-            Lazy.of(() => shadow.tabOrder()),
-          );
+          function* gen() {
+            yield element;
+            yield* shadow.tabOrder();
+          }
+          return LazyList.from(gen());
         } else {
           return shadow.tabOrder();
         }
@@ -193,7 +194,7 @@ export abstract class Node<T extends string = string>
       }
 
       // If no shadow or content document, just keep the element.
-      return Sequence.of(element);
+      return LazyList.of(element);
     }
 
     return candidates(this).sortWith(comparer).flatMap(expand);
@@ -317,22 +318,22 @@ export interface Node {
   isParentOf(node: Node, options?: Node.Traversal): boolean;
   root(options?: Node.Traversal): Node;
   isRootOf(node: Node, options?: Node.Traversal): boolean;
-  children(options?: Node.Traversal): Sequence<Node>;
+  children(options?: Node.Traversal): LazyList<Node>;
   isChildOf(node: Node, options?: Node.Traversal): boolean;
-  descendants(options?: Node.Traversal): Sequence<Node>;
+  descendants(options?: Node.Traversal): LazyList<Node>;
   isDescendantOf(node: Node, options?: Node.Traversal): boolean;
-  inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
+  inclusiveDescendants(options?: Node.Traversal): LazyList<Node>;
   isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
-  ancestors(options?: Node.Traversal): Sequence<Node>;
+  ancestors(options?: Node.Traversal): LazyList<Node>;
   isAncestorOf(node: Node, options?: Node.Traversal): boolean;
-  inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
+  inclusiveAncestors(options?: Node.Traversal): LazyList<Node>;
   isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
-  siblings(options?: Node.Traversal): Sequence<Node>;
+  siblings(options?: Node.Traversal): LazyList<Node>;
   isSiblingOf(node: Node, options?: Node.Traversal): boolean;
-  inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
+  inclusiveSiblings(options?: Node.Traversal): LazyList<Node>;
   isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
-  preceding(options?: Node.Traversal): Sequence<Node>;
-  following(options?: Node.Traversal): Sequence<Node>;
+  preceding(options?: Node.Traversal): LazyList<Node>;
+  following(options?: Node.Traversal): LazyList<Node>;
   first(options?: Node.Traversal): Option<Node>;
   last(options?: Node.Traversal): Option<Node>;
   previous(options?: Node.Traversal): Option<Node>;

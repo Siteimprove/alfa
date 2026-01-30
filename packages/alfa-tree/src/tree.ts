@@ -3,12 +3,11 @@
 import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Flags } from "@siteimprove/alfa-flags";
 import type { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Lazy } from "@siteimprove/alfa-lazy";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import type { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { RNG } from "@siteimprove/alfa-rng";
-import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -80,9 +79,7 @@ export abstract class Node<
     internalId?: string,
     extraData?: any,
   ) {
-    this._children = (children as Array<Node<K, F>>).filter((child) =>
-      child._attachParent(this),
-    ) as Array<Node<K, F>>;
+    this._children = children.filter((child) => child._attachParent(this));
     this._type = type;
     this._externalId = externalId;
     this._extraData = extraData;
@@ -171,8 +168,8 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
-  public children(options?: Flags<K, F>): Sequence<Node<K, F>> {
-    return Sequence.from(this._children);
+  public children(options?: Flags<K, F>): LazyList<Node<K, F>> {
+    return LazyList.from(this._children);
   }
 
   /**
@@ -182,25 +179,24 @@ export abstract class Node<
     return node.children(options).includes(this);
   }
 
-  private _descendants: Array<Sequence<Node<K, F>>> = [];
+  private *_descendants(options?: Flags<K, F>): Generator<Node<K, F>> {
+    for (const child of this.children(options)) {
+      yield child;
+      yield* child._descendants(options);
+    }
+  }
+
+  private _descendantsCache: Array<LazyList<Node<K, F>>> = [];
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
    */
-  // While this is lazily built, actually generating the sequence takes time to
-  // walk through the tree and resolve all the continuations.
-  // Caching it saves a lot of time by generating the sequence only once.
-  public descendants(options?: Flags<K, F>): Sequence<Node<K, F>> {
+  public descendants(options?: Flags<K, F>): LazyList<Node<K, F>> {
     const value = options?.value ?? 0;
-    if (this._descendants[value] === undefined) {
-      this._descendants[value] = this.children(options).flatMap((child) =>
-        Sequence.of(
-          child,
-          Lazy.of(() => child.descendants(options)),
-        ),
-      );
+    if (this._descendantsCache[value] === undefined) {
+      this._descendantsCache[value] = LazyList.from(this._descendants(options));
     }
 
-    return this._descendants[value];
+    return this._descendantsCache[value];
   }
 
   /**
@@ -213,11 +209,8 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
    */
-  public inclusiveDescendants(options?: Flags<K, F>): Sequence<Node<K, F>> {
-    return Sequence.of(
-      this,
-      Lazy.of(() => this.descendants(options)),
-    );
+  public inclusiveDescendants(options?: Flags<K, F>): LazyList<Node<K, F>> {
+    return this.descendants(options).prepend(this);
   }
 
   /**
@@ -230,18 +223,18 @@ export abstract class Node<
     return node.inclusiveDescendants(options).includes(this);
   }
 
+  private *_ancestors(options?: Flags<K, F>): Generator<Node<K, F>> {
+    for (const parent of this.parent(options)) {
+      yield parent;
+      yield* parent._ancestors(options);
+    }
+  }
+
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
    */
-  public ancestors(options?: Flags<K, F>): Sequence<Node<K, F>> {
-    for (const parent of this.parent(options)) {
-      return Sequence.of(
-        parent,
-        Lazy.of(() => parent.ancestors(options)),
-      );
-    }
-
-    return Sequence.empty();
+  public ancestors(options?: Flags<K, F>): LazyList<Node<K, F>> {
+    return LazyList.from(this._ancestors(options));
   }
 
   /**
@@ -254,11 +247,8 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
    */
-  public inclusiveAncestors(options?: Flags<K, F>): Sequence<Node<K, F>> {
-    return Sequence.of(
-      this,
-      Lazy.of(() => this.ancestors(options)),
-    );
+  public inclusiveAncestors(options?: Flags<K, F>): LazyList<Node<K, F>> {
+    return this.ancestors(options).prepend(this);
   }
 
   /**
@@ -274,7 +264,7 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-sibling}
    */
-  public siblings(options?: Flags<K, F>): Sequence<Node<K, F>> {
+  public siblings(options?: Flags<K, F>): LazyList<Node<K, F>> {
     return this.inclusiveSiblings(options).reject(equals(this));
   }
 
@@ -285,15 +275,17 @@ export abstract class Node<
     return node.siblings(options).includes(this);
   }
 
+  private *_inclusiveSiblings(options?: Flags<K, F>): Generator<Node<K, F>> {
+    for (const parent of this.parent(options)) {
+      yield* parent.children(options);
+    }
+  }
+
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling}
    */
-  public inclusiveSiblings(options?: Flags<K, F>): Sequence<Node<K, F>> {
-    for (const parent of this.parent(options)) {
-      return parent.children(options);
-    }
-
-    return Sequence.empty();
+  public inclusiveSiblings(options?: Flags<K, F>): LazyList<Node<K, F>> {
+    return LazyList.from(this._inclusiveSiblings(options));
   }
 
   /**
@@ -306,40 +298,40 @@ export abstract class Node<
     return node.inclusiveSiblings(options).includes(this);
   }
 
-  private _preceding: Array<Sequence<Node<K, F>>> = [];
+  private _precedingCache: Array<LazyList<Node<K, F>>> = [];
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-preceding}
    */
   // Due to reversing, this is not lazy and is costly at build time.
   // This only looks in frozen parts of the tree.
-  public preceding(options?: Flags<K, F>): Sequence<Node<K, F>> {
+  public preceding(options?: Flags<K, F>): LazyList<Node<K, F>> {
     const value = options?.value ?? 0;
-    if (this._preceding[value] === undefined) {
-      this._preceding[value] = this.inclusiveSiblings(options).preceding(
+    if (this._precedingCache[value] === undefined) {
+      this._precedingCache[value] = this.inclusiveSiblings(options).preceding(
         equals(this),
       );
     }
 
-    return this._preceding[value];
+    return this._precedingCache[value];
   }
 
-  private _following: Array<Sequence<Node<K, F>>> = [];
+  private _followingCache: Array<LazyList<Node<K, F>>> = [];
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-following}
    */
   // Due to skipUntil, this is not fully lazy and is costly at build time.
   // This only looks in frozen parts of the tree.
-  public following(options?: Flags<K, F>): Sequence<Node<K, F>> {
+  public following(options?: Flags<K, F>): LazyList<Node<K, F>> {
     const value = options?.value ?? 0;
-    if (this._following[value] === undefined) {
-      this._following[value] = this.inclusiveSiblings(options)
+    if (this._followingCache[value] === undefined) {
+      this._followingCache[value] = this.inclusiveSiblings(options)
         .skipUntil(equals(this))
         .rest();
     }
 
-    return this._following[value];
+    return this._followingCache[value];
   }
 
   /**

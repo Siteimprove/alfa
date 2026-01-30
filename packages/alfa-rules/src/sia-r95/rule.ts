@@ -4,7 +4,7 @@ import { EAA } from "@siteimprove/alfa-eaa";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import type { Page } from "@siteimprove/alfa-web";
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Element>({
   ],
   tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
-    let tabbables = Map.empty<Element, Sequence<Element>>();
+    let tabbables = Map.empty<Element, LazyList<Element>>();
 
     return {
       applicability() {
@@ -61,11 +61,11 @@ export default Rule.Atomic.of<Page, Element>({
             ),
             () =>
               Outcomes.IsTabbable(
-                tabbables.get(target).getOr(Sequence.empty<Element>()),
+                tabbables.get(target).getOr(LazyList.empty<Element>()),
               ),
             () =>
               Outcomes.IsNotTabbable(
-                tabbables.get(target).getOr(Sequence.empty<Element>()),
+                tabbables.get(target).getOr(LazyList.empty<Element>()),
               ),
           ),
         };

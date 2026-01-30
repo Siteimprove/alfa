@@ -1,14 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/package",
-  "name": "@siteimprove/alfa-tree",
+  "name": "@siteimprove/alfa-lazy-list",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.110.0",
+  "version": "0.109.0",
   "license": "MIT",
-  "description": "Functionality for modelling n-ary trees",
+  "description": "Lazy list implementation with functional operations",
   "repository": {
     "type": "git",
     "url": "github:Siteimprove/alfa",
-    "directory": "packages/alfa-tree"
+    "directory": "packages/alfa-lazy-list"
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "engines": {
@@ -22,15 +22,22 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "workspace:^",
-    "@siteimprove/alfa-flags": "workspace:^",
+    "@siteimprove/alfa-array": "workspace:^",
+    "@siteimprove/alfa-callback": "workspace:^",
+    "@siteimprove/alfa-collection": "workspace:^",
+    "@siteimprove/alfa-comparable": "workspace:^",
     "@siteimprove/alfa-hash": "workspace:^",
+    "@siteimprove/alfa-iterable": "workspace:^",
     "@siteimprove/alfa-json": "workspace:^",
-    "@siteimprove/alfa-lazy-list": "workspace:^",
+    "@siteimprove/alfa-map": "workspace:^",
+    "@siteimprove/alfa-mapper": "workspace:^",
     "@siteimprove/alfa-option": "workspace:^",
     "@siteimprove/alfa-predicate": "workspace:^",
-    "@siteimprove/alfa-refinement": "workspace:^",
-    "@siteimprove/alfa-rng": "workspace:^"
+    "@siteimprove/alfa-reducer": "workspace:^",
+    "@siteimprove/alfa-refinement": "workspace:^"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^"
   },
   "publishConfig": {
     "access": "public",

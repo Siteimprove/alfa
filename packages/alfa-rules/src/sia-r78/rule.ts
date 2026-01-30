@@ -6,7 +6,7 @@ import { None, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import type { Sequence } from "@siteimprove/alfa-sequence";
+import { LazyList } from "@siteimprove/alfa-lazy-list";
 import type { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation.js";
 import { BestPractice } from "../requirements/index.js";
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [BestPractice.of("heading-has-content")],
   tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document }) {
-    let headings: Sequence<Element>;
+    let headings: LazyList<Element>;
 
     return {
       applicability() {
