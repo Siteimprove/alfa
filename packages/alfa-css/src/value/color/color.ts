@@ -142,13 +142,15 @@ export namespace Color {
 
     const backgroundOpacity = background.alpha.value * (1 - foregroundOpacity);
 
-    const [red, green, blue] = [
-      [foreground.red, background.red],
-      [foreground.green, background.green],
-      [foreground.blue, background.blue],
-    ].map(
-      ([a, b]) => a.value * foregroundOpacity + b.value * backgroundOpacity,
-    );
+    const red =
+      foreground.red.value * foregroundOpacity +
+      background.red.value * backgroundOpacity;
+    const green =
+      foreground.green.value * foregroundOpacity +
+      background.green.value * backgroundOpacity;
+    const blue =
+      foreground.blue.value * foregroundOpacity +
+      background.blue.value * backgroundOpacity;
 
     return rgb(
       Percentage.of(red),
