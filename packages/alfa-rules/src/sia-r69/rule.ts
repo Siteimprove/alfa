@@ -19,7 +19,11 @@ export default Rule.Atomic.of<
   Text | Group<Element>
 >({
   uri: "https://alfa.siteimprove.com/rules/sia-r69",
-  requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6"), EAA.of("9.1.4.3")],
+  requirements: [
+    Criterion.of("1.4.3"),
+    Criterion.of("1.4.6"),
+    EAA.of("9.1.4.3"),
+  ],
   tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     return {

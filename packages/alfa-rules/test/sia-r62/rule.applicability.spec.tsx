@@ -359,8 +359,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
         makePairing(offBlack, offBlue, 2.03),
         makePairing(offBlue, offBlack, 2.03),
         makePairing(defaultTextColor, offBlack, 1.2),
-        makePairing(offBlue, offBlue, 1),
         makePairing(offBlack, offBlack, 1),
+        makePairing(offBlue, offBlue, 1),
       ])
       .withDistinguishingProperties(["background", "text-decoration"]),
   );

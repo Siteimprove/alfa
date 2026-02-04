@@ -19,6 +19,8 @@ import type * as json from '@siteimprove/alfa-json';
 import { Keywords as Keywords_2 } from '../position/keywords.js';
 import { LengthPercentage as LengthPercentage_2 } from '../index.js';
 import type { Mapper } from '@siteimprove/alfa-mapper';
+import { Maybe } from '@siteimprove/alfa-option';
+import { None } from '@siteimprove/alfa-option';
 import { Option as Option_2 } from '@siteimprove/alfa-option';
 import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Parser as Parser_3 } from '../../index.js';
@@ -29,8 +31,9 @@ import { Radius as Radius_3 } from './radius.js';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Result } from '@siteimprove/alfa-result';
-import type { Serializable } from '@siteimprove/alfa-json';
+import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
+import { Some } from '@siteimprove/alfa-option';
 import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Token as Token_2 } from '../../syntax/token.js';
 import { Unit as Unit_2 } from '../../index.js';
@@ -311,24 +314,50 @@ export namespace Circle {
     parse: Parser<Circle>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "ColorMix" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export type Color = CSS4Color | Current | System;
+export type Color<S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod> = ColorMix<S, H> | CSS4Color | Current | System;
 
 // @public (undocumented)
 export namespace Color {
     // (undocumented)
-    export type Canonical = Current | System | CSS4Color.Canonical;
+    export type Canonical = CSS4Color.Canonical;
+    export function composite(foreground: Color.Canonical, background: Color.Canonical, opacity: number): Color.Canonical;
     // (undocumented)
     export function isTransparent(color: Color): boolean;
     const // (undocumented)
-    current: Current;
+    isCSS4Color: typeof CSS4Color.isCSS4Color;
+    const // (undocumented)
+    isCurrent: typeof Current.isCurrent;
+    const // (undocumented)
+    isSystem: typeof System.isSystem;
+    const // (undocumented)
+    isColorMix: typeof ColorMix.isColorMix;
     // (undocumented)
-    export type JSON = CSS4Color.JSON | Keyword.JSON;
+    export type JSON<S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod> = ColorMix.JSON<S, H> | CSS4Color.JSON | Keyword.JSON;
     export function of(color: string): Result<CSS4Color, Error>;
+    // (undocumented)
+    export function parse(input: Slice<Token>): Result<[Slice<Token>, Color], string>;
+    // (undocumented)
+    export function partiallyResolve<S extends ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod>(color: Color<S, H>): PartiallyResolved<S, H>;
+    // (undocumented)
+    export type PartiallyResolved<S extends ColorMix.InterpolationSpace = ColorMix.InterpolationSpace, H extends ColorMix.HueInterpolationMethod = ColorMix.HueInterpolationMethod> = ColorMix<S, H> | CSS4Color | Current;
+    // (undocumented)
+    export interface PartialResolver {
+    }
     const // (undocumented)
-    system: typeof Keyword.of;
+    transparent: CSS4Color;
     const // (undocumented)
-    parse: Parser<Color>;
+    current: Current;
+    const // (undocumented)
+    system: (value: System.Keyword) => System;
+    // (undocumented)
+    export function resolve(resolver: Resolver): (color: Color) => Canonical;
+    export interface Resolver {
+        // (undocumented)
+        currentColor: CSS4Color.Canonical;
+    }
     export function rgb(red: Number_2 | Percentage, green: Number_2 | Percentage, blue: Number_2 | Percentage, alpha?: Number_2 | Percentage): CSS4Color;
 }
 
@@ -460,7 +489,7 @@ export class CSS4Color extends Value<"color", false> implements Resolvable<CSS4C
     // (undocumented)
     static of(color: string): Result<CSS4Color, Error>;
     // (undocumented)
-    static of(space: string, coords: [number | null, number | null, number | null], alpha?: number | null): Result<CSS4Color, Error>;
+    static of(space: string, coordinates: CSS4Color.Coordinates<number | null>, alpha?: number | null): Result<CSS4Color, Error>;
     // (undocumented)
     get red(): Percentage.Canonical;
     // (undocumented)
@@ -468,13 +497,21 @@ export class CSS4Color extends Value<"color", false> implements Resolvable<CSS4C
     // (undocumented)
     toJSON(): CSS4Color.JSON;
     // (undocumented)
+    toSpace(space: string): Result<CSS4Color, Error>;
+    // (undocumented)
     toString(): string;
+    // (undocumented)
+    withAlpha(alpha: Percentage.Canonical | number): CSS4Color;
 }
 
 // @public (undocumented)
 export namespace CSS4Color {
     // (undocumented)
     export type Canonical = CSS4Color;
+    // (undocumented)
+    export type Coordinates<T> = [T, T, T];
+    // (undocumented)
+    export function isCSS4Color(value: unknown): value is CSS4Color;
     // (undocumented)
     export interface JSON extends Value.JSON<"color"> {
         // (undocumented)
@@ -495,6 +532,8 @@ export type Current = Keyword<"currentcolor">;
 
 // @public (undocumented)
 export namespace Current {
+    // (undocumented)
+    export function isCurrent(value: unknown): value is Current;
     const // (undocumented)
     parse: Parser<Current>;
 }
@@ -1053,6 +1092,8 @@ export namespace Keyword {
     // (undocumented)
     export function isKeyword(value: unknown): value is Keyword;
     // (undocumented)
+    export function isKeyword<N extends string>(value: unknown, ...names: Array<N>): value is Keyword<N>;
+    // (undocumented)
     export interface JSON<T extends string = string> extends Ident.JSON<"keyword", T> {
     }
     // (undocumented)
@@ -1226,16 +1267,22 @@ export namespace Lexer {
 export class List<V extends Value> extends Value<"list", Value.HasCalculation<[V]>> implements Iterable_2<V>, Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>>, PartiallyResolvable<List<Resolvable.PartiallyResolved<V>>, Resolvable.PartialResolver<V>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<V>;
-    protected constructor(values: Array<V>, separator: string);
+    protected constructor(values: Array_2<V>, separator: string);
     cutOrExtend(length: number): List<V>;
     // (undocumented)
     equals<T extends Value>(value: List<T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    every<U extends V>(refinement: Refinement<V, U, [index: number]>): this is List<U>;
+    // (undocumented)
+    every(predicate: Predicate<V, [index: number]>): boolean;
+    // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
     map<U extends Value>(mapper: Mapper<V, U>): List<U>;
+    // (undocumented)
+    none(predicate: Predicate<V, [index: number]>): boolean;
     // (undocumented)
     static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V>;
     // (undocumented)
@@ -1265,7 +1312,7 @@ export namespace List {
         // (undocumented)
         separator: string;
         // (undocumented)
-        values: Array<Serializable.ToJSON<V>>;
+        values: Array_2<Serializable.ToJSON<V>>;
     }
     const // (undocumented)
     parseCommaSeparated: <V extends Value>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V>>;
@@ -2182,7 +2229,7 @@ export namespace Shadow {
     // (undocumented)
     export function parse(options?: Options): Parser<Shadow>;
     // (undocumented)
-    export type Resolver = Length.Resolver;
+    export type Resolver = Length.Resolver & Color.Resolver;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Shape" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2333,10 +2380,17 @@ export type System = Keyword<System.Keyword>;
 
 // @public (undocumented)
 export namespace System {
+    const // (undocumented)
+    keywords: readonly ["accentcolor", "accentcolortext", "activetext", "buttonborder", "buttonface", "buttontext", "canvas", "canvastext", "field", "fieldtext", "graytext", "highlight", "highlighttext", "linktext", "mark", "marktext", "selecteditem", "selecteditemtext", "visitedtext"];
     // (undocumented)
-    export type Keyword = "canvas" | "canvastext" | "linktext" | "visitedtext" | "activetext" | "buttonface" | "buttontext" | "field" | "fieldtext" | "highlight" | "highlighttext" | "graytext";
+    export function isSystem(value: unknown): value is System;
+    const // (undocumented)
+    resolve: (system: System) => CSS4Color;
+    // (undocumented)
+    export type Keyword = (typeof keywords)[number];
     const // (undocumented)
     parse: Parser<System>;
+        {};
 }
 
 // @public (undocumented)

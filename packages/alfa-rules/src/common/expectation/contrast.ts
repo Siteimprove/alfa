@@ -20,47 +20,6 @@ const { flatMap, map, takeWhile } = Iterable;
 const { max, round } = Math;
 
 /**
- * @deprecated This is only used in the deprecated R66v1 and R69v1.
- */
-export function hasSufficientContrastDeprecated(
-  target: Text,
-  device: Device,
-  largeTextThreshold: number,
-  normalTextThreshold: number,
-) {
-  // Associated Applicability should ensure that target have Element as parent.
-  // Additionally, stray text nodes should not exist in our use case and we'd
-  // rather crash if finding one.
-  const parent = target.parent(Node.flatTree).getUnsafe() as Element;
-
-  const foregrounds = Question.of("foreground-colors", target).answerIf(
-    getForeground(parent, device),
-  );
-  const backgrounds = Question.of("background-colors", target).answerIf(
-    getBackground(parent, device),
-  );
-
-  const threshold = isLargeText(device)(target)
-    ? largeTextThreshold
-    : normalTextThreshold;
-
-  return {
-    1: foregrounds.map((foregrounds) =>
-      backgrounds.map((backgrounds) => {
-        const { pairings, highest } = getPairings(foregrounds, backgrounds);
-
-        return expectation(
-          // Accept if  single pairing is good enough.
-          highest >= threshold,
-          () => Outcomes.HasSufficientContrast(highest, threshold, pairings),
-          () => Outcomes.HasInsufficientContrast(highest, threshold, pairings),
-        );
-      }),
-    ),
-  };
-}
-
-/**
  * @internal
  */
 export function hasSufficientContrast(

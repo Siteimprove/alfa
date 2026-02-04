@@ -19,28 +19,42 @@ const { left, either, end } = parser.Parser;
  * contain the default keywords that are handled globally. The actual type of
  * specified values does include them.
  */
-export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
-  public static of<SPECIFIED, COMPUTED>(
+export class Longhand<
+  SPECIFIED = unknown,
+  COMPUTED = SPECIFIED,
+  USED = COMPUTED,
+> {
+  public static of<SPECIFIED, COMPUTED = SPECIFIED, USED = COMPUTED>(
     initial: COMPUTED,
     parse: parser.Parser<Slice<Token>, SPECIFIED, string>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
-    options: Partial<Longhand.Options<COMPUTED>> = {},
-  ): Longhand<SPECIFIED, COMPUTED> {
-    const { inherits = false, use = Option.of } = options;
+    options: Partial<Longhand.Options<COMPUTED, USED>> = {},
+  ): Longhand<SPECIFIED, COMPUTED, USED> {
+    const { inherits = false, use = (value) => value } = options;
 
-    return new Longhand(initial, parse, compute, inherits, use);
+    return new Longhand(
+      initial,
+      parse,
+      compute,
+      inherits,
+      // If `use` is not provided, we default to `Option.of`. But in this case,
+      // `USED` also has no value and default to `COMPUTED`, so the assertion is
+      // OK. The only bad case would be forcing the type of `USED` with, e.g.
+      // `const options: Options<string, number> = {}`.
+      use as Mapper<Value<COMPUTED>, Value<USED>, [style: Style]>,
+    );
   }
 
-  public static extend<SPECIFIED, COMPUTED>(
-    property: Longhand<SPECIFIED, COMPUTED>,
+  public static extend<SPECIFIED, COMPUTED = SPECIFIED, USED = COMPUTED>(
+    property: Longhand<SPECIFIED, COMPUTED, USED>,
     overrides: {
       initial?: COMPUTED;
       parse?: parser.Parser<Slice<Token>, SPECIFIED, string>;
       compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
       inherits?: boolean;
-      use?: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>;
+      use?: Mapper<Value<COMPUTED>, Value<USED>, [style: Style]>;
     } = {},
-  ): Longhand<SPECIFIED, COMPUTED> {
+  ): Longhand<SPECIFIED, COMPUTED, USED> {
     const {
       initial = property._initial,
       parse = property._parseBase,
@@ -61,18 +75,14 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     [style: Style]
   >;
   private readonly _inherits: boolean;
-  private readonly _use: Mapper<
-    Value<COMPUTED>,
-    Option<Value<COMPUTED>>,
-    [style: Style]
-  >;
+  private readonly _use: Mapper<Value<COMPUTED>, Value<USED>, [style: Style]>;
 
   protected constructor(
     initial: COMPUTED,
     parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
     inherits: boolean,
-    use: Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]>,
+    use: Mapper<Value<COMPUTED>, Value<USED>, [style: Style]>,
   ) {
     this._initial = initial;
     this._parseBase = parseBase;
@@ -111,7 +121,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     return this._inherits;
   }
 
-  get use(): Mapper<Value<COMPUTED>, Option<Value<COMPUTED>>, [style: Style]> {
+  get use(): Mapper<Value<COMPUTED>, Value<USED>, [style: Style]> {
     return this._use;
   }
 }
@@ -120,13 +130,9 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
  * @internal
  */
 export namespace Longhand {
-  export interface Options<COMPUTED> {
+  export interface Options<COMPUTED, USED = COMPUTED> {
     readonly inherits: boolean;
-    readonly use: Mapper<
-      Value<COMPUTED>,
-      Option<Value<COMPUTED>>,
-      [style: Style]
-    >;
+    readonly use: Mapper<Value<COMPUTED>, Value<USED>, [style: Style]>;
   }
 
   export type Parser<SPECIFIED> = parser.Parser<
@@ -159,7 +165,10 @@ export namespace Longhand {
       // Computed is used both in a covariant (output of compute) and
       // contravariant (input of use) position in Longhand. Therefore,
       // it needs to be exactly inferred for the subtyping to exist.
-      infer _
+      infer _C,
+      // Used is only used covariantly (output of use) in Longhand. But,
+      // at this point, it's just simpler to exactly infer it as well.
+      infer _U
     >
       ? S
       : never;
@@ -179,10 +188,38 @@ export namespace Longhand {
       // Specified is used both in a covariant (output of the parser) and
       // contravariant (input of compute) position in Longhand. Therefore,
       // it needs to be exactly inferred for the subtyping to exist.
-      infer _,
-      infer C
+      infer _S,
+      infer C,
+      // Used is only used covariantly (output of use) in Longhand. But,
+      // at this point, it's just simpler to exactly infer it as well.
+      infer _U
     >
       ? C
+      : never;
+
+  /**
+   * Extracts the used type of a property.
+   *
+   * @remarks
+   * This is a convenience type for building shorthands.
+   *
+   * {@link https://drafts.csswg.org/css-cascade/#used}
+   *
+   * @internal
+   */
+  export type Used<T> =
+    T extends Longhand<
+      // Specified is used both in a covariant (output of the parser) and
+      // contravariant (input of compute) position in Longhand. Therefore,
+      // it needs to be exactly inferred for the subtyping to exist.
+      infer _S,
+      // Computed is used both in a covariant (output of compute) and
+      // contravariant (input of use) position in Longhand. Therefore,
+      // it needs to be exactly inferred for the subtyping to exist.
+      infer _C,
+      infer U
+    >
+      ? U
       : never;
 
   /**
@@ -206,12 +243,12 @@ export namespace Longhand {
    *
    * @internal
    */
-  export function fromKeywords<K extends string>(
-    options: Partial<Options<Keyword.ToKeywords<K>>>,
+  export function fromKeywords<K extends string, USED = Keyword.ToKeywords<K>>(
+    options: Partial<Options<Keyword.ToKeywords<K>, USED>>,
     initial: K,
     ...other: Array<K>
-  ): Longhand<Keyword.ToKeywords<K>> {
-    return Longhand.of<Keyword.ToKeywords<K>, Keyword.ToKeywords<K>>(
+  ): Longhand<Keyword.ToKeywords<K>, Keyword.ToKeywords<K>, USED> {
+    return Longhand.of<Keyword.ToKeywords<K>, Keyword.ToKeywords<K>, USED>(
       Keyword.of(initial),
       Keyword.parse(initial, ...other),
       (value) => value,

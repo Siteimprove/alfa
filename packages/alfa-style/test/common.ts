@@ -51,7 +51,7 @@ export function used<N extends Longhands.Name>(
   element: Element,
   name: N,
   context: Context = Context.empty(),
-): Option.JSON<Value<Style.Computed<N>>> {
+): Value.JSON<Style.Used<N>> {
   return Style.from(element, device, context).used(name).toJSON();
 }
 

@@ -72,6 +72,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   "src/value/transform/translate.ts";
   "exit_src/value/textual";
   "src/value/textual/ident.ts";
+  "src/value/color/color-mix.ts";
   "src/value/color/css4-color.ts";
   "src/value/color/current.ts";
   "src/value/color/system.ts";
@@ -109,6 +110,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
   "src/calculation/math-expression/math.ts";
   "src/value/flags/contain.ts";
   "src/value/flags/trim.ts";
+  "src/value/color/mix.ts";
   "src/syntax/comma.ts";
   "src/syntax/declaration.ts";
   "src/syntax/lexer.ts";
@@ -813,6 +815,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
             color = "#ff9900";
             penwidth = 5;
           ];
+          "src/value/color/color-mix.ts" [
+            label = "color-mix.ts";
+          ];
+          "src/value/color/mix.ts" [
+            label = "mix.ts";
+          ];
           "src/value/color/css4-color.ts" [
             label = "css4-color.ts";
           ];
@@ -826,6 +834,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
             style = "invis";
           ];
           "src/value/color/index.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/color-mix.ts" -> "exit_src/value/color" [
+            style = "invis";
+          ];
+          "src/value/color/mix.ts" -> "exit_src/value/color" [
             style = "invis";
           ];
           "src/value/color/css4-color.ts" -> "exit_src/value/color" [
@@ -1021,6 +1035,9 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
         "exit_src/value/shape" -> "exit_src/value" [
           style = "invis";
         ];
+        "exit_src/value/color" -> "exit_src/value" [
+          style = "invis";
+        ];
         "exit_src/value/textual" -> "exit_src/value" [
           style = "invis";
         ];
@@ -1031,6 +1048,9 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
           style = "invis";
         ];
         "exit_src/value/collection" -> "exit_src/value" [
+          style = "invis";
+        ];
+        "exit_src/value/color" -> "exit_src/value" [
           style = "invis";
         ];
         "exit_src/value/textual" -> "exit_src/value" [
@@ -1598,7 +1618,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
       "exit_src/value" -> "exit_src" [
         style = "invis";
       ];
+      "exit_src/value" -> "exit_src" [
+        style = "invis";
+      ];
       "exit_src/syntax" -> "exit_src" [
+        style = "invis";
+      ];
+      "exit_src/value" -> "exit_src" [
         style = "invis";
       ];
       "exit_src/value" -> "exit_src" [
@@ -1761,6 +1787,12 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
         style = "invis";
       ];
     }
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
+    "exit_src" -> "exit_src" [
+      style = "invis";
+    ];
     "exit_src" -> "exit_src" [
       style = "invis";
     ];
@@ -2707,6 +2739,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
+  "src/value/color/color.ts" -> "src/value/color/color-mix.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color.ts" -> "src/value/color/color-mix.ts" [
+    style = "solid";
+    color = "black";
+  ];
   "src/value/color/color.ts" -> "src/value/color/css4-color.ts" [
     style = "invis";
   ];
@@ -3596,6 +3635,87 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
   ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+    color = "#3300ff";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/value";
+  ];
+  "exit_src/value/color" -> "name_src/value/collection" [
+    style = "dotted";
+    color = "#ff9900";
+    lhead = "cluster_src/value/collection";
+    ltail = "cluster_src/value/color";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/color.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/color.ts" [
+    style = "dotted";
+    color = "black";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/css4-color.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/css4-color.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/current.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/current.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/mix.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/mix.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/system.ts" [
+    style = "invis";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/color/system.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "exit_src/value/color" -> "name_src/value/numeric" [
+    style = "invis";
+    color = "#ff9900";
+    lhead = "cluster_src/value/numeric";
+    ltail = "cluster_src/value/color";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/resolvable.ts" [
+    style = "dotted";
+    color = "#ff9900";
+    ltail = "cluster_src/value/color";
+  ];
+  "exit_src/value/color" -> "name_src/value/textual" [
+    style = "invis";
+    color = "#ff9900";
+    lhead = "cluster_src/value/textual";
+    ltail = "cluster_src/value/color";
+  ];
+  "src/value/color/color-mix.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/value.ts" [
+    style = "solid";
+    color = "#ff9900";
+    ltail = "cluster_src/value/color";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+    color = "#3300ff";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/value";
+  ];
   "src/value/textual/url.ts" -> "src/value/resolvable.ts" [
     style = "invis";
   ];
@@ -3733,6 +3853,46 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     style = "solid";
     color = "black";
   ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+    color = "#3300ff";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/value";
+  ];
+  "exit_src/value" -> "name_src/syntax" [
+    style = "invis";
+    color = "#3300ff";
+    lhead = "cluster_src/syntax";
+    ltail = "cluster_src/value";
+  ];
+  "exit_src/value/color" -> "name_src/value/collection" [
+    style = "invis";
+    color = "#ff9900";
+    lhead = "cluster_src/value/collection";
+    ltail = "cluster_src/value/color";
+  ];
+  "exit_src/value/color" -> "name_src/value/numeric" [
+    style = "invis";
+    color = "#ff9900";
+    lhead = "cluster_src/value/numeric";
+    ltail = "cluster_src/value/color";
+  ];
+  "src/value/color/mix.ts" -> "src/value/resolvable.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/resolvable.ts" [
+    style = "invis";
+    color = "#ff9900";
+    ltail = "cluster_src/value/color";
+  ];
+  "src/value/color/mix.ts" -> "src/value/value.ts" [
+    style = "invis";
+  ];
+  "exit_src/value/color" -> "src/value/value.ts" [
+    style = "invis";
+    color = "#ff9900";
+    ltail = "cluster_src/value/color";
+  ];
   "src/value/textual/ident.ts" -> "src/value/resolvable.ts" [
     style = "invis";
   ];
@@ -3765,7 +3925,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     style = "invis";
   ];
   "exit_src/value/color" -> "src/value/resolvable.ts" [
-    style = "dotted";
+    style = "invis";
     color = "#ff9900";
     ltail = "cluster_src/value/color";
   ];
@@ -3773,7 +3933,7 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     style = "invis";
   ];
   "exit_src/value/color" -> "src/value/value.ts" [
-    style = "solid";
+    style = "invis";
     color = "#ff9900";
     ltail = "cluster_src/value/color";
   ];
@@ -4593,6 +4753,13 @@ digraph "dependency-graph-@siteimprove/alfa-css" {
     color = "#3300ff";
     lhead = "cluster_src/syntax";
     ltail = "cluster_src/value";
+  ];
+  "src/value/color/system.ts" -> "src/value/color/css4-color.ts" [
+    style = "invis";
+  ];
+  "src/value/color/system.ts" -> "src/value/color/css4-color.ts" [
+    style = "solid";
+    color = "black";
   ];
   "exit_src/value/color" -> "name_src/value/textual" [
     style = "invis";

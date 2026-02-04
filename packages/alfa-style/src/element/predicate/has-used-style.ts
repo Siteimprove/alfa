@@ -15,15 +15,13 @@ const { isElement } = Element;
  */
 export function hasUsedStyle<N extends Longhands.Name>(
   name: N,
-  predicate: Predicate<Style.Computed<N>, [source: Option<Declaration>]>,
+  predicate: Predicate<Style.Used<N>, [source: Option<Declaration>]>,
   device: Device,
   context?: Context,
 ): Predicate<Element | Text> {
   return function hasUsedStyle(node): boolean {
     return isElement(node)
-      ? Style.from(node, device, context)
-          .used(name)
-          .some((used) => used.some(predicate))
+      ? Style.from(node, device, context).used(name).some(predicate)
       : node.parent(Node.flatTree).filter(isElement).some(hasUsedStyle);
   };
 }

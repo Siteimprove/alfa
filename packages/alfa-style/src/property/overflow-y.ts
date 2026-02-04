@@ -1,17 +1,8 @@
 import { Keyword } from "@siteimprove/alfa-css";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Longhand } from "../longhand.js";
 
-import { isBlockContainer } from "../predicate/is-block-container.js";
-import { isFlexContainer } from "../predicate/is-flex-container.js";
-import { isGridContainer } from "../predicate/is-grid-container.js";
-
 import Base from "./overflow-x.js";
-
-const { or } = Predicate;
-const isContainer = or(isBlockContainer, isFlexContainer, isGridContainer);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-y}
@@ -32,5 +23,4 @@ export default Longhand.extend(Base, {
 
       return y.value === "visible" ? Keyword.of("auto") : Keyword.of("hidden");
     }),
-  use: (value, style) => (isContainer(style) ? Option.of(value) : None),
 });

@@ -1,4 +1,10 @@
-import type { LengthPercentage, Unit, Value } from "@siteimprove/alfa-css";
+import {
+  Color,
+  type LengthPercentage,
+  Shadow,
+  type Unit,
+  type Value,
+} from "@siteimprove/alfa-css";
 import { Length, List } from "@siteimprove/alfa-css";
 import type { Mapper } from "@siteimprove/alfa-mapper";
 
@@ -71,5 +77,13 @@ export namespace Resolver {
   ) {
     return <V extends Value>(value: List<V>): List<V> =>
       value.cutOrExtend(Math.max(style.computed(name).value.size, 1));
+  }
+
+  export function color(style: Style): Color.Resolver {
+    return { currentColor: style.used("color").value };
+  }
+
+  export function shadow(style: Style): Shadow.Resolver {
+    return { ...length(style), ...color(style) };
   }
 }

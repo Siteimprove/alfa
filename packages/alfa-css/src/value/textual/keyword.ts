@@ -36,11 +36,25 @@ export class Keyword<T extends string = string>
  * @public
  */
 export namespace Keyword {
-  export interface JSON<T extends string = string>
-    extends Ident.JSON<"keyword", T> {}
+  export interface JSON<T extends string = string> extends Ident.JSON<
+    "keyword",
+    T
+  > {}
 
-  export function isKeyword(value: unknown): value is Keyword {
-    return value instanceof Keyword;
+  export function isKeyword(value: unknown): value is Keyword;
+
+  export function isKeyword<N extends string>(
+    value: unknown,
+    ...names: Array<N>
+  ): value is Keyword<N>;
+
+  export function isKeyword<N extends string>(
+    value: unknown,
+    ...names: Array<N>
+  ): value is Keyword<N> {
+    return (
+      value instanceof Keyword && (names.length === 0 || value.is(...names))
+    );
   }
 
   /**

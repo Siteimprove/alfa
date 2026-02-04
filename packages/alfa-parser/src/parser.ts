@@ -290,11 +290,31 @@ export namespace Parser {
     return flatMap(left, (left) => map(right, (right) => [left, right]));
   }
 
-  export function left<I, T, U, E, A extends Array<unknown> = []>(
+  export function left<I, T, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
-    right: Parser<I, U, E, A>,
+    ...right: Array<Parser<I, unknown, E, A>>
   ): Parser<I, T, E, A> {
-    return flatMap(left, (left) => map(right, () => left));
+    return (input, ...args) => {
+      const first = left(input, ...args);
+
+      if (!first.isOk()) {
+        return first;
+      }
+
+      let [remainder, result] = first.get();
+
+      for (const parser of right) {
+        const next = parser(remainder, ...args);
+
+        if (next.isErr()) {
+          return next;
+        }
+
+        [remainder] = next.getUnsafe();
+      }
+
+      return Result.of([remainder, result]);
+    };
   }
 
   export function right<I, T, U, E, A extends Array<unknown> = []>(

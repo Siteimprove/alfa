@@ -20,6 +20,9 @@
     "./value/collection/list.spec.ts",
     "./value/collection/tuple.spec.ts",
     "./value/color/css4-color.spec.ts",
+    "./value/color/color.spec.ts",
+    "./value/color/color-mix.spec.ts",
+    "./value/color/mix.spec.ts",
     "./value/image/image.spec.ts",
     "./value/image/linear-gradient.spec.ts",
     "./value/image/radial-gradient.spec.ts",
@@ -44,5 +47,9 @@
     "./value/transform/skew.spec.ts",
     "./value/transform/translate.spec.ts"
   ],
-  "references": [{ "path": "../src" }, { "path": "../../alfa-test" }]
+  "references": [
+    { "path": "../src" },
+    { "path": "../../alfa-rng" },
+    { "path": "../../alfa-test" }
+  ]
 }
