@@ -1,5 +1,11 @@
 # @siteimprove/alfa-parser
 
+## 0.110.0
+
+### Patch Changes
+
+- **Changed:** `Parser.left` now accepts any number of parsers (at least one), will run them sequentially and return the result of the first, with the remainder input of running them all. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
 ## 0.109.0
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @siteimprove/alfa-aria
 
+## 0.110.0
+
+### Patch Changes
+
+- **Added:** The `inert` attribute is now supported. ([#1964](https://github.com/Siteimprove/alfa/pull/1964))
+
 ## 0.109.0
 
 ## 0.108.2

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-array
 
+## 0.110.0
+
 ## 0.109.0
 
 ## 0.108.2

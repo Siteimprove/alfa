@@ -1,5 +1,51 @@
 # Alfa changelog
 
+## [0.110.0](../../compare/v0.109.0...v0.110.0) (2026-02-05)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01100), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): Color composition (`Color.composite`) has been moved from `@siteimprove/alfa-rules` to `@siteimprove/alfa-css`. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): Values who include a color, such as `Shadow`, gradients, … now require a color resolver to be resolved (i.e. providing a value for `currentColor`). ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01100): Used values of style properties can now be any type, wrapped in a value, not just an `Option` of the computed type. The `Style.hasUsedValue` predicate now requires as argument a predicate of the used value type (instead of the computed one). ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): `List.none` and `List.every` predicates combinators are now available, with `List.every` narrowing its input type if possible. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence/CHANGELOG.md#01100): A new function `Sequence.preceding` has been added. ([#1988](https://github.com/Siteimprove/alfa/pull/1988))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): Methods `CSS4Color#withAlpha` and `CSS4Color.toSpace` are now available. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#01100), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#01100), [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01100), [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01100): The `inert` attribute is now supported. ([#1964](https://github.com/Siteimprove/alfa/pull/1964))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): `Color.resolve` and `Color.partiallyResolve` helpers are now available, with the former requiring a resolver to provide a value for `currentColor`. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): Types guards `Color.isCurrent`, `Color.isSystem` and `Color.isCSS4Color` are now available. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): `Keyword.isKeyword` now accepts an optional list of valid values. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): The CSS `color-mix` function is now supported. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+### Changed
+
+- [@siteimprove/alfa-sequence](packages/alfa-sequence/CHANGELOG.md#01100): `Sequence.reverse` has been optimized. ([#1988](https://github.com/Siteimprove/alfa/pull/1988))
+
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md#01100): `Parser.left` now accepts any number of parsers (at least one), will run them sequentially and return the result of the first, with the remainder input of running them all. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#01100): `Tree.preceding` now uses the optimized `Sequence.preceding`. ([#1988](https://github.com/Siteimprove/alfa/pull/1988))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01100): Deprecated rules SIA-DR18, SIA-DR66, SIA-DR69 have been removed. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#01100): `CSS4Color#equals` and `CSS4Color#hash` are now more lenient toward insignificant differences (after the 5th decimal). ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#01100): CSS properties whose value is a color now properly resolve system colors at compute time; and `currentColor` at used time. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#01100): The "unresolvable colors" diagnostics for SIA-R66 and SIA-R69 have been removed, as colors are now always resolved (interposed descendants and images can style cause `cantTell` results). ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
 ## [0.109.0](../../compare/v0.108.2...v0.109.0) (2026-01-21)
 
 ### Breaking

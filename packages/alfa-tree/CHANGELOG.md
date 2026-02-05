@@ -1,5 +1,11 @@
 # @siteimprove/alfa-tree
 
+## 0.110.0
+
+### Patch Changes
+
+- **Changed:** `Tree.preceding` now uses the optimized `Sequence.preceding`. ([#1988](https://github.com/Siteimprove/alfa/pull/1988))
+
 ## 0.109.0
 
 ### Patch Changes

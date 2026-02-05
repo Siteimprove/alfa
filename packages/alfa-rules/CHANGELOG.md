@@ -1,5 +1,21 @@
 # @siteimprove/alfa-rules
 
+## 0.110.0
+
+### Minor Changes
+
+- **Breaking:** Color composition (`Color.composite`) has been moved from `@siteimprove/alfa-rules` to `@siteimprove/alfa-css`. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- **Changed:** Deprecated rules SIA-DR18, SIA-DR66, SIA-DR69 have been removed ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+  The version 1 of these rules, which was deprecated, has now been entirely removed.
+
+### Patch Changes
+
+- **Fixed:** The "unresolvable colors" diagnostics for SIA-R66 and SIA-R69 have been removed, as colors are now always resolved (interposed descendants and images can style cause `cantTell` results). ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- **Added:** The `inert` attribute is now supported. ([#1964](https://github.com/Siteimprove/alfa/pull/1964))
+
 ## 0.109.0
 
 ### Patch Changes

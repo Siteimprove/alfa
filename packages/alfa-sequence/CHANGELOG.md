@@ -1,5 +1,13 @@
 # @siteimprove/alfa-sequence
 
+## 0.110.0
+
+### Patch Changes
+
+- **Added:** A new function `Sequence.preceding` has been added. ([#1988](https://github.com/Siteimprove/alfa/pull/1988))
+
+- **Changed:** `Sequence.reverse` has been optimized. ([#1988](https://github.com/Siteimprove/alfa/pull/1988))
+
 ## 0.109.0
 
 ### Patch Changes

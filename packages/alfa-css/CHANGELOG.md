@@ -1,5 +1,31 @@
 # @siteimprove/alfa-css
 
+## 0.110.0
+
+### Minor Changes
+
+- **Added:** `List.none` and `List.every` predicates combinators are now available, with `List.every` narrowing its input type if possible. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- **Breaking:** Color composition (`Color.composite`) has been moved from `@siteimprove/alfa-rules` to `@siteimprove/alfa-css`. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- **Added:** Methods `CSS4Color#withAlpha` and `CSS4Color.toSpace` are now available. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- **Breaking:** Values who include a color, such as `Shadow`, gradients, … now require a color resolver to be resolved (i.e. providing a value for `currentColor`). ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- **Added:** `Color.resolve` and `Color.partiallyResolve` helpers are now available, with the former requiring a resolver to provide a value for `currentColor`. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+  Since the `Color` type is just a union and not a subclass of `Value`, there is no `Color#resolve` method.
+
+- **Added:** Types guards `Color.isCurrent`, `Color.isSystem` and `Color.isCSS4Color` are now available. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- **Added:** The CSS `color-mix` function is now supported. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+### Patch Changes
+
+- **Fixed:** `CSS4Color#equals` and `CSS4Color#hash` are now more lenient toward insignificant differences (after the 5th decimal). ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
+- **Added:** `Keyword.isKeyword` now accepts an optional list of valid values. ([#1982](https://github.com/Siteimprove/alfa/pull/1982))
+
 ## 0.109.0
 
 ### Minor Changes
