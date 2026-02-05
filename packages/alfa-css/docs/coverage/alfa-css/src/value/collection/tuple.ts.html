@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.36% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/19</span>
+                <span class='fraction'>12/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">20% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>2/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.66% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/15</span>
+                <span class='fraction'>14/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.36% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/19</span>
+                <span class='fraction'>10/20</span>
             </div>
         
             
@@ -276,17 +276,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">38x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -356,7 +356,7 @@ export class Tuple&lt;T extends Array&lt;Value&gt;&gt;
     this._values = values;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >values(</span>): Readonly&lt;T&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >values(</span>): Readonly&lt;T&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._values;</span>
   }
 &nbsp;
@@ -366,12 +366,12 @@ export class Tuple&lt;T extends Array&lt;Value&gt;&gt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >partiallyResolve(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >partiallyResolve(</span></span>
     resolver?: Tuple.PartialResolver&lt;T&gt;,
   ): Tuple&lt;Tuple.PartiallyResolved&lt;T&gt;&gt; {
 <span class="cstat-no" title="statement not covered" >    return new Tuple&lt;Tuple.PartiallyResolved&lt;T&gt;&gt;(</span>
-      this._values.map(<span class="fstat-no" title="function not covered" >(v</span>alue) =&gt;
-<span class="cstat-no" title="statement not covered" >        value.resolve(resolver),</span>
+      this._values.map(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        value.resolve(resolver),</span></span>
       ) as Tuple.PartiallyResolved&lt;T&gt;,
     );
   }
@@ -380,15 +380,15 @@ export class Tuple&lt;T extends Array&lt;Value&gt;&gt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       Tuple.isTuple(value) &amp;&amp;
       value._values.length === this._values.length &amp;&amp;
       value._values.every(<span class="fstat-no" title="function not covered" >(v</span>alue, i) =&gt; <span class="cstat-no" title="statement not covered" >value.equals(this._values[i]))</span>
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    for (const value of this._values) {</span>
 <span class="cstat-no" title="statement not covered" >      value.hash(hash);</span>
     }
@@ -405,7 +405,7 @@ export class Tuple&lt;T extends Array&lt;Value&gt;&gt;
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `${this._values.join(" ")}`.trim();</span>
   }
 }
@@ -413,7 +413,7 @@ export class Tuple&lt;T extends Array&lt;Value&gt;&gt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Tuple {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Tuple {</span></span>
   export interface JSON&lt;T extends Array&lt;Value&gt;&gt; extends Value.JSON&lt;"tuple"&gt; {
     values: Serializable.ToJSON&lt;T&gt;;
   }
@@ -466,7 +466,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >T
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:58:16.177Z
+                at 2026-02-05T08:53:37.113Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.78% </span>
+                <span class="strong">72.05% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/56</span>
+                <span class='fraction'>49/68</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.48% </span>
+                <span class="strong">69.64% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>31/39</span>
+                <span class='fraction'>39/56</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">65.71% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/20</span>
+                <span class='fraction'>23/35</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -325,7 +325,7 @@
 <span class="cline-any cline-yes">1944x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">38x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -339,8 +339,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2532x</span>
-<span class="cline-any cline-yes">2532x</span>
+<span class="cline-any cline-yes">2536x</span>
+<span class="cline-any cline-yes">2536x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -556,7 +556,7 @@ import type { Numeric } from "../numeric/index.js";
  */
 export class Kind implements Equatable, Serializable {
   public static of(kind?: Kind.Base): Kind {
-    const kinds = this._empty._kinds;
+    const kinds = <span class="cstat-no" title="statement not covered" >this._empty._kinds;</span>
 &nbsp;
     return new Kind(kind === undefined ? kinds : kinds.set(kind, 1), None);
   }
@@ -579,11 +579,11 @@ export class Kind implements Equatable, Serializable {
     this._hint = hint;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >kinds(</span>): Kind.Map {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >kinds(</span>): Kind.Map {</span>
 <span class="cstat-no" title="statement not covered" >    return this._kinds;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >hint(</span>): Option&lt;Kind.Hint&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hint(</span>): Option&lt;Kind.Hint&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._hint;</span>
   }
 &nbsp;
@@ -592,8 +592,8 @@ export class Kind implements Equatable, Serializable {
    */
   public is(
     kind?: Kind.Base,
-    value: number = 1,
-    hinted: boolean = kind === "percentage",
+    value: number = <span class="branch-0 cbranch-no" title="branch not covered" >1,</span>
+    hinted: boolean = <span class="branch-0 cbranch-no" title="branch not covered" >kind === "percentage",</span>
   ): boolean {
     for (const entry of this._kinds) {
       // this is not the dimension we're looking for, and it has power 0.
@@ -617,8 +617,8 @@ export class Kind implements Equatable, Serializable {
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-add-two-types}
    */
   public add(kind: Kind): Result&lt;Kind, string&gt; {
-    let a: Kind = this;
-    let b: Kind = kind;
+    let a: Kind = <span class="cstat-no" title="statement not covered" >this;</span>
+    let b: Kind = <span class="cstat-no" title="statement not covered" >kind;</span>
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (a._hint.some(<span class="fstat-no" title="function not covered" >(a</span>) =&gt; <span class="cstat-no" title="statement not covered" >b._hint.some(<span class="fstat-no" title="function not covered" >(b</span>) =&gt; <span class="cstat-no" title="statement not covered" >a !== b)</span>)</span>) {
 <span class="cstat-no" title="statement not covered" >      return Err.of(`Cannot add types ${a} and ${b}`);</span>
@@ -664,8 +664,8 @@ export class Kind implements Equatable, Serializable {
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-multiply-two-types}
    */
   public multiply(kind: Kind): Result&lt;Kind, string&gt; {
-    let a: Kind = this;
-    let b: Kind = kind;
+    let a: Kind = <span class="cstat-no" title="statement not covered" >this;</span>
+    let b: Kind = <span class="cstat-no" title="statement not covered" >kind;</span>
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (a._hint.some(<span class="fstat-no" title="function not covered" >(a</span>) =&gt; <span class="cstat-no" title="statement not covered" >b._hint.some(<span class="fstat-no" title="function not covered" >(b</span>) =&gt; <span class="cstat-no" title="statement not covered" >a !== b)</span>)</span>) {
 <span class="cstat-no" title="statement not covered" >      return Err.of(`Cannot multiply types ${a} and ${b}`);</span>
@@ -728,15 +728,15 @@ export class Kind implements Equatable, Serializable {
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Kind &amp;&amp;
       value._kinds.equals(this._kinds) &amp;&amp;
       value._hint.equals(this._hint)
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toJSON(</span>): Kind.JSON {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toJSON(</span>): Kind.JSON {</span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
       kinds: this._kinds.toArray(),
       hint: this._hint.getOr(null),
@@ -778,7 +778,7 @@ export namespace Kind {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:58:16.177Z
+                at 2026-02-05T08:53:37.113Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>128/128</span>
+                <span class='fraction'>129/129</span>
             </div>
         
             
@@ -709,13 +709,7 @@
 <a name='L644'></a><a href='#L644'>644</a>
 <a name='L645'></a><a href='#L645'>645</a>
 <a name='L646'></a><a href='#L646'>646</a>
-<a name='L647'></a><a href='#L647'>647</a>
-<a name='L648'></a><a href='#L648'>648</a>
-<a name='L649'></a><a href='#L649'>649</a>
-<a name='L650'></a><a href='#L650'>650</a>
-<a name='L651'></a><a href='#L651'>651</a>
-<a name='L652'></a><a href='#L652'>652</a>
-<a name='L653'></a><a href='#L653'>653</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L647'></a><a href='#L647'>647</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -924,6 +918,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1375x</span>
 <span class="cline-any cline-yes">933x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -956,16 +953,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">156x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1247,7 +1235,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">369x</span>
-<span class="cline-any cline-yes">369x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">396x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1394,9 +1382,9 @@ import type { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation.js";
 &nbsp;
 import { Contrast } from "../common/diagnostic/contrast.js";
-import { contrast } from "../common/expectation/contrast.js";
 &nbsp;
 import { getForeground } from "../common/dom/get-colors.js";
+import { contrast } from "../common/expectation/contrast.js";
 &nbsp;
 import { Scope, Stability, Version } from "../tags/index.js";
 &nbsp;
@@ -1576,6 +1564,9 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
                     device,
                     context,
                   )
+                    // We do need to map through the full array as
+                    // `isDistinguishable` has side effect of registering the
+                    // properties (for the diagnostic).
                     .map((isDistinguishable) =&gt; isDistinguishable(link))
                     .some((distinguishable) =&gt; distinguishable),
               );
@@ -1599,27 +1590,18 @@ export default Rule.Atomic.of&lt;Page, Element&gt;({
                   .flatMap((elementMap) =&gt; elementMap.get(link))
                   .getOrElse(() =&gt; List.empty());
 &nbsp;
+              const diagnostic = ElementDistinguishable.from(
+                link,
+                device,
+                target,
+                context,
+                properties,
+                distinguishableContrast,
+              );
+&nbsp;
               return hasDistinguishableStyle
-                ? Ok.of(
-                    ElementDistinguishable.from(
-                      link,
-                      device,
-                      target,
-                      context,
-                      properties,
-                      distinguishableContrast,
-                    ),
-                  )
-                : Err.of(
-                    ElementDistinguishable.from(
-                      link,
-                      device,
-                      target,
-                      context,
-                      properties,
-                      distinguishableContrast,
-                    ),
-                  );
+                ? Ok.of(diagnostic)
+                : Err.of(diagnostic);
             }),
           )
             .toArray()
@@ -1899,8 +1881,8 @@ namespace Distinguishable {
     context: Context = Context.empty(),
   ): ReadonlyArray&lt;Contrast.Pairing&lt;["container", "link"]&gt;&gt; {
     return getForeground(container, device, context)
-      .map((containerColors) =&gt; [
-        ...Array.flatMap(containerColors, (containerColor) =&gt;
+      .map((containerColors) =&gt;
+        Array.flatMap(containerColors, (containerColor) =&gt;
           getForeground(link, device, context)
             .map((linkColors) =&gt;
               Array.map(linkColors, (linkColor) =&gt;
@@ -1913,7 +1895,7 @@ namespace Distinguishable {
             )
             .getOr([]),
         ),
-      ])
+      )
       .getOr([]);
   }
 &nbsp;
@@ -2026,7 +2008,7 @@ namespace Distinguishable {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T12:00:03.269Z
+                at 2026-02-05T08:55:28.357Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

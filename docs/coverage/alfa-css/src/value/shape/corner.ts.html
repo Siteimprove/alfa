@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.25% </span>
+                <span class="strong">48% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/16</span>
+                <span class='fraction'>12/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35.71% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/14</span>
+                <span class='fraction'>8/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">43.75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/8</span>
+                <span class='fraction'>7/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.25% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/16</span>
+                <span class='fraction'>8/16</span>
             </div>
         
             
@@ -150,32 +150,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">271x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -188,19 +188,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -233,13 +233,13 @@ export namespace Corner {
   export function hasCalculation(corner: Corner): boolean {
     return LengthPercentage.isLengthPercentage(corner)
       ? Value.hasCalculation(corner)
-      : Value.hasCalculation(corner[0] || <span class="branch-1 cbranch-no" title="branch not covered" >Value.hasCalculation(corner[1]))</span>;
+      : Value.hasCalculation(corner[0] || <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Value.hasCalculation(corner[1]))</span></span>;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >resolve(</span>
+  export function resolve(
     resolver: LengthPercentage.Resolver,
   ): (value: Corner) =&gt; Canonical {
-    function <span class="fstat-no" title="function not covered" >resolveAndClamp(</span>
+    function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >resolveAndClamp(</span></span>
       radius: LengthPercentage,
     ): LengthPercentage.Canonical {
       const resolved = <span class="cstat-no" title="statement not covered" >LengthPercentage.resolve(resolver)(radius);</span>
@@ -250,8 +250,8 @@ export namespace Corner {
       );
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(v</span>alue) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      LengthPercentage.isLengthPercentage(value)</span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      LengthPercentage.isLengthPercentage(value)</span></span>
         ? resolveAndClamp(value)
         : [resolveAndClamp(value[0]), resolveAndClamp(value[1])];
   }
@@ -266,7 +266,7 @@ export namespace Corner {
   export function <span class="fstat-no" title="function not covered" >partiallyResolve(</span>
     resolver: LengthPercentage.PartialResolver,
   ): (value: Corner) =&gt; PartiallyResolved {
-    function <span class="fstat-no" title="function not covered" >resolveAndClamp(</span>
+    function <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >resolveAndClamp(</span></span>
       radius: LengthPercentage,
     ): LengthPercentage.PartiallyResolved {
       const resolved = <span class="cstat-no" title="statement not covered" >LengthPercentage.partiallyResolve(resolver)(radius);</span>
@@ -282,8 +282,8 @@ export namespace Corner {
         : LengthPercentage.of(clamped, resolved.unit);
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(v</span>alue) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      LengthPercentage.isLengthPercentage(value)</span>
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(v</span></span>alue) =&gt;</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      LengthPercentage.isLengthPercentage(value)</span></span>
         ? resolveAndClamp(value)
         : [resolveAndClamp(value[0]), resolveAndClamp(value[1])];
   }
@@ -295,7 +295,7 @@ export namespace Corner {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:57:48.339Z
+                at 2026-02-05T08:53:05.184Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.48% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/27</span>
+                <span class='fraction'>26/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/12</span>
+                <span class='fraction'>12/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.47% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>13/17</span>
+                <span class='fraction'>26/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.76% </span>
+                <span class="strong">81.48% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/26</span>
+                <span class='fraction'>22/27</span>
             </div>
         
             
@@ -213,12 +213,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -287,25 +287,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -404,7 +404,7 @@ export class ContainFlags
     return this._flags.paint;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >resolve(</span>): ContainFlags {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >resolve(</span>): ContainFlags {</span>
 <span class="cstat-no" title="statement not covered" >    return this;</span>
   }
 &nbsp;
@@ -412,17 +412,17 @@ export class ContainFlags
     return value instanceof ContainFlags &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >value._flags.equals(this._flags);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeNumber(this._flags.value);</span>
   }
 &nbsp;
   public toJSON(): ContainFlags.JSON {
-    const { size, inlineSize, layout, style, paint } = this;
+    const { size, inlineSize, layout, style, paint } = <span class="cstat-no" title="statement not covered" >this;</span>
 &nbsp;
     return { ...super.toJSON(), size, inlineSize, layout, style, paint };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return this._flags.toString();</span>
   }
 }
@@ -430,7 +430,7 @@ export class ContainFlags
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >ContainFlags {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >ContainFlags {</span></span>
   export interface JSON extends Value.JSON&lt;"contain-flags"&gt; {
     size: boolean;
     inlineSize: boolean;
@@ -439,7 +439,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
     paint: boolean;
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isContainFlags(</span>value: unknown): value is ContainFlags {
+  export function isContainFlags(value: unknown): value is ContainFlags {
 <span class="cstat-no" title="statement not covered" >    return value instanceof ContainFlags;</span>
   }
 &nbsp;
@@ -472,7 +472,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
       }
 &nbsp;
       return Result.of(
-        ContainFlags.of(CFlags.of(...flags.map((flag) =&gt; flag?.value ?? <span class="branch-1 cbranch-no" title="branch not covered" >0)</span>)),
+        ContainFlags.of(CFlags.of(...flags.map((flag) =&gt; flag?.value ?? <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >0)</span></span>)),
       );
     },
   );
@@ -484,7 +484,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:57:48.339Z
+                at 2026-02-05T08:53:05.184Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

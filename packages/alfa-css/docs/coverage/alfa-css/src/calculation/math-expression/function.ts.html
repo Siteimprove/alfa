@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.95% </span>
+                <span class="strong">87.3% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>40/46</span>
+                <span class='fraction'>55/63</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>15/20</span>
+                <span class='fraction'>20/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">76.92% </span>
+                <span class="strong">79.54% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>20/26</span>
+                <span class='fraction'>35/44</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.8% </span>
+                <span class="strong">88.09% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>36/41</span>
+                <span class='fraction'>37/42</span>
             </div>
         
             
@@ -257,10 +257,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">38x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -301,17 +301,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">51x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">38x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">484x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -336,17 +336,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
+<span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -461,7 +461,7 @@ export abstract class Function&lt;
     this._kind = kind;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >args(</span>): Readonly&lt;A&gt; {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >args(</span>): Readonly&lt;A&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return this._args;</span>
   }
 &nbsp;
@@ -469,13 +469,13 @@ export abstract class Function&lt;
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Function &amp;&amp;
       value.type === this.type &amp;&amp;
       value._args.length === this._args.length &amp;&amp;
-      value._args.every(<span class="fstat-no" title="function not covered" >(a</span>rg: Expression, i: number) =&gt;
-<span class="cstat-no" title="statement not covered" >        arg.equals(this._args[i]),</span>
+      value._args.every(<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >(a</span></span>rg: Expression, i: number) =&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >        arg.equals(this._args[i]),</span></span>
       )
     );
   }
@@ -488,7 +488,7 @@ export abstract class Function&lt;
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Function {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Function {</span></span>
   export interface JSON&lt;T extends string = string&gt; extends Expression.JSON&lt;T&gt; {
     arguments: Array&lt;Expression.JSON&gt;;
   }
@@ -518,7 +518,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
     }
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isCalculation(</span>value: unknown): value is Calculation {
+  export function isCalculation(value: unknown): value is Calculation {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Calculation;</span>
   }
 &nbsp;
@@ -604,7 +604,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
       return new Max(reduced as [Expression, ...Array&lt;Expression&gt;], this._kind);
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+    public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >      return `max(${this._args.map(<span class="fstat-no" title="function not covered" >(e</span>xpr) =&gt; <span class="cstat-no" title="statement not covered" >expr.toString())</span>.join(", ")})`;</span>
     }
   }
@@ -616,7 +616,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >F
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:58:16.177Z
+                at 2026-02-05T08:53:37.113Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

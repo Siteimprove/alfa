@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">60.86% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/18</span>
+                <span class='fraction'>14/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">20% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>2/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.46% </span>
+                <span class="strong">46.15% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/13</span>
+                <span class='fraction'>12/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">57.89% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/18</span>
+                <span class='fraction'>11/19</span>
             </div>
         
             
@@ -227,7 +227,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -307,18 +307,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -330,11 +324,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -351,7 +351,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -403,22 +403,22 @@ export class Circle&lt;R extends Radius = Radius, P extends Position = Position&
     this._center = center;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >radius(</span>): R {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >radius(</span>): R {</span>
 <span class="cstat-no" title="statement not covered" >    return this._radius;</span>
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >center(</span>): P {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >center(</span>): P {</span>
 <span class="cstat-no" title="statement not covered" >    return this._center;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >resolve(</span>resolver: Circle.Resolver): Circle.Canonical {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >resolve(</span>r</span>esolver: Circle.Resolver): Circle.Canonical {
 <span class="cstat-no" title="statement not covered" >    return new Circle(</span>
       this._radius.resolve(resolver),
       this._center.resolve(resolver),
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >partiallyResolve(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >partiallyResolve(</span></span>
     resolver: Circle.PartialResolver,
   ): Circle.PartiallyResolved {
 <span class="cstat-no" title="statement not covered" >    return new Circle(</span>
@@ -431,15 +431,15 @@ export class Circle&lt;R extends Radius = Radius, P extends Position = Position&
 &nbsp;
   public equals(value: unknown): value is this;
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): boolean {
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >    return (</span></span>
       value instanceof Circle &amp;&amp;
       value._radius.equals(this._radius) &amp;&amp;
       value._center.equals(this._center)
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash) {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash) {
 <span class="cstat-no" title="statement not covered" >    hash.writeHashable(this._radius).writeHashable(this._center);</span>
   }
 &nbsp;
@@ -451,7 +451,7 @@ export class Circle&lt;R extends Radius = Radius, P extends Position = Position&
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `circle(${this._radius.toString()} at ${this._center.toString()})`;</span>
   }
 }
@@ -459,7 +459,7 @@ export class Circle&lt;R extends Radius = Radius, P extends Position = Position&
 /**
  * @public
  */
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Circle {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Circle {</span></span>
   export type Canonical = Circle&lt;Radius.Canonical, Position.Canonical&gt;;
 &nbsp;
   export type PartiallyResolved = Circle&lt;
@@ -477,7 +477,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
   export type PartialResolver = Radius.PartialResolver &amp;
     Position.PartialResolver;
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isCircle(</span>value: unknown): value is Circle {
+  export function isCircle(value: unknown): value is Circle {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Circle;</span>
   }
 &nbsp;
@@ -511,7 +511,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >C
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:57:48.339Z
+                at 2026-02-05T08:53:05.184Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

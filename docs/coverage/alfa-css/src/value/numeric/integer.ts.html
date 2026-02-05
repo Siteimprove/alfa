@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">67.85% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/28</span>
+                <span class='fraction'>27/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/10</span>
+                <span class='fraction'>8/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>11/20</span>
+                <span class='fraction'>34/40</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -260,7 +260,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -274,13 +274,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -330,7 +330,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -390,15 +390,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -408,7 +408,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">271x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">30x</span>
@@ -420,7 +420,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -488,7 +488,7 @@ export namespace Integer {
       );
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >partiallyResolve(</span>resolver?: Numeric.GenericResolver): Canonical {
+    public <span class="fstat-no" title="function not covered" >partiallyResolve(r</span>esolver?: Numeric.GenericResolver): Canonical {
 <span class="cstat-no" title="statement not covered" >      return this.resolve(resolver);</span>
     }
 &nbsp;
@@ -496,7 +496,7 @@ export namespace Integer {
       return value instanceof Calculated &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >super.equals(value);</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toJSON(</span>): Calculated.JSON {
+    public <span class="fstat-no" title="function not covered" >toJSON(): Calculated.JSON {</span>
 <span class="cstat-no" title="statement not covered" >      return super.toJSON();</span>
     }
   }
@@ -536,18 +536,18 @@ export namespace Integer {
       return this;
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >partiallyResolve(</span>): this {
+    public <span class="fstat-no" title="function not covered" >partiallyResolve(): this {</span>
 <span class="cstat-no" title="statement not covered" >      return this;</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >scale(</span>factor: number): Fixed {
+    public <span class="fstat-no" title="function not covered" >scale(f</span>actor: number): Fixed {
 <span class="cstat-no" title="statement not covered" >      return new Fixed(this._value * factor);</span>
     }
 &nbsp;
     /**
      * @internal
      */
-    public <span class="fstat-no" title="function not covered" >toBase(</span>): BaseInteger {
+    public <span class="fstat-no" title="function not covered" >toBase(): BaseInteger {</span>
 <span class="cstat-no" title="statement not covered" >      return BaseInteger.of(this._value);</span>
     }
 &nbsp;
@@ -555,7 +555,7 @@ export namespace Integer {
       return value instanceof Fixed &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >super.equals(value);</span>
     }
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+    public <span class="fstat-no" title="function not covered" >hash(h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >      hash.writeInt32(this._value);</span>
     }
 &nbsp;
@@ -571,15 +571,15 @@ export namespace Integer {
     export interface JSON extends Numeric.Fixed.JSON&lt;"integer"&gt; {}
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isCalculated(</span>value: unknown): value is Calculated {
+  export function isCalculated(value: unknown): value is Calculated {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Calculated;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isFixed(</span>value: unknown): value is Fixed {
+  export function isFixed(value: unknown): value is Fixed {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Fixed;</span>
   }
 &nbsp;
-  export function <span class="fstat-no" title="function not covered" >isInteger(</span>value: unknown): value is Integer {
+  export function isInteger(value: unknown): value is Integer {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Calculated || value instanceof Fixed;</span>
   }
 &nbsp;
@@ -613,7 +613,7 @@ export namespace Integer {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:57:48.339Z
+                at 2026-02-05T08:53:05.184Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/13</span>
+                <span class='fraction'>9/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/10</span>
+                <span class='fraction'>8/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/13</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
@@ -159,7 +159,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -215,12 +215,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -233,7 +230,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">272x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Hash } from "@siteimprove/alfa-hash";
 &nbsp;
@@ -267,15 +267,15 @@ export class Hint&lt;P extends LengthPercentage = LengthPercentage&gt;
     this._position = position;
   }
 &nbsp;
-  public get <span class="fstat-no" title="function not covered" >position(</span>): P {
+  public get <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >position(</span>): P {</span>
 <span class="cstat-no" title="statement not covered" >    return this._position;</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >resolve(</span>resolver: Hint.Resolver): Hint.Canonical {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >resolve(</span>r</span>esolver: Hint.Resolver): Hint.Canonical {
 <span class="cstat-no" title="statement not covered" >    return new Hint(LengthPercentage.resolve(resolver)(this._position));</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >partiallyResolve(</span>
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >partiallyResolve(</span></span>
     resolver: Hint.PartialResolver,
   ): Hint.PartiallyResolved {
 <span class="cstat-no" title="statement not covered" >    return new Hint(</span>
@@ -283,11 +283,11 @@ export class Hint&lt;P extends LengthPercentage = LengthPercentage&gt;
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >equals(</span>value: unknown): value is this {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >equals(</span>v</span>alue: unknown): value is this {
 <span class="cstat-no" title="statement not covered" >    return value instanceof Hint &amp;&amp; value._position.equals(this._position);</span>
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >hash(</span>hash: Hash): void {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >hash(</span>h</span>ash: Hash): void {
 <span class="cstat-no" title="statement not covered" >    hash.writeHashable(this._position);</span>
   }
 &nbsp;
@@ -298,12 +298,12 @@ export class Hint&lt;P extends LengthPercentage = LengthPercentage&gt;
     };
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >toString(</span>): string {
+  public <span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >toString(</span>): string {</span>
 <span class="cstat-no" title="statement not covered" >    return `${this._position}`;</span>
   }
 }
 &nbsp;
-export namespace <span class="branch-1 cbranch-no" title="branch not covered" >Hint {</span>
+export namespace <span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" >Hint {</span></span>
   export type Canonical = Hint&lt;LengthPercentage.Canonical&gt;;
 &nbsp;
   export type PartiallyResolved = Hint&lt;LengthPercentage.PartiallyResolved&gt;;
@@ -328,7 +328,7 @@ export namespace <span class="branch-1 cbranch-no" title="branch not covered" >H
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:57:48.339Z
+                at 2026-02-05T08:53:05.184Z
             </div>
         <script src="../../../../../../prettify.js"></script>
         <script>

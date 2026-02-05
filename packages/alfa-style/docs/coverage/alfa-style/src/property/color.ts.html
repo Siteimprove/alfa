@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -84,7 +84,22 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -100,30 +115,60 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">53x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Color } from "@siteimprove/alfa-css";
+<span class="cline-any cline-yes">70x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Color, System } from "@siteimprove/alfa-css";
+import { Selective } from "@siteimprove/alfa-selective";
 &nbsp;
 import { Longhand } from "../longhand.js";
-import { Resolver } from "../resolver.js";
+import type { Style } from "../style.js";
+import type { Value } from "../value.js";
 &nbsp;
 type Specified = Color;
 &nbsp;
-type Computed = Color.Canonical;
+type Computed = Color.PartiallyResolved;
+&nbsp;
+type Used = Color.Canonical;
 &nbsp;
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/color}
  * @internal
  */
-export default Longhand.of&lt;Specified, Computed&gt;(
-  Color.system("canvastext"),
+export default Longhand.of&lt;Specified, Computed, Used&gt;(
+  Color.partiallyResolve(Color.system("canvastext")),
   Color.parse,
-<span class="fstat-no" title="function not covered" >  (v</span>alue, style) =&gt; <span class="cstat-no" title="statement not covered" >value.resolve(Resolver.length(style)),</span>
+<span class="fstat-no" title="function not covered" >  (v</span>alue) =&gt; <span class="cstat-no" title="statement not covered" >value.map(Color.partiallyResolve),</span>
   {
     inherits: true,
+    // We need to delay the call to `style.parent` to avoid infinite recursion
+    // at the top of the tree with the empty style. Hence, we break down the
+    // resolution instead of calling `Resolver.color`.
+    use: <span class="fstat-no" title="function not covered" >(v</span>alue: Value&lt;Computed&gt;, style: Style): Value&lt;Used&gt; =&gt;
+<span class="cstat-no" title="statement not covered" >      value.map((computed) =&gt;</span>
+        Selective.of(computed)
+          .if(Color.isCSS4Color, (color) =&gt; color)
+          .if(Color.isSystem, System.resolve)
+          .else(() =&gt; style.parent.used("color").value)
+          .get(),
+      ),
   },
 );
 &nbsp;</pre></td></tr></table></pre>
@@ -133,7 +178,7 @@ export default Longhand.of&lt;Specified, Computed&gt;(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-21T11:59:55.187Z
+                at 2026-02-05T08:55:24.020Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
