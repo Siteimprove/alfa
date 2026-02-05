@@ -2,13 +2,12 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Color, CSS4Color } from "@siteimprove/alfa-css";
 import type { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Err, Result } from "@siteimprove/alfa-result";
+import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
-import { ColorError, ColorErrors } from "./color-error.js";
+import { ColorErrors } from "./color-error.js";
 import { getBackground } from "./get-background.js";
 
 const { isElement } = Element;
