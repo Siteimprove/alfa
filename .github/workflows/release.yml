@@ -26,7 +26,6 @@ jobs:
           coverage: true
           coverage-url: ${{ secrets.COVERAGE_API_URL }}
           coverage-api-key: ${{ secrets.COVERAGE_API_KEY }}
-          many-graphs: true
           publish: true
           npm-publish: true
           token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
