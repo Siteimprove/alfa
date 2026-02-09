@@ -789,27 +789,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdn/browser-compat-data@npm:^7.3.0":
-  version: 7.3.0
-  resolution: "@mdn/browser-compat-data@npm:7.3.0"
-  checksum: 10c0/95b75bae6d4934889e2bda055744e6aa9421fef1a0949ee806fd9674331b126a59598bc0170bbc826e151add39c66dc6ebdac323e06b354fbbc889ad4fd80e05
+"@mdn/browser-compat-data@npm:^7.3.1":
+  version: 7.3.1
+  resolution: "@mdn/browser-compat-data@npm:7.3.1"
+  checksum: 10c0/1265a4169d934576d810a1ab3314982f88f05583ccc64d1156169a9bea54f42a011c34ea9e4e24546604c1899226ab6f22035b9c22df75b9030ed581c4959b9d
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.28.6":
-  version: 7.28.6
-  resolution: "@microsoft/api-documenter@npm:7.28.6"
+"@microsoft/api-documenter@npm:^7.28.9":
+  version: 7.28.9
+  resolution: "@microsoft/api-documenter@npm:7.28.9"
   dependencies:
     "@microsoft/api-extractor-model": "npm:7.32.2"
     "@microsoft/tsdoc": "npm:~0.16.0"
     "@rushstack/node-core-library": "npm:5.19.1"
     "@rushstack/terminal": "npm:0.21.0"
-    "@rushstack/ts-command-line": "npm:5.1.7"
+    "@rushstack/ts-command-line": "npm:5.2.0"
     js-yaml: "npm:~4.1.0"
     resolve: "npm:~1.22.1"
   bin:
     api-documenter: bin/api-documenter
-  checksum: 10c0/60205e7491b05b5c7e788b740e89cd589b6a3abcbc01f511b240d697dd30a14c5802e34519c736abdaa74afb62ea6346dcbb627c30aab3fa381b792b2a425c71
+  checksum: 10c0/f28022a586b87feb6d52ec0ae979e5fa355679ab25bf72405dfc2640365a49cbe76fb81952dd1ee59a177dae10dc285c6e3b96258cb0a1ef9e8ff91f98c4bd12
   languageName: node
   linkType: hard
 
@@ -1105,9 +1105,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@puppeteer/browsers@npm:2.11.2":
-  version: 2.11.2
-  resolution: "@puppeteer/browsers@npm:2.11.2"
+"@puppeteer/browsers@npm:2.12.0":
+  version: 2.12.0
+  resolution: "@puppeteer/browsers@npm:2.12.0"
   dependencies:
     debug: "npm:^4.4.3"
     extract-zip: "npm:^2.0.1"
@@ -1118,7 +1118,7 @@ __metadata:
     yargs: "npm:^17.7.2"
   bin:
     browsers: lib/cjs/main-cli.js
-  checksum: 10c0/8e52b3887f91d759e1c5f330ca449c5b1e3a43ea12f707668b30b32a9118a62039064a82465da2ed60f6327df92be8bf3f7dbe5b472ee7b63c68b81c097a20d8
+  checksum: 10c0/1895591d9acbdd7b20f971be9678f2f84148e6290c0407b0dfd7e5482fd668402dc1d25831374bf16a473f0dc97f5dcc9784f8e9a4e05fd86f3b44b640295571
   languageName: node
   linkType: hard
 
@@ -1383,15 +1383,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/ts-command-line@npm:5.1.7":
-  version: 5.1.7
-  resolution: "@rushstack/ts-command-line@npm:5.1.7"
+"@rushstack/ts-command-line@npm:5.2.0":
+  version: 5.2.0
+  resolution: "@rushstack/ts-command-line@npm:5.2.0"
   dependencies:
     "@rushstack/terminal": "npm:0.21.0"
     "@types/argparse": "npm:1.0.38"
     argparse: "npm:~1.0.9"
     string-argv: "npm:~0.3.1"
-  checksum: 10c0/5ec13fcde7fe66ea0af6dac78908c9887810044656269c296db0c4311b703aa73ee7b4d5ace00c51062598da936f94695ce0d5caec0d1c0c6022040d335b77ac
+  checksum: 10c0/0b8b9ce38ebe0104739e2b67f0b4c75dae6f9bedda3cd95bddc7068c618e7c5945d383baa7b4cc5d88fe2662e6f8402cfd2bef060f0c846b2f37abe6d4bf600a
   languageName: node
   linkType: hard
 
@@ -1478,7 +1478,7 @@ __metadata:
     "@siteimprove/alfa-thunk": "workspace:^"
     "@siteimprove/alfa-tree": "workspace:^"
     prettier: "npm:^3.8.1"
-    puppeteer: "npm:^24.36.1"
+    puppeteer: "npm:^24.37.2"
   languageName: unknown
   linkType: soft
 
@@ -1616,7 +1616,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-compatibility@workspace:packages/alfa-compatibility"
   dependencies:
-    "@mdn/browser-compat-data": "npm:^7.3.0"
+    "@mdn/browser-compat-data": "npm:^7.3.1"
     "@siteimprove/alfa-iterable": "workspace:^"
     "@siteimprove/alfa-json": "workspace:^"
     browserslist: "npm:^4.28.1"
@@ -1915,7 +1915,7 @@ __metadata:
     "@siteimprove/alfa-result": "workspace:^"
     "@siteimprove/alfa-slice": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
-    axios: "npm:^1.13.4"
+    axios: "npm:^1.13.5"
     prettier: "npm:^3.8.1"
   languageName: unknown
   linkType: soft
@@ -2472,7 +2472,7 @@ __metadata:
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
     "@siteimprove/alfa-rng": "workspace:^"
-    "@types/node": "npm:^25.2.0"
+    "@types/node": "npm:^25.2.2"
     vitest: "npm:^4.0.18"
   languageName: unknown
   linkType: soft
@@ -2527,14 +2527,14 @@ __metadata:
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@svitejs/changesets-changelog-github-compact": "npm:^1.1.0"
-    "@ts-graphviz/adapter": "npm:^3.0.5"
+    "@ts-graphviz/adapter": "npm:^3.0.6"
     "@types/madge": "npm:^5.0.3"
-    axios: "npm:^1.13.4"
+    axios: "npm:^1.13.5"
     json-stringify-pretty-compact: "npm:^4.0.0"
     madge: "npm:^8.0.0"
     resolve-from: "npm:^5.0.0"
     simple-git: "npm:^3.30.0"
-    ts-graphviz: "npm:^3.0.6"
+    ts-graphviz: "npm:^3.0.7"
   bin:
     alfa-changelog: dist/changeset/changelog-global.js
     create-alfa-package: dist/create-alfa-package.js
@@ -2632,7 +2632,7 @@ __metadata:
     "@siteimprove/alfa-predicate": "workspace:^"
     "@siteimprove/alfa-refinement": "workspace:^"
     prettier: "npm:^3.8.1"
-    puppeteer: "npm:^24.36.1"
+    puppeteer: "npm:^24.37.2"
   languageName: unknown
   linkType: soft
 
@@ -2677,12 +2677,12 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.29.8"
-    "@microsoft/api-documenter": "npm:^7.28.6"
+    "@microsoft/api-documenter": "npm:^7.28.9"
     "@microsoft/api-extractor": "npm:^7.52.10"
     "@siteimprove/alfa-toolchain": "workspace:^0.110.0"
-    "@types/node": "npm:^25.2.0"
+    "@types/node": "npm:^25.2.2"
     "@vitest/coverage-v8": "npm:^4.0.18"
-    knip: "npm:^5.82.1"
+    knip: "npm:^5.83.1"
     minimist: "npm:^1.2.6"
     prettier: "npm:^3.8.1"
     typescript: "npm:^5.9.3"
@@ -2723,12 +2723,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/adapter@npm:^3.0.5":
-  version: 3.0.5
-  resolution: "@ts-graphviz/adapter@npm:3.0.5"
+"@ts-graphviz/adapter@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@ts-graphviz/adapter@npm:3.0.6"
   dependencies:
-    "@ts-graphviz/common": "npm:^3.0.4"
-  checksum: 10c0/fc0e53d4541cd22953f2f845fb9839f4b2f4f57fbb80c6355e9cb35509d55f272a478921248c1bddaf3f965523e00ef29c42c24a653d3402722f24ca4fb33b36
+    "@ts-graphviz/common": "npm:^3.0.5"
+  checksum: 10c0/327d083a195c8b5b8cefa089431ce7836f521498f207708e644a717bbbf542779f2ab672635745df5edd5b6e7fbd695ae4ba4a31fc42ac9f997616c82cad7586
   languageName: node
   linkType: hard
 
@@ -2741,12 +2741,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/ast@npm:^3.0.5":
-  version: 3.0.5
-  resolution: "@ts-graphviz/ast@npm:3.0.5"
+"@ts-graphviz/ast@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@ts-graphviz/ast@npm:3.0.6"
   dependencies:
-    "@ts-graphviz/common": "npm:^3.0.4"
-  checksum: 10c0/8d486ab5fcc98250520ff0537ce1e257a2b56892046b6ae7b96ed1c2b55231585fdc6d73f7eee172469a2ddb532f114d731f315f2e5f7fdf50b9dbc2c7ba58d4
+    "@ts-graphviz/common": "npm:^3.0.5"
+  checksum: 10c0/dbd69086e22cf479c3a0597cf8649b393fa82a75cb2894d4d4b09cf62acdb198ede91a81cbf122306a4592726f1cf6f924f92fb3664b20461710318a14665987
   languageName: node
   linkType: hard
 
@@ -2757,10 +2757,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/common@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "@ts-graphviz/common@npm:3.0.4"
-  checksum: 10c0/fca7d12062a0c1d34c3e69f55cb5a6f80c69eac16316fd56615d0611f0610d7880a61d9eccf22a930e27bb12923a84970a32aafb8cf13d5d7e78692ddb20fed8
+"@ts-graphviz/common@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@ts-graphviz/common@npm:3.0.5"
+  checksum: 10c0/a285366bb1244583bac9b46c1a1399602369bd28cc90650001393d9974944c7094727d607a927b0e2209b0e0a5837dedc28415462f16563b889d947c5d54de38
   languageName: node
   linkType: hard
 
@@ -2774,13 +2774,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/core@npm:^3.0.6":
-  version: 3.0.6
-  resolution: "@ts-graphviz/core@npm:3.0.6"
+"@ts-graphviz/core@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "@ts-graphviz/core@npm:3.0.7"
   dependencies:
-    "@ts-graphviz/ast": "npm:^3.0.5"
-    "@ts-graphviz/common": "npm:^3.0.4"
-  checksum: 10c0/b9e620690b06d4d4e705dc7fbd633aa5b5a11e36d66ae9e1d6bb07bdccd032ecb1be6f325cb17a05223fab0b3330c628d9273a0cb55ae62b8a0d029d1a40f2c5
+    "@ts-graphviz/ast": "npm:^3.0.6"
+    "@ts-graphviz/common": "npm:^3.0.5"
+  checksum: 10c0/30dada8e8042c68b63d310d3c80db440e2000c009584c8084c8104d7949b39a0b9b205ba0e7bf5a542c8b02be332fadec0ccf9d1290668114ebbd21dd26cc385
   languageName: node
   linkType: hard
 
@@ -2843,12 +2843,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^25.2.0":
-  version: 25.2.0
-  resolution: "@types/node@npm:25.2.0"
+"@types/node@npm:*, @types/node@npm:^25.2.2":
+  version: 25.2.2
+  resolution: "@types/node@npm:25.2.2"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/89559ea0de5c8c2da051b384f2cd3161012446816e05d18841838f814e57eb1865f000622e903f08d14f5242736063ed4003a4a359730fdd367e35e2122a8fce
+  checksum: 10c0/45aa45b00df0aac4712c2d6e934a6ed21ac54e0284dd726df1c7620b8c7d36a4fb601b9f8fe1d2951298d1ee7618cf8275688e329c295eb36e8b8fa827a8e334
   languageName: node
   linkType: hard
 
@@ -3263,14 +3263,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.13.4":
-  version: 1.13.4
-  resolution: "axios@npm:1.13.4"
+"axios@npm:^1.13.5":
+  version: 1.13.5
+  resolution: "axios@npm:1.13.5"
   dependencies:
-    follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.4"
+    follow-redirects: "npm:^1.15.11"
+    form-data: "npm:^4.0.5"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/474c00b7d71f4de4ad562589dae6b615149df7c2583bbc5ebba96229f3f85bfb0775d23705338df072f12e48d3e85685c065a3cf6855d58968a672d19214c728
+  checksum: 10c0/abf468c34f2d145f3dc7dbc0f1be67e520630624307bda69a41bbe8d386bd672d87b4405c4ee77f9ff54b235ab02f96a9968fb00e75b13ce64706e352a3068fd
   languageName: node
   linkType: hard
 
@@ -3526,15 +3526,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromium-bidi@npm:13.0.1":
-  version: 13.0.1
-  resolution: "chromium-bidi@npm:13.0.1"
+"chromium-bidi@npm:13.1.1":
+  version: 13.1.1
+  resolution: "chromium-bidi@npm:13.1.1"
   dependencies:
     mitt: "npm:^3.0.1"
     zod: "npm:^3.24.1"
   peerDependencies:
     devtools-protocol: "*"
-  checksum: 10c0/3841fb1c6e6ec836e8d796a8b8bb81381fed6f486101cb42f7a6531c6d3cc7f5cbb9696356aba01ba701b5bb84caf2b2363a6f8f9e086fd7ee0c902d91ec2477
+  checksum: 10c0/50f5fea90a61c8995b53e1e55179f3064033552a076349cf1ded8417c17c0e736851ccb0af5c22a2c4bd85b8523afd0e9725a6d0d2e6e7400aeb1eded2e6deba
   languageName: node
   linkType: hard
 
@@ -3889,10 +3889,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devtools-protocol@npm:0.0.1551306":
-  version: 0.0.1551306
-  resolution: "devtools-protocol@npm:0.0.1551306"
-  checksum: 10c0/b38b0aaf21675a8c2ccaa213d9dfb2f8314b2408592e5817758bbf4c55d844b29eb390a9086812a5a11851f41501cedf0b43914aef7b67ef53cd241c9732a188
+"devtools-protocol@npm:0.0.1566079":
+  version: 0.0.1566079
+  resolution: "devtools-protocol@npm:0.0.1566079"
+  checksum: 10c0/a220a0a408df35efe118249d822d7b79874a1374b4eba0d59473a3d98623c7d0159f9833541086eeaa0da18f92e450b1c099cdbc6525277e804e2571cd530b8a
   languageName: node
   linkType: hard
 
@@ -4377,13 +4377,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.6":
-  version: 1.15.9
-  resolution: "follow-redirects@npm:1.15.9"
+"follow-redirects@npm:^1.15.11":
+  version: 1.15.11
+  resolution: "follow-redirects@npm:1.15.11"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 10c0/5829165bd112c3c0e82be6c15b1a58fa9dcfaede3b3c54697a82fe4a62dd5ae5e8222956b448d2f98e331525f05d00404aba7d696de9e761ef6e42fdc780244f
+  checksum: 10c0/d301f430542520a54058d4aeeb453233c564aaccac835d29d15e050beb33f339ad67d9bddbce01739c5dc46a6716dbe3d9d0d5134b1ca203effa11a7ef092343
   languageName: node
   linkType: hard
 
@@ -4397,16 +4397,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.4":
-  version: 4.0.4
-  resolution: "form-data@npm:4.0.4"
+"form-data@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "form-data@npm:4.0.5"
   dependencies:
     asynckit: "npm:^0.4.0"
     combined-stream: "npm:^1.0.8"
     es-set-tostringtag: "npm:^2.1.0"
     hasown: "npm:^2.0.2"
     mime-types: "npm:^2.1.12"
-  checksum: 10c0/373525a9a034b9d57073e55eab79e501a714ffac02e7a9b01be1c820780652b16e4101819785e1e18f8d98f0aee866cc654d660a435c378e16a72f2e7cac9695
+  checksum: 10c0/dd6b767ee0bbd6d84039db12a0fa5a2028160ffbfaba1800695713b46ae974a5f6e08b3356c3195137f8530dcd9dfcb5d5ae1eeff53d0db1e5aad863b619ce3b
   languageName: node
   linkType: hard
 
@@ -5134,9 +5134,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^5.82.1":
-  version: 5.82.1
-  resolution: "knip@npm:5.82.1"
+"knip@npm:^5.83.1":
+  version: 5.83.1
+  resolution: "knip@npm:5.83.1"
   dependencies:
     "@nodelib/fs.walk": "npm:^1.2.3"
     fast-glob: "npm:^3.3.3"
@@ -5156,7 +5156,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10c0/c3bfe898fe3103bb6a59ee2ba4297f05ea4d2db474571db89ae199ebbd74eafa5061d05b3bc2c75e4ec2322ba7ffee44493c76132d3d8991fae66ba742b9ccb4
+  checksum: 10c0/94efd7f4fc3a1c12baca7f1974cbfc7340836a521ed79e962aba89e8720ea374c8bf90462144512555bb891ca398f9ce496963fdda9f4eae4a91a7edf30b42c3
   languageName: node
   linkType: hard
 
@@ -6086,34 +6086,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:24.36.1":
-  version: 24.36.1
-  resolution: "puppeteer-core@npm:24.36.1"
+"puppeteer-core@npm:24.37.2":
+  version: 24.37.2
+  resolution: "puppeteer-core@npm:24.37.2"
   dependencies:
-    "@puppeteer/browsers": "npm:2.11.2"
-    chromium-bidi: "npm:13.0.1"
+    "@puppeteer/browsers": "npm:2.12.0"
+    chromium-bidi: "npm:13.1.1"
     debug: "npm:^4.4.3"
-    devtools-protocol: "npm:0.0.1551306"
+    devtools-protocol: "npm:0.0.1566079"
     typed-query-selector: "npm:^2.12.0"
     webdriver-bidi-protocol: "npm:0.4.0"
     ws: "npm:^8.19.0"
-  checksum: 10c0/78f2f93bb2d7ada27cb03ea878541071b0fc5bd5e2026611a6f446df30bf009a5d1c30c6feccf5ce3960bf8b48b11e244f34f30198cabccc08cf758b4d115241
+  checksum: 10c0/2effc9783f119acfd59a66ec66dc027ca9c601a05081e038ad29ac51e2bebb85d5c0aa70919b11f752c08d900f4b6573db5e7433a5d46f5633e31a99d72526de
   languageName: node
   linkType: hard
 
-"puppeteer@npm:^24.36.1":
-  version: 24.36.1
-  resolution: "puppeteer@npm:24.36.1"
+"puppeteer@npm:^24.37.2":
+  version: 24.37.2
+  resolution: "puppeteer@npm:24.37.2"
   dependencies:
-    "@puppeteer/browsers": "npm:2.11.2"
-    chromium-bidi: "npm:13.0.1"
+    "@puppeteer/browsers": "npm:2.12.0"
+    chromium-bidi: "npm:13.1.1"
     cosmiconfig: "npm:^9.0.0"
-    devtools-protocol: "npm:0.0.1551306"
-    puppeteer-core: "npm:24.36.1"
+    devtools-protocol: "npm:0.0.1566079"
+    puppeteer-core: "npm:24.37.2"
     typed-query-selector: "npm:^2.12.0"
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: 10c0/9286b611598f93970f1832b59b0836bcc22437eeca373db6626ae08c50d546d7fc7776a109b007bf044aace2724c70a2d8939e59aa7904efe8eab8cb8e85707b
+  checksum: 10c0/813c39cdf6aee37a5aa1292a7d941346b89fcb65cd42eccadb0f801027762d0c44ebc06ee246e10634d3574ebf78b087079e4047a445eab931888aa38cc53b3b
   languageName: node
   linkType: hard
 
@@ -6912,15 +6912,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-graphviz@npm:^3.0.6":
-  version: 3.0.6
-  resolution: "ts-graphviz@npm:3.0.6"
+"ts-graphviz@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "ts-graphviz@npm:3.0.7"
   dependencies:
-    "@ts-graphviz/adapter": "npm:^3.0.5"
-    "@ts-graphviz/ast": "npm:^3.0.5"
-    "@ts-graphviz/common": "npm:^3.0.4"
-    "@ts-graphviz/core": "npm:^3.0.6"
-  checksum: 10c0/16241247edceeaa35759b06e7deac2729ee1a5e8e2c7de0f3c3fc6a1875246bb2d2da28440026e97ba90943e6e4d58a488e7319b00a8e92c0ba4df1521047f8d
+    "@ts-graphviz/adapter": "npm:^3.0.6"
+    "@ts-graphviz/ast": "npm:^3.0.6"
+    "@ts-graphviz/common": "npm:^3.0.5"
+    "@ts-graphviz/core": "npm:^3.0.7"
+  checksum: 10c0/c22065e26e05e873a973275f6662b191a91528042771c7d97a025fa181177c367d6497dbaf6c6e6c4c968416bb4f18c6e61bc73d232e8bf97563dd21b25f024c
   languageName: node
   linkType: hard
 
