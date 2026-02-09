@@ -1,13 +1,5 @@
 name: Generate coverage data
 
-inputs:
-  url:
-    description: "The URL of the coverage API endpoint"
-    required: false
-  api-key:
-    description: "The API key to authenticate with the coverage API"
-    required: false
-
 runs:
   using: composite
   steps:
@@ -27,13 +19,6 @@ runs:
     - name: Generate global coverage report
       shell: bash
       run: yarn coverage
-
-    - name: Upload global coverage report
-      shell: bash
-      run: yarn upload-coverage-report ${{ github.workspace }}
-      env:
-        COVERAGE_API_URL: ${{ inputs.url }}
-        COVERAGE_API_KEY: ${{ inputs.api-key }}
 
     - name: Generate individual coverage reports
       shell: bash
