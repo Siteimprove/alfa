@@ -1917,7 +1917,7 @@ __metadata:
     "@siteimprove/alfa-result": "workspace:^"
     "@siteimprove/alfa-slice": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
-    axios: "npm:^1.13.4"
+    axios: "npm:^1.13.5"
     prettier: "npm:^3.8.1"
   languageName: unknown
   linkType: soft
@@ -2529,14 +2529,14 @@ __metadata:
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@svitejs/changesets-changelog-github-compact": "npm:^1.1.0"
-    "@ts-graphviz/adapter": "npm:^3.0.5"
+    "@ts-graphviz/adapter": "npm:^3.0.6"
     "@types/madge": "npm:^5.0.3"
-    axios: "npm:^1.13.4"
+    axios: "npm:^1.13.5"
     json-stringify-pretty-compact: "npm:^4.0.0"
     madge: "npm:^8.0.0"
     resolve-from: "npm:^5.0.0"
     simple-git: "npm:^3.30.0"
-    ts-graphviz: "npm:^3.0.6"
+    ts-graphviz: "npm:^3.0.7"
   bin:
     alfa-changelog: dist/changeset/changelog-global.js
     create-alfa-package: dist/create-alfa-package.js
@@ -2725,12 +2725,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/adapter@npm:^3.0.5":
-  version: 3.0.5
-  resolution: "@ts-graphviz/adapter@npm:3.0.5"
+"@ts-graphviz/adapter@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@ts-graphviz/adapter@npm:3.0.6"
   dependencies:
-    "@ts-graphviz/common": "npm:^3.0.4"
-  checksum: 10c0/fc0e53d4541cd22953f2f845fb9839f4b2f4f57fbb80c6355e9cb35509d55f272a478921248c1bddaf3f965523e00ef29c42c24a653d3402722f24ca4fb33b36
+    "@ts-graphviz/common": "npm:^3.0.5"
+  checksum: 10c0/327d083a195c8b5b8cefa089431ce7836f521498f207708e644a717bbbf542779f2ab672635745df5edd5b6e7fbd695ae4ba4a31fc42ac9f997616c82cad7586
   languageName: node
   linkType: hard
 
@@ -2743,12 +2743,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/ast@npm:^3.0.5":
-  version: 3.0.5
-  resolution: "@ts-graphviz/ast@npm:3.0.5"
+"@ts-graphviz/ast@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@ts-graphviz/ast@npm:3.0.6"
   dependencies:
-    "@ts-graphviz/common": "npm:^3.0.4"
-  checksum: 10c0/8d486ab5fcc98250520ff0537ce1e257a2b56892046b6ae7b96ed1c2b55231585fdc6d73f7eee172469a2ddb532f114d731f315f2e5f7fdf50b9dbc2c7ba58d4
+    "@ts-graphviz/common": "npm:^3.0.5"
+  checksum: 10c0/dbd69086e22cf479c3a0597cf8649b393fa82a75cb2894d4d4b09cf62acdb198ede91a81cbf122306a4592726f1cf6f924f92fb3664b20461710318a14665987
   languageName: node
   linkType: hard
 
@@ -2759,10 +2759,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/common@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "@ts-graphviz/common@npm:3.0.4"
-  checksum: 10c0/fca7d12062a0c1d34c3e69f55cb5a6f80c69eac16316fd56615d0611f0610d7880a61d9eccf22a930e27bb12923a84970a32aafb8cf13d5d7e78692ddb20fed8
+"@ts-graphviz/common@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@ts-graphviz/common@npm:3.0.5"
+  checksum: 10c0/a285366bb1244583bac9b46c1a1399602369bd28cc90650001393d9974944c7094727d607a927b0e2209b0e0a5837dedc28415462f16563b889d947c5d54de38
   languageName: node
   linkType: hard
 
@@ -2776,13 +2776,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-graphviz/core@npm:^3.0.6":
-  version: 3.0.6
-  resolution: "@ts-graphviz/core@npm:3.0.6"
+"@ts-graphviz/core@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "@ts-graphviz/core@npm:3.0.7"
   dependencies:
-    "@ts-graphviz/ast": "npm:^3.0.5"
-    "@ts-graphviz/common": "npm:^3.0.4"
-  checksum: 10c0/b9e620690b06d4d4e705dc7fbd633aa5b5a11e36d66ae9e1d6bb07bdccd032ecb1be6f325cb17a05223fab0b3330c628d9273a0cb55ae62b8a0d029d1a40f2c5
+    "@ts-graphviz/ast": "npm:^3.0.6"
+    "@ts-graphviz/common": "npm:^3.0.5"
+  checksum: 10c0/30dada8e8042c68b63d310d3c80db440e2000c009584c8084c8104d7949b39a0b9b205ba0e7bf5a542c8b02be332fadec0ccf9d1290668114ebbd21dd26cc385
   languageName: node
   linkType: hard
 
@@ -3265,14 +3265,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.13.4":
-  version: 1.13.4
-  resolution: "axios@npm:1.13.4"
+"axios@npm:^1.13.5":
+  version: 1.13.5
+  resolution: "axios@npm:1.13.5"
   dependencies:
-    follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.4"
+    follow-redirects: "npm:^1.15.11"
+    form-data: "npm:^4.0.5"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/474c00b7d71f4de4ad562589dae6b615149df7c2583bbc5ebba96229f3f85bfb0775d23705338df072f12e48d3e85685c065a3cf6855d58968a672d19214c728
+  checksum: 10c0/abf468c34f2d145f3dc7dbc0f1be67e520630624307bda69a41bbe8d386bd672d87b4405c4ee77f9ff54b235ab02f96a9968fb00e75b13ce64706e352a3068fd
   languageName: node
   linkType: hard
 
@@ -4378,13 +4378,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.6":
-  version: 1.15.9
-  resolution: "follow-redirects@npm:1.15.9"
+"follow-redirects@npm:^1.15.11":
+  version: 1.15.11
+  resolution: "follow-redirects@npm:1.15.11"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 10c0/5829165bd112c3c0e82be6c15b1a58fa9dcfaede3b3c54697a82fe4a62dd5ae5e8222956b448d2f98e331525f05d00404aba7d696de9e761ef6e42fdc780244f
+  checksum: 10c0/d301f430542520a54058d4aeeb453233c564aaccac835d29d15e050beb33f339ad67d9bddbce01739c5dc46a6716dbe3d9d0d5134b1ca203effa11a7ef092343
   languageName: node
   linkType: hard
 
@@ -4398,16 +4398,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.4":
-  version: 4.0.4
-  resolution: "form-data@npm:4.0.4"
+"form-data@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "form-data@npm:4.0.5"
   dependencies:
     asynckit: "npm:^0.4.0"
     combined-stream: "npm:^1.0.8"
     es-set-tostringtag: "npm:^2.1.0"
     hasown: "npm:^2.0.2"
     mime-types: "npm:^2.1.12"
-  checksum: 10c0/373525a9a034b9d57073e55eab79e501a714ffac02e7a9b01be1c820780652b16e4101819785e1e18f8d98f0aee866cc654d660a435c378e16a72f2e7cac9695
+  checksum: 10c0/dd6b767ee0bbd6d84039db12a0fa5a2028160ffbfaba1800695713b46ae974a5f6e08b3356c3195137f8530dcd9dfcb5d5ae1eeff53d0db1e5aad863b619ce3b
   languageName: node
   linkType: hard
 
@@ -6913,15 +6913,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-graphviz@npm:^3.0.6":
-  version: 3.0.6
-  resolution: "ts-graphviz@npm:3.0.6"
+"ts-graphviz@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "ts-graphviz@npm:3.0.7"
   dependencies:
-    "@ts-graphviz/adapter": "npm:^3.0.5"
-    "@ts-graphviz/ast": "npm:^3.0.5"
-    "@ts-graphviz/common": "npm:^3.0.4"
-    "@ts-graphviz/core": "npm:^3.0.6"
-  checksum: 10c0/16241247edceeaa35759b06e7deac2729ee1a5e8e2c7de0f3c3fc6a1875246bb2d2da28440026e97ba90943e6e4d58a488e7319b00a8e92c0ba4df1521047f8d
+    "@ts-graphviz/adapter": "npm:^3.0.6"
+    "@ts-graphviz/ast": "npm:^3.0.6"
+    "@ts-graphviz/common": "npm:^3.0.5"
+    "@ts-graphviz/core": "npm:^3.0.7"
+  checksum: 10c0/c22065e26e05e873a973275f6662b191a91528042771c7d97a025fa181177c367d6497dbaf6c6e6c4c968416bb4f18c6e61bc73d232e8bf97563dd21b25f024c
   languageName: node
   linkType: hard
 
