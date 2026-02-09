@@ -24,7 +24,6 @@ jobs:
           documentation: true
           dependency-graphs: true
           coverage: true
-          many-graphs: true
           publish: true
           npm-publish: true
           token: ${{ secrets.BUILDUSER_GITHUB_WRITE }}
