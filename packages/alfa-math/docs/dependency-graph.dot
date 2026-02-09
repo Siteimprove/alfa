@@ -1,8 +1,8 @@
 digraph "dependency-graph-@siteimprove/alfa-math" {
   compound = true;
   "src/real.ts";
-  "src/matrix.ts";
   "src/vector.ts";
+  "src/matrix.ts";
   subgraph "cluster_src" {
     color = "#000000";
     label = "";
@@ -72,6 +72,13 @@ digraph "dependency-graph-@siteimprove/alfa-math" {
     style = "invis";
   ];
   "src/matrix.ts" -> "src/real.ts" [
+    style = "solid";
+    color = "black";
+  ];
+  "src/matrix.ts" -> "src/vector.ts" [
+    style = "invis";
+  ];
+  "src/matrix.ts" -> "src/vector.ts" [
     style = "solid";
     color = "black";
   ];
