@@ -246,105 +246,114 @@ export namespace Math {
   // are mutually recursive and must be kept together here rather than distributed
   // in the corresponding files.
 
-  let parseSum: CSSParser<Expression>;
+  const parseCalc = (parseSum: CSSParser<Expression>) =>
+    map(
+      CSSFunction.parse("calc", (input) => parseSum(input)),
+      ([, expression]) => Function.Calculation.of(expression),
+    );
 
-  const parseCalc = map(
-    CSSFunction.parse("calc", (input) => parseSum(input)),
-    ([, expression]) => Function.Calculation.of(expression),
-  );
+  const parseMax = (parseSum: CSSParser<Expression>) =>
+    mapResult(
+      CSSFunction.parse("max", (input) =>
+        separatedList(
+          parseSum,
+          delimited(option(Token.parseWhitespace), Token.parseComma),
+        )(input),
+      ),
+      ([, args]) => Function.Max.of(...args),
+    );
 
-  const parseMax = mapResult(
-    CSSFunction.parse("max", (input) =>
-      separatedList(
-        parseSum,
-        delimited(option(Token.parseWhitespace), Token.parseComma),
-      )(input),
-    ),
-    ([, args]) => Function.Max.of(...args),
-  );
-
-  const parseFunction = either(parseCalc, parseMax);
+  const parseFunction = (parseSum: CSSParser<Expression>) =>
+    either(parseCalc(parseSum), parseMax(parseSum));
 
   /**
    * {@link https://drafts.csswg.org/css-values/#typedef-calc-value}
    */
-  const parseValue = either<Slice<Token>, Expression, string>(
-    map(
-      either<Slice<Token>, Numeric, string>(
-        Number.parse,
-        Percentage.parse,
-        Length.parse,
-        Angle.parse,
+  const parseValue = (parseSum: CSSParser<Expression>) =>
+    either<Slice<Token>, Expression, string>(
+      map(
+        either<Slice<Token>, Numeric, string>(
+          Number.parse,
+          Percentage.parse,
+          Length.parse,
+          Angle.parse,
+        ),
+        Value.of,
       ),
-      Value.of,
-    ),
-    parseFunction,
-    delimited(
-      Token.parseOpenParenthesis,
-      (input) => parseSum(input),
-      Token.parseCloseParenthesis,
-    ),
-  );
+      parseFunction(parseSum),
+      delimited(
+        Token.parseOpenParenthesis,
+        parseSum,
+        Token.parseCloseParenthesis,
+      ),
+    );
 
   /**
    * {@link https://drafts.csswg.org/css-values/#typedef-calc-product}
    */
-  const parseProduct = mapResult(
-    pair(
-      parseValue,
-      zeroOrMore(
-        pair(
-          delimited(
-            option(Token.parseWhitespace),
-            either(
-              map(Token.parseDelim("*"), () => false),
-              map(Token.parseDelim("/"), () => true),
+  const parseProduct = (parseSum: CSSParser<Expression>) =>
+    mapResult(
+      pair(
+        parseValue(parseSum),
+        zeroOrMore(
+          pair(
+            delimited(
+              option(Token.parseWhitespace),
+              either(
+                map(Token.parseDelim("*"), () => false),
+                map(Token.parseDelim("/"), () => true),
+              ),
             ),
+            parseValue(parseSum),
           ),
-          parseValue,
         ),
       ),
-    ),
-    ([left, result]) =>
-      result
-        .map(([invert, right]) => (invert ? Operation.Invert.of(right) : right))
-        .reduce(
-          (left: Result<Expression, string>, right: Expression) =>
-            left.flatMap((left) => Operation.Product.of(left, right)),
-          Result.of(left),
-        ),
-  );
+      ([left, result]) =>
+        result
+          .map(([invert, right]) =>
+            invert ? Operation.Invert.of(right) : right,
+          )
+          .reduce(
+            (left: Result<Expression, string>, right: Expression) =>
+              left.flatMap((left) => Operation.Product.of(left, right)),
+            Result.of(left),
+          ),
+    );
 
   /**
    * {@link https://drafts.csswg.org/css-values/#typedef-calc-sum}
    */
-  parseSum = mapResult(
-    pair(
-      parseProduct,
-      zeroOrMore(
-        pair(
-          delimited(
-            Token.parseWhitespace,
-            either(
-              map(Token.parseDelim("+"), () => false),
-              map(Token.parseDelim("-"), () => true),
+  function parseSum(input: Slice<Token>) {
+    return mapResult(
+      pair(
+        parseProduct(parseSum),
+        zeroOrMore(
+          pair(
+            delimited(
+              Token.parseWhitespace,
+              either(
+                map(Token.parseDelim("+"), () => false),
+                map(Token.parseDelim("-"), () => true),
+              ),
             ),
+            parseProduct(parseSum),
           ),
-          parseProduct,
         ),
       ),
-    ),
-    ([left, result]) =>
-      result
-        .map(([invert, right]) => (invert ? Operation.Negate.of(right) : right))
-        .reduce(
-          (left: Result<Expression, string>, right: Expression) =>
-            left.flatMap((left) => Operation.Sum.of(left, right)),
-          Result.of(left),
-        ),
-  );
+      ([left, result]) =>
+        result
+          .map(([invert, right]) =>
+            invert ? Operation.Negate.of(right) : right,
+          )
+          .reduce(
+            (left: Result<Expression, string>, right: Expression) =>
+              left.flatMap((left) => Operation.Sum.of(left, right)),
+            Result.of(left),
+          ),
+    )(input);
+  }
 
-  export const parse = map(parseFunction, Math.of);
+  export const parse = map(parseFunction(parseSum), Math.of);
 
   // other parsers + filters can be added when needed
   export const parseAngle = filter(
