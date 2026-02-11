@@ -1,5 +1,12 @@
 import { Array } from "@siteimprove/alfa-array";
+import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
+
+import {
+  Function as CSSFunction,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax/index.js";
 
 import { Unit } from "../../unit/index.js";
 
@@ -14,6 +21,8 @@ const { isAngle } = Angle;
 const { isLength } = Length;
 const { isNumber } = Number;
 const { isValueExpression } = Value;
+
+const { delimited, either, map, mapResult, option, separatedList } = Parser;
 
 /**
  * @public
@@ -89,9 +98,19 @@ export namespace Function {
     }
   }
 
-  export function isCalculation(value: unknown): value is Calculation {
-    return value instanceof Calculation;
+  export namespace Calculation {
+    export function isCalculation(value: unknown): value is Calculation {
+      return value instanceof Calculation;
+    }
+
+    export const parse = (parseSum: CSSParser<Expression>) =>
+      map(
+        CSSFunction.parse("calc", (input) => parseSum(input)),
+        ([, expression]) => Function.Calculation.of(expression),
+      );
   }
+
+  export const { isCalculation } = Calculation;
 
   export class Max extends Function<"max", [Expression, ...Array<Expression>]> {
     public static of(
@@ -179,4 +198,26 @@ export namespace Function {
       return `max(${this._args.map((expr) => expr.toString()).join(", ")})`;
     }
   }
+
+  export namespace Max {
+    export function isMax(value: unknown): value is Max {
+      return value instanceof Max;
+    }
+
+    export const parse = (parseSum: CSSParser<Expression>) =>
+      mapResult(
+        CSSFunction.parse("max", (input) =>
+          separatedList(
+            parseSum,
+            delimited(option(Token.parseWhitespace), Token.parseComma),
+          )(input),
+        ),
+        ([, args]) => Function.Max.of(...args),
+      );
+  }
+
+  export const { isMax } = Max;
+
+  export const parse = (parseSum: CSSParser<Expression>) =>
+    either(Calculation.parse(parseSum), Max.parse(parseSum));
 }

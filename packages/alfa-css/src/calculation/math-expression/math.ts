@@ -1,15 +1,9 @@
 import type { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Slice } from "@siteimprove/alfa-slice";
 import { Err, Result } from "@siteimprove/alfa-result";
 
 import type * as json from "@siteimprove/alfa-json";
 
-import {
-  Function as CSSFunction,
-  Token,
-  type Parser as CSSParser,
-} from "../../syntax/index.js";
 import type { Unit } from "../../unit/index.js";
 
 import type { Numeric } from "../numeric/index.js";
@@ -19,19 +13,8 @@ import type { Expression } from "./expression.js";
 import { Function } from "./function.js";
 import type { Kind } from "./kind.js";
 import { Operation } from "./operation.js";
-import { Value } from "./value.js";
 
-const {
-  delimited,
-  either,
-  filter,
-  map,
-  mapResult,
-  option,
-  pair,
-  separatedList,
-  zeroOrMore,
-} = Parser;
+const { filter, map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#math}
@@ -243,117 +226,10 @@ export namespace Math {
     | "number";
 
   // Due to possibility of recursive expressions (`calc(1 + calc(2+3) )`), parsers
-  // are mutually recursive and must be kept together here rather than distributed
-  // in the corresponding files.
+  // are mutually recursive. This is handled by injecting the top "sum"
+  // parser in the lower level parsers that need it.
 
-  const parseCalc = (parseSum: CSSParser<Expression>) =>
-    map(
-      CSSFunction.parse("calc", (input) => parseSum(input)),
-      ([, expression]) => Function.Calculation.of(expression),
-    );
-
-  const parseMax = (parseSum: CSSParser<Expression>) =>
-    mapResult(
-      CSSFunction.parse("max", (input) =>
-        separatedList(
-          parseSum,
-          delimited(option(Token.parseWhitespace), Token.parseComma),
-        )(input),
-      ),
-      ([, args]) => Function.Max.of(...args),
-    );
-
-  const parseFunction = (parseSum: CSSParser<Expression>) =>
-    either(parseCalc(parseSum), parseMax(parseSum));
-
-  /**
-   * {@link https://drafts.csswg.org/css-values/#typedef-calc-value}
-   */
-  const parseValue = (parseSum: CSSParser<Expression>) =>
-    either<Slice<Token>, Expression, string>(
-      map(
-        either<Slice<Token>, Numeric, string>(
-          Number.parse,
-          Percentage.parse,
-          Length.parse,
-          Angle.parse,
-        ),
-        Value.of,
-      ),
-      parseFunction(parseSum),
-      delimited(
-        Token.parseOpenParenthesis,
-        parseSum,
-        Token.parseCloseParenthesis,
-      ),
-    );
-
-  /**
-   * {@link https://drafts.csswg.org/css-values/#typedef-calc-product}
-   */
-  const parseProduct = (parseSum: CSSParser<Expression>) =>
-    mapResult(
-      pair(
-        parseValue(parseSum),
-        zeroOrMore(
-          pair(
-            delimited(
-              option(Token.parseWhitespace),
-              either(
-                map(Token.parseDelim("*"), () => false),
-                map(Token.parseDelim("/"), () => true),
-              ),
-            ),
-            parseValue(parseSum),
-          ),
-        ),
-      ),
-      ([left, result]) =>
-        result
-          .map(([invert, right]) =>
-            invert ? Operation.Invert.of(right) : right,
-          )
-          .reduce(
-            (left: Result<Expression, string>, right: Expression) =>
-              left.flatMap((left) => Operation.Product.of(left, right)),
-            Result.of(left),
-          ),
-    );
-
-  /**
-   * {@link https://drafts.csswg.org/css-values/#typedef-calc-sum}
-   */
-  function parseSum(input: Slice<Token>) {
-    return mapResult(
-      pair(
-        parseProduct(parseSum),
-        zeroOrMore(
-          pair(
-            delimited(
-              Token.parseWhitespace,
-              either(
-                map(Token.parseDelim("+"), () => false),
-                map(Token.parseDelim("-"), () => true),
-              ),
-            ),
-            parseProduct(parseSum),
-          ),
-        ),
-      ),
-      ([left, result]) =>
-        result
-          .map(([invert, right]) =>
-            invert ? Operation.Negate.of(right) : right,
-          )
-          .reduce(
-            (left: Result<Expression, string>, right: Expression) =>
-              left.flatMap((left) => Operation.Sum.of(left, right)),
-            Result.of(left),
-          ),
-    )(input);
-  }
-
-  export const parse = map(parseFunction(parseSum), Math.of);
+  export const parse = map(Function.parse(Operation.Sum.parse), Math.of);
 
   // other parsers + filters can be added when needed
   export const parseAngle = filter(

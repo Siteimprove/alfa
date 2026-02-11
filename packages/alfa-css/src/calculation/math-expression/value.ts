@@ -1,20 +1,30 @@
 import type { Mapper } from "@siteimprove/alfa-mapper";
+import { Parser } from "@siteimprove/alfa-parser";
 import type { Result } from "@siteimprove/alfa-result";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Selective } from "@siteimprove/alfa-selective";
+import type { Slice } from "@siteimprove/alfa-slice";
 
+import { Token, type Parser as CSSParser } from "../../syntax/index.js";
 import { Unit } from "../../unit/index.js";
-
-import type { Numeric } from "../numeric/index.js";
-import { Angle, Length, Number, Percentage } from "../numeric/index.js";
+import {
+  Angle,
+  Length,
+  Number,
+  type Numeric,
+  Percentage,
+} from "../numeric/index.js";
 
 import { Expression } from "./expression.js";
+import type { Function } from "./function.js";
 import { Kind } from "./kind.js";
 
 const { isAngle } = Angle;
 const { isLength } = Length;
 const { isNumber } = Number;
 const { isPercentage } = Percentage;
+
+const { delimited, either, map } = Parser;
 
 /**
  * @public
@@ -204,4 +214,29 @@ export namespace Value {
         ? resolver(length)
         : length.withUnit(Unit.Length.Canonical);
   }
+
+  /**
+   * {@link https://drafts.csswg.org/css-values/#typedef-calc-value}
+   */
+  export const parse = (
+    parseFunction: (parseSum: CSSParser<Expression>) => CSSParser<Function>,
+    parseSum: CSSParser<Expression>,
+  ) =>
+    either<Slice<Token>, Expression, string>(
+      map(
+        either<Slice<Token>, Numeric, string>(
+          Number.parse,
+          Percentage.parse,
+          Length.parse,
+          Angle.parse,
+        ),
+        Value.of,
+      ),
+      parseFunction(parseSum),
+      delimited(
+        Token.parseOpenParenthesis,
+        parseSum,
+        Token.parseCloseParenthesis,
+      ),
+    );
 }
