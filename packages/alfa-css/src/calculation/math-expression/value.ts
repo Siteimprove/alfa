@@ -16,7 +16,7 @@ import {
 } from "../numeric/index.js";
 
 import { Expression } from "./expression.js";
-import type { Function } from "./function.js";
+import type { Function } from "./function/index.js";
 import { Kind } from "./kind.js";
 
 const { isAngle } = Angle;

@@ -17,7 +17,7 @@ import {
 } from "../numeric/index.js";
 
 import { Expression } from "./expression.js";
-import { Function } from "./function.js";
+import { Function } from "./function/index.js";
 import type { Kind } from "./kind.js";
 import { Value } from "./value.js";
 
@@ -27,8 +27,7 @@ const { isLength } = Length;
 const { isNumber } = Number;
 const { isPercentage } = Percentage;
 
-const { delimited, either, filter, map, mapResult, option, pair, zeroOrMore } =
-  Parser;
+const { delimited, either, map, mapResult, option, pair, zeroOrMore } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#calculation-tree-operator-nodes}

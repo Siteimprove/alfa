@@ -10,7 +10,7 @@ import type { Numeric } from "../numeric/index.js";
 import { Angle, Length, Number, Percentage } from "../numeric/index.js";
 
 import type { Expression } from "./expression.js";
-import { Function } from "./function.js";
+import { Function } from "./function/index.js";
 import type { Kind } from "./kind.js";
 import { Operation } from "./operation.js";
 
