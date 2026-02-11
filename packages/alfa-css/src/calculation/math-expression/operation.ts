@@ -327,8 +327,10 @@ export namespace Operation {
     /**
      * {@link https://drafts.csswg.org/css-values/#typedef-calc-product}
      */
-    export const parse = (parseSum: CSSParser<Expression>) =>
-      mapResult(
+    export function parse(
+      parseSum: CSSParser<Expression>,
+    ): CSSParser<Expression> {
+      return mapResult(
         pair(
           Value.parse(Function.parse, parseSum),
           zeroOrMore(
@@ -355,6 +357,7 @@ export namespace Operation {
               Result.of(left),
             ),
       );
+    }
   }
 
   export const { isProductExpression } = Product;

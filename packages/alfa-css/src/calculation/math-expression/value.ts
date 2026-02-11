@@ -218,11 +218,11 @@ export namespace Value {
   /**
    * {@link https://drafts.csswg.org/css-values/#typedef-calc-value}
    */
-  export const parse = (
+  export function parse(
     parseFunction: (parseSum: CSSParser<Expression>) => CSSParser<Function>,
     parseSum: CSSParser<Expression>,
-  ) =>
-    either<Slice<Token>, Expression, string>(
+  ): CSSParser<Expression> {
+    return either<Slice<Token>, Expression, string>(
       map(
         either<Slice<Token>, Numeric, string>(
           Number.parse,
@@ -239,4 +239,5 @@ export namespace Value {
         Token.parseCloseParenthesis,
       ),
     );
+  }
 }
