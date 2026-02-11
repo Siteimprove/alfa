@@ -25,6 +25,11 @@ const { isValueExpression } = Value;
 
 const { delimited, mapResult, option, separatedList } = Parser;
 
+/**
+ * {@link https://drafts.csswg.org/css-values/#comp-func}
+ *
+ * @public
+ */
 export class Max extends Function<"max", [Expression, ...Array<Expression>]> {
   public static of(
     first: Expression,
@@ -109,6 +114,7 @@ export class Max extends Function<"max", [Expression, ...Array<Expression>]> {
   }
 }
 
+/** @public */
 export namespace Max {
   export function isMax(value: unknown): value is Max {
     return value instanceof Max;

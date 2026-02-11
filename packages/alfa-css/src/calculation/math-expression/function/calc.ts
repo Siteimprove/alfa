@@ -18,6 +18,11 @@ const { isValueExpression } = Value;
 
 const { map } = Parser;
 
+/**
+ * {@link https://drafts.csswg.org/css-values/#calc-func}
+ *
+ * @public
+ */
 export class Calculation extends Function<"calculation", [Expression]> {
   public static of(expression: Expression): Calculation {
     return new Calculation([expression], expression.kind);
@@ -43,6 +48,7 @@ export class Calculation extends Function<"calculation", [Expression]> {
   }
 }
 
+/** @public */
 export namespace Calculation {
   export function isCalculation(value: unknown): value is Calculation {
     return value instanceof Calculation;
