@@ -369,6 +369,69 @@ test("Parser.either() tries parsers in order", (t) => {
   });
 });
 
+test("Parser.exclusive() tries parsers", (t) => {
+  const parseFooFoo = Parser.pair(parseFoo, parseFoo);
+  const parseBarBar = Parser.pair(parseBar, parseBar);
+
+  const parser = Parser.exclusive(parseAny, (token: string) =>
+    token === "foo" ? parseFooFoo : parseBarBar,
+  );
+
+  t.deepEqual(parser(["foo", "foo", "bar"]).toJSON(), {
+    type: "ok",
+    value: [["bar"], ["foo", "foo"]],
+  });
+
+  t.deepEqual(parser(["bar", "bar", "baz"]).toJSON(), {
+    type: "ok",
+    value: [["baz"], ["bar", "bar"]],
+  });
+
+  t.deepEqual(parser(["foo", "bar"]).toJSON(), {
+    type: "err",
+    error: "invalid token: bar",
+  });
+});
+
+// test("Parser.exclusive() only tries one parser", (t) => {
+//   let foo = 0;
+//   let bar = 0;
+//
+//   const parseFooFoo = Parser.tee(Parser.pair(parseFoo, parseFoo), () => foo++);
+//   const parseBarBar = Parser.tee(Parser.pair(parseBar, parseBar), () => bar++);
+//
+//   const parser = Parser.exclusive(parseAny, (token: string) =>
+//     token === "foo" ? parseFooFoo : parseBarBar,
+//   );
+//
+//   t.deepEqual(parser(["foo", "foo", "bar"]).toJSON(), {
+//     type: "ok",
+//     value: [["bar"], ["foo", "foo"]],
+//   });
+//
+//   // FooFoo is triggered, BarBar is not, same behavior as either.
+//   t.equal(foo, 1);
+//   t.equal(bar, 0);
+//
+//   t.deepEqual(parser(["bar", "bar", "baz"]).toJSON(), {
+//     type: "ok",
+//     value: [["baz"], ["bar", "bar"]],
+//   });
+//
+//   // BarBar is triggered, FooFoo is skipped, different from either.
+//   t.equal(foo, 1);
+//   t.equal(bar, 1);
+//
+//   t.deepEqual(parser(["foo", "bar"]).toJSON(), {
+//     type: "err",
+//     error: "invalid token: bar",
+//   });
+//
+//   // FooFoo is triggered and fails, BarBar is skipped, different from either.
+//   t.equal(foo, 2);
+//   t.equal(bar, 1);
+// });
+
 test("Parser.pair() parses two values", (t) => {
   const parser = Parser.pair(parseFoo, parseBar);
 
