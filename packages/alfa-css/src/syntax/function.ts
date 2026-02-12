@@ -144,7 +144,7 @@ export namespace Function {
     return flatMap(
       // TypeScript is unable to match the overloads of this function with the
       // ones of `Token.parseFunction` (the local overloads are ignored in the
-      // implementation); so we just teel it to ignore it.
+      // implementation); so we just tell it to ignore it.
       right(peek(Token.parseFunction(query as any)), Function.consume),
       (fn) => (input) => {
         if (body === undefined) {
