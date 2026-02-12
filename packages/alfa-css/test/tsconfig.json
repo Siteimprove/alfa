@@ -18,6 +18,7 @@
     "./calculation/calculation.spec.ts",
     "./calculation/common.ts",
     "./calculation/function/max.ts",
+    "./calculation/function/min.ts",
     "./value/collection/list.spec.ts",
     "./value/collection/tuple.spec.ts",
     "./value/color/css4-color.spec.ts",
