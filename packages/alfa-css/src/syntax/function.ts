@@ -2,6 +2,7 @@ import type { Equatable } from "@siteimprove/alfa-equatable";
 import type { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Predicate } from "@siteimprove/alfa-predicate";
+import type { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -31,20 +32,25 @@ const {
  *
  * @public
  */
-export class Function implements Iterable<Token>, Equatable, Serializable {
-  public static of(name: string, value: Iterable<Token>): Function {
+export class Function<N extends string = string>
+  implements Iterable<Token>, Equatable, Serializable
+{
+  public static of<N extends string = string>(
+    name: N,
+    value: Iterable<Token>,
+  ): Function<N> {
     return new Function(name, Array.from(value));
   }
 
-  private readonly _name: string;
+  private readonly _name: N;
   private readonly _value: Array<Token>;
 
-  protected constructor(name: string, value: Array<Token>) {
+  protected constructor(name: N, value: Array<Token>) {
     this._name = name;
     this._value = value;
   }
 
-  public get name(): string {
+  public get name(): N {
     return this._name;
   }
 
@@ -72,7 +78,7 @@ export class Function implements Iterable<Token>, Equatable, Serializable {
     );
   }
 
-  public toJSON(): Function.JSON {
+  public toJSON(): Function.JSON<N> {
     return {
       name: this._name,
       value: this._value.map((token) => token.toJSON()),
@@ -88,9 +94,9 @@ export class Function implements Iterable<Token>, Equatable, Serializable {
  * @public
  */
 export namespace Function {
-  export interface JSON {
+  export interface JSON<N extends string = string> {
     [key: string]: json.JSON;
-    name: string;
+    name: N;
     value: Array<Token.JSON>;
   }
 
@@ -121,12 +127,25 @@ export namespace Function {
       ([{ value: name }, value]) => Function.of(name, value),
     )(input);
 
-  export const parse = <T>(
-    query?: string | Array<string> | Predicate<Token.Function>,
+  export function parse<T, N extends string = string>(
+    query: N | ReadonlyArray<N> | Refinement<Token.Function, Token.Function<N>>,
     body?: CSSParser<T> | Thunk<CSSParser<T>>,
-  ): CSSParser<[Function, T]> =>
-    flatMap(
-      right(peek(Token.parseFunction(query)), Function.consume),
+  ): CSSParser<[Function, T]>;
+
+  export function parse<T>(
+    query?: Predicate<Token.Function>,
+    body?: CSSParser<T> | Thunk<CSSParser<T>>,
+  ): CSSParser<[Function, T]>;
+
+  export function parse<T>(
+    query?: string | ReadonlyArray<string> | Predicate<Token.Function>,
+    body?: CSSParser<T> | Thunk<CSSParser<T>>,
+  ): CSSParser<[Function, T]> {
+    return flatMap(
+      // TypeScript is unable to match the overloads of this function with the
+      // ones of `Token.parseFunction` (the local overloads are ignored in the
+      // implementation); so we just teel it to ignore it.
+      right(peek(Token.parseFunction(query as any)), Function.consume),
       (fn) => (input) => {
         if (body === undefined) {
           return Result.of([input, [fn, undefined as never] as const]);
@@ -169,4 +188,5 @@ export namespace Function {
         return Result.of([input, [fn, value] as const]);
       },
     );
+  }
 }
