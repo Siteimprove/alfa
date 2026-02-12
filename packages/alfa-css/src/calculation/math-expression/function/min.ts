@@ -122,11 +122,12 @@ export namespace Min {
 
   export const parse = (parseSum: CSSParser<Expression>) =>
     mapResult(
-      CSSFunction.parse("min", (input) =>
+      CSSFunction.parse(
+        "min",
         separatedList(
           parseSum,
           delimited(option(Token.parseWhitespace), Token.parseComma),
-        )(input),
+        ),
       ),
       ([, args]) => Min.of(...args),
     );

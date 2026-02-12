@@ -122,11 +122,12 @@ export namespace Max {
 
   export const parse = (parseSum: CSSParser<Expression>) =>
     mapResult(
-      CSSFunction.parse("max", (input) =>
+      CSSFunction.parse(
+        "max",
         separatedList(
           parseSum,
           delimited(option(Token.parseWhitespace), Token.parseComma),
-        )(input),
+        ),
       ),
       ([, args]) => Max.of(...args),
     );
