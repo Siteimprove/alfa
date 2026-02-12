@@ -8,6 +8,7 @@
     "./calculation/math-expression/index.ts",
     "./calculation/math-expression/kind.ts",
     "./calculation/math-expression/function/calc.ts",
+    "./calculation/math-expression/function/clamp.ts",
     "./calculation/math-expression/function/function.ts",
     "./calculation/math-expression/function/index.ts",
     "./calculation/math-expression/function/max.ts",
