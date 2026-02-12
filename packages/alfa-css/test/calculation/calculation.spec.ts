@@ -2,6 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Math } from "../../dist/index.js";
 import { parser, parserUnsafe, serializer } from "../common/parse.js";
+import { resolver } from "./common.js";
 
 const parseErr = parser(Math.parse);
 const parse = parserUnsafe(Math.parse);
@@ -360,5 +361,43 @@ test(".parse() accepts whitespace inside parentheses", (t) => {
       type: "value",
       value: { type: "number", value: 1 },
     },
+  });
+});
+
+test("parse() parses division of dimensions", (t) => {
+  const calculation = parse("calc(2em / 1rem)");
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "calculation",
+      arguments: [
+        {
+          type: "product",
+          operands: [
+            {
+              type: "value",
+              value: { value: 2, type: "length", unit: "em" },
+            },
+            {
+              type: "invert",
+              operands: [
+                {
+                  type: "value",
+                  value: { value: 1, type: "length", unit: "rem" },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  const reduced = calculation.reduce(resolver);
+
+  t.deepEqual(reduced.toJSON(), {
+    type: "math expression",
+    expression: { type: "value", value: { value: 1, type: "number" } },
   });
 });
