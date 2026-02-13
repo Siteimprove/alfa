@@ -35,7 +35,8 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
 import { Some } from '@siteimprove/alfa-option';
 import type { Thunk } from '@siteimprove/alfa-thunk';
-import { Token as Token_2 } from '../../syntax/token.js';
+import { Token as Token_2 } from '../../index.js';
+import { Token as Token_3 } from '../../syntax/token.js';
 import { Unit as Unit_2 } from '../../index.js';
 
 // @public (undocumented)
@@ -793,18 +794,18 @@ export namespace Expression {
 }
 
 // @public (undocumented)
-class Function_2 implements Iterable<Token>, Equatable, Serializable {
+class Function_2<N extends string = string> implements Iterable<Token>, Equatable, Serializable {
     // (undocumented)
     [Symbol.iterator](): Iterator<Token>;
-    protected constructor(name: string, value: Array<Token>);
+    protected constructor(name: N, value: Array<Token>);
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get name(): string;
+    get name(): N;
     // (undocumented)
-    static of(name: string, value: Iterable<Token>): Function_2;
+    static of<N extends string = string>(name: N, value: Iterable<Token>): Function_2<N>;
     // (undocumented)
-    toJSON(): Function_2.JSON;
+    toJSON(): Function_2.JSON<N>;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -814,18 +815,20 @@ class Function_2 implements Iterable<Token>, Equatable, Serializable {
 // @public (undocumented)
 namespace Function_2 {
     // (undocumented)
-    interface JSON {
+    interface JSON<N extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        name: string;
+        name: N;
         // (undocumented)
         value: Array<Token.JSON>;
     }
     const // (undocumented)
     consume: Parser<Function_2>;
-    const // (undocumented)
-    parse: <T>(query?: string | Array<string> | Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>) => Parser<[Function_2, T]>;
+    // (undocumented)
+    function parse<T, N extends string = string>(query: N | ReadonlyArray<N> | Refinement<Token.Function, Token.Function<N>>, body?: Parser<T> | Thunk<Parser<T>>): Parser<[Function_2, T]>;
+    // (undocumented)
+    function parse<T>(query?: Predicate<Token.Function>, body?: Parser<T> | Thunk<Parser<T>>): Parser<[Function_2, T]>;
 }
 export { Function_2 as Function }
 
@@ -1382,19 +1385,19 @@ namespace Math_2 {
     const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Math_2" which is marked as @internal
     //
     // (undocumented)
-    parse: Parser_2<Slice<Token>, Math_2<Dimension>, string, []>;
+    parse: Parser_2<Slice<Token_2>, Math_2<Dimension>, string, []>;
     const // (undocumented)
-    parseAngle: Parser_2<Slice<Token>, Math_2<"angle">, string, []>;
+    parseAngle: Parser_2<Slice<Token_2>, Math_2<"angle">, string, []>;
     const // (undocumented)
-    parseAnglePercentage: Parser_2<Slice<Token>, Math_2<"angle-percentage">, string, []>;
+    parseAnglePercentage: Parser_2<Slice<Token_2>, Math_2<"angle-percentage">, string, []>;
     const // (undocumented)
-    parseLength: Parser_2<Slice<Token>, Math_2<"length">, string, []>;
+    parseLength: Parser_2<Slice<Token_2>, Math_2<"length">, string, []>;
     const // (undocumented)
-    parseLengthPercentage: Parser_2<Slice<Token>, Math_2<"length-percentage">, string, []>;
+    parseLengthPercentage: Parser_2<Slice<Token_2>, Math_2<"length-percentage">, string, []>;
     const // (undocumented)
-    parseNumber: Parser_2<Slice<Token>, Math_2<"number">, string, []>;
+    parseNumber: Parser_2<Slice<Token_2>, Math_2<"number">, string, []>;
     const // (undocumented)
-    parsePercentage: Parser_2<Slice<Token>, Math_2<"percentage">, string, []>;
+    parsePercentage: Parser_2<Slice<Token_2>, Math_2<"percentage">, string, []>;
 }
 export { Math_2 as Math }
 
@@ -1459,7 +1462,7 @@ export namespace Matrix {
     ]
     ];
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Matrix, string, []>;
+    parse: Parser_2<Slice<Token_3>, Matrix, string, []>;
 }
 
 // @public (undocumented)
@@ -1801,9 +1804,9 @@ export namespace Perspective {
     // (undocumented)
     export type Resolver = Length.Resolver;
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Perspective<Length<Unit_2.Length>>, string, []>;
+    parse: Parser_2<Slice<Token_3>, Perspective<Length<Unit_2.Length>>, string, []>;
     const // (undocumented)
-    parseProp: Parser_2<Slice<Token_2>, Perspective<Length<Unit_2.Length>>, string, []>;
+    parseProp: Parser_2<Slice<Token_3>, Perspective<Length<Unit_2.Length>>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Polygon" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2162,9 +2165,9 @@ export namespace Scale {
         z: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
+    parse: Parser_2<Slice<Token_3>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
     const // (undocumented)
-    parseProp: Parser_2<Slice<Token_2>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
+    parseProp: Parser_2<Slice<Token_3>, Scale<Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical, Number_2.Fixed | Percentage.Canonical>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "Shadow" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2337,7 +2340,7 @@ export namespace Skew {
         y: Angle.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser_2<Slice<Token_2>, Skew, string, []>;
+    parse: Parser_2<Slice<Token_3>, Skew, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "String" is marked as @public, but its signature references "Resolvable" which is marked as @internal
@@ -2551,8 +2554,6 @@ export namespace Token {
         // (undocumented)
         get type(): "close-square-bracket";
     }
-    const // (undocumented)
-    atKeyword: typeof AtKeyword.of;
     // (undocumented)
     export namespace CloseSquareBracket {
         // (undocumented)
@@ -2565,6 +2566,8 @@ export namespace Token {
             type: "close-square-bracket";
         }
     }
+    const // (undocumented)
+    atKeyword: typeof AtKeyword.of;
     // (undocumented)
     export class Colon implements Equatable, Serializable<Colon.JSON> {
         // (undocumented)
@@ -2578,9 +2581,6 @@ export namespace Token {
         // (undocumented)
         get type(): "colon";
     }
-    const // (undocumented)
-    hash: typeof Hash.of, // (undocumented)
-    isHash: typeof Hash.isHash;
     // (undocumented)
     export namespace Colon {
         // (undocumented)
@@ -2593,6 +2593,9 @@ export namespace Token {
             type: "colon";
         }
     }
+    const // (undocumented)
+    hash: typeof Hash.of, // (undocumented)
+    isHash: typeof Hash.isHash;
     // (undocumented)
     export class Comma implements Equatable, Serializable<Comma.JSON> {
         // (undocumented)
@@ -2618,9 +2621,6 @@ export namespace Token {
             type: "comma";
         }
     }
-    const // (undocumented)
-    string: typeof String.of, // (undocumented)
-    isString: typeof String.isString;
     // (undocumented)
     export class Delim implements Equatable, Serializable<Delim.JSON> {
         protected constructor(value: number);
@@ -2637,6 +2637,9 @@ export namespace Token {
         // (undocumented)
         get value(): number;
     }
+    const // (undocumented)
+    string: typeof String.of, // (undocumented)
+    isString: typeof String.isString;
     // (undocumented)
     export namespace Delim {
         // (undocumented)
@@ -2673,9 +2676,6 @@ export namespace Token {
         // (undocumented)
         get value(): number;
     }
-    const // (undocumented)
-    url: typeof URL.of, // (undocumented)
-    isURL: typeof URL.isURL;
     // (undocumented)
     export namespace Dimension {
         // (undocumented)
@@ -2696,40 +2696,41 @@ export namespace Token {
             value: number;
         }
     }
+    const // (undocumented)
+    url: typeof URL.of, // (undocumented)
+    isURL: typeof URL.isURL;
     // (undocumented)
-    export class Function implements Equatable, Serializable<Function.JSON> {
-        protected constructor(value: string);
+    export class Function<N extends string = string> implements Equatable, Serializable<Function.JSON> {
+        protected constructor(value: N);
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         get mirror(): CloseParenthesis;
         // (undocumented)
-        static of(value: string): Function;
+        static of<N extends string = string>(value: N): Function<N>;
         // (undocumented)
-        toJSON(): Function.JSON;
+        toJSON(): Function.JSON<N>;
         // (undocumented)
         toString(): string;
         // (undocumented)
         get type(): "function";
         // (undocumented)
-        get value(): string;
+        get value(): N;
     }
     // (undocumented)
     export namespace Function {
         // (undocumented)
         export function isFunction(value: unknown): value is Function;
         // (undocumented)
-        export interface JSON {
+        export interface JSON<N extends string = string> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
             type: "function";
             // (undocumented)
-            value: string;
+            value: N;
         }
     }
-    const // (undocumented)
-    badURL: typeof BadURL.of;
     // (undocumented)
     export class Hash implements Equatable, Serializable<Hash.JSON> {
         protected constructor(value: string, isIdentifier: boolean);
@@ -2748,6 +2749,8 @@ export namespace Token {
         // (undocumented)
         get value(): string;
     }
+    const // (undocumented)
+    badURL: typeof BadURL.of;
     // (undocumented)
     export namespace Hash {
         // (undocumented)
@@ -2764,9 +2767,6 @@ export namespace Token {
             value: string;
         }
     }
-    const // (undocumented)
-    delim: typeof Delim.of, // (undocumented)
-    isDelim: typeof Delim.isDelim;
     // (undocumented)
     export class Ident<N extends string = string> implements Equatable, Serializable<Ident.JSON<N>> {
         protected constructor(value: N);
@@ -2783,6 +2783,9 @@ export namespace Token {
         // (undocumented)
         get value(): N;
     }
+    const // (undocumented)
+    delim: typeof Delim.of, // (undocumented)
+    isDelim: typeof Delim.isDelim;
     // (undocumented)
     export namespace Ident {
         // (undocumented)
@@ -2799,9 +2802,6 @@ export namespace Token {
     }
     // (undocumented)
     export type JSON = Ident.JSON | Function.JSON | AtKeyword.JSON | Hash.JSON | String.JSON | URL.JSON | BadURL.JSON | Delim.JSON | Number.JSON | Percentage.JSON | Dimension.JSON | Whitespace.JSON | Colon.JSON | Semicolon.JSON | Comma.JSON | OpenParenthesis.JSON | CloseParenthesis.JSON | OpenSquareBracket.JSON | CloseSquareBracket.JSON | OpenCurlyBracket.JSON | CloseCurlyBracket.JSON | OpenComment.JSON | CloseComment.JSON;
-    const // (undocumented)
-    number: typeof Number.of, // (undocumented)
-    isNumber: typeof Number.isNumber;
     // (undocumented)
     export class Number implements Equatable, Serializable<Number.JSON> {
         protected constructor(value: number, isInteger: boolean, isSigned: boolean);
@@ -2822,6 +2822,9 @@ export namespace Token {
         // (undocumented)
         get value(): number;
     }
+    const // (undocumented)
+    number: typeof Number.of, // (undocumented)
+    isNumber: typeof Number.isNumber;
     // (undocumented)
     export namespace Number {
         // (undocumented)
@@ -2853,9 +2856,6 @@ export namespace Token {
         // (undocumented)
         get type(): "open-comment";
     }
-    const // (undocumented)
-    percentage: typeof Percentage.of, // (undocumented)
-    isPercentage: typeof Percentage.isPercentage;
     // (undocumented)
     export namespace OpenComment {
         // (undocumented)
@@ -2868,6 +2868,9 @@ export namespace Token {
             type: "open-comment";
         }
     }
+    const // (undocumented)
+    percentage: typeof Percentage.of, // (undocumented)
+    isPercentage: typeof Percentage.isPercentage;
     // (undocumented)
     export class OpenCurlyBracket implements Equatable, Serializable<OpenCurlyBracket.JSON> {
         // (undocumented)
@@ -2895,9 +2898,6 @@ export namespace Token {
             type: "open-curly-bracket";
         }
     }
-    const // (undocumented)
-    dimension: typeof Dimension.of, // (undocumented)
-    isDimension: typeof Dimension.isDimension;
     // (undocumented)
     export class OpenParenthesis implements Equatable, Serializable<OpenParenthesis.JSON> {
         // (undocumented)
@@ -2913,6 +2913,9 @@ export namespace Token {
         // (undocumented)
         get type(): "open-parenthesis";
     }
+    const // (undocumented)
+    dimension: typeof Dimension.of, // (undocumented)
+    isDimension: typeof Dimension.isDimension;
     // (undocumented)
     export namespace OpenParenthesis {
         // (undocumented)
@@ -2940,11 +2943,6 @@ export namespace Token {
         // (undocumented)
         get type(): "open-square-bracket";
     }
-    const // (undocumented)
-    whitespace: typeof Whitespace.of, // (undocumented)
-    isWhitespace: typeof Whitespace.isWhitespace;
-    const // (undocumented)
-    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export namespace OpenSquareBracket {
         // (undocumented)
@@ -2957,17 +2955,24 @@ export namespace Token {
             type: "open-square-bracket";
         }
     }
+    const // (undocumented)
+    whitespace: typeof Whitespace.of, // (undocumented)
+    isWhitespace: typeof Whitespace.isWhitespace;
+    const // (undocumented)
+    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export function parseDelim(query?: string | number | Predicate<Delim>): Parser<Delim>;
+    // (undocumented)
+    export function parseDimension(predicate?: Predicate<Dimension>): Parser<Dimension>;
     const // (undocumented)
     colon: typeof Colon.of, // (undocumented)
     isColon: typeof Colon.isColon;
     const // (undocumented)
     parseColon: Parser<Colon>;
     // (undocumented)
-    export function parseDimension(predicate?: Predicate<Dimension>): Parser<Dimension>;
+    export function parseFunction<N extends string>(query: N | ReadonlyArray<N> | Refinement<Function, Function<N>>): Parser<Function<N>>;
     // (undocumented)
-    export function parseFunction(query?: string | Array_2<string> | Predicate<Function>): Parser<Function>;
+    export function parseFunction(query?: Predicate<Function>): Parser<Function>;
     const // (undocumented)
     semicolon: typeof Semicolon.of, // (undocumented)
     isSemicolon: typeof Semicolon.isSemicolon;
@@ -3267,7 +3272,7 @@ export namespace Translate {
     const // (undocumented)
     parse: Parser<Translate>;
     const // (undocumented)
-    parseProp: Parser_2<Slice<Token_2>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>;
+    parseProp: Parser_2<Slice<Token_3>, Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length.Fixed<"px">> | Translate<LengthPercentage<Unit.Length>, LengthPercentage<Unit.Length>, Length>, string, []>;
 }
 
 // Warning: (ae-incompatible-release-tags) The symbol "TrimFlags" is marked as @public, but its signature references "Resolvable" which is marked as @internal
