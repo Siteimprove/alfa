@@ -136,6 +136,7 @@
     { "path": "../../alfa-selective" },
     { "path": "../../alfa-slice" },
     { "path": "../../alfa-string" },
-    { "path": "../../alfa-thunk" }
+    { "path": "../../alfa-thunk" },
+    { "path": "../../alfa-tuple" }
   ]
 }

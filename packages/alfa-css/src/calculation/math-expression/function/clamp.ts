@@ -1,4 +1,3 @@
-import { Array } from "@siteimprove/alfa-array";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";

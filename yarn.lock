@@ -1680,6 +1680,7 @@ __metadata:
     "@siteimprove/alfa-string": "workspace:^"
     "@siteimprove/alfa-test": "workspace:^"
     "@siteimprove/alfa-thunk": "workspace:^"
+    "@siteimprove/alfa-tuple": "workspace:^"
     colorjs.io: "npm:^0.6.1"
   languageName: unknown
   linkType: soft
