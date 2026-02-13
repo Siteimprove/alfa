@@ -39,13 +39,6 @@ export namespace Function {
    * Parses a math function in a calculation.
    *
    * @param parseSum - A parser for the sum production in a calculation.
-   *
-   * @privateRemarks
-   * The `either` will repeatedly try to parse the first token. This could be
-   * optimized a bit by pre-looking at it and selecting the right parser based
-   * on it. This is likely not a hot-path because calculations aren't that
-   * common (especially functions other than `calc`), and there are relatively
-   * few functions now. So keeping it that way for the sake of simplicity for now.
    */
   export function parse(parseSum: CSSParser<Expression>): CSSParser<Function> {
     return exclusive(Token.parseFunction(names), (fn) =>

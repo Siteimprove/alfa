@@ -70,7 +70,6 @@ export class Clamp extends Function<
     return this._args[2];
   }
 
-  // TODO
   public reduce<
     L extends Unit.Length = Unit.Length.Canonical,
     P extends Numeric = Numeric,
