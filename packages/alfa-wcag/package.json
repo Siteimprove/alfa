@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "prettier": "^3.8.1",
-    "puppeteer": "^24.37.2"
+    "puppeteer": "^24.37.3"
   },
   "publishConfig": {
     "access": "public",
