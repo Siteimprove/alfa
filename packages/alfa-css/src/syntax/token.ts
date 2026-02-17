@@ -871,8 +871,8 @@ export namespace Token {
    * Parses whitespace.
    *
    * @remarks
-   * This accepts several whitespace because our tokenization does not group
-   * them, but CSS grammar doesn't care how many there are.
+   * This accepts more than one whitespace because our tokenization does not
+   * group them, but CSS grammar doesn't care how many there are.
    *
    * This accepts zero whitespace to handle Arbitrary Substitution Functions
    * (essentially `var()`).
@@ -888,10 +888,11 @@ export namespace Token {
    * It is clearer to accept 0 or more whitespace here and have the value parser
    * require whitespace (`separated(parseFoo, parseWhitespace, parseBar`) than
    * using `optional(parseWhitespace)` everywhere. Notably reading the parsers
-   * make it more obvious that we are talking of separated tokens.
+   * make it more obvious that we are talking about separated tokens.
    */
-  export const parseWhitespace = map(zeroOrMore(parseToken(isWhitespace)), () =>
-    Whitespace.of(),
+  export const parseWhitespace = map(
+    zeroOrMore(parseToken(isWhitespace)),
+    Whitespace.of,
   );
 
   export class Colon implements Equatable, Serializable<Colon.JSON> {
