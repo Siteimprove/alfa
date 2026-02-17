@@ -10,7 +10,7 @@ import type { Slice } from "@siteimprove/alfa-slice";
 
 import type { Parser as CSSParser } from "./parser.js";
 
-const { map, oneOrMore } = Parser;
+const { map, zeroOrMore } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 
@@ -867,9 +867,31 @@ export namespace Token {
 
   export const { of: whitespace, isWhitespace } = Whitespace;
 
-  export const parseWhitespace = map(
-    oneOrMore(parseToken(isWhitespace)),
-    ([first]) => first,
+  /**
+   * Parses whitespace.
+   *
+   * @remarks
+   * This accepts several whitespace because our tokenization does not group
+   * them, but CSS grammar doesn't care how many there are.
+   *
+   * This accepts zero whitespace to handle Arbitrary Substitution Functions
+   * (essentially `var()`).
+   * {@link https://drafts.csswg.org/css-values-5/#arbitrary-substitution-function}
+   * When a substitution function is substituted, its value replaces the entire
+   * function, but they do not "merge" with previous or following tokens.
+   * That is, `var(--foo)var(--bar)` resolves as `[Ident("foo"), Ident("bar")]`
+   * and not `[Ident("foobar")]`, and there is no way to obtain the former through
+   * pure lexing of a string. This means that a value that accepts two idents
+   * would accept `var(--foo)var(--bar)` as a valid value, even if it doesn't
+   * accept `foobar`.
+   *
+   * It is clearer to accept 0 or more whitespace here and have the value parser
+   * require whitespace (`separated(parseFoo, parseWhitespace, parseBar`) than
+   * using `optional(parseWhitespace)` everywhere. Notably reading the parsers
+   * make it more obvious that we are talking of separated tokens.
+   */
+  export const parseWhitespace = map(zeroOrMore(parseToken(isWhitespace)), () =>
+    Whitespace.of(),
   );
 
   export class Colon implements Equatable, Serializable<Colon.JSON> {
