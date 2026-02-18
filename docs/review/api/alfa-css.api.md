@@ -2943,8 +2943,7 @@ export namespace Token {
     const // (undocumented)
     whitespace: typeof Whitespace.of, // (undocumented)
     isWhitespace: typeof Whitespace.isWhitespace;
-    const // (undocumented)
-    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
+    const parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export namespace OpenSquareBracket {
         // (undocumented)
