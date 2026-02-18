@@ -2943,10 +2943,6 @@ export namespace Token {
         // (undocumented)
         get type(): "open-square-bracket";
     }
-    const // (undocumented)
-    whitespace: typeof Whitespace.of, // (undocumented)
-    isWhitespace: typeof Whitespace.isWhitespace;
-    const parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export namespace OpenSquareBracket {
         // (undocumented)
@@ -2962,8 +2958,7 @@ export namespace Token {
     const // (undocumented)
     whitespace: typeof Whitespace.of, // (undocumented)
     isWhitespace: typeof Whitespace.isWhitespace;
-    const // (undocumented)
-    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
+    const parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export function parseDelim(query?: string | number | Predicate<Delim>): Parser<Delim>;
     // (undocumented)
